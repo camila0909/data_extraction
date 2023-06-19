@@ -1,4 +1,7 @@
 import re
+from re import sub
+import unicodedata
+from unicodedata import normalize
 
 #Abre arquivo convertendo o texto em uma lista de strings, variável lines recebe a lista
 
@@ -9,6 +12,13 @@ with open(file, "r") as file:
     lines = file.readlines()
 
 lines = [line.strip() for line in lines]
+
+#Define função de formtação de texto
+
+def format_text(txt):
+    txt = normalize('NFKD', txt).encode('ASCII', 'ignore').decode('ASCII')
+    txt = sub('[^\n\.\?\:\;\!A-Za-z0-9 -]+', '', txt).strip()
+    return txt.upper()
 
 # Define função encontrar_abstract
 
@@ -54,6 +64,7 @@ def encontrar_resumo(lista):
 #Define função para encontrar local defesa e caso tenha, também retorna o nome do orientador
 
 def encontrar_local(lista):
+    #exit = número inteiro sendo 0 ou 1, se 0 retornará o nome do local, se 1 retornará o co_orientador
     local_encontrado = []
     co_orientador = []
     encontrou_string = False
@@ -78,7 +89,7 @@ def encontrar_local(lista):
     if local_encontrado:
         local_encontrado = lines[lines.index(local_encontrado[0])]
 
-    return co_orientador, local_encontrado
+    return local_encontrado, co_orientador
 
 #Define função que retorna o ano da defesa
 
@@ -87,7 +98,8 @@ def encontrar_ano(lista):
     encontrou_string = False
 
     for i in range(len(lista)):
-        if re.match(r'^(\d{2}|\d{4})',lista[i]):
+        #if re.match(r'^(\d{2}|\d{4})',lista[i]):
+        if re.match(r'^(\d{4})',lista[i]):
             ano.append(lista[i])
             encontrou_string = True
         if encontrou_string:
@@ -106,7 +118,8 @@ def encontrar_keywords(lista):
             encontrou_string = True
         if encontrou_string:
             break
-    return keywords[0] 
+    keywords = "".join(keywords)
+    return keywords
 
 def encontrar_palavras_chave(lista):
     palavras_chave = []
@@ -139,6 +152,7 @@ def encontrar_orientador(lista):
             encontrou_string = True
             if encontrou_string:
                 break
-    return orientador[0]
+    orientador = ' '.join(orientador)
+    return orientador
 
       

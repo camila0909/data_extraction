@@ -23,6 +23,7 @@ def get_text(filename):
   tese_clean_spaces = [l.strip() for l in tese_list]
   tese_text = ''.join(tese_list)
   tese_formatted_text = format_text(tese_text)
+  tese.close()
   return tese_formatted_text
 
 tese = []
