@@ -7,7 +7,7 @@ Define as funções de leitura e formatação de arquivos de texto
 Define as funções para encontrar padrões específicos no texto (local de defesa, ano, orientador, resumo, palavras-chave, abstract e keywords)
 
 ## [execution.py](https://github.com/camila0909/data_extraction/blob/main/execution.py)
-Executa as funções de [define_functions.py](https://github.com/camila0909/data_extraction/blob/main/define_functions.py)
+Executa as funções de [define_functions.py](https://github.com/camila0909/data_extraction/blob/main/define_functions.py) no arquivo [tese.txt](https://github.com/camila0909/data_extraction/blob/main/tese.txt) (este arquivo foi utilizado com o referência para definir os padrões)
 
 ## [create_data_frame.py](https://github.com/camila0909/data_extraction/blob/main/create_data_frame.py)
 Cria um dataframe com os [metadados](https://github.com/camila0909/data_extraction/tree/main/metadata)
