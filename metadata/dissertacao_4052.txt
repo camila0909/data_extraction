@@ -1,0 +1,4641 @@
+UNIVERSIDADE FEDERAL DE SANTA CATARINA
+BIBLIOTECA UNIVERSIT ´ARIA
+
+Jo˜ao Carlos Bez Batti
+
+UM POUCO DA MATEM ´ATICA POR TR ´AS DO
+ALGORITMO PAGERANK DO GOOGLE
+
+Florian´opolis
+
+2015
+
+Jo˜ao Carlos Bez Batti
+
+UM POUCO DA MATEM ´ATICA POR TR ´AS DO
+ALGORITMO PAGERANK DO GOOGLE
+
+Disserta¸c˜ao submetida ao Programa
+de Mestrado Proﬁssional em Matem´atica
+da Universidade Federal de Santa Ca-
+tarina para a obten¸c˜ao do Grau de
+Mestre em Matem´atica.
+Orientador: Prof. Fernando de La-
+cerda Mortari
+
+Florian´opolis
+
+2015
+
+ através do Programa de Geração Automática da Biblioteca Universitária da UFSC.
+
+Ficha de identificação da obra elaborada pelo autor,
+
+Bez Batti, João Carlos 
+   Um pouco da matemática usada no algoritmo PageRank do
+Google / João Carlos  Bez Batti ; orientador, Fernando de
+Lacerda Mortari - Florianópolis, SC, 2015.
+   63 p.
+
+   Dissertação (mestrado profissional) - Universidade
+Federal de Santa Catarina, Centro de Ciências Físicas e
+Matemáticas. Programa de Pós-Graduação em Matemática.
+
+   Inclui referências 
+
+   1. Matemática. 2. Álgebra Linear. 3. Algoritmo
+PageRank. I. de Lacerda Mortari, Fernando. II.
+Universidade Federal de Santa Catarina. Programa de Pós-
+Graduação em Matemática. III. Título.
+
+Jo˜ao Carlos Bez Batti
+
+UM POUCO DA MATEM ´ATICA POR TR ´AS DO
+ALGORITMO PAGERANK DO GOOGLE
+
+Esta Disserta¸c˜ao foi julgada aprovada para a obten¸c˜ao do T´ıtulo
+de “Mestre em Matem´atica”, e aprovada em sua forma ﬁnal pelo Pro-
+grama de Mestrado Proﬁssional em Matem´atica da Universidade Fede-
+ral de Santa Catarina.
+
+Florian´opolis, 16 de Julho 2015.
+
+Profa. Dra. Maria Inez Cardoso Gon¸calves
+Coordenador
+Universidade Federal de Santa Catarina
+
+Banca Examinadora:
+
+Prof. Fernando de Lacerda Mortari
+Orientador
+
+AGRADECIMENTOS
+
+Agrade¸co a Deus por ter me dado sa´ude e disposi¸c˜ao, mas prin-
+cipalmente, pelas pessoas mais do que especiais que colocou em minha
+vida.
+
+Agrade¸co aos meus pais, Silvio Bez Batti Neto e Maril´eti Let´ıcia
+Godinho Bez Batti, que sempre me incentivaram e me apoiaram em
+cada etapa da minha vida, estimulando e dando for¸ca para que seguisse
+em frente.
+
+A minha esposa Mariana Marcusso Manh˜aes e ao meu ﬁlho Ber-
+nardo Manh˜aes Bez Batti, agrade¸co por todo amor, carinho, paciˆencia
+e compreens˜ao durante todo esse per´ıodo de estudo, que por v´arias
+vezes me ausentei e n˜ao pude dar a aten¸c˜ao e carinho que mereciam.
+
+Ao meu amigo e colega de mestrado Jaison Gasperi, pelo incen-
+
+tivo e for¸ca nos v´arios dias que passamos estudando.
+
+Aos meus s´ocios, Lucas Ramiro Talarico e Ricardo Silveira da
+Silva, pela compreens˜ao em rela¸c˜ao `a minha ausˆencia em diversas si-
+tua¸c˜oes.
+
+Ao amigo e professor, Rafael Descovi Galelli, pelas aulas e pela
+
+sua imensur´avel boa vontade.
+
+A todos os meus amigos que de alguma forma me ajudaram
+nessa caminhada. Em especial, a Fabiano Carlos Cidral pelo incentivo,
+lealdade e companheirismo, al´em de todos os ensinamentos.
+
+Ao meu orientador, Professor Fernando de Lacerda Mortari, por
+todos os conhecimentos adquiridos durante essa caminhada. Agrade¸co
+tamb´em pela sua paciˆencia em sanar todas a minhas d´uvidas e a sua
+compreens˜ao em rela¸c˜ao ao tempo restrito que tive para dedicar-me a
+esse trabalho.
+
+A Coordena¸c˜ao de Aperfei¸coamento de Pessoal de N´ıvel Superior
+
+pelo apoio ﬁnanceiro.
+
+“O bom professor ´e aquele que se torna
+gradativamente desnecess´ario.”
+Autor desconhecido
+
+RESUMO
+
+Neste trabalho trataremos de forma simpliﬁcada os conceitos matem´aticos
+envolvidos em um dos algoritmos utilizados no sistema de classiﬁca¸c˜ao
+das p´aginas pelo Google: o PageRank. Abordaremos de maneira in-
+formal, a ideia de se atribuir uma pontua¸c˜ao de importˆancia para as
+p´aginas da internet e posteriormente formalizaremos matematicamente,
+com o aux´ılio da ´Algebra Linear. Por ﬁm, apresentaremos um roteiro
+para se inserir, de modo intuitivo, a essˆencia do algoritmo PageRank
+no Ensino M´edio, estimulando os estudantes ao aprendizado de temas
+como Matrizes, Determinantes e Sistemas de Equa¸c˜oes Lineares usando
+como objeto a internet, a qual est´a cada vez mais presente no dia a dia
+dos alunos e dessa forma servindo como fonte de inspira¸c˜ao para o
+aprendizado da matem´atica.
+Palavras-chave: Internet. Google. PageRank. ´Algebra Linear
+
+ABSTRACT
+
+In this work we deal, in a simpliﬁed way, with the mathematical con-
+cepts involved in one of the algorithms used in Google’s page ranking
+system called: PageRank. We discuss informally the idea of assigning
+an importance score for websites and then do a mathematical forma-
+lization, with the help of Linear Algebra. Finally, we present a class
+script to insert, intuitively, the idea of the PageRank algorithm in high
+school, encouraging students to learn themes such as matrices, determi-
+nants and systems of linear equations using the internet as the subject,
+which is becoming more present in the day-to-day lives of students and
+thus serving as a source of inspiration for the learning of Mathematics.
+
+Keywords: Internet. Google. PageRank. Linear Algebra.
+
+LISTA DE FIGURAS
+
+Figura 1 Rastreadores . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+Figura 2 Janela do Google . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+Figura 3 Modelo de grafo dirigido . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+Figura 4 Modelo de internet de quatro p´aginas . . . . . . . . . . . . . . . . . . 26
+Figura 5 Modelo de sumidouro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Figura 6 Grafo dirigido . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Figura 7 Modelo de internet desconexa . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+Figura 8 Grafo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+SUM ´ARIO
+
+INTRODUC¸ ˜AO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+19
+A IDEIA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1
+21
+O PAGERANK . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+1.1
+MODELANDO O PROBLEMA . . . . . . . . . . . . . . . . .
+2
+29
+A MATRIZ DO GRAFO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+2.1
+MATRIZES COLUNA-ESTOC ´ASTICAS E OS AUTO-
+2.2
+VALORES . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+DEFICIˆENCIAS DO M´ETODO . . . . . . . . . . . . . . . . . . . . . . 35
+2.3
+2.3.1 INTERNET DESCONECTADA . . . . . . . . . . . . . . . . . . 35
+2.3.2 CORRIGINDO AS DEFICIˆENCIAS . . . . . . . . . . . . . . 48
+APLICANDO O M´ETODO . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+2.4
+ROTEIRO PARA ABORDAR O TEMA NO EN-
+3
+SINO M´EDIO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+55
+ROTEIRO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+59
+61
+
+3.1
+CONCLUS ˜AO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+REFERˆENCIAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+19
+
+INTRODUC¸ ˜AO
+
+“Google”, trocadilho feito com o termo matem´atico “Googol”:
+n´umero representado pelo d´ıgito um seguido de cem d´ıgitos zeros, deu
+origem ao nome de uma das maiores e mais evidentes empresas da
+atualidade: a Google. A utiliza¸c˜ao da express˜ao traduz a vontade de
+Larry Page e Sergey Brin, os fundadores do Google, de organizar uma
+volume muito grande de dados na internet.
+
+Tudo come¸cou em meados da d´ecada de 90, quando faziam parte
+do programa de doutorado da Universidade de Stanford e come¸caram
+juntos um trabalho de pesquisa, com o intuito de criar um sistema
+de busca mais eﬁcaz do que os existiam na ´epoca. Esse sistema foi
+criado e foi nomeado BackRub. Diferentemente dos sistemas que j´a
+existiam, os quais apenas procuravam registros em um banco de dados
+pr´e-cadastrados, o BackRub, atrav´es de algoritmos, contava os links que
+se dirigiam `as p´aginas e os interpretava como votos para essas p´aginas.
+Dessa forma, quanto mais links um site recebia, mais relevante esse site
+se tornava nos resultados de uma pesquisa.
+
+Posteriormente, os algoritmos do BackRub foram testados para
+organizar e classiﬁcar milh˜oes de sites p´ublicos. H´a boatos de que esse
+teste tenha sobrecarregado os servidores de Stanford deixando toda a
+Universidade sem acesso `a internet.
+
+Em 1997, vivenciando o ˆexito do BackRub, numa reuni˜ao com
+diversos estudantes, Larry Page encontrou um nome que representasse
+a grande quantidade de dados que seu sistema conseguia processar.
+Contam as referˆencias que um dos estudantes mencionou oralmente
+a palavra “Googolplex”, e Larry Page prontamente complementou de
+forma mais sucinta: “Googol”. Sem inten¸c˜ao, cometeram um erro or-
+togr´aﬁco ao digitar o termo enquanto procuravam pela disponibilidade
+de seu dom´ınio - escreveram “Google”em vez de “Googol- obtendo o
+dom´ınio dispon´ıvel. Em seguida o dom´ınio foi registrado, nascendo
+assim, o “Google Search Engine”, a vers˜ao p´ublica do BackRub.
+
+Maiores informa¸c˜oes sobre a hist´oria do Google, como surgi-
+mento, evolu¸c˜oes e desenvolvimentos de produtos, o leitor pode con-
+seguir em [3]. Para um conhecimento mais t´ecnic sobre a elabora¸c˜ao
+do algoritmo PageRank sugerimos a leitura de [6].
+
+No Cap´ıtulo 1 deste trabalho, apresentaremos as principais es-
+trat´egias e t´ecnicas atualmente utilizadas pelo Google, de maneira in-
+formal, com o simples intuito de transmitir ao leitor uma ideia geral
+
+20
+
+sobre como funciona esse motor de busca. No entanto, o objetivo cen-
+tral desse trabalho n˜ao ´e explicar o funcionamento do Google nos dias
+de hoje, e sim apresentar os conceitos matem´aticos envolvidos na ideia
+inicial de Larry Page e Sergey Brin para o desenvolvimento do algo-
+ritmo PageRank, o qual fez com que o Google se tornasse um dos mais
+eﬁcazes buscadores da internet. Tais conceitos ser˜ao apresentados for-
+malmente no Cap´ıtulo 2, dando portanto, embasamento te´orico aos
+processos descritos no Cap´ıtulo 1. Por ﬁm, no Cap´ıtulo 3, daremos
+uma sugest˜ao de como abordar as ideias principais deste trabalho no
+Ensino m´edio. Faremos isso atrav´es de um roteiro de aula.
+
+21
+
+1 A IDEIA
+
+As evolu¸c˜oes cient´ıﬁcas e tecnol´ogicas advindas do avan¸co
+da inform´atica, mais precisamente da internet, s˜ao imensur´aveis. A
+facilidade de encontrar uma informa¸c˜ao com o simples clicar de um
+bot˜ao tornou muito ´agil e pr´atico a constru¸c˜ao e a dissemina¸c˜ao do
+conhecimento. Por´em, nem sempre foi t˜ao f´acil assim. A internet, atu-
+almente, ´e composta por trilh˜oes de p´aginas, na qual, ao efetuarmos
+uma pesquisa procuramos por informa¸c˜oes de forma r´apida e precisa.
+As ferramentas que facilitaram tais pesquisas na internet foram os mo-
+tores de busca, dos quais um deles se destaca: o Google.
+
+Para come¸carmos a entender os mecanismos de busca do Google,
+comparemos a internet com uma biblioteca gigantesca, de forma que
+usar o Google para procurar uma informa¸c˜ao na internet ´e equivalente a
+procurar um livro que se encontra em alguma das muitas estantes dessa
+biblioteca. Mais especiﬁcamente, encontrar alguma informa¸c˜ao contida
+em alguma parte de uma p´agina de um site compara-se a encontrar um
+tema discutido em alguma parte de um livro.
+
+Com o aux´ılio da inform´atica, a busca por um livro numa bi-
+blioteca ´e relativamente f´acil. Utilizando um computador, digita-se o
+t´ıtulo, o autor, ou at´e mesmo o tema abordado pelo livro e o compu-
+tador informa um n´umero correspondente a posi¸c˜ao do livro dentro da
+biblioteca. Por´em, para que isso aconte¸ca, as informa¸c˜oes como tema,
+t´ıtulo, autor e etc, de todos os livros, devem ser cadastrados manual-
+mente por algu´em, o que ´e uma tarefa muito trabalhosa, visto ainda que
+palavras espec´ıﬁcas contidas no interior do livro n˜ao poderiam ser en-
+contradas a n˜ao ser que todo o texto do livro fosse cadastrado tamb´em
+de forma manual.
+
+Al´em disso, ao procurarmos uma informa¸c˜ao em uma biblioteca
+podemos obter como resposta mais de um livro. Tal fato nos levaria,
+al´em de tudo, a ter que decidir qual desses seria o livro mais pertinente
+aos nossos objetivos. Tarefa essa nada f´acil de resolver, principalmente
+se obtivermos uma quantidade muito grande de livros relacionados ao
+tema pesquisado, haja visto que dever´ıamos analisar livro por livro para
+decidir qual o mais relevante.
+
+Imagine ainda que a quantidade de livros nessa biblioteca au-
+mente diariamente. Sendo assim, se formos hoje a essa biblioteca e
+procurarmos por livros sobre culin´aria, por exemplo, e encontramos os
+livros A, B e C relacionados ao assunto. Ap´os analisarmos os livros de-
+terminamos que o livro C ´e o mais interessante, seguido pelo A e depois
+
+22
+
+pelo B. Realizando a mesma pesquisa amanh˜a, pode ser que essa classi-
+ﬁca¸c˜ao n˜ao seja mais a mesma, visto que novos livros D e E podem ter
+sido acrescentados `a biblioteca mudando assim essa classiﬁca¸c˜ao. Al´em
+do mais, mesmo que novos livros n˜ao sejam integrados `a biblioteca,
+novas edi¸c˜oes dos pr´oprios livros A, B e C podem ter chegado, gerando
+assim uma nova classiﬁca¸c˜ao para os mesmos livros.
+
+Com isso, algumas perguntas surgem naturalmente:
+Ao efetuarmos uma pesquisa na internet usando o Google, algum
+funcion´ario do Google pesquisa manualmente o tema que desejamos em
+todos os sites relacionados, classiﬁca-os e retorna a lista de resultados
+em cent´esimos de segundo?
+
+Com certeza h´a seres humanos incr´ıveis no mundo, com capa-
+cidades acima do normal. Entretanto, tais procedimentos s˜ao, com
+certeza, sobre-humanos no intervalo de tempo descrito. A internet ´e
+formada por trilh˜oes p´aginas e a mesma ´e diariamente enxertada com
+milhares de novas p´aginas, o que nos levaria a uma constante atua-
+liza¸c˜ao dos resultados j´a obtidos. Al´em disso, milhares de pesquisas
+s˜ao realizadas a cada segundo, o que demandaria muitas pessoas envol-
+vidas nesse processos.
+
+Portanto, uma nova quest˜ao ´e levantada: Como a pesquisa ´e
+
+realizada sem a interferˆencia humana de forma eﬁciente?
+
+Quando fazemos uma pesquisa na internet usando o motor de
+busca Google, n˜ao buscamos em toda a rede, e sim, nas p´aginas “pr´e-
+cadastradas” pelo Google que est˜ao armazenadas em seus bancos de
+dados. De forma pr´atica podemos interpretar a rede como um conjunto
+de pontos (p´aginas) e de caminhos ligando os pontos (links entre as
+p´aginas).
+
+p´agina A •
+
+Link de A para B
+
+/ • p´agina B
+
+O Google utiliza programas chamados “aranhas”, rastreadores
+
+da Web, para descobrir p´aginas dispon´ıveis publicamente.
+
+/
+23
+
+Figura 1 – Rastreadores
+
+Esses rastreadores come¸cam por algumas p´aginas da web e se-
+guem os links dessas p´aginas para as quais eles direcionam. Chegando
+`as novas p´aginas repetem o processo de forma a rastrear uma grande
+parte da web. A medida que s˜ao rastreadas, as p´aginas s˜ao numera-
+das, bem como a maior parte do seu conte´udo, de modo que quando
+uma palavra ´e pesquisada as p´aginas que est˜ao relacionadas ao tema
+possam ser localizadas no banco de dados. Por exemplo, imagine que
+queiramos saber qual o peso de uma baleia azul. Vamos at´e a janela
+de busca do Google e digitamos: “PESO BALEIA AZUL” e clicamos
+ENTER.
+
+Figura 2 – Janela do Google
+
+Um programa pesquisa no banco de dados todas as p´aginas que
+incluam esses termos (sem interferˆencia humana alguma). Nesse caso,
+h´a centenas de milhares de resultados poss´ıveis, desde os que envolvem
+as trˆes palavras juntas: “PESO BALEIA AZUL”, aos que envolvem
+cada uma delas separadas: “PESO ”, “BALEIA” e “AZUL”. Dessa
+
+24
+
+forma, certamente, temos v´arias p´aginas que n˜ao informam o que real-
+mente queremos saber. Por outro lado, os links que nos interessam, em
+geral, aparecem nas primeiras coloca¸c˜oes da primeira p´agina de resulta-
+dos. Inclusive s˜ao dos primeiros links, da primeira p´agina de resultados,
+onde encontramos que uma baleia azul tem seu peso variando de 80 a
+120 toneladas.
+
+Dessa forma, como o Google decide quais resultados mais nos
+
+interessam?
+
+A resposta ´e: com a an´alise de mais de 200 vari´aveis, cada uma
+com um respectivo peso. Algumas dessas var´ı´aveis s˜ao: Quantidade
+de vezes que essa p´agina cont´em suas palavras-chave, posi¸c˜oes em que
+aparecem as palavras pesquisadas na p´agina: no t´ıtulo da p´agina ou no
+nome do site?, PageRank dessa p´agina, etc.
+
+A abordagem deste trabalho se restringir´a `a pondera¸c˜ao do algo-
+ritmo PageRank de cada p´agina. Explicaremos a matem´atica por tr´as
+desse algoritmo, como segue.
+
+1.1 O PAGERANK
+
+O PageRank de cada p´agina ´e dado por uma f´ormula matem´atica,
+desenvolvida pelos fundadores do Google, Larry Page e Sergey Brin, a
+qual avalia a importˆancia de uma p´agina em fun¸c˜ao de p´aginas externas
+conectadas a ela atrav´es de links, numa esp´ecie de democracia da web,
+em que esses links s˜ao considerados como uma forma de voto.
+
+Abstratamente, representamos a web como um grafo dirigido:
+um conjunto de pontos chamados de v´ertices e um conjunto de ﬂechas
+ligando esses v´ertices a outros v´ertices chamados de links.
+
+•
+
+•
+
+•
+
+/ •
+
+/ •
+
+U✯✯✯✯✯✯✯✯✯✯✯✯✯✯✯✯✯✯✯
+9sssssssssssssssssssssss
+
+•
+
+•
+
+Figura 3 – Modelo de grafo dirigido
+
+Nosso objetivo ´e atribuir uma pontua¸c˜ao para cada p´agina, isto
+
+(cid:23)
+(cid:23)
+/
+!
+!
+W
+W
+/
+a
+a
+9
+O
+O
+U
+25
+
+´e, associar a cada p´agina um n´umero real, maior do que ou igual a
+zero, de modo que quanto maior o valor do n´umero associado `a p´agina,
+mais importante ela ´e. Dessa forma, podemos organizar esses n´umeros,
+em ordem crescente, por exemplo, deﬁnindo assim, uma ordem de im-
+portˆancia para as p´aginas da internet. Agora, o mais importante: que-
+remos que o computador o fa¸ca por conta pr´opria! ´E imposs´ıvel para
+n´os avaliarmos a importˆancia de cada p´agina como um todo. Temos,
+simplesmente, informa¸c˜oes demais para processar. Por outro lado, o
+computador ´e incapaz de interpretar o conte´udo de cada p´agina e de-
+cidir a importˆancia dela embasado apenas no que est´a escrito nela.
+
+Ent˜ao, como o fazer?
+Uma maneira poss´ıvel ´e deixar o conte´udo das p´aginas de lado
+e utilizar apenas as informa¸c˜oes deixadas por humanos nas p´aginas
+que possam ajudar a decidir a importˆancia da p´agina em quest˜ao, no
+contexto da internet como um todo: os links entre as p´aginas. Ou seja,
+o Google pontua a importˆancia de uma p´agina em fun¸c˜ao dos links que
+se conectam a ela. Um link da p´agina A para a p´agina B indica que
+a p´agina A “votou” pela importˆancia da p´agina B, isto ´e, se um site
+X cita (possui um link para) outro site Y, esse site Y ´e, mesmo que
+minimamente, importante para o site X. Al´em disso, deve-se ponderar a
+importˆancia que cada link transmite de uma p´agina para outra. Quanto
+maior a importˆancia da p´agina A, maior dever´a ser o peso do seu voto
+para as p´aginas que ela possui links. No exemplo que segue, a p´agina A
+contribui para as importˆancias das p´aginas B e C, isto ´e, A possui link
+para B e link para C. Esperamos que essa democracia da web ocorra
+de forma justa, ou seja, a p´agina A deve contribuir de forma igual para
+a importˆancia da p´agina B e da p´agina C. Portanto, a p´agina A vota
+com metade de sua importˆancia para a p´agina B e a outra metade para
+a p´agina C.
+
+p´agina A •
+
+5❦❦❦❦❦❦❦❦❦❦❦❦❦❦
+)❙❙❙❙❙❙❙❙❙❙❙❙❙❙
+
+• p´agina B
+
+• p´agina C
+
+Assim, para avaliar a importˆancia de uma p´agina da internet,
+usamos a importˆancia das p´aginas que possuem links para ela. No
+modelo de internet de 4 p´aginas, representado na ﬁgura 4, a p´agina
+
+)
+5
+26
+
+A
+
+D
+
+ ❅❅❅❅❅❅❅❅
+~⑦⑦⑦⑦⑦⑦⑦⑦
+
+5 B
+
+5 C
+
+Figura 4 – Modelo de internet de quatro p´aginas
+
+C recebe links das p´aginas A, B e D. Dizemos que a importˆancia da
+p´agina C ´e gerada pela soma das contribui¸c˜oes dadas `a p´agina C pelas
+p´aginas A, B e D. Mais especiﬁcamente, se xA indica a importˆancia da
+p´agina A e al´em disso, a p´agina A vota em trˆes p´aginas distintas (B,
+C e D), ent˜ao a parcela de importˆancia atribu´ıda `a p´agina C atrav´es
+da p´agina A ´e xA
+3 . Analogamente, se xB e xD s˜ao, respectivamente, as
+importˆancias das p´aginas B e D, e al´em disso, a p´agina B vota em trˆes
+p´aginas distintas (A, C e D) e a p´agina D vota em uma ´unica p´agina
+(C), ent˜ao a importˆancia atribu´ıda `a p´agina C pelas p´aginas B e D s˜ao,
+respectivamente, xB
+1 . Logo, a importˆancia da p´agina C, indicada
+por xC ´e dada por:
+
+3 e xD
+
+xA
+3
+(soma das contribui¸c˜oes). De forma an´aloga, encontra-se que
+
+xD
+1
+
+xB
+3
+
+xC =
+
++
+
++
+
+,
+
+xA =
+
+xB
+3
+
+, xB =
+
+xA
+3
+
++
+
+xC
+2
+
+,
+
+e xD =
+
+xA
+3
+
++
+
+xB
+3
+
++
+
+xC
+2
+
+.
+
+Dessa forma, estabelecemos uma maneira para atribuir a pon-
+tua¸c˜ao de importˆancia `as p´aginas. No entanto, percebemos algo cu-
+rioso: para sabermos a importˆancia de A, precisamos conhecer a im-
+portˆancia de B, para sabermos a importˆancia de B, precisamos da im-
+portˆancia de A e C, para sabermos a importˆancia de C precisamos
+das importˆancias de A, B e D e por ﬁm, para sabermos a importˆancia
+de D precisamos das importˆancias de A, B e C. Isso gera a impress˜ao
+que para descobrimos xC precisamos saber quanto vale xC ! Por´em,
+essa n˜ao ´e a quest˜ao. Na pr´atica o que acontece ´e que n˜ao precisa-
+mos saber de antem˜ao os valores que indicam as importˆancias de cada
+p´agina. Apenas indicamos rela¸c˜oes, as quais gostar´ıamos que os valores
+referentes `as pontua¸c˜oes das p´aginas obedecessem. Uma vez que essas
+rela¸c˜oes s˜ao estabelecidas precisamos saber se existem n´umeros que as
+satisfa¸cam. Em outras palavras, xA, xB, xC e xD s˜ao inc´ognitas e se
+relacionam por meio de equa¸c˜oes. Portanto, se a internet fosse como a
+representada no exemplo anterior, ter´ıamos uma equa¸c˜ao por p´agina,
+
+ 
+(cid:15)
+(cid:15)
+5
+v
+v
+~
+(cid:21)
+(cid:21)
+5
+u
+u
+V
+V
+27
+
+(1.1)
+
+xA =
+
+xB =
+
+xC =
+
+xD =
+
+xB
+3
+
+xA
+3
+
+xA
+3
+
+xA
+3
+
+
+
+
+
+
++
+
++
+
++
+
+xC
+2
+
+xB
+3
+
+xB
+3
+
++
+
++
+
+xD
+1
+
+xC
+2
+
+de modo que, determinar a importˆancia de cada p´agina signiﬁca encon-
+trar n´umeros xA, xB, xC e xD que satisfa¸cam, simultaneamente, todas
+as equa¸c˜oes do Sistema de Equa¸c˜oes Lineares 1.1, que nesse caso possui
+4 equa¸c˜oes e 4 inc´ognitas, mais precisamente, temos que determinar,
+caso exista, uma solu¸c˜ao para esse sistema.
+
+Note que o sistema 1.1 possui inﬁnitas solu¸c˜oes, e uma solu¸c˜ao
+poss´ıvel ´e xA = 3, xB = 9, xC = 16 e xD = 12 (leitor, veriﬁque!).
+Colocando as solu¸c˜oes em ordem crescente,
+
+xA = 3 < xB = 9 < xD = 12 < xC = 16.
+
+Com isso, ao medirmos a importˆancia das p´aginas da internet
+de acordo com os crit´erios que estabelecemos, obtivemos que a p´agina
+C ´e a de maior importˆancia. Na sequˆencia temos que a p´agina D ´e a
+segunda mais importante, seguida pela B em terceira coloca¸c˜ao e por
+´ultimo a p´agina A (p´agina menos importante).
+
+N˜ao obstante, o exemplo anterior de uma internet composta ape-
+nas por quatro p´aginas temos um caso muito simpliﬁcado da internet
+real, composta por trilh˜oes de p´aginas. O m´etodo apresentado acima
+envolve montar e resolver um sistema de equa¸c˜oes com uma equa¸c˜ao
+por p´agina, isto ´e, no caso real, ter´ıamos trilh˜oes de equa¸c˜oes e trilh˜oes
+de inc´ognitas. Al´em disso, a montagem e resolu¸c˜ao desse sistema deve
+ser realizada muito rapidamente - de fato, ao pesquisarmos no Go-
+ogle queremos respostas imediatas. Para resolver esse problema de
+agilidade e eﬁciˆencia, necessitamos de conceitos matem´aticos bastante
+avan¸cados, mais especiﬁcamente de uma das ´areas da Matem´atica cha-
+mada de ´Algebra Linear, a qual surgiu a partir do estudo de sistemas
+de equa¸c˜oes lineares.
+
+28
+
+29
+
+2 MODELANDO O PROBLEMA
+
+Neste cap´ıtulo, abordaremos de maneira formal os conceitos ma-
+tem´aticos necess´arios para modelarmos o problema de encontrar uma
+pontua¸c˜ao de importˆancia para cada uma das p´aginas da internet. Mais
+especiﬁcamente, precisaremos dos seguintes conceitos: matriz coluna-
+estoc´astica, autovalores e autovetores associados a uma matriz qua-
+drada, bem como as deﬁni¸c˜oes de base, dimens˜ao e espa¸co vetorial.
+
+Para os leitores que sentirem necessidade de uma explana¸c˜ao
+mais detalhada dos conceitos citados acima, al´em daquelas apresenta-
+das no decorrer do texto, indicamos a leitura de [1], [4] e [5].
+
+2.1 A MATRIZ DO GRAFO
+
+No Cap´ıtulo 1 determinamos as pontua¸c˜oes de importˆancia para
+
+as p´aginas de uma internet representada pelo grafo
+
+A
+
+5 B
+
+.
+
+ ❅❅❅❅❅❅❅❅
+~⑦⑦⑦⑦⑦⑦⑦⑦
+
+D
+
+5 C
+Cada p´agina dessa internet ´e representada por um v´ertice do
+grafo e uma ﬂecha entre dois desses v´ertices representa um link entre
+duas p´aginas.
+
+Considere agora, um modelo de internet composto por n p´aginas:
+P1, P2, P3, . . . , Pn. Al´em disso, por uma quest˜ao de simplicidade,
+vamos supor que toda p´agina possui pelo menos um link que sai dela
+para outra p´agina. Portanto, ao analisarmos o grafo dessa internet,
+percebemos que todo v´ertice possui pelo menos uma ﬂecha saindo dele.
+Quando h´a um v´ertice sem ﬂechas saindo dele, o chamaremos de po¸co
+ou sumidouro. No grafo da ﬁgura 5, B ´e um sumidouro.
+
+Agora, admita um grafo com n v´ertices, que n˜ao possui sumidou-
+ros, associado a uma internet de n p´aginas. Representemos os v´ertices
+por 1, 2, 3, . . . , n. J´a vimos como associar uma matriz `a internet e o
+mesmo racioc´ınio se aplica aqui. Para cada j ∈ {1, 2, ..., n}, nj denota
+o n´umero de p´aginas que recebem links da p´agina Pj . Agora, para
+cada k ∈ {1, 2, ..., n} deﬁnimos Lk como sendo o conjunto de todas as
+p´aginas que possuem links para a p´agina k, isto ´e, Lk denota o con-
+
+ 
+(cid:15)
+(cid:15)
+5
+v
+v
+~
+(cid:21)
+(cid:21)
+5
+u
+u
+V
+V
+30
+
+A•
+
+C•
+
+$❍❍❍❍❍❍❍❍❍
+:✈✈✈✈✈✈✈✈✈
+
+• B
+
+Figura 5 – Modelo de sumidouro
+
+junto de todos os v´ertices do grafo, os quais possuem ﬂechas saindo
+deles para o v´ertice k.
+
+i1•
+
+i2•
+
+...
+
+(cid:24)✵✵✵✵✵✵✵✵✵✵✵✵✵✵✵
+ ❅❅❅❅❅❅❅❅
+>⑦⑦⑦⑦⑦⑦⑦⑦⑦
+
+im•
+
+/ •k
+
+Na ilustra¸c˜ao acima, Lk = {i1, i2, ..., im} em que im ∈ {1, 2, ..., n}.
+
+Analogamente ao que ﬁzemos para o modelo da internet da ﬁgura
+
+4, denotamos a nota da p´agina Pk por xk, em que
+
+xk =
+
+Xj∈Lk
+
+1
+nj
+
+· xj.
+
+(2.1)
+
+Esse somat´orio indica que cada p´agina Pj com um link para
+Pk, contribui para a nota xk de Pk com 1
+de sua pr´opria nota. Tal
+nj
+racioc´ınio d´a origem a um sistema de equa¸c˜oes lineares, cuja repre-
+senta¸c˜ao matricial ´e da forma
+
+A · x = x
+
+$
+:
+(cid:24)
+ 
+/
+>
+31
+
+em que A ´e uma matriz quadrada n × n e
+
+x =
+
+x1
+x2
+...
+xn
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+n×1
+
+Denote por aij, com i, j ∈ {1, 2, ..., n} as entradas da matriz A. Assim,
+aij = 1
+, se Pj possui links para Pi e aij = 0 caso contr´ario.
+nj
+Usando a ideia descrita acima para a internet de 4 p´aginas ilus-
+trada pelo grafo dirigido da ﬁgura 6 notamos que a p´agina 1 recebe link
+
+1
+
+4
+
+( 2
+
+,
+
+/ 3
+
+Figura 6 – Grafo dirigido
+
+apenas da p´agina 2. Por outro lado, a p´agina 2 recebe links das p´aginas
+1, 3 e 4, a p´agina 3 recebe link apenas de 4 e ﬁnalmente, a p´agina 4
+recebe link apenas de 1. Com isso, denotamos L1 = {2}, L2 = {1, 3, 4},
+L3 = {4} e L4 = {2, 3}. Al´em disso, a p´agina 1 possui links para duas
+p´aginas, a saber as p´aginas 2 e 4, com isso, n1 = 2. De forma an´aloga,
+contando as p´aginas, `as quais 2, 3 e 4 possuem links, obtemos, respec-
+tivamente, que n2 = 1, n3 = 1 e n4 = 2. (Observa¸c˜ao: Lembre-se que
+nj denota o n´umero de p´aginas que recebem links da p´agina j e n˜ao
+o n´umero de links que saem da p´agina j, dessa forma, n4 por exem-
+plo, vale 2 e n˜ao 3 como pode parecer se contarmos o n´umero de links
+que saem da p´agina 4). Com isso, as express˜oes para a pontua¸c˜ao das
+p´aginas 1, 2, 3 e 4 s˜ao, respectivamente:
+
+x1 =
+
+Xj∈L1
+
+x2 =
+
+Xj∈L2
+
+x3 =
+
+Xj∈L3
+
+1
+nj
+
+1
+nj
+
+1
+nj
+
+· xj =
+
+· xj =
+
+· xj =
+
+1
+n2
+
+1
+n1
+
+1
+n4
+
+· x2 =
+
+x2
+1
+
+,
+
+· x3 +
+
+1
+n4
+
+· x4 =
+
+x1
+2
+
++
+
+x3
+1
+
++
+
+x4
+2
+
+,
+
+· x1 +
+
+· x4 =
+
+1
+n3
+
+x4
+2
+
+(cid:15)
+(cid:15)
+(
+h
+h
+7
+7
+H
+H
+/
+O
+O
+32
+
+e
+
+x4 =
+
+Xj∈L4
+
+1
+nj
+
+· xj =
+
+1
+n1
+
+· x1 =
+
+x1
+2
+
+.
+
+Com essas equa¸c˜oes montamos o sistema linear
+
++
+
+x3
+1
+
++
+
+x4
+2
+
+,
+
+x1 =
+
+x2 =
+
+x3 =
+
+x4 =
+
+x2
+1
+
+x1
+2
+
+x4
+2
+
+x1
+2
+
+
+
+
+
+
+o qual pode ser escrito na forma A · x = x:
+
+0
+
+1
+2
+
+0
+
+1
+2
+
+
+
+
+
+
+
+
+
+
+1 0
+
+0 1
+
+0 0
+
+0 0
+
+0
+
+1
+2
+1
+2
+
+0
+
+
+
+
+
+
+
+
+
+
+x1
+x2
+x3
+x4
+
+· 
+
+
+
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+
+
+
+
+
+
+
+
+= 
+
+
+
+
+em que
+
+
+
+x =
+
+
+
+x1
+x2
+x3
+x4
+
+
+
+
+´e uma matriz coluna 4 × 1 cujas entradas x1, x2, x3 e x4 represen-
+tam as vari´aveis do problema, isto ´e, as pontua¸c˜oes de importˆancia,
+respectivamente, das p´aginas 1, 2, 3 e 4. Al´em disso, a matriz
+
+
+
+
+
+A =
+
+0
+1
+2
+0
+1
+2
+
+
+
+
+
+
+
+1
+0
+0
+0
+
+0
+1
+0
+0
+
+0
+1
+2
+1
+2
+0
+
+
+
+
+
+
+
+33
+
+´e denominada matriz do grafo.
+
+Deﬁni¸c˜ao 1. Deﬁne-se um vetor como uma matriz coluna n × 1 com
+entradas reais. Denotaremos por
+
+v =
+
+v1
+v2
+...
+vn
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+em que vi ∈ R, com 1 ≤ i ≤ n, ou ainda, v ∈ Rn.
+
+Observa¸c˜ao 2. 0n×1 denota o vetor nulo de ordem n × 1.
+
+2.2 MATRIZES COLUNA-ESTOC ´ASTICAS E OS AUTOVALORES
+
+No exemplo anterior, a matriz do grafo possui a soma das entra-
+
+das de cada coluna igual a 1.
+
+Deﬁni¸c˜ao 3. Uma matriz quadrada com entradas n˜ao negativas, cuja
+somas das entradas de cada coluna ´e igual a 1 ´e chamada matriz coluna-
+estoc´astica.
+
+As matrizes dos grafos associadas a modelos de internet sem
+sumidouros s˜ao sempre matrizes coluna-estoc´astica. Isso ocorre visto
+que as entradas da coluna j correspondem `as contribui¸c˜oes da p´agina
+Pj para as notas das p´aginas que recebem links de Pj. Ou seja, cada
+entrada n˜ao nula nessa coluna ´e igual a 1
+e, como h´a nj entradas n˜ao
+nj
+nulas nessa coluna - existem nj p´aginas que recebem links de Pj - a
+soma das entradas da coluna j ´e dada por
+
+1
+nj
+
++
+
+1
+nj
+
++ · · · +
+
+1
+nj
+
+= 1.
+
+nj parcelas
+{z
+
+|
+
+}
+
+Sejam A uma matriz quadrada de ordem n e x um vetor em
+Rn. No nosso caso, encontrar uma solu¸c˜ao para um sistema da forma
+A · x = x, ou ainda (A − I) · x = 0, ´e equivalente a determinar uma
+
+34
+
+lista de notas, uma para cada p´agina. Obviamente,
+
+x =
+
+0
+0
+
+...
+
+
+0
+
+
+0
+
+
+
+
+
+
+
+
+
+
+n×1
+
+´e solu¸c˜ao desse sistema. No entanto, esta solu¸c˜ao nos diz que todas as
+p´aginas s˜ao igualmente importantes, visto que cada uma delas recebeu
+a mesma pontua¸c˜ao igual a zero. No entanto, estamos interessados em
+determinar poss´ıveis solu¸c˜oes n˜ao triviais para esse sistema. Para isso
+usaremos alguns conceitos de ´Algebra Linear.
+
+Deﬁni¸c˜ao 4. Sejam A uma matriz quadrada de ordem n e v ∈ Rn
+um vetor n˜ao nulo. Se existe um escalar α tal que A · v = α · v, ent˜ao
+esse escalar α ´e denominado um autovalor de A e v um autovetor de
+A associado a esse escalar α.
+
+Agora, note que se um vetor b ∈ Rn, n˜ao nulo, ´e solu¸c˜ao do
+sistema A · x = x, ent˜ao λ = 1 ´e um autovalor da matriz A. Por
+outro lado, se λ = 1 ´e um autovalor associado `a matriz A, ent˜ao todo
+autovetor associado ao autovalor 1 ser´a uma solu¸c˜ao desse sistema. No
+entanto, perceba que nem toda matriz quadrada possui autovalor igual
+a 1. Contudo, isso sempre ocorre para matrizes coluna-estoc´asticas, o
+que nos leva ao seguinte teorema.
+
+Teorema 5. Toda matriz B coluna-estoc´astica possui 1 como autova-
+lor.
+Prova:
+Sejam B uma matriz coluna-estoc´astica n × n, BT sua transposta e
+v um vetor coluna n × 1 com todas as entradas iguais a 1. Como B
+´e coluna-estoc´astica, a soma das entradas de cada coluna ´e igual a 1,
+e portanto, em BT , a soma das entradas de cada linha ´e igual a 1, donde
+
+a12
+a11
+a22
+a21
+...
+...
+an1 an2
+
+· · ·
+· · ·
+. . .
+· · ·
+
+a1n
+a2n
+...
+ann
+
+1
+1
+...
+1
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a11 + a12 + · · · + a1n
+a21 + a22 + · · · + a2n
+...
+...
+...
+an1 + an2 + · · · + ann
+
+. . .
+
+...
+
+...
+
+...
+
+35
+
+
+
+
+
+
+
+
+1
+1
+...
+1
+
+
+
+
+
+
+
+
+BT · v =
+
+=
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= v
+
+comprovando que 1 ´e autovalor de BT associado ao autovetor v. Como
+B e BT possuem os mesmos autovalores, temos que 1 ´e autovalor de B.
+Isso ocorre pois, da ´Algebra Linear, um sistema da forma B · x = λ · x
+pode ser reescrito como o sistema homogˆeneo (B − λI) · x = 0. Tal
+sistema possui solu¸c˜oes n˜ao triviais quando det (B − λI) = 0, visto que
+x 6= 0. Essas solu¸c˜oes s˜ao os autovalores de B. No entanto, perceba que
+det (B − λI) = det (B − λI)T , donde det (B − λI) = det
+, o
+que indica que B e BT possuem os mesmos autovalores.
+(cid:1)
+
+BT − λI
+(cid:0)
+
+Dessa forma, para uma matriz da internet sem sumidouros, exis-
+tem solu¸c˜oes n˜ao nulas do sistema A · x = x, as quais podemos usar
+para atribuir notas `as p´aginas da internet do modo como foi exposto:
+utilizando um autovetor de A associado ao seu autovalor 1.
+
+2.3 DEFICIˆENCIAS DO M´ETODO
+
+2.3.1 INTERNET DESCONECTADA
+
+At´e agora nos preocupamos em encontrar uma forma de atribuir
+uma pontua¸c˜ao de importˆancia para as p´aginas da internet. Tivemos
+
+36
+
+P1•
+
+P3•
+
+b❋❋❋❋❋❋❋❋
+
+•P5
+
+P2•
+
+P4•
+
+Figura 7 – Modelo de internet desconexa
+
+ˆexito, por´em, alguns problemas acabam surgindo e temos que solucion´a-
+los. Um deles vem do fato de que o autovalor λ = 1 possui inﬁnitos
+autovetores associados, ou seja, podemos atribuir notas de inﬁnitas
+maneiras diferentes, todas satisfazendo as condi¸c˜oes exigidas. Dessa
+forma, a ordem de importˆancia das p´aginas pode mudar dependendo
+de qual dos autovetores escolhemos. Por exemplo, considere a internet
+como a representada pelo grafo
+A matriz do grafo ´e
+
+A =
+
+0 1
+1 0
+0 0
+0 0
+0 0
+
+
+
+
+
+
+
+
+
+0 0
+0 0
+0 0
+1 0
+0 1
+
+0
+0
+1
+2
+1
+2
+0
+
+
+
+
+
+
+
+
+
+donde duas poss´ıveis solu¸c˜oes para o sistema A · x = x, isto ´e, dois
+autovetores associados ao autovalor λ = 1, s˜ao
+
+v1 =
+
+1
+2
+1
+2
+0
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e
+
+v2 =
+
+0
+0
+1
+2
+1
+1
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+Veja que na solu¸c˜ao v1, as p´aginas P1 e P2 s˜ao as mais importan-
+tes, mas na solu¸c˜ao v2, as p´aginas P4 e P5 s˜ao as mais importantes! Com
+isso, algumas perguntas devem ser respondidas: Qual dos autovetores
+devemos usar para a classiﬁca¸c˜ao das p´aginas? Em quais condi¸c˜oes
+obteremos mais de um autovetor para a classiﬁca¸c˜ao das p´aginas?
+
+(cid:19)
+(cid:19)
+(cid:15)
+(cid:15)
+(cid:3)
+(cid:3)
+b
+S
+S
+C
+C
+37
+
+Para tal, considere V1(A) o auto-espa¸co de A associado ao auto-
+
+valor λ = 1, isto ´e,
+
+V1(A) = {x ∈ Rn|A · x = x}.
+
+J´a sabemos que V1(A) ´e subespa¸co vetorial do espa¸co Mn×1(R) das
+matrizes coluna n × 1. No exemplo acima, {v1, v2} forma uma base de
+V1(A), logo dim(V1(A)) = 2.
+
+Com isso, sempre que dim(V1(A)) > 1, teremos este problema:
+existir˜ao ao menos 2 vetores linearmente independentes em V1(A) e
+cada um deles nos d´a uma forma diferente de atribuir notas para as
+p´aginas da internet. Em outras palavras, haver˜ao ao menos dois ve-
+tores, dos quais um deles n˜ao ´e m´ultiplo do outro, que servir˜ao para
+classiﬁcarmos a importˆancia das p´aginas da internet. Al´em disso, note
+que o grafo do exemplo anterior ´e composto de dois “subgrafos”: as
+duas partes desconectadas dessa internet. Tal fato, gera na matriz do
+grafo, dois blocos,
+
+A =
+
+B2×2
+02×3
+
+(cid:18)
+
+02×3
+C3×3(cid:19)
+
+=
+
+0 1
+1 0
+0 0
+0 0
+0 0
+
+
+
+
+
+
+
+
+
+0 0
+0 0
+0 0
+1 0
+0 1
+
+,
+
+0
+0
+1
+2
+1
+2
+0
+
+
+
+
+
+
+
+
+
+os quais podem ser interpretados como as matrizes dos grafos de cada
+uma desses subgrafos desconectados, o que for¸ca dim(V1(A)) a ser maior
+do que 1. Mais precisamente, temos o seguinte resultado:
+
+Teorema 6. Se o grafo de uma internet sem sumidouros ´e constitu´ıdo
+de r subgrafos, em que r > 1, ent˜ao dim(V1(A)) ≥ r.
+
+Prova:Inicialmente, observemos que se temos uma internet com
+n p´aginas, P1, P2,. . . , Pn, ent˜ao na matriz da internet h´a uma coluna
+para cada p´agina, bem como uma linha para cada p´agina.
+
+A p´agina Pj est´a associada `a coluna j da matriz, ou ainda, as
+entradas desta coluna revelam se Pj possui links para as demais p´aginas,
+mais precisamente, a i-´esima entrada na coluna j indica se Pj possui
+links para Pi. Dessa forma, interpretamos que Pj possui links para Pi
+se, e somente se, aij 6= 0. Similarmente, a p´agina Pi est´a associada `a
+linha i da matriz. Temos que Pi recebe links de Pj se, e somente se,
+aij 6= 0.
+
+Considere portanto, uma internet com n p´aginas, representada
+por um grafo com n v´ertices, constitu´ıdo por r subgrafos desconectados:
+
+38
+
+W1, ..., Wr, com r ≥ 2. Numeremos os v´ertices do grafo de modo que os
+v´ertices de W1 sejam indicados por 1, 2, 3,..., N1, os v´ertices de W2 por
+N1 + 1,...,N2, e assim sucessivamente, at´e os v´ertices de Wr, indicados
+por Nr−1 + 1 at´e Nr = n. Se estipularmos N0 = 1, podemos observar
+que o n´umero de v´ertices em cada subgrafo ´e dado por
+
+nk = Nk − Nk−1.
+
+Assim, podemos escrever, n = n1 + n2 + ... + nr. Seja A a matriz
+do grafo. Esta matriz ´e quadrada de ordem n e cada linha/coluna de
+A est´a associada a um v´ertice do grafo, pelo que observamos acima.
+Podemos agrupar as linhas de A em r blocos, um para cada subgrafo,
+como ilustrado a seguir:
+
+1
+...
+N1
+
+W1 
+
+
+
+
+W2 
+
+
+N1 + 1
+...
+N2
+
+
+...
+
+Nr−1 + 1
+...
+Nr
+
+Wr 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+O mesmo pode ser feito para as colunas:
+
+Bloco 1
+
+Bloco 2
+
+...
+
+Bloco r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+W1
+
+W2
+
+Wr
+
+1, · · · , N1
+{
+}|
+z
+
+N1 + 1, · · · , N2
+{
+}|
+z
+
+. . .
+
+Nr−1 + 1, · · · , Nr
+z
+{
+}|
+
+Bloco 1
+
+Bloco 2
+
+. . .
+
+Bloco r
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+39
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Combinando essas duas decomposi¸c˜oes podemos subdividir a matriz A
+em r2 sublocos:
+
+W1
+
+. . . Wl
+
+. . . Wr
+
+W1
+
+...
+
+Wk
+
+...
+
+Wr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bkl
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Para cada k, l ∈ {1, ..., r}, Bkl = Bloco kl = [aij] ´e a matriz em que
+i varia de Nk−1 + 1 at´e Nk e j varia de Nl−1 + 1 at´e Nl. Note que
+Bkl ´e uma matriz nk × nl. Seja j ∈ {1, ..., n} um v´ertice qualquer do
+grafo. Digamos que este v´ertice perten¸ca ao subgrafo Wl, para algum
+l ∈ {1, ..., r}. Sabemos que a p´agina Pj da internet possui apenas links
+para p´aginas que correspondem a v´ertices do mesmo subgrafo Wl de
+j. Isto quer dizer que se i ´e um v´ertice que n˜ao pertence a Wl, ent˜ao
+a entrada aij da matriz do subgrafo Wl ´e igual a zero. Em outras
+palavras, se i ∈ {1, ..., n} e i ∈/{Nl−1 + 1, ..., Nl}, ent˜ao aij = 0. Como
+consequˆencia, se k ∈ {1, ..., r} e k 6= l, ent˜ao o bloco Bkl da matriz A
+
+40
+
+possui apenas entradas nulas. Assim, a matriz A pode ser escrita como,
+
+A =
+
+B11
+0
+...
+0
+0
+
+
+
+
+
+
+
+
+
+
+0
+B22
+...
+0
+0
+
+. . .
+0
+. . .
+0
+...
+...
+0 Br−1r−1
+0
+
+. . .
+
+0
+0
+...
+0
+Brr
+
+.
+
+
+
+
+
+
+
+
+
+
+N˜ao obstante, as matrizes em blocos, da forma Bll, com l ∈ {1, . . . , r},
+podem ser interpretadas como a matriz associada ao subgrafo Wl, com
+l ∈ {1, . . . , r} da internet de n p´aginas com r subgrafos desconexos.
+
+Perceba ainda, que cada matriz quadrada Bii de ordem ni ´e
+coluna-estoc´astica, portanto, pelo Teorema 5 possui 1 como autovalor,
+e dessa forma, existe algum autovetor vi ∈ Rni associado ao autovalor
+1. Agora, para cada i ∈ {1, . . . , r} seja wi ∈ Rn um vetor subdivido
+em r blocos, da seguinte forma: para cada j ∈ {1, . . . , r}, o bloco j de
+wi ´e igual a: o vetor nulo nj × 1 se j 6= i, ou o vetor vi no caso j = i.
+Com isso, montamos o vetor wi, como segue:
+
+wi =
+
+0
+...
+
+0
+
+0
+...
+
+0
+...
+vi
+...
+0
+...
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+v1
+
+v2
+
+...
+
+vni
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+41
+
+Veja que os vetores wi, com 1 ≤ i ≤ r, da forma
+
+w1 =
+
+v1
+0
+0
+...
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+, w2 =
+
+0
+v2
+0
+...
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+, . . . , wi =
+
+0
+...
+vi
+...
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+, . . . ,
+
+s˜ao autovetores de A associados ao autovalor λ = 1, pois,
+
+A · wi =
+
+A1
+0
+0 A2
+...
+...
+0
+0
+0
+0
+
+
+
+
+
+
+
+
+
+
+. . .
+. . .
+...
+
+0
+0
+. . .
+0 Ar−1
+0
+
+. . .
+
+0
+0
+...
+0
+Ar
+
+
+
+
+
+
+
+
+
+
+·
+
+0
+...
+vi
+...
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= wi,
+
+em que cada Ai = Bii, com 1 ≤ i ≤ r.
+
+Al´em disso, ´e f´acil ver que os vetores wi, com 1 ≤ i ≤ r, s˜ao
+
+linearmente independentes, visto que a equa¸c˜ao
+
+α1 · w1 + α2 · w2 + · · · + αr · wr = 0n×1
+
+´e satisfeita somente quando
+
+α1 = α2 = · · · = αr = 0.
+
+De fato,
+
+α1 · w1 + α2 · w2 + · · · + αr · wr = 0n×1
+
+(2.2)
+
+α1 ·
+
+v1
+0
+0
+...
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++ α2 ·
+
+0
+v2
+0
+...
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++ · · · + αr ·
+
+0
+0
+...
+0
+vr
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+= 0n×1
+
+42
+
+α1 · v1
+α2 · v2
+α3 · v3
+...
+αr · vr
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+...
+0
+
+.
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Como cada vi, com 1 ≤ i ≤ r, ´e n˜ao nulo, pois s˜ao autovetores de A
+associados ao autovalor λ = 1, a ´unica solu¸c˜ao para a equa¸c˜ao 2.2 ´e
+α1 = α2 = · · · = αr = 0.
+
+Portanto, dim(V1(A)) ≥ r.
+
+Com base no que provamos no Teorema 6, precisamos determinar
+uma forma de que dim(V1(A)) = 1, visto que com essa informa¸c˜ao
+conseguimos uma ´unica classiﬁca¸c˜ao de importˆancia para as p´aginas
+da internet.
+
+Deﬁni¸c˜ao 7. Uma matriz Mm×n ´e positiva se aij > 0 para todo 1 ≤
+i ≤ m e 1 ≤ j ≤ n.
+
+Proposi¸c˜ao 8. Se Mn×n ´e uma matriz positiva e coluna-estoc´astica,
+ent˜ao qualquer autovetor v ∈ V1(M ) possui todas as entradas positivas
+ou todas as entradas negativas.
+
+Prova:Sejam
+
+v =
+
+v1
+v2
+...
+vn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+M =
+
+m11
+m21
+...
+mn1
+
+
+
+
+
+
+
+
+· · · m1i
+· · · m2i
+...
+...
+· · · mni
+
+· · · m1n
+· · · m2n
+...
+. . .
+· · · mnn
+
+,
+
+
+
+
+
+
+
+
+e
+
+tal que v ∈ V1(M ). Suponha, por absurdo, que v n˜ao possui, todas
+as entradas positivas ou todas as entradas negativas, isto ´e, possui
+simultaneamente entradas positivas e entradas negativas.
+Como v ∈ V1(M ),
+
+M · v = v,
+
+43
+
+m11
+m21
+...
+mn1
+
+
+
+
+
+
+
+
+· · · m1i
+· · · m2i
+...
+...
+· · · mni
+
+· · · m1n
+· · · m2n
+...
+. . .
+· · · mnn
+
+v1
+v2
+...
+vn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+=
+
+v1
+v2
+...
+vn
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+m11v1 + · · · + m1ivi + · · · + m1nvn
+m21v1 + · · · + m2ivi + · · · + m2nvn
+...
+mn1v1 + · · · + mnivi + · · · + mnnvn
+
+v1
+v2
+...
+vn
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+m11v1 + · · · + m1ivi + · · · + m1nvn = v1
+m21v1 + · · · + m2ivi + · · · + m2nvn = v2
+...
+mn1v1 + · · · + mnivi + · · · + mnnvn = vn
+
+.
+
+Aplicando m´odulo nos dois membros de cada equa¸c˜ao vem que
+
+|m11v1 + · · · + m1ivi + · · · + m1nvn| = |v1|
+|m21v1 + · · · + m2ivi + · · · + m2nvn| = |v2|
+...
+|mn1v1 + · · · + mnivi + · · · + mnnvn| = |vn|
+
+Usando a desigualdade triangular juntamente com o fato de que v tem
+entradas mistas e cada mij > 0, visto que M ´e uma matriz positiva,
+temos
+
+|m11v1| + · · · + |m1ivi| + · · · + |m1nvn| ≥ |v1|
+|m21v1| + · · · + |m2ivi| + · · · + |m2nvn| ≥ |v2|
+...
+|mn1v1| + · · · + |mnivi| + · · · + |mnnvn| ≥ |vn|
+
+
+
+
+
+donde,
+
+44
+
+m11 |v1| + · · · + m1i |vi| + · · · + m1n |vn| > |v1|
+m21 |v1| + · · · + m2i |vi| + · · · + m2n |vn| > |v2|
+...
+mn1 |v1| + · · · + mni |vi| + · · · + mnn |vn| > |vn|
+
+
+
+
+
+Somando as equa¸c˜oes do sistema membro a membro obtemos
+
+(m11 + · · · + mn1) |v1| + · · · + (m1n + · · · + mnn) |vn| > |v1| + · · · + |vn| .
+
+Por´em, m1i + m2i + · · · + mni, 1 ≤ i ≤ n, representa a soma dos
+elementos da coluna i de M que ´e coluna-estoc´astica, e portanto, m1i +
+m2i + · · · + mni = 1 para todo 1 ≤ i ≤ n. Dessa forma,
+
+|v1| + · · · + |vn| > |v1| + · · · + |vn| ,
+
+o que ´e um absurdo! Portanto, v possui todas as entradas positivas ou
+todas as entradas negativas.
+
+Proposi¸c˜ao 9. Sejam m ∈ N, m ≥ 2 e v, w ∈ Rm, linearmente inde-
+pendentes. Existem α, β ∈ R n˜ao simultaneamente nulos, tais que o
+vetor u = α · v + β · w possui entradas positivas e negativas simultane-
+amente, isto ´e, entradas com sinais opostos.
+
+Prova: Sejam v, w ∈ Rm, linearmente independentes, tais que
+
+e
+
+v =
+
+w =
+
+v1
+v2
+...
+vm
+
+
+
+
+
+
+
+
+w1
+w2
+...
+wm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+Para demonstrar a proposi¸c˜ao dividiremos em casos:
+
+• Caso 1:
+
+Considere que ao menos um dos vetores v ou w j´a possuam en-
+tradas positivas e negativas simultaneamente. Logo, basta tomar
+
+45
+
+α = 1 e β = 0 ou vice-versa.
+
+• Caso 2:
+
+Suponha agora que w possua exatamente uma entrada n˜ao nula,
+ou seja, wi n˜ao ´e zero para um ´unico i com 1 ≤ i ≤ m. Como v e
+w s˜ao linearmente independentes, v possui ao menos uma entrada
+vj 6= 0, em que 1 ≤ j ≤ m e i 6= j. Dessa forma, o vetor
+
+u = α · v + β · w
+
+´e dado por
+
+u =
+
+α · v1 + β · 0
+α · v2 + β · 0
+...
+α · vj + β · 0
+...
+α · vi + β · wi
+...
+α · vm + β · 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+α · v1
+α · v2
+...
+α · vj
+...
+α · vi + β · wi
+...
+α · vm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+– Subcaso: vi = 0.
+
+I) Se vj e wi tiverem sinais opostos, tome α = 1 e β = 1.
+Dessa forma, o vetor u possui as entradas ui = wi e uj = vj
+com sinais opostos.
+
+II) Se vj e wi tiverem sinais iguais, tome α = 1 e β = −1.
+Com isso, o vetor u possui as entradas ui = −wi e uj = vj
+com sinais opostos.
+
+– Subcaso: vi 6= 0 e vj > 0.
+
+I) Se vi > 0 e wi > 0, ent˜ao tome α = 1 e β = −d, em que
+d > vi
+. Dessa forma, u possui as entradas ui e uj com sinais
+wi
+opostos, pois, d > vi
+⇒ ui = vi − d · wi < 0 e uj = vj > 0.
+wi
+
+II) Se vi > 0 e wi < 0, ent˜ao tome α = 1 e β = −d, em que
+d < vi
+. Dessa forma, u possui as entradas ui e uj com sinais
+wi
+opostos, pois, d < vi
+⇒ ui = vi − d · wi < 0 e uj = vj > 0.
+wi
+
+46
+
+III) Se vi < 0, temos o Caso 1.
+
+Os casos em que vi 6= 0 e vj < 0 s˜ao an´alogos.
+
+Suporemos a partir de agora que w possui ao menos duas entradas
+n˜ao nulas.
+
+• Caso 3:
+
+Considere 0 ≤ wi ≤ vi, para todo 1 ≤ i ≤ m. Para as entradas
+wi 6= 0 analise os quocientes vi
+. Perceba que h´a ao menos dois
+wi
+quocientes diferentes da forma vi
+= k,
+wi
+e dessa forma, vi = k · wi, o que caracterizaria que os vetores v e
+w seriam linearmente dependentes. Com isso, sejam, sem perda
+de generalidade,
+
+, caso contr´ario, vi
+wi
+
+= vj
+wj
+
+v =
+
+v1
+...
+vi
+...
+vj
+...
+vm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e w =
+
+w1
+...
+wi
+...
+wj
+...
+wm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+,
+
+em que, vi
+wi
+< d < vj
+vi
+wj
+wi
+
+< vj
+wj
+.
+
+Dessa forma,
+
+´e dado por
+
+. Com isso, tome α = 1 e β = −d, de forma que
+
+u = α · v + β · w
+
+u =
+
+v1 − d · w1
+...
+vi − d · wi
+...
+vj − d · wj
+...
+vm − d · wm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+47
+
+No entanto, d < vj
+< d ⇒ ui =
+wj
+vi − d · wi < 0, o que indica que u possui, ao menos, as entradas
+ui e uj com sinais opostos.
+
+⇒ uj = vj − d · wj > 0 e vi
+wi
+
+O caso em que vi ≤ wi ≤ 0 ´e an´alogo.
+
+• Caso 4:
+
+Considere que existam i, j ∈ {1, ..., m} tais que vi > wi e vj < wj .
+Nesse caso basta tomar α = 1 e β = −1.
+De fato, sejam, sem perda de generalidade,
+
+v =
+
+Dessa forma,
+
+´e dado por
+
+v1
+...
+vi
+...
+vj
+...
+vm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e w =
+
+w1
+...
+wi
+...
+wj
+...
+wm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+u = α · v + β · w
+
+u =
+
+v1 − w1
+...
+vi − wi
+...
+vj − wj
+...
+vm − wm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+Como, vi > wi ⇒ ui = vi − wi > 0 e vj < wj ⇒ uj = vj − wj < 0,
+temos que u possui, ao menos, as entradas ui e uj com sinais
+opostos.
+
+N˜ao obstante, em todos os casos conseguimos encontrar n´umeros
+reais, n˜ao simultaneamente nulos, α e β, tais que u = α · v + β · w
+possui entradas com sinais opostos.
+
+48
+
+Teorema 10. Se Mn×n ´e positiva e coluna-estoc´astica, ent˜ao a di-
+mens˜ao de V1(M ) ´e igual a 1.
+
+Prova: Provaremos por contradi¸c˜ao. Considere que existam dois
+autovetores linearmente independentes, v1 e v2 ∈ V1(M ). Para quais-
+quer α, β ∈ R, n˜ao simultaneamente nulos, temos que x, deﬁnido como
+α · v1 + β · v2, est´a no subespa¸co V1(M ) e ´e n˜ao nulo, pois, v1 e v2
+s˜ao linearmente independentes, logo ´e autovetor de M associado ao
+autovalor 1. Dessa forma, pela Proposi¸c˜ao 8, x possui todas as en-
+tradas positivas ou todas as entradas negativas. Por outro lado, pela
+Proposi¸c˜ao 9, existem α, β ∈ R, n˜ao simultaneamente nulos, tais que
+x = α · v1 + β · v2 possui entradas positivas e negativas simultanea-
+mente. Contradi¸c˜ao! Com isso, n˜ao existem dois vetores linearmente
+independentes pertencentes a V1(M ) e, portanto, dim(V1(M )) = 1.
+
+Agora, com o resultado do Teorema 10 conseguimos gerar, de
+forma ´unica, a pontua¸c˜ao de importˆancia para uma internet constitu´ıda
+de r subgrafos desconectados, como segue.
+
+2.3.2 CORRIGINDO AS DEFICIˆENCIAS
+
+Para modelos de internet com n p´aginas sem sumidouros, po-
+demos gerar pontua¸c˜oes de importˆancias ´unicas at´e mesmo nos casos
+desconectados. Para tal, considere a matriz An×n de um grafo dirigido
+com n v´ertices sem sumidouros e a matriz Sn×n cujas entradas s˜ao
+todas iguais a 1
+
+n . Note que a matriz
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+S =
+
+
+
+
+
+
+
+
+
+
+
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+. . .
+
+. . .
+. . .
+. . .
+
+. . .
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+
+
+
+
+
+
+
+
+
+
+
+pode ser interpretada como a matriz do grafo representeado na ﬁgura 8,
+em que cada um dos n v´ertices desse grafo possui um link para cada um
+dos outros v´ertices. Claramente, a matriz S ´e coluna-estoc´astica e todas
+as suas entradas s˜ao positivas, logo, pelo Teorema 10, dim(V1(S)) = 1.
+Agora, para um valor m ∈ [0, 1], considere a matriz
+
+M = (1 − m) · A + m · S.
+
+49
+
+•
+
+...
+
+•
+
+. . .
+
+. . .
+
+. . .
+
+•
+
+...
+
+•
+
+Figura 8 – Grafo
+
+Veja que M deﬁnida dessa forma ´e igual a A para m = 0, por´em igual
+a S para m = 1. A matriz M ´e uma “perturba¸c˜ao” da matriz A.
+
+Na pr´atica, ao substituir a matriz A por M , estamos atribuindo,
+de maneira igual, uma pequena pontua¸c˜ao para cada uma das p´aginas,
+ou ainda, como se cada uma das p´aginas tivesse, por menor que seja,
+importˆancia para cada uma das demais. Note ainda, que para qualquer
+valor de m ∈ [0, 1],
+
+M = (1 − m) · A + m · S
+
+M = (1−m)·
+
+a11
+a21
+a31
+...
+an1
+
+
+
+
+
+
+
+
+
+
+· · ·
+· · ·
+· · ·
+...
+· · ·
+
+a1i
+a2i
+a3i
+
+· · ·
+ani
+
+· · ·
+· · ·
+· · ·
+. . .
+· · ·
+
+a1n
+a2n
+a3n
+...
+ann
+
+
+
+
+
+
+
+
+
+
++m·
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+
+
+
+
+
+
+
+
+
+
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+. . .
+
+. . .
+. . .
+. . .
+
+. . .
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+1
+n
+1
+n
+
+...
+
+1
+n
+1
+n
+
+
+
+
+
+
+
+
+
+
+
+
+(1 − m)a11 + m
+n
+(1 − m)a21 + m
+n
+(1 − m)a31 + m
+n
+...
+(1 − m)an1 + m
+n
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+· · ·
+
+· · ·
+
+· · ·
+...
+· · ·
+
+(1 − m)a1i + m
+n
+(1 − m)a2i + m
+n
+(1 − m)a3i + m
+n
+
+· · ·
+(1 − m)ani + m
+n
+
+· · ·
+
+· · ·
+
+· · ·
+. . .
+
+· · ·
+
+(1 − m)a1n + m
+n
+(1 − m)a2n + m
+n
+(1 − m)a3n + m
+n
+...
+(1 − m)ann + m
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a soma das entradas da coluna j, com 1 ≤ j ≤ n, da matriz M ´e dada
+
+(cid:19)
+(cid:19)
+3
+3
+$
+$
+(cid:19)
+(cid:19)
+s
+s
+(cid:5)
+(cid:5)
+S
+S
+3
+3
+E
+E
+S
+S
+s
+s
+d
+d
+50
+
+por
+
+n
+
+n
+
+mij =
+
+Xi=1
+
+(1 − m)aij +
+
+Xi=1 h
+
+m
+n i
+
+n
+
+= (1 − m)
+
+aij +
+
+Xi=1
+
+m
+n
+
+n
+
+1.
+
+Xi=1
+
+Como A ´e coluna-estoc´astica,
+
+e
+
+ent˜ao,
+
+n
+
+Xi=1
+
+n
+
+Xi=1
+
+aij = 1
+
+1 = n,
+
+n
+
+Xi=1
+
+mij = (1 − m) × 1 +
+
+m
+n
+
+× n = 1,
+
+o que indica que M tamb´em ´e coluna-estoc´astica. Al´em disso, para
+todo m ∈]0, 1], a matriz M possui todas as entradas positivas, tendo
+em vista que a matriz A possui todas as entradas aij n˜ao negativas
+(aij ≥ 0) para todo i e j. Como a matriz S possui todas as entradas
+iguais a sij = 1
+n > 0, todas as entradas de M s˜ao da forma mij =
+(1 − m) · aij + m · sij e portanto, mij > 0 para todo i e j. Dessa forma,
+pelo Teorema 10, dim(V1(M )) = 1, gerando assim, apenas uma forma
+de classiﬁcar a importˆancia das p´aginas da internet considerada.
+
+2.4 APLICANDO O M´ETODO
+
+Considere o seguinte grafo da internet de 4 p´aginas como segue.
+
+P1
+
+* P2
+
+P4
+
+/ P3
+
+Desse grafo, extra´ımos as equa¸c˜oes que descrevem as rela¸c˜oes
+entre as pontua¸c˜oes de importˆancia das p´aginas. Usando a Equa¸c˜ao
+2.1 montamos o sistema
+
+(cid:15)
+(cid:15)
+*
+j
+j
+7
+7
+F
+F
+/
+O
+O
+51
+
+2 + x3
+
+1 + x4
+
+2
+
+x1 = x2
+1
+x2 = x1
+x3 = x4
+2
+x4 = x1
+2
+
+
+
+
+
+
+o qual pode ser escrito na forma A · x = x:
+
+0
+1
+2
+0
+1
+2
+
+1 0
+0 1
+0 0
+0 0
+
+
+
+
+
+
+
+e cuja solu¸c˜ao geral ´e dada por
+
+0
+1
+2
+1
+2
+0
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+=
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+
+
+
+
+
+
+
+
+S =
+
+2α, 2α,
+
+n(cid:16)
+
+α
+2
+
+, α
+
+, α ∈ R
+
+.
+
+(cid:17)
+
+o
+
+Fazendo x1 + x2 + x3 + x4 = 1, obtemos a seguinte solu¸c˜ao para o
+sistema: x1 ≈ 0, 364, x2 ≈ 0, 364, x3 ≈ 0, 09 e x4 ≈ 0, 182. Dessa
+forma, x1 e x2 s˜ao as p´aginas mais importantes e x3 a p´agina menos
+importante.
+
+Agora podemos utilizar a matriz M = (1 − m) · A + m · S no
+lugar de A para determinar a ordem de importˆancia das p´aginas do
+modelo de internet anterior e veriﬁcar se h´a mudan¸cas signiﬁcativas
+nessa ordem. Para tal, considere a matriz
+
+S =
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+
+
+
+
+
+
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+.
+
+
+
+
+
+
+
+
+Usaremos m = 0, 15 (valor divulgado pelo Google segundo [2]). Dessa
+forma,
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+1
+4
+1
+4
+1
+4
+1
+4
+
+
+
+
+
+
+
+
+M = (1 − 0, 15) · 
+
+
+
+
+0
+1
+2
+0
+1
+2
+
+1
+0
+0
+0
+
+0
+1
+0
+0
+
+0
+1
+2
+1
+2
+0
+
+
+
+
+
+
+
++ 0, 15 ·
+
+
+
+
+
+
+
+
+0, 0375 0, 8875 0, 0375 0, 0375
+0, 4625 0, 0375 0, 8875 0, 4625
+0, 0375 0, 0375 0, 0375 0, 4625
+0, 4625 0, 0375 0, 0375 0, 0375
+
+
+
+
+
+
+
+M = 
+
+
+
+
+52
+
+Resolvendo o sistema
+
+M · x = x
+
+encontramos a solu¸c˜ao geral
+
+x1 =
+
+51853α
+27713
+
+, x2 =
+
+108653α
+55426
+
+, x3 =
+
+34907α
+55426
+
+e x4 = α
+
+para todo α ∈ R. Fazendo x1 + x2 + x3 + x4 = 1, obtemos a se-
+guinte solu¸c˜ao para o sistema: x1 ≈ 0, 343, x2 ≈ 0, 359, x3 ≈ 0, 115 e
+x4 ≈ 0, 183. Isso mostra que, mesmo utilizando a matriz M , as p´aginas
+1 e 2 ainda s˜ao as mais importantes, por´em, com uma leve vantagem
+para a p´agina 2 e tamb´em que a p´agina 3 ainda ´e a menos importante.
+
+No caso da internet desconexa, do in´ıcio da Se¸c˜ao 2.3, dada pelo grafo
+
+em que
+
+P1•
+
+P3•
+
+,
+
+b❋❋❋❋❋❋❋❋
+
+•P5
+
+P2•
+
+P4•
+
+A =
+
+0 1
+1 0
+0 0
+0 0
+0 0
+
+
+
+
+
+
+
+
+
+
+0 0
+0 0
+0 0
+1 0
+0 1
+
+0
+0
+1
+2
+1
+2
+0
+
+
+
+
+
+
+
+
+
+
+´e a matriz do grafo, t´ınhamos mais de uma maneira de classiﬁcar suas
+p´aginas, pois, V1(A) > 1. No entanto, ao utilizarmos a matriz
+
+com
+
+M = (1 − m).A + m.S,
+
+m = 0, 15
+
+(cid:19)
+(cid:19)
+(cid:15)
+(cid:15)
+(cid:3)
+(cid:3)
+b
+S
+S
+C
+C
+53
+
+e
+
+S =
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+
+
+
+
+
+
+
+
+
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+
+
+
+
+
+
+
+
+
+
+,
+
+encontramos inﬁnitos autovetores associados ao autovalor λ = 1 para
+a matriz M , por´em todos s˜ao m´ultiplos uns dos outros. Al´em disso,
+temos um ´unico autovetor cuja soma das entradas vale 1, e portanto,
+podemos utiliz´a-lo para classiﬁcar a importˆancia das p´aginas como se-
+gue:
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+1
+5
+1
+5
+1
+5
+1
+5
+1
+5
+
+
+
+
+
+
+
+
+
+
+
+M = (1 − 0, 15) ·
+
+0
+1
+
+0
+
+
+0
+
+
+0
+
+
+
+1 0
+0 0
+0 0
+0 1
+0 0
+
+0
+0
+0
+0
+1
+
+0
+0
+1
+2
+1
+2
+0
+
+
+
+
+
+
+
+
+
+
++ 0, 15 ·
+
+
+
+
+
+
+
+
+
+
+
+0, 03
+0, 03 0, 88 0, 03 0, 03
+0, 88 0, 03 0, 03 0, 03
+0, 03
+0, 03 0, 03 0, 03 0, 03 0, 455
+0, 03 0, 03 0, 88 0, 03 0, 455
+0, 03
+0, 03 0, 03 0, 03 0, 88
+
+
+
+
+
+
+
+
+
+M =
+
+
+
+
+
+
+
+
+
+Resolvendo o sistema
+
+M · x = x
+
+encontramos a solu¸c˜ao geral
+
+x1 =
+
+1769α
+2058
+
+, x2 =
+
+1769α
+2058
+
+, x3 =
+
+190α
+343
+
+, x4 =
+
+703α
+686
+
+e x5 = α
+
+para todo α ∈ R. Fazendo x1 +x2 +x3 +x4+x5 = 1, obtemos a seguinte
+solu¸c˜ao para o sistema: x1 = 0, 2, x2 = 0, 2, x3 ≈ 0, 13, x4 ≈ 0, 238 e
+x5 ≈ 0, 232. Dessa forma, x4 ´e a p´agina mais importante e x3 a p´agina
+menos importante.
+
+54
+
+55
+
+3 ROTEIRO PARA ABORDAR O TEMA NO ENSINO
+
+M´EDIO
+
+Neste cap´ıtulo apresentaremos uma proposta de abordagem, de
+forma intuitiva, do algoritmo PageRank para turmas de ensino m´edio.
+No entanto, necessitamos que os alunos tenham alguns conhecimentos
+pr´evios:
+
+1. Matrizes: opera¸c˜oes e propriedades.
+
+2. Sistemas Lineares: resolu¸c˜ao e classiﬁca¸c˜ao atrav´es do escalona-
+
+mento.
+
+3.1 ROTEIRO
+
+Durante o estudo de sistemas lineares, o aprendizado desse as-
+sunto pode ser motivado utilizando-se como artif´ıcio o algoritmo Pa-
+geRank. Inicialmente, podemos explanar atrav´es de exemplos a ideia
+intuitiva de se atribuir uma pontua¸c˜ao de importˆancia para cada p´agina
+de uma internet como feito na Se¸c˜ao 1.1. Depois podemos propor aos
+alunos que realizem as seguintes atividades:
+
+Quest˜ao 1. Considere a internet de 4 p´aginas representada pelo grafo
+
+5 B
+
+.
+
+A
+
+D
+
+ ❅❅❅❅❅❅❅❅
+
+5 C
+
+Usando seus conhecimentos sobre o algoritmo PageRank, fa¸ca o que se
+pede:
+
+1. Monte o sistema de equa¸c˜oes lineares que indica as rela¸c˜oes de
+
+importˆancia entre as p´aginas.
+
+2. Identiﬁque a matriz do grafo A associada a essa internet.
+
+3. Que valor obtemos ao somar todos os elementos de uma coluna
+
+da matriz do grafo associado a essa internet?
+
+4. Escalone o sistema obtido.
+
+ 
+(cid:15)
+(cid:15)
+5
+v
+v
+5
+V
+V
+56
+
+5. Classiﬁque o sistema escalonado quanto `a quantidade de solu¸c˜oes:
+
+uma ´unica, inﬁnitas ou nenhuma solu¸c˜ao.
+
+6. Dˆe o conjunto solu¸c˜ao do sistema.
+
+7. Utilize o conjunto solu¸c˜ao do sistema obtido para classiﬁcar qual
+
+das p´aginas ´e a mais importante.
+
+8. Construa um novo grafo acrescentando um link saindo da p´agina
+B para a p´agina D. Resolva novamente os itens anteriores e
+determine a nova classiﬁca¸c˜ao para as p´aginas associadas a esse
+novo grafo.
+
+9. Caso constru´ıssemos um novo grafo acrescentando 3 links saindo
+da p´agina B para a p´agina D, em vez de apenas 1, como no
+item anterior, ter´ıamos uma classiﬁca¸c˜ao diferente para as p´aginas
+dessa internet? Justiﬁque sua resposta.
+
+Quest˜ao 2. O Sr. Farias, dono do site correspondente a p´agina C,
+representada no grafo
+
+A
+
+B
+
+ ❅❅❅❅❅❅❅❅
+`❅❅❅❅❅❅❅❅
+~⑦⑦⑦⑦⑦⑦⑦⑦
+
+5 C
+
+/ D
+
+deseja alavancar a pontua¸c˜ao de importˆancia de sua p´agina calculada
+atrav´es do algoritmo PageRank de modo a superar a p´agina A que ´e
+a p´agina mais importante. Para isso, o Sr. Farias cria uma p´agina E,
+a qual possui link para a p´agina C da mesma forma que C possui link
+para E. Ser´a que o Sr. Farias obter´a ˆexito? Justiﬁque sua resposta com
+suas palavras de forma l´ogica e/ou com os c´alculos necess´arios.
+
+Quest˜ao 3. Considere o grafo a seguir, correspondente a uma internet
+desconectada.
+
+A •
+
+C•
+
+•E
+
+B •
+
+D•
+
+1. Monte o sistema de equa¸c˜oes lineares que indica as rela¸c˜oes de
+
+importˆancia entre as p´aginas.
+
+ 
+(cid:15)
+(cid:15)
+5
+v
+v
+~
+/
+`
+O
+O
+(cid:19)
+(cid:19)
+(
+(
+(cid:15)
+(cid:15)
+g
+g
+(cid:4)
+(cid:4)
+S
+S
+E
+E
+57
+
+2. Identiﬁque a matriz do grafo A associada a essa internet.
+
+3. Escalone o sistema obtido.
+
+4. Classiﬁque o sistema escalonado quanto `a quantidade de solu¸c˜oes:
+
+uma ´unica, inﬁnitas ou nenhuma solu¸c˜ao.
+
+5. Dˆe o conjunto solu¸c˜ao do sistema.
+
+6. Utilize o conjunto solu¸c˜ao do sistema obtido para classiﬁcar qual
+
+das p´aginas ´e a mais importante.
+
+7. Existe mais de uma forma para classiﬁcar a importˆancia das
+
+p´aginas dessa internet?
+
+8. Use a matriz M = (1 − m) · A + m · S, com m = 0, 15, no lugar
+de A para determinar a ordem de importˆancia das p´aginas dessa
+internet.
+
+9. O que acontece com a matriz M = (1−m)·A+m·S, ao variarmos
+
+m de 0 at´e 1?
+
+10. O que podemos dizer sobre M quando m = 0? E quando m = 1?
+
+58
+
+59
+
+CONCLUS ˜AO
+
+Ao desenvolver esse trabalho, mostramos uma parte da ma-
+tem´atica envolvida nos mecanismos de busca utilizados pelo Google
+no algoritmo PageRank. Nos interessamos pelo estudo desse algoritmo
+por ser um dos principais respons´aveis pela qualidade das respostas
+dadas pelo Google ao efetuarmos uma pesquisa na internet. Como a
+internet est´a cada vez mais presente no dia a dia das pessoas, principal-
+mente dos jovens, veriﬁcamos que os conceitos matem´aticos envolvidos
+nesse estudo poderiam ser utilizados como motiva¸c˜ao aos alunos do en-
+sino m´edio, no apredizado de assuntos como: matrizes, determinantes
+e sistemas lineares.
+
+Desenvolvemos os cap´ıtulos desse trabalho em n´ıveis de com-
+plexidade e aprofundamento diferentes. No Cap´ıtulo 1 nosso objetivo
+foi simplesmente informar o leitor, numa linguagem acess´ıvel, de f´acil
+compreens˜ao e um tanto quanto l´udica, sobre os passos dados pelo Go-
+ogle ao efetuarmos uma pesquisa na internet. J´a no segundo cap´ıtulo,
+apresentamos e utilizamos os conceitos matem´aticos envolvidos no algo-
+ritmo PageRank, com toda a formalidade devida, estipulando condi¸c˜oes
+e modelando algumas das situa¸c˜oes a que esse algoritmo ´e submetido.
+Por ﬁm, no ´ultimo cap´ıtulo, mostramos uma forma de abordar, de
+modo intuitivo, os processos descritos e formalizados, no primeiro e no
+segundo cap´ıtulo, respectivamente, atrav´es de um roteiro com quest˜oes,
+elaborado de modo acess´ıvel aos alunos de ensino m´edio.
+
+Aos leitores que quiserem conhecer um pouco mais sobre outros
+modelos que n˜ao foram mencionados neste trabalho, indicamos a leitura
+completa de [2] e [6].
+
+60
+
+61
+
+REFERˆENCIAS
+
+1 ANTON, Howard. ´Algebra linear: com aplica¸c˜oes. 8. ed. Porto
+
+Alegre: Bookman, 2001-2002.
+
+2 BRYAN, Kurt e LEISE, Tanya. The $25,000,000,000*
+
+eigenvector: The Linear ´Algebra behind Google. Dispon´ıvel em:
+<https://www.rose-
+hulman.edu/ bryan/googleFinalVersionFixed.pdf>. Acesso em: 28 de
+junho de 2015.
+
+3 GOOGLE. Nossa hist´oria a fundo. Dispon´ıvel em:
+
+<https://www.google.com.br/about/company/history>. Acesso em:
+28 de junho de 2015.
+
+4 HEFEZ, Abramo e FERNANDEZ, Cec´ılia S. Introdu¸c˜ao `a ´algebra
+
+linear. 1. ed. Rio de Janeiro: SBM, 2012.
+
+5 LAY, David C. ´Algebra linear e suas aplica¸c˜oes. 2. ed. Rio de
+
+Janeiro: Livros T´ecnicos e Cient´ıﬁcos, 1999.
+
+6 PAGE, Lawrence e BRIN, Sergey e MOTWANI, Rajeev e
+
+WINOGRAD, Terry. The PageRank Citation Ranking: Bringing
+Order to the Web. Technical Report. Stanford InfoLab, 1999.
+Dispon´ıvel em:
+<http://ilpubs.stanford.edu:8090/422/1/1999-66.pdf>. Acesso em: 06
+de outubro de 2015.
+
+

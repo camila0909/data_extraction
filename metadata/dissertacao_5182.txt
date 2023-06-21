@@ -1,0 +1,2208 @@
+Universidade Federal Rural de Pernambuco
+Departamento de Matem´atica
+
+Mestrado Proﬁssional em Matem´atica
+
+ALGORITMO GULOSO
+
+Camila Mendon¸ca Morais
+
+DISSERTAC¸ ˜AO DE MESTRADO
+
+Recife
+2014
+
+Universidade Federal Rural de Pernambuco
+Departamento de Matem´atica
+
+Camila Mendon¸ca Morais
+
+ALGORITMO GULOSO
+
+Trabalho apresentado ao Programa de Mestrado Proﬁssi-
+
+onal em Matem´atica do Departamento de Matem´atica da
+
+Universidade Federal Rural de Pernambuco como requisito
+
+parcial para obten¸c˜ao do grau de Mestre em Matem´atica.
+
+Orientador: Prof. Dr. Thiago Dias
+
+Recife
+2014
+
+Dedico esta disserta¸c˜ao a minha fam´ılia, namorado e a
+
+todos os amigos que me incentivaram e ajudaram de muitas
+
+formas, sofrendo e sorrindo junto comigo para que a sua
+
+concretiza¸c˜ao fosse poss´ıvel.
+
+AGRADECIMENTOS
+
+Agrade¸co primeiramente a Deus pela for¸ca e coragem durante esta caminhada. Aos
+meus pais, Dolores e Carlos, e minha irm˜a, Carolina, que me apoiaram em todos os
+momentos. Agrade¸co aos meus demais familiares, especialmente aos meus av´os, que com
+palavras de amor e apoio estiveram sempre presentes, acreditando em mim em todas as
+horas.
+
+Ao meu namorado, Guilherme, que nunca me deixou desistir, sendo muito compa-
+nheiro do come¸co ao ﬁm, me ajudando, animando, e aconselhando em todos os momen-
+tos, com palavras de est´ımulo para que eu concretizasse meus objetivos, sendo sempre
+compreensivo e prestativo. Obrigada, meu amor.
+
+A todos os meus amigos, que me incentivaram e compreenderam minha ausˆencia,
+especialmente aos meus colegas de turma, Diogo, Walfrido e Fabiano, pelo apoio e por
+tornarem todos os dias de aula e estudo mais agrad´aveis.
+
+Agrade¸co ao meu orientador, Thiago Dias, pela credibilidade e aux´ılio, pela enorme
+paciˆencia, especialmente na execu¸c˜ao do programa utilizado, e por apesar do pouco tempo
+dispon´ıvel, estar sempre presente e sol´ıcito a me ajudar. A todos aqueles que de alguma
+forma contribu´ıram ou torceram pela concretiza¸c˜ao desta etapa da minha vida, obrigada.
+
+vii
+
+A mente que se abre a uma nova ideia, jamais volta ao seu estado
+
+original.
+
+—ALBERT EINSTEIN
+
+RESUMO
+
+O presente trabalho tem como objetivo principal estudar o Algoritmo Guloso, esp´ecie de
+algoritmo de otimiza¸c˜ao, e algumas de suas aplica¸c˜oes, para posterior desenvolvimento
+de uma sequˆencia did´atica a ser abordada com alunos do Ensino M´edio. Neste estudo, a
+constru¸c˜ao e l´ogica do algoritmo foram relacionadas a grafos e ´arvores, conceitos os quais
+foram previamente estudados e analisados como requisitos para a compreens˜ao das propri-
+edades e caracter´ısticas do algoritmo. Primeiramente, ﬁzemos uma s´ıntese de como surgiu
+a Teoria dos Grafos; em seguida retratamos alguns conceitos sobre grafos em geral, como
+sua deﬁni¸c˜ao, propriedades, classiﬁca¸c˜oes e percursos. Na sequˆencia, deﬁnimos ´arvores -
+um tipo especial de grafo - e estudamos alguns de seus principais teoremas fundamen-
+tais para a posterior compreens˜ao do algoritmo, al´em de alguns m´etodos de codiﬁca¸c˜ao,
+como o c´odigo de Pr¨ufer. Finalmente, deﬁnimos o Algoritmo Guloso, especialmente o
+algoritmo de Kruskal, utilizando uma situa¸c˜ao pr´atica para exempliﬁcar sua aplica¸c˜ao.
+Ap´os toda a fundamenta¸c˜ao, desenvolvemos uma sequˆencia did´atica para ser trabalhada
+em cinco aulas. Nesta sequˆencia did´atica, atividades envolvendo grafos e ´arvores foram
+progressivamente realizadas, com quest˜oes contextualizadas como exerc´ıcios, para que na
+´ultima aula da sequˆencia o Algoritmo Guloso fosse deﬁnido e estudado, e os alunos capa-
+citados a utiliz´a-lo na an´alise de um projeto, que seria utilizado como instrumento ﬁnal
+de avalia¸c˜ao. Esta sequˆencia did´atica tem como objetivo estimular o racioc´ınio l´ogico dos
+estudantes, al´em de introduzir estes conceitos em seu curr´ıculo escolar do Ensino M´edio.
+
+Palavras-chave: Algoritmo guloso; otimiza¸c˜ao; grafos; ´arvore gulosa; sequˆencia did´atica.
+
+xi
+
+ABSTRACT
+
+This research aims to study the Greedy Algorithm, a type of optimization algorithm, and
+some of its applications, in order to develop a didactic sequence to be applied with secon-
+dary level students. In the study, the construction and logic of the algorithm were related
+to the graph and trees, concepts which were previously studied and analyzed as requisites
+to the comprehension of the properties and characteristics of the algorithm. Firstly, we
+synthetized the elaboration of the Theory of Graphs; then, we presented some concepts
+about graphs in general, such as its deﬁnition, properties, classiﬁcations and percusses.
+Next, we deﬁned trees - a special type of graph - and studied some of its fundamentals
+theorems for the comprehension of the algorithm, as well as some methods of codiﬁcation
+such as the Pr¨ufer code. Finally, we deﬁned the Greedy Algorithm, specially the Kruskal
+algorithm, using a practical setting in order to exemplify its application. After the theo-
+retical fundaments, we develop a didactical sequence to be applied in ﬁve classes. In this
+didactical sequence, activities which involve graphs and trees were progressively applied,
+with contextualized questions such as exercises in such a way that in the last class of the
+sequence, the Greedy Algorithm could be deﬁned and studied, and the students were able
+to use them to analyze a project, which would be used as a ﬁnal instrument of evaluation.
+This didactical sequence aims to stimulate the student’s logical reasoning, as well as to
+introduce these concepts in their school curriculum on secondary level.
+
+Keywords: Greedy Algorithm; optimization; graph; greedy tree; didactical sequence.
+
+xiii
+
+SUM´ARIO
+
+Cap´ıtulo 1—Grafos
+
+1.1 Teoria dos Grafos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.2 Conceitos B´asicos e Deﬁni¸c˜oes . . . . . . . . . . . . . . . . . . . . . . . .
+
+Cap´ıtulo 2—Percursos
+
+2.1 Passeios, ciclos e caminhos . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.2 Grafos e componentes conexos . . . . . . . . . . . . . . . . . . . . . . . .
+2.3 Passeios Eulerianos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Cap´ıtulo 3—´Arvores
+
+3.1 Deﬁni¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+´Arvores enraizadas e ´arvores geradoras . . . . . . . . . . . . . . . . . . .
+3.2
+
+Cap´ıtulo 4—Algoritmo guloso
+
+´Arvore gulosa e m´etodo otimista . . . . . . . . . . . . . . . . . . . . . . .
+4.1
+4.2 O problema do caxeiro viajante . . . . . . . . . . . . . . . . . . . . . . .
+
+Cap´ıtulo 5—Sequˆencia did´atica
+
+5.1 Aula 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.1.1 Objetivos
+5.1.2 Conte´udos abordados . . . . . . . . . . . . . . . . . . . . . . . . .
+5.1.3 Metodologia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Instrumento de avalia¸c˜ao . . . . . . . . . . . . . . . . . . . . . . .
+5.1.4
+5.2 Aula 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.1 Objetivos
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.2 Conte´udos abordados . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.3 Metodologia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Instrumento de avalia¸c˜ao . . . . . . . . . . . . . . . . . . . . . . .
+5.2.4
+5.3 Aula 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.3.1 Objetivos
+5.3.2 Conte´udos abordados . . . . . . . . . . . . . . . . . . . . . . . . .
+5.3.3 Metodologia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Instrumentos de avalia¸c˜ao . . . . . . . . . . . . . . . . . . . . . .
+5.3.4
+5.4 Aula 4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+
+3
+4
+
+9
+
+9
+11
+15
+
+19
+
+19
+22
+
+29
+
+29
+34
+
+35
+
+35
+35
+35
+35
+36
+36
+36
+36
+37
+38
+38
+38
+38
+38
+40
+40
+
+xv
+
+xvi
+
+SUM ´ARIO
+
+5.4.1 Objetivos
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.4.2 Conte´udos abordados . . . . . . . . . . . . . . . . . . . . . . . . .
+5.4.3 Metodologia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Instrumentos de avalia¸c˜ao . . . . . . . . . . . . . . . . . . . . . .
+5.4.4
+5.5 Aula 5 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.5.1 Objetivos
+5.5.2 Conte´udos abordados . . . . . . . . . . . . . . . . . . . . . . . . .
+5.5.3 Metodologia . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Instrumento de avalia¸c˜ao . . . . . . . . . . . . . . . . . . . . . . .
+5.5.4
+
+40
+40
+40
+41
+41
+41
+41
+41
+45
+
+LISTA DE FIGURAS
+
+1.1 Pontes de K¨onigsberg . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.2 Grafo das pontes de K¨onigsberg . . . . . . . . . . . . . . . . . . . . . . .
+1.3 Exemplo de multigrafo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.4 Exemplos de grafos dirigidos . . . . . . . . . . . . . . . . . . . . . . . . .
+(a) Exemplo de grafo vazio; (b) Exemplo de Grafo completo . . . . . . .
+1.5
+
+2.1
+(a) Exemplos de caminhos; (b) Exemplos de ciclos . . . . . . . . . . . . .
+2.2 Tabela de caminhos e seus complementos . . . . . . . . . . . . . . . . . .
+2.3 Passeio P . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.4 Exemplo de grafo desconexo . . . . . . . . . . . . . . . . . . . . . . . . .
+2.5 Exemplo de grafo desconexo com componentes conexas destacadas . . . .
+2.6 Problema do aeroporto . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.7 Problema do aeroporto (2) . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.1 Exemplos de ´arvores
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2 Caminhos C e C’
+´Arvore enraizada . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3
+3.4 Recorte de G . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+´Arvore rotulada . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.5
+
+4.1 Exemplo de lago com 10 lotes de terra . . . . . . . . . . . . . . . . . . .
+4.2 Constru¸c˜ao de ´arvores 1 . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.3 Constru¸c˜ao de ´arvores 2 . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.4 Encontrando a ´arvore gulosa . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+4
+5
+5
+7
+
+10
+10
+12
+13
+13
+15
+15
+
+19
+20
+22
+24
+25
+
+29
+31
+32
+33
+
+36
+5.1 Pontes de K¨onigsberg . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+39
+5.2 Planta da casa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+40
+5.3 Atividade 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+5.4 Encontrando a ´arvore gulosa . . . . . . . . . . . . . . . . . . . . . . . . .
+42
+5.5 Encontrando a ´arvore gulosa - Passo 1 . . . . . . . . . . . . . . . . . . .
+43
+5.6 Encontrando a ´arvore gulosa - Passo 2 . . . . . . . . . . . . . . . . . . .
+43
+5.7 Encontrando a ´arvore gulosa - Passo 3 . . . . . . . . . . . . . . . . . . .
+43
+5.8 Encontrando a ´arvore gulosa - Passo 4 . . . . . . . . . . . . . . . . . . .
+44
+5.9 Encontrando a ´arvore gulosa - Passo 5 . . . . . . . . . . . . . . . . . . .
+44
+5.10 Encontrando a ´arvore gulosa - Passo 6 . . . . . . . . . . . . . . . . . . .
+5.11 ´Arvore gulosa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+5.12 (a) Projeto a ser avaliado pelo Algoritmo Guloso (b)Distˆancia entre cidades 45
+
+xvii
+
+INTRODUC¸ ˜AO
+
+Existem muitas situa¸c˜oes ou problemas matem´aticos que parecem de simples re-
+solu¸c˜ao, mas que na pr´atica h´a uma grande diﬁculdade para sistematizar as informa¸c˜oes
+fornecidas e organiz´a-las de maneira que possa levar a algum m´etodo de resolvˆe-los.
+
+Um exemplo ´e o seguinte problema: Um motorista de caminh˜ao de lixo deve recolher
+todos os res´ıduos residenciais de um determinado bairro. ´E poss´ıvel que ele colete esse
+lixo passando por cada esquina uma ´unica vez e retornando ao mesmo lugar que partiu?
+Esse ´e um t´ıpico caso em que a utiliza¸c˜ao de grafos esquematiza de forma clara e
+direta todas as possibilidades, levando `a visualiza¸c˜ao de uma poss´ıvel estrat´egia para
+solucionar o problema. Al´em disso, existem algoritmos que foram criados para indicar
+a melhor escolha que atenda a determinado objetivo. Algoritmos deste tipo podem ser
+denominados como de otimiza¸c˜ao, pois ao lidar com uma sequˆencia de passos consegue
+indicar qual ´e a melhor op¸c˜ao entre as possibilidades. Um exemplo ´e o algoritmo guloso,
+objeto de estudo deste trabalho, que a cada passo escolhe a op¸c˜ao que parece ser a melhor
+naquele determinado momento com o intuito de satisfazer o objetivo proposto.
+
+Pelo fato das escolhas feitas por este algoritmo dependerem apenas da situa¸c˜ao pre-
+sente, ou seja, da informa¸c˜ao dispon´ıvel naquele momento, em alguns casos ele n˜ao pos-
+sibilita a escolha ´otima, o que vai depender do objetivo de cada situa¸c˜ao. Entretanto,
+ele ´e eﬁciente em diversos casos, e s˜ao considerados de certo modo simples de criar, j´a
+que uma vez que a op¸c˜ao foi escolhida n˜ao se pode voltar atr´as, n˜ao tendo, portanto, a
+necessidade de rever as possibilidades. A denomina¸c˜ao guloso vem do fato do algoritmo
+selecionar sempre a melhor op¸c˜ao do momento, escolher sempre o melhor “peda¸co”, sem
+pensar em consequˆencias futuras. No decorrer deste trabalho veremos, de maneira geral,
+como a l´ogica do algoritmo guloso ´e criada e desenvolvida, estando associado `a utiliza¸c˜ao
+de grafos e ´arvores, os quais ser˜ao deﬁnidos e analisados nos cap´ıtulos iniciais.
+
+No cap´ıtulo 1 s˜ao retratados alguns conceitos b´asicos sobre grafos em geral, suas
+deﬁni¸c˜oes, propriedades e classiﬁca¸c˜oes, assim como sua origem, com uma breve s´ıntese
+sobre a Teoria dos Grafos e seu processo de evolu¸c˜ao. Com ˆenfase em alguns teoremas
+mais importantes, atrav´es de exemplos pr´aticos ressaltaremos como a utiliza¸c˜ao da Teoria
+de grafos auxilia na resolu¸c˜ao e simpliﬁca¸c˜ao de problemas.
+
+No cap´ıtulo 2 falamos sobre poss´ıveis percursos em um grafo, tais como caminhos,
+ciclos e passeios, al´em dos conceitos de conexidade, subgrafos e componentes conexas.
+Analisando os estudos de Euler relativos a grafos, discutiremos sobre passeios Eulerianos
+e suas propriedades.
+
+O cap´ıtulo 3 deﬁne o conceito de ´arvores, tipo espec´ıﬁco de grafo, analisando algumas
+de suas propriedades e teoremas considerados mais importantes como requisitos para o
+posterior entendimento do algoritmo guloso. Ainda neste cap´ıtulo ser˜ao vistas t´ecnicas
+de armazenamento de ´arvores, onde o c´odigo de pai e o c´odigo de Pr¨ufer ser˜ao deﬁnidos
+
+1
+
+2
+
+e trabalhados.
+
+INTRODUC¸ ˜AO
+
+Ap´os o estudo destes conte´udos necess´arios para o entendimento do algoritmo guloso,
+ele ser´a retratado no cap´ıtulo 4, onde, atrav´es de um exemplo pr´atico, chegaremos a sua
+deﬁni¸c˜ao e posterior execu¸c˜ao. Exporemos dois m´etodos para executar o algoritmo guloso:
+o m´etodo de Prim e o de Kruskal. Este ´ultimo ser´a estudado detalhadamente. Ainda
+neste cap´ıtulo, o problema do Caxeiro Viajante ´e citado, fazendo analogia a problemas
+cotidianos.
+
+Finalizando este trabalho, uma sequˆencia did´atica ser´a proposta no ´ultimo cap´ıtulo,
+com o objetivo de trabalhar com alunos do Ensino M´edio o conte´udo desenvolvido. Ser´a
+realizada em cinco aulas de 50 minutos cada, iniciando com o estudo de grafos e ´arvores,
+e concluindo com a aplica¸c˜ao do algoritmo guloso na an´alise de um projeto, que ser´a
+utilizado como instrumento ﬁnal de avalia¸c˜ao.
+
+CAP´ITULO 1
+
+GRAFOS
+
+1.1 TEORIA DOS GRAFOS
+
+H´a muito tempo, os cidad˜aos de K¨onigsberg (onde hoje ﬁca Kalingrado, R´ussia)
+propuseram um desaﬁo. A cidade era dividida em quatro distritos por bra¸cos do rio
+Preguel, que eram conectados por 7 pontes (Figura 1.1). Seria poss´ıvel realizar um
+trajeto em todos os distritos passando por todas as pontes uma ´unica vez?
+
+Figura 1.1 Pontes de K¨onigsberg
+
+Em 1736, o matem´atico Euler publicou um artigo que demonstrava que era imposs´ıvel
+realizar tal passeio. Esse resultado ´e considerado como o primeiro teorema da Teoria dos
+Grafos, ainda que Euler n˜ao tenha utilizado essa terminologia. Contudo, na ´epoca esse
+resultado foi visto pela comunidade cient´ıﬁca como uma esp´ecie de solu¸c˜ao a uma charada
+matem´atica, n˜ao sendo a ele dada a devida importˆancia, o que contribuiu para que essa
+teoria ﬁcasse estagnada por mais de cem anos.
+
+Finalmente, em 1847, Gustav Robert Kirchhoﬀ, cientista da cidade de K¨onigsberg,
+utilizou modelos de grafos ao estudar circuitos el´etricos, criando a Teoria das ´arvores.
+Isso abriu precedentes para que outros cientistas come¸cassem a notar a prov´avel aplica-
+bilidade desta teoria, como o irlandˆes Willian Rowan Hamilton, que deﬁniu como grafo
+hamiltoniano aquele que cont´em um percurso fechado passando uma ´unica vez por cada
+v´ertice; ou o britˆanico Arthur Cayley, que utilizou a ideia de ´arvores para aplica¸c˜oes
+como a enumera¸c˜ao dos isˆomeros dos hidrocarbonetos alif´aticos saturados, em qu´ımica
+orgˆanica.
+
+Ap´os o desenvolvimento dos computadores, a partir de 1970, a teoria dos Grafos obteve
+um grande avan¸co, especialmente com o surgimento de softwares para microcomputado-
+res, como o MS Project, criado pela Microsoft. Este avan¸co tecnol´ogico desencandeou
+o surgimento de publica¸c˜oes referentes a algoritmos de grafos, o que possibilitou uma
+utiliza¸c˜ao aplicada da teoria.
+
+3
+
+4
+
+GRAFOS
+
+Sendo atualmente uma das ´areas mais importantes da Matem´atica discreta, a Teoria
+dos Grafos tem sido aplicada a muitas ´areas (Inform´atica, Investiga¸c˜ao Operacional,
+Economia, Sociologia, Gen´etica, etc.), pois um grafo constitui o modelo matem´atico ideal
+para o estudo das rela¸c˜oes entre objetos discretos de qualquer tipo.
+
+1.2 CONCEITOS B´ASICOS E DEFINIC¸ ˜OES
+
+Muitas situa¸c˜oes podem ser descritas e representadas convenientemente por um es-
+quema ou diagrama que consiste em um conjunto de pontos e linhas que ligam aos pares
+alguns desses pontos. Por exemplo, a ﬁgura 1.2 abaixo esbo¸ca um grafo das pontes de
+K¨onigsberg, onde os distritos est˜ao representados por pontos e letras, e as pontes por
+linhas que ligam esses pontos.
+
+Figura 1.2 Grafo das pontes de K¨onigsberg
+
+Deﬁni¸c˜ao 1.1. Um grafo G consiste num conjunto ﬁnito e n˜ao vazio V (G) de elementos
+denominados v´ertices ou n´os, que podem ou n˜ao estar ligados aos pares por arestas.
+O conjunto ﬁnito formado por estas arestas ´e denominado A(G). Portanto, escreve-se
+G = (V, A) para indicar que o grafo G tem o conjunto de v´ertices V e o conjunto de
+arestas A.
+
+A forma adotada para representar as arestas (reta, curva, etc.) n˜ao ´e relevante,
+importando apenas o par de n´os que ela conecta. Uma aresta que liga os v´ertices x e
+y, por exemplo, ´e o conjunto {x, y}, que ´e subconjunto de V , ou o par ordenado (x, y)
+pertencente a V x V , ou ainda simplesmente a aresta xy.
+
+Algumas possibilidades, como por exemplo se uma aresta pode conectar um n´o a si
+mesma (la¸co), ou se mais de uma aresta pode conectar o mesmo par de n´os (arestas
+paralelas) ser˜ao consideradas neste trabalho de acordo com os objetivos que se deseja
+alcan¸car. Vamos analisar o exemplo das pontes de K¨onigsberg. Existe a situa¸c˜ao em que
+mais de uma ponte liga o mesmo par de distritos, ent˜ao ´e conveniente que se adote arestas
+paralelas. Mas n˜ao teria sentido uma ponte ligando um distrito a si mesmo, ent˜ao neste
+caso n˜ao h´a necessidade de la¸cos. Quando um grafo apresenta arestas paralelas ou la¸cos,
+pode ser chamado de multigrafo. J´a quando em um determinado grafo n˜ao h´a nenhum
+destes elementos, ele ´e denominado grafo simples.
+
+Na ﬁgura seguinte temos um exemplo de multigrafo, onde as arestas a1 e a2 s˜ao
+paralelas, pois ambas ligam o mesmo par de v´ertices (1 e 2); e a aresta a3 ´e um la¸co, pois
+conecta o v´ertice 2 a ele mesmo.
+
+1.2 CONCEITOS B ´ASICOS E DEFINIC¸ ˜OES
+
+5
+
+Figura 1.3 Exemplo de multigrafo
+
+Um grafo ´e chamado de dirigido, direcionado ou d´ıgrafo quando suas arestas s˜ao
+orientadas, como por exemplo, grafos utilizados para representar estradas de sentido
+´unico conectando cidades, ou quem sorteou quem em um amigo secreto. (Figura 1.4)
+
+Figura 1.4 Exemplos de grafos dirigidos
+
+De volta a ﬁgura 1.2, podemos observar que trˆes das pontes passam pelo distrito
+A, cinco das pontes passam pelo distrito B, trˆes pelo distrito C e trˆes pelo distrito D.
+Denominamos, portanto, que os graus dos v´ertices que representam os distritos A, B, C
+e D s˜ao 3, 4, 3 e 3, respectivamente, pois ´e a quantidade de arestas que saem de cada
+v´ertice. Representamos estes graus como g(A) = 3, g(B) = 5, e assim por diante.
+
+Deﬁni¸c˜ao 1.2. O grau g(v) de um v´ertice v, sem la¸cos, ´e equivalente ao n´umero de
+arestas que conectam v a outros v´ertices, ou seja, a quantidade de arestas que incidem
+em v.
+
+No caso em que v possui um la¸co, seu grau ´e aumentado em dois, pois ´e como se a
+
+aresta que forma o la¸co incidisse em v duas vezes.
+
+Ao somar os graus de cada v´ertice, uma aresta ´e contabilizada por ambos os v´ertices
+os quais ela incide, ou seja, cada aresta ´e contabilizada duas vezes. Da´ı segue a seguinte
+proposi¸c˜ao:
+
+Proposi¸c˜ao 1.1. A soma dos graus de todos os v´ertices de um grafo ´e igual ao dobro de
+seu n´umero de arestas.
+
+Podemos concluir, portanto, que a soma dos graus de todos os v´ertices de qualquer
+grafo ´e um n´umero par, j´a que corresponde ao dobro do n´umero de arestas. Se omitir-
+mos desta soma todos os termos pares (os graus dos v´ertices cuja quantidade de arestas
+
+6
+
+GRAFOS
+
+incidentes ´e par), ainda obteremos um n´umero par, que corresponde `a soma dos termos
+´ımpares. Mas para que a soma de termos ´ımpares resulte num n´umero par, ´e necess´ario
+que a quantidade destes termos seja par. Ou seja, em um grafo h´a uma quantidade par
+de v´ertices cujo grau ´e ´ımpar.
+
+Corol´ario 1.1. Em um grafo, o n´umero de v´ertices com grau ´ımpar ´e par.
+
+Do corol´ario acima, podemos tirar as seguintes conclus˜oes: Se um grafo tem um
+n´umero ´ımpar de v´ertices, ent˜ao o n´umero de v´ertices com grau par, ´e ´ımpar.
+Isso ´e
+facilmente dedut´ıvel, pois o total de v´ertices de um grafo ´e a soma dos v´ertices de grau
+par com os v´ertices de grau ´ımpar. Se o grafo tem um n´umero ´ımpar de v´ertices ao total,
+e todo grafo possui um n´umero par de v´ertices de grau ´ımpar, ent˜ao o n´umero de v´ertices
+com grau par ´e ´ımpar. Da mesma forma, se um grafo possui um n´umero par de v´ertices,
+ent˜ao o n´umero de v´ertices com grau par, ´e par.
+
+Proposi¸c˜ao 1.2. Todo grafo simples possui pelo menos dois v´ertices com o mesmo grau.
+
+Demonstra¸c˜ao. Seja G um grafo com n v´ertices. Cada um desses v´ertices pode ter seu
+grau variando de 0 a n − 1, ou seja, existem n possibilidades para o grau de cada v´ertice.
+Entretanto, se um dos v´ertices tem grau igual a n − 1, ent˜ao ele est´a conectado a todos os
+demais v´ertices, ou seja, n˜ao poderia existir um v´ertice de grau 0. Logo, em um grafo G
+de n v´ertices ou existe algum v´ertice de grau n − 1 ou algum v´ertice de grau 0, mas n˜ao
+os dois ao mesmo tempo. Isso implica que os n v´ertices existentes em G teriam apenas
+n − 1 op¸c˜oes para seu grau, logo, pelo princ´ıpio da casa dos pombos, pelo menos dois
+(cid:4)
+v´ertices teriam o mesmo grau.
+
+Dizemos que dois v´ertices s˜ao adjacentes quando s˜ao conectados por uma mesma
+aresta (por exemplo os v´ertices 1 e 3 da ﬁgura 1.3), e v´ertices adjacentes ao mesmo n´o
+x s˜ao chamados de seus vizinhos (o v´ertice 3 da ﬁgura 1.3 tem como vizinhos os v´ertices
+1 e 2, por exemplo). Chamamos de n´o ou v´ertice isolado aquele que n˜ao possui aresta
+incidindo sobre ele, ou seja, tem grau zero (como o v´ertice 4 da ﬁgura 1.3).
+
+Os grafos vazios, que s˜ao os mais simples, n˜ao possuem arestas, ou seja, todos os
+seus v´ertices tˆem grau zero; j´a um grafo simples que possui todas as arestas poss´ıveis ´e
+denominado grafo completo (Figura 1.5). Se um grafo G possui n v´ertices e ´e completo,
+ent˜ao cada um de seus v´ertices tem grau n−1. Como a soma dos graus de todos os v´ertices
+´e igual ao dobro do n´umero de arestas (Proposi¸c˜ao 1.1), ent˜ao um grafo completo de n
+v´ertices possui n(n−1)
+
+arestas.
+
+Dizemos que um grafo ´e o complemento de outro se ambos possu´ırem o mesmo con-
+junto de n´os, e as arestas de um n˜ao estiverem contidas no outro. Ent˜ao um grafo vazio,
+por exemplo, ´e o complemento de um grafo completo e vice-versa.
+
+J´a um grafo G de n v´ertices, onde apenas um destes v´ertices possui grau igual a n − 1
+
+e todos os demais v´ertices possuem grau 1 ´e denominado estrela.
+
+2
+
+Figura 1.5 (a) Exemplo de grafo vazio; (b) Exemplo de Grafo completo
+
+CAP´ITULO 2
+
+PERCURSOS
+
+2.1 PASSEIOS, CICLOS E CAMINHOS
+
+Considerando um grafo G, o percurso que consiste em uma sequˆencia de v´ertices
+consecutivos (conectados por alguma aresta) ´e denominado passeio. Contudo, se mais
+de uma aresta pode conectar o mesmo par de n´os, que ´e o caso de G conter arestas
+parelelas, h´a a necessidade de especiﬁca¸c˜ao de qual aresta est´a sendo utilizada para
+formar o percurso.
+
+Deﬁni¸c˜ao 2.1. Um passeio P em um grafo G ´e uma sequˆencia ﬁnita e n˜ao vazia do tipo
+(v0, a1, v1, a2, ..., ak, vk), cujos termos s˜ao alternadamente v´ertices vi e arestas ai, onde
+para todo i, 1 ≤ i ≤ k, os extremos das arestas ai s˜ao os v´ertices vi−1 e vi, sem que
+necessariamente todos os v´ertices sejam percorridos.
+
+O passeio mais curto poss´ıvel ´e aquele de um ´unico v´ertice v0. O primeiro e o ´ultimo
+v´ertice do percurso s˜ao denominados extremidades do percurso. Quando as extremidades
+n˜ao coincidem, deﬁne-se que o passeio ´e aberto. E, neste caso, se o passeio n˜ao contiver
+nenhum v´ertice repetido, ele recebe uma denomina¸c˜ao especial.
+
+Deﬁni¸c˜ao 2.2. Um caminho C em um grafo G ´e um passeio ou sequˆencia ﬁnita e n˜ao
+vazia do tipo (v0, a1, v1, a2, ..., ak, vk), cujos termos s˜ao alternadamente v´ertices vi e arestas
+ai, os quais n˜ao se repetem no percurso.
+
+Exerc´ıcio 2.1. Seja G um grafo de n v´ertices, onde v´ertices consecutivos s˜ao conectados
+por uma ´unica aresta, formando um caminho que passa por todos os v´ertices do grafo.
+Mostre que G possui n − 1 arestas.
+
+J´a no caso em que o primeiro e ´ultimo v´ertices do passeio s˜ao os mesmos, ou seja,
+
+v0 = vk, o o passeio ´e deﬁnido como fechado.
+
+Deﬁni¸c˜ao 2.3. Um ciclo C em um grafo G ´e uma sequˆencia ﬁnita e n˜ao vazia do tipo
+(v0, a1, v1, a2, ..., ak, vk), cujos termos s˜ao alternadamente v´ertices vi e arestas ai, onde o
+´ultimo v´ertice ´e igual ao primeiro, ou seja, v0 = vk, e v0 e vk s˜ao os primeiros v´ertices do
+passeio a coincidirem.
+
+Perceba que ao conectarmos as extremidades de um caminho, ou seja, conectando o
+´ultimo v´ertice ao primeiro, obtemos um ciclo. Obviamente, tanto em caminhos quanto
+em ciclos, os v´ertices do grafo podem estar em diferentes disposi¸c˜oes, sendo poss´ıvel que
+arestas se intersectem (Figura 2.1).
+
+O comprimento de um caminho, passeio ou ciclo ´e o seu n´umero de arestas. Um ciclo
+
+de comprimento k ´e usualmente chamado de k-ciclo.
+
+9
+
+10
+
+PERCURSOS
+
+Figura 2.1 (a) Exemplos de caminhos; (b) Exemplos de ciclos
+
+Exemplo 2.1. Encontre todos os caminhos cujo complemento ´e um caminho.
+
+Resolu¸c˜ao. Podemos come¸car o exerc´ıcio fazendo um teste para alguns caminhos (Figura
+2.2).
+
+Figura 2.2 Tabela de caminhos e seus complementos
+
+O caminho com 1 v´ertice, por exemplo, tem como complemento ele mesmo, ou seja,
+
+seu complemento ´e um caminho;
+
+O caminho contendo 2 v´ertices, que possui 1 aresta, tem como complemento o grafo
+
+com 2 v´ertices e nenhuma aresta, que n˜ao ´e um caminho;
+
+O caminho contendo 3 v´ertices, que possui 2 arestas, tem como complemento o grafo
+
+com 3 v´ertices e apenas 1 aresta, ou seja, n˜ao ´e um caminho;
+
+O caminho contendo 4 v´ertices, que possui 3 arestas, tem como complemento o grafo
+
+com 4 v´ertices e 3 arestas, que ´e um caminho;
+
+O caminho contendo 5 v´ertices, que possui 4 arestas, tem como complemento o grafo
+
+com 5 v´ertices e 6 arestas, que n˜ao ´e um caminho.
+
+Continuando o racioc´ınio, intuitivamente chegamos `a conclus˜ao que apenas os cami-
+
+nhos com 1 e 4 v´ertices ter˜ao como complemento um caminho.
+
+Contudo, para ter certeza que apenas esses dois caminhos possuem essa caracter´ıstica,
+vamos formalizar a resolu¸c˜ao. Seja C um caminho com n v´ertices, logo C possui n − 1
+arestas. Seja ¯C o complemento de C. Ent˜ao a soma da quantidade de arestas de C e ¯C ´e o
+m´aximo de arestas que um grafo poderia ter, que ´e dado por n(n−1)
+. Assim, denominando
+AC e A ¯C a quantidade de arestas de C e ¯C, respectivamente, temos a seguinte equa¸c˜ao:
+
+2
+
+2.2 GRAFOS E COMPONENTES CONEXOS
+
+11
+
+AC + A ¯C =
+
+n(n − 1)
+2
+
+.
+
+Sabemos que AC = n − 1. Para que o complemento ¯C de C tamb´em seja um caminho,
+¯C deve possuir n − 1 arestas, ou seja, A ¯C = n − 1. Substituindo estes dados na equa¸c˜ao,
+temos:
+
+n − 1 + n − 1 =
+
+n(n − 1)
+2
+
+⇒ 2n − 2 =
+
+n(n − 1)
+2
+
+⇒ 4n − 4 = n2 − n ⇒ n2 − 5n + 4 = 0.
+
+Resolvendo a equa¸c˜ao, encontramos que n = 1 ou n = 4. Ou seja, os ´unicos caminhos
+(cid:4)
+
+cujo complemento tamb´em ´e um caminho s˜ao o de 1 v´ertice e o de 4 v´ertices.
+
+Proposi¸c˜ao 2.1. Se G ´e um grafo cujo grau de todos os seus v´ertices ´e pelo menos dois,
+ent˜ao G cont´em um ciclo.
+
+Demonstra¸c˜ao. Se G possui la¸cos ou arestas paralelas, o resultado ´e ´obvio. Vamos
+supor, ent˜ao, que G ´e um grafo simples de n v´ertices. Seja P um passeio em G come¸cando
+pelo v´ertice v1. Percorrendo P , vamos escolher v2 como v´ertice adjacente a v1; v3 como
+v´ertice adjacente a v2; e assim por diante, de modo que para cada v´ertice vi, com 1 ≤
+i ≤ n − 1, temos vi+1 como seu v´ertice adjacente (o que pode ser garantido pelo fato do
+grau de qualquer um dos v´ertices de G ser no m´ınimo 2). Assim, temos que o passeio P
+´e dado por v1v2v3...
+
+Como G possui um n´umero ﬁnito de v´ertices, em algum momento P passar´a por al-
+gum v´ertice que j´a havia participado do passeio anteriormente. Se vk ´e o primeiro v´ertice
+a ser escolhido mais de uma vez, ent˜ao as duas ocorrˆencias de vk e as partes do passeio
+(cid:4)
+entre elas formam um ciclo em G.
+
+Um ciclo ´e deﬁnido como hamiltoniano se ele cont´em todos os v´ertices do grafo ao
+qual pertence, ou seja, ´e um passeio fechado que passa por todos os v´ertices uma ´unica
+vez. Se um determinado grafo G cont´em um ciclo hamiltoniano, ele ´e denominado grafo
+hamiltoniano. Este nome se deve ao matem´atico irlandˆes Sir William Rowan Hamilton
+(1805-1865).
+
+2.2 GRAFOS E COMPONENTES CONEXOS
+
+Deﬁni¸c˜ao 2.4. Um grafo H ´e chamado de subgrafo de um grafo G (H ⊆ G) se todos os
+v´ertices de H s˜ao tamb´em v´ertices de G, e todas as arestas de H s˜ao tamb´em arestas de
+G, ou seja, V (H) ⊆ V (G) e A(H) ⊆ A(G). Nesse caso, tamb´em pode-se dizer que G ´e
+supergrafo de H.
+
+Um subgrafo H de G pode ser obtido removendo-se algumas das arestas e v´ertices
+de G. Obviamente, ao remover-se um v´ertice, automaticamente s˜ao removidas todas as
+arestas que o conectam a outro v´ertice.
+
+12
+
+PERCURSOS
+
+Quando H ⊆ G e H (cid:54)= G, ent˜ao H ´e um subgrafo pr´oprio de G, e escreve-se H ⊂ G.
+Deﬁnimos H como grafo gerador de G, quando al´em de ser um subgrafo de G, dentre
+os v´ertices de H se encontram todos os v´ertices de G, ou seja, H ⊆ G e V (H) = V (G).
+O subgrafo H ´e dito maximal em rela¸c˜ao a certa propriedade K se, al´em de possuir a
+propriedade, nenhum outro subgrafo J de G, tal que H ⊂ J ⊂ G, tamb´em a possua.
+
+Deﬁni¸c˜ao 2.5. Quando em um grafo G, quaisquer dois v´ertices u e v puderem ser
+conectados por um caminho C, com extremidades u e v, onde C ´e subgrafo de G, ent˜ao
+G ´e denominado grafo conexo. Caso contr´ario, ´e desconexo.
+
+N˜ao existe relevˆancia, quanto `a conexidade, se dois v´ertices s˜ao conectados por um
+caminho ou por um passeio, pois se eles podem ser conectados por um passeio, ent˜ao
+podem ser conectados por um caminho.
+
+Considere um passeio P em um grafo G com 8 v´ertices vi, com 1 (cid:54) i (cid:54) 8, por
+exemplo, onde P ´e representado pela sequˆencia de v´ertices v1v2v3v1v2v3v4v5v6v7v4v5v7v8
+(Figura 2.3 abaixo).
+
+Figura 2.3 Passeio P
+
+Como o v´ertice v1 ´e o primeiro que se repete, vamos eliminar do passeio todos os
+v´ertices que est˜ao entre ele e sua repeti¸c˜ao, incluindo a pr´opria repeti¸c˜ao. Ap´os esse
+procedimento, obtemos o passeio dado por v1v2v3v4v5v6v7v4v5v7v8. Agora o pr´oximo
+v´ertice a se repetir ´e o v4. Aplicando o mesmo procedimento, eliminando os v´ertices que
+est˜ao entre ele e sua repeti¸c˜ao, obtemos o passeio v1v2v3v4v5v7v8, que, como podemos
+perceber, ´e um caminho de v1 a v8. Este procedimento pode ser aplicado a qualquer
+passeio. Enunciando o resultado, temos:
+
+Proposi¸c˜ao 2.2. Se dois v´ertices quaisquer s˜ao conectados por um passeio, ent˜ao tamb´em
+podem ser conectados por um caminho.
+
+Se removermos uma aresta uv de um grafo conexo G, o grafo resultante G(cid:48) pode ou
+n˜ao ser conexo. Um exemplo simples onde G(cid:48) n˜ao seria conexo, ´e quando G ´e um caminho
+e tem uma de suas arestas removidas, resultando num grafo desconexo.
+
+Em contrapartida, temos a seguinte proposi¸c˜ao:
+
+Proposi¸c˜ao 2.3. Se G ´e um grafo conexo que cont´em um ciclo C, ao removermos uma
+das arestas de C o grafo remanescente G(cid:48) ainda ser´a conexo.
+
+Demonstra¸c˜ao. Considere dois n´os u e v arbitr´arios pertencentes a G e suponha que
+retiramos do ciclo C uma aresta a. Se G ´e conexo, podemos garantir que ele cont´em um
+caminho P que conecta u a v. Se a aresta retirada a n˜ao pertencer a P , ent˜ao os v´ertices
+u e v ainda estar˜ao sendo conectados por P .
+
+2.2 GRAFOS E COMPONENTES CONEXOS
+
+13
+
+Supondo agora que a aresta a, que pertence ao ciclo C, tamb´em perten¸ca ao caminho
+P , onde a = xy. Vamos considerar que percorrendo o caminho de u a v, o v´ertice x
+venha antes do y. Ao retirar a aresta a ou xy, ainda existir´a um caminho de u a x e um
+caminho de y a v. Por´em, tamb´em existir´a um caminho de x a y, pois ambos os v´ertices
+pertencem ao ciclo C. Logo, se existe um caminho de u a x, um caminho de x a y e um
+de y a v, ent˜ao existe um caminho ou um passeio de u a v para qualquer escolha de u e
+v. Caso o percurso seja um passeio, ent˜ao podemos garantir que existe caminho de u a v
+(cid:4)
+(Proposi¸c˜ao 2.2). Assim, o grafo resultante G(cid:48) ´e conexo.
+
+Diz-se que H ´e um subgrafo conexo maximal de G, se al´em de H ser um subgrafo
+conexo de G, n˜ao existir nenhum supergrafo pr´oprio de H que seja subgrafo conexo de
+G.
+
+Figura 2.4 Exemplo de grafo desconexo
+
+Na ﬁgura 2.4 acima, temos como exemplo o grafo G, desconexo, que ´e formado por
+quatro subgrafos conexos maximais. Portanto, nada impede que G possua mais de um
+subgrafo conexo maximal. Assim, se G ´e um grafo desconexo, ent˜ao poder´a ser subdi-
+vidido em subgrafos conexos, pois at´e o subgrafo que consiste de um ´unico v´ertice (e
+nenhuma aresta) ´e conexo. Um grafo formado por trˆes v´ertices e nenhuma aresta, por
+exemplo, ´e composto por trˆes subgrafos distintos, onde cada um dos v´ertices seria um
+desses subgrafos. Os subgrafos conexos maximais de um grafo G s˜ao denominados de
+componentes conexas.
+
+Ainda na ﬁgura 2.4, G ´e formado por quatro componentes conexas distintas: os
+v´ertices 1, 2 e 5 e as arestas que os conectam; os v´ertices 3 e 4 e a aresta que os conecta;
+os v´ertices 6 e 7 e sua respectiva aresta incidente; e o v´ertice 8, como pode ser melhor
+visualizado na ﬁgura 2.5 a seguir.
+
+Figura 2.5 Exemplo de grafo desconexo com componentes conexas destacadas
+
+Consequentemente, podemos concluir que todo v´ertice de um grafo G pertence a
+
+14
+
+PERCURSOS
+
+alguma componente conexa, pois ainda que seu grau fosse zero ele mesmo seria uma
+componente conexa. Ademais, cada v´ertice ou aresta de G est´a contido em uma ´unica
+componente conexa, pois do contr´ario, duas componentes conexas distintas teriam um
+v´ertice ou aresta em comum, e sua uni˜ao resultaria em um ´unico subgrafo conexo ma-
+ximal, o que contraria a maximalidade das componentes conexas em rela¸c˜ao `a inclus˜ao.
+Portanto, conclu´ımos que componentes diferentes de G n˜ao possuem v´ertices nem arestas
+em comum.
+
+Deﬁni¸c˜ao 2.6. Um grafo H ´e uma componente conexa de um grafo G se H ´e subgrafo
+conexo maximal de G, ou seja, qualquer outro subgrafo de G que contenha H ´e desconexo.
+Duas componentes conexas distintas n˜ao possuem elementos em comum.
+
+Exemplo 2.2. Em um pa´ıs existem 9 aeroportos numerados de 1 at´e 9. Existe voo direto
+do aeroporto i para o aeroporto j se 3|ij, com ij = 10i + j. Sabendo disso, existe voo
+(possivelmente com escalas) do aeroporto 1 para o aeroporto 9?
+
+Resolu¸c˜ao. Do aeroporto 1, os poss´ıveis voos diretos s˜ao para os aeroportos 2, 5 e 8,
+pois 3 divide 12, 15 e 18, e n˜ao divide ij quando i = 1 e j = 3, 4, 6, 7ou9, ou seja, n˜ao
+divide 13, 14, 16, 17 e 19.
+
+Do aeroporto 2, os poss´ıveis voos diretos s˜ao para os aeroportos 1, 4 e 7, pois 3 divide
+
+21, 24 e 27.
+
+Seguindo este racioc´ınio, para encontrar todos os voos diretos de i para j basta veriﬁcar
+todos os m´ultiplos de 3 de dois algarismos distintos que v˜ao de 1 a 9. S˜ao eles: 12 e 21,
+15 e 51, 18 e 81, 24 e 42, 27 e 72, 36 e 63, 39 e 93, 45 e 54, 48 e 84, 57 e 75, 69 e 96, 78 e
+87.
+
+Vamos representar o problema utilizando um grafo, onde os aeroportos ser˜ao os
+v´ertices, e quando existir voo direto entre dois aeroportos, eles ser˜ao conectados por
+uma aresta. Como o crit´erio de divisibilidade por 3 ´e que a soma dos algarismos seja um
+m´ultiplo de 3, se 3|ij ent˜ao 3|ji, pois i + j = j + i, como pode ser observado. Assim, no
+grafo cada aresta representa poss´ıveis voos diretos de ida e volta entre os v´ertices (aero-
+portos) que ela conecta. Ent˜ao os voos do aeroporto 1 para o 2 e do aeroporto 2 para o
+1, por exemplo, ser˜ao representados por uma ´unica aresta que conectar´a os v´ertices 1 e
+2. Desse modo, obtemos o seguinte grafo:
+
+O grafo obtido, como pode ser visto, n˜ao ´e conexo, pois ele possui duas componentes
+
+conexas, o que pode ser melhor observado na seguinte ﬁgura:
+
+Assim, para o aeroporto 9 s´o existem voos dos aeroportos 3 e 6, ou seja, n˜ao existe
+voo (nem com escalas) do aeroporto 1 para o aeroporto 9, pois os v´ertices 1 em 9 est˜ao
+(cid:4)
+em diferentes componentes conexas.
+
+Exemplo 2.3. Prove que ao conectar dois v´ertices u e v pertencentes a um grafo G por
+uma aresta, cria-se um ciclo C se, e somente se, u e v estiverem na mesma componente
+conexa.
+
+Resolu¸c˜ao. ⇒ Vamos supor, por absurdo, que u e v estejam em duas componentes
+conexas distintas, ou seja, G ´e desconexo e u e v n˜ao est˜ao ligados por caminho em G.
+
+2.3 PASSEIOS EULERIANOS
+
+15
+
+Figura 2.6 Problema do aeroporto
+
+Figura 2.7 Problema do aeroporto (2)
+
+Se adicionarmos a aresta uv, um ciclo C ´e formado no grafo resultante G(cid:48). Retirando
+a aresta uv pertencente a C, o grafo volta `a condi¸c˜ao inicial, sendo que u e v estariam
+ligados por um caminho (pela proposi¸c˜ao 2.3), chegando a uma contradi¸c˜ao. Logo, se ao
+conectar u e v em G um ciclo C ´e formado, ent˜ao u e v est˜ao na mesma componente
+conexa.
+
+⇐ Agora, por hip´otese, u e v est˜ao em uma mesma componente conexa de G. Temos
+que provar que ao conectar u e v por uma aresta uv, um ciclo C ser´a formado. Se u e v
+est˜ao na mesma componente conexa, que ´e um subgrafo conexo, ent˜ao consequentemente
+u e v podem ser conectados por um caminho M em G (Deﬁni¸c˜ao 2.5). Como existe um
+caminho M de u a v, ao adicionar a aresta uv existir˜ao dois caminhos distintos de u a v,
+(cid:4)
+ou seja, um ciclo C ser´a formado.
+
+2.3 PASSEIOS EULERIANOS
+
+Ap´os o desaﬁo das pontes do rio Preguel, proposto pelos cidad˜aos de K¨onigsberg e soluci-
+onado por Euler, que deu origem `a Teoria dos Grafos, foi deﬁnido como passeio Euleriano
+
+16
+
+PERCURSOS
+
+aquele que passa por cada aresta do grafo exatamente uma vez, podendo ser aberto ou
+fechado, e Grafo Euleriano o grafo que cont´em um passeio Euleriano. Ap´os analisar cui-
+dadosamente diferentes tipos de grafo quanto `a poss´ıvel existˆencia de passeios Eulerianos,
+foi enunciado o seguinte Teorema:
+
+Teorema 2.1. a)Um grafo conexo G possui um passeio Euleriano fechado se, e somente
+se, n˜ao possui nenhum v´ertice com grau ´ımpar.
+
+b) Um grafo conexo possui exatamente dois v´ertices com grau ´ımpar se, e somente se,
+
+ele tem um passeio Euleriano que come¸ca em um desses v´ertices e termina no outro.
+
+c) Se um grafo conexo possui mais de dois v´ertices com grau ´ımpar, ent˜ao ele n˜ao tem
+
+passeio Euleriano.
+
+Demonstra¸c˜ao. (a) ⇒ A demonstra¸c˜ao da ida ´e bem simples. Supondo, por hip´otese,
+que o grafo G possui um passeio euleriano fechado P , ent˜ao cada vez que P passa por
+um v´ertice v , ele utiliza duas arestas incidentes: a que chega a P e a que sai de P , no
+sentido do passeio. Isso se deve ao fato do passeio ser fechado. Pela deﬁni¸c˜ao de passeio
+Euleriano cada aresta ocorre uma ´unica vez, ent˜ao o grau de cada v´ertice ´e par.
+
+⇐ Vamos provar a volta por indu¸c˜ao. Temos, por hip´otese, que G s´o possui v´ertices de
+grau par. O caso em que G n˜ao possui arestas ´e trivial. Ent˜ao, por hip´otese de indu¸c˜ao,
+vamos supor que o resultado ´e v´alido para G com menos de n arestas. Pela conexidade
+de G, podemos garantir que todos os seus v´ertices possuem grau maior ou igual a dois; e
+pela Proposi¸c˜ao 2.1, garantimos que G cont´em um ciclo C.
+
+Se C possui todas as arestas de G, a prova est´a conclu´ıda. Vamos supor, ent˜ao, que
+C (cid:54)= G. Removendo de G todas as arestas de C, obtemos um grafo remanescente H,
+eventualmente desconexo, com menos arestas que G. Todos os v´ertices de H continuam
+possuindo grau par, pois o que foi removido de G foi um ciclo. Pela hip´otese de indu¸c˜ao,
+cada componente de H possui um passeio Euleriano fechado, e como G ´e conexo, cada
+componente de H possui pelo menos um v´ertice em comum com C. Agora, podemos
+tra¸car o passeio Euleriano fechado seguindo as arestas de C, at´e um v´ertice n˜ao isolado
+de H ser alcan¸cado, e tra¸car um passeio Euleriano fechado na componente de H que
+cont´em tal v´ertice. Em seguida, continuamos a tra¸car o passeio pelas arestas de C
+at´e encontrar outro v´ertice n˜ao isolado que perten¸ca a outra componente conexa de H,
+tra¸cando outro passeio Euleriano fechado por ela, e assim por diante. O processo se
+repete sucessivamente at´e que o trajeto tenha passado por todas as componentes de H e
+retorne ao v´ertice inicial, ﬁnalizando o passeio Euleriano fechado.
+
+(b) ⇒ Seja 2n − 1 o grau de um v´ertice v1 pertencente a um grafo G, com n ∈ N , e
+sejam ai, 1 ≤ i ≤ 2n−1, todas as arestas que passam por v1. Vamos supor, primeiramente,
+um passeio P que come¸ca em v1. Neste caso, a aresta a1 sai de v1, enquanto a aresta a2
+chega a v1, e assim por diante. Como o grau de v1 ´e ´ımpar, ent˜ao a aresta a2n−1 sair´a de
+v1, e o passeio acabar´a em outro v´ertice vk. Seja b1 uma aresta que chega a vk, b2 uma
+aresta que sai deste v´ertice, e assim por diante. Como o passeio termina em vk, ent˜ao a
+´ultima aresta bi que chega a ele tem ´ındice ´ımpar, logo vk tem grau ´ımpar. Ou seja, P
+come¸ca e termina em v´ertices de grau ´ımpar.
+
+Suponhamos, ent˜ao, que P n˜ao come¸ca em v1. Ent˜ao, em algum momento, a aresta a1
+vai chegar a v1, enquanto o passeio vai seguir pela aresta a2 saindo do v´ertice, e assim por
+
+2.3 PASSEIOS EULERIANOS
+
+17
+
+diante. Neste caso, sempre que o ´ındice de ai for ´ımpar, signiﬁca que ai est´a chegando a
+v1, no sentindo do passeio, da mesma forma que estar´a saindo de v1 sempre que seu ´ındice
+for par. Como o grau de v1 ´e ´ımpar, signiﬁca que a ´ultima aresta a passar por v1, aquela
+de ´ındice 2n − 1, estar´a chegando a v1, encerrando assim o passeio neste v´ertice. Como
+cada aresta est´a sendo usada uma ´unica vez no passeio, ent˜ao P ´e Euleriano. Portanto,
+se um grafo G possui algum v´ertice de grau ´ımpar, um passeio Euleriano em G ou come¸ca
+ou termina neste v´ertice. Logo, se G possui exatamente dois v´ertices de grau ´ımpar, ele
+possui um passeio Euleriano que come¸ca em um destes v´ertices e termina no outro.
+
+⇐ Por hip´otese, G possui um passeio Euleriano que come¸ca no v´ertice v1 e termina
+no v´ertice v2, com v1, v2 ∈ G. Se adicionarmos em G uma aresta k, conectando v1 a v2,
+ent˜ao o grafo resultante G(cid:48) possuir´a um passeio Euleriano fechado, e de acordo com a
+parte a deste Teorema, todos os v´ertices de G(cid:48) tˆem grau par. Ao remover k de G(cid:48) obtemos
+novamente o grafo G, e os graus dos v´ertices v1 e v2 diminuem em 1 unidade, ou seja,
+passam a ter grau ´ımpar, enquanto os graus dos demais v´ertices permanecem inalterados.
+Assim, v1 e v2 s˜ao os ´unicos v´ertices com grau ´ımpar em G.
+
+(c) Como demonstrado na parte b deste Teorema, se um grafo conexo G possui um
+v´ertice de grau ´ımpar, ent˜ao um passeio Euleriano em G come¸ca ou termina neste v´ertice.
+Logo, se G possuir mais de dois v´ertices de grau ´ımpar, ´e imposs´ıvel que contenha um
+(cid:4)
+passeio Euleriano P , pois P come¸caria em um deles e terminaria no outro.
+
+De volta ao problema das pontes de K¨onigsberg, seria imposs´ıvel um passeio de modo
+que se atravessasse cada ponte uma ´unica vez (passeio Euleriano), j´a que os distritos
+representavam v´ertices de graus 3, 5, 3, e 3, ou seja, mais de dois v´ertices de grau ´ımpar.
+
+Exemplo 2.4. Seja G = (V ; E) um grafo simples conexo n˜ao-euleriano. Queremos
+construir um grafo H que seja euleriano e que contenha G como subgrafo. Considere os
+seguintes poss´ıveis processos de constru¸c˜ao:
+
+(a) Acrescenta-se um novo v´ertice, ligando-o a cada v´ertice de G por uma aresta.
+(b) Acrescenta-se um novo v´ertice, ligando-o a cada v´ertice de grau ´ımpar de G por
+
+uma aresta.
+
+(c) Cria-se uma nova c´opia G(cid:48) do grafo G e acrescenta-se uma aresta ligando cada par
+
+de v´ertices correspondentes.
+
+(d) Escolhe-se um v´ertice arbitr´ario de G e acrescentam-se arestas ligando este v´ertice
+
+a todo v´ertice de grau ´ımpar de G.
+
+(e) Duplicam-se todas as arestas de G.
+(f) Acrescentam-se arestas a G at´e se formar o grafo completo com |V | v´ertices.
+Quais dos processos acima sempre constroem corretamente o grafo H?
+
+Resolu¸c˜ao. Primeiramente, se H ´e Euleriano ent˜ao cont´em um passeio Euleriano, e de
+acordo com o Teorema 2.1 isso implica que todos os v´ertices de H tˆem grau par (passeio
+Euleriano fechado) ou H possui no m´aximo dois v´ertices de grau ´ımpar (passeio Euleriano
+aberto). Da mesma forma, se G ´e n˜ao-Euleriano, ent˜ao possui mais de dois v´ertices de
+grau ´ımpar, e de acordo com o Corol´ario 1.1, G possui uma quantidade par de v´ertices
+com grau ´ımpar. Vamos analisar cada um dos processos de constru¸c˜ao de H propostos.
+
+18
+
+PERCURSOS
+
+(a) Ao acrescentar um v´ertice v e conect´a-lo aos v´ertices de G por arestas, os v´ertices
+que tinham grau par passam a ter grau ´ımpar, e os que tinham grau ´ımpar passam a ter
+grau par. Assim, se G possu´ıa mais de dois v´ertices de grau par, H ter´a mais de dois
+v´ertices de grau ´ımpar, e neste caso n˜ao seria Euleriano. Ent˜ao este processo nem sempre
+constr´oi o grafo H corretamente.
+
+(b)Ao acrescentar um v´ertice v e conect´a-lo aos v´ertices de G de grau ´ımpar por
+arestas, os v´ertices de grau par continuar˜ao com o mesmo grau, e os v´ertices de grau
+´ımpar passar˜ao a ter grau par. Al´em disso, o grau de v ser´a igual `a quantidade de v´ertices
+de grau ´ımpar em G, que sabemos que ´e par. Assim, neste processo de constru¸c˜ao todos
+os v´ertices de H ter˜ao grau par, o que garante que H ´e Euleriano.
+
+(c) Criando uma c´opia G(cid:48) de G, ao ligar cada um de seus v´ertices ao v´ertice corres-
+pondente em G, todos os v´ertices pertencentes a G e a G(cid:48) ter˜ao seu grau aumentado em
+1, ou seja, o grau que era par agora ser´a ´ımpar e vice-versa. Mas se G possui dois ou
+mais v´ertices de grau par, H ter´a quatro ou mais v´ertices de grau ´ımpar, e nesse caso
+n˜ao seria Euleriano, ou seja, este processo nem sempre constr´oi o grafo H corretamente.
+(d) Ao escolher um v´ertice v arbitr´ario de G, existem duas possibilidades: v ter grau
+par e v ter grau ´ımpar. Vamos analisar primeiramente o caso em que o grau de v ´e par.
+Como ele ser´a conectado a todo v´ertice de grau ´ımpar G, que possui uma quantidade par
+de v´ertices de grau ´ımpar, ent˜ao o grau de v permanecer´a par, pois a soma de dois n´umeros
+pares resulta em um n´umero par. J´a os demais v´ertices de G de grau par continuar˜ao
+com o mesmo grau, j´a que nenhuma aresta ser´a conectada a eles. E os v´ertices de G que
+possu´ıam grau ´ımpar ter˜ao em H mais uma aresta conectada a cada um deles, ou seja,
+seus graus passar˜ao a ser par. Neste caso, todos os v´ertices de H teriam grau par.
+
+Vamos considerar agora o caso em que o v´ertice v escolhido arbitrariamente tem grau
+´ımpar. Como G tem um n´umero par de v´ertices de grau ´ımpar, excluindo v resta uma
+quantidade ´ımpar destes v´ertices. Logo, como v ser´a conectado aos demais v´ertices de
+grau ´ımpar em G, ser˜ao adicionadas a ele um n´umero ´ımpar de arestas. Assim, seu grau
+passar´a a ser par, pois a soma de dois n´umeros ´ımpares resulta em um n´umero par. Os
+demais v´ertices de grau ´ımpar em G ter˜ao mais uma aresta adicionada a eles em H,
+ou seja, passar˜ao a ter grau par. Como os v´ertices de G de grau par n˜ao ter˜ao arestas
+adicionadas a eles, permanecer˜ao com grau par em H. Assim, em ambos os casos H
+possui todos os v´ertices de grau par, ou seja, ´e Euleriano.
+
+(e) Ao duplicar todas as arestas de G, cada um dos v´ertices de H ter´a o dobro de
+arestas incidentes que possu´ıa em G, ou seja, o grau de cada um destes v´ertices ser´a
+dobrado. Com isto, garantimos que todos os v´ertices de H ter˜ao grau par (pois todos os
+graus s˜ao m´ultiplos de 2), ou seja, H ´e Euleriano. Logo, este processo sempre constr´oi
+corretamente o grafo H.
+
+(f) Ao transformar G de n v´ertices em um grafo completo H, o grau de cada um
+desses v´ertices ser´a n − 1. Ent˜ao se n for par, ou seja, se G tiver um n´umero par de
+v´ertices, todos os v´ertices de H ter˜ao grau ´ımpar. Neste caso, H n˜ao seria Euleriano para
+n > 2, ou seja, este processo nem sempre constr´oi o grafo H corretamente.
+
+Portanto, dos processos acima, os que sempre constroem corretamente o grafo H s˜ao
+(cid:4)
+
+os descritos em (b), (d) e (e).
+
+CAP´ITULO 3
+
+3.1 DEFINIC¸ ˜AO
+
+´ARVORES
+
+Um grafo G ´e denominado ´arvore se ele for conexo e n˜ao contiver qualquer ciclo
+como subgrafo. Por ser conexo, entendemos que quaisquer dois v´ertices de G podem ser
+conectados por um caminho, ou seja, G precisa de uma quantidade m´ınima de arestas
+que satisfa¸cam a essa condi¸c˜ao. Ademais, por n˜ao conter ciclos, G n˜ao deve ter arestas
+excessivas, ou seja, dever´a ter uma quantidade m´axima de arestas para respeitar a essa
+condi¸c˜ao. A ﬁgura 3.1 mostra algumas variedades de ´arvores.
+
+Figura 3.1 Exemplos de ´arvores
+
+Teorema 3.1. (a) Um grafo G ´e uma ´arvore se, e somente se, al´em de ser conexo, a
+remo¸c˜ao de qualquer uma de suas arestas o tornaria desconexo.
+
+(b) Um grafo G ´e uma ´arvore se, e somente se, n˜ao contiver nenhum ciclo, mas a
+
+adi¸c˜ao de qualquer nova aresta implicaria na cria¸c˜ao de um.
+
+(c) Um grafo G ´e uma ´arvore se, e somente se, cada dois de seus v´ertices s˜ao conectados
+
+por um ´unico caminho.
+
+(d) Um grafo G ´e uma ´arvore, se e somente se, pode ser obtido atrav´es do Procedimento
+
+de Crescimento-de- ´Arvore, descrito a seguir:
+1) Come¸ca-se com um simples v´ertice;
+2) Um novo v´ertice ´e criado e conectado atrav´es de uma nova aresta a qualquer v´ertice
+
+j´a existente, e esse processo ´e repetido qualquer n´umero de vezes.
+
+Demonstra¸c˜ao. (a) ⇒ Se o grafo G ´e uma ´arvore, ent˜ao ele ´e conexo e a remo¸c˜ao de
+qualquer uma de suas arestas resulta em um grafo desconexo. Pela deﬁni¸c˜ao de ´arvore,
+segue diretamente que G ´e conexo. Ent˜ao, basta provar que ao remover qualquer uma
+de suas arestas ele deixa de ser. Vamos supor, por absurdo, que removendo a aresta
+uv de G ele resulte em um grafo G(cid:48) ainda conexo. Ent˜ao, podemos garantir que existe
+em G(cid:48) um caminho P que conecta u a v (pela deﬁni¸c˜ao de grafo conexo). Portanto, se
+
+19
+
+20
+
+´ARVORES
+
+adicionarmos de volta a aresta uv a G(cid:48), resultando novamente em G, o caminho P e a
+aresta uv formar˜ao um ciclo em G, o que contradiz diretamente a deﬁni¸c˜ao de ´arvore
+(que n˜ao pode conter nenhum ciclo). Logo, se o grafo G ´e uma ´arvore, ou seja, ´e conexo,
+ent˜ao a remo¸c˜ao de qualquer uma de suas arestas implica em um grafo desconexo.
+
+⇐ Se G ´e um grafo conexo e a remo¸c˜ao de qualquer uma de suas arestas resulta em
+um grafo G(cid:48) desconexo, ent˜ao G ´e uma ´arvore. Para comprovar isto, basta mostrar que G
+n˜ao cont´em nenhum ciclo, pois por hip´otese G ´e conexo. Vamos supor, por absurdo, que
+G contenha um ciclo C. Ao remover uma aresta uv de C, ainda continuar´a existindo um
+caminho que conecta u a v (Proposi¸c˜ao 2.3), e, portanto, o grafo resultante G(cid:48) continuar´a
+sendo conexo, o que contradiz a hip´otese de que ao remover uma aresta de G o grafo
+resultante ´e desconexo. Portanto, se G ´e um grafo conexo e ao remover qualquer uma de
+suas arestas o grafo G(cid:48) resultante for desconexo, ent˜ao G ´e uma ´arvore.
+
+(b)⇒ Se o grafo G ´e um ´arvore, ent˜ao ele n˜ao cont´em nenhum ciclo, mas a adi¸c˜ao
+de qualquer aresta implicaria na cria¸c˜ao de um ciclo no grafo resultante. Pela deﬁni¸c˜ao
+de ´arvore, segue diretamente que G n˜ao possui nenhum ciclo. Portanto, basta provarmos
+que se adicionarmos uma aresta uv a G, surge um ciclo C no grafo resultante G(cid:48). Sejam
+u e v v´ertices de G. Como G ´e uma ´arvore, ent˜ao, por conexidade, existe um caminho
+C ux1x2...v conectando u a v, onde xi tamb´em s˜ao v´ertices de G. Ao adicionar a G uma
+aresta uv, obtemos o ciclo ux1x2...vu em G(cid:48).
+
+⇐ Queremos provar que se um grafo G n˜ao cont´em nenhum ciclo e ao adicionarmos
+uma aresta a ele o grafo resultante cont´em um ciclo, ent˜ao G ´e uma ´arvore. Note que
+basta provar que G ´e conexo. Considere dois v´ertices u e v arbitr´arios pertencentes a G.
+Se u e v est˜ao ligados por uma aresta, ent˜ao est˜ao conectados por um caminho. Sen˜ao,
+acrescente a aresta uv. Deste modo, produziremos um ciclo C. Removendo a aresta uv de
+C, temos que uv est˜ao ligados por um caminho em G (Proposi¸c˜ao 2.3), logo G ´e conexo.
+(c) ⇒ Se G ´e uma ´arvore (hip´otese), ent˜ao G ´e conexo, logo quaisquer dois v´ertices
+u e v pertencentes a G podem ser conectados por um caminho C. Temos que provar
+que esse caminho ´e ´unico. Vamos supor, por absurdo, que C n˜ao seja ´unico, ou seja,
+existe outro caminho C (cid:48) em G, diferente de C, que conecte u e v. Seguindo o caminho
+na dire¸c˜ao de u a v, seja x o ´ultimo v´ertice que C e C (cid:48) possuem em comum antes de se
+separar, e seja y o v´ertice onde C e C (cid:48) voltam a se encontrar.
+
+Figura 3.2 Caminhos C e C’
+
+Perceba que x pode ou n˜ao coincidir com u, e y pode ou n˜ao coindidir com v (Figura
+3.2). Como x e y s˜ao as extremidades onde C e C (cid:48) se separam, ent˜ao todos os v´ertices
+entre x e y ou pertecem a C ou pertencem a C (cid:48). Logo, existe um ciclo contendo x e y, o
+que contraria a hip´otese de que G ´e uma ´arvore.
+
+⇐ Por hip´otese, existe um ´unico caminho que conecta dois v´ertices u e v quaisquer
+
+3.1 DEFINIC¸ ˜AO
+
+21
+
+de G. Logo, G ´e conexo (pois existe caminho de u a v) e G n˜ao cont´em nenhum ciclo
+(pois este caminho ´e ´unico). Logo, G ´e uma ´arvore.
+
+(d) ⇒ Vamos provar por indu¸c˜ao sobre o n´umero de v´ertices. Seja G uma ´arvore de
+um ´unico v´ertice, ent˜ao G foi constru´ıda pelo Procedimento de Crescimento-de-´arvores,
+pois este ´e o primeiro passo do procedimento. Vamos supor, ent˜ao, que G possui pelo
+menos dois v´ertices. De acordo com a Proposi¸c˜ao 2.1, se os graus dos v´ertices de G fossem
+todos maiores ou iguais a 2, ent˜ao G possuiria um ciclo. Mas, como G ´e um ´arvore, ent˜ao
+n˜ao cont´em nenhum ciclo, o que implica que pelo menos um de seus v´ertices tem grau
+1, o qual chamaremos de v. Ao remover v de G, juntamente com sua aresta incidente,
+obtemos um grafo G(cid:48). Certamente, G(cid:48) ´e conexo, pois quaisquer v´ertices x e y pertencentes
+a G(cid:48) podem ser conectados por um caminho de G, o qual n˜ao passa por v que tem grau 1.
+Como G(cid:48) foi obtido por uma remo¸c˜ao de v´ertice e aresta de G, que n˜ao continha nenhum
+ciclo por ser ´arvore, ent˜ao G(cid:48) tamb´em n˜ao cont´em nenhum ciclo, logo G(cid:48) ´e ´arvore.
+
+Assim, pela hip´otese de indu¸c˜ao, toda ´arvore G(cid:48) com menos v´ertices que a ´arvore G
+surge por constru¸c˜ao atrav´es do Procedimento de Crescimento-de-´arvore. Ent˜ao, pode-
+mos aﬁrmar que G surge de G(cid:48) ao executar mais um passo do procedimento, ou seja, toda
+´arvore G pode ser obtida atrav´es dele.
+
+⇐ Seja um grafo G obtido pelo Procedimento de Crescimento-de- ´Arvore. Como ele
+come¸cou a ser criado com um ´unico v´ertice, ent˜ao neste momento, era uma ´arvore. Se
+conseguirmos mostrar que durante as etapas do procedimento este grafo nunca deixou
+de ser uma ´arvore, ´e imediato que o grafo ﬁnal G ´e uma ´arvore. Mais precisamente,
+demonstraremos que se G(cid:48) ´e uma ´arvore e que se G foi obtido ao adicionar um novo
+v´ertice e conect´a-lo a um v´ertice de G(cid:48), ent˜ao G ´e uma ´arvore.
+
+Suponhamos que G foi obtido ao conectar, atrav´es de uma aresta a1, um novo v´ertice
+y a um certo v´ertice x de G(cid:48). Como G(cid:48) ´e ´arvore, ent˜ao ´e conexo, assim qualquer v´ertice
+w de G(cid:48) pode ser conectado ao v´ertice x por um caminho em G(cid:48). Podemos garantir que
+G tamb´em ´e conexo, pois como um v´ertice w qualquer de G(cid:48) pode ser conectado a x por
+um caminho, e como x ´e ligado a y por a1, ent˜ao w pode ser conectado a y, e al´em disso
+quaisquer dois v´ertices de G que estejam em G(cid:48) j´a poderiam ser conectados.
+
+Ent˜ao, para provar que G ´e uma ´arvore, basta mostrar que n˜ao possui nenhum ciclo.
+Ao conectar y a G(cid:48) por a1 e formar G, ´e evidente que o v´ertice y possui grau 1, pois
+sua ´unica aresta incidente ´e a1. Como G(cid:48) ´e ´arvore, n˜ao existe nenhum ciclo em G(cid:48), e
+(cid:4)
+consequentemente, G tamb´em n˜ao possui nenhum ciclo.
+
+O Procedimento de Crescimento-de-´arvore estabelece algumas propriedades de ´arvores.
+Uma delas ´e relacionada ao n´umero de arestas que uma ´arvore possui, o qual depende
+exclusivamente do n´umero de v´ertices da mesma.
+
+Teorema 3.2. Toda ´arvore que possui n v´ertices, possui n − 1 arestas.
+
+Demonstra¸c˜ao. Como toda ´arvore pode ser constru´ıda atrav´es do Procedimento de
+Crescimento-de-´arvore, ap´os o primeiro passo, ela possui 1 v´ertice e nenhuma aresta, ou
+seja, a quantidade de v´ertices excede em 1 a quantidade de arestas. Ao executar o se-
+gundo passo, sempre ´e adicionado `a arvore um v´ertice e uma aresta. Como toda a ´arvore
+´e constru´ıda atrav´es da repeti¸c˜ao sucessiva do segundo passo do procedimento, ou seja,
+
+22
+
+´ARVORES
+
+adicionando sempre um v´ertice e uma aresta `a ´arvore, a diferen¸ca entre a quantidade de
+v´ertices e arestas da ´arvore n˜ao se alterar´a em nenhum momento. Logo, a ´arvore sempre
+ter´a um v´ertice a mais que a quantidade de arestas. Assim, se G ´e uma ´arvore de n
+(cid:4)
+v´ertices, ent˜ao G possui n − 1 arestas.
+
+3.2
+
+´ARVORES ENRAIZADAS E ´ARVORES GERADORAS
+
+Seja G um grafo conexo com n arestas ai, onde 1 ≤ i ≤ n. Quando uma de suas
+arestas ai ´e removida, o gr´aﬁco remanescente pode ou n˜ao permanecer conexo. Caso
+ele ﬁque desconexo, dizemos que ai ´e uma aresta-de-corte. Consequentemente, podemos
+concluir que toda aresta de uma ´arvore ´e aresta-de-corte (Teorema 3.1).
+
+Vamos agora considerar o caso em que G n˜ao ´e uma ´arvore, ou seja, entre suas arestas
+h´a pelo menos uma que n˜ao ´e aresta-de-corte. Se removermos cada uma dessas arestas
+ai at´e que todas as arestas restantes sejam arestas-de-corte, o grafo resultante G(cid:48), que ´e
+subgrafo de G, ´e uma ´arvore, e ´e denominado ´arvore geradora de G. Como o processo de
+remo¸c˜ao de arestas pode ser feito de v´arias maneiras, um grafo conexo pode ter v´arias
+´arvores geradoras.
+
+´E poss´ıvel, em uma ´arvore G qualquer, que um dos seus v´ertices seja escolhido e
+designado como raiz, a qual determina uma hierarquia aos demais v´ertices, dependendo
+da “distˆancia” que eles se encontrem dela. A este tipo de ´arvore denominamos ´arvore
+enraizada, onde cada aresta ´e direcionada no sentido de se afastar da raiz.
+
+Deﬁni¸c˜ao 3.1. Dada uma ´arvore G qualquer, uma raiz de G ´e qualquer v´ertice de G
+escolhido e denominado, a partir da escolha, de raiz. A ´avore G ´e ent˜ao chamada de
+´arvore enraizada.
+
+Seja G uma ´arvore enraizada com raiz r, e sejam u e v v´ertices quaisquer de G.
+Da parte (c) do Teorema 3.1, sabemos que existe um ´unico caminho que conecta r a
+v. Se neste caminho o v´ertice u precede v imediatamente, ent˜ao u ´e chamado pai de
+v. Os outros vizinhos de v s˜ao denominados seus ﬁlhos. V´ertices com o mesmo pai s˜ao
+chamados de irm˜aos. A raiz r n˜ao tem pai.
+
+Figura 3.3 ´Arvore enraizada
+
+Na ﬁgura 3.3 acima, temos um exemplo de uma ´arvore enraizada de raiz r, onde
+o v´ertice u ´e pai dos v´ertices x, y e v, que s˜ao irm˜aos, assim como os v´ertices k, w e
+
+3.2 ´ARVORES ENRAIZADAS E ´ARVORES GERADORAS
+
+23
+
+z tamb´em o s˜ao, pois s˜ao ﬁlhos do mesmo pai v. Assim, um v´ertice pode ter qualquer
+n´umero de ﬁlhos, incluindo zero, como ´e o caso dos v´ertices x, y, k, w e z ainda na mesma
+ﬁgura. Neste caso, s˜ao chamados de f olhas. Portanto, em uma ´arvore com mais de um
+v´ertice, suas folhas s˜ao aqueles de 1, diferentes da raiz. No exemplo da ﬁgura 3.3, a raiz
+r tem grau 1, mas n˜ao ´e folha.Quando a ´arvore consiste em um ´unico v´ertice, ent˜ao este
+´e uma folha.
+
+Proposi¸c˜ao 3.1. Em uma ´arvore G todo v´ertice diferente da raiz possui um ´unico pai.
+
+Demonstra¸c˜ao. Seja r a raiz de uma ´arvore G e seja v um de seus v´ertices (diferente
+de r). Da parte (c) do Teorema 3.1, sabemos que G cont´em um ´unico caminho conec-
+tando r a v, e por deﬁni¸c˜ao o v´ertice que vem imediatamente antes de v neste caminho
+´e denominado seu pai. Como o caminho ´e ´unico, tal v´ertice tamb´em ´e ´unico, tenho v,
+(cid:4)
+portanto, um ´unico pai.
+
+Proposi¸c˜ao 3.2. Em uma ´arvore enraizada, todo v´ertice ´e pai de seus ﬁlhos.
+
+Demonstra¸c˜ao. Seja G uma ´arvore enraizada de raiz r e sejam v e u v´ertices de G,
+onde u ´e ﬁlho de v. Queremos provar que v ´e pai de u.
+
+Seja P o caminho de v a r, neste sentido. Podemos concluir que u n˜ao ´e o primeiro
+v´ertice depois de v, pois se fosse, ent˜ao u seria pai de v, e n˜ao seu ﬁlho. Al´em disso,
+u tamb´em n˜ao pode ser outro v´ertice de P , pois al´em da aresta uv, existiria um outro
+caminho em P de u a v, e em uma ´arvore dois v´ertices s˜ao conectados por um ´unico ca-
+minho (parte c do Teorema 3.1). Ou seja, u n˜ao faz parte de P . Assim, ao adicionarmos
+o v´ertice u a P e a aresta uv, obtemos um caminho P (cid:48) de u a r. Mas v ser´a o primeiro
+(cid:4)
+v´ertice depois de u em P (cid:48), logo v ´e pai de u.
+
+Teorema 3.3. Toda ´arvore G com no m´ınimo dois v´ertices, possui pelo menos dois
+v´erties de grau 1.
+
+Demonstra¸c˜ao. Pela proposi¸c˜ao 2.1, podemos concluir que G possui pelo menos um
+v´ertice de grau 1, pois caso contr´ario conteria um ciclo ou um v´ertice de grau 0, e ambas
+as condi¸c˜oes contrariam a deﬁni¸c˜ao de ´arvore. Considere que v ´e este v´ertice de guau 1.
+Vamos supor um passeio P em G, sem repeti¸c˜ao de arestas, come¸cando por v. Como G
+´e uma ´arvore e n˜ao possui ciclos, ent˜ao P n˜ao pode passar por um mesmo v´ertice mais
+de uma vez, logo P n˜ao pode terminar em v. Seja u o v´ertice onde o passeio termina.
+Como P passa por u uma ´unica vez, ent˜ao u possui uma ´unica aresta incidente, logo u
+tem grau 1. Portanto, se G ´e uma ´arvore com pelo menos dois v´ertices, ent˜ao possui no
+(cid:4)
+m´ınimo dois v´ertices de grau 1.
+
+Exerc´ıcio 3.1. Prove que se uma ´arvore G possui um v´ertice de grau d, ent˜ao possui
+pelo menos d v´ertices de grau 1.
+
+24
+
+´ARVORES
+
+Figura 3.4 Recorte de G
+
+Resolu¸c˜ao. Seja v o v´ertice de G que tem grau d, e sejam v1, v2, ... e vd os v´ertices
+conectados a v pelas arestas a1, a2, ... e ad, respectivamente, como ilustrado na ﬁgura 3.4
+abaixo.
+
+Como G ´e arvore, ou seja, quaisquer dois pares de v´ertices vi e vj (com i (cid:54)= j e
+1 ≤ i, j ≤ d) s´o podem ser conectados por um ´unico caminho (parte c do Teorema 3.1),
+ent˜ao se removermos de G o v´ertice v e as arestas a1, a2, ... e ad, o grafo remanescente G(cid:48)
+ser´a formado por d componentes conexas, onde cada uma delas conter´a um dos v´ertices
+vi (1 ≤ i ≤ d). Como cada componente conexa n˜ao cont´em nenhum ciclo (pois G era
+´arvore), ent˜ao podemos concluir que cada uma dessas componentes ser´a tamb´em uma
+´arvore.
+
+De acordo com o Teorma 3.3, se cada uma destas componentes possu´ırem no m´ınimo
+dois v´ertices, ent˜ao cada uma ter´a no m´ınimo dois v´ertices de grau 1, onde os v´ertices
+vi podem ser folhas de G ou n˜ao. Caso contr´ario, a componente ter´a um ´unico v´ertice,
+ou seja, ser´a a pr´opria folha vi. Em todo caso, pelo menos uma das folhas ´e folha de G,
+ent˜ao G possui no m´ınimo d v´ertices de grau 1, como quer´ıamos demonstrar.
+
+Uma outra solu¸c˜ao deste problema ´e considerar o Procedimento de Crescimento-de-
+´arvores. Supondo que G foi constru´ıda inicialmente pelo v´ertice v e todas as suas d
+arestas remanescentes, ligadas aos v´ertices v1, v2, ...vd. Ent˜ao nesta etapa de constru¸c˜ao
+G possu´ıa d v´ertices de grau 1. Ao acrescentar arestas e v´ertices a um v´ertice vi, este
+deixa de ter grau 1, mas pelo menos mais uma folha ´e criada. Assim, a quantidade de
+v´ertices de grau 1 nunca diminuir´a, sendo no m´ınimo d, ou seja, se uma ´arvore G possui
+(cid:4)
+um v´ertice de grau d, ent˜ao possui pelo menos d v´ertices de grau 1.
+
+Seja G uma ´arvore com n v´ertices. A depender da utilidade ou ﬁnalidade atribu´ıda a
+G, ou que informa¸c˜oes sobre ela vocˆe deseja registrar, ´e poss´ıvel que haja a necessidade de
+especiﬁcar ou nomear seus v´ertices e arestas. Assim, cada um dos seus n v´ertices podem
+ser numerados de “0” a “n-1”, e cada aresta pode ser referida listando suas extremidades,
+ou seja, os v´ertices que ela conecta. Este tipo de ´arvore, cujos v´ertices s˜ao rotulados de
+0 a n − 1, ´e denomidado ´arvore rotulada (Figura 3.5).
+
+3.2 ´ARVORES ENRAIZADAS E ´ARVORES GERADORAS
+
+25
+
+Figura 3.5 ´Arvore rotulada
+
+Existem diversas maneiras de se armazenar uma ´arvore rotulada. Um modo bem ´util
+e eﬁciente ´e atrav´es de uma codiﬁca¸c˜ao. Tomando G como uma ´arvore enraizada onde o
+v´ertice 0 ´e tido como sua raiz, podemos nos referir a cada aresta pelos dois v´ertices que
+ela conecta, citando primeiro o mais distante da raiz e depois a extremidade mais pr´oxima
+da mesma. Organizando este c´odigo da aresta com um n´umero abaixo do outro, temos
+que o n´umero que representa o v´ertice da linha de baixo ´e o pai do v´ertice representado
+na linha acima.
+
+A ordem em que as arestas aparecem pode ser determinada por v´arios crit´erios. Por
+exemplo, as arestas podem ser ordenadas pela ordem crescente de sua primeira extremi-
+dade. Tomando como exemplo a ´arvore da ﬁgura 3.5, onde o v´ertice 0 ´e sua raiz, temos
+a seguinte tabela:
+
+Como pode ser observado, o v´ertice 0 n˜ao aparece na primeira linha, pois como ´e a
+raiz, n˜ao ´e ﬁlho de nenhum outro v´ertice. Ademais, como uma ´arvore de n v´ertices possui
+n − 1 arestas (Teorema 3.2), este ser´a o n´umero de colunas da tabela. No caso da ´arvore
+tomada como exemplo, se ela possui 12 v´ertices, a tabela apresenta 11 colunas. Como
+a primeira linha ser´a sempre numerada pelos v´ertices de 1 a n − 1, em ordem crescente,
+ela pode ser dispensada. Assim, o c´odigo da ´arvore ser´a composto pela segunda linha da
+tabela, e ´e chamado de c´odigo de pai.
+
+Sendo considerado como um aprimoramento do c´odigo de pai, existe um determinado
+c´odigo onde o crit´erio para estabelecer a ordem das arestas ´e mais reﬁnado. Este ´e
+denominado c´odigo de Pr¨ufer, e em vez de ser formado por uma sequˆencia de n − 1
+r´otulos, ser´a formado por n − 2. J´a a ordem em que as arestas s˜ao listadas, considerando
+uma ´arvore G de n − 1 v´ertices, ´e determinada da seguinte maneira:
+
+1) Procura-se a folha (v´ertice de grau 1 que n˜ao seja pai de ningu´em) de menor r´otulo,
+
+e a aresta com essa extremidade ´e registrada.
+
+2) Em seguida, este v´ertice e aresta s˜ao removidos, atualizando a ´arvore, e este pro-
+
+cedimento ´e repetido at´e que a ´ultima aresta seja listada.
+
+Vamos tomar como exemplo novamente a ´arvore da ﬁgura 3.5. Como pode ser obser-
+vado, a folha de menor r´otulo ´e o v´ertice 2. Ao removˆe-lo, junto com a aresta 2 − 0, a
+
+26
+
+´ARVORES
+
+folha de menor r´otulo ser´a o v´ertice 5. Ao ser removido com a aresta 5 − 1, a folha de
+menor r´otulo ser´a agora o v´ertice 7, e ap´os sua remo¸c˜ao e a da aresta 7 − 3 ser´a o v´ertice
+8. Removendo o v´ertice 8 e a aresta 8 − 4, a folha de menor r´otulo ser´a o v´ertice 9, que
+ser´a removido junto com a aresta 9 − 4. Agora o v´ertice 4 ´e uma folha, e a de menor
+v´ertice, portanto a pr´oxima a ser removida, junto com a aresta 4 − 1. O v´ertice 1 se torna
+a folha de menor r´otulo, sendo removido com a aresta 1 − 0. Seguindo o procedimento,
+os pr´oximos v´ertices e arestas a serem removidos ser˜ao o 10 com a aresta 10 − 6, o 11
+com a aresta 11 − 6, o 6 com a aresta 6 − 3, e o 3 com a aresta 3 − 0, ﬁcando o c´odigo
+do seguinte modo:
+
+Este c´odigo ´e denominado c´odigo estendido de Pr¨ufer. Como a raiz ´e o ´unico v´ertice
+que n˜ao ´e removido, a ´ultima aresta a ser listada ser´a sempre incidente a ela. Assim,
+sabemos que a ´ultima entrada a ser listada na segunda linha ´e o v´ertice 0. Portanto,
+sendo o c´odigo de Pr¨ufer dado pela segunda linha, n˜ao precisamos da ´ultima entrada, j´a
+que ser´a sempre a mesma. Logo, este c´odigo ser´a formado por uma sequˆencia de n − 2
+r´otulos. Mas como advinhar a ´arvore a partir do c´odigo de Pr¨ufer?
+
+O racioc´ınio para responder a esta pergunta ´e bem simples. Vamos explic´a-lo ultili-
+
+zando o mesmo exemplo, ou seja, suponha que nos foi fornecido o seguinte c´odigo:
+
+Primeiramente, se o c´odigo possui 10 entradas, podemos deduzir que a ´arvore procu-
+rada possui 12 v´ertices rotulados de 0 a 11. Para deduzir a primeira entrada da linha de
+cima, devemos considerar que esta foi a folha de menor r´otulo a ser removida. Como os
+v´ertices que aparecem no c´odigo dado s˜ao pais de algum v´ertice, ent˜ao podemos deduzir
+que n˜ao s˜ao folhas. Assim, a primeira entrada da linha de cima n˜ao pode ser nenhum dos
+v´ertices 0, 1, 3, 4 ou 6. Logo, podemos concluir que a primeira folha a ser removida foi
+o v´ertice 2, pois se ele n˜ao fosse folha seria pai de algu´em e apareceria no c´odigo.
+
+Ao concluir que 2 ´e a primeira entrada da linha de cima no c´odigo estendido, dedu-
+zimos que a segunda entrada ser´a a folha de menor r´otulo ap´os o 2 ser removido. Os
+mesmos v´ertices ainda est˜ao no c´odigo, ou seja, a segunda entrada ainda n˜ao pode ser
+nenhum dos v´ertices 0, 1, 3, 4 ou 6, sendo portanto, o v´ertice 5 o de menor r´otulo. Pelo
+mesmo motivo anterior, conclu´ımos que o 5 ´e a segunda entrada. Seguindo o mesmo
+racioc´ınio, vamos descobrir que a terceira, a quarta e a quinta entrada da primeira linha
+do c´odigo estendido s˜ao, respectivamente, os v´ertices 7, 8 e 9.
+
+Agora, o v´ertice 4 n˜ao se encontra mais entre os v´ertices do c´odigo cujas entradas
+correspondentes da linha de cima ainda n˜ao foram descobertas. Assim, podemos concluir
+que ap´os a remo¸c˜ao do 9, o v´ertice 4 se tornou uma folha, sendo portanto a pr´oxima a ser
+removida, pois ´e a de menor r´otulo. Sabendo que o 4 ´e a sexta entrada, notamos que o
+v´ertice 1 n˜ao ´e pai de nenhuma aresta ainda a ser descoberta, logo ser´a a pr´oxima folha a
+ser removida. De modo semelhante, obtemos as pr´oximas entradas at´e chegar ao c´odigo
+estendido.
+
+3.2 ´ARVORES ENRAIZADAS E ´ARVORES GERADORAS
+
+27
+
+A partir deste racioc´ınio, podemos enunciar o seguinte Teorema:
+
+Teorema 3.4. A segunda linha de um c´odigo estendido de Pr¨ufer determina a primeira.
+
+Demonstra¸c˜ao. Pela proposi¸c˜ao 3.1, sabemos que em uma ´arvore enraizada uma folha
+n˜ao ´e pai de nenhum v´ertice. Como a primeira linha do c´odigo cont´em, da esquerda
+para a direita, a folha de menor r´otulo, ent˜ao no momento em que o v´ertice aparece na
+primeira linha signiﬁca que n˜ao ´e mais pai de nenhum v´ertice que ainda n˜ao tenha sido
+citado.
+
+Se a segunda linha cont´em os pais das respectivas folhas da linha acima, ent˜ao os
+v´ertices que aparecem como entrada na primeira linha n˜ao podem estar a sua direita na
+linha de baixo. Como a folha que aparece na linha de cima ´e aquela de menor r´otulo
+no momento, ent˜ao na segunda linha do c´odigo basta observar qual ´e o v´ertice de menor
+r´otulo que n˜ao foi computado (signiﬁcando que n˜ao ´e pai de ningu´em, portanto uma
+folha) e este ser´a a primeira entrada da linha de cima. Al´em disso, se um v´ertice j´a
+apareceu como entrada na linha de cima, signiﬁca que ´e folha, e que foi ’retirado’ da
+´arvore para continuar o procedimento, logo n˜ao aparecer´a como entrada novamente.
+
+Resumindo o procedimento, concluimos que cada entrada na primeira linha do c´odigo
+estendido de Pr¨ufer ´e o menor r´otulo que n˜ao ocorre na primeira linha antes dele, nem
+na segunda linha abaixo ou depois dele. Assim, a segunda linha do c´odigo determina a
+(cid:4)
+primeira.
+
+Teorema 3.5. Em um conjunto de n v´ertices, podem ser constru´ıdas nn−2 ´arvores rotu-
+ladas distintas.
+
+Demonstra¸c˜ao. Sabemos que o c´odigo de Pr¨ufer ´e uma sequˆencia de n − 2 n´umeros,
+compreendidos entre 0 e n−1. Assim, se provarmos que toda sequˆencia deste tipo ´e c´odigo
+de Pr¨ufer de alguma ´arvore rotulada de n v´ertices, basta veriﬁcar quantas sequˆencias
+podem ser formadas neste padr˜ao e descobrimos quantas ´arvores rotuladas existem sobre
+n v´ertices.
+
+Dada uma sequˆencia de n − 2 entradas com n´umeros naturais compreendidos de
+0 a n − 1, vamos acrescentar o 0 ao ﬁnal da sequˆencia e formar uma primeira linha
+escrevendo acima de cada entrada o menor r´otulo que n˜ao ocorre na mesma linha antes
+dele e nem abaixo ou depois dele na linha de baixo. Assim, por deﬁni¸c˜ao, esta tabela ´e
+o c´odigo estendido de Pr¨ufer de alguma ´arvore. Ou seja, a gera¸c˜ao aleat´oria de qualquer
+sequˆencia de n − 2 r´otulos dentre os n r´otulos relativos a n v´ertices, implica em gerar o
+correspondente C´odigo de Pr¨ufer de uma ´arvore qualquer de n v´ertices.
+
+Agora, temos apenas que contabilizar quantos c´odigos de Pr¨ufer diferentes podem ser
+formados sobre n v´ertices. Para cada uma das n − 2 entradas do c´odigo de Pr¨ufer, h´a n
+possibilidades de escolha, pois pode ser qualquer um dos n v´ertices. No caso de todas as
+posi¸c˜oes serem ocupadas pelo mesmo r´otulo, por exemplo, a ´arvore formada seria uma
+estrela. Assim, o total de possibilidades para o c´odigo de Pr¨ufer sobre n v´ertices ´e de
+nn−2. Como cada um destes c´odigos determina uma ´arvore diferente, ent˜ao sobre um
+(cid:4)
+conjunto de n v´ertices existem nn−2 ´arvores rotuladas distintas.
+
+CAP´ITULO 4
+
+ALGORITMO GULOSO
+
+4.1
+
+´ARVORE GULOSA E M´ETODO OTIMISTA
+
+Seja G um grafo de n v´ertices, onde cada um desses v´ertices representa um lote de
+terra que se encontra em determinado lago. O dono do lago, com o intuito de caminhar
+de um lote para outro, deseja construir pontes que os conectem dois a dois, representadas
+em G por arestas. Obviamente, n˜ao h´a a necessidade de construir uma ponte entre cada
+dois lotes distintos, pois se h´a conex˜ao do lote 1 para o lote 2 e do lote 2 para o lote 3, por
+exemplo, h´a como ir do lote 1 ao 3 passando pelo lote 2. Entretanto, cada uma destas
+pontes possui um determinado custo, dependendo da distˆancia entre os lotes e outros
+fatores. Supondo que o custo da constru¸c˜ao de cada ponte poss´ıvel tenha sido avaliado,
+como o dono do lago deve escolher quais pontes construir de modo que obtenha um custo
+m´ınimo?
+
+Primeiramente, se ele deseja ter acesso a todos os lotes, pelo menos uma ponte deve
+chegar a cada um deles, ou seja, G deve ser conexo. Como o custo desta constru¸c˜ao tem
+que ser m´ınimo, a menor quantidade poss´ıvel de pontes deve ser constru´ıda, ou seja, n˜ao
+deve existir nenhuma aresta em G que possa ser removida sem que G deixe de ser conexo.
+Logo, podemos concluir que G ´e uma ´arvore (Teorema 3.1), ou seja, possui n − 1 arestas
+ou que o lago possui n − 1 pontes (Teorema 3.2).
+
+Na ﬁgura 4.1 abaixo, temos um exemplo onde o lago possui 10 lotes de terra, ent˜ao
+
+consequentemente foram constru´ıdas 9 pontes, representadas por arestas.
+
+Figura 4.1 Exemplo de lago com 10 lotes de terra
+
+Por´em, como a constru¸c˜ao de cada ponte possui um custo diferente, n˜ao se trata
+apenas de quantidade, e sim do valor atribu´ıdo a cada uma. Associando a cada aresta
+o valor do custo da ponte, o qual podemos chamar de peso, temos que o custo total
+dessa obra ser´a a soma dos pesos de cada aresta. Portanto, para que o custo total seja
+m´ınimo, as pontes (ou arestas) devem ser escolhidas de modo que a soma de seus valores
+seja m´ınimo. Este m´etodo de sele¸c˜ao ´e chamado de m´etodo otimista ou algoritmo guloso.
+
+29
+
+30
+
+ALGORITMO GULOSO
+
+Assim, a ´arvore G de menor custo, escolhida pelo m´etodo otimista para representar esses
+lotes e as respectivas pontes que o interligam, ´e deﬁnida como ´arvore geradora de custo
+m´ınimo ou ´arvore gulosa.
+
+Existem v´arias maneiras de construir uma ´arvore gulosa, as quais s˜ao determinadas
+pelos crit´erios de constru¸c˜ao estabelecidos, o que vai deﬁnir o tipo de algoritmo utilizado.
+Voltando ao problema das pontes, por exemplo, poderia ser deﬁnido como crit´erio que ao
+construir a primeira ponte, todas as demais devem ser constru´ıdas a partir dela, ou seja,
+uma vez dentro do lago em um determinado lote, a ´unica maneira de se deslocar para
+outros lotes ´e atrav´es da constru¸c˜ao de pontes, sempre escolhendo a menos custosa. Esse
+tipo de algoritmo guloso ´e denominado algoritmo de Prim. Vamos traduzir este processo
+de constru¸c˜ao da ´arvore G para o conceito de grafos.
+
+Seja G a ´arvore de n v´ertices vi (1 ≤ i ≤ n) a ser contru´ıda, onde aj ´e o conjunto
+das suas poss´ıveis arestas, onde cada uma possui um peso diferente, com j ≥ 1. Vamos
+considerar G, inicialmente, como um grafo vazio. Seja a1 a aresta de menor peso que
+liga v1 a v2, por exemplo. Ent˜ao a1 ser´a a primeira aresta adicionada a G. Seja a2
+a pr´oxima aresta de menor peso que conecta v1 ou v2 a um de seus vizinhos. Ent˜ao
+a2 ser´a a pr´oxima aresta adicionada a G. Seguindo esse racioc´ınio, a pr´oxima aresta a
+ser adicionada ser´a aquela de menor peso que incida em um dos v´ertices pertencentes `a
+componente conexa em forma¸c˜ao. Este processo deve ser repetido at´e que os n v´ertices
+de G estejam conectados, ou seja, at´e que G seja conexo. Obviamente, como G ´e uma
+´arvore, o processo de crescimento de ´arvores deve ser respeitado nesta constru¸c˜ao (se¸c˜ao
+3.3).
+
+Suponha agora um novo crit´erio de constru¸c˜ao para as pontes. Se no conjunto dos n
+lotes, ap´os a constru¸c˜ao da primeira ponte que conecta os lotes 1 e 2, haja a possibilidade
+de que a segunda ponte a ser constru´ıda conecte os lotes 4 e 7, por exemplo. Neste caso,
+durante o processo de constru¸c˜ao das pontes, ´e permitido se deslocar pelo lago de uma
+outra maneira, como por exemplo de barco. Traduzindo para o conceito de grafos, isso
+signiﬁca que nos n v´ertices de G, ap´os a adi¸c˜ao da primeira aresta menos custosa a1,
+a pr´oxima aresta adicionada n˜ao precisa fazer parte da componente conexa que cont´em
+a1, e assim por diante. Logo, uma vez que os crit´erios de crescimento de ´arvores sejam
+respeitados, qualquer aresta que o algoritmo guloso julgar como a mais conveniente pode
+ser adicionada na sequˆencia, at´e que a ´arvore G seja constru´ıda. Este tipo de algoritmo
+guloso ´e denominado algoritmo de Kruskal.
+
+Existem outros tipos de algoritmo guloso que obedecem a diferentes crit´erios, mas
+focaremos especiﬁcamente no algoritmo de Kruskal. Neste caso, considerando que o
+algoritmo construir´a a ´arvore de custo m´ınimo G, que possui n v´ertices (v1v2...vn) e
+arestas com diferentes pesos, a primeira aresta a ser adicionada ser´a aquela de menor
+peso. Em seguida, a pr´oxima aresta a ser adicionada ser´a novamente a de menor peso
+e que conecte quaisquer dois v´ertices ainda n˜ao conectados por nenhum caminho em G.
+Este processo ser´a repetido at´e que as n − 1 arestas sejam constru´ıdas. Lembre-se que
+como G ´e uma ´arvore de n v´ertices, ent˜ao possui n − 1 arestas (Teorema 3.2) e G ser´a
+um grafo conexo que n˜ao possui nenhum ciclo (parte a do Teorema 3.1).
+
+Deﬁni¸c˜ao 4.1. O algoritmo de Kruskal executado em um grafo G de n v´ertices, onde
+
+4.1 ´ARVORE GULOSA E M´ETODO OTIMISTA
+
+31
+
+A = (a1, a2, ...) ´e o conjunto das poss´ıveis arestas a conectarem os v´ertices de G, cada
+uma com um respectivo peso, funciona da seguinte maneira:
+
+1) Seja ai uma aresta de A de menor peso. Se ai n˜ao criar ciclo em G, ent˜ao ´e
+
+adicionada a G. Caso contr´ario, ´e descartada de A.
+2) O processo ´e repetido at´e que A seja vazio.
+
+A quest˜ao ´e, seguindo esse m´etodo de otimiza¸c˜ao, denominado m´etodo otimista, ´e
+poss´ıvel garantir que a ´arvore gulosa G constru´ıda ´e realmente a de menor custo? Ou
+seja, qualquer ´arvore H diferente de G formada pelos v´ertices v1v2...vn possui no m´ınimo
+o mesmo custo de G? A resposta a essa pergunta estabelece a seguinte proposi¸c˜ao:
+
+Proposi¸c˜ao 4.1. Se G ´e uma ´arvore gulosa sobre n v´ertices constru´ıda pelo m´etodo
+otimista do algoritmo de Kruskal, ent˜ao qualquer ´arvore G(cid:48) diferente de G, constru´ıda
+sobre os mesmos n v´ertices, ter´a custo igual ou maior ao custo de G.
+
+Demonstra¸c˜ao. Vamos considerar, no processo de constru¸c˜ao de G, o passo em que foi
+adicionada a primeira aresta i, que n˜ao ´e aresta de G(cid:48). Se adicionarmos i a G(cid:48), obteremos
+um ciclo C (parte b do Teorema 3.1). Como G ´e ´arvore, ent˜ao n˜ao cont´em C inteiramente,
+ou seja, existe alguma aresta j pertencente ao ciclo C (logo pertencente a G(cid:48)) que n˜ao ´e
+aresta de G (Figura 4.2).
+
+Figura 4.2 Constru¸c˜ao de ´arvores 1
+
+Se em G(cid:48) adicionarmos i e removermos j, obteremos uma terceira ´arvore G(cid:48)(cid:48) (podemos
+garantir que G(cid:48)(cid:48) ´e ´arvore pelo argumento usado na proposi¸c˜ao 2.3), como pode ser visto
+na ﬁgura 4.3 abaixo.
+
+Queremos mostrar que o pre¸co de G(cid:48)(cid:48) ´e menor ou igual ao pre¸co de G(cid:48). Como a ´unica
+diferen¸ca entre estas duas ´arvores s˜ao as arestas i (que est´a contida apenas em G(cid:48)(cid:48)) e j
+(que est´a contida apenas em G(cid:48)), ´e equivalente mostrarmos que i ´e no m´aximo t˜ao cara
+quanto j. Vamos supor, por absurdo, que i ´e mais cara que j. Isso signigica que, por
+algum motivo, a aresta j estava impossibilitada de ser escolhida em G, j´a que o algoritmo
+guloso escolhe sempre a aresta mais barata. A ´unica raz˜ao que poderia justiﬁcar essa
+escolha seria o caso de a escolha de j em G implicar na cria¸c˜ao de algum ciclo C (cid:48) formado
+pelas arestas de G j´a selecionadas. Por´em, como estamos considerando, no processo de
+forma¸c˜ao de G, que i ´e a primeira aresta que n˜ao est´a em G(cid:48) e foi adicionada a G, ent˜ao
+todas estas arestas previamente adicionadas a G (antes de i) fazem parte de G(cid:48). Como j
+tamb´em pertence a G(cid:48), ent˜ao podemos concluir que todas as arestas de C (cid:48) pertencem a
+
+32
+
+ALGORITMO GULOSO
+
+Figura 4.3 Constru¸c˜ao de ´arvores 2
+
+G(cid:48), o que ´e absurdo, pois se G(cid:48) ´e ´arvore n˜ao pode conter nenhum ciclo. Ent˜ao, provamos
+por contradi¸c˜ao que i n˜ao pode ser mais cara que j, ou seja, G(cid:48)(cid:48) n˜ao pode ser mais cara
+que G(cid:48).
+
+Assim, podemos substituir G(cid:48) por G(cid:48)(cid:48), j´a que temos certeza que ela n˜ao ´e mais cara.
+Ademais, pode ser facilmente observado que em rela¸c˜ao a G(cid:48), G(cid:48)(cid:48) coincide com G em
+mais arestas, pois G(cid:48)(cid:48) foi obtida de G(cid:48) ao se adicionar uma aresta pertencente a G (i)
+e ao remover uma aresta que n˜ao pertencia a G (j). Logo, se G(cid:48)(cid:48) for diferente de G,
+podemos repetir o processo utilizando o mesmo argumento, e vamos chegar sempre a
+´arvores que n˜ao s˜ao mais caras que G(cid:48) e coincidem com G em mais arestas, o que im-
+plica que em algum momento a ´arvore obtida deste processo ser´a a pr´opria G. Assim, ﬁca
+demonstrado que G n˜ao era mais cara que G(cid:48), ou seja, G(cid:48) tem custo igual ou maior a G. (cid:4)
+
+Vamos considerar, agora, um outro m´etodo para constru¸c˜ao destas pontes. Suponha
+que o dono do lago, em posse da informa¸c˜ao de quais s˜ao todas as poss´ıveis pontes a
+serem constru´ıdas e seus respectivos custos, decida que, em vez de ir erguendo as pontes
+mais baratas, ele v´a eliminando o projeto das pontes mais caras e os marcando como
+imposs´ıveis, at´e que todos os projetos que n˜ao forem essenciais para satisfazer `a condi¸c˜ao
+inicial (que cada lote possua pelo menos uma ponte que leve a ele e o conecte aos demais
+lotes) sejam eliminados. Assim, ap´os eliminar tantas pontes caras quanto poss´ıvel, ele
+realizaria a obra inteira.
+
+Considerando estas poss´ıveis pontes a serem erguidas como arestas em um grafo A,
+indicadas por seus respectivos pesos, e os n lotes representados por v´ertices v1v2...vn,
+vamos descrever o algoritmo que selecionar´a as arestas que ser˜ao eliminadas de A at´e que
+o grafo se torne uma ´arvore H sobre os n v´ertices. Denominado por algoritmo guloso
+pessimista, este selecionar´a a aresta de maior peso, e caso sua remo¸c˜ao n˜ao torne o grafo
+remanescente desconexo, ser´a eliminada. Mais uma vez, o algoritmo indicar´a a pr´oxima
+aresta de maior peso, e se sua remo¸c˜ao n˜ao comprometer a conexidade do grafo, tamb´em
+ser´a eliminada. O processo ser´a repetido at´e que todas as arestas restantes sejam arestas-
+de-corte, ou seja, at´e que o grafo H remanescente seja uma ´arvore.
+
+Entretanto, ser´a que esse m´etodo de sele¸c˜ao tamb´em levaria ao grafo de menor custo
+poss´ıvel, ou seja, levaria `a ´arvore gulosa? Curiosamente, este custo tamb´em seria o mais
+barato, tanto quanto o custo da ´arvore gulosa obtida pelo m´etodo otimista. Isto ser´a
+
+4.1 ´ARVORE GULOSA E M´ETODO OTIMISTA
+
+33
+
+demonstrado na proposi¸c˜ao a seguir.
+
+Proposi¸c˜ao 4.2. Se H ´e uma ´arvore sobre n v´ertices constru´ıda pelo algoritmo guloso
+pessimista, ent˜ao seu custo ser´a igual ao de qualquer ´arvore gulosa G constru´ıda pelo
+algoritmo de Kruskal sobre os mesmos n v´ertices.
+
+Demonstra¸c˜ao. Seja A o grafo do qual foram eliminadas as arestas selecionadas pelo
+algoritmo pessimista at´e se chegar `a ´arvore H. Considerando esse processo de elimina¸c˜ao,
+seja i a primeira aresta a ser removida de A que perten¸ca a G. Se removermos i de G, o
+grafo resultante ser´a desconexo (parte a do Teorema 3.1), possuindo duas componentes.
+Como H ´e ´arvore, e portanto conexa, podemos garantir que ela cont´em alguma aresta j,
+n˜ao pertencente a G, que conecta estes dois componentes.
+
+Temos que provar que j ´e no m´aximo t˜ao cara quanto i. Vamos supor, por absurdo, que
+i seja mais barata que j. Considerando o processo de constru¸c˜ao de H, por algum motivo
+a aresta j n˜ao foi removida antes de i. A ´unica raz˜ao que justiﬁcaria essa escolha ´e o fato
+de que se j fosse removida, o grafo resultante se tornaria desconexo. Se adicionarmos i
+novamente a H, um ciclo C ser´a formado (parte b do Teorema 3.1). Como i faz parte da
+mesma componente de j, ent˜ao C cont´em ambas as arestas i e j. Neste caso, qualquer
+aresta de C poderia ser removida sem comprometer a conexidade de H (proposi¸c˜ao 2.3),
+o que contraria o fato da remo¸c˜ao de j implicar na desconexidade de H. Logo, podemos
+concluir que j ´e no m´aximo t˜ao cara quanto i.
+
+Neste caso, poder´ıamos substituir em G a aresta j pela aresta i sem aumentar seu
+custo, resultando em outra ´arvore gulosa G(cid:48). ´E f´acil observar que G(cid:48) possui mais arestas
+coincidentes a H que G, pois G(cid:48) foi obtida de G a partir da remo¸c˜ao de uma aresta n˜ao
+pertencente a H (i), e a adi¸c˜ao de uma aresta pertencente a H (j). Se G(cid:48) for diferente
+de H, podemos repetir o processo, obtendo sempre ´arvores t˜ao baratas quanto G e que
+possuem cada vez mais arestas em comum com H, at´e que mais cedo ou mais tarde a
+´arvore obtida seja a pr´opria H. Assim, ﬁca demonstrado que H ´e t˜ao barata quanto G. (cid:4)
+
+Exerc´ıcio 4.1. Dado o grafo abaixo, onde os pesos das respectivas arestas est˜ao indica-
+dos, encontre a ´arvore de menor custo utilizando o Algoritmo Guloso.
+
+Figura 4.4 Encontrando a ´arvore gulosa
+
+34
+
+ALGORITMO GULOSO
+
+4.2 O PROBLEMA DO CAXEIRO VIAJANTE
+
+Imagine que agora o dono do lago, por precau¸c˜ao, decida que realizar´a a obra de
+modo que para passear por dois lotes quaisquer, haja pelo menos dois caminhos poss´ıveis
+sem pontes em comum. Para manter o crit´erio de menor custo poss´ıvel, ainda dever˜ao
+ser constru´ıdas o m´ınimo de pontes poss´ıveis. Como sabemos que para conectar os n
+lotes, com apenas um caminho de um lote para outro, s˜ao necess´arias no m´ınimo n − 1
+pontes, ent˜ao neste caso esse n´umero n˜ao ser´a mais suﬁciente. Mas quantas pontes a
+mais deveriam ser constru´ıdas para atender `as novas necessidades do propriet´ario?
+
+Bem, se as pontes constru´ıdas formarem um ´unico ciclo pelos lotes do lago, ser˜ao
+necess´arias apenas n pontes. A quest˜ao ´e, como selecionar o ciclo de menor custo?
+Pensando no grafo G que representa este lago, onde os lotes s˜ao os v´ertices e as pontes
+as arestas cujos custos s˜ao indicados por pesos, como encontrar o ciclo C contido em G,
+passando pelos n v´ertices, de modo que a soma dos pesos de suas arestas seja a menor
+poss´ıvel?
+
+Este ´e um problema de otimiza¸c˜ao combinat´oria, conhecido como Problema do Caxeiro
+Viajante. Seu nome foi inspirado na necessidade de vendedores, conhecidos como caxeiros
+viajantes, de visitar diversas cidades percorrendo o menor caminho poss´ıvel, reduzindo
+o tempo necess´ario para a viagem e os poss´ıveis custos com transporte e combust´ıvel,
+por exemplo, e depois retornar a sua cidade. Na verdade, este mesmo problema se aplica
+a diversas situa¸c˜oes, como por exemplo a rota de menor custo para coleta de lixo pelos
+bairros de determinada ´area ou a melhor rota de entregas para o correio.
+
+Chegar a uma resolu¸c˜ao para esse problema n˜ao ´e t˜ao simples, pois n˜ao h´a um al-
+goritmo exato e de simples compreens˜ao que leve `a melhor escolha, como ´e o caso do
+algoritmo guloso na escolha da ´arvore gulosa. Na verdade, existem alguns m´etodos que
+funcionam na maioria das vezes, mas sua an´alise e discuss˜ao n˜aos nos conv´em para esse
+estudo, onde este problema ﬁca apenas a t´ıtulo de informa¸c˜ao como outro exemplo de
+otimiza¸c˜ao.
+
+CAP´ITULO 5
+
+SEQUˆENCIA DID´ATICA
+
+Esta sequˆencia did´atica tem como objetivo geral fazer com que o aluno seja capaz
+de analisar tipos espec´ıﬁcos de projetos, com a utiliza¸c˜ao do algoritmo guloso. Como
+requisito para tal capacidade, algumas atividades que envolvem indiretamente conceitos
+e aplica¸c˜oes de grafos e ´arvores ser˜ao trabalhadas em sala, associadas a quest˜oes contex-
+tualizadas para estimular o interesse do aluno. Para ﬁnalizar a sequˆencia, ser´a entregue
+um projeto a ser analisado pelos estudantes com o uso do algoritmo em quest˜ao, e tal
+an´alise ser´a utilizada como instrumento ﬁnal de avalia¸c˜ao.
+
+As aulas ser˜ao ministradas com alunos do Ensino M´edio, e a sequˆencia se dar´a em
+cinco aulas de cinquenta minutos cada. Todas as atividades ser˜ao realizadas em grupos
+de cinco alunos, em m´edia, para que possam discutir cada problema proposto. A seguir,
+cada aula e suas respectivas atividades ser˜ao descritas, com detalhamento dos objetivos
+pretendidos, conte´udos trabalhados e a metodologia utilizada, al´em dos instrumentos de
+avalia¸c˜ao.
+
+5.1 AULA 1
+
+5.1.1 Objetivos
+
+- Estimular e direcionar os alunos a utilizarem a representa¸c˜ao de grafos sem pr´evia
+
+deﬁni¸c˜ao e a partir da´ı trabalhar com o conceito de grafos e suas principais deﬁni¸c˜oes;
+
+- Explicar brevemente como surgiu a Teoria dos grafos a partir do problema das pontes
+
+de K¨onigsberg;
+
+- Destacar a importˆancia de grafos na resolu¸c˜ao de problemas;
+
+5.1.2 Conte´udos abordados
+
+- Representa¸c˜ao de grafos e seus elementos;
+- Conceito de grau de v´ertice no grafo;
+
+5.1.3 Metodologia
+
+Ser´a desenvolvida e trabalhada em sala a seguinte atividade:
+
+Atividade 5.1. O problema das pontes de K¨onigsberg;
+
+(Tempo estimado: 40 minutos.)
+Com a apresenta¸c˜ao do problema das pontes como exposto a seguir (projetado com
+data show), ser´a pedido aos alunos que fa¸cam uma representa¸c˜ao da cidade com as pontes
+de uma maneira simples, mas que seja ﬁel aos elementos essenciais.
+
+35
+
+36
+
+SEQUˆENCIA DID ´ATICA
+
+Apresenta¸c˜ao do problema: H´a muito tempo, os cidad˜aos de K¨onigsberg (onde hoje
+ﬁca Kalingrado, R´ussia) propuseram um desaﬁo. A cidade era dividida em quatro distri-
+tos por bra¸cos do rio Preguel, que eram conectados por 7 pontes. Seria poss´ıvel realizar
+um trajeto em todos os distritos passando por todas as pontes uma ´unica vez?
+
+Figura 5.1 Pontes de K¨onigsberg
+
+Em seguida, cada grupo ter´a 15 minutos para tentar solucionar o desaﬁo, apresentando
+
+para a sala argumentos que sustentem a conclus˜ao obtida.
+
+Quando cada equipe tiver apresentado suas considera¸c˜oes, o professor apresentar´a a
+real solu¸c˜ao do problema, formalizando o conceito de grafos e seus elementos (v´ertices e
+arestas), assim como a deﬁni¸c˜ao de grau de um v´ertice, seguido de uma breve explica¸c˜ao
+da origem da Teoria dos Grafos.
+
+5.1.4 Instrumento de avalia¸c˜ao
+
+A avalia¸c˜ao do aprendizado dos alunos ser´a feita a partir da atividade trabalhada,
+nos momentos em que cada grupo exp˜oe seus resultados, quando o professor observar´a
+os pontos onde apareceram mais d´uvidas.
+
+5.2 AULA 2
+
+5.2.1 Objetivos
+
+- Utilizar grafos na resolu¸c˜ao de problemas;
+- Trabalhar o conceito de grafos dirigidos;
+- Deﬁnir ciclos e conexidade em grafos;
+
+5.2.2 Conte´udos abordados
+
+- Grafos;
+- Conceitos de ciclos e conexidade em grafos;
+
+5.2 AULA 2
+
+5.2.3 Metodologia
+
+37
+
+Utilizando o recurso data show, ser´a feita uma breve retomada do que foi visto na
+
+aula passada, e o seguinte exemplo ser´a trabalhado:
+
+No ﬁnal do ano, cinco amigos (Neto, Ana Luiza, Hugo, Camila e Geovana) resolvem
+fazer uma pequena confraterniza¸c˜ao, onde pretendem realizar um amigo secreto. Geovana,
+que ´e muito curiosa, est´a decidida a descobrir quem cada amigo sorteou. Ela sorteou
+Hugo, e atrav´es dos seus m´etodos descobriu que Camila sorteou Neto, que por sua vez
+sorteou Ana Luiza. Se ela sabe que Hugo n˜ao sorteou Camila, ser´a que essas informa¸c˜oes
+foram suﬁcientes para Geovana descobrir o amigo secreto de todos? Represente em um
+grafo.
+
+Desenvolvendo o racioc´ınio com os alunos, a partir das informa¸c˜oes adquiridas, como
+nem Geovana nem Neto sortearam Camila, apenas Hugo ou Ana Luiza poderiam tˆe-la
+sorteado. Mas Geovana sabe que n˜ao foi Hugo, logo s´o pode ter sido Ana Luiza. Sabendo
+disto, a ´unica pessoa que pode ter sorteado Geovana ´e Hugo. Ap´os essa conclus˜ao, o
+seguinte grafo ser´a mostrado:
+
+A partir do exemplo, o professor desenvolver´a o conceito de grafos direcionados, ciclos
+
+e conexidade. Em seguida, pedir´a que os alunos realizem a seguinte atividade:
+
+Atividade 5.2. O problema das liga¸c˜oes telefˆonicas;
+
+Tempo estimado: 10 minutos.
+Vinte anos depois da formatura, cinco colegas de turma decidem organizar uma con-
+fraterniza¸c˜ao. Para marcar o dia e o local da confraterniza¸c˜ao, precisam comunicar-se
+por telefone. Cada um conhece o telefone de alguns colegas e desconhece o de outros.
+No quadro abaixo, o n´umero 1 indica que o colega da linha correspondente conhece o
+telefone do colega da coluna correspondente; o n´umero 0 indica que o colega da linha n˜ao
+conhece o telefone do colega da coluna. Exemplo: Beto sabe o telefone do Dino que n˜ao
+conhece o telefone do Aldo.
+
+Construa um grafo representando a situa¸c˜ao descrita e responda: Qual ´e o n´umero
+
+m´ınimo de telefonemas que Aldo deve fazer para se comunicar com Carlos?
+
+38
+
+SEQUˆENCIA DID ´ATICA
+
+Ap´os discutir os resultados da atividade, analisando as respostas dadas por cada
+grupo, ser´a proposta a hip´otese em que um sexto amigo, que n˜ao possui o n´umero de
+ningu´em e mudou de n´umero recentemente, ou seja, nenhum dos outros amigos possui o
+seu n´umero, tamb´em fa¸ca parte do grupo, para que seja refor¸cado o conceito de conexidade
+em grafos.
+
+Como ´ultima atividade da aula ser´a proposto o problema a seguir, e ap´os cerca de
+10 minutos para que cada equipe o solucione e discuta seus argumentos, os alunos ir˜ao
+expor suas conclus˜oes, mediados pelo professor.
+
+Atividade 5.3. O problema do aeroporto;
+
+Tempo estimado: 10 minutos.
+Em um pa´ıs existem 9 aeroportos numerados de 1 at´e 9. Existe voo direto do aeroporto
+i para o aeroporto j se 3|ij, com ij = 10i + j. Sabendo disso, existe voo (possivelmente
+com escalas) do aeroporto 1 para o aeroporto 9?
+
+5.2.4 Instrumento de avalia¸c˜ao
+
+A avalia¸c˜ao do aprendizado dos alunos ser´a similar ao da aula anterior, feita a partir
+das atividades trabalhadas, onde ser´a observada a participa¸c˜ao de cada equipe e seu
+desempenho nos momentos em que cada uma delas exp˜oe seus resultados.
+
+5.3 AULA 3
+
+5.3.1 Objetivos
+
+- Estimular o interesse dos alunos atrav´es de exerc´ıcios interessantes envolvendo
+
+grafos;
+
+- Deﬁnir passeios em um grafo;
+- Deﬁnir passeio Euleriano e suas propriedades;
+- Deﬁnir ´arvores como tipo espec´ıﬁco de grafo.
+
+5.3.2 Conte´udos abordados
+
+- Passeios em um grafo;
+- Passeio Euleriano;
+- Conceito de ´arvore;
+
+5.3.3 Metodologia
+
+O professor come¸car´a a aula com o problema proposto na atividade a seguir. Ser´a dado aos
+grupos em torno de 15 minutos para resolvˆe-lo e discutir suas conclus˜oes. Ser´a sugerido
+aos alunos que representem a planta da casa como um grafo para facilitar a resolu¸c˜ao.
+
+Atividade 5.4. O problema do assassinato do bilion´ario Van Diamond
+
+Tempo estimado: 15 minutos.
+A ﬁgura abaixo ´e a planta da residˆencia do bilion´ario Van Diamond, que acaba de ser
+assassinado. Sherlock Gomes (um conhecido detetive que nas horas vagas ´e um estudioso
+
+5.3 AULA 3
+
+39
+
+da Teoria de Grafos) foi chamado para investigar o caso. O mordomo alega ter visto o
+jardineiro entrar na sala da piscina (lugar onde ocorreu o assassinato) e logo em seguida
+deixar aquela sala pela mesma porta que havia entrado. O jardineiro, contudo, aﬁrma
+que ele n˜ao poderia ser a pessoa vista pelo mordomo, pois ele havia entrado na casa,
+passado por todas as portas uma ´unica vez e, em seguida, deixado a casa. Sherlock
+Gomes avaliou a planta da residˆencia (conforme ﬁgura) e em poucos minutos declarou
+solucionado o caso.
+
+a) Quem poderia ser o suspeito indicado por Sherlock Gomes?
+b) Qual o racioc´ınio utilizado pelo detetive para apontar o suspeito?
+
+Figura 5.2 Planta da casa
+
+Ap´os a discuss˜ao dos resultados obtidos pelos grupos, o professor mostrar´a a real
+solu¸c˜ao do problema, conduzindo os alunos a chegarem superﬁcialmente ao Teorema 2.1.
+Formalizando o conceito de passeio em um grafo, o professor deﬁnir´a passeios Euleria-
+nos baseado na atividade realizada, trabalhando mais aprofundadamente o conte´udo do
+Teorema 2.1.
+
+Finalizada esta atividade e dando continuidade a aula, cada grupo resolver´a o seguinte
+
+problema:
+
+Atividade 5.5. Encontrando o menor grafo
+
+Tempo estimado: 10 minutos
+Em cada um dos trˆes casos abaixo (Figura 5.3), onde foram dados os v´ertices de um
+grafo, construa suas arestas de modo que elas estejam em menor n´umero poss´ıvel e que
+o grafo seja conexo.
+
+Terminado o tempo previsto para a resolu¸c˜ao, o professor discutir´a os resultados com a
+sala e ir´a direcion´a-la a chegar informalmente ao Teorema 3.2, do qual far´a a demonstra¸c˜ao
+de maneira simpliﬁcada. A partir da´ı ele trabalhar´a com a deﬁni¸c˜ao de ´arvores como um
+tipo espec´ıﬁco de grafos. (Ser´a pedido aos alunos que tragam na pr´oxima aula o material
+produzido)
+
+40
+
+SEQUˆENCIA DID ´ATICA
+
+Figura 5.3 Atividade 3
+
+5.3.4 Instrumentos de avalia¸c˜ao
+
+Os alunos ser˜ao avaliados no decorrer das atividades desenvolvidas, sendo observados
+
+sua participa¸c˜ao e interesse.
+
+5.4 AULA 4
+
+5.4.1 Objetivos
+
+- Deﬁnir o conceito de ´arvore enraizada;
+- Despertar o interesse do aluno pelo conte´udo atrav´es da brincadeira da advinha¸c˜ao;
+- Estimular o racioc´ıcio l´ogico dos estudantes.
+
+5.4.2 Conte´udos abordados
+
+- Conceito de ´arvore enraizada;
+- Codiﬁca¸c˜ao de ´arvores (C´odigo de Pr¨ufer);
+
+5.4.3 Metodologia
+
+Ser´a feita uma retomada do conceito de ´arvores e do Teorema 3.2 (de maneira in-
+formal), mostrando que os v´ertices de uma ´arvore podem ser numerados para melhor
+identiﬁca¸c˜ao. Em seguida, o professor explicar´a o que ´e uma ´arvore enraizada, associ-
+ando o v´ertice numerado como 0 `a raiz.
+
+Ap´os estas deﬁni¸c˜oes, mostrar´a como armazenar uma ´arvore atrav´es do c´odigo esten-
+dido de Pr¨ufer, utilizando para praticar com os alunos as ´arvores obtidas por eles (ap´os
+numerar seus v´ertices) na aula anterior.
+
+Escolhendo aleatoriamente uma das equipes, o professor pedir´a que escolha um dos
+c´odigos obtidos e que informe o c´odigo da linha de baixo at´e o pen´ultimo n´umero, e a
+partir disso advinhar´a o resto do c´odigo.
+
+Despertando o interesse da turma para a brincadeira, explicar´a que agora ela ser´a
+
+realizada entre os pr´oprios grupos, realizando a atividade a seguir.
+
+Atividade 5.6. Advinhando ´arvores
+Tempo estimado: 30 minutos.
+
+5.5 AULA 5
+
+41
+
+Escolhendo um componente de cada equipe, o professor explica para eles, em local
+isolado, como descobrir o resto do c´odigo a partir dos n´umeros fornecidos. Enquanto isso,
+pede que cada equipe que permaneceu na sala construa uma ´arvore, com o n´umero de
+v´ertices que desejar, e ap´os numerar seus v´ertices (associando o 0 `a raiz) anotem o c´odigo
+estendido de Pr¨ufer referente a ela.
+
+Ao retornarem `a sala, ap´os veriﬁca¸c˜ao r´apida por parte do professor se os c´odigos
+obtidos est˜ao corretos, cada componente que estava fora dever´a advinhar o c´odigo da
+´arvore de sua respectiva equipe, a partir dos n´umeros fornecidos por elas (somente at´e o
+pen´ultimo da linha de baixo).
+
+Quando todas as equipes ﬁnalizarem, cada componente que fez a advinha¸c˜ao deve
+explicar aos demais a l´ogica utilizada. O professor ﬁnalizar´a explicando para a turma em
+geral a l´ogica desta advinha¸c˜ao.
+
+5.4.4 Instrumentos de avalia¸c˜ao
+
+A avalia¸c˜ao da aprendizagem do aluno ser´a feita a partir da atividade de advinha¸c˜ao
+de ´arvores realizada pelas equipes em todo seu processo: se conseguiram criar uma ´arvore
+e armazenar seu c´odigo de maneira correta; se conseguiram entender como o c´odigo Pr¨ufer
+´e constru´ıdo e se a advinha¸c˜ao foi correta.
+
+5.5 AULA 5
+
+5.5.1 Objetivos
+
+- Deﬁnir algoritmo guloso e mostrar algumas de suas aplica¸c˜oes;
+- Fazer com que os alunos sejam capazes de analisar o menor custo de um projeto
+
+utilizando o algoritmo guloso.
+
+5.5.2 Conte´udos abordados
+
+- Algoritmo guloso (m´etodo de Kruskal) e aplica¸c˜oes.
+
+5.5.3 Metodologia
+
+O professor iniciar´a a aula com a deﬁni¸c˜ao de algoritmo guloso e algumas de suas
+aplica¸c˜oes na an´alise do custo de projetos. Explicar´a o objetivo do algoritmo atrav´es
+do exemplo das pontes do lago (se¸c˜ao 4.1), onde os lotes s˜ao os v´ertices e as pontes as
+arestas de um grafo, e que dependendo de alguns fatores, cada ponte (ou aresta) ter´a um
+custo diferente, onde o objetivo do algoritmo ´e conectar todos os lotes de um modo que
+o custo da obra seja o menor poss´ıvel.
+
+Conduzindo o racioc´ınio e explicando como o algoritmo realiza suas escolhas (utili-
+zando o m´etodo de Kruskal), selecionando as arestas de menor custo e que n˜ao formem
+nenhum ciclo (para que n˜ao haja pontes desnecess´arias), levar´a os alunos a deduzirem
+que o grafo obtido pelo algoritmo ser´a uma ´arvore, chamada de ´arvore gulosa.
+
+Em seguida, o professor utilizar´a o algoritmo - explicando as etapas de sele¸c˜ao de
+cada aresta - para encontrar a ´arvore gulosa no exemplo a seguir, que apresenta o grafo
+
+42
+
+SEQUˆENCIA DID ´ATICA
+
+original, onde as arestas est˜ao numeradas em ordem crescente de custo (Figura 5.4).
+
+Figura 5.4 Encontrando a ´arvore gulosa
+
+As arestas AD e CE s˜ao as mais leves do grafo, ent˜ao ambas podem ser selecionadas
+
+primeiro. A aresta AD ´e escolhida aleatoriamente (Figura 5.5).
+
+Figura 5.5 Encontrando a ´arvore gulosa - Passo 1
+
+Agora a aresta CE ´e a de menor peso. Como ela n˜ao forma um ciclo com a aresta
+
+AD, ela ´e selecionada (Figura 5.6).
+
+Agora a aresta de menor peso ´e a DF (peso 6). J´a que n˜ao forma um ciclo com as
+
+arestas j´a escolhidas, ent˜ao ela ´e selecionada (Figura 5.7).
+
+Agora duas arestas com peso 7 (AB e BE) s˜ao as mais leves e n˜ao formam ciclo com as
+demais j´a escolhidas, ent˜ao podem ser selecionadas. Escolhendo a aresta AB ao acaso, ela
+´e adicionada. Como a aresta BD forma um ciclo com as arestas AD e AB j´a selecionadas,
+ent˜ao ela ´e eliminada (indicada de vermelho na Figura 5.8).
+
+Agora a aresta BE ´e a de menor peso e n˜ao forma ciclo com as demais j´a escolhidas,
+portando ´e selecionada. Similarmente ao passo anterior, as arestas BC, DE e EF s˜ao
+eliminadas, pois formariam ciclos com outras arestas j´a adicionadas (Figura 5.9).
+
+Dentre as arestas restantes a EG ´e a de menor peso, portando a selecionada. Auto-
+
+maticamente a aresta FG ´e eliminada, pois se tornou desnecess´aria (Figura 5.10).
+
+5.5 AULA 5
+
+43
+
+Figura 5.6 Encontrando a ´arvore gulosa - Passo 2
+
+Figura 5.7 Encontrando a ´arvore gulosa - Passo 3
+
+Figura 5.8 Encontrando a ´arvore gulosa - Passo 4
+
+Retirando as arestas eliminadas da ﬁgura, ﬁnalmente chegamos `a ´arvore gulosa. Note
+que como ela ´e uma ´arvore, se o grafo inicial possui 7 v´ertices, ent˜ao a ´arvore possui 6
+arestas (Figura 5.11).
+
+Ap´os responder a todas as d´uvidas que surgirem sobre o algoritmo, o professor reali-
+
+zar´a a atividade descrita a seguir.
+
+44
+
+SEQUˆENCIA DID ´ATICA
+
+Figura 5.9 Encontrando a ´arvore gulosa - Passo 5
+
+Figura 5.10 Encontrando a ´arvore gulosa - Passo 6
+
+Figura 5.11 ´Arvore gulosa
+
+Atividade 5.7. Tempo estimado: 25 minutos.
+
+Cada um das equipes receber´a o projeto de um mapa de um Estado ﬁct´ıcio, com 20
+cidades que devem ser conectadas por estradas, em forma de grafo, e uma tabela com
+as distˆancias entre as respectivas cidades (Figura 5.12). O professor explicar´a que cada
+
+5.5 AULA 5
+
+45
+
+uma das cidades ser´a representada por um dos v´ertices, que estar˜ao numerados de 1 a
+20, e as poss´ıveis estradas a serem constru´ıdas est˜ao representadas por arestas. Os custos
+das estradas (arestas) ser˜ao diretamente proporcionais `as distˆancias das cidades que elas
+conectam. O custo por quilˆometro ´e de 200 reais. Quando a estrada passar por um lago,
+ﬂoresta ou montanha, o custo da estrada, por quilˆometro constru´ıdo, sofrer´a aumentos
+de 15%, 10% e 20%, respectivamente.
+
+Figura 5.12 (a) Projeto a ser avaliado pelo Algoritmo Guloso (b)Distˆancia entre cidades
+
+Cada grupo dever´a analisar cuidadosamente o mapa e atrav´es do algoritmo guloso
+deve indicar quais estradas seriam contru´ıdas, a distˆancia total e o custo da obra, para
+posterior compara¸c˜ao entre as equipes.
+
+5.5.4 Instrumento de avalia¸c˜ao
+
+A avalia¸c˜ao ﬁnal da turma ser´a feita a partir da an´alise que cada equipe fez do
+
+projeto em quest˜ao.
+
+REFERˆENCIAS BIBLIOGR´AFICAS
+
+[1] LOV ´ASZ, L.; PELIK ´AN, J.; VESTERGOMBI, K. Matem´atica discreta. Rio de Ja-
+
+neiro: Sociedade Brasileira de Matem´atica, 2003.
+
+[2] LUCCHESI, Cl´audio Leonardo. Introdu¸c˜ao `a Teoria dos grafos. Rio de Janeiro: Ins-
+
+tituto de Matem´atica pura e aplicada, 1979.
+
+[3] OSTROSKI, ´Alvaro; MENONCINI, Luciana. Aplica¸c˜oes pr´aticas da Teoria dos Gra-
+
+fos. Pato Branco: XIII ERMAC, 2009.
+
+47
+
+

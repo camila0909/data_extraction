@@ -1,0 +1,9614 @@
+UNIVERSIDADE FEDERAL DE ALAGOAS
+
+Mestrado Profissional em Matemática em Rede Nacional
+PROFMAT
+
+DISSERTAÇÃO DE MESTRADO
+
+O Algoritmo do Par Binário:
+Um estudo da representação decimal do quociente
+
+José Elizângelo Lopes Luna
+
+Maceió, Abril de 2013
+
+Catalogação na fonte 
+Universidade Federal de Alagoas 
+Biblioteca Central 
+Divisão de Tratamento Técnico 
+Bibliotecária Responsável: Fabiana Camargo dos Santos 
+
+              L961a       Luna, José Elizângelo Lopes. 
+
+ O algoritmo do par binário : um estudo da representação decimal do 
+
+quociente a/2n, a ϵ R e n ϵ N* / José Elizângelo Lopes Luna. – 2013. 
+
+ 119 f. 
+
+ Orientador: André Luiz Flores. 
+ Dissertação (Mestrado profissional em Matemática em Rede Nacional) – 
+
+Universidade Federal de Alagoas. Instituto de Matemática. Maceió, 2013. 
+
+ Bibliografia: f. 118-119. 
+
+ 1. Representação decimal. 2. Quociente divisor 2. 3. Par binário.  
+
+4. Matemática – Ensino. I. Título. 
+
+CDU: 511 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                     
+                                    
+                                    
+                                     
+ 
+            
+ 
+ 
+ 
+Aos meus pais, José Lopes de Luna e Maria Rosa Lopes
+Luna, por me guiarem desde cedo pelo caminho da
+verdade e sabedoria. A eles nunca serei suﬁcientemente
+grato.
+
+Agradecimentos
+
+Agradeço a Deus, que em sua inﬁnita misericórdia me deu forças para superar as limitações que
+me impediam de chegar até aqui: Gratias agimus tibi propter magnam gloriam tuam sempiterne
+omnipotens Dei Sancti!
+
+Aos meus pais, meus irmãos Rejane, Rolângela e Mário e meus sobrinhos, especialmente Lí-
+via e Letícia, e aos amigos que tanto me apoiaram nessa fase de minha vida, em especial, Adelmo
+Camilo, Joyce Cardoso, Vanderléia Paes, Adilma Lopes e Jéssica Santos.
+
+Aos meus colegas e ex-colegas de trabalho, em especial, os Professores Mário Gama, Márcio
+Soares, Iran Carvalho, Cleyton Almeida, Fábio Henrique e Valdiran Souza, verdadeiros amigos
+com quem pude contar em diversos momentos difíceis.
+
+Ao Prof. Dr. André Luiz Flores, pela valiosa orientação e paciência inabalável; em suas aulas
+
+pude reavivar o entusiasmo pela Álgebra e Teoria dos Números.
+
+Ao Prof. Dr. Ediel Guerra e Prof. Dr. Givaldo Oliveira, pelas importantes sugestões para o
+
+enriquecimento deste trabalho.
+
+Ao grande amigo e Prof. Vicente Bezerra Filho, da UPE, com quem aprendi não apenas a amar
+
+a matemática, mas também, e sobretudo, a amar ser professor.
+
+Ao Prof. Dr. Paulo Figueiredo de Lima, da UFPE, que há dez anos atrás me encorajou a lutar
+
+pelo sonho do mestrado. Jamais esquecerei a conﬁança que depositou em mim.
+
+A todos os professores do PROFMAT- UFAL, de maneira especial aos professores Ediel Guerra,
+Fernando Micena, Marcus Bronzi e André Contiero. Levarei comigo o grande exemplo de Mate-
+máticos e seres humanos que mostraram ser ao longo do curso.
+
+Aos meus ex-alunos e ex-integrantes do Programa de Qualiﬁcação Discente em Matemática de
+Nível Médio da EREM Francisco Pereira da Costa e do Programa NEPSO: Vaniele Barros, Edjane
+Pereira, Marta Michelly, Edlânia Félix, Francielly Bezerra e Ramón Miranda, atualmente alunos
+da graduação em Matemática da Universidade de Pernambuco- UPE, com quem tive a primeira
+oportunidade de compartilhar as ideias que aqui exponho.
+
+A Camila Martinez Toledo, aluna do Programa NEPSO- Polo Chile e do Programa Educa-
+cional para Niños, Niñas y Jóvenes con Talentos Académicos de la Universidad de La Frontera
+
+(PROENTA-UFRO), pela preciosa ajuda na língua espanhola.
+
+Aos colegas alagoanos do PROFMAT, que me receberam em seu Estado e não pouparam es-
+
+forços para que eu e os demais colegas de Pernambuco nos sentíssemos em casa.
+
+Aos colegas e amigos pernambucanos Paulo Sérgio e Alex Gomes com quem pude comparti-
+
+lhar mais de perto as diﬁculdades desses dois anos, e com o apoio de quem as pude superar.
+
+À CAPES, pelo apoio ﬁnanceiro.
+
+"Deus criou os números naturais. Todo o resto é obra do Homem."
+
+—L. KRONECKER (1823-1891)
+
+Resumo
+
+No contexto tradicional, a unívoca determinação do quociente e do resto da divisão euclidiana se
+faz por meio de algoritmos baseados na determinação de aproximações máximas do dividendo pelo
+produto entre o divisor e o número candidato a quociente, e então pela diferença entre a aproxi-
+mação dada e o dividendo original, num processo permeado pela obtenção de quocientes parciais,
+obtidos considerando-se grupos convenientes de dígitos do dividendo, tomados no sentido da maior
+para a menor ordem. No caso especíﬁco do divisor 2, é possível desviar o processo de cálculo dessa
+recorrência clássica, mediante o deﬁnir de uma função que relaciona cada algarismo do dividendo
+ao seu congênere de mesma ordem no quociente. Neste trabalho provamos a existência de tal fun-
+ção deﬁnida em Z2 × {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, que usaremos chamar de "Função par binário", ao
+tempo que oferecemos uma contribuição adicional ao estudo das regularidades da representação
+decimal no contexto da divisão pelos inteiros na forma 2n, com n ∈ N e, extensivamente, 2n · 10m
+com m ∈ Z. Adicionalmente, expomos aplicações aritméticas da técnica exposta, dentre as quais é
+destacada a relação entre as bases binária e decimal, e propomos, como produto de nosso trabalho,
+uma sequência didática na qual o sistema binário de numeração em Z é introduzido de maneira lú-
+dica com o conhecido jogo matemático "Matemágica dos cartões numerados", cujo funcionamento
+fundamenta-se na conversão binária das expressões decimais dos números inteiros.
+
+Palavras-chave: <REPRESENTAÇÃO DECIMAL. DIVISOR 2. PAR BINÁRIO.>
+
+Abstract
+
+In the traditional context, the unequivocal determination of the quotient and the remainder of the
+Euclidean division takes place by means of algorithms based approaches in determining the ma-
+ximum dividend by the product of the divisor and quotient candidate number, then the difference
+between the approach and the dividend paid original, a process permeated by obtaining partial quo-
+tients obtained considering convenient groups of digits of the dividend taken in order from largest
+to smallest order. In the speciﬁc case of the divider 2, you can bypass the process of calculating
+this recurrence classic, by deﬁning a function that relates each digit of the dividend to its coun-
+terpart of the same order in the quotient. In this paper we prove the existence of such a function
+deﬁned on Z2 × {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}, we use to call "function binary pair"to time we offer an
+additional contribution to the study of the regularities of the decimal representation in the context
+of the division by integers of the form 2n, with n ∈ N and, extensively, 2n · 10m with m ∈ Z. Additi-
+onally, we expose arithmetic applications of the binary pair algorithm, among which highlight the
+relationship between binary and decimal bases, and propose, as a product of this work, a didactic
+sequence about the binary numbering system on Z in playful way with the known mathematical
+game "Matemágica dos cartões numerados", whose operation is based on the conversion of binary
+decimal expressions of integers.
+
+Keywords: <DECIMAL REPRESENTATION. DIVIDER 2. BINARY PAIR>
+
+Sumário
+
+1
+
+2
+
+2.1
+2.2
+2.3
+2.4
+
+3
+
+3.1
+3.2
+3.3
+
+INTRODUÇÃO
+
+NOÇÕES ELEMENTARES DA TEORIA DOS NÚMEROS
+
+Sistema de Numeração Decimal . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Divisibilidade .
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+.
+Congruências
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Classes de restos .
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+O ALGORITMO DO PAR BINÁRIO EM Z
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Motivação .
+.
+.
+O Algoritmo do Par binário: Enunciado e Exemplos . . . . . . . . . . . . . . .
+.
+Demonstração do Algoritmo do par binário . . . . . . . . . . . . . . . . . . . . .
+
+. .
+
+.
+
+.
+
+.
+
+4
+
+4.1
+4.2
+4.2.1
+4.2.2
+
+O ALGORITMO DO PAR BINÁRIO EM R
+. . . . . . . . . . . . . . . . . . . . . . .
+Expressões decimais de números reais
+O Algoritmo do Par Binário para dividendos reais quaisquer . . . . . . . . . . .
+.
+Dividendos que admitem representação decimal ﬁnita . . . . . . . . . . . . . . .
+Dividendos expressos em representação decimal inﬁnita . . . . . . . . . . . . . .
+
+5
+
+ITERAÇÃO DE QUOCIENTES
+
+.
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+Quocientes Iterados .
+5.1
+Par Binário Composto .
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2
+Matriz associada a um dividendo . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.3
+Matriz do dividendo inteiro . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.4
+Divisão euclidiana por 2n
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.4.1
+Matriz complementar do dividendo inteiro . . . . . . . . . . . . . . . . . . . . .
+5.5
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Redutibilidade de quocientes
+5.5.1
+Parte Fracionária de um Quociente Irredutível
+. . . . . . . . . . . . . . . . . . .
+5.5.2
+Construção da Matriz do Dividendo Inteiro . . . . . . . . . . . . . . . . . . . . .
+5.6
+Dividendos Reais Quaisquer . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.7
+5.7.1
+Forma Produto de um Quociente . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.7.2 Matriz Inteira Associada a Dízimas Inﬁnitas . . . . . . . . . . . . . . . . . . . .
+
+12
+
+16
+
+. 16
+. 21
+. 23
+. 27
+
+29
+
+. 29
+. 30
+. 36
+
+45
+
+. 45
+. 51
+. 51
+. 54
+
+60
+
+. 60
+. 62
+. 66
+. 68
+. 68
+. 73
+. 73
+. 76
+. 82
+. 85
+. 85
+. 87
+
+6
+
+6.1
+6.2
+6.3
+6.4
+6.5
+
+7
+
+APLICAÇÕES
+
+Sobre o Uso do Presente Trabalho na Escola Básica . . . . . . . . . . . . . . . .
+Representação Binária de um Inteiro Dado na Base Decimal . . . . . . . . . . . .
+Representação Decimal de Expressões Binárias Finitas
+. . . . . . . . . . . . . .
+Representação Binária de Quocientes do tipo q =
+. . . . . . .
+Aplicações com a Forma Produto . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+PROPOSTA DE SEQUÊNCIA DIDÁTICA: JOGO DOS CARTÕES NUMERADOS
+
+.
+
+.
+
+.
+.
+
+.
+.
+.
+
+.
+.
+.
+
+Descrição e Regras
+.
+O Segredo .
+.
+.
+.
+Análise do Jogo .
+Construção dos Cartões .
+.
+Sequência didática .
+.
+.
+. .
+.
+.
+.
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.1
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+7.2
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.3
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.4
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.5
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Objetivo .
+Público-alvo .
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Metodologia e Tempo Pedagógico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+Avaliação .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+. .
+.
+.
+
+. .
+.
+
+. .
+
+. .
+
+. .
+
+.
+.
+.
+
+.
+.
+.
+
+.
+.
+
+.
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+89
+
+. 89
+. 90
+. 93
+. 97
+. 103
+
+107
+
+. 107
+. 107
+. 109
+. 109
+. 113
+. 113
+. 113
+. 113
+. 114
+
+1
+
+INTRODUÇÃO
+
+Possuem considerável valor na matemática os resultados relacionados à relação de divisibilidade
+dos inteiros e à divisão com resto, conceitos fundamentais da Teoria dos Números que derivam do
+teorema milenar conhecido como Algoritmo da divisão de Euclides, que estabelece a existência e
+unicidade do quociente b ∈ Z e do resto r ∈ {0, 1, · · · , b − 1} na divisão entre um dividendo a ∈ Z
+e um divisor não-nulo d ∈ Z.
+
+No caso especíﬁco do divisor d = 2, encontramos o desdobrar mais singelo da teoria, que
+chama a atenção pela sua simplicidade, contrastando com a importância de suas aplicações: de
+fato, se por um lado tal simplicidade contribui para que o divisor 2 seja tradicionalmente a via
+pela qual estabelecemos o primeiro contato com a divisão, ainda na infância, por outro, é dela que
+derivam aplicações de grande relevância na atualidade, sobretudo nas ciências da computação e
+engenharias, que se valem amplamente de tais conceitos. Nesse contexto, os quocientes de divisor
+2 ocupam um lugar especial, uma vez que é do processo de se determinar o quociente e o resto
+para tal divisor que se baseia a conversão da linguagem humana convencional na linguagem biná-
+ria, própria das máquinas, e reciprocamente. Comumente, tal processo consiste na aplicação do
+método conhecido como algoritmo da chave, que se baseia na obtenção de aproximações máxi-
+mas do dividendo a partir do produto entre um inteiro conveniente e o divisor: a diferença entre a
+aproximação obtida (quando máxima) e o dividendo, resulta no resto procurado.
+
+Em geral, esse processo e vários outros de mesma natureza são tratados no ensino básico de
+maneira mecânica, sem nenhuma justiﬁcativa que explique seu funcionamento ou que o relacione
+às propriedades da representação decimal dos inteiros, de onde provém. Segundo BRASIL [5],
+o trabalho com as operações deve se concentrar "na compreensão dos diferentes signiﬁcados de
+cada uma delas, nas relações existentes entre elas e no estudo reﬂexivo do cálculo "(p. 55). Nesse
+contexto, a articulação com o funcionamento do sistema decimal é imprescindível, pois
+
+"as técnicas operatórias usualmente ensinadas na escola (...) apoiam-se nas regras
+do sistema de numeração decimal e na existência de propriedades e de regularidades
+
+12
+
+CAPÍTULO 1. INTRODUÇÃO
+
+13
+
+presentes nas operações. (...) Muitos dos erros cometidos pelos alunos são proveni-
+entes da não-disponibilidade desses conhecimentos ou do não-reconhecimento de sua
+presença no cálculo"(idem, p.120).
+
+Apesar disso, nos últimos anos tem ganhado força no meio docente o abandono sistemático do
+ensino das propriedades do sistema decimal e dos algoritmos , em detrimento do uso exclusivo
+e irreﬂexivo das calculadoras e computadores, às vezes sob a alegação de se tratarem de práticas
+anacrônicas e inúteis.
+
+De acordo com os PCN do Ensino Fundamental (BRASIL ,[4]),isto constitui uma falha impor-
+
+tante no ensino da matemática na escola básica. Com efeito,
+
+[são] aspectos do tratamento habitualmente dado ao estudo dos naturais nos ciclos ﬁ-
+nais do ensino fundamental [que] também comprometem sua aprendizagem:
+
+(...)
+
+• ausência de um trabalho com estimativas e com cálculo mental e o abandono da
+
+exploração dos algoritmos das operações fundamentais;
+
+(...)
+
+• trabalho centrado nos algoritmos, como o cálculo do mmc e do mdc sem a com-
+preensão dos conceitos e das relações envolvidos e da identiﬁcação de regulari-
+dades que possibilitem ampliar a compreensão acerca dos números. "(p.97)
+
+Na verdade, a representação decimal de um número inteiro constitui um terreno fértil para a
+observação de regularidades aritméticas interessantes e inesperadas, sobretudo no contexto edu-
+cacional do Ensino básico. De fato, com a popularização recente da matemática recreativa, pro-
+tagonizada pelos jogos matemáticos, e responsável pela disseminação cada vez mais comum de
+laboratórios de matemática nas escolas públicas, não é difícil encontrarem-se materiais didáticos
+que se prestam a explorar ou a ilustrar conceitos aritméticos a partir da manipulação de jogos ou
+da curiosidade suscitada por procedimentos de cálculo inusitados, como as "matemágicas"1 das
+adivinhações numéricas ou os métodos algorítmicos de manipulação mais cômoda do que os tra-
+dicionais. Como exemplo, citamos Hefez ([14]: pp.47-52), que se utiliza de tais expedientes para
+ilustrar a aritmética da representação dos números naturais recorrendo ao Jogo de Nim e ao jogo
+de adivinhação "O nove misterioso".
+
+1Termo comumente usado no contexto da matemática recreativa para se referir às "mágicas"que se utilizam de
+
+propriedades aritméticas dos números naturais para causar o efeito de adivinhação.
+
+CAPÍTULO 1. INTRODUÇÃO
+
+14
+
+Segundo BRASIL [4], esse tipo de abordagem exploratória, em que se privilegia a investiga-
+ção de padrões e a formulação de hipóteses, embora seja o meio pelo qual ocorre a gênese em
+matemática, não é devidamente destacada no ensino básico:
+
+"A partir da observação de casos particulares, as regularidades são desvendadas, as
+conjecturas e teorias matemáticas são formuladas. Esse caráter indutivo é, em ge-
+ral, pouco destacado quando se trata da comunicação ou do ensino do conhecimento
+matemático."(p.26)
+
+e enfatiza que, em tal abordagem, a Álgebra (e, por extensão, a aritmética) possui o papel de
+sistematizadora do conhecimento:
+
+"É interessante (...) propor situações em que os alunos possam investigar padrões,
+tanto em sucessões numéricas como em representações geométricas e identiﬁcar suas
+estruturas, construindo a linguagem algébrica para descrevê-los simbolicamente. Esse
+processo favorece a que o aluno construa a ideia de Álgebra como uma linguagem
+para expressar regularidades."(p.117)
+
+Neste trabalho, apresentamos uma técnica algorítmica que objetiva, em sua forma mais ele-
+mentar, determinar o quociente da divisão euclidiana por 2 recorrendo ao relacionar de cada al-
+garismo do dividendo com o seu correspondente de ordem no quociente a partir da análise de
+paridade de dois algarismos vizinhos na representação decimal do dividendo e segundo o quadro
+1, que usaremos chamar de tabuada do par binário2, compondo um curioso processo, suposta-
+mente desprovido de cálculos intermediários e que pretende, a partir da curiosidade quanto ao seu
+funcionamento, eventualmente suscitada pelo seu manuseio, predispor o estudante a procurar pa-
+drões e regularidades ligadas às expressões decimais dos números e à sua divisão euclidiana por 2,
+característica normalmente presente nos materiais que integram os laboratórios de matemática das
+escolas básicas.
+
+No decorrer do texto, pretendemos provar e generalizar a validade da tabuada do par binário,
+inicialmente considerando dividendos em Z (Capítulo 2), e a partir daí, procedendo a duas am-
+pliações naturais: a primeira, usando dividendos reais dados pelas dízimas que os representam
+(Capítulo 3); e a segunda, considerando divisores do tipo 2n, n ∈ N∗ (Capítulo 4). Uma vez de
+posse dos resultados obtidos nessa etapa, queremos expor aplicações do algoritmo obtido em algu-
+mas situações comuns no estudo da aritmética do ensino básico, com destaque para os processos
+relacionados à conversão entre os sistemas decimal e binário de numeração (Capítulo 5). Final-
+mente, apresentaremos uma sugestão de sequência didática que utiliza o algoritmo do par binário
+
+2Assim a chamaremos pelo fato de tornar possível a determinação do algarismo do quociente procurado em função
+do par ai e ai+1 de algarismos do dividendo, e da paridade de ai+1, o que signiﬁca que o resto deste por 2 pode assumir
+um dos valores do conjunto {0, 1}, que são os dígitos do sistema binário de numeração. A conexão do algoritmo com
+tal sistema ﬁcará mais evidente nos capítulos posteriores, e receberá um tratamento completo no capítulo ﬁnal. Em
+vista disso, usamos chamar o método aqui apresentado de Algoritmo do Par Binário.
+
+CAPÍTULO 1. INTRODUÇÃO
+
+15
+
+Quadro 1: Tabuada do par binário
+
+DIVIDENDO
+ai
+0 ou 1
+2 ou 3
+4 ou 5
+6 ou 7
+8 ou 9
+
+QUOCIENTE
+
+para ai+1 par
+0
+1
+2
+3
+4
+
+para ai+1 ímpar
+5
+6
+7
+8
+9
+
+Fonte: Autor, 2003
+
+e o conhecido jogo "A matemática dos cartões numerados"para introduzir o sistema binário de
+numeração no ensino básico (Capítulo 6).
+
+2
+
+NOÇÕES ELEMENTARES DA TEORIA DOS NÚMEROS
+
+Neste capítulo, estabeleceremos notações e resultados fundamentais da aritmética que usaremos
+durante todo o decurso de nosso trabalho. Tomaremos como axiomas o Algoritmo da divisão de
+Euclides, o Princípio da indução ﬁnita em suas duas versões e a existência do conjunto dos números
+inteiros, que denotaremos por Z, cuja deﬁnição admitiremos conhecida. Além disso, deﬁnimos o
+conjunto N, dos naturais, pondo
+
+N = {n ∈ Z : n (cid:62) 0}
+
+2.1 Sistema de Numeração Decimal
+
+Segundo Hefez ([14], p.43), o nosso sistema de numeração deriva do sistema sexagesimal dos ba-
+bilônios (1700 A.C.) e se desenvolveu na China e na Índia, em virtude do que é chamado, às vezes,
+de "Sistema de numeração Indo-Arábico".
+
+Esse sistema, que se espalhou pela Europa por volta de 1202, devido à publicação da obra Liber
+Abacci, de Fibonacci, apesar de sua notável superioridade sobre os sistemas de numeração usados
+na época, não gozou de notoriedade imediata, talvez devido à sua grande aceitação junto aos povos
+árabes, cuja cultura era rejeitada pelos europeus:
+
+"A introdução do sistema decimal na Europa foi tardia por causa dos preconceitos
+da Idade Média. Por exemplo, num documento de 1299, os banqueiros de Florença
+condenavam o seu uso. (...) Vários séculos se passaram para que, ﬁnalmente, esse
+sistema fosse usado sem restrições pelos europeus."(idem)
+
+Na atualidade, os dez símbolos que usamos na representação decimal de um número costumam
+
+16
+
+2.1 SISTEMA DE NUMERAÇÃO DECIMAL
+
+17
+
+ser chamados de Algarismos1 ou Dígitos 2. São eles:
+
+0, 1, 2, 3, 4, 5, 6, 7, 8, 9
+
+que representam também os primeiros 9 números inteiros positivos mais o zero. Por força da
+tradição, diremos que o número inteiro que cada algarismo representa é o seu valor absoluto.
+Devido à constante menção que faremos do conjunto dos valores absolutos durante o trabalho, o
+indicaremos com a notação
+
+A = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}
+
+Por outro lado, a representação decimal de um número inteiro positivo se faz indicando o número
+de agrupamentos de 10 unidades, chamado de dezenas; de 10 dezenas, chamados de centenas; e
+de 10 centenas, chamados de unidade de milhar, para citar apenas os primeiros. Evidentemente,
+não faz sentido empreender a (impossível) tarefa de se nomear cada um dos inﬁnitos agrupamentos
+possíveis. De modo geral, dizemos que um agrupamento de ordem n é um agrupamento de 10n
+unidades, e a ∈ A agrupamentos desses expressam-se como o produto
+
+a · 10n
+
+(2.1)
+
+Desse modo, a quantidade que conhecemos pelo nome de "três mil, oitocentos e vinte e três",
+por exemplo, signiﬁca que estamos "batizando" um grupo de 3 unidades de milhar, 8 centenas, 2
+dezenas e 3 unidades; ou ainda, utilizando a convenção 2.1,
+
+3 · 103 + 8 · 102 + 2 · 10 + 3
+
+Essa última representação costuma ser chamada de Forma polinomial3 do número inteiro, devido
+à quantidade de termos que usamos para descrever os muitos agrupamentos, e é equivalente à no-
+tação usual "3823" que expressa, numa sequência de dígitos, as quantidades respectivas de cada
+tipo de agrupamento. A ausência de determinado grupo é indicada pelo zero. Voltaremos a falar
+dessa importante notação em breve.
+
+Tradicionalmente, quando indica-se genericamente um dígito a, convém indexá-lo com o nú-
+mero da ordem que ele ocupa na forma decimal de que faz parte e que é, por deﬁnição, o expoente
+da potência de dez de quem é coeﬁciente. Também aqui adotaremos essa convenção e passaremos
+
+1Deriva do sobrenome do matemático persa Buchafar Mohamed Abenmusa Al-Kuarizmi, que descreveu comple-
+
+tamente o sistema hindu num livro do ano 825 d.C. (ver [11], p.40)
+
+2Deriva do latim Digitus, que signiﬁca "dedo": uma clara alusão aos antigos métodos de contagem, que utilizavam
+
+os dedos das mãos, o que justiﬁca o fato da adoção da base dez para o sistema hindu.
+3Etimologicamente, do grego poli: "muitos"e do latim nominalis: "nomes".
+
+2.1 SISTEMA DE NUMERAÇÃO DECIMAL
+
+a representar expressões como 2.1 na forma
+
+an10n
+
+18
+
+(2.2)
+
+Aliás, (2.2) é a expressão que deﬁne o Valor posicional ou Relativo de um algarismo an. Ademais,
+ao valor n ∈ N chamaremos de ordem de an.
+
+Com essa notação, a forma polinomial pode ser vista como uma soma de valores relativos de
+
+algarismos, e se escreve, de maneira geral, na forma do somatório
+
+n
+∑
+i=0
+
+ai10i
+
+(2.3)
+
+onde i ∈ N.
+
+Chamamos agora atenção para o fato de que (2.3) certamente expressa um número inteiro, uma
+vez que Z é fechado para a multiplicação e para a adição4. No entanto, isto não nos garante que
+todos os números inteiros possam ser representados assim. De fato, essa garantia se nos fornece
+por meio do conhecido resultado que enunciamos a seguir:
+
+Teorema 2.1 (Martinez et al:[23], p.37). Se a, b ∈ N com b > 1, então existem inteiros positi-
+vos ai ∈ {0, 1, 2, · · · , b − 1} univocamente determinados tais que
+
+a =
+
+n
+∑
+i=0
+
+aibi
+
+com n ∈ N.
+
+Demonstração. Provaremos o resultado pela segunda forma do princípio de indução ﬁnita:
+
+(Existência): Se 0 ≤ a < b, basta escrever a = a0 e o teorema é válido neste caso. Seja então
+a ≥ b e suponha que a proposição seja válida para q ∈ N tal que
+
+1 ≤ q < a.
+
+(2.4)
+
+Provemos que vale também para q = a: De fato, pelo Algoritmo de Euclides, existe q ∈ N e
+
+4Um conjunto A é dito fechado para uma operação ∗ quando para quaisquer a e b elementos de A se tem a ∗ b ∈ A.
+
+A multiplicação e a adição possuem essa propriedade em Z. Para detalhes, recomendamos [10], p.121
+
+2.1 SISTEMA DE NUMERAÇÃO DECIMAL
+
+a0 ∈ {0, 1, 2, · · · , b − 1} tais que
+
+a = bq + a0
+
+19
+
+(2.5)
+
+Agora, note que (2.5) implica q < a, e daí, a hipótese de indução (2.4) nos diz que existem inteiros
+r0, r1, · · · , rm ∈ {0, 1, 2, · · · , b − 1} tais que
+
+q = rmbm + · · · + r1b + r0.
+
+(2.6)
+
+Substituindo (2.6) em (2.5), temos
+
+a = (rmbm + · · · + r1b + r0) · b + a0 = rmbm+1 + · · · + r1b2 + r0b + a0.
+
+Daí, basta deﬁnir ai = ri−1 para todo i ≥ 1 e m = n − 1.
+
+(Unicidade): Para 0 ≤ a < b é trivial. Seja então a ≥ b e suponha que o resultado seja válido
+para todo q ∈ N tal que
+
+1 ≤ q < a
+
+(2.7)
+
+Provemos que também ele o é para q = a: para isto, considere as seguintes representações para a,
+a saber:
+
+e
+
+a = anbn + · · · + a1b + a0
+
+a = a(cid:48)
+
+nbn + · · · + a(cid:48)
+
+1b + a(cid:48)
+0.
+
+Então, como se tratam do mesmo inteiro a, podemos escrever:
+
+(2.8)
+
+(2.9)
+
+a = b(anbn−1 + · · · + a1) + a0 = b(a(cid:48)
+
+nbn−1 + · · · + a(cid:48)
+
+1) + a(cid:48)
+0.
+
+Agora, pondo q = anbn−1 + · · · + a1 e q(cid:48) = a(cid:48)
+1, é fácil ver que q < a e q(cid:48) < a, e daí a
+hipótese de indução (2.7) nos diz que as representações de q e q(cid:48) são univocamente determinadas.
+Por outro lado, como 0 ≤ a0, a(cid:48)
+0 < b, segue que (2.8) e (2.9) expressam a divisão euclidiana de a
+com divisor b e restos respectivamente iguais a a0 e a(cid:48)
+0; daí, a unicidade do quociente e do resto
+nos garante que
+
+nbn−1 + · · · + a(cid:48)
+
+q = q(cid:48)
+
+e
+
+a0 = a(cid:48)
+0,
+
+e as representações são indistintas.
+
+Neste ponto, cabe uma observação importante: apesar de termos enunciado o Teorema 2.1 em
+N, ele evidentemente vale em Z; a prova para esse caso geral é análoga, pois em termos de notação,
+a e −a diferem entre si tão somente pelo acréscimo do sinal "−"5. Na verdade, em todo o nosso
+texto nos valeremos dessa observação para nos abstermos de provar cada resultado para Z− e para
+
+5Ver, por exemplo, [13]: p. 62.
+
+2.1 SISTEMA DE NUMERAÇÃO DECIMAL
+
+20
+
+Z+.
+
+Corolário 2.1. Se a é um número inteiro, então existem dígitos ai ∈ A univocamente determi-
+nados tais que
+
+com n ∈ N.
+
+a =
+
+n
+∑
+i=0
+
+ai10i
+
+Demonstração. Basta fazer b = 10 no teorema 2.1.
+
+Deﬁnição 2.1. Seja a ∈ Z o número inteiro deﬁnido pela soma
+
+a =
+
+n
+∑
+i=0
+
+ai10i
+
+Damos o nome de expressão decimal de a, à representação
+
+a = anan−1 · · · a1a0
+
+em que ai ∈ A para todo i ∈ {0, 1, 2, 3, · · · , n} .
+
+Corolário 2.2. : As expressões decimais a = anan−1 · · · a1a0 e b = bnbn−1 · · · b1b0 representam
+o mesmo número inteiro se, e somente se, ai = bi, para todo i ∈ {0, 1, 2, 3, ..., n} .
+
+Demonstração. Decorre imediatamente da unicidade da representação de um inteiro numa base b
+qualquer.
+
+Corolário 2.3. : Se a = anan−1 · · · a1a0 e a(cid:48) = 0anan−1 · · · a1a0, então a = a(cid:48)
+
+Demonstração. Pela deﬁnição 2.1, temos:
+
+a(cid:48) = 0anan−1 · · · a1a0 = 0 · 10n+1 + an10n + · · · + a110 + a0 = 0 + an10n + · · · + a110 + a0 =
+
+= an10n + · · · + a110 + a0 = anan−1 · · · a1a0 = a.
+
+2.2 DIVISIBILIDADE
+
+21
+
+Em virtude desse corolário, é costume dizer-se que o zero, ao ser escrito na extrema esquerda
+da expressão decimal, é um algarismo não signiﬁcativo, pois sua omissão não altera o valor da
+expressão decimal considerada. Isto nos diz que dados a e b inteiros distintos, sempre podemos
+considerar ambos com o mesmo número de algarismos, bastando para isso que completemos com
+zeros não signiﬁcativos a expressão decimal com menor número de dígitos.
+
+2.2 Divisibilidade
+
+Deﬁnição 2.2 (Martinez et al:[23], p.15). Sejam a e b dois números inteiros tais que a (cid:54) b.
+Dizemos que a divide b quando existe um inteiro q ∈ Z tal que b = q·a. Nesse caso, escrevemos
+
+Se isto não ocorre, dizemos que a não divide b, e escrevemos a (cid:45) b.
+
+a | b.
+
+Proposição 2.1 (Hefez:[14], pp.31-32). Sejam a, b, c, d, m, n números inteiros. São válidas as
+seguintes propriedades:
+
+(i) 1 | a, a | a e a | 0.
+
+(ii) Se a | b e b | a, então a = b.
+
+(iii) Se a | b e b | c, então a | c.
+
+(iv) Se a, b, c, m e n são inteiros, c | a e c | b, então c | ma + nb.
+
+Demonstração. :
+(i) Como a = 1, segue que a | a e 1 | a; por outro lado, 0 = 0 · a; logo, a | 0.
+
+(ii) Se a | b e b | a, então existem q e q(cid:48) inteiros tais que
+
+a = qb
+
+e
+
+b = q(cid:48)a.
+
+Daí, a = qq(cid:48)a, e daí, qq(cid:48) = 1 e q = q(cid:48) = 1, donde a = b.
+
+2.2 DIVISIBILIDADE
+
+(iii) Se a | b e b | c, então existem q, q(cid:48) ∈ Z tais que
+
+b = aq
+
+e
+
+c = bq(cid:48)
+
+do que segue, de 2.10, que bq(cid:48) = aqq(cid:48) e c = aqq(cid:48), o que signiﬁca que a | c.
+
+22
+
+(2.10)
+
+(iv) Por hipótese, existem q e q(cid:48) inteiros tais que
+
+a = cq
+
+e
+
+b = cq(cid:48).
+
+Então, temos que
+
+ma + nb = mcq + ncq(cid:48) = c(mq + nq(cid:48)), o que implica c | ma + nb.
+
+Dissemos que se não existe q ∈ Z tal que a = bq, então a não divide b. Isto signiﬁca que a
+divisão de a por b não é exata; daí, pelo algoritmo de Euclides, existe r ∈ {1, 2, 3, · · · , b − 1} tal
+que
+
+a = bq + r
+
+A essa expressão chamaremos de Forma Euclidiana de a com divisor b. No caso b = 2, por exem-
+plo, para escrever um inteiro positivo a existem somente duas formas euclidianas possíveis: a = 2b
+ou a = 2b + 1. No primeiro caso temos que 2 | a, e no segundo, 2 (cid:45) a. É costume denominar os
+números do primeiro tipo de pares, e os do segundo tipo de ímpares.
+
+A seguir provamos o conhecido critério de divisibilidade por 2, de que faremos uso posterior-
+
+mente.
+
+Proposição 2.2 (Critério de divisibilidade por 2).
+
+a = anan−1 · · · a1a0 é divisível por 2 se, e somente se, 2 | a0.
+
+Demonstração. Podemos escrever:
+
+a = an · 10n + · · · + a110 + a0 = 10
+
+(cid:33)
+
+ai10i−1
+
++ a0
+
+(cid:32) n
+∑
+i=1
+
+ou ainda, pondo Q =
+
+n
+∑
+i=1
+
+ai10i−1,
+
+a = 10Q + a0.
+
+(2.11)
+
+2.3 CONGRUÊNCIAS
+
+23
+
+( ⇒ ) Se 2 | a0, então, como 2 | 10, a Proposição 2.1 (iv) nos garante que 2 | a.
+
+( ⇐ ) Se 2 | a, então existe q ∈ Z tal que a = 2q. Então, temos que
+
+2q = 10Q + a0, e daí, a0 = 2q − 10Q = 2(q − 5Q) donde 2 | a0.
+
+2.3 Congruências
+
+A classiﬁcação dos inteiros conforme o resto que deixam na divisão por outro inteiro é fundamental
+na aritmética, e não são poucas as situações interessantes na Teoria dos números cujo tratamento
+adequado requer sua consideração. Segundo [11] (p. 520), deve-se a Gauss 6 a notação que
+tornou a discussão de tais situações mais exequível, introduzindo uma nova aritmética em seu
+livro Disquisitiones Arithmeticae, de 1801 . Trata-se da relação de congruência, cuja deﬁnição
+enunciamos a seguir:
+
+Deﬁnição 2.3 (Hefez:[14], p.110). Seja m ∈ N \ {0, 1} e a, b ∈ Z.
+
+Dizemos que a é congruente a b módulo m quando a deixa o mesmo resto que b na
+divisão por m. Nesse caso, escrevemos
+
+a ≡ b mod m
+
+Se isto não ocorre, dizemos que a não é congruente a b módulo m, e escrevemos a (cid:54)≡ b mod m
+
+Exemplo 2.1. Temos, de acordo com a deﬁnição 2.3, por exemplo:
+
+23 ≡ 13 mod 10, pois 23 = 2 · 10 + 3 e 13 = 10 · 1 + 3;
+
+240 ≡ 8 mod 2, pois 240 e 8 deixam resto zero quando divididos por 2;
+
+5 (cid:54)≡ 2 mod 2, pois 5=2·2 + 1.
+
+A proposição a seguir nos fornece uma deﬁnição equivalente para a relação de congruência:
+
+6Carl Friedrich Gauss: 1777-1855
+
+2.3 CONGRUÊNCIAS
+
+24
+
+Proposição 2.3 (Hefez:[13], p. 111). : Sejam a e b inteiros quaisquer e m ∈ N \ {0, 1}. Nessas
+condições, vale
+
+a ≡ b mod m se, e somente se, m | a − b
+
+Demonstração. :
+( ⇒ ) Se a ≡ b mod m, então, por deﬁnição, existem inteiros q e q(cid:48) e r ∈ {0, 1, · · · , m − 1} tais que
+
+a = mq + r
+
+e
+
+b = mq(cid:48) + r.
+
+Subtraindo membro a membro, temos
+
+a − b = mq − mq(cid:48) + r − r, ou ainda a − b = m(q − q(cid:48)), e daí, m | a − b.
+
+( ⇐ ) Por hipótese, existe q ∈ Z tal que
+
+a − b = mq, que podemos escrever a = mq + b
+
+(2.12)
+
+Mas, pelo algoritmo de Euclides, existe r ∈ {0, 1, · · · , m − 1} e q(cid:48) ∈ Z tais que
+
+a = mq(cid:48) + r
+
+(2.13)
+
+Então, de 2.12 e de 2.13, temos
+
+mq + b = mq(cid:48) + r , ou ainda, b = m(q(cid:48) − q) + r
+
+(2.14)
+
+Como 0 ≤ r < m, segue que 2.14 é a forma euclidiana de b com divisor m. Então, temos de 2.13 e
+de 2.14 que a e b deixam o mesmo resto na divisão por 2.
+
+Proposição 2.4 (Santos:[27], pp.32-35). : Sejam a, b, c e d inteiros quaisquer e m ∈ N \ {0, 1}.
+Temos:
+
+(i) a ≡ a mod m;
+
+(ii) Se a ≡ b mod m, então b ≡ a mod m;
+
+(iii) Se a ≡ b mod m e
+
+b ≡ c mod m, então a ≡ c mod m;
+
+(iv) Se a ≡ b mod m e
+
+c ≡ d mod m, então a + c ≡ b + d mod m;
+
+(v) Se a ≡ b mod m e
+
+c ≡ d mod m, então ac ≡ bd mod m;
+
+2.3 CONGRUÊNCIAS
+
+25
+
+(vi) Se a ≡ b mod m, então a + c ≡ b + c mod m;
+
+(vii) Se a ≡ b mod m, então ac ≡ bc mod m;
+
+(viii) Se a ≡ b mod m, então an ≡ bn mod m para todo n ∈ N
+
+Demonstração. :
+(i) De fato, como m | 0, temos m | a − a, e daí, a ≡ a mod m.
+
+(ii) a ≡ b mod m implica m | a − b, e daí, m | −(b − a), ou ainda, m | b − a, do que segue que
+b ≡ a mod m.
+
+(iii) Por hipótese, m | a − b e b | b − c. Então existem q, q(cid:48) ∈ Z tais que
+
+a − b = mq
+
+e
+
+b − c = mq(cid:48).
+
+Então, escrevendo b = a − mq
+a − c = m(q + q(cid:48)), e daí, m | a − c o que equivale, segundo a Proposição 2.3, que a ≡ c mod m.
+
+e b = c + mq(cid:48), segue que a − mq = c + mq(cid:48), o que implica
+
+(iv) Por hipótese, temos que m | a − b e m | c − d. Daí, existem inteiros q e q(cid:48) tais que
+
+a − b = mq
+
+e
+
+c − d = mq(cid:48).
+
+(2.15)
+
+Somando essas igualdades membro a membro, temos a − b + c − d = mq + mq(cid:48), que pode ser re-
+escrita como a + c − (b + d) = m(q + q(cid:48)), o que equivale a dizer que m | (a + c) − (b + d) ou ainda,
+pela Proposição 2.3, que a + c ≡ b + d mod m
+
+(v) De 2.15, temos que
+
+ou ainda,
+
+a − b = mq
+
+e
+
+c − d = mq(cid:48)
+
+a = b + mq
+
+e
+
+c = d + mq(cid:48)
+
+(2.16)
+
+Multiplicando membro a membro, as igualdades 2.16, temos:
+
+ac = (b + mq)(d + mq(cid:48)) = bd + bmq(cid:48) + dmq + m2qq(cid:48). Logo, ac − bd = m(bq(cid:48) + dq + mqq(cid:48)), e
+a Proposição 2.3 nos dá que ac ≡ bd mod m.
+
+(vi) Basta fazer c = d em (iv).
+
+2.3 CONGRUÊNCIAS
+
+26
+
+(vii) Basta fazer c = a e b = d em (v), e obtemos a2 ≡ b2 mod m. O resultado geral segue por
+indução.
+
+Para ilustrar a eﬁcácia da notação de congruência, considere o exemplo a seguir:
+
+Exemplo 2.2. Vamos determinar o algarismo das unidades de 1245:
+
+Antes de qualquer coisa, observe que
+
+a = an10n + · · · + a1101 + a0 = 10
+
+(cid:33)
+
+ai10i
+
+(cid:32) n
+∑
+i=1
+
++ a0 ≡ 0 + a0 ≡ a0 mod 10,
+
+(2.17)
+
+o que nos diz que a é côngruo ao seu algarismo das unidades, módulo 10. Nosso trabalho, então, se
+reduz a encontrar o menor valor positivo x tal que 1245 ≡ x mod 10. Para isso, podemos escrever
+
+1245 = 122·22+1 = (122)22 · 12 = 14422 · 12.
+
+Agora, pela proposição 2.4 (vii) e (viii) e por 2.17, temos que
+
+14422 · 12 ≡ 422 · 2 ≡ (42)11 · 2 ≡ (16)11 · 2 ≡ (6)11 · 2 ≡ 62·5+1 · 2 ≡ (62)56 · 2 ≡ 365 · 12 ≡
+
+≡ 65 · 2 ≡ 362 · 6 · 2 ≡ 62 · 6 · 2 ≡ 36 · 12 ≡ 6 · 2 ≡ 12 ≡ 2 mod 10, e daí, segue que a0 = 2
+
+2.4 CLASSES DE RESTOS
+
+2.4 Classes de restos
+
+27
+
+Para concluir o capítulo, introduziremos o conceito de classes de restos. Para tanto, apresentamos
+três deﬁnições algébricas que nos ajudarão a tornar seu tratamento mais conciso:
+
+Deﬁnição 2.4 (Relação de equivalência). Seja U um conjunto não vazio.
+Uma relação ∼ deﬁnida em U × U é chamada de Relação de equivalência sobre U quando,
+para quaisquer elementos a, b, c ∈ U valem as seguintes propriedades:
+
+1. (Reﬂexiva) a ∼ a;
+
+2. (Simétrica) Se a ∼ b, então b ∼ a;
+
+3. (Transitiva) Se a ∼ b e b ∼ c, então a ∼ c
+
+Deﬁnição 2.5 (Classe de equivalência). Seja U (cid:54)= /0 e ∼ uma relação de equivalência sobre U .
+
+Damos o nome de classe de equivalência de a pela relação ∼ ao subconjunto a formado por
+todos os elementos x de U tais que x ∼ a, isto é,
+
+a = {x ∈ U : x ∼ a}
+
+Deﬁnição 2.6 (Quociente de um conjunto por uma relação de equivalência). Seja U (cid:54)= /0 e ∼
+uma relação de equivalência sobre U .
+Ao conjunto de todas as classes de equivalência determinadas por uma relação de equivalência
+∼ dá-se o nome de Quociente de U por ∼, e indica-se por
+
+U / ∼= {x : x ∈ U }
+
+As relações de equivalência são importantes porque permitem classiﬁcar os elementos de um
+conjunto U em grupos que são equivalentes entre si (daí o nome atribuído a elas) segundo uma
+dada propriedade. Em outras palavras, esses grupos de elementos equivalentes, no contexto da
+relação considerada, formam o que se chama de classe equivalência, e podem ser considerados
+indistintos entre si, de modo que um representante qualquer deles pode ser usado para se deﬁnir
+objetos relacionados a toda classe, bem como concluir resultados gerais para esta. Finalmente,
+
+2.4 CLASSES DE RESTOS
+
+28
+
+o conjunto das classes de elementos equivalentes é o que deﬁnimos como conjunto quociente do
+conjunto U pela relação ∼ em questão. Essas considerações permitem um tratamento mais geral
+e mais sintético das propriedades de U .
+
+Atentando para a Proposição 2.4, as aﬁrmações (i), (ii) e (iii) caracterizam a congruência
+módulo m como uma relação de equivalência sobre Z. Tal relação particiona, pois, o conjunto dos
+inteiros em grupos de números que possuem o mesmo resto na divisão pelo m considerado; isto é,
+considerando que os restos possíveis na divisão por m são 0, 1, 2, · · · , m − 1, podemos deﬁnir:
+
+Deﬁnição 2.7 (Classes de Restos). : Seja m ∈ Z \ {0, 1} e a ∈ {0, 1, 2, · · · , m − 1}.
+A classe de resto a módulo m é o conjunto denotado por a cujos elementos são todos os
+números inteiros que deixam resto a na divisão euclidiana por m; isto é,
+
+a = {x ∈ Z : x ≡ a mod m}
+
+Nessas condições, o conjunto Z ﬁca particionado em m classes distintas, que são os elementos
+do conjunto quociente de Z pela relação ≡ mod m, que tradicionalmente é chamado de conjunto
+dos inteiros módulo m, conforme deﬁnimos a seguir:
+
+Deﬁnição 2.8 (Conjunto dos inteiros módulo m). : Seja m ∈ Z \ {0, 1}.
+Damos o nome de Conjunto dos inteiros módulo m ao conjunto quociente de Z pela relação de
+congruência módulo m, e o indicamos por
+
+Zm = (cid:8)0, 1, 2, 3, · · · , m − 1(cid:9) .
+
+O ALGORITMO DO PAR BINÁRIO EM Z
+
+3
+
+3.1 Motivação
+
+Queremos aqui tratar da divisão euclidiana por 2 de um inteiro qualquer deﬁnido por sua expressão
+decimal a = anan−1 · · · a1a0, isto é, supondo o quociente b = bnbn−1 · · · b1b0 e o resto r ∈ {0, 1}
+queremos escrever
+
+a = 2b + r,
+
+(3.1)
+
+e a partir daí estudar como se dá a "transformação "de cada algarismo ak de a no seu correspon-
+dente bk de mesma ordem em b. A exemplo de Lima ([16], p.59), faremos uso exclusivamente
+de inteiros positivos em nossa abordagem, uma vez que para tratar dos números negativos basta
+acrescentar o sinal de menos.
+
+A título de ilustração, considere o inteiro a = 231247859, para o qual temos b = 115623929 e
+r = 1. Para facilitar nossa exposição, relacionaremos cada algarismo bk da expressão decimal de b
+ao seu correspondente de ordem ak na expressão decimal de a por meio da notação
+
+β (ak) = bk
+
+(3.2)
+
+Temos então, neste caso,
+
+a8 = 2 (cid:55)→ b8 = 1,
+a7 = 3 (cid:55)→ b7 = 1,
+a6 = 1 (cid:55)→ b6 = 5,
+a5 = 2 (cid:55)→ b5 = 6,
+a4 = 4 (cid:55)→ b4 = 2,
+a3 = 7 (cid:55)→ b3 = 3,
+a2 = 8 (cid:55)→ b2 = 9,
+a1 = 5 (cid:55)→ b1 = 2,
+a0 = 9 (cid:55)→ b0 = 9,
+
+ou
+ou
+ou
+ou
+ou
+ou
+ou
+ou
+ou
+
+β (2) = 1
+β (3) = 1
+β (1) = 5
+β (2) = 6
+β (1) = 2
+β (7) = 3
+β (8) = 9
+β (5) = 2
+β (9) = 9.
+
+29
+
+(3.3)
+
+3.2 O ALGORITMO DO PAR BINÁRIO: ENUNCIADO E EXEMPLOS
+
+30
+
+Para nossos objetivos, gostaríamos que a relação β = {(ai, bi) ∈ A × A} deﬁnida por (3.2) de-
+ﬁnisse uma função de A em A. Isto, no entanto, não ocorre. De fato, para os números a e b de
+nosso exemplo, temos um par de valores distintos para ai = 2: β (2) = 1 na ordem i = 8 e β (2) = 6,
+na ordem i = 5.
+
+Nosso primeiro objetivo aqui será o de estabelecer meios para eliminar essa ambiguidade,
+redeﬁnindo a relação 3.2 num domínio mais adequado, no qual β expresse uma associação unívoca.
+Isto nos dará o nosso principal resultado, e é do que trataremos na seção a seguir.
+
+3.2 O Algoritmo do Par binário: Enunciado e Exemplos
+
+A função que deﬁniremos a seguir ocupará um papel central em toda a nossa exposição:
+
+Deﬁnição 3.1 (Função Par Binário). Damos o nome de Par Binário à função
+
+deﬁnida por
+
+quando 2 | b, e
+
+(cid:104) , (cid:105) : Z2 × A −→ A
+
+(a, b) (cid:55)→ (cid:104)a, b(cid:105)
+
+(cid:104)a, b(cid:105) =
+
+
+
+
+
+b
+2
+
+b
+2
+
+,
+
+se a = 0
+
++ 5,
+
+se a = 1
+
+(cid:104)a, b(cid:105) = (cid:104)a, b − 1(cid:105) ,
+
+caso contrário.
+
+A título de ilustração, calculemos essa função para alguns valores particulares de a e de b:
+
+Exemplo 3.1. De acordo com a Deﬁnição 3.1, devemos ter:
+
+(cid:104)0, 2(cid:105) =
+
+(cid:104)1, 4(cid:105) =
+
+2
+2
+
+4
+2
+
+= 1
+
++ 5 = 7
+
+(cid:104)0, 3(cid:105) = (cid:104)0, 2(cid:105) =
+
+2
+2
+
+= 1
+
+3.2 O ALGORITMO DO PAR BINÁRIO: ENUNCIADO E EXEMPLOS
+
+31
+
+(cid:104)1, 9(cid:105) = (cid:104)1, 8(cid:105) =
+
+8
+2
+
++ 5 = 9
+
+Estamos agora em condições de enunciar nosso principal resultado, que expressa a relação 3.2
+em termos da Deﬁnição 3.1 com m = 2. No que segue, usaremos a notação "∗" com o signiﬁcado
+da Deﬁnição 2.8, isto é, representando a função
+
+tal que
+
+∗ : A −→ Z2
+
+
+
+
+
+
+a =
+
+1,
+
+se
+
+a ≡ 1 mod 2
+
+.
+
+0,
+
+se
+
+a ≡ 0 mod 2
+
+Teorema 3.1 (Algoritmo do Par Binário). Se a = anan−1 · · · a1a0 e b = bnbn−1 · · · b1b0 são
+inteiros tais que a = 2b + r com r ∈ {0, 1}, então
+
+bi = (cid:104)ai+1, ai(cid:105)
+
+com i ∈ {0, 1, · · · , n}
+
+O resultado que enunciado identiﬁca a relação (3.2) com o conceito de par binário dado na
+Deﬁnição 3.1. Em outras palavras, deﬁnindo β no domínio Z2 × A, a função que associa cada al-
+garismo ai do dividendo ao seu correspondente de mesma ordem no quociente identiﬁca-se com a
+função par binário aplicada na dupla (ai+1, ai). Apesar de os elementos do novo domínio conside-
+rado serem pares ordenados, para maior concisão do texto optaremos por manter a notação (3.2),
+ﬁcando subtendida a presença do elemento de Z2 que corresponde à paridade do algarismo de
+ordem imediatamente superior àquele que nos interessa. Em vista dessa convenção, escreveremos
+
+β (ai) = (cid:104)ai+1, ai(cid:105)
+
+e passaremos a chamar o símbolo β (ai) de "par binário"de ai.
+
+Passaremos agora a ilustrar o uso do Teorema 3.1 com alguns exemplos antes de procedermos
+
+à sua demonstração.
+
+3.2 O ALGORITMO DO PAR BINÁRIO: ENUNCIADO E EXEMPLOS
+
+32
+
+Exemplo 3.2. .
+
+1. Para a = 15323, podemos escrever (corolário 2.3) a = 015323, e o Teorema 3.1 nos dá
+
+b = β (1)β (5)β (3)β (2)β (3) =
+
+= (cid:10)0, 1(cid:11) (cid:10)1, 5(cid:11) (cid:10)5, 3(cid:11) (cid:10)3, 2(cid:11) (cid:10)2, 3(cid:11) =
+
+= (cid:104)0, 0(cid:105) (cid:104)1, 4(cid:105) (cid:104)1, 2(cid:105) (cid:104)1, 2(cid:105) (cid:104)0, 2(cid:105) =
+
+=
+
+(cid:18)4
+2
+
+0
+2
+
++ 5
+
+(cid:19) (cid:18)2
+2
+
++ 5
+
+(cid:19) (cid:18)2
+2
+
++ 5
+
+(cid:19) 2
+2
+
+=
+
+= 0(2 + 5)(1 + 5)(1 + 5)1 =
+
+= 7661
+
+2. Para a = 3142 = 03142, temos
+
+b = (cid:10)0, 3(cid:11) (cid:10)3, 1(cid:11) (cid:10)1, 4(cid:11) (cid:10)4, 2(cid:11) =
+
+= (cid:104)0, 1(cid:105) (cid:104)1, 1(cid:105) (cid:104)1, 4(cid:105) (cid:104)0, 2(cid:105) =
+
+= (cid:104)0, 0(cid:105) (cid:104)1, 0(cid:105) (cid:104)1, 4(cid:105) (cid:104)0, 2(cid:105) =
+
+=
+
+(cid:18)0
+2
+
+(cid:19) (cid:18)0
+2
+
++ 5
+
+(cid:19) (cid:18)4
+2
+
++ 5
+
+(cid:19) (cid:18)2
+2
+
+(cid:19)
+
+=
+
+= 0(0 + 5)(2 + 5)1 =
+
+= 0571
+
+Conforme visto, o Teorema 3.1 possibilita transferir o trabalho da divisão por 2 de um número
+inteiro com um número qualquer de algarismos para o equivalente (mais simples) de operar com
+pares binários obtidos a partir de algarismos de ordens consecutivas. Conforme veremos a seguir,
+os pares binários (cid:104)a, b(cid:105), quando escritos em sua forma mais simples, isto é, na forma tal que 2 | b e
+a ∈ {0, 1}, se comportam como um quociente exato com divisor 2 de números inteiros pares entre
+0 e 18. Essa correspondência nos permite formular uma deﬁnição alternativa para a função Par
+binário (Deﬁnição 3.1), e torna o processo de cálculo mais intuitivo, facilitando sua manipulação.
+Na proposição a seguir estabelecemos essa equivalência:
+
+3.2 O ALGORITMO DO PAR BINÁRIO: ENUNCIADO E EXEMPLOS
+
+33
+
+Proposição 3.1. Com as hipóteses do Teorema 3.1, se (cid:104)ai+1, ai(cid:105) = (cid:104)c1, c0(cid:105), com c0 ≡ 0 mod 2,
+c1 ∈ {0, 1} e c = c110 + c0 = c1c0 é o inteiro cujos algarismos são c1 e c0, então
+
+(cid:104)ai+1, ai(cid:105) =
+
+c
+2
+
+Demonstração. :
+Se c1 = 0 e 2 | ai, então:
+(cid:104)0, ai(cid:105) =
+=
+Se c1 = 0 e 2 (cid:45) ai, então:
+(cid:104)0, ai(cid:105) = (cid:104)0, ai − 1(cid:105) =
+
+0ai
+2
+
+ai
+2
+
+daí, basta fazer c1 = 0 e c0 = ai
+
+ai − 1
+2
+
+=
+
+0(ai − 1)
+2
+
+daí, c1 = 0 e c0 = ai − 1.
+
+Se c1 = 1 e 2 | ai, então:
+(cid:104)1, ai(cid:105) =
+
++ 5 =
+
+ai
+2
+
+ai + 10
+2
+
+=
+
+1ai
+2
+
+. Analogamente, c1 = 1 e c0 = ai.
+
+Se c1 = 1 e 2 (cid:45) ai, então:
+(cid:104)1, ai(cid:105) = (cid:104)1, ai − 1(cid:105) =
+
+ai − 1
+2
+
++ 5 =
+
+ai − 1 + 10
+2
+
+=
+
+1(ai − 1)
+2
+
+e c1 = 1 e c0 = ai − 1.
+
+Portanto, em qualquer caso, (cid:104)ai+1, ai(cid:105) =
+
+c
+2
+
+Usando este resultado, o cálculo do par binário (cid:104)ai+1, ai(cid:105) reduz-se, portanto, a encontrar sua
+, o que torna o processo
+
+forma simpliﬁcada (cid:104)c1, c0(cid:105) e considerá-la como sendo o quociente
+mais natural. De fato, é o que ilustramos no exemplo a seguir:
+
+c1c0
+2
+
+Exemplo 3.3. Para a = 997766 e a = 2b + r, r ∈ {0, 1}, a Proposição 3.1 nos dá:
+
+b = (cid:10)0, 9(cid:11) (cid:10)9, 9(cid:11) (cid:10)9, 7(cid:11) (cid:10)7, 7(cid:11) (cid:10)7, 6(cid:11) (cid:10)6, 6(cid:11) =
+
+= (cid:104)0, 8(cid:105) (cid:104)1, 8(cid:105) (cid:104)1, 6(cid:105) (cid:104)1, 6(cid:105) (cid:104)1, 6(cid:105) (cid:104)0, 6(cid:105) =
+
+=
+
+(cid:18)8
+2
+
+(cid:19) (cid:18)18
+2
+
+(cid:19) (cid:18)16
+2
+
+(cid:19) (cid:18)16
+2
+
+(cid:19) (cid:18)16
+2
+
+(cid:19) (cid:18)6
+2
+
+(cid:19)
+
+=
+
+= 498883;
+
+Para a = 125478, temos
+
+b = (cid:10)0, 1(cid:11) (cid:10)1, 2(cid:11) (cid:10)2, 5(cid:11) (cid:10)5, 4(cid:11) (cid:10)4, 7(cid:11) (cid:10)7, 8(cid:11) =
+
+3.2 O ALGORITMO DO PAR BINÁRIO: ENUNCIADO E EXEMPLOS
+
+34
+
+= (cid:104)0, 0(cid:105) (cid:104)1, 2(cid:105) (cid:104)0, 4(cid:105) (cid:104)1, 4(cid:105) (cid:104)0, 6(cid:105) (cid:104)1, 8(cid:105) =
+
+=
+
+(cid:18)0
+2
+
+(cid:19) (cid:18)12
+2
+
+(cid:19) (cid:18)4
+2
+
+(cid:19) (cid:18)14
+2
+
+(cid:19) (cid:18)6
+2
+
+(cid:19) (cid:18)18
+2
+
+(cid:19)
+
+=
+
+= 62739
+
+Para concluir a seção, mostraremos uma aplicação da Proposição 3.1 no cálculo do dobro de
+um número inteiro qualquer a partir do Algoritmo do par binário, e em seguida, mostraremos como
+obter o algoritmo tradicional da multiplicação por 2 como corolário do Teorema 3.1.
+
+Exemplo 3.4 (Aplicação do par binário na multiplicação por 2). .
+Seja b = 652415. o Teorema 3.1 nos garante que a cada algarismo bi de b corresponde um al-
+garismo de 2b, univocamente determinado pelo par binário (cid:104)ai+1, ai(cid:105). Por outro lado, a Proposi-
+= (cid:104)c1, c0(cid:105).
+ção 3.1 nos ensina como bi é obtido a partir do seu ai correspondente: de fato, bi =
+Dito isto, temos:
+
+c1c0
+2
+
+652415 =
+
+(cid:18)12
+2
+
+(cid:19) (cid:18)10
+2
+
+(cid:19) (cid:18)4
+2
+
+(cid:19) (cid:18)8
+2
+
+(cid:19) (cid:18)2
+2
+
+(cid:19) (cid:18)10
+2
+
+(cid:19)
+
+= (cid:104)1, 2(cid:105) (cid:104)1, 0(cid:105) (cid:104)0, 4(cid:105) (cid:104)0, 8(cid:105) (cid:104)0, 2(cid:105) (cid:104)1, 0(cid:105)
+
+Agora, sabemos do Teorema 3.1 que a sequência de pares binários acima representa b se, e somente
+se, o primeiro algarismo de cada par for côngruo mod 2 ao segundo algarismo do par de ordem
+imediatamente inferior, o que sempre pode ocorrer, segundo a Deﬁnição 3.1, segundo a qual temos
+(cid:104)a, b(cid:105) = (cid:104)a, b − 1(cid:105), se 2 (cid:45) b. Sendo assim, podemos escrever:
+
+(cid:104)1, 2(cid:105) (cid:104)1, 0(cid:105) (cid:104)0, 4(cid:105) (cid:104)0, 8(cid:105) (cid:104)0, 2(cid:105) (cid:104)1, 0(cid:105) =
+
+= (cid:104)1, 3(cid:105) (cid:104)1, 0(cid:105) (cid:104)0, 4(cid:105) (cid:104)0, 8(cid:105) (cid:104)0, 3(cid:105) (cid:104)1, 0(cid:105) =
+
+= (cid:10)1, 3(cid:11) (cid:10)3, 0(cid:11) (cid:10)0, 4(cid:11) (cid:10)4, 8(cid:11) (cid:10)8, 3(cid:11) (cid:10)3, 0(cid:11) =
+
+=
+
+1304830
+2
+
+⇒ 2 × 652415 = 1304830.
+
+Generalizaremos este resultado no corolário seguinte:
+
+Corolário 3.1 (Algoritmo tradicional da multiplicação por 2). Seja a = anan−1 · · · a1a0 e b =
+bnbn−1 · · · b1b0 = 2a. Sejam também c1c0 e c(cid:48)
+1c(cid:48)
+Se 2ak = c1c0 e 2ak−1 = c(cid:48)
+
+0 números inteiros tais que c1, c(cid:48)
+
+1 ∈ {0, 1}.
+
+0, então
+
+1c(cid:48)
+
+b0 = c0,
+
+3.2 O ALGORITMO DO PAR BINÁRIO: ENUNCIADO E EXEMPLOS
+
+35
+
+e
+
+
+
+
+
+
+bk =
+
+c0,
+
+se c0 = c(cid:48)
+1
+
+c0 + 1,
+
+se c0 (cid:54)= c(cid:48)
+1
+
+Demonstração. Temos 2ak = c1c0; logo, ak =
+
+c1c0
+2
+
+, e a Proposição 3.1 nos diz que ak = (cid:104)c1, c0(cid:105).
+
+Analogamente, 2ak−1 = c(cid:48)
+
+1c(cid:48)
+
+0 ⇒ ak−1 =
+
+c1c0
+2
+
+= (cid:10)c(cid:48)
+
+1, c(cid:48)
+0
+
+(cid:11)
+
+Agora, pelo Teorema 3.1, temos:
+
+e
+
+Segue disto que
+
+Além disso, se r ∈ {0, 1}, então
+
+e
+
+(cid:10)bk+1, bk
+
+(cid:11) = ak = (cid:104)c1, c0(cid:105)
+
+(cid:10)bk, bk−1
+
+(cid:11) = ak−1 = (cid:10)c(cid:48)
+
+1, c(cid:48)
+0
+
+(cid:11)
+
+bk+1 = c1
+
+bk−1 − r = c(cid:48)
+0
+
+bk = c(cid:48)
+1.
+
+Então, se c0 = c(cid:48)
+
+1, segue de 3.4 que c0 = bk, e daí, c0 = bk.
+
+(3.4)
+
+Por outro lado, se c0 (cid:54)= c(cid:48)
+
+1, temos, por 3.4, que c0 + 1 = c(cid:48)
+
+1 = bk.
+
+E daí, bk = c0 + 1.
+
+Note que o corolário formaliza a sistemática do "vai um"presente no algoritmo usual de multi-
+plicação. O exemplo a seguir ilustra isto:
+
+Exemplo 3.5. Dobrar o número a = 15723546:
+
+Dobrando os algarismos e aplicando o Corolário 3.1, podemos escrever:
+
+2a = (02)(10)(14)(04)(06)(10)(08)(12) =
+
+= (2 + 1)(0 + 1)44(6 + 1)0(8 + 1)2 =
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+36
+
+= 31447092.
+
+3.3 Demonstração do Algoritmo do par binário
+
+Concluiremos este capítulo apresentando uma demonstração para o Teorema 3.1. Para tanto, enun-
+ciaremos e provaremos alguns resultados essenciais que se farão necessários no decorrer da prova.
+Iniciamos com o lema a seguir, que se presta ao objetivo de reduzir toda a prova ao caso em que
+o dividendo é múltiplo do quociente. Os demais lemas objetivam estabelecer equivalências entre
+características das expressões decimais do dividendo e do quociente, de modo a transferir o foco
+da prova do primeiro para o segundo, o que torna possível a demonstração que iremos apresentar.
+
+Lema 3.1. Se 2 | a, então a e a + 1 possuem o mesmo quociente b na divisão euclidiana por 2
+
+Demonstração. :
+
+Se 2 | a, então existe b ∈ N tal que a = 2b. Então, a + 1 = 2b + 1, e como 1 ∈ {0, 1}, segue
+que b é o quociente da divisão euclidiana de a + 1 por 2.
+
+Lema 3.2. Seja b = bnbn−1 · · · b1b0 e ak o dígito de ordem k ≥ 1 na expressão decimal de 2b.
+
+(i) bk ∈ {0, 1, 2, 3, 4} se, e somente se, ak = 2bk + s;
+
+(ii) bk ∈ {5, 6, 7, 8, 9} se, e somente se, ak = (2bk − 10) + s,
+
+Em que s =
+
+
+
+
+
+
+0,
+
+se bk−1 ∈ {0, 1, 2, 3, 4}
+
+1,
+
+se bk−1 ∈ {5, 6, 7, 8, 9}
+
+Demonstração. ( ⇒ )
+
+(Indução sobre k) Seja k = 1. Há dois casos a se considerar, a depender da paridade de b0:
+
+Caso I: Se 0 ≤ b0 ≤ 4, segue que
+
+0 ≤ 2b0 ≤ 8 e daí, a0 = 2b0
+
+(3.5)
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+Então,
+
+(i)
+
+Logo, de 3.5 e 3.6, temos que
+
+0 ≤ b1 ≤ 4 implica 0 ≤ 2b1 ≤ 8
+
+2(b1b0) = 2b110 + 2b0 = (2b1)(2b0) = a1a0, donde a1 = 2b1 + 0.
+
+37
+
+(3.6)
+
+(ii)
+
+Se 5 ≤ b1 ≤ 9, então 10 ≤ 2b1 ≤ 18, e temos 0 ≤ 2b1 − 10 ≤ 8.
+
+(3.7)
+
+Disto segue que 2(b1b0) = 2b110 + 2b0 = (2b1 − 10 + 10)10 + b0 = (2b1 − 10) · 10 + 102 + b0 =
+
+= 102 + (2b1 − 10) · 10 + b0, e, usando a desigualdade 3.7, temos então a1 = 2b1 − 10.
+
+Caso II: Se 5 ≤ b0 ≤ 9 temos
+
+10 ≤ 2b0 ≤ 18, ou ainda 0 ≤ 2b0 − 10 ≤ 8, o que nos dá a0 = 2b0 − 10
+
+(3.8)
+
+Então,
+
+(i) 2(b1b0) = 2b110 + 2b0 = 2b110 + 2b0 − 10 + 10 ⇒ (2b1 + 1)10 + 2b0 − 10
+
+e, de 3.6, temos
+
+1 ≤ 2b1 + 1 ≤ 9, que implica a1 = 2b1 + 1.
+
+(ii) 2(b1b0) = 2b110 + 2b0 = (2b1 − 10 + 10)10 + 2b0 − 10 + 10 =
+
+= (2b1 − 10)10 + 102 + 10 + 2b0 − 10 = 102 + [(2b1 − 10) + 1]10 + 2b0 − 10,
+
+e de 3.7 e 3.8, segue que a1 = (2b1 − 10) + 1.
+
+Logo, o resultado vale para k = 1. Suponha agora que valha para todo 1 ≤ k ≤ n, onde n é al-
+gum inteiro. Provaremos que vale para k + 1, e daí, para todo k ∈ N. Para tanto, dividiremos a
+prova em dois casos, como antes:
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+Caso I: Se 0 ≤ bk+1 ≤ 4, temos:
+
+0 ≤ 2bk+1 ≤ 8,
+
+e supondo s ∈ {0, 1}, temos
+
+(i)
+
+38
+
+(3.9)
+
+0 ≤ bk ≤ 4, ou 0 ≤ 2bk ≤ 8, ou ainda 0 ≤ 2bk + s ≤ 9.
+
+(3.10)
+
+Agora, usando 3.9 e 3.10, a hipótese de indução nos garante que ak = 2bk + s , e daí,
+
+2b = 2 · (bk+1bk · · · b0) = 2bk+110k+1 + (2bk + s)10k + · · · + a0, o que nos dá ak+1 = 2bk+1 + 0.
+
+(ii)
+
+Se 5 ≤ bk+1 ≤ 9, então
+
+0 ≤ 2bk − 10 ≤ 8, donde 0 ≤ (2bk − 10) + s ≤ 9.
+
+(3.11)
+
+Além disso, podemos escrever
+
+2b = 2 · (bk+1bk · · · b0) = 2bk+110k+1 + 2bk10k + · · · + a0 =
+
+= 2bk+110k+1 + (2bk − 10 + 10)10k + · · · + a0 =
+
+= 2bk+110k+1 + (2bk − 10)10k + 10k+1 + · · · + a0 =
+
+= (2bk+1 + 1)10k+1 + (2bk − 10)10k + · · · + a0.
+
+Agora, pela hipótese de indução e por 3.11, temos
+
+ak = (2bk − 10) + s ≤ 9
+
+o que nos dá
+
+2b = 2 · (bk+1bk · · · b0) = (2bk+1 + 1)(2bk − 10 + s) · · · a0
+
+e daí, ak+1 = 2bk+1 + 1.
+
+Caso II: Se 5 ≤ bk+1 ≤ 9 temos
+
+e usando 3.10, 3.12, a hipótese de indução e um raciocínio análogo ao caso I, temos:
+
+0 ≤ 2bk+1 − 10 ≤ 8,
+
+(3.12)
+
+(i) 2b = 2 · (bk+1bk · · · b0) =
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+39
+
+= (2bk+1 − 10)10k+1 + 10k+2 + 2bk10k + · · · + a0 =
+
+= 10k+2 + [(2bk+1 − 10)(2bk + s) · · · a0]
+
+⇒ ak+1 = 2bk+1 − 10 + 0.
+
+Da mesma forma, de 3.11, 3.12 e da hipótese de indução decorre:
+
+(ii) 2b = 2 · (bk+1bk · · · b0) =
+
+= (2bk+1 − 10 + 1)10k+1 + 10k+2 + (2bk − 10 + s)10k + · · · + a0 =
+
+= 10k+2 + [(2bk+1 − 10 + 1)(2bk − 10 + s) · · · a0]
+
+⇒ ak+1 = 2bk+1 − 10 + 1 1
+
+( ⇐ )
+
+(i)
+
+Se ak = 2bk + s ∈ A, então bk =
+
+ak − s
+2
+
+. Como bk ∈ A e s ∈ {0, 1}, segue que
+
+ak − s ∈ {0, 2, 4, 6, 8} ⇒ bk =
+
+ak − s
+2
+
+∈ {0, 1, 2, 3, 4}
+
+(3.13)
+
+(ii) Analogamente, se ak = (2bk − 10) + s, então bk =
+
+ak − s
+2
+
++ 5 ∈ {5, 6, 7, 8, 9}, por 3.13.
+
+Lema 3.3. Sejam a = anan−1 · · · a1a0 e b = bnbn−1 · · · b1b0 inteiros tais que a = 2b + r, com
+r ∈ {0, 1}. Então, para k ∈ {1, 2, · · · , n} temos que
+
+se 2 | ak
+
+e
+
+2 | ak+1, então 0 ≤ bk−1 ≤ 4
+
+e 0 ≤ bk ≤ 4
+
+Demonstração. :
+
+Sejam a =
+
+n
+∑
+i=0
+
+ai10i, b =
+
+n
+∑
+i=0
+
+suﬁciente considerarmos o caso a = 2b. Disto segue que b =
+
+bi10i e ak−1, ak e ak+1 dígitos consecutivos de a. Pelo Lema 3.1 é
+a
+2
+
+, e daí,
+
+b =
+
+n
+∑
+i=0
+
+ai
+2
+
+10i =
+
+an
+2
+
+10n + · · · +
+
+ak+1
+2
+
+10k+1 +
+
+ak
+2
+
+10k +
+
+ak−1
+2
+
+10k−1 + · · · +
+
+a0
+2
+
+1pois 0 ≤ 2bk − 10 + s ≤ 9
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+40
+
+Por hipótese, temos que 2 | ak+1 e 2 | ak implica que existem b(cid:48)
+
+k ∈ A e b(cid:48)
+
+k+1 ∈ A tais que
+
+ak+1 = 2b(cid:48)
+
+k+1 , que nos dá b(cid:48)
+
+k+1 =
+
+ak+1
+2
+
+e
+
+ak = 2b(cid:48)
+
+k , donde b(cid:48)
+
+k =
+
+ak
+2
+
+.
+
+(3.14)
+
+Como ak, ak+1 ∈ {0, 2, 4, 6, 8}, segue que b(cid:48)
+
+k, b(cid:48)
+
+k+1 ∈ {0, 1, 2, 3, 4}.
+
+Para ak−1 há duas situações possíveis: a primeira, em que 2 | ak−1 e a segunda, em que 2 (cid:45) ak−1. A
+seguir apresentamos a prova para o primeiro caso. A prova do segundo pode ser obtida de maneira
+inteiramente análoga.
+
+Dito isto, temos que:
+
+Se 2 | ak−1, então existe b(cid:48)
+
+k−1 =
+
+ak−1
+2
+
+∈ {0, 1, 2, 3, 4} ,
+
+e b(cid:48)
+
+k+1, b(cid:48)
+
+k e b(cid:48)
+
+k−1 são dígitos entre 0 e 4.
+
+Aﬁrmamos que b(cid:48)
+
+k = bk; isto é, que b(cid:48)
+
+k é, efetivamente, o algarismo de ordem k em b:
+
+De fato, como 2 | ak, o Lema 3.2 nos diz que
+
+(i) ak = 2bk
+
+ou
+
+(ii) ak = 2bk − 10
+
+.
+
+Suponha por absurdo que ocorre (ii). Então temos que
+
+ak = 2bk − 10 = 2b(cid:48)
+
+k implica bk = b(cid:48)
+
+k + 5 , e temos, por 3.14, que bk ∈ {5, 6, 7, 8, 9} ;
+
+logo, pelo Lema 3.2, segue que ak+1 = 2bk+1 − 10 + 1 ou ak+1 = 2bk+1 + 1.
+
+Em qualquer caso, teremos que 2 (cid:45) ak+1, contradição. Portanto,
+
+ak = 2bk = 2b(cid:48)
+
+k , e daí, bk = b(cid:48)
+
+k ∈ {0, 1, 2, 3, 4} .
+
+Além disso, ak = 2bk e pelo Lema 3.2, segue que bk−1 ∈ {0, 1, 2, 3, 4}.
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+41
+
+Lema 3.4. Sejam a = anan−1 · · · a1a0 e b = bnbn−1 · · · b1b0 inteiros tais que a = 2b + r, com
+r ∈ {0, 1}. Então, para k ∈ {1, 2, · · · , n}, temos que
+
+se 2 | ak
+
+e 2 (cid:45) ak+1, então 0 ≤ bk−1 ≤ 4 e
+
+5 ≤ bk ≤ 9
+
+Demonstração. :
+
+n
+∑
+i=0
+
+Sejam a =
+
+Isto nos dá:
+
+ai10i e b =
+
+b =
+
+a
+2
+
+=
+
+n
+∑
+i=0
+
+ai
+2
+
+10i =
+
+n
+∑
+i=0
+
+an
+2
+
+bi10i. Como antes, e sem perda de generalidade, suponha a = 2b.
+
+10n + · · · +
+
+ak+1
+2
+
+10k+1 +
+
+ak
+2
+
+10k +
+
+ak−1
+2
+
+10k−1 + · · · +
+
+a0
+2
+
+(3.15)
+
+Por outro lado, seguindo a ideia da demonstração anterior,
+
+se 2 (cid:45) ak+1 então existe b(cid:48)
+
+k+1 ∈ {0, 1, 2, 3, 4} tal que ak+1 = 2b(cid:48)
+
+k+1 + 1
+
+e
+
+se 2 | ak, então existe b(cid:48)
+
+k ∈ {0, 1, 2, 3, 4} tal que ak = 2b(cid:48)
+k
+
+(3.16)
+
+(3.17)
+
+Além disso, o Lema 3.2 nos diz que 2 | ak implica s = 0 e nos aponta as duas seguintes possibili-
+dades:
+
+(i) ak = 2bk
+
+ou
+
+(ii) ak = 2bk − 10
+
+.
+
+Aﬁrmamos que ak = 2bk − 10. De fato, supondo (i), temos que
+
+ak = 2bk e ak = 2b(cid:48)
+
+k , e dai bk = b(cid:48)
+
+k ∈ {0, 1, 2, 3, 4} ;
+
+logo, pelo Lema 3.2 devemos ter ak+1 = 2bk+1 + 0 ou ak+1 = 2bk+1 − 10 , e daí, 2 | ak+1 (contra-
+dição).
+
+Portanto, ak = 2bk − 10 = 2b(cid:48)
+bk ∈ {5, 6, 7, 8, 9}.
+
+k , que é o mesmo que bk = b(cid:48)
+
+k + 5 em vista do que temos
+
+Para completar a demonstração, observemos que ak = 2bk − 10 , e o Lema 3.2 nos diz que
+bk−1 ∈ {0, 1, 2, 3, 4} .
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+42
+
+Lema 3.5. Sejam a = anan−1 · · · a1a0 e b = bnbn−1 · · · b1b0 inteiros tais que a = 2b + r, com
+r ∈ {0, 1}. Então, para k ∈ {1, 2, · · · , n}, temos que
+
+Se 2 | ak+1
+
+e 2 (cid:45) ak , então 0 ≤ bk ≤ 4
+
+e 5 ≤ bk−1 ≤ 9.
+
+Demonstração. : Supondo a = 2b (Lema 3.1), podemos escrever
+
+b =
+
+a
+2
+
+=
+
+an
+2
+
+10n + · · · +
+
+ak+1
+2
+
+10k+1 +
+
+ak
+2
+
+10k +
+
+ak−1
+2
+
+10k−1 + · · · +
+
+a0
+2
+
+Por hipótese, existem b(cid:48)
+
+k e b(cid:48)
+
+k+1 ∈ {0, 1, 2, 3, 4} tais que
+
+e
+
+Além disso, o Lema 3.2 nos diz que
+
+ak+1 = 2b(cid:48)
+
+k+1
+
+ak = 2b(cid:48)
+
+k + 1
+
+(i) ak = 2bk + 1
+
+ou (ii) ak = (2bk − 10) + 1
+
+Supondo que ocorre (ii), temos
+
+ak = 2bk − 10 + 1 = 2b(cid:48)
+k + 5 ∈ {5, 6, 7, 8, 9} , e o Lema 3.2 nos diz que s =
+1 , e daí devemos ter ak+1 = 2bk+1 + 1 ou ak+1 = (2bk+1 − 10) + 1 donde 2 (cid:45) ak+1 (contradição).
+
+k + 1 , ou ainda bk = b(cid:48)
+
+Logo, ak = 2bk + 1 = 2b(cid:48)
+
+k + 1 e temos bk = b(cid:48)
+
+k que implica bk ∈ {0, 1, 2, 3, 4}.
+
+Além disso, se ak = 2bk + 1 , então s = 1 , e daí, bk−1 ∈ {5, 6, 7, 8, 9} .
+
+Lema 3.6. Sejam a = anan−1 · · · a1a0 e b = bnbn−1 · · · b1b0 inteiros tais que a = 2b + r, com
+r ∈ {0, 1}. Então, para k ∈ {1, 2, · · · , n}, temos que
+
+se 2 (cid:45) ak+1
+
+e 2 (cid:45) ak , então 5 ≤ bk−1, bk ≤ 9.
+
+Demonstração. Supondo a = 2b (Lema 3.1), podemos escrever, como o ﬁzemos antes:
+
+b =
+
+a
+2
+
+=
+
+an
+2
+
+10n + · · · +
+
+ak+1
+2
+
+10k+1 +
+
+ak
+2
+
+10k +
+
+ak−1
+2
+
+10k−1 + · · · +
+
+a0
+2
+
+.
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+43
+
+Por hipótese, existem b(cid:48)
+
+k e b(cid:48)
+
+k+1 ∈ {0, 1, 2, 3, 4} tais que
+
+ak+1 = 2b(cid:48)
+
+k+1 + 1
+
+ak = 2b(cid:48)
+
+k + 1.
+
+e
+
+Do Lema 3.2 temos que
+
+2 (cid:45) ak , e daí, s = 1, o que implica
+
+(i) ak = 2bk + 1
+
+ou (ii) ak = (2bk − 10) + 1
+
+.
+
+Se ak = 2bk + 1, então temos bk = b(cid:48)
+
+k ∈ {0, 1, 2, 3, 4} , e daí temos
+
+ak+1 = 2bk+1 ou ak+1 = 2bk+1 − 10 , e 2 | ak+1 (absurdo).
+
+Logo, ak = (2bk − 10) + 1 = 2b(cid:48)
+
+k + 1 , do que segue que bk = b(cid:48)
+
+k + 5 ∈ {5, 6, 7, 8, 9}.
+
+Por outro lado,
+
+se ak = 2bk + 1 , então s = 1 e daí, bk−1 ∈ {5, 6, 7, 8, 9} .
+
+Estamos agora em condições de efetuar a prova do Teorema 3.1:
+
+Demonstração. (do Teorema 3.1):
+
+n
+∑
+i=0
+
+n
+∑
+i=0
+
+Sejam a =
+
+ai10i e b =
+
+bi10i inteiros tais que a = 2b + r,
+
+r ∈ {0, 1}. Sem perda de
+
+generalidade, suponhamos r = 0. Sejam também ak e ak+1 dois algarismos consecutivos de a e
+bi = β (ai):
+
+Se 2 | ak e 2 | ak+1, o Lema 3.3 nos diz que 0 ≤ bk−1 ≤ 4 e 0 ≤ bk ≤ 4 e daí, pelo Lema 3.2 e
+a Deﬁnição 3.1, temos:
+
+ak = 2bk , donde bk =
+
+ak
+2
+
+= (cid:104)0, ak(cid:105) = (cid:104)ak+1, ak(cid:105) , pois 2 | ak+1.
+
+Se 2 | ak e 2 (cid:45) ak+1, o Lema 3.4 nos diz que 0 ≤ bk−1 ≤ 4 e 5 ≤ bk ≤ 9 e daí, pelo Lema 3.2 e a
+
+3.3 DEMONSTRAÇÃO DO ALGORITMO DO PAR BINÁRIO
+
+44
+
+Deﬁnição 3.1, segue que
+
+ak = 2bk − 10 , ou ainda bk =
+
+ak
+2
+
++ 5 = (cid:104)1, ak(cid:105) = (cid:104)ak+1, ak(cid:105) , pois 2 (cid:45) ak+1.
+
+Se 2 (cid:45) ak e 2 | ak+1, o Lema 3.5 nos diz que 5 ≤ bk−1 ≤ 9 e 0 ≤ bk ≤ 4, e daí, pelo Lema 3.2 e a
+Deﬁnição 3.1 segue que
+
+ak = 2bk + 1 ou, equivalentemente, bk =
+
+ak − 1
+2
+
+= (cid:104)0, ak − 1(cid:105) = (cid:104)ak+1, ak(cid:105) ,
+
+pois 2 | ak+1 e (cid:104)0, ak − 1(cid:105) = (cid:104)0, ak(cid:105) . Se 2 (cid:45) ak e 2 (cid:45) ak+1, o Lema 3.6 nos diz que 5 ≤ bk−1, bk ≤ 9
+e daí, pelo Lema 3.2 e a Deﬁnição 3.1, segue que
+
+ak = 2bk − 10 + 1 , que implica bk =
+anteriores.
+
+ak − 1
+2
+
++ 5 = (cid:104)1, ak − 1(cid:105) = (cid:104)ak+1, ak(cid:105) , por razões análogas às
+
+Logo, em qualquer caso, concluímos que β (ak) = (cid:104)ak+1, ak(cid:105), como queríamos demonstrar.
+
+O ALGORITMO DO PAR BINÁRIO EM R
+
+4
+
+Queremos, no presente capítulo, estabelecer a validade da generalização do Teorema 3.1 obtida
+quando ampliamos o conjunto de deﬁnição do dividendo de Z para R. Para tanto, dedicaremos
+a presente seção às considerações prévias a respeito da representação decimal dos números reais,
+bem como às convenções que usaremos, e que julgamos necessárias ao que pretendemos.
+
+4.1 Expressões decimais de números reais
+
+No que segue, assumiremos conhecidos os conceitos de série de números reais e o critério de
+convergência de séries de termos positivos, de que precisaremos para a deﬁnição a seguir:
+
+Deﬁnição 4.1. Seja a ∈ R o número real deﬁnido pela série
+
+a(cid:48) +
+
+∞
+∑
+i=1
+
+a−i
+10i
+
+(4.1)
+
+onde a(cid:48) = anan−1 · · · a1a0 ∈ Z e a−1, a−2, · · · ∈ A. Damos o nome de expressão decimal de a à
+representação
+
+a = a(cid:48), a−1a−2a−3 · · · a−m · · ·
+
+Adicionalmente, dizemos que a(cid:48) é a parte inteira de a e que a−1a−2 · · · a−m · · · é sua parte
+fracionária. Nessas condições, a vírgula cumpre o papel de separação entre as partes inteira e
+fracionária de a. Além disso, por simplicidade, usaremos chamar os algarismos ai tais que i < 0 de
+algarismos fracionários, ao passo que designaremos os algarismos ai tais que i ≥ 0 de algarismos
+inteiros de a.
+
+Por outro lado, vale mencionar que a deﬁnição está bem justiﬁcada. De fato, se a(cid:48) ≥ 0 e
+
+45
+
+4.1 EXPRESSÕES DECIMAIS DE NÚMEROS REAIS
+
+46
+
+ai > 0 para todo i ∈ N, (4.1) é uma série de termos positivos cuja n-ésima soma parcial é dada por
+
+a(cid:48) + Sn = a(cid:48) +
+
+a−1
+10
+
++
+
+a−2
+102 + · · · +
+
+a−n
+10n
+
+Mas do fato de que
+
+a−k
+10k ≤
+
+1
+
+10k−1 , segue que
+
+a(cid:48) + Sn ≤ a(cid:48) + 1 +
+
+1
+10
+
++ · · · +
+
+1
+10n−1
+
+Mas
+
+∞
+∑
+i=1
+
+série converge para
+donde obtemos
+
+1
+10i−1 é uma série geométrica de primeiro termo 1 e razão r =
+
+1
+10
+
+. É fato conhecido que tal
+
+1
+1 − r
+
+(Para uma prova deste fato, recomendamos consultar Ávila ([2], p.109),
+
+∞
+∑
+i=1
+
+1
+10i−1 =
+
+1
+1 − 1/10
+
+=
+
+10
+9
+
+.
+
+Segue disto que
+
+n
+∑
+i=1
+e a sequência de somas parciais a(cid:48) + Sn é monótona limitada, logo, convergente (Ver [17] p.26,
+Teo. 4), e daí, (4.1) também converge e a > 0.
+
+1
+10i−1 < a(cid:48) +
+
+0 < a(cid:48) + Sn ≤ a(cid:48) +
+
+10
+9
+
+Se a(cid:48) = 0 e ak = 0 para todo k ≤ −1, segue-se trivialmente que a = 0, e se a(cid:48) + ∑
+
+a−i
+10i < 0
+
+> 0 e este caso se reduz ao primeiro, donde −a > 0 implica a < 0.
+
+segue que −
+
+(cid:18)
+a(cid:48) +∑
+
+(cid:19)
+
+a−i
+10i
+
+Logo, a série 4.1 sempre deﬁne um número real a, de modo que podemos escrever
+
+a(cid:48), a−1a−2a−3 · · · a−m · · · = a.
+
+Menos trivial e mais importante é a implicação contrária, isto é, a aﬁrmação de que para cada
+número real a existe uma expressão decimal que o deﬁne. Tal aﬁrmação constitui uma generali-
+zação do Teorema 2.1 a R, e devido à sua importância no que se segue, o provaremos a seguir,
+utilizando o método apresentado por Dominguez ([9], p.264). Para tanto, admitiremos conhecida
+a deﬁnição analítica de limite de uma sequência de números reais 1.
+
+Teorema 4.1 (cf. [9], p.264). Se a ∈ R, então existem a(cid:48) ∈ Z e dígitos a−1, a−2, · · · a−m, · · ·
+
+1Dizemos que uma sequência (ai)i∈N possui limite a quando, dado um ε > 0 arbitrário, existir r ∈ N tal que
+
+n ≥ r ⇒ |an − a| < ε. Nesse caso, escrevemos lim ai = a
+
+(cf. [17], p.24)
+
+4.1 EXPRESSÕES DECIMAIS DE NÚMEROS REAIS
+
+47
+
+tais que
+
+a = a(cid:48), a−1a−2a−3 · · · a−m · · ·
+
+Demonstração. Seja a(cid:48) ∈ Z tal que a(cid:48) ≤ a < a(cid:48) + 1.
+
+Se a(cid:48) = a, recaímos no caso a ∈ Z já provado anteriormente (Teorema 2.1).
+
+Suponha então a(cid:48) < a < a(cid:48) + 1 e seja a−1 ∈ A o maior dígito tal que
+
+S1 = a(cid:48) +
+
+a−1
+10
+
+≤ a ≤ a(cid:48) +
+
+a−1 + 1
+10
+
+= S(cid:48)
+1.
+
+(4.2)
+
+Se a = S1, a demonstração está concluída e a = a(cid:48), a−1.
+
+Caso contrário, seja a−2 ∈ A o maior dígito tal que
+
+S2 = S1 +
+
+a−2
+102 ≤ a ≤ S1 +
+
+a−2 + 1
+102 = S(cid:48)
+2.
+
+Se a = S2, então a = a(cid:48), a−1a−2 e a demonstração termina. Caso contrário, repete-se o processo.
+
+A partir daí, temos duas situações possíveis:
+I) Para algum r ∈ N se tem a = a(cid:48), a−1a−2a−3 · · · a−r, e a demonstração está completa.
+
+II) O processo não termina.
+
+Nesse caso, consideremos os subconjuntos de R:
+
+S = {S1, S2, · · · }
+
+e
+
+S(cid:48) = (cid:8)S(cid:48)
+
+1, S(cid:48)
+
+2, · · · (cid:9)
+
+onde os elementos Sk ∈ S deﬁnem-se recursivamente pondo Sk = Sk−1 +
+
+S(cid:48)
+k ∈ S(cid:48), de maneira análoga, pondo S(cid:48)
+
+k = Sk−1 +
+
+a−k + 1
+10k
+
+Por construção, para todo i ∈ N se tem Si < S(cid:48)
+i.
+
+Por outro lado, temos
+
+a−k
+10k , e os elementos
+
+, e S1 e S(cid:48)
+
+1 deﬁnidos como em 4.2.
+
+0 < S(cid:48)
+
+r − Sr = a(cid:48) +
+
+r−1
+∑
+i=1
+
+ai
+10i +
+
+ar + 1
+10r −
+
+(cid:32)
+
+a(cid:48) +
+
+(cid:33)
+
+r
+∑
+i=1
+
+ai
+10i
+
+=
+
+1
+10r .
+
+(4.3)
+
+4.1 EXPRESSÕES DECIMAIS DE NÚMEROS REAIS
+
+Agora, dado ε > 0, seja r ∈ N tal que
+
+1
+10r < ε. Por 4.3, temos que S(cid:48)
+
+r − Sr =
+
+1
+10r .
+
+Mas Sr ≤ a ≤ S(cid:48)
+
+r, e daí,
+
+a − Sr < S(cid:48)
+
+r − Sr =
+
+1
+10r < ε.
+
+Entretanto, sabemos que para todo n ≥ r vale a desigualdade
+
+Então, de 4.4, temos:
+
+Sr ≤ Sn ≤ a.
+
+a − Sn ≤ a − Sr<ε
+
+Mas a − Sn = |a − Sn|, e daí temos de 4.5 que
+
+n ≥ r ⇒ |a − Sn| < ε,
+
+48
+
+(4.4)
+
+(4.5)
+
+o que signiﬁca, pela, deﬁnição de limite, que lim Sn = a ou, equivalentemente, que
+
+a = a(cid:48), a−1a−2a−3 · · · a−m · · ·
+
+Observemos que apesar de ser um resultado mais geral do que seu equivalente em Z, o Teorema
+4.1 não assegura a unicidade da representação decimal, ao contrário do seu caso particular. Com
+efeito, apesar de cada expressão decimal deﬁnir um único número real, a aﬁrmação recíproca não é
+necessariamente verdadeira. De fato, consideremos, a título de ilustração, as expressões decimais
+a seguir:
+
+a = 0, 23000 · · · tal que ai = 0 para todo i < −2
+
+e
+
+b = 0, 22999 · · · em que ai = 9 para todo i < −2.
+
+Aﬁrmamos que a e b deﬁnem o mesmo número α ∈ R. De fato, por deﬁnição, temos
+
+a = 0, 23000 · · · =
+
+2
+10
+
++
+
+3
+102 +
+
+0
+103 +
+
+0
+104 + · · · =
+
+20
+102 +
+
+3
+102 + · · · + 0 + 0 + · · · =
+
+23
+100
+
+,
+
+e
+
+b = 0, 22999 · · · =
+
+2
+10
+
++
+
+2
+102 +
+
+9
+103 +
+
+9
+104 + · · · =
+
+20
+102 +
+
+2
+102 +
+
+9
+103
+1 − 1
+10
+
+=
+
+22
+100
+
++
+
+9/103
+9/10
+
+=
+
+4.1 EXPRESSÕES DECIMAIS DE NÚMEROS REAIS
+
+49
+
+=
+
+22
+100
+
++
+
+1
+100
+
+=
+
+23
+100
+
+Logo, as expressões a e b deﬁnem o mesmo número real α ∈ R.
+
+Em vista dessa duplicidade de notação, diremos que a = 0, 23000 · · · é a representação de α
+em expansão ﬁnita e que b = 0, 22999 · · · a sua representação em expansão inﬁnita. Apesar disso,
+concordando com Lima ([16], pp. 59-60), adotaremos escrever a = b = α, não fazendo distinção
+entre α e qualquer de suas representações decimais. Além disso, no primeiro caso, dispensaremos
+os zeros à direita de a e escreveremos a = 0, 23.
+
+Generalizando, temos a deﬁnição a seguir:
+
+Deﬁnição 4.2 (Dízima ﬁnita e dízima inﬁnita). Seja a = a(cid:48), a−1a−2a−3 · · · a−m · · · uma expres-
+são decimal real. Dizemos que a é uma dízima de expansão ﬁnita, ou, simplesmente, dízima
+ﬁnita, se para algum m ∈ N se tenha ai = 0 para todo i < −m, e escrevemos
+
+a = a(cid:48), a−1a−2a−3 · · · a−m.
+
+Caso contrário, dizemos que a é uma dízima de expansão inﬁnita, ou, simplesmente, uma
+dízima inﬁnita.
+
+Exemplo 4.1. São exemplos de dízimas ﬁnitas:
+
+0, 50000 · · · = 0, 5 e 1, 21000 · · · = 1, 21,
+
+e são exemplos de dízimas inﬁnitas
+
+3, 14159265 · · · (= π)
+
+e 0, 3333 · · ·
+
+=
+
+(cid:18)
+
+(cid:19)
+
+1
+3
+
+A observação feita antes da Deﬁnição 4.2 referente à equivalência entre as dízimas 0, 23 e
+
+0, 22999 · · · , bem como a segunda parte do Exemplo 4.1 referentes aos números π e
+nos dão
+evidências de que os números que admitem representação em dízima ﬁnita também possuem uma
+representação na forma de dízima inﬁnita tal que ai = 9 para todo i ≤ −m, para algum m ∈ N, ao
+passo que alguns números, tais como o
+, que apresenta uma expansão inﬁnita periódica, ou o π,
+que apresenta uma expansão inﬁnita e aperiódica não possuem uma representação alternativa ﬁnita.
+
+1
+3
+
+1
+3
+
+4.1 EXPRESSÕES DECIMAIS DE NÚMEROS REAIS
+
+50
+
+De fato, segundo Lima ([16], p.64), a função que associa cada número real a à sua expressão
+decimal é sobrejetiva, mas não injetiva, e ainda, o único caso em que há a quebra da injetividade
+é aquele em que a dízima possui inﬁnitos algarismos fracionários iguais a 9. Desse modo, um
+número real admite uma expressão decimal inﬁnita se, e somente se, admitir uma representação
+inﬁnita do tipo a(cid:48), a−1a−2a−3 · · · a−m9999 · · · , o que não ocorre com as dízimas periódicas de pe-
+ríodo diferente de 9. Na proposição a seguir caracterizaremos os números reais que possuem tal
+propriedade:
+
+Proposição 4.1. Um número real a admite uma representação decimal em dízima ﬁnita se, e
+somente se, existem α ∈ Z e n ∈ N tais que
+
+a =
+
+α
+10n
+
+Demonstração. Seja a = a(cid:48), a−1a−2a−3 · · · a−n e suponha que ai = 0 para todo i < −n. Podemos
+escrever:
+
+a = a(cid:48), a−1a−2a−3 · · · a−n = a(cid:48) +
+
+n
+∑
+i=1
+
+a−i
+10i =
+
+a(cid:48)10n + a−110n−1 + · · · + a−n
+10n
+
+=
+
+a(cid:48)a−1a−2 · · · a−n
+10n
+
+onde a(cid:48) = amam−1 · · · a1a0
+
+Reciprocamente, seja α = amam−1 · · · a1a0 ∈ Z.
+
+Então,
+
+a =
+
+amam−1 · · · a1a0
+10n
+
+=
+
+m
+∑
+i=0
+
+ai10i
+10n =
+
+am
+10n−m +
+
+am−1
+10n−m+1 + · · · +
+
+a1
+10n−1 +
+
+a0
+10n
+
+(4.6)
+
+Agora, se n = m temos:
+
+a = am +
+
+am−1
+10
+
++
+
+am−2
+102 + · · · +
+
+a1
+10m−1 +
+
+a0
+10m = am, am−1am−2 · · · a1a0.
+
+Se n > m, então existe k ∈ N tal que n = m + k.
+
+Então, de 4.6 vem:
+
+a =
+
+am
+10k +
+
+am−1
+10k+1 + · · · +
+
+a1
+10m−1 +
+
+a0
+10m = 0, 0 · · · 0
+(cid:124) (cid:123)(cid:122) (cid:125)
+k−zeros
+
+amam−1 · · · a1a0.
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+51
+
+Se n < m, então existe k ∈ N tal que n = m − k.
+
+Então,
+
+a =
+
+am
+10−k +
+
+am−1
+10−k+1 + · · · +
+
+a1
+10m−(k+1)
+
++
+
+a0
+10m−k =
+
+= am10k + am−110k−1 + · · · + a110k−(m−1) + a010k−m =
+
+= amam−1 · · · am−k, am−(k+1) · · · a1a0.
+
+Em qualquer caso, a dízima resultante é ﬁnita.
+
+Decorre desse resultado que toda expressão decimal de um número inteiro é um caso particular
+de uma dízima ﬁnita. De fato, dado a = amam−1 · · · a1a0 ∈ Z, basta pôr α = amam−1 · · · a1a00 e
+n = 1, e teremos
+
+amam−1 · · · a1a00
+101
+
+Por outro lado, segue da Deﬁnição 4.2 que a dízima ﬁnita amam−1 · · · a1a0, 0 coincide com a
+
+expressão decimal do inteiro a acima. Com efeito,
+
+amam−1 · · · a1a0, 0 = a +
+
+∞
+∑
+i=1
+
+0
+10i = a + 0 = a
+
+Com isto, temos provado que toda expressão decimal real a de parte não-inteira nula representa
+um número inteiro de expressão decimal igual a parte inteira de a, resultado que destacamos a
+seguir, e determina uma "imersão"das expressões decimais inteiras no conjunto das expressões
+decimais reais:
+
+Corolário 4.1. Se a = a(cid:48), 0 é o número real tal que a(cid:48) = anan−1 · · · a1a0, então a = a(cid:48) ∈ Z, ou,
+equivalentemente,
+
+a(cid:48), 0 = a(cid:48)
+
+4.2 O Algoritmo do Par Binário para dividendos reais quaisquer
+
+4.2.1 Dividendos que admitem representação decimal ﬁnita
+
+Uma vez de posse dos resultados da seção precedente referentes à natureza ﬁnita ou inﬁnita das
+expressões decimais, abordaremos agora o problema de generalizar o Teorema 3.1 a dividendos
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+52
+
+reais. No caso das expansões ﬁnitas, o que temos em mente é associar uma dada expressão decimal
+real a uma expressão decimal em Z que lhe seja equivalente num sentido que se tornará claro no
+decorrer desta seção.
+
+Para tanto, dadas duas dízimas a ∈ R e b ∈ R∗, precisamos ainda investigar qual a relação entre
+. Nesse problema mais geral, o questio-
+
+as ﬁnitudes de a e de b com a ﬁnitude do quociente
+
+namento chave seria: Sendo a ﬁnita, é
+
+a
+b
+
+De fato, pondo a = 1 e b = 3, temos a ﬁnita enquanto
+
+sempre ﬁnita? A resposta geral, evidentemente, é não.
+
+a
+b
+
+= 0, 333 · · · é inﬁnita. Por outro lado,
+
+a
+b
+
+se a = 0, 333 · · · e b = 0, 666 · · · temos
+
+=
+
+= 0, 5, que é uma dízima ﬁnita. Além disso, já
+
+vimos que sendo a ∈ Z e n ∈ N,
+condicionada à ﬁnitude do dividendo, em geral.
+
+a
+10n é ﬁnita, e concluímos que a ﬁnitude do quociente não está
+
+a
+b
+
+1
+2
+
+Na proposição a seguir, veremos que, felizmente, não é esse o caso dos quocientes de divisor
+2. Nela provaremos que dada uma expressão decimal a ﬁnita, a expressão decimal de
+também
+será ﬁnita, valendo a recíproca; isto é: se b ∈ R admite uma representação ﬁnita, então existe a ∈ R
+decimal ﬁnita tal que b =
+
+a
+2
+
+.
+
+a
+2
+
+Proposição 4.2. a = a(cid:48), a−1a−2a−3 · · · a−m · · · é uma dízima ﬁnita se, e somente se,
+
+a
+2
+
+= b(cid:48), b−1b−2b−3 · · · b−m · · ·
+
+é uma dízima ﬁnita
+
+Demonstração. ( ⇒ ) Seja a = a(cid:48), a−1a−2a−3 · · · a−m · · · . Pela Proposição 4.1, existe α ∈ Z tal
+que
+
+a =
+
+α
+10m .
+
+Dividindo os dois membros de 4.7 por 2, segue que
+
+a
+2
+
+=
+
+α
+2 · 10m =
+
+5α
+10 · 10m =
+
+5α
+10m+1
+
+(4.7)
+
+(4.8)
+
+Como 5α ∈ Z, segue pela Proposição 4.1 que (4.8) é uma dízima ﬁnita, e daí,
+
+a
+2
+
+é uma dízima ﬁnita.
+
+( ⇐ ) Seja
+
+a
+2
+
+= b(cid:48), b−1b−2b−3 · · · b−m. Pela Proposição 4.1 existe α (cid:48) ∈ Z tal que
+
+a
+2
+
+=
+
+α (cid:48)
+10m e daí, a =
+
+2α (cid:48)
+10m .
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+53
+
+Como α (cid:48) ∈ Z, segue que 2α (cid:48) ∈ Z, e daí a mesma proposição nos garante que a é uma dízima
+ﬁnita.
+
+Em outras palavras, o resultado nos diz que a ﬁnitude de uma dízima é invariante pela divisão
+por 2. Em particular, se a admite uma representação em dízima ﬁnita, o uso da representação ﬁnita
+em representação ﬁnita; ao passo que se tomarmos a em representação
+de a nos retornará um
+
+também o será. No primeiro caso, a proposição a seguir estende o algoritmo
+
+a
+2
+
+inﬁnita, a dízima
+do par binário às dízimas ﬁnitas:
+
+a
+2
+
+Proposição 4.3. Seja a = a(cid:48), a−1a−2a−3 · · · a−m uma dízima ﬁnita. Se γ = cn+m+1cn+m · · · c10
+é um inteiro tal que γ = a · 10m+1, então
+
+a
+2
+
+=
+
+a(cid:48)
+2
+
++ 0, β (cm)β (cm−1) · · · β (c1)β (0) =
+
+a(cid:48)
+2
+
++ 0, β (a−1)β (a−2) · · · β (a−m)β (0)
+
+onde β (ai) = (cid:104)ai+1, ai(cid:105)
+
+Demonstração. Podemos escrever:
+
+a
+2
+
+=
+
+a(cid:48), a−1a−2a−3 · · · a−m · 10m+1
+2
+
+·
+
+1
+10m+1 =
+
+γ
+2
+
+· 10−m−1.
+
+Como γ ∈ Z, o Teorema 3.1 nos dá
+
+a
+2
+
+= (β (cn+m+1)β (cn+m) · · · β (c1)β (0)) · 10−m−1 =
+
+=
+
+(cid:34)n+m+1
+∑
+i=1
+
+(cid:35)
+β (ci)10i + β (0)
+
+· 10−m−1 =
+
+= (cid:10)0, cn+m+1
+
+(cid:11) (cid:104)cn+m+1, cn+m(cid:105) · · · (cid:104)c1, 0(cid:105) · 10−m−1 =
+
+= (cid:10)0, cn+m+1
+
+(cid:11) · · · (cid:104)c2+m, c1+m(cid:105) , (cid:104)c1+m, cm(cid:105) · · · (cid:104)c1, 0(cid:105) =
+
+=
+
+a(cid:48)
+2
+
++ 0, β (cm) · · · β (c1)β (0).
+
+Agora, basta observar que para cada i se tem ai = cm+i+1
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+54
+
+Em termos práticos, a proposição 4.3 nos ensina que, para ﬁns de cálculo de pares binários,
+podemos tratar dízimas ﬁnitas como se fossem expressões decimais inteiras, respeitando a posição
+da vírgula decimal e consequente distinção entre algarismos inteiros e fracionários.
+
+Exemplo 4.2. Para a = 8933, 432, temos
+
+= (cid:10)0, 8(cid:11) (cid:10)8, 9(cid:11) (cid:10)9, 3(cid:11) (cid:10)3, 3(cid:11) , (cid:10)3, 4(cid:11) (cid:10)4, 3(cid:11) (cid:10)3, 2(cid:11) (cid:10)2, 0(cid:11) =
+
+08
+2
+
+08
+2
+
+12
+2
+
+12
+2
+
+,
+
+14
+2
+
+02
+2
+
+12
+2
+
+00
+2
+
+=
+
+a
+2
+
+=
+
+8933, 4320
+2
+
+= 4466, 7160.
+
+Para a = 1047, temos
+
+1047
+2
+
+=
+
+1047, 0
+2
+
+= (cid:10)0, 1(cid:11) (cid:10)1, 0(cid:11) (cid:10)0, 4(cid:11) (cid:10)4, 7(cid:11) , (cid:10)7, 0(cid:11) = 0523, 5.
+
+Para a = 3, 123, temos:
+
+3, 123
+2
+
+=
+
+3, 1230
+2
+
+= (cid:10)0, 3(cid:11) (cid:10)3, 1(cid:11) (cid:10)1, 2(cid:11) (cid:10)2, 3(cid:11) , (cid:10)3, 0(cid:11) = 1, 5615
+
+4.2.2 Dividendos expressos em representação decimal inﬁnita
+
+Conforme observa Lima ([16], p. 66), não é possível efetuar as quatro operações com as dízimas
+inﬁnitas usando-as integralmente. Em particular, se a = a(cid:48), a−1a−2a−3 · · · a−m · · · é uma dízima in-
+, já que este se desenvolve da
+ﬁnita, não é possível recorrer ao algoritmo tradicional no cálculo de
+direita para a esquerda, ao passo que as dízimas denotam-se no sentido oposto. Tal inconveniente,
+no entanto, não constitui uma barreira à aplicação do algoritmo do par binário, uma vez que este
+não baseia-se na adoção de uma ordem ﬁxa de manipulação, podendo, pois, ser desenvolvido da
+esquerda para a direita, se assim o quisermos.
+
+a
+2
+
+Nesse contexto, a única barreira que persiste refere-se à impossibilidade óbvia de se calcula-
+rem os inﬁnitos pares binários provenientes da expansão inﬁnita do dividendo. A solução clássica
+para tal entrave, como observa Lima ([16]), consiste na obtenção de aproximações sucessivas do
+quociente real por meio de racionais expressos em dízimas ﬁnitas, com cada vez mais algarismos
+não-inteiros, "tanto mais aproximados quanto maior for m [o número de algarismos adotados no
+dividendo]" (idem, p.66).
+
+É esta a estratégia de que faremos uso a partir de então. Para tanto, deﬁnimos:
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+55
+
+Deﬁnição 4.3 (Aproximação e Erro). Seja a = a(cid:48), a−1a−2a−3 · · · a−m · · ·
+b(cid:48), b−1b−2b−3 · · · b−m · · · dízimas inﬁnitas tais que q =
+ﬁnita q(cid:48) < q é uma aproximação por falta de q se existe uma função
+
+e q =
+. Dizemos que uma dízima
+
+a
+2
+
+E : [0, q) ∩
+
+(cid:110) α
+
+10k : α ∈ N e k ∈ N∗(cid:111)
+
+−→ (0, q]
+
+(4.9)
+
+Tal que
+
+E(q(cid:48)) = q − q(cid:48)
+
+Nessas condições, dizemos que E é o Erro por falta na aproximação de q por q(cid:48).
+
+Neste ponto cabem duas observações: a primeira é a de que E está bem deﬁnida. De fato, a
+proposição 4.2 nos assegura que sempre é possível obter dízimas inﬁnitas a e q como acima. A
+segunda, é a de que poderíamos deﬁnir, de maneira análoga ao que ﬁzemos, a aproximação por
+excesso e o erro por excesso. Não o faremos, entretanto, por não haver nenhum ganho sensível
+teórica ou praticamente no que segue, se assim o ﬁzermos.
+
+Finalmente, a função E nos fornece a "distância"entre o valor real de q e a sua aproximação
+racional (e de expansão ﬁnita) q(cid:48). Em particular, dadas duas aproximações distintas q(cid:48) e q(cid:48)(cid:48) de q,
+dizemos que q(cid:48) é melhor aproximação (por falta) de q do que q(cid:48)(cid:48) quando E(q(cid:48)) < E(q(cid:48)(cid:48)).
+
+Evidentemente, sendo q uma dízima inﬁnita, o processo de obtenção de aproximações ﬁnitas
+cada vez melhores de q que citamos acima e de que trata Lima (idem) pode ser repetido inﬁni-
+tamente, bastando, para isso, tomarmos a próxima aproximação com mais algarismos do que a
+sua precedente. No entanto, se ﬁxarmos um número de algarismos para a aproximação desejada,
+podemos obter uma aproximação melhor do que qualquer outra tomada com o mesmo número de
+algarismos. É disto que trata a deﬁnição que propomos a seguir:
+
+Deﬁnição 4.4. Seja q uma dízima inﬁnita. Damos o nome de m-aproximação ótima de q, e
+denotaremos por "Am(q)"(ou simplesmente "Am"quando não houver possibilidade de confusão
+quanto à dízima a que estamos nos referindo) à dízima ﬁnita com m algarismos fracionários tal
+que
+
+E(Am(q)) < E(q(cid:48))
+
+Para toda aproximação q(cid:48) do domínio de E com m algarismos fracionários.
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+56
+
+A proposição a seguir assegura a existência de Am(q) e nos mostra como a obter a partir de
+
+qualquer q.
+
+Proposição 4.4. Se q = b(cid:48), b−1b−2b−3 · · · b−m · · · é uma dízima inﬁnita, então a m-aproximação
+ótima de q é dada por
+
+Am(q) = b(cid:48), b−1b−2b−3 · · · b−m
+
+Demonstração. :
+
+Seja q(cid:48) = b(cid:48), b−1 · · · ˜b−m tal que ˜b−m (cid:54)= bm. Se ˜b−m > b−m, temos que q(cid:48) > q e q(cid:48) não é uma
+aproximação por falta de q. Suponhamos então ˜b−m < b−m.
+Então,
+
+E(q(cid:48)) = q − q(cid:48) = 0, 0 · · · (bm − ˜b−m) · · · > 0, 0 · · · (b−m − b−m) · · · = q − Am(q) = E(Am(q))
+
+Logo, E(Am(q)) < E(q(cid:48)) para todo q(cid:48) (cid:54)= Am(q)
+
+O ponto fundamental da proposição 4.4 é o fato de que ela nos diz que os m algarismos de
+uma m-aproximação ótima são todos exatos; isto é, a sequência b−1, b−2, · · · , b−m dos algarismos
+fracionários de Am(q) coincide com a sequência dos m primeiros dígitos não-inteiros de q. Tal fato
+será importante na demonstração do próximo resultado:
+
+Proposição 4.5. Se a = a(cid:48), a−1a−2a−3 · · · a−m · · · é uma dízima inﬁnita e q =
+
+a
+2
+
+, então
+
+Am(q) =
+
+a(cid:48)
+2
+
++ 0, β (a−1) · · · β (a−m)
+
+é a m-aproximação ótima de q, onde β (ai) = (cid:104)ai+1, ai(cid:105)
+
+Demonstração. :
+
+Pela Proposição 4.4, Am(q) = a(cid:48), a−1a−2a−3 · · · a−m é a m−aproximação ótima de a. Sendo Am(q)
+uma dízima ﬁnita, o Teorema 4.3 nos diz que
+
+Am(a)
+2
+
+=
+
+a(cid:48)
+2
+
++ 0, β (a−1) · · · β (a−m)β (0).
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+57
+
+Ainda pela Proposição 4.4, os m primeiros algarismos não-inteiros de
+a(cid:48)
+2
+
++ 0, β (a−1) · · · β (a−m) = Am(q) é a m-aproximação ótima de q.
+
+Am(a)
+2
+
+são exatos, e daí,
+
+Exemplo 4.3. A 4-aproximação ótima do quociente q =
+
+a
+2
+
+onde a = 0, 333 · · · é
+
+A4(a) =
+
+0, 3333
+2
+
+= (cid:10)0, 0(cid:11) , (cid:10)0, 3(cid:11) (cid:10)3, 3(cid:11) (cid:10)3, 3(cid:11) (cid:10)3, 3(cid:11) = 0, 1666
+
+Para ﬁns práticos, a proposição 4.5 já nos possibilita determinar a aproximação de quocientes
+com qualquer precisão desejada, o que já seria suﬁciente para os objetivos a que nos propusemos
+neste capítulo. No entanto, para tornar este estudo mais completo, gostaríamos de mostrar que a
+sequência de aproximações (An(q))n∈N de fato deﬁne o número real q. Com isto, obteremos a ge-
+neralização deﬁnitiva do nosso algoritmo ao universo R. Para esse ﬁm, precisaremos antes provar
+o lema seguinte:
+
+Lema 4.1. Seja q = a(cid:48), a−1a−2a−3 · · · a−m · · · uma dízima inﬁnita. O erro E(Ak(q)) cometido
+quando substituímos q por Ak(q) é menor do que
+
+1
+10k
+
+Demonstração. :
+
+Pela Proposição 4.4, temos Ak(q) = a(cid:48), a−1a−2a−3 · · · a−m · · · . Nessas condições, temos
+
+E(Ak(q)) = q − Ak(q) = 0, 0 · · · 0
+(cid:124) (cid:123)(cid:122) (cid:125)
+k−ordens
+
+a−k−1 · · · < 0, 0 · · · 01
+(cid:124) (cid:123)(cid:122) (cid:125)
+k−ordens
+
+=
+
+1
+10k
+
+Estamos agora em condições de provar o resultado principal do capítulo:
+
+Teorema 4.2 (Algoritmo do par binário para dízimas inﬁnitas). :
+Com as notações anteriores, se a = a(cid:48), a−1a−2a−3 · · · a−m · · · , então
+
+q =
+
+a(cid:48)
+2
+
++ 0, β (a−1) · · · β (a−m) · · ·
+
+onde β (ai) = (cid:104)ai+1, ai(cid:105)
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+58
+
+Demonstração. :
+
+Seja Ak = Ak(q) a k-aproximação ótima de q e considere a sequência (A1, A2, · · · , An, · · · ) . Pela
+Deﬁnição 4.3, temos
+
+0 ≤ A1 ≤ A2 ≤ · · · < q e
+
+q ≥ E(A1) ≥ E(A2) ≥ · · · ≥ E(An) ≥ · · · > 0
+
+(4.10)
+
+e daí, as sequências (An)n∈N e (E(An))n∈N são monótonas limitadas, logo, convergentes (ver
+[17],p.26, Teo.4).
+
+Por outro lado, de 4.10 e do Lema 4.1 que
+
+0 < E(An) <
+
+1
+10n
+
+(4.11)
+
+e o teorema do confronto de limites (idem, p.27, Teo. 6)2, nos dá
+
+0 = lim 0 < lim E(An) < lim
+
+1
+10n = 0 , o que implica que lim E(An) = 0.
+
+Daí segue que lim(q − An) = 0.
+
+Agora, como a sequência constante converge, temos então3:
+
+lim q − lim An = 0 , do que decorre q − lim An = 0 e, ﬁnalmente,
+
+lim An = q.
+
+Logo, a sequência (An)n∈N converge para q, o que equivale a dizer que
+
+q =
+
+a(cid:48)
+2
+
++ 0, β (a−1) · · · β (a−m) · · · .
+
+Exemplo 4.4. Para a = 53, 121212 · · · , temos
+
+= (cid:10)0, 5(cid:11) (cid:10)5, 3(cid:11) , (cid:10)3, 1(cid:11) (cid:10)1, 2(cid:11) (cid:10)2, 1(cid:11) (cid:10)1, 2(cid:11) (cid:10)2, 1(cid:11) (cid:10)1, 2(cid:11) · · · = 26, 560606 · · ·
+
+a
+2
+
+Para a = 0, 10110011 · · · , temos
+
+= 0, (cid:10)0, 1(cid:11) (cid:10)1, 0(cid:11) (cid:10)0, 1(cid:11) (cid:10)1, 1(cid:11) (cid:10)1, 0(cid:11) (cid:10)0, 0(cid:11) (cid:10)0, 1(cid:11) (cid:10)1, 1(cid:11) · · · = 0, 05055005 · · ·
+
+a
+2
+
+2Teorema do confronto (ou do sanduíche): "Se lim xn = lim yn = a e xn ≤ zn ≤ yn para todo n suﬁcientemente
+
+grande, então lim zn = a"
+
+3Se duas sequências xn e yn convergem, então lim(xn + yn) = limxn + limyn (ver [17]: p. 28, Teorema 8).
+
+4.2 O ALGORITMO DO PAR BINÁRIO PARA DIVIDENDOS REAIS QUAISQUER
+
+59
+
+Para a = π = 3, 1415926 · · · , temos
+
+= (cid:10)0, 3(cid:11) , (cid:10)3, 1(cid:11) (cid:10)1, 4(cid:11) (cid:10)4, 1(cid:11) (cid:10)1, 5(cid:11) (cid:10)5, 9(cid:11) (cid:10)9, 2(cid:11) (cid:10)2, 6(cid:11) · · · = 1, 5707963 · · ·
+
+a
+2
+
+Para concluir o capítulo, gostaríamos de estabelecer uma notação que uniﬁcasse os teoremas
+3.1, 4.2 e a proposição 4.3. Isto é possível se considerarmos que uma expressão decimal em Z é
+um caso particular de uma expressão decimal ﬁnita (corolário 4.1), e esta, por sua vez, admite uma
+representação em dízima inﬁnita.
+
+Para tanto, seja a = a(cid:48), a−1a−2a−3 · · · a−m
+
+· · · uma expressão decimal genérica com a
+
+(cid:48) = an an−1
+
+                               Podemos escrever
+· · · a1a0
+
+.
+
+ai10i
+
+a = ∑
+i∈I
+
+(4.12)
+
+desde que deﬁnamos:
+
+• I = {n, · · · , 1, 0} ⊂ N, quando a for uma expressão decimal em Z;
+
+• I = {n, · · · , 1, 0, −1, · · · − m} ⊂ Z, quando a for uma dízima ﬁnita; e
+
+• I = {n, · · · , 1, 0, −1, · · · − m · · · } ⊂ Z quando a uma dízima inﬁnita.
+
+Nessas condições, reescreveremos os três teoremas anteriores de maneira uniﬁcada como se segue:
+
+Teorema 4.3. Seja a = ∑
+i∈I
+decimal de a. Se β (ai) = (cid:104)ai+1, ai(cid:105), então
+
+ai10i ∈ R e I ⊂ Z um conjunto de índices adequado à representação
+
+a
+2
+
+= ∑
+i∈I
+
+β (ai)10i.
+
+Tal notação sintética será útil no prosseguir do trabalho, sempre que precisarmos apresentar
+
+deﬁnições ou resultados que independam da expansão de a.
+
+5
+
+ITERAÇÃO DE QUOCIENTES
+
+5.1 Quocientes Iterados
+
+Tendo ampliado o raio de ação de nosso algoritmo no capítulo precedente, generalizando de Z para
+R o domínio dos dividendos aos quais se aplica, voltamos nossa atenção agora para a aplicação da
+teoria desenvolvida até aqui à determinação de quocientes cujo divisor não seja necessariamente
+igual a 2. Conscientes, no entanto, de que uma generalização a todo divisor b ∈ R∗ é impossível
+no âmbito das fronteiras naturalmente impostas ao nosso trabalho, nos limitaremos a tratar do caso
+b = 2n, n ∈ N∗, que se constitui, como se sabe, uma aplicação natural e imediata da divisão por 2.
+
+De fato, dividir por 4 equivale a dividir duas vezes consecutivas por 2 ( pois
+
+dividir por 8 equivale a dividir três vezes consecutivas por 2 ( pois
+
+por 16 equivale a dividir quatro vezes seguidas por 2 ( pois
+
+a
+16
+
+=
+
+a
+4
+a
+23 = a·
+1
+1
+1
+·
+·
+2
+2
+2
+
+=
+1
+·
+2
+1
+·
+2
+
+·
+
+);
+
+1
+2
+
+1
+2
+), e dividir
+
+a
+22 = a ·
+1
+1
+·
+2
+2
+), por exemplo.
+
+=
+
+a
+8
+a
+24 = a·
+
+Mais geralmente, para q =
+
+a
+2n , a ∈ R, n ∈ N∗, considere a sequência (qi)i≥1 tal que
+
+qi =
+
+
+
+
+
+a
+2
+
+qi−1
+2
+
+se
+
+i = 1
+
+se
+
+i > 1
+
+(5.1)
+
+isto é, considere a sequência iniciada pela metade do dividendo a ∈ R e cujos termos posteriores
+são sempre iguais à metade de seu antecessor na sequência. É imediato que (qi) assim deﬁnida é
+
+uma progressão geométrica de primeiro termo q1 =
+[24], p.21) que podemos expressar seu termo geral na forma
+
+a
+2
+
+1
+2
+
+e razão r =
+
+, do que segue (ver Morgado:
+
+qi =
+
+(cid:19)i−1
+
+(cid:18)1
+2
+
+·
+
+a
+2
+
+=
+
+a
+2
+
+·
+
+1
+2i−1 =
+
+a
+2i
+
+Do exposto, segue que qn =
+
+a
+2n = q, e daí, a iteração n vezes da operação de divisão por 2 a partir
+
+60
+
+5.1 QUOCIENTES ITERADOS
+
+61
+
+de a ∈ R nos retorna o quociente desejado. Em vista disso, deﬁnimos:
+
+Deﬁnição 5.1. Seja a ∈ R. Damos o nome de Iteração sobre a à sequência deﬁnida por
+
+qi(a) =
+
+a
+2i ,
+
+i ∈ N∗
+
+e de k-iterado de a ao seu k-ésimo termo qk(a).
+
+Usando essa nomenclatura 1, sintetizamos o raciocínio anterior na proposição seguinte:
+
+Proposição 5.1. Sejam a ∈ R e n ∈ N∗ tais que q =
+então o valor de q coincide com o do n-iterado de a; isto é,
+
+a
+2n . Se (qi(a))i≥1 é a iteração sobre a,
+
+q = qn
+
+Demonstração. (Indução sobre n) Para n = 1, é imediato. Supondo que q = qn para algum n ∈ N∗,
+
+a
+então temos q =
+2n+1 =
+indução, para todo n ∈ N∗
+
+(cid:17)
+
+(cid:16) a
+2n
+2
+
+=
+
+qn
+2
+
+(5.1)
+= qn+1, donde a proposição é verdadeira para n + 1, e, por
+
+Exemplo 5.1. Para q =
+
+115
+23 temos, pelo Teorema 4.3:
+
+q1 = β (1)β (1)β (5), β (0) = 057, 5
+q2 = β (5)β (7), β (5)β (0) = 28, 75
+q3 = β (2)β (8), β (7)β (5)β (0) = 14, 375,
+
+e daí, segue que q = 14, 375.
+
+Vale comentar que o processo de iteração que ﬁzemos acima e provamos na proposição 5.1
+possui a vantagem teórica de possibilitar a omissão de uma série de considerações preliminares re-
+ferentes à ﬁnitude das expansões de a e de q =
+para 2 ≤
+
+a
+2n . De fato, uma vez que q = qn e qi =
+
+qi−1
+2
+
+1Sempre que não houver possibilidade de confusão usaremos indicar o k-iterado qk(a) simplesmente pela notação
+mais limpa "qk", reservando a notação completa para quando precisarmos tratar de mais de um dividendo no mesmo
+contexto.
+
+5.2 PAR BINÁRIO COMPOSTO
+
+62
+
+i ≤ n, a aplicação repetida da proposição 4.2 nos diz que q admite representação em dízima ﬁnita
+se, e somente se, qn−1 admite representação em dízima ﬁnita, se, e somente se, qn−2 admite re-
+presentação em dízima ﬁnita, e, prosseguindo com esse raciocínio, concluímos que isto ocorre se,
+e somente se, a admite representação em dízima ﬁnita.
+
+Desse modo, para calcularmos q =
+
+a
+2n basta que procedamos como no exemplo 5.1 aplicando n
+vezes seguidas o teorema 4.3. Além disso, a ﬁnitude da expansão decimal de qn = q será a mesma
+da expansão de a.
+
+5.2 Par Binário Composto
+
+Na discussão acima, vimos que a proposição 5.1 estende o teorema 4.3 aos quocientes com di-
+visores do tipo 2n, sem a necessidade de quaisquer considerações adicionais, a não ser o uso do
+raciocínio recursivo. Na verdade, tendo em vista os objetivos iniciais deste capítulo, isto seria o
+suﬁciente para considerarmos nossa meta atingida. No entanto, gostaríamos de obter uma técnica
+mais reﬁnada e eﬁciente para a obtenção de quocientes a partir da iteração. De fato, apesar do uso
+dessa técnica tal como a ﬁzemos no exemplo 5.1 ser um procedimento eﬁcaz, a necessidade de
+determinar cada qi−1 antes de cada qi pode revelar-se um trabalho penoso, sobretudo nos casos em
+que o número de algarismos de a ou a quantidade de iterações for grande. Isso deve-se ao fato de
+o processo apresentado ser um procedimento "horizontal"; isto é, imaginando cada qi como uma
+linha de uma matriz, a linha qi+1 só pode ser obtida após a determinação completa da linha qi; em
+particular, se qi expressa uma dízima inﬁnita, o procedimento descrito não nos permite obter qi+1.
+
+Queremos agora estabelecer um procedimento "vertical"; isto é, um procedimento que em
+lugar da iteração dos quocientes, foque na iteração de cada algarismo do dividendo em separado,
+de modo a que a determinação de uma coluna ﬁque condicionada à completa determinação de sua
+vizinha imediata de ordem superior. Para tanto, precisaremos da introdução de alguns conceitos
+complementares de cuja discussão nos ocuparemos em todo o restante do capítulo: o primeiro
+deles o deﬁniremos a seguir, e consiste numa generalização do conceito de par binário:
+
+Deﬁnição 5.2. Seja n ∈ N∗ e I ⊂ Z um conjunto de índices e a = ∑
+de Par Binário Composto à função β n : A −→ A deﬁnida pela recorrência
+
+i∈I
+
+ai10i ∈ R. Damos o nome
+
+β n(ai) =
+
+
+
+
+
+
+β (ai) = (cid:104)ai+1, ai(cid:105) ,
+
+β (β n−1(ai)) =
+
+(cid:69)
+(cid:68)
+β n−1(ai+1), β n−1(ai)
+
+,
+
+se
+
+se
+
+n = 1
+
+n > 1
+
+.
+
+5.2 PAR BINÁRIO COMPOSTO
+
+Para referência futura, diremos que
+
+(β n(ai))n≥1
+
+63
+
+(5.2)
+
+é a sequência de pares binários gerada por ai . No entanto, quando quisermos nos referir aos k
+primeiros termos de 5.2, escreveremos
+
+[ai]k =
+
+(cid:17)
+(cid:16)
+β (ai), β 2(ai), β 3(ai), · · · , β k(ai)
+
+(5.3)
+
+Na proposição a seguir, apresentaremos algumas propriedades do par binário composto:
+
+Proposição 5.2 (Propriedades). O Par Binário Composto possui as seguintes propriedades:
+
+(i) β (β n(ai)) = β n(β (ai)), para todo n ∈ N∗;
+
+(ii) β n(β m(ai)) = β m(β n(ai)), para todo m, n ∈ N∗;
+
+(iii) β n((cid:104)ai+1, ai(cid:105)) =
+
+(cid:69)
+(cid:68)
+β n(ai+1), β n(ai)
+;
+
+(iv) Se β (1) = 0 , então (cid:104)0, β n(1)(cid:105) = 0 para todo n ∈ N∗.
+
+Demonstração. :
+(i)
+para n + 1 temos, por deﬁnição:
+
+Para n = 1, é imediato. Suponha que para certo n ∈ N∗ a propriedade se veriﬁque; então,
+
+β (β n+1(ai)) = β (β (β n(ai))),
+
+e pela hipótese de indução e Deﬁnição 5.2, por sua vez,
+
+β (β (β n(ai))) = β (β n(β (ai))) = β n+1(β (ai))
+
+e a propriedade é válida para n + 1 e, consequentemente, para todo n ∈ N∗.
+
+(ii)
+
+Para n = 1 a validade é garantida por (i). Supondo que exista n ∈ N∗ tal que a propri-
+
+edade seja válida, segue então, pela Deﬁnição 5.2, que
+
+β n+1(β m(ai)) = β (β n(β m(ai))),
+
+e daí,pela hipótese de indução e pela Deﬁnição 5.2, temos
+
+β (β n(β m(ai))) = β (β n+m(ai)) = β n+m+1(ai).
+
+5.2 PAR BINÁRIO COMPOSTO
+
+64
+
+e daí, a propriedade é verdadeira para todo n ∈ N∗.
+
+(iii)
+
+Pelo Teorema 4.3 e por (i), temos β n((cid:104)ai+1, ai(cid:105)) = β n(β (ai)) = β (β n(ai)) =
+
+(cid:69)
+(cid:68)
+β n(ai+1), β n(ai)
+.
+
+=
+
+(iv)
+
+Para n = 1, temos (cid:104)0, β (1)(cid:105) = (cid:104)0, 0(cid:105) = 0.
+
+Supondo que (cid:104)0, β n(1)(cid:105) = 0 para certo n ∈ N∗, temos então, de (i) e de (iii), que
+
+(cid:10)0, β n+1(1)(cid:11) = (cid:104)β (1), β (β n(1))(cid:105) = (cid:104)β (0), β (β n(1))(cid:105) = β ((cid:104)0, β n(1)(cid:105)),
+
+e a hipótese de indução nos diz que β ((cid:104)0, β n(1)(cid:105)) = β (0) = 0. Logo, a propriedade é válida para
+n + 1, e daí, para todo n ∈ N∗.
+
+Queremos, com a Deﬁnição 5.2, introduzir algo similar à iteração de quocientes em R ao uni-
+verso de A, o que transferirá o cálculo de qk(a) à determinação de cada um de seus algarismos
+tomados isoladamente, o que trará consigo alguns benefícios, de que trataremos no momento ade-
+quado. Para tanto, enunciamos, a seguir, o teorema que conﬁrma tal possibilidade:
+
+Teorema 5.1 (Algoritmo do Par Binário Composto). : Sejam a ∈ R e I um conjunto de índices
+adequado à expansão decimal de a.
+
+Se a = ∑
+i∈I
+
+ai10i e
+
+a
+2n = ∑
+
+i∈I
+
+bi10i, então bi = β n(ai) para todo i ∈ I.
+
+Demonstração. (Indução sobre n):
+
+Se n = 1, temos o Teorema 4.3, que sabemos ser verdadeiro.
+
+Suponhamos então que para certo n ∈ N∗ o resultado seja válido. Então, para n + 1 devemos
+ter:
+
+q =
+
+a
+2n+1 =
+
+(cid:17)
+
+,
+
+(cid:16) a
+2n
+2
+
+ou ainda, usando a hipótese de indução:
+
+β n(ai)10i
+
+∑
+i∈I
+
+2
+
+.
+
+q =
+
+5.2 PAR BINÁRIO COMPOSTO
+
+65
+
+Agora, pelo Teorema 4.3 e Deﬁnição 5.2, temos:
+
+q = ∑
+i∈I
+
+β (β n(ai))10i = ∑
+
+i∈I
+
+β n+1(ai)10i,
+
+donde decorre que o resultado é válido para todo n ∈ N∗
+
+Antes de ilustrarmos o uso do Teorema 5.1, cabe uma observação, referente ao fato (óbvio)
+de que o resultado que provamos trata-se de uma releitura da Proposição 5.2 em termos de pares
+binários compostos, o que pode parecer redundante numa primeira análise. Perceba-se, no entanto,
+que ao contrário daquela proposição, que focava na iteração de quocientes tomando cada iterado a
+partir do seu precedente, o teorema que provamos foca na sequência [ai]. De fato, ao aﬁrmar que
+β n(ai) é o dígito de ordem i em q, o teorema nos autoriza a usar a deﬁnição 5.2, segundo a qual
+teremos β n(ai) = β (β n−1(ai)), iniciando um processo recursivo sobre a ordem i em cada iterado
+de a, conforme ilustraremos a seguir:
+
+Exemplo 5.2. Calculemos q =
+
+358
+24 :
+
+Usando o teorema 5.1 e a proposição 5.2 (i), temos:
+
+q = β 4(3)β 4(5)β 4(8), β 4(0) =
+
+= β 3(1)β 3(7)β 3(9), β 3(0)β 3(0) =
+
+= β 2(0)β 2(8)β 2(9), β 2(5)β 2(0) =
+
+= β (0)β (4)β (4), β (7)β (5)β (0) =
+
+= 022, 375
+
+Pelo exposto, note que agora poderíamos determinar cada algarismo ai de q, a partir de a, sem
+a necessidade de se determinar os iterados qk completamente a cada passo, isto é, o Teorema 5.1
+nos permite fazer um cálculo "vertical", calculando-se os 4 primeiros termos de [ai], ao invés do
+cálculo "horizontal", baseado na construção da sequência (q j(a))1≤ j≤4.
+
+Assim, teríamos, no exemplo anterior:
+
+[a2]4 = (1, 0, 0, 0) ⇒ β 4(3) = 0
+
+[a1]4 = (7, 8, 4, 2) ⇒ β 4(5) = 2
+
+[a0]4 = (9, 9, 4, 2) ⇒ β 4(8) = 2
+
+5.3 MATRIZ ASSOCIADA A UM DIVIDENDO
+
+66
+
+[a−1]4 = (0, 5, 7, 3) ⇒ β 4(0−1) = 3
+
+[a−2]4 = (0, 0, 5, 7) ⇒ β 4(0−2) = 7
+
+[a−3]4 = (0, 0, 0, 5) ⇒ β 4(0−3) = 5
+
+Nosso objetivo, a partir de então, será o de otimizar essa técnica de cálculo, o que faremos
+
+introduzindo uma notação mais adequada, da qual trataremos em seguida.
+
+5.3 Matriz associada a um dividendo
+
+a
+Nas seções 4.1 e 4.2 orientamos o processo de cálculo do quociente q =
+2n segundo a construção
+da iteração (q j(a))1≤ j≤n de a, o que chamamos de "cálculo horizontal"de q, e mais tarde mostra-
+mos, com o Teorema 5.1, que a expressão decimal de q poderia ser obtida mediante a construção
+das sequências [ai]n, com i ∈ I, o que então apelidamos de "cálculo vertical"de q.
+
+Queremos agora dar sentido mais preciso às expressões "horizontal"e "vertical"que usamos, e
+mostrar, como prometemos, a vantagem do uso do processo a que se refere a última expressão.
+ai10i, doravante representaremos a sequência [ai]n dos n primeiros pares
+Para tanto, pondo a = ∑
+i∈I
+binários do dígito ai na forma da matriz coluna
+
+[ai]n =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+β (ai)
+β 2(ai)
+...
+β n(ai)
+
+(5.4)
+
+Por outro lado, ﬁxando k ∈ {1, · · · , n}, o Teorema 5.1 nos assegura que qk = ∑
+i∈I
+expressão decimal pode ser vista como a matriz
+
+β k(ai)10i, cuja
+
+(cid:105)
+(cid:104)
+β k(ai)
+
+1×(#I)
+
+= [qk]
+
+(5.5)
+
+que é a matriz linha usual, com tantas colunas quantas forem os elementos de I. Em particular, se
+I = {r, · · · , 1, 0, −1, · · · , −m}, temos
+
+[qk] =
+
+(cid:17)
+(cid:16)
+β k(ar) · · · β k(a1)β k(a0)β k(a−1) · · · β k(a−m)
+
+.
+
+(5.6)
+
+5.3 MATRIZ ASSOCIADA A UM DIVIDENDO
+
+67
+
+Admitindo certo abuso de notação2, a partir daqui não distinguiremos o k-iterado qk e sua matriz
+associada [qk], e escreveremos qk = [qk].
+
+Estamos agora em condições de deﬁnir a matriz associada a um dividendo:
+
+Deﬁnição 5.3 (Matriz associada a um dividendo). Seja q =
+
+a
+2n , n ∈ N∗ e a = ∑
+
+i∈I
+
+ai10i.
+
+Daremos o nome de Matriz n−ésima associada ao dividendo a à matriz denotada por
+
+[a]n = (αi j)
+
+(5.7)
+
+com i ∈ {1, · · · , n} e j ∈ I deﬁnida por
+
+αi j = β i(ak+1− j)
+
+Em outras palavras, a matriz [a]n é tal que sua i-ésima linha é dada pelo iterado qi, e sua j-
+ésima coluna é a matriz [a j]n, o que signiﬁca que calcular q equivale a se determinar a linha qn de
+(5.7), o que, por sua vez, pode ser feito determinando-se as sequências [ai]n que são as colunas de
+(5.7), o que justiﬁca a denominação de "cálculo vertical"que ﬁzemos, opondo-se à determinação
+linha a linha, que chamamos de "cálculo horizontal"por razões análogas. A titulo de ilustração,
+consideremos o exemplo a seguir:
+
+Exemplo 5.3. : Sendo q =
+
+800
+24 , temos
+
+[800]4 =
+
+
+
+
+
+
+
+
+
+β (0)
+β (0)
+β (8)
+β 2(8) β 2(0) β 2(0)
+β 3(8) β 3(0) β 3(0)
+β 4(8) β 4(0) β 4(0)
+
+
+
+
+
+
+
+
+
+Mas
+
+(cid:16)
+
+=
+
+[a2]4
+
+[a1]4
+
+[a0]4
+
+(cid:17)
+
+(5.8)
+
+2A identiﬁcação que fazemos aqui entre qk e [qk] refere-se aos valores absolutos dos algarismos de qk. A rigor,
+trata-se de uma bijeção entre o conjunto das matrizes-linha 1 × k e R que associa a cada expressão decimal q a matriz
+cujos termos são os dígitos de q tomados ordenadamente da esquerda para direita.
+
+5.4 MATRIZ DO DIVIDENDO INTEIRO
+
+e usando 5.9, temos
+
+e usando 5.10, por sua vez, segue que:
+
+[a2]4 =
+
+[a1] =
+
+[a0] =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+2
+1
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+5
+
+0
+0
+0
+0
+
+68
+
+(5.9)
+
+(5.10)
+
+(5.11)
+
+E substituindo 5.9, 5.10 e 5.11 em 5.8, temos:
+
+[800]4
+
+(5.9)
+=
+
+
+
+
+
+
+
+
+
+4 β (0)
+β (0)
+2 β 2(0) β 2(0)
+1 β 3(0) β 3(0)
+0 β 4(0) β 4(0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+4 0 β (0)
+2 0 β 2(0)
+1 0 β 3(0)
+0 5 β 4(0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+,
+
+
+
+
+
+
+
+4 0 0
+2 0 0
+1 0 0
+0 5 0
+
+e daí, segue que q = q5 = 50.
+
+5.4 Matriz do dividendo inteiro
+
+5.4.1 Divisão euclidiana por 2n
+
+Interessa-nos agora abordar a divisão euclidiana por 2n e o cálculo do quociente nessa divisão,
+em particular. A matriz que deﬁniremos como resultado das considerações desta seção será muito
+útil em nossa proposta de otimizar o nosso algoritmo para o divisor especíﬁco que temos estudado
+neste capítulo.
+
+A deﬁnição da função Parte inteira3 será útil nesse contexto, em razão do que a enunciaremos
+
+a seguir:
+
+3Também chamada por alguns autores de "Função maior inteiro": ver por exemplo, [27], p. 76.
+
+5.4 MATRIZ DO DIVIDENDO INTEIRO
+
+69
+
+Deﬁnição 5.4. Damos o nome de Parte Inteira à função
+
+(cid:98)
+
+(cid:99) : R −→ Z
+
+que a cada número real x = x(cid:48) + ∑
+expressão decimal, e indicamos
+
+i∈ I
+
+xi10i, xi ∈ A, I ⊂ Z− associa a parte inteira x(cid:48) de sua
+
+(cid:98)x(cid:99) = x(cid:48)
+
+Assim, por exemplo, (cid:98)2, 5(cid:99) = 2; (cid:98)0, 125(cid:99) = 0; e (cid:98)5(cid:99) = 5.
+
+Enunciaremos na proposição a seguir algumas propriedades da função parte inteira. A prova
+
+destas decorrem imediatamente da Deﬁnição 5.4 e optaremos por sua omissão:
+
+Proposição 5.3. : A Função Parte inteira de x possui as seguintes propriedades:
+
+(i) x ∈ (0, 1) ⇒ (cid:98)x(cid:99) = 0;
+
+(ii) (cid:98)x − y(cid:99) = 0 ⇒ (cid:98)x(cid:99) = (cid:98)y(cid:99);
+
+(iii) (cid:98)x(cid:99) = x ⇔ x ∈ Z.
+
+O problema da determinação do quociente da divisão euclidiana por 2n está diretamente rela-
+
+cionado à função parte inteira. De fato, sejam a ∈ Z e n ∈ N tais que q =
+
+Se 2n | a, então existe b ∈ Z tal que a = 2nb, e daí, temos:
+
+b =
+
+a
+2n = q ∈ Z e (cid:98)q(cid:99) = q.
+
+Caso contrário, existe b ∈ Z e r ∈ Z com 0 < r < 2n tais que
+
+a
+2n .
+
+donde
+
+b =
+
+a − r
+2n =
+
+a
+2n −
+
+r
+2n = q −
+
+r
+2n .
+
+Note que q /∈ Z pois 5.12 implica que
+
+a = 2nb + r
+
+(5.12)
+
+q − b =
+
+r
+2n ∈ (0, 1)
+
+(5.13)
+
+5.4 MATRIZ DO DIVIDENDO INTEIRO
+
+e disto segue que b = q −
+
+r
+2n ⇒ q − b =
+
+r
+2n .
+
+Agora, pela Proposição 5.3 (i) e por 5.12, temos (cid:98)q − b(cid:99) =
+
+(cid:107)
+
+(cid:106) r
+2n
+
+= 0.
+
+Logo, da Proposição 5.3 (ii) e (iii) temos (cid:98)q(cid:99) = (cid:98)b(cid:99),
+
+e ﬁnalmente, b = (cid:98)q(cid:99), o que nos dá o resultado seguinte:
+
+70
+
+Proposição 5.4. Sejam a ∈ Z, b ∈ Z, r ∈ N∗. Se a = 2nb + r com 0 ≤ r < 2n, então
+
+b =
+
+(cid:107)
+
+.
+
+(cid:106) a
+2n
+
+Demonstração. Efetuada.
+
+Corolário 5.1. Com as hipóteses anteriores, se a = akak−1 · · · a1a0 então
+
+b = β n(ak)β n(ak−1) · · · β n(a0).
+
+Demonstração. : Basta usar a Proposição 5.2, segundo a qual q = qn. Daí, b = (cid:98)q(cid:99) = (cid:98)qn(cid:99) =
+β n(ak)β n(ak−1) · · · β n(a0).
+
+O que a Proposição 5.4 nos diz, e mais propriamente o seu corolário, em termos de represen-
+tação decimal, é que o quociente na divisão euclidiana de a por 2n é dado pela n-ésima linha da
+matriz
+
+αi j = (cid:0)β i(ak+1− j)(cid:1)
+
+1 ≤ i ≤ n
+
+0 ≤ j ≤ k
+
+obtida a partir da supressão dos termos β i(a j) de [a]n tais que j < 0. Pela sua importância no que
+segue, a deﬁniremos formalmente a seguir:
+
+5.4 MATRIZ DO DIVIDENDO INTEIRO
+
+71
+
+Deﬁnição 5.5. Seja q =
+inteira n-ésima de a à matriz que indicaremos por (cid:98)a(cid:99)n tal que
+
+a
+2n com a = akak−1 · · · a1a0 ∈ Z e n ∈ N∗. Damos o nome de Matriz
+
+(cid:98)a(cid:99)n =
+
+
+
+
+
+
+
+β (ak)
+...
+β n(ak)
+
+· · ·
+
+β (a0)
+...
+
+· · · β n(a0)
+
+
+
+
+
+
+
+Exemplo 5.4. Vamos calcular o quociente da divisão euclidiana de 2417 por 24. Isto equivale a
+determinar a 4.ª linha da matriz (cid:98)2417(cid:99)4:
+
+(cid:98)2417(cid:99)4 =
+
+
+
+
+
+
+
+
+
+1 2 0 8
+0 6 0 4
+0 3 0 2
+0 1 5 1
+
+
+
+
+
+
+
+
+
+Portanto,
+
+(cid:23)
+
+(cid:22)2417
+24
+
+= 151
+
+A proposição a seguir pode ser útil na construção de (cid:98)a(cid:99)n, sobretudo para maiores valores de
+
+n:
+
+Proposição 5.5. Se a = akak−1 · · · a1a0 ∈ Z, n ∈ N∗ e (cid:98)a(cid:99)n = (αi j)
+
+, então:
+
+1 ≤ i ≤ n
+1 ≤ j ≤ k + 1
+
+(i) α(i+1)1 = (cid:104)0, αi1(cid:105) para todo i ∈ {1, · · · , n − 1}.
+
+Em particular, se αr1 = 1, então, α(i+1)1 = 0 para todo i ≥ r
+
+(ii) Se 2 | αi(s−1) para todo i ≥ r e r ∈ {1, · · · , n − 1}, então α(i+1)s = (cid:104)0, αis(cid:105).
+
+Em particular, se αrs = 1 e αi(s−1) = 0 para todo i ≥ r, então α(i+1)s = 0 para todo i ≥ r
+
+Demonstração. :
+
+(i) Pela Proposição 5.2 e pelo Teorema 4.3, temos:
+
+α(i+1)1 = β i+1(ak) = β (cid:0)β i(ak)(cid:1) = β i (β (ak)) = β i ((cid:104)ak+1, ak(cid:105)) =
+
+(cid:69)
+(cid:68)
+β i(ak+1), β i(ak)
+.
+
+Mas ak+1 = 0 implica que β i(ak+1) = 0 para todo i ∈ N.
+
+5.4 MATRIZ DO DIVIDENDO INTEIRO
+
+72
+
+Logo, α(i+1)1 = (cid:10)0, β i(ak)(cid:11) = (cid:104)0, αi1(cid:105).
+
+Em particular, se αr1 = 1 com i > r, temos que
+
+α(i+1)1 = (cid:10)0, β i+1(ak)(cid:11),
+
+e a Proposição 5.2 (ii) nos dá
+
+(cid:10)0, β i+1(ak)(cid:11) = (cid:10)0, β i+1−r (β r(ak))(cid:11) = (cid:10)0, β i+1−r (αr1)(cid:11) = (cid:10)0, β i+1−r(1)(cid:11).
+
+E daí, da Proposição 5.2 (iv) obtemos (cid:10)0, β i+1−r(1)(cid:11) = 0.
+
+(ii) α(i+1)s = β i+1(ak+1−s) = β i (β (ak+1−s)) = β i (cid:0)(cid:10)ak+1−(s−1), ak+1−s
+
+(cid:11)(cid:1) =
+
+(cid:69)
+(cid:68)
+β i(ak+1−(s−1)), β i(ak+1−s)
+
+=
+
+= (cid:10)αi(s−1), αis
+
+(cid:11).
+
+Mas, por hipótese, 2 | αi(s−1), e daí, α(i+1)s = (cid:104)0, αis(cid:105).
+
+Em particular, se αrs = 1 e αi(s−1) = 0 para todo i ≥ r, temos, então, para i ≥ r:
+
+α(i+1)s = (cid:104)0, αis(cid:105) = (cid:10)0, β i(ak−1+s)(cid:11) = (cid:10)0, β i−r (β r(ak−1+s))(cid:11) = (cid:10)0, β i−r(αrs
+
+(cid:11) =
+
+= (cid:10)0, β i−r(1)(cid:11) = 0
+
+Dito de outra forma, a proposição 5.5 nos diz que, para construir (cid:98)a(cid:99)n é conveniente:
+
+1. Preparar uma tabela (Matriz) cuja quantidade de linhas seja igual ao expoente do divisor e a
+
+quantidade de colunas seja igual à quantidade dígitos do dividendo;
+
+2. Ao proceder o cálculo por colunas, perceber que o cálculo dos pares binários da primeira
+coluna se faz dividindo por dois o par binário precedente, se este for par, ou subtraindo uma
+unidade e então dividindo-o, caso seja ímpar;
+
+3. Ao se encontrar o dígito 1 na primeira coluna, dispensar o cálculo dos demais termos, que
+
+serão todos nulos;
+
+4. A partir da linha em que a primeira coluna se anular, tudo o que foi dito dela em (2) e (3) se
+aplica à segunda coluna; quando esta se anular, o mesmo se aplicará à terceira, e assim por
+diante.
+
+Ilustraremos o processo no exemplo a seguir:
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+73
+
+Exemplo 5.5. Vamos construir a matriz (cid:98)312(cid:99)7, e determinar
+visualizar a aplicação da técnica, marcaremos com pontos as células da tabela cujo cálculo é dis-
+pensável:
+
+em seguida. Para melhor
+
+(cid:23)
+
+(cid:22)312
+27
+
+
+
+(cid:98)312(cid:99)7 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 5 6
+. 7 8
+. 3 9
+. 1 9
+. 9
+.
+. 4
+.
+. 2
+.
+
+Portanto,
+
+(cid:23)
+
+(cid:22)312
+27
+
+= 2.
+
+5.5 Matriz complementar do dividendo inteiro
+
+5.5.1 Redutibilidade de quocientes
+
+No que segue, gostaríamos de admitir apenas quocientes de dividendos ímpares em nossas con-
+siderações. Para que possamos fazer isto sem prejuízo para a generalidade de nossa exposição,
+mostraremos que todo quociente do tipo considerado neste capítulo admite tal representação, salvo
+casos particulares que não requerem a teoria desta seção para o seu tratamento.
+
+Com este objetivo, deﬁnimos:
+
+b
+2m tais que n, m ∈ N∗ e a, b ∈ Z. Dizemos que p é
+Deﬁnição 5.6. Sejam q =
+equivalente a q, e escrevemos p ∼ q, se p e q admitem a mesma representação decimal. Além
+disso, se m > n, dizemos que p é redutível a q.
+
+a
+2n e p =
+
+Decorre dessa deﬁnição que se p ∼ q e m > n, temos que (cid:98)a(cid:99)n possui menor quantidade de
+linhas e colunas do que (cid:98)b(cid:99)m, embora possuam, a menos de zeros à esquerda, a mesma linha ﬁnal,
+já que pm = qn.
+
+De fato, por deﬁnição, p = q, e daí, temos
+
+a =
+
+2nb
+2m =
+
+b
+2m−n
+
+(5.14)
+
+e a última linha de (cid:98)b(cid:99)m−n coincide com a.
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+Por outro lado, de (5.14),
+
+(cid:18) b
+
+(cid:19)
+
+q =
+
+2m−n
+2n
+
+implica (cid:98)a(cid:99)n =
+
+(cid:22) b
+
+2m−n
+
+(cid:23)
+
+.
+
+n
+
+Mais rigorosamente, se a = arar−1 · · · a1a0 e b = bsbs−1 · · · b1b0 com s ≥ r, temos
+
+· · ·
+
+br+1
+...
+
+· · ·
+
+br
+...
+
+b0
+...
+
+· · · β m−n(br+1) β m−n(br)
+· · ·
+
+· · · β m−n(b0)
+· · ·
+
+0
+...
+0
+
+β (ar)
+...
+β n(ar)
+
+· · ·
+
+β (a0)
+...
+β n(a0)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(cid:98)b(cid:99)n =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+bs
+...
+β m−n(bs)
+0
+...
+0
+
+E daí, considerando as matrizes
+
+Mn×r = (cid:98)a(cid:99)n;
+
+N(m−n)×s = (cid:98)b(cid:99)m−n; e
+
+On×(r−s) a matriz nula, podemos escrever sinteticamente:
+
+
+
+
+
+
+
+
+
+(cid:98)b(cid:99)n =
+
+N(m−n)×s
+
+On×(r−s)
+
+Mn×r
+
+· · ·
+
+
+
+
+
+
+
+
+
+74
+
+(5.15)
+
+(5.16)
+
+(5.17)
+
+e daí, a matriz (cid:98)a(cid:99)n coincide com a matriz obtida da supressão das m − n primeiras linhas e r − s
+primeiras colunas de (cid:98)b(cid:99)n.
+
+Ilustrando:
+
+Exemplo 5.6.
+
+3072
+27
+
+é equivalente a
+
+96
+22 . Temos:
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+75
+
+(cid:98)3072(cid:99)7 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 5 3 6
+0 7 6 8
+0 3 8 4
+0 1 9 2
+0 0 9 6
+
+0 0 4 8
+0 0 2 4
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e
+
+(cid:98)96(cid:99)2 =
+
+(cid:33)
+
+(cid:32)
+
+4 8
+2 4
+
+que pode ser obtida suprimindo-se as 5 primeiras linhas e 2 primeiras colunas de (cid:98)3072(cid:99)7
+
+Um quociente q =
+
+a
+2n é dito irredutível quando para todo p =
+
+considerações anteriores, sabemos que isto equivale a dizer que b =
+somente se, 2n−m (cid:45) a para todo n − m ∈ N.
+
+b
+2m , m < n, se tem q (cid:28) p. Pelas
+a
+2n−m /∈ Z, o que ocorre se, e
+
+Em particular, para m = n − 1 temos 2 (cid:45) a, o que nos dá o resultado seguinte:
+
+Proposição 5.6. : q =
+
+a
+2n , n ∈ N∗ é irredutível se, e somente se, 2 (cid:45) a
+
+Decorre desse resultado que nem todo quociente admite um equivalente irredutível. De fato,
+
+se 2 | a, então existe R ∈ N∗ tal que 2R | a e 2R+1 (cid:45) a, donde segue que
+
+é um inteiro ímpar, e daí,
+
+a
+2R = qR
+
+q =
+
+qR
+2n−R .
+
+Nessas condições, se n = R, temos q = qR ∈ Z e se n < R, então q = 2R−nqR ∈ Z.
+
+Por outro lado, se temos n > R, segue que após R iterações de a obteremos o dividendo qR da
+
+forma irredutível de q. Em vista disso, deﬁnimos:
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+76
+
+a
+2n com a ∈ Z e n ∈ N∗ um quociente irredutível.
+Deﬁnição 5.7. Seja q =
+Damos o nome de Iterações de redução de q ao valor natural R < n tal que
+
+é o equivalente irredutível de q.
+
+˜q =
+
+qR
+2n−R
+
+Exemplo 5.7. O quociente q =
+linha com dígito ﬁnal ímpar:
+
+192
+25 não possui equivalente irredutível, pois (cid:98)192(cid:99)5 não possui
+
+(cid:98)192(cid:99)5 =
+
+
+
+
+
+
+
+
+
+
+
+0 9 6
+. 4 8
+. 2 4
+. 1 2
+. 6
+.
+
+
+
+
+
+
+
+
+
+
+
+.
+
+Exemplo 5.8. O quociente q =
+
+76
+24 é redutível, e como
+
+(cid:98)76(cid:99)2 =
+
+(cid:35)
+
+(cid:34)
+
+3 8
+1 9
+
+segue que ˜q =
+
+19
+22 e R = 2.
+
+5.5.2 Parte Fracionária de um Quociente Irredutível
+
+qR
+No exposto, vimos que dado um quociente redutível q =
+2n−R
+com qR ímpar é tal que n < R, então q ∈ Z, o que signiﬁca que se q não admite forma irredutível,
+então (cid:98)q(cid:99) = q e a expressão decimal de q possui parte fracionária nula.
+
+a
+2n , se o menor R ∈ N tal que q =
+
+Na verdade, a recíproca deste fato também é válida; de fato, se q =
+
+a
+2n é irredutível, então pela
+proposição anterior, 2 (cid:45) a, e daí, 2n (cid:45) a, donde q /∈ Z. Enunciamos a seguir esse resultado como
+corolário da Proposição 5.6
+
+Corolário 5.2. q admite parte fracionária se, e somente se, q possui equivalente irredutível.
+
+Tal resultado nos assegura que para tratarmos da parte fracionária de q é suﬁciente considerar-
+
+mos quocientes de dividendos ímpares.
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+77
+
+Assim como ﬁzemos no cálculo de (cid:98)q(cid:99), trataremos o cálculo da parte não-inteira do ponto de
+
+vista matricial. Para isso, introduzimos a seguinte deﬁnição:
+
+a
+Deﬁnição 5.8. Seja q =
+2n um quociente irredutível e N(q) o número de algarismos fracioná-
+rios da forma decimal de q. Damos o nome de Matriz complementar n-ésima de a à matriz que
+denotaremos por
+
+(cid:100)a(cid:101)n = (cid:0)∆i j
+
+(cid:1)
+n×N(q)
+
+tal que ∆i j = β i(a− j)
+
+A seguir listamos as propriedades da matriz complementar tendo em vista facilitar o seu pro-
+
+cesso de construção:
+
+Teorema 5.2 (Propriedades da matriz complementar). Seja q =
+Se (cid:100)a(cid:101)n = (cid:0)∆i j
+
+(cid:1)
+n×N(q), então são válidas as seguintes propriedades:
+
+a
+2n irredutível com n ∈ N∗.
+
+(i) N(q) = n
+
+(ii) ∆ii = 5 para todo 1 ≤ i ≤ n;
+
+(iii) ∆i(i−1) = ∆21 para todo 3 ≤ i ≤ n
+
+(iv) ∆i(i−2) =
+
+
+
+
+
+
+∆31
+
+se 2 (cid:45) i
+
+e 5 ≤ i ≤ n
+
+∆42
+
+se 2 | i
+
+e 6 ≤ i ≤ n
+
+(v) ∆i j = 0 se
+
+i < j para todo 1 ≤ i ≤ n
+
+Demonstração. :
+
+(i) Seja a = arar−1 · · · a1a0 com a0 ímpar. Vamos provar que N(qk) = k para todo k ∈ N∗:
+
+Para k = 1, temos
+
+q1 =
+
+a
+2
+
+=
+
+a, 0
+2
+
+= β (ar)β (ar−1) · · · β (a0), β (0) = β (ar)β (ar−1) · · · β (a0), 5, e daí, N(q1) = 1,
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+pois (cid:104)a0, 0(cid:105) = (cid:104)1, 0(cid:105) = 5
+
+Agora, se para algum k ∈ N∗ temos N(qk) = k, então
+
+qk =
+
+a
+2k =
+
+(cid:106) a
+2k
+
+(cid:107)
+, β k(a−1)β k(a−2) · · · β k(a−k+1)5
+
+78
+
+(5.18)
+
+e daí,
+
+qk+1 =
+
+a
+2k+1 =
+
+(cid:106) a
+
+(cid:107)
+
+2k+1
+
+, β (β k(a−1)) · · · β (β k(a−k+1))β (5) (cid:10)5, 0(cid:11)
+
+(5.19)
+
+Como (cid:10)5, 0(cid:11) = 5 (cid:54)= 0, temos disto e de (5.18) que
+
+N(qk+1) = N(qk) + 1 = k + 1
+
+(5.20)
+
+e daí, para todo k ∈ N∗ vale N(qn) = n.
+
+(ii) Decorre da prova de (i). De fato, vimos que N(qk) = k, e que, além disso,
+
+β k(a−k) = 5 para todo k ∈ N∗
+
+Mas β k(a−k) = ∆kk por deﬁnição. Em particular, se 1 ≤ i ≤ n, temos ∆ii = 5.
+
+(iii) Suponhamos inicialmente que 2 | β (a0).
+
+Então
+
+∆21 =
+
+(cid:68)
+
+β (a0), ∆11
+
+(cid:69)
+
+= (cid:104)0, 5(cid:105) = 2
+
+Daí, para i = 3, temos, de (ii) e de (5.21), que
+
+∆32 = (cid:10)∆21, ∆22
+
+(cid:11) = (cid:10)2, 5(cid:11) = (cid:104)0, 5(cid:105) = 2
+
+Supondo que para certo k ∈ N∗ se tenha
+
+∆k(k−1) = ∆21 = 2
+
+temos, de (ii) e de (5.23) que, para k + 1 vale:
+
+∆(k+1)k = (cid:10)∆k(k+1), ∆kk
+
+(cid:11) = (cid:10)2, 5(cid:11) = 2.
+
+Logo, se 2 | β (a0), então ∆i(i−1) = ∆21 para todo i ∈ N∗.
+
+Se isto não ocorre, então teremos ∆21 = 7 e o restante da prova e análoga.
+
+(5.21)
+
+(5.22)
+
+(5.23)
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+79
+
+(iv) Há 4 casos a serem considerados, conforme seja
+
+(cid:68)
+
+β 2(a0), ∆21
+
+(cid:69)
+
+∈ {(cid:104)0, 2(cid:105) , (cid:104)1, 2(cid:105) , (cid:104)0, 7(cid:105) , (cid:104)1, 7(cid:105)}
+
+Provaremos o caso β 2(a0) = 0 e ∆21 = 2. Os demais casos se provam de forma exatamente idêntica.
+
+Supondo isso, temos então
+
+∆31 =
+
+(cid:68)
+
+β 2(a0), ∆21
+
+(cid:69)
+
+= (cid:104)0, 2(cid:105) = 1
+
+e
+
+Então, para i = 5, teremos
+
+e, para i = 6, teremos
+
+∆42 = (cid:10)∆31, ∆32
+
+(cid:11) = (cid:104)1, 2(cid:105) = 6
+
+(5.24)
+
+∆53 = (cid:10)∆42, ∆43
+
+(cid:11) = (cid:10)6, 2(cid:11) = 1
+
+∆64 = (cid:10)∆53, ∆54
+
+(cid:11) = (cid:10)1, 2(cid:11) = 6
+
+Suponha agora que a propriedade seja válida para certo n ∈ N∗; isto é, que
+
+∆k(k−2) =
+
+
+
+
+
+
+∆31 = 1 se 2 (cid:45) k
+
+∆42 = 6 se 2 | k
+
+(5.25)
+
+Então, de (iii) e de (5.25) teremos, para k + 1, se k é par:
+
+∆(k+1)(k−1) = (cid:10)∆k(k−2), ∆k(k−1)
+
+(cid:11) = (cid:104)1, 2(cid:105) = 6
+
+ou, analogamente,
+
+∆(k+1)(k−1) = (cid:10)6, 2(cid:11) = (cid:10)0, 2(cid:11) = 1,
+
+se 2 (cid:45) k
+
+Logo, (iv) é válida para todo k ∈ N∗.
+
+(v) Suponha por absurdo que exista i ∈ {1, · · · , n} e j > i tal que ∆i j (cid:54)= 0.
+
+Então, N(qi) ≥ j > i. Absurdo.
+
+De acordo com o teorema, a matriz complementar de a é uma matriz quadrada (propriedade
+1) e triangular inferior (propriedade 5). Sua diagonal principal é formada por n dígitos iguais a 5
+(propriedade 2), a diagonal imediatamente inferior à principal é formada por n − 1 dígitos iguais
+a 2 ou a 7 (propriedade 3), e a diagonal inferior a esta última, por sua vez, é uma sequência cujos
+termos alternam-se entre os valores 1 e 6 ou 3 e 8 (propriedade 4).
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+80
+
+Em consequência disto, temos que para cada n ∈ N∗ existe apenas um número ﬁnito de matrizes
+
+complementares (cid:100)a(cid:101)n. De fato, construindo as matrizes para alguns valores de n, temos:
+
+(cid:100)a(cid:101)1 = (5)
+
+(cid:100)a(cid:101)2 ∈
+
+(cid:40)(cid:32)
+
+5 0
+2 5
+
+(cid:33)(cid:41)
+
+(cid:33)
+
+,
+
+(cid:32)
+
+5 0
+7 5
+
+(cid:100)a(cid:101)3 ∈
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ ,
+
+5 0 0
+2 5 0
+1 2 5
+
+
+
+
+
+
+5 0 0
+2 5 0
+6 2 5
+
+
+
+
+
+
+ ,
+
+
+
+
+5 0 0
+7 5 0
+3 7 5
+
+
+
+
+ ,
+
+(5.26)
+
+(5.27)
+
+(5.28)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5 0 0
+7 5 0
+8 7 5
+
+É fácil ver que cada matriz do tipo (cid:100)a(cid:101)n pode ser estendida à ordem (n + 1) × (n + 1) de duas
+maneiras diferentes, conforme seja β n(a0) = 1 ou β n(a0) = 0. Desse modo, para n = 4, devemos
+ter
+
+(cid:100)a(cid:101)4 ∈
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 0 0
+5
+5 0 0
+2
+1
+2 5 0
+d1 6 2 5
+
+
+
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+0 0 0
+5
+5 0 0
+2
+6
+2 5 0
+d2 1 2 5
+
+
+
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+0 0 0
+5
+5 0 0
+7
+3
+7 5 0
+d3 8 7 5
+
+
+
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+0 0 0
+5
+5 0 0
+7
+8
+7 5 0
+d4 3 7 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+com d1 ∈ {0, 5}, d2 ∈ {3, 8}, d3 ∈ {1, 6} e d4 ∈ {4, 9} Desse modo, temos que
+
+# {(cid:100)a(cid:101)1} = 1,
+
+# {(cid:100)a(cid:101)2} = 2,
+
+# {(cid:100)a(cid:101)3} = 4,
+
+e # {(cid:100)a(cid:101)4} = 8
+
+Aﬁrmamos que essa regularidade se mantém para n > 4, isto é, aﬁrmamos que # {(cid:100)a(cid:101)n} = 2n−1.
+
+De fato, supondo que isto acontece para algum n ∈ N∗, provemos que assim também o é para
+
+n + 1:
+
+Para tanto, seja (cid:100)a(cid:101)n = (∆i j)n×n. Estendendo para (cid:100)a(cid:101)n+1, devemos ter
+
+∆(n+1)1 =
+
+(cid:68)
+
+β n(a0), ∆n1
+
+(cid:69)
+
+=
+
+
+
+
+
+
+(cid:104)0, ∆n1(cid:105) ,
+
+se β n(a0) = 0
+
+.
+
+(cid:104)1, ∆n1(cid:105) ,
+
+se β n(a0) = 1
+
+Então,
+
+∆(n+1) j = (cid:10)∆n( j+1), ∆n j
+
+(cid:11) para todo j (cid:54)= 1,
+
+do que segue que apenas o termo ∆(n+1)1 admite duplicidade de valores, e daí,
+
+5.5 MATRIZ COMPLEMENTAR DO DIVIDENDO INTEIRO
+
+# (cid:8)(cid:100)a(cid:101)n+1
+
+(cid:9) = 2# {(cid:100)a(cid:101)n} = 2(2n−1) = 2n,
+
+81
+
+(5.29)
+
+e a aﬁrmação é válida para n + 1, e daí, por indução, também o é para todo n ∈ N∗. Logo, a
+quantidade de matrizes complementares é ﬁnita para cada n ∈ N∗, valendo o resultado obtido, que
+destacamos a seguir:
+
+Proposição 5.7. Se n ∈ N∗ então # {(cid:100)a(cid:101)n} = 2n−1
+
+Demonstração. Efetuada.
+
+Isto nos diz que apesar de existirem inﬁnitos dividendos ímpares para o quociente
+
+sibilidades para (cid:100)a(cid:101)n, e, consequentemente, para q − (cid:98)q(cid:99) são ﬁnitas.
+
+a
+2n , as pos-
+
+Exemplo 5.9. Construamos (cid:100)3(cid:101)7:
+
+(cid:100)3(cid:101)7 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5 0 0 0 0 0 0
+7 5 0 0 0 0 0
+3 7 5 0 0 0 0
+1 8 7 5 0 0 0
+0 9 3 7 5 0 0
+0 4 6 8 7 5 0
+0 2 3 4 3 7 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+O que obtemos construindo uma tabela quadrada 7 × 7 e em seguida preenchendo sua diagonal
+principal com o dígito 5 e, sem se preocupar com os termos acima desta, que são todos nulos,
+= 7 que será o valor a ser preenchido em toda a primeira diagonal
+calculamos ∆21 =
+abaixo da principal.
+
+β (3), 5
+
+(cid:69)
+
+(cid:68)
+
+Em seguida, calculamos ∆31 =
+
+gonal com os valores 3 e 8.
+
+(cid:68)
+
+β 2(3), 7
+
+(cid:69)
+
+= (cid:104)0, 6(cid:105) = 3, e daí alternamos o restante dessa dia-
+
+Finalmente, calculamos os termos restantes. Em particular, a última linha nos dá a parte fraci-
+
+onária de
+
+3
+27 , e do fato de que β n(3) = 0 para n ≥ 2, temos
+
+3
+27 = 0, 0234375
+
+5.6 CONSTRUÇÃO DA MATRIZ DO DIVIDENDO INTEIRO
+
+82
+
+5.6 Construção da Matriz do Dividendo Inteiro
+
+Reunimos tudo o que vimos até aqui no resultado a seguir, que estabelece a construção da matriz
+de um dividendo inteiro em termos da matriz inteira, matriz complementar e iterações de redução
+de q:
+
+Teorema 5.3. Seja q =
+
+a
+2n com a = arar−1 · · · a1a0 ∈ Z, n ∈ N∗.
+
+Se R < n é o número de iterações de redução de q à forma irredutível, então a matriz
+associada ao dividendo a é a matriz de ordem n × (n − R + r + 1) tal que
+
+
+
+
+
+
+
+
+
+[a]n =
+
+(cid:98)a(cid:99)R
+
+O
+
+(cid:98)qR(cid:99)n−R (cid:100)qR(cid:101)n−R
+
+
+
+
+
+
+
+
+
+onde
+
+(cid:98)a(cid:99)R é do tipo R × (r + 1);
+(cid:98)qR(cid:99)n−R é do tipo (n − R) × (r + 1);
+(cid:100)qR(cid:101)n−R é quadrada de ordem n − R; e
+O é a matriz nula R × (n − R)
+
+Demonstração. :
+
+Pela Deﬁnição 5.5, as primeiras r + 1 colunas de [a]n coincidem com a matriz (cid:98)a(cid:99)n. Em parti-
+qR
+cular, se R é o número de iterações de redução de q, então ˜q =
+2n−R é a forma irredutível de q e
+daí podemos escrever
+
+
+
+(cid:98)a(cid:99)n =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(cid:98)a(cid:99)R
+
+(cid:98)qR(cid:99)n−R
+
+(5.30)
+
+(∗)
+
+Mas qk =
+
+a
+2k é inteiro par para todo 1 ≤ k < R e qR é inteiro ímpar
+
+Segue disso que as últimas n − R linhas a partir da coluna r + 2 de [a]n coincidem com a ma-
+triz (cid:100)qR(cid:101)n−R que possui n − R colunas (Teorema 5.2 (1))
+(∗∗)
+
+5.6 CONSTRUÇÃO DA MATRIZ DO DIVIDENDO INTEIRO
+
+83
+
+Finalmente, de (∗) temos que qk ∈ Z para todo 1 ≤ k ≤ R, donde qk − (cid:98)qk(cid:99) = 0, e de (5.30) e
+de (∗∗) segue que
+
+
+
+
+
+
+
+α1(r+2)
+...
+αR(r+2)
+
+· · · α1(n−R+r+1)
+
+...
+
+· · · αR(n−R+r+1)
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+0 · · · 0
+...
+...
+0 · · · 0
+
+R×(n−R)
+
+(5.31)
+
+e então,
+
+
+
+
+
+
+
+
+
+[a]n =
+
+(cid:98)a(cid:99)R
+
+O
+
+(cid:98)qR(cid:99)n−R (cid:100)qR(cid:101)n−R
+
+
+
+
+
+
+
+
+
+.
+
+A demonstração do teorema, que é construtiva, nos ensina que devemos construir, inicialmente,
+uma tabela n × (r + 1), referente a (cid:98)a(cid:99)n. Uma vez identiﬁcado o R tal que 2 (cid:45) β R(a0), podemos
+construir, a partir da próxima linha, uma tabela (n − R) × (n − R) para ser preenchida conforme
+(cid:100)qR(cid:101)n−R, e com isso ﬁca determinado o bloco O, e, por conseguinte, [a]n.
+
+Evidentemente, nesse processo, podemos lançar mão das propriedades estudadas anterior-
+mente. Nesse contexto, é importante mencionar que os itens (i) e (ii) da proposição 5.5 podem ser
+estendidos à matriz [a]n, o que pode ser provado de maneira idêntica ao que ﬁzemos para (cid:98)a(cid:99)n. No
+mais, todas as demais propriedades vistas até aqui permanecem válidas para a matriz do dividendo
+inteiro.
+
+Exemplo 5.10. Construiremos [416]8. A título de ilustração,o faremos exibindo os detalhes de
+cada passo:
+
+1. Inicialmente construímos (cid:98)416(cid:99)8 :
+
+(cid:98)416(cid:99)8 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 0 8
+1 0 4
+0 5 2
+0 2 6
+0 1 3
+
+0 0 6
+0 0 3
+0 0 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2. Identiﬁcada a primeira linha ímpar, no caso, a q5 = 13, passamos a construir sua matriz
+
+complementar:
+
+5.6 CONSTRUÇÃO DA MATRIZ DO DIVIDENDO INTEIRO
+
+84
+
+(cid:100)13(cid:101)8−5 (cid:100)13(cid:101)3 =
+
+
+
+
+
+
+5 0 0
+2 5 0
+6 2 5
+
+
+
+
+
+
+Finalmente, formamos [328]8 justapondo os dois blocos matriciais a partir da última linha e com-
+pletando com zeros os espaços vazios:
+
+[328]8 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 0 8 0 0 0
+1 0 4 0 0 0
+0 5 2 0 0 0
+0 2 6 0 0 0
+0 1 3 0 0 0
+
+0 0 6 5 0 0
+0 0 3 2 5 0
+0 0 1 2 5 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Naturalmente, se nosso interesse for tão somente o cálculo de q, como se espera, os detalhes
+
+de notação podem ser dispensados para agilizar o processo. É o que faremos a seguir:
+
+Exemplo 5.11. Vamos calcular
+
+600
+210 :
+
+Seguindo os passos acima com as devidas abreviações4, e usando uma grade para facilitar a lo-
+calização dos termos, teremos:
+
+4Apesar de não fazer parte da matriz, alocaremos o dividendo numa linha superior na tabela para tornar visualmente
+
+mais cômodo o processo
+
+5.7 DIVIDENDOS REAIS QUAISQUER
+
+85
+
+6 0 0
+
+3 0 0
+
+1 5 0
+. 7 5
+. 3 7
+. 1 8
+. 9
+.
+. 4
+. 2
+. 1
+
+.
+
+.
+
+.
+
+5
+
+7 5
+
+3 7 5
+
+6 8 7 5
+
+3 4 3 7 5
+
+1 7 1 8 7 5
+
+0 0 0
+
+5 8 5 9 3 7 5
+
+Tomando então a última linha, temos
+
+600
+210 = 0, 5859375
+
+5.7 Dividendos Reais Quaisquer
+
+5.7.1 Forma Produto de um Quociente
+
+Seja a ∈ R uma dízima exata e q =
+
+a
+2n com n ∈ N∗. Pela proposição 4.1, existem m ∈ N e ˆa ∈ Z
+
+tais que a =
+
+ˆa
+10m . Se, além disso, m é o menor inteiro tal que ˆa ∈ Z, então
+
+m = N(a) = número de algarismos fracionários de a
+
+Nestas condições, podemos escrever q =
+(∗)
+Segue então da proposição 5.1 que a linha qn( ˆa) da matriz [ ˆa]n é tal que ˆq = qn( ˆa), e daí, supondo
+
+ˆa
+2n · 10−m, ou ainda q = ˆq · 10−m, pondo q =
+
+ˆa
+2n
+
+ˆq =
+
+r
+∑
+i=−s
+
+bi10i temos, de (∗) que
+
+q = qn( ˆa)10−m =
+
+r
+∑
+i=−s
+
+bi10i−m =
+
+r−m
+∑
+i=−(s+m)
+
+bi10i.
+
+Por outro lado, se tomarmos a ∈ Z e considerarmos que toda expressão decimal inteira é também
+ˆa
+uma dízima ﬁnita (Corolário 4.1), podemos ainda escrever a =
+10m , bastando para isto que consi-
+deremos m ≤ 0. Isto pode ser útil nos casos em que a é múltiplo de 10, conforme ilustraremos a
+seguir. Antes, porém, formalizaremos o que discutimos:
+
+5.7 DIVIDENDOS REAIS QUAISQUER
+
+86
+
+Deﬁnição 5.9 (Forma produto). Seja a uma dízima ﬁnita e n ∈ N∗ tais que q =
+
+nome de forma produto de q à expressão que q = ˆq · 10m, em que ˆq =
+inteiro tal que ˆa ∈ Z.
+
+a
+2n . Damos o
+ˆa
+2n e m é o menor número
+
+De acordo com a Deﬁnição, temos, por exemplo,
+
+mas produto dos quocientes
+deﬁnimos m nos dá informações sobre o dividendo escrito na forma usual:
+
+0, 08
+25 ,
+
+300
+29 e
+
+8
+25 · 10−2,
+
+3
+5
+212 · 100 são as for-
+29 · 102 e
+5
+212 , respectivamente. Note, ainda, que a forma como
+
+• m < 0 indica que o dividendo a possui |m| dígitos não inteiros;
+
+• m > 0 indica que o dividendo original possui |m| zeros na extrema direita de sua parte inteira;
+
+• m = 0 indica que o dividendo original já é inteiro e não múltiplo de 10.
+
+É fácil ver que ˆq se transforma em q após a operação de aumentar em |m| unidades o número
+de seus algarismos fracionários, ou de diminuir em |m| esse número, conforme seja m, respectiva-
+mente, negativo ou positivo5.
+
+Exemplo 5.12. Para q =
+
+0, 008
+29
+
+, temos q =
+
+8
+29 · 10−3. Construindo [8]9:
+
+8
+
+4
+
+2
+
+1
+
+.
+
+.
+
+.
+
+.
+
+.
+
+5
+
+2 5
+
+1 7 5
+. 6 7 5
+. 3 1 2 5
+
+0 0 1 5 6 2 5
+
+Logo, q = ˆq · 10−3 = 0, 000015625
+
+5Trata-se da regra do "deslocamento da vírgula"no produto ou divisão por potências de 10.
+
+5.7 DIVIDENDOS REAIS QUAISQUER
+
+87
+
+Exemplo 5.13. Para q =
+
+6000
+29 , temos q =
+
+6
+29 · 103 =
+
+3
+28 · 103. e daí, a matriz [3]8 é:
+
+3
+
+1
+
+5
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+7 5
+
+3 7 5
+
+1 8 7 5
+. 9 3 7 5
+. 4 6 8 7 5
+. 2 3 4 3 7 5
+. 1 1 7 1 8 7 5
+
+0
+
+0 0 5 8 5 9 3 7 5
+
+Então, q = 0, 005859375 · 103 = 5, 859375
+
+5.7.2 Matriz Inteira Associada a Dízimas Inﬁnitas
+
+Seja a ∈ R uma dízima inﬁnita, e q =
+temos, pela Proposição 4.3 que sua s-aproximação ótima é dada por
+
+a
+2n com n ∈ N∗. Supondo a = (cid:98)a(cid:99) , a−1a−2a−3 · · · a−s · · · ,
+
+As(a) = (cid:98)a(cid:99) , a−1a−2a−3 · · · a−s
+
+Por outro lado, k aplicações sucessivas do Teorema 4.5 nos garantem que o k−iterado
+
+q(cid:48)
+k =
+
+(cid:106) a
+2k
+
+(cid:107)
+, β k(a−1)β k(a−2) · · · β k(a−s)
+
+é a s−aproximação ótima de qk. Em particular,
+
+As(q) = As(qn) =
+
+(cid:107)
+, β n(a−1)β n(a−2) · · · β n(a−s)
+
+(cid:106) a
+2n
+
+é a s-aproximação ótima de q. Então, pelo Teorema 5.2 devemos ter:
+
+q =
+
+(cid:106) a
+2n
+
+(cid:107)
+, β n(a−1)β n(a−2) · · · β n(a−s)β n(a−s−1) · · · = As(qn) +
+
+∞
+∑
+j=1
+
+β n(a−s− j)10−s− j
+
+Dito de outra forma, para determinarmos q com s algarismos exatos visíveis antes das reticên-
+cias, é suﬁciente iterarmos a s-aproximação ótima As(a) de a obtendo a sequência de aproximações
+ótimas com s algarismos fracionários As(q1), As(q2), · · · , As(qn).
+
+5.7 DIVIDENDOS REAIS QUAISQUER
+
+88
+
+Note agora que As(a) é uma dízima exata, e daí, existe γ ∈ Z tal que
+
+As(a) =
+
+γ
+10s
+
+Agora, como queremos que a iteração (As(qi))1≤i≤n só tenha algarismos exatos, estamos interes-
+· 10−s, e daí, As(q) será
+sados apenas na parte inteira de cada As(qk). Segue que As(qn) =
+a dízima cujos algarismos fracionários são dados pela sequência dos s últimos termos da última
+linha da matriz (cid:98) ˆa(cid:99)n, e os algarismos inteiros pela sequência dos termos restantes.
+
+(cid:106) γ
+2n
+
+(cid:107)
+
+Exemplo 5.14. Vamos calcular q =
+
+a
+26 com 5 algarismos fracionários expostos, sendo a = 1, 11111 · · · .
+
+Para isso, tomemos a 5-aproximação ótima de a, A5(a) = 1, 11111. Usando-a, temos que a 5-
+aproximação ótima de q é dada por A5(q) tal que
+
+A5(q) =
+
+(cid:23)
+
+(cid:22)111111
+26
+
+10−5
+
+Construindo (cid:98)111111(cid:99)6, temos:
+
+(cid:98)111111(cid:99)6 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 5 5 5 5 5
+0 2 7 7 7 7
+0 1 3 8 8 8
+0 0 6 9 4 4
+0 0 3 4 7 2
+0 0 1 7 3 6
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Então, A5(q) = 0, 01736, e daí, q = 0, 01736 · · · .
+
+6
+
+APLICAÇÕES
+
+Encerramos nossa exposição apresentando algumas aplicações elementares de nosso trabalho. Para
+tanto, nos serviremos de tudo quanto tratamos nas páginas anteriores bem como de algumas inter-
+pretações adicionais eventualmente necessárias que serão apresentadas a seu tempo.
+
+6.1 Sobre o Uso do Presente Trabalho na Escola Básica
+
+Sendo este um trabalho que se propõe a oferecer um meio alternativo de se determinar quocientes
+de divisores do tipo 2n, pouco além das aplicações da própria divisão por dois usual podemos ir.
+Ao nosso ver, no entanto, isto é o suﬁciente; de fato, a divisão por 2 assume, em nossos tempos
+fortemente marcados pela tecnologia, uma importância ímpar: como já dissemos, provém dos res-
+tos possíveis da divisão por 2 o sistema binário e, deste, a linguagem utilizada pelos computadores
+e dispositivos eletrônicos em geral. Nessas condições, decodiﬁcar a linguagem do computador em
+linguagem comum e vice-versa ou, equivalentemente, converter expressões binárias em expressões
+decimais e estas naquelas constitui relevante matéria de estudo que pode ser tratada já na escola
+básica. De fato, a menos de um tratamento adequado à maturidade (cronológica e cognitiva) dos
+alunos aos quais se propuser a atividade, o estudo que aqui temos desenvolvido pode ser trabalhado
+em qualquer curso de matemática em nível básico e mesmo em cursos superiores de Teoria dos
+Números, a título de ilustração das propriedades aritméticas das representações binária e decimal,
+por exemplo. Por outro lado, a abordagem que optamos dar no decorrer do texto, utilizando a
+linguagem algébrica das matrizes, sequências, somas e séries, bem como os rudimentos dos con-
+ceitos de limite e convergência, se usados na atividade voltada a uma clientela mais experiente,
+pode fornecer uma boa oportunidade de ilustrar as aplicações e integração de tais conceitos, assim
+como fomentar o hábito da observação e sistematização de regularidades, o que constitui uma das
+competências elencadas pelos Parâmetros Curriculares Nacionais de matemática em nível médio:
+segundo esse documento, é competência a ser desenvolvida pelo aluno durante a educação básica
+
+"(...) estabelecer relações, identiﬁcar regularidades, invariantes e transformações (...)
+em situações semelhantes para estabelecer regras, algoritmos e propriedades" (BRA-
+
+89
+
+6.2 REPRESENTAÇÃO BINÁRIA DE UM INTEIRO DADO NA BASE DECIMAL
+
+90
+
+SIL: [7], p.113).
+
+Nesse contexto, sugerimos que as atividades que visem a aplicação do estudo que desenvolve-
+mos se pautem inicialmente na experimentação, seguida da formalização, e ﬁnalmente nas aplica-
+ções complementares. Este capítulo objetiva fornecer alguns subsídios adicionais que servem ao
+propósito de ilustrar situações outras da divisão por 2 nas quais a aplicação do método que aqui
+desenvolvemos pode fornecer maior dinâmica ao processo.
+
+6.2 Representação Binária de um Inteiro Dado na Base Decimal
+
+Segundo Bianchini e Paccola [3] , o sistema posicional de numeração de base 2 foi imaginado
+inicialmente por Leibnitz, matemático alemão que lançou os alicerces desse sistema ao proceder a
+busca por "uma base que fosse a mais simples possível, que usasse menos algarismos, e na qual os
+cálculos fossem mais fáceis de serem efetuados"(idem, p.50).
+
+Evidentemente, a pretensão inicial de substituir o sistema decimal pelo binário não seguiu adi-
+ante, por razões cuja discussão não nos compete; entretanto, a numeração de base dois assume
+capital importância nos dias atuais, já que a maioria dos equipamentos de computação trabalha
+com valores numéricos em representação binária, conforme destaca Arenales e Darezzo ([1], p.2).
+Desse modo, o computador "[converte] para o sistema binário, automaticamente, o que lhe forne-
+cemos no sistema decimal" (Giovanni e Parente: [12], p.29).
+
+Esse processo de mudança de base, que internamente é feito pelo computador é baseado no
+
+Teorema 2.1 e consiste em
+
+fazer sucessivas divisões [euclidianas] por 2. As divisões serão feitas com o número
+[base 10] e com cada um dos quocientes encontrados (...). Os restos das divisões,
+escritos na ordem inversa em que aparecem (...) nos dão a representação do número
+[dado] na base dois (Bianchini e Paccola: [3], p.57).
+
+A seguir, queremos abordar o processo de representação na base 2 de um inteiro como aplicação
+do que discutimos no capítulo precedente. Nesse contexto, é a matriz inteira de um dividendo a
+ferramenta adequada para atacarmos tal problema, conforme mostraremos a seguir:
+
+Proposição 6.1 (Representação binária). Sejam a = anan−1 · · · a1a0 um inteiro escrito na base
+10, e
+
+(cid:98)a(cid:99)k = (cid:0)β i(a j)(cid:1)
+
+k×(n+1)
+
+6.2 REPRESENTAÇÃO BINÁRIA DE UM INTEIRO DADO NA BASE DECIMAL
+
+91
+
+a matriz inteira de a tal que sua k−ésima linha é dada por qk =
+(rkrk−1 · · · r1r0)2 é a representação binária de a, então
+
+(cid:16)
+
+0 0 · · · 1
+
+(cid:17)
+
+. Se a =
+
+
+
+
+
+
+rk =
+
+a0
+
+, se k = 0
+
+β k(a0)
+
+, se k > 0
+
+Demonstração. A existência e ﬁnitude da sequência de dígitos binários r0, r1, · · · rk, bem como o
+fato de que a = (rkrk−1 · · · r1r0)2 são fatos garantidos pelo Teorema 2.1.
+
+Além disso, pelo Algoritmo de Euclides, existem inteiros q1, · · · , qk+1 univocamente determi-
+
+nados tais que
+
+e
+
+Nessas condições, temos então:
+
+e
+
+a = 2q1 + r0
+
+qk = 2qk+1 + rk,
+
+se
+
+k ≥ 1.
+
+a = 2q1 + r0 = 0 + r0 = r0
+
+qk = 2qk+1 + rk = 0 + rk = rk
+
+(6.1)
+
+(6.2)
+
+Mas sendo a = anan−1 · · · a1a0 a Proposição 2.2 e (6.1) nos garante que a = a0 ⇒ r0 = a0.
+
+e pelo Corolário 5.2 e por (6.2), temos
+
+qk = β k(an)β k(an−1) · · · β k(a0) , e daí, qk = β k(a0) ⇒ rk = β k(a0)
+
+Exemplo 6.1. Usaremos a Proposição 6.1 para expressar os inteiros a = 150 e b = 64 na base
+binária. Para tanto, iremos construir a Matriz inteira de cada dividendo com tantas linhas quantas
+forem necessárias para que suas últimas linhas sejam (0 0 1) e (0 1), respectivamente.
+
+6.2 REPRESENTAÇÃO BINÁRIA DE UM INTEIRO DADO NA BASE DECIMAL
+
+92
+
+Nestas condições, para a = 150, temos
+
+(cid:107)
+
+(cid:106) a
+27
+
+= 1 (pois 27 < 150 < 28), e daí, temos:
+
+(cid:98)150(cid:99)7 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+. 7 5
+. 3 7
+. 1 8
+. 9
+.
+. 4
+.
+. 2
+.
+0 0 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e pondo 150 = (r7r6, · · · r0)2, a proposição nos dá r0 = 0 = 0, e
+
+150 = (1 2 4 9 8 7 5 0)2 = (10010110)2
+
+Analogamente, para b = 64, temos
+
+(cid:23)
+
+(cid:22)64
+26
+
+= 1, e daí,
+
+(cid:98)64(cid:99)6 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3 2
+1 6
+. 8
+. 4
+. 2
+. 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+donde 64 = (r6r5r4r3r2r1r0)2 = (1 2 4 8 6 2 4)2 = (1000000)2
+
+Uma interessante aplicação do resultado anterior, apontada por Hefez ([14], p. 49), mostra que
+todo número inteiro se escreve de maneira única como soma de potências de base 2. De fato, o
+Teorema 2.1 nos garante que se a = (rnrn−1 · · · r1r0)2 ∈ Z e ri ∈ {0, 1} para todo i ∈ {0, · · · , n},
+
+então a =
+
+n
+∑
+i=0
+
+ri2i, e daí, desprezando as parcelas tais que rk = 0, temos então
+
+2i,
+
+a = ∑
+i∈A
+
+com A = {k : rk (cid:54)= 0} .
+
+(6.3)
+
+O que prova, pois, o resultado a seguir:
+
+Proposição 6.2. : A todo número inteiro corresponde uma, e apenas uma, soma de potências
+de base 2.
+
+6.3 REPRESENTAÇÃO DECIMAL DE EXPRESSÕES BINÁRIAS FINITAS
+
+93
+
+Exemplo 6.2. Escreveremos 1387 como soma de potências de base 2. Para isso, construiremos
+
+(cid:98)1387(cid:99)k com k = 10, já que
+
+(cid:23)
+
+(cid:22)1387
+210
+
+= 1:
+
+(cid:98)1387(cid:99)10 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+. 6 9 3
+. 3 4 6
+. 1 7 3
+. 8 6
+.
+. 4 3
+.
+. 2 1
+.
+. 1 0
+.
+. 5
+.
+.
+. 2
+.
+.
+. 1
+.
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Temos então, 1387 = (10101101011)2 = 210 + 28 + 26 + 25 + 23 + 21 + 20
+
+6.3 Representação Decimal de Expressões Binárias Finitas
+
+Uma vez tendo sido abordada a conversão base decimal-base binária de números inteiros, é natural
+que o estudante desse tema indague quanto à representação de um número real qualquer na base 2,
+tendo em vista as importantes aplicações de tal base na tecnologia atual.
+
+Para além do ponto de vista técnico, não é difícil constatar-se que a representação binária de
+um número real não goza da mesma notoriedade que a forma binária de um inteiro nas salas de aula
+da educação básica, talvez pela falta de familiaridade dos professores com o tema, sua ausência
+nos conteúdos programáticos oﬁciais, ou mesmo por preferência do ensino de outros temas mais
+tradicionais do currículo.
+
+Aqui pretendemos amenizar as diﬁculdades de ordem técnica relacionadas a esse tema; para
+isso, utilizaremos os conceitos tratados nos capítulos precedentes focando no caso especíﬁco das
+representações binárias ﬁnitas, uma vez que para as inﬁnitas pouco podemos fazer além do que
+já é feito tradicionalmente. Para tanto, o primeiro passo que daremos consiste em deﬁnir o nosso
+objeto de estudo:
+
+6.3 REPRESENTAÇÃO DECIMAL DE EXPRESSÕES BINÁRIAS FINITAS
+
+94
+
+Deﬁnição 6.1 (Expressão Binária Finita). Seja o número real deﬁnido pela série
+
+a = (cid:98)a(cid:99) +
+
+−∞
+∑
+i=1
+
+ai2i,
+
+ai ∈ {0, 1} para todo i ∈ Z
+
+Diremos que a possui uma Representação Binária Finita quando existe um k ∈ Z tal que ai = 0
+para todo i < k. Nesse caso escrevemos
+
+a = ((cid:98)a(cid:99) , a−1a−2 · · · ak)2
+
+(6.4)
+
+e diremos que (6.4) é a Expressão Binária Finita de a.
+
+De maneira análoga ao que ﬁzemos anteriormente no estudo da expansão decimal, estabe-
+leceremos, na proposição a seguir, uma condição necessária e suﬁciente para a ﬁnitude de uma
+expansão binária:
+
+Proposição 6.3. Um número real q admite representação binária em expansão ﬁnita se, e
+somente se, existem a ∈ Z e n ∈ N∗ tais que
+
+q =
+
+a
+2n
+
+Demonstração. A menos da base, é idêntica à demonstração da Proposição 4.1, e não oferece
+nenhuma diﬁculdade adicional, de modo que optaremos por omití-la.
+
+Decorre dessa proposição que todas e apenas as expressões decimais que possuem representa-
+ção binária ﬁnita são quocientes de divisor 2n, e daí, suas partes não inteiras são linhas da matriz
+complementar (cid:100)a(cid:101)n de algum dividendo inteiro a. No exemplo a seguir, ilustraremos o método
+para reconhecimento das dízimas decimais que dão origem a expressões binárias ﬁnitas:
+
+Exemplo 6.3. Possuem expressão binária ﬁnita:
+
+a = 2, 125, pois ( 1 2 5 ) = q5 em (cid:100)1(cid:101)n; e
+
+b = 50, 1875, pois ( 1 8 7 5 ) = q4 em (cid:100)3(cid:101)n,
+
+e não possuem representação ﬁnita na base 2:
+
+6.3 REPRESENTAÇÃO DECIMAL DE EXPRESSÕES BINÁRIAS FINITAS
+
+95
+
+c = 5, 885, d = 0, 0075, e e = 0, 10875;
+
+os dois primeiros casos por razões facilmente identiﬁcáveis, já que a terminação decimal de quo-
+cientes de divisor 2n só pode ser do tipo 125, 625, 875 ou 375, se considerarmos apenas os 3
+últimos dígitos (ver proposição 5.2 (4)). O reconhecimento da ﬁnitude do terceiro na base 2, por
+outro lado, pode requerer um esforço adicional, se não soubermos se existe alguma matriz (cid:100)a(cid:101)n
+tal que q5(a) = ( 1 0 8 7 5 ). Para dirimir essa dúvida, basta que suponhamos que existe
+um a ∈ Z tal que isso aconteça, e, usando as propriedades da construção da matriz complementar
+chegaremos à conﬁrmação do que supomos ou a uma contradição:
+
+(cid:100)a(cid:101)5 =
+
+
+
+
+
+
+
+
+
+
+
+5
+5
+7
+8
+7 5
+∆41 3 7 5
+1
+
+0 8 7 5
+
+
+
+
+
+
+
+
+
+
+
+Perceba que conhecemos todos os termos da matriz, com exceção de ∆41. Entretanto, sabemos que
+∈ {4, 9}. Porém, veriﬁcando os possíveis valores, temos:
+∆41 =
+
+β 3(a0), 8
+
+(cid:69)
+
+(cid:68)
+
+Se ∆41 = 4, então 1 =
+
+Se ∆41 = 9, então 1 =
+
+(cid:68)
+
+β 4(a0), 4
+
+(cid:68)
+
+β 4(a0), 9
+
+(cid:69)
+
+(cid:69)
+
+∈ {2, 7} (absurdo); e
+
+∈ {4, 9} (absurdo).
+
+Logo, não existe a ∈ Z tal que (cid:100)a(cid:101)n possua a quinta linha igual a ( 1 0 8 7 5 ), e daí o
+número dado não possui representação binária ﬁnita.
+
+Finalizando este tópico, trataremos agora da conversão à base dez de uma expressão binária
+
+q ∈ R ﬁnita. É claro que é suﬁciente tratarmos do caso 0 < q < 1. De fato, para q ≥ 1 temos
+
+q = ((cid:98)q(cid:99) , a−1 · · · a−n)2 = ((cid:98)q(cid:99))2 + (0, a−1a−2a−3 · · · a−n)2
+
+daí, podemos converter em separado as partes inteira e não-inteira de q, desde que as somemos ao
+ﬁm. Como a conversão da parte inteira é uma soma trivial de potências de base 2, nos deteremos
+na conversão da parte fracionária.
+
+A seguir apresentamos o algoritmo que nos fornecerá isto:
+
+Proposição 6.4. Seja q = (0, a−1a−2a−3 · · · a−n)2 ∈ R com a−n = 1 uma expressão binária
+ﬁnita.
+
+6.3 REPRESENTAÇÃO DECIMAL DE EXPRESSÕES BINÁRIAS FINITAS
+
+96
+
+Se J = {n1 < n2 < · · · < nk = n} é o conjunto dos índices i ∈ {0, · · · , n} tais que a−i (cid:54)= 0, então
+a representação decimal de q é dada pela expressão decimal do quociente
+
+k
+∑
+j=1
+
+2n−n j
+
+2n
+
+a =
+
+Demonstração. Por hipótese, temos:
+
+q = (0, a−1a−2a−3 · · · a−n)2 =
+
+n
+∑
+i=1
+
+ai
+2i = ∑
+
+i∈I
+
+1
+2i =
+
+1
+2n1
+
++
+
+1
+2n2
+
++ · · ·
+
+1
+2n
+
+Como n = max I, seque que n − ni ≥ 0 para todo i ∈ {1, · · · , k}, e daí, usando (6.5), podemos
+escrever:
+
+q =
+
+2n−n1
+2n +
+
+2n−n2
+2n + · · · +
+
+2n−n
+2n =
+
+k
+∑
+j=1
+
+2n−n j
+
+2n
+
+Exemplo 6.4. Escrevamos q = (11, 0110101)2 na base decimal.
+
+Temos
+
+Por outro lado,
+
+((cid:98)q(cid:99))2 = (11)2 = 2 + 1 = 3
+
+q − (cid:98)q(cid:99) = (0, 0110101)2
+
+cujas ordens não nulas possuem índices -2, -3, -5, e -7. Logo, pela proposição, a forma decimal de
+q será dada pelo quociente
+
+q =
+
+25 + 24 + 22 + 1
+27
+
+=
+
+32 + 16 + 4 + 1
+27
+
+=
+
+53
+27
+
+6.4 REPRESENTAÇÃO BINÁRIA DE QUOCIENTES DO TIPO q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+97
+
+construindo [53]7, temos, então:
+
+5 3
+
+2 6
+
+1 3
+. 6
+. 3
+. 1
+.
+.
+
+5
+
+2 5
+
+6 2 5
+
+3 1 2 5
+
+6 5 6 2 5
+
+8 2 8 1 2 51
+
+0 0
+
+4 1 4 0 6
+
+2
+
+5
+
+Portanto, (11, 0110101)2 = 3, 4140625
+
+Exemplo 6.5 (Potências de 2 com expoente negativo). Potências do tipo 2n, n ∈ Z− podem ser
+vistas como casos particulares de expressões binárias ﬁnitas em que #J = 1. De fato, temos:
+
+2−1 = (0, 1)2, 2−2 = (0, 01)2, · · · , 2−n = (0, 0 · · · 01
+(cid:124) (cid:123)(cid:122) (cid:125)
+n−dígitos
+
+)2
+
+Nestas condições, calcular 2−5, por exemplo, é o mesmo que determinar a expressão decimal do
+1
+25 , o que conseguimos
+
+número (0, 00001)2, o que equivale, por sua vez, a calcular o quociente q =
+determinando a 5.ª linha de [1]5, a saber, 0, 03125
+
+6.4 Representação Binária de Quocientes do tipo q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+Segundo [1], o procedimento usual que se adota para mudança da base 10 para a base binária de
+um número real 0 < |q| < 1 é chamado de método das "multiplicações sucessivas"e consiste, como
+o nome sugere, em multiplicar q seguidas vezes por 2 e, em cada passo, separar o dígito da ordem
+0, formando uma sequência de algarismos que representará o número dado na base binária:
+
+"O procedimento [para a conversão base 10- base 2] é constituído dos seguintes passos:
+
+(a) Multiplicamos o número fracionário por 2;
+
+(b) Do resultado do passo (a), a parte inteira é o primeiro dígito binário;
+
+(c) Do resultado do passo (b), a parte fracionária é novamente multiplicada por 2;
+
+(d) O processo continua até que a parte fracionária seja nula" (Arenales e Darezzo: [1], p. 4).
+
+Não é difícil se concluir que se trata de um procedimento simples, mas relativamente trabalhoso.
+Além disso, a mecânica do processo não é intuitiva: o ato de dobrar o número e tomar sua parte
+inteira seguidamente não deixa claro o que de fato ocorre.
+
+6.4 REPRESENTAÇÃO BINÁRIA DE QUOCIENTES DO TIPO q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+98
+
+Não obstante, vemos também aqui uma boa possibilidade de aplicação das técnicas que temos
+apresentado. Novamente restringiremos nossa exposição ao caso em que q pode ser representado
+com expansão ﬁnita na base 2. Nesse caso, conforme a Proposição 6.3, q admite a representação
+na forma do quociente
+
+(6.5)
+
+para algum a ∈ Z e n ∈ N∗.
+
+q =
+
+a
+2n
+
+Nosso trabalho, então, se resume a determinar o dividendo a e o expoente n do divisor em (6.5).
+
+De fato, pelo Teorema 2.1 e por 6.3, existem números naturais n1, n2, · · · , nk tais que
+
+a =
+
+k
+∑
+i=1
+
+2ni
+
+Sem perda de generalidade, podemos supor q irredutível, e daí, teremos a ímpar e para algum
+índice i deve ocorrer ni = 0. Seja i = k esse índice. Então podemos escrever
+
+a = 2n1 + 2n2 + 2n3 + · · · + 2nk−1 + 1
+
+e substituindo (6.6) em (6.5), teremos
+
+q =
+
+2n1
+2n +
+
+2n2
+2n + · · · +
+
+2nk−1
+2n +
+
+1
+2n =
+
+1
+22n−n1
+
++
+
+1
+22n−n2
+
++ · · · +
+
+1
+22n−nk−1
+
++
+
+1
+2n
+
+que é a forma polinomial binária de q.
+
+(6.6)
+
+(6.7)
+
+Resta-nos agora determinar a e n e, com esses dados, escrevermos (6.7). Para determinarmos
+n, usemos o Teorema 5.2, que nos garante que a forma decimal de cada parcela de (6.7) possui
+
+n − ni dígitos não inteiros. Além disso, note que (6.7) representa a soma
+
+qn−ni das linhas de
+
+ordem n − n1, n − n2, · · · , n − nk−1, n da matriz (cid:100)1(cid:101)n. Usando isso, uma simples soma pode nos
+revelar que
+
+k
+∑
+i=1
+
+N(q) = N
+
+qn−ni
+
+= max {n − ni : i ∈ {1, 2, · · · , n}} = n
+
+(cid:33)
+
+(cid:32) k
+∑
+i=1
+
+o que nos diz que a matriz complementar de a possui n colunas e n linhas (Teorema 5.2) e [a]n
+possui última linha qn = q. Assim, para determinar o dividendo a devemos reconstituir [a]n a partir
+de sua última linha, o que exige que calculemos ∆(i−1) j a partir de cada ∆i j. Para isto, podemos
+usar o Corolário 3.1, ou então a técnica de tentativa e veriﬁcação que propomos a seguir:
+
+1. Calculamos módulo 10 o dobro de ∆i j, isto é, calculamos o resto de 2∆i j na divisão por 10,
+
+que denotaremos por 2
+
+(10)
+(cid:12) ∆i j .
+
+2. Veriﬁcamos se o valor encontrado satisfaz (cid:10)∆(i−1) j, ∆(i−1)( j+1)
+
+(cid:11) = ∆i( j+1). Caso aﬁrmativo,
+
+6.4 REPRESENTAÇÃO BINÁRIA DE QUOCIENTES DO TIPO q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+99
+
+temos ∆(i−1) j = 2
+
+(10)
+(cid:12) ∆i j. Do contrário, ∆(i−1) j = 2
+
+(10)
+(cid:12) ∆i j + 1
+
+De fato,
+
+∆i j = (cid:10)∆(i−1)( j−1), ∆(i−1) j
+
+(cid:11) ∈
+
+(cid:26) ∆(i−1) j
+2
+
+,
+
+∆(i−1) j
+2
+
++ 5,
+
+∆(i−1) j − 1
+2
+
+,
+
+∆(i−1) j − 1
+2
+
+(cid:27)
+
++ 5
+
+⇒ ∆(i−1) j ∈ (cid:8)2∆i j, 2∆i j − 10, 2∆i j + 1, (2∆i j − 10) + 1(cid:9)
+
+o que equivale a
+
+∆(i−1) j ∈
+
+(cid:26)
+
+(10)
+(cid:12) ∆i j, 2
+
+2
+
+(10)
+(cid:12) ∆i j + 1
+
+(cid:27)
+
+.
+
+Uma vez obtido o valor de a, (6.7) nos ensina que devemos escrever a como soma de potências
+
+de 2, o que fazemos construindo a matriz
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a0
+
+β (a0)
+
+β 2(a0)
+
+...
+
+β n(a0)
+
+= A
+
+Conforme provamos na proposição 6.1. Note, entretanto, que essa matriz já foi obtida no processo
+de reconstrução de [a]n, bastando agora que reescrevamos seus termos módulo 2. Na verdade, é
+totalmente dispensável a construção de (cid:98)a(cid:99)n por completo, uma vez que só precisaremos de A. Isto
+suaviza sensivelmente o processo e nos devolve a na base 2 de imediato.
+
+Ilustraremos o processo detalhadamente no exemplo a seguir:
+
+Exemplo 6.6. Converteremos a dízima q = 0, 05078125 para o sistema binário. Para isso, deve-
+mos:
+
+1- Determinar as dimensões de (cid:100)a(cid:101)n e sua linha ﬁnal qn:
+
+n = N(q) = 8 e qn =
+
+(cid:16)
+
+0 5 0 7 8 1 2 5
+
+(cid:17)
+
+6.4 REPRESENTAÇÃO BINÁRIA DE QUOCIENTES DO TIPO q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+100
+
+2- Construir (cid:100)a(cid:101)n:
+
+3-Determinar os termos ∆ii, ∆i(i−1) e ∆i(i−2) que já conhecemos:
+
+0 5 0 7 8 1 2 5
+
+5
+
+2 5
+
+6 2 5
+
+1 2 5
+
+6 2 5
+
+1 2 5
+
+6 2 5
+
+0 5 0 7 8 1 2 5
+
+4-Calcular os termos que faltam por teste e veriﬁcação: Se ∆(i−1) j é o dígito procurado e ∆i j é o
+dígito que está imediatamente abaixo na matriz, fazemos
+
+x = 2
+
+(10)
+(cid:12) ∆i j
+
+e depois veriﬁcamos se ocorre
+
+(cid:10)x, ∆(i−1)( j+1)
+
+(cid:11) = ∆i( j+1).
+
+Se a igualdade 6.9 é verdadeira, então x = ∆(i−1) j; caso contrário, ∆(i−1) j = x + 1.
+
+(6.8)
+
+(6.9)
+
+Usando isto para determinar os elementos da penúltima linha, temos:
+
+x = 2
+
+x = 2
+
+x = 2
+
+x = 2
+
+(10)
+(cid:12) 7 = 4 ⇒ (cid:10)4, 6(cid:11) = 3 (cid:54)= 8 ⇒ ∆74 = 5
+(10)
+(cid:12) 0 = 0 ⇒ (cid:10)0, 5(cid:11) = 2 (cid:54)= 7 ⇒ ∆73 = 0 + 1 = 1
+(10)
+(cid:12) 5 = 0 ⇒ (cid:10)0, 1(cid:11) = 0 ⇒ ∆72 = 0
+(10)
+(cid:12) 0 = 0 ⇒ (cid:10)0, 0(cid:11) = 0 (cid:54)= 5 ⇒ ∆71 = 0 + 1 = 1:
+
+6.4 REPRESENTAÇÃO BINÁRIA DE QUOCIENTES DO TIPO q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+101
+
+5
+
+2 5
+
+6 2 5
+
+1 2 5
+
+6 2 5
+
+1 2 5
+
+1 0 1 5 6 2 5
+
+0 5 0 7 8 1 2 5
+
+De modo análogo determinamos os demais termos da matriz complementar:
+
+5
+
+2 5
+
+6 2 5
+
+8 1 2 5
+
+4 0 6 2 5
+
+2 0 3 1 2 5
+
+1 0 1 5 6 2 5
+
+0 5 0 7 8 1 2 5
+
+5-Construir a matriz coluna A, para obter a: Basta decidir o valor binário de cada célula: 0 ou 1, o
+que se pode fazer facilmente resolvendo as equações em β i(a0) dadas por:
+
+(cid:68)
+
+β i(a0), ∆i1
+
+(cid:69)
+
+= ∆(i+1)1
+
+(6.10)
+
+e lembrando que ∆11 = (cid:104)a0, 0(cid:105) e β 8(a0) = (cid:98)q(cid:99) = 0. Usando isto, temos:
+
+(cid:104)a0, 0(cid:105) = 5 ⇒ a0 = 1
+
+(cid:68)
+
+(cid:68)
+
+(cid:68)
+
+(cid:68)
+
+(cid:68)
+
+β 1(a0), 5
+
+β 2(a0), 2
+
+β 3(a0), 6
+
+β 4(a0), 8
+
+β 5(a0), 4
+
+(cid:69)
+
+(cid:69)
+
+(cid:69)
+
+(cid:69)
+
+(cid:69)
+
+= 2 ⇒ β 1(a0) = 0
+
+= 6 ⇒ β 2(a0) = 1
+
+= 8 ⇒ β 3(a0) = 1
+
+= 4 ⇒ β 4(a0) = 0
+
+= 2 ⇒ β 5(a0) = 0
+
+6.4 REPRESENTAÇÃO BINÁRIA DE QUOCIENTES DO TIPO q =
+
+a
+2n , a ∈ Z, n ∈ N∗
+
+102
+
+(cid:68)
+
+(cid:68)
+
+β 6(a0), 2
+
+β 7(a0), 1
+
+(cid:69)
+
+(cid:69)
+
+= 1 ⇒ β 6(a0) = 0
+
+= 0 ⇒ β 7(a0) = 0
+
+Logo, temos
+
+A =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+0
+1
+1
+0
+0
+0
+0
+0
+
+e então,
+
+(cid:16)
+β 8(a0) β 7(a0) β 6(a0) β 5(a0) β 4(a0) β 3(a0) β 2(a0) β 1(a0) a0
+
+a =
+
+(cid:17)
+
+2
+
+= (000001101)2 =
+
+= (1101)2
+
+o que nos dá a = 23 + 22 + 1.
+
+6-Escrever a soma binária conforme 6.7:
+
+a =
+
+1
+25 +
+
+1
+26 +
+
+1
+28 =
+
+1
+28−2 +
+
+1
+28−3 +
+Na verdade, uma vez de posse da expressão binária de a, podemos operar diretamente na base
+2 se ﬁzermos a conversão do divisor, o que é algo simples e que torna os cálculos mais diretos e
+intuitivos. No exemplo anterior, poderíamos fazer 28 = (108)2 e então,
+
+1
+28 = (0, 00001101)2.
+
+a
+28 =
+
+(cid:18)1101
+108
+
+(cid:19)
+
+2
+
+= (0, 00001101)2.
+
+Exemplo 6.7. Escrevamos q = 7, 8359375 no sistema binário:
+
+Inicialmente, separamos as partes inteira e não inteira:
+
+6.5 APLICAÇÕES COM A FORMA PRODUTO
+
+103
+
+(cid:98)q(cid:99) = 7 = 22 + 2 + 1 = (111)2.
+
+Para q − (cid:98)q(cid:99), construímos a matriz conforme o tutorial anterior. Por praticidade, escreveremos
+uma coluna adicional à esquerda da matriz para representar A, e uma linha extra acima, para repre-
+sentar a0 e a−1:
+
+1 0
+
+1 5
+
+0 7 5
+
+1 3 7 5
+
+0 6 8 7 5
+
+1 3 4 3 7 5
+
+1 6 7 1 8 7 5
+
+0 8 3 5 9 3 7 5
+
+Logo, q − (cid:98)q(cid:99) =
+
+(cid:18)1101011
+107
+
+(cid:19)
+
+2
+
+= (0, 1101011)2,
+
+e daí,
+
+q = (111, 1101011)2.
+
+6.5 Aplicações com a Forma Produto
+
+Encerraremos nossa exposição apresentando duas singelas aplicações do algoritmo do par binário
+que podem ser confortavelmente usadas em qualquer etapa do ensino básico, e que decorrem da
+forma produto (Deﬁnição 5.9). De fato, para obtê-las, não precisaremos dispor de nenhuma teoria
+adicional, mas tão-somente da reescrita adequada do quociente em questão.
+
+Seja, pois, q =
+
+a
+2n · 10m. Analisaremos separadamente os casos m (cid:54)= n e m = n:
+
+1) Se m (cid:54)= n, reescrevendo
+
+q =
+
+a
+2n · 10−m
+
+obtemos quocientes com novos divisores não contemplados até aqui, mas inteiramente calculáveis
+pelos métodos que propomos.
+
+Exemplo 6.8. Calculemos a forma decimal de q =
+
+3
+2, 56
+
+:
+
+6.5 APLICAÇÕES COM A FORMA PRODUTO
+
+104
+
+Sabemos que 256 = 28, e daí, temos 2, 56 = 28 · 10−2. Logo, podemos reescrever
+
+q =
+
+3
+28 · 10−2 =
+
+3
+28 · 102
+
+e daí, precisamos construir a matriz [3]8. É o que faremos:
+
+3
+
+1 5
+. 7 5
+. 3 7 5
+. 1 8 7 5
+.
+
+. 9 3 7 5
+. 4 6 8 7 5
+. 2 3 4 3 7 5
+
+.
+
+.
+
+0 0 1 1 7 1 8 7 5
+
+Temos então q = 0, 01171875 · 102 = 1, 1171875.
+
+Exemplo 6.9. Para q =
+
+18000
+0, 0032
+
+, temos
+
+Calculando
+
+18
+25 , temos:
+
+q =
+
+18 · 103
+25 · 10−4 =
+
+18
+25 · 107
+
+1 8
+
+. 9
+. 4 5
+. 2 2 5
+. 1 1 2 5
+
+0 0 5 6 2 5
+
+e então, q = 0, 05625 · 107 = 562500.
+
+Exemplo 6.10. Para q =
+
+0, 7
+1600
+
+, temos
+
+q =
+
+7 · 10−1
+24 · 102 =
+
+7
+24 · 10−3
+
+6.5 APLICAÇÕES COM A FORMA PRODUTO
+
+105
+
+e daí temos:
+
+[7]4 =
+
+
+
+
+
+
+
+
+
+3 5
+1 7 5
+0 8 7 5
+0 4 3 7 5
+
+
+
+
+
+
+
+
+
+o que nos dá q = 0, 4375 · 10−3 = 0, 0004375.
+
+2) Se m = n, podemos escrever
+
+q =
+
+a
+2n · 10n = a ·
+
+10n
+2n = a ·
+
+(cid:18)10
+2
+
+(cid:19)n
+
+= a · 5n,
+
+e obtemos uma identidade que nos permite aplicar a divisão por 2n e, consequentemente, do Algo-
+ritmo do par binário para o cálculo de produtos do tipo a · 5n:
+
+Proposição 6.5 (Multiplicação por Potências de Base 5). :
+
+Se k ∈ N∗, I ⊂ Z e a = ∑
+
+i∈I
+
+ai10i, então a · 5k = ∑
+
+i∈I
+
+β k(ai)10i
+
+Em particular, se n = 1, a identidade
+
+nos retorna o produto por 5 por meio da divisão por 2. Por outro lado, se a = 1 temos
+
+a · 5 =
+
+a
+2
+
+· 10
+
+(6.11)
+
+5n =
+
+1
+2n · 10n
+
+1
+2n possui n algarismos fracionários, e daí, o produto pelo fator 10n nos
+e o teorema 5.2 nos diz que
+diz que 5n será o número cujos algarismos são a n−ésima linha da matriz (cid:100)1(cid:101)n, cuja determinação
+não oferece maiores diﬁculdades.
+
+Exemplo 6.11 (Multiplicação por 5). Vamos calcular alguns produtos de fator 5:
+
+a) 5 · 147 =
+
+· 10 = (cid:10)0, 1(cid:11) (cid:10)1, 4(cid:11) (cid:10)4, 7(cid:11) (cid:10)7, 0(cid:11) = 0735.
+
+b) 0, 095 · 5 =
+
+· 10 =
+
+95
+2
+
+· 10−2 = (cid:10)0, 9(cid:11) (cid:10)9, 5(cid:11) , (cid:10)5, 0(cid:11) · 10−2 = 0, 475.
+
+c) 0, 099 · 0, 05 = 99 · 10−3 · 5 · 10−2 = 99 · 5 · 10−5 = (cid:10)0, 9(cid:11) (cid:10)9, 9(cid:11) , (cid:10)9, 0(cid:11) · 10−4 = 495 · 10−4 =
+
+= 0, 00495.
+
+147
+2
+95 · 10−3
+2
+
+6.5 APLICAÇÕES COM A FORMA PRODUTO
+
+106
+
+Exemplo 6.12 (Potências de 5). Vamos determinar as potências 53, 55, e 57. Por 6.12, as conse-
+guiremos determinando a 3.ª, a 5.ª e a 7.ª linhas de (cid:100)1(cid:101)7:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(cid:100)1(cid:101)7 =
+
+5
+2 5
+1 2 5
+0 6 2 5
+0 3 1 2 5
+0 1 5 6 2 5
+0 0 7 8 1 2 5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Temos então 53 = q3 = 125, 55 = q5 = 3125 e 57 = q7 = 78125
+
+Exemplo 6.13 (Produto por potências de 5). Calculemos p = 57 · 59:
+
+Pela proposição 6.5, p = q9 · 109, o que nos induz a determinar a 9.ª linha de [57]9:
+
+5 7
+
+2 8
+
+1 4
+. 7
+. 3
+. 1
+.
+.
+
+.
+
+.
+
+.
+
+.
+
+5
+
+2 5
+
+1 2 5
+
+5 6 2 5
+
+7 8 1 2 5
+
+8 9 2 6 2 5
+
+4 4 5 3 1 2 5
+
+2 2 2 6 5 6 2 5
+
+0 0
+
+1 1 1 3 2 8 1 2 5
+
+Logo, p = 111328125
+
+Exemplo 6.14. Calcular 0, 253 :
+
+Temos 0, 253 = (25 · 10−2)3 = (52 · 10−2)3 = 56 · 10−6 =
+
+1
+26 · 106 · 10−6 =
+
+1
+26 = q6
+
+Agora, consultando a matriz que construímos no exemplo 6.12, temos q6 = 0, 015625.
+
+7
+
+PROPOSTA DE SEQUÊNCIA DIDÁTICA: JOGO DOS CARTÕES
+
+NUMERADOS
+
+7.1 Descrição e Regras
+
+O Jogo dos cartões numerados é uma popular atividade matemático-recreativa da linha das "mate-
+mágicas", segmento de jogos matemáticos que se prestam à utilização de propriedades aritméticas
+dos números inteiros para gerar o efeito da adivinhação ou previsão do futuro.
+
+Como seu nome sugere, este jogo consiste numa coleção de cartões, em geral 6, cada um com
+32 números inteiros escolhidos entre o 1 e o 63, inclusive, distribuídos de forma aparentemente
+aleatória em cada cartão, em ordem crescente, de modo que cada número aparece em pelo menos
+um dos cartões.
+
+Participam dele dois jogadores, um um dos quais ocupará a função de "mágico"e o outro, a
+função de voluntário da "plateia". A este último, será entregue o baralho e caberá escolher um
+número qualquer de um dos cartões. Em seguida, é solicitado a memorizar o número escolhido e
+mantê-lo em segredo. Os cartões são mais uma vez embaralhados e entregues ao mágico. Feito
+isso, o mágico os tomará nas mãos e os mostrará um por um ao voluntário, que será convidado a
+indicar os cartões que possuem o número que escolheu.
+
+O voluntário, então, faz isso, e ao ﬁm da última carta mostrada pelo mágico, este, como num
+
+"passe de mágica", revelará à plateia o número escolhido por aquele, para surpresa de todos.
+
+7.2 O Segredo
+
+Há diversas referências disponíveis, sobretudo na internet, que se prestam a explicar o funciona-
+mento da suposta mágica dos cartões. Dentre estas, destacamos Menezes ([22]) que o faz para o
+
+107
+
+7.2 O SEGREDO
+
+108
+
+caso particular do jogo para 5 cartões. Aqui o faremos para a forma mais habitual de apresentação
+do jogo, a de seis cartas, que permite a utilização dos inteiros no intervalo de 1 a 64. Para tanto,
+considere o quadro 7.2, na qual são exibidas o conjunto de cartas para tal apresentação.
+
+Atentemo-nos agora ao primeiro número de cada cartão. Perceba que em todos eles essa po-
+sição é ocupada por uma potência de 2; a saber, 1, 2 ,4, 8, 16, 32. Para facilitar a referência,
+nomearemos os cartões de acordo com esse primeiro número: assim, a carta 22 ou 4 será a carta
+cujo primeiro número é o 4, por exemplo.
+
+Conhecido isto, o truque é bem simples: quando o voluntário for solicitado a indicar em quais
+das cartas o número escolhido comparece, o mágico deve atentar rapidamente para o valor desse
+primeiro número em cada cartela, com o ﬁm de os somar à medida que as cartas escolhidas foram
+sendo reveladas. A menos de erro de atenção do voluntário ou de cálculo do mágico, o número
+secreto será o resultado dessa soma.
+
+Quadro 2: Cartões para o jogo com seis cartas
+
+carta 20
+5
+3
+13
+11
+21
+19
+29
+27
+37
+35
+45
+43
+53
+51
+61
+59
+
+carta 23
+10
+9
+14
+13
+26
+25
+30
+29
+42
+41
+46
+45
+58
+57
+62
+61
+
+1
+9
+17
+25
+33
+41
+49
+57
+
+8
+12
+24
+28
+40
+44
+56
+60
+
+7
+15
+23
+31
+39
+47
+55
+63
+
+11
+15
+27
+31
+43
+47
+59
+63
+
+carta 21
+7
+6
+3
+11 14 15
+23
+22
+19
+31
+30
+27
+39
+38
+35
+47
+46
+43
+55
+54
+51
+63
+62
+59
+
+carta 24
+17 18 19
+23
+22
+21
+27
+26
+25
+31
+30
+29
+51
+50
+49
+55
+54
+53
+59
+58
+57
+63
+62
+61
+
+2
+10
+18
+26
+34
+42
+50
+58
+
+16
+20
+24
+28
+48
+52
+56
+60
+
+Fonte: Autor, 2013
+
+carta 22
+6
+5
+14
+13
+22
+21
+30
+29
+38
+37
+46
+45
+54
+53
+62
+61
+
+carta 25
+34
+33
+38
+37
+42
+41
+46
+45
+50
+49
+54
+53
+58
+57
+62
+61
+
+4
+12
+20
+28
+36
+44
+52
+60
+
+32
+36
+40
+44
+48
+52
+56
+60
+
+7
+15
+23
+31
+39
+47
+55
+63
+
+35
+39
+43
+47
+51
+55
+59
+63
+
+Exemplo 7.1. Suponha que o voluntário escolha um número que esteja nos cartões 20, 21 e 24. O
+mágico, nesse caso, deve realizar mentalmente a soma: 16+2+1=19
+
+7.3 ANÁLISE DO JOGO
+
+109
+
+É claro que tanto mais convincente será a mágica quanto maior for a destreza do mágico em
+
+realizar cálculos com as potências de 2 referente às cartas.
+
+7.3 Análise do Jogo
+
+O segredo do funcionamento do jogo reside na forma criteriosa com que os números são distri-
+buídos entre as cartelas. Com efeito, considerando a Proposição 6.2, sabemos que todo número
+inteiro pode ser escrito de maneira única como uma soma de potências de base 2, a qual, por sua
+vez, se associa uma forma binária inteira.
+
+Nessas condições, perceba inicialmente que se considerarmos as potências 20, 21, 22, 23, 24
+e 25, então o menor inteiro positivo que pode ser representado a partir da soma de tais parcelas é
+20 = 1, enquanto que o maior inteiro é dado por 1+2+4+8+16+32=63.
+
+Tendo isto em vista, a ideia é a de alocarmos em cada carta 2n todos, e apenas os números
+inteiros que possuem a parcela 2n em sua forma binária. Desse modo, quando o voluntário nos
+indica as cartas em que constam o número que ele escolheu, ele estará, na verdade, nos retornando
+a representação binária do número escolhido. Daí, uma soma trivial nos revela o resultado.
+
+Exemplo 7.2. : No caso do exemplo 7.1, quando o voluntário nos retorna a informação de que
+o número escolhido encontra-se nos cartões 20, 21 e 24, estará revelando que o número escolhido
+possui a forma binária em que as ordens 0, 1, e 4 são não-nulas, do que segue que o número
+escolhido será dado por (10011)2 = 24 + 2 + 1 = 16 + 2 + 1 = 19
+
+7.4 Construção dos Cartões
+
+Uma vez tratado o funcionamento do Sistema Binário e explorada a técnica de conversão que apre-
+sentamos no capítulo 6, a confecção de um conjunto de cartões pelo aluno pode se constituir numa
+atividade de assimilação de conteúdo muito enriquecedora. De fato, uma vez tendo aprendido a
+escrever na forma binária um inteiro dado no sistema decimal, a construção de um baralho de seis
+cartas exigirá do aluno que este converta corretamente os números inteiros no intervalo de 1 a 63.
+
+Aqui sugerimos que se organize um quadro cujas linhas sejam as formas binárias dos inteiros
+de 1 a 63, e cujas colunas sejam os algarismos binários de cada ordem. Nessas condições, a bije-
+tividade da função que associa um inteiro a à sua representação binária (Teorema 2.1) nos garante
+que as linhas de tal quadro são distintas entre si, acontecendo o mesmo com suas colunas.
+
+7.4 CONSTRUÇÃO DOS CARTÕES
+
+110
+
+Uma vez feito isto, os cartões do jogo se referirão a cada uma das ordens binárias (colunas) do
+número inteiro a (linhas), e daí, cada cartão 2i deverá conter os números cujas linhas correspon-
+dentes apresentem o digito 1 na coluna relativa i.
+
+Nos quadros 7.4, 7.4 e 7.4 apresentamos o quadro correspondente a um conjunto de 6 cartas.
+
+Para ilustrar o processo, considere o exemplo a seguir:
+
+Exemplo 7.3. : Suponha que queiramos construir o cartão 24. Observemos, então, a coluna cor-
+respondente a 24 nos quadros 7.4, 7.4 e 7.4. Nelas, as linhas que possuem o digito 1 são, em ordem
+crescente, as linhas de 16 a 31, e as linhas de 48 a 63. Isto signiﬁca que o cartão 24 deverá conter
+todos os inteiros de 16 a 31, e de 48 a 63, inclusive.
+
+Quadro 3: Codiﬁcação Binária dos inteiros de 1 a 21 para confecção dos cartões
+
+a
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+
+a5
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+a4
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+1
+1
+1
+1
+1
+
+a3
+0
+0
+0
+0
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+0
+0
+0
+0
+0
+0
+
+a2
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+0
+1
+1
+
+a1
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+
+Fonte: Autor, 2013
+
+a0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+
+7.4 CONSTRUÇÃO DOS CARTÕES
+
+111
+
+Quadro 4: Codiﬁcação Binária dos inteiros de 22 a 42 para confecção dos cartões
+
+a
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+
+a5
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+
+a4
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+
+a3
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+1
+1
+1
+
+a2
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+
+Fonte: Autor, 2013
+
+a1
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+
+a0
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+
+7.4 CONSTRUÇÃO DOS CARTÕES
+
+112
+
+Quadro 5: Codiﬁcação Binária dos inteiros de 43 a 63 para confecção dos cartões
+
+a
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+
+a5
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+
+a4
+0
+0
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+1
+
+a3
+1
+1
+1
+1
+1
+0
+0
+0
+0
+0
+0
+0
+0
+1
+1
+1
+1
+1
+1
+1
+1
+
+a2
+0
+1
+1
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+0
+0
+0
+0
+1
+1
+1
+1
+
+Fonte: Autor, 2013
+
+a1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+0
+0
+1
+1
+
+a0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+0
+1
+
+7.5 SEQUÊNCIA DIDÁTICA
+
+7.5 Sequência didática
+
+113
+
+A seguir apresentamos uma sugestão de sequência didática utilizando o Jogo dos cartões numera-
+dos:
+
+Introduzir o Sistema de Numeração Binário no universo Z.
+
+Objetivo
+
+Público-alvo
+
+Alunos do Ensino Fundamental, Ensino Médio ou Médio Proﬁssionalizante voltado para a área
+das ciências da informação e aﬁns.
+
+Metodologia e Tempo Pedagógico
+
+1. Apresentação do Jogo dos cartões numerados e exposição do seu funcionamento (1 h/a);
+
+2. Apresentação do Sistema binário de numeração e da decomposição de um inteiro como soma
+
+de potências de base 2 (2 h/a);
+
+3. Abordagem tradicional da conversão entre os sistemas Binário e decimal (2 h/a);
+
+4. Introdução do Algoritmo do Par binário no contexto da iteração de quocientes e sua aplicação
+
+na conversão de números inteiros da forma decimal para a binária (2 h/a);
+
+5. Atividade de ﬁxação de aprendizagem e avaliação: Confecção dos cartões do jogo (2 h/a);
+
+6. Levantamento de questões complementares (2 h/a).
+
+Para a etapa de conclusão de trabalhos, convém levantar questões que instiguem o estudante a
+reﬂetir sobre as consequências na alteração de algumas características do jogo, tais como o uso de
+um intervalo maior de inteiros, o que tornaria o efeito do truque ainda mais surpreendente, embora
+aumente a quantidade de cartas, e daí, a complexidade dos cálculos mentais envolvidos, o porquê
+da utilização da base binária ao invés de outra qualquer, bem como a possibilidade de repetir o
+truque em tais condições, dentre outros questionamentos do gênero cuja resposta, em geral, pode
+exigir uma maior compreensão do sistema de representação númerico, e daí, suscitar o desejo de
+pesquisa complementar no estudante.
+
+Além das etapas prescritas acima, a depender da maturidade da turma, tempo disponível para
+tanto e objetivos especíﬁcos do curso, constituem interessantes desdobramentos da proposta a abor-
+dagem dos seguintes temas suplementares:
+
+7.5 SEQUÊNCIA DIDÁTICA
+
+114
+
+(a) Sistema binário em R e aplicação do Algoritmo do par binário na conversão entre as bases 10
+
+e 2 nesse universo;
+
+(b) Operações fundamentais no sistema binário: Tábuas de operação em Z2;
+
+(c) Conversão entre linguagem de máquina e linguagem humana: Neste tema, pode ser parti-
+cularmente interessante mencionar a Tabela de Códigos ASCII1 que consiste numa tábua de
+conversão de caracteres e comandos codiﬁcados entre as bases decimal e binária, e
+
+"é usada pela maior parte da indústria de computadores para a troca de informações
+[entre homem e máquina]. Cada caractere é representado por um código de 8 bits2"
+(Cruz: [8]).
+
+Avaliação
+
+Sugerimos que seja feita de duas formas distintas e complementares: a primeira, contínua e sub-
+jetiva, no decorrer do processo, englobando aspectos como participação e trabalho em grupo, e
+objetiva e focal, ao ﬁnal do processo, contemplando o conteúdo de início proposto.
+
+1sigla da língua inglesa para American Standard Code for Information Interchange, que em português signiﬁca
+
+"Código Padrão Americano para o Intercâmbio de Informação"
+
+2bit: Binary digit: Termo utilizado na computação para representar os algarismos do sistema binário: 0, que
+
+representa o circuito aberto, e 1, que representa o circuito fechado.
+
+CONSIDERAÇÕES FINAIS
+
+No presente trabalho apresentamos o algoritmo do par binário, teorema de nossa autoria que possi-
+bilita o cálculo da forma decimal do quociente numa divisão euclidiana por 2 de dividendos inteiros
+a partir da deﬁnição da função par binário, que se presta à associação direta de cada algarismo do
+dividendo ao seu respectivo de mesma ordem no quociente.
+
+Demonstramos a validade de tal algoritmo no universo Z partindo de sua forma mais elementar,
+para o divisor 2, e, a partir daí, recorrendo à análise real, indução ﬁnita e à notação matricial, pro-
+cedemos à generalização do algoritmo do par binário a dividendos em R, num primeiro momento,
+e a divisores do tipo 2n, n ∈ N∗, em seguida. Para tanto, deﬁnimos a função par binário composto
+e estabelecemos a conexão com a álgebra matricial, com o que tornou-se possível a determinação
+de cada algarismo do quociente a/2n a partir da iterada aplicação da função par binário em cada
+algarismo do dividendo, tomados a partir da maior para a menor ordem. Nessa fase foi possível
+detectar diversas regularidades interessantes relativas à terminação decimal dos quocientes itera-
+dos a partir de dividendos decimais de expansão ﬁnita, o que contribuiu signiﬁcativamente para a
+aceleração do processo.
+
+Como consequência direta dos resultados tratados no decorrer do texto, foi possível detectar
+diversas possibilidades de aplicações, das quais destacamos a conversão de números reais entre
+as bases decimal e binária, o cálculo de potências de 5 com expoente natural e o produto por tais
+potências, e obtivemos, como corolário do teorema do par binário em Z, o algoritmo tradicional
+da multiplicação por 2.
+
+Finalmente, como produto ﬁnal de nosso trabalho, propusemos uma sequência didática baseada
+no conhecido jogo "matemágica dos cartões numerados", na qual é introduzido o sistema binário
+de numeração e a teoria desenvolvida nos capítulos precedentes é aplicada como facilitadora do
+processo de ensino de tal conteúdo.
+
+115
+
+7.5 SEQUÊNCIA DIDÁTICA
+
+116
+
+Por ocasião da conclusão deste trabalho, percebemos que o estudo do tema proposto não se
+encontra deﬁnitivamente encerrado. Conjecturas tais como a possibilidade de generalização da
+função par binário a outros divisores, do teorema principal a outras bases de numeração, e da
+existência de uma regra geral para o cálculo da terminação decimal de quocientes de dízimas
+ﬁnitas com qualquer número de algarismos fracionários, dentre outras, surgiram naturalmente no
+nosso estudo e mostraram-se como pistas para um futuro prosseguimento para tal pesquisa.
+
+Referências Bibliográﬁcas
+
+[1] ARENALES, Selma e DAREZZO, Artur. Cálculo Numérico: Aprendizagem com o apoio de
+
+Software São Paulo: Thompson, 2011.
+
+[2] ÁVILA, Geraldo Severo de Souza. Análise Matemática para Licenciatura. 3.ª ed. rev. amp. São
+
+Paulo: Edgard Blücher, 2011.
+
+[3] BIANCHINI, E. & PACCOLA, H. Sistemas de Numeração ao Longo da História. 2.ª ed. São
+
+Paulo: Moderna, 1997.
+
+[4] BRASIL, Secretaria de Educação Fundamental. Parâmetros Curriculares Nacionais do Ensino
+
+Fundamental. Matemática. Brasília: Ministério da Educação: 1998.
+
+[5] BRASIL, Secretaria de Educação Fundamental. Parâmetros Curriculares Nacionais do Ensino
+Fundamental. Matemática: Ensino de primeira à quarta série. Brasília: MEC/SEF: 1997.
+
+[6] BRASIL, Secretaria de Educação Média e tecnológica. Parâmetros Curriculares Nacionais do
+Ensino Médio: Linguagens, códigos e suas tecnologias. Brasília: Ministério da Educação:
+2000.
+
+[7] BRASIL, Secretaria de Educação Média e tecnológica. PCN+ Ensino Médio: Orientações
+Educacionais complementares aos Parâmetros Curriculares Nacionais. Linguagens, códigos e
+suas tecnologias. Brasília: Ministério da Educação: 2002.
+
+[8] CRUZ, A. J. O. Tabela ASCII. Disponível em <http://equipe.nce.ufrj.br/adriano/c/apostila/ ta-
+
+bascii.htm>. Acesso em 21 de Abril de 2013.
+
+[9] DOMINGUES, Hygino. Fundamentos de Aritmética. São Paulo:Atual, 1991.
+
+[10] DOMINGUEZ, H. E IEZZI, G. Álgebra Moderna. 4.ª ed. ref. São Paulo: Atual, 2003.
+
+117
+
+7.5 SEQUÊNCIA DIDÁTICA
+
+118
+
+[11] EVES, Howard. Introdução à História da Matemática. Tradução de Hygino H. Domingues.
+
+Campinas: Editora da UNICAMP, 2008.
+
+[12] GIOVANNI, José Ruy e PARENTE, E. A. de Medeiros. Matemática: 1.º grau. São Paulo: FTD,
+
+1988.
+
+[13] HEFEZ, Abramo. Curso de Álgebra . 3.ª ed. Rio de Janeiro: IMPA, 2002. Coleção Matemática
+
+Universitária.
+
+[14] HEFEZ, Abramo. Elementos de Aritmética. Rio de Janeiro: IMPA, 2002. Coleção Textos
+
+Universitários.
+
+[15] JAKUBOVIC, José. Par ou ímpar. 4.ª edição. São Paulo: Scipione, 1995. Coleção Vivendo a
+
+Matemática.
+
+[16] LIMA, E.L. et al. A matemática do Ensino Médio volume 1. 9.ª ed. Rio de Janeiro, SBM:
+
+2006. Coleção do Professor de Matemática
+
+[17] LIMA, E. L. Análise Real Volume 1: Funções de Uma Variável. 11.ª ed. Rio de Janeiro:
+
+IMPA, 2011. Coleção Matemática Universitária.
+
+[18] LIMA, E. L. Base Decimal ou Duodecimal. Revista do Professor de Matemática n.º 12. Rio
+
+de Janeiro: SBM, 1987.
+
+[19] LIMA, E. L. Curso de Análise Volume 1. 13.ª ed. Rio de Janeiro: IMPA, 2011. Coleção Projeto
+
+Euclides.
+
+[20] LIMA, E.L. et al. Meu Professor de Matemática e Outras Histórias. Rio de Janeiro, SBM:
+
+1991. Coleção do Professor de Matemática
+
+[21] LUNA, J.E.L. Programa de qualiﬁcação do Ensino de Matemática em Nível Médio: uma
+proposta para a Escola Francisco Pereira da Costa. Monograﬁa. Garanhuns, (Não publicado):
+2007.
+
+[22] MENEZES, S. V. Matemágica binária. Disponível em <http:// colegiosantamarce-
+
+lina.com.br/Theorema/binaria.pdf>. Acesso em 24 de Abril de 2013.
+
+[23] MOREIRA, Carlos Gustavo Moreira et al. Teoria dos Números: um passeio com primos e
+outros números familiares pelo mundo inteiro. 2.ª ed. Rio de Janeiro: IMPA, 2011. Coleção
+Projeto Euclides.
+
+[24] MORGADO, A. C. et al. Progressões e Matemática Financeira. 4.ª ed. Rio de Janeiro, SBM:
+
+2001. Coleção do Professor de Matemática.
+
+7.5 SEQUÊNCIA DIDÁTICA
+
+119
+
+[25] MUNIZ NETO, Antônio Caminha. Tópicos de Matemática Elementar Volume 5: Teoria dos
+
+números. Rio de Janeiro: SBM, 2012. Coleção do Professor de Matemática.
+
+[26] PERNAMBUCO, Secretaria de Educação. Base Curricular Comum para as Redes Públicas de
+
+Ensino de Pernambuco. Matemática. Recife: SE, 2008.
+
+[27] SANTOS, José Plínio de Oliveira. Introdução à Teoria dos Números . 2.ª ed. Rio de Janeiro:
+
+IMPA, 2000. Coleção Matemática universitária.
+
+[28] TÁBOAS, Carmem M. G. & RIBEIRO, Hermano de Souza. Sobre Critérios de Divisibilidade.
+
+Revista do Professor de Matemática. Rio de Janeiro: SBM, 2012.
+
+[29] ANGELA e et al. Fundamentos de Álgebra. Belo Horizonte: Editora UFMG, 2009.
+
+

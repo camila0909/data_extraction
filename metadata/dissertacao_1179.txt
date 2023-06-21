@@ -1,0 +1,3025 @@
+2019: DISSERTAC¸ ˜AO DE MESTRADO
+Mestrado Proﬁssional em Matem´atica - PROFMAT, Universidade Federal de S˜ao Jo˜ao Del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+Modelagem Matem´atica para Previs˜ao de Jogos de Futebol
+
+Luiz Fernando Pinheiro Ramos1
+Humberto Cesar Fernandes Lemos2
+Ben Dˆeivide de Oliveira Batista3
+
+Resumo: Este trabalho se prop˜oe a construir um m´etodo para calcular probabilidades
+no futebol e comparar os resultados com o modelo do Departamento de Matem´atica da
+UFMG. Na metodologia apresentada, assumimos que os n´umeros de gols marcados pelos
+times em uma partida s˜ao independentes e seguem uma distribui¸c˜ao Poisson, em que a
+m´edia reﬂete o fator ataque ou fator defesa. Aplicada `a 250 jogos da S´erie A do Campe-
+onato Brasileiro de 2018, a metodologia estudada apresentou resultados coerentes com o
+modelo da UFMG. Foi poss´ıvel prever com boa precis˜ao o campe˜ao e obteve resultados
+satisfat´orios para os classiﬁcados para a Copa Libertadores da Am´erica, como tamb´em
+para os times rebaixados. A m´edia da medida de DeFinetti foi 0,568 e aproximadamente
+57% dos resultados est˜ao abaixo de 2/3. A metodologia proposta foi implementada no
+software R.
+
+Palavras-chave: Probabilidade no Futebol, Teoria das Probabilidades, Lei dos Grandes
+N´umeros, Distribui¸c˜ao de Poisson.
+
+Abstract: This study proposes to construct a method to calculate soccer probabilities
+and compare the results with the UFMG Mathematics Department model. In the pre-
+sented methodology, we assume that the number of goals scored by the teams in a match
+are independent and follow a Poisson distribution, where the average reﬂects the attack
+factor or defense factor. Applied in 250 games of Series A of the 2018 Brazilian Cham-
+pionship, the methodology studied presented results consistent with the UFMG model.
+It was possible to predict with good accuracy the champion and obtained satisfactory
+results for the qualiﬁers for the Copa Libertadores of America, as well as for the relegated
+teams. The DeFinetti measurement average was 0.568 and approximately 57 % of the
+results are below 2/3. The proposed methodology was implemented in the software R.
+
+Keywords: Probability in Soccer, Probability Theory, Law of Large Numbers, Poisson
+distribution.
+
+1Aluno do Mestrado Proﬁssional em Matem´atica em Rede Nacional, Turma 2017
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao Del-Rei - UFSJ
+E-mail: luizpramos@yahoo.com.br
+
+2Orientador do Trabalho de Conclus˜ao de Curso
+
+Departamento de Estat´ıstica, F´ısica e Matem´atica - DEFIM, CAP-UFSJ
+E-mail: humbertolemos@ufsj.edu.br
+
+3Coorientador do Trabalho de Conclus˜ao de Curso
+
+Departamento de Estat´ıstica, F´ısica e Matem´atica - DEFIM, CAP-UFSJ
+E-mail: ben.deivide@ufsj.edu.br
+
+2
+
+1
+
+Introdu¸c˜ao
+
+Uma das maiores paix˜oes dos brasileiros, ´e sem d´uvida, o futebol. Este esporte emoci-
+onante ´e uns dos assuntos mais frequentes nos meios de comunica¸c˜ao. Para [4], o futebol
+´e t˜ao encantador pela sua magia e dinamismo, que at´e aqueles que n˜ao s˜ao f˜as declarados
+param para ver a sele¸c˜ao de seu pa´ıs disputar uma Copa do Mundo.
+
+O futebol se torna cada vez mais alvo de especialistas que buscam na matem´atica,
+atrav´es da probabilidade, meios para explicar e prever os resultados. Tal fato ´e t˜ao
+impressionante que muitos especialistas da ´area esportiva dizem que o futebol ´e o esporte
+no qual a chance do mais fraco vencer o mais forte se maximiza em rela¸c˜ao a qualquer
+outro esporte. Quantas vezes clubes que ﬁzeram grandes investimentos foram derrotados
+por outros que, “em teoria”, eram mais fracos? Um elenco de ponta e um esquema t´atico
+infal´ıvel s˜ao primordiais nesse jogo, que `as vezes parece um combate estrat´egico duelado
+pelos t´ecnicos, mas nem sempre os melhores times vencem. ´E exatamente isso que torna
+o futebol t˜ao impressionante [4].
+
+Diante disso, o futebol sempre foi alvo de especula¸c˜oes sobre quem seria o campe˜ao, o
+vice-campe˜ao, quais os clubes seriam rebaixados, qual o time que marcaria mais gols, entre
+muitas outras perguntas relacionadas. Surgiram ent˜ao os primeiros modelos estat´ısticos
+para tentar responder essas perguntas que muitos torcedores e admiradores do esporte
+faziam [6].
+
+Em [10], o autor veriﬁcou por meio da porcentagem de vit´orias obtidas como man-
+dante que um time tem vantagem ao jogar em casa com o apoio da torcida. Em [11]
+propuseram uma metodologia bayesiana para calcular probabilidades das partidas de fu-
+tebol, utilizando opini˜oes de especialistas e o ranking da FIFA como informa¸c˜oes a priori.
+Tamb´em ´e poss´ıvel encontrar trabalhos que utilizam a distribui¸c˜ao de Poisson, em [8] o
+autor utiliza esta distribui¸c˜ao para modelar os n´umeros de gols marcados pela Inglaterra,
+Irlanda, Esc´ocia e Pa´ıs de Gales, no Campeonato Internacional Britˆanico 1883 `a 1980.
+Em [9], o autor tamb´em considera a distribui¸c˜ao de Poisson em que as m´edias dependem
+dos efeitos ofensivos e defensivos de cada equipe.
+
+Este trabalho prop˜oe uma metodologia, baseada na distribui¸c˜ao de Poisson, para cal-
+cular probabilidades no futebol que ser´a detalhado na se¸c˜ao 5. Na se¸c˜ao 2, apresentaremos
+um estudo sobre a Teoria da Probabilidade, trataremos as deﬁni¸c˜oes das probabilidades
+cl´assica e frequentista, destacaremos a probabilidade axiom´atica atrav´es dos axiomas de
+Kolmogorov, apresentaremos a probabilidade condicional e a independˆencia de eventos.
+Na se¸c˜ao 3 introduzimos o conceito de vari´aveis aleat´orias e quais s˜ao os seus tipos, dando
+destaque `as vari´aveis discretas, e apresentamos a distribui¸c˜ao de Poisson. Na se¸c˜ao 4,
+apresentamos os tipos de convergˆencia e a Lei dos Grandes N´umeros, que ´e o conceito
+mais importante para o desenvolvimento deste trabalho. Na se¸c˜ao 5, detalharemos o
+m´etodo proposto por este trabalho, o qual ser´a chamado de m´etodo do PROFMAT, e na
+se¸c˜ao 6 confrontaremos os resultados com o modelo do Departamento de Matem´atica da
+UFMG (modelo da UFMG), que ´e um modelo que corrobora com o presente trabalho,
+pois ´e de referˆencia e respeitado nacionalmente. E por ´ultimo, na se¸c˜ao 7, apresentaremos
+uma proposta envolvendo o c´alculo de probabilidade em sala de aula.
+
+3
+
+2 Teoria das Probabilidades
+
+Nesta se¸c˜ao introduzimos alguns dos conceitos mais elementares da teoria das probabi-
+lidades. Esta teoria matem´atica teve, como ponto de partida, resolver problemas relativos
+`a apostas de jogos de azar. No ano de 1654, Antonio de Gombaud (1607-1684), conhecido
+como cavaleiro de M´er´e, era um dos apostadores e procurou Blaise Pascal (1623-1662)
+para solucionar um destes problemas. Pascal, por sua vez, consulta Pierre Fermat (1601-
+1665), com isso eles come¸cam uma troca de cartas com o prop´osito de solucionar este e
+outros problemas semelhantes. Depois disso, em 1713, foi publicado a obra Ars Conjec-
+tandi o primeiro livro inteiramente dedicado `a teoria das probabilidades de autoria de
+Jacob Bernoulli (1654-1705). Em 1718, na obra The Doctrine of Chaucesme, Abraham
+de Moivre (1667-1754) apresenta o conceito do Teorema Central do Limite e em 1812, na
+obra Theorie Analytique des Probabilit´es, Pierre Simon Laplace (1749-1827) apresentou
+a deﬁni¸c˜ao cl´assica de probabilidade. Em 1933, Andrei Kolmogorov (1903-1987) propˆos
+certos axiomas que deram uma formalidade matem´atica para a teoria da probabilidade
+que prevalece at´e hoje. A teoria das probabilidades tem sido ´util para modelar experi-
+mentos onde ´e necess´ario incorporar incerteza ou chance como um elemento essencial do
+modelo. Assim, a probabilidade pode ser deﬁnida como um ramo da matem´atica que ´e
+respons´avel pelo estudo dos experimentos aleat´orios.
+
+2.1 Experimentos Determin´ısticos e Aleat´orios
+
+Existem dois tipos de experimentos na natureza: determin´ısticos e aleat´orios. Um
+experimento determin´ıstico ´e aquele que produz o mesmo resultado quando ´e repetido
+nas mesmas condi¸c˜oes, por exemplo, ´agua aquecida a 100oC, sob press˜ao normal, entra
+em ebuli¸c˜ao. Muitas outras leis da f´ısica s˜ao exemplos de experimento determin´ıstico. Por
+outro lado, um experimento aleat´orio ´e aquele que, quando repetido nas mesmas condi¸c˜oes,
+o resultado observado nem sempre ´e o mesmo e nem sempre ´e previs´ıvel. Lan¸car um dado
+e observar qual face est´a voltada para cima e resultados de jogos de futebol s˜ao exemplos
+de experimentos aleat´orios.
+
+2.2 Espa¸co amostral
+
+Mencionamos que a probabilidade ´e o ramo da matem´atica que ´e respons´avel pelo
+estudo dos experimentos aleat´orios. A princ´ıpio, n˜ao sabemos qual o resultado de um
+experimento aleat´orio, o que torna conveniente agrupar todos os resultados poss´ıveis em
+um conjunto. Chamaremos este conjunto de espa¸co amostral.
+
+Deﬁni¸c˜ao 2.1 (Espa¸co amostral) O conjunto de todos os poss´ıveis resultados de um
+experimento aleat´orio se chama espa¸co amostral e ´e representado pela letra Ω (ˆomega
+mai´uscula). Um resultado particular do experimento ´e representado pela letra ω (ˆomega
+min´usculas).
+
+4
+
+Exemplo 2.1 Se um experimento aleat´orio consiste em observar o resultado de uma
+determinada equipe em um jogo de futebol, ent˜ao claramente seu espa¸co amostral ´e Ω =
+{V it´oria, Empate, Derrota}.
+
+Exemplo 2.2 Suponha que um experimento aleat´orio consiste em observar o tempo em
+que um time de futebol ﬁca sem perder. Se considerarmos o tempo em escala cont´ınua,
+ent˜ao podemos adotar como espa¸co amostral o intervalo [0, ∞). Neste caso o espa¸co
+amostral ´e inﬁnito e n˜ao enumer´avel. Se consideramos o tempo de forma discreta (roda-
+das, dias, semanas, etc), ent˜ao um poss´ıvel espa¸co amostral ´e Ω = {0, 1, 2, 3, ...}. Neste
+caso o espa¸co amostral ´e inﬁnito e enumer´avel.
+
+Muitas vezes, n˜ao queremos apenas saber qual a probabilidade de um resultado ω
+apenas, mas de uma cole¸c˜ao deles. No Exemplo 2.2, ´e relevante perguntar qual a proba-
+bilidade do time de futebol perder em at´e 3 rodadas, neste caso, n˜ao ´e suﬁciente saber
+quais s˜ao as chances do time perder somente na terceira rodada. Isto nos motiva seguinte
+deﬁni¸c˜ao.
+
+Deﬁni¸c˜ao 2.2 (Evento) Um evento ´e um subconjunto do espa¸co amostral Ω e ´e repre-
+sentado por uma letra mai´uscula do alfabeto latino, por exemplo, A, B ou C.
+
+• Dado ω ∈ Ω, um evento ocorre se e somente se ω ∈ A.
+
+• O evento A = Ω ´e chamado de evento certo, e o evento A = ∅ ´e chamado de evento
+
+imposs´ıvel. Estes s˜ao os eventos triviais.
+
+• Um evento simples consta de um ´unico resultado do experimento aleat´orio, e um
+
+evento composto conta de dois ou mais resultados.
+
+Exemplo 2.3 Voltando ao exemplo 2.2 e suponha que estamos interessados em calcular
+a probabilidade do time de futebol perder em at´e 3 rodadas, ent˜ao podemos deﬁnir o evento
+A = {Time de futebol perder em at´e 3 rodadas} = {0, 1, 2, 3}.
+
+Exemplo 2.4 Se um experimento aleat´orio consiste em lan¸car um dado de 6 faces e
+observar a face voltada para cima, ent˜ao o espa¸co amostral ´e Ω = {1, 2, 3, 4, 5, 6}. Alguns
+eventos poss´ıveis s˜ao.
+
+• A = {n´umeros pares} = {2, 4, 6}.
+
+• B = {n´umero dois} = {2}.
+
+• C = {divisores de 60} = {1, 2, 3, 4, 5, 6}.
+
+• D = {n´umeros maiores que 6} = ∅.
+
+Observe que o evento A ´e composto, o evento B ´e simples, o evento C ´e certo e o
+
+evento D ´e imposs´ıvel.
+
+5
+
+2.3 Probabilidade Cl´assica
+
+Deﬁni¸c˜ao 2.3 (Probabilidade Cl´assica) Seja A um subconjunto do espa¸co amostral
+Ω de cardinalidade ﬁnita. Deﬁnimos a probabilidade cl´assica do evento A como:
+
+P (A) =
+
+#(A)
+#(Ω)
+
+.
+
+(1)
+
+onde #(A) ´e a cardinalidade do conjunto A e #(Ω) ´e a cardinalidade do espa¸co amostral.
+
+Esta deﬁni¸c˜ao s´o ´e v´alida para espa¸cos amostrais ﬁnitos, ou seja, precisamos assumir
+que o n´umero de elementos em Ω ´e ﬁnito. Al´em disso, o espa¸co amostral deve ser equi-
+prov´avel, ou seja, cada evento tem a mesma probabilidade de ocorrˆencia. Assim para
+calcular a probabilidade de um evento A, s´o precisamos contar o n´umero de elementos de
+A e dividir pelo n´umero de elementos do conjunto total Ω.
+
+Exemplo 2.5 Voltado ao exemplo 2.4, temos um experimento aleat´orio que consiste em
+lan¸car um dado honesto de 6 faces e observar a face voltada para cima, ent˜ao o espa¸co
+amostral ´e Ω = {1, 2, 3, 4, 5, 6}. A probabilidade do evento A = {obter um n´umero par} ´e
+dada por:
+
+P (A) =
+
+#(A)
+#(Ω)
+
+=
+
+#{2, 4, 6}
+#{1, 2, 3, 4, 5, 6}
+
+=
+
+3
+6
+
+=
+
+1
+2
+
+.
+
+´E poss´ıvel veriﬁcar que a probabilidade cl´assica satisfaz as seguintes propriedades:
+
+i) P (Ω) = 1;
+
+ii) P (A) ≥ 0, para qualquer evento A;
+
+iii) P(A∪B) = P(A) + P(B), quando A e B s˜ao disjuntos, ou seja, quando a interse¸c˜ao
+
+´e conjunto vazio.
+
+2.4 Probabilidade Frequentista
+
+Suponha que n repeti¸c˜oes de um certo experimento aleat´orio sejam realizadas e que
+o n´umero de vezes que um dado evento A ocorre ´e registrada. Ent˜ao podemos deﬁnir a
+probabilidade de A como:
+
+Deﬁni¸c˜ao 2.4 (Probabilidade Frequentista) Seja nA o n´umero de ocorrˆencias de um
+evento A em n repeti¸c˜oes de um experimento aleat´orio. A probabilidade frequentista do
+evento A ´e deﬁnida por:
+
+P (A) = lim
+n→∞
+
+nA
+n
+
+.
+
+(2)
+
+6
+
+Neste caso, nem sempre ´e poss´ıvel realizar o experimento aleat´orio uma inﬁnidade
+de vezes e, por enquanto, n˜ao podemos garantir a existˆencia do limite deﬁnido acima.
+Portanto, atrav´es da deﬁni¸c˜ao anterior, n˜ao ´e poss´ıvel calcular a probabilidade exata de
+qualquer evento, mas ´e poss´ıvel obter uma aproxima¸c˜ao emp´ırica do valor P (A), ou seja:
+
+P (A) ≈
+
+nA
+n
+
+.
+
+(3)
+
+Exemplo 2.6 Suponha que estamos interessados em calcular a probabilidade de vit´oria
+do Atl´etico - MG em um determinado jogo do campeonato brasileiro de futebol. Para isso
+vamos simular o jogo milh˜oes de vezes e contar em quantas o Atl´etico foi vencedor, ent˜ao:
+
+P (V it´oria Atl´etico) ≈
+
+nV it´oriaAtl´etico
+nsimula¸c˜oes
+
+.
+
+Nas pr´oximas se¸c˜oes esse resultado ser´a formalizado atrav´es da Lei dos Grandes
+N´umeros, que garante, em particular, que P (A) converge para a probabilidade do evento
+A.
+
+A probabilidade frequentista tamb´em satisfaz as propriedades que mencionamos no
+
+ﬁm da se¸c˜ao 2.3.
+
+2.5 Probabilidade Axiom´atica
+
+Ao contr´ario das probabilidades deﬁnidas nas se¸c˜oes anteriores, a deﬁni¸c˜ao axiom´atica
+de probabilidade n˜ao estabelece uma forma direta de calcular as probabilidades, mas sim,
+regras que os c´alculos das probabilidades devem satisfazer. A seguir apresentaremos trˆes
+axiomas propostos por Andrei Kolmogorov em 1933.
+
+Axiomas de Kolmogorov: Os trˆes axiomas de Kolmogorov, tamb´em conhecido como
+axiomas da probabilidade s˜ao:
+
+1) P (A) ≥ 0, para qualquer evento A;
+
+2) P (Ω) = 1;
+
+3)P
+
+(cid:18) ∞
+(cid:83)
+k=1
+
+(cid:19)
+
+Ak
+
+=
+
+∞
+(cid:80)
+k=1
+
+P (Ak), quando A1, A2, · · · s˜ao disjuntos dois a dois.
+
+Um axioma ´e uma proposi¸c˜ao aceita como verdade e sobre a qual se baseia uma teoria,
+no nosso caso, a teoria da probabilidade. ´E poss´ıvel veriﬁcar que as deﬁni¸c˜oes anteriores de
+probabilidade satisfazem os trˆes axiomas. A seguir apresentamos a deﬁni¸c˜ao axiom´atica
+de probabilidade.
+
+Deﬁni¸c˜ao 2.5 (Probabilidade Axiom´atica) Uma medida de probabilidade ´e qualquer
+fun¸c˜ao P deﬁnida para uma cole¸c˜ao de eventos, que satisfaz os trˆes axiomas de Kolmogo-
+rov.
+
+7
+
+Os axiomas acima fornecem todos os elementos necess´arios para que possamos de fato
+calcular a probabilidade de um determinado time ser campe˜ao brasileiro. Ou seja, o
+primeiro axioma nos diz que a probabilidade de um time ser campe˜ao ´e pelo menos 0,
+o segundo que a probabilidade de um dos times da s´erie A ser campe˜ao ´e 1 e o terceiro
+que a probabilidade de um time mineiro ser campe˜ao ´e a soma das probabilidades de
+Am´erica, Atl´etico-MG e Cruzeiro o serem. Ent˜ao dos Axiomas de Kolmogorov podemos
+deduzir a Lei dos Grandes N´umeros, e esta sim fundamenta um m´etodo de c´alculo de
+probabilidades bem preciso, i.e., o m´etodo de simula¸c˜oes [2].
+
+Em outras palavras, tomando como ponto de partida que a probabilidade oscila entre
+0 e 1 e que uni˜ao disjunta ´e a soma das probabilidades (Axiomas de Kolmogorov) segue
+um resultado important´ıssimo: a probabilidade de um evento ´e a raz˜ao entre o n´umero
+de ocorrˆencias do mesmo e o n´umero de ensaios quando este tende a inﬁnito (Lei dos
+Grandes N´umeros). Ou mais precisamente
+
+probabilidade = lim
+n→∞
+
+no de ocorrˆencias em n ensaios
+n
+
+(4)
+
+Portanto, a deﬁni¸c˜ao 2.4 est´a bem fundamentada, e se quisermos realmente saber qual
+a probabilidade de um dado time ser campe˜ao, o que temos de fazer ´e repetir v´arios
+campeonatos e ver em quantos deles o clube leva a melhor. Quanto mais edi¸c˜oes forem
+realizadas, mais preciso o c´alculo. A probabilidade (4) ser´a apresentada com rigor no
+teorema 4.1.
+
+2.6 Sigma ´Algebra
+
+Nesta se¸c˜ao vamos deﬁnir uma cole¸c˜ao de subconjuntos do espa¸co amostral fechada
+sobre opera¸c˜oes cont´aveis de uni˜ao, interse¸c˜ao e complemento, chamada σ-´algebra (sigma-
+´algebra).
+
+Deﬁni¸c˜ao 2.6 (σ-´algebra) Uma cole¸c˜ao A de subconjuntos de um espa¸co amostral Ω
+n˜ao vazio, ´e uma σ-´algebra (sigma-´algebra) de subconjuntos de Ω se ela satisﬁzer as se-
+guintes condi¸c˜oes:
+
+1) Ω ∈ A;
+
+2) Se A ∈ A, ent˜ao Ac ∈ A;
+
+3) Se A1, A2, A3, . . . ∈ A , ent˜ao
+
+∞
+(cid:83)
+k=1
+
+Ak ∈ A.
+
+Os elementos de A s˜ao chamados de eventos.
+
+A partir de agora chamaremos de evento os elementos que pertencem a uma σ-´algebra
+
+associada a um espa¸co amostral.
+
+Voltando na deﬁni¸c˜ao 2.5, uma medida de probabilidade ´e qualquer fun¸c˜ao P deﬁnida
+para uma cole¸c˜ao de eventos que satisfaz os trˆes axiomas. Essa cole¸c˜ao de eventos ´e a
+σ-´algebra e corresponde ao dom´ınio da fun¸c˜ao.
+
+Exemplo 2.7 Seja Ω um espa¸co amostral de um experimento aleat´orio, ent˜ao os seguin-
+tes subconjuntos de Ω s˜ao σ-´algebras.
+a) A = {∅, Ω}.
+
+8
+
+b) A = {A, Ac, ∅, Ω}, onde A ⊂ Ω.
+
+2.7 Espa¸co de Probabilidade
+
+Com os elementos deﬁnidos nas se¸c˜oes anteriores, podemos agora deﬁnir a estrutura
+
+matem´atica para modelar um experimento aleat´orio.
+
+Deﬁni¸c˜ao 2.7 (Espa¸co de Probabilidade) Um espa¸co de probabilidade ´e uma terna
+(Ω, A, P) onde Ω ´e um conjunto n˜ao-vazio, A ´e uma σ-´algebra dos eventos de Ω e P ´e
+uma medida de probabilidade deﬁnida sobre A.
+
+Exemplo 2.8 Suponha que um experimento aleat´orio consiste em lan¸car uma moeda
+honesta e observar a face voltada para cima. Ent˜ao temos:
+
+• Ω = {cara, coroa}, com #Ω = 2.
+
+• A = {∅, cara, coroa, Ω}.
+
+• P (cara) = P (coroa) =
+
+1
+#(Ω)
+
+=
+
+1
+2
+
+.
+
+Logo (Ω, A, P) ´e um espa¸co de probabilidade.
+
+2.8 Probabilidade Condicional
+
+Muitas vezes nos deparamos com situa¸c˜oes em que, antes da realiza¸c˜ao de algum ex-
+perimento descrito em um espa¸co de probabilidade (Ω, A, P), temos alguma informa¸c˜ao
+adicional. Queremos saber o quanto que essa informa¸c˜ao pode afetar a medida de proba-
+bilidade dos eventos de A.
+
+Deﬁni¸c˜ao 2.8 (Probabilidade Condicional) Seja (Ω, A, P) um espa¸co de probabili-
+dade e sejam A e B eventos quaisquer com P (B) (cid:54)= 0, deﬁnimos a probabilidade condici-
+onal de A dado B como:
+
+P (A | B) =
+
+P (A ∩ B)
+P (B)
+
+.
+
+(5)
+
+Exemplo 2.9 Suponha que um experimento aleat´orio consiste em lan¸car um dado ho-
+nesto e observar a face voltada para cima. Deﬁnimos os seguintes eventos:
+
+9
+
+A = {n´umero trˆes} = {3}.
+B = {n´umeros ´ımpares} = {1, 3, 5}.
+
+Ent˜ao a probabilidade de A dado B ´e dada por:
+
+P (A | B) =
+
+P (A ∩ B)
+P (B)
+
+=
+
+#{3}
+#{1, 3, 5}
+
+=
+
+1
+3
+
+.
+
+No futebol, a probabilidade condicional explica a varia¸c˜ao das probabilidades dos times
+ao longo do campeonato, por exemplo, se um time vence uma partida, ´e natural que, para
+a pr´oxima rodada, sua probabilidade de vit´oria aumente.
+
+2.9 Independˆencia de eventos
+
+Quando a ocorrˆencia de um evento n˜ao afeta a probabilidade de ocorrˆencia de outro
+
+evento, dizemos que eles s˜ao independentes.
+
+Deﬁni¸c˜ao 2.9 (Independˆencia de eventos) Dizemos que dois eventos A e B s˜ao in-
+dependentes se:
+
+P (A ∩ B) = P (A)P (B).
+
+(6)
+
+Exemplo 2.10 Um experimento aleat´orio consiste em lan¸car um dado honesto de 6 faces
+e observar a face voltada para cima, ent˜ao o espa¸co amostral ´e Ω = {1, 2, 3, 4, 5, 6}.
+
+a) Os eventos A = {1, 2, 3} e B = {3, 5} s˜ao independentes pois, P (A ∩ B) =
+
+P (A)P (B) =
+
+1
+6
+
+.
+
+b) Os eventos A = {1, 2, 3} e B = {1, 3} n˜ao s˜ao independentes pois, P (A ∩ B) =
+
+e P (A)P (B) =
+
+1
+6
+
+.
+
+3 Vari´aveis Aleat´orias
+
+1
+3
+
+Nesta se¸c˜ao deﬁniremos uma vari´avel aleat´oria como uma fun¸c˜ao cujo o dom´ınio ´e
+o espa¸co amostral e a imagem ´e o conjunto dos n´umeros reais, ou seja, o resultado do
+experimento aleat´orio ´e um n´umero real obtido pela vari´avel aleat´oria.
+
+10
+
+3.1 Vari´aveis Aleat´orias
+
+Vamos considerar um espa¸co de probabilidade (Ω, A, P) associado a um experimento
+
+aleat´orio qualquer.
+
+Deﬁni¸c˜ao 3.1 (Vari´aveis Aleat´orias) Uma vari´avel aleat´oria X ´e uma fun¸c˜ao men-
+sur´avel X : Ω → R tal que para qualquer n´umero real x,
+
+{ω ∈ Ω : X(ω) ≤ x} ∈ A.
+
+(7)
+
+Dado um valor x, o conjunto de todos os elementos de Ω para os quais X atribui um
+valor menor ou igual a x deve estar contido na σ-´algebra deﬁnida em Ω (vide Deﬁni¸c˜ao
+2.6).
+
+Deﬁni¸c˜ao 3.2 (Fun¸c˜ao de Distribui¸c˜ao) A fun¸c˜ao de distribui¸c˜ao de uma vari´avel
+aleat´oria X, denotada por FX(X), ´e deﬁnida por
+
+FX(X) = P (X ≤ x), x ∈ R.
+
+(8)
+
+3.2 Tipos de Vari´aveis Aleat´orias
+
+Existem trˆes tipos de vari´aveis aleat´orias: as cont´ınuas, que assumem valores em
+qualquer intervalo dos n´umeros reais, as discretas, que assumem somente um conjunto
+enumer´avel (ﬁnito ou inﬁnito) de valores e as mistas, que s˜ao cont´ınuas e discretas ao
+mesmo tempo. Como estamos interessados em modelar os n´umeros de gols feitos e sofridos,
+vamos focar apenas nas vari´aveis discretas.
+
+Deﬁni¸c˜ao 3.3 (Vari´aveis Aleat´orias Discretas) Dizemos que uma vari´avel aleat´oria
+X ´e discreta se toma um n´umero ﬁnito ou enumer´avel de valores, isto ´e, se existe um con-
+junto ﬁnito ou enumer´avel {x1, x2, ...} ⊂ R tal que X(ω) ∈ {x1, x2, ...} ∀ (t) ∈ Ω. A fun¸c˜ao
+p(xi) deﬁnida por p(xi) = P (X = xi), i = 1, 2, ..., ´e chamada fun¸c˜ao de probabilidade de
+X.
+
+Deﬁni¸c˜ao 3.4 (Fun¸c˜ao de Probabilidade) A fun¸c˜ao de probabilidade, Px : R → [0, 1],
+de uma vari´avel aleat´oria discreta ´e deﬁnida por
+
+Px(X) = Px(X = x) = P ({ω ∈ Ω : X(ω) = x}), sendo
+
+(cid:88)
+
+x
+
+Px(X) = 1.
+
+(9)
+
+3.3 Esperan¸ca de vari´aveis aleat´orias
+
+Deﬁni¸c˜ao 3.5 (Esperan¸ca de vari´aveis aleat´orias) Se X ´e uma vari´avel aleat´oria
+com fun¸c˜ao de probabilidade p(x), ent˜ao a esperan¸ca de X, denotada por E[x], ´e dada por
+
+E[x] =
+
+(cid:88)
+
+x
+
+xp(x), onde
+
+(cid:88)
+
+x
+
+xp(x) < ∞.
+
+(10)
+
+11
+
+3.4 Independˆencia de vari´aveis aleat´orias
+
+O conceito de independˆencia de eventos que foi mostrado em se¸c˜oes anteriores pode
+
+ser estendido para o caso de vari´aveis aleat´orias como deﬁnido a seguir.
+
+Deﬁni¸c˜ao 3.6 (Independˆencia de vari´aveis aleat´orias) Dizemos que duas vari´aveis
+aleat´orias X e Y s˜ao independentes se os eventos (X ≤ x) e (Y ≤ y) s˜ao independentes
+para quaisquer valores reais de x e y, isto ´e, se a igualdade for satisfeita
+
+P [(X ≤ x) ∩ (Y ≤ y)] = P (X ≤ x, Y ≤ y) = P (X ≤ x)P (Y ≤ y).
+
+(11)
+
+3.5 Vari´aveis Aleat´orias com Distribui¸c˜ao de Poisson
+
+A distribui¸c˜ao de probabilidade de Poisson ´e utilizada quando queremos observar o
+n´umero de ocorrˆencias de um certo evento dentro de um intervalo de tempo, como por
+exemplo, o n´umero de chamadas de uma central telefˆonica ou o n´umero de gols feitos por
+um time de futebol durante uma partida. Para modelar este tipo de situa¸c˜ao vamos deﬁnir
+a vari´avel aleat´oria X como o n´umero de ocorrˆencia de um evento dentro de um intervalo
+espec´ıﬁco de tempo, ou seja, X pode assumir os valores 0, 1, 2, .... Agora suponhamos
+que conhecemos a taxa m´edia de ocorrˆencia do evento de interesse, que denotaremos pela
+letra grega λ (lambda). O parˆametro λ ´e n˜ao negativo, e ´e interpretado como n´umero
+esperado de ocorrˆencias do evento dentro do intervalo de tempo. Deﬁnimos a distribui¸c˜ao
+de Poisson como:
+
+Deﬁni¸c˜ao 3.7 (Distribui¸c˜ao de Poisson) Uma vari´avel aleat´oria X tem distribui¸c˜ao
+de Poisson com parˆametro λ > 0, denotamos X ∼ P oisson(λ), quando sua fun¸c˜ao de
+probabilidade ´e
+
+P (X = k) = e−λ λk
+k!
+
+,
+
+k = 0, 1, 2, ...
+
+.
+
+(12)
+
+Seja X uma vari´avel aleat´oria que conta a quantidade de gols feitos ou sofridos por
+um time de futebol, pela natureza da vari´avel, dado as caracter´ısticas apresentadas no
+in´ıcio da se¸c˜ao 3.5, assumiremos que X ∼ P oisson(λ), onde λ ´e a m´edia de gols feitos
+ou sofridos por este time.
+
+Exemplo 3.1 Suponha que a quantidade de gols marcados como mandante pelo Atl´etico
+- MG tenha uma distribui¸c˜ao de Poisson com parˆametro λ = 2, 13. A probabilidade do
+Atl´etico - MG fazer dois gols no pr´oximo jogo como mandante ´e dada por:
+
+Se X representa o n´umero de gols marcados como mandante, temos
+
+P {X = 2} = e−2,13 2, 132
+2!
+
+= 0, 270.
+
+Teorema 3.1 (Somas de duas vari´aveis aleat´orias de Poisson independentes) Se
+X e Y s˜ao vari´aveis aleat´orias de Poisson independentes com respectivos parˆametros λ1
+e λ2, ent˜ao a distribui¸c˜ao de X + Y ´e Poisson com parˆametro λ = λ1 + λ2
+
+Demonstra¸c˜ao: Como o evento {X +Y = n} pode ser escrito como a uni˜ao dos eventos
+disjuntos {X = k, Y = n − k}, 0 ≤ k ≤ n, temos
+
+12
+
+P {X + Y = n} =
+
+n
+(cid:88)
+
+k=0
+
+P {X = k, X + Y = n}
+
+=
+
+n
+(cid:88)
+
+k=0
+
+P {X = k, Y = n − k}
+
+=
+
+n
+(cid:88)
+
+k=0
+
+P {X = k}P {Y = n − k}.
+
+Como X e Y s˜ao Poisson, ent˜ao:
+
+P {X + Y = n} =
+
+n
+(cid:88)
+
+k=0
+
+e−λ1
+
+λk
+1
+k!
+
+e−λ2
+
+λn−k
+2
+(n − k!)
+
+= e−(λ1+λ1)
+
+n
+(cid:88)
+
+k=0
+
+1λn−k
+λk
+2
+k!(n − k)!
+
+.
+
+Multiplicando por
+
+n!
+n!
+
+, temos:
+
+P {X + Y = n} =
+
+e−(λ1+λ1)
+n!
+
+n
+(cid:88)
+
+k=0
+
+n!
+k!(n − k)!
+
+1λn−k
+λk
+2
+
+.
+
+Pelo Bin´omio de Newton, (λ1 + λ2)n =
+
+n
+(cid:88)
+
+k=0
+
+n!
+k!(n − k)!
+
+1λn−k
+λk
+2
+
+, temos que:
+
+P {X + Y = n} =
+
+e−(λ1+λ2)
+n!
+
+(λ1 + λ2)n.
+
+Assim, X + Y tem distribui¸c˜ao de Poisson com parˆametros λ1 + λ2.
+
+(13)
+
+(14)
+
+(15)
+
+(16)
+
+(17)
+
+(18)
+
+(19)
+
+(cid:3)
+
+13
+
+Uma outra estat´ıstica de interesse espec´ıﬁco para este trabalho ´e W = (X + Y )/2, isto
+´e, a m´edia de duas vari´aveis aleat´orias de Poisson independentes, isto ´e, X ∼ P oisson(λ1)
+e Y ∼ P oisson(λ2). Podemos pensar por analogia ao Teorema 3.1 que W tamb´em teria
+distribui¸c˜ao Poisson. Contudo, podemos mostrar que a fun¸c˜ao de probabilidade de W
+dada por:
+
+P (W = w) =
+
+e−(λ1+λ2)
+w!
+
+w
+(cid:88)
+
+y=0
+
+w!
+(2w − y)!y!
+
+1 × λy
+λw−y
+2,
+
+(20)
+
+n˜ao ´e uma fun¸c˜ao de probabilidade de Poisson. Isso ocorre, simplesmente devido ao termo
+que quantiﬁca o n´umero de vari´aveis envolvidas em W , no nosso caso ´e o valor 2. Caso,
+n˜ao houvesse esse termo, o somat´orio em (20) se resumiria ao termo (λ1 + λ2)w, da´ı
+ter´ıamos uma distribui¸c˜ao Poisson.
+
+Assim, com estudos preliminares e simula¸c˜oes realizadas no R, percebemos que a
+express˜ao em (20) se aproxima de uma distribui¸c˜ao de Poisson de parˆametro igual a
+(λ1 + λ2)/2, isto ´e,
+
+P (W ) ≈
+
+eλ∗ × (λ∗)w
+w!
+
+,
+
+(21)
+
+em que λ∗ = λ1+λ2
+. Uma vantagem de se utilizar a aproxima¸c˜ao em (21) ´e que esta fun¸c˜ao
+j´a est´a implementada em softwares como o R, e os resultados s˜ao satisfat´orios dentro de
+problemas relacionados a jogos de futebol.
+
+2
+
+Ser´a baseado em (21) a proposta do m´etodo para calcular probabilidades no futebol
+
+que ser´a discutido na subse¸c˜ao 5.1.
+
+Suponha que estamos simulando o jogo entre o time A e o time B, e que o time A faz
+em m´edia 3 gols e o time B sofre em m´edia 1 gol, ´e mais prudente esperar que o time A
+fa¸ca 2 gols do que ele fa¸ca 4 gols, ent˜ao, neste trabalho, iremos somar a m´edia de gols
+feitos como mandante de um time A com a m´edia de gols sofridos como visitante do time
+B e tirar a m´edia, que ter´a distribui¸c˜ao de Poisson e ser´a denotada de fator mandante.
+J´a a m´edia de gols feitos como visitante com a m´edia de gols sofridos como mandante
+ser´a denotada de fator visitante, e tamb´em ter´a distribui¸c˜ao de Poisson. O exemplo 3.2
+ilustra esta situa¸c˜ao e na se¸c˜ao 5 deﬁniremos com mais detalhes esses fatores.
+
+Exemplo 3.2 Suponha que em uma partida de futebol entre Atl´etico - MG e Chapecoense,
+a quantidade de gols marcados como mandante pelo Atl´etico - MG tenha uma distribui¸c˜ao
+de Poisson com parˆametro λ1 = 2, 13 e a quantidade de gols sofridos como visitante pela
+Chapecoense tenha uma distribui¸c˜ao de Poisson com parˆametro λ2 = 2, 27. Ent˜ao o fator
+mandante do Atl´etico - MG, para essa partida, ser´a aproximado por uma distribui¸c˜ao de
+
+Poisson com parˆametro λ = 2, 20 =
+
+4 Teoremas Limite
+
+2, 13 + 2, 27
+2
+
+Nesta se¸c˜ao apresentaremos um dos resultados te´oricos mais importantes da teoria da
+probabilidade, que ´e a Lei dos Grandes N´umeros. Este resultado tem papel fundamental
+
+14
+
+na execu¸c˜ao deste trabalho.
+
+Sejam X e (Xn)n∈N vari´aveis aleat´orias deﬁnidas num mesmo espa¸co de probabilidade
+
+(Ω, A, P).
+
+Deﬁni¸c˜ao 4.1 (Convergˆencia em probabilidade) Dizemos que Xn converge em pro-
+P−→ X, se para todo ε > 0
+babilidade para X, denotado Xn
+
+P (|(Xn − X)| ≥ ε) → 0
+
+quando n → ∞
+
+(22)
+
+A convergˆencia em probabilidade garante que para valores grandes de n as vari´aveis
+Xn e X s˜ao aproximadamente iguais com probabilidade alta. A seguir, apresentaremos a
+Lei dos Grandes N´umeros, que ´e a primeira aproxima¸c˜ao para a soma de muitas vari´aveis
+aleat´orias.
+
+Sejam X1, X2, ...Xn vari´aveis aleat´orias integr´aveis em (Ω, A, P) e S1, S2, ...Sn suas
+
+somas parciais dadas por
+
+Sn = X1 + X2 + ... + Xn.
+
+(23)
+
+Deﬁni¸c˜ao 4.2 (Lei Fraca dos Grandes N´umeros) Dizemos que a sequˆencia (X1, X2, ...)
+satisfaz a Lei Fraca dos Grandes N´umeros se, para todo ε > 0, vale
+
+(cid:32) (cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+P
+
+Sn − E(Sn)
+n
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:33)
+
+≥ ε
+
+→ 0,
+
+quando n → ∞.
+
+(24)
+
+ou seja, se
+
+Sn − E(Sn)
+n
+
+P−→ 0.
+
+(25)
+
+Teorema 4.1 Seja (Ω, A, P) um espa¸co de probabilidade e A ∈ Ω um evento com pro-
+babilidade p. Seja Sn(A) a vari´avel aleat´oria que conta o n´umero de ocorrencias de A em
+n ensaios independentes. Ent˜ao, para todo ε > 0,
+
+(cid:32) (cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+P
+
+Sn(A)
+n
+
+− p
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:33)
+
+≥ ε
+
+→ 0,
+
+quando n → ∞
+
+(26)
+
+O teorema 4.1 ´e a uma prova da deﬁni¸c˜ao 2.4 e ele nos diz que se realizarmos um grande
+n´umero de observa¸c˜oes independentes sobre um determinado evento, ent˜ao a raz˜ao entre o
+n´umero de ocorrˆencias do mesmo e o n´umero de observa¸c˜oes converge para a probabilidade
+do evento acontecer. Esta aﬁrma¸c˜ao, antes dos Axiomas de Kolmogorov, era a base da
+
+15
+
+teoria frequencista, que dava `a teoria de probabilidades um car´ater, a princ´ıpio, mais
+emp´ırico que matem´atico. A dedu¸c˜ao da Lei dos Grandes N´umeros a partir dos Axiomas
+de Kolmogorov nos mostra que o “empirismo” em quest˜ao j´a n˜ao guarda mais eventuais
+resqu´ıcios pejorativos que o termo possa ter (teste, tentativa, suposi¸c˜ao, apriorismo, etc).
+Muito pelo contr´ario, o “frequencismo” passa a ser ent˜ao a nossa grande ferramenta para
+se estimar probabilidades que (sempre) desconhecemos. Mais ainda, est´a muito bem
+fundamentado do ponto de vista te´orico, com todo o rigor matem´atico [2].
+
+5 Metodologia
+
+Nesta se¸c˜ao, iremos apresentar o m´etodo proposto por este trabalho e uma medida
+
+para veriﬁcar a qualidade dos resultados.
+
+5.1 M´etodo Proposto
+
+Para [2], o modo de se estimar probabilidades em futebol ´e simples e de certa forma
+comum aos diferentes modelos. A ideia ´e partir da situa¸c˜ao atual do campeonato e
+simular os jogos restantes. Ao ﬁnal, o computador gera a classiﬁca¸c˜ao dos times e a
+registra. Depois, volta a fazer o mesmo in´umeras vezes, e ao t´ermino do processo j´a est´a
+apto a divulgar as probabilidades que nos interessam. Se, por exemplo, queremos saber a
+probabilidade de um dado time ser campe˜ao, basta ver a propor¸c˜ao entre as simula¸c˜oes
+em que terminou l´ıder sobre o total de simula¸c˜oes.
+
+O m´etodo do PROFMAT atribui, a cada time participante do campeonato, dois vetores
+
+de m´edias
+
+M andante = (GF M ; GSM )
+
+e V isitante = (GF V ; GSV ),
+
+(27)
+
+onde GFM ´e a m´edia de gols feitos como mandante, GSM ´e a m´edia de gols sofridos como
+mandante, GFV ´e a m´edia de gols feitos como visitante, GSV ´e a m´edia de gols sofridos
+como visitante e essas m´edias s˜ao calculadas da seguinte maneira:
+
+GF M =
+
+(cid:80)r
+
+i=0(gols feitos como mandante)
+r + 1
+
+,
+
+GSM =
+
+(cid:80)r
+
+i=0(gols sofridos como mandante)
+r + 1
+
+,
+
+GF V =
+
+(cid:80)r
+
+i=0(gols feitos como visitante)
+r + 1
+
+,
+
+GSV =
+
+(cid:80)r
+
+i=0(gols sofridos como visitante)
+r + 1
+
+,
+
+(28)
+
+(29)
+
+(30)
+
+(31)
+
+16
+
+onde r ´e quantidade de rodadas do campeonato j´a realizadas e i ´e o ´ındice que percorre es-
+sas rodadas – veja que o somat´orio inicia em zero, pois na primeira rodada do campeonato
+n˜ao temos nenhuma rodada realizada.
+
+A cada rodada, os vetores s˜ao realimentados. Se o time jogou como mandante, muda-
+se o seu vetor mandante, e o mesmo vale para seu vetor visitante, caso o jogo tenha sido
+fora de casa. Para [2], a ideia de se tratar um mesmo time como dois diferentes – um em
+casa, e outro fora dela – n˜ao ´e nenhum tipo de esquizofrenia futebol´ıstica. Ao contr´ario,
+reﬂete apenas o modo como a torcida, ou o pr´oprio campo onde a equipe habitualmente
+joga, podem inﬂuenciar no desempenho do clube. Em suma, jogos iguais em campos
+distintos, s˜ao distintos.
+
+De acordo com [2], a quest˜ao chave ´e como atualizar os vetores de m´edias de duas
+equipes que se enfrentam, ap´os a realiza¸c˜ao do jogo. Pode-se dizer que isto ´e o que
+distingue os diferentes m´etodos de calcular probabilidades. A premissa da qual partimos
+´e a de que, na primeira rodada do campeonato, quando r = 0, todos os times recebem as
+mesmas m´edias GFM, GSM, GFV e GSV, que s˜ao baseadas no ´ultimo campeonato. Em
+2017, por exemplo, essas m´edias foram GFM = GSV = 1,38 e GFV = GSM = 1,04, ent˜ao
+na primeira rodada do campeonato de 2018, todos os times recebem esses dois vetores de
+m´edias
+
+M andante = (1, 38; 1, 04)
+
+e V isitante = (1, 04; 1, 38).
+
+(32)
+
+Na primeira rodada do campeonato brasileiro de 2018, o Grˆemio venceu o Cruzeiro
+por 1 a 0 no Mineir˜ao, ent˜ao para simular a segunda rodada deste campeonato os vetores
+de m´edias dessas equipes s˜ao atualizados da seguinte forma
+
+CRUmandante =
+
+(cid:18) 1.38 + 0
+2
+
+;
+
+1.04 + 1
+2
+
+(cid:19)
+
+e CRUvistante = (1.38; 1.04).
+
+(33)
+
+GREmandante = (1.38; 1.04)
+
+e GREvistante =
+
+(cid:18) 1.04 + 1
+2
+
+;
+
+1.38 + 0
+2
+
+(cid:19)
+.
+
+(34)
+
+Como o Cruzeiro jogou em casa e o Grˆemio fora, os vetores CRUvistante e GREmandante
+n˜ao s˜ao alterados. Perceba que estamos dividindo por 2, pois temos apenas uma rodada
+do campeonato realizada (r = 1), ou seja, estamos calculando a m´edia entre os resultados
+da primeira rodada com o parˆametro do campeonato passado, se por exemplo, estivermos
+simulando a 21a rodada (quando r = 20), a soma do parˆametro do campeonato passado
+com os resultados da 20 rodadas passadas ser´a dividida por 21. Seguindo esse racioc´ınio,
+a partir de uma rodada qualquer, simulamos todo o campeonato e armazenamos os resul-
+tados.
+
+Com as m´edias GFM, GSM, GFV e GSV bem deﬁnidas, criamos o fator mandante
+). Como foi dito anteriormente, o fator man-
+e o fator visitante segue a Poisson com
+
+( GF M +GSV
+2
+dante segue a Poisson com parˆametro GF M +GSV
+
+) e o fator visitante ( GF V +GSM
+
+2
+
+2
+
+17
+
+parˆametro GF V +GSM
+´e
+
+2
+
+. Com esses dois fatores podemos formar o vetor m´edia do jogo que
+
+(cid:32)
+
+V etorJogo =
+
+GF M + GSV
+2
+
+;
+
+GF V + GSM
+2
+
+(cid:33)
+,
+
+(35)
+
+em que a primeira coordenada ´e o fator mandante e a segunda o fator visitante.
+
+Voltando ao exemplo 3.2, onde o fator mandante ´e Poisson(2,20) e suponha que o fator
+
+visitante seja Poisson(1,50), ent˜ao o vetor jogo ser´a
+
+VCAM xCHA = (2, 20; 1, 50).
+
+(36)
+
+Com esse vetor o computador calcula as probabilidades atrav´es da fun¸c˜ao de probabi-
+lidade da Poisson e divide o intervalo [0, 1] em seis partes de acordo com as probabilidades
+acumuladas. As Tabelas 1 e 2 mostram as probabilidades e suas acumuladas.
+
+Tabela 1: Probabilidade de gols para o fator mandante.
+
+Gols
+0
+1
+2
+3
+4
+5 ou mais
+
+Probabilidade Acumulada
+
+0,111
+0,244
+0,268
+0,197
+0,108
+0,072
+
+0,111
+0,355
+0,623
+0,819
+0,928
+1,000
+
+Fonte: Pr´oprio autor.
+
+Tabela 2: Probabilidade de gols para o fator visitante.
+
+Gols
+0
+1
+2
+3
+4
+5 ou mais
+
+Probabilidade Acumulada
+
+0,223
+0,335
+0,251
+0,126
+0,047
+0,018
+
+0,223
+0,558
+0,809
+0,935
+0,982
+1,000
+
+Fonte: Pr´oprio autor.
+
+18
+
+Ent˜ao para o fator mandante as seis partes do intervalo s˜ao: [0, 0,111], (0,111, 0,355],
+
+(0,355, 0,623], (0,623, 0,819], (0,819, 0,928] e (0,928, 1].
+
+Para o fator visitante as seis partes do intervalo s˜ao: [0, 0,223], (0,223, 0,558], (0,558,
+
+0,809], (0,809, 0,935], (0,935, 0,982] e (0,982, 1].
+
+Logo ap´os, o computador sorteia dois n´umeros aleat´orios entre 0 e 1, um para o fator
+mandante e o outro para o fator visitante e vˆe quais subintervalos cont´em o n´umero
+sorteado caiu. Se, por exemplo, o n´umero sorteado para o fator mandante ´e 0, 553 e para
+o fator visitante ´e 0, 448, ent˜ao o time mandante faz 2 gols e o time visitante faz 1 gol,
+assim o resultado do jogo ´e 2x1 para o time mandante.
+
+Depois de simular uma rodada, atualizam-se os vetores m´edias de todos os times, de
+acordo com os resultados da rodada, e simula-se a rodada seguinte. Ao ﬁnal da simula¸c˜ao
+do campeonato, o time que ﬁcar em primeiro lugar ser´a o campe˜ao, os seis primeiros v˜ao
+para libertadores, do s´etimo ao d´ecimo segundo v˜ao para sulamericana e os quatro ´ultimos
+s˜ao rebaixados. Assim, este processo ´e repetido milhares de vezes, para este trabalho
+ﬁzemos 500 mil simula¸c˜oes, e a probabidade de um time ser campe˜ao ´e quantidade de
+vezes que ele terminou em primeiro lugar dividido pelo n´umero de simula¸c˜oes. Caso
+estejamos interessados nas probabilidades do resultados de um jogo, ao inv´es de todo um
+campeonato, o racioc´ınio ´e an´alogo: a probabilidade de vit´oria de um time ´e a quantidade
+de vezes que ele venceu dividido pelo n´umero de simula¸c˜oes da partida.
+
+A seguir, apresentamos um m´etodo para medir a qualidade dos resultados, as proba-
+bilidades encontradas pelo m´etodo apresentado e seu percentual de acerto comparado ao
+modelo do Departamento de Matem´atica da UFMG.
+
+5.2 Qualidade dos Resultados
+
+Para veriﬁcar a qualidade dos resultados do m´etodo proposto na subse¸c˜ao anterior,
+iremos utilizar a medida de DeFinetti: este m´etodo foi proposto por [7] e consiste na
+considera¸c˜ao de um plano em R3 como representa¸c˜ao geom´etrica do conjunto de poss´ıveis
+previs˜oes probabil´ısticas. Os v´ertices desse plano correspondem `as ocorrˆencias dos resul-
+tados e os demais pontos a todas as outras poss´ıveis previs˜oes, ou seja,
+
+S = {(P V M, P EM, P V V ) ∈ R3 : P V M + P EM + P V V = 1, P V M ≥ 0, P EM ≥ 0, P V V ≥ 0}.
+
+(37)
+
+onde PVM denota a probabilidade de vit´oria do mandante, PEM a probabilidade de
+empate e PVV a probabilidade de vit´oria do visitante.
+
+A medida de distˆancia de DeFinetti corresponde `a distˆancia euclidiana quadr´atica
+entre o ponto correspondente `a (distribui¸c˜ao) probabilidade prevista e o v´ertice de uma
+previs˜ao [5], um ´ındice dado pela m´edia aritm´etica das distˆancias de DeFinetti, ´e chamado
+de medida DeFinetti. Para o futebol, associam-se os v´ertices (1, 0, 0), (0, 1, 0) e (0, 0, 1)
+respectivamente `a vit´oria da equipe mandante, ao empate, e `a vit´oria da equipe vistante.
+Ao vetor de probabilidades atribu´ıdas para uma determinada partida associa-se o ponto
+(P V M, P EM, P V V ) ∈ S.
+
+Assim, a distˆancia de DeFinetti ser´a igual a:
+
+19
+
+(P V M − 1)2 + (P EM − 0)2 + (P V V − 0)2 se a equipe mandante vencer a partida;
+
+(38)
+
+(P V M − 0)2 + (P EM − 1)2 + (P V V − 0)2 se a partida terminar empatada;
+
+(39)
+
+(P V M − 0)2 + (P EM − 0)2 + (P V V − 1)2 se a equipe visitante ganhar a partida.
+
+(40)
+
+Por exemplo, se a previs˜ao for (0.45, 0.30, 0.25) e o resultado for vit´oria da equipe
+mandante (1, 0, 0), ent˜ao a distˆancia de DeFinetti ´e (0.45 − 1)2 + (0.30 − 0)2 + (0.25 −
+0)2 = 0.3025. Nas previs˜oes temos que um padr˜ao comumente utilizado ´e a atribui¸c˜ao
+equiprov´avel de probabilidades (P V M = P EM = P V V = 1/3), ou seja, atribuir chances
+iguais a cada resultado em cada jogo. Para essa atribui¸c˜ao a medida de DeFinetti ´e igual
+(1/3 − 1)2 + (1/3 − 0)2 + (1/3 − 0)2 = 2/3.
+
+Assim, podemos considerar m´etodos de previs˜oes de qualidade minimamente aceit´avel,
+aqueles que apresentam medidas de DeFinetti menores que 2/3 e de m´a qualidade, aqueles
+que apresentam medidas maiores que 2/3 [3].
+
+6 Resultados
+
+Nesta se¸c˜ao, apresentamos os resultados obtidos da aplica¸c˜ao do m´etodo no Campeo-
+nato Brasileiro de 2018. Primeiramente, realizamos uma breve an´alise dos resultados dos
+jogos. Em seguida, apresentamos os resultados para as probabilidades dos jogos de uma
+determinada rodada e para o campeonato inteiro. Se quisermos saber as probabilidades
+do campeonato para uma determinada rodada, utilizamos os resultados obtidos at´e a
+rodada anterior. Por exemplo, para as probabilidades da rodada 28, foram utilizados os
+resultados do campeonato at´e a rodada 27.
+
+6.1 An´alise Descritiva
+
+Realizamos uma an´alise descritiva dos dados do Campeonato Brasileiro de 2018. A
+Tabela 3 indica o n´umero de gols marcados que cada equipe fez como mandante, visitante
+e no geral. Como podemos ver, o Atl´etico-PR teve o melhor ataque como mandante (44
+gols), o Flamengo teve o melhor ataque como visitante (29 gols) e o Palmeiras foi o melhor
+ataque do campeonato (64 gols). O Brasileir˜ao de 2018 teve um total de 827 gols em 380
+jogos, uma m´edia de 2,18 gols por jogo. Desses 380 jogos, 202 (53%) terminaram com
+a vit´oria do mandante, 68 (18%) com a vit´oria do visitante e 110 (29%) com empate.
+O resultado mais comum foi a vit´oria do mandante por 1x0 (68 jogos), 238 jogos (63%)
+tiveram menos de trˆes gols e 142 (37%) tiveram trˆes ou mais gols.
+
+Tabela 3: N´umero de gols marcados pelos times no campeonato.
+
+20
+
+Times
+
+Am´erica-MG
+Atl´etico-MG
+Atl´etico-PR
+Bahia
+Botafogo
+Cear´a
+Chapecoense
+Corinthians
+Cruzeiro
+Flamengo
+Fluminense
+Grˆemio
+Internacional
+Palmeiras
+Paran´a
+Santos
+S˜ao Paulo
+Sport
+Vasco da Gama
+Vit´oria
+
+1o Turno
+
+2o Turno
+Mandante Visitante Mandante Visitante Mandante Visitante
+
+Geral
+
+13
+19
+16
+17
+9
+6
+13
+10
+10
+17
+9
+16
+14
+17
+7
+14
+15
+11
+16
+11
+
+5
+14
+2
+4
+9
+4
+6
+12
+4
+12
+10
+6
+12
+9
+2
+4
+15
+8
+6
+9
+Fonte: Pr´oprio autor.
+
+9
+12
+28
+10
+13
+12
+11
+9
+15
+13
+8
+20
+18
+25
+6
+14
+10
+8
+13
+11
+
+3
+11
+8
+8
+7
+10
+4
+3
+5
+17
+5
+6
+7
+13
+3
+14
+6
+8
+6
+5
+
+22
+31
+44
+27
+22
+18
+24
+19
+25
+30
+17
+36
+32
+42
+13
+28
+25
+19
+29
+22
+
+8
+25
+10
+12
+16
+14
+10
+15
+9
+29
+15
+12
+19
+22
+5
+18
+21
+16
+12
+14
+
+6.2 Probabilidades para uma partida
+
+Ao todo, foram simulados 250 jogos e as probabilidade de vit´oria, empate e derrota
+foram calculadas da 14a at´e a 38a rodada. No m´etodo do PROFMAT, a medida DeFinetti
+associadas as probabilidades desses jogos obteve uma m´edia igual a 0,5680, enquanto que
+no modelo da UFMG a m´edia foi de 0,6273.
+
+Por exemplo, na Tabela 4 apresentamos as probabilidades para cada uma das partidas
+da rodada 24 juntamente com o placar observado e a medida de DeFinetti. Como j´a era
+esperado, as probabilidades de vit´oria s˜ao maiores quando o time ´e mandante.
+
+Observe que o m´etodo do PROFMAT estima as probabilidades de vit´oria do mandante
+maiores que as estimadas no modelo da UFMG. Com rela¸c˜ao ao empate, as probabilidades
+estimadas pelo modelo da UFMG s˜ao maiores que as do m´etodo do PROFMAT, fato que
+pode ser observado na Figura 1.
+
+Tabela 4: Probabilidades e medida de DeFinetti para a rodada 24.
+
+Jogo
+
+Visitante
+
+Mandante
+
+Vit´oria
+2
+1
+Jogo 1
+0,218
+0,398
+Jogo 2
+0,462
+0,624
+Jogo 3
+0,487
+0,653
+Jogo 4
+0,306
+0,474
+Jogo 5
+0,247
+0,525
+Jogo 6
+0,302
+0,482
+Jogo 7
+0,367
+0,538
+0,231
+Jogo 8
+0,386
+0,455
+0,470
+Jogo 9
+0,474
+Jogo 10 Atl´etico - MG Atl´etico - PR 0,574
+
+Derrota
+2
+1
+0,272
+0,186
+0,143
+0,132
+0,172
+0,115
+0,263
+0,234
+0,282
+0,209
+0,255
+0,186
+0,199
+0,214
+0,245
+0,299
+0,236
+0,248
+0,160
+0,152
+Legenda: 1 = PROFMAT - UFSJ e 2 = DEMAT - UFMG.
+
+Probabilidades
+Empate
+2
+1
+0,510
+0,321
+0,395
+0,244
+0,341
+0,233
+0,431
+0,292
+0,471
+0,267
+0,453
+0,332
+0,434
+0,248
+0,524
+0,316
+0,309
+0,282
+0,366
+0,274
+
+Sport
+S˜ao Paulo
+Flamengo
+Am´erica
+Fluminense
+Internancional
+Palmeiras
+Paran´a
+Vit´oria
+
+Cruzeiro
+Bahia
+Chapecoense
+Cear´a
+Botafogo
+Grˆemio
+Corinthians
+Santos
+Vasco
+
+21
+
+Placar
+
+0x0
+1x0
+2x0
+0x0
+1x0
+1x0
+1x0
+0x2
+1x0
+3x1
+
+DeFinetti
+2
+1
+0,362
+0,698
+0,466
+0,218
+0,409
+0,188
+0,486
+0,780
+0,868
+0,341
+0,772
+0,414
+0,628
+0,321
+0,898
+0,740
+0,448
+0,423
+0,437
+0,279
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Figura 1: Probabilidades da rodada 24.
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Na Tabela 5 apresentamos o acerto de cada modelo, consideramos como acerto a
+ocorrˆencia do evento com maior probabilidade. Dos 250 jogos simulados, o mandante
+venceu em 136, dos quais o m´etodo do PROFMAT acertou 131 e o modelo da UFMG 68.
+Quanto ao empate, 70 jogos terminaram com o placar igual, o m´etodo do PROFMAT n˜ao
+acertou nenhum resultado e o da UFMG acertou 38. J´a o visitante venceu em 44 jogos,
+
+22
+
+o m´etodo do PROFMAT acertou 6 e o da UFMG acertou apenas 1.
+
+Aqui j´a detectamos algumas falhas do m´etodo do PROFMAT, que s˜ao a falta de acerto
+de empate e o pouco acerto de vit´oria do visitante. O ponto positivo do m´etodo ´e o bom
+acerto de vit´oria do mandante. J´a o modelo da UFMG, acerta bem os empates e vit´orias
+do mandantes, mas tamb´em deixa a desejar nas vit´orias dos visitantes.
+
+Na Figura 2 ´e poss´ıvel ver a medida de DeFinetti para cada um dos jogos da rodada
+24, tanto o modelo da UFMG quanto o m´etodo do PROFMAT apresentaram 3 resultados
+acima de 2/3.
+
+Tabela 5: Percentual de acerto por modelo.
+
+Modelo
+6 (13,64%)
+PROFMAT
+UFMG
+1 (2,27%)
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Vit´oria (136) Empate (70) Derrota (44)
+0 (0,00%)
+131 (96,32%)
+38 (54,28%)
+68 (50,00%)
+
+Figura 2: Medida de DeFinetti para a rodada 24.
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Na Tabela 6 apresentamos os percentis da medida de DeFinetti, no modelo da UFMG,
+aproximadamente 60% dos resultados est˜ao abaixo de 2/3, enquanto que no modelo pro-
+posto por esse trabalho esse percentual ´e pr´oximo de 57%.
+
+Tabela 6: Percentis da medida de DeFinetti.
+
+Percentis
+
+DeFinetti
+PROFMAT UFMG
+
+0.648
+0.670
+0.682
+0.693
+0.702
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+0.631
+0.646
+0.655
+0.664
+0.668
+
+0.56
+0.57
+0.58
+0.59
+0.60
+
+23
+
+6.3 Probabilidades para a Classiﬁca¸c˜ao Final do Campeonato
+
+Para obter as probabilidades de um determinado time ser campe˜ao, de ir para Liber-
+tadores ou de ser rebaixado, realizamos 500 mil simula¸c˜oes para cada rodada a partir da
+14a rodada. Na Tabela 7, apresentamos as probabilidades para os seis melhores times
+do campeonato, tomadas ao in´ıcio de cada rodada do segundo turno, de se tornarem
+campe˜oes. Observe que a partir da rodada 29 o Palmeiras passou a ser o time favorito
+ao t´ıtulo, 0,569 no m´etodo do PROFMAT e 0,553 no modelo da UFMG, reﬂexo de uma
+sequˆencia de 13 jogos sem derrota, com 3 empates e 10 vit´orias.
+
+Tabela 7: Probabilidade de conquista do t´ıtulo para cada um dos seis melhores times do
+campeonato.
+
+Rodada
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+
+Internacional
+
+Palmeiras
+2
+1
+0,028
+0,049
+0,045
+0,065
+0,036
+0,061
+0,092
+0,126
+0,145
+0,168
+0,144
+0,173
+0,161
+0,189
+0,260
+0,289
+0,330
+0,341
+0,553
+0,569
+0,619
+0,628
+0,735
+0,707
+0,793
+0,776
+0,897
+0,862
+0,933
+0,920
+0,967
+0,952
+0,966
+0,946
+0,984
+0,973
+1,000
+1,000
+Legenda: 1 = PROFMAT - UFSJ e 2 = DEMAT - UFMG.
+
+Grˆemio
+2
+1
+0,127
+0,095
+0,083
+0,058
+0,049
+0,040
+0,100
+0,071
+0,083
+0,060
+0,023
+0,024
+0,047
+0,040
+0,088
+0,054
+0,129
+0,083
+0,078
+0,042
+0,018
+0,010
+0,006
+0,004
+0,001
+0,001
+0,001
+0,001
+0,003
+0,001
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+
+Flamengo
+2
+1
+0,142
+0,142
+0,187
+0,156
+0,159
+0,150
+0,090
+0,088
+0,063
+0,057
+0,059
+0,055
+0,045
+0,055
+0,079
+0,076
+0,049
+0,050
+0,109
+0,114
+0,125
+0,121
+0,169
+0,180
+0,109
+0,121
+0,037
+0,059
+0,010
+0,022
+0,005
+0,013
+0,023
+0,044
+0,016
+0,023
+0,000
+0,000
+
+1
+0,224
+0,336
+0,277
+0,289
+0,385
+0,425
+0,369
+0,338
+0,339
+0,198
+0,216
+0,102
+0,089
+0,076
+0,055
+0,035
+0,010
+0,000
+0,000
+
+2
+0,197
+0,299
+0,205
+0,204
+0,349
+0,409
+0,376
+0,322
+0,342
+0,186
+0,212
+0,085
+0,085
+0,064
+0,053
+0,028
+0,011
+0,000
+0,000
+
+S˜ao Paulo Atl´etico-MG
+1
+0,447
+0,360
+0,459
+0,413
+0,310
+0,304
+0,329
+0,233
+0,178
+0,074
+0,024
+0,006
+0,014
+0,003
+0,001
+0,000
+0,000
+0,000
+0,000
+
+2
+0,044
+0,023
+0,038
+0,039
+0,021
+0,019
+0,015
+0,007
+0,006
+0,002
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+
+1
+0,041
+0,023
+0,011
+0,012
+0,019
+0,019
+0,018
+0,008
+0,009
+0,003
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+0,000
+
+2
+0,464
+0,361
+0,510
+0,473
+0,338
+0,345
+0,354
+0,244
+0,144
+0,078
+0,026
+0,006
+0,012
+0,002
+0,005
+0,000
+0,000
+0,000
+0,000
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+O S˜ao Paulo iniciou o segundo turno como o time com maior probabilidade de t´ıtulo,
+0,447 no m´etodo do PROFMAT e 0,464 no modelo da UFMG, mas, nos 10 primeiros
+jogos do returno, conquistou apenas 11 pontos, aproveitamento de 36,67%, com isso sua
+probabilidade de t´ıtulo foi caindo a cada rodada.
+
+O Internacional no inicio do returno era o segundo time com maior probabilidade de
+t´ıtulo, 0,224 no m´etodo do PROFMAT e 0,197 no modelo da UFMG mas, assim como
+o S˜ao Paulo, n˜ao teve um bom in´ıcio de segundo turno, conquistando 18 pontos em 10
+jogos, aproveitamento de 60%.
+
+J´a o Palmeiras, nestes mesmos 10 jogos, venceu 8 e empatou 2, conquistando 26 pontos,
+um aproveitamento de 86,67%, fato que justiﬁca o crescimento da probabilidade de t´ıtulo
+a cada rodada.
+
+As probabilidades de t´ıtulo do m´etodo do PROFMAT est˜ao coerentes com as do
+modelo da UFMG: na Figura 3, ´e poss´ıvel ver um comparativo dessas probabilidades
+para cada um desses seis melhores times. Observe que de modo geral, o compartamento
+da curva de probabilidades do m´etodo do PROFMAT acompanha a curva do modelo da
+UFMG.
+
+24
+
+Figura 3: Probabilidade de conquista do t´ııtulo para cada um dos seis melhores times do
+campeonato.
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Na Tabela 8, apresentamos as probabilidades de conquista de uma vaga para a Liber-
+tadores de cada uma das seis melhores equipes. Todas as seis equipes iniciaram o segundo
+turno com probabilidade acima de 0,700. O S˜ao Paulo, que era o l´ıder do campeonato,
+tinha 0,988 no m´etodo do PROFMAT e 0,989 no modelo da UFMG, mas como teve um
+in´ıcio ruim de segundo turno, conquistou a vaga s´o na 32a rodada.
+
+O Internacional que era o vice l´ıder, iniciou o returno com probabilidade de conquista
+de uma vaga na Libertadores de 0,962 no m´etodo do PROFMAT e 0,950 no modelo da
+UFMG e conquistou a vaga em deﬁnitivo na 29a rodada.
+
+J´a o Palmeiras, conquistou a vaga na 28a rodada, reﬂexo da sua campanha de 13 jogos
+sem derrota. O Flamengo conquistou a vaga na Libertadores na 30a rodada e o Grˆemio
+na 33a rodada.
+
+O ´ultimo time a conquistar a vaga na Libertadores foi o Atl´etico-MG, que entrou na
+´ultima rodada disputando com o Atl´etico-PR, as probabilidades desta disputa podem ser
+vistas na Figura 4.
+
+25
+
+Rodada
+
+Internacional
+
+Tabela 8: Probabilidade de conquista de uma vaga na libertadores para cada um dos seis
+melhores times do campeonato.
+Palmeiras
+2
+1
+0,735
+0,806
+0,810
+0,879
+0,777
+0,890
+0,887
+0,946
+0,953
+0,973
+0,979
+0,986
+0,984
+0,989
+0,993
+0,996
+0,999
+0,999
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+S˜ao Paulo Atl´etico-MG
+1
+0,988
+0,987
+0,994
+0,992
+0,991
+0,995
+0,997
+0,994
+0,996
+0,993
+0,991
+0,989
+0,998
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+Grˆemio
+2
+1
+0,913
+0,904
+0,892
+0,882
+0,817
+0,854
+0,898
+0,920
+0,910
+0,930
+0,842
+0,906
+0,920
+0,944
+0,963
+0,965
+0,992
+0,991
+0,985
+0,988
+0,983
+0,984
+0,991
+0,988
+0,966
+0,958
+0,999
+0,998
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+Flamengo
+2
+1
+0,920
+0,934
+0,957
+0,956
+0,946
+0,961
+0,882
+0,918
+0,867
+0,906
+0,925
+0,936
+0,916
+0,941
+0,958
+0,967
+0,970
+0,973
+0,992
+0,995
+0,999
+0,999
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+2
+0,735
+0,666
+0,756
+0,747
+0,710
+0,806
+0,794
+0,676
+0,805
+0,681
+0,633
+0,555
+0,364
+0,287
+0,321
+0,554
+0,581
+0,839
+0,889
+
+1
+0,758
+0,712
+0,621
+0,638
+0,771
+0,837
+0,850
+0,792
+0,880
+0,833
+0,769
+0,691
+0,542
+0,442
+0,479
+0,685
+0,682
+0,871
+0,952
+
+1
+0,962
+0,986
+0,984
+0,985
+0,995
+0,998
+0,997
+0,997
+0,999
+0,998
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+2
+0,950
+0,982
+0,969
+0,969
+0,992
+0,998
+0,997
+0,996
+0,999
+0,988
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+2
+0,989
+0,986
+0,993
+0,992
+0,989
+0,996
+0,997
+0,994
+0,996
+0,992
+0,990
+0,994
+0,999
+1,000
+1,000
+1,000
+1,000
+1,000
+1,000
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+
+Legenda: 1 = PROFMAT - UFSJ e 2 = DEMAT - UFMG
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Figura 4: Probabilidade de conquista de uma vaga na Libertadores Atl´etico - MG (CAM)
+versus Atl´etico - PR (CAP).
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+26
+
+Na Figura 5, ´e poss´ıvel ver um comparativo das probabilidades de conquista de uma
+vaga para a Libertadores para cada um desses seis melhores times. Observe que de modo
+geral, o compartamento da curva de probabilidades do m´etodo do PROFMAT acompanha
+a curva do modelo da UFMG.
+
+Uma observa¸c˜ao importante ´e que o Cruzeiro foi campe˜ao da Copa do Brasil antes
+da 31a rodada, mas ele n˜ao esteve entre os seis melhores e o Atl´etico-PR foi campe˜ao da
+Sulamericana ap´os o ﬁm do campeonato brasileiro.
+
+Figura 5: Probabilidade de conquista de uma vaga na Libertadores para cada um dos seis
+melhores times do campeonato.
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+Na Tabela 9, apresentamos as probabilidades de rebaixamento das seis piores equipes,
+ao ﬁm do campeonato os quatro ´ultimos colocados caem para a segunda divis˜ao. O
+Paran´a, que era o lanterna do campeonato com 14 pontos ganhos e aproveitamento de
+24,6%, iniciou o returno com probabilidade de rebaixamento de 0,874 no m´etodo do
+PROFMAT e 0,807 no modelo da UFMG e foi matematicamente rebaixado na 29a rodada.
+O Cear´a, vice lanterna com 16 pontos ganhos e aproveitamento de 28,1%, foi o time
+que apresentou maior discrepˆancia nas probabilidades, iniciou o segundo turno com pro-
+babilidade de rebaixamento de 0,723 no m´etodo do PROFMAT e 0,491 no modelo da
+UFMG, mas venceu 5 dos 10 primeiros jogos do returno, (inclusive venceu o Flamengo
+no Maracan˜a e Cruzeiro no Mineir˜ao), empatou 3 e perdeu 2, aproveitamento de 60% e
+conquistou 18 pontos. Com esses resultados o Cear´a saiu da zona de rebaixamento na 26a
+rodada e foi at´e o ﬁm do campeonato sem voltar para ela.
+
+27
+
+O Am´erica iniciou o returno com probabilidade de rebaixamento de 0,223 no m´etodo
+do PROFMAT e 0,216 no modelo da UFMG, ele estava na 12a coloca¸c˜ao com 22 pontos,
+mas nas ´ultimas 10 rodadas do campeonato perdeu 6 jogos, inclusive perdeu em casa para
+o Paran´a que j´a estava rebaixado, e acabou rebaixado.
+
+O vit´oria foi rebaixado na 37a rodada e cinco times entraram na ´ultima rodada com
+chances de serem rebaixados, Vasco, Chapecoence, Fluminense, Am´erica e Sport, os dois
+´ultimos foram rebaixados.
+
+Na Figura 6, ´e poss´ıvel ver a probabilidades de rebaixamento para as seis piores equipes
+do campeonato e novamente o compartamento da curva de probabilidades do m´etodo do
+PROFMAT acompanha a curva do modelo da UFMG.
+
+Rodada
+
+Cear´a
+
+Sport
+
+Vasco
+
+Tabela 9: Probabilidade de rebaixamento para os seis piores times do campeonato.
+Am´erica
+2
+1
+0,216
+0,223
+0,097
+0,099
+0,102
+0,127
+0,173
+0,181
+0,100
+0,113
+0,097
+0,130
+0,194
+0,184
+0,150
+0,142
+0,179
+0,158
+0,278
+0,248
+0,293
+0,235
+0,328
+0,246
+0,484
+0,351
+0,713
+0,622
+0,915
+0,878
+0,919
+0,882
+0,662
+0,676
+0,843
+0,858
+0,671
+0,781
+
+Paran´a
+1
+2
+1
+0,261
+0,807
+0,874
+0,231
+0,800
+0,879
+0,171
+0,867
+0,914
+0,315
+0,930
+0,952
+0,379
+0,960
+0,973
+0,436
+0,976
+0,989
+0,511
+0,991
+0,994
+0,374
+0,996
+0,997
+0,364
+0,998
+0,999
+0,392
+1,000
+1,000
+0,253
+1,000
+1,000
+0,313
+1,000
+1,000
+0,395
+1,000
+1,000
+0,174
+1,000
+1,000
+0,244
+1,000
+1,000
+0,240
+1,000
+1,000
+0,271
+1,000
+1,000
+0,036
+1,000
+1,000
+1,000
+0,109
+1,000
+Legenda: 1 = PROFMAT - UFSJ e 2 = DEMAT - UFMG.
+
+Vit´oria
+2
+1
+0,452
+0,510
+0,498
+0,530
+0,618
+0,413
+0,489
+0,310
+0,231
+0,295
+0,114
+0,176
+0,210
+0,249
+0,329
+0,387
+0,390
+0,407
+0,581
+0,615
+0,360
+0,385
+0,420
+0,398
+0,601
+0,598
+0,732
+0,655
+0,772
+0,773
+0,782
+0,716
+0,905
+0,888
+0,990
+0,980
+1,000
+1,000
+
+1
+0,334
+0,493
+0,606
+0,545
+0,626
+0,675
+0,744
+0,819
+0,856
+0,801
+0,868
+0,775
+0,537
+0,367
+0,341
+0,349
+0,478
+0,729
+0,715
+
+2
+0,371
+0,493
+0,601
+0,521
+0,654
+0,651
+0,797
+0,850
+0,887
+0,788
+0,856
+0,761
+0,525
+0,322
+0,350
+0,300
+0,398
+0,778
+0,764
+
+1
+0,723
+0,756
+0,817
+0,672
+0,548
+0,534
+0,435
+0,466
+0,313
+0,159
+0,227
+0,250
+0,127
+0,214
+0,258
+0,248
+0,175
+0,037
+0,000
+
+2
+0,232
+0,202
+0,152
+0,267
+0,398
+0,443
+0,520
+0,343
+0,315
+0,350
+0,169
+0,269
+0,344
+0,147
+0,267
+0,261
+0,324
+0,030
+0,105
+
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+
+2
+0,491
+0,497
+0,696
+0,511
+0,409
+0,399
+0,300
+0,398
+0,217
+0,224
+0,302
+0,155
+0,066
+0,139
+0,180
+0,192
+0,150
+0,023
+0,000
+
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol.
+
+28
+
+Figura 6: Probabilidade de rebaixamento para os seis piores times do campeonato
+Fonte: Pr´oprio autor e http://www.mat.ufmg.br/futebol/
+
+7 Propostas de Atividades em Sala de Aula
+
+Nesta se¸c˜ao iremos propor uma atividade que pode ser utilizada em sala de aula
+para a aplica¸c˜ao da distribui¸c˜ao de Poisson no c´alculo de probabilidade no futebol. A
+atividade visa apresentar, com aux´ılio do Excel, um m´etodo de c´alculo de probabilidade
+bem dinˆamico para que os alunos possam discutir os resultados e apresentar novas ideias.
+Primeiramente, o professor dever´a detalhar a distribui¸c˜ao de Poisson, explicando como
+
+obter as probabilidades da partida, se poss´ıvel, da rodada que est´a para acontecer.
+
+A pr´oxima etapa o professor dever´a solicitar que os alunos formem cinco grupos e cada
+grupo ﬁcar´a respons´avel pelo c´alculo de dois jogos, visto que s˜ao 10 jogos por rodada.
+De acordo com [14], o professor poder´a aproveitar este momento para conversar sobre
+os conceitos de probabilidades e as Leis dos Grandes N´umeros, comentando sobre as
+simula¸c˜oes que s˜ao realizadas atrav´es de um programa e que determinam as probabilidades
+dos times para serem campe˜oes ou para outras situa¸c˜oes.
+
+Em seguida, com o suporte do Excel, o professor dever´a auxiliar os grupos na cons-
+tru¸c˜ao das Tabelas 1 e 2 para cada jogo da rodada. Com os dados destas tabelas, o
+grupo de alunos construir´a as Tabelas 10, 11 e 12 que serviram de base para o c´alculo das
+probabilidades da rodada.
+
+A escolha da pr´oxima rodada ´e ideal para que, ao ﬁnal das tabelas constru´ıdas e apre-
+sentadas, assim que as partidas ocorrerem na realidade, os alunos possam comparar os
+resultados obtidos e estes servindo como pauta de discuss˜ao em sala de aula criando opor-
+tunidade para o professor esclarecer a diferen¸ca entre “chance de ocorrer” e a “ocorrˆencia
+real” [14].
+
+29
+
+Tabela 10: Probabilidade de vit´oria do mandante.
+
+Resultado
+1x0
+2x0
+2x1
+3x0
+3x1
+3x2
+4x0
+4x1
+4x2
+4x3
+5x0
+5x1
+5x2
+5x3
+5x4
+
+C´alculo
+0,244 x 0,223
+0,268 x 0,223
+0,268 x 0,335
+0,197 x 0,223
+0,197 x 0,335
+0,197 x 0,251
+0,108 x 0,223
+0,108 x 0,335
+0,108 x 0,251
+0,108 x 0,126
+0,072 x 0,223
+0,072 x 0,335
+0,072 x 0,251
+0,072 x 0,126
+0,072 x 0,047
+
+Probabilidade
+0,055
+0,060
+0,090
+0,043
+0,065
+0,048
+0,023
+0,035
+0,026
+0,013
+0,015
+0,023
+0,017
+0,008
+0,003
+0.525
+
+Probabilidade de vit´oria do mandante
+
+Fonte: Pr´oprio autor.
+
+Tabela 11: Probabilidade de empate.
+
+Resultado
+0x0
+1x1
+2x2
+3x3
+4x4
+5x5
+
+C´alculo
+0,111 x 0,223
+0,244 x 0,335
+0,268 x 0,251
+0,197 x 0,126
+0,108 x 0,047
+0,072 x 0,018
+Probabilidade de empate
+
+Probabilidade
+0,026
+0,084
+0,068
+0,024
+0,005
+0,001
+0.208
+
+Fonte: Pr´oprio autor.
+
+Tabela 12: Probabilidade de vit´oria do visitante.
+
+Resultado
+0x1
+0x2
+1x2
+0x3
+1x3
+2x3
+0x4
+1x4
+2x4
+3x4
+0x5
+1x5
+2x5
+3x5
+4x5
+
+C´alculo
+0,111 x 0,335
+0,111 x 0,251
+0,244 x 0,251
+0,111 x 0,126
+0,244 x 0,126
+0,268 x 0,126
+0,111 x 0,047
+0,244 x 0,047
+0,268 x 0,047
+0,197 x 0,047
+0,111 x 0,018
+0,244 x 0,018
+0,268 x 0,018
+0,197 x 0,018
+0,108 x 0,018
+
+Probabilidade de vit´oria do visitante
+Fonte: Pr´oprio autor.
+
+Probabilidade
+0,039
+0,029
+0,063
+0,015
+0,031
+0,034
+0,006
+0,012
+0,013
+0,009
+0,002
+0,005
+0,005
+0,004
+0,002
+0.267
+
+30
+
+Considera¸c˜oes Finais e Pesquisas Futuras
+
+Neste trabalho realizamos, atrav´es da distribui¸c˜ao de Poisson, uma aplica¸c˜ao de uma
+metodologia bem simples para calcular probabilidades no futebol. Aplicando `a 250 jogos
+da S´erie A do Campeonato Brasileiro de 2018, a metodologia estudada apresentou bons
+resultados preditivos, a m´edia da medida de DeFinetti foi 0,568 e aproximadamente 57%
+dos resultados est˜ao abaixo de 2/3.
+
+Com a simula¸c˜ao foi poss´ıvel prever com boa precis˜ao o campe˜ao (Palmeiras), e obteve
+resultados satisfat´orios para os classiﬁcados para a Copa Libertadores da Am´erica, como
+tamb´em para os times rebaixados. Apesar de 250 jogos ser uma amostra pequena e da
+falta de acerto de empate e de vit´oria do visitante, os resultados obtidas pelo o m´etodo do
+PROFMAT est˜ao coerentes com o modelo do Departamento de Matem´atica da UFMG,
+que ´e um modelo de referˆencia e respeitado nacionalmente.
+
+Para trabalhos futuros ´e necess´ario melhor a qualidade do ajuste para prever empates
+e vit´orias do visitante, al´em disso, uma linha de pesquisa futura ´e aplicar a m´edia de gols
+para os ´ultimos 5 ou 10 jogos e n˜ao para o campeonato todo. Tamb´em seria interessante
+colocar um peso para os gols, por exemplo, fazer gol no Palmeiras, que teve a melhor defesa
+em 2018, deferia ter um peso maior do que fazer gol no Paran´a, que foi a pior defesa. Em
+caso de cl´assicos, os dois times podem entrar como mandante, j´a que geralmente cl´assicos
+n˜ao tem favoritos.
+
+A metodologia apresentada pode ser usada para outros campeonatos de pontos cor-
+ridos, como por exemplo a S´erie B do Campeonato Brasileiro ou o Campeonato Inglˆes.
+´E importante ressaltar que o modelo utilizado neste trabalho n˜ao leva em considera¸c˜ao
+v´arios fatores que podem inﬂuenciar o resultado de um determinado jogo, tais como a
+presen¸ca de torcida, suspens˜oes, entre outros. Todas as implementa¸c˜oes computacionais
+foram realizadas utilizando o Software R que ´e um ambiente computacional de livre acesso.
+
+Agradecimentos
+
+Agrade¸co em primeiro lugar a Deus, por me propocinar essa oportunidade, nada ´e
+poss´ıvel sem a presen¸ca Dele. Agrade¸co `a minha esposa Isabella por todo apoio, paciˆencia
+e compreens˜ao. `A minha m˜ae Rosane, que nunca mediu esfor¸cos para a minha educa¸c˜ao.
+Aos irm˜aos Pedro e Marcos por todo apoio. Ao meu primo Victor pela ajuda durante esse
+tempo de estudo. Agrade¸co aos amigos da turma de 2017 do PROFMAT, em especial
+aos amigos Bruna, Edson, Jonilson e Wendel. Aos amigos Renato Faria e Guilherme
+Furts pela ajuda com a parte computacional. Ao amigo C´ezar Augusto pela ajuda com o
+LaTeX. Agrade¸co `a professora Mariana Garabini, por todo carinho e dedica¸c˜ao para o bom
+andamento do PROFMAT no CAP. Agrade¸co `a CAPES pelo apoio ﬁnanceiro. Agrade¸co
+ao professor Gilcione, do Departamento de Matem´atica da UFMG, pela contribui¸c˜ao ao
+trabalho. Agrade¸co ao CEFET-MG, sem essa institui¸c˜ao esse sonho n˜ao seria poss´ıvel. Por
+ﬁm, um agradecimento especial aos meus orientadores, Dr. Humberto Cesar Fernandes
+Lemos e Dr. Ben Dˆeivide de Oliveira Batista, pela paciˆencia, dedica¸c˜aao e ensinamentos
+em prol da conclus˜ao deste trabalho ﬁnal.
+
+31
+
+Referˆencias
+
+[1] B. R. James, Probabilidade: um curso em n´ıvel intermedi´ario. IMPA, 2015.
+
+[2] B. N. B. de Lima, F. Brochero, G. N. Costa, G. M. Zeferino, M. T. Cunha e R.
+V. Martins: Probabilidades no futebol. Revista Matem´atica Universit´aria, ns.48/49,
+artigo 02, junho/dezembro de 2010.
+
+[3] A. K. Suzuki: Modelagem Estat´ıstica para Previs˜ao Esportiva: Uma aplica¸c˜ao no
+Futebol. Disserta¸c˜ao apresentada ao Departamento de Estat´ıstica da Universidade
+Federal de S˜ao Carlos para obten¸c˜ao do grau de Mestre em Estat´ıstica, 2007.
+
+[4] F. F. Farias: An´alise e Previs˜ao de Resultados de Partidas de Futebol. Disserta¸c˜ao
+apresentada ao Instituto de Matem´atica da Universidade Federal do Rio de Janeiro
+para obten¸c˜ao do grau de Mestre em Estat´ıstica, novembro de 2008.
+
+[5] L. Arruda: Poisson, Bayes, Futebol e DeFinetti. Disserta¸c˜ao apresentada ao Instituto
+de Matem´atica e Estat´ıstica da Universidade de S˜ao Paulo para a obten¸c˜ao do grau
+de mestre em Estat´ıstica, 2000.
+
+[6] A. Suzuki e L. Tavares: Modelagem Estat´ıstica para Previs˜ao Esportiva: Uma
+aplica¸c˜ao no Futebol. Revista Eletrˆonica Matem´atica e Estat´ıstica em Foco, Volume
+3 - N´umero 1, P´aginas: 32 a 47, Maio de 2015.
+
+[7] B. DeFinetti: Probability, Induction and Statistics. John Wiley, London, 1972.
+
+[8] J.B. Keller: A Characterization of the Poisson Distribution and the Probability of
+
+Winning a Game. The American Statistician, 48(4):294–298, 1994.
+
+[9] A. Lee: Modeling Scores in the Premier League: Is Manchester United Really the
+
+Best? Chance, 10(1):15–19, 1997.
+
+[10] R. Pollard: Home advantage in soccer: a retrospective analysis. Journal of Sports
+
+Sciences, pp. 237 – 248, 1986.
+
+[11] A. Suzuki, L. Salasar, F. Louzada-Neto e J. Leite: A bayesian approach for predic-
+ting match outcomes: The 2006 (Association) Football World Cup. Journal of the
+Operational Research Society, 61:1530–1539 (October 2010), 2009.
+
+[12] S. Ross: Probabilidade : um curso moderno com aplica¸c˜oes; tradutor: Alberto Re-
+
+sende De Conti. - 8. ed. - Porto Alegre : Bookman, 2010.
+
+[13] C. A. B. Dantas: Probabilidade: Um Curso Introdut´orio. Edusp, 2008
+
+[14] C. A. G. Carneiro: Probabilidades no Futebol. Disserta¸c˜ao apresentada ao Depar-
+tamento de Estat´ıstica, F´ısica e Matem´atica da Universidade Federal de S˜ao Jo˜ao
+Del-Rei para obten¸c˜ao do grau de Mestre em Matem´atica, 2017.
+
+

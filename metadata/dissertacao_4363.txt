@@ -1,0 +1,3907 @@
+Universidade Federal de Mato Grosso
+Instituto de Ciˆencias Exatas e da Terra
+
+Departamento de Matem´atica
+
+Um Sistema de Criptograﬁa de Chave P´ublica
+
+Chamado ElGamal
+
+Paulo S´ergio Lopes da Silva
+
+Mestrado Proﬁssional em Matem´atica: PROFMAT/SBM
+
+Orientador: Prof. Dr. Martinho da Costa Ara´ujo
+
+Trabalho ﬁnanciado pela Capes
+
+Cuiab´a - MT
+
+Junho de 2015
+
+Um Sistema de Criptograﬁa de Chave P´ublica
+Chamado ElGamal
+
+Este exemplar corresponde `a reda¸c˜ao ﬁnal da dis-
+serta¸c˜ao, devidamente corrigida e defendida por
+Paulo S´ergio Lopes da Silva e aprovada pela co-
+miss˜ao julgadora.
+
+Cuiab´a, 10 de julho de 2015.
+
+Prof. Dr. Martinho da Costa Ara´ujo
+Orientador
+
+Banca examinadora:
+
+Prof. Dr. Martinho da Costa Ara´ujo
+Prof. Dr. Moiseis dos Santos Cecconello
+Prof. Dr. Lenimar Nunes de Andrade
+
+Disserta¸c˜ao apresentada ao curso de Mestrado
+Proﬁssional em Matem´atica – PROFMAT, da Uni-
+versidade Federal de Mato Grosso, como requisito
+parcial para obten¸c˜ao do t´ıtulo de Mestre em
+Matem´atica.
+
+Disserta¸c˜ao de Mestrado defendida em 08 de Junho de 2015 e aprovada pela
+
+banca examinadora composta pelos Professores Doutores
+
+Prof. Dr. Martinho da Costa Ara´ujo-UFMT
+
+Prof. Dr. Lenimar Nunes de Andrade-UFPB
+
+Prof. Dr. Moiseis dos Santos Cecconello-UFMT
+
+iii
+
+`A minha doce amada.
+
+iv
+
+Agradecimentos
+
+Ao t´ermino deste trabalho, deixo aqui meus sinceros agradecimentos:
+
+– a Deus por tudo;
+
+– `a minha esposa e ﬁlhos por perdoarem os incont´aveis ﬁns de semana de ausˆencia;
+
+– ao Prof. Dr. Martinho da Costa Ara´ujo, por toda dedica¸c˜ao, paciˆencia e est´ımulo
+
+em sua orienta¸c˜ao;
+
+– a todos os professores do Departamento de Matem´atica da UFMT;
+
+– aos professores da banca pelas valiosas sugest˜oes;
+
+– a minha fam´ılia, pelo incentivo e seguran¸ca que me passaram durante todo esse
+
+per´ıodo;
+
+– aos amigos do PROFMAT pelo agrad´avel conv´ıvio especialmente Jackson e Adilson;
+
+– `a gest˜ao da Escola Estadual 29 de Novembro de Tangar´a da Serra pela paciˆencia;
+
+– a todos que direta ou indiretamente contribu´ıram para a realiza¸c˜ao deste trabalho;
+
+– `a Capes pelo aux´ılio ﬁnanceiro.
+
+v
+
+“Sempre me pareceu estranho que to-
+
+dos aqueles que estudam seriamente
+
+esta ciˆencia acabam tomados de uma
+
+esp´ecie de paix˜ao pela mesma. Em
+
+verdade o que proporciona o m´aximo
+
+prazer n˜ao ´e o conhecimento e sim a
+
+aprendizagem, n˜ao ´e a posse mas a
+
+aquisi¸c˜ao, n˜ao ´e a presen¸ca mas o ato
+
+de atingir a meta ”
+
+Carl F. Gauss
+
+vi
+
+Resumo
+
+Neste trabalho trataremos do sistema de criptograﬁa de chave p´ublica de ElGamal. No
+
+primeiro cap´ıtulo apresentamos todos os conceitos matem´aticos envolvidos neste tema,
+
+enfatizando o ´ındice. No segundo cap´ıtulo trataremos do conceito desse sistema, fatos
+
+relevantes para sua implementa¸c˜ao e alguns fatos hist´oricos. O m´etodo de codiﬁca¸c˜ao e
+
+decodiﬁca¸c˜ao neste criptosistema ´e apresentado no terceiro cap´ıtulo. Finalizamos apre-
+
+sentando no quarto e quinto cap´ıtulos a proposta did´atica de inser¸c˜ao do tema criptograﬁa
+
+no ensino regular de matem´atica.
+
+Palavras chave: Grupos c´ıclicos, logaritmo discreto, assinatura digital.
+
+vii
+
+Abstract
+
+In this paper we will address public key cryptosystem ElGamal.
+
+In the ﬁrst chapter
+
+we present all the mathematical concepts addressed, especially the index. In the second
+
+chapter we will talk about the system concepts studied in this paper, historical and
+
+relevant facts that were important for its implementation. The coding and encoding
+
+method in this cryptosystem is presented in the third chapter. In the fourth and ﬁfth
+
+chapter we ﬁnish presenting a didactic proposal to include encryption in the regular
+
+teaching mathematics.
+
+Keywords: Cyclic groups, discrete logarithm, digital signature.
+
+viii
+
+Sum´ario
+
+Agradecimentos
+
+Resumo
+
+Abstract
+
+Introdu¸c˜ao
+
+1 Conceitos B´asicos
+
+1.1 Estrutura . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Ordem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+v
+
+vii
+
+viii
+
+1
+
+2
+
+2
+
+8
+
+1.3 Obtendo uma Raiz Primitiva . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1.4 A Aritm´etica dos ´Indices . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+2 No¸c˜oes de Criptograﬁa
+
+3 O Criptosistema de ElGamal
+
+20
+
+27
+
+3.1 O Problema do Logaritmo Discreto . . . . . . . . . . . . . . . . . . . . . . 27
+
+3.2 Usando o MAPLE . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+3.3 O processo de Codiﬁca¸c˜ao e Decodiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . 29
+
+3.4 Criando uma chave . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+3.5 Codiﬁcando uma Mensagem . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+3.6 Decodiﬁcando a Mensagem . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+3.7 Exemplo Completo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+3.8 Resolvendo o PLD . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+3.9 Assinaturas Digitais . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+3.9.1 Assinando uma Mensagem com ElGamal
+
+. . . . . . . . . . . . . . . 36
+
+ix
+
+3.9.2 Veriﬁcando a Assinatura . . . . . . . . . . . . . . . . . . . . . . . . 36
+
+3.9.3
+
+Seguran¸ca da Assinatura . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+3.9.4 Exemplos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+4 Criptograﬁa Na Sala da Aula
+
+41
+
+4.1 A Esteganograﬁa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+4.2 Construindo um Disco Criptogr´aﬁco . . . . . . . . . . . . . . . . . . . . . . 42
+
+4.3 Construindo um cilindro de Thomas Jeﬀerson . . . . . . . . . . . . . . . . 43
+
+4.4 Criptograﬁa e Fun¸c˜oes Bijetivas . . . . . . . . . . . . . . . . . . . . . . . . 44
+
+5 ElGamal Em Sala de Aula
+
+46
+
+5.1 Trabalhando com a fun¸c˜ao φ de Euler . . . . . . . . . . . . . . . . . . . . . 46
+
+5.2 Deﬁnindo ordem de um n´umero . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+5.3 Deﬁnindo raiz primitiva . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+
+5.4 Deﬁnindo o criptosistema . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+5.5 Criptografando uma mensagem . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+5.6 Decodiﬁcando um texto
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+
+x
+
+Introdu¸c˜ao
+
+“The magic words are squeamish ossifrage ”
+
+(RSA-129)
+
+Suponha que vocˆe deseja mandar uma mensagem muito importante para algu´em,
+
+por´em, vocˆe n˜ao queira que o mensageiro leia o que foi escrito. Este ´e um problema que a
+
+humanidade enfrenta desde os prim´ordios da escrita, cuja solu¸c˜ao ´e dada pela criptograﬁa,
+
+que a grosso modo ´e “a arte de criar mensagens secretas e envi´a-las com seguran¸ca”.
+
+Atualmente os principais interessados na solu¸c˜ao deste problema s˜ao os diplo-
+
+matas, militares e o com´ercio eletrˆonico, este ´ultimo s´o desenvolveu o interesse ap´os a
+
+chegada das mensagens eletrˆonicas e a internet.
+
+N´os vamos apresentar aqui um dos mais importantes m´etodos de criptograﬁa,
+
+por´em menos conhecido que o RSA, o criptosistema de ElGamal. Para tanto ser´a ne-
+
+cess´ario, antes expor conceitos como grupos, teorema de Euler, ordem e o logaritmo
+
+discreto.
+
+Existem tamb´em a necessidade de saber se uma mensagem criptografada ´e ver-
+
+dadeira ou n˜ao. Para suprir esta necessidade apresentaremos a assinatura digital, que
+
+veriﬁca a autenticidade de uma mensagem, sem necessariamente decodiﬁc´a-la.
+
+Por ﬁm, apresentaremos uma sequˆencia did´atica para aplica¸c˜ao dos conceitos aqui
+
+apresentados no ensino b´asico.
+
+1
+
+Cap´ıtulo 1
+
+Conceitos B´asicos
+
+Neste cap´ıtulo apresentaremos todos os conceitos para que possamos introduzir
+
+as ra´ızes primitivas, para tanto daremos uma deﬁni¸c˜ao para ordem.
+
+1.1 Estrutura
+
+O conjunto dos n´umeros naturais N ´e caracterizado1 da seguinte forma:
+
+i) Exite uma fun¸c˜ao injetiva s : N → N. A imagem s(n) de cada n´umero natural
+
+n ∈ N ´e chamada sucessor de n.
+
+ii) Existe um n´umero natural 1 ∈ N tal que 1 (cid:54)= s(n) para todo n ∈ N.
+
+iii) Se um conjunto X ⊂ N ´e tal que 1 ∈ X e S(X) ⊂ X ent˜ao X = N
+
+Os axiomas acima citados permitem caracterizar a opera¸c˜ao de adi¸c˜ao que as-
+
+socia cada par de naturais (m, n) a um ´unico natural m + n chamado de soma. Deﬁni-
+
+mos o n´umero zero, doravante 0, como sendo o elemento neutro desta opera¸c˜ao, ou seja
+
+n + 0 = n, ∀ n ∈ N. Deﬁnimos tamb´em o oposto do n´umero natural n como sendo o
+
+n´umero −n de modo que n + (−n) = 0.
+
+Deﬁni¸c˜ao 1 Seja −N o conjunto de todos os opostos dos n´umeros naturais. Ent˜ao
+
+Z = −N ∪ {0} ∪ N ser´a chamado de n´umeros inteiros.
+
+A estrutura alg´ebrica que sustenta todo o conceito aqui empregado ´e a estrutura
+
+de grupo, que deﬁnimos a seguir.
+
+1Essa caracteriza¸c˜ao ´e chamada de Axiomas de Peano, para uma leitura aprofundada recomendo Lima
+
+(2007).
+
+2
+
+Deﬁni¸c˜ao 2 Um sistema composto por um conjunto G n˜ao vazio e uma opera¸c˜ao bin´aria
+
+∗ ´e chamado de grupo se (G, ∗) tem as seguintes propriedades:
+
+1. Associatividade: Dados a, b e c elementos de G temos (a ∗ b) ∗ c = a ∗ (b ∗ c)
+
+2. Elemento neutro: Exite um elemento e ∈ G de modo que para todo a ∈ G temos
+
+a ∗ e = e ∗ a = a
+
+3. Inverso: Para todo a ∈ G existe um a(cid:48) ∈ G tal que a ∗ a(cid:48) = a(cid:48) ∗ a = e
+
+Se um grupo G possui a propriedade
+
+a ∗ b = b ∗ a
+
+para todo a, b ∈ G ent˜ao G ´e chamado de grupo abeliano ou grupo comutativo.
+
+Exemplo 1
+
+O conjunto Z dos inteiros com soma usual ´e um grupo.
+
+Teorema 1 Dados dois inteiros a e b, b > 0, existem um ´unico par de n´umeros inteiros
+
+q e r tais que
+
+a = qb + r,
+
+com 0 ≤ r < b
+
+Prova A prova deste teorema pode ser encontrada em Santos (2009).
+
+No teorema acima se tivermos r = 0 ent˜ao diremos que b divide a e denotaremos
+
+por b|a.
+
+Deﬁni¸c˜ao 3 Dados inteiros a, b e m com m > 0 dizemos que a ´e congruente b m´odulo
+
+m se a − b ´e um m´ultiplo de m. Em s´ımbolos escrevemos
+
+a ≡ b
+
+(mod m) ⇔ m|(a − b)
+
+Congruˆencias possuem algumas propriedades que nos ajudar˜ao a trabalhar com
+
+n´umeros inteiros.
+
+Proposi¸c˜ao 2 Dados a, b, c e m inteiros com m > 0 e n ∈ N ent˜ao:
+
+i) a ≡ b (mod m) ⇔ a + c ≡ b + c (mod m)
+
+3
+
+ii) se a ≡ b (mod m) ent˜ao a · c ≡ b · c (mod m)
+
+iii) a ≡ b (mod m) ⇔ an ≡ bn (mod m)
+
+Prova:
+
+i) Notemos que a deﬁni¸c˜ao de congruˆencia nos indica que a ≡ b (mod m) ⇔
+
+m|(a − b) ent˜ao
+
+m|(a − b) ⇔ (a − b) = k · m ⇔ (a + c − c − b) = k · m ⇔ ([a + c] − [b + c]) =
+
+k · m ⇔ m|([a + c] − [b + c]). Aplicando a deﬁni¸c˜ao de congruˆencia temos a ≡ b
+
+(mod m) ⇔ m|(a − b) ⇔ m|([a + c] − [b + c]) ⇔ a + c ≡ b + c (mod m).
+
+ii) Para provar este item devemos salientar que se p|q ent˜ao p|q ·r para qualquer r
+
+sendo p, q, r inteiros. Notemos agora que m|(a−b) ⇒ m|(a−b)·c ⇒ m|(a·c−b·c) aplicando
+
+a deﬁni¸c˜ao de congruˆencia temos a ≡ b (mod m) ⇔ m|(a−b) ⇒ m|(a·c−b·c) ⇔ a·c ≡ b·c
+
+(mod m)
+
+iii) Provaremos usando indu¸c˜ao sobre n.
+
+Se n = 1 teremos a hip´otese da proposi¸c˜ao, Suponhamos que an ≡ bn (mod m) ´e
+
+verdadeiro para algum n natural, ent˜ao pela hip´otese de indu¸c˜ao temos
+
+an+1 = a · an ≡ b · bn = bn+1
+
+(mod m)
+
+(cid:3)
+
+Deﬁni¸c˜ao 4 Diremos que um n´umero natural d ´e um m´aximo divisor comum de dois
+
+inteiros a e b n˜ao simultaneamente nulos, se possuir as seguintes propriedades:
+
+i) d ´e um divisor comum de a e de b, e
+
+ii) d ´e divis´ıvel por todo divisor comum de a e de b.
+
+A condi¸c˜ao ii) acima pode ser reescrita como segue:
+
+ii’) Se c ´e um divisor comum de a e de b ent˜ao c|d
+
+Denotaremos o m´aximo divisor comum dos inteiros a e b por (a, b) = mdc(a, b).
+
+Deﬁni¸c˜ao 5 Chamamos de coprimos os n´umeros a e b tal que (a, b) = 1.
+
+O pr´oximo teorema ´e um dos mais importante da teoria dos n´umeros, o algoritmo
+
+de Euclides.
+
+4
+
+Proposi¸c˜ao 3 Sejam r0 = a e r1 = b inteiros n˜ao-negativos com b (cid:54)= 0. Se o algoritmo
+
+da divis˜ao for aplicado sucessivamente para se obter
+
+rj = qj+1rj+1 + rj+2, 0 ≤ rj+2 < rj+1
+
+para j = 0, 1, 2, 3, · · · , n − 1 e rn+1 = 0 ent˜ao (a, b) = rn, o ´ultimo resto n˜ao-nulo.
+
+Prova Uma excelente prova desta proposi¸c˜ao pode ser encontrada em Hefez (2013).
+
+Deﬁni¸c˜ao 6 Dado um inteiro n˜ao nulo m e um inteiro 0 ≤ a < m deﬁnimos a classe
+
+residual m´odulo m como sendo o conjunto [a] = a = {a + mk, k ∈ Z}
+
+Exemplo 2
+
+Note que 6 ≡ 1 (mod 5) pois, 5|6 − 1 no entanto 5|11 − 1, 5|16 − 1 e assim por diante. Em
+
+geral podemos aﬁrmar que, para todo inteiro k, 5k + 1 ≡ 1 (mod 5) j´a que 5|(5k + 1 − 1).
+
+Generalizando, temos que 1 ´e o conjunto de todos os n´umeros inteiros que ao ser dividido
+
+por 5 deixam resto 1, ou seja, a classe
+
+[1] = 1 = {· · · , −9, −4, 1, 6, 11, · · · } = {1 + 5k, k ∈ Z}.
+
+Todos os conceitos apresentados neste cap´ıtulo pode ser encontrado com mais
+
+riqueza de detalhes em Santos (2009).
+
+Deﬁni¸c˜ao 7 Deﬁnimos Zm como sendo o conjunto de todas as classes residuais m´odulo
+
+m ou seja,
+
+Zm = {[0], [1], · · · , [m − 1]}
+
+Deﬁni¸c˜ao 8 Sejam [a] e [b] classes residuais m´odulo m ent˜ao deﬁniremos a opera¸c˜ao
+
+soma ⊕ de classes residuais como sendo [a] ⊕ [b] = [a + b].
+
+Deﬁni¸c˜ao 9 Sejam [a] e [b] classes residuais m´odulo m, ent˜ao deﬁniremos a opera¸c˜ao
+
+multiplica¸c˜ao (cid:12) de classes residuais como sendo [a] (cid:12) [b] = [a · b]
+
+Notemos que [a] = [a(cid:48)] e [b] = [b(cid:48)] dois representantes de cada classe residual
+
+m´odulo m ent˜ao a ≡ a(cid:48) (mod m) e b ≡ b(cid:48) (mod m) e certamente a+b ≡ a(cid:48) +b(cid:48) (mod m)
+
+e a · b ≡ a(cid:48) · b(cid:48)
+
+(mod m) o que equivale a dizer que [a + b] = [a(cid:48) + b(cid:48)] e [a · b] = [a(cid:48) · b(cid:48)].
+
+5
+
+Esta observa¸c˜ao nos diz que a soma e o produto de classes residuais est˜ao bem deﬁnidas,
+
+ou seja, n˜ao depende da escolha do representante da classe.
+
+Doravante todo grupo cuja opera¸c˜ao ´e uma adi¸c˜ao se chamar´a grupo aditivo e
+
+cuja opera¸c˜ao ´e uma multiplica¸c˜ao ser´a chamado de grupo multiplicativo.
+
+Deﬁni¸c˜ao 10 Dado um grupo (G, ∗), tal que G ´e ﬁnito ent˜ao (G, ∗) ser´a chamado de
+
+grupo ﬁnito. O n´umero de elemento de G ser´a chamado de ordem do grupo.
+
+Proposi¸c˜ao 4 O conjunto Zm com a opera¸c˜ao de adi¸c˜ao de classes residuais m´odulo m
+formam um grupo, ou seja, (Zm, ⊕) ´e um grupo.
+
+Prova: i)
+
+[a] ⊕ ([b] ⊕ [c]) = [a] ⊕ [b + c]
+
+= [a + (b + c)]
+
+= [(a + b) + c]
+
+= [a + b] ⊕ [c]
+
+= ([a] ⊕ [b]) ⊕ [c]
+
+ii) Aﬁrmamos que a classe [0] ´e o elemento neutro da adi¸c˜ao e de fato;
+
+[a] ⊕ [0] = [a + 0] = [a] e [0] ⊕ [a] = [0 + a] = [a]
+
+iii) Aﬁrmamos tamb´em que a classe [m − a] ´e o elemento inverso da classe [a],
+
+pois, [m − a] ⊕ [a] = [m − a + a] = [m] = [0] e [a] ⊕ [m − a] = [a + m − a] = [m] = [0]
+
+(cid:3)
+
+Quando nos referimos ao fechamento de um conjunto A em rela¸c˜ao a determi-
+
+nada opera¸c˜ao ∗, queremos dizer que ao tomarmos dois elementos a e b do conjunto A e
+
+realizarmos a opera¸c˜ao a ∗ b obtemos um elemento tamb´em pertencente a A.
+
+Proposi¸c˜ao 5 O conjunto Z∗
+
+m = Zm − [0] ´e fechado para a opera¸c˜ao de multiplica¸c˜ao se,
+
+e somente se, m ´e primo.
+
+Prova: Suponhamos que m n˜ao seja primo, ent˜ao exitem a e b com a, b < m tais
+
+que a · b = m. Como na multiplica¸c˜ao de classes residuais n˜ao importa o representante
+
+da classe residual, podemos aﬁrmar que [a] (cid:12) [b] = [m] = [0] no entanto, [0] n˜ao faz parte
+
+do conjunto G, contradi¸c˜ao.
+
+6
+
+Reciprocamente, devemos ver que a ´unica possibilidade de Zm n˜ao ser fechado
+
+para a multiplica¸c˜ao m´odulo m ´e se existirem classes [a] e [b], tais que [a] · [b] = [0] o que
+
+resultaria em a · b ≡ 0 (mod m), ou seja m|a · b mas por hip´otese m ´e primo logo, m|a
+
+ou m|b. Se m|a ent˜ao a = mk portanto,
+
+[a] = [m · k] = [m] (cid:12) [k] = [0] · [k] = [0]
+
+que ´e absurdo, pois [a] ∈ Z∗
+
+m. De modo semelhante se m|b obtemos [b] = [0] que tamb´em
+
+´e absurdo.
+
+Exemplo 3
+
+(cid:3)
+
+Um conjunto que n˜ao ´e fechado com a opera¸c˜ao de multiplica¸c˜ao ´e o conjunto (Z∗
+
+6, (cid:12)).
+
+Basta observarmos que [2] · [3] = [6] = [0]. Logo n˜ao ´e um grupo multiplicativo.
+
+Proposi¸c˜ao 6 Se p um n´umero primo ent˜ao (Zp, (cid:12)) ´e um grupo multiplicativo.
+
+Prova: ´E f´acil mostrar que a multiplica¸c˜ao de classes residuais ´e associativa e
+
+que [1] ´e o elemento neutro. Portanto, s´o resta mostrar que para todo [a] ∈ Z∗
+
+m existe um
+
+[b] ∈ Z∗
+
+m tal que [a] · [b] = [1] e de fato existe, pois,
+
+[a][b] = [1] ⇒ a · b ≡ 1
+
+(mod m) ⇒ a · b − km = 1
+
+e a equa¸c˜ao diofantina tem solu¸c˜ao b e k pois (a, m) = 1.
+
+(cid:3)
+
+Deﬁni¸c˜ao 11 Seja G um grupo multiplicativo. Se a ∈ G e n ´e um n´umero inteiro, a
+
+n-´esima potˆencia de a ´e o elemento an deﬁnido por recorrˆencia do seguinte modo:
+
+(cid:136) se n = 0 ent˜ao an = eGElemento neutro de G
+
+(cid:136) se n > 0 ent˜ao an = an−1 ∗ a
+
+(cid:136) se n < 0 ent˜ao a−n = (a−1)−n
+
+7
+
+Exemplo 4
+
+Tomemos como exemplo o grupo (Z∗
+
+7, (cid:12)) e a classe residual [3]
+
+[3]0 = [1]
+[3]1 = [3]1−1 (cid:12) [3] = [1] (cid:12) [3] = [1 · 3] = [3]
+[3]2 = [3]2−1 (cid:12) [3] = [3] (cid:12) [3] = [1 · 3] = [9] = [2]
+[3]3 = [3]3−1 (cid:12) [3] = [2] (cid:12) [3] = [2 · 3] = [6]
+[3]4 = [3]4−1 (cid:12) [3] = [6] (cid:12) [3] = [6 · 3] = [18] = [4]
+[3]5 = [3]5−1 (cid:12) [3] = [4] (cid:12) [3] = [4 · 3] = [12] = [5]
+[3]6 = [3]6−1 (cid:12) [3] = [5] (cid:12) [3] = [5 · 3] = [15] = [1]
+[3]7 = [3]7−1 (cid:12) [3] = [1] (cid:12) [3] = [1 · 3] = [3]
+
+Deﬁni¸c˜ao 12 Um grupo multiplicativo G ´e chamado de c´ıclico se existir um a ∈ G de
+
+modo que G = {an; n ∈ Z}. Nestas condi¸c˜oes a ´e o gerador de G e escrevemos < a >= G.
+
+Exemplo 5
+
+Podemos notar pelo exemplo 4 que o grupo G = (Z∗
+
+Z}. Notemos tamb´em que [3] ´e um gerador de (Z∗
+
+7, (cid:12)) ´e c´ıclico pois, (Z∗
+7, (cid:12)), ou seja, (Z∗
+
+7, (cid:12)) =< [3] >.
+
+7, (cid:12)) = {[3]n; n ∈
+
+1.2 Ordem
+
+Antes de darmos a deﬁni¸c˜ao de ordem apresentaremos alguns conceitos que ser˜ao
+
+necess´arios para demonstrarmos proposi¸c˜oes e teoremas importantes.
+
+Deﬁni¸c˜ao 13 Uma fun¸c˜ao aritm´etica ´e uma fun¸c˜ao deﬁnida em todos os inteiros positi-
+
+vos.
+
+Deﬁni¸c˜ao 14 Seja n um inteiro positivo. A fun¸c˜ao φ de Euler ´e deﬁnida como sendo a
+
+fun¸c˜ao que associa cada n a quantidade de n´umeros inteiros positivos k menores que n e
+
+coprimos com n.
+
+Por exemplo:
+
+As vezes escrevemos φ(n) = #{k, 1 ≤ k ≤ n tais que (k, n) = 1} onde # signiﬁca
+
+o n´umero de elementos de um conjunto.
+
+8
+
+n
+φ(n)
+
+2
+1
+
+3
+2
+
+4
+2
+
+5
+4
+
+7
+6
+
+10
+4
+
+Tabela 1.1:
+
+Teorema 7 Para p primo e a um inteiro positivo temos:
+
+i)φ(pa) = pa − pa−1 = pa−1(p − 1)
+
+ii)φ(p) = p − 1
+
+Prova i) Pela deﬁni¸c˜ao da fun¸c˜ao φ sabemos que φ(pa) ´e o n´umero de inteiros
+
+positivos n˜ao-negativos menores que e igual a pa coprimos com pa. Mas os ´unicos n´umeros
+
+n˜ao primos com pa menores do que ou iguais a pa s˜ao aqueles que s˜ao divis´ıveis por p,
+
+ou seja M = {1p, 2p, 3p, · · · pa−1 · p}, percebemos que o n´umeros de elementos M ´e pa−1
+
+portanto, φ(pa) = pa − pa−1, o resultado segue.
+
+ii) Este item ´e um caso particular de i).
+
+(cid:3)
+
+Teorema 8 A fun¸c˜ao φ(n) ´e multiplicativa, isto ´e φ(n · m) = φ(n) · φ(m) para (n, m) = 1
+
+Prova A prova pode ser encontrada em Santos (2009).
+
+(cid:3)
+
+(cid:3)
+
+Teorema 9 Para n = pa1
+
+1 pa2
+
+2 · · · pan
+
+n , temos
+
+φ(n) = pa1−1
+
+1
+
+pa2−1
+2
+
+· · · pan−1
+n
+
+(p1 − 1)(p2 − 1) · · · (pn − 1)
+
+Prova A prova deste teorema decorre da aplica¸c˜ao do teorema 8.
+
+Exemplo 6
+
+Desejamos calcular φ(31), φ(625), φ(15):
+
+(i) Como 31 ´e primo temos φ(31) = 31 − 1 = 30;
+
+(ii)φ(625) = φ(54) = 54−1(5 − 1) = 500;
+
+(iii)φ(15) = φ(3 · 5) = φ(3)φ(5) = (3 − 1)(5 − 1) = 8;
+
+9
+
+Deﬁni¸c˜ao 15 Um sistema reduzido de res´ıduos m´odulo m, doravante SRRm, ´e o con-
+
+junto de φ(m) inteiros, de modo que todos sejam coprimos com m e tomados quaisquer
+
+dois elementos deste conjunto, estes n˜ao s˜ao incongruentes m´odulo m.
+
+Exemplo 7
+
+Calcularemos SRR10 e SRR5.
+
+Note que SRR10 = {1, 3, 7, 9} e SRR5 = {1, 2, 3, 4}.
+
+Observa¸c˜ao 1 Pela deﬁni¸c˜ao SRRm dado um SRRm = {r1, r2, · · · , rφ(m)} temos que
+
+todos os elementos ri; 1 ≤ i ≤ φ(n) s˜ao coprimos com m ent˜ao conclu´ımos que (r1 ·
+
+r2 · · · rφ(m), m) = 1.
+
+Proposi¸c˜ao 10 Seja SRRm = {r1, · · · rφ(m)} e um inteiro a coprimo com m. Ent˜ao o
+
+conjunto {a · r1, · · · , a · rφ(m)} tamb´em ´e SRRm.
+
+Prova: Percebemos claramente que (a · ri, m) = 1. Suponhamos agora que existam i e j
+
+com i (cid:54)= j e 1 ≤ i, j ≤ φ(m), tal que a · ri ≡ a · rj
+
+(mod m). Pela deﬁni¸c˜ao de congruˆencia
+
+temos m|(a · ri − a · rj) ⇒ m|a(ri − rj) por´em, por hip´otese, temos que (a, m) = 1, ou seja,
+
+m (cid:54) |a e deste modo somos levados a concluir que m|(ri − rj), ou seja, ri ≡ rj
+
+(mod m)
+
+que ´e um absurdo pois ri e rj s˜ao elementos do SRRm.
+
+Observe que na proposi¸c˜ao anterior a · ri ´e congruente `a algum rj.
+
+Teorema 11 (Euler) Seja a e m inteiros coprimos e m > 0, ent˜ao
+
+aφ(m) ≡ 1
+
+(mod m)
+
+Prova Pela observa¸c˜ao feita na proposi¸c˜ao 10 conclu´ımos que
+
+a · r1 · a · r2 · · · a · rφ(m) ≡ r1 · r2 · · · rφ(m)
+aφ(m)(r1 · r2 · · · rφ(m)) ≡ (r1 · r2 · · · rφ(m))
+aφ(m) ≡ 1 (mod m)
+
+(mod m)
+
+(mod m)
+
+(cid:3)
+
+(cid:3)
+
+Deﬁni¸c˜ao 16 Sejam a e n inteiros coprimos. Ent˜ao, o menor inteiro positivo x tal que
+
+ax ≡ 1 (mod n) ´e chamado de ordem de a m´odulo n
+
+10
+
+Vamos representar a ordem de a m´odulo n por ordna,logo pelo teorema de Euler
+
+podemos garantir a existˆencia da ordem de a m´odulo n, pois sabemos que x pode assumir
+
+o valor de φ(n).
+
+Exemplo 8
+
+Podemos encontrar de ord72 calculando.
+
+21 ≡ 2 (mod 7), 22 ≡ 4 (mod 7),
+
+23 ≡ 1 (mod 7), como vimos acima, a primeira potencia de 2 que ´e congruente a 1
+
+m´odulo 7 ´e 23, assim ord72 = 3
+
+Exemplo 9
+
+Agora tentaremos calcular ord1212
+
+21 ≡ 2
+22 ≡ 4
+23 ≡ 8
+24 ≡ 16
+25 ≡ 32
+26 ≡ 64
+27 ≡ 7
+28 ≡ 14
+29 ≡ 28
+210 ≡ 56
+
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+
+211 ≡ 112
+212 ≡ 103
+213 ≡ 85
+214 ≡ 49
+215 ≡ 98
+216 ≡ 75
+217 ≡ 29
+218 ≡ 58
+219 ≡ 116
+220 ≡ 111
+
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+(mod 121)
+
+Podemos ver no exemplo 9 que nem sempre ´e simples obter a ordem de a m´odulo
+
+n. A proposi¸c˜ao abaixo ser´a destinada a facilitar esta procura. Neste caso veremos que a
+
+ord1212 = 110.
+
+Proposi¸c˜ao 12 Se a e n s˜ao inteiros coprimos e n > 0, ent˜ao o inteiro positivo x ser´a
+
+solu¸c˜ao da congruˆencia ax ≡ 1 (mod n) se, e somente se, ordna|x
+
+Prova: i) Temos que o inteiro x ´e a solu¸c˜ao da congruˆencia ax ≡ 1 (mod n) pela divis˜ao
+
+euclidiana temos que x = k · ordna + r com 0 ≤ r < ordna ent˜ao ax = ak·ordna+r ≡ ar
+(mod n) como por hip´otese ax ≡ 1 (mod n) ent˜ao ar ≡ 1 (mod n) pela deﬁni¸c˜ao de
+
+ordem conclu´ımos que r = 0, ou seja, ordna|x
+
+ii) Se ordna|x ent˜ao x = ordna · k, assim
+
+ax = aordna·k = (aordna)n ≡ 1n = 1 mod n
+
+concluindo a prova.
+
+11
+
+Corol´ario 13 Se a e n s˜ao coprimos ent˜ao ordna|φ(n)
+
+Prova: Pelo teorema Euler temos que aφ(n) ≡ 1 (mod n); o teorema anterior nos garante
+
+(cid:3)
+
+que ordna|φ(n)
+
+Exemplo 10
+
+(cid:3)
+
+Agora podemos retornar ao exemplo 9 e obter ord1212. Como φ(121) = 110 os can-
+
+didatos ao valor de ord1212 s˜ao os divisores de 110 que s˜ao os elementos do conjunto
+
+{1, 2, 5, 10, 11, 22, 55, 110}. J´a sabemos que {1, 2, 5, 10, 11} n˜ao s˜ao, ent˜ao tentaremos os
+
+demais.
+
+222 ≡ 81
+
+(mod 121)
+
+255 ≡ 120
+
+(mod 121)
+
+2110 ≡ 1
+Observemos que ord1212 = 110 = φ(121), neste caso, o n´umero 2 recebe o nome
+
+(mod 121)
+
+de ra´ız primitiva m´odulo 121, que deﬁnimos agora.
+
+1.3 Obtendo uma Raiz Primitiva
+
+Deﬁni¸c˜ao 17 Se ordma = φ(m) dizemos que a ´e uma raiz primitiva m´odulo m
+
+Exemplo 11
+
+Aﬁrmamos que 3 ´e raiz primitiva m´odulo 5, e de fato ´e pois 31 ≡ 3 (mod 5), 32 ≡ 4
+
+(mod 5) e 34 ≡ 1 (mod 5).
+
+Dado um natural n estamos interessados em obter todas as ra´ızes primitivas
+
+incongruentes m´odulo n, caso existam. Construiremos este resultado.
+
+Proposi¸c˜ao 14 Se a e n s˜ao inteiros coprimos com n > 0 e i, j inteiros n˜ao negativos,
+
+ent˜ao ai ≡ aj
+
+(mod n) se, e somente se i ≡ j (mod ordna)
+
+Prova: Por hip´otese temos que (a, n) = 1 ⇒ (aj, n) = 1. Notemos agora que se divi-
+
+dirmos os temos equivalentes na congruˆencia ai ≡ aj (mod n) por aj obtemos ai−j ≡ 1
+
+12
+
+(mod n), pela proposi¸c˜ao 12 conclu´ımos que ordna|(i − j) e pela deﬁni¸c˜ao de congruˆencia
+
+temos i ≡ j (mod ordna).
+
+Reciprocamente se i ≡ j (mod ordna) ent˜ao i = k · ordna + j assim ai =
+· aj ≡ aj (mod n), uma vez que aordna ≡ 1 (mod m)
+
+ak·ordna+j = (cid:0)aordna(cid:1)k
+
+(cid:3)
+
+Proposi¸c˜ao 15 Se ordna = t e u ´e um inteiro positivo, ent˜ao
+
+ordnau =
+
+t
+(u, t)
+
+Prova: Vamos deﬁnir ordna = t, ordnau = s, (t, u) = d. Pela divis˜ao euclidiana temos
+
+u = d · u1 e t = d · t1.
+
+Notemos agora que
+
+(au)t1 = (cid:0)ad·u1(cid:1) t
+
+d = (cid:0)at(cid:1)u1 ≡ 1
+
+(mod n)
+
+de onde conclu´ımos que ordnau = s divide t1.
+
+Por outro lado temos que (au)s = aus ≡ 1 (mod n). Sabemos agora que t|us,
+pois t = ordna ent˜ao d · t1|d · u1 · s que resulta em t1|u1 · s. ´E f´acil ver que (u1, t1) = 1,
+conclu´ımos que t1|s. Como s|t1 e t1|s provamos que s = t1. Ou seja, ordnau =
+
+t
+(u, t)
+
+(cid:3)
+
+Proposi¸c˜ao 16 Dados r e n inteiros positivos coprimos com n > 0, se r ´e uma raiz
+
+primitiva m´odulo n, ent˜ao os inteiros
+
+r, r2, , · · · , rφ(n)
+
+formam um sistema reduzido de res´ıduos m´odulo n.
+
+Prova: Para provar que as primeiras φ(n) potˆencia de uma raiz primitiva forma um
+
+sistema reduzido de res´ıduos m´odulo n, precisamos apenas mostrar que elas s˜ao coprimas
+
+com n e n˜ao s˜ao congruentes duas a duas.
+
+Pela hip´otese de r ser raiz primitiva m´odulo n conclu´ımos que (n, r) = 1. Con-
+
+sequentemente (n, rk) = 1 para todo k ∈ N, assim todas as potˆencias de r s˜ao coprimas
+
+com n.
+
+13
+
+Assumindo que ri ≡ rj (mod n), pela proposi¸c˜ao 14 isso s´o ocorre se i ≡ j
+
+mod ordnr, o que implica em i ≡ j mod φ(n) com 1 ≤ i ≤ φ(n) e 1 ≤ j ≤ φ(n). Pela
+
+deﬁni¸c˜ao de congruˆencia temos φ(n)|i − j que s´o ocorre se i − j = 0, pois i − j < φ(n).
+
+Conclu´ımos que ri ≡ rj (mod n) se, e s´o se, i = j.
+
+(cid:3)
+
+Exemplo 12
+
+Pelo exemplo 11, j´a sabemos que 3 ´e uma raiz primitiva m´odulo 5 ent˜ao temos SRR5 =
+{3, 32, 33, 34}que podem ser SRR5 = {1, 2, 3, 4}
+
+Proposi¸c˜ao 17 Seja r uma raiz primitiva m´odulo n onde n ´e um inteiro maior que 1,
+
+ent˜ao ru ´e tamb´em raiz primitiva m´odulo n se, e s´o se, (u, φ(n)) = 1.
+
+Prova: Pela proposi¸c˜ao 15 temos que ordnau =
+
+ordna
+(u, ordna)
+
+ent˜ao ordnru =
+
+ordnr
+(u, ordrn)
+
+=
+
+, consequentemente, ordnru = φ(n), ou seja, ru ser´a uma raiz primitiva m´odulo
+
+φ(n)
+(u, φ(n))
+n se e s´o se (u, φ(n)) = 1.
+
+(cid:3)
+
+Exemplo 13
+
+Como φ(5) = 4 e (4, 1) = (4, 3) = 1 conclu´ımos que 31 ≡ 3 (mod 5) e 33 ≡ 2 (mod 5)
+
+s˜ao raizes primitivas m´odulo 5.
+
+Proposi¸c˜ao 18 Se um inteiro n tem uma raiz primitiva, ent˜ao n tem exatamente φ(φ(n))
+
+ra´ızes primitivas incongruentes.
+
+Prova: A proposi¸c˜ao 16 nos garante que r, r2, · · · , rφ(n) forma um sistema reduzido de
+
+res´ıduos m´odulo n e conforme a proposi¸c˜ao 17 conclu´ımos que apenas as i-potencias,
+
+1 ≤ i ≤ φ(n), com (i, φ(n)) = 1 s˜ao ra´ızes primitivas m´odulo n, ent˜ao, existe φ(φ(n))
+
+ra´ızes primitivas m´odulo n.
+
+(cid:3)
+
+14
+
+Exemplo 14
+
+Vamos obter as ra´ızes primitivas m´odulo 11. Aﬁrmamos que 2 ´e raiz primitiva m´odulo
+
+11, e de fato ´e pois φ(11) = 11 − 1 = 10 e 21 ≡ 2 (mod 11), 22 ≡ 4 (mod 11),
+
+25 ≡ 10 (mod 11) e 210 ≡ 1 (mod 11). Agora podemos obter as demais ra´ızes primitivas,
+
+e s˜ao elas: 21 ≡ 2 (mod 11), 23 ≡ 8 (mod 11), 27 ≡ 7 (mod 11) e 29 ≡ 6 (mod 11)
+
+As ra´ızes primitivas ´e um parte da teoria dos n´umeros important´ıssima, po-
+
+der´ıamos escrever muitas p´aginas sobre este t´opico, entretanto escapar´ıamos e muito do
+
+nosso objetivo neste trabalho. Para um estudo profundo deste tema recomendamos Rosen
+
+(2005).
+
+Todavia nosso objetivo ´e apresentar que todo primo tem raiz primitiva. Pra
+
+alcan¸car esta meta lan¸camos m˜ao de alguns teoremas cujas as demonstra¸c˜oes podem ser
+
+encontradas em Rosen (2005).
+
+Deﬁni¸c˜ao 18 Seja f (x) um polinˆomio de coeﬁcientes inteiros. Dizemos que c ´e uma raiz
+
+de f (x) m´odulo m se f (c) ≡ 0 (mod m).
+
+´E f´acil ver que se c ´e uma raiz de f (x) m´odulo m ent˜ao todo inteiro x congruente
+
+a c m´odulo m tamb´em ser´a raiz.
+
+Exemplo 15
+
+Aﬁrmamos que f (x) = x2 + x + 1 tem exatamente duas ra´ızes m´odulo 7, x ≡ 2 (mod 7)
+
+e x ≡ 4 (mod m) e de fato, substituindo x = 0, 1, 2, 3, 4, 5, 6 em f (x), temos:
+
+02 + 0 + 1 (cid:54)≡ 0 (mod 7), 12 + 1 + 1 (cid:54)≡ 0 (mod 7), 22 + 2 + 1 = 7 ≡ 0 (mod 7)
+
+32 +3+1 (cid:54)≡ 0 (mod 7), 42 +4+1 = 21 ≡ 0 (mod 7), 52 +5+1 (cid:54)≡ 0 (mod 7), 62 +6+1 (cid:54)≡ 0
+
+(mod 7)
+
+Exemplo 16
+
+O polinˆomio g(x) = x2 + 2 n˜ao tem ra´ızes m´odulo 5, pois,
+
+02 + 2 (cid:54)≡ 0 (mod 5), 12 + 2 (cid:54)≡ 0 (mod 5), 22 + 2 (cid:54)≡ 0 (mod 5), 32 + 2 (cid:54)≡ 0 (mod 5),
+
+42 + 2 (cid:54)≡ 0 (mod 5).
+
+15
+
+Exemplo 17
+
+O pequeno teorema de Fermat nos diz que caso p seja primo, ent˜ao o polinˆomio h(x) =
+
+xp−1 − 1 tem exatamente p − 1 ra´ızes m´odulo p.
+
+Teorema 19 Seja p um primo e seja d um divisor de p − 1. Ent˜ao o polinˆomio xd − 1
+
+tem exatamente d ra´ızes incongruentes m´odulo p.
+
+Prova A prova deste teorema pode ser encontrada em Rosen (2005).
+
+(cid:3)
+
+Teorema 20 Seja p um primo e tomemos d um divisor de p − 1. Ent˜ao o n´umero de
+
+inteiros incongruentes de ordem d m´odulo p ´e igual a φ(p).
+
+Prova A prova deste teorema pode ser encontrada em Rosen (2005).
+
+(cid:3)
+
+Teorema 21 Todo primo tem um raiz primitiva.
+
+Prova:
+
+Seja p um primo.
+
+Pelo teorema 20,
+
+sabemos que existem
+
+φ(p − 1) inteiros incongruentes de ordem p − 1 m´odulo p. Devido a este fato e pela
+
+deﬁni¸c˜ao de raiz primitiva, p tem φ(p − 1) ra´ızes primitiva.
+
+(cid:3)
+
+A existˆencia de ra´ızes primitivas n˜ao est´a restrita aos n´umeros primos. Sabemos
+
+que todos os n´umeros da forma 1, 2, 4, pt e 2pt com p primo e t inteiro positivo possuem
+
+raiz primitiva. Para um justiﬁcativa ver Rosen (2005).
+
+1.4 A Aritm´etica dos ´Indices
+
+Com base na proposi¸c˜ao 16 sabemos que os inteiros r, r2, r3, · · · , rφ(m) forma
+
+um sistema reduzido de res´ıduos m´odulo m. A partir deste fato percebemos que se a ´e
+
+um inteiro coprimo com m est˜ao existe um ´unico x com 1 ≤ x ≤ φ(m) de modo que
+
+a ≡ rx
+
+(mod m)
+
+16
+
+Deﬁni¸c˜ao 19 Seja m um inteiro positivo com uma raiz primitiva r e a ´e um inteiro
+
+positivo com (a, m) = 1 ent˜ao o inteiro x com 1 ≤ x ≤ φ(m) tal que rx ≡ a (mod m) ´e
+
+chamado de ´ındice de a na base r m´odulo m.
+
+Neste caso escrevemos indra para indicar o indice de a na base r m´odulo m.
+
+Exemplo 18
+
+5 ´e uma raiz primitiva m´odulo 18.
+
+´E f´acil ver que
+
+51 ≡ 5
+
+(mod 18)
+
+52 ≡ 7
+
+(mod 18)
+
+53 ≡ 17
+
+(mod 18)
+
+54 ≡ 13
+
+(mod 18)
+
+55 ≡ 11
+
+(mod 18)
+
+56 ≡ 1
+
+(mod 18)
+
+assim:
+
+ind55 = 1
+
+ind57 = 2
+
+ind517 = 3
+
+ind53 = 4
+
+ind511 = 5
+
+ind51 = 6
+
+Observando a deﬁni¸c˜ao de indra, vemos que este n´umero ´e um expoente positivo e
+que rindra ≡ a (mod n) e ainda, indra ´e o menor expoente positivo onde 1 ≤ indra ≤ φ(n).
+
+Suponha que a ≡ b
+
+(mod m) e que r ´e um raiz primitiva m´odulo m. Ent˜ao
+
+rindra ≡ a (mod m) e rindrb ≡ b (mod m), logo rindra ≡ rindrb (mod m). Pela proposi¸c˜ao
+
+14 temos indra ≡ indrb (mod φ(n)), portanto
+
+a ≡ b
+
+(mod m) ⇔ indra ≡ indrb
+
+(mod φ(m))
+
+(1.1)
+
+Desta forma a propriedade rindra ≡ a (mod m) nos faz lembrar o n´umero real w
+
+deﬁnido como logaritmo de u na base v com um u e v n´umeros reais positivos e v (cid:54)= 1, ou
+
+seja, w = logv u. Equivalentemente vw = u e tamb´em sua propriedade de que vlogv u = u
+de modo semelhante 1.1 nos faz lembra que logv u = logv x ⇔ u = x. Veremos algumas
+
+propriedades dos ´ındices aritm´eticos.
+
+Teorema 22 Seja m um inteiro positivo com raiz primitiva r e seja a e b inteiros copri-
+
+mos com m. Ent˜ao:
+
+i) indr1 ≡ 0 mod φ(m)
+
+17
+
+ii) indr(a · b) ≡ (indra + indrb) (mod φ(m))
+
+iii) indrak ≡ k · indra (mod φ(m)) para k natural
+
+Prova i) Pelo teorema de Euler temos que rφ(m) ≡ 1 (mod m) como r ´e uma raiz primitiva
+
+de m ent˜ao φ(m) ´e a menor potˆencia de r congruente a 1 ent˜ao indr1 = φ(m) ≡ 0
+
+(mod φ(m)).
+
+ii) Notemos que rindr(a·b) ≡ a · b (mod m) e rindra+indrb = rindra · rindrb ≡ a · b
+
+(mod m) ent˜ao rindr(a·b) ≡ rindra+indrb (mod m), consequentemente indr(a · b) ≡ indra +
+
+indrb (mod φ(m))
+
+iii) Inicialmente notemos que rindrak ≡ ak (mod m) e de fato indrak = x ⇒
+≡ ak (mod m) ent˜ao
+
+rx ≡ ak (mod m) ⇒ rindrak ≡ ak (mod m) e rk·indra ≡ (cid:0)rindra(cid:1)k
+rindrak ≡ rk·indra (mod m) e consequentemente indrak ≡ k · indra (mod φ(m)).
+
+(cid:3)
+
+Por isso na deﬁni¸c˜ao 19 tamb´em dizemos que x ´e o logaritmo discreto de a na
+
+base r, ou seja, rlogr a ≡ a (mod m). Logo o teorema 22 pode ser reescrito da seguinte
+
+forma:
+
+Teorema 23 Seja m um inteiro positivo com raiz primitiva r e seja a e b inteiros copri-
+
+mos com m. Ent˜ao:
+
+i) logr 1 ≡ 0 mod φ(m)
+
+ii) logr(a · b) ≡ (logr a + logr b) (mod φ(m))
+
+iii) logr ak ≡ k · logr a (mod φ(m)) para k natural
+
+Exemplo 19
+
+Seja m = 7 temos que r = 3 ´e uma raiz primitiva m´odulo 7.
+
+´E f´acil ver que
+
+31 ≡ 3
+
+(mod 7)
+
+32 ≡ 2
+
+(mod 7)
+
+33 ≡ 6
+
+(mod 7)
+
+34 ≡ 4
+
+(mod 7)
+
+35 ≡ 5
+
+(mod 7)
+
+36 ≡ 1
+
+(mod 7)
+
+assim:
+
+18
+
+log3 1 = 6
+
+log3 3 = 1
+
+log3 5 = 5
+
+log3 2 = 2
+
+log3 4 = 4
+
+log3 6 = 3
+
+Exemplo 20
+
+Considerando ainda m = 7 e r = 5 temos
+
+51 ≡ 5
+
+(mod 7)
+
+52 ≡ 4
+
+(mod 7)
+
+53 ≡ 6
+
+(mod 7)
+
+54 ≡ 2
+
+(mod 7)
+
+55 ≡ 3
+
+(mod 7)
+
+56 ≡ 1
+
+(mod 7)
+
+log5 1 = 6
+
+log5 3 = 5
+
+log5 5 = 1
+
+log5 2 = 4
+
+log5 4 = 2
+
+log5 6 = 3
+
+Pelo exemplo 20 podemos notar que:
+
+log5 1 = 6 ≡ 0
+
+(mod φ(7))
+
+e
+
+log5 2 + log5 3 = 4 + 5 ≡ 3 = log5 6
+
+(mod φ(7)).
+
+19
+
+Cap´ıtulo 2
+
+No¸c˜oes de Criptograﬁa
+
+Criptograﬁa ´e a jun¸c˜ao de duas palavras oriundas do grego, e s˜ao elas krypt´os
+
+que signiﬁca “escondido”, “oculto”, “obscuro” e gr´aphein de signiﬁcado “descrever”, “es-
+
+crever”; “escrita”, portanto, a grosso modo, podemos entender que criptografar um men-
+
+sagem ´e escreve-la de modo dif´ıcil compreens˜ao por uma pessoa que n˜ao saiba com des-
+
+criptograf´a-la.
+
+Acredita-se que a primeira mensagem criptografada foi usada pelo escriba do fara´o
+
+eg´ıpcio Khnumhotep II, por volta de 1900 antes de Cristo, que documentou em tabletes
+
+de argila os segredos do tesouro de uma pirˆamide e teve a ideia de substituir algumas
+
+palavras ou alguns trechos do texto por c´odigos. Caso o documento fosse roubado, o
+
+ladr˜ao n˜ao encontraria o caminho que o levaria ao tesouro e morreria de fome, perdido
+
+nas catacumbas da pirˆamide.
+
+Antes do avan¸co da criptograﬁa usava-se a t´ecnica de esconder a mensagem de
+
+forma a n˜ao ser lida pelo inimigo, um exemplo cruel de esteganograﬁa antiga ´e escolher
+
+um escravo, rapava a cabe¸ca e tatuava a mensagem no couro cabeludo. Ap´os o cabelo ter
+
+crescido novamente o enviava ao destinat´ario da mensagem.
+
+Al´em do Egito, tamb´em existe registro dos prim´ordios da criptograﬁa na China,
+
+na Mesopotˆamia e at´e na b´ıblia, por´em os gregos tiveram mais destaque principalmente
+
+em dois m´etodos.
+
+O primeiro deles ´e o sistema monoalfab´etico de Cesar que baseia em trocar cada
+
+letra do alfabeto por uma outra, de tal forma que esta rela¸c˜ao se mantenha ﬁxa. Por
+
+exemplo se usarmos a chave 5 a letra l ser´a substitu´ıda pela letra l(cid:48) ≡ (l + 5) mod 26 logo
+
+a primeira letra do alfabeto ser´a substitu´ıda pela letra l(cid:48) ≡ (1 + 5) mod 26 ⇒ l(cid:48) = 6, assim
+
+20
+
+a letra F corresponder´a a letra A. Repetindo os c´alculos teremos que G corresponde a B,
+
+H corresponde a C e assim por diante.
+
+Este sistema parece eﬁciente, no entanto, um texto de uma determinada l´ıngua
+
+as letras aparecem com determinada frequˆencia e algumas regras de concordˆancia tornam
+
+este sistema fr´agil.
+
+O segundo ´e conhecido atualmente como “quadrado de Polybius”, neste m´etodo
+
+as letras do alfabeto eram distribu´ıdas em uma matriz quadrada de ordem 5 e seu valor
+
+correspondente seria o n´umero i · 10 + j, onde i ´e a linha e j ´e a coluna.
+
+1
+
+3
+
+4
+2
+1 A B C D
+2 F G H I
+3 K L M N
+4 P Q R S
+5 U V W X Y/Z
+
+5
+E
+J
+O
+T
+
+Tabela 2.1: O quadrado de Polybius
+
+Por exemplo se desejo escrever Isaac terei 2444111113.
+
+A criptograﬁa teve muita importˆancia no decorrer da hist´oria humana.
+
+Em 8 de fevereiro de 1587 era executada a rainha Maria Stuart da Esc´ocia por
+
+tramar a morte da rainha Elizabeth I da Inglaterra. A principal prova contra Maria era um
+
+conjunto de cartas criptografadas interceptadas cujo conte´udo consistia num plano para
+
+substituir Elizabeth por Maria. Nestas cartas continham a prova de que Maria estava
+
+tramado a morte de Elizabeth, deste modo, Maria subiria ao trono j´a que era prima de
+
+Elizabeth.
+
+Durante a segunda guerra mundial a criptograﬁa foi um dos principais fatores para
+
+o desfecho. Quando a Inglaterra conseguiu decifrar os c´odigos produzidos pela m´aquina
+
+Enigma dos Nazistas.
+
+Podemos notar que a criptograﬁa ´e t˜ao antiga quanto a pr´opria escrita. Entre-
+
+tanto, s´o recentemente se tornou alvo de extenso estudo cient´ıﬁco. Uma das grandes
+
+motiva¸c˜oes ´e a seguran¸ca de dados, como compras eletrˆonicas, assinatura digital de do-
+
+cumentos, controle de acesso, transa¸c˜oes de dinheiro eletrˆonico.
+
+Um criptosistema moderno ´e uma cole¸c˜ao de cinco elementos (P, C, K, E, D) com
+
+as seguintes propriedades:
+
+21
+
+(cid:136) P ´e um conjunto chamado de Espa¸co de texto comum. onde est˜ao as informa¸c˜oes
+
+que podem ser lidas por todos, muitas vezes chamado de texto puro.
+
+(cid:136) C ´e um conjunto chamado de Espa¸co de texto cifrado, onde est˜ao todos os textos
+
+criptografados.
+
+(cid:136) K ´e um conjunto onde se encontram todas as chaves para codiﬁcar uma mensagem.
+
+Devemos entender que “chave”neste texto ´e o nome dado ao objeto de codiﬁca¸c˜ao
+
+e decodiﬁca¸c˜ao de um texto, nos m´etodos criptogr´aﬁcos recentes este objeto ´e um
+
+n´umero.
+
+(cid:136) E= {Ek : k ∈ K} ´e uma fam´ılia de fun¸c˜oes Ek : P → C, cujos elementos s˜ao
+
+chamados de fun¸c˜oes de codiﬁca¸c˜ao criptogr´aﬁca.
+
+(cid:136) D = {Dk : k ∈ K} ´e uma fam´ılia de fun¸c˜oes Dk : C → P. Seus elementos s˜ao
+
+fun¸c˜oes de decodiﬁca¸c˜ao criptogr´aﬁca.
+
+Devemos perceber que as fun¸c˜oes das fam´ılias Ek e Dk s˜ao sobrejetivas, pois
+
+todo texto P e C devem ser levados a algum elemento, para garantir a funcionalidade
+
+do sistema. E certamente estas fun¸c˜oes devem ser injetivas para evitar ambiguidade na
+
+mensagem tornando o sistema criptogr´aﬁco falho.
+
+Observemos que a bijetividade das fun¸c˜oes Ek e Dk nos garante que estas admitem
+
+uma fun¸c˜ao inversa, no entanto estas inversas est˜ao em conjuntos diferentes, ou seja, temos
+
+que Ee ∈ E enquanto que a sua inversa Dd ∈ D. Em s´ımbolos ∀e ∈ K, ∃d ∈ K tal que
+
+Dd(Ee(p)) = p para todo p ∈ P.
+
+Notemos que os elementos dos conjuntos P e C s˜ao letras, ent˜ao a primeira coisa
+
+a fazer se desejarmos usar algum criptosistema num´erico devemos converter a mensagem
+
+em uma sequˆencia de n´umeros. Suporemos, para simpliﬁcar, que a mensagem original ´e
+
+um texto onde n˜ao haja n´umeros (caso tenha, basta escrevˆe-los usando o alfabeto e n˜ao
+
+os algarismos), apenas palavras.
+
+Na pr´e-codiﬁca¸c˜ao convertemos as letras em n´umeros usando a seguinte tabela
+
+de convers˜ao.
+
+22
+
+11
+
+12
+
+J K L M
+A B C D E F G H I
+10
+22
+19
+18
+16
+14
+N O P Q R S T U V W X Y Z
+35
+29
+23
+
+27
+
+24
+
+30
+
+13
+
+32
+
+28
+
+33
+
+34
+
+17
+
+25
+
+15
+
+20
+
+31
+
+26
+
+21
+
+Tabela 2.2: Pr´e Codiﬁca¸c˜ao de Textos
+
+E o espa¸co entre duas palavras ser´a substitu´ıdo pelo n´umero 99
+
+Adotaremos aqui que cada letra corresponde a um n´umero de dois algarismos,
+
+aﬁm de evitar ambiguidades. Podemos, agora, “escrever” numericamente uma mensagem
+
+usando a tabela 2.2, por exemplo, pr´e-codiﬁcamos a mensagem “ teoria dos n´umeros” e
+
+obtemos
+
+29142427181099132428992302214272428
+
+Se em um criptosistema a chave de codiﬁca¸c˜ao criptogr´aﬁca e ´e sempre igual `a
+
+chave de decodiﬁca¸c˜ao criptogr´aﬁca, ent˜ao o criptosistema ´e chamado sim´etrico.
+
+A principal vantagem ´e a simplicidade, esta t´ecnica apresenta facilidade de uso
+
+e rapidez para executar os processos criptogr´aﬁcos. Entenda que se as chaves utilizadas
+
+forem complexas a elabora¸c˜ao de um algoritmo de chave privada se torna bastante f´acil,
+
+por´em as possibilidades de intercepta¸c˜ao s˜ao correlatas aos recursos empregados, entre-
+
+tanto sua utiliza¸c˜ao ´e consider´avel no processo de prote¸c˜ao da informa¸c˜ao, pois quanto
+
+mais simples o algoritmo, melhor ´e a velocidade de processamento e facilidade de imple-
+
+menta¸c˜ao.
+
+Usu´arios de um sistema sim´etrico precisam trocar a chave secreta e antes de
+
+come¸carem sua comunica¸c˜ao. A chave e precisa ser mantida secreta dado que qualquer um
+
+que conhe¸ca e pode determinar a correspondente chave d de decodiﬁca¸c˜ao criptogr´aﬁca.
+
+Uma solu¸c˜ao para problema de trocar a chave no sistema sim´etrico ´e o seguinte:
+
+Seja R o remetente e D destinat´ario de uma mensagem secreta T P que ser´a
+
+enviada por um meio n˜ao seguro. O remetente R escolhe uma chave e1 e criptografa a
+
+mensagem T P resultando em e1(T P ) e envia para D, ao receber a mensagem e1(T P ),
+
+D escolhe uma outra chave e2 e criptografa a mensagem novamente resultando agora
+
+em e2(e1(T P )) e retorna a mensagem para R. Desta vez R descriptografa a mensagem
+
+usando a chave d1 do seguinte modo d1(e2(e1(T P ))) = d1(e1(e2(T P ))) = e2(T P ) e retorna
+
+a mensagem para D faltando agora apenas aplicar d2 e d2(e2(tp)) = tp.
+
+Mas esta solu¸c˜ao ainda cont´em dois problemas; o primeiro ´e que temos que enviar
+
+23
+
+a mensagem trˆes vezes pelo canal de comunica¸c˜ao, que ´e um risco; e segundo, precisamos
+
+que nosso criptosistema seja comutativo, ou seja, n˜ao importar´a a ordem que a mensagem
+
+ser´a criptografada e descriptografada. Estes dois problemas devem expor o sistema a
+
+s´erios riscos de se conhecer a chave secreta.
+
+Os principais algoritmos criptogr´aﬁcos sim´etricos s˜ao:
+
+(cid:136) AES
+
+O Advanced Encryption Standard (AES) ´e uma cifra de bloco, anunciado pelo
+
+National Institute of Standards and Technology (NIST) em 2003.
+
+(cid:136) DES
+
+O Data Encryption Standard (DES) foi o algoritmo sim´etrico mais disseminado no
+
+mundo, at´e a padroniza¸c˜ao do AES. Foi criado pela IBM em 1977.
+
+(cid:136) 3DES
+
+O 3DES ´e uma simples varia¸c˜ao do DES, utilizando-o em trˆes ciframentos sucessivos.
+
+(cid:136) IDEA
+
+O International Data Encryption Algorithm (IDEA) foi criado em 1991 por James
+
+Massey e Xuejia Lai e possui patente da su´ı¸ca ASCOM Systec.
+
+(cid:136) Blowﬁsh
+
+Algoritmo desenvolvido por Bruce Schneier, que oferece a escolha, entre maior segu-
+
+ran¸ca ou desempenho atrav´es de chaves de tamanho vari´avel. O autor aperfei¸coou
+
+o no Twoﬁsh.
+
+(cid:136) RC2
+
+Projetado por Ron Rivest (o R da empresa RSA Data Security Inc.) e utilizado no
+
+protocolo S/MIME, voltado para criptograﬁa de e-mail corporativo.
+
+(cid:136) CAST
+
+´E um algoritmo de cifra de bloco, sendo criado em 1996 por Carlisle Adams e
+
+Staﬀord Tavares.
+
+Nos criptosistemas assim´etricos, as chaves d e e s˜ao distintas e o c´alculo de d
+
+a partir de e ´e invi´avel. Em tais sistemas, a chave de codiﬁca¸c˜ao pode ser tornada
+
+p´ublica. Assim se eu desejar receber mensagens criptografadas, eu publico uma chave de
+
+24
+
+codiﬁca¸c˜ao criptogr´aﬁca e e mantenho secreta a correspondente chave d de decodiﬁca¸c˜ao
+
+criptogr´aﬁca.
+
+Este modelo de criptograﬁa foi criado na d´ecada de 1970 - pelo matem´atico Clif-
+
+ford Cocks que trabalhava no servi¸co secreto inglˆes, o GCHQ - Government Commu-
+
+nications Headquarters- na qual cada parte envolvida na comunica¸c˜ao usa duas chaves
+
+diferentes (assim´etricas) e complementares, uma privada e outra p´ublica.
+
+A seguran¸ca deste modelo de criptograﬁa ´e a diﬁculdade de obter e a partir de
+
+d. Vejamos agora os exemplos mais conhecidos de criptosistemas assim´etricos e no que se
+
+baseia sua seguran¸ca.
+
+(cid:136) RSA
+
+O RSA ´e um algoritmo assim´etrico que possui este nome devido a seus inventores:
+
+Ron Rivest, Adi Shamir e Len Adleman, que o criaram em 1977 no MIT. Atu-
+
+almente, ´e o algoritmo de chave p´ublica mais amplamente utilizado, al´em de ser
+
+uma das mais poderosas formas de criptograﬁa de chave p´ublica conhecidas at´e o
+
+momento. A seguran¸ca do RSA consiste na facilidade de multiplicar dois n´umeros
+
+primos para obter um terceiro n´umero, mas muito dif´ıcil de recuperar os dois primos
+
+a partir daquele terceiro n´umero.
+
+(cid:136) Diﬃe-Hellman
+
+Baseado no problema do logaritmo discreto, ´e o criptosistema de chave p´ublica mais
+
+antigo ainda em uso. O conceito de chave p´ublica, ali´as foi introduzido pelos autores
+
+deste criptosistema em 1976.
+
+(cid:136) Curvas Elipticas
+
+Em 1985, Neal Koblitz e V. S. Miller propuseram de forma independente a utiliza¸c˜ao
+
+de curvas el´ıpticas para sistemas criptogr´aﬁcos de chave p´ublica. Eles n˜ao chegaram
+
+a inventar um novo algoritmo criptogr´aﬁco com curvas el´ıpticas sobre corpos ﬁnitos,
+
+mas implementaram algoritmos de chave p´ublica j´a existentes, como o algoritmo de
+
+Diﬃe-Hellman, usando curvas el´ıpticas. Assim, os sistemas criptogr´aﬁcos de curvas
+
+el´ıpticas consistem em modiﬁca¸c˜oes de outros sistemas, que passam a trabalhar no
+
+dom´ınio das curvas el´ıpticas, em vez de trabalharem no dom´ınio dos corpos ﬁnitos.
+
+(cid:136) ElGamal
+
+Que ´e o principal objetivo. Cuja seguran¸ca tamb´em est´a baseada na diﬁculdade de
+
+25
+
+obter solu¸c˜ao do problema do logaritmo discreto em grupo cicl´ıco ﬁnito.
+
+26
+
+Cap´ıtulo 3
+
+O Criptosistema de ElGamal
+
+O ElGamal ´e um algoritmo de chave p´ublica utilizado para gerenciamento de cha-
+
+ves. Sua matem´atica difere da utilizada no RSA, mas tamb´em ´e um sistema comutativo.
+
+O algoritmo envolve a manipula¸c˜ao matem´atica de grandes quantidades num´ericas. Sua
+
+seguran¸ca adv´em de algo denominado problema do logaritmo discreto. Assim, o ElGamal
+
+obt´em sua seguran¸ca na diﬁculdade de calcular logaritmos discretos em um grupo c´ıclico
+
+ﬁnito, o que lembra bastante o problema de escrever n´umeros inteiros em um produto de
+
+fatores primos.
+
+3.1 O Problema do Logaritmo Discreto
+
+A seguran¸ca de v´arias t´ecnicas criptogr´aﬁcas dependem da diﬁculdade de se obter
+
+uma solu¸c˜ao para o logaritmos discreto que deﬁniremos agora.
+
+Deﬁni¸c˜ao 20 (O problema do logaritmo discreto, PLD) Tome um primo p, um
+
+gerador α de Z∗
+
+p, e um elemento β de Z∗
+
+p, encontrar um inteiro x tal que 0 ≤ x ≤ p − 2,
+
+de modo que αx ≡ β (mod p)
+
+A deﬁni¸c˜ao anterior por ser generalizada para um grupo c´ıclico ﬁnito qualquer G
+
+Deﬁni¸c˜ao 21 Tomemos um grupo c´ıclico e ﬁnito G de ordem n, um gerador α de G e
+
+um elementos de β ∈ G, encontrar um inteiro x, 0 ≤ x ≤ n − 1, de modo que αx = β
+
+Apesar de ser intrat´avel computacionalmente, o PLD tem algumas solu¸c˜oes que
+
+apresentaremos no pr´oximo cap´ıtulo.
+
+27
+
+Sem uma boa calculadora ´e muito dif´ıcil calcular a ordem de um n´umero inteiro
+
+m´odulo p, as ra´ızes primitivas e mais ainda o logaritmos discreto, para auxiliar nesta
+
+empreitada, uma poderosa ferramenta na resolu¸c˜ao de alguns problemas ´e o software
+
+Maple' um dos mais conhecidos no meio acadˆemico.
+
+3.2 Usando o MAPLE
+
+Todos os c´alculos apresentado para obter a ordem, a raiz primitiva, e at´e mesmo
+
+o logaritmo discreto s˜ao simples por´em, se desejarmos operar com valores muito altos n˜ao
+
+ser´a f´acil.
+
+Apresentamos uma ferramenta computacional para facilitar este processo.
+
+O Maple ´e um software alg´ebrico pago, desenvolvido inicialmente em 1981 na
+
+universidade de Waterloo no Canad´a. Todas os conceitos empregados aqui s˜ao obtidos
+
+no manual fornecido em MapleSoft (2008). Existem in´umeros tutoriais dispon´ıveis na
+
+internet.
+
+Para efetuarmos as opera¸c˜oes citadas anteriormente, primeiro devemos carregar
+
+o pacote teoria dos n´umeros clicando em ferramentas → carregar pacotes → teoria dos
+
+n´umeros.
+
+Ap´os carregado o pacote, podemos obter a ordem de um n´umero usando o co-
+
+mando: order(n,m) onde n ´e um inteiro qualquer e m ´e um inteiro positivo, de modo que
+
+ni = 1 (mod m) caso queira saber a ordem de 30 m´odulo 999983 obteremos 999932. Caso
+
+(m, n) (cid:54)= 1 o programa responder´a a mensagem F AIL
+
+Para calcularmos uma raiz primitiva de um n´umero devemos, ainda com o pacote
+
+carregado, inserir o comando primroot(n) e ter´a como resposta a menor raiz primitiva do
+
+n´umero n ou primroot(g,n) e ter´a como resposta a menor raiz primitiva m´odulo n maior
+
+que g
+
+E para obtermos o logaritmo discreto y da equa¸c˜ao ay ≡ x (mod m) fornecemos
+
+os dados no comando mlog(x,a,m), por exemplo se inserirmos mlog(963878,1002,999983)
+
+teremos como resposta y = 452.
+
+28
+
+3.3 O processo de Codiﬁca¸c˜ao e Decodiﬁca¸c˜ao
+
+Em cada etapa a seguir usaremos um exemplo para ilustr´a-las. Posteriormente
+
+este, apresentaremos um segundo exemplo mais amplo.
+
+3.4 Criando uma chave
+
+Deve-se, em primeiro lugar, escolher um n´umero primo aleat´orio p em seguida
+
+c´alcula-se uma raiz primitiva g de p e depois deve-se escolher um n´umero x aleat´orio com
+
+x < p. Calcula-se
+
+y ≡ gx
+
+(mod p)
+
+A chave p´ublica ser´a [y, g, p], e a chave particular ser´a o n´umero x. Para garantir
+
+a seguran¸ca do algoritmo, todos os n´umeros apresentados devem ter no m´ınimo 100 casas
+
+decimais pois, a seguran¸ca do sistema esta relaciona `a quantidade de algarismos dos
+
+n´umeros.
+
+Exemplo 21
+
+Tomemos o n´umero 10007 vamos veriﬁcar se este n´umero ´e primo. Existem in´umeros
+
+teste de primalidade de um inteiro, usaremos o m´etodo chamado de Crivo de Erast´otenes,
+
+por ser o mais simples e mais acess´ıvel a iniciantes em teoria dos n´umeros.
+
+Sabemos que
+
+10007 ∼= 100 e o conjunto dos primos p menores que 100 ´e
+
+√
+
+{2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97} vamos come¸car
+
+os testes:
+
+10007 = 5003 · 2 + 1 ⇒ 2 (cid:54) |10007
+10007 = 3335 · 3 + 2 ⇒ 3 (cid:54) |10007
+10007 = 2001 · 5 + 2 ⇒ 5 (cid:54) |10007
+10007 = 1429 · 7 + 4 ⇒ 7 (cid:54) |10007
+10007 = 909 · 11 + 8 ⇒ 11 (cid:54) |10007
+10007 = 769 · 13 + 10 ⇒ 13 (cid:54) |10007
+10007 = 588 · 17 + 11 ⇒ 17 (cid:54) |10007
+10007 = 526 · 19 + 13 ⇒ 19 (cid:54) |10007
+10007 = 435 · 23 + 2 ⇒ 23 (cid:54) |10007
+10007 = 345 · 29 + 2 ⇒ 29 (cid:54) |10007
+10007 = 322 · 31 + 25 ⇒ 31 (cid:54) |10007
+10007 = 270 · 37 + 17 ⇒ 37 (cid:54) |10007
+
+10007 = 244 · 41 + 3 ⇒ 41 (cid:54) |10007
+10007 = 232 · 43 + 31 ⇒ 43 (cid:54) |10007
+10007 = 212 · 47 + 43 ⇒ 47 (cid:54) |10007
+10007 = 188 · 53 + 43 ⇒ 53 (cid:54) |10007
+10007 = 169 · 59 + 36 ⇒ 59 (cid:54) |10007
+10007 = 164 · 61 + 3 ⇒ 61 (cid:54) |10007
+10007 = 149 · 67 + 24 ⇒ 67 (cid:54) |10007
+10007 = 140 · 71 + 67 ⇒ 71 (cid:54) |10007
+10007 = 137 · 73 + 6 ⇒ 73 (cid:54) |10007
+10007 = 126 · 79 + 53 ⇒ 79 (cid:54) |10007
+10007 = 120 · 83 + 47 ⇒ 83 (cid:54) |10007
+10007 = 112 · 89 + 39 ⇒ 89 (cid:54) |10007
+10007 = 103 · 97 + 16 ⇒ 97 (cid:54) |10007
+
+29
+
+Conclu´ımos que 10007 ´e primo. Devemos agora obter uma raiz primitiva de
+
+p = 10007, o faremos por tentativa e erros, no entanto ´e necess´ario ter em mente o
+
+corol´ario 13.
+
+Tentaremos inicialmente 2, calculamos φ(10007) = 10006 pelo corol´ario 13 sabe-
+
+mos que os candidatos a ord100072 s˜ao os divisores de φ(10007) que s˜ao {1, 2, 5003, 10006}.
+
+Calculando temos 21 ≡ 2 (cid:54)≡ 1 (mod 10007), 22 ≡ 4 (cid:54)≡ 1 (mod 10007), 25003 ≡ 1
+
+(mod 10007) como ord100072 = 5003 (cid:54)= 10006 = φ(10007) conclu´ımos que 2 n˜ao ´e uma
+
+raiz primitiva m´odulo 10007
+
+Tentaremos agora 5, 51 ≡ 5 (cid:54)≡ 1 (mod 10007), 52 ≡ 25 (cid:54)≡ 1 (mod 10007),
+
+55003 ≡ −1 (mod 10007) e 510006 ≡ 1 (mod 10007) como ord100075 = 10006 = φ(10007)
+
+conclu´ımos que 5 ´e uma raiz primitiva m´odulo 10007.
+
+Basta agora escolher um n´umero inteiro, digamos x = 1000, e calcularmos
+
+y ≡ 51000 (mod 10007) ou seja y ≡ ((510)10)10 ≡ ((8800)10)10 ≡ 823010 ≡ 5801 (mod 10007)
+
+Logo temos a chave p´ublica [5801, 5, 10007] e a chave privada x = 1000
+
+3.5 Codiﬁcando uma Mensagem
+
+Queremos criptografar a mensagem tp. Primeiro escolhe-se um n´umero k com
+
+0 ≤ k ≤ p − 2, tal que (k, p − 1) = 1. Ent˜ao calculamos,
+
+a ≡ gk
+
+(mod p)
+
+b ≡ (tp · yk)
+
+(mod p)
+
+Ent˜ao o texto criptografado ser´a [a, b].
+
+Exemplo 22
+
+Vamos criptografar tp = 1516 com a chave p´ublica [5801, 5, 10007]. Escolhemos
+
+um n´umero k = 30 ent˜ao:
+
+a ≡ 530 ≡ 3290
+
+(mod 10007)
+
+b ≡ (1516 · 580130) ≡ 4528
+
+(mod 10007)
+
+Assim o texto criptografado ser´a [3290, 4528]
+
+30
+
+3.6 Decodiﬁcando a Mensagem
+
+Agora para o receptor decodiﬁcar a mensagem ele toma o valor a e calcula
+
+e usar´a o resultado para calcular
+
+ξ ≡ (cid:0)a−1(cid:1)x
+
+(mod p)
+
+tp ≡ (b · ξ)
+
+(mod p).
+
+Exemplo 23
+
+Tomemos a chave privada x = 1000 e calcularmos ξ ≡ (cid:0)3290−1(cid:1)1000
+
+(mod 10007),
+
+que faremos por partes. Um processo simples para obtermos o inverso 3290−1 m´odulo
+
+10007 ´e resolver a congruˆencia 3290 · a−1 ≡ 1 (mod 10007) que ´e o mesmo que resolver
+
+a equa¸c˜ao diofantina 3267 · a−1 − 10007 · z = 1, pelo algoritmo de Euclides estendido
+
+teremos 1 = 3290 · 5040 − 10007 · 1657, ou seja, a−1 = 5040. Agora ξ ≡ 50401000 ≡ 5437
+
+(mod 10007)
+
+Teremos o texto puro ser´a tp ≡ (4528 · 5437)
+
+(mod 10007) que ser´a tp ≡ 1516
+
+(mod 10007) retomando o texto original.
+
+3.7 Exemplo Completo
+
+Para ilustrar este fato, criaremos uma situa¸c˜ao onde Jhon e Isaac desejam inter-
+
+cambiar uma mensagem secreta por um meio inseguro. Vamos supor que a mensagem
+
+seja tp = 251018.
+
+Jhon escolhe os n´umeros p = 999983 g = 48732 e x = 532 e calcula
+
+y ≡ 48732532
+
+(mod 999983)
+
+obtendo y = 532760 e divulga [532760, 48732, 999983]
+
+Quando Isaac recebe a chave p´ublica e escolhe k = 997, pois (997, φ(999983)) = 1
+
+calcula
+
+a ≡ 48732997
+
+(mod 999983) e b ≡ 251018 · 532760997
+
+(mod 999983)
+
+31
+
+obtendo a mensagem cifrada [831610, 658822], agora basta envia-la para Jhon.
+
+Jhon recebe a mensagem enviada por Isaac e deseja decifr´a-la, para tanto calcula
+
+ξ ≡ (cid:0)831610532(cid:1)−1
+
+(mod 999983)
+
+obtendo ξ = 933484 e posteriormente calcula
+
+tp ≡ 658822 · 933484
+
+(mod 999983)
+
+Chegando a tp = 251018 que realmente ´e a mensagem enviada por Isaac.
+
+Em 1977 os criadores do RSA lan¸caram o desaﬁo intitulado RSA-129, que con-
+
+sistia em decifrar uma mensagem criptografada pelo m´etodo RSA com uma chave de 129
+
+bits. Esse problema foi resolvido em 1993 por uma rede de 600 computadores coordena-
+
+dos por Derek Atkins, Michael Graﬀ, Arjen Lenstra e Paul Leyland cuja solu¸c˜ao ´e “The
+
+Magic Words are Squeamish Ossifrage”.
+
+Em homenagem a este problema codiﬁcaremos “The Magic Words are Squea-
+
+mish Ossifrage”pelo sistema criptogr´aﬁco de ElGamal usando a chave p´ublica [y, g, p] =
+
+[15, 5, 227].
+
+[5, 208]
+[17, 7]
+[128, 68]
+[17, 182]
+[198, 57]
+[174, 156]
+
+[125, 171]
+[37, 149]
+[17, 130]
+[125, 154]
+[37, 45]
+[17, 208]
+
+[174, 159]
+[125, 175]
+[37, 165]
+[174, 185]
+[198, 180]
+[125, 134]
+
+[35, 86]
+[174, 78]
+[17, 182]
+[37, 110]
+[125, 141]
+
+[125, 154]
+[37, 165]
+[174, 91]
+[17, 137]
+[5, 225]
+
+[174, 52]
+[17, 169]
+[37, 58]
+[174, 112]
+[198, 206]
+
+Tabela 3.1: Texto Criptografado
+
+3.8 Resolvendo o PLD
+
+Uma pergunta razo´avel ´e “Por que o criptosistema funciona?”. A resposta para
+
+essa pergunta se d´a em duas partes: A primeira diz respeito ao protocolo. Notemos que
+
+32
+
+b · ξ ⇒ (tp · yk) · a−x
+
+(mod p)
+
+⇒ tp · yk · (gk)−x
+
+(mod p)
+
+⇒ tp · yk · y−k
+
+(mod p)
+
+⇒ tp
+
+(mod p)
+
+⇒ tp
+
+o que garante que o protocolo funciona.
+
+A segunda diz respeito `a seguran¸ca. Ainda n˜ao existe um algoritmo eﬁciente para
+
+resolver o problema do logaritmo discreto, apesar disto, apresentaremos alguns esquema
+
+para obter o logaritmo discreto.
+
+O primeiro e mais obvio m´etodo para solucionar o PLD ´e atrav´es da procura
+
+exaustiva na sequˆencia αx1 ≡ β1
+(mod p), αx2 ≡ β2
+(mod p), at´e
+encontrar um βj = β obtendo a chave secreta. ´E not´orio que este esquema n˜ao ´e eﬁciente,
+principalmente se tratando de criptograﬁa onde a ordem de Zp ´e gigantesca.
+
+(mod p), αx3 ≡ β3
+
+O segundo m´etodo ´e conhecido como Baby-Step Giant-Step Menezes et al. (1996),
+
+que funciona assim:
+
+Estamos interessados em obter
+
+logr a
+
+(mod p) ou rx ≡ a (mod p)
+
+(3.1)
+
+Tomemos m como sendo o maior inteiro mais pr´oximo de (cid:112)ordpr = (cid:112)p − 1.
+
+Em seguida devemos observar que pelo algoritmo de Euclides temos x = im + j
+
+com i, j ∈ N e 0 ≤ j < m e substituindo em 3.1 teremos
+
+rim+j ≡ a
+
+(mod m)
+
+rim · rj ≡ a
+
+(mod m)
+
+⇔
+
+⇔
+
+rj ≡ a · (rim)−1
+
+(mod m) ⇔
+
+que, implica em
+
+33
+
+a · (cid:0)(cid:0)r−1(cid:1)m(cid:1)i
+
+≡ rj
+
+(mod m)
+
+(3.2)
+
+Agora basta variar o valor de i at´e encontrar o valor de 0 ≤ j < m, recomenda-se
+
+construir uma tabela com os valores de j e rj (mod p).
+
+Por exemplo. Estamos interessado em calcular 15x ≡ 54 (mod 157)
+
+Notemos que p = 157 ´e primo e 15 ´e uma raiz primitiva de 157 ent˜ao ord15715 =
+
+φ(157) = 156 logo m =
+
+(cid:108)√
+
+(cid:109)
+
+156
+
+= 13 ent˜ao
+
+x = 13i + j
+
+e substituindo em 3.2 obtemos
+
+15j = 54
+
+(cid:16)(cid:0)15−1(cid:1)13(cid:17)i
+
+(3.3)
+
+(3.4)
+
+realizando alguns c´alculos temos que 15−1 ≡ 21 (mod 157) e 2113 ≡ 22 (mod 157),
+
+trocando estas informa¸c˜oes em 3.4 encontramos
+
+15j = 54 · 22i
+
+(mod 157)
+
+(3.5)
+
+Como nossa solu¸c˜ao ser´a alguma potˆencia de 15 m´odulo 157 ´e interessante cons-
+
+truir uma tabela com os poss´ıveis valores para estas potˆencias. Como em 3.3 usamos o
+
+algoritmo de Euclides ent˜ao 0 ≤ j < 13
+
+j
+15j
+
+0
+1
+
+1
+15
+
+2
+68
+
+3
+78
+
+4
+71
+
+5
+123
+
+6
+118
+
+7
+43
+
+8
+17
+
+9
+98
+
+10
+57
+
+11
+70
+
+12
+108
+
+Tabela 3.2:
+
+Agora que tenho as poss´ıveis respostas basta variar o valor de 0 ≤ i < ∞ at´e
+
+encontrar algum valor na tabela 3.2.
+
+Iniciamos nossa busca, construindo uma nova tabela.
+
+Para i = 0 temos
+
+i
+
+0
+
+54 · 22i
+
+(mod 157) 54
+
+Como 54 n˜ao consta na tabela 3.2 faremos o mesmo c´alculo para i = 1
+
+34
+
+i
+
+0
+
+1
+
+54 · 22i
+
+(mod 157) 54 89
+
+Como 89 n˜ao consta na tabela 3.2 faremos o mesmo c´alculo para i = 2, e assim
+
+por diante, at´e encontrarmos algum n´umero que conste na tabela 3.2
+
+i
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+54 · 22i
+
+(mod 157) 54 89 74 58 20 126 103 68
+
+Por ﬁm encontramos um n´umero, neste caso, i = 7 que consta na tabela 3.2 que
+
+ocorre quando j = 2 pela equa¸c˜ao 3.3 temos que x = 13 · 7 + 2 = 93 portanto
+
+1593 ≡ 54
+
+(mod 157)
+
+Apesar do m´etodo baby-step Giant-step ser simples ele n˜ao ´e eﬁciente,pois a
+
+procura para o valor de i para chave p´ublica muito grande ser´a exaustiva. Caso i seja
+
+pequeno podemos obter a chave privada com facilidade que afetar´a a seguran¸ca do sistema.
+
+Caso o leitor esteja interessado existem mais m´etodos para encontrar o logaritmo
+
+discreto e podem ser encontrados em Menezes et al. (1996) e em ElGamal (1984).
+
+3.9 Assinaturas Digitais
+
+Assinatura digital ´e um par de n´umeros naturais (γ, s) que devem ser adicionados
+
+ao texto cifrado de modo que apenas o emissor da mensagem pode obtˆe-la. Esse par de
+
+n´umero deve ser veriﬁc´avel sem a necessidade de saber o teor da mensagem, visto que em
+
+caso de desacordo entre as partes com rela¸c˜ao ao texto da mensagem, uma terceira pessoa
+
+possa veriﬁcar a autoria da mensagem.
+
+Assinaturas digitais tˆem muitas aplica¸c˜oes em seguran¸ca da informa¸c˜ao, incluindo
+
+autentica¸c˜ao e integridade de dados. Uma das aplica¸c˜oes mais importantes de assinatura
+
+digital ´e a certiﬁca¸c˜ao de chaves p´ublicas em grandes redes.
+
+O conceito e utilidade de uma assinatura digital foram reconhecidos v´arios anos
+
+antes que qualquer aplica¸c˜ao pr´atica deste conceito estivesse dispon´ıvel. O primeiro
+
+m´etodo descoberto foi o esquema de assinatura RSA, que permanece at´e hoje como uma
+
+das t´ecnicas mais pr´aticas e vers´ateis dispon´ıveis.
+
+35
+
+3.9.1 Assinando uma Mensagem com ElGamal
+
+Trataremos agora sobre assinaturas digitais pelo criptosistema de ElGamal. Su-
+
+ponha que uma pessoa deseja assinar uma mensagem usando o criptosistema de ElGamal
+
+e que tamb´em que essa pessoa tenha a chave p´ublica [y, g, p] e a chave privada x de modo
+
+que y ≡ gx (mod p).
+
+Para assinar a mensagem tp, essa pessoa com a chave privada x far´a o seguinte:
+
+(i) Primeiro selecionar´a um inteiro k coprimo com p − 1, ou seja (k, p − 1) = 1, o que
+
+garante a existˆencia do inverso de k m´odulo p − 1;
+
+(ii) em seguida calcula γ tal que γ ≡ gk (mod p) com 0 ≤ γ ≤ p − 1;
+
+(iii) s ≡ (tp − x · γ)k−1 (mod p − 1), com 0 ≤ s ≤ p − 2;
+
+(iv) A assinatura na mensagem ser´a o par (γ, s) que ser´a anexado ao texto tp.
+
+3.9.2 Veriﬁcando a Assinatura
+
+O sistema de cria¸c˜ao de assinatura digital s´o ter´a efeito se a assinatura for ve-
+
+riﬁc´avel. Para veriﬁcar se a assinatura na mensagem tp ´e autˆentica, devemos tomar a
+
+chave p´ublica [y, g, p] e a assinatura (γ, s) e calcular os veriﬁcadores V1 e V2 os quais n˜ao
+
+dependem da chave privada:
+
+V1 ≡ γsyγ
+
+(mod p),
+
+0 ≤ V1 ≤ p − 1
+
+e
+
+V2 ≡ gtp
+
+(mod p),
+
+0 ≤ V2 ≤ p − 1.
+
+Para que a assinatura seja verdadeira devemos obter V1 ≡ V2
+
+(mod p), ou seja:
+
+V1 ≡ γsyγ
+
+(mod p)
+
+≡ γ(tp−x·γ)k−1yγ
+γk−1(cid:17)tp−x·γ
+
+≡
+
+(cid:16)
+
+yγ
+
+(mod p)
+
+(mod p)
+
+(mod p)
+
+(mod p)
+
+(mod p)
+
+≡ gtp−x·γyγ
+≡ gtp (gx·γ)−1 yγ
+≡ gtp (yγ)−1 yγ
+
+≡ gtp
+
+(mod p)
+
+≡ V2
+
+(mod p)
+
+36
+
+3.9.3 Seguran¸ca da Assinatura
+
+Jamais podemos escolher o mesmo k para duas assinaturas diferentes. Se to-
+
+marmos o mesmo valor de k para duas assinaturas (γ1, s1) e (γ2, s2), este valor pode ser
+
+encontrado. De fato,para o mesmo k ter´ıamos duas assinaturas
+
+e
+
+s1 ≡ k−1(tp1 − xγ)
+
+(mod p − 1)
+
+s2 ≡ k−1(tp2 − xγ)
+
+(mod p − 1),
+
+multiplicando as duas congruˆencias por k teremos
+
+e
+
+s1k ≡ (tp1 − xγ)
+
+(mod p − 1)
+
+s2k ≡ (tp2 − xγ)
+
+(mod p − 1),
+
+subtraindo as duas congruˆencias teremos
+
+k(s1 − s2) ≡ tp1 − tp2
+
+(mod p − 1)
+
+e ﬁnalizando, podemos calcular
+
+k ≡ (tp1 − tp2)(s1 − s2)−1
+
+(mod p − 1).
+
+Uma vez conhecendo o valor de k em m˜aos temos
+
+s1 ≡ k−1(tp1 − xγ)
+
+(mod p − 1)
+
+s1k ≡ tp1 − xγ
+
+(mod p − 1)
+
+xγ ≡ tp1 − s1k
+
+(mod p − 1)
+
+x ≡ γ−1(tp1 − s1k)
+
+(mod p − 1)
+
+obtenmos a chave privada, colocando todo o processo em risco.
+
+37
+
+Caso algu´em tente forjar uma assinatura na mensagem tp escolhendo um k e
+
+usando a chave p´ublica para calcular γ ≡ gk (mod p). Mas para calcular
+
+s = (P − xγ)k−1
+
+(mod p − 1)
+
+seria necess´ario conhecer a chave privada x.
+
+3.9.4 Exemplos
+
+Exemplo 24 Queremos assinar o texto tp = 10 usando o criptosistema de ElGamal, com
+
+as chaves p´ublica [y, g, p] = [11, 2, 13] e a chave privada x = 7.
+
+Para assinar este texto primeiro devemos escolher aleatoriamente um k = 5, mas
+
+este k n˜ao pode ser qualquer n´umero, este k deve ser maior que zero e menor que φ(13)
+
+e coprimo com φ(13). Notemos que 5−1 ≡ 8 (mod 13)
+
+Agora para obtermos a assinatura calculamos
+
+γ ≡ 25
+
+(mod 13)
+
+facilmente chegamos a γ = 6 e
+
+s ≡ (10 − 7 · 6) · 8 mod 12
+
+obtendo s = 8 assim a nossa assinatura ser´a o par (6, 8) e o texto ser´a P = 10
+
+Podemos veriﬁcar a validade da assinatura calculando
+
+o que implica que V1 = 10 e
+
+V1 ≡ 116 · 68
+
+(mod 13)
+
+V2 ≡ 210
+
+(mod 13)
+
+e resultando em V2 = 10 a assinatura ´e verdadeira devido o fato de V1 = V2.
+
+Exemplo 25
+
+Assinaremos agora o texto cifrado no exemplo 21.
+
+38
+
+Temos como texto criptografado tc = [3290, 4528] ent˜ao assinaremos cada um
+
+individualmente com a chave p´ublica [y, g, p] = [5801, 5, 10007] e a chave privada x = 1000.
+
+Para assinarmos 3290 usaremos k = 197, calculemos
+
+γ ≡ 5197
+
+(mod 10007)
+
+γ ≡ 5488
+
+(mod 10007)
+
+que resulta em
+
+e calculando s:
+
+s ≡ (3290 − 1000 · 5488) · 197−1
+
+(mod 1006).
+
+s ≡ 2380
+
+(mod 10006);
+
+portanto para o texto 3290 temos a assinatura [5488, 2380].
+
+Agora assinando o texto 4528 escolhemos k = 167 ent˜ao
+
+γ ≡ 5167 ≡ 172
+
+(mod 10007)
+
+e
+
+s ≡ (4528 − 1000 · 172) · 167−1 ≡ 9842
+
+(mod 10006)
+
+assim a assinatura para o texto 4528 ´e o par [172, 9842].
+
+Quando enviarmos os texto criptografado tc = [3290, 4528] devemos enviar junto
+
+as respectivas assinaturas digitais [5488, 2380] e [172, 9842]
+
+Para veriﬁcarmos a conﬁabilidade da origem da mensagem que recebemos deve-
+
+mos veriﬁcar a assinatura antes de decodiﬁcar a mensagem. Veriﬁcando
+
+V1 ≡ 54882380 · 58015488 ≡ 6809
+
+(mod 10007)
+
+e
+
+V2 ≡ 53290 ≡ 6809
+
+(mod 10007)
+
+V1 ≡ 1729842 · 5801172 ≡ 4420
+
+(mod 10007)
+
+39
+
+e
+
+V2 ≡ 53290 ≡ 4420
+
+(mod 10007)
+
+conclu´ımos que a origem da mensagem ´e conﬁ´avel.
+
+Exemplo 26
+
+Assinar a mensagem tp = 3517 usando a chave p´ublica [y, g, p] = [18, 5, 37] e a chave
+
+particular x = 7
+
+Como o texto tp ´e maior que o primo p = 37 devemos inicialmente “quebrar”o
+
+texto em textos menores que p. Agindo deste forma teremos tp1 = 35 e tp2 = 17.
+
+Inicialmente estaremos assinando o texto tp1 escolhendo k = 5, calculando o valor de γ
+
+temos
+
+e calculando
+
+ou seja
+
+γ ≡ 55 ≡ 17
+
+(mod 37)
+
+s ≡ (35 − 7 · 17)29
+
+(mod 36)
+
+s ≡ 12
+
+(mod 36).
+
+Portanto a assinatura do texto tp1 = 35 ´e o par
+
+(γ, s) = (17, 2).
+
+Agora faremos o mesmo processo para assinar tp2 = 17 escolhemos k = 11,
+
+calculando o γ chegamos em
+
+e calculando o s temos
+
+ou seja
+
+γ ≡ 511 ≡ 2
+
+(mod 37)
+
+s ≡ (35 − 7 · 2)23
+
+(mod 36)
+
+s ≡ 15
+
+(mod 36).
+
+Ent˜ao a assinatura do texto tp2 = 17 ser´a (γ, s) = (2, 15).
+
+40
+
+Cap´ıtulo 4
+
+Criptograﬁa Na Sala da Aula
+
+O nosso objetivo neste cap´ıtulo ´e dar um proposta de inser¸c˜ao de criptograﬁa no
+
+ensino regular de matem´atica. Primeiro daremos algumas atividades l´udicas e em seguida
+
+apresentaremos uma sequˆencia did´atica para o sistema ElGamal.
+
+4.1 A Esteganograﬁa
+
+Sabemos que esteganograﬁa (do grego “escrita escondida”) ´e o estudo e uso das
+
+t´ecnicas para ocultar a existˆencia de uma mensagem dentro de outra. Em outras palavras,
+
+esteganograﬁa ´e o ramo particular da criptologia que consiste em fazer com que uma forma
+
+escrita seja camuﬂada em outra a ﬁm de mascarar o seu verdadeiro sentido.
+
+Esta t´ecnica ´e mais aconselhada para os aluno do inicio de ensino m´edio, cujo
+
+conhecimento em matem´atica n˜ao est´a preparado para c´alculos avan¸cados.
+
+Um dos exemplos mais conhecido de esteganograﬁa ´e a inser¸c˜ao de uma s´ılaba
+
+entre as s´ılabas da palavra que desejamos transmitir. Por exemplo: ﬁxamos como s´ılaba
+PE como a s´ılaba de codiﬁca¸c˜ao, ent˜ao se desejo transmitir a palavra MATEM ´ATICA,
+devo transmitir o c´odigo MAPETEPEM ´APETIPECA
+
+Outro m´etodo que podemos usar ´e transformar o alfabeto em outros s´ımbolos,
+
+vejamos um exemplo na ﬁgura 4.1
+
+41
+
+Figura 4.1: Chave Criptogr´aﬁca
+
+Neste modelo, cada letra ser´a representada pela ﬁgura que a circunda com por
+
+exemplo:
+
+4.2 Construindo um Disco Criptogr´aﬁco
+
+O disco criptogr´aﬁco ´e uma ferramenta para auxiliar no m´etodo criptograﬁa de
+
+C´esar dado no primeiro cap´ıtulo deste trabalhos.
+
+Os materiais necess´arios s˜ao:
+
+(cid:136) duas folhas A4 ou papel cart˜ao ou cartolina;
+
+(cid:136) uma r´egua;
+
+(cid:136) um esquadro;
+
+(cid:136) um compasso;
+
+(cid:136) uma tesoura e
+
+(cid:136) um prendedor de saco pl´astico em pastas tipo ﬁcheiro
+
+Usando compasso construa dois c´ırculos concˆentricos, em seguida construa um
+
+novo c´ırculo de mesmo raio do menor. Usando constru¸c˜ao geom´etrica1 divida estes c´ırculos
+
+em 27 partes iguais e trace raios ligando essas partes ao centro.
+
+Em cada parte escreva uma letra do alfabeto. Em seguida fa¸ca um furo no centro
+
+de cada circunferˆencia pequeno o suﬁciente para passar o prendedor sem folga.
+
+1Este tema n˜ao ´e contemplado neste trabalho, na internet existem v´arios v´ıdeos de como se fazer esta
+
+constru¸c˜ao, mas preferimos a referˆencia Wagner (2009)
+
+42
+
+Agora j´a esta pronto o disco criptogr´aﬁco, basta us´a-lo como indicado no cap´ıtulo
+
+1
+
+.
+
+4.3 Construindo um cilindro de Thomas Jeﬀerson
+
+Este ´e um m´etodo criptogr´aﬁco criado por Tomas Jeﬀerson, que foi o terceiro
+
+presidente dos Estados Unidos e tamb´em inventor. Para construirmos uma r´eplica preci-
+
+saremos de:
+
+(cid:136) Folhas de papel A4
+
+(cid:136) No m´aximo 27 copos descart´aveis de mesmo tamanho;
+
+(cid:136) tesoura;
+
+(cid:136) cola branca;
+
+(cid:136) r´egua;
+
+(cid:136) caneta;
+
+(cid:136) caneta para cd.
+
+´E incrivelmente simples confeccionar este cilindro. Primeiro use uma folha de A4
+
+e corte um tira de 1 cm de largura e de comprimento total da folha em seguida enrole
+
+esta o mais pr´oximo da boca do copo poss´ıvel e retire o excesso; agora vocˆe tem uma tira
+
+de papel de comprimento igual ao comprimento do circulo que forma boca deste copo.
+
+Agora vocˆe deve desenhar 27 retˆangulos iguais de modo a n˜ao faltar nem sobrar
+
+tira de papel neste processo, s˜ao nestes retˆangulos vocˆe deve escrever o alfabeto de forma
+
+mais aleat´oria poss´ıvel, recomendo fazer um sorteio de cada letra. Fa¸ca 27 tiras exata-
+
+mente iguais a primeira, por´em o alfabeto deve estar em ordem diferente. Quando as tira
+
+de papel estiverem prontas cole uma em cada copo, desta forma teremos 27 copos cada
+
+um com um alfabeto aleat´orio colado.
+
+Use a caneta para cd para numerar os copos de preferˆencia no fundo e tamb´em
+
+use n´umeros aleat´orios.
+
+43
+
+Para criptografar mensagem devemos colocar os copos um dentro do outro de
+
+forma que as tiras de papel se encaixem sem nenhuma sobrepor outra.
+
+Se desejarmos criptografar a palavras Escola, escolhemos 6 copos, digamos os
+
+copos c1, c2, c3, c4, c5, c6 e giramos estes copos de modo a escreve a palavra Escola da´ı
+
+escolhemos uma das outras 26 palavras poss´ıveis para se formar com 6 letras do alfabeto
+
+nas ordens dos copos escolhidos, suponha que tenha escolhido a palavra composta pelas
+
+letras L1, L2, L3, L4, L5, L6, ent˜ao a palavra Escola ser´a o par
+
+[L1L2L3L4L5L6, c1 − c2 − c3 − c4 − c5 − c6]
+
+4.4 Criptograﬁa e Fun¸c˜oes Bijetivas
+
+Um poderoso m´etodo para apresenta¸c˜ao da criptograﬁa como ramo da matem´atica
+
+para os leigos ´e a fun¸c˜ao aﬁm. A vantagem da fun¸c˜ao aﬁm em rela¸c˜ao as demais ´e o fato
+
+de ser de f´acil manipula¸c˜ao e principalmente por ser bijetiva em todo o seu dom´ınio.
+
+Exemplo 27
+
+Separamos os alunos em duplas e em seguida pedimos para escolherem uma fun¸c˜ao aﬁm
+
+qualquer, digamos y = 2x + 3.
+
+Um dos alunos escolhe um mensagem e a pr´e-codiﬁca usando a tabela 1.1, su-
+
+ponhamos que a mensagem seja 17241914 291422 10302110 ao passar cada n´umero pelo
+
+processo criptogr´aﬁco o aluno ter´a 34483831 582847 20604223 que ´e uma mensagem crip-
+
+tografada. O outro aluno da dupla que queira decodiﬁcar a mensagem calcula a inversa da
+
+criptogr´aﬁca,
+
+fun¸c˜ao
+34483831 − 3
+2
+
+582847 − 3
+2
+
+neste
+caso
+20604223 − 3
+2
+
+x
+
+=
+
+y − 3
+2
+
+e
+
+efetua
+
+o
+
+c´alculo
+
+resultando 17241914 291422 10302110 que ´e a
+
+mensagem “hoje tem aula”.
+
+Este ´e um exemplo de criptograﬁa onde se criptografa toda a palavra, no entanto
+
+podemos criptografar letra por letra. Pode ser mais demorado para efetuar os c´alculos,
+
+por´em ´e muito mais vantajoso quanto a gama de escolhas de fun¸c˜oes criptogr´aﬁcas.
+
+Podemos criptografar a mensagem
+
+17 − 24 − 19 − 14 − 99 − 29 − 14 − 22 − 99 − 10 − 30 − 21 − 10
+
+44
+
+substituindo os espa¸cos por 99 usando uma fun¸c˜ao de duas senten¸cas
+
+y =
+
+
+
+
+
+
+2x − 24, se x ≥ 22
+
+x − 2, se x < 22
+
+Resultando na mensagem criptografada 15 − 24 − 17 − 12 − 174 − 34 − 12 − 20 −
+
+174 − 8 − 36 − 19 − 8.
+
+E para descriptografar esta mensagem basta usar a sua inversa, que ´e dada por
+
+x =
+
+
+
+
+
+
+y + 24
+2
+
+, se x ≤ 20
+
+y + 2, se x > 20
+
+Exemplo 28
+
+Outra forma de estabelecer uma fun¸c˜ao criptogr´aﬁca ´e atrav´es de fun¸c˜oes do segundo
+
+grau, como a fun¸c˜ao y = x2 + 5x − 50, ´e do conhecimento de todos que esta fun¸c˜ao n˜ao
+
+´e bijetiva, mas se restringirmos seu dom´ınio ao conjunto D = {x ∈ N; 10 ≤ x ≤ 99} esta
+
+fun¸c˜ao passa a ser bijetiva. Portanto devemos tomar muito cuidado ao escolhermos essa
+
+fun¸c˜ao do segundo grau.
+
+Criptografando a mesma mensagem do exemplo anterior temos,
+
+324 − 646 − 406 − 216 − 10246 − 936 − 216 − 544 − 10246 − 100 − 1000 − 496 − 100
+
+E para decodiﬁcar a mensagem acima basta usar a inversa
+
+x =
+
+−5 + (cid:112)25 + 4 · (50 + y)
+2
+
+45
+
+Cap´ıtulo 5
+
+ElGamal Em Sala de Aula
+
+Ap´os a motiva¸c˜ao dada pelo cap´ıtulo anterior poderemos apresentar um sistema
+
+muito mais forte de criptograﬁa por´em menos acess´ıvel aos alunos do ensino m´edio.
+
+Faremos um roteiro de como deve ser esta apresenta¸c˜ao, tentaremos fornecer o
+
+m´aximo de exemplos e detalhes poss´ıvel.
+
+5.1 Trabalhando com a fun¸c˜ao φ de Euler
+
+O funcionamento da fun¸c˜ao φ depende do conceito de m´aximo divisor comum,
+
+doravante MDC, que deﬁnimos agora.
+
+Deﬁni¸c˜ao 22 : M´aximo divisor comum de dois n´umeros inteiros a e b ´e o maior inteiro
+
+m que divide esses dois n´umeros. Neste caso escrevemos m = M DC(a, b) = (a, b).
+
+Pela deﬁni¸c˜ao 22 podemos dizer que m = (a, b) quando m satisfas as seguintes
+
+condi¸c˜oes:
+
+i) m|a e m|b
+
+ii) se existe um inteiro c de modo que c|a e c|b ent˜ao c|m
+
+Exemplo 29
+
+Qual ´e o MDC(12,18)=?
+
+Para resolver este problema devemos elencar o conjunto dos divisores de 12 e de
+
+18 e s˜ao eles D(12) = {1, 2, 3, 4, 6, 12} e D(18) = {1, 2, 3, 6, 9, 18} e os divisores comuns
+
+s˜ao os n´umeros {1, 2, 3, 6} e o maior deles ´e 6 consequentemente M DC(12, 18) = 6
+
+46
+
+Sabemos que este processo pode ser exaustivo, ent˜ao daremos um outro m´etodo:
+
+12, 18 2 ← Escolhemos um n´umero primo que divida ambos os n´umeros
+
+6,
+
+2,
+
+9
+
+3
+
+3 ← repetimos o processo acima
+
+1 ← paramos quando somente o n´umero 1 os divide
+
+ent˜ao o M DC(12, 18) = 2 · 3 · 1 = 6
+
+Exemplo 30
+
+Obter M DC(75, 105)
+
+75, 105 5
+
+15,
+
+21
+
+5,
+
+7
+
+3
+
+1
+
+conclu´ımos que M DC(75, 105) = 5 · 3 · 1 = 15
+
+Exemplo 31
+
+Calcular M DC(462, 1155)
+
+Repetindo o processo
+
+462, 1155
+
+154,
+
+385
+
+22,
+
+2,
+
+55
+
+5
+
+3
+
+7
+
+11
+
+1
+
+Portanto M DC(462, 1155) = 3 · 7 · 11 · 1 = 231
+
+Agora que j´a estamos com ideia de m´aximo divisor comum estabelecido podemos
+
+passar para a pr´oxima deﬁni¸c˜ao.
+
+Deﬁni¸c˜ao 23 Chamamos de coprimos os n´umeros a e b tal que M DC(a, b) = 1
+
+Exemplo 32
+
+Podemos aﬁrmar que 10 e 12 s˜ao coprimos?
+
+A resposta para essa pergunta ´e n˜ao, pois
+
+10, 12 2
+
+5,
+
+6
+
+1
+
+conclu´ımos que M DC(10, 12) = 2 · 1 = 2 e diferente de 1 que fere a deﬁni¸c˜ao de
+
+n´umeros coprimos.
+
+47
+
+Exemplo 33
+
+Os n´umeros 21 e 20 s˜ao coprimos?
+
+Notemos que os divisores de 21 s˜ao D(21) = {1, 3, 7, 21} e de 20 s˜ao D(20) =
+
+{1, 2, 4, 5, 10, 20} e o ´unico elemento em comum neste conjuntos ´e o n´umero 1 ent˜ao
+
+M DC(21, 20) = 1, ent˜ao a resposta para a pergunta ´e sim. Os n´umeros 21 e 20 s˜ao
+
+coprimos.
+
+Deﬁni¸c˜ao 24 Dado um n´umero natural n deﬁniremos como φ(n) como sendo a quanti-
+
+dade de n´umeros naturais k menores que n e coprimos com n
+
+Existem dois m´etodos para se calcular o valor de φ(n) dado um natural n qual-
+
+quer. O primeiro ´e fazer uma lista com todos os n´umeros menores que n e tirar da lista
+
+os n˜ao coprimos e em seguida contar os que sobraram ent˜ao φ(n) ser´a esta quantidade.
+´E obvio que este m´etodo n˜ao ´e eﬁciente quando se trata de n´umeros muito grande.
+
+O segundo m´etodo ´e mais eﬁciente e j´a conhecemos pelo teorema 9.
+
+Exemplo 34
+
+Calcular φ(19).
+
+Notemos que 19 ´e primo, conclu´ımos que φ(19) = 19 − 1 = 18 Para facilitar a
+
+veriﬁca¸c˜ao dos pr´oximos exemplos ampliaremos a tabela 1.1.
+
+n
+
+1 2 3 4 5 6 7 8 9
+
+φ(n) 1 1 2 2 4 2 6 4 6
+
+n
+
+10 11 12 13 14 15 16 17 18 19
+
+φ(n)
+
+4
+
+10
+
+4
+
+12
+
+6
+
+8
+
+8
+
+16
+
+6
+
+18
+
+n
+
+20 21 22 23 24 25 26 27 28 29 30
+
+φ(n)
+
+8
+
+12 10 22
+
+8
+
+20 12 18 12 28
+
+8
+
+5.2 Deﬁnindo ordem de um n´umero
+
+Para termos no¸c˜ao de ordem de um n´umero ´e preciso antes ter no¸c˜ao de con-
+
+gruˆencia, que daremos na pr´oxima deﬁni¸c˜ao.
+
+48
+
+Deﬁni¸c˜ao 25 Dados os n´umeros inteiros a, b e m a ´unica restri¸c˜ao para estes n´umeros
+
+´e m > 1. Dizemos que a ´e congruente a b m´odulo m, em s´ımbolos a ≡ b (mod m), se e
+
+somente se b − a for divis´ıvel por m.
+
+Apesar de parecer ser de dif´ıcil compreens˜ao, congruˆencia ´e um dos t´opicos mais
+
+simples da matem´atica e tamb´em um dos mais fecundos. Para avaliarmos que dois
+
+n´umeros s˜ao ou n˜ao congruentes m´odulo determinado n´umero, basta veriﬁcar se a di-
+
+feren¸ca destes n´umeros ´e divis´ıvel pelo terceiro.
+
+Exemplo 35
+
+Vamos veriﬁcar se 35 ´e congruente a 8 m´odulo 2
+
+Notemos que 35 − 8 = 27 com 27 n˜ao ´e divis´ıvel por 2 conclu´ımos que 35 n˜ao ´e
+
+congruente a 8 m´odulo 2, em s´ımbolos 35 (cid:54)≡ 8 (mod 2)
+
+Exemplo 36
+
+Veriﬁcar se 45 ´e congruente a 6 m´odulo 3
+
+Temos que 45 − 6 = 39 e 39 ´e divis´ıvel por 3 ent˜ao 45 ´e congruente 6 m´odulo 3,
+
+em s´ımbolos 45 ≡ 6 (mod 3)
+
+Nem sempre ´e poss´ıvel observar esta congruˆencia apenas com uma subtra¸c˜ao, nes-
+
+tes caos, precisamos de algumas propriedades para facilitar este c´alculo, estas propriedades
+
+j´a foram mencionadas e provadas neste trabalho, mais especiﬁcamente na proposi¸c˜ao 2
+
+Segue um exemplo de como trabalhar com estas propriedades
+
+Exemplo 37
+
+2100 ´e congruente a quanto m´odulo 10?
+
+Mesmo com uma boa calculadora ´e quase imposs´ıvel saber esta resposta usando
+
+apenas uma subtra¸c˜ao. Portanto devemos usar as propriedades. Sabemos que 24 = 16 e
+
+que ´e f´acil ver que 16 ≡ 6 (mod 10), devemos perceber agora que 65 = 7776 ou seja 65 ≡ 6
+
+(mod 10) ent˜ao (24)5 ≡ 65 ≡ 6 (mod 10) e com (24)5 = 220 temos 220 ≡ 6 (mod 10),
+
+como nosso objetivo n˜ao foi alcan¸cado devemos continuar o processo, (220)5 ≡ 65 ≡ 6
+
+(mod 10) ou seja 2100 ≡ 6 (mod 10).
+
+Deﬁni¸c˜ao 26 Ordem de a m´odulo n ´e o menor n´umero x que satisfa¸ca a congruˆencia
+
+ax ≡ 1 (mod m) e M DC(a, m) = 1.
+
+49
+
+Para encontrar a ordem de um n´umero m´odulo m basta testar todos os divisores
+
+de φ(m).
+
+Exemplo 38
+
+Determinar a ordem de 5 m´odulo 19
+
+Sabemos pelo exemplo 34 que φ(19) = 18 e os divisores de 18 s˜ao {1, 2, 3, 6, 9, 18},
+
+agora basta testa cada um dos divisores de 18 na congruˆencia 5x ≡ 1 (mod 19)
+
+51 ≡ 5 (mod 19), 52 ≡ 6 (mod 19), 53 ≡ 11 (mod 19) 56 ≡ 7 (mod 19) 59 ≡ 1
+
+(mod 19) concluimos que a ordem de 5 m´odulo 19 ´e 9. Simbolicamente ord195 = 9
+
+Exemplo 39
+
+Vamos determinar ord112
+
+Antes de iniciarmos devemos calcular o valor de φ(11) que ´e dado por φ(11) =
+
+11 − 1 = 10. Agora devemos encontrar os divisores de 10 que s˜ao {1, 2, 5, 10}, falta apenas
+
+testar os divisores na congruˆencia 2x ≡ 1 (mod 11) o primeiro que cumprir ser´a a ordem.
+
+21 ≡ 2 (mod 11), 22 ≡ 4 (mod 11), 25 ≡ 10 (mod 11) e 210 ≡ 1 (mod 11)
+
+ent˜ao conclu´ımos que ord112 = 10
+
+Exemplo 40
+
+Obter ord136
+
+Sabemos que φ(13) = 13 − 1 = 12 e os divisores de 12 s˜ao {1, 2, 3, 4, 6, 12} ent˜ao
+
+61 ≡ 6 (mod 13), 62 ≡ 10 (mod 13), 63 ≡ 8 (mod 13), 64 ≡ 9 (mod 13),
+
+66 ≡ 12 (mod 13) e 612 ≡ 1 (mod 13) Portanto ord136 = 12
+
+5.3 Deﬁnindo raiz primitiva
+
+Deﬁni¸c˜ao 27 Dizemos que r ´e uma raiz primitiva de um n´umero inteiro m com M DC(r, m) =
+
+1 quando ordmr = φ(m).
+
+Exemplo 41
+
+Pelos exemplos 39 e 40 conclu´ımos: 6 ´e uma raiz primitiva de 13 e que 2 ´e uma
+
+raiz primitiva de 11
+
+Exemplo 42
+
+Pelo exemplo 38 podemos concluir que 5 n˜ao ´e uma raiz primitiva de 19.
+
+50
+
+5.4 Deﬁnindo o criptosistema
+
+Como apresentado em todo esse trabalho, o criptosistema de ElGamal ´e muito
+
+eﬁciente, tentaremos agora transpor esta ideia para o ensino m´edio.
+
+Para criptografar uma mensagem devemos primeiro criar uma chave p´ublica que
+
+ser´a divulgada, para que qualquer pessoa possa me enviar uma mensagem criptografada.
+
+Para isso eu devo escolher um n´umero primo p, um n´umero natural x qualquer menor que
+
+esse primo e encontra uma raiz primitiva g deste primo, em seguida calculamos y ≡ gx
+
+(mod m). A chave p´ublica ser´a o trio [y, g, p] e a chave secreta ser´a o n´umero x
+
+Exemplo 43
+
+Crie uma chave p´ublica e um chave privada no sistema criptogr´aﬁco de ElGamal usando
+
+o primo p = 37 e a raiz primitiva g = 5
+
+Como j´a temos o primo p = 37 e a raiz primitiva g = 5, ent˜ao agora falta apenas
+
+escolher um n´umero para ser a chave privada e calcularmos a chave p´ublica. Escolhemos
+
+o n´umeros x = 6, notemos que apesar de x = 6 ser um n´umero pequeno os c´alculos se
+
+tornam complicados e ´e neste empecilho que se garante a seguran¸ca do criptosistema.
+
+Vamos aos c´alculos:
+
+53 ≡ 14
+
+(mod 37)
+
+56 ≡ (53)2 ≡ 142 ≡ 11
+
+(mod 37).
+
+Assim constru´ımos a chave p´ublica [11, 5, 37] para a chave privada x = 6
+
+Este exemplo ´e muito rico, pois ele nos mostra que mesmo dado um n´umero primo
+
+e uma raiz primitiva, a chave p´ublica e a chave privada n˜ao s˜ao ´unicas, portanto uma sala
+
+pode ter o mesmo n´umero primo e a mesma raiz primitiva e chave diferentes.
+
+5.5 Criptografando uma mensagem
+
+O processo de criptograﬁa de uma mensagem ´e simples. Mais uma vez devemos
+
+escolher um n´umero natural k e resolver o seguinte par de congruˆencias:
+
+a ≡ gk
+
+(mod p)
+
+b ≡ (tp · yk)
+
+(mod p)
+
+51
+
+Onde tp ´e a mensagem j´a pr´e-codiﬁcada.
+
+52
+
+Exemplo 44
+
+Codiﬁque a mensagem tp = 10 usando k = 3 e a chave p´ublica do exemplo 43.Dando
+
+in´ıcio aos c´alculos
+
+ou seja,
+
+e
+
+a ≡ 53
+
+(mod 37),
+
+a ≡ 14
+
+(mod 37)
+
+b ≡ (10 · 113)
+
+(mod 37)
+
+b ≡ 13310
+
+(mod 37)
+
+b ≡ 27
+
+(mod 37).
+
+Portanto a mensagem criptografada ser´a o par [a, b] = [14, 27]
+
+Exemplo 45
+
+Codiﬁque a mensagem tp = 10 usando k = 7 e a chave p´ublica do exemplo 43.
+
+Calculando
+
+a ≡ 57
+
+(mod 37)
+
+a ≡ 18
+
+(mod 37)
+
+b ≡ (10 · 117)
+
+(mod 37)
+
+usando uma calculadora teremos,
+
+117 ≡ 11
+
+(mod 37)
+
+o que resulta em
+
+b ≡ 10 · 117 ≡ 10 · 11 ≡ 36
+
+(mod 37).
+
+A mensagem ser´a [a, b] = [18, 36].
+
+53
+
+5.6 Decodiﬁcando um texto
+
+Para decodiﬁcar a mensagem devemos tomar o valor a e calcular
+
+ξ ≡ (cid:0)a−1(cid:1)x
+
+(mod p)
+
+e usamos o resultado para calcular
+
+tp ≡ (b · ξ)
+
+(mod p)
+
+O grande problema que temos para decodiﬁcar uma mensagem ´e encontrar o
+
+inverso a−1, que deﬁniremos agora.
+
+Deﬁni¸c˜ao 28 O inverso m´odulo m de um inteiro a ´e o n´umero inteiro a−1 de modo que
+
+a · a−1 ≡ 1 (mod m).
+
+Exemplo 46
+
+Encontre o inverso de a = 7 m´odulo 13.
+
+Basta encontrar a−1 de modo que 7 · a−1 ≡ 1 (mod 13). Iniciando os c´alculos:
+
+7 · 1 ≡ 7
+
+(mod 13)
+
+7 · 2 ≡ 1
+Conclu´ımos que a−1 = 2, ou seja, que o inverso de 7 m´odulo 13 ´e 2.
+
+(mod 13)
+
+Exemplo 47
+
+Obtenha o inverso de a = 9 m´odulo 11
+
+9 · 1 ≡ 9
+
+(mod 11)
+
+9 · 2 ≡ 7
+
+(mod 11)
+
+9 · 3 ≡ 5
+
+(mod 11)
+
+9 · 4 ≡ 3
+
+(mod 11)
+
+9 · 5 ≡ 1
+portanto a−1 = 5
+
+(mod 11)
+
+Exemplo 48
+
+Vamos obter o inverso de a = 14 m´odulo 37
+
+54
+
+14 · 1 ≡ 14
+
+(mod 37)
+
+14 · 2 ≡ 28
+
+(mod 37)
+
+14 · 3 ≡ 05
+
+(mod 37)
+
+14 · 4 ≡ 19
+
+(mod 37)
+
+14 · 5 ≡ 33
+
+(mod 37)
+
+14 · 6 ≡ 10
+
+(mod 37)
+
+14 · 7 ≡ 24
+
+(mod 37)
+
+14 · 8 ≡ 01
+Portanto a−1 = 8
+
+(mod 37)
+
+Exemplo 49
+
+Calcular o inverso de a = 18 m´odulo 37
+
+18 · 1 ≡ 18
+
+(mod 37)
+
+18 · 2 ≡ 36
+
+(mod 37)
+
+18 · 3 ≡ 17
+
+...
+
+...
+
+18 · 34 ≡ 20
+
+(mod 37)
+...
+(mod 37)
+
+18 · 35 ≡ 01
+
+(mod 37)
+
+Exemplo 50
+
+Decodiﬁque a mensagem do exemplo 44.
+
+Observando o exemplo 48 conclu´ımos que
+
+Ent˜ao, falta calcular
+
+para obtermos
+
+Finalizando temos
+
+a−1 = 8.
+
+ξ ≡ 86
+
+(mod 37)
+
+ξ ≡ 36
+
+(mod 37).
+
+tp ≡ (27 · 36)
+
+(mod 37)
+
+tp ≡ 972
+
+(mod 37)
+
+55
+
+tp ≡ 10
+
+(mod 37),
+
+resultando que o texto original 10.
+
+Exemplo 51
+
+Decodiﬁque a mensagem do exemplo 45.
+
+Com o exemplo 49 j´a temos que
+
+ent˜ao, calculamos
+
+logo
+
+e o texto puro ser´a
+
+ou seja,
+
+a−1 = 35
+
+ξ ≡ 356
+
+(mod 37),
+
+ξ ≡ 27
+
+(mod 37)
+
+tp ≡ 36 · 27
+
+(mod 37),
+
+tp ≡ 10
+
+(mod 37)
+
+A sequˆencia de exemplos que acabamos de apresentar nos sugere que a escolha
+
+do k ´e indiferente no processo de criptograﬁa do texto.
+
+56
+
+Conclus˜ao
+
+As denuncias Edward Joseph Snowden mostram que vivemos em um mundo onde
+
+as informa¸c˜oes trocadas via internet n˜ao est˜ao em total seguran¸ca. Neste trabalho mostra-
+
+mos que o sistema de criptograﬁa de ElGamal ´e eﬁciente no que diz respeito a transmiss˜ao
+
+de dados por um meio de comunica¸c˜ao, devido a diﬁculdade de se calcular o logaritmo
+
+discreto.
+
+A grande vantagem do sistema de criptograﬁa de ElGamal, est´a no fato de se co-
+
+diﬁcar facilmente as mensagens e ser extremamente dif´ıcil de um intruso obter o logaritmo
+
+discreto que ´e a chave privada do processo criptogr´aﬁco, somente com o conhecimento da
+
+chave p´ublica, . Tamb´em tratamos t´ecnicas j´a existentes de ataque ao logaritmo discreto
+
+quando utilizamos n´umeros primos com a quantidade de d´ıgitos pequena que servem para
+
+a constru¸c˜ao da chave p´ublica. Deixamos duas referˆencias que tratam de outras formas
+
+de ataque.
+
+Neste trabalho n˜ao nos preocupamos em expor t´ecnicas de c´alculo de raiz pri-
+
+mitiva, consequentemente de logaritmos discretos atrav´es de algoritmos j´a existente, pois
+
+preferimos evidenciar a seguran¸ca do sistema como tamb´em o seu funcionamento.
+
+Apresentamos tamb´em a assinatura digital que ´e um par (γ, s) que deve ser
+
+inserido ao texto para certiﬁcar a autenticidade da mensagem.
+
+Expomos um passo a passo de como inserir o sistema de criptograﬁa de ElGa-
+
+mal para os alunos do ensino m´edio. A motiva¸c˜ao para esta exposi¸c˜ao ´e que os alunos
+
+premiados pela Obmep que s˜ao destinados ao PIC, estudam criptograﬁa em dois m´odulo,
+
+por´em, ´e dado enfase ao RSA. Ap´os todo o estudo efetuado percebemos que o sistema
+
+criptogr´aﬁco de ElGamal requer conceitos matem´aticos mais profundo e certamente seria
+
+mais enriquecedor ao conhecimento destes alunos.
+
+Conclu´ımos que o sistema criptogr´aﬁco de ElGamal ´e uma excelente porta de
+
+entrada para a matem´atica avan¸cada e devido a isso n˜ao podemos deixar de apresent´a-lo
+
+57
+
+aos alunos do ensino b´asico na forma de est´ımulo aos que acreditam que a matem´atica do
+
+ensino b´asico seja simpl´oria.
+
+Finalizamos aﬁrmando que criptograﬁa deveria fazer parte do curr´ıculo de ma-
+
+tem´atica do ensino m´edio e de maneira mais avan¸cada no curr´ıculo das gradua¸c˜oes em
+
+matem´atica.
+
+58
+
+Referˆencias Bibliogr´aﬁcas
+
+ElGamal, T. (1984). A public key cryptosystem and a signature scheme based on
+
+discrete logarithms. URL:http://groups.csail.mit.edu/cis/crypto/classes/6.857/papers
+
+/elgamal.pdf Acesso em: 18/11/2014.
+
+Hefez, A. (2013). Aritm´etica. Ed. SBM, R. Janeiro.
+
+Lima, E. L. (2007). An´alise Real. Ed. SBM, R. Janeiro.
+
+MapleSoft (2008). Manual user guide. URL: www.maplesoft.com/view.aspx?sl=5883
+
+Acesso em: 17/11/2014.
+
+Menezes, A. J., van Oorschot, P. C., e Vanstone, S. A. (1996). Handbook of applied
+
+cryptography. URL:http://citeseer.ist.psu.edu/viewdoc/download?doi=10.1.1.99.2838
+
+&rep=rep1&type=pdf Acesso em: 20/07/2014.
+
+Rosen, K. H. (2005). Elementary Number Theory and Its Applications. Pearson Addilson
+
+Wesley, New York.
+
+Santos, J. P. O. (2009). Introdu¸c˜ao `a Teoria dos N´umeros . Ed. SBM, R. Janeiro.
+
+Wagner, E. (2009). Constru¸c˜oes Geom´etricas . Ed. SBM, R. Janeiro.
+
+59
+
+

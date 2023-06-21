@@ -1,0 +1,3070 @@
+Universidade Federal da Paraíba
+Centro de Ciências Exatas e da Natureza
+Departamento de Matemática
+Curso de Pós-Graduação em Matemática em Rede Nacional -
+PROFMAT
+
+Criptograﬁa: abordagem histórica,
+protocolo Diﬃe-Hellman e
+aplicações em sala de aula. †
+
+por
+
+Thiago Valentim Marques
+
+sob orientação do
+
+Prof. Dr. Bruno Henrique Carvalho Ribeiro
+
+Trabalho de conclusão apresentado ao Corpo Docente do
+Curso de Pós-Graduação em Matemática em Rede Nacio-
+nal PROFMAT CCEN-UFPB, como requisito parcial para
+obtenção do título de Mestre em Matemática.
+
+Abril/2013
+João Pessoa - PB
+
+†O presente trabalho foi realizado com apoio da CAPES
+
+Agradecimentos
+
+A Deus, que sempre está iluminando o meu caminho me ajudando a conquistar
+
+vitórias.
+
+À minha família, pela formação, amor e incentivo nos meus estudos. Em espe-
+cial, meus pais Ilo Marques (in memoriam) e Francisca Valentim, minha irmã Flávia
+e meus sobrinhos João Paulo, Sarah Karoline e Isaac Newton.
+
+A Alyne Rayane cuja companhia me faz o homem mais feliz do mundo, sendo
+minha amiga e ao mesmo tempo minha namorada, sempre propiciando momentos
+maravilhosos.
+
+Ao meu grande amigo, na verdade irmão, Thiago Antônio, pela sua amizade e
+companheirismo em todos os momentos, sempre discutindo propostas que tornem o
+ensino da Matemática cada vez mais proveitoso.
+
+Ao meu orientador, Professor Bruno Henrique Carvalho Ribeiro que propôs o
+tema desse trabalho, acompanhou o seu desenvolvimento, fez as devidas correções
+sempre disponibilizando tempo para ajudar. Enﬁm, pela sua excelente orientação.
+
+Aos professores Antônio de Andrade e Silva e Daniel Cordeiro de Morais Filho
+pelas excelentes contribuições que foram fundamentais para a melhoria deste traba-
+lho.
+
+A todos os professores que ministraram aulas no PROFMAT na UFPB, pela de-
+dicação destinada ao ensino e aprendizagem nas disciplinas ministradas, em especial
+os professores Bruno Ribeiro e Napoleon Caro Tuesta.
+
+Ao professor Carlos Alexandre Gomes pelas aulas ministradas em Natal e João
+Pessoa que foram importantíssimas para a minha aprovação nas disciplinas e no
+exame de qualiﬁcação do PROFMAT.
+
+Aos meus amigos de Mestrado na UFPB, que estiveram junto comigo nessa ca-
+minhada durante os dois últimos anos, pelo companheirismo e amizade, em especial
+a Aldrin Ruﬁno, Sandro Godeiro e Andreilson Oliveira por enfrentar a estrada todos
+os sábados na ida de Natal a João Pessoa.
+
+Aos colegas do PROFMAT da UFRN e UFERSA, em especial Emanuel Gomes,
+Fellipe Arrais, Leonardo Andrade, Gilberto Fernandes, Thiago Pardo, Jorge Pontes
+e Luciano Nóbrega que sempre estavam presentes nas aulas do Professor Carlos
+Alexandre Gomes.
+
+Aos Professores Aldrin Ruﬁno e Edilson, pelos ensinamentos na minha educação
+
+básica e inspiração para ser um professor de matemática.
+
+Aos professores da graduação na UFRN: André Gustavo, Benedito Tadeu, Gur-
+gel de Melo, Antônio Roberto, Marcelo Gomes e Gabriela Lucheze, pela enorme
+contribuição na minha formação.
+
+Aos colegas de graduação na UFRN, em especial Dayvid Marques, Daniel Tei-
+xeira, José Carlos e Marconio da Silva pelos excelentes momentos de discussão ma-
+temática e colaboração.
+
+A Professora Teresa Paula pela sua amizade e pela correção ortográﬁca desse
+trabalho, ao Professor Paulo Eduardo pela correção do abstract deste trabalho e ao
+Professor Daniel Teixeira pelas correções em latex.
+
+Ao pessoal do PET de Matemática da UFRN e ao professor Marcelo Gomes.
+
+À Sociedade Brasileira de Matemática (SBM) pela criação do Mestrado Proﬁssi-
+onal em Matemática em Rede Nacional (PROFMAT) dando oportunidade para que
+professores da educação básica possam melhorar os seus conhecimentos matemáticos.
+
+À Coordenação de Aperfeiçoamento de Pessoal de Nível Superior (CAPES) pela
+
+bolsa concedida.
+
+Dedicatória
+
+Dedico este trabalho às duas pessoas que foram funda-
+mentais no apoio aos meus estudos: meu pai, Ilo Mar-
+ques Bezerra (in memoriam) e minha mãe, Francisca
+Valentim da Silva Bezerra, que, desde 2004, assumiu,
+com extremo amor e responsabilidade, o papel de ambos.
+
+Epígrafe
+
+“Não há ramo da Matemática, por mais abstrato que
+seja, que não possa um dia vir a ser aplicado aos
+fenômenos do mundo real.” (Lobachevsky)
+
+Resumo
+
+Neste trabalho, vamos estudar a evolução da criptograﬁa ao longo da história;
+analisar a diferença entre as criptograﬁas simétricas e assimétricas; enunciar de-
+ﬁnições e teoremas sobre relações binárias, teoria dos grupos, raízes primitivas e
+logaritmos discretos; entender o procedimento do protocolo da troca de chaves de
+Diﬃe-Hellman; e, na parte ﬁnal deste trabalho, iremos propor três atividades para
+serem aplicadas em sala de aula.
+
+Palavras chaves: criptograﬁa, sigilo, Diﬃe-Hellman, logaritmos discretos, raí-
+
+zes primitivas, matemática, segurança.
+
+vii
+
+Abstract
+
+In this paper we are studying cryptography’s evolution throughout history; analy-
+zing the diﬀerence between symmetric and asymmetric cryptographies; enunciating
+deﬁnitions and theorems about binary relations, group theories, primitive roots and
+discrete logarithms; understanding the procedure of Diﬃe-Hellman’s key change pro-
+tocol. In the last part in this work, we are proposing three activities to be applied
+in classroom.
+
+Keywords: cryptography; secrecy; Diﬃe-Hellman; discrete logarithms; primi-
+
+tive roots; mathematics; safety.
+
+viii
+
+Sumário
+
+Lista de Figuras
+
+xi
+
+1 A evolução da criptograﬁa ao longo da história
+
+1
+1
+1.1 Heródoto . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.2 A cifra de César . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3 Criptoanalistas árabes
+5
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+1.4 A cifra de Vigenère . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+1.5 Máquinas de cifragem . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+1.6 Criptograﬁa nos computadores . . . . . . . . . . . . . . . . . . . . . . 15
+. . . . . . . . . . . . . . . . . . . . . . 15
+1.6.1 Criptograﬁa simétrica
+1.6.2 Criptograﬁa assimétrica . . . . . . . . . . . . . . . . . . . . . 17
+
+2 Das relações binárias aos logaritmos discretos
+
+20
+2.1 Relações binárias . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+2.2 Domínio, imagem e relação inversa . . . . . . . . . . . . . . . . . . . 21
+2.3 Relações de equivalência . . . . . . . . . . . . . . . . . . . . . . . . . 22
+2.4 Classes de equivalência e conjunto quociente . . . . . . . . . . . . . . 23
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+2.5 Funções
+2.6 Grupos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+2.7 Grupos Cíclicos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+2.8 Raízes primitivas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+2.9 Logaritmos discretos
+
+3 Criptograﬁa Diﬃe-Hellman
+
+42
+3.1 Um pouco de história . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+3.2 O problema da distribuição das chaves
+. . . . . . . . . . . . . . . . . 45
+3.3 O uso das funções na troca de chaves . . . . . . . . . . . . . . . . . . 46
+3.4 A protocolo das trocas de chaves de Diﬃe-Hellman . . . . . . . . . . 48
+
+ix
+
+4 Atividades com criptograﬁa em sala de aula
+
+52
+4.1 Atividade 1 - A utilização das funções na Criptograﬁa . . . . . . . . . 52
+4.2 Atividade 2 - O uso das matrizes na Criptograﬁa . . . . . . . . . . . . 55
+4.3 Atividade 3 - A criptograﬁa Diﬃe-Hellman em sala de aula . . . . . . 58
+
+Referências Bibliográﬁcas
+
+61
+
+Lista de Figuras
+
+Imagem artística de Al-Kindi
+
+2
+1.1 Busto de Heródoto . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.2 Cabeça colossal do imperador Júlio César . . . . . . . . . . . . . . . .
+4
+1.3 Cifra de César . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+. . . . . . . . . . . . . . . . . . . . . .
+1.4
+7
+1.5 Frequência das letras na língua portuguesa . . . . . . . . . . . . . . .
+7
+1.6 Frequência das letras no texto cifrado . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+1.7 Blaise de Vigenère
+1.8 Cifra de Vigenère . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1.9 Cifragem da frase “invadir a cidade” . . . . . . . . . . . . . . . . . . . 13
+1.10 Disco de cifras utilizado na guerra civil americana . . . . . . . . . . . 14
+1.11 Enigma - Maquina alemã . . . . . . . . . . . . . . . . . . . . . . . . . 15
+1.12 Modelo simpliﬁcado de Criptograﬁa simétrica . . . . . . . . . . . . . 16
+1.13 Modelo simpliﬁcado de Criptograﬁa assimétrica . . . . . . . . . . . . 18
+
+2.1 Potência dos inteiros módulo 19 . . . . . . . . . . . . . . . . . . . . . 39
+
+3.1 Whitﬁeld Diﬃe . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+3.2 Martin Hellman . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+. . 46
+3.3 Esquema da troca de chaves ilustrada pelo exemplo dos cadeados
+3.4 Troca de chaves ilustrada pelo exemplo das tintas . . . . . . . . . . . 47
+3.5 Calculadora de logaritmos discretos . . . . . . . . . . . . . . . . . . . 49
+3.6 Primos de Sophie German . . . . . . . . . . . . . . . . . . . . . . . . 50
+
+xi
+
+Introdução
+
+O computador tornou-se indispensável no nosso dia a dia, pois está presente nos
+ambientes que frequentamos, seja em casa, na escola ou no trabalho. A utilização
+deste recurso para a comunicação via internet é de suma importância na sociedade,
+pois diariamente enviamos e-mails, utilizamos redes sociais ou escrevemos mensagens
+para celulares utilizando aplicativos em sites. A partir disso, surgem as seguintes
+perguntas: será que temos privacidade ao enviar essas mensagens? Se alguém in-
+terceptar essas mensagens, elas serão lidas ou elas estarão codiﬁcadas? Perguntas
+como essas são o interesse do nosso estudo.
+
+Desde os tempos antigos, por vários motivos, imperadores, generais e reis pro-
+curavam obter modos eﬁcientes de comunicação entre seus exércitos. A necessidade
+de as informações não serem descobertas motivou a elaboração de técnicas para
+ocultar o real signiﬁcado delas por meio de códigos, possibilitando que somente o re-
+metente e o destinatário pudessem entender o que a mensagem dizia, diﬁcultando o
+trabalho de eventuais intrusos na tentativa de desvendá-la. Essa técnica é chamada
+criptograﬁa, cuja evolução deve-se, em boa parte, ao longo dos anos, a Matemática.
+A força de um código está relacionada à diﬁculdade de um intruso decifrá-lo e,
+dessa forma, tem-se uma “guerra” entre cifradores e decifradores de mensagens. Na
+medida em que a informação se torna mais valiosa, o processo de codiﬁcação das
+mensagens tem um papel cada vez mais importante na sociedade.
+
+Já se falou que a Primeira Guerra Mundial foi a guerra dos quí-
+micos, devido ao emprego, pela primeira vez, do gás mostarda
+e do cloro, que a Segunda Guerra Mundial foi a guerra dos fí-
+sicos devido à bomba atômica. De modo semelhante se fala que
+uma Terceira Guerra Mundial seria a guerra dos matemáticos, pois
+os matemáticos terão o controle sobre a próxima grande arma de
+guerra, a informação. Os matemáticos têm sido responsáveis pelo
+desenvolvimento dos códigos usados atualmente para a proteção
+das informações militares. E não nos surpreende que os matemá-
+ticos também estejam na linha de frente da batalha para tentar
+decifrar esses códigos. (SINGH, 2007, p.13)
+
+xii
+
+Introdução
+
+A importância da criptograﬁa está relacionada com a proteção de dados sigilo-
+sos de caráter pessoal ou proﬁssional. Por exemplo: na comunicação de dois países
+aliados na criação de uma nova tecnologia que deve ser mantida em segredo. Atra-
+vés da Ciência da Computação, tendo a ajuda da Matemática, essas informações
+são transmitidas de modo extremamente rápido e seguro. Hoje em dia vemos isso
+acontecer claramente quando fazemos uma transação bancária via internet, pois é
+preciso um meio de encriptar a senha dos usuários para que hackers não possam
+obtê-la e ter acesso à conta do usuário. Vários bancos têm um sistema diferenciado
+de proteção de senhas dos usuários, que é feito utilizando criptograﬁa.
+
+O problema fundamental e quase axiomático durante muitos anos foi o “problema
+da distribuição de chaves”, ou seja, dois usuários devem se comunicar utilizando um
+algoritmo, mas, para isso ser feito, eles precisam de uma chave para codiﬁcar e
+decodiﬁcar as mensagens. Como essa chave pode ser distribuída de modo seguro?
+A Matemática entra em cena com os números primos e os logaritmos discretos.
+Iremos aprender que estes são fundamentais para resolver o problema da troca de
+chaves, pois o intruso terá uma diﬁculdade imensa, já que não existe um algoritmo
+eﬁciente que possa calcular esses logaritmos discretos para números primos muito
+grandes. Isso foi feito por Diﬃe e Hellman nos anos 70, causando um avanço imenso
+na criptograﬁa.
+
+Partindo do princípio que a criptograﬁa é um assunto importante e interessante
+no contexto atual, acredita-se que a sua utilização em sala de aula possa ser um
+fator que motive os alunos, já que a informática está presente de maneira intensa na
+vida dos jovens. Trazendo a criptograﬁa para a sala de aula, poderemos associá-la
+com conteúdos de Matemática, vistos na educação básica, fazendo com que o aluno
+sinta motivação no momento de aprender ou aplicar tal conteúdo.
+
+Partindo do princípio que a criptograﬁa é um assunto importante e interessante
+no contexto atual, acredita-se que a sua utilização em sala de aula possa ser um
+fator que motive os alunos, já que a informática está presente de maneira intensa na
+vida dos jovens. Trazendo a criptograﬁa para a sala de aula, poderemos associá-la
+com conteúdos de Matemática, vistos na educação básica, fazendo com que o aluno
+sinta motivação no momento de aprender ou aplicar tal conteúdo.
+
+O objetivo geral deste trabalho é fornecer um conhecimento sobre Criptograﬁa de
+modo que o Professor de Matemática possa introduzi-la em sala de aula, relacionando
+este tema com assuntos do ensino básico, tornando a prática docente mais dinâmica
+e motivante, pois os alunos ﬁcarão frente a frente com atividades de codiﬁcação e
+decodiﬁcação.
+
+xiii
+
+Introdução
+
+Os objetivos especíﬁcos são:
+
+• Introduzir a deﬁnição de criptograﬁa;
+
+• Relatar a evolução histórica da criptograﬁa;
+
+• Diferenciar as criptograﬁas simétrica e assimétrica;
+
+• Compreender a deﬁnição de relações, grupos, raízes primitivas e logaritmos
+
+discretos bem como os teoremas e demonstrações;
+
+• Saber a importância dos logaritmos discretos na troca de chaves de Diﬃe-
+
+Hellman;
+
+• Relacionar a criptograﬁa com assuntos de matemática vistos no ensino básico.
+
+A ﬁm de proporcionar uma visão geral do nosso trabalho, apresentamos uma
+
+breve descrição dos assuntos que iremos tratar em cada um dos capítulos.
+
+No capítulo um, vamos mostrar a evolução histórica da criptograﬁa apresentando
+como Heródoto relatou o aparecimento da Esteganograﬁa; a Cifra de César; os
+criptoanalistas árabes; a cifra de Vigenère, as máquinas de cifragem e a criptograﬁa
+na atualidade, descrevendo a criptograﬁa simétrica e a assimétrica.
+
+No capítulo dois, faremos um estudo resumido de Álgebra, apresentando várias
+deﬁnições e teoremas importantes que são utilizados na criptograﬁa. Os assuntos que
+veremos são: relações binárias, Grupos, Raízes Primitivas e Logaritmos Discretos.
+No capítulo três, uma abordagem histórica sobre a criptograﬁa Diﬃe-Hellman
+será apresentada e, em seguida, descreveremos o problema da troca de chaves junto
+com a sua solução utilizando Logaritmos Discretos.
+
+No último capítulo, vamos propor três atividades que relacionam a criptograﬁa
+com funções polinomiais do primeiro grau, matrizes e divisibilidade, respectiva-
+mente.
+
+xiv
+
+Capítulo 1
+
+A evolução da criptograﬁa ao longo
+da história
+
+Neste capítulo vamos fazer uma abordagem histórica da criptograﬁa, mostrando
+a evolução dos métodos de cifragem, fornecendo dados para que o Professor de
+Matemática possa ter ideias de como introduzir este assunto no ensino básico. As
+referências utilizadas na escrita deste capítulo foram SINGH [20]; STALLINGS [21];
+MALAGUTTI [13]; TÁBARA [22] e OLIVEIRA [15].
+
+1.1 Heródoto
+
+Um dos primeiros textos sobre códigos secretos foi escrito pelo geógrafo e histori-
+ador grego Heródoto (485 a.C. - 420 a.C.). Ele foi o primeiro não só a escrever sobre
+o passado, mas também a considerar o passado como um problema ﬁlosóﬁco ou um
+projeto de pesquisa que podia revelar conhecimento do comportamento humano.
+Por esse motivo ele recebeu o título de “o pai da História”. Na sua principal obra,
+conhecida por “as histórias de Heródoto”, é retratada a história dos conﬂitos entre
+a Pérsia e a Grécia no início do século V a.C; atribuiu, pois, à habilidade da escrita
+secreta a causa de a Grécia não ter sido conquistada por Xerxes, cuja intenção, à
+época, era formar um grande exército para invadir a Grécia. Para a infelicidade
+de Xerxes, o plano da invasão foi testemunhado por Demarato, um grego que foi
+expulso da sua terra natal e vivia em uma cidade persa chamada Susa. Mesmo
+sendo um exilado, ele ainda tinha um sentimento de lealdade com a Grécia e decidiu
+enviar uma mensagem para advertir os espartanos dos planos de invasão de Xerxes.
+O principal desaﬁo era como enviar essa mensagem sem que ela fosse interceptada
+pelos guardas. Vejamos a história contada nas palavras de Heródoto:
+
+1
+
+Heródoto
+
+Capítulo 1
+
+O perigo de ser descoberto era grande; havia apenas um modo pelo
+qual a mensagem poderia passar:
+isso foi feito raspando a cera
+de um par de tabuletas de madeira, e escrevendo embaixo o que
+Xerxes pretendia fazer, depois a mensagem foi coberta novamente
+com cera. Deste modo, as tabuletas pareceriam estar em branco
+e não causariam problemas com os guardas ao longo da estrada.
+Quando a mensagem chegou ao seu destino, ninguém foi capaz de
+perceber o segredo, até que, pelo que entendi, a ﬁlha de Cleômenes,
+Gorgo, que era casada com Leônidas, adivinhou e contou aos outros
+que se eles raspassem a cera encontrariam alguma coisa escrita na
+madeira. Isto foi feito, revelando a mensagem, então transmitida
+para os gregos. (SINGH, 2007, p. 20)
+
+Assim, os gregos, que não estavam se preparando para uma batalha, começa-
+ram a se armar. Como exemplo, podemos citar o lucro das minas de ouro, antes
+compartilhada pelos cidadãos, começou a ser entregue à marinha para a construção
+de duzentos navios de guerra. Curiosidade: os gregos foram vencedores da futura
+batalha. Note que a estratégia de Demarato foi, apenas, ocultar a mensagem.
+
+Heródoto também narra outro incidente no qual a ocultação foi suﬁciente para
+garantir a transmissão segura da mensagem. É a história de Histaeu, que queria
+encorajar Aristágora de Mileto a se revoltar contra o rei persa. Para transmitir
+suas instruções de segurança, Histaeu raspou a cabeça do mensageiro, escreveu a
+mensagem no couro cabeludo e aguardou até que o cabelo voltasse a crescer. O
+mensageiro partiu e, quando chegou ao seu destino, raspou a cabeça e exibiu a
+mensagem ao destinatário.
+
+Figura 1.1: Busto de Heródoto
+Fonte: http://commons.wikimedia.org/wiki/File:AGMA_Herodotus_7307.jpg
+
+2
+
+A cifra de César
+
+Capítulo 1
+
+As duas histórias contadas por Heródoto não são consideradas comunicações se-
+cretas, pois foram obtidas através da ocultação da mensagem. A arte ou ciência
+de ocultar mensagens é chamada de estenograﬁa, nome derivado das palavras gre-
+gas estenos, cujo signiﬁcado é “escondido” e graphein que que signiﬁca “escrever”.
+Várias formas de estenograﬁas foram utilizadas durante muitos séculos. Entre al-
+guns exemplos estão a escrita de uma mensagem secreta em uma tira de seda ﬁna,
+que era amassada formando uma pequena bola, coberta com cera e engolida por
+um mensageiro; a tinta invisível usada na escrita que, após um suave aquecimento,
+adere a cor marrom; e a mensagem no ovo cozido que baseava-se em escrever uma
+mensagem sobre a casca desse ovo com uma tinta especial que penetrava essa casca
+e estampava o ovo.
+
+1.2 A cifra de César
+
+Em paralelo com o desenvolvimento da estenograﬁa, houve a evolução da crip-
+tograﬁa, derivada da palavra grega kriptos, que signiﬁca oculto, escondido, secreto.
+O objetivo da criptograﬁa não é ocultar a existência de uma mensagem, e sim es-
+conder o seu signiﬁcado - um processo conhecido como encriptação. A vantagem
+da criptograﬁa: a mensagem codiﬁcada interceptada pelo inimigo será ilegível e seu
+conteúdo não poderá ser percebido. O primeiro código secreto que se tem notícia
+foi utilizado pelo militar e governante romano Júlio César (100 a.C. - 44 a.C.), na
+época da transição do ﬁnal do período republicano da Roma Antiga.
+
+Figura 1.2: Cabeça colossal do imperador Júlio César
+Fonte: http://sp-arte.aonde.org/wp-content/uploads/2012/01/exposicao-roma.jpg
+
+3
+
+A cifra de César
+
+Capítulo 1
+
+Júlio César é considerado por muitos o maior gênio militar da história. Um dos
+motivos que pode justiﬁcar esse adjetivo é o fato dele utilizar um recurso para codiﬁ-
+car mensagens com o objetivo de manter segredos de natureza militar. No livro “As
+vidas dos Césares”, escrito no século II por Suetônio, um dos recursos utilizados por
+César consistia numa substituição de cada letra do alfabeto por outra, três posições
+adiante, a partir do que as três últimas letras do alfabeto fazem corresponder às três
+primeiras. Na prática, a letra “a” é substituída pela letra “d”; a letra “b”, pela “e”; a
+letra “c”, pela “f” e assim sucessivamente.
+
+Qualquer forma de substituição criptográﬁca, a partir da qual cada letra é subs-
+tituída por outra letra ou símbolo é chamada de cifra. Dessa forma, o alfabeto da
+língua portuguesa após a “cifra de César ” é:
+
+Figura 1.3: Cifra de César
+
+Por exemplo, no lugar de escrever atacar pelo norte, o remetente escreveria
+
+DWDFDU SHOR QRUWH.
+
+Antes de prosseguirmos, vamos deﬁnir congruência modular para entendermos a
+
+notação utilizada por STALLINGS [21]:
+
+Deﬁnição 1 Seja m ∈ N com m > 1. Diremos que dois números naturais a e b são
+congruentes módulo m se os restos de sua divisão euclidiana por m são iguais.
+
+a ≡ b mod m
+
+Exemplo: Note que 12 ≡ 7 mod 5, pois os restos da divisão de 12 e de 7 por 5
+são iguais a 2.
+
+A teoria das congruências também é importante para calcularmos o resto da
+divisão entre dois números. Se 0 ≤ b < m, então b é o resto da divisão de a por m,
+por exemplo 8 deixa resto 3 na divisão por 5:
+
+Então, 8 ≡ 3 mod 5.
+
+8 = 1 · 5 + 3
+
+4
+
+Criptoanalistas árabes
+
+Capítulo 1
+
+Com base nessa deﬁnição, vamos atribuir um equivalente numérico a cada letra
+
+do alfabeto a = 0, b = 1, c = 2, d = 3, ..., z = 25:
+
+Podemos expressar um algoritmo da seguinte maneira: para cada letra no texto
+original, que vamos chamar de texto p, substitua-a pela letra do texto cifrado, que
+vamos chamar de C. Aplicando a notação utilizada na aritmética modular, temos:
+
+C ≡ (p + 3) mod 26
+
+Embora Suetônio só mencione que César deslocava as letras em três casas, ﬁca
+claro que podemos fazer um deslocamento de qualquer quantidade, de modo que o
+algoritmo de César ﬁca representado por
+
+C ≡ (p + k) mod 26, com k ∈ Z ﬁxo e 1 ≤ k ≤ 25
+
+No que diz respeito a decodiﬁcar o texto, basta fazer, no máximo, 25 tentativas,
+pois o texto não é o original, por isso uma possibilidade é excluída, ou seja, quando
+k = 0, STALLINGS [21] chama esse método de decodiﬁcação utilizando a “força
+bruta”.
+
+O método de César mais geral é aquele em que efetuamos uma permutação
+arbitrária das 26 letras do alfabeto. Como existem 26! permutações distintas de
+um conjunto de 26 elementos, existe uma grande quantidade de cifras distintas.
+Para tentar decodiﬁcar um texto utilizando a força bruta devemos descrever os 26!
+textos distintos (um para cada permutação) e, seguramente, um desses textos terá
+a mensagem original. Na prática, este método é totalmente inviável, pois existem
+mais de 400.000.000.000.000.000.000.000.000 rearranjos do alfabeto original e, por
+isso, durante séculos este foi o método mais eﬁciente para codiﬁcar mensagens.
+
+1.3 Criptoanalistas árabes
+
+No século IX um matemático árabe, que trabalhava na “Casa da sabedoria de
+Bagdad”, escreveu um livro manuscrito sobre o deciframento de mensagens cripto-
+gráﬁcas. O nome deste árabe é Abu Yusuf Yaqub ibn Ishaq al-Sabbah Al-Kindi,
+mas nos referimos simplesmente como Al-Kindi, conhecido como “o ﬁlósofo dos ára-
+bes”. Autor de 290 livros sobre Medicina, Astronomia, Matemática, Linguística e
+Música, seu maior tratado só foi descoberto em 1987, no Arquivo Otomano Sulaima-
+
+5
+
+Criptoanalistas árabes
+
+Capítulo 1
+
+niyyah em Istambul, e se intitula: “Um manuscrito sobre a decifração de mensagens
+criptográﬁcas”.
+
+Figura 1.4: Imagem artística de Al-Kindi
+Fonte: http://muslimheritage.com/topics/default.cfm?ArticleID=691
+
+Nesse livro é descrito o método da análise das frequências, o qual permite “rom-
+per” todas as cifras de substituição monoalfabéticas, ou seja, cifras de substituição
+a partir das quais cada letra do texto claro é substituída por outra letra no texto
+cifrado, de forma constante.
+
+O método de Al-Kindi consiste em decifrar uma mensagem codiﬁcada, quando se
+conhece o idioma. Para isso, deve-se encontrar um texto diferente, na mesma língua,
+suﬁciente longo para preencher uma página e fazer essa análise das frequências. A
+letra que aparecer com maior frequência no texto é chamada de “primeira”, a segunda
+mais frequente recebe o nomes e “segunda” e assim por diante, até todas as letras
+do texto serem contadas. Em seguida, examina-se o texto cujo deciframento será
+feito e os símbolos também são classiﬁcados com relação à frequência. O símbolo
+que aparecer com maior frequência é substituído pela “primeira”, o segundo símbolo
+mais frequente é substituído pela “segunda” e assim por diante, até todos os símbolos
+serem convertidos.
+
+Para poder aplicar a análise das frequências, precisamos conhecer qual é a porcen-
+tagem de aparição de cada letra nos textos de uma determinada língua. A frequência
+média de cada letra na Língua Portuguesa está apresentada na tabela a seguir:
+
+6
+
+Criptoanalistas árabes
+
+Capítulo 1
+
+Figura 1.5: Frequência das letras na língua portuguesa
+
+Para decodiﬁcar o texto cifrado, basta contar a frequência de cada símbolo no
+texto para descobrir a que letra correspondem os símbolos mais frequentes.
+Isto
+geralmente é suﬁciente para quebrar o código e ler toda a mensagem. Observe,
+entretanto, que este método de quebra do código só funciona bem se a mensagem
+for longa. É fácil escrever uma mensagem curta cuja contagem de frequência seja
+totalmente diferente da contagem de frequência média do português. Por exemplo,
+na frase “O rato roeu a roupa do rei de Roma” a letra R aparece 5 vezes e a letra
+A aparece 4 vezes. De um modo geral, textos curtos têm maior probabilidade de se
+desviarem signiﬁcativamente das frequências padrão; caso haja menos de cem letras,
+a decodiﬁcação será muito difícil.
+
+Por exemplo, MALAGUTTI [13] apresenta o seguinte texto para ser decodiﬁcado:
+
+urtklm tr dqapuakcftr ltr iasqtr aj nmqsuouar lacfdqa t jakrtoaj tetfxm
+a cmjniasa t steait ntqt qaofrsqtq tr ruersfsufcmar akcmksqtltr
+
+Analisando a frequência de cada letra no texto, temos:
+
+Figura 1.6: Frequência das letras no texto cifrado
+
+7
+
+Criptoanalistas árabes
+
+Capítulo 1
+
+Note que a letra que aparece com maior frequência é a letra t e há uma grande
+possibilidade de ela ser a letra A no texto original. A segunda letra que aparece na
+segunda colocação das frequência é a letra a e, como ﬁzemos anteriormente, há uma
+grande possibilidade de ela ser a letra E. Vale a pena ressaltar que isso é apenas um
+estudo, ou seja, estamos fazendo uma especulação. Substituindo essas informações
+no texto, temos:
+
+UrAklm Ar dqEpuEkcfAr lAr iEsqAr Ej nmqsuouEr lEcfdqE A
+jEkrAoEj AeAfxm E cmjniEsE A sAeEiA nAqA qEofrsqAq Ar
+ruersfsufcmEr EkcmksqAlAr.
+
+Diferenciamos em maiúsculas as letras do alfabeto original e minúsculas as do
+alfabeto cifrado. A letra r é a terceira letra com maior frequência, então ela pode
+estar codiﬁcando as letras O,R ou S. Vamos substituir essa letra por cada uma das
+letras que estamos especulando para ver se algum texto faz sentido.
+
+Substituindo a letra r por O:
+
+UOAklm AO dqEpuEkcfAO lAO iEsqAO Ej nmqsuouEO lEcfdqE A
+jEkOAoEj AeAfxm E cmjniEsE A sAeEiA nAqA qEofOsqAq AO
+OueOsfsufcmEO EkcmksqAlAO.
+
+Substituindo r por R, temos:
+
+URAklm AR dqEpuEkcfAR lAR iEsqAR Ej nmqsuouER lEcfdqE A
+jEkRAoEj AeAfxm E cmjniEsE A sAeEiA nAqA qEofRsqAq AR
+RueRsfsufcmER EkcmksqAlAR.
+
+Finalmente, substituindo r por S, a mensagem ﬁca:
+
+USAklm AS dqEpuEkcfAS lAS iEsqAS Ej nmqsuouES lEcfdqE A
+jEkSAoEj AeAfxm E cmjniEsE A sAeEiA nAqA qEofSsqAq AS
+SueSsfsufcmES EkcmksqAlAS.
+
+Diante das três possibilidades, a que mais faz sentido é a terceira, ou seja, quando
+trocamos r por S. A quarta letra é a q, então, provavelmente ela será O ou R. Assim:
+
+Se a letra q foi substituída por O, obtemos:
+
+USAklm AS dOEpuEkcfAS lAS iEsOAS Ej nmOsuouES lEcfdOE A
+jEkSAoEj AeAfxm E cmjniEsE A sAeEiA nAOA OEofSsOAO AS
+SueSsfsufcmES EkcmksOAlAS.
+
+8
+
+Criptoanalistas árabes
+
+Capítulo 1
+
+Se a letra q foi substituída por R,
+
+USAklm AS dREpuEkcfAS lAS iEsRAS Ej nmRsuouES lEcfdRE A
+jEkSAoEj AeAfxm E cmjniEsE A sAeEiA nARA REofSsRAR AS
+SueSsfsufcmES EkcmksRAlAS.
+
+Na primeira opção temos algo que se torna absurdo na Língua Portuguesa. Isso se
+dá pelo fato da palavra nAOA aparecer no texto. Logo, iremos optar pela segunda
+possibilidade. Note que a palavra Ej pode ser EM, ou seja, a letra j pode ter sido
+substituída pela letra M no momento da codiﬁcação. Assim:
+
+USAklm AS dREpuEkcfAS lAS iEsRAS EM nmRsuouES lEcfdRE A
+MEkSAoEM AeAfxm E cmMniEsE A sAeEiA nARA REofSsRAR AS
+SueSsfsufcmES EkcmksRAlAS.
+
+Realmente isso faz muito sentido, pois apareceu a palavra MEkSAoEM, haja
+vista, claramente, que ela representa a palavra MENSAGEM, ou seja, no texto
+cifrado, a letra k foi trocada por N e a letra o foi substituída por G. Analisando
+mais uma vez o texto:
+
+USANlm AS dREpuENcfAS lAS iEsRAS EM nmRsuGuES lEcfdRE A
+MENSAGEM AeAfxm E cmMniEsE A sAeEiA nARA REGfSsRAR AS
+SueSsfsufcmES ENcmNsRAlAS.
+
+Podemos observar que apalavra lEcfdRE deve ser DECIFRE, REGfSsRAR
+deve ser REGISTRAR e USANlm deve ser USANDO. Desta forma, percebemos
+que l é D, f é I, d é F, s é T e m é O.
+
+USANDO AS FREpuENCIAS DAS iETRAS EM nORTuGuES
+DECIFRE A MENSAGEM AeAIxO E COMniETE A TAeEiA nARA
+REGISTRAR AS SueSTITuICOES ENCONTRADAS.
+
+Note que SueSTITuICOES é SUBSTITUIÇÕES, FREpuENCIAS é FREQUÊN-
+
+CIAS, iETRAS é LETRAS. Assim, u é U, e é B, p é Q e i é L. Logo:
+
+USANDO AS FREQUENCIAS DAS LETRAS EM nORTUGUES
+DECIFRE A MENSAGEM ABAIxO E COMnLETE A TABELA
+nARA REGISTRAR AS SUBSTITUICOES ENCONTRADAS.
+
+Finalmente, note que a letra n é a letra P e a letra x é X. Logo chegamos a
+
+mensagem original:
+
+9
+
+A cifra de Vigenère
+
+Capítulo 1
+
+USANDO AS FREQUENCIAS DAS LETRAS EM PORTUGUES
+DECIFRE A MENSAGEM ABAIXO E COMPLETE A TABELA
+PARA REGISTRAR AS SUBSTITUICOES ENCONTRADAS.
+
+Note que não foi tão difícil descriptografar a mensagem, visto que foi possível
+manter a estrutura da Língua Portuguesa, só omitindo acentos e trocando ç por c.
+Poderíamos ter juntado os artigos, preposições entre outros nas próximas palavras.
+Isso já tornaria o texto mais difícil de ser decifrado. Apesar de ser um método que re-
+quer muito tempo para ser decifrado, os chamados “criptoanalistas” foram evoluindo
+nos seus métodos tanto no mundo árabe quanto na Europa, destruindo a segurança
+deste método, ou seja, qualquer um que enviasse uma mensagem codiﬁcada tinha
+que aceitar a possibilidade de que um especialista inimigo poderia interceptá-la e
+conhecer os segredos mais preciosos.
+
+1.4 A cifra de Vigenère
+
+O italiano Leon Battista Alberti (1404 - 1472) nasceu em Génova e foi pintor,
+compositor, poeta, ﬁlósofo e, sobretudo, conhecido como arquiteto. Alberti teve
+grande destaque na Renascença, pois, em meados de 1440, ele escreveu um ensaio
+do que acreditava ser um novo tipo de cifra. Alberti propôs a utilização de dois ou
+mais alfabetos cifrados, usados alternadamente, para confundir os criptoanalistas.
+Observe:
+
+O avanço principal do método de Alberti consiste em não permitir que a mesma
+letra do texto original apareça como uma única letra do alfabeto cifrado, ou seja,
+ele é o primeiro personagem que se tem notícia que utilizou a cifra de substituição
+polialfabética. Nesse método ele utilizava alternadamente dois alfabetos de César,
+causando uma enorme diﬁculdade para os criptoanalistas, pois a análise das frequên-
+cias era insuﬁciente para decifrar as mensagens. Ele não conseguiu desenvolver a sua
+ideia num sistema completo de cifragem, sistema que fora aperfeiçoado por Johannes
+Trithemius (1462 - 1516), depois pelo italiano Giovanni Porta (1541 - 1615), e, por
+ﬁm, pelo nosso próximo personagem: Blaise de Vigenère (1523 - 1596).
+
+Segundo TÁBARA [22], Blaise de Vigenère foi um diplomata francês do século
+XVI. Em razão da diplomacia, entrou em contato com o mundo da criptograﬁa e,
+
+10
+
+A cifra de Vigenère
+
+Capítulo 1
+
+quando encerrou sua carreira, dedicou grande parte do seu tempo a esta arte. Em
+1586, publicou o livro Traité des chiﬀres où secrètes manières d’escrire no qual expôs
+seu novo método de criptografar mensagens, baseado na cifra de César, a partir das
+ideias de Alberti.
+
+Vamos imaginar que ciframos a primeira letra utilizando o método de César,
+deslocando três unidades; a segunda letra, deslocando 7; e assim por diante, deslo-
+cando arbitrariamente. Este método resiste à análise de frequências, pois cada letra
+se codiﬁca de muitas formas distintas. Mas, se trocarmos arbitrariamente a cifra
+de César, nem nós mesmos seremos capazes de decifrá-la. Para não se perder na
+própria encriptação, Vigenère utilizou o conceito de palavra chave. Vamos imaginar
+que nos dão a chave de VIGENERE. Se quisermos cifrar uma mensagem com esta
+chave procederemos do seguinte modo: para cifrar a primeira letra, utilizamos o
+alfabeto de César que começa por V, ou seja, quando k = 21 na cifra de César; para
+cifrar a segunda letra, utilizamos o alfabeto que começa por I, isto é, quando k = 8;
+a terceira com G, quando k = 6 e assim por diante, até chegar à oitava letra. Para
+a nona letra voltamos a utilizar o alfabeto na letra V. Neste exemplo, utilizamos
+seis alfabetos diferentes. Caso sejam escolhidas outras palavras (ou frases) chave,
+podemos variar muito o resultado do criptograma.
+
+Figura 1.7: Blaise de Vigenère
+Fonte: http://algorithinking.blogspot.com.br/2011/07/vigenere-cipher.html
+
+11
+
+A cifra de Vigenère
+
+Capítulo 1
+
+Para a realização prática deste método utiliza-se uma tabela que contém todos
+os alfabetos possíveis de serem utilizados. Para complicar ainda mais os criptoana-
+listas do método de Vigenère, basta elencar chaves bem mais longas e com poucas
+letras repetidas. Quanto mais alfabetos empregarmos, mais difícil será realizar a
+criptoanálise.
+
+Figura 1.8: Cifra de Vigenère
+
+Na cifra de Vigenère, uma linha diferente do quadrado é utilizada para codiﬁcar
+letras diferentes da mensagem. Para decifrar a mensagem, o destinatário precisa
+saber que linha do quadrado de Vigenère foi usada para a cifragem, e, para isso,
+utiliza-se uma palavra-chave. Por exemplo, vamos utilizar a palavra-chave ROMA
+para o texto INVADIR A CIDADE. A letra “I” será substituída pela letra cor-
+respondente no alfabeto que começa pela letra “R”, ou seja, a letra “Z”; a letra “N”
+será substituída pela letra correspondente no alfabeto que começa pela letra “O”, ou
+seja, a letra “B” e assim por diante, até chegarmos ao texto cifrado ZBHAUWD
+R OIUOPE.
+
+12
+
+Máquinas de cifragem
+
+Capítulo 1
+
+Figura 1.9: Cifragem da frase “invadir a cidade”
+
+A aplicação deste método no computador ou no seu estudo matemático é feita
+utilizando-se aritmética modular. A partir da palavra chave, aplicamos os números
+associados e cada letra do texto original deve adicionar, modularmente, as letras
+da chave. Apesar da potência deste método, ele veio a ser utilizado muito tarde,
+devido à complexidade do mesmo. Além disso ele resistiu durante muitos séculos às
+tentativas dos criptoanalistas quebrá-lo, tanto que chegou a ser conhecido como “Le
+chiﬀre indéchiﬀrable” que signiﬁca a cifra indecifrável.
+
+1.5 Máquinas de cifragem
+
+De acordo com SINGH [20], a primeira máquina criptográﬁca que se tem registro
+foi inventada no século XV pelo arquiteto italiano Leon Alberti, um dos criadores
+da cifra polialfabética. A máquina era composta de dois discos de cobre. O maior
+era ﬁxo e o outro, o menor, era móvel. Cada disco continha o alfabeto ao longo da
+sua borda; no disco maior, o alfabeto original em letras maiúsculas e, no menor, o
+alfabeto cifrado em letras minúsculas. O disco menor poderia ser girado e, com isso,
+
+13
+
+Máquinas de cifragem
+
+Capítulo 1
+
+poderia ser usado para cifrar uma mensagem utilizando a cifra de César. Embora
+fosse um dispositivo muito básico, o disco de cifras possibilitava o trabalho de ci-
+fragem e foi utilizado por séculos. A ﬁgura 1.9 mostra o disco utilizado na Guerra
+Civil americana.
+
+Figura 1.10: Disco de cifras utilizado na guerra civil americana
+Fonte: http://www.cryptomuseum.com/crypto/usa/ccd/index.htm
+
+Em 1918 o inventor alemão Arthur Scherbius e seu amigo Richard Ritter fun-
+daram uma empresa, a Scherbius&Ritter. Um de seus projetos era substituir os
+sistemas de Criptograﬁa inadequados, usados na Primeira Guerra Mundial, a partir
+da troca de cifras de papel e lápis por uma forma de cifragem que usasse a tecnolo-
+gia do século XX. Engenheiro eletricista de formação, ele patenteou uma invenção
+de uma máquina de cifra mecânica, basicamente uma versão elétrica do disco de
+Alberti, mais tarde vendida como a máquina Enigma.
+
+Em 1925, Scherbius produziu a Enigma em grande escala, pois as autoridades
+alemãs acreditavam na segurança absoluta que ela proporcionava. Trinta mil máqui-
+nas foram adquiridas e utilizadas, nas duas décadas seguintes, pelo exército alemão.
+A Enigma era extremamente forte e, por aproximadamente treze anos, os cripto-
+analistas franceses e britânicos acreditaram que mensagens cifradas por ela eram
+indecifráveis sem o conhecimento da chave. Até que após um árduo trabalho, o crip-
+toanalista Alan Turing conseguiu quebra-la na primeira metade da década de 40.
+Isso foi feito em Bletchley Park, onde ﬁcava a sede da Escola de Cifras e Códigos do
+Governo (GC&CS) da Inglaterra, a partir do desenvolvimento dos criptoanalistas
+poloneses. Essa identiﬁcação se deu pelo desenvolvimento de máquinas chamadas
+“bombas”. A quebra das cifras da Enigma deu aos Aliados uma vantagem funda-
+mental, que, de acordo com historiadores, encurtou a guerra por mais dois anos,
+salvando muitas vidas.
+
+14
+
+Criptograﬁa nos computadores
+
+Capítulo 1
+
+Figura 1.11: Enigma - Maquina alemã
+Fonte: http://www.ilord.com/enigma.html
+
+Outro aparelho que tinha como ﬁnalidade decifrar mensagens foi desenvolvido na
+Inglaterra com base nas ideias de Turing. Denominado de “Colossus”, foi utilizado
+para decifrar as codiﬁcações feitas pela máquina Lorenz, empregada nas comunica-
+ções de Hitler e seus generais. O Colossus apresentou duas vantagens em relação
+às bombas: a primeira era que ele era constituído de válvulas eletrônicas bem mais
+rápidas do que os antigos eletromecânicos utilizados nas bombas e a segunda é o
+fato de serem programáveis, ou seja, esse fato fez com que ele seja considerado o pre-
+cursor do computador moderno. em razão disto, podemos dizer que o computador
+teve origem na criptoanálise.
+
+1.6 Criptograﬁa nos computadores
+
+1.6.1 Criptograﬁa simétrica
+
+A criptograﬁa simétrica (ou de chave privada) transforma um texto claro em
+um texto cifrado, usando uma chave secreta e um algoritmo de criptograﬁa. A
+partir da mesma chave e com o auxílio de um algoritmo de decriptograﬁa, o texto
+claro é recuperado a partir do texto cifrado. Ela é conhecida também por secret-
+key ou symmetric-key encryption. Esta chave pode ser uma palavra, frase ou uma
+sequência aleatória de números e/ou símbolos. O tamanho da chave é medido em
+bits e, por regra, quanto maior for a chave, mais seguro será o documento codiﬁcado.
+O esquema dessa criptograﬁa pode ser resumido na ﬁgura 1.12.
+
+15
+
+Criptograﬁa nos computadores
+
+Capítulo 1
+
+Figura 1.12: Modelo simpliﬁcado de Criptograﬁa simétrica
+Fonte: STALLINGS [21], p. 18
+
+Para um remetente e um destinatário se comunicarem utilizando este método,
+eles têm que concordar quanto ao valor da chave e têm que manter isso em segredo.
+Se eles estão em localizações físicas diferentes, deverão conﬁar em um mensageiro,
+telefone, SMS, e-mail, pessoalmente ou outro meio seguro de comunicação para pre-
+venir a revelação da chave secreta antes da transmissão. Como fazer que destinatário
+receba a chave sem alguém interceptá-la? Veremos mais adiante que isto se tornou
+um problema quase axiomático na informática, conhecido como “o problema da troca
+de chaves”.
+
+Os principais algoritmos de chave privada são, conforme OLIVEIRA [15]:
+DES - O Data Encryption Standard (DES) foi o algoritmo simétrico mais dis-
+seminado no mundo, até a padronização do AES. Foi criado pela IBM em 1977 e,
+apesar de permitir cerca de 72 quadrilhões de combinações, seu tamanho de chave
+(56 bits) é considerado pequeno, tendo sido quebrado por “força bruta” em 1997 em
+um desaﬁo lançado na internet.
+
+AES - O Advanced Encryption Standard (AES) é uma cifra de bloco, anunci-
+ado pelo NIST em 2003, fruto de concurso para escolha de um novo algoritmo de
+chave simétrica para proteger informações do governo federal, sendo adotado como
+padrão pelo governo dos Estados Unidos, é um dos algoritmos mais populares, desde
+2006, usado para Criptograﬁa de chave simétrica, sendo considerado como o padrão
+substituto do DES. O AES tem um tamanho de bloco ﬁxo em 128 bits e uma chave
+com tamanho de 128, 192 ou 256 bits, ele é rápido tanto em software quanto em
+hardware, é relativamente fácil de executar e requer pouca memória.
+
+16
+
+Criptograﬁa nos computadores
+
+Capítulo 1
+
+IDEA - O International Data Encryption Algorithm (IDEA) foi criado em 1991
+por James Massey e Xuejia Lai e possui patente da suíça ASCOM Systec. O algo-
+ritmo é estruturado seguindo as mesmas linhas gerais do DES. Mas na maioria dos
+microprocessadores, uma implementação por software do IDEA é mais rápida do
+que uma implementação por software do DES. O IDEA é utilizado principalmente
+no mercado ﬁnanceiro e no PGP, o programa para Criptograﬁa de e-mail pessoal
+mais disseminado no mundo.
+
+Outros algoritmos de chave privada são 3DES, Blowﬁsh, Twoﬁsh, RC4 e CAST.
+
+1.6.2 Criptograﬁa assimétrica
+
+A criptograﬁa assimétrica (ou de chave pública) transforma um texto claro em
+texto cifrado usando uma de duas chaves e um algoritmo de criptograﬁa. Usando a
+outra chave associada e um algoritmo de decriptograﬁa, o texto claro é recuperado a
+partir do texto cifrado. A chave pública pode ﬁcar disponível para qualquer pessoa
+que queira se comunicar com outra de modo seguro, mas a chave privada deverá
+ﬁcar em poder apenas de cada titular. Para ilustrar essa situação, vamos utilizar o
+esquema dos cadeados em que Alice deseja enviar uma carta a Bob. Bob distribui
+milhares de cadeados abertos iguais pelas agências de correios do mundo todo, mas
+somente ele tem a chave que abre esses cadeados. Assim, Alice vai até uma agência
+dos correios, pede o cadeado referente a Bob e tranca a carta com esse cadeado.
+Note que ela não pode mais abrir o cadeado, somente Bob pode fazer isso. Assim,
+mesmo que outra pessoa tente interceptar a mensagem, somente Bob pode abri-lo.
+Esse modelo de criptograﬁa foi criado na década de 70 pelo matemático Cliﬀord
+Cocks, que trabalhava no serviço secreto inglês, porém, como o seu trabalho não
+foi divulgado, a primeira evidência pública foi em 1976 com Diﬃe e Hellman. Eles
+mudaram os rumos da criptograﬁa desenvolvendo a criptograﬁa assimétrica na ten-
+tativa de solucionar o problema da troca de chaves. Conforme foi dito por Diﬃe:
+“Aﬁnal, qual é a vantagem de desenvolver criptossistemas impenetráveis, se seus
+usuários forem forçados a compartilhar suas chaves com um Centro de Distribui-
+ção de Chaves - CDC - que pode estar sujeito a roubo ou suborno?”. A principal
+vantagem deste método é a sua segurança, pois não é preciso (nem se deve) compar-
+tilhar a chave privada. Deve-se destacar que na criptograﬁa assimétrica, o tempo de
+processamento de mensagens é muitas vezes maior do que a criptograﬁa simétrica,
+dando maior diﬁculdade para o criptoanalista que deseja decifrar a mensagem. A
+ﬁgura 1.13 mostra, de forma simpliﬁcada, a criptograﬁa assimétrica.
+
+17
+
+Criptograﬁa nos computadores
+
+Capítulo 1
+
+Figura 1.13: Modelo simpliﬁcado de Criptograﬁa assimétrica
+Fonte: STALLINGS [21], p. 184
+
+Os principais algoritmos de chave pública, conforme OLIVEIRA [15] são:
+RSA - É um algoritmo assimétrico que possui este nome devido a seus inventores:
+Ron Rivest, Adi Shamir e Len Adleman, que o criaram em 1977 no Massachusetts
+Institute of Technology (MIT). Atualmente, é o algoritmo de chave pública mais
+amplamente utilizado, além de ser uma das mais poderosas formas de criptograﬁa
+de chave pública conhecidas até o momento. O RSA utiliza números primos. A
+premissa por trás do RSA consiste na facilidade de multiplicar dois números primos
+para obter um terceiro número, mas muito difícil de recuperar os dois primos a
+partir daquele terceiro número.
+Isto é conhecido como fatoração. Por exemplo,
+os fatores primos de 3.337 são 47 e 71. Gerar a chave pública envolve multiplicar
+dois primos grandes; qualquer um pode fazer isto. Derivar a chave privada a partir
+da chave pública envolve fatorar um grande número. Se o número for grande o
+suﬁciente e bem escolhido, então ninguém pode fazer isto em uma quantidade de
+tempo razoável. Assim, a segurança do RSA baseia-se na diﬁculdade de fatoração
+de números grandes.
+
+ElGamal - É outro algoritmo de chave pública utilizado para gerenciamento de
+chaves. Sua matemática difere da utilizada no RSA, mas também é um sistema co-
+mutativo. O algoritmo envolve a manipulação matemática de grandes quantidades
+numéricas. Sua segurança advém de algo denominado problema do logaritmo dis-
+creto. Assim, o ElGamal obtém sua segurança da diﬁculdade de calcular logaritmos
+discretos em um corpo ﬁnito, o que lembra bastante o problema da fatoração.
+
+Diﬃe-Hellman - Também baseado no problema do logaritmo discreto; trata-
+se do criptossistema de chave pública mais antigo ainda em uso. O conceito de
+
+18
+
+Criptograﬁa nos computadores
+
+Capítulo 1
+
+chave pública, aliás, foi introduzido pelos autores deste criptossistema em 1976. O
+problema desse método é que ele não permite ciframento, o sistema foi projetado
+para permitir a dois indivíduos entrarem em um acordo ao compartilharem um
+segredo tal como uma chave, muito embora eles somente troquem mensagens em
+público.
+
+Curvas Elípticas - Em 1985, Neal Koblitz e V. S. Miller propuseram de forma
+independente a utilização de curvas elípticas para sistemas criptográﬁcos de chave
+pública. Eles não chegaram a inventar um novo algoritmo criptográﬁco com curvas
+elípticas sobre corpos ﬁnitos, mas implementaram algoritmos de chave pública já
+existentes, como o algoritmo de Diﬃe-Hellman, usando curvas elípticas. Assim,
+os sistemas criptográﬁcos de curvas elípticas consistem em modiﬁcações de outros
+sistemas (o ElGamal, por exemplo), que passam a trabalhar no domínio das curvas
+elípticas, em vez de trabalharem no domínio dos corpos ﬁnitos. Eles possuem o
+potencial de proverem sistemas criptográﬁcos de chave pública mais seguros, com
+chaves de menor tamanho. Muitos algoritmos de chave pública, como o Diﬃe-
+Hellman e o ElGamal podem ser implementados em curvas elípticas sobre corpos
+ﬁnitos.
+
+No nosso trabalho vamos focar como funciona a criptograﬁa utilizando o pro-
+tocolo Diﬃe-Hellman para a troca de chaves. Para isso devemos ter conhecimento
+sobre Grupos, assunto estudado na disciplina de Álgebra Abstrata nas universidades,
+para compreendermos melhor o problema do logaritmo discreto.
+
+19
+
+Capítulo 2
+
+Das relações binárias aos logaritmos
+discretos
+
+Neste capítulo vamos estudar várias deﬁnições e teoremas relacionados à Álgebra.
+Este estudo será feito para que possamos entender, nos demais capítulos, o protocolo
+da troca de chaves de Diﬃe-Hellman. Mesmo que a maioria desses assuntos não
+estejam presentes no currículo do ensino básico, o Professor de Matemática pode
+fazer algumas adaptações nos resultados para que estes ﬁquem mais acessíveis aos
+alunos. As referências utilizadas para a elaboração deste capítulo foram ARAÚJO
+[2], DOMINGUES Domingues-Iezzi, FIGUEIREDO [9], FILHO [10], HEFEZ [11] e
+KAKUTA [12], ORE [16], SHOKRANIAN [19], SANTOS [18] e STALLINGS [21].
+
+2.1 Relações binárias
+
+Deﬁnição 2 Dados dois elementos x e y, chama-se par ordenado um terceiro ele-
+mento que se indica por (x, y), em que o elemento x é chamado de primeira coorde-
+nada e o elemento y é chamado de segunda coordenada
+
+Deﬁnição 3 Dados dois conjuntos não vazios A e B, chama-se produto cartesiano
+de A por B, denotado por A × B, o conjunto formado por todos os pares ordenados
+(x, y), onde x ∈ A e y ∈ B.
+
+A × B = {(x, y) | x ∈ A e y ∈ B}
+
+Exemplo: Considere os conjuntos A = {−1, 0, 1} e B = {1, 2, 3, 4}.
+
+a) A×B = {(−1, 1), (−1, 2), (−1, 3), (−1, 4), (0, 1), (0, 2), (0, 3), (0, 4), (1, 1), (1, 2), (1, 3), (1, 4)}
+
+b) B×A = {(1, −1), (1, 0), (1, 1), (2, −1), (2, 0), (2, 1), (3, −1), (3, 0), (3, 1), (4, −1), (4, 0), (4, 1)}
+
+20
+
+Domínio, imagem e relação inversa
+
+Capítulo 2
+
+Deﬁnição 4 Dados dois conjuntos não vazios A e B, chama-se relação binária ou
+simplesmente relação de A em B a todo subconjunto R do produto cartesiano A × B.
+
+R é relação de A em B ⇔ R ⊂ A × B
+
+O conjunto A recebe o nome de conjunto de partida e o conjunto B recebe o
+nome de conjunto de chegada. Para indicar que (x, y) ∈ R, escrevemos xRy e lemos
+“x erre y” ou “x se relaciona com y por R”. Caso (x, y) /∈ R, escrevemos x(cid:0)(cid:0)Ry e
+lemos “x não erre y” ou “x não se relaciona com y por R”.
+
+Exemplo: Com base no exemplo anterior, temos alguns exemplos de relações:
+
+R1 = {(−1, 1), (−1, 2), (0, 2), (1, 3)}
+R2 = {(0, 1), (0, 2), (0, 3)}
+R3 = {(1, 4)}
+
+2.2 Domínio, imagem e relação inversa
+
+Deﬁnição 5 Seja R uma relação de A em B. Chama-se domínio de R e denota-se
+por D(R) o subconjunto de A formado pelos elementos x para os quais existe algum
+y em B tal que xRy.
+
+D(R) = {x ∈ A | ∃y ∈ B com xRy}
+
+Exemplo: Utilizando as relações R1, R2 e R3 utilizadas na seção anterior, temos
+que seus respectivos domínios são:
+
+D(R1) = {−1, 0, 1}
+D(R2) = {0}
+D(R3) = {1}
+
+Deﬁnição 6 Seja R uma relação de A em B. Chama-se imagem de R e denota-se
+por Im(R) o subconjunto de B formado pelos elementos y para os quais existe algum
+x em A tal que xRy.
+
+Im(R) = {y ∈ B | ∃x ∈ A com xRy}
+
+21
+
+Relações de equivalência
+
+Capítulo 2
+
+Exemplo: Novamente utilizando R1, R2 e R3, obtemos:
+
+Im(R1) = {1, 2, 3}
+
+Im(R2) = {1, 2, 3}
+
+Im(R3) = {4}
+
+Deﬁnição 7 Seja R uma relação de A em B. Chama-se relação inversa de R e
+denota-se por R−1 a seguinte relação de B em A:
+
+R−1 = {(y, x) ∈ B × A : (x, y) ∈ R}
+
+Exemplo: Dados os conjuntos A = {1, 2, 3} e B = {−3, 0, 2}. A relação inversa
+de R = {(1, −3), (2, 0), (3, 2)} em B × A é R−1 = {(−3, 1), (0, 2), (2, 3)}.
+
+Note que:
+
+i) D(R−1) = Im(R)
+
+ii) Im(R−1) = D(R)
+
+iii) (R−1)−1 = R
+
+Deﬁnição 8 Quando A = B e R é uma relação de A em B, diz-se que R é uma
+relação sobre A ou, ainda, R é uma relação em E.
+
+2.3 Relações de equivalência
+
+Deﬁnição 9 Uma relação R sobre um conjunto não vazio A é chamada relação de
+equivalência sobre A quando R é relexiva, simétrica e transitiva, ou seja, quando
+são verdadeiras as seguintes propriedades:
+
+i) Se x ∈ A, então xRx (reﬂexiva)
+
+ii) Se x, y ∈ A e xRy, então yRx (simétrica)
+
+iii) Se x, y, z ∈ A e xRy e yRz, então xRz (transitiva)
+
+22
+
+Classes de equivalência e conjunto quociente
+
+Capítulo 2
+
+Quando R é uma relação de equivalência sobre um conjunto A, costumamos repre-
+sentar (x, y) ∈ R (ou xRy) por
+
+x ≡ y mod R ou x ∼ y mod R
+
+Antes de irmos para o próximo exemplo, vamos utilizar uma deﬁnição equivalente
+
+a deﬁnição 1 de congruência modular. Assim:
+
+Deﬁnição 10 Dados a, b ∈ N e m um número natural ﬁxo, com m > 1, dizemos
+que a é congruente a b módulo m se, e somente se, m dividir a diferença a − b. Em
+símbolos:
+
+a ≡ b m ⇔ m | (a − b)
+
+A prova da equivalência das duas deﬁnições é feita de maneira imediata.
+
+Exemplo: A relação de congruência módulo m (em que m ∈ Z e m > 1) sobre Z,
+é uma relação de equivalência, pois:
+
+i) Se x ∈ Z, então x ≡ x mod m
+
+De fato, a ≡ b m, pois m | 0.
+
+ii) Se x, y ∈ Z e x ≡ y mod m, então y ≡ x mod x
+
+Com efeito, se m | (a − b), então m divide o negativo, ou seja, m | − (a − b), ou ainda,
+m | b − a.
+
+iii) Se x, y, z ∈ Z e x ≡ y mod m e y ≡ z mod m, então x ≡ z mod m
+
+Note que m | (a − b) e m | (b − c), então m | (a − b) + (b − c), ou seja, m | (a − c).
+
+2.4 Classes de equivalência e conjunto quociente
+
+Deﬁnição 11 Seja R uma relação de equivalência sobre um conjunto A. Dado
+a ∈ A, chama-se classe de equivalência determinada por a módulo R (ou segundo
+R) e indica-se por [a], o subconjunto de A constituído por todos os elementos x tais
+que xRa,
+
+[a] = {x ∈ A | xRa} ou [a] = {x ∈ A | x ≡ a mod R}
+
+23
+
+Classes de equivalência e conjunto quociente
+
+Capítulo 2
+
+Neste caso, o elemento a ∈ [a] é chamado um representante de classe [a].
+
+Exemplo:
+deﬁnida por:
+
+Seja A = {x ∈ Z : | x | ≤ 10} e consideremos a relação R sobre A
+
+aRb ⇔ a2 + 2a = b2 + 2b
+
+Note que R é uma relação de equivalência, pois:
+
+i) aRa, pois a2 + 2a = a2 + 2a, ∀a ∈ A.
+
+ii) aRb ⇔ a2 + 2a = b2 + 2b ⇔ b2 + 2b = a2 + 2a ⇔ bRa.
+
+iii) aRb e bRc ⇔ a2 + 2a = b2 + 2b e b2 + 2b = c2 + 2c ⇒ a2 + 2a = c2 + 2c ⇔ aRc.
+
+Proposição 1 Seja R uma relação de equivalência sobre A e sejam a, b ∈ A. As
+seguintes proposições são equivalentes:
+
+i) aRb
+
+ii) a ∈ [b]
+
+iii) b ∈ [a]
+
+iv) [a] = [b]
+
+Demonstração: Devemos provar que (i) ⇒ (ii) ⇒ (iii) ⇒ (iv) ⇒ (i).
+(i) ⇒ (ii): É decorrência da deﬁnição de classe de equivalência.
+(ii) ⇒ (iii): Como a ∈ [b], então aRb. Daí, pela simetria de R, bRa e, portanto,
+b ∈ [a].
+(iii) ⇒ (iv): Por hipótese, b ∈ [a], ou seja, bRa. Logo, aRb. Temos que provar que
+[a] ⊂ [b] e [b] ⊂ [a].
+De fato, para provar a primeira das inclusões, seja x ∈ [a]. Então, xRa e, levando
+em conta que aRb, concluímos, por transitividade de R, que xRb. Assim, x ∈ [b] e
+[a] ⊂ [b].
+A prova de [b] ⊂ [a] é feita de modo análogo.
+(iv) ⇒ (i): Como a ∈ [a] e b ∈ [b], os conjuntos [a] e [b] não são vazios. Considere
+um x ∈ [a] = [b]. Então, xRa e xRb. Assim, pela simetria em R, valem aRx e xRb.
+A transitividade em R garante, então, que aRb.
+
+Nota: A propriedade (ii) nos motra que se x ∈ [a], então [x] = [a], isto é, todo
+elemento de uma classe de equivalência é um representante desta classe.
+
+24
+
+Classes de equivalência e conjunto quociente
+
+Capítulo 2
+
+Exemplo: Utilizando a relação de congruência módulo m (m ∈ N e m > 1) so-
+bre Z, as classes de equivalência [0] , [1] , [2] , [3] , ..., [m − 1] são denominadas classes
+residuais módulo m e são dadas por
+
+[0] = {x ∈ A | x ≡ 0 mod m}
+
+[1] = {x ∈ A | x ≡ 1 mod m}
+
+[2] = {x ∈ A | x ≡ 2 mod m}
+
+[3] = {x ∈ A | x ≡ 3 mod m}
+
+...
+
+[m − 1] = {x ∈ A | x ≡ m − 1 mod m}
+
+Note que paramos em [m − 1], pois [m] = [0].
+
+Deﬁnição 12 O conjunto de todas as classes de equivalência módulo R será indi-
+cado por A/R e chamado conjunto quociente de A por R, termo que justiﬁca o fato
+que R “particiona” o conjunto A em subconjuntos não vazios e disjuntos.
+
+Exemplo: Note que podemos particionar o conjunto Z dos números inteiros em
+subconjuntos, em que cada um deles possuem os números inteiros que possuem o
+mesmo resto na divisão por m, ou seja, R é a operação ≡ mod m. Assim, podemos
+particionar o conjunto Z utilizando todos os conjuntos de classes residuais módulo
+m.
+
+Z/R = {[0] , [1] , [2] , [3] , ..., [m − 1]}
+
+Denotaremos o conjunto quociente Z/R, em que R é a operação ≡ mod m por Zm.
+
+Deﬁnição 13 Dadas duas classes residuais [a] e [b] ∈ Zm chama-se soma [a] + [b]
+a classe [a + b].
+
+Deﬁnição 14 Dadas duas classes residuais [a] e [b] ∈ Zm chama-se produto [a] · [b]
+a classe [a · b].
+
+Evidentemente, é necessário garantir que estas operações estão bem deﬁnidas
+no sentido de que uma soma ou um produto de classes residuais independem do
+particular representante da classe que foi utilizado. Isto signiﬁca que devemos provar
+que se x ∈ [a] e y ∈ [b], então [x] + [y] = [a] + [b] e [x] · [y] = [a] · [b]. Dessa forma,
+se x ∈ [a] e y ∈ [b] implicam que x ≡ a mod m e y ≡ b mod m e, então, é imediato
+que, x + y ≡ a + b mod m e x · y ≡ a · b mod m.
+
+25
+
+Grupos
+
+Capítulo 2
+
+Exemplo: Vamos construir as tabelas da adição e multiplicação em Z4.
+
+2.5 Funções
+
+Deﬁnição 15 Seja f uma relação de A em B. Dizemos que f é uma função de A
+em B quando
+
+i) D(f ) = A;
+
+ii) Dado a ∈ D(f ), existe um único elemento b ∈ B tal que (a, b) ∈ f .
+
+Se f é uma função de A em B, vamos escrever b = f (a) para denotar que
+(a, b) ∈ f e f : A → B será uma maneira simbólica de dizermos que f é uma função
+de A em B. O conjunto B será chamado de contradomínio de f .
+
+Deﬁnição 16 Sendo A um conjunto não vazio, toda função f : A × A → A recebe
+o nome de operação sobre A ou lei de composição interna em A.
+
+Exemplo:
+potenciãção sobre N.
+
+A função f : N × N → N tal que f (x, y) = xy é a operação de
+
+Deﬁnição 17 Seja ⊗ uma operação sobre um conjunto não vazio A. Seja B um
+subconjunto não-vazio de A. Dizemos que B é uma parte fechada de A para a
+operação ⊗ se, e somente se, temos
+
+x ∈ B e y ∈ B ⇒ x ⊗ y ∈ B, ∀x, y ∈ B
+
+2.6 Grupos
+
+Deﬁnição 18 Seja G um conjunto não vazio e ⊗ : G × G → G uma operação.
+Dizemos que (G, ⊗) é um grupo se satisfaz as seguintes condições:
+
+26
+
+Grupos
+
+Capítulo 2
+
+i) A operação é associativa: a ⊗ (b ⊗ c) = (a ⊗ b) ⊗ c, ∀a, b, c ∈ G;
+
+ii) Existe um elemento neutro: ∃e ∈ G tal que a ⊗ e = e ⊗ a = a, ∀a ∈ G;
+
+iii) Existência do elemento simétrico: ∀a ∈ G, ∃a(cid:48) ∈ G | a ⊗ a(cid:48) = a(cid:48) ⊗ a = e.
+
+Da deﬁnição de grupos seguem algumas propriedades imediatas:
+
+• A unicidade do elemento neutro de (G, ⊗);
+
+• A unicidade do simétrico de cada elemento de G;
+
+• Se e é o elemento neutro, então e(cid:48) = e;
+
+• (a(cid:48))(cid:48) = a para qualquer que seja a ∈ G;
+
+• (a ⊗ b)(cid:48) = b(cid:48) ⊗ a(cid:48);
+
+• Todo elemento de G é regular para a operação ⊗, ou seja, vale a “lei do corte”:
+
+a ⊗ x = a ⊗ y ⇒ x = y.
+
+Deﬁnição 19 Dizemos que um grupo (G, ⊗) é abeliano ou comutativo se a operação
+⊗ : G × G → G é comutativa, isto é,
+
+a ⊗ b = b ⊗ a, ∀a, b ∈ G.
+
+Caso a operação de um grupo seja representada pelo símbolo +, então a iden-
+tidade do grupo é chamada zero, o inverso de um elemento a é denotado por −a
+e o grupo é dito grupo aditivo. Por outro lado, se a operação é representada pelo
+símbolo ×, então a identidade do grupo é chamada um, o inverso de um elemento a
+é a−1 e o grupo é chamado de grupo multiplicativo.
+
+Deﬁnição 20 Um grupo ﬁnito é um grupo (G, ⊗) no qual o conjunto G é ﬁnito. O
+número de elementos de G denotado por o(G) é chamado de ordem do grupo G.
+
+Para representar todos os elementos de um grupo ﬁnito costuma-se utilizar a
+tabela (ou tábua) da operação associada ao grupo. A primeira linha da tabela
+é chamada de linha fundamental e a primeira coluna à esquerda é chamada de
+coluna fundamental. Por exemplo, observe a tabela do grupo (G, ⊗), em que G =
+{g1, g2, g3, ..., gn}.
+
+27
+
+Grupos
+
+Capítulo 2
+
+Observe que
+
+• A operação ⊗ é comutativa se a tabela é simétrica em relação a diagonal
+
+principal;
+
+• Existe um elemento neutro, se existirem uma linha e uma coluna idênticas às
+
+fundamentais;
+
+• Seja Li a linha iniciada por gi. Se nesta linha o elemento neutro e, se situa na
+
+coluna Cj, então o simétrico de g(cid:48)
+
+i inicia na coluna Cj.
+
+Exemplo: G = {−1, 1} é um grupo em relação à multiplicação usual. Ele é um
+grupo ﬁnito de ordem 2. Observe a tabela:
+
+Exemplo: Vamos construir as tabelas de Z2, Z3, Z4 e Z5 com relação as operações
+de adição e multiplicação usuais.
+
+Note que (Zm, +) é sempre um grupo e o representamos como o grupo aditivo das
+classes residuais módulo m. Porém (Zm, ×) só será o o grupo multiplicativo das
+classes residuais módulo m se, e somente se, m for um número primo. Note que
+(Z4, ×) não é um grupo, pois [2] não possui elemento simétrico, mas (Z2, ×), (Z3, ×)
+e (Z5, ×) são grupos.
+
+28
+
+Grupos
+
+Capítulo 2
+
+Deﬁnição 21 Seja (G, ⊗) um grupo. Diz-se que um subconjunto não vazio H ⊂ G
+é um subgrupo de G se:
+
+i) H é fechado para a operação ⊗ (isto é, se a, b ∈ H, então a ⊗ b ∈ H);
+
+ii) (H, ⊗) também é um grupo.
+
+Note que se e indica o elemento neutro de G, então {e} é um subgrupo de G.
+É imediato, também, que o próprio G é um subgrupo de si mesmo. Esses dois
+subgrupos, ou seja, {e} e G, são chamados de subgrupos triviais de G.
+
+Proposição 2 Seja (G, ⊗) um grupo. Para que um subconjunto não vazio H ⊂ G
+seja um subgrupo de G, é necessário e suﬁciente que (a ⊗ b(cid:48)) seja um elemento de
+H sempre que a e b pertencerem a esse conjunto.
+
+Demonstração:
+
+Vamos indicar por e e eh, respectivamente, os elementos neutros de G e H. Como
+
+eh ⊗ eh = eh = eh ⊗ e
+
+29
+
+Grupos
+
+Capítulo 2
+
+e todo elemento do grupo é regular em relação a ⊗, então e = eh.
+Agora, vamos tomar um elemento b ∈ H e indiquemos por b(cid:48) e b(cid:48)
+em G e H, respectivamente. Como,
+
+h seus simétricos
+
+h ⊗ b = eh = e = b(cid:48) ⊗ b ⇒ b(cid:48)
+b(cid:48)
+
+h = b(cid:48)
+
+Novamente pelo fato de todos os elementos do grupo serem regulares para sua ope-
+ração. Finalmente, se a, b ∈ H, então a ⊗ b(cid:48)
+h ∈ H, pois temos da hipótese que (H, ⊗)
+é um grupo. Mas, b(cid:48)
+
+h = b(cid:48) e, portanto, a ⊗ b(cid:48) ∈ H.
+
+Reciprocamente, sabemos que, por hipótese, H não é vazio, então podemos con-
+0 = e ∈ H.
+
+siderar um elemento x0 ∈ H. Juntando esse fato a hipótese: x0 ⊗ x(cid:48)
+Considerando um elemento b ∈ H, da hipótese e da conclusão anterior segue que:
+
+e ⊗ b(cid:48) = b(cid:48) ∈ H
+
+Mostremos agora que H é fechado para a operação ⊗. De fato, se a, b ∈ H, então
+levando em conta a conclusão anterior, a, b(cid:48) ∈ H. Usando a hipótese, temos:
+
+a ⊗ (b(cid:48))(cid:48) = a ⊗ b ∈ H
+
+Agora, só falta mostrar a associatividade em H. De fato, se a, b, c ∈ H, então
+a, b, c ∈ G e, portanto, a ⊗ (b ⊗ c) = (a ⊗ b) ⊗ c, já que essa propriedade vale em G.
+
+Quando estivermos tratando de grupos multiplicativos, denotaremos ab para indicar
+que a · b, então a condição de subgrupo dada pela proposição, em termos de grupos
+multiplicativos, apresenta-se assim:
+
+a, b ∈ H ⇒ ab−1 ∈ H
+
+Deﬁnição 22 Seja G um grupo multiplicativo. Se a ∈ G e m é um número inteiro,
+a potência m-ésima de a, ou potência de a de expoente m, é o elemento de G
+denotado por am e deﬁnido da seguinte maneira:
+
+i) Se m ≥ 0, por recorrência, da seguinte forma
+
+ii) Se m < 0
+
+a0 = e elemento neutro de G
+
+am = aam−1, se m ≥ 1
+
+am = (cid:0)a−m(cid:1)−1
+
+30
+
+Grupos
+
+Capítulo 2
+
+A deﬁnição por recorrência no caso m ≥ 0 deve ser interpretada assim:
+
+a1 = a1−1a = a0a = ea = a
+
+a2 = a2−1a = a1a = aa
+
+a3 = a3−1a = a2a = aaa
+
+E assim por diante.
+
+Exemplo:
+a = [2]. Então:
+
+No grupo multiplicativo Z∗
+
+5 das classes de resíduos módulo 5, seja
+
+[2]0 = [1]
+[2]1 = [2]
+[2]2 = [2] [2] = [4]
+[2]3 = [4] [2] = [3]
+[2]−1 = [3]
+[2]−2 = (cid:0)[2]2(cid:1)−1
+
+= ([4])−1 = [4]
+
+Note que Z∗
+
+5 = {[1] , [2] , [3] , [4]} foi gerado pelas potências de [2].
+
+Proposição 3 Seja G um grupo multiplicativo. Se m e n são números inteiros e
+a ∈ G, então:
+
+i) aman = am+n;
+
+ii) a−m = (am)−1;
+
+iii) (am)n = amn.
+
+Demonstração:
+i) Inicialmente vamos demonstrar por indução sobre n o caso particular, em que
+n ≥ 0 e m + n ≥ 0. De fato,
+
+n = 0 ⇒ aman = ama0 = ame = am = am+0 = am+n
+
+Logo, a propriedade é válida quando n = 0.
+Agora, seja r ≥ 0 e suponhamos que, para qualquer inteiro m tal que m + r ≥ 0,
+seja válida a igualdade am+r = amar, ou seja, a nossa hipótese de indução, então:
+
+31
+
+Grupos
+
+Capítulo 2
+
+∗
+
+amar+1
+
+(cid:122)(cid:125)(cid:124)(cid:123)= am (ara) = (amar) a
+
+∗∗
+(cid:122)(cid:125)(cid:124)(cid:123)= am+ra
+
+∗
+
+(cid:122)(cid:125)(cid:124)(cid:123)= a(m+r)+1
+
+Note que nas passagens assinaladas por ∗ usamos a deﬁnição de potência, o que é
+possível por que r + 1 ≥ 1 e m + r + 1 ≥ 1; e na passagem assinalada por ∗∗ usamos
+a hipótese de indução.
+Para o caso geral, sejam m e n inteiros quaisquer. Tomemos um número inteiro
+p > 0 tal que p + n > 0 e p + m + n > 0, o que claramente é possível. Da deﬁnição,
+temos:
+
+apa−p = ap (ap)−1 = e
+
+Então,
+
+am+n = am+n (cid:0)apa−p(cid:1) = (cid:0)am+nap(cid:1) a−p
+
+∗
+
+(cid:122)(cid:125)(cid:124)(cid:123)= a(m+n)+pa−p =
+
+∗
+
+(cid:122)(cid:125)(cid:124)(cid:123)= (cid:0)aman+p(cid:1) a−p = (cid:2)am (anap) a−p(cid:3) =
+= am+(n+p)a−p
+= (cid:2)(aman) apa−p(cid:3) = (aman) (cid:0)apa−p(cid:1) = amane = aman
+
+Note que nas passagens ∗ utilizamos a conclusão anterior.
+
+ii) Note que, devido ao primeiro item,
+
+a−mam = a(−m)+m = a0 = e
+
+De modo análogo,
+
+Logo, cada uma dessas potências é inversa da outra, ou seja,
+
+ama−m = e
+
+a−m = (am)−1
+
+Como queríamos demonstrar nesse item.
+iii) Para provar a veracidade dessa equação, vamos provar por indução o caso em
+que n ≥ 0. Para n = 0, temos:
+
+(am)0 = e = a0 = am.0
+
+Vamos supor que exista r ≥ 0 que satisfaça a igualdade (am)r = amr (hipótese de
+indução). Vamos provar que é valida a igualdade (am)r+1 = am(r+1). De fato,
+
+32
+
+Grupos Cíclicos
+
+Capítulo 2
+
+(am)r+1 = (am)r (am)1 = amram = amr+m = am(r+1)
+
+e, por ﬁm, vamos supor que n < 0. Assim:
+
+(am)n
+
+∗
+
+(cid:122)(cid:125)(cid:124)(cid:123)= (cid:2)(am)−n(cid:3)−1
+
+= (cid:0)a−mn(cid:1)−1
+
+∗∗
+(cid:122)(cid:125)(cid:124)(cid:123)= amn
+
+Em ∗ usamos a deﬁnição e ∗∗ usamos (ii).
+
+Deﬁnição 23 Se a é um elemento de um grupo multiplicativo G, denotaremos por
+(cid:104)a(cid:105) o subconjunto de G formado pelas potências inteiras de a, ou seja,
+
+(cid:104)a(cid:105) = {am | m ∈ Z}
+
+.
+
+Proposição 4 (i) o subconjunto (cid:104)a(cid:105) é um subgrupo de G; (ii) se H é um subgrupo
+de G ao qual a pertence, então (cid:104)a(cid:105) ⊂ H.
+
+Demonstração:
+
+i) Note que (cid:104)a(cid:105) (cid:54)= φ , pois e, o elemento neutro de G, pertence a ele, uma vez
+
+que e = a0. Considere u e v elementos de (cid:104)a(cid:105). Dessa forma:
+
+u = am e v = an
+
+Para convenientes inteiros m e n, utilizando a proposição anterior, temos:
+
+uv−1 = am (an)−1 = ama−n = am−n
+
+Isso mostra que uv−1 ∈ (cid:104)a(cid:105), ou seja, (cid:104)a(cid:105) é um subgrupo de G.
+ii) Se a ∈ H, então toda potência de a também pertence a H e, portanto,
+
+(cid:104)a(cid:105) ⊂ H.
+
+2.7 Grupos Cíclicos
+
+Deﬁnição 24 Um grupo multiplicativo G será chamado de grupo cíclico se, para
+algum elemento a ∈ G, se veriﬁcar a igualdade G = (cid:104)a(cid:105). Nessas condições, o
+elemento a é chamado gerador do grupo G.
+
+G = (cid:104)a(cid:105) = {am | m ∈ Z}
+
+33
+
+Grupos Cíclicos
+
+Capítulo 2
+
+Exemplo: O grupo multiplicativo (Z∗
+
+5, ·) é um grupo cíclico, pois
+
+5 = (cid:8)[2]1 , [2]2 , [2]3 , [2]4(cid:9) = {[2] , [4] , [3] , [1]} = {[1] , [2] , [3] , [4]} = (cid:104)2(cid:105)
+Z∗
+
+Proposição 5 Seja G = (cid:104)a(cid:105) um grupo cíclico que ar = as para algum par de inteiros
+distintos r e s. Então, existe um inteiro h > 0 tal que:
+
+i) ah = e
+
+ii) ar (cid:54)= e sempre que 0 < r < h.
+
+Neste caso,
+
+G = (cid:104)a(cid:105) = (cid:8)e, a, a2, ..., ah−1(cid:9)
+
+o grupo é chamado de grupo cíclico ﬁnito e o expoente h, período ou ordem de
+
+a, cuja notação é ord(a) = h.
+
+Demonstração: Sem perda de generalidade, vamos supor que r > s. Então,
+
+E,
+
+ar (as)−1 = as (as)−1 = e
+
+ar−s = e
+
+Em que r−s > 0. Isso mostra que há potências de a, com expoentes estritamente
+positivos, iguais ao elemento neutro e. Portanto, pelo princípio da boa ordenação, é
+possível fazer a seguinte escolha: seja h o menor número inteiro estritamente positivo
+tal que ah = e. Então,
+
+ah = e
+
+ah+1 = aha = ea = a
+
+ah+2 = ah+1a = aa = a2
+
+Ou seja, a partir do expoente h as potências de a se repetem ciclicamente. Vamos
+
+provar a unicidade das potências a seguir:
+
+34
+
+Raízes primitivas
+
+Capítulo 2
+
+a0 = e
+
+a1 = a
+
+a2
+...
+ah−1
+
+De fato, suponhamos que ai = aj, com 0 ≤ i < j < h. Então, 0 < j − i < h e
+
+aj−i = aj (cid:0)ai(cid:1)−1 = aj (cid:0)aj(cid:1)−1 = e
+
+Ora, mas isso gera um absurdo, pois dada a escolha de h, não podemos ter
+
+simultaneamente 0 < j − i < h e aj−i = e.
+
+Agora, vamos provar que os únicos elementos no grupo cíclico são e, a, a2, a3, ...,
+ah−1. De fato, seja x um elemento de G = (cid:104)a(cid:105). Então, x = am para algum inteiro m.
+Usando-se o algoritmo de Euclides colocando m como dividendo e h como divisor,
+temos:
+
+m = hq + r (0 ≤ r < h)
+
+Então,
+
+am = ahq+r = (cid:0)ah(cid:1)q
+
+ar = eqar = ear = ar
+
+Como os valores possíveis de r são 0, 1, 2, 3, ..., h − 1, então as possibilidades para
+am são e, a, a2, a3, ..., ah−1. Isso mostra que (cid:104)a(cid:105) ⊂ (cid:8)a0 = e, a1 = a, a2, a3, ..., ah−1(cid:9).
+Note que, devido a deﬁnição de (cid:104)a(cid:105) , vale a inclusão contrária, ou seja, (cid:104)a(cid:105) =
+(cid:8)a0 = e, a1 = a, a2, a3, ..., ah−1(cid:9) e a ordem desse grupo é h.
+
+2.8 Raízes primitivas
+
+Deﬁnição 25 Designaremos por φ(m) à quantidade de números naturais entre 0 e
+m − 1 que são primos com m.
+
+Teorema 26 (Euler) Sejam m, a ∈ N com m > 1 e mdc(a, m) = 1. Então:
+
+aφ(m) ≡ 1 mod m
+
+35
+
+Raízes primitivas
+
+Capítulo 2
+
+Teorema 27 Se m = pα1
+então
+
+1 pα2
+
+2 · · · pαn
+n
+
+é a decomposição de m em fatores primos,
+
+φ(m) = pα1
+
+1 pα2
+
+2 · · · pαn
+n
+
+(cid:18)
+
+1 −
+
+1
+p1
+
+(cid:19) (cid:18)
+
+1 −
+
+1
+p2
+
+(cid:19)
+
+(cid:18)
+
+· · ·
+
+1 −
+
+(cid:19)
+
+1
+pn
+
+Em particular, quando m é primo φ(m) = m − 1.
+
+Para calcular o resto da divisão de uma potência an por um número natural
+m > 1, é conveniente achar um expoente h de modo que a potência ah ≡ 1 mod m.
+Pelo teorema de Euler existe h = φ(m) tal que ah deixa resto 1 na divisão por m.
+Como o conjunto formado por esses elementos h é não-vazio, podemos utilizar o
+princípio da boa ordenação para a seguinte deﬁnição:
+
+Deﬁnição 28 Suponha que a, m ∈ N∗, com m > 1 e mdc(a, m) = 1, deﬁne-se
+ordem de a com respeito a m como sendo o número natural
+
+ordm(a) = min (cid:8)i ∈ N∗; ai ≡ 1 mod m(cid:9) .
+
+Exemplo:
+a) A ordem de 7 com respeito a 15 é igual a 4.
+
+Com efeito,
+
+71 ≡ 7 mod 15
+
+72 = 49 ≡ 4 mod 15
+
+73 = 343 ≡ 13 mod 15
+
+74 = 2401 ≡ 1 mod 15
+
+Note que poderíamos ter utlizado as propriedades da aritmética modular, mas
+preferimos calcular as potências na “força bruta”. Ao calcular 74 ≡ 1 mod 15 perce-
+bemos que nenhuma potência de 7 menor que 4 é congruente a 1 módulo 15. Logo,
+ord15(7) = 4.
+
+Agora, vamos calcular φ(15):
+
+(cid:18)
+
+φ(15) = 3.5
+
+1 −
+
+(cid:19)
+
+(cid:18)
+
+.
+
+1 −
+
+1
+3
+
+(cid:19)
+
+1
+5
+
+⇒ φ(15) = 3.5.
+
+2
+3
+
+.
+
+4
+5
+
+⇒ φ(15) = 8.
+
+Logo, a ordem de 7 com respeito a 15 é igual 4 e φ(15) = 8.
+
+36
+
+Raízes primitivas
+
+Capítulo 2
+
+b) A ordem de 4 com respeito a 9 é igual a 3.
+
+De fato,
+
+41 ≡ 4 mod 9
+
+42 = 16 ≡ 7 mod 9
+
+43 = 64 ≡ 1 mod 9
+
+Por curiosidade, vamos calcular φ(9):
+
+φ(9) = 32.
+
+(cid:18)
+
+1 −
+
+(cid:19)
+
+1
+3
+
+⇒ φ(9) = 9.
+
+2
+3
+
+⇒ φ(9) = 6.
+
+Nos dois casos percebe-se que a ordm(a) | φ(m). Isso será enunciado no corolário
+
+do teorema a seguir.
+
+Teorema 29 Temos que an ≡ 1 mod m se, e somente se, ordm(a) | n.
+
+Demonstração:
+tal que existe um único par de inteiros q e r, 0 ≤ r < k tal que
+
+Inicialmente vamos fazer ordm(a) = k ∈ N∗. Seja n um inteiro
+
+Dessa forma,
+
+n = qk + r
+
+an = aqk+r = (cid:0)ak(cid:1)q
+
+ar ≡ ar mod m
+
+Como an ≡ 1 mod m, acabamos de mostrar que ar ≡ 1 mod m. Sendo r < k,
+r deve ser zero, pois k é, por deﬁnição, o menor inteiro positivo para o qual ak ≡
+1 mod m. Logo, r = 0 e n = qk. A recíproca é demonstrada de maneira análoga.
+
+Corolário 5.1 Sejam a, m ∈ N, com mdc(a, m) = 1. Temos que ordm(a) | φ(m).
+
+Deﬁnição 30 Quando φ(m) é a ordem de a com respeito a m, então dizemos que
+a é uma raiz primitiva módulo m.
+
+a é raiz primitiva com respeito a m ⇔ ordm(a) = φ(m)
+
+Exemplo: Vamos calcular a ordem de 2 com respeito a 9. Note que não precisamos
+calcular todas as potências do número 2, pois vimos que ord9(2) | φ(9) = 6. Assim:
+
+37
+
+Raízes primitivas
+
+Capítulo 2
+
+21 ≡ 2 mod 9
+
+22 = 4 ≡ 4 mod 9
+
+23 = 8 ≡ 8 mod 9
+
+26 = 64 ≡ 1 mod 9
+
+Dessa forma, o inteiro 2 é uma raiz primitiva módulo 9, pois a ordem de 2 com
+
+respeito a 9 é 6 e φ(9) = 6.
+
+Teorema 31 Seja ordm(a) = k ∈ N∗, então at ≡ ah mod m se, e somente se,
+t ≡ h mod k.
+
+Demonstração: Vamos supor que at ≡ ah mod m. Sem perda de generalidade
+podemos supor que t ≥ h. Logo, como at ≡ ahat−h mod m e at ≡ ah mod m temos
+ah ≡ ahat−h mod m. Como mdc(a, m) = 1 temos (ah, m) = 1, podemos cancelar ah
+nesta última congruência, obtendo
+
+1 ≡ at−h mod m.
+
+Dessa forma, k | (t − h) o que equivale a dizer que t ≡ h mod k.
+
+A recíproca é uma consequência do algoritmo da divisão de Euclides. Se t ≡
+
+h mod k, então existe um inteiro n tal que t = h + nk. Logo:
+
+at = ah+nk = ah (cid:0)ak(cid:1)n
+
+≡ ah mod m
+
+Pois k é a ordem de a módulo m, o que conclui a demonstração.
+
+Corolário 5.2 Seja p um número primo e a uma raiz primitiva módulo p, então
+at ≡ ah mod m se, e somente se, t ≡ h mod (p − 1).
+
+Demonstração: Com efeito, se p é um número primo, então pelo teorema anterior,
+sabemos que at ≡ ah mod m ⇔ t ≡ h mod (ordp(a)). Como a é raiz primitiva, então
+ordp(a) = φ(p) = p − 1 e, consequentemente, at ≡ ah mod m ⇔ t ≡ h mod (p − 1).
+
+Por curiosidade, somente os números naturais da forma 1, 2, 4, pt e 2pt ( p primo
+impar e t inteiro positivo) possuem raízes primitivas. A demonstração desse teorema
+é feita por SANTOS [18].
+
+38
+
+Logaritmos discretos
+
+Capítulo 2
+
+Teorema 32 (cid:104)a(cid:105) = Z∗
+
+m se, e somente se, a é raiz primitiva módulo m.
+
+O resultado desse teorema é muito importante, pois somente raízes primitivas
+
+geram grupos cíclicos módulo m, STALLINGS [21].
+
+Figura 2.1: Potência dos inteiros módulo 19
+Fonte: STALLINGS [21], p. 176
+
+2.9 Logaritmos discretos
+
+Deﬁnição 33 Para um número natural b co-primo com m, e a uma raiz primi-
+tiva módulo m, deﬁnimos como índice de b módulo m na base a ou logaritmo
+discreto de b módulo m na base a denotado por dloga,m(b) como o único número
+j ∈ {1, 2, 3, 4, · · · , φ(m)} tal que aj ≡ b mod m.
+
+O índice ou logaritmo discreto de b módulo m na base a foi denotado por
+
+dloga,m(b), mas alguns autores denotam esse fato por dloga,m(b).
+
+A principal aplicação dos logaritmos discretos é feita em algoritmos de chave
+pública, como por exemplo na troca de chaves de Diﬃe-Hellman e no ElGamal. Esse
+assunto é conhecido como problema do logaritmo discreto, em que é considerado um
+número primo p ao invés de um inteiro qualquer m (m > 1).
+
+39
+
+Logaritmos discretos
+
+Capítulo 2
+
+Exemplo: As potências de 2 com expoentes positivos módulo 11 são:
+
+21 = 2 ≡ 2 mod 11
+
+22 = 4 ≡ 4 mod 11
+
+23 = 8 ≡ 8 mod 11
+
+24 = 16 ≡ 5 mod 11
+
+25 = 32 ≡ 10 mod 11
+
+26 = 64 ≡ 9 mod 11
+
+27 = 128 ≡ 7 mod 11
+
+28 = 256 ≡ 3 mod 11
+
+29 = 512 ≡ 6 mod 11
+
+210 = 1024 ≡ 1 mod 11
+
+Note que 2 é raiz primitiva módulo 11, pois φ(11) = 11 − 1 = 10 e, portanto,
+
+Z∗
+
+11 =< 2 >= {21, 22, 23, · · · , 210}.
+
+Esses resultados que obtivemos das potências de 2 módulo 11, nos fornecem
+os valores de dlog2,11(x). Por exemplo, dlog2,11(1) = 0, pois 20 ≡ 1 mod 11 e
+dlog2,11(6) = 9, pois 29 ≡ 6 mod 11.
+
+Vamos construir uma tabela com dlog2,11(x) para todos os valores de x de 1 a
+
+10.
+
+Na verdade a função dlog2,11(x), em que x ∈ N∗, satisfaz propriedades semelhan-
+
+tes às propriedades dos logaritmos. As propriedades são:
+
+i) dloga,p(1) = 0;
+
+ii) dloga,p(a) = 1;
+
+iii) dloga,p(xy) ≡ dloga,p(x) + dloga,p(y) mod (p − 1);
+
+iv) dloga,p(xr) ≡ r.dloga,p(x) mod (p − 1);
+
+Demonstração:
+
+i) Da deﬁnição, temos que dloga,p(1) = 0, pois a0 = 1 ≡ 1 mod p.
+
+40
+
+Logaritmos discretos
+
+Capítulo 2
+
+ii) Da deﬁnição, temos que dloga,p(a) = 1, pois a1 = a ≡ a mod p.
+
+iii) Considere adloga,p(x) ≡ x mod p e adloga,p(y) ≡ y mod p, multiplicando as duas
+
+congruências, temos:
+
+adloga,p(x)+dloga,p(y) ≡ xy ≡ adloga,p(xy) mod p
+
+Mas, como a é raiz primitiva módulo p, então
+
+dloga,p(xy) ≡ dloga,p(x) + dloga,p(y) mod (p − 1)
+
+iv) Seja r um inteiro não-negativo. Podemos escrever xr como x.x.x.x.x.x · · · x
+com r fatores iguais a x. Considere adloga,p(x) ≡ x mod p, multiplicando essa
+congruência por ela mesmo r vezes, temos:
+
+adloga,p(x)+dloga,p(x)+···+dloga,p(x) ≡ xr ≡ adloga,p(xr) mod p
+
+De maneira análoga ao que ﬁzemos no item anterior, temos:
+
+dloga,p(xr) ≡ r.dloga,p(x) mod (p − 1)
+
+41
+
+Capítulo 3
+
+Criptograﬁa Diﬃe-Hellman
+
+Neste capítulo estudaremos os fatos históricos que foram importantes para o ser-
+gimento do protocolo Diﬃe-Hellman; o problema da distribuição das chaves e a troca
+de chaves de Diﬃe-Hellman. As referências bibliográﬁcas utilizadas foram: SINGH
+[20], ALMEIDA [1], COUTINHO [5], DIÁZ [6], FIARRESGA [8], ODLYZKO [14],
+RAYMOND [17] e VERISSIMO [23].
+
+3.1 Um pouco de história
+
+Whitﬁeld Diﬃe - nascido em 1944, Queens, Nova York, EUA - é muito conhecido
+pela sua descoberta do conceito de criptograﬁa de chave pública (com Martin Hell-
+man). Desde os tempos de criança tinha especial fascínio pela Matemática; leu livros
+que iam do Manual de tabelas matemáticas da Companhia Química da Borracha até
+o Curso de matemática pura de G. H. Hardy. Justamente por isso, Diﬃe decidiu
+estudar Matemática no Massachusetts Instituteof Technology - MIT; formou-se em
+1965. Depois disto, trabalhou com segurança de computadores até que, no início
+dos anos 70, adquirira o amadurecimento necessário para se tornar um criptógrafo
+de pensamento livre. Seus cabelos longos e a sua maneira de ser fazem dele uma
+espécie de hippie da alta tecnologia.
+
+O interesse de Diﬃe era a solução do problema da distribuição de chaves; apos-
+tava na crença de entrada na história daquele que encontrasse essa solução; posto
+que, nestas circunstâncias, surgiria a sumidade dos criptógrafos de todos os tempos.
+Ele acompanhou a evolução da organização de pesquisa ARPA (Advanced Research
+Projects Agency), fundada pelo Departamento de Defesa dos EUA, responsável por,
+em 1969, criar o sistema de comunicação em rede chamado de ARPANet; no trans-
+curso do tempo, em seu processo evolutivo, esse método, em 1982, deu origem a
+internet. Enquanto a ARPANet ainda era uma criança, Diﬃe sentia que uma re-
+
+42
+
+Um pouco de história
+
+Capítulo 3
+
+volução digital estava prestes a acontecer e que o projeto abria as portas para o
+desenvolvimento de uma supervia de comunicação. Dessa forma, ele sabia que a
+criptograﬁa se transformaria numa ferramenta essencial e que o problema da distri-
+buição de chaves se tornaria especialmente agudo.
+
+Diﬃe considerou duas situações. Na primeira, ele imaginou dois estranhos se
+comunicando via internet e se perguntou como eles poderiam trocar uma mensagem
+cifrada; e, na segunda, ele considerou uma pessoa que estava comprando um produto
+via internet. Como esta pessoa poderia mandar um e-mail contendo informações
+cifradas sobre o seu cartão de crédito, de modo que apenas o vendedor da internet
+pudesse decifrá-las? Note que nos dois casos as duas partes precisariam trocar uma
+chave, mas como isso poderia ser feito de modo seguro? Ele ﬁcou obcecado pela
+solução do problema da troca de chaves.
+
+Figura 3.1: Whitﬁeld Diﬃe
+Fonte: http://www.computerhistory.org/fellowawards/hall/bios/Whitﬁeld,Diﬃe/
+
+No ano de 1974, Diﬃe fez uma visita ao laboratório Thomas J. Watson da Inter-
+national Business Machine (IBM), onde foi convidado a dar uma palestra. Naquela
+ocasião, foram citadas várias estratégias para enfrentar o problema da distribuição
+de chaves, porém as suas ideias ainda eram muito experimentais. Um dos primeiros
+criptógrafos da IBM, Alan Kanheim, mencionou que outro palestrante falou sobre a
+questão da troca de chaves - referia-se a Martin Hellman, um professor da Univer-
+sidade de Stanford, na Califórnia. Assim, Diﬃe começou uma viagem de cinco mil
+quilômetros até a Costa Oeste para falar com Hellman.
+
+Martin Hellman nasceu em 1945 no Bronx, Nova York, EUA. Quando tinha
+apenas quatro anos de idade, sua família se mudou para um bairro cuja vizinhança
+era predominantemente formada por católicos irlandeses. Ser judeu mudou perma-
+nentemente a sua atitude frente à vida; na crença corrente, todo judeu é “Matador
+
+43
+
+O problema da distribuição das chaves
+
+Capítulo 3
+
+de Cristo” e, em razão disto, apanhava dos demais meninos e sofria diversa outras
+formas de perseguições e discriminações ao longo da vida. Ele lembra que queria ser
+como os outros meninos com relação à árvore de Natal e presentes de ﬁm de ano,
+mas percebeu que não poderia ser como os outros garotos e adotou uma atitude
+defensiva de “Quem é que deseja ser como todo mundo?”. Ele conta que este foi um
+dos motivos pelos quais começou a se interessar por criptograﬁa.
+
+Os colegas chamaram-no de louco: como fazer pesquisa de criptograﬁa, concorrer
+com a National Security Agency (NSA), uma agência de orçamento bilionário, e
+julgar que pudesse descobrir algo sem que eles soubessem? Sem falar que a NSA se
+apoderaria da descoberta e a classiﬁcaria como secreta. Até a visita inesperada de
+Diﬃe, em 1974, o famoso livro de David Kahn, The Codebreakers, tinha sido o seu
+livro de cabeceira e a única fonte de informação de Hellman.
+
+Figura 3.2: Martin Hellman
+Fonte: http://http://www.nndb.com/people/407/000028323/
+
+Finalmente Diﬃe havia cruzado o país e, por meio de uma chamada telefônica,
+entrou em contato com Hellman, que não hesitou em encontrá-lo, embora o visi-
+tante fosse totalmente desconhecido. Depois de meia hora de conversa, um estava
+impressionado com o conhecimento do outro e perceberam que não estavam mais
+sozinhos na busca de uma solução que até então era impossível na prática. Ape-
+sar das evidentes diferenças de personalidade, travava-se ali começo de uma grande
+amizade e companheirismo. Imediatamente começaram a arquitetar um plano para
+poderem trabalhar juntos. Como Diﬃe não tinha condições de contratar o novo
+amigo como pesquisador, Hellman resolveu registrar Diﬃe como estudante gradu-
+ado de Stanford. E, juntos, começaram a estudar o problema da distribuição de
+chaves, tentando encontrar uma alternativa para a cansativa tarefa de transportar
+ﬁsicamente as chaves através de grandes distâncias.
+
+44
+
+O uso das funções na troca de chaves
+
+Capítulo 3
+
+3.2 O problema da distribuição das chaves
+
+Se duas pessoas quiserem trocar mensagens secretas pelo telefone, o remetente
+deve cifrá-las e, para isso, ele usa uma chave, também secreta. Assim, surge o pro-
+blema de transmitir uma chave secreta para o receptor, a ﬁm de que seja possível
+transmiti-la. Em suma, antes que duas pessoas possam partilhar um segredo (a
+mensagem cifrada), é necessário partilhar outro segredo (a chave). Por mais com-
+plexa que fosse a cifra, se o “inimigo” interceptasse a chave, o sigilo iria por água a
+baixo.
+
+Quando se estuda o problema da distribuição das chaves surgem três personagens
+ﬁctícios que se tornaram um padrão nos debates sobre criptograﬁa: Alice, Bob e
+Eva. Vamos à situação prática: Alice deseja enviar uma mensagem para Bob ou
+vice-versa e Eva está tentando interceptar esta mensagem. Se Alice está tentando
+enviar mensagens conﬁdenciais para Bob, ela deve cifrá-las antes do envio usando
+uma determinada chave. Mas ela enfrenta sempre o problema de distribuição de
+chaves, visto que ela precisa mandar as chaves para Bob em segurança, pois, caso
+contrário, Bob não conseguirá decifrar as mensagens.
+
+Uma alternativa para o problema seria Alice e Bob se encontrarem uma vez por
+semana e trocarem chaves suﬁcientes para cobrirem todas as mensagens que possam
+ser enviadas durante os sete dias seguintes. Trocar chaves pessoalmente é certamente
+um modo seguro, mas, inconveniente, pois caso um dos dois ﬁcasse doente, o sistema
+deixaria de funcionar, ou, ainda, se contratassem um mensageiro, isso seria menos
+seguro. De qualquer modo, a distribuição de chaves é inevitável e durante dois mil
+anos isso foi considerado um axioma da criptograﬁa. Assim, surge um método que
+parece desaﬁar este axioma.
+
+Suponha que Alice deseja enviar uma mensagem para Bob utilizando uma agên-
+cia de correios, mas sabia que no trajeto desta carta alguém poderia abrir e ler a
+mensagem, então ela resolveu colocar a carta numa caixa de ferro trancada com
+um cadeado, ﬁcando com a chave. Quando Bob recebe a caixa, ele não tem como
+abri-la, então ele coloca outro cadeado e mandou de volta para Alice. Após receber
+a caixa, ela remove o próprio cadeado, deixando apenas o cadeado de Bob para im-
+pedir a abertura da caixa. Por ﬁm, ela envia novamente a caixa para Bob e, nesta
+circunstância, temos uma diferença crucial: Bob pode abrir a caixa porque ela está
+fechada apenas com o seu cadeado, para o qual só ele tem a chave, ﬁgura 3.3.
+
+A mensagem chegou ao destinatário com segurança sem que as pessoas trocas-
+sem, necessariamente, as chaves. Será que a troca de chaves pode não ser uma
+parte inevitável na criptograﬁa? Veremos que esse esquema é válido somente para
+cadeados, mas ele contribuiu muito para o avanço das pesquisas de Diﬃe e Hellman.
+
+45
+
+O uso das funções na troca de chaves
+
+Capítulo 3
+
+Figura 3.3: Esquema da troca de chaves ilustrada pelo exemplo dos cadeados
+Fonte: http://www.youtube.com/watch?v=pEfEgCEKcJ0
+
+3.3 O uso das funções na troca de chaves
+
+Vamos interpretar o exemplo dos cadeados em termos de cifragem. Alice usa a
+sua própria chave para cifrar a mensagem e a envia para Bob. Ele codiﬁca de novo
+a mensagem e a envia para Alice, daí ela recebe a mensagem, duplamente cifrada
+e retira a sua cifra e envia para Bob. Finalmente, Bob retira a sua cifra e ler a
+mensagem. Vejamos um exemplo:
+
+Note que a mensagem decifrada por Bob não faz sentido algum, ou seja, a ordem
+que o processo é realizado é muito importante. Por exemplo, se invertermos a ordem
+
+46
+
+A troca de chaves de Diﬃe-Hellman
+
+Capítulo 3
+
+em que foi decifrada, ou seja, primeiro Bob e depois Alice, obteremos a mensagem.
+
+Estamos diante de um problema: qual a ordem em que as cifragens devem ser
+feitas? De modo geral elas são feitas partindo do princípio “último dentro, primeiro
+fora”. Por exemplo, pela manhã calçamos nossas meias e em seguida os nossos tênis.
+À noite nós retiramos os tênis primeiro e as meias por último. Seria impossível
+retirar as meias sem antes retirar os tênis. As pesquisas de Diﬃe e Hellman foram
+avançando e eles chegaram à conclusão de que deveriam utilizar funções matemáticas
+para resolver o problema das trocas de chaves.
+
+Deﬁnição 34 Uma função invertível f (x) recebe o nome de função unidirecional se
+é “fácil” calcular y = f (x) para todo x do seu domínio, mas é computacionalmente
+inacessível calcular x = f −1(y) para todos os elementos y da imagem de f .
+
+Essas funções apresentam uma propriedade em que elas e suas inversas são com-
+pletamente assimétricas, quando nos referimos a termos de computação. Essas fun-
+ções também são conhecidas como funções de “mão única”. Para ilustrar isso de
+modo prático, a função que mistura tinta amarela com tinta azul para produzir
+tinta verde é unidirecional, pois é impossível desfazer essa mistura. A ﬁgura 3.4
+representa como seria o esquema da troca de chaves utilizando o exemplo das tintas.
+
+Figura 3.4: Troca de chaves ilustrada pelo exemplo das tintas
+Fonte: http://pt.wikipedia.org/wiki/Diﬃe-Hellman
+
+47
+
+A troca de chaves de Diﬃe-Hellman
+
+Capítulo 3
+
+3.4 A protocolo das trocas de chaves de Diﬃe-Hellman
+
+Depois de dois anos de trabalho com funções unidirecionais oferecidas pela arit-
+mética modular, em 1976, Hellman ﬁnalmente conseguiu resolver o problema da
+troca de chaves, mudando dos rumos da criptograﬁa desenvolvendo a criptograﬁa
+assimétrica. Finalmente, um protocolo para a troca de chaves foi criado para a
+comunicação em um meio não seguro. Esse método é baseado nas operações com
+logaritmos discretos. Vamos ver como funciona o protocolo Diﬃe-Hellman na co-
+municação entre Alice e Bob. Dado um número primo p e α uma raiz primitiva de
+p.
+
+Alice escolhe um número xa < p. Esse número é mantido em segredo.
+Bob escolhe um número xb < p. Esse número também é mantido em segredo.
+Alice calcula ya ≡ αxa mod p
+Bob calcula yb ≡ αxb mod p
+Alice envia o número ya para Bob.
+Bob envia o número yb para Alice.
+Alice calcula k ≡ (yb)xa mod p ⇒ k ≡ (αxb)xa mod p ⇒ k ≡ αxaxb mod p
+Bob calcula k ≡ (ya)xb mod p ⇒ k ≡ (αxa)xb mod p ⇒ k ≡ αxaxb mod p
+
+Alice e Bob chegaram ao mesmo valor k. Esse número k será a chave de comu-
+nicação entre eles. Note que na hora em que Alice e Bob trocam as informações
+é uma oportunidade para que Eva escutar e descobrir os detalhes da informação
+transmitida. Mas, ela pode escutar toda a conversa, pois mesmo que Eva saiba dos
+valores de p e α e os números trocados ya e yb ela não terá dados suﬁcientes para
+obter o número k se o valor de p for considerado computacionalmente grande.
+Exemplo:
+Bob será da seguinte forma:
+
+Suponha que p = 97 e α = 5. Então a troca de chaves entre Alice e
+
+• Alice escolhe um número, por exemplo 36;
+
+• Bob escolhe um número, por exemplo 58;
+
+• Alice calcula 536 ≡ 50 mod97;
+
+• Bob calcula 558 ≡ 44 mod97;
+
+• Alice informa a Bob o número 50;
+
+• Bob informa a Alice o número 44;
+
+• Alice calcula 4436 ≡ 75 mod97;
+
+48
+
+A troca de chaves de Diﬃe-Hellman
+
+Capítulo 3
+
+• Bob calcula 5058 ≡ 75 mod97;
+
+Portanto a chave entre Alice e Bob é o número 75.
+Agora, vamos nos colocar na situação de Eva. Ela sabe os número p = 97, α = 5,
+
+ya = 50 e yb = 44. Vamos tentar obter os números xa e xb.
+
+5xa ≡ 50 mod 97
+
+Ou seja, Eva tem que calcular,
+
+xa = dlog5,97(50)
+
+No site http://www.alpertron.com.ar/DILOG.HTM há uma calculadora de lo-
+Inserindo os valores que Eva tem, obtemos rapidamente que
+
+garitmos discretos.
+xa = 36 e com isso ela consegue saber que o valor de k é 75.
+
+Figura 3.5: Calculadora de logaritmos discretos
+Fonte: http://www.alpertron.com.ar/DILOG.HTM
+
+Assim, pode surgir a seguinte pergunta: o problema da troca de chaves não está
+resolvido? Note que utilizamos números relativamente pequenos. A segurança da
+criptograﬁa Diﬃe-Hellman reside no problema de determinar logaritmos discretos
+muito grandes.
+
+Segundo FIGUEIREDO [9], é importante que a ordem do grupo multiplicativo
+G seja um primo ou tenha um fator primo muito grande, caso contrário é bem
+fácil resolver o problema do logaritmo discreto, como ﬁzemos anteriormente. Se
+utilizarmos Z∗
+p, em que p é um número primo, ou seja, a ordem do grupo é p − 1,
+
+49
+
+A troca de chaves de Diﬃe-Hellman
+
+Capítulo 3
+
+uma boa escolha são os primos de Sophie German, que são da forma p = 2q + 1,
+onde q também é primo.
+
+Esses primos são famosos, pois a matemática, física e ﬁlósofa francesa Marie-
+Sophie Germain, nascida em Paris, provou que o “Último Teorema de Fermat” é
+verdadeiro para eles, ou seja, se p é um número primo com estas características,
+distintos dois a dois, então não existem soluções inteiras não triviais para a equa-
+ção xp + yp = zp. Como curiosidade, há 189 primos de Sophie Germain no in-
+tervalo [1, 104] e o maior número de Sophie German conhecido até o momento é
+185436379005152666667 − 1 que tem 200701 dígitos e foi descoberto em abril de 2012
+por Philipp Bliedung.
+
+Figura 3.6: Primos de Sophie German
+Fonte: http://es.wikipedia.org/wiki/N%C3%BAmero_primo_de_Sophie_Germain
+
+Trabalhar com logaritmos discretos é totalmente viável no âmbito computacional,
+pois não existe um algoritmo que calcule em tempo hábil os logaritmos discretos para
+primos muito grandes. Desta forma, os algoritmos que tentam descobrir o logaritmo
+discreto fazem testes, ou seja, trabalham utilizando a força bruta. Se o número primo
+for muito grande o computador irá gastar muito tempo para calcular o logaritmo
+discreto, pois esse problema é computacionalmente muito difícil.
+
+Vamos observar na prática como funciona o protocolo da troca de chaves Diﬃe-
+Hellman para a encriptação de uma mensagem, para isso vamos utilizar os números
+p e α pequenos para uma melhor explicação. Suponha que Alice e Bob combinem
+que irão utilizar os números p = 97 e α = 5. No exemplo anterior, vimos que a chave
+secreta entre eles será o número 75 e essa chave será utilizada tanto no algoritmo
+de criptograﬁa quanto no algoritmo de decriptograﬁa. Por exemplo, vamos supor
+
+50
+
+A troca de chaves de Diﬃe-Hellman
+
+Capítulo 3
+
+que nos computadores de Alice e Bob esteja instalado um algoritmo que utilize
+a cifra de Vigenère. Esse algoritmo cifra as mensagens utilizando a posição dos
+alfabetos de acordo com os algarismos da chave obtida. Nesse caso ele irá utilizar,
+alternadamente, os alfabetos da posição 7 e da posição 5 nessa ordem.
+
+Se Bob desejar enviar a mensagem AMOR para Alice, então o algoritmo de
+encriptação irá cifrar a mensagem como uiin e o algoritmo de decriptação irá decifrar
+uiin transformando na mensagem inicial AMOR.
+
+O grande problema deste modelo é o fato das chaves de Alice e Bob serem as
+mesmas, apesar da função logaritmo discreto ser unidirecional, o computador de
+ambos está sujeito a vírus. Suponha que um usuário deseja realizar uma transação
+bancária via internet, sabemos que o sistema que protege os computadores dos
+bancos são altamente seguros, mas o computador do usuário não, pois ele está
+sujeito a ser invadido por um vírus. Como a chave é a mesma é um risco para
+o banco utilizar esse método. Então, ela é considerada segura se o meio onde as
+chaves forem guardadas for seguro. Dessa forma, este modelo não é considerado o
+mais eﬁciente, pelo contrário, ele está obsoleto em relação a criptograﬁa RSA, por
+exemplo.
+
+A criptograﬁa RSA se baseia na fatoração de números primos grandes no âmbito
+computacional e a chave de criptograﬁa é diferente da chave de decriptograﬁa. As-
+sim, se Bob desejar enviar uma mensagem para Alice, ele utilizará a chave pública
+de Alice para cifrar a mensagem, mas somente Alice será capaz de decifrar a mensa-
+gem, pois ela utilizará a sua chave privada, tornado a comunicação entre eles mais
+segura. Portanto, a segurança da informação na troca de chaves de Diﬃe-Hellman
+se torna inferior se comparada a segurança RSA, por isso a sua pouca utilização
+atualmente.
+
+51
+
+Capítulo 4
+
+Atividades com criptograﬁa em sala
+de aula
+
+A abordagem de conteúdos que estimulem a curiosidade e que desencadeiem um
+processo que permita a construção de novos conhecimentos é um ponto de referência
+no processo de ensino e aprendizagem da Matemática. Dessa forma, a intenção de
+elaborar as atividades aqui propostas foi de aplicar o conhecimento obtido sobre
+criptograﬁa neste trabalho no ambiente escolar. Acredita-se que o tema Criptogra-
+ﬁa pode ser utilizado como gerador de atividades didáticas que permitam revisar,
+exercitar, ﬁxar e aprofundar os conteúdos matemáticos desenvolvidos no Ensino
+Fundamental e Médio. Partindo desse princípio, podemos introduzir a criptograﬁa
+ao começar um novo assunto ou no desenvolvimento dele.
+
+4.1 Atividade 1 - A utilização das funções na Crip-
+
+tograﬁa
+
+Neste trabalho, estudamos a evolução da criptograﬁa ao longo da história e
+aprendemos vários métodos de cifragem de mensagens. Nesta atividade vamos as-
+sociar a Cifra de César com uma função deﬁnida por várias sentenças, assunto que
+geralmente é visto após as funções polinomiais do 1o e 2o graus.
+
+Atividade
+
+A função f : N∗ → N∗, deﬁnida por f (x) =
+
+(cid:40)
+
+2x + 1, se x ≤ 12
+x, se x > 12
+
+, será respon-
+
+sável pela codiﬁcação de mensagens cujas letras estarão associadas com os números
+da tabela a seguir:
+
+Por exemplo, ao codiﬁcar a palavra casa, temos:
+
+52
+
+Atividade 1 - A utilização das funções na Criptograﬁa
+
+Capítulo 4
+
+f (3) = 2.3 + 1 ⇒ f (3) = 6 + 1 ⇒ f (3) = 7
+f (1) = 2.1 + 1 ⇒ f (1) = 2 + 1 ⇒ f (1) = 3
+f (19) = 19
+
+Note que a imagem do número 3 (que representa a letra c) pela função f é
+o número 7 que representa a letra g. Continuando o procedimento a mensagem
+codiﬁcada será gcsc.
+
+O que acabamos que fazer era comumente utilizado pelo imperador romano Júlio
+César para transmitir mensagens conﬁdenciais aos seus aliados. Esse método é
+chamado de cifra de César. O nome dado a técnica de codiﬁcar uma mensagem
+para que apenas o seu destinatário saiba traduzi-la é chamada de criptograﬁa. Um
+ramo muito importante da informática, cuja aplicação está diretamente ligada a
+segurança das informações transmitidas entre duas pessoas, ou empresas, ou países,
+etc.
+
+Com base no exemplo, faça o que se pede:
+
+a) cifre a mensagem eu amo criptograﬁa;
+
+b) Represente a função f por meio de diagramas utilizando o esquema de ﬂechas;
+
+c) Existem letras que não terão representação no texto cifrado. Quais são elas?
+
+Objetivo geral
+
+Introduzir a criptograﬁa em sala de aula como fator motivacional para veriﬁcar
+
+a aprendizagem dos alunos com respeito a funções deﬁnidas por várias sentenças.
+
+Objetivos especíﬁcos
+
+• Reconhecer uma função deﬁnida por várias sentenças;
+
+• Calcular o valor numérico de uma função deﬁnida por várias sentenças;
+
+• Retomar a ideia de diagramas por meio do esquema de ﬂechas;
+
+• Relacionar a função deﬁnida por várias sentenças a codiﬁcação e decodiﬁcação
+
+de mensagens.
+
+53
+
+Atividade 1 - A utilização das funções na Criptograﬁa
+
+Capítulo 4
+
+Público Alvo
+
+Estudantes da 1a série do ensino médio, segundo os Parâmetros Curriculares
+
+Nacionais (PCN).
+
+Pré-requisitos
+
+Os alunos deverão saber a deﬁnição de função constante e função polinomial do
+1o grau; representação de funções por meio do esquema de ﬂechas e cálculo do valor
+numérico para funções deﬁnidas por várias sentenças.
+
+Materiais
+
+Os materiais utilizados nesta atividade são lápis, borracha e a folha contendo a
+
+atividade.
+
+Recomendações Metodológicas
+
+Esta atividade será aplicada em sala de aula ao ﬁnal do conteúdo de funções de-
+ﬁnidas por várias sentenças. Os alunos responderão as atividades e, posteriormente,
+se reunirão em duplas para discutir os resultados obtidos. Ao término da discus-
+são, o docente responderá a atividade ou poderá propor aos alunos responderem na
+lousa.
+
+Diﬁculdades previstas
+
+Esta atividade requer conhecimentos prévios, ou seja, se por algum motivo o
+aluno não absorveu esses conhecimentos a atividade será encarada com diﬁculda-
+des. Dessa forma, ao perceber essas diﬁculdades o docente deverá dar uma atenção
+“especial” a esse aluno.
+
+Possíveis continuações ou desdobramentos
+
+O docente poderá associar este conteúdo com outras funções estudadas na 1a
+série do ensino médio, basta ter cuidado na escolha da lei de formação destas., para
+isso poderá mudar os valores associados as letras desta atividade.
+
+54
+
+Atividade 2 - O uso das matrizes na Criptograﬁa
+
+Capítulo 4
+
+4.2 Atividade 2 - O uso das matrizes na Criptograﬁa
+
+Um outro conteúdo visto na educação básica que pode ser relacionar com a
+Criptograﬁa é o estudo das Matrizes. Geralmente a contextualização desse con-
+teúdo utilizada nos livros de ensino médio diz respeito a multiplicação de matrizes.
+Nessa atividade vamos relacionar a criptograﬁa com multiplicação de matrizes, mas
+o diferencial é que vamos envolver matriz inversa nesses cálculos, o que permite fa-
+zer uma avaliação sobre o aprendizado dos alunos com relação a esse conteúdo de
+modo instigante, pois obter a real mensagem será motivante para os discentes. Para
+isso propomos uma questão que foi explorada no vestibular 2011 da Universidade
+Federal de Goiás (UFG).
+
+Atividade
+
+Uma técnica para criptografar mensagens utiliza a multiplicação de matrizes. Um
+codiﬁcador transforma sua mensagem numa matriz M, com duas linhas, substituindo
+cada letra pelo número correspondente à sua ordem no alfabeto, conforme modelo
+apresentado a seguir.
+
+Por exemplo, a palavra SENHAS ﬁcaria assim:
+
+(cid:34)
+
+M =
+
+S E N
+H A S
+
+(cid:35)
+
+(cid:34)
+
+=
+
+(cid:35)
+
+19 5 14
+1 19
+8
+
+Para codiﬁcar, uma matriz 2 × 2, A, é multiplicada pela matriz M, resultando
+
+na matriz E = A × M , que é a mensagem codiﬁcada a ser enviada.
+
+Ao receber a mensagem, o decodiﬁcador precisa reobter M para descobrir a
+mensagem original. Para isso, utiliza uma matriz 2 × 2, B, tal que B × A = I,
+onde I é a matriz identidade (2 × 2). Assim, multiplicando B por E, obtém-se
+B × E = B × A × M = M .
+
+Uma palavra codiﬁcada, segundo esse processo, por uma matriz A =
+
+resultou na matriz E =
+
+(cid:34)
+
+47 30 29
+28 21 22
+
+(cid:35)
+.
+
+(cid:35)
+
+(cid:34)
+
+2 1
+1 1
+
+Calcule a matriz B, decodiﬁque a mensagem e identiﬁque a palavra original.
+
+55
+
+Atividade 2 - O uso das matrizes na Criptograﬁa
+
+Capítulo 4
+
+Objetivo geral
+
+Introduzir a criptograﬁa em sala de aula como fator motivacional para veriﬁcar a
+aprendizagem dos alunos com respeito a multiplicação de matrizes e matriz inversa.
+
+Objetivos especíﬁcos
+
+• Identiﬁcar quando o produto de matrizes é possível;
+
+• Calcular o produto entre matrizes;
+
+• Obter a matriz identidade de ordem n;
+
+• Calcular a matriz inversa de uma matriz;
+
+• Resolver problemas envolvendo matrizes utilizando sistemas lineares;
+
+• Relacionar matrizes com a codiﬁcação e decodiﬁcação de mensagens.
+
+Público Alvo
+
+Estudantes da 2a série do ensino médio, segundo os Parâmetros Curriculares
+
+Nacionais (PCN).
+
+Pré-requisitos
+
+Os alunos deverão saber a deﬁnição de matrizes bem como identiﬁcar quando o
+produto entre matrizes é possível, multiplicação entre matrizes, obtenção da matriz
+inversa e matriz identidade.
+
+Materiais
+
+Os materiais utilizados nesta atividade são lápis, borracha e a folha contendo a
+
+atividade.
+
+Recomendações Metodológicas
+
+Esta atividade será aplicada em sala de aula ao ﬁnal do conteúdo de matrizes
+para a veriﬁcação da aprendizagem dos alunos com relação a esse conteúdo. Os
+alunos responderão a atividade e, ao término da discussão, o docente responderá a
+atividade ou poderá propor aos alunos responderem na lousa.
+
+Diﬁculdades previstas
+
+As diﬁculdades, que poderão surgir ao longo desta atividade, são aquelas referen-
+tes a multiplicação de matrizes e, em especial, ao cálculo de matrizes inversas, pois
+
+56
+
+Atividade 2 - O uso das matrizes na Criptograﬁa
+
+Capítulo 4
+
+o discente irá se deparar com o assunto sistema de equações lineares que foi visto
+no 8o ano do ensino fundamental, segundo os PCNs. Ao notar essas diﬁculdades,
+o docente deverá resgatar esse conteúdo para os alunos por meio de uma rápida
+revisão.
+
+Possíveis continuações ou desdobramentos
+
+O docente poderá criar outras atividades relacionando outras matrizes e outras
+
+mensagens originais para serem codiﬁcadas e decodiﬁcadas.
+
+57
+
+Atividade 3 - A criptograﬁa Diﬃe-Hellman em sala de aula
+
+Capítulo 4
+
+4.3 Atividade 3 - A criptograﬁa Diﬃe-Hellman em
+
+sala de aula
+
+No capítulo 3 deste trabalho aprendemos como funciona o algoritmo utilizado
+no protocolo da troca de chaves de Diﬃe-Hellman e ao ﬁnal exempliﬁcamos, no
+ﬁnal do capítulo, como ele funciona. A atividade aqui proposta irá fazer os alunos
+trabalharem com o conteúdo divisão de números inteiros e potenciação de números
+inteiros ambos vistos no 6o ano do ensino fundamental.
+
+Atividade
+A criptograﬁa (do grego kryptos, “escondido”, e graphein,“escrita”) é o estudo dos
+princípios e técnicas pelas quais a informação pode ser transformada da sua forma
+original para outra ilegível, de forma que possa ser conhecida apenas pelo remetente
+e destinatário da mensagem por meio de uma chave. Dois estudiosos americanos
+chamados Whitﬁeld Diﬃe e Martin Hellman publicaram em 1976 um novo método
+de duas pessoas trocarem mensagens de modo seguro utilizando o protocolo da troca
+de chaves de Diﬃe-Hellman, baseado, de maneira simpliﬁcada, no resto da divisão
+entre números naturais.
+
+Vamos supor que Alice e Bob são duas pessoas que desejam se comunicar utili-
+zando uma mensagem secreta, mas para isso eles deverão compartilhar uma chave
+secreta. O protocolo Diﬃe-Hellman funciona da seguinte maneira:
+
+i) Alice e Bob trocarão informações utilizando os restos das potências de base 4
+
+com relação ao número primo 7.
+
+ii) Alice deverá escolher um valor natural entre 1 e 7, que vamos chamar de x, e
+
+calcular o resto da divisão de 4x por 7 que denotaremos por a.
+
+iii) Bob deverá escolher um valor natural entre 1 e 7, que vamos chamar de y, e
+
+calcular o resto da divisão de 4y por 7 que denotaremos por b;
+
+iv) Agora, Alice irá calcular o resto da divisão de bx por 7 e chamar de k1;
+
+v) Bob irá calcular o resto da divisão de ay por 7 e chamar de k2;
+
+vi) Note que k1 = k2 e essa será a chave da comunicação secreta entre eles, que
+
+denotaremos por k.
+
+Após esse procedimento ser feito, Bob deseja enviar uma palavra secreta para
+Alice, por exemplo, amor. Por exemplo, se o valor de k obtido for o número 5,
+
+58
+
+Atividade 3 - A criptograﬁa Diﬃe-Hellman em sala de aula
+
+Capítulo 4
+
+então Bob irá codiﬁcar a palavra amor substituindo cada letra dessa palavra pela
+representante dela na 5 linha da tabela abaixo.
+
+Então, ele substituirá a letra A por N, M por H, O por A e R por Z, obtendo a
+palavra nhaz. Alice receberá essa mensagem decodiﬁcará utilizando a 5a linha com
+relação a linha do alfabeto da Língua Portuguesa. Dessa forma, ela substituirá a
+letra N por A, H por M, A por O e Z por R, obtendo a mensagem original amor.
+Reúnam-se em duplas e troquem palavras utilizando o protocolo Diﬃe-Hellman.
+
+Objetivo geral
+
+Introduzir a criptograﬁa em sala de aula como fator motivacional para veriﬁcar a
+aprendizagem dos alunos com respeito a divisão e potenciação de números inteiros.
+
+Objetivos especíﬁcos
+
+• Identiﬁcar o dividendo, divisor, quociente e resto de uma divisão;
+
+• Saber a deﬁnição de números primos;
+
+• Calcular potências de números naturais;
+
+• Relacionar o resto de uma divisão com a codiﬁcação e decodiﬁcação de men-
+
+sagens.
+
+Público Alvo
+
+Estudantes do 6o ano do ensino fundamental, segundo os Parâmetros Curriculares
+
+Nacionais (PCN).
+
+Pré-requisitos
+
+Os alunos deverão conhecer o algoritmo da divisão de Euclides, a deﬁnição e
+propriedades das potências de números naturais e a deﬁnição e obtenção de números
+primos.
+
+59
+
+Atividade 3 - A criptograﬁa Diﬃe-Hellman em sala de aula
+
+Capítulo 4
+
+Materiais
+
+Os materiais utilizados nesta atividade são lápis, borracha, calculadora e a folha
+
+contendo a atividade.
+
+Recomendações Metodológicas
+
+Esta atividade será aplicada em sala de aula ao ﬁnal do conteúdo de potenciação
+para a veriﬁcação da aprendizagem dos alunos com relação a esse conteúdo. Os
+alunos deverão formar duplas para veriﬁcar, utilizando a calculadora para o cálculo
+de potências, se conseguiram chegar a mesma chave e codiﬁcar e decodiﬁcar as
+mensagens transmitidas. Ao ﬁnal desta atividade o professor deverá discutir os
+resultados obtidos com os discentes, veriﬁcando se as mensagens foram trocadas
+com êxito.
+
+Diﬁculdades previstas
+
+As diﬁculdades, que poderão surgir ao longo desta atividade, são aquelas referen-
+tes ao assunto divisão, pois estudos comprovam a diﬁculdades dos alunos em todo o
+país com relação a esse conteúdo. O professor ao andar pela sala e ver o andamento
+das atividades poderá ajudar os alunos percebendo essa diﬁculdade.
+
+Possíveis continuações ou desdobramentos
+
+O docente poderá utilizar outros valores para o número primo e a base da potên-
+cia, bem como mudar o alfabeto utilizado no ﬁnal desta atividade para a codiﬁcação
+e decodiﬁcação das mensagens.
+
+60
+
+Referências Bibliográﬁcas
+
+[1] ALMEIDA, Paulo J., Criptograﬁa e segurança. Departamento de Matemática
+de Aveiro. Portugal, (2012). Disponível em: http://arquivoescolar.org/
+bitstream/arquivo-e/195/1/CS11_12.pdf>. Acesso em 05 fevereiro 2013.
+
+[2] ARAÚJO, Maria Julieta Ventura Carvalho, Fundamentos de Matemática Ele-
+mentar. Notas de aula, (2010). Disponível em: http://www.ufjf.br/andre_
+hallack/files/2012/07/fund-09.pdf. Acesso em 20 janeiro 2013.
+
+[3] BRASIL, Orientações curriculares para o ensino médio. Ciências da natureza,
+matemática e suas tecnologias. Brasília: Ministério da Educação, Secretaria
+de Educação Básica, 2006. Disponível em: http://portal.mec.gov.br/seb/
+arquivos/pdf/book_volume_02_internet.pdf. Acesso em 28 fevereiro 2013.
+
+[4]
+
+, Parâmetros Curriculares Nacionais: matemática. Secretaria de Educa-
+ção Fundamental. Brasília: MEC, SEF, 1997. Disponível em: http://portal.
+mec.gov.br/seb/arquivos/pdf/livro03.pdf. Acesso em 25 fevereiro 2013.
+
+[5] COUTINHO, S. C., Números inteiros e Criptograﬁa RSA. Série de Computação
+
+e Matemática n. 2. 2 ed. Rio de Janeiro, IMPA e SBM, (2000).
+
+[6] DIÁZ, José Raúl Durán, Números primos especiales y sus aplicaciones cripto-
+gráﬁcas. Tese (Departamento de Física Aplicada a las Tecnologias de la Infor-
+mación). Escuela Técnica Superior de Engenieros de Telecomunicación. Madrid,
+(2003). Disponível em: http://oa.upm.es/193/1/09200317.pdf. Acesso em
+12 fevereiro 2013.
+
+[7] DOMINGUES, H. H.; IEZZI, G., Álgebra moderna. 4 ed. São Paulo: Atual,
+
+(2003).
+
+[8] FIARRESGA, Victor Manuel Calhabrês, Criptograﬁa e Matemática. Disserta-
+ção (Mestrado em Matemática para Professores) - Universidade de Lisboa, Lis-
+boa, (2010). Disponível em: http://repositorio.ul.pt/bitstream/10451/
+3647/1/ulfc055857_tm_Victor_Fiarresga.pdf. Acesso em: 05 janeiro 2013.
+
+[9] FIGUEIREDO, Luiz Manoel
+
+ﬁa de chave pública. Rio de Janeiro:
+nense,
+48189108-Criptografia-Numeros-Primos. Acesso em: 20 dezembro 2012.
+
+e Criptogra-
+Universidade Federal Flumi-
+http://pt.scribd.com/doc/52956969/
+
+(2006). Disponível
+
+Silva, Números
+
+primos
+
+em:
+
+61
+
+Referências Bibliográficas
+
+[10] FILHO, Edgard de Alencar, Teoria das congruências. São Paulo: Nobel, (1986).
+
+[11] HEFEZ, Abramo, Elementos de aritmética. 2 ed. Rio de Janeiro: SBM, (2011).
+
+[12] KAKUTA, Neuza, Álgebra I. Universidade Estadual Paulista, São José do Rio
+
+Preto, (2005).
+
+[13] MALAGUTTI, Pedro Luiz, Atividades de Contagem a Partir da Criptograﬁa.
+OBMEP, Rio de Janeiro, (2009). Disponível em: http://server22.obmep.
+org.br:8080/media/servicos/recursos/296660.o. Acesso em: 14 janeiro
+2013.
+
+[14] ODLYZKO, Andrew. Discrete logarithms over ﬁnite ﬁelds. University of Min-
+http://www.dtc.umn.edu/~odlyzko/doc/
+
+nesota, (2009). Disponível em:
+discrete.logs.hff.pdf. Acesso em: 14 de fevereiro 2013.
+
+[15] OLIVEIRA, Ronielton Rezende, Criptograﬁa tradicional simétrica de chave pri-
+vada e Criptograﬁa assimétrica de chave pública: análise das vantagens e des-
+vantagens. Trabalho da pós-graduação Criptograﬁa e Segurança em Redes da
+UFF, Niteroi, (2006).
+
+[16] ORE, Oystein, Invitation to number theory. New York: Random House, (1967).
+
+[17] RAYMOND, J. F.; STIGLIC, A., Security Issues in the Diﬃe-Hellman Key
+Agreement Protocol. (2003). Disponível em: http://crypto.cs.mcgill.ca/
+~stiglic/Papers/dhfull.pdf. Acesso em: 12 fevereiro 2013.
+
+[18] SANTOS, José Plínio de Oliveira, Introdução à teoria dos números. 3 ed. Rio
+
+de Janeiro: IMPA, (2010).
+
+[19] SHOKRANIAN, Salahoddin, Uma introdução à teoria dos números. Rio de
+
+Janeiro: Editora Ciência Moderna Ltda., (2008).
+
+[20] SINGH, Simon; tradução de Jorge Calife, O livro dos códigos. 6 ed. Rio de
+
+Janeiro: Record, (2007).
+
+[21] STALLINGS, Willian; traduzido por Daniel Vieira, Criptograﬁa e segurança de
+
+redes. 4 ed. São Paulo: Pearson Prentice Hall, (2008).
+
+[22] TÁBARA, José Luis, Breve história de la Criptograﬁa clássica. Ma-
+drid,
+http://pt.scribd.com/doc/123095010/
+Breve-Historia-de-La-Criptografia-Clasica. Acesso em: 05 Janeiro 2013.
+
+(2011). Disponível
+
+em:
+
+[23] VERISSIMO, Fernando, Segurança em redes sem ﬁo. Monograﬁa. Uni-
+versidade Federal do Rio de Janeiro, Rio de Janeiro, (2012). Disponível
+em:
+http://www.lockabit.coppe.ufrj.br/sites/lockabit.coppe.ufrj.
+br/files/publicacoes/lockabit/wnsmono.pdf. Acesso em: 02 Janeiro 2013.
+
+62
+
+

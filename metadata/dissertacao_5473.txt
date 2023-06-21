@@ -1,0 +1,1305 @@
+2014: Trabalho de Conclus˜ao de Curso do Mestrado Proﬁssional em Matem´atica - PROFMAT
+Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ / Campus Alto Paraopeba - CAP
+Sociedade Brasileira de Matem´atica - SBM
+
+Sistemas de Identiﬁca¸c˜ao Modular:
+uma aplica¸c˜ao no ensino fundamental
+
+1
+Fernanda Rodrigues Alves Costa
+2
+Marcelo Oliveira Veloso
+
+Resumo: O trabalho descreve trˆes exemplos de sistemas de identiﬁca¸c˜ao modular analisando-
+os em rela¸c˜ao a capacidade de detec¸c˜ao de erros. Tamb´em prop˜oe uma aplica¸c˜ao direta em
+sala de aula, utilizando o recurso dos blocos l´ogicos.
+
+Palavras-chave: Aritm´etica Modular, Sistemas de Identiﬁca¸c˜ao de Erros, Blocos L´ogicos.
+
+1
+
+Introdu¸c˜ao
+
+“Os erros s˜ao quase sempre de uma natureza sagrada. Nunca tente os corrigir. Pelo contr´ario:
+Racionalize-os, compreenda-os a fundo. Depois disso, lhe ser´a poss´ıvel sublim´a-los.”
+(Salvador Dal´ı)
+
+Imagine se em uma transferˆencia banc´aria o operador cometesse um erro ao digitar o
+n´umero da conta e o valor fosse depositado para um desconhecido. Seria uma situa¸c˜ao
+realmente desagrad´avel, mas as chances desta falha ocorrer s˜ao raras.
+
+O n´umero que identiﬁca uma conta banc´aria ´e gerado por um sistema capaz de detectar
+a maioria dos erros cometidos durante a sua leitura, digita¸c˜ao e transmiss˜ao. Estes sistemas
+utilizam um ou mais algarismos acrescentados ao n´umero original que permitem alertar o
+operador da ocorrˆencia de um erro. Este d´ıgito adicional ´e conhecido como d´ıgito veriﬁcador.
+O d´ıgito veriﬁcador ´e determinado por algoritmos que utilizam conceitos simples da Te-
+oria dos N´umeros, mais especiﬁcamente Aritm´etica Modular. Por isto, estes sistemas s˜ao
+conhecidos como Sistemas de Identiﬁca¸c˜ao Modular.
+
+Os Sistemas de Identiﬁca¸c˜ao Modular tˆem grande importˆancia no com´ercio, na identi-
+ﬁca¸c˜ao civil, na arrecada¸c˜ao de tributos e em muitas outras ´areas. Eles s˜ao amplamente
+utilizados em c´odigos de barra, documentos de identiﬁca¸c˜ao, passaportes, notas ﬁscais, bole-
+tos de cobran¸ca banc´aria etc.
+
+Este artigo estuda os Sistemas de Identiﬁca¸c˜ao Modular e apresenta alguns exemplos que
+s˜ao avaliados quanto a capacidade de detectar erros. Al´em disso, prop˜oe uma aula para
+alunos do ensino fundamental sobre o tema. Para isso, a se¸c˜ao 2, apresenta as no¸c˜oes b´asicas
+
+1Aluna do Mestrado Proﬁssional em Matem´atica, Turma 2012
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+E-mail: fernandaracosta@gmail.com
+
+2Orientador do Trabalho de Conclus˜ao de Curso
+
+Departamento de F´ısica e Matem´atica - Deﬁm, CAP-UFSJ
+E-mail: veloso@ufsj.edu.br
+
+da Teoria dos N´umeros, que fundamentam o texto. A se¸c˜ao 3, discute sobre os tipos de erros
+cometidos ao digitar um n´umero de identiﬁca¸c˜ao, deﬁne os Sistemas de Identiﬁca¸c˜ao Modular
+e estabelece as condi¸c˜oes para que os sistemas possam detectar determinados tipos de erros.
+As se¸c˜oes que seguem descrevem trˆes exemplos concretos de sistema de identiﬁca¸c˜ao em
+utiliza¸c˜ao no pa´ıs: o CPF, o ISBN e o cart˜ao de cr´edito. Para uma melhor compreens˜ao
+da estrutura de cada um destes modelos s˜ao analisadas situa¸c˜oes concretas. Estes sistemas
+tamb´em s˜ao avaliados em rela¸c˜ao a capacidade de detec¸c˜ao de erros.
+
+Finalmente, a se¸c˜ao 7 apresenta uma possibilidade de trabalho deste tema com alunos
+do 6o e 7o anos do ensino fundamental. Uma sequˆencia did´atica baseada na metodologia de
+Resolu¸c˜ao de Problemas e Investiga¸c˜ao Matem´atica ´e cuidadosamente descrita para orientar
+o trabalho do professor. A proposta utiliza o recurso dos blocos l´ogicos para oportunizar a
+vivˆencia de experiˆencias de codiﬁca¸c˜ao e transmiss˜ao de dados.
+
+Deseja-se que a realiza¸c˜ao da pr´atica possibilite aos estudantes reﬂetir, investigar e cons-
+truir conhecimento. Tamb´em, espera-se que esse trabalho seja ´util a professores e alunos,
+mostrando como ideias e conceitos abstratos levam ao desenvolvimento de tecnologias que
+visam ao bem estar da nossa sociedade. Almeja-se ainda, que a leitura deste artigo motive um
+estudo mais aprofundado sobre a Teoria do N´umeros e os Sistemas de Identiﬁca¸c˜ao Modular.
+
+2 Conceitos Iniciais
+
+Esta se¸c˜ao, apresenta algumas deﬁni¸c˜oes e propriedades referentes `a Teoria dos N´umeros,
+mais especiﬁcamente `a Aritm´etica Modular. Um estudo mais detalhado desse tema pode ser
+encontrado em Hefez [1], Neto [6] e Santos [10].
+
+Neste texto, Z representa o conjunto dos n´umeros inteiros com suas opera¸c˜oes usuais de
+
+adi¸c˜ao (+) e multiplica¸c˜ao (·) e suas rela¸c˜oes de ordem (≤).
+
+Deﬁni¸c˜ao 2.1 Sejam a e b n´umeros inteiros com a 6= 0 dizemos que a divide b e vamos
+denotar por a | b, se existir um inteiro c tal que b = ac. Se a n˜ao divide b, escrevemos a - b.
+´E usual dizer que a ´e um divisor de b, ou b ´e divis´ıvel por a, ou ainda b ´e um m´ultiplo
+
+de a quando a | b.
+
+Exemplo 2.1 Como 6 = 2.3, ent˜ao 2 divide 6 e denotamos por 2 | 6. Segue que 2 ´e um
+divisor de 6, ou 6 ´e divis´ıvel por 2, ou ainda 6 ´e um m´ultiplo de 2.
+♦
+
+Deﬁni¸c˜ao 2.2 Um n´umero inteiro n ´e primo se n > 1 e se possui apenas dois divisores
+positivos n e 1. Se n > 1 n˜ao ´e primo dizemos que n ´e composto.
+
+Exemplo 2.2 Os inteiros 2, 3, 5, 7, 11, 13, 17, 23, 127 e 239 s˜ao n´umeros primos. J´a os
+inteiros 8 (8 = 2.4) e 33 (33 = 3.11) n˜ao s˜ao primos, ou seja, s˜ao n´umeros compostos.
+♦
+
+Proposi¸c˜ao 2.1 Se a, b, c, m e n s˜ao inteiros, c | a e c | b, ent˜ao c | (ma + nb).
+
+Demonstra¸c˜ao. Se c | a e c | b ent˜ao existem inteiros k1 e k2 com a = ck1 e b = ck2.
+Multiplicando essas duas equa¸c˜oes por m e n, respectivamente, teremos ma = mck1 e
+nb = nck2. Somando membro a membro, obtemos ma + nb = c(mk1 + nk2), segue da
+(cid:3)
+Deﬁni¸c˜ao 2.1 que c | (ma + nb).
+
+2
+
+Deﬁni¸c˜ao 2.3 Para cada inteiro x, deﬁne-se o inteiro m´odulo ou valor absoluto de x, de-
+notado por |x|, pela igualdade:
+
+x
+−x
+
+se x ≥ 0
+se x < 0
+
+|x| =
+
+(cid:26)
+
+Segue da deﬁni¸c˜ao que |x| ≥ 0, para todo x e que |x| = 0 se, e somente se, x = 0.
+
+Teorema 2.1 Sejam a, d e n n´umeros inteiros. Ent˜ao:
+
+1. 1 | n, n | n e n | 0
+
+2. d | n ⇒ ad | an
+
+3. ad | an e a 6= 0 ⇒ d | n
+
+4. d | n e n 6= 0 ⇒ |d| ≤ |n|
+
+5. d | n e n | d ⇒ |d| = |n|
+
+6. d | n e m ∈ Z ⇒ d | nm
+
+Demonstra¸c˜ao. As aﬁrma¸c˜oes s˜ao veriﬁcadas individualmente.
+
+1. Observe que n = 1.n, n = n.1 e 0 = n.0.
+
+2. Se d | n ent˜ao existe c ∈ Z tal que n = dc. Logo an = (ad)c, isto ´e, ad | an.
+
+3. Se ad | an ent˜ao an = adc, para algum inteiro c. Logo an − adc = 0, colocando a em
+evidˆencia escrevemos a(n − dc) = 0, como a 6= 0, segue que (n − dc) = 0 e portanto
+n = dc.
+
+4. Se d | n, temos que n = dc e n 6= 0 implica que c 6= 0. Logo |c| ≥ 1. Portanto,
+
+|n| = |dc| = |d||c| ≥ |d|.
+
+5. Se d | n e n | d, temos que n = dk1 e d = nk2 ent˜ao n = nk1k2. Assim, k1k2 = 1, logo,
+
+k1 = k2 = ±1 e portanto, |d| = |n|.
+
+6. Se d | n ent˜ao n = dc, multiplicando ambos os lados desta igualdade por m ∈ Z temos
+
+nm = dcm = d(cm) e segue pela Deﬁni¸c˜ao 2.1 que d | nm.
+
+(cid:3)
+
+O pr´oximo resultado ´e conhecido como Algor´ıtmo da Divis˜ao ou Algor´ıtmo de Euclides.
+
+Teorema 2.2 Sejam a e b dois n´umeros inteiros com a > 0. Ent˜ao existem inteiros q e r
+tais que
+
+b = a.q + r, onde 0 ≤ r < a
+
+Os inteiros q e r s˜ao ´unicos e s˜ao designados, respectivamente, por quociente e resto da
+divis˜ao de b por a.
+
+Demonstra¸c˜ao. Veja Teorema 1.2 no livro [10].
+
+(cid:3)
+
+3
+
+Deﬁni¸c˜ao 2.4 Se a e b s˜ao inteiros dizemos que a ´e congruente a b m´odulo m (m > 0) se
+m | (a − b), nota¸c˜ao a ≡ b (mod m). O caso em que a n˜ao ´e congruente a b m´odulo m
+denotamos por a 6≡ b (mod m).
+
+Exemplo 2.3 Temos que 11 ≡ 3 (mod 2) pois 2 | (11 − 3).
+
+♦
+
+Proposi¸c˜ao 2.2 Sejam a e b inteiros. Ent˜ao a ≡ b (mod m) se, e somente se, a e b possuem
+o mesmo resto na divis˜ao por m.
+
+Demonstra¸c˜ao. Pelo Algor´ıtmo da Divis˜ao, Teorema 2.2, existem q1, q2, r1, r2, inteiros com
+0 ≤ r1, r2 < m, tais que a = q1m + r1 e b = q2m + r2. Logo, a − b = m(q1 − q2) + (r1 − r2),
+segue que (a − b) − m(q1 − q2) = (r1 − r2).
+
+Como a ≡ b (mod m), temos que m | (a − b), temos ainda que m | m(q1 − q2). Portanto,
+pela Proposi¸c˜ao 2.1, m | (a − b) − m(q1 − q2), ou seja, m | (r1 − r2). Agora note que
+|r1 − r2| < m. Contudo isso s´o ´e poss´ıvel se r1 = r2.
+
+Reciprocamente, se a e b possuem o mesmo resto na divis˜ao por m, pelo Teorema 2.2,
+existem inteiros r, q1, q2 tais que a = mq1 + r e b = mq2 + r. Logo, a − b = m(q1 − q2). Assim,
+(cid:3)
+m | m(q1 − q2) e, portanto, m | (a − b), segue pela Deﬁni¸c˜ao 2.4 que a ≡ b (mod m).
+
+Exemplo 2.4 Como 21 = 2.10 + 1 e 13 = 2.6 + 1 temos que 21 ≡ 13 (mod 2) pois o resto
+♦
+da divis˜ao de 21 e de 13 por 2 s˜ao iguais a 1.
+
+A rela¸c˜ao (mod m) ´e uma rela¸c˜ao de equivalˆencia, ou seja, ´e reﬂexiva, sim´etrica e tran-
+
+sitiva (veja 2.3).
+
+Proposi¸c˜ao 2.3 Seja a, b, c e m n´umeros inteiros e m > 0. Ent˜ao
+
+1. a ≡ a (mod m)
+
+2. Se a ≡ b (mod m), ent˜ao b ≡ a (mod m)
+
+3. Se a ≡ b (mod m) e b ≡ c (mod m), ent˜ao a ≡ c (mod m)
+
+Demonstra¸c˜ao.
+
+1. Como m | 0, ent˜ao m | (a − a), o que implica a ≡ a (mod m).
+
+2. Como a ≡ b (mod m), pela deﬁni¸c˜ao 2.4 temos m | a − b, segue pelo Teorema 2.1 que
+
+m | −(a − b) = b − a. Logo m | b − a e portanto, b ≡ a (mod m).
+
+3. Como a ≡ b (mod m) e b ≡ c (mod m), ent˜ao m | a−b e m | b−c. Segue da Proposi¸c˜ao
+
+2.1 que m | [(a − b) + (b − c)], logo m | a − c, o que implica a ≡ c (mod m).
+
+(cid:3)
+
+No teorema a seguir percebe-se que a rela¸c˜ao de equivalˆencia ´e compat´ıvel com as opera¸c˜oes
+
+de adi¸c˜ao e multiplica¸c˜ao nos inteiros.
+
+Teorema 2.3 Se a, b, c, r, s e m s˜ao inteiros tais que a ≡ b (mod m) e r ≡ s (mod m),
+ent˜ao
+
+1. a + c ≡ b + c (mod m)
+
+2. a − c ≡ b − c (mod m)
+
+4
+
+3. ac ≡ bc (mod m)
+
+4. a + r ≡ b + s (mod m)
+
+5. ar ≡ bs (mod m)
+
+Demonstra¸c˜ao. Aplicando o Teorema 2.1 e a Deﬁni¸c˜ao 2.4, obtemos:
+
+1. a ≡ b (mod m) ⇒ m | a − b ⇒ m | a − c + c − b ⇒ m | (a + c) − (b + c) ⇒
+
+a + c ≡ b + c (mod m).
+
+2. a ≡ b (mod m) ⇒ m | a − b ⇒ m | (a − c) − (b − c) ⇒ a − c ≡ b − c (mod m).
+
+3. a ≡ b (mod m) ⇒ m | a − b ⇒ m | (a − b)c ⇒ m | ac − bc ⇒ ac ≡ bc (mod m).
+
+4. a ≡ b (mod m) e r ≡ s (mod m) ⇒ m | a − b e m |
+m | (a − b) + (r − s) ⇒ m | (a + r) − (b + s) ⇒ a + r ≡ b + s (mod m).
+
+r − s ⇒
+
+5. a ≡ b (mod m) e r ≡ s (mod m) ⇒ m | a − b e m |
+
+r − s ⇒
+
+m | r(a − b) + b(r − s) ⇒ m | ar − bs ⇒ ar ≡ bs (mod m).
+
+(cid:3)
+
+Deﬁni¸c˜ao 2.5 Sejam a e b inteiros, com a 6= 0 ou b 6= 0. O m´aximo divisor comum de a e
+b, denotado por mdc (a, b), ´e o inteiro positivo d que satisfaz:
+
+1. d | a e d | b.
+
+2. Se existe um inteiro c tal que c | a e c | b ent˜ao c ≤ d.
+
+Exemplo 2.5 Observe que mdc (4, 14) = 2 pois os divisores de 4 s˜ao {±1, ±2, ±4} e 4 n˜ao
+♦
+divide 14.
+
+Proposi¸c˜ao 2.4 Sejam a, b e c n´umeros inteiros. Se a | bc e mdc (a, b) = 1 ent˜ao a | c.
+
+Demonstra¸c˜ao. Veja Proposi¸c˜ao 1.21 em Neto [6].
+
+(cid:3)
+
+Teorema 2.4 Sejam p e k n´umeros inteiros.
+b ∈ {1, . . . , k − 1} se, e somente se, mdc (p, k) = 1.
+
+Ent˜ao pb
+
+6≡ 0 (mod k), para todo
+
+Demonstra¸c˜ao. Suponha que mdc (p, k) = d > 1. Ent˜ao d | p e d | k, e assim p = dd1 e
+k = dd2 com d2 ∈ {1, . . . , k − 1}. Fazendo b = d2 temos que
+
+pb = pd2 = dd1d2 = d1dd2 = d1k ≡ 0
+
+(mod k).
+
+Como pb 6≡ 0 (mod k) temos um absurdo. Portanto d = 1, ou seja, mdc (p, k) = 1.
+
+Reciprocamente, como mdc (p, k) = 1 temos que k - p. Seja b ∈ {1, . . . , k − 1} tal que
+pb ≡ 0 (mod k). Logo k | pb e mdc (p, k) = 1. Segue da Proposi¸c˜ao 2.4 que k | b. Um
+(cid:3)
+absurdo, pois 0 < b ≤ k − 1. Portanto, pb 6≡ 0 (mod k).
+
+5
+
+3 Sistemas de Identiﬁca¸c˜ao Modular
+
+Frequentemente utilizam-se um n´umero para identiﬁcar rapidamente um artigo, uma
+propriedade, um livro ou uma pessoa. Estes n´umeros de identiﬁca¸c˜ao podem armazenar
+uma grande quantidade de dados e informa¸c˜oes. Sua utiliza¸c˜ao ´e observada no Registro
+de Identidade (RG), no Cadastro de Pessoa F´ısica (CPF), no C´odigo de Endere¸camento
+Postal (CEP), na identiﬁca¸c˜ao de livros (ISBN), no c´odigo de barras, na conta banc´aria e em
+v´arias outras situa¸c˜oes. Estes n´umeros de identiﬁca¸c˜ao s˜ao, em geral, formados de algarismos
+(c´odigos num´ericos) ou de letras e algarismos (c´odigos alfanum´ericos).
+
+Para se detectar e evitar fraudes e poss´ıveis erros de transmiss˜ao, digita¸c˜ao ou leitura,
+a maioria dos sistemas de identiﬁca¸c˜ao utilizam alguma informa¸c˜ao redundante transmitida
+em simultˆaneo com o c´odigo que se pretende comunicar. Essa informa¸c˜ao adicional ou re-
+dundˆancia ´e chamada de d´ıgito veriﬁcador, algarismo de controle ou ainda algarismo de teste.
+Na maioria dos sistemas de identiﬁca¸c˜ao o d´ıgito veriﬁcador ´e o ´ultimo d´ıgito da sequˆencia
+e seu valor ´e calculado utilizando Aritm´etica Modular. Por esse motivo, estes sistemas s˜ao
+conhecidos como Sistemas de Identiﬁca¸c˜ao Modular.
+
+A utiliza¸c˜ao de d´ıgitos veriﬁcadores n˜ao permite a corre¸c˜ao autom´atica do erro. Contudo
+permite que o sistema alerte ao operador sobre a ocorrˆencia do mesmo. E, consequentemente,
+da necessidade de reescrever o n´umero.
+
+Os erros cometidos ao digitar um n´umero foram sistematicamente investigados por au-
+tores como Beckley e Verhoeﬀ citados por Milies [4] e [5] e tamb´em por Picado [7]. Estas
+pesquisas revelam que cerca de 79% dos erros ocorrem com a digita¸c˜ao equivocada de um
+´unico d´ıgito, como, por exemplo, digitar 1573, quando o correto seria 1673. Este tipo de erro
+recebe o nome de erro singular. Outros 11% dos erros, chamados de erros de transposi¸c˜ao,
+dividem-se em dois casos: os erros de transposi¸c˜ao adjacente e os erros de transposi¸c˜ao inter-
+calada. O primeiro tipo refere-se `a troca de posi¸c˜ao de dois d´ıgitos diferentes situados lado
+a lado e o segundo, refere-se `a troca de posi¸c˜ao de dois d´ıgitos diferentes intercalado por um
+terceiro d´ıgito. Por exemplo, escrever 3876, quando o correto seria 3786 conﬁgura um erro de
+transposi¸c˜ao adjacente, enquanto escrever o n´umero 3687 representa um erro de transposi¸c˜ao
+intercalada. Os demais 9,9% dos erros est˜ao distribu´ıdos em diversas categorias, nenhuma
+delas representando mais de 1% do total. Estes estudos tamb´em nos dizem que a incidˆencia
+de mais de um erro ao digitar um n´umero ´e muito pouco prov´avel.
+
+Assim, os erros que ser˜ao considerados neste texto, singular e de transposi¸c˜ao, cobrem
+mais de 90% dos erros poss´ıvelmente cometidos pelo homem. Como vemos na Tabela 1, que
+citamos abreviando tabela publicada em Milies [5] e Picado [7].
+
+Tipo de erro
+
+erro singular
+erro de transposi¸c˜ao adjacente
+erro de transposi¸c˜ao intercalada
+outros erros
+
+· · · a · · · → · · · b · · ·
+· · · ab · · · → · · · ba · · ·
+· · · acb · · · → · · · bca · · ·
+−
+
+Total
+
+Frequˆencia relativa
+79,1%
+10,2%
+0,8%
+9,9%
+100%
+
+Tabela 1: Tipos de erros mais comuns.
+
+´E necess´ario esclarecer que existem especiﬁcidades em cada sistema de c´odigos ou at´e
+mesmo em cada idioma que podem mudar signiﬁcativamente essa distribui¸c˜ao de probabili-
+dades.
+
+6
+
+Nos sistemas que utilizam a aritm´etica modular um n´umero de identiﬁca¸c˜ao ´e da forma
+
+x1x2x3 . . . xnC,
+
+onde C ´e o algarismo de controle ou d´ıgito veriﬁcador. O valor de C ´e determinado pela
+congruˆencia
+
+p1x1 + p2x2 + · · · + pnxn + C ≡ 0
+
+(mod k)
+
+onde os elementos {p1, p2, · · · , pn} s˜ao previamente escolhidos e denominados pesos.
+
+Os
+
+sistemas deste
+
+tipo s˜ao chamados de Sistema m´odulo k e a soma,
+
+p1x1 + p2x2 + · · · + pnxn + C, por soma controle ou soma teste, sendo designada por S.
+
+Usualmente ´e utilizado o zero nesta congruˆencia embora qualquer outro valor inteiro entre
+0 e k − 1 possa ser empregado. Essa escolha se deve `a vantagem de que, se S ≡ 0 (mod k)
+temos que k | S e portanto a soma teste ´e um m´ultiplo de k.
+
+Outra forma para determinar o d´ıgito veriﬁcador ´e utilizar a congruˆencia
+
+p1x1 + p2x2 + · · · + pnxn
+
+(mod k) = C
+
+Veja a situa¸c˜ao a seguir para melhor compreens˜ao da estrutura de um sistema modular.
+
+Exemplo 3.1 Uma empresa utiliza trˆes d´ıgitos, x1x2x3, para identiﬁcar cada produto que
+vende. Para ter certeza de que estes n´umeros ser˜ao corretamente transmitidos, ela acres-
+centa um quarto d´ıgito (o algarismo de controle) em cada n´umero, criando o c´odigo de
+identiﬁca¸c˜ao x1x2x3C. O d´ıgito de controle, C, ´e determinado resolvendo a equa¸c˜ao,
+3x1 + x2 + 3x3 + C ≡ 0 (mod 10) , ou seja, a empresa utiliza um sistema m´odulo 10 com
+pesos {3, 1, 3}.
+
+Assim, para o produto identiﬁcado pelo n´umero 854, C = 9, pois C ´e escolhido para
+
+satisfazer `a seguinte congruˆencia,
+
+3 · 8 + 5 + 3 · 4 + C ≡ 0
+
+(mod 10)
+
+24 + 5 + 12 + C ≡ 0
+
+(mod 10)
+
+41 + C ≡ 0
+
+(mod 10)
+
+O d´ıgito 9 foi escolhido como d´ıgito de controle porque 41 + 9 = 50 e 50 ≡ 0 (mod 10).
+Portanto, o c´odigo de identiﬁca¸c˜ao desse produto ´e 8549. J´a o n´umero 7632 ´e um c´odigo
+♦
+inv´alido, uma vez que 3 · 7 + 6 + 3 · 3 + 2 = 38 e 38 6≡ 0 (mod 10).
+
+Os teoremas a seguir estabelecem as condi¸c˜oes para que Sistemas de Identiﬁca¸c˜ao Modular
+
+detectem os erros singulares e de transposi¸c˜ao.
+
+Teorema 3.1 Um sistema de identiﬁca¸c˜ao m´odulo k, com pesos {p1, p2, · · · , pn}, detecta
+todo erro singular, ai → a0
+
+i, na i−´esima posi¸c˜ao se, e somente se, mdc (pi, k) = 1.
+
+Demonstra¸c˜ao. Considere um n´umero a1a2a3 · · · an de um sistema de identiﬁca¸c˜ao m´odulo
+k, cujo d´ıgito de veriﬁca¸c˜ao ´e an e a soma teste ´e S. Sabe-se que S ≡ 0 (mod k). Designa-
+remos por S0 a soma teste com a troca ai → a0
+i na i−´esima posi¸c˜ao. Apesar de se tratar de
+uma soma incorreta podemos ter S0 ≡ 0 (mod k) ou S0 6≡ 0 (mod k) , casos em que o erro ´e
+ou n˜ao ´e detectado, respectivamente.
+
+Calculando a diferen¸ca, S0 − S, temos:
+S0 − S = (p1a1 + p2a2 + · · · + pia0
+= p1a1 + p2a2 + · · · + pia0
+
+i + · · · + pnan) − (p1a1 + p2a2 + · · · + piai + · · · + pnan)
+
+i + · · · + pnan − p1a1 − p2a2 − · · · − piai − · · · − pnan
+
+7
+
+i − piai
+i − ai)
+
+= pia0
+= pi(a0
+Dessa forma, um erro ai → a0
+i − ai) 6≡ 0 (mod k), para ai, a0
+E esta condi¸c˜ao ´e equivalente a mdc (pi, k) = 1, pelo Teorema 2.4.
+
+i na i−´esima posi¸c˜ao ´e detect´avel se, e somente se,
+i ∈ {0, 1, 2, · · · , k − 1} e ai 6= a0
+i.
+
+(cid:3)
+
+pi(a0
+
+Teorema 3.2 Um sistema de identica¸c˜ao m´odulo k, com pesos {p1, p2, ..., pn}, detecta to-
+dos os erros de transposi¸c˜ao dos algarismos ai e aj nas posi¸c˜oes i e j se, e somente se,
+mdc (pi − pj, k) = 1.
+
+Demonstra¸c˜ao. Neste caso, a diferen¸ca entre a soma teste do n´umero errado e a soma teste
+correta ´e
+
+S0 −S = (p1a1 +· · ·+piaj +· · ·+pjai +· · ·+pnan)−(p1a1 +· · ·+piai +· · ·+pjaj +· · ·+pnan)
+= p1a1 + · · · + piaj + · · · + pjai + · · · + pnan − p1a1 − · · · − piai − · · · − pjaj − · · · − pnan
+= piaj + pjai − piai − pjaj
+= piaj − piai + pjai − pjaj
+= pi(aj − ai) + pj(aj − ai)
+= (pi − pj)(aj − ai)
+Portanto, o sistema detecta todas as transposi¸c˜oes de algarismos nas posi¸c˜oes i e j se, e so-
+
+mente se, para quaisquer ai, aj ∈ {0, 1, 2, ..., k − 1} com ai
+(pi − pj)(aj − ai) 6≡ 0 (mod k) que ´e equivalente a mdc (pi − pj, k) = 1, pelo Teorema
+(cid:3)
+2.4 .
+
+6= aj,
+
+se tem
+
+Estes resultados justiﬁcam uma maior utiliza¸c˜ao de sistemas m´odulo 11, pela facilidade
+de encontrar pesos primos com 11, usando apenas um car´acter para algarismo de controle.
+Este m´etodo, por´em, tem uma pequena desvantagem, no conjunto dos d´ıgitos de 0 a 9,
+n˜ao h´a nenhum que represente o n´umero 10, sendo necess´ario incluir mais um s´ımbolo para
+representar este n´umero. Em geral utiliza-se sua representa¸c˜ao em algarismo romano, “X”,
+sendo este m´etodo denominado m´odulo 11 completo. Outra possibilidade ´e o esquema m´odulo
+11 restrito, que utiliza o d´ıgito 0 para representar o 10.
+
+No caso k = 10 as condi¸c˜oes dos Teoremas 3.1 e 3.2 s˜ao incompat´ıveis: ´e imposs´ıvel
+satisfazer o segundo se o primeiro for veriﬁcado pois, nesse caso, os pesos s˜ao necessariamente
+´ımpares e temos que a diferen¸ca entre dois n´umeros ´ımpares ´e um n´umero par. Portanto,
+qualquer sistema m´odulo 10 que tenha 100% de eﬁciˆencia na detec¸c˜ao dos erros singulares
+n˜ao detectar´a todos os erros de transposi¸c˜ao.
+
+Faz-se necess´ario destacar a importˆancia dos Teoremas 3.1 e 3.2 como mecanismo para a
+
+constru¸c˜ao de novos sistemas modulares.
+
+4 N´umero do CPF
+
+O Cadastro de Pessoas F´ısica, mais conhecido como CPF ´e o registro de um cidad˜ao na
+Receita Federal brasileira no qual devem estar todos os contribuintes (pessoas f´ısicas bra-
+sileiras ou estrangeiras com neg´ocios no Brasil). O CPF armazena informa¸c˜oes fornecidas
+pelo pr´oprio contribuinte e por outros sistemas da Receita Federal. Sua posse n˜ao ´e obri-
+gat´oria, mas ´e necess´aria em v´arias situa¸c˜oes, como abertura de contas em bancos e emiss˜ao
+de passaporte, por exemplo.
+
+O n´umero de um CPF tem nove d´ıgitos de identiﬁca¸c˜ao e mais dois d´ıgitos veriﬁcadores
+
+que s˜ao indicados por ´ultimo. Portanto, um CPF tem onze algarismos.
+
+8
+
+O d´ıgito anterior aos d´ıgitos veriﬁcadores (isto ´e, o terceiro d´ıgito da direita para a es-
+querda) identiﬁca a unidade federativa em que a pessoa registrou-se pela primeira vez. Por
+exemplo, a origem do CPF 043.658.306-27 ´e Minas Gerais, cujo c´odigo ´e “6”. Segue a lista
+com o n´umero que identiﬁca cada um dos estados brasileiros:
+
+0. Rio Grande do Sul.
+1. Distrito Federal, Goi´as, Mato Grosso, Mato Grosso do Sul e Tocantins.
+2. Amazonas, Par´a, Roraima, Amap´a, Acre e Rondˆonia.
+3. Cear´a, Maranh˜ao e Piau´ı.
+4. Para´ıba, Pernambuco, Alagoas e Rio Grande do Norte.
+5. Bahia e Sergipe.
+6. Minas Gerais.
+7. Rio de Janeiro e Esp´ırito Santo.
+8. S˜ao Paulo.
+9. Paran´a e Santa Catarina.
+
+Seja x1x2x3x4x5x6x7x8x9x10x11 um n´umero de CPF, onde xi representa um d´ıgito de
+identiﬁca¸c˜ao para 1 ≤ i ≤ 9 e x10 e x11 s˜ao os d´ıgitos de controle. O algoritmo abaixo,
+adaptado de Souza [13], permite calcular estes d´ıgitos de controle.
+
+9
+
+x10 =
+
+ixi
+
+(mod 11)
+
+i=1
+X
+
+10
+
+(mod 10)
+
+!
+
+x11 =
+
+(i − 1)xi
+
+(mod 11)
+
+(mod 10)
+
+!
+
+i=2
+X
+
+Com a ﬁnalidade de ilustrar a aplica¸c˜ao deste algoritmo, vamos veriﬁcar a autencidade
+
+do CPF 043.658.306 − 27 calculando os d´ıgitos de controle, x10 e x11.
+
+Fazendo as devidas substitui¸c˜oes obt´em-se a seguinte express˜ao para x10:
+
+x10 = ((1.0 + 2.4 + 3.3 + 4.6 + 5.5 + 6.8 + 7.3 + 8.0 + 9.6) (mod 11)) (mod 10)
+x10 = ((0 + 8 + 9 + 24 + 25 + 48 + 21 + 0 + 54) (mod 11)) (mod 10)
+x10 = ((189 (mod 11)) (mod 10)
+x10 = 2 (mod 10)
+x10 = 2
+
+Esse resultado conﬁrma o valor do primeiro d´ıgito veriﬁcador, agora calcula-se o segundo
+
+d´ıgito, x11:
+
+x11 = ((1.4 + 2.3 + 3.6 + 4.5 + 5.8 + 6.3 + 7.0 + 8.6 + 9.2) (mod 11)) (mod 10)
+x11 = ((4 + 6 + 18 + 20 + 40 + 18 + 0 + 48 + 18) (mod 11)) (mod 10)
+x11 = ((172 (mod 11)) (mod 10)
+x11 = 7 (mod 10)
+x11 = 7
+
+Os c´alculos conﬁrmam o valor do segundo d´ıgito de controle. Assim, conclui-se que o
+
+CPF 043.658.306 − 27 ´e autˆentico.
+
+´E importante ressaltar que o fato de um n´umero de CPF ser autenticado pelos seus d´ıgitos
+veriﬁcadores n˜ao o torna um CPF v´alido. Para isso, ´e necess´ario que ele esteja cadastrado
+
+9
+
+ 
+ 
+no banco de dados da Receita Federal. Assim, um n´umero correto de CPF nem sempre ser´a
+um documento j´a emitido. ´E o que acontece, por exemplo, com n´umeros de CPF que tˆem
+todos os d´ıgitos iguais, apesar de serem autenticados pelos seus d´ıgitos veriﬁcadores, eles n˜ao
+s˜ao v´alidos.
+
+Esse sistema, que utiliza dois d´ıgitos veriﬁcadores, melhora o m´etodo m´odulo 11 restrito.
+Por´em, poderia ter uma maior capacidade de detec¸c˜ao de erros, caso a escolha dos pesos
+tivesse sido feita de forma mais criteriosa. Mesmo assim, a falha na detec¸c˜ao de erros ´e de
+apenas 0,22% dos casos de erro singular e 0,17% dos erros de transposi¸c˜ao. A demonstra¸c˜ao
+destes resultados pode ser encontrada em Souza [13], ANEXO A.
+
+Um fato interessante ´e a implementa¸c˜ao no Brasil do Registro de Identidade Civil (RIC).
+Ele ser´a um cart˜ao com chip que conter´a os n´umeros de RG, CPF, T´ıtulo de Eleitor, PIS
+(Programa de Integra¸c˜ao Social), PASEP (Programa de Forma¸c˜ao do Patrimˆonio do Servidor
+P´ublico), Carteira de Trabalho e Carteira Nacional de Habilita¸c˜ao. Nele constar´a, ainda, um
+campo com informa¸c˜oes como o tipo sangu´ıneo e se a pessoa ´e ou n˜ao doadora de ´org˜aos.
+
+O identiﬁcador ser´a um n´umero de onze d´ıgitos, sendo o ´ultimo um d´ıgito veriﬁcador, que ´e
+calculado empregando o sistema m´odulo 11 restrito e os seguintes pesos {9, 8, 7, 6, 5, 4, 3, 2, 9, 8}.
+Com o RIC, haver´a uma padroniza¸c˜ao nacional do sistema para emiss˜ao de RG, colo-
+cando um ﬁm `a emiss˜ao de identidade por estado. O governo pretende substituir todos os
+documentos em at´e 10 anos.
+
+5 C´odigo ISBN
+
+O ISBN - International Standard Book Number - ´e um dos sistemas de indentiﬁca¸c˜ao
+mais antigos, criado em 1967 e oﬁcializado como norma internacional em 1972. Ele identi-
+ﬁca numericamente os livros segundo o t´ıtulo, o autor, o pa´ıs e a editora, individualizando
+inclusive edi¸c˜oes diferentes.
+
+O sistema ´e controlado pela Agˆencia Internacional do ISBN, que orienta e delega poderes
+`as agˆencias nacionais. No Brasil, a Funda¸c˜ao Biblioteca Nacional representa a Agˆencia Bra-
+sileira desde 1978, com a fun¸c˜ao de atribuir o n´umero de identiﬁca¸c˜ao aos livros editados no
+pa´ıs.
+
+Inicialmente o ISBN era composto por dez d´ıgitos, x1x2x3x4x5x6x7x8x9C, onde os nove
+primeiros identiﬁcavam o livro e o d´ecimo era o d´ıgito veriﬁcador. Segundo Picado [7],
+este sistema que indicaremos por ISBN-10, utiliza os pesos {10, 9, 8, 7, 6, 5, 4, 3, 2, 1} e uma
+congruˆencia m´odulo 11.
+
+Assim, o c´alculo do d´ıgito veriﬁcador do ISBN-10 era efetuado da seguinte forma:
+
+10x1 + 9x2 + 8x3 + 7x4 + 6x5 + 5x6 + 4x7 + 3x8 + 2x9 + C ≡ 0
+
+(mod 11)
+
+Se o valor C necess´ario para satisfazer esta condi¸c˜ao fosse 10, este seria substitu´ıdo por um
+“X”. Como no ´ultimo romance de E¸ca de Queir´os, A Cidade e As Serras, cujo ISBN-10 ´e o
+n´umero 85-87328-14-X.
+
+A partir de 1o de janeiro de 2007, o ISBN passou de dez para treze d´ıgitos, sendo conhecido
+por ISBN-13, o que tornou poss´ıvel o uso do c´odigo de barras denominado EAN (European
+Article Number)3. O objetivo foi aumentar a capacidade do sistema, devido ao crescente
+n´umero de publica¸c˜oes. A nova numera¸c˜ao foi precedida pelo n´umero 978, que identiﬁca o
+
+3O sistema EAN (European Article Number) adotado na Europa em 1976 ´e an´alogo ao sistema UPC
+(Universal Product Code), o primeiro c´odigo de barras, criado nos E.U.A. em 1973. Esse c´odigo de 13 d´ıgitos
+´e atualmente utilizado no mundo inteiro principalmente para a identiﬁca¸c˜ao de itens do varejo.
+
+10
+
+produto livro e o n´umero de controle foi recalculado. Quando o “preﬁxo 978”se esgotar, ser´a
+adotado o “preﬁxo 979”.
+
+O d´ıgito de veriﬁca¸c˜ao de um ISBN-13 ´e de 1 d´ıgito com valores entre 0 e 9, mos-
+
+trado como um caractere ﬁnal no t´ermino da sequˆencia. Veja o exemplo de ISBN-13:
+978 − 85 − 85818 − 25 − 8, referente ao livro Elementos de Aritm´etica de Abramo Hefez. O
+primeiro elemento, 978, ´e especiﬁcado pela Agˆencia Internacional do ISBN, em conformidade
+com o sistema global de numera¸c˜ao de produtos e indica a ind´ustria, neste caso, publica¸c˜ao
+de livros. O segundo elemento identiﬁca os grupos nacionais geogr´aﬁcos, sendo o identiﬁca-
+dor do Brasil o 85. O terceiro elemento refere-se ao editor, nesse caso a Sociedade Brasileira
+de Matem´atica (SBM). O quarto elemento ´e um elemento de publica¸c˜ao, destinado para o
+editor da publica¸c˜ao, que etiquetou o livro com o n´umero 25. Por ﬁm, o quinto elemento
+corresponde o d´ıgito veriﬁcador.
+
+Os diferentes componentes do ISBN-13 (ind´ustria, pa´ıs, editor e t´ıtulo) possuem quan-
+tidade variada de d´ıgitos. Esta varia¸c˜ao permite que os idiomas mais utilizados e que as
+grandes editoras tenham um n´umero de identiﬁca¸c˜ao menor, possibilitando catalogar um
+maior n´umero de livros.
+
+O ISBN-13 utiliza os pesos {1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1} e k = 10. Logo, determina-se o
+
+d´ıgito veriﬁcador deste sistema resolvendo a equa¸c˜ao abaixo, adaptada de Louren¸co [3]:
+
+x1 + 3x2 + x3 + 3x4 + x5 + 3x6 + x7 + 3x8 + x9 + 3x10 + x11 + 3x12 + C ≡ 0
+
+(mod 10)
+
+onde xi s˜ao os algarismos do c´odigo ISBN-13 na posi¸c˜ao i e C o d´ıgito de controle.
+
+Por exemplo, o livro O homem que calculava, de Malba Tahan, tem como ISBN-13 o
+
+n´umero 978-85-0106-196-6. O d´ıgito ﬁnal, de veriﬁca¸c˜ao ´e 6 porque
+
+S = 9 + 3.7 + 8 + 3.8 + 5 + 3.0 + 1 + 3.0 + 6 + 3.1 + 9 + 3.6 + 6 =
+
+= 9 + 21 + 8 + 24 + 5 + 0 + 1 + 0 + 6 + 3 + 9 + 18 + 6 = 110 ≡ 0
+
+(mod 10)
+
+Teorema 5.1 O sistema ISBN-13 detecta todo erro singular.
+
+Demonstra¸c˜ao. Como os pesos do sistema ISBN-13 s˜ao {1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1, 3, 1},
+mdc (1, 10) = 1 e mdc (3, 10) = 1, segue direto pelo Teorema 3.1 que esse sistema detecta
+(cid:3)
+todo erro singular.
+
+Portanto, este sistema tem uma eﬁciˆencia de 100% na detec¸c˜ao de erros singulares.
+
+Teorema 5.2 O sistema ISBN-13 n˜ao detecta todos os erros de transposi¸c˜ao adjacente.
+
+Demonstra¸c˜ao. Segue direto do Teorema 3.2, uma vez que mdc (2, 10) = 2 > 1.
+
+(cid:3)
+
+Exemplo 5.1 Se a9 = 6 e a8 = 1 forem trocados ter´ıamos S0−S = 2(a9−a8) = 2(6−1) = 10
+♦
+e o erro n˜ao seria detectado.
+
+Veriﬁca-se que as trocas de algarismos adjacentes ...aiai+1... → ...ai+1ai... que este sistema
+n˜ao detecta s˜ao aquelas em que | ai+1 − ai |= 5. Com efeito, supondo i par, temos que a
+diferen¸ca entre a soma teste do n´umero errado e a soma teste correta ´e dada por:
+
+S0 − S = (a1 + · · · + 3ai+1 + ai + · · · + C) − (a1 + · · · + 3ai + ai+1 + · · · + C) = 2(ai+1 − ai)
+
+No caso em que i ´e ´ımpar, tem-se a diferen¸ca com o sinal trocado, 2(−ai+1 + ai). Segue que,
+
+10 | S0 ⇔ 10 | (S0 − S) ⇔ 10 | 2(ai+1 − ai) ⇔| ai+1 − ai |= 5
+
+11
+
+Logo, o sitema ISBN-13 n˜ao detecta os seguintes casos de transposi¸c˜ao adjacente “05”,
+“50”, “16”, “61”, “27”, “72”, “38”, “83”, “49”e “94”o que corresponde a 10 dos 90 casos
+poss´ıveis. Este sistema tem assim uma eﬁciˆencia de 88,9% na detec¸c˜ao deste tipo de erro.
+Mas esse ´e um problema sem relevˆancia pr´atica, uma vez que leitores ´opticos s˜ao muito
+precisos e, quando muito, cometem erros singulares.
+
+6 N´umero do Cart˜ao de Cr´edito
+
+Os principais n´umeros de cart˜oes de cr´edito no Brasil possuem uma sequˆencia de 16
+d´ıgitos, os 6 primeiros d´ıgitos deﬁnem a institui¸c˜ao emissora, sendo que o primeiro desses seis
+d´ıgitos caracteriza a bandeira do cart˜ao, por exemplo, 4 - Visa e 5 - Mastercard. Os nove
+d´ıgitos que seguem identiﬁcam o cliente e o ´ultimo d´ıgito, na extremidade direita, representa
+o d´ıgito veriﬁcador.
+
+Esse d´ıgito ﬁnal do n´umero do cart˜ao, d´ıgito de veriﬁca¸c˜ao, ´e utilizado para decidir se um
+cart˜ao de cr´edito ´e v´alido e pode ser calculado por uma f´ormula chamada Algoritmo de Luhn.
+Segundo Kirtland [2] esta f´ormula foi assim nomeada em homenagem ao cientista Hans Peter
+Luhn (1896-1964), um engenheiro da IBM (International Business Machines), que recebeu
+em 1960 a patente dos Estados Unidos por inventar a t´ecnica. Atualmente, o algoritmo ´e de
+dom´ınio p´ublico, conhecido como M´odulo 10 IBM, sendo largamente utilizado por bancos e
+demais entidades ﬁnanceiras para validar cart˜oes de cr´edito e d´ebito.
+
+Veriﬁca-se a autencidade de um cart˜ao resolvendo a equa¸c˜ao que segue, adaptada de
+
+Kirtland [2] e Souza [13]:
+
+2x1 + x2 + 2x3 + x4 + 2x5 + x6 + 2x7 + x8 + 2x9 + x10 + 2x11 + x12 + 2x13 + x14 + 2x15 + C ≡ 0
+(mod 10), onde xi ´e o algarismos do n´umero do cart˜ao na posi¸c˜ao i e C o algarismo de
+controle. Temos ainda que:
+
+2xi,
+2xi − 9,
+
+se 2xi < 10
+se 2xi ≥ 10
+
+2xi =
+
+(cid:26)
+
+Portanto, ap´os os algarismos do identiﬁcador serem multiplicados pelos pesos 2 e 1 alter-
+nadamente, em cada produto, subtrai-se 9 quando este ´e maior ou igual a 10 e escolhe-se o
+algarismo de controle C de forma a que a soma teste seja um m´ulpiplo de 10.
+
+Esse sistema, com um ´unico d´ıgito de veriﬁca¸c˜ao, detecta erros t´ıpicos que as pessoas
+cometem quando transcrevem n´umeros de cart˜ao, por exemplo, em compras via internet.
+Para ilustrar esta situa¸c˜ao, suponha que ao digitar o n´umero 4073038870480971 de um
+cart˜ao de cr´edito, tenha se cometido um erro, e que o n´umero de fato digitado fosse
+4072038870480971. Ao fazer a veriﬁca¸c˜ao de leitura, o computador que recebeu a informa¸c˜ao
+faz as seguintes opera¸c˜oes:
+
+S = 2.4 + 0 + 2.7 + 2 + 2.0 + 3 + 2.8 + 8 + 2.7 + 0 + 2.4 + 8 + 2.0 + 9 + 2.7 + 1 =
+= 8 + 0 + 14 + 2 + 0 + 3 + 16 + 8 + 14 + 0 + 8 + 8 + 0 + 9 + 14 + 1 =
+= 8 + 0 + (14 − 9) + 2 + 0 + 3 + (16 − 9) + 8 + (14 − 9) + 0 + 8 + 8 + 0 + 9 + (14 − 9) + 1 =
+= 8 + 0 + 5 + 2 + 0 + 3 + 7 + 8 + 5 + 0 + 8 + 8 + 0 + 9 + 5 + 1 = 69
+
+Como o resultado obtido n˜ao ´e um multiplo de 10, o computador avisa que foi cometido
+
+algum erro e o n´umero deve ser novamente digitado.
+
+Teorema 6.1 O Algoritmo de Luhn ou M´odulo 10 IBM detecta todo erro singular.
+
+12
+
+Demonstra¸c˜ao. Considere separadamente dois casos: o erro ocorre num algarismo com
+´ındice par ou o erro ocorre num algarismo de ´ındice ´ımpar.
+
+Nas posi¸c˜oes de ´ındice par o peso ´e 1 e sendo mdc (1, 10) = 1, pelo Teorema 3.1, todos os
+
+erros singulares s˜ao detectados.
+
+No caso de erro num algarismo de ´ındice ´ımpar, temos que S0 − S = 2a0
+
+i − 2ai, onde S0 ´e
+a soma teste de um n´umero com um erro singular e S ´e a soma teste de um n´umero correto.
+Mas observe que 2a0
+
+i e 2ai s˜ao o resultado de uma das seguintes transforma¸c˜oes:
+
+0 → 0
+1 → 2
+2 → 4
+3 → 6
+4 → 8
+Segue, que se S0 fosse m´ultiplo de 10, ter´ıamos que 10 | (S0 − S). Logo, 10 dividiria
+(2a0
+i − 2ai), o que ´e absurdo, pois (2a0
+i − 2ai) ´e um n´umero inteiro n˜ao nulo entre −9 e 9.
+Portanto, todos os erros singulares tamb´em s˜ao detectados quando ocorre num algarismo de
+(cid:3)
+´ındice ´ımpar.
+
+5 → 10 → 1
+6 → 12 → 3
+7 → 14 → 5
+8 → 16 → 7
+9 → 18 → 9
+
+Assim, o Algoritmo de Luhn detecta todo erro singular. Ele tamb´em detecta todas as
+transposi¸c˜oes de algarismos adjacentes, com exce¸c˜ao dos casos “09”e “90”, ou seja, detecta 88
+casos em 90. Dessa forma, o Algoritmo de Luhn possui uma taxa de detec¸c˜ao de transposi¸c˜oes
+adjacentes de 97,8%, melhor do que os 88,9% observado no sistema ISBN. Uma exposi¸c˜ao
+mais detalhada sobre os erros de transposi¸c˜ao pode ser encontrada em Souza [13].
+
+Mas o d´ıgito veriﬁcador n˜ao ´e o bastante para garantir a seguran¸ca no uso de cart˜oes de
+cr´edito, por isso ainda h´a um c´odigo de trˆes d´ıgitos que ﬁca atr´as do cart˜ao. Esse c´odigo ´e
+gerado pela pr´opria institui¸c˜ao e calculado ao criptografar o n´umero do cart˜ao e sua data de
+validade. Cada empresa decide qual algoritmo usar nessa criptograﬁa e a chave de decodi-
+ﬁca¸c˜ao n˜ao ´e p´ublica.
+
+7 Uma aplica¸c˜ao em sala de aula: Blocos L´ogicos
+
+Os blocos l´ogicos foram criados pelo matem´atico h´ungaro Zoltan Paul Dienes, por volta
+da d´ecada de 50. Segundo, Simons [12], o modelo mais frequente nas escolas apresenta-se em
+caixas contendo 48 pe¸cas geom´etricas, divididas em:
+
+1. Quatro formas: c´ırculos, quadrados, triˆangulos e retˆangulos;
+
+2. Trˆes cores: amarelo, azul e vermelho;
+
+3. Dois tamanhos: grande e pequeno;
+
+4. Duas espessuras: ﬁno e grosso;
+
+Assim, cada pe¸ca possui 4 atributos. Por exemplo, pode-se ter um c´ırculo, vermelho,
+grande e ﬁno. O objetivo desta proposta ´e trabalhar com este material estimulando os
+estudantes a representar cada bloco por uma sequˆencia num´erica, um c´odigo.
+
+Espera-se que o trabalho com esse material favore¸ca o desenvolvimento cognitivo dos es-
+tudantes nas no¸c˜oes abstratas de classiﬁca¸c˜ao, seria¸c˜ao, ordem e sistematiza¸c˜ao de padr˜oes,
+bem como possibilite vivenciar as ideias iniciais de transmiss˜ao de dados, percebendo a im-
+portˆancia dos d´ıgitos veriﬁcadores e conhecendo a teoria dos c´odigos identiﬁcadores de erros.
+
+13
+
+Figura 1: Blocos L´ogicos
+
+7.1 Proposta de trabalho
+
+Prop˜oe-se uma sequˆencia did´atica para o trabalho com estudantes do Ensino Fundamen-
+
+tal, para desenvolver o tema, c´odigos identiﬁcadores de erros, utilizando os blocos l´ogicos.
+
+O objetivo ´e estimular os alunos a compreender a tecnologia dos c´odigos identiﬁcadores,
+estabelecendo uma rela¸c˜ao entre as caracter´ısticas de cada pe¸ca e um c´odigo que a identiﬁ-
+que. Uma sugest˜ao ´e uma sequˆencia de 5 algarismos onde o 1o algarismo identiﬁca a forma,
+o 2o a cor, o 3o o tamanho, o 4o a espessura e por ´ultimo o 5o algarismo ´e o d´ıgito veriﬁ-
+cador calculado a partir dos anteriores. As tabelas, a seguir, associam um algarismo a cada
+caracter´ıstica.
+
+Figura 2: Tabelas
+
+Para determinar o algarismo de controle, C, do c´odigo x1x2x3x4 − C basta calcular o resto
+da divis˜ao por 5 da soma: x1 + 2x2 + 3x3 + 4x4. Esse ´e um sistema m´odulo 5 com pesos
+{1, 2, 3, 4}.
+
+Assim, por exemplo, um c´ırculo, vermelho, grande e ﬁno ser´a identiﬁcado pelo c´odigo
+1311 − 4. Uma tabela com essa sugest˜ao de c´odigo, referente `as 48 pe¸cas dos blocos l´ogicos,
+pode ser encontrada no Anexo 1.
+
+Observe que mdc (pi, 5) = 1 para i = {1, 2, 3, 4}, veriﬁcando a condi¸c˜ao do Teorema 3.1
+para detec¸c˜ao de erro singular. Agora, perceba que mdc (pi − pj, 5) = 1 para i, j ∈ {1, 2, 3, 4},
+veriﬁcando a condi¸c˜ao do Teorema 3.2 para detec¸c˜ao de erros de transposi¸c˜ao. Portanto, a
+
+14
+
+escolha por este modelo n˜ao ´e aleat´oria uma vez que ele detecta todos os casos de erro singular
+e de transposi¸c˜ao.
+
+Vale ressaltar que outros c´odigos podem ser elaborados pelo professor (ou pelos alunos)
+
+para identiﬁca¸c˜ao dos blocos l´ogicos nessa sequˆencia de trabalho.
+
+7.2 Metodologia
+
+A proposta baseia-se na metodologia de Resolu¸c˜ao de Problemas e Investiga¸c˜ao Ma-
+tem´atica discutidos por Polya [9] e Ponte [10] e est´a em consonˆancia com as orienta¸c˜oes
+apresentadas nos Parˆametros Curriculares Nacionais (PCN). Nesta concep¸c˜ao o aluno tanto
+aprende matem´atica resolvendo problemas, como aprende matem´atica para resolvˆe-los. As-
+sim, guardada as devidas propor¸c˜oes, diante de um problema, o aluno se vˆe em uma situa¸c˜ao
+an´aloga `aquela em que muitas vezes o matem´atico est´a ao exercer sua atividade. Isto ´e, o
+aluno deve ser capaz de realizar tentativas, estabelecer hip´oteses, testar essas hip´oteses e va-
+lidar seus resultados, provando que s˜ao verdadeiros ou, em caso contr´ario, mostrando algum
+contra-exemplo.
+
+Essa op¸c˜ao de trabalho traz impl´ıcita a convic¸c˜ao de que o conhecimento matem´atico
+ganha signiﬁcado quando os alunos tˆem situa¸c˜oes desaﬁadoras para resolver, e trabalham
+coletivamente para desenvolver estrat´egias de resolu¸c˜ao. Neste sentido, ´e fundamental que o
+professor estabele¸ca condi¸c˜oes adequadas para a intera¸c˜ao dos estudantes, criando um clima
+favor´avel `a convivˆencia em grupo de maneira produtiva e cooperativa.
+
+A organiza¸c˜ao dos alunos em grupos de trabalho inﬂuˆencia o processo de ensino e apren-
+dizagem, e pode ser otimizada quando o professor interfere nessa organiza¸c˜ao. Agrupamentos
+adequados, que levem em conta a diversidade dos alunos, tornam-se eﬁcazes na individua-
+liza¸c˜ao do ensino e atendimento `a diversidade de aprendizagem. A esse respeito, os PCN
+trazem:
+
+Como um incentivador da aprendizagem, o professor estimula a coopera¸c˜ao
+entre os alunos, t˜ao importante quanto a pr´opria intera¸c˜ao professor-aluno. O
+confronto entre o que o aluno pensa e o que pensam seus colegas, seu professor
+e as demais pessoas com quem convive ´e uma forma de aprendizagem signiﬁca-
+tiva, principalmente por pressupor a necessidade de formula¸c˜ao de argumentos
+(dizendo, descrevendo, expressando) e de valid´a-los (questionando, veriﬁcando,
+convencendo). (PCN, 1998, p. 38).
+
+Assim, para o desenvolvimento dessa proposta, sugere-se a organiza¸c˜ao da turma em
+grupos de trabalho heterogˆeneos, compostos de 4 a 5 alunos em diferentes n´ıveis de aprendi-
+zagem.
+
+O trabalho nessa perspectiva exige do professor uma conduta diferente da aula tradicional.
+Neste papel, o professor ´e respons´avel por relatar os procedimentos empregados e as diferen¸cas
+encontradas, promover o debate sobre resultados e m´etodos, orientar as reformula¸c˜oes e
+valorizar as solu¸c˜oes mais adequadas apresentadas por cada grupo. Ele tamb´em decide se ´e
+necess´ario prosseguir o trabalho ou se ´e o momento de elaborar uma s´ıntese.
+
+A sequˆencia proposta ´e indicada para o trabalho com estudantes do 6o e 7o anos do
+Ensino Fundamental, sendo previsto, aproximadamente, quatro aulas de 50 minutos. Um
+maior tempo pode ser exigido em fun¸c˜ao dos diferentes n´ıveis de aprendizgem da turma,
+conhecimento pr´evio sobre o tema e envolvimento com a dinˆamica.
+
+No que tange aos recursos did´aticos, ser˜ao necess´arios: blocos l´ogicos, etiquetas adesivas,
+
+dicion´ario, folha de alma¸co, caneta, l´apis, l´apis de cor e borracha.
+
+15
+
+7.3 Objetivos
+
+Os objetivos dessa sequˆencia de trabalho s˜ao:
+
+• Etiquetar as pe¸cas dos blocos l´ogicos.
+
+• Vivenciar as ideias iniciais de transmiss˜ao de dados.
+
+• Perceber a importˆancia do d´ıgito veriﬁcador.
+
+• Conhecer a teoria dos c´odigos identiﬁcadores de erros.
+
+• Calcular o d´ıgito veriﬁcador de algumas pe¸cas.
+
+• Reconhecer o uso dos c´odigos identiﬁcadores em situa¸c˜oes do cotidiano.
+
+7.4 Expectativas de aprendizagem
+
+As expectativas de aprendizagem desenvolvidas nessa proposta ser˜ao:
+
+• Reconhecer as ﬁguras planas que tˆem a forma do quadrado, retˆangulo, triˆangulo e
+
+c´ırculo.
+
+• Classiﬁcar, ordenar e estabelecer padr˜oes.
+
+• Efetuar c´alculos com n´umeros naturais envolvendo as opera¸c˜oes de adi¸c˜ao, subtra¸c˜ao,
+
+multiplica¸c˜ao e divis˜ao.
+
+• Utilizar os conceitos de n´umero primo, m´ultiplos e divisores de n´umeros naturais.
+
+7.5 Sequˆencia did´atica
+
+A primeira etapa dessa sequˆencia ´e a motiva¸c˜ao para o trabalho com o tema. Orienta-
+se uma conversa informal sobre c´odigos e n´umeros de identiﬁca¸c˜ao. Tamb´em ´e interessante
+organizar uma pequena exposi¸c˜ao de embalagens com c´odigos de barras, documentos pessoais,
+cart˜oes de cr´edito, folha de cheque, livros, entre outros objetos que possuam n´umeros de
+identiﬁca¸c˜ao.
+
+Para criar um ambiente estimulador, sugere-se ao professor fazer perguntas que despertem
+o interesse sobre o tema e permitir que os alunos fa¸cam o relato de alguma experiˆencia pessoal.
+No ﬁnal desse primeiro momento, caso nenhum aluno fa¸ca a sugest˜ao, o professor dever´a
+orientar a consulta ao dicion´ario e registro do signiﬁcado da palavra c´odigo.4 Pode-se aqui,
+manusear o dicion´ario observando o contexto semˆantico da palavra e selecionar a acep¸c˜ao
+mais adequada no verbete do dicion´ario.
+
+Ap´os esse primeiro momento, as caixas com os blocos l´ogicos ser˜ao entregues aos grupos
+e os alunos ir˜ao explorar o material livremente. Orienta-se ao professor fazer perguntas que
+
+4Verbete no dicion´ario Aur´elio: s.m. Cole¸c˜ao de leis: C´odigo Penal. / Cole¸c˜ao de regras e preceitos. /
+Sistema de s´ımbolos que permite a representa¸c˜ao de uma informa¸c˜ao: c´odigo Morse. / Conjunto de regras
+que permite a transposi¸c˜ao de sistemas de s´ımbolos sem alterar o signiﬁcado da informa¸c˜ao transmitida. /
+Ling¨u´ıstica Conjunto de todos os elementos ling¨u´ısticos vigentes numa comunidade e postos `a disposi¸c˜ao dos
+indiv´ıduos para servir-lhes de meios de comunica¸c˜ao; l´ıngua. // C´odigo de barras, c´odigo que utiliza barras
+verticais, impresso na embalagem de um artigo e que, submetido a um leitor ´optico, permite a identiﬁca¸c˜ao
+do artigo, seu pre¸co e dados sobre seu estoque.
+
+16
+
+oportunizem aos grupos pensar sobre os atributos das pe¸cas. Em seguida, o professor solici-
+tar´a aos alunos que formem conjuntos considerando caracter´ısticas comuns das pe¸cas, isto ´e,
+a forma, a cor, o tamanho e a espessura. Nesta etapa, n˜ao se espera que os estudantes de-
+monstrem diﬁculdades, embora seja interessante que o professor represente no quadro algum
+dos esquemas, tabelas ou desenhos utilizados pelos grupos como forma de registro.
+
+Logo em seguida a explora¸c˜ao do material, o professor ﬁxar´a, em local adequado para
+que todos possam visualizar, um cartaz com a rela¸c˜ao que associa um algarismo a cada
+caracter´ıstica das pe¸cas, Figura 2 - Tabelas. O professor far´a a leitura das tabelas esclarecendo
+poss´ıveis d´uvidas e apresentar´a a atividade a ser realizada:
+
+• Etiquete cada pe¸ca com um c´odigo relacionando suas carac-
+
+ter´ısticas aos dados das tabelas apresentados no cartaz.
+
+´E poss´ıvel responder a quest˜ao com diferentes c´odigos, pois cada grupo pode estabelecer
+uma ordem distinta para os atributos das pe¸cas. Por exemplo, um grupo pode estabelecer
+que o 1o algarismo identiﬁque a forma, o 2o a cor, o 3o o tamanho, o 4o a espessura e um
+outro grupo pode identiﬁcar as pe¸cas segundo o crit´erio, espessura, cor, forma e tamanho.
+
+O professor dever´a explorar essa situa¸c˜ao, pedindo aos grupos que digam alguns c´odigos
+e que os outros grupos tentem descobrir qual ´e a pe¸ca associada a esse c´odigo. O objetivo
+´e que os alunos percebam a necessidade de se estabelecer um padr˜ao e elaborem um c´odigo
+´unico para identiﬁca¸c˜ao das pe¸cas. Por exemplo:
+
+1oalgarismo → f orma
+2oalgarismo → cor
+3oalgarismo → tamanho
+4oalgarismo → espessura
+
+Uma preocupa¸c˜ao do professor neste momento deve ser que todos compreendam a situa¸c˜ao
+
+problema proposta e participem das discuss˜oes.
+
+Dando continuidade ao trabalho, o professor orientar´a que todos os grupos etiquetem os
+blocos l´ogicos. Aqui, o professor deve ﬁcar atento para que todos os grupos utilizem a ordem
+estabelecida pela turma e os dados do cartaz, Figura 2 - Tabelas. Quando todos conclu´ırem,
+o professor ir´a propor a transmiss˜ao de dados entre os grupos:
+
+• Selecione 10 pe¸cas e anote a descri¸c˜ao em seu caderno.
+
+• Escreva uma lista com o c´odigo que identiﬁca cada uma das
+
+pe¸cas escolhidas.
+
+• Envie a lista com os c´odigos a um outro grupo.
+
+Nesta atividade, os alunos poder˜ao perceber que identiﬁcar numericamente as pe¸cas sim-
+
+pliﬁca e agiliza a transmiss˜ao de informa¸c˜oes.
+
+Ap´os cada grupo transmitir e receber uma lista com os dez c´odigos o professor indicar´a a
+
+pr´oxima atividade:
+
+17
+
+• Decodiﬁque a lista que vocˆe recebeu.
+
+• Identiﬁque as pe¸cas escolhidas pelo outro grupo.
+
+• Conﬁra as informa¸c˜oes com o outro grupo.
+
+As atividades anteriores, estabelecer um c´odigo padr˜ao e enviar mensagens entre os gru-
+pos, podem motivar o debate sobre seguran¸ca na transmiss˜ao de informa¸c˜oes e erros na
+leitura, escrita e transmiss˜ao de dados. Sendo prop´ıcio novas quest˜oes:
+
+• Quais foram os erros cometidos na transmiss˜ao das listas?
+
+• H´a erros comuns aos grupos?
+
+• Como evitar ou minimizar essas falhas?
+
+´E importante ressaltar que os grupos devem ser orientados a sistematizar e registrar as
+observa¸c˜oes e as conclus˜oes que forem surgindo durante o trabalho. Conceitos como erro
+singular e de transposi¸c˜ao devem ser formalizados pelo professor.
+
+Ap´os discuss˜ao sobre os erros cometidos na transmiss˜ao e recep¸c˜ao de dados, o professor
+ir´a apresentar a teoria dos d´ıgitos veriﬁcadores. Em sua exposi¸c˜ao, o professor deve ressaltar
+a simplicidade dessa teoria, suas in´umeras aplica¸c˜oes no dia a dia e eﬁciˆencia na detec¸c˜ao de
+erros. A situa¸c˜ao proposta no Exemplo 3.1 ou o C´odigo de Barras (Sistema EAN-13) pode
+ser utilizado para ilustrar o uso do d´ıgito veriﬁcador e seu c´alculo.
+
+Retomando o trabalho com os blocos l´ogicos e o c´odigo de identiﬁca¸c˜ao criado, chegamos
+
+ao momento em que surge o grande desaﬁo da proposta:
+
+• Elabore uma f´ormula para determinar o d´ıgito veriﬁcador do
+
+c´odigo criado para identiﬁca¸c˜ao dos blocos l´ogicos.
+
+• A f´ormula elaborada estabelece uma rela¸c˜ao com os primeiros
+
+algarismos?
+
+• Essa f´ormula ´e eﬁciente na detec¸c˜ao de erros?
+
+• Quais as limita¸c˜oes do sistema elaborado pelo seu grupo?
+
+Acredita-se que os alunos j´a se apropriaram do sentido do problema e espera-se que
+estejam motivados a buscar uma solu¸c˜ao para essas quest˜oes e fazer novas perguntas. Nesse
+sentido, v´arias estrat´egias e ideias informais podem surgir e devem ser discutidas pela turma
+e valorizadas pelo professor.
+
+´E importante que o professor solicite o registro dos processos gerais utilizados na ela-
+bora¸c˜ao da f´ormula para o c´alculo do d´ıgito veriﬁcador. E tamb´em, estimule as justiﬁcativas,
+pedindo aos alunos que mostrem se os c´odigos criados s˜ao adequados, do ponto de vista da
+detec¸c˜ao de erros. Neste ponto, esperamos que os estudantes percebam que a utiliza¸c˜ao de
+n´umeros primos torna o sistema mais eﬁciente.
+
+18
+
+Em seguida o professor pode apresentar (ou construir coletivamente) uma f´ormula ´unica
+para o c´alculo do d´ıgito veriﬁcador para a turma. Uma sugest˜ao de sistema m´odulo 5 com
+pesos {1, 2, 3, 4} foi apresentada na Se¸c˜ao 5.1 e uma tabela com os c´odigos para as 48 pe¸cas
+dos blocos l´ogicos segundo esse sistema encontra-se no Anexo 1.
+
+Neste momento ´e importante que o professor fa¸ca uma s´ıntese dos conceitos trabalhados:
+algor´ıtmo da divis˜ao, resto da divis˜ao, n´umeros primos, divisores e m´ultiplos de n´umeros
+naturais.
+
+Para veriﬁcar se os estudantes compreenderam o algortimo elaborado para o c´alculo do 5o
+algarismo, o professor poder´a escolher algumas pe¸cas e pedir que os alunos calculem o d´ıgito
+veriﬁcador. Outra estrat´egia ´e escrever alguns c´odigos inv´alidos, ou faltando um dos d´ıgitos
+e solicitar que os alunos tentem encontrar o erro e em seguida corrigi-lo.
+
+Para ﬁnalizar, os grupos ir˜ao produzir um relat´orio, descrevendo a pr´atica, as conclus˜oes e
+os conceitos matem´aticos envolvidos, incluindo uma autoavalia¸c˜ao e a avalia¸c˜ao da atividade.
+
+7.6 Avalia¸c˜ao e encerramento
+
+Esta sequˆencia de trabalho deve fazer parte do processo de ensino e aprendizagem e como
+tal precisa ser avaliada. Avaliar permite ao professor e ao estudante monitorar o desempenho
+e veriﬁcar quais aspectos precisam ser melhor trabalhados. Assim, os grupos ir˜ao produzir
+um relat´orio, descrevendo a pr´atica, as conclus˜oes e os conceitos matem´aticos envolvidos,
+bem como dever˜ao ser incentivados a realizar uma autoavalia¸c˜ao e a avalia¸c˜ao da atividade.
+Durante os trabalhos, o professor dever´a avaliar os estudantes, observando a postura, as
+estrat´egias que desenvolvem, a capacidade de argumentar e utilizar a linguagem e simbologia
+pr´opria da matem´atica. Desenhos, esquemas e tabelas tamb´em devem ser valorizados como
+forma de registro.
+
+Pode ocorrer que os relat´orios produzidos pelos estudantes sejam inicialmente pouco de-
+senvolvidos, com respostas curtas e justiﬁcativas insuﬁcientes ou n˜ao fundamentadas. Uma
+alternativa, para sanar essa diﬁculdade, ´e fornecer roteiros e indicar, durante a discuss˜ao nos
+grupos, pontos importantes de serem mencionados nos relatos.
+
+Outra possibilidade de avalia¸c˜ao ´e uma apresenta¸c˜ao oral para a classe, onde cada grupo
+explicar´a a proposta elaborada para o c´alculo do d´ıgito veriﬁcador e a matem´atica envolvida
+em suas investiga¸c˜oes.
+
+8 Considera¸c˜oes Finais
+
+Neste trabalho abordou-se as no¸c˜oes b´asicas de Teoria dos N´umeros e sua aplica¸c˜ao no
+
+c´alculo do d´ıgito veriﬁcador de Sistemas de Identiﬁca¸c˜ao Modular.
+
+Versou-se sobre a utiliza¸c˜ao dos n´umeros de identiﬁca¸c˜ao no cotidiano e os erros cometidos
+na leitura, escrita e transmiss˜ao destes n´umeros. Recorreu-se a Aritm´etica Modular para
+generalizar os sistemas de identiﬁca¸c˜ao estudados e percebeu-se a importˆancia dos Teoremas
+3.1 e 3.2 para a constru¸c˜ao de novos sistemas modulares.
+
+Foram apresentados trˆes exemplos concretos de sistema de identiﬁca¸c˜ao em utiliza¸c˜ao no
+pa´ıs: o CPF, o ISBN e o cart˜ao de cr´edito. Situa¸c˜oes concretas foram utilizadas para ilustrar
+a aplica¸c˜ao destes modelos e para uma melhor compreens˜ao da estrutura de cada sistema.
+
+Uma proposta de aplica¸c˜ao da teoria dos c´odigos foi didaticamente descrita para o trabalho
+com estudantes do ensino fundamental. A sequˆencia did´atica recorreu a explora¸c˜ao dos blocos
+l´ogicos para criar um ambiente motivador e estimulador da aprendizagem.
+
+19
+
+Problemas relativos a corre¸c˜ao de erros n˜ao foram discutidos neste texto. Acredita-se
+ser necess´ario a realiza¸c˜ao de estudos posteriores para melhor compreens˜ao de m´etodos que
+possam al´em de detectar os erros, fazer sua corre¸c˜ao autom´atica. Os chamados Sistemas
+Corretores de Erros.
+
+Espera-se que a realiza¸c˜ao da pr´atica em sala de aula contribua para o desenvolvimento
+
+dos alunos e fomente o interesse por projetos e atividades de investiga¸c˜ao e explora¸c˜ao.
+
+Em rela¸c˜ao aos professores, deseja-se ter cumprido o objetivo de motivar um estudo mais
+aprofundado sobre Artm´etica Modular, mostrando como ideias e conceitos matem´aticos levam
+ao desenvolvimento de tecnologias que visam o avan¸co e o bem estar social.
+
+Enﬁm, acredita-se que este trabalho possa contribuir para que alunos e professores cons-
+truam uma vis˜ao mais completa da verdadeira natureza da atividade matem´atica. E perce-
+bam que o estudo de temas aparentemente abstratos como Sistemas de Identiﬁca¸c˜ao Modular
+´e uma fant´astica oportunidade de aprendizagem, possibilitando momentos de reﬂex˜ao, inves-
+tiga¸c˜ao e constru¸c˜ao de conhecimento que, em geral, n˜ao observamos no dia-a-dia da sala de
+aula.
+
+20
+
+ANEXO 1
+
+Figura 3: Etiquetas para as pe¸cas dos blocos l´ogicos
+
+Referˆencias
+
+[1] Hefez, Abramo. Elementos de aritm´etica. SBM, 2a ed., Rio de Janeiro, 2011.
+
+[2] Kirtland, Joseph. Indeﬁcation Numbers and Check Digit Schemes. USA: The Mathema-
+
+tical Association of America, 2001.
+
+21
+
+[3] Louren¸co, Paulo Jorge Pais. Aritm´etica Modular: aplica¸c˜oes nos sistemas de identi-
+ﬁca¸c˜ao. Faculdade de Ciˆencias e Tecnologia da Universidade de Coimbra, Coimbra, 2011.
+
+[4] Milies, Francisco C´esar Polcino. A matem´atica dos C´odigos de Barras. Revista do Pro-
+
+fessor de Matem´atica, v. 65, p. 46-53, 2008.
+
+[5] Milies, Francisco C´esar Polcino. A matem´atica dos c´odigos de barras: detectando erros.
+
+Revista do Professor de Matem´atica, v. 68, p. 38-42, 2009.
+
+[6] Neto, Antonio Caminha Muniz. T´opicos de Matem´atica Elementar, Teoria dos N´umeros.
+
+SBM, Cole¸c˜ao do Professor de Matem´atica, Vol.5, Rio de Janeiro, 2012.
+
+[7] Picado, Jorge. A ´algebra dos sistemas de identiﬁca¸c˜ao: da artm´etica modular aos grupos
+
+diedrais. Boletim da Sociedade Portuguesa de Matem´atica, no 44, 2011.
+
+[8] Polya, George. A arte de resolver problemas. Rio de Janeiro: Editora Interciˆencia, 2006.
+
+[9] Ponte, Jo˜ao Pedro da. Investiga¸c˜oes Matem´aticas na Sala de Aula. Belo Horizonte:
+
+Autˆentica Editora, 2009.
+
+[10] Santos, Jos´e Pl´ınio de Oliveira. Introdu¸c˜ao `a Teoria dos N´umeros. IMPA, Rio de Janeiro,
+
+2012.
+
+[11] Secretaria de Educa¸c˜ao Fundamental. Parˆametros Curriculares Nacionais: Matem´atica.
+
+Bras´ılia: MEC/SEF, 1998.
+
+[12] Simons, Ursula Marianne. Blocos L´ogicos. Petr´opolis, Rio de Janeiro. Editora Vozes,
+
+2007.
+
+[13] Souza, Nat´alia Pedroza de. Uma an´alise dos esquemas de d´ıgitos veriﬁcadores usados no
+Brasil. Disserta¸c˜ao de Mestrado em Ciˆencias Computacionais, Universidade do Estado
+do Rio de Janeiro, 2013.
+
+[14] www.isbn.bn.br. Agˆencia Brasileira do ISBN, Funda¸c˜ao Biblioteca Nacional. Acesso em
+
+08/02/2014.
+
+22
+
+

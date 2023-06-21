@@ -1,0 +1,4316 @@
+Universidade Federal de Vi¸cosa
+Disserta¸c˜ao de Mestrado
+
+J´ulio C´esar Pereira
+
+N´umeros Primos e Criptografia RSA
+
+Florestal
+Minas Gerais – Brasil
+2017
+
+J´ulio C´esar Pereira
+
+N ´UMEROS PRIMOS E CRIPTOGRAFIA RSA
+
+Disserta¸c˜ao apresentada `a Universidade Federal de Vi¸cosa,
+como parte das exigˆencias do Programa de P´os-Gradua¸c˜ao
+Mestrado Proﬁssional em Matem´atica em Rede Nacional,
+para obter o t´ıtulo Magister Scientiae.
+
+Florestal
+Minas Gerais – Brasil
+2017
+
+Ficha catalográfica preparada pela Biblioteca da Universidade Federalde Viçosa - Câmpus Florestal T Pereira, Júlio César, 1980-P436n2017        Números primos e criptografia RSA / Júlio César Pereira. –Florestal, MG, 2017.         vi,63f. ; 29 cm.           Inclui apêndices.         Orientador: Danielle Franco Nicolau Lara.         Dissertação (mestrado) - Universidade Federal de Viçosa.         Referências bibliográficas: f.63.           1. Números Primos - Propriedades. 2. Teoria dos Números.3. Criptografia. I. Universidade Federal de Viçosa.Departamento de Matemática. Programa de Pós-graduaçãoMestrado Profissional em Matemática em Rede Nacional.II. Título.  CDD 22 ed. 512.723 Agradecimentos
+
+A Deus, por sempre me dar for¸ca e f´e pra continuar.
+
+`A minha esposa, Michele Pereira, pelo constante apoio e incentivo.
+
+`A minha orientadora, Profa. Dra. Danielle Franco Nicolau Lara,
+pelos ensinamentos transmitidos.
+
+Ao Prof. Luis Alberto D’Afonseca pelo aux´ılio na elabora¸c˜ao da
+disserta¸c˜ao.
+
+Aos meus professores do PROFMAT.
+
+Aos meus colegas do PROFMAT, do meu polo e de outros polos,
+pela ajuda nos estudos.
+
+ii
+
+Resumo
+
+PEREIRA, J´ulio C´esar, M.Sc., Universidade Federal de Vi¸cosa, agosto de 2017.
+N´umeros Primos e Criptograﬁa RSA. Orientadora: Danielle Franco Nicolau
+Lara. Coorientadores: Elisˆangela Aparecida de Oliveira e Mehran Sabeti.
+
+Este trabalho apresenta uma revis˜ao te´orica de alguns conceitos da teoria dos n´umeros
+
+como o princ´ıpio da indu¸c˜ao ﬁnita, o algoritmo da divis˜ao Euclidiana, o teorema
+
+fundamental da aritm´etica, rela¸c˜oes de equivalˆencia, congruˆencia m´odulo m, classes
+
+de equivalˆencia e conjuntos quocientes. O objetivo principal ´e realizar um estudo das
+
+propriedades dos n´umeros primos, das propriedades da fatora¸c˜ao num´erica, no¸c˜oes de
+
+m´aximo divisor comum e aritm´etica modular, apresentar aplica¸c˜oes pr´aticas destes
+
+conceitos e uma aplica¸c˜ao da criptograﬁa RSA. Para isso, ´e apresentado um estudo
+
+sistemas de equa¸c˜oes lineares utilizando o teorema chinˆes do resto, que pode ser
+
+aplicado como um m´etodo de criptograﬁa para partilhas de senhas. Por ﬁm, ´e
+
+elaborada uma aplica¸c˜ao de criptograﬁa para alunos de ensino m´edio.
+
+iii
+
+Abstract
+
+PEREIRA, J´ulio C´esar, M.Sc., Universidade Federal de Vi¸cosa, August, 2017. Prime
+Numbers and RSA Cryptography RSA. Adviser: Danielle Franco Nicolau Lara.
+Co-advisers: Elisˆangela Aparecida de Oliveira and Mehran Sabeti.
+
+The present study provides a theoretical review of some concepts of the theory
+
+of numbers such as the principle of ﬁnite induction, Euclidean division algorithm,
+
+fundamental theorem of arithmetic, equivalence relations, congruence modulo m,
+
+equivalence classes and quotient sets. The primary objective was to perform a study
+
+of the properties of prime numbers, properties of numerical factorization, notions of
+
+greatest common divisor and modular arithmetic and to present practical applications
+
+of these concepts and an application of RSA cryptography. To this end, we report a
+
+study of a system of linear equations using the Chinese remainder theorem, which can
+
+be applied as a cryptography method for password sharing. Lastly, a cryptography
+
+application was devised for high-school students.
+
+iv
+
+Sum´ario
+
+1
+
+Introdu¸c˜ao
+
+1
+
+Conceitos Preliminares
+
+4
+2
+4
+2.1 Princ´ıpio da Indu¸c˜ao Finita . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+2.2 Algoritmo da Divis˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.3 M´aximo Divisor Comum . . . . . . . . . . . . . . . . . . . . . . . . . . .
+11
+2.4 N´umeros Primos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+Rela¸c˜ao de Equivalˆencia
+
+3
+23
+3.1 Rela¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+3.1.1 Propriedades de uma rela¸c˜ao R em A . . . . . . . . . . . . . . . . . . . 24
+3.2 Congruˆencia M´odulo m em Z . . . . . . . . . . . . . . . . . . . . . . . . 26
+3.3 Classe de Equivalˆencia e Conjunto Quociente . . . . . . . . . . . . . . . 32
+
+34
+Aplica¸c˜ao
+4
+4.1
+Sistemas de Congruˆencias . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+4.1.1 Equa¸c˜oes Lineares . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+4.1.2 Teorema Chinˆes do Resto . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.1.3 Um Exemplo Astronˆomico . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+4.2 Partilha de Senhas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+Criptograﬁa RSA
+Implementa¸c˜ao do M´etodo
+
+43
+5
+5.1
+. . . . . . . . . . . . . . . . . . . . . . . . . 43
+5.1.1 Pr´e-codiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+5.1.2 Codiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+5.1.3 Decodiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+5.2 Viabilidade do M´etodo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+Seguran¸ca do M´etodo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+5.3
+5.4 Processo de Assinatura . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+49
+Aplica¸c˜ao da Criptograﬁa no Ensino M´edio
+6
+6.1
+Importˆancia da Aplica¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+6.2 Abordagem Te´orica do M´etodo . . . . . . . . . . . . . . . . . . . . . . . 49
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+6.3 Descri¸c˜ao da Atividade
+
+v
+
+Sum´ario
+
+vi
+
+Apˆendices
+
+7
+52
+7.1 Apˆendice 1: Introdu¸c˜ao `a Teoria de An´eis . . . . . . . . . . . . . . . . . 52
+7.2 Apˆendice 2: Planos de Aula . . . . . . . . . . . . . . . . . . . . . . . . . 56
+7.2.1 Aula 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+7.2.2 Aula 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+7.2.3 Aulas 3 e 4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+7.2.4 Aula 5 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+7.2.5 Exerc´ıcios Propostos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+
+8
+
+Considera¸c˜oes Finais
+
+Bibliograﬁa
+
+62
+
+63
+
+Introdu¸c˜ao
+
+1
+
+O estudo da teoria dos n´umeros inteiros ´e feito desde as civiliza¸c˜oes mais
+antigas, entretanto ´e na Gr´ecia que a identiﬁcamos e a entendemos como ´e atualmente.
+Entre os problemas da teoria dos n´umeros que os gregos abordaram est˜ao:
+
+• O c´alculo do m´aximo divisor comum entre dois n´umeros;
+
+• A determina¸c˜ao dos n´umeros primos menores que um inteiro dado;
+
+• A demonstra¸c˜ao de que h´a um inﬁnidade de n´umeros primos.
+
+De acordo com COUTINHO (2005), estes e outros problemas s˜ao discutidos em
+detalhe num dos famosos livros de Matem´atica herdados da Gr´ecia, os Elementos -
+livros VII, VIII e IX, escrito por Euclides por volta de 300 a. C. Dentre os v´arios
+matem´aticos gregos que estudaram problemas da Teoria dos N´umeros se destaca
+Diofanto, cuja obra trata principalmente da solu¸c˜ao de equa¸c˜oes indeterminadas com
+coeﬁcientes inteiros.
+
+Durante a Renascen¸ca, muitas obras de autores gregos foram redescobertas,
+editadas e publicadas na Europa. Foi nesta ocasi˜ao que o texto grego Aritm´etica
+de Diofanto foi publicado e caiu nas m˜aos do matem´atico francˆes Pierre de Fermat.
+Isso marcou o in´ıcio do interesse desse matem´atico pela teoria dos n´umeros, que
+posteriormente se expressou em uma sequˆencia de resultados importantes. Ap´os
+sua morte em 1665, seu ﬁlho Samuel Fermat publicou a obra de seu pai e uma das
+publica¸c˜oes trouxe um famoso teorema conhecido como ´Ultimo Teorema de Fermat:
+
+“Se x, y, z e n s˜ao inteiros e xn + yn = zn, onde n ≥ 3, ent˜ao xyz = 0”
+
+O sucessor de Fermat, nesse campo, foi o matem´atico su´ı¸co Leonard Euler, nascido
+em 1707. Ao contr´ario de Fermat, que era magistrado por proﬁss˜ao, a Matem´atica
+era a principal ocupa¸c˜ao de Euler. A obra de Fermat acabou chegando at´e Euler
+que come¸ca a lˆe-la, aproximadamente em 1730. Nos anos seguintes, ele provaria e
+estenderia grande parte dos resultados enunciados por Fermat, resolvendo inclusive
+
+1
+
+Cap´ıtulo 1.
+
+Introdu¸c˜ao
+
+2
+
+uma quest˜ao proposta por ele:
+
+Todos os n´umeros do tipo 22n s˜ao primos
+
+Atrav´es dos trabalhos de Euler, a teoria dos n´umeros se popularizou; mas o desen-
+volvimento sistem´atico da teoria s´o se iniciou com Gauss em sua obra Disquisitiones
+Arithmeticae, publicada em 1801. O enfoque atual da teoria teve in´ıcio na obra de
+Gauss.
+
+Fermat, Euler e Gauss s˜ao grandes expoentes da teoria dos n´umeros. Esta ´area
+t˜ao fascinante da Matem´atica se caracteriza pela simplicidade de seus enunciados e
+da enorme diﬁculdade em demonstr´a-los (COUTINHO, 2005).
+
+Uma das grandes aplica¸c˜oes da Teoria dos N´umeros ´e a implementa¸c˜ao do sistema
+de criptograﬁa. Segundo COUTINHO (2005), esse sistema estuda os m´etodos para
+codiﬁcar uma mensagem de modo que s´o seu destinat´ario leg´ıtimo consiga interpret´a-
+la.
+
+Sistemas de criptograﬁa s˜ao usados desde os tempos antigos. Podemos citar,
+por exemplo, c´odigos como o de C´esar, que usava mensagens criptografadas para se
+comunicar com seus soldados. No ﬁnal da idade m´edia, o movimento renascentista
+trouxe grandes novidades para a criptograﬁa. Em 1452, Veneza criou uma organiza¸c˜ao
+especializada em lidar com segredos, cifras e decifra¸c˜oes; ela quebrava e criava cifras
+usadas pelo governo.
+
+No s´eculo XIX, a tecnologia continuou a se desenvolver e as duas Grandes Guerras
+aumentaram ainda mais a importˆancia da criptograﬁa e da criptoan´alise. Com o
+surgimento do computador, a criptograﬁa se distancia dos conceitos tradicionais
+e entra numa nova era. A preocupa¸c˜ao com a seguran¸ca de informa¸c˜oes trocadas
+entre pessoas e institui¸c˜oes ﬁca ainda maior com o advento da internet. Como ´e
+relativamente f´acil interceptar mensagens enviadas por linha telefˆonica, torna-se
+necess´ario codiﬁc´a-las, sempre que contenham informa¸c˜oes sens´ıveis (COUTINHO,
+2005). Assim, tornou-se necess´ario inventar c´odigos seguros que fossem dif´ıceis
+de decifrar, mesmo com aux´ılio de computadores. Nesse contexto, foram criados
+c´odigos modernos de chave p´ublica. Em um c´odigo de chave p´ublica, saber codiﬁcar
+n˜ao implica saber decodiﬁcar. De acordo com o tipo de chave usada, os m´etodos
+criptogr´aﬁcos podem ser subdivididos em duas grandes categorias: criptograﬁa de
+chave sim´etrica e criptograﬁa de chaves assim´etricas.
+
+A criptograﬁa de chave sim´etrica, tamb´em chamada de criptograﬁa de chave
+secreta ou ´unica, utiliza uma mesma chave tanto para codiﬁcar como para decodiﬁcar
+informa¸c˜oes, sendo usada principalmente para garantir a conﬁdencialidade dos dados.
+Exemplos de m´etodos criptogr´aﬁcos que usam chave sim´etrica s˜ao: AES, Blowﬁsh,
+RC4, 3DES e IDEA. J´a a criptograﬁa de chaves assim´etricas, tamb´em conhecida
+como criptograﬁa de chave p´ublica, utiliza duas chaves distintas: uma p´ublica, que
+pode ser livremente divulgada, e uma privada, que deve ser mantida em segredo
+por seu dono. Quando uma informa¸c˜ao ´e codiﬁcada com uma das chaves, somente
+a outra chave do par pode decodiﬁc´a-la. Exemplos de m´etodos criptogr´aﬁcos que
+usam chaves assim´etricas s˜ao: RSA, DSA.
+
+Cap´ıtulo 1.
+
+Introdu¸c˜ao
+
+3
+
+Por raz˜oes de seguran¸ca, o destinat´ario exige garantia de que a mensagem
+criptografada tenha sido originada no seu real remetente. Ou ainda, o remetente
+espera que sua mensagem criptografada chegue no verdadeiro destinat´ario sem que
+seja interceptada por um hacker, por exemplo. Assim, a mensagem deve ser assinada.
+A assinatura digital permite comprovar a autenticidade e a integridade de uma
+informa¸c˜ao, ou seja, que ela foi realmente gerada por quem diz tˆe-la feito e que ela
+n˜ao foi alterada. Ela se baseia no fato de que apenas o dono conhece a chave privada
+e que, se ela foi usada para codiﬁcar uma informa¸c˜ao, ent˜ao apenas seu dono poderia
+tˆe-la feito. A veriﬁca¸c˜ao da assinatura ´e feita com o uso da chave p´ublica, pois se o
+texto foi codiﬁcado com a chave privada, somente a chave p´ublica correspondente
+pode decodiﬁc´a-lo.
+
+O mais conhecido dos m´etodos de chave p´ublica ´e o RSA. Ele foi inventado
+em 1978 por Ronald L. Rivest, Adi Shamir e Leonard M. Adleman que, na ´epoca,
+trabalhavam no Massachussets Institute of Technology (M.I.T.). Este m´etodo ´e
+usado, por exemplo, no Netscape.
+
+Por meio do uso da criptograﬁa podemos proteger os dados sigilosos armazenados
+no computador, como arquivos de senhas e declara¸c˜ao de Imposto de Renda; criar
+uma ´area (parti¸c˜ao) espec´ıﬁca no computador, na qual todas as informa¸c˜oes que
+forem l´a gravadas ser˜ao automaticamente criptografadas; proteger backups contra
+acesso indevido, principalmente aqueles enviados para ´areas de armazenamento
+externo de m´ıdias; proteger as comunica¸c˜oes realizadas pela Internet, como os e-mails
+enviados/recebidos e as transa¸c˜oes banc´arias e comerciais realizadas.
+
+Esta disserta¸c˜ao ´e uma continua¸c˜ao do meu trabalho de conclus˜ao de curso (TCC)
+realizado na gradua¸c˜ao sob orienta¸c˜ao do professor Jos´e Carlos Souza J´unior e tem
+por ﬁnalidade aprofundar os conhecimentos matem´aticos na Teoria dos N´umeros
+e descrever algumas aplica¸c˜oes pr´aticas. Apresenta um estudo das propriedades
+dos n´umeros primos e das propriedades da fatora¸c˜ao num´erica, no¸c˜oes de m´aximo
+divisor comum e aritm´etica modular. O principal objetivo do trabalho ´e apresentar
+o m´etodo de criptograﬁa RSA: sua implementa¸c˜ao, viabilidade e seguran¸ca. A maior
+parte do conte´udo estudado se encontra nos trabalhos sobre a teoria dos n´umeros
+desenvolvidos pelos antigos gregos e por Fermat, Euler e Gauss.
+
+Na revis˜ao te´orica, ´e abordado, primeiramente, o Princ´ıpio da Indu¸c˜ao Finita e
+sua rela¸c˜ao com o Princ´ıpio da Boa Ordem. H´a tamb´em um estudo sobre o Algoritmo
+da Divis˜ao Euclidiana. Em seguida, tratamos sobre m´aximo divisor comum e n´umeros
+primos, com suas propriedades fundamentais e o Teorema Fundamental da Aritm´etica.
+No cap´ıtulo seguinte, s˜ao abordadas as rela¸c˜oes de equivalˆencia, congruˆencia m´odulo
+m, as classes de equivalˆencia e os conjuntos quocientes. Apresentamos tamb´em a
+solu¸c˜ao de sistemas de equa¸c˜oes lineares, o chamado Algoritmo Chinˆes do Resto
+com uma aplica¸c˜ao a um m´etodo de criptograﬁa para partilha de senhas. Por ﬁm,
+apresentamos o sistema de criptograﬁa RSA e uma aplica¸c˜ao desses conceitos para
+alunos do ensino m´edio.
+
+Conceitos Preliminares
+
+2
+
+Este cap´ıtulo abordar´a alguns conceitos preliminares importantes para o enten-
+dimento do trabalho. Uma leitura mais ampla e profunda pode ser encontrada em
+Milies (2003) e Sampaio (2007).
+
+2.1 Princ´ıpio da Indu¸c˜ao Finita
+
+Axioma 2.1 (Princ´ıpio da Boa Ordena¸c˜ao): Todo subconjunto n˜ao vazio
+S de Z de elementos n˜ao negativos possui um elemento m´ınimo, ou seja, ∃ x0 ∈ S
+tal que x0 ≤ x ∀x ∈ S.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.1: Usando o princ´ıpio da boa ordena¸c˜ao, mostre que
+
+√
+
+2 ´e
+
+irracional.
+
+Solu¸c˜ao: Suponha que
+
+√
+
+2 ∈ Q, neste caso, existem inteiros positivos a e b, tais
+
+que:
+
+√
+
+⇒ a = b
+
+√
+
+2
+
+2 =
+√
+
+a
+b
+2 ∈ Z}.
+
+Seja A = {m ∈ Z; m > 0 e m
+Note que A (cid:54)= ∅, pois b ∈ A. Logo, pelo princ´ıpio da boa ordena¸c˜ao, A possui
+
+um menor elemento, digamos s.
+
+√
+
+Temos que s e s
+Note que r ´e um inteiro positivo, pois
+
+√
+
+2 s˜ao ambos inteiros positivos. Considere o inteiro r = s
+
+2 − 1 > 0. Al´em disso, r
+
+√
+
+√
+
+2 − s.
+2 tamb´em ´e
+
+um inteiro. De fato,
+
+√
+
+r
+
+2 = (s
+
+√
+
+√
+
+2 − s)
+
+2 = 2s
+(cid:124)(cid:123)(cid:122)(cid:125)
+∈Z
+
+√
+
+− s
+
+2
+(cid:124)(cid:123)(cid:122)(cid:125)
+∈Z
+
+∈ Z
+
+√
+
+√
+
+√
+
+2 − s = s(
+
+Mas r = s
+Assim, r ∈ A e ´e menor do que s. (Contradi¸c˜ao)
+Portanto, nossa suposi¸c˜ao de que
+
+2 − 1) < s, pois
+
+√
+
+2 ∈ Q est´a errada.
+
+2 − 1 < 1.
+
+(cid:3)
+
+Proposi¸c˜ao 2.1 (Princ´ıpio da Indu¸c˜ao Finita - Primeira Forma):
+
+Suponhamos que seja dada uma aﬁrma¸c˜ao P (n) dependendo de n ∈ N tal que:
+
+4
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+5
+
+(i) P (0) ´e verdadeira (a senten¸ca ´e v´alida para n = 0).
+
+(ii) Para cada k ∈ N, P (k + 1) ´e verdadeira sempre que P (k) for verdadeira.
+
+Ent˜ao P (n) ´e verdadeira para todo n ∈ N.
+
+Demonstra¸c˜ao: Seja S o conjunto dos inteiros m ∈ N tais que P (m) seja falsa,
+e suponhamos que S (cid:54)= ∅ . Pelo princ´ıpio da boa ordena¸c˜ao, existe um x0 ∈ S tal
+que x0 ≤ m, ∀ m ∈ S. Como P (0) ´e verdadeira por hip´otese, temos que 0 (cid:54)∈ S e
+portanto x0 ≥ 1; mais ainda, como x0 − 1 (cid:54)∈ S, temos que P (x0 − 1) ´e verdadeira.
+Agora, pela hip´otese (ii), segue que P (x0) = P [(x0 − 1) + 1] ´e verdadeira, o que ´e
+uma contradi¸c˜ao. Logo S = ∅ e o resultado segue.
+
+Proposi¸c˜ao 2.2 (Princ´ıpio da Indu¸c˜ao Finita - Segunda Forma): Su-
+
+ponhamos que seja dada uma aﬁrma¸c˜ao P (n) dependendo de n ∈ N tal que:
+
+(i) P (0) ´e verdadeira.
+
+(ii) Para cada inteiro m > 0, P (m) ´e verdadeira sempre que P (k) for verdadeira
+
+para 0 ≤ k < m.
+
+Ent˜ao P (n) ´e verdadeira para todo n ∈ N.
+
+Demonstra¸c˜ao: Seja S o conjunto dos inteiros m ∈ N tais que P (m) seja falsa e
+suponhamos que S ´e n˜ao vazio. Ent˜ao, pelo princ´ıpio da boa ordena¸c˜ao, existe um
+x0 ∈ S tal que x0 ≤ x, para todo x ∈ S, e pela hip´otese (i) x0 > 0. Como x0 ´e o
+elemento m´ınimo de S, segue que P (k) ´e verdadeira para todo k, 0 ≤ k < x0, de
+forma que a hip´otese (ii) nos leva a concluir que P (x0) ´e verdadeira, o que ´e uma
+contradi¸c˜ao. Logo S = ∅ e o resultado segue.
+
+(cid:31)
+
+(cid:63) Observa¸c˜ao 2.1:Observe que as proposi¸c˜oes 2.1 e 2.2 poderiam ser
+enunciadas a partir do inteiro 1 em vez de zero e nesse caso a hip´otese
+(i) seria P (1) ´e verdadeira. As mesmas demonstra¸c˜oes funcionam com as
+devidas modiﬁca¸c˜oes.
+
+(cid:30)
+
+(cid:28)
+
+(cid:29)
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.2: Usando o princ´ıpio da indu¸c˜ao ﬁnita, mostre que:
+
+1 + 2 + 3 + . . . + n =
+
+n(n + 1)
+2
+
+, c n ≥ 1.
+
+Solu¸c˜ao: Seja P (n) a senten¸ca: 1 + 2 + 3 + . . . + n = n(n+1)
+
+. A senten¸ca P (1)
+
+2
+
+estabelece que 1 = 1·(1+1)
+
+2
+
+, a qual ´e certamente v´alida.
+
+Agora, assuma que P (k) ´e verdadeira para algum k ≥ 1, ou seja,
+
+1 + 2 + 3 + . . . + k =
+
+k(k + 1)
+2
+
+.
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+6
+
+Vamos mostrar que P (k + 1) ´e verdadeira, isto ´e, que
+
+1 + 2 + 3 + . . . + k + (k + 1) =
+
+(k + 1)(k + 2)
+2
+
+.
+
+Temos que:
+
+1 + 2 + . . . + k + (k + 1) = (1 + 2 + . . . + k) + (k + 1)
+
+HIP=
+
+k(k + 1)
+2
+
++ (k + 1)
+
+= (k + 1)
+
+= (k + 1)
+
+(cid:19)
+
+(cid:19)
+
++ 1
+
+(cid:18) k
+2
+(cid:18) k + 2
+2
+
+=
+
+(k + 1)(k + 2)
+2
+
+Logo, P (k + 1) ´e verdadeira e pelo Princ´ıpio da Indu¸c˜ao Finita, o resultado ´e v´alido
+(cid:3)
+para todo n ≥ 1.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.3: Usando o princ´ıpio da indu¸c˜ao ﬁnita, mostre que n3 − n ´e
+
+m´ultiplo de 3, para todo n ≥ 0.
+
+Solu¸c˜ao: Seja P (n) a senten¸ca: n3 − n ´e um m´ultiplo de 3. Temos que P (0) ´e
+
+verdadeira pois 03 − 0 = 0 = 0 · 3.
+
+Suponha que P (k) ´e verdadeira para algum k ≥ 1, ou seja, que k3 − k = 3 · m,
+
+para algum m ∈ Z e algum k ≥ 1.
+
+Ent˜ao:
+
+(k + 1)3 − (k + 1) = k3 + 3k2 + 3k + 1 − (k + 1)
+
+= (k3 − k) + (3k2 + 3k)
+HIP= 3m + 3(k2 + k)
+= 3 (m + k2 + k),
+(cid:125)
+
+(cid:124)
+
+(cid:123)(cid:122)
+∈Z
+
+o qual ´e um m´ultiplo de 3 e assim, P (k + 1) ´e verdadeira. Logo, pelo Princ´ıpio da
+(cid:3)
+Indu¸c˜ao Finita, conclu´ımos que P (n) ´e verdadeira para todo n ≥ 0.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.4: Mostre que o princ´ıpio da indu¸c˜ao ﬁnita implica o princ´ıpio
+
+da boa ordena¸c˜ao.
+
+Solu¸c˜ao: Seja U ⊂ N tal que U n˜ao possui um menor elemento. Seja P (n) a
+
+senten¸ca: n (cid:54)∈ U . Vamos mostrar que U = ∅.
+
+Note que P (0) ´e verdadeira, uma vez que 0 (cid:54)∈ U , caso contr´ario ele seria claramente
+
+o menor elemento de U .
+
+Agora, suponha que P (k) ´e verdadeira para algum k ∈ N, ou seja, k (cid:54)∈ U .
+Segue que para todo inteiro m tal que 0 ≤ m ≤ k, temos que m (cid:54)∈ U . De fato,
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+7
+
+se tivermos valores entre 0 e k pertencendo `a U , ent˜ao o menor dentre estes valores
+seria o menor elemento de U , contrariando a nossa hip´otese. Conseq¨uentemente,
+k + 1 tamb´em n˜ao poder´a pertencer `a U , pois caso contr´ario, este passaria a ser o
+menor elemento de U . Assim, P (k + 1) ´e verdadeira.
+
+Logo, pelo Princ´ıpio da Indu¸c˜ao Finita, temos que P (n) ´e verdadeira para todo
+
+n ∈ N, ou seja, U = ∅.
+
+Portanto, se U ⊂ N e U (cid:54)= ∅, ent˜ao U possui um menor elemento.
+(cid:15)
+
+(cid:63) Observa¸c˜ao 2.2:A proposi¸c˜ao 2.1 e o exemplo 2.4 estabelecem que o
+princ´ıpio da indu¸c˜ao ﬁnita e o princ´ıpio da boa ordena¸c˜ao s˜ao equivalentes.
+
+(cid:14)
+
+(cid:3)
+
+(cid:12)
+
+(cid:13)
+
+2.2 Algoritmo da Divis˜ao
+
+Defini¸c˜ao 2.1 (Divisibilidade): Dizemos que um inteiro a divide um inteiro
+
+b quando existe um inteiro m, tal que b = a · m. Nota¸c˜ao: a|b.
+
+Neste caso, dizemos tamb´em que:
+
+• a ´e um divisor de b;
+
+• a ´e um fator de b;
+
+• b ´e um m´ultiplo de a.
+
+No caso em que a (cid:54)= 0, dizemos ainda que:
+
+• b ´e divis´ıvel por a;
+
+• m = b
+
+a ´e o quociente de b por a.
+
+(cid:7)
+
+(cid:6)
+
+(cid:63) Observa¸c˜ao 2.3:Quando a n˜ao divide b, escrevemos a (cid:45) b.
+
+(cid:4)
+
+(cid:5)
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.5: Temos que 7 divide 161, uma vez que existe um inteiro, que
+
+no caso ´e o 23, tal que 161 = 7 · 23.
+
+(cid:46)(cid:46)(cid:46) Exemplo 2.6: Os divisores de 12 s˜ao: 1, 2, 3, 4, 6, 12, −1, −2, −3, −4, −6, −12.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.7: Os divisores de 23 s˜ao: 1, 23, −1, −23.
+
+Proposi¸c˜ao 2.3: Se a, b e c s˜ao inteiros, tais que a|b e b|c, ent˜ao a|c.
+
+Demonstra¸c˜ao: Como a|b e b|c, ent˜ao existem inteiros m e n tais que b = a · m e
+
+c = b · n. Logo, c = (a · m) · n = a · (m · n)
+(cid:124) (cid:123)(cid:122) (cid:125)
+∈Z
+
+e, portanto, a|c
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+8
+
+Proposi¸c˜ao 2.4: Se a, b e c s˜ao inteiros, tais que a|b e a|c, ent˜ao para todo
+
+m, n ∈ Z temos que a|(mb + nc).
+
+Demonstra¸c˜ao: Como a|b e a|c, ent˜ao existem inteiros e e f tais que b = a · e e
+c = a · f . Logo, m · b + n · c = m · (a · e) + n · (a · f ) = a · (me + nf ). Portanto,
+a|(mb + nc).
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.8: 3|21 e 3|33, logo 3|(5 · 21 − 3 · 33), isto ´e, 3|6.
+
+Teorema 2.1 (Algoritmo da Divis˜ao Euclidiana em N): Para cada
+n´umero natural n e cada inteiro positivo d, d (cid:54)= 0, existem n´umeros naturais q
+(quociente) e r (resto), satisfazendo:
+
+n = d · q + r e 0 ≤ r < d.
+
+Al´em disso, os naturais q e r, satisfazendo as condi¸c˜oes apresentadas, s˜ao ´unicos.
+
+Demonstra¸c˜ao: (EXISTˆENCIA) Mostraremos a existˆencia dos naturais q e r, por
+indu¸c˜ao sobre n. Provaremos que, ﬁxado um inteiro positivo d, para cada n´umero
+natural n, existem q e r nas condi¸c˜oes enunciadas.
+
+Se n = 0, basta tomar q = r = 0.
+Seja k um n´umero natural e suponhamos que existam q e r satisfazendo:
+
+k = d · q + r e 0 ≤ r < d.
+
+Ent˜ao, k + 1 = d · q + (r + 1). Como 0 ≤ r < d, temos que r + 1 < d + 1, ou seja,
+
+r + 1 ≤ d.
+
+Se r + 1 < d, tomamos q(cid:48) = q e r(cid:48) = r + 1 e teremos:
+
+k + 1 = d · q(cid:48) + r(cid:48), com 0 ≤ r(cid:48) < d.
+
+Se r + 1 = d, ent˜ao:
+
+k + 1 = d · q + d
+
+= d · (q + 1)
+(cid:124) (cid:123)(cid:122) (cid:125)
+q(cid:48)(cid:48)
+
+,
+
++ 0
+(cid:124)(cid:123)(cid:122)(cid:125)
+r(cid:48)(cid:48)
+
+tomando q(cid:48)(cid:48) = q + 1 e r(cid:48)(cid:48) = 0, teremos k + 1 = d · q(cid:48)(cid:48) + r(cid:48)(cid:48).
+
+Portanto, pelo princ´ıpio da indu¸c˜ao ﬁnita, para cada n ∈ N, existem q e r
+
+satisfazendo:
+
+n = d · q + r, com 0 ≤ r < d.
+
+(UNICIDADE) Suponhamos que existam naturais q1, q2, r1 e r2 tais que:
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+9
+
+• n = q1 · d + r1 = q2 · d + r2;
+
+• 0 ≤ r1 < d, 0 ≤ r2 < d.
+
+Ent˜ao, (q1 − q2)d = r2 − r1. Da´ı, |q1 − q2| · |d| = |r2 − r1|.
+Como 0 ≤ r1 < d e 0 ≤ r2 < d, segue que:
+
+(∗)
+
+0 ≤ r1 < d
+
+−r2 ≤ r1 − r2 < d − r2
+−d < −r2 ≤ r1 − r2 < d − r2
+
+−d < r1 − r2 < d − r2 < d
+
+0 ≤ |r1 − r2| < d.
+
+(∗∗)
+
+De (∗) e (∗∗) resulta que |q1 − q2| · |d| < |d| e, ent˜ao, |q1 − q2| < 1.
+Sendo 0 ≤ |q1 − q2| < 1, como n˜ao existem inteiros x com 0 < x < 1, temos
+
+necessariamente que |q1 − q2| = 0, ou seja, q1 = q2 e, por (∗)’, r1 = r2.
+
+Logo o quociente e o resto em uma divis˜ao euclidiana s˜ao determinados de maneira
+
+´unica.
+(cid:15)
+
+(cid:63) Observa¸c˜ao 2.4:No pr´oximo teorema, estenderemos o resultado acima
+
+para os n´umeros inteiros.
+
+(cid:14)
+
+(cid:12)
+
+(cid:13)
+
+Teorema 2.2 (Algoritmo da Divis˜ao em Z): Se a e b s˜ao n´umeros inteiros
+
+e b (cid:54)= 0, ent˜ao existem inteiros q e r tais que:
+
+a = b · q + r e 0 ≤ r < |b|.
+
+Os inteiros q e r, nas condi¸c˜oes acima, s˜ao ´unicos.
+
+Demonstra¸c˜ao: (EXISTˆENCIA)
+
+1. Caso b > 0:
+
+Se a ≥ 0, pelo teorema 2.1, existem n´umeros naturais q e r satisfazendo:
+
+a = b · q + r e 0 ≤ r < b.
+
+Se a < 0, ent˜ao |a| > 0. Novamente pelo Teorema 2.1, existem naturais q e
+
+r satisfazendo:
+
+|a| = b · q + r e 0 ≤ r < b.
+
+Como |a| = −a, temos ent˜ao:
+
+−a = b · q + r, 0 < r < b
+
+a = b · (−q) + (−r), −b < −r < 0
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+10
+
+Se r = 0, temos a = b · (−q) + 0, sendo −q e 0 o quociente e o resto da
+
+divis˜ao de a por b, respectivamente.
+
+Se r > 0, temos:
+
+a = b · (−q) + (−r)
+
+a = b · (−q) − b + b − r
+
+a = b · (−q − 1) + (b − r).
+
+Como 0 < r < b, temos que −b < −r < 0 e, ent˜ao somando b aos trˆes
+
+membros desta ´ultima igualdade, obtemos 0 < b − r < b.
+
+Fazendo q(cid:48) = −q − 1 e r(cid:48) = b − r, temos:
+
+a = b · q(cid:48) + r(cid:48), com 0 < r(cid:48) < b.
+
+2. Caso b < 0:
+
+Se b < 0, ent˜ao |b| > 0. Pelo caso anterior, temos que existem n´umeros inteiro
+q e r tais que:
+
+a = |b| · q + r, 0 ≤ r < |b|.
+
+Como |b| = −b, temos ent˜ao:
+
+a = −b · q + r, 0 ≤ r < |b|
+
+= b · (−q) + r, 0 ≤ r < |b|
+
+tal que −q e r s˜ao quociente e resto da divis˜ao de a por b.
+
+(UNICIDADE) Para demonstrar a unicidade do quociente q e do resto r, vamos
+
+supor que seja poss´ıvel escrever
+
+a = b · q1 + r1 = b · q2 + r2,
+
+com q1, q2, r1 e r2 inteiros, al´em de 0 ≤ r1 < |b| e 0 ≤ r2 < |b|.
+
+Mostraremos que necessariamente q1 = q2 e r1 = r2.
+A partir da igualdade b · q1 + r1 = b · q2 + r2, obtemos:
+
+0 = b · (q1 − q2) + (r1 − r2), ou, equivalentemente, (r2 − r1) = b · (q1 − q2).
+
+Logo, b divide r2 − r1 e, consequentemente, b divide |r2 − r1|.
+Por outro lado, como 0 ≤ r1 < |b| e 0 ≤ r2 < |b|, segue que −|b| < r2 − r1 < |b| e
+
+(∗)
+
+portanto, |r2 − r1| < |b|.
+
+(∗∗)
+
+De (∗) segue que |r2 − r1| = b · m, para algum m ∈ Z. Logo, m = |r2−r1|
+. A
+partir de (∗∗) conclu´ımos que m resulta em uma fra¸c˜ao pr´opria (numerador menor
+que o denominado), assim m ∈ Z ⇔ |r2 − r1| = 0, ou seja, r2 − r1 = 0 ⇒ r2 = r1 e,
+consequentemente, q1 − q2 = 0. Segue portanto, a unicidade q1 = q2 e r1 = r2.
+
+b
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+11
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.9: Na divis˜ao de 47 por −5, temos:
+
+47 = 9 · 5 + 2
+
+∴ 47 = (−9) · (−5) + 2
+(cid:124)(cid:123)(cid:122)(cid:125)
+resto
+
+Observe que 0 ≤ resto < | − 5|.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.10: Na divis˜ao de −17 por 7, temos:
+
+17 = 2 · 7 + 3
+
+17 = 3 · 7 − 4
+∴ −17 = (−3) · (7) + 4
+(cid:124)(cid:123)(cid:122)(cid:125)
+resto
+
+Note que 0 ≤ resto < |7|.
+
+2.3 M´aximo Divisor Comum
+
+O maior inteiro positivo que divide, simultaneamente, dois ou mais n´umeros
+inteiros ´e chamado m´aximo divisor comum. Nessa se¸c˜ao, ser´a formalizado esse
+conceito bem como algumas proposi¸c˜oes e propriedades que o cercam.
+
+Proposi¸c˜ao 2.5: Se a e b s˜ao n´umeros inteiros, em que b (cid:54)= 0 e a|b, ent˜ao
+
+|a| ≤ |b|.
+
+Demonstra¸c˜ao: Como a|b e b (cid:54)= 0, ent˜ao existe um inteiro c (cid:54)= 0 tal que b = a · c.
+Logo, |c| ≥ 1 e, portanto,
+
+|a| ≤ |a| · |c| = |a · c| = |b|.
+
+Defini¸c˜ao 2.2 (M´aximo Divisor Comum): O M´aximo Divisor Comum de
+dois inteiros a e b (a ou b diferente de zero), denotado por (a,b) ou mdc(a,b), ´e um
+inteiro d satisfazendo as seguintes condi¸c˜oes:
+
+(i) d > 0;
+
+(ii) d|a e d|b (consequentemente d divide |a| e d divide |b|);
+
+(iii) Se k ∈ Z ´e tal que k|a e k|b, ent˜ao k ≤ d.
+
+Em outras palavras, temos que se d = (a,b), ent˜ao d ´e o maior inteiro que divide
+
+a e b.(cid:7)
+
+(cid:6)
+
+(cid:63) Observa¸c˜ao 2.5:(a,b) = (|a|,|b|)
+
+(cid:4)
+
+(cid:5)
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+12
+
+Teorema 2.3: Sejam a,b ∈ Z, com a (cid:54)= 0. Se a|b, ent˜ao (a,b) = |a|.
+
+Demonstra¸c˜ao: Observe que |a| satisfaz as seguintes condi¸c˜oes:
+
+(i) |a| > 0, pois a (cid:54)= 0.
+
+(ii) Claramente |a| divide a. Como por hip´otese a|b, ´e imediato que |a| divide b.
+
+(iii) Suponhamos que existe um inteiro k tal que k|a e k|b. Como k|a segue da
+
+Proposi¸c˜ao 2.5 que |k| ≤ |a|, consequentemente, k ≤ |a|.
+
+Logo, (a,b) = |a|.
+
+Teorema 2.4: Sejam a,b ∈ Z, em que b > 0. Se a = b · q + r, tal que q, r ∈ Z e
+
+0 ≤ r < b, ent˜ao (a,b) = (b,r).
+
+Demonstra¸c˜ao: Seja d = (a,b). Mostraremos que d = (b,r). Temos que:
+
+(i) d > 0, pois d = (a,b).
+
+(ii) Sabemos que d|b e d|a. Ent˜ao, segue da Proposi¸c˜ao 2.4, que d|(a − b · q), ou
+
+seja, d|r. Logo, d|b e d|r.
+
+(iii) Seja k ∈ Z tal que k|r e k|b. Segue da Proposi¸c˜ao 2.4, que k|(b · q + r) ⇒ k|a.
+
+Assim, k|a e k|b. Como d = (a,b), k ≤ d.
+
+Portanto, d = (b,r).
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.11: (M´etodo Pr´atico para Encontrar o M.D.C.) Encontre o
+
+m´aximo divisor comum entre:
+
+(a) 28 e −6.
+
+Solu¸c˜ao: Segue da observa¸c˜ao 2.5 que (28, −6) = (28,6). Como 28 = 6 · 4 + 4
+
+,
+(cid:124)(cid:123)(cid:122)(cid:125)
+resto
+
+segue do Teorema 2.4 que (28,6) = (6,4).
+
+Novamente pelo algoritmo da divis˜ao, temos 6 = 4·1+ 2
+
+. Assim, do Teorema
+
+(cid:124)(cid:123)(cid:122)(cid:125)
+resto
+
+2.4 conclu´ımos que (6,4) = (4,2).
+
+Como 2|4, segue do Teorema 2.3 que (4,2) = 2.
+
+Portanto, (28, −6) = 2.
+
+Podemos esquematizar este racioc´ınio atrav´es do seguinte m´etodo pr´atico:
+
+Fazendo a divis˜ao de 28 por 6, obtemos quociente igual a 4 e resto igual a 4:
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+13
+
+28
+
+4
+6
+4
+
+quocientes
+
+restos
+
+Na sequˆencia, fazemos a divis˜ao de 6 pelo resto obtido:
+
+28
+
+4
+6
+4 (cid:37)
+
+4
+
+quocientes
+
+restos
+
+Na divis˜ao de 6 por quatro, obtemos quociente igual a 1 e resto igual a 2:
+
+28
+
+4
+6
+4
+
+1
+4
+2
+
+quocientes
+
+restos
+
+Na sequˆencia, fazemos a divis˜ao de 4 por 2 (atual resto):
+
+28
+
+4
+6
+4
+
+1
+4
+2 (cid:37)
+
+2
+
+quocientes
+
+restos
+
+Finalmente, fazendo a divis˜ao de 4 por 2, obtemos quociente igual a 2 e resto
+igual a zero.
+
+28
+
+4
+6
+4
+
+1
+4
+2
+
+2 quocientes
+2
+0
+
+restos
+
+Assim, conforme o racioc´ınio descrito anteriormente, conclu´ımos que (28, 6) = 2.
+
+28
+
+4
+6
+4
+
+1
+4
+2
+
+2
+2// (Resposta!)
+0
+
+quocientes
+
+restos
+
+(b) 45 e 12.
+
+Solu¸c˜ao: Fazendo pelo m´etodo pr´atico, obtemos a seguinte tabela:
+
+45
+
+3
+12
+9
+
+1
+9
+3
+
+3
+3// (Resposta!)
+0
+
+quocientes
+
+restos
+
+Portanto (45,12) = 3.
+
+(cid:3)
+
+(cid:3)
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+(c) 45 e 15.
+
+Solu¸c˜ao: Como 15|45, segue do Teorema 2.3 que (45,15) = 15.
+
+(d) 41 e 12.
+
+Solu¸c˜ao: Fazendo pelo m´etodo pr´atico, obtemos a seguinte tabela:
+
+41
+
+3
+12
+5
+
+2
+5
+2
+
+2
+2
+1
+
+2
+1// (Resposta!)
+0
+
+quocientes
+
+restos
+
+Portanto (41,12) = 1.
+
+14
+
+(cid:3)
+
+(cid:3)
+
+Defini¸c˜ao 2.3 (Primos entre si): Dois inteiros a e b s˜ao ditos primos entre
+
+si, se (a,b) = 1.
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 2.6:No Exemplo 2.11 (d), observamos que os n´umeros
+
+41 e 12 s˜ao primos entre si.
+
+(cid:14)
+
+(cid:12)
+
+(cid:13)
+
+Teorema 2.5 (Teorema de Bezout): Para quaisquer inteiros a e b (a (cid:54)= 0
+ou b (cid:54)= 0), existem inteiros x0 e y0 tais que d = a · x0 + b · y0 ´e o m´aximo divisor
+comum de a e b.
+
+Demonstra¸c˜ao:
+
+1. Caso a = 0 e b (cid:54)= 0.
+
+Como |b| ´e o maior inteiro que divide simultaneamente 0 e b, segue que (0,b) = |b|.
+Nesse caso, basta tomar x0 = 0 e y0 = ±1 (dependendo do sinal de b), que a
+express˜ao |b| = a · x0 + b · y0 ´e satisfeita.
+
+2. Caso a (cid:54)= 0 e b = 0. ´E an´alogo ao anterior.
+
+3. Caso a (cid:54)= 0 e b (cid:54)= 0. Levando em conta a ´ultima observa¸c˜ao acima, podemos
+
+nos ater ao caso em que a > 0 e b > 0.
+
+Considere o conjunto
+
+L = {w ∈ Z; w > 0 e w = ax + by, com x,y ∈ Z}
+
+Note que L (cid:54)= ∅, pois a + b ∈ L (x = y = 1).
+
+Pelo Princ´ıpio da Boa Ordena¸c˜ao, L possui um menor elemento, digamos d.
+Assim, d = a · x0 + b · y0, para convenientes x0, y0 ∈ Z. Mostraremos que
+d = (a,b). De fato,
+
+(i) d > 0 por pertencer a L.
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+15
+
+(ii) d|a pois, pelo algoritmo da divis˜ao, temos que
+
+a = q · d + r, com q, r ∈ Z e 0 ≤ r < d.
+
+Se r (cid:54)= 0 (resta-nos apenas a op¸c˜ao r > 0), ent˜ao:
+
+r = a − q · d
+
+= a − q · (a · x0 + b · y0)
+= (1 − q · x0) · a − (y0 · q) · b
+
+Assim, 0 < r < d e r ∈ L, o que contraria o fato de d ∈ L ser m´ınimo. Logo,
+r = 0 e d|a.
+
+De maneira analoga, temos que d|b.
+
+(iii) Se k|a e k|b, para algum k ∈ Z, ent˜ao pela Proposi¸c˜ao 2.4, k divide qualquer
+combina¸c˜ao linear de a e b, em particular, k|(a·x0 +b·y0), ou seja, k|d. Portanto,
+pela Proposi¸c˜ao 2.5, temos que |k| ≤ |d| = d, pois d > 0, consequentemente,
+k ≤ d.
+
+Portanto, d = (a,b).
+
+Proposi¸c˜ao 2.6 (Caracteriza¸c˜ao Alternativa do M.D.C.): Sejam a e
+
+b dois inteiros (a (cid:54)= 0 ou b (cid:54)= 0), ent˜ao:
+
+d = (a,b) ⇔
+
+
+
+
+
+
+(i) d > 0
+(ii) d|a e d|b
+(iii) para todo k ∈ Z, se k|a e k|b, ent˜ao k|d
+
+Demonstra¸c˜ao:
+(⇒) Observe que (i) e (ii) j´a s˜ao propriedades estabelecidas do mdc. Assim, s´o
+
+nos resta mostrar que d = (a,b) satisfaz a condi¸c˜ao (iii).
+
+Pelo Teorema 2.5, d = x0 · a + y0 · b para certos inteiros x0 e y0. Logo, se k ∈ Z ´e
+tal que k|a e k|b, ent˜ao pela Proposi¸c˜ao 2.4, temos que k|(a · x0 + b · y0), ou seja, k|d.
+(⇐) Seja d um inteiro satisfazendo (i), (ii) e (iii). As condi¸c˜oes (i) e (ii) s˜ao
+comuns `a Deﬁni¸c˜ao 2.2 de m´aximo divisor comum. Pela condi¸c˜ao (iii), se k ´e um
+inteiro tal que k|a e k|b, ent˜ao k|d. Como d > 0, segue da Proposi¸c˜ao 2.5 que k ≤ d.
+Portanto, conforme a Deﬁni¸c˜ao 2.2, d = (a,b).
+
+Teorema 2.6: Se a e b s˜ao inteiros primos entre si e a|(b · c), ent˜ao a|c.
+
+Demonstra¸c˜ao: Como a e b s˜ao primos entre si, d = (a,b) = 1. Pelo Teorema 2.5,
+temos que existem x0, y0 ∈ Z, tais que a · x0 + b · y0 = 1. Ou seja, a · c · x0 + b · c · y0 = c.
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+16
+
+Como a|(a · c) e por hip´otese, a|(b · c), segue da Proposi¸c˜ao 2.4 que a|(acx0 + bcy0),
+ou seja, a|c.
+
+2.4 N´umeros Primos
+
+Defini¸c˜ao 2.4 (N´umeros Primos): Um n´umero inteiro p ´e chamado n´umero
+
+primo se as seguintes condi¸c˜oes se veriﬁcam:
+
+(i) p (cid:54)= 0;
+
+(ii) p (cid:54)= ±1;
+
+(iii) Os ´unicos divisores de p s˜ao ±1 e ±p.
+
+Proposi¸c˜ao 2.7: Sejam p e q primos distintos e seja a ∈ Z.
+
+(i) Se q | ap ent˜ao q | a;
+
+(ii) Se p | a e q | a ent˜ao pq | a.
+
+Demonstra¸c˜ao:
+
+(i) Por hip´otese, sabemos que mcd(p,q) = 1. Assim, pelo Teorema 2.5 existem
+
+inteiros x0 e y0 tais que
+
+x0 · p + y0 · q = 1
+
+Multiplicando ambos os lados dessa igualdade por a, temos:
+
+x0 · pa + y0 · qa = a
+
+Note que y0 · qa ´e divis´ıvel por q. Mas x0 · pa tamb´em ´e divis´ıvel por q pois, por
+hip´otese, q divide ap. Assim, x0 · pa + y0 · qa ´e divis´ıvel por q. Portanto, q | a.
+
+(ii) Como p | a, temos que a = pt para algum inteiro t. Como q | a = pt e
+mcd(p,q) = 1, segue de (i) que q | t. Assim t = qk, para algum inteiro k. Logo,
+a = pt = p(qk) = (pq)k e portanto pq | a.
+
+Lema 2.1 (Lema de Euclides): Sejam a, b, p ∈ Z, tal que p ´e primo e p|(a · b),
+ent˜ao p|a ou p|b.
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+17
+
+Demonstra¸c˜ao: Temos que p pode dividir a e b ou pode n˜ao dividir a ou b. No
+primeiro caso, o Lema est´a provado. Suponhamos que p (cid:45) a. Mostraremos que p|b.
+Se p n˜ao divide a, ent˜ao −p tamb´em n˜ao ´e divisor de a. Como os divisores de p s˜ao
+apenas ±1 e ±p, ent˜ao os divisores comuns de p e a s˜ao apenas ±1. Logo, (a,p) = 1
+e, pelo Teorema 2.5, existem x0, y0 ∈ Z, tais que
+
+p · x0 + a · y0 = 1.
+p · b · x0 + a · b · y0 = b.
+
+Como p|(p·b) e por hip´otese p|(a·b), segue da Proposi¸c˜ao 2.4 que p|(p·b·x0+a·b·y0),
+
+ou seja, p|b.
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 2.7:A rec´ıproca do Lema 2.1 tamb´em ´e verdadeira.
+
+Sejam a, b, p ∈ Z tal que p ´e primo, se p|a ou p|b, ent˜ao p|(a · b).
+
+(cid:14)
+
+(cid:12)
+
+(cid:13)
+
+Um generaliza¸c˜ao do Lema de Euclides ´e o seguinte Lema:
+
+Lema 2.2: Sejam p, a1, a2, . . . an ∈ Z, com n ≥ 2 e p primo. Se p|(a1 · a2 · . . . · an),
+ent˜ao p|ai para algum ´ındice i, i ∈ {1, 2, . . . , n}.
+
+Demonstra¸c˜ao: Mostraremos por indu¸c˜ao sobre n. Se n = 2, ent˜ao o resultado
+segue do Lema 2.1. Seja k um inteiro, com k ≥ 2, e suponhamos que o resultado seja
+verdadeiro para n = k, ou seja, suponhamos que se p ´e primo e p divide um produto
+de k n´umeros inteiros, ent˜ao p divide ao menos um dos fatores.
+
+Consideremos agora, um produto de k +1 inteiros a1 ·a2 ·. . .·ak ·ak+1 e suponhamos
+
+que p|(a1 · a2 · . . . · ak · ak+1). Ent˜ao, p|[(a1 · a2 · . . . · ak) · ak+1].
+
+Pelo Lema 2.1, p|(a1 · a2 · . . . · ak) ou p|ak+1. Assim, pela hip´otese de indu¸c˜ao,
+p|aj para algum j ∈ {1, 2, . . . , k} ou p|ak+1 e desta forma, a propriedade enunciada
+tamb´em se aplica ao produto de k + 1 inteiros.
+
+Teorema 2.7 (Teorema Fundamental da Aritm´etica): Todo n´umero
+
+inteiro maior do que 1 pode ser escrito na forma:
+
+n = p1 · p2 · . . . · pk, em que p1 ≤ p2 ≤ . . . ≤ pk
+
+s˜ao n´umeros primos positivos, n˜ao necessariamente distintos. Al´em disso, essa
+express˜ao ´e ´unica.
+
+Demonstra¸c˜ao: Primeiramente provaremos que qualquer inteiro n pode ser escrito
+como acima e a demonstra¸c˜ao ser´a dada por indu¸c˜ao. Se n = 2, ent˜ao n ´e primo e
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+18
+
+j´a se encontra na forma desejada. Suponhamos que todo n´umero inteiro m tal que
+2 ≤ m < n, pode ser escrito como produto de primos. Mostraremos que n tamb´em
+pode ser escrito como produto de primos.
+
+Se n for primo, ent˜ao n˜ao h´a nada a ser demonstrado. Se n n˜ao for um n´umero
+primo, ent˜ao existem divisores d e d(cid:48) de n tais que n = d · d(cid:48), com 1 < d, d(cid:48) < n. Pela
+hip´otese de indu¸c˜ao, segue que d = q1 · q2 · . . . · qr, com q1 ≤ q2 ≤ . . . ≤ qr primos
+positivos e d(cid:48) = q(cid:48)
+Segue que
+
+s primos positivos.
+
+2 ≤ . . . ≤ q(cid:48)
+
+s, com q(cid:48)
+
+2 · . . . · q(cid:48)
+
+1 ≤ q(cid:48)
+
+1 · q(cid:48)
+
+e rearranjando os n´umeros primos q1, q2, . . . ,qr, q(cid:48)
+
+s podemos escrever:
+
+n = d · d(cid:48) = (q1 · q2 · . . . · qr) · (q(cid:48)
+
+2 · . . . · q(cid:48)
+s)
+
+1 · q(cid:48)
+2, . . . , q(cid:48)
+
+1, q(cid:48)
+
+n = p1 · p2 · . . . · pk,
+
+em que k = r + s e p1 ≤ p2 ≤ . . . ≤ pk, como quer´ıamos demonstrar.
+
+Demonstraremos a unicidade da express˜ao n = p1 · . . . · pk, em que p1 ≤ p2 ≤
+. . . ≤ pk s˜ao n´umeros primos positivos. Suponhamos que exista um inteiro positivo
+n, n ≥ 2, que possa ser escrito como produto de fatores primos positivos de duas
+maneiras diferentes, isto ´e, suponhamos
+
+n = p1 · p2 · . . . · pr = q1 · q2 · . . . · qs,
+
+sendo p1, p2, . . . , pr, q1, q2, . . . , qs primos positivos com p1 ≤ p2 ≤ . . . ≤ pr e q1 ≤ q2 ≤
+. . . ≤ qs.
+
+Cancelando os fatores primos que aparecem em ambos os lados da igualdade
+
+p1 · p2 · . . . · pr = q1 · q2 · . . . · qs,
+
+como as duas fatora¸c˜oes de n s˜ao supostamente distintas, chegaremos a uma igualdade:
+
+pi1 · pi2 · . . . · piu = qj1 · qj2 · . . . · qjv
+
+em que u ≥ 1 e v ≥ 1 e cada um dos primos do lado esquerdo ´e diferente de cada um
+dos primos do lado direito, ou seja, os membros `a esquerda e `a direita n˜ao tˆem mais
+fatores primos comuns. Da ´ultima igualdade acima, temos que pi1 divide o produto
+qj1 · qj2 · . . . · qjv . Pelo Lema 2.2, temos que pi1 divide um dos fatores qj1, qj2, . . . , qjv ,
+o que ´e imposs´ıvel, uma vez que cada um destes fatores ´e primo e diferente de pi1.
+Portanto, chegamos em um absurdo e conclu´ımos que a fatora¸c˜ao de n em primos
+
+positivos ´e ´unica.
+
+Corol´ario 2.1: Para cada inteiro n, com n ≥ 2, existem primos positivos
+p1, . . . , ps, com s ≥ 1 e p1 < . . . < ps se s ≥ 2, e inteiros positivos α1, . . . , αs, tais que
+
+n = pα1
+1
+
+· . . . · pαs
+s .
+
+Tal representa¸c˜ao ´e ´unica.
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+19
+
+Demonstra¸c˜ao: Pelo Teorema 2.7, n ´e um produto de fatores primos q1 · . . . · qr,
+com q1 ≤ . . . ≤ qr (r ≥ 1). Agrupando-se os fatores primos repetidos na forma de
+potˆencias de primos, temos a representa¸c˜ao enunciada neste corol´ario. Al´em disso,
+pelo Teorema Fundamental da Aritm´etica, tal representa¸c˜ao ´e ´unica.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.12: Exempliﬁcando o 2.7, temos as seguintes fatora¸c˜oes de
+
+inteiros, com fatores primos escritos em ordem n˜ao decrescente:
+
+(a) 40 = 2 · 2 · 2 · 5 = 23 · 5.
+
+(b) 342 = 2 · 3 · 3 · 19 = 2 · 32 · 19 .
+
+Proposi¸c˜ao 2.8: Seja m um inteiro tal que m = pα1
+1
+
+n , com n ≥ 1 e
+p1, . . . , pn primos positivos com p1 < . . . < pn se n ≥ 2 e α1, . . . , αn inteiros positivos.
+
+· . . . · pαn
+
+Ent˜ao, cada inteiro a divisor de m ´e da forma:
+
+a = pβ1
+
+1 · . . . · pβn
+n ,
+
+com β1, . . . , βn inteiros satisfazendo 0 ≤ βi ≤ αi, ∀i ∈ {1, 2, . . . n}.
+
+Demonstra¸c˜ao: Se a|m, ent˜ao m = a · c, para algum inteiro positivo c. Assim, os
+eventuais fatores primos de a (eventuais, pois podemos ter a = 1) s˜ao fatores primos
+de m, ou seja, o conjunto de fatores primos de a ´e um subconjunto dos fatores primos
+de m.
+
+1 ·. . .·pβn
+
+Assim sendo, a = pβ1
+
+n para certos n´umeros inteiros n˜ao negativos β1, . . . , βn
+(em que teremos βj = 0 se pj n˜ao for fator de a). Claramente, para cada ´ındice j
+teremos βj ≤ αj, pois, como pα1
+n · c, se αj < βj para algum
+1
+´ındice j, teremos uma contradi¸c˜ao em rela¸c˜ao ao Teorema 2.7.
+
+1 · . . . · pβn
+
+n = pβ1
+
+· . . . · pαn
+
+(cid:23)
+
+(cid:22)
+
+(cid:63) Observa¸c˜ao 2.8:A Proposi¸c˜ao 2.8 nos fornece um meio de encontrar
+todos os divisores de um inteiro m, m ≥ 2, a partir da fatora¸c˜ao de m em
+primos positivos.
+
+(cid:20)
+
+(cid:21)
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.13: Os divisores positivos de 120 = 23 · 3 · 5 s˜ao os inteiros
+positivos cujas fatora¸c˜oes possuem somente potˆencias dos primos 2, 3 e 5, com
+expoentes menores que ou iguais a 3, 1 e 1 respectivamente. Os divisores de 120 s˜ao,
+portanto,
+
+3
+2 · 3 = 6
+
+3 · 5 = 15
+1
+2
+2 · 3 · 5 = 30
+22 = 4 22 · 3 = 12 22 · 5 = 20 22 · 3 · 5 = 60
+23 = 8 23 · 3 = 24 23 · 5 = 40 23 · 3 · 5 = 120
+
+5
+2 · 5 = 10
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+20
+
+Proposi¸c˜ao 2.9: Sejam a e b dois inteiros positivos. Ent˜ao existem primos
+positivos p1, . . . , pn, com n ≥ 1, sendo p1 < . . . < pn se n ≥ 2 e inteiros n˜ao negativos
+α1, . . . , αn, β1, . . . , βn, tais que:
+
+a = pα1
+1
+
+· . . . · pαn
+
+n e b = pβ1
+
+1 · . . . · pβn
+n .
+
+A partir destas representa¸c˜oes de a e b, teremos:
+
+(a,b) = pγ1
+
+1 · . . . · pγn
+n ,
+
+sendo para cada ´ındice i, γi = min{αi, βi}.
+
+Demonstra¸c˜ao: Para que um produto de fatores primos comuns seja um divisor
+comum de a e b, temos pela Proposi¸c˜ao 2.8 que nenhum expoente γi de pi poder´a
+superar nem αi e nem βi. Como estamos interessados no maior dos divisores positivos,
+basta tomarmos γi = min{αi, βi}.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.14: Calcular mdc(700, 720), com base nas decomposi¸c˜oes de
+
+700 e 720 em fatores primos.
+
+Solu¸c˜ao: Fatorando-se 720 e 700 em potˆencias de primos, obtemos:
+
+Podemos ent˜ao, escrever:
+
+720 = 24 · 32 · 5
+700 = 22 · 52 · 7
+
+720 = 24 · 32 · 51 · 70
+700 = 22 · 30 · 52 · 71
+
+Pela Proposi¸c˜ao 2.9, mdc(a,b) = 22 · 30 · 51 · 70 = 22 · 5 = 20.
+
+(cid:3)
+
+Defini¸c˜ao 2.5 (M´ınimo M´ultiplo Comum): O M´ınimo M´ultiplo Comum
+de dois inteiros a e b ´e o menor inteiro positivo que ´e divis´ıvel por a e b. Vamos
+denot´a-lo por mmc(a,b) ou por [a,b].
+
+Proposi¸c˜ao 2.10: Sejam a e b dois inteiros positivos. Ent˜ao existem primos
+positivos p1, . . . , pn, com n ≥ 1, sendo p1 < . . . < pn se n ≥ 2 e inteiros n˜ao negativos
+α1, . . . , αn, β1, . . . , βn, tais que:
+
+a = pα1
+1
+
+· . . . · pαn
+
+n e b = pβ1
+
+1 · . . . · pβn
+n .
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+21
+
+A partir destas representa¸c˜oes de a e b, teremos:
+
+[a,b] = pδ1
+
+1 · . . . · pδn
+n ,
+
+sendo para cada ´ındice i, δi = max{αi, βi}.
+
+Demonstra¸c˜ao: Da deﬁni¸c˜ao de m´ınimo m´ultiplo comum nenhum fator primo
+pi deste m´ınimo poder´a ter um expoente que seja inferior nem a αi e nem a βi. Se
+tomarmos o maior destes dois para expoente de pi teremos, n˜ao apenas um m´ultiplo
+comum, mas o menor poss´ıvel dentre todos eles. O que conclui a demonstra¸c˜ao.
+
+(cid:46) (cid:46) (cid:46) Exemplo 2.15: Calcular mmc(700, 720), com base nas decomposi¸c˜oes de
+
+700 e 720 em fatores primos.
+
+Solu¸c˜ao: Conforme vimos,
+
+720 = 24 · 32 · 51 · 70
+700 = 22 · 30 · 52 · 71
+
+Pela Proposi¸c˜ao 2.10, mmc(720,700) = 24 · 32 · 52 · 71 = 25200
+
+(cid:3)
+
+Teorema 2.8: Se a e b s˜ao dois inteiros positivos, ent˜ao
+
+mmc(a,b) · mdc(a,b) = a · b.
+
+Demonstra¸c˜ao: Sejam a e b inteiros positivos, e os consideremos representados
+
+como na Proposi¸c˜ao 2.9, isto ´e,
+
+a = pα1
+1
+
+· . . . · pαn
+
+n e b = pβ1
+
+1 · . . . · pβn
+n ,
+
+sendo p1, . . . , pn primos positivos e α1, . . . , αn, β1, . . . , βn inteiros n˜ao negativos.
+
+Pelas Proposi¸c˜oes 2.9 e 2.10, temos:
+
+mdc(a,b) = pγ1
+mmc(a,b) = pδ1
+
+1 · . . . · pγn
+n
+1 · . . . · pδn
+n
+
+sendo para cada ´ındice i, γi = min{αi, βi} e δi = max{αi, βi}.
+
+Como para cada ´ındice i, γi + δi = min{αi, βi} + max{αi, βi} = αi + βi, ent˜ao:
+
+mdc(a,b) · mmc(a,b) = (pγ1
+
+1 · . . . · pδn
+n )
+
+1 · . . . · pγn
+
+n )(pδ1
+· . . . · pγn+δn
+n
+· . . . · pαn+βn
+n
+n )(pβ1
+
+· . . . · pαn
+
+= pγ1+δ1
+1
+= pα1+β1
+1
+= (pα1
+1
+= a · b
+
+1 · . . . · pβn
+n )
+
+Cap´ıtulo 2. Conceitos Preliminares
+
+22
+
+Teorema 2.9 (Euclides): Existem inﬁnitos n´umeros primos.
+
+Demonstra¸c˜ao: Suponhamos que exista uma quantidade ﬁnita de n´umeros primos.
+Seja p1, p2, . . . , pn a rela¸c˜ao de todos os primos. Consideremos o n´umero R =
+p1 · . . . · pn + 1. ´E claro que R n˜ao ´e divis´ıvel por nenhum dos pi de nossa rela¸c˜ao,
+pois caso contr´ario, 1 = R − p1 · . . . · pn seria divis´ıvel por pi, o que ´e um absurdo.
+Al´em disso, temos que R ´e maior que qualquer pi. Mas pelo Teorema Fundamental
+da Aritm´etica, ou R ´e primo ou possui algum fator primo e isto implica na existˆencia
+de um primo que n˜ao pertence `a nossa rela¸c˜ao original. Portanto a quantidade de
+n´umeros primos n˜ao pode ser ﬁnita.
+
+Rela¸c˜ao de Equivalˆencia
+
+3
+
+O conte´udo presente neste cap´ıtulo ´e baseado em Teoria Elementar dos n´umeros de
+Landau, 2002, N´umeros primos: mist´erios e recordes de Ribemboim, 2001 e tamb´em
+em Uma introdu¸c˜ao `a teoria dos n´umeros de Santos, 2007. Algumas proposi¸c˜oes e
+deﬁni¸c˜oes podem ser encontradas em Aritm´etica, Hefez, 2014.
+
+3.1 Rela¸c˜ao
+
+Defini¸c˜ao 3.1 (Produto Cartesiano): Dados dois conjuntos n˜ao vazios
+A e B, chamamos de produto cartesiano de A por B o conjunto de todos os pares
+ordenados (a,b), tais que a ∈ A e b ∈ B.
+
+Nota¸c˜ao: A × B = {(a,b); a ∈ A e b ∈ B}.
+
+(cid:7)
+
+(cid:6)
+
+(cid:63) Observa¸c˜ao 3.1:Em geral, A × B (cid:54)= B × A.
+
+(cid:4)
+
+(cid:5)
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.1: Considere os conjuntos A = {1,2} e B = {1,2,3}. Temos
+
+que:
+
+A × B = {(1,1), (1,2), (1,3), (2,1), (2,2), (2,3)}
+
+B × A = {(1,1), (1,2), (2,1), (2,2), (3,1), (3,2)}
+
+Observe que A × B (cid:54)= B × A.
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 3.2:Se A ou B for o conjunto vazio, ent˜ao deﬁnimos
+
+A × B = ∅.
+
+(cid:14)
+
+(cid:12)
+
+(cid:13)
+
+Defini¸c˜ao 3.2 (Rela¸c˜ao): Dados dois conjuntos A e B, deﬁnimos uma rela¸c˜ao
+R de A em B, como sendo um subconjunto de A × B. Dizemos que a ∈ A se relaciona
+com b ∈ B e denotamos por aRb se (a, b) ∈ R. Caso contr´ario, escrevemos a (cid:54)Rb.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.2: Considere os conjuntos A = {1,2,3} e B = {a,b}. Temos
+
+23
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+24
+
+que:
+
+A × B = {(1,a), (1,b), (2,a), (2,b), (3,a), (3,b)}
+
+A seguir, listamos algumas das poss´ıveis rela¸c˜oes entre A e B:
+
+R1 = {(1,a), (1,b)}
+R2 = {(1,a), (2,b), (2,a)}
+R3 = ∅
+R4 = A × B
+R5 = {(3,b)}
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 3.3:Neste exemplo, observamos que: 1R1b, 1R1a, 2R2b,
+
+3 (cid:54)R2a.
+
+(cid:14)
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 3.4:Quando A = B e R ´e uma rela¸c˜ao de A em B,
+
+dizemos que R ´e uma rela¸c˜ao sobre A, ou que R ´e uma rela¸c˜ao em A.
+
+(cid:14)
+
+(cid:12)
+
+(cid:13)
+
+(cid:12)
+
+(cid:13)
+
+3.1.1 Propriedades de uma rela¸c˜ao R em A
+
+Daremos a seguir as principais propriedades que uma rela¸c˜ao R sobre A pode
+
+veriﬁcar.
+
+todo
+todo elemento de A se relaciona
+(1) Reﬂexiva: Dizemos que R ´e reﬂexiva, quando todo
+
+consigo mesmo, ou seja, ∀ x ∈ A, xRx, isto ´e, (x,x) ∈ R.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.3: (a) A rela¸c˜ao R = {(a,a), (b,b), (c,c), (a,b), (b,c)} sobre
+
+A = {a, b, c} ´e reﬂexiva, pois aRa, bRb e cRc.
+
+(b) Seja R uma rela¸c˜ao deﬁnida no conjunto Z, dos n´umeros inteiros, por
+
+xRy ⇔ x = y.
+Temos que R ´e reﬂexiva, pois x = x, ∀x ∈ Z.
+
+(c) Seja R uma rela¸c˜ao deﬁnida sobre o conjunto das retas do espa¸co euclidi-
+
+ano, dada por r R s ⇔ r (cid:107) s.
+
+R ´e reﬂexiva, pois r (cid:107) r, qualquer que seja a reta.
+
+(d) Considere a rela¸c˜ao R = {(a,a), (a,b), (b,a), (b,b), (b,c)} sobre A = {a,b,c}.
+
+R n˜ao ´e reﬂexiva, pois c (cid:54)Rc
+
+(2) Sim´etrica: Dizemos que R ´e sim´etrica, se dados x,y ∈ A e xRy, ent˜ao yRx.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.4: (a) A rela¸c˜ao R = {(a,a), (a,b), (b,a), (c,c)} sobre
+
+A = {a, b, c} ´e claramente sim´etrica.
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+25
+
+(b) Seja R uma rela¸c˜ao deﬁnida sobre o conjunto das retas do espa¸co euclidi-
+
+ano, dada por r R s ⇔ r ⊥ s.
+
+R ´e sim´etrica, pois se r ⊥ s, ent˜ao s ⊥ r.
+
+(c) Considere a rela¸c˜ao R = {(a,a), (a,b), (b,b), (c,c)} sobre A = {a,b,c}.
+
+R n˜ao ´e sim´etrica, pois aRb e b (cid:54)Ra.
+
+(3) Transitiva: Dizemos que R ´e transitiva se, dados x, y, z ∈ A, tais que xRy e
+
+yRz, ent˜ao xRz.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.5: (a) A rela¸c˜ao R = {(a,b), (b,b), (b,c), (a,c), (c,c)} sobre
+
+A = {a, b, c} ´e transitiva.
+
+(b) A rela¸c˜ao R deﬁnida sobre o conjunto dos triˆangulos do espa¸co, dada por:
+xRy ⇔ x ∼ y (semelhan¸ca), ´e transitiva. Pois, sendo x, y e z triˆangulos
+quaisquer, tem-se: x ∼ y e y ∼ z ⇒ x ∼ z.
+
+(c) A rela¸c˜ao R = {(a,b), (b,a)} sobre A = {a,b} n˜ao ´e transitiva, pois
+
+aRb, bRa e a (cid:54)Ra.
+
+(4) Antissim´etrica: Dizemos que R ´e antissim´etrica se, dados x, y ∈ A, tais que
+
+xRy e yRx, ent˜ao x = y.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.6: (a) A rela¸c˜ao R sobre o conjunto dos n´umeros reais
+
+R, dada por
+
+xRy ⇔ x ≤ y
+
+´e antissim´etrica, pois sendo x e y n´umeros reais quaisquer, se x ≤ y e
+y ≤ x, ent˜ao x = y.
+
+(b) A rela¸c˜ao R = {(a,a), (b,b), (c,c), (b,c), (c,b)} sobre A = {a,b, c} n˜ao ´e
+
+antissim´etrica, pois bRc, cRb mas b (cid:54)= c.
+
+Defini¸c˜ao 3.3 (Rela¸c˜ao de Equivalˆencia): Uma rela¸c˜ao R sobre um
+conjunto A (cid:54)= ∅ recebe o nome de rela¸c˜ao de equivalˆencia sobre A se, e somente se, R
+´e reﬂexiva, sim´etrica e transitiva. Ou seja, R deve cumprir as seguintes propriedades:
+
+(i) Se x ∈ A, ent˜ao xRx;
+
+(ii) Se x, y ∈ A e xRy, ent˜ao yRx;
+
+(iii) Se x, y, z ∈ A, xRy e yRz, ent˜ao xRz.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.7:
+
+1. A rela¸c˜ao R = {(a,a), (b,b), (c,c), (a,b), (b,a)}, sobre
+
+A = {a,b, c}, ´e uma rela¸c˜ao de equivalˆencia.
+
+2. A rela¸c˜ao de paralelismo deﬁnida para as retas de um espa¸co euclidiano ´e uma
+
+rela¸c˜ao de equivalˆencia, pois sendo r, s e t retas, tem-se:
+
+(i) r (cid:107) r;
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+26
+
+(ii) Se r (cid:107) s, ent˜ao s (cid:107) r;
+
+(iii) Se r (cid:107) s e s (cid:107) t, ent˜ao r (cid:107) t.
+
+3. A rela¸c˜ao ”igual a”no conjunto dos R ´e uma rela¸c˜ao de equivalˆencia, pois se
+
+x, y, z ∈ R, tem-se:
+
+(i) x = x;
+
+(ii) Se x = y, ent˜ao y = x;
+
+(iii) Se x = y e y = z, ent˜ao x = z.
+
+3.2 Congruˆencia M´odulo m em Z
+
+Defini¸c˜ao 3.4 (Congruˆencia m´odulo m em Z): Dados trˆes inteiros a, b e
+a ´e congruente a b m´odulo m
+m, dizemos que a ´e congruente a b m´odulo m
+a ´e congruente a b m´odulo m e denotamos por a ≡ b (mod m) ou
+por a ≡m b , se m divide (a − b). Se a n˜ao for congruente a b, m´odulo m, escrevemos
+a (cid:54)≡ b (mod m), ou ainda, a (cid:54)≡m b .
+
+(cid:39)
+
+(cid:63) Observa¸c˜ao 3.5:Note que
+
+a ≡m b ⇔ m|(a − b)
+
+⇔ a − b = λ · m, para algum λ ∈ Z
+⇔ a = b + λ · m, para algum λ ∈ Z
+
+(cid:38)
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.8:
+
+(a) 22 ≡ 4 ( mod 9), pois 9|(22 − 4).
+
+(cid:36)
+
+(cid:37)
+
+(b) 3 ≡ −6 ( mod 9), pois 9|(3 + 6).
+
+(c) 200 ≡ 2 ( mod 9), pois 9|(200 − 2).
+
+(d) 13 (cid:54)≡ 5 ( mod 9), pois 9 (cid:54) |(13 − 5).
+
+Teorema 3.1: Sendo m um inteiro n˜ao nulo, a rela¸c˜ao de congruˆencia m´odulo
+
+m deﬁnida em Z ´e uma rela¸c˜ao de equivalˆencia em Z, ou seja, satisfaz:
+
+(i) Para todo a ∈ Z, temos que a ≡ a (mod m).
+
+(ii) Para todo a, b ∈ Z, se a ≡ b (mod m), ent˜ao b ≡ a (mod m) .
+
+(iii) Para todo a, b, c ∈ Z, se a ≡ b (mod m) e b ≡ c (mod m), ent˜ao a ≡ c (mod m).
+
+Demonstra¸c˜ao: Para cada a, b, c ∈ Z, temos:
+
+(i) Como m|0, ent˜ao m|(a − a), ou seja, a ≡ a (mod m).
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+27
+
+(ii) Se a ≡ b (mod m), ent˜ao m|(a − b), consequentemente, m| − (a − b), ou seja,
+
+m|(b − a). Portanto, b ≡ a (mod m).
+
+(iii) Se a ≡ b (mod m) e b ≡ c (mod m), ent˜ao m|(a − b) e m|(b − c). Ent˜ao
+segue da Proposi¸c˜ao 2.4 que m|[(a − b) + (b − c)], isto ´e, m|(a − c). Portanto,
+a ≡ c (mod m).
+
+Teorema 3.2: Seja m um inteiro n˜ao nulo ﬁxado. Dados a,b,c ∈ Z e n ∈ N,
+
+temos:
+
+(i) a ≡ b (mod m) ⇔ (a + c) ≡ (b + c) (mod m).
+
+(ii)
+
+a ≡ b (mod m)
+c ≡ d (mod m)
+
+(cid:27)
+
+⇒ (a + c) ≡ (b + d) (mod m)
+
+(iii) a ≡ b (mod m) ⇒ a · c ≡ b · c (mod m)
+
+(iv)
+
+a ≡ b (mod m)
+c ≡ d (mod m)
+
+(cid:27)
+
+⇒ (a · c) ≡ (b · d) (mod m)
+
+(v) a ≡ b (mod m) ⇒ an ≡ bn (mod m)
+
+Demonstra¸c˜ao:
+
+(i)
+
+(ii)
+
+a ≡ b (mod m) ⇔ m|(a − b)
+
+⇔ m|[(a + c) − (b + c)]
+
+⇔ (a + c) ≡ (b + c) (mod m)
+
+a ≡ b (mod m)
+c ≡ d (mod m)
+
+(cid:27)
+
+⇒ m|(a − b) e m|(c − d)
+
+Logo, segue da Proposi¸c˜ao 2.4, que m|[(a−b)+(c−d)], ou seja, m|[(a+c)−(b+d)].
+Portanto, (a + c) ≡ (b + d) (mod m).
+
+(iii) Se a ≡ b (mod m), ent˜ao m|(a − b), consequentemente, m|(a − b) · c e desta
+
+forma, m|(ac − bc). Portanto, ac ≡ bc (mod m).
+
+(iv) Se
+
+(cid:26) a ≡ b (mod m)
+c ≡ d (mod m)
+
+, ent˜ao usando (iii), podemos multiplicar os termos da
+
+primeira express˜ao por c e os da segunda por b, obtendo:
+
+(cid:26) ac ≡ bc (mod m)
+bc ≡ bd (mod m)
+
+⇒ ac ≡ bd (mod m), por transitividade.
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+28
+
+(v) A demonstra¸c˜ao ser´a feita por indu¸c˜ao sobre n.
+
+Se n = 0, ent˜ao o resultado ´e claramente v´alido.
+
+Agora, suponha que o resultado seja v´alido para n = k, ou seja, ak ≡
+bk (mod m).
+
+Assim, temos que
+
+(cid:26) ak ≡ bk (mod m)
+
+a ≡ b (mod m) (hip´otese inicial)
+
+.
+
+Assim, usando (iv), obtemos que ak+1 ≡ bk+1 (mod m).
+
+Portanto, pelo princ´ıpio da indu¸c˜ao ﬁnita, temos que o resultado ´e v´alido para
+todo n ∈ N.
+
+(cid:39)
+
+(cid:63) Observa¸c˜ao 3.6:A re´ıproca do item (iii) ´e falsa. Por exemplo,
+
+(cid:36)
+
+14 ≡ 8 (mod 6)
+
+7 · 2 ≡ 4 · 2 (mod 6)
+
+Note que n˜ao podemos cancelar o fator comum 2, pois 7 (cid:54)≡ 4 (mod 6).
+
+(cid:38)
+
+(cid:37)
+
+Teorema 3.3: Sejam a, b, c e m inteiros, m ≥ 2. Se a · c ≡ b · c (mod m), sendo
+
+m e c primos entre si, ent˜ao a ≡ b (mod m).
+
+Demonstra¸c˜ao: Se a · c ≡ b · c (mod m), ent˜ao m|(ac − bc).
+Logo, m|(a − b) · c. Como mdc(m,c) = 1, segue do Teorema 2.6, que m|(a − b) e,
+
+ent˜ao a ≡ b (mod m).
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.9: Como 42 ≡ 7 (mod 5) e mdc(5,7) = 1, podemos concluir
+
+que:
+
+6 · 7 ≡ 1 · 7 (mod 5) ⇒ 6 ≡ 1 (mod 5)
+
+Teorema 3.4 (Congruˆencia m´odulo m e o resto da divis˜ao por m):
+
+Sejam a, b e m inteiros, com m ≥ 2. Ent˜ao:
+
+(i) Se r ´e o resto da divis˜ao de a por m, ent˜ao a ≡ r (mod m).
+
+(ii) Se a ≡ s (mod m) e 0 ≤ s < m, ent˜ao s ´e o resto da divis˜ao de a por m.
+
+(iii) a ≡ b (mod m) se, e somente se, os restos das divis˜oes de a e b por m s˜ao iguais.
+
+Demonstra¸c˜ao:
+
+(1) Pelo algoritmo da divis˜ao, segue que existem inteiros q e r, tais que a = m · q + r,
+com 0 ≤ r < m. Desta forma, a − r = m · q, ou seja, m|(a − r). Portanto,
+a ≡ r (mod m).
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+29
+
+(2) Sendo a ≡ s (mod m), temos que a − s = m · q, para algum q ∈ Z.
+
+Da´ı, a = m · q + s, com q e s inteiros e 0 ≤ s < m (por hip´otese).
+
+Pelo Teorema 2.2, s ´e o resto da divis˜ao de a por m, j´a que o resto e o quociente
+dessa divis˜ao s˜ao ´unicos.
+
+(3) (⇒) Seja r o resto da divis˜ao de a por m. Pelo item (1), temos que a ≡
+r (mod m). Como a ≡ b (mod m), usando a propriedade transitiva da rela¸c˜ao
+de equivalˆencia, temos que b ≡ r (mod m). Como 0 ≤ r < m, pelo item (2),
+segue que r ´e o resto da divis˜ao de b por m.
+
+(⇐) Seja r o resto das divis˜oes de a e b por m. Pelo item (1) anterior, temos
+que a ≡ r (mod m) e b ≡ r (mod m). Novamente pela transitividade, temos
+que a ≡ b (mod m).
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.10 (Determinando restos via congruˆencias):
+
+.
+
+(a) Calcule o resto da divis˜ao de 2100 por 7.
+
+Solu¸c˜ao:
+
+8 ≡ 1 (mod 7)
+23 ≡ 1 (mod 7)
+(23)33 ≡ 133 (mod 7)
+299 ≡ 1 (mod 7)
+299 · 2 ≡ 1 · 2 (mod 7)
+2100 ≡ 2 (mod 7)
+
+Portanto, o resto da divis˜ao de 2100 por 7 ´e 2.
+
+(b) Mostre que 22n+1 + 1 ´e divis´ıvel por 3, para todo n ∈ N.
+
+Solu¸c˜ao:
+
+4 ≡ 1 (mod 3)
+4n ≡ 1n (mod 3), ∀ n ∈ N
+22n ≡ 1 (mod 3)
+22n · 2 ≡ 1 · 2 (mod 3)
+22n+1 ≡ 2 (mod 3)
+22n+1 + 1 ≡ 2 + 1 (mod 3)
+22n+1 + 1 ≡ 3 (mod 3)
+
+Agora, sabemos que 3 ≡ 0 (mod 3), e portanto, 22n+1 + 1 ≡ 0 (mod 3). Ou
+seja, 3|(22n+1 + 1), ∀ n ∈ N.
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+30
+
+Defini¸c˜ao 3.5 (Fun¸c˜ao Fi de Euler): Designaremos por φ(n) o n´umero
+de elementos de um sistema reduzido de res´ıduos m´odulo n > 1, que corresponde
+`a quantidade de n´umeros naturais entre 1 e n − 1 que s˜ao primos com n. Pondo
+φ(1) = 1, deﬁnimos a fun¸c˜ao
+
+chamada Fun¸c˜ao Fi de Euler.
+
+φ : N → N
+
+Proposi¸c˜ao 3.1: Seja um natural n onde n ≥ 2. Ent˜ao φ(n) = n − 1 se, e
+
+somente se, n ´e primo.
+
+Demonstra¸c˜ao: De fato, n ´e primo se, e somente se, 1, 2, · · · , n − 1 formam um
+
+sistema reduzido de res´ıduos m´odulo n, o que equivale a dizer que φ(n) = n − 1.
+
+Proposi¸c˜ao 3.2: Sejam m e n inteiros positivos tais que mdc(m,n) = 1. ent˜ao
+
+φ(mn) = φ(m) · φ(n)
+
+Demonstra¸c˜ao: O resultado ´e trivial se m = 1 ou n = 1. Portanto, vamos supor
+que m > 1 e n > 1. Considere a seguinte tabela formada pelos n´umeros naturais de
+1 a m · n:
+
+1
+n + 1
+...
+
+2
+n + 2
+...
+
+· · ·
+· · ·
+
+k
+n + k
+...
+
+· · ·
+· · ·
+
+n
+2n
+...
+
+(m − 1)n + 1 (m − 1)n + 2 · · ·
+
+(m − 1)n + k · · · m · n
+
+Como mdc(m,n) = 1, tem-se que mdc(t,m · n) = 1 se, e somente se, mdc(t,m) =
+mdc(t,n) = 1. Para calcular φ(mn) devemos contar quantos dos inteiros na tabela
+acima s˜ao simultaneamente primos com m e n.
+
+O Teorema 3.2, intem (i) implica que se o primeiro elemento da coluna n˜ao for
+primo com n, ent˜ao todos os elementos da coluna n˜ao s˜ao primos com n. Portanto,
+os elementos primos com n est˜ao necessariamente nas colunas restantes que s˜ao
+em n´umero φ(n), cujos elementos s˜ao primos com n. Vejamos agora quais s˜ao os
+elementos primos com m em cada uma das colunas.
+
+Como mdc(m,n) = 1, a sequˆencia
+
+k, n + k, · · · , (m − 1)n + k
+
+forma um sistema completo de res´ıduos m´odulo m e, portanto, φ(m) desses elementos
+s˜ao primos com m. Logo, o n´umero de elementos simultaneamente primos com m e
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+n ´e φ(m) · φ(n).
+
+(cid:35)
+
+(cid:63) Observa¸c˜ao 3.7:Das proposi¸c˜oes 3.1 e 3.2, conclu´ımos que
+
+φ(m · n) = (m − 1) · (n − 1)
+
+se m e n s˜ao primos distintos.
+
+(cid:34)
+
+31
+
+(cid:32)
+
+(cid:33)
+
+Defini¸c˜ao 3.6: Consideremos dois n´umeros naturais p e i com p ≥ i. Chamamos
+
+de n´umero binomial p sobre i e indicamos por
+
+o n´umero dado por:
+
+(cid:19)
+
+(cid:18) p
+i
+
+(cid:19)
+
+(cid:18) p
+i
+
+=
+
+p!
+i!(p − i)!
+
+Lema 3.1: Seja p um n´umero primo. Os n´umeros binomiais
+
+0 < i < p, s˜ao todos divis´ıveis por p.
+
+(cid:18) p
+i
+
+(cid:19)
+
+, em que
+
+Demonstra¸c˜ao: Para i = 1 o resultado ´e trivial. Podemos, ent˜ao, supor 1 <
+i < p. Nesse caso, i! | p(p − 1) · · · (p − i + 1). Como mdc(i!,p) = 1, decorre que
+i! | (p − 1) · · · (p − i + 1) e o resultado se segue, pois
+
+(cid:19)
+
+(cid:18) p
+i
+
+= p
+
+(p − 1) · · · (p − i + 1)
+i!
+
+Teorema 3.5 (Pequeno Teorema de Fermat): Dado um n´umero primo p,
+
+tem-se que p divide o n´umero ap − a, para todo a ∈ Z.
+
+Demonstra¸c˜ao: Se p = 2, temos que a2 − a = a(a − 1) ´e par e, assim, o resultado
+segue. Suponhamos p ´ımpar. Nesse caso, basta mostrar o resultado para a ≥ 0 pois
+se a < 0, −a > 0 e (−a)p − (−a) = −(ap − a). Provaremos o resultado por indu¸c˜ao
+sobre a.
+
+O resultado vale claramente para a = 0, pois p | 0.
+Suponha o resultado v´alido para a. Pela f´ormula do Binˆomio de Newton,
+
+(a + 1)p − (a + 1) = ap − a +
+
+(cid:19)
+
+(cid:18) p
+1
+
+ap−1 +
+
+(cid:19)
+
+(cid:18) p
+2
+
+ap−2 + · · · +
+
+(cid:18) p
+
+p − 1
+
+(cid:19)
+
+a
+
+.
+
+Pelo Lema 3.1 e pela hip´otese de indu¸c˜ao, o segundo membro da igualdade acima
+
+´e divis´ıvel por p e segue o resultado.
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+32
+
+3.3 Classe de Equivalˆencia e Conjunto Quociente
+Defini¸c˜ao 3.7: Seja R uma rela¸c˜ao de equivalˆencia sobre A. Dado a ∈
+A, chama-se classe de equivalˆencia determinada por a, m´odulo R, o seguinte
+subconjunto de A:
+
+a = {x ∈ A; xRa}.
+
+Defini¸c˜ao 3.8: O conjunto das classes de equivalˆencia m´odulo R ser´a indicado
+
+por A/R e chamado de conjunto quociente de A por R.
+
+(cid:46)(cid:46)(cid:46) Exemplo 3.11: Considere a rela¸c˜ao de equivalˆencia R = {(a,a), (b,b), (c,c), (a,b), (b,a)}
+
+sobre A = {a, b, c}.
+
+Neste caso, temos:
+
+a = {a, b}
+
+b = {b, a} = a
+
+c = {c}
+
+A/R = {a, c} = {{a, b}, {c}}
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.12: Sejam m ∈ Z \ {0} e R a rela¸c˜ao de congruˆencia m´odulo
+
+m deﬁnida em Z. Temos que:
+
+0 = {k ∈ Z; k ≡ 0 (mod m)} = {inteiros com resto 0 na divis˜ao por m}
+1 = {k ∈ Z; k ≡ 1 (mod m)} = {inteiros com resto 1 na divis˜ao por m}
+
+...
+
+m − 1 = {k ∈ Z; k ≡ m − 1 (mod m)} = {inteiros com resto m-1 na divis˜ao por m}
+
+Observe que qualquer n´umero inteiro possui resto r na divis˜ao por m com 0 ≤ r ≤
+m − 1, assim, segue do Teorema 3.4 que qualquer n´umero inteiro pertence a alguma
+das classes de equivalˆencia listadas acima.
+
+Defini¸c˜ao 3.9: Seja R a rela¸c˜ao de equivalˆencia m´odulo m deﬁnida em Z.
+
+Assim:
+
+Z/R = {0, 1, 2, · · · , m − 1} = Zm
+
+Defini¸c˜ao 3.10 (Parti¸c˜ao): Seja A um conjunto n˜ao vazio. Diz-se que uma
+fam´ılia P de subconjuntos n˜ao vazios de A ´e uma parti¸c˜ao de A se, e somente se,
+
+(a) dois membros quaisquer de P ou s˜ao iguais, ou s˜ao disjuntos;
+
+(b) a uni˜ao dos membros de P ´e igual ao conjunto A.
+
+Cap´ıtulo 3. Rela¸c˜ao de Equivalˆencia
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 3.8:Podemos denominar conjunto pelas palavras cole-
+
+¸c˜ao ou fam´ılia .
+
+(cid:14)
+
+33
+
+(cid:12)
+
+(cid:13)
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.13: A fam´ılia de subconjuntos P = {{1}, {2, 3}, {4}} ´e uma
+
+parti¸c˜ao do conjunto E = {1, 2, 3, 4}.
+
+De fato, cada um dos trˆes conjuntos que comp˜oem P s˜ao n˜ao vazios, dois a dois
+
+disjuntos e a uni˜ao deles ´e o conjunto E.
+
+(cid:46) (cid:46) (cid:46) Exemplo 3.14: Sejam P = {x ∈ Z; x ´e par} e I = {x ∈ Z; x ´e ´ımpar}
+
+subconjuntos de Z.
+
+Ent˜ao P = {P, I} ´e uma parti¸c˜ao de Z, pois P e I s˜ao n˜ao vazios, P ∩ I = ∅ e
+
+P ∪ I = Z.
+
+Teorema 3.6: Se R ´e uma rela¸c˜ao de equivalˆencia sobre um conjunto A, ent˜ao
+
+o conjunto quociente A/R ´e uma parti¸c˜ao do conjunto A.
+
+Demonstra¸c˜ao: Primeiramente, mostraremos que todas as classes de equivalˆencia
+que comp˜oem A/R s˜ao diferentes do conjunto vazio. Seja a ∈ A/R. Como R ´e uma
+rela¸c˜ao de equivalˆencia, temos que R ´e reﬂexiva, assim, aRa, ou seja, a ∈ a, portanto
+a (cid:54)= ∅, para todo a ∈ A/R.
+
+Agora, mostraremos que se a, b ∈ A/R s˜ao tais que a ∩ b (cid:54)= ∅, ent˜ao a = b. Seja
+y ∈ a ∩ b. Ent˜ao y ∈ a e y ∈ b, ou seja, yRa e yRb. Usando as propriedades sim´etrica
+e transitiva, conclu´ımos que aRb. Logo, a ∈ b e dessa forma, a ⊂ b. Por outro lado,
+como R ´e reﬂexiva, segue que bRa e assim, b ∈ a, de forma que b ⊂ a.
+
+Portanto, a = b e assim, mostramos que classes distintas tˆem interse¸c˜ao vazia.
+Finalmente, mostraremos que (cid:83)
+Para cada a ∈ A, temos que a ⊂ A, portanto (cid:83)
+Por outro lado, sendo x um elemento qualquer de A, ent˜ao xRx. Da´ı, x ∈ x e,
+
+a∈A a ⊂ A.
+
+a∈A a = A.
+
+por conseguinte, x ∈ (cid:83)
+a∈A a = A.
+
+Logo, (cid:83)
+
+a∈A a. Portanto, A ⊂ (cid:83)
+
+a∈A a.
+
+Aplica¸c˜ao
+
+4
+
+Neste cap´ıtulo vamos estudar a solu¸c˜ao de sistemas de congruˆencias, o cha-
+mado Algoritmo Chinˆes do Resto. O cap´ıtulo se encerrar´a com uma aplica¸c˜ao
+deste algoritmo a um m´etodo de criptograﬁa para partilha de senhas. Seu estudo
+fundamentou-se em Coutinho, 2005.
+
+4.1 Sistemas de Congruˆencias
+
+4.1.1 Equa¸c˜oes Lineares
+
+Teorema 4.1 (Teorema de invers˜ao): A classe a tem inverso em Zn se, e
+
+somente se, a e n s˜ao primos entre si.
+
+Demonstra¸c˜ao: Suponhamos que a ∈ Zn tem inverso α. Desta forma, a · α = 1, o
+que equivale a dizer que a · α − k · n = 1, para algum k ∈ Z. Observe que esta ´ultima
+equa¸c˜ao implica que o mdc(a,n) = 1. Conclu´ımos portanto que se a tem inverso em
+Zn, ent˜ao mdc(a,n) = 1.
+
+Reciprocamente, suponhamos que a ´e um inteiro e que mdc(a,n) = 1. Ent˜ao
+segue do Teorema 2.5, que existem inteiros x0, y0 tais que a · x0 + n · y0 = 1. Essa
+equa¸c˜ao ´e equivalente a a · x0 = 1, em Zn. Conclu´ımos assim, que se mdc(a,n) = 1,
+ent˜ao a tem inverso em Zn.
+
+Agora, iniciaremos o estudo de sistemas de equa¸c˜oes lineares no qual abordaremos
+
+primeiramente o caso de uma ´unica equa¸c˜ao linear.
+
+em que a, b ∈ Z e n ´e um n´umero inteiro positivo. Consideraremos dois casos:
+
+ax ≡ b
+
+(mod n)
+
+(4.1)
+
+1. Se a ´e invert´ıvel em Zn
+
+Sejam a invert´ıvel em Zn e α o inverso de a. A equa¸c˜ao (4.1) pode ser reescrita
+como
+
+34
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+35
+
+α(ax) ≡ αb
+
+(mod n)
+
+Como αa = ¯1 em Zn, segue que
+
+x ≡ αb
+
+(mod n)
+
+´e a solu¸c˜ao da equa¸c˜ao. Em particular, se n ´e primo, todo a (cid:54)≡ 0 (mod n)
+possui inverso em Zn e (4.1) sempre tem solu¸c˜ao.
+
+2. Se a n˜ao ´e invert´ıvel em Zn
+
+Suponha que a n˜ao possui inverso em Zn. Nesse caso, temos que mdc(a,n) (cid:54)= 1.
+A equa¸c˜ao (4.1) tem solu¸c˜ao se existirem x, y em Z tais que
+
+ax − ny = b
+
+(4.2)
+
+Mas isso s´o ´e poss´ıvel se mdc(a,n) divide b. De fato, se existem x, y ∈ Z
+tais que ax − ny = b, ent˜ao o fato de d = mdc(a,n) implica que d|a e d|n,
+consequentemente, d|(ax − ny), ou seja, d|b. Por outro lado, se d = mdc(a,n),
+ent˜ao segue do Teorema 2.5 que existem x0, y0 ∈ Z, tais que ax0 + ny0 = d. Se
+d|b, ent˜ao b = r · d, para algum r ∈ Z, ou seja, b = r · (ax0 + ny0) = rx0a + ry0n.
+Fazendo x = rx0 e −y = ry0, obtemos (4.2).
+
+Conclu´ımos que (4.1) tem solu¸c˜ao se, e somente se, b ´e divis´ıvel pelo mdc(a,n).
+Se a tem inverso em Zn essa condi¸c˜ao ´e satisfeita, porque nesse caso mdc(a,n) =
+1.
+
+Suponhamos que d = mdc(a,n) divide b. Digamos que a = da(cid:48), b = db(cid:48) e
+n = dn(cid:48). Substituindo em (4.2) e cancelando d,
+
+a(cid:48)x − n(cid:48)y = b(cid:48)
+
+(mod n(cid:48)); uma nova equa¸c˜ao em con-
+Que se converte na equa¸c˜ao a(cid:48)x ≡ b(cid:48)
+gruˆencias. Mas cuidado, o m´odulo mudou. A equa¸c˜ao original tinha n
+como m´odulo; a nova equa¸c˜ao tem m´odulo n(cid:48), um divisor de n. Observe
+que mdc(a(cid:48),n(cid:48)) = mdc(a/d, n/d) = 1, portanto essa ´ultima equa¸c˜ao sempre tem
+solu¸c˜ao.
+
+(cid:46)(cid:46)(cid:46) Exemplo 4.1: Seja 6x ≡ 4
+
+(mod 8). Como mdc(6,8) = 2 (cid:54)= 1, n˜ao podemos
+inverter ¯6 em Z8. Se esta equa¸c˜ao tiver solu¸c˜ao, ent˜ao existem inteiros x e y tais que
+(mod 4). Mas ¯3 ´e o seu
+6x - 8y = 4 o que equivale a 3x - 4y = 2. Isto leva a 3x ≡ 2
+pr´oprio inverso em Z4. Multiplicando esta ´ultima equa¸c˜ao por 3, teremos a solu¸c˜ao
+
+x ≡ 2 (mod 4)
+
+(4.3)
+
+Come¸camos com uma equa¸c˜ao m´odulo 8, mas obtivemos uma solu¸c˜ao m´odulo 4.
+Para fazermos a convers˜ao, basta converter (4.3) em uma express˜ao em inteiros (isto
+´e, sem congruˆencias) e analisar como as solu¸c˜oes se comportam m´odulo 8. Temos
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+36
+
+que (4.3) ´e equivalente a x = 2 + 4k, em que k ´e um inteiro qualquer. Se k for par,
+ent˜ao k = 2s para algum s ∈ Z, desta forma teremos:
+
+x = 2 + 4k
+
+x = 2 + 4(2s)
+
+x = 2 + 8s
+∴ x ≡ 2 (mod 8)
+
+Analogamente, se k for ´ımpar, ent˜ao k = 2s + 1, para algum s ∈ Z, de modo que:
+
+x = 2 + 4k
+
+x = 2 + 4(2s + 1)
+
+x = 6 + 8s
+∴ x ≡ 6 (mod 8)
+
+Logo 6x ≡ 4
+
+(mod 8) possui duas solu¸c˜oes em Z8: ¯2 e ¯6. Observe que a equa¸c˜ao
+
+´e linear, mas tem duas solu¸c˜oes.
+
+4.1.2 Teorema Chinˆes do Resto
+
+Esse teorema ´e assim chamado porque um dos primeiros lugares em que aparece ´e
+o livro Manual de aritm´etica do Mestre Sun, escrito entre 287 d.C. e 473 d.C.. Esse
+resultado tamb´em ´e mencionado na Aritm´etica de Nicˆomano de Gerasa. Alguns
+conceitos sobre an´eis se encontram no Apˆendice 1.
+
+Lema 4.1: Se a e b s˜ao primos entre si, isto ´e, mdc(a,b) = 1, ent˜ao Za × Zb
+
+∼= Zab.
+
+∼=
+
+Z
+(ab)Z e Za ×Zb
+
+∼=
+
+Z
+aZ ×
+
+Z
+bZ, ´e suﬁciente mostrarmos
+
+que
+
+Demonstra¸c˜ao: Como Zab
+Z
+Z
+aZ ×
+bZ.
+Z
+aZ ×
+
+Z
+(ab)Z
+Seja ϕ : Z →
+
+∼=
+
+Claramente temos que ϕ ´e um homomorﬁsmo de an´eis. Mais ainda,
+
+Z
+bZ, deﬁnida por ϕ(x) = (x + aZ, x + bZ), para todo x ∈ Z.
+
+Ker(ϕ) = {x ∈ Z; ϕ(x) = (0 + aZ,0 + bZ)} = {x ∈ Z; ϕ(x) = (aZ, bZ)}.
+
+Se x ∈ ker(ϕ), ent˜ao x ∈ aZ e x ∈ bZ. Logo, a|x e b|x, o que implica que
+= a · b. Assim, x ∈ abZ, ou seja Ker(ϕ) ⊆
+mmc(a,b)|x. Mas, mmc(a,b) =
+abZ. A inclus˜ao contr´aria ´e imediata. Pelo Primeiro Teorema do Isomorﬁsmo para
+
+a · b
+mdc(a,b)
+
+an´eis temos
+
+Como
+
+Z
+abZ
+Z
+abZ
+
+∼= Im(ϕ) ⊆ Za × Zb.
+(cid:18) Z
+abZ
+
+∼= Zab, #
+
+(cid:19)
+
+= # (Zab) = ab = # (Za × Zb), o que implica que
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+ϕ ´e sobrejetora.
+
+Teorema 4.2: Se n ∈ Z, n > 0 e n = pα1
+1
+
+ent˜ao Zn
+
+∼= Z
+
+pα1
+1
+
+× . . . × Z
+
+αk
+p
+k
+
+37
+
+· . . . · pαk
+
+k , com pi’s primos distintos,
+
+Demonstra¸c˜ao: Segue diretamente do lema anterior e indu¸c˜ao.
+
+Observemos que na demonstra¸c˜ao do lema anterior, mostramos que ϕ ´e sobrejetora
+sem exibirmos a pr´e-imagem de um elemento gen´erico. Assim, cabe a seguinte
+pergunta:
+
+• Se (c+aZ, d+bZ) ∈ Z
+
+aZ × Z
+
+bZ , ent˜ao qual ´e o x ∈ Z tal que ϕ(x) = (c+aZ, d+bZ)?
+
+Note que:
+
+(cid:26) x + aZ = c + aZ
+
+x + bZ = d + bZ ⇒
+
+(cid:26) x ≡ c (mod a)
+x ≡ d (mod b)
+
+⇒
+
+(cid:26) x = c + a · n1, n1 ∈ Z
+x = d + b · n2, n2 ∈ Z
+
+Por exemplo, Z15
+Temos que
+
+∼= Z3 × Z5, qual ´e o elemento x ∈ Z, tal que ϕ(x) = (2, 4)?
+
+(cid:26) x ≡ 2 (mod 3)
+x ≡ 4 (mod 5)
+
+Assim, x = 2 + 3n1, com n1 ∈ Z e x ≡ 4 (mod 5). Desta forma:
+
+x ≡ 4 (mod 5)
+
+2 + 3n1 ≡ 4 (mod 5)
+3n1 ≡ 2 (mod 5)
+2 · 3n1 ≡ 2 · 2 (mod 5)
+n1 ≡ 4 (mod 5)
+n1 = 4 + 5n2, para algum n2 ∈ Z.
+
+Ent˜ao, x = 2 + 3(4 + 5n2) = 14 + 15n2, ou seja, x ≡ 14 (mod 15).
+
+Corol´ario 4.1 (Teorema Chinˆes do Resto): Seja {mi}k
+
+i=1 um conjunto
+de k inteiros primos entre si 2 a 2, ou seja, mdc(mi, mj) = 1, para todo i (cid:54)= j. Ent˜ao
+o sistema de congruˆencias lineares:
+
+
+
+
+
+
+x ≡ a1 (mod m1)
+...
+x ≡ ak (mod mk)
+
+onde ai ∈ Z, possui uma ´unica solu¸c˜ao m´odulo n = m1 · m2 · . . . · mk.
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+38
+
+Demonstra¸c˜ao: Basta observar que Zn
+
+∼= Zm1 × . . . × Zmk.
+
+4.1.3 Um Exemplo Astronˆomico
+
+Nesta se¸c˜ao, veremos um exemplo de astronomia que ´e resolvido atrav´es de um
+
+sistema de congruˆencias lineares.
+
+Trˆes sat´elites passar˜ao sobre Alfenas-MG esta noite. O primeiro `a 1 hora da
+madrugada, o segundo `as 4 horas e o terceiro `as 8 horas da manh˜a. Cada sat´elite
+tem um per´ıodo diferente. O primeiro leva 13 horas para completar uma volta em
+torno da Terra, o segundo 15 horas e o terceiro 19 horas. Determine quantas horas
+decorrer˜ao, a partir da meia-noite, at´e que os trˆes sat´elites passem simultaneamente
+sobre Alfenas.
+
+Vamos formular o problema matematicamente.
+Chamaremos de x o n´umero de horas, contadas a partir da meia-noite de hoje,
+quando os trˆes sat´elites passar˜ao sobre Alfenas. O primeiro sat´elite passa sobre
+Alfenas a cada 13 horas, a contar da 1 hora da madrugada. Logo x = 1 + 13t, para
+algum inteiro positivo t. Equivalentemente x ≡ 1
+(mod 13). Para os outros sat´elites,
+temos que
+
+x ≡ 4 (mod 15)
+
+e x ≡ 8 (mod 19).
+
+Os trˆes sat´elites passar˜ao juntos sobre Alfenas para os valores de x que satisfazem
+
+simultaneamente as trˆes equa¸c˜oes. Isto ´e, precisamos resolver o sistema
+
+x ≡ 1 (mod 13)
+
+x ≡ 4 (mod 15)
+
+x ≡ 8 (mod 19)
+
+(4.4)
+
+Observe que n˜ao podemos somar ou subtrair as equa¸c˜oes entre si, j´a que os m´odulos
+s˜ao diferentes. Resolveremos o problema convertendo as equa¸c˜oes de congruˆencias
+(mod 13) corresponde a x = 1 + 13t, que ´e
+em identidades de inteiros. Assim x ≡ 1
+um inteiro e, portanto, pode ser substitu´ıdo na equa¸c˜ao x ≡ 4
+(mod 15) resultando
+em
+
+1 + 13t ≡ 4 (mod 15) ou seja, 13t ≡ 3 (mod 15)
+
+Mas 13 ´e invert´ıvel m´odulo 15 e seu inverso ´e 7. Multiplicando 13t ≡ 3 (mod 15) por
+7, e reduzindo os n´umeros m´odulo 15, obtemos
+
+t ≡ 6 (mod 15)
+
+Assim t ´e da forma t = 6 + 15u.
+
+Portanto, x = 1 + 13t ⇒ x = 1 + 13(6 + 15u) ⇒ x = 79 + 195u.
+Desta forma, qualquer n´umero da forma 79 + 195u satisfaz as duas primeiras
+congruˆencias do sistema (4.4). Por ﬁm, vamos substituir x = 79 + 195u na equa¸c˜ao
+x ≡ 8 (mod 19), obtendo:
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+39
+
+79 + 195u ≡ 8 (mod 19)
+
+195u ≡ −71 (mod 19)
+
+195u ≡ 5 (mod 19), pois como 71 + 5 = 76 = 0 ⇒ −71 = 5
+
+5u ≡ 5 (mod 19), pois 195 ≡ 5 (mod 19)
+
+Como 5 ´e invert´ıvel m´odulo 19, podemos cancel´a-lo na equa¸c˜ao acima obtendo
+
+u ≡ 1 (mod 19) o que nos d´a u = 1 + 19v, para algum inteiro v. Logo,
+
+x = 79 + 195u ⇒ x = 79 + 195(1 + 19v) ⇒ x = 274 + 3705v.
+
+Lembrando que x corresponde ao tempo contado a partir da meia-noite, queremos
+menor inteiro positivo
+descobrir qual o menor inteiro positivo
+menor inteiro positivo x que satisfaz as equa¸c˜oes; esse inteiro ´e o
+274. Portanto, os sat´elites passar˜ao juntos pela primeira vez 274 horas depois da
+meia noite de hoje. Isto corresponde a 11 dias e 10 horas. Mas nossa solu¸c˜ao nos
+diz mais. Somando um m´ultiplo qualquer de 370537053705 `a 274 temos uma nova solu¸c˜ao
+do sistema. Ou seja, os sat´elites voltar˜ao a passar juntos a cada 370537053705 horas, que
+corresponde a 154 dias e 9 horas.
+
+Observe que dividimos a solu¸c˜ao desse sistema de 3 equa¸c˜oes, de modo a resolver
+dois sistemas de duas equa¸c˜oes. De fato, resolvendo a duas primeiras equa¸c˜oes,
+Isto corresponde a uma nova equa¸c˜ao, que ´e x ≡
+obtivemos x = 79 + 195u.
+79 (mod 195). Para obter o valor ﬁnal de x, resolvemos o sistema
+
+x ≡ 79 (mod 195)
+
+x ≡ 8 (mod 19)
+
+Em geral, a solu¸c˜ao de um sistema de muitas equa¸c˜oes ´e obtida atrav´es da solu¸c˜ao
+
+de v´arios sistemas de duas equa¸c˜oes.
+
+4.2 Partilha de Senhas
+
+Imagine que o cofre de um banco ´e aberto atrav´es de uma senha. Um certo n´umero
+de funcion´arios desse banco tem acesso ao cofre. Mas o banco deseja, por seguran¸ca,
+que n˜ao seja poss´ıvel abrir o cofre quando h´a menos de trˆes desses funcion´arios
+presentes na agˆencia. Digamos que h´a na agˆencia 20 funcion´arios com acesso ao cofre.
+Como garantir que n˜ao ser´a poss´ıvel abrir o cofre a menos que haja, pelo menos, trˆes
+desses funcion´arios presentes na agˆencia?
+
+Para abrir o cofre do banco ´e necess´ario conhecer a senha, que ´e um n´umero s.
+Queremos partilhar s entre n pessoas. A cada pessoa ser´a dado um elemento ( sua
+“parte”da senha) de um conjunto S de n pares de inteiros positivos, de modo que,
+para um inteiro positivo k ≤ n, previamente escolhido temos:
+
+(1) qualquer subconjunto de S com k elementos permite determinar s facilmente;
+
+(2) ´e muito dif´ıcil determinar s conhecendo menos que k elementos de S.
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+40
+
+A inspira¸c˜ao para a constru¸c˜ao do conjunto S vem do Teorema Chinˆes do Resto.
+
+Defini¸c˜ao 4.1 (Limiar de um conjunto): Sejam L um conjunto de n inteiros
+positivos, dois a dois primos entre si, N o produto dos k menores n´umeros de L e M
+o produto dos k − 1 maiores n´umeros de L. Diremos que o conjunto L tem limiar k
+se
+
+M < s < N ,
+
+onde s ´e a senha que se quer partilhar entre n pessoas e que poder´a ser escolhida
+como sendo qualquer inteiro no intervalo acima.
+
+(cid:46) (cid:46) (cid:46) Exemplo 4.2: Seja L = {11,13,17,19,23}, vejamos se este conjunto possui
+
+limiar 2. Pela deﬁni¸c˜ao anterior, temos que:
+
+N = 11 · 13 = 143 (o produto dos 2 menores n´umeros de L)
+
+M = 23 (o produto do 2-1 maiores n´umeros de L, ou seja, o pr´oprio 23)
+
+Como M < N , segue que L possui limiar 2 e o valor da senha s pode ser escolhido
+como sendo qualquer inteiro no intervalo (23,143).
+
+(cid:23)
+
+(cid:22)
+
+(cid:63) Observa¸c˜ao 4.1:A condi¸c˜ao M < s < N implica que o produto de k
+ou mais elementos de L ´e sempre maior ou igual a N e o produto de menos
+de k elementos ´e sempre menor ou igual a M.
+
+(cid:20)
+
+(cid:21)
+
+Defini¸c˜ao 4.2: Seja L um conjunto de n inteiros positivos, dois a dois primos
+
+entre si e com limiar k. Deﬁnimos o conjunto S como sendo
+
+S = {(m,sm), onde m ∈ L e sm ´e a forma reduzida de s m´odulo m}
+
+Note que o fato de termos um conjunto com limiar k ≥ 1 implica que s > m,
+
+para qualquer m ∈ L e portanto, sempre temos sm < s, qualquer que seja m ∈ L.
+
+(cid:46) (cid:46) (cid:46) Exemplo 4.3: Com rela¸c˜ao ao conjunto L = {11,13,17,19,23} do Exemplo
+
+4.2, escolhendo o valor da senha como sendo s = 30 (23 < s < 143), temos
+
+S = {(m,sm), onde m ∈ L e sm ´e a forma reduzida de s m´odulo m}
+S = {(11,3011), (13,3013), (17, 3017), (19, 3019), (23, 3023)}
+S = {(11,8), (13,4), (17, 13), (19, 11), (23, 7)}
+
+Voltando ao nosso problema inicial, suponhamos que mais de k funcion´arios se
+encontram no banco. Isso equivale a dizer que s˜ao conhecidos t dentre os pares S
+onde t ≥ k. Denotaremos estes pares por (m1,s1), · · · , (mt,st). Vamos resolver os
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+sistema de congruˆencias
+
+x ≡ s1
+x ≡ s2
+...
+x ≡ st
+
+(mod m1)
+(mod m2)
+
+(mod mt)
+
+41
+
+(4.5)
+
+De acordo com o Teorema Chinˆes do Resto, o sistema acima possui uma ´unica solu¸c˜ao
+em Zm1·...·mt, logo possui uma ´unica solu¸c˜ao inteira x0 menor que m1 · . . . · mt.
+
+Observe que da maneira como foi constru´ıdo o sistema acima, s ´e uma solu¸c˜ao,
+
+mais ainda, como t ≥ k, ent˜ao m1 · . . . · mt ≥ N > s.
+
+Ou seja, s ´e uma solu¸c˜ao do sistema (4.5) com a propriedade de ser menor do
+que m1 · . . . · mt. Portanto, a unicidade do Teorema Chinˆes do Resto nos garante que
+s = x0.
+
+(cid:46) (cid:46) (cid:46) Exemplo 4.4: Suponhamos que em um banco apenas 5 funcion´arios
+possuem acesso ao cobre e que pelo menos dois desses devem estar presentes para
+que o cofre possa ser aberto.
+
+O conjunto L deve ter 5 elementos e seu limiar deve ser 2. O conjunto
+
+L = {11,13,17,19,23}
+
+do exemplo 4.2 satisfaz as condi¸c˜oes desejadas e escolhendo a senha do cofre como
+sendo s = 30, o exemplo 4.3 nos fornece:
+
+S = {(11,8), (13,4), (17, 13), (19, 11), (23, 7)},
+
+desta forma, cada funcion´ario receber´a uma senha pessoal que ser´a um dos pares
+ordenados do conjunto acima.
+
+Suponhamos que dois funcion´arios possuam as senhas (11,8) e (13,4) e desejam
+
+obter a senha. Para isso, ´e preciso resolver o sistema:
+
+(cid:26) x ≡ 8 (mod 11)
+x ≡ 4 (mod 13)
+
+Assim, x = 8 + 11n, com n ∈ Z e x ≡ 4 (mod 13). Desta forma:
+
+x ≡ 4 (mod 13)
+
+8 + 11n ≡ 4 (mod 13)
+
+11n ≡ −4 (mod 13)
+
+11n ≡ 9 (mod 13)
+
+6 · 11n ≡ 6 · 9 (mod 13)
+
+66n ≡ 54 (mod 13)
+
+n ≡ 2 (mod 13)
+
+Cap´ıtulo 4. Aplica¸c˜ao
+
+42
+
+Segue que n = 2 + 13t, com t ∈ Z. Portanto, a solu¸c˜ao geral do sistema ´e x =
+8 + 11 · (2 + 13t) ⇒ x = 30 + 143t, em que t ´e um inteiro positivo, isto ´e
+x ≡ 30 (mod 143). Assim, determinamos que s = 30 ´e o valor correto da senha.
+
+Criptograﬁa RSA
+
+5
+
+A criptograﬁa estuda os m´etodos para codiﬁcar uma mensagem de modo que s´o seu
+destinat´ario leg´ıtimo consiga interpret´a-la. Todo processo de codiﬁca¸c˜ao ´e composto
+de duas etapas b´asicas: a codiﬁca¸c˜ao da mensagem e a decodiﬁca¸c˜ao da mensagem.
+Decodiﬁcar ´e o que um destinat´ario leg´ıtimo do c´odigo faz para ler a mensagem.
+A base te´orica do processo de implanta¸c˜ao da criptograﬁa moderna ´e a aritm´etica
+modular, j´a estudada s´eculos antes por Euler, Gauss, Fermat entre outros.
+
+O mais conhecido dos m´etodos de criptograﬁa ´e o RSA que foi inventado em
+1978 por Rivest, Shamir e Adleman. A implementa¸c˜ao desse m´etodo de criptograﬁa
+depende de dois primos distintos grandes p e q. Para codiﬁcar uma mensagem usando
+o RSA ´e suﬁciente conhecer o produto n = pq, denominado chave de decodiﬁca¸c˜ao
+(que ´e p´ublica). J´a, o processo de decodiﬁca¸c˜ao s´o ´e poss´ıvel quando se conhecem os
+primos p e q. Como o processo de criptograﬁa ´e implementado com n´umeros grandes,
+os c´alculos s˜ao realizados por meio de computa¸c˜ao alg´ebrica, assunto que n˜ao ser´a
+abordado nesse trabalho.
+
+Estudaremos neste cap´ıtulo o sistema de criptograﬁa RSA. Baseado em Coutinho,
+2005 ser´a feita uma abordagem da implementa¸c˜ao, viabilidade e seguran¸ca desse
+sistema bem como seu processo de assinatura.
+
+5.1 Implementa¸c˜ao do M´etodo
+
+5.1.1 Pr´e-codiﬁca¸c˜ao
+
+O processo de pr´e-codiﬁca¸c˜ao consiste em transformar a mensagem a ser codiﬁcada
+em uma sequˆencia num´erica. Para realizar a pr´e-codiﬁca¸c˜ao, converte-se letras em
+n´umeros usando a seguinte correspondˆencia:
+
+12
+
+11
+
+J K L M
+A B C D E F G H I
+10
+22
+19
+18
+16
+14
+N O P Q R S T U V W X Y Z
+35
+29
+23
+
+26
+
+31
+
+13
+
+27
+
+28
+
+30
+
+33
+
+32
+
+34
+
+21
+
+20
+
+17
+
+15
+
+25
+
+24
+
+43
+
+Cap´ıtulo 5. Criptograﬁa RSA
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 5.1:O espa¸co entre duas palavras ´e substitu´ıdo pelo
+
+n´umero 99.
+
+(cid:14)
+
+(cid:46) (cid:46) (cid:46) Exemplo 5.1: A frase
+
+convertida em n´umeros, ﬁca
+
+Paraty ´e Linda
+
+2510271029349914992118231310
+
+44
+
+(cid:12)
+
+(cid:13)
+
+Feita a convers˜ao da mensagem em n´umeros, deve-se agora determinar os parˆame-
+tros do sistema RSA que ser˜ao usados no processo de codiﬁca¸c˜ao. Estes parˆametros
+s˜ao dois primos distintos, que denotaremos por p e q. Coloquemos n = pq.
+
+Para encerrar o processo de pr´e-codiﬁca¸c˜ao, a mensagem (j´a transformada em
+
+n´umeros) ´e quebrada em blocos que devem ser menores que n.
+
+(cid:23)
+
+(cid:63) Observa¸c˜ao 5.2:A escolha dos blocos n˜ao ´e ´unica. ´E desej´avel que
+o bloco n˜ao comece por zero pois isso traria problemas no processo de
+decodiﬁca¸c˜ao.
+
+(cid:22)
+
+(cid:20)
+
+(cid:21)
+
+(cid:46) (cid:46) (cid:46) Exemplo 5.2: Se escolhermos p = 11 e q = 13, ent˜ao n = 143. Assim,
+cada bloco da mensagem deve ser menor que 143. Colocando em blocos a mensagem
+do Exemplo 5.1, temos:
+
+25 - 102 - 7 - 102 - 93 - 49 - 91 - 49 - 92 - 118 - 23 - 13 - 10
+
+5.1.2 Codiﬁca¸c˜ao
+
+A codiﬁca¸c˜ao da mensagem ´e feita usando n, que ´e o produto dos primos p e q,
+e um n´umero inteiro positivo e invers´ıvel m´odulo φ(n) . Ou seja, mdc(e,φ(n)) = 1.
+Como p e q s˜ao primos, sabemos da Observa¸c˜ao 3.7 que
+
+φ(n) = (p − 1)(q − 1)
+
+O par (n, e) ´e a chave de codiﬁca¸c˜ao do sistema RSA. No processo de pr´e-codiﬁca¸c˜ao,
+a mensagem foi quebrada em blocos que ser˜ao codiﬁcados separadamente. Vamos
+denotar cada bloco por b e cada bloco codiﬁcado por C(b). Assim:
+
+em que
+
+C(b) = a
+
+be ≡ a (mod n)
+
+Cap´ıtulo 5. Criptograﬁa RSA
+
+45
+
+(cid:46) (cid:46) (cid:46) Exemplo 5.3: Vamos codiﬁcar o segundo bloco do Exemplo 5.2. J´a temos
+
+que p = 11 e q = 13 assim:
+
+φ(n) = (11 − 1)(13 − 1) = 120
+
+Adotando e = 7, segue que
+
+1027 ≡ (−41)7 ≡ −417 ≡ −81 · 138 ≡ 62 · (−5) ≡ −310 ≡ −24 ≡ 119 (mod 143)
+
+Assim, C(102) = 119
+
+5.1.3 Decodiﬁca¸c˜ao
+
+A decodiﬁca¸c˜ao da mensagem ´e processada a partir de dois n´umeros: n e o
+inverso de e em φ(n), que denotaremos por d. O par (n, d) ´e chamado de chave de
+decodiﬁca¸c˜ao. Sendo a o bloco codiﬁcado da mensagem, D(a) ser´a o resultado do
+processo de decodiﬁca¸c˜ao. Segue que:
+
+em que
+
+D(a) = k
+
+ad ≡ k (mod n)
+
+(cid:31)
+
+(cid:63) Observa¸c˜ao 5.3:Sendo b o bloco inicial da mensagem, teremos k = b,
+o que ser´a demonstrado adiante. Em outras palavras, decodiﬁcando um
+bloco da mensagem codiﬁcada, espera-se encontrar o bloco correspondente
+da mensagem original.
+
+(cid:30)
+
+(cid:28)
+
+(cid:29)
+
+(cid:46) (cid:46) (cid:46) Exemplo 5.4: Vamos decodiﬁcar o bloco codiﬁcado no Exemplo 5.3. Para
+
+tanto, necessitamos calcular d. Como d ´e o inverso de e em φ(n), temos que:
+
+d · 7 ≡ 1 (mod 120)
+
+Como 120 = 7 · 17 + 1, temos que 120 + 7 · (−17) = 1. Logo, d = −17. Como
+−17 ≡ 103 (mod 120), temos que d = 103. Portanto, para decodiﬁcar o bloco
+mencionado, devemos resolver a equa¸c˜ao:
+
+119103 ≡ k (mod 143)
+
+Atrav´es da computa¸c˜ao alg´ebrica , conclu´ımos que k = 102 e D(119) = 102
+
+5.2 Viabilidade do M´etodo
+
+Como visto, o m´etodo de criptograﬁa s´o ´e ´util se, decodiﬁcando um bloco codiﬁcado,
+obtemos o bloco correspondente da mensagem original. Sendo C(b) = a o bloco
+codiﬁcado, queremos mostrar que D(a) = b, ou seja, D(C(b)) = b para todo b entre
+
+Cap´ıtulo 5. Criptograﬁa RSA
+
+46
+
+1 e n.
+
+Sabemos, dos processos de codiﬁca¸c˜ao e decodiﬁca¸c˜ao deﬁnidos anteriormente, que
+
+C(b) ≡ be (mod n) e D(a) ≡ ad (mod n)
+
+Assim,
+
+D(C(b)) ≡ (be)d ≡ bed (mod n).
+
+Ou seja, deﬁnidos os parˆametros p, q e n = pq e ainda a chave de codiﬁca¸c˜ao (n, e)
+
+e a chave de decodiﬁca¸c˜ao (n, d), devemos mostrar que:
+
+1 ≤ b ≤ n − 1 ⇒ bed ≡ b (mod n)
+
+No entanto, devemos mostrar apenas que bed ≡ b (mod n), uma vez que, no
+
+processo de pr´e-codiﬁca¸c˜ao, b foi tomado no intervalo entre 1 e n.
+
+(cid:23)
+
+(cid:22)
+
+(cid:63) Observa¸c˜ao 5.4:Comentamos anteriormente que a mesagem deve ser
+quebrada em blocos menores que n e devem ser mantidos separados. Agora
+ﬁca evidente a justiﬁcativa de tais coment´arios.
+
+(cid:20)
+
+(cid:21)
+
+Sabe-se que n = pq em que p e q s˜ao primos distintos. Como d ´e o inverso de e
+
+m´odulo φ(n), temos que
+
+ou seja ed = 1 + kφ(n), k ∈ Z. Assim,
+
+ed ≡ 1 (mod φ(n))
+
+ed = 1 + kφ(n) = 1 + k(p − 1)(q − 1)
+
+Logo
+
+bed ≡ b1+k(p−1)(q−1) (mod p)
+bed ≡ b · bk(p−1)(q−1) (mod p)
+bed ≡ b · (bp−1)k(q−1) (mod p)
+
+(5.1)
+
+Se p divide b, ´e evidente que bed ≡ b (mod p). Suponhamos ent˜ao que p n˜ao divide
+
+b. Segue ent˜ao, pelo Teorema 3.5 que
+
+p|(bp − b) = b(bp−1 − 1)
+
+e assim
+
+bp−1 ≡ 1 (mod p).
+
+(5.2)
+
+Cap´ıtulo 5. Criptograﬁa RSA
+
+47
+
+Logo, de (5.1) e (5.2) conclu´ımos que bed ≡ b (mod p). Portanto, essa ´ultima
+
+congruˆencia ´e v´alida para qualquer valor de b.
+
+Analogamente, se q divide b, ent˜ao bed ≡ b (mod q). Se q n˜ao divide b, temos que
+
+bq−1 ≡ 1 (mod q)
+
+(5.3)
+
+e ainda
+
+bed ≡ b1+k(p−1)(q−1) (mod q)
+bed ≡ b · bk(p−1)(q−1) (mod q)
+bed ≡ b · (bq−1)k(p−1) (mod q)
+
+(5.4)
+
+De (5.3) e (5.4) temos que bed ≡ b (mod q).
+
+Portanto, bed − b ´e divis´ıvel por p e por q e, assim, tamb´em ´e divis´ıvel por pq uma
+
+vez que mdc(p,q) = 1. Como n = pq, conclu´ımos que
+
+bed ≡ b (mod n), para qualquer b ∈ Z.
+
+5.3 Seguran¸ca do M´etodo
+
+O sistema RSA de criptograﬁa ´e de chave p´ublica. Sendo assim, a chave de
+codiﬁca¸c˜ao (n, e) ´e acess´ıvel a qualquer usu´ario. A seguran¸ca do m´etodo se d´a no
+fato de que ´e dif´ıcil calcular d quando apenas n e e s˜ao conhecidos. Nesta se¸c˜ao
+abordaremos tal diﬁculdade.
+
+Na pr´atica, d pode ser obtido aplicando o algoritmo euclidiano estendido a φ(n) e
+e. Em contrapartida, para obter φ(n), precisamos de p e q que podem ser obtidos
+fatorando n. Mas n ´e um n´umero grande (por exemplo, 250 algarismos) e sendo
+assim, n˜ao existe algoritmo eﬁciente para fator´a-lo, tornando o feito muito dif´ıcil.
+
+Suponhamos que φ(n) fora encontrado sem fatorar n. Conhecidos n = pq e
+
+φ(n) = (p − 1)(q − 1), teremos:
+
+φ(n) = (p − 1)(q − 1)
+
+= pq − (p + q) + 1
+
+= n − (p + q) − 1
+
+p + q = n − φ(n) + 1
+
+(5.5)
+
+Cap´ıtulo 5. Criptograﬁa RSA
+
+Contudo
+
+(p + q)2 − 4n = p2 + q2 + 2pq − 4pq
+
+= (p − q)2
+p − q = (cid:112)(p + q)2 − 4n
+
+48
+
+(5.6)
+
+De (5.5) e (5.6), calculamos facilmente p e q, ou seja, fatoramos n. Logo, n˜ao ´e
+poss´ıvel imaginar que consigamos achar φ(n) sem fatorar n, porque se ambos s˜ao
+conhecidos, tamb´em conhecemos os fatores de n.
+
+Ademais, suponhamos que haja um algoritmo que calcule d diretamente a partir
+de n e e. Como ed ≡ 1 (mod φ(n)), isto implica que conhecemos um m´ultiplo de
+φ(n). Isto tamb´em seria suﬁciente para fatorar n.
+
+Por ﬁm, encontrar b a partir da forma reduzida de be m´odulo n sem encontrar d
+requer um processo de tentativa-impratic´avel quando n ´e grande. Diante de todo o
+exposto, acredita-se que quebrar o RSA e fatorar n sejam equivalentes, tornando o
+m´etodo bastante seguro.
+
+5.4 Processo de Assinatura
+
+Em todo processo de mensagem eletrˆonica h´a, obviamente, o remetente e o
+destinat´ario. Este ´ultimo necessita de uma garantia de que a mensagem teve origem
+no remente autorizado. Para tanto, faz-se um processo de assinatura eletrˆonica da
+mensagem.
+
+Denotemos por Cr e Dr as fun¸c˜oes de codiﬁca¸c˜ao e decodiﬁca¸c˜ao, respectivamente,
+do remetente e Cd e Dd as fun¸c˜oes de codiﬁca¸c˜ao e decodiﬁca¸c˜ao, respectivamente,
+do destinat´ario. Seja b o bloco da mensagem a ser enviado. Ao inv´es do remetente
+enviar
+
+´e enviado
+
+Cd(b)
+
+Cd(Dr(b))
+
+Tendo recebido o bloco Cd(Dr(b)), o destinat´ario aplica a fun¸c˜ao de decodiﬁca¸c˜ao
+
+obtendo
+
+e a este ´ultimo bloco aplica a fun¸c˜ao codiﬁca¸c˜ao do remetente para obter b:
+
+Dd(Cd(Dr(b))) = Dr(b)
+
+Cr(Dr(b)) = b
+
+(cid:7)
+
+(cid:6)
+
+(cid:63) Observa¸c˜ao 5.5:Cr ´e p´ublico e por isso ´e conhecido do destinat´ario.
+
+(cid:4)
+
+(cid:5)
+
+6
+Aplica¸c˜ao da Criptograﬁa no Ensino
+M´edio
+
+6.1 Importˆancia da Aplica¸c˜ao
+
+Em geral, o conceito de n´umero primo ´e introduzido nas escolas no 5o e 6o anos
+do Ensino Fundamental. Por´em, isso ´e feito de modo superﬁcial uma vez que, nessa
+fase do aprendizado, o aluno n˜ao tem conhecimento e maturidade para aprofundar
+no assunto sendo, portanto, um momento inoportuno para tal. A maioria dos alunos
+acaba decorando os primeiros n´umeros primos e a sua deﬁni¸c˜ao n˜ao se atentando
+para sua importˆancia e aplicabilidade. No Ensino M´edio (mais precisamente no 3o
+ano), podemos aprofundar o estudo da Teoria dos N´umeros uma vez que, nessa fase,
+os alunos est˜ao mais maduros e aptos ao entendimento das deﬁni¸c˜oes e propriedades
+que cercam os n´umeros inteiros.
+
+As escolas que aderem `a Olimp´ıada Brasileira de Matem´atica (OBM) ou `a Olim-
+p´ıada Brasileira de Matem´atica das Escolas P´ublicas (OBMEP), na maioria das
+vezes, trabalham temas ligados `a Teoria dos N´umeros tais como primalidade, algo-
+ritmo de Euclides, congruˆencia entre outros com alunos do ciclo b´asico de ensino.
+Nesse sentido, a OBM e a OBMEP s˜ao grandes motivadoras para que os alunos se
+interessem e estudem tais conte´udos.
+
+Esse cap´ıtulo traz uma proposta para alunos do terceiro ano do Ensino M´edio
+e visa o aprofundamento no tema de n´umeros primos e o estudo do conceito de
+congruˆencia e suas propriedades culminando no m´etodo de criptograﬁa RSA. Para
+tanto, sugerimos uma abordagem te´orica e uma atividade pr´atica com os alunos.
+
+6.2 Abordagem Te´orica do M´etodo
+
+Primeiramente, deve ser feito com a turma uma abordagem te´orica sobre alguns
+t´opicos da Teoria dos N´umeros bem como o m´etodo de Criptograﬁa RSA. Essa
+abordagem pode ser feita em sete aulas. Nessas aulas trabalharemos teoria e exemplos
+relacionados a cada tema. O professor deve ter a sensibilidade de saber at´e que ponto
+aprofundar a teoria uma vez que o p´ublico alvo pode ser heterogˆeneo e n˜ao ter muita
+
+49
+
+Cap´ıtulo 6. Aplica¸c˜ao da Criptograﬁa no Ensino M´edio
+
+50
+
+aﬁnidade com a disciplina.
+
+(1) Na primeira aula, ser´a abordado o Algoritmo da Divis˜ao Euclidiana, o conceito
+de m´ultiplos e divisores e a deﬁni¸c˜ao de m´ınimo m´ultiplo comum e m´aximo
+divisor comum.
+
+(2) A segunda aula ser´a dedicada aos n´umeros primos: sua deﬁni¸c˜ao e alguns
+t´opicos relevantes `a aplica¸c˜ao do m´etodo criptogr´aﬁco. Dever´a ser discutida
+a existˆencia e a inﬁnidade desses n´umeros, o Lema de Euclides e o Teorema
+Fundamental da Aritm´etica.
+
+(3) A congruˆencia m´odulo m ser´a trabalhada na terceira e quarta aulas. Aqui ser´a
+deﬁnida a congruˆencia, estudada suas principais propriedades e apresentado os
+sistemas de congruˆencia.
+
+(4) A aula 5 ser´a dedicada ao m´etodo de criptograﬁa. Ser´a trabalhada a pr´e-
+codiﬁca¸c˜ao, a codiﬁca¸c˜ao e a decodiﬁca¸c˜ao. N˜ao ser´a abordada a demonstra¸c˜ao
+bem como a seguran¸ca e assinatura do m´etodo. Isso pode ser trabalhado em
+aulas especiais e com uma turma mais restrita.
+
+(5) As aulas 6 e 7 ser˜ao dedicadas `a atividade com os alunos.
+
+Os planos de aula detalhados encontram-se no Apˆendice 2.
+
+6.3 Descri¸c˜ao da Atividade
+
+A turma ser´a divida em duplas e cada duas duplas “disputar´a” entre si codiﬁcando
+e decodiﬁcando uma mensagem sugerida pelo professor. Metade das duplas ﬁcar´a
+respons´avel pela codiﬁca¸c˜ao da mensagem e a outra metade com a decodiﬁca¸c˜ao
+da mesma. Cada dupla estar´a sujeita ao ˆonus ou bˆonus de seus erros e acertos,
+respectivamente, previamente combinados com o professor. Por exemplo, pode ser
+feita a atribui¸c˜ao ou n˜ao de pontos extras aos alunos.
+
+Descrevamos a atividade com duas duplas que designaremos por dupla 1 e dupla
+
+2 :
+
+(1) O professor atribuir´a `a dupla 1 a mensagem
+
+Paraty ´e Linda
+
+sem que a dupla 2 tenha conhecimento dessa mensagem.
+
+(2) dupla 1 dever´a pr´e-codiﬁc´a-la e codiﬁc´a-la obtendo
+
+25 - 102 - 7 - 102 - 93 - 49 - 91 - 49 - 92 - 118 - 23 - 13 - 10
+
+na pr´e-codiﬁca¸c˜ao e
+
+Cap´ıtulo 6. Aplica¸c˜ao da Criptograﬁa no Ensino M´edio
+
+51
+
+64 - 119 - 6 - 119 - 102 - 36 - 130 - 36 - 27 - 79 - 23 - 117 - 10
+
+como codiﬁca¸c˜ao.
+
+(3) A dupla 2 receber´a a mensagem codiﬁcada e ter´a que decodiﬁc´a-la encontrando
+
+25 - 102 - 7 - 102 - 93 - 49 - 91 - 49 - 92 - 118 - 23 - 13 - 10
+
+e assim obter a mensagem original sugerida pelo professor.
+
+(3) Se a mensagem obtida pela dupla 2 for idˆentica `a mensagem original, as duplas
+
+levam o bˆonus da “disputa”.
+
+(4) Se a mensagem obtida pela dupla 2 for diferente `a original, cabe ao professor
+encontrar o erro cometido. Se o erro estiver na codiﬁca¸c˜ao, a dupla 1 ser´a
+onerada conforme o combinado; se o erro foi na decodiﬁca¸c˜ao, o ˆonus ﬁca para
+a dupla 2.
+
+Ap´os o encerramento da atividade, ´e interessante que o professor refa¸ca a mesma
+(com uma mensagem diferente) alternando o trabalho das duplas, ou seja, as duplas
+que codiﬁcaram ﬁcar˜ao respons´aveis pela decodiﬁca¸c˜ao e vice-versa.
+
+Apˆendices
+
+7
+
+7.1 Apˆendice 1: Introdu¸c˜ao `a Teoria de An´eis
+
+Nessa se¸c˜ao, encontra-se a abordagem de alguns resultados sobre a teoria de an´eis.
+
+Sua discuss˜ao basea-se em Gon¸calves, 2015.
+
+Defini¸c˜ao 7.1 (Grupo Abeliano): Um sistema matem´atico constitu´ıdo de
+um conjunto n˜ao vazio G e uma opera¸c˜ao ((cid:63)) sobre G ´e chamado grupo abeliano se
+essa opera¸c˜ao satisfaz as seguintes propriedades:
+
+(i) Associativa: (a (cid:63) b) (cid:63) c = a (cid:63) (b (cid:63) c) quaisquer que sejam a, b, c ∈ G;
+
+(ii) Existˆencia do elemento neutro: existe um elemento e ∈ G tal que a(cid:63)e = e(cid:63)a = a
+
+qualquer que seja a ∈ G;
+
+(iii) Existˆencia de sim´etricos: para todo a ∈ G existe um elemento a(cid:48) ∈ G tal que
+
+a (cid:63) a(cid:48) = a(cid:48) (cid:63) a = e;
+
+(iv) Comutativa: a (cid:63) b = b (cid:63) a quaisquer que sejam a, b ∈ G.
+
+Defini¸c˜ao 7.2 (Anel): Um anel ´e um conjunto (R, (cid:63) ,(cid:52)) onde (cid:63) e (cid:52) s˜ao
+
+opera¸c˜oes bin´arias sobre R satisfazendo:
+
+(i) (R,(cid:63)) ´e um grupo abeliano.
+
+(ii) (cid:52) ´e associativa, ou seja, (a (cid:52) b) (cid:52) c = a (cid:52) (b (cid:52) c), para todo a, b, c ∈ R.
+
+(iii)
+
+(cid:26) a (cid:52) (b (cid:63) c) = (a (cid:52) b) (cid:63) (a (cid:52) c)
+(a (cid:63) b) (cid:52) c = (a (cid:52) c) (cid:63) (b (cid:52) c)
+
+, para todo a, b, c ∈ R.
+
+(cid:46) (cid:46) (cid:46) Exemplo 7.1: (Z, + ,·) ´e um anel. De fato:
+
+(i) (Z,+) ´e abeliano.
+
+(ii) O produto ´e associativo, ou seja, a · (b · c) = (a · b) · c, para todo a, b, c ∈ Z.
+
+52
+
+Cap´ıtulo 7. Apˆendices
+
+53
+
+(iii)
+
+(cid:26) a · (b + c) = a · b + a · c
+(a + b) · c = a · c + b · c
+
+, para todo a, b, c ∈ Z.
+
+(cid:46) (cid:46) (cid:46) Exemplo 7.2: (Zm, ⊕ ,(cid:12)) ´e um anel. De fato:
+(i) (Zm,⊕) ´e grupo abeliano.
+
+(ii) a (cid:12) (b (cid:12) c) = a (cid:12) (bc) = abc = (ab) (cid:12) c = (a (cid:12) b) (cid:12) c, para todo a, b, c ∈ Zm
+
+(iii) a (cid:12) (b ⊕ c) = a (cid:12) (b + c) = a(b + c) = ab + ac = ab ⊕ ac = (a (cid:12) b) ⊕ (a (cid:12) c), para
+todo a, b, c ∈ Zm . De forma an´aloga, mostramos que (a⊕b)(cid:12)c = (a(cid:12)c)⊕(b(cid:12)c).
+
+Defini¸c˜ao 7.3 (Subanel): Seja S um conjunto n˜ao vazio de um anel (R, (cid:63) ,(cid:52)).
+
+Dizemos que (S, (cid:63) ,(cid:52)) ´e um subanel de (R, (cid:63) ,(cid:52)) se (S, (cid:63) ,(cid:52)) for um anel.
+
+Teorema 7.1: Seja S um subconjunto n˜ao vazio de um anel (R, (cid:63) ,(cid:52)). Ent˜ao
+(S, (cid:63) ,(cid:52)) ´e um subanel de (R, (cid:63) ,(cid:52)) se, e somente se, as seguintes condi¸c˜oes s˜ao
+satisfeitas:
+
+(i) Se a, b ∈ S, ent˜ao a (cid:63) b−1 ∈ S.
+
+(ii) Se a, b ∈ S, ent˜ao a (cid:52) b ∈ S
+
+Demonstra¸c˜ao:
+(⇒) Como (S, (cid:63) ,(cid:52)) ´e um subanel de (R, (cid:63) ,(cid:52)), segue que (S, (cid:63) ,(cid:52)) ´e um anel.
+
+Logo, (S,(cid:63)) ´e um grupo abeliano e consequentemente, a condi¸c˜ao (i) ´e satisfeita.
+
+Tamb´em pelo fato de (S, (cid:63) ,(cid:52)) ser um anel, temos que a opera¸c˜ao (cid:52) ´e bin´aria
+
+sobre S, satisfazendo assim, a condi¸c˜ao (ii).
+
+(⇐) Como S ⊂ R, S (cid:54)= ∅ e a condi¸c˜ao (i) ´e v´alida, ent˜ao temos que (S,(cid:63)) ´e um
+subgrupo de (R,(cid:63)). Como todo subgrupo de um grupo abeliano ´e abeliano, ent˜ao
+(S,(cid:63)) ´e um grupo abeliano.
+
+Como S ⊂ R e a segunda opera¸c˜ao de S e R coincidem, o fato de (cid:52) ser associativa
+
+em R garante que ela tamb´em o ´e em S.
+
+A distributividade de (cid:52) em rela¸c˜ao a (cid:63) em S segue de maneira an´aloga.
+
+Defini¸c˜ao 7.4 (Homomorfismo de An´eis): Sejam (R, (cid:63) ,(cid:52)) e (S, (cid:5) ,∧)
+an´eis. Uma fun¸c˜ao f : R → S ´e um homomorﬁsmo se f (a (cid:63) b) = f (a) (cid:5) f (b) e
+f (a (cid:52) b) = f (a) ∧ f (b), para todo a,b ∈ R.
+
+(cid:15)
+
+(cid:63) Observa¸c˜ao 7.1:Se a fun¸c˜ao f : R → S for bijetora, ent˜ao f ´e dita um
+isomorﬁsmo. Neste caso, R e S s˜ao ditos isomorfos. (NOTA ¸C ˆAO: R ∼= S)
+(cid:14)
+
+(cid:12)
+
+(cid:13)
+
+Cap´ıtulo 7. Apˆendices
+
+54
+
+(cid:46) (cid:46) (cid:46) Exemplo 7.3: f : (Z, + ,·) → (Zm, ⊕ ,(cid:12)) dada por f (a) = a ´e um
+
+homomorﬁsmo de an´eis, ou seja Z ∼= Zm , pois:
+f (a + b) = a + b = a ⊕ b = f (a) ⊕ f (b), para todo a,b ∈ Z e
+f (a · b) = a · b = a (cid:12) b = f (a) (cid:12) f (b), para todo a,b ∈ Z
+
+(cid:46) (cid:46) (cid:46) Exemplo 7.4: f : Z → M2(Z), dada por f (a) =
+
+(cid:21)
+
+(cid:20) a 0
+0 a
+
+´e um homomor-
+
+ﬁsmo de an´eis, ou seja Z ∼= M2(Z). De fato:
+0
+a + b
+
+(cid:20) a 0
+0 a
+
+f (a + b) =
+
+(cid:20) b 0
+0 b
+
++
+
+=
+
+(cid:21)
+
+(cid:21)
+
+(cid:20) a + b
+0
+(cid:20) a · b
+0
+
+e
+
+f (a · b) =
+
+0
+a · b
+
+(cid:21)
+
+=
+
+(cid:20) a 0
+0 a
+
+(cid:21)
+
+(cid:20) b 0
+0 b
+
+·
+
+(cid:21)
+
+= f (a) · f (b), para todo a,b ∈ Z.
+
+(cid:21)
+
+= f (a) + f (b), para todo a,b ∈ Z
+
+Defini¸c˜ao 7.5 (Ideal): Sejam (R, (cid:63) ,(cid:52)) um anel e (S, (cid:63) ,(cid:52)) um subanel de
+(R, (cid:63) ,(cid:52)). Dizemos que S ´e um ideal de R se r (cid:52) x ∈ S e x (cid:52) r ∈ S, para todo x ∈ S
+e r ∈ R.
+
+(cid:46) (cid:46) (cid:46) Exemplo 7.5: I = (5Z, +, ·) ´e um ideal de (Z, + ,·). De fato:
+
+(i) I ´e um subanel de (Z, + ,·).
+
+(ii) Seja r ∈ Z e x ∈ 5Z. Da´ı, segue x = 5k, k ∈ Z. Logo, r·x = r·5k = 5(rk) ∈ 5Z
+
+e x · r = 5k · x = 5(kx) ∈ 5Z.
+
+Teorema 7.2: Seja f : (R, (cid:63) ,(cid:52)) → (S, (cid:5) ,∧) um homomorﬁsmo e S(cid:48) um subanel
+
+de S. Ent˜ao f −1(S(cid:48)) ´e um subanel de R.
+
+Demonstra¸c˜ao: Temos que f (eR) = eS ∈ S(cid:48) ⇒ eR ∈ f −1(S(cid:48)), logo f −1(S(cid:48)) (cid:54)= ∅.
+Agora, mostraremos que se a1 e a2 ∈ f −1(S(cid:48)), ent˜ao a1 (cid:63) a−1
+2 ∈ f −1(S(cid:48)).De fato,
+2 ) = f (a1) (cid:5) (f (a2))−1 ∈ S(cid:48) ⇒ a1 (cid:63) a−1
+2 ∈ f −1(S(cid:48)).
+Por ﬁm, basta mostrar que se a1 e a2 ∈ f −1(S(cid:48)), ent˜ao a1 (cid:52) a2 ∈ f −1(S(cid:48)).Temos
+
+2 ) = f (a1) (cid:5) f (a−1
+
+f (a1 (cid:63) a−1
+
+que f (a1 (cid:52) a2) = f (a1) ∧ f (a2) ∈ S(cid:48) ⇒ a1 (cid:52) a2 ∈ f −1(S(cid:48)).
+
+Portanto,
+f −1(S(cid:48)) ´e subanel de R.
+
+Corol´ario 7.1: Se f : (R, (cid:63) ,(cid:52)) → (S, (cid:5) ,∧) ´e um homomorﬁsmo, ent˜ao
+
+f −1({eS}) ´e um subanel de R.
+
+Cap´ıtulo 7. Apˆendices
+
+55
+
+Defini¸c˜ao 7.6 (Kernel): O subanel f −1({eS}) do Corol´ario 7.1, ´e chamado
+
+de n´ucleo (ou kernel) de f . (NOTA ¸C ˜AO: ker(f )).
+
+Defini¸c˜ao 7.7 (Anel Quociente): Sejam (R, (cid:63) ,(cid:52)) um anel e I um ideal de
+
+R. O anel (
+
+R
+I
+
+, (cid:5) ,∧) ´e denominado anel quociente de R por I.
+
+Teorema 7.3 (Primeiro Teorema do Isomorfismo): Seja f : (R, (cid:63) ,(cid:52)) →
+
+(S, (cid:5) ,∧) um homomorﬁsmo. Ent˜ao
+
+R
+kerf
+
+∼= Im(f )
+
+Demonstra¸c˜ao: Deﬁna ϕ :
+
+R
+kerf
+
+→ Im(f ) dada por ϕ(r (cid:63) kerf ) = f (r)
+
+1. A fun¸c˜ao ϕ est´a bem deﬁnida:
+
+Se r (cid:63) kerf = r(cid:48) (cid:63) kerf , ent˜ao: (r(cid:48))−1 ∈ kerf . Da´ı, temos que:
+
+f ((r(cid:48))−1 (cid:63) r) = es ∈ S e ainda
+(f (r(cid:48)))−1 (cid:5) f (r) = es ∈ S. Logo:
+f (r) = f (r(cid:48)) e pontanto
+ϕ(r (cid:63) kerf ) = ϕ(r(cid:48) (cid:63) kerf ).
+
+2. A fun¸c˜ao ϕ ´e homomorﬁsmo:
+
+De fato:
+
+Sejam r1, r2 ∈ R
+ϕ[(r1 (cid:63) kerf ) (cid:63) (r2 (cid:63) kerf )] = ϕ[(r1 (cid:63) r2) (cid:63) kerf )] = f (r1 (cid:63) r2) = f (r1) (cid:5) f (r2) =
+ϕ(r1 (cid:63) kerf ) (cid:5) ϕ(r2 (cid:63) kerf ) e
+
+ϕ[(r1(cid:52)kerf )(cid:52)(r2(cid:52)kerf )] = ϕ[(r1(cid:52)r2)(cid:52)kerf )] = f (r1(cid:52)r2) = f (r1)∧f (r2) =
+ϕ(r1 (cid:52) kerf ) ∧ ϕ(r2 (cid:52) kerf )
+
+3. A fun¸c˜ao ϕ ´e injetora:
+
+De fato:
+Sejam r1, r2 ∈ R
+
+Se ϕ(r1 (cid:63) kerf ) = ϕ(r2 (cid:63) kerf ), ent˜ao f (r1) = f (r2), Assim:
+
+(f (r2))−1 (cid:5) f (r1) = eS ⇒
+
+Cap´ıtulo 7. Apˆendices
+
+56
+
+f (r−1
+2 (cid:63) r1) = eS ⇒
+r−1
+2 (cid:63) r1 ∈ kerf ⇒
+r1 (cid:63) kerf = r2 (cid:63) kerf
+
+4. A fun¸c˜ao ϕ ´e sobrejetora:
+
+Seja y ∈ Im(f ), ent˜ao y = f (r) para algum r ∈ R. Como r(cid:63)Ker(f ) ∈ R/Ker(f )
+e ϕ(r (cid:63) Ker(f )) = f (r) = y, segue que ϕ ´e sobrejetora.
+
+(cid:46) (cid:46) (cid:46) Exemplo 7.6: Seja f : (Z4, ⊕ ,(cid:12)) → (Z2, ⊕ ,(cid:12)), talquef (0) = 0, f (1) =
+
+1, f (2) = 1 e f (3) = 1.
+
+(i) f e um homomorﬁsmo.
+
+(ii) Im(f ) = Z2
+
+(iii) kerf = {0, 2}
+
+Pelo Primeiro Teorema do Isomorﬁsmo, temos:
+
+Z4
+{0, 2}
+
+∼= Z2
+
+7.2 Apˆendice 2: Planos de Aula
+
+7.2.1 Aula 1
+
+1. Tema: M´ultiplos e Divisores.
+
+2. Objetivo: Trabalhar com os alunos conceitos b´asicos acerca dos n´umeros
+inteiros tais como divis˜ao Euclidiana, m´ultiplos, divisores, m´ınimo m´ultiplo
+comum e m´aximo divisor comum.
+
+3. Recursos e Materiais: Lousa, pincel e lista de exerc´ıcios.
+
+4. Dura¸c˜ao: Cinquenta minutos.
+
+5. Desenvolvimento:
+
+• Fazer uma breve abordagem hist´orica com ˆenfase na Gr´ecia Antiga citando
+
+Euclides e os “Elementos”.
+
+• Abordar o Algoritmo da Divis˜ao Euclidiana chamando aten¸c˜ao para o
+resto e sua rela¸c˜ao com o quociente, uma vez que ele ser´a bastante ´util
+no entendimento do m´etodo criptogr´aﬁco. Apresentar alguns exemplos
+num´ericos.
+
+Cap´ıtulo 7. Apˆendices
+
+57
+
+• Deﬁnir m´ultiplos e divisores. Trabalhar com exemplos num´ericos. Chamar
+aten¸c˜ao para a quantidade ﬁnita de divisores e inﬁnita de m´ultiplos.
+
+• Ensinar aos alunos o m´etodo para se calcular a quantidade de divisores
+
+de um n´umero inteiro.
+
+• Deﬁnir m´ınimo m´ultiplo comum e abordar o m´etodo para seu c´alculo
+
+usando fatora¸c˜ao num´erica.
+
+• Deﬁnir m´aximo divisor comum e abordar o m´etodo para seu c´alculo.
+Pode-se trabalhar com os alunos o m´etodo da fatora¸c˜ao num´erica e o
+m´etodo das divis˜oes sucessivas (Exemplo 2.11).
+
+• Apresentar aos alunos o Teorema 2.8. Trabalhar com exemplo num´erico.
+
+• Resolver com os alunos os exerc´ıcios apresentados na subse¸c˜ao 7.2.5.
+
+7.2.2 Aula 2
+
+1. Tema: N´umeros Primos.
+
+2. Objetivo: Trabalhar o conceito de n´umeros primos, discutir sua inﬁnidade e
+
+alguns teoremas que o cercam.
+
+3. Recursos e Materiais: Lousa, pincel e lista de exerc´ıcios.
+
+4. Dura¸c˜ao: Cinquenta minutos.
+
+5. Desenvolvimento:
+
+• Deﬁnir n´umero primo e comentar sobre sua inﬁnidade (caso haja interesse
+
+da turma, demonstrar).
+
+• Deﬁnir n´umero composto.
+
+• Deﬁnir n´umeros primos entre si. Mostrar alguns exemplos num´ericos.
+
+• Apresentar, utilizando um exemplo num´erico, o Crivo de Erat´ostenes.
+
+• Comentar sobre o teste da raiz para veriﬁca¸c˜ao da primalidade de um
+
+n´umero.
+
+• Apresentar aos alunos o Lema 2.1 (Lema de Euclides). Comentar sua
+
+reciprocidade e trabalhar alguns exemplos.
+
+• Enunciar o Teorema 2.7 (Teorema Fundamental da Aritm´etica). Trabalhar
+
+alguns exemplos num´ericos.
+
+• Resolver com os alunos os exerc´ıcios apresentados na subse¸c˜ao 7.2.5.
+
+7.2.3 Aulas 3 e 4
+
+1. Tema: Congruˆencia.
+
+2. Objetivo: Deﬁnir Congruˆencia M´odulo m em Z. Estudar suas propriedades e
+
+a resolu¸c˜ao de sistemas de congruˆencia.
+
+Cap´ıtulo 7. Apˆendices
+
+58
+
+3. Recursos e Materiais: Lousa, pincel e lista de exerc´ıcios.
+
+4. Dura¸c˜ao: Uma hora e quarenta minutos.
+
+5. Desenvolvimento:
+
+• Deﬁnir Rela¸c˜ao de Equivalˆencia. Apresentar aos alunos alguns exemplos.
+• Deﬁnir Congruˆencia M´odulo m Z. Comentar que a congruˆencia ´e uma
+
+rela¸c˜ao de equivalˆencia. Fazer alguns exmeplos num´ericos.
+
+• Apresentar aos alunos e Teorema 3.2 exempliﬁcando-o numericamente.
+
+• Abordar o Teorema 3.4.
+
+• Deﬁnir a Fun¸c˜ao Fi de Euler.
+
+• Apresentar as Proposi¸c˜oes 3.1 e 3.2 e propor alguns exemplos aos alunos.
+
+• Apresentar aos alunos o Teorema 3.5 (Pequeno Teorema de Fermat).
+
+• Deﬁnir Sistema de Congruˆencia e apresentar um exemplo aos alunos.
+
+• Resolver o exemplo apresentado no item anterior.
+
+• Resolver com os alunos os exerc´ıcios apresentados na subse¸c˜ao 7.2.5.
+
+7.2.4 Aula 5
+
+1. Tema: Criptograﬁa.
+
+2. Objetivo: Apresentar aos alunos o m´etodo de criptograﬁa: da pr´e-codiﬁca¸c˜ao
+
+`a decodiﬁca¸c˜ao bem como sua viabilidade.
+
+3. Recursos e Materiais: Lousa, pincel e projetor de slides.
+
+4. Dura¸c˜ao: Cinquenta minutos.
+
+5. Desenvolvimento:
+
+• Fazer uma breve abordagem hist´orica sobre a criptograﬁa.
+
+• Discutir com os alunos a importˆancia do m´etodo de criptograﬁa para
+
+seguran¸ca de mensagens eletrˆonicas.
+
+• Explicar aos alunos, atrav´es de um exemplo, como funciona o processo de
+pr´e-codiﬁca¸c˜ao. Comentar sobre a escolha dos primos e a importˆancia de
+dividir a mensagem em blocos.
+
+• Explicar como funciona o processo de codiﬁca¸c˜ao da mensagem. Neste
+momento pode ser usado algum programa computacional (com o aux´ılio
+do projetor) para o c´alculo do resto e obten¸c˜ao da mensagem codiﬁcada.
+
+• Explicar como funciona o processo de decodiﬁca¸c˜ao. Assim como no item
+
+anterior, o recurso computacional pode ser usado.
+
+• Mostrar a viabilidade do m´etodo.
+
+• Comentar que pode ser realizado um processo de assinatura, sem entrar
+
+em muitos detalhes.
+
+Cap´ıtulo 7. Apˆendices
+
+59
+
+7.2.5 Exerc´ıcios Propostos
+
+Aula 1
+
+1. Quantos divisores positivos possui o n´umero 4500?
+
+2. (ENEM/2014) Durante a Segunda Guerra Mundial, para decifrarem as men-
+sagens secretas, foi utilizada a t´ecnica de decomposi¸c˜ao em fatores primos.
+Um n´umero N ´e dado pela express˜ao 2x · 5y · 7z na qual x, y e z s˜ao n´umeros
+inteiros n˜ao negativos. Sabe-se que N ´e m´ultiplo de 10 e n˜ao ´e m´ultiplo de 7.
+O n´umero de divisores de N , diferentes de N ´e:
+
+(a) x · y · z
+
+(b) (x + 1)(y + 1)
+
+(c) x · y · z − 1
+
+(d) (x + 1)(y + 1)z
+
+(e) (x + 1)(y + 1)(z + 1) − 1
+
+3. (UEL-PR) Considere dois rolos de barbante, um com 96m e outro com 150m
+de comprimento. Pretende-se cortar todo o barbante dos dois rolos em peda¸cos
+de mesmo comprimento. O menor n´umero de peda¸cos que poder´a ser obtido ´e:
+
+(a) 38
+
+(b) 41
+
+(c) 43
+
+(d) 52
+
+(e) 55
+
+4. (UPF-RS) Trˆes didades resolveram realizar um evento no ano 2000. A cidade
+A decidiu que, a partir de ent˜ao, ele se realizar´a de 5 em 5 anos; a cidade B
+decidiu que ele se repetir´a de 3 em 3 anos; e a cidade C, de 6 em 6 anos. As
+cidades A, B e C realizar˜ao novamente o evento no mesmo ano em:
+
+(a) 2014
+
+(b) 2090
+
+(c) 2030
+
+(d) 2021
+
+(e) 2006
+
+5. Sejam a, b e d n´umeros inteiros. Suponha que d divide a. Mostre que:
+
+(a) Se d tamb´em divide b, ent˜ao d divide a − b.
+
+(b) Se d tamb´em divide a + b, ent˜ao d divide b.
+
+(c) Se d tamb´em divide a − b, ent˜ao d divide b.
+
+Cap´ıtulo 7. Apˆendices
+
+60
+
+6. (OBMEP/2006) Da igualdade 9174532 · 13 = 119268916 pode-se concluir que
+
+um dos n´umeros abaixo ´e divis´ıvel por 13. qual ´e este n´umero?
+
+(a) 119268903
+
+(b) 119268907
+
+(c) 119268911
+
+(d) 119268913
+
+(e) 119268923
+
+Aula 2
+
+1. Considere todos os n´umeros primos maiores que 30 e menores que 40. A soma
+
+desses n´umeros ´e:
+
+(a) 55
+
+(b) 68
+
+(c) 101
+
+(d) 118
+
+(e) 75
+
+2. Veriﬁque se o n´umero 329 ´e primo.
+
+3. (BB/20105) O n´umero natural 2103 + 2102 + 2101 + 2100 ´e divis´ıvel por
+
+(a) 6
+
+(b) 10
+
+(c) 14
+
+(d) 22
+
+(e) 26
+
+4. (ENC/98) Uma das aﬁrmativas abaixo sobre n´umeros naturais ´e falsa. Qual ´e
+
+ela?
+
+(a) Dado um n´umero primo, existe sempre um n´umero primo acima dele.
+
+(b) Se dois n´umeros n˜ao primos s˜ao primos entre si, um deles ´e ´ımpar.
+
+(c) Um n´umero primo ´e sempre ´ımpar.
+
+(d) O produto de trˆes n´umeros naturais consecutivos ´e m´ultiplo de 6.
+
+(e) A soma de trˆes n´umeros naturais consecutivos ´e m´ultiplo de 3.
+
+5. Determine se existem inteiros positivos x e y que satisfa¸cam a equa¸c˜ao 30x·35y =
+
+21x · 140 · 52x
+
+6. (OBMEP/2007) Quais n´umeros naturais m e n satisfazem a 2n + 1 = m2?
+
+61
+
+Cap´ıtulo 7. Apˆendices
+
+Aulas 3 e 4
+
+1. Ache o resto da divis˜ao de 710 por 51.
+
+2. Para todo n ∈ N, mostre que 1016n − 1 ´e divis´ıvel por 70.
+
+3. Mostre que 42|a7 − a para todo n´umero natural a.
+
+4. Determine o valor de φ(58).
+
+5. Resolva, quando poss´ıvel, as congruˆencias:
+
+(a) 3X ≡ 5 (mod 7)
+
+(b) 12X ≡ 36 (mod 28)
+
+(c) 151X ≡ 11 (mod 245)
+
+6. Ache todos os n´umeros inteiros que deixam restos 2, 3 e 4 quando divididos
+
+por 3, 4 e 5, respectivamente.
+
+Considera¸c˜oes Finais
+
+8
+
+Este trabalho foi de grande importˆancia uma vez que contribuiu para aprimorar
+meu aprendizado acerca da teoria dos n´umeros, sua importˆancia e a necessidade de
+se trabalhar esse conte´udo, ainda com mais empenho, no ensino m´edio.
+
+O objetivo proposto na disserta¸c˜ao foi atingido, uma vez que o estudo de alguns
+t´opicos da Teoria dos N´umeros e da ´Algebra abordados foi importante para o
+entendimento de algumas aplica¸c˜oes desta ´area como o Teorema Chinˆes do Resto
+e sua aplica¸c˜ao num m´etodo de criptograﬁa para partilha de senhas e criptograﬁa
+RSA. Este trabalho ´e uma complementa¸c˜ao do trabalho de conclus˜ao de curso (TCC)
+da gradua¸c˜ao, trabalho este que j´a previa o estudo de um exemplo de criptograﬁa.
+Trabalhos futuros podem incorporar o estudo aqui realizado a ﬁm de implementar
+outras aplica¸c˜oes para alunos de ensino m´edio ou fundamental.
+
+62
+
+Bibliograﬁa
+
+[1] Coutinho, Severino Collier: N´umeros Inteiros e Criptograﬁa RSA. Rio de Janeiro:
+
+IMPA, 2005, ISBN 9788524401249.
+
+[2] Gon¸calves, Adilson:
+ISBN 9788524401084.
+
+Introdu¸c˜ao `a ´Algebra.
+
+Rio de Janeiro:
+
+IMPA, 2015,
+
+[3] Hefez, Abramo: Aritm´etica. Rio de Janeiro: SBM, 2014, ISBN 9788585818920.
+
+[4] Landau, Edmund: Teoria Elementar dos N´umeros. Rio de Janeiro: Moderna, 2002,
+
+ISBN 8573931744.
+
+[5] Milies, Francisco C´esar Polcino e Sonia Pitta Coelho: Uma Introdu¸c˜ao `a Matem´atica.
+
+S˜ao Paulo: Edusp, 2003, ISBN 9788531404580.
+
+[6] Oliveira Santos, Jos´e Pl´ınio de: Introdu¸c˜ao `a Teoria dos N´umeros. Rio de Janeiro:
+
+IMPA, 2015, ISBN 9788524401428.
+
+[7] Ribenboim, Paulo: N´umeros Primos: Mist´erios e Recordes. Rio de Janeiro: IMPA,
+
+2001, ISBN 9788524401688.
+
+[8] Sampaio, Jo˜ao Carlos Vieira e Paulo Antˆonio Silvani Caetano: Introdu¸c˜ao `a Teoria dos
+
+N´umeros: um Curso Breve. S˜ao Carlos: EdUFSCar, 2007, ISBN 8576001276.
+
+63
+
+

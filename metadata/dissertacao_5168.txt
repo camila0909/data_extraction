@@ -1,0 +1,4374 @@
+UNIVERSIDADE DO ESTADO DE MATO GROSSO 
+
+CAMPUS DE SINOP 
+
+FACULDADE DE CIÊNCIAS EXATAS E TECNOLÓGICAS 
+
+MESTRADO PROFISSIONAL EM MATEMÁTICA EM REDE 
+
+NACIONAL - PROFMAT 
+
+RÔMULO FANGUEIRO PEREIRA 
+
+METODOLOGIA PARA A FUSÃO DE IMAGENS DIGITAIS BASEADA NAS 
+EQUAÇÕES DE COLINEARIDADE 
+
+SINOP-MT 
+2021 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+RÔMULO FANGUEIRO PEREIRA 
+
+METODOLOGIA PARA A FUSÃO DE IMAGENS DIGITAIS BASEADA NAS 
+EQUAÇÕES DE COLINEARIDADE 
+
+Dissertação apresentada ao Programa de 
+Mestrado  Profissional  em  Matemática  em 
+do 
+Rede  Nacional 
+departamento 
+da 
+Universidade  Estadual  do  Mato  Grosso  – 
+UNEMAT,  como  requisito  parcial  para 
+obtenção  do  grau  de  Mestre  em 
+Matemática. 
+
+–  PROFMAT, 
+de  Matemática 
+
+Prof. Dr. Giovane Maia do Vale 
+Orientador 
+
+Prof. Dr. João Gabriel Ribeiro 
+Coorientador 
+
+Prof. Me. Diogo Albino de Queiroz 
+Coorientador 
+
+SINOP 
+2021 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1 
+
+AGRADECIMENTOS 
+
+Em primeiro lugar, eu agradeço a Deus, o Criador de tudo e de todos, razão pela qual 
+
+eu existo e estou aqui. 
+
+Agradeço também especialmente ao meu orientador, professor Doutor Giovane Maia 
+
+do  Vale,  que  representou  para  mim  o  grande  esteio  na  construção  deste  trabalho, 
+
+sendo extremamente compreensivo comigo em um momento de dificuldade pessoal 
+
+em minha vida. Foi graças a ele que este trabalho pôde ser realizado e apresentado. 
+
+Também agradeço à minha família, meu pai, minha mãe, minhas irmãs e meus avós, 
+
+que  me  deram  todas  as  condições  para  que  eu  pudesse  estudar  e  realizar  este 
+
+trabalho, sendo eles parte fundamental da minha vida. 
+
+Agradeço também a minha atual namorada Lucélia Santana Fialho, pela ajuda e apoio 
+
+incondicional que ela tem me dado em tudo o que eu venho fazendo, sendo ela um 
+
+porto seguro para mim. 
+
+Por  fim,  agradeço  também  a  todos  os  professores  integrantes  do  programa  de 
+
+Mestrado Profissional em Matemática em nível nacional - PROFMAT, pelo Campus 
+
+de  Sinop  –  MT,  bem  como  todos  os  meus  colegas  de  mestrado,  que  foram 
+
+fundamentais no processo de formação e conclusão deste curso. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+2 
+
+RESUMO 
+
+Este  trabalho  versa  sobre  a  aplicação  da  Matemática  como  a  ferramenta  que 
+fundamenta o processamento de imagens capturadas por satélite. Nestes termos, o 
+objetivo deste trabalho foi desenvolver um software livre que efetuasse o processo de 
+fusão de imagens via método de fusão IHS. Tal software, implementado em C/C++, 
+se  baseou  no  algoritmo  de  retificação  de  imagens  que  incorpora  as  equações  de 
+colinearidade (Geometria Projetiva). Logo, se efetuou alterações no referido algoritmo 
+e nas equações de colinearidade de modo a gerar o referido software. Neste caso, o 
+algoritmo de retificação de imagens modificado foi utilizado como uma ferramenta de 
+reamostragem  de 
+foram 
+provenientes  do  satélite  sino-brasileiro  CBERS  4.  Foram  utilizadas  as  imagens 
+multiespectrais (R, G e B) do sensor MUX - Câmera Multiespectral Regular, com 
+de  resolução  espacial,  e  a  imagem  pancromática  do  sensor  PAN  -  Câmera 
+20 𝑚𝑚
+Pancromática e Multiespectral, com resolução espacial de 
+. Por meio do software QGIS 
+foram efetuados dois recortes nas imagens CBERS 4. Os recortes foram utilizados nos testes 
+e diziam respeito às regiões dos reservatórios de Ilha Solteira e Engenheiro Souza Dias 
+(Jupiá),  localizados  entre  os  estados  de  São  Paulo  e  Mato  Grosso  do  Sul.  Os 
+resultados  (imagens  fusionadas),  após  serem  submetidos  à  processo  de  realce  de 
+contraste, se mostraram satisfatórios, indicando o sucesso da pesquisa. 
+
+imagens  multiespectrais.  As 
+
+imagens  de  entrada 
+
+5 𝑚𝑚
+
+Palavras – chave: satélite, Matemática, imagens, Sensoriamento Remoto, fusão de 
+imagens. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+3 
+
+ABSTRACT 
+
+This work deals with the application of Mathematics as fundamental tool for processing 
+of  images  captured  by  satellite.  In  these  terms,  the  objective  of  this  work  was  to 
+develop a free software that could carry out image fusion process via the IHS fusion 
+method. Such software, implemented in C / C ++, was based on image rectification 
+algorithm  that  incorporates  collinearity  equations  (Projective  Geometry).  Therefore, 
+changes were made in the referred algorithm and in collinearity equations in order to 
+generate the referred software. In this case, the modified image rectification algorithm 
+was used as a multispectral image resampling tool. The input images were from the 
+Sino-Brazilian  satellite  CBERS  4.  Multispectral  images  (R,  G  and  B)  from  the  MUX 
+sensor - Regular Multispectral Camera, with 20 m spatial resolution, and panchromatic 
+image from the PAN sensor - Multispectral and Panchromatic Camera, with a spatial 
+resolution  of  5  m,  were  used.  Using  the  QGIS  software, two  cutouts  were made  on 
+CBERS 4 images. The cutouts were used in tests and related to the regions of Ilha 
+Solteira and Engenheiro Souza Dias (Jupiá) reservoirs, located between the states of 
+São Paulo and Mato Grosso do Sul. The results (fused images), after being submitted 
+through  the  contrast  enhancement  process,  are  defined  as  satisfactory,  indicating 
+research success. 
+
+Keywords: satellite, Mathematics, images, Remote Sensing, images fusion. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+4 
+
+ÍNDICE DE FIGURAS 
+
+Figura 1: Espectro visível da luz. .............................................................................. 13 
+
+Figura 2: Sistemas de cores primárias: RGB e CMYK. ............................................ 14 
+
+Figura 3: Esquema do cubo de cores RGB. ............................................................. 15 
+
+Figura 4: Triângulo de representação matiz/saturação ............................................ 16 
+
+Figura 5: Estrutura piramidal intensidade/matiz/saturação ....................................... 17 
+
+Figura 6: Esquematização da disposição dos pixels no sistema cartesiano. ........... 20 
+
+Figura 7: Representação de uma matriz P de M linhas por N colunas. .................... 21 
+
+Figura 8: Exemplo de representação matricial de pixels em tons de cinza. ............. 21 
+
+Figura 9: Exemplo de composição colorida. ............................................................. 22 
+
+Figura 10: Ilustração de resoluções espaciais distintas. .......................................... 24 
+
+Figura  11:  Ilustração  mostrando  um  esquema  de  resolução  espectral.  À  esquerda, 
+
+resolução multiespectral; à direita, resolução hiper espectral. .................................. 25 
+
+Figura  12:  Representação  de  uma  mesma  imagem  em  diferentes  resoluções 
+
+radiométricas. ............................................................................................................ 26 
+
+Figura 13: Esquema do processo de fusão de imagens por método IHS. ............... 28 
+
+Figura 14: Exemplo de fusão IHS: a) Imagem pancromática (tons de cinza) com alta 
+
+resolução;  b)  Imagem  colorida  (RGB)  com  baixa  resolução;  e  c)  Resultado  final  da 
+
+fusão. ........................................................................................................................ 28 
+
+Figura 15: Esquema de distribuição de angulações e colinearidade em fotogrametria.
+
+ .................................................................................................................................. 29 
+
+Figura  16:  Etapas  do  algoritmo  de  fusão  de  imagens,  materializadas  no  software 
+
+“Fusion”. .................................................................................................................... 43 
+
+Figura 17: Interface do Fusion: Prompt de Comando de MS-DOS. ......................... 44 
+
+Figura 18: Tabela contendo os dados e especificações da câmera MUX, responsável 
+
+pela captação das bandas 
+
+, 
+
+ e 
+
+. ......................................................................... 49 
+
+Figura 19: Tabela contendo os dados e especificações da câmera PAN, responsável 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+pela captação da imagem pancromática. .................................................................. 49 
+
+Figura  20:  Alocação  dos  reservatórios  hidrelétricos  -  Retângulo  Superior: 
+
+Reservatório de Ilha Solteira; Retângulo Inferior: Reservatório Engenheiro Souza Dias 
+
+(Jupiá). ...................................................................................................................... 50 
+
+Figura 21: Usina de Ilha Solteira: (a) Composição colorida – 
+
+; (b) Componente 
+
+vermelha; (c) Componente verde; (d) Componente azul. .......................................... 51 
+
+20 𝑚𝑚
+
+ 
+ 
+5 
+
+Figura  22:  Usina  de  Jupiá:  (a)  Composição  colorida  – 
+
+;  (b)  Componente 
+
+vermelha; (c) Componente verde; (d) Componente azul. .......................................... 51 
+
+20 𝑚𝑚
+
+Figura 23: Imagens Pancromáticas: (a) Região da Usina de Ilha Solteira; (b) Região 
+
+da Usina de Jupiá ...................................................................................................... 52 
+
+Figura 24: Composições coloridas: (a) Região da Usina de Ilha Solteira; (b) Região 
+
+da Usina de Jupiá. ..................................................................................................... 54 
+
+Figura  25:  Imagens  coloridas  reamostradas  relativas  às  regiões  de  Ilha  Solteira  (à 
+
+esquerda) e de Jupiá (à direita). ................................................................................ 55 
+
+Figura 26: Imagens coloridas reamostradas com realce, relativas às regiões de Ilha 
+
+Solteira (à esquerda) e de Jupiá (à direita). .............................................................. 55 
+
+Figura 27: Imagens fusionadas: (a) Região da Usina de Ilha Solteira; (b) Região da 
+
+Usina de Jupiá. .......................................................................................................... 56 
+
+Figura 28: Imagens fusionadas resultantes do experimento, com realce  de contraste 
+
+linear, relativas às regiões de Ilha Solteira (à esquerda) e de Jupiá (à direita). ........ 57 
+
+Figura  29:  Imagem  fusionada  realçada:  (a)  Região  da  Usina  de  Ilha  Solteira;  (b) 
+
+Região da Usina de Jupiá. ........................................................................................ 58 
+
+Figura  30:  Comparação  de  detalhes  (região  de  Ilha  Solteira):  (a)  Imagem  colorida 
+
+inicial; (b) Imagem fusionada ..................................................................................... 59 
+
+Figura 31: Comparação de detalhes (região de Jupiá): (a) Imagem colorida inicial; (b) 
+
+Imagem fusionada ..................................................................................................... 59 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+6 
+
+SUMÁRIO 
+
+1 
+
+Introdução ........................................................................................................... 8 
+
+1.1  Estado da Arte e Justificativa ......................................................................... 8 
+
+1.2  Objetivos ...................................................................................................... 10 
+
+1.3  Estrutura do Trabalho ................................................................................... 11 
+
+2  FUNDAMENTAÇÃO TEÓRICA ......................................................................... 12 
+
+2.1  A Luz e o Olho Humano ............................................................................... 12 
+
+2.2  As Cores Primárias ...................................................................................... 13 
+
+2.3 
+
+Imagens Digitais ........................................................................................... 19 
+
+2.4  Resoluções de Imagens ............................................................................... 23 
+
+2.4.1  Resolução Espacial ..................................................................... 23 
+
+2.4.2  Resolução Espectral .................................................................... 24 
+
+2.4.3  Resolução Radiométrica .............................................................. 25 
+
+2.4.4  Resolução Temporal .................................................................... 27 
+
+2.5  Fusão de Imagens via Método IHS .............................................................. 27 
+
+2.6  Equações de Colinearidade ......................................................................... 29 
+
+2.7  Retificação de imagens ................................................................................ 32 
+
+3  Metodologia ....................................................................................................... 36 
+
+3.1  Preâmbulo .................................................................................................... 36 
+
+3.2  Delineamento Metodológico da Pesquisa .................................................... 38 
+
+3.2.1  Alterações às equações de colinearidade ................................... 38 
+
+3.2.2  O algoritmo de fusão de imagens ................................................ 42 
+
+4  RESULTADOS E ANÁLISES ............................................................................. 48 
+
+4.1  Dados de Entrada ........................................................................................ 48 
+
+4.2  Resultados Experimentais e Análises .......................................................... 53 
+
+4.2.1  Procedimentos preliminares ........................................................ 53 
+
+4.2.2  A fusão das imagens ................................................................... 55 
+
+ 
+7 
+
+5  CONCLUSÕES E RECOMENDAÇÕES: ........................................................... 61 
+
+5.1  Conclusões .................................................................................................. 61 
+
+5.2  Recomendações .......................................................................................... 62 
+
+REFERÊNCIAS BIBLIOGRÁFICAS ......................................................................... 63 
+
+ 
+ 
+ 
+ 
+ 
+ 
+8 
+
+1 
+
+INTRODUÇÃO 
+
+1.1  Estado da Arte e Justificativa 
+
+No  universo  do  Sensoriamento  Remoto  e  da  Fotogrametria  são  aplicadas 
+
+técnicas  e  metodologias  intimamente  ligadas  à  Matemática  e  que  envolvem,  por 
+
+exemplo,  vetores,  equações,  Geometria,  ajustamento  de  observações  e  conceitos 
+
+espaciais diversos (GONZALEZ e WOODS, 2010). Até mesmo programas com fins 
+
+cartográficos, como o Google Maps e o Google Earth, que incorporam tecnologia GPS 
+
+(Global Positioning System) e que fazem uso das metodologias e técnicas associadas 
+
+ao  Sensoriamento  Remoto  e  à  Fotogrametria,  possuem  em  sua  constituição  uma 
+
+enorme gama de teorias matemáticas que os tornam operacionais. 
+
+É sabido ainda que, em Sensoriamento Remoto e Fotogrametria os sensores 
+
+possibilitam  a  captação  de  radiação  eletromagnética  refletida  pelos  alvos  e  este 
+
+conteúdo dá origem a dados (imagens digitais) que, quando processados, resultam 
+
+em informações abrangentes sobre as áreas de interesse (CRÓSTA, 1992). Assim, 
+
+cabe informar que, as metodologias e técnicas ligadas ao Sensoriamento Remoto e à 
+
+Fotogrametria  encontram-se  impregnadas  de  elementos  Matemáticos,  pois  as 
+
+imagens  digitais,  que  são  as  principais  fontes  de  dados  destas  ciências,  estão 
+
+intrinsecamente  ligadas  à  Matemática  e,  por  este  motivo,  surge  a  demanda  por 
+
+algoritmos e modelos matemáticos para o seu processamento e para a subsequente 
+
+geração de informações (CRÓSTA, 1992). Eis aí a importância das imagens digitais, 
+
+as quais se encontram no escopo da pesquisa aqui descrita. 
+
+Neste contexto, ao se buscar por imagens digitais orbitais, por exemplo, no site 
+
+do INPE – Instituto Nacional de Pesquisas Espaciais (http://www.dgi.inpe.br/CDSR/), 
+
+verifica-se  uma  gama  razoável  de  satélites  e  sensores  disponíveis.  De  modo  mais 
+
+geral,  novos  satélites  destinados  ao  imageamento  são  lançados  regularmente, 
+
+aumentando  consideravelmente  a  disponibilidade  de  dados  orbitais.  No  entanto, 
+
+apesar  da  disponibilidade  de  imagens,  o  custo  de  produtos  que  oferecem  alta 
+
+resolução  e  elevado  detalhamento,  por  vezes,  é  proibitivo  para  uma  parcela  da 
+
+comunidade das geociências. Logo, é comum que se busque uma alternativa viável a 
+
+estes produtos onerosos, conforme o exposto a seguir. 
+
+ 
+ 
+ 
+9 
+
+É comum verificar que sensores pancromáticos, que imageam o espectro em 
+
+apenas uma banda ou faixa de frequência (imagens em tons de cinza), dão origem às 
+
+imagens de mais alta resolução espacial (qualidade do detalhamento da imagem) do 
+
+que os sensores multiespectrais (coloridos) de um mesmo satélite. Assim, visando um 
+
+melhor  aproveitamento  dos  dados  com  diferentes  resoluções  espaciais  e,  muitas 
+
+vezes,  provenientes  de  diferentes  sensores,  alguns  métodos  de  processamento  de 
+
+imagens  têm  sido  propostos  (VENTURA,  2002).  Estes  métodos,  genericamente 
+
+conhecidos como “métodos de fusão de imagens”, destinam-se a combinar imagens 
+
+de  diferentes  características  espectrais  e  espaciais  a  fim  de  se  obter  uma  nova 
+
+imagem,  fruto  da  fusão  de  imagens  pancromáticas,  com  boa  resolução  espacial,  e 
+
+imagens multiespectrais que, diferentemente das imagens pancromáticas, possuem, 
+
+eventualmente,  pior  resolução  espacial  (LEONARDI  et  al.,  2005).  Ou  seja,  nos 
+
+métodos de fusão de imagens, atribui-se cor à uma imagem pancromática de melhor 
+
+resolução  espacial,  utilizando-se  as  cores de  imagens  multiespectrais  de resolução 
+
+espacial inferior (CHAVEZ e BOWELL, 1988). Logo, o resultado é uma imagem com 
+
+boa resolução espacial e informação de cor, a qual era anteriormente inexistente. 
+
+Nestes termos, como a discrepância de qualidade e de utilidade estabelecida 
+
+entre imagens de satélite, com e sem coloração, é significativa e considerando a busca 
+
+que  os  interessados  das  áreas  de  Geoprocessamento,  Geomática  e  Geografia 
+
+(usuários,  pesquisadores  e  professores)  empreendem  por  imagens  com  a  melhor 
+
+qualidade possível, verifica-se a importância da pesquisa teórica e implementação de 
+
+softwares capazes de gerar imagens digitais que possuam a qualidade almejada por 
+
+tais interessados. 
+
+Cabe informar que já existem algoritmos destinados à fusão de imagens e que 
+
+estes  são  conhecidos,  aprovados  e  consolidados  pela  comunidade  científica 
+
+(LEONARDI et al., 2005). Porém, segundo Leonardi et al. (2005), dada a diferença de 
+
+concepção entre tais algoritmos, existe alguma divergência entre os produtos gerados 
+
+por eles. Logo, é nesse contexto que a pesquisa executada se inseriu. 
+
+Diante  do  exposto  e  considerando  a  importância  da  Matemática,  bem  como, 
+
+das imagens digitais no âmbito das Geociências, buscou-se fazer avançar o estado 
+
+da arte no tocante a estes assuntos. Logo, nesta pesquisa efetuou-se alterações a um 
+
+modelo matemático e se criou um novo algoritmo, dando origem, consequentemente, 
+
+a  um  programa  de  computador  destinado  à  fusão  de  imagens  digitais,  baseado  no 
+
+ 
+10 
+
+processo de retificação de imagens, o qual incorpora em sua concepção elementos 
+
+de  Geometria  Projetiva  (equações  de  colinearidade).  Para  se  atingir  tais  metas, 
+
+realizou-se  um  estudo  do  algoritmo  de  retificação  de  imagens  e  das  equações  de 
+
+colinearidade  a  ele  incorporadas.  Diante  do  know-how  adquirido,  efetuou-se 
+
+mudanças  algorítmicas  e  matemáticas  no  processo  de  modo  a  se  gerar  um 
+
+algoritmo/software de fusão de imagens baseado na teoria de fusão de imagens via 
+
+método IHS (Intensity-Hue-Saturation). Cabe especificar que, se optou por utilizar o 
+
+método de fusão de imagens IHS, devido à qualidade de seus resultados, preconizada 
+
+na literatura, e pelo fato deste ser frequentemente utilizado pela comunidade científica 
+
+(LEONARDI et al., 2005). A análise se deu de forma comparativa entre as imagens 
+
+fusionadas geradas e as respectivas imagens simplesmente reamostradas. 
+
+Por  fim,  especifica-se  que,  em  um  primeiro  momento,  os  resultados  desta 
+
+pesquisa  podem  ser  utilizados  em  aplicações  de  Sensoriamento  Remoto  e 
+
+Fotogrametria, que necessitam de dados confiáveis e de excelente qualidade espacial 
+
+e espectral. Em adição a isso, por sua facilidade de operação, o sistema criado poderá 
+
+ser utilizado também, tanto no âmbito acadêmico, quanto na Educação Básica, e.g., 
+
+por professores de Geografia e de História. 
+
+1.2  Objetivos 
+
+A pesquisa objetivou o estudo e o aprofundamento teórico relativo às equações 
+
+de colinearidade e ao algoritmo fotogramétrico de retificação de imagens digitais, com 
+
+o  intuito  de  criar  uma  aplicação  computacional  que  efetuasse  a  fusão  de  imagens 
+
+digitais com base no método IHS de fusão. A metodologia desenvolvida encontra-se 
+
+no  âmbito  da  Geometria  Projetiva  e  foi  avaliada  comparativamente  com  relação  às 
+
+imagens reamostradas pelo próprio sistema implementado. 
+
+A fim de alcançar tal objetivo, algumas metas foram estabelecidas e serão aqui 
+
+detalhadas.  Inicialmente,  procurou-se  estudar  a  teoria  relativa  às  equações  de 
+
+colinearidade,  com  vistas  a  entender  sua  concepção  e  parâmetros,  bem  como, 
+
+analisar o algoritmo fotogramétrico de retificação de imagens, objetivando vislumbrar 
+
+sua lógica de funcionamento e angariar embasamento teórico para a implementação 
+
+proposta.  Em  seguida,  buscou-se  estudar  a  linguagem  de  programação  C/C++, 
+
+considerando  o  paradigma  procedural  de  implementação  computacional,  para  que, 
+
+ 
+ 
+ 
+11 
+
+com isso, se pudesse projetar e efetuar modificações algorítmicas e matemáticas no 
+
+algoritmo  de  retificação  de  imagens,  objetivando  assim  a  criação  de  um  software 
+
+capaz  de  realizar  a  fusão  de  imagens.  Por  fim,  a  última  meta  foi  efetuar  a 
+
+experimentação  e  posterior  avaliação  comparativa  entre  os  resultados  advindos  do 
+
+novo software proposto. 
+
+1.3  Estrutura do Trabalho 
+
+Este trabalho foi estruturado em 5 capítulos. Após a introdução, na qual o tema 
+
+abordado foi contextualizado, chegou-se ao Capítulo 2, destinado à apresentação dos 
+
+fundamentos  teóricos  que  embasam  a  metodologia  elaborada  e  executada.  Neste 
+
+capítulo  se  explana  sobre:  a  luz  e  o  olho  humano,  as  cores  primárias,  as  imagens 
+
+digitais, os tipos de resoluções de imagens, a fusão de imagens via método IHS, as 
+
+equações de colinearidade e o algoritmo de retificação de imagens digitais. 
+
+O  Capítulo  3  destina-se  à  apresentação  do  delineamento  metodológico 
+
+empreendido e que resultou no software implementado. Neste capítulo são descritos 
+
+os detalhes inerentes à metodologia como, por exemplo, a especificação dos dados 
+
+dos processados (imagens), as alterações matemáticas e algorítmicas para a geração 
+
+do referido programa e os aspectos relativos à implementação do software de fusão 
+
+de imagens. 
+
+No Capítulo 4 estão contidos os resultados obtidos e as análises empreendidas 
+
+sobre tais resultados. 
+
+Ao  final,  tem-se  as  conclusões  advindas  da  pesquisa  realizada.  Ou  seja,  o 
+
+Capítulo 5 traz as considerações finais e as principais conclusões que se pôde inferir 
+
+partir da realização do trabalho, bem como, as recomendações relativas a possíveis 
+
+trabalhos futuros. 
+
+ 
+ 
+ 
+ 
+ 
+12 
+
+2  FUNDAMENTAÇÃO TEÓRICA 
+
+As  seções  que  seguem  fundamentam  a  pesquisa  realizada.  Assim,  os 
+
+conteúdos  relacionados  à  luz  e  ao  olho  humano,  às  cores  primárias,  às  imagens 
+
+digitais, aos tipos de resoluções de imagens, à fusão de imagens via método IHS, às 
+
+equações  de  colinearidade  e  ao  algoritmo  de  retificação  são  apresentados  e 
+
+brevemente  discutidos  a  fim  de  que  se  tenha  o  arcabouço  teórico  necessário  à 
+
+execução da pesquisa de acordo com o delineamento metodológico previsto. 
+
+2.1  A Luz e o Olho Humano 
+
+Antes de se falar de imagens geradas por sensores embarcados em satélites, 
+
+faz-se necessário realizar uma abordagem acerca das principais características das 
+
+ondas eletromagnéticas, além do funcionamento do olho humano, com relação a seu 
+
+mecanismo de captação de luz. 
+
+As ondas eletromagnéticas que compõem a luz possuem, como qualquer onda 
+
+de  caráter  físico,  um  comprimento  de  onda 
+
+  e  uma  frequência 
+
+,  medida  em 
+
+oscilações  por  segundo,  indicadas  em  hertz  (Hz),  sendo  que  estas  grandezas  são 
+
+𝜆𝜆
+
+𝑓𝑓
+
+inversamente  proporcionais  entre  si.  Entre  as  ondas  eletromagnéticas  de  baixa 
+
+frequência  (e.  g.,  infravermelho),  podem  ser  citadas  as  ondas  de  rádio,  televisão  e 
+
+micro-ondas.  A  faixa  de  frequência  correspondente  ao  espectro  eletromagnético 
+
+visível pelo olho humano varia entre 4.1014 Hz (luz vermelha) e 8.1014 Hz (luz violeta), 
+
+o  que  equivale  a  um 
+
+intervalo  de 
+
+frequências  relativamente  curto.  Mais 
+
+especificamente, tal faixa corresponde às cores vermelho, alaranjado, amarelo, verde, 
+
+azul,  anil,  violeta  e  suas  variações,  respectivamente,  que  são  derivadas  da 
+
+decomposição  da  luz  branca.  Acima  disso  estão  as  ondas  de  alta  frequência, 
+
+conhecidas  como  ondas  ultravioleta,  entre  as  quais  se  encontram  o  raio  X  e,  com 
+
+frequência ainda maior, os raios gama. (GASPAR, 2016).  
+
+Com relação às estruturas do olho humano responsáveis pela captação de luz, 
+
+estas consistem em pequenos elementos denominados de cones e bastonetes. Os 
+
+cones são ativados pela maior presença de luz e são responsáveis pela captação das 
+
+cores.  Já  os  bastonetes,  menos  sensíveis  às  cores,  estão  presentes  em  uma 
+
+ 
+ 
+ 
+ 
+13 
+
+quantidade bastante superior à dos cones e possuem a capacidade de captar luz em 
+
+ambientes com baixa luminosidade. Com isso, os bastonetes são úteis em ambientes 
+
+de baixa luminosidade, em que o discernimento de formas dos objetos se sobrepõe 
+
+ao de cores (GONZALEZ e WOODS, 2010). 
+
+Figura 1: Espectro visível da luz. 
+Fonte: Gaspar (2016) 
+
+Basicamente,  a  luz  captada  pelo  olho  humano  pode  advir  de  duas  fontes: 
+
+corpos emissores de luz, como o Sol e as lâmpadas elétricas, e corpos refletores de 
+
+luz, como a maioria dos objetos visíveis. Considerando esta segunda classe, chega-
+
+se ao âmbito das imagens digitais produzidas por satélite que, de modo geral, são o 
+
+produto da amostragem e quantização da radiação eletromagnética refletida. 
+
+A Figura 1 ilustra, em destaque, o espectro visível que é constituído por ondas 
+
+com comprimento de onda perceptíveis pelo olho humano. 
+
+2.2  As Cores Primárias 
+
+Quando  se  fala  em  cores  primárias,  se  está  abordando  basicamente  um 
+
+conjunto de cores determinadas que dá origem às demais cores captadas pelo olho 
+
+humano. Neste ponto, cabe especificar que, as cores dizem respeito ao comprimento 
+
+de  onda  da  radiação  eletromagnética  refletida  pelos  objetos  e  que  são, 
+
+posteriormente, captadas pelo olho humano. Gonzalez e Woods (2010) especificam 
+
+que, para fins de padronização, a CIE (Commission Internationale de l’Eclairage ou, 
+
+ 
+ 
+ 
+ 
+em  português,  Comissão  Internacional  de  Iluminação)  determinou,  em  1931,  os 
+
+seguintes valores específicos como comprimentos de onda das três cores primárias: 
+
+azul  = 
+
+,  verde  = 
+
+  e  vermelho  = 
+
+.  Assim,  por  exemplo,  um 
+
+14 
+
+objeto  que  reflita  radiação  eletromagnética  com  comprimento  de  onda  em  torno  de 
+
+700 𝑛𝑛𝑛𝑛
+
+435,8 𝑛𝑛𝑛𝑛
+546,1 𝑛𝑛𝑛𝑛
+ será visto como vermelho. 
+
+700 𝑛𝑛𝑛𝑛
+
+Complementando  e  corroborando  com  o  acima  descrito,  Gomes  e  Queiroz 
+
+(2001) especificam que as três cores primárias da luz, considerando a percepção do 
+
+olho  humano,  são  o  vermelho,  o  verde  e  o  azul,  e  que  estas  formam  o  sistema 
+
+conhecido como RGB (Red-Green-Blue, em inglês). Das luzes relativas à estas três 
+
+cores se originam todas as demais, inclusive a luz branca, quando combinadas (ou 
+
+adicionadas). Por exemplo, o vermelho combinado com o verde, em igual proporção, 
+
+forma a cor amarela. De igual modo, o vermelho e o azul formam o magenta e, por 
+
+sua  vez,  o  azul  com  o  verde  resulta  no  ciano.  A  luz  de  cor  branca  é  resultante  da 
+
+combinação, em intensidade máxima, das três cores primárias citadas anteriormente. 
+
+Essa combinação vale, tanto para objetos emissores de luz, quanto para os objetos 
+
+refletores. No caso de um objeto refletor, a luz branca (combinação de todas as cores) 
+
+chega  até  ele  e  as  componentes  da  luz  são  absorvidas  por  sua  superfície,  com 
+
+exceção de uma componente particular que será refletida e que será responsável por 
+
+sua coloração, quando tal objeto for observado pelo olho humano ou imageado. Por 
+
+exemplo, se um objeto é de cor vermelha, significa que ele absorveu as outras faixas 
+
+de cores e refletiu apenas a cor vermelha. 
+
+Figura 2: Sistemas de cores primárias: RGB e CMYK. 
+Fonte: Confeccionado pelo próprio autor 
+
+ 
+ 
+15 
+
+Outro  sistema  de  cores  primárias  muito  utilizado  é  o  sistema  denominado 
+
+CMYK 
+
+(Cyan-Magenta-Yellow-BlacK,  em 
+
+inglês)  correspondente  às  cores 
+
+secundárias  do  sistema  anterior,  ciano,  magenta  e  amarelo.  Esse  sistema  é 
+
+normalmente  utilizado  em  impressões  de  imagens  por  impressoras  e  máquinas 
+
+gráficas  de  modo  geral,  visto  que  as  três  cores  citadas  dão  origem,  quando  são 
+
+utilizadas tintas de impressão, a todas as outras, excetuando-se a cor preta, que é 
+
+adicionada  à  parte.  Daí  o  nome  CMYK  (GOMES  e  QUEIROZ,  2001).  A  Figura  2 
+
+esquematiza os dois sistemas de cores citados anteriormente. Já, na Figura 3, tem-
+
+se o cubo de cores RGB, que se baseia em um sistema de coordenadas cartesianas 
+
+tridimensional, no qual cada eixo diz respeito a uma componente ou cor primária. 
+
+Gonzales  e  Woods 
+
+(2010)  explicam  que,  nesta 
+
+representação,  por 
+
+conveniência, assume-se que todos os valores de cor foram normalizados, de forma 
+
+que o cubo mostrado na Figura 3 é um cubo unitário. Assim, assume-se os valores de 
+
+R, G e B variem no intervalo [0, 1]. Nestes termos, afirma-se que imagens coloridas 
+
+(RGB) são constituídas de pixels nos quais comparecem três componentes de cor. De 
+
+modo geral, assume-se que uma imagem colorida seja o resultado da composição de 
+
+três imagens, uma para cada cor primária. Ressalta-se que, as componentes ciano, 
+
+magenta e amarelo também comparecem, de forma complementar, no cubo de cores 
+
+RGB. 
+
+Figura 3: Esquema do cubo de cores RGB. 
+Fonte: Gonzalez e Woods (2010) 
+
+ 
+ 
+16 
+
+Além dos sistemas citados, há também outros sistemas de cores, como o IHS 
+
+(Intensity, Hue, Saturation ou, em português, Intensidade-Matiz-Saturação), no qual 
+
+são  consideradas,  além  do  matiz  da  cor  (hue),  outras  características,  como  a 
+
+intensidade e a saturação. 
+
+O modelo de cores IHS caracteriza-se por utilizar um sistema de coordenadas 
+
+cilíndricas  polares  que  representa  as  cores,  ao  invés  de  coordenadas  cartesianas 
+
+como o sistema RGB (CRÓSTA, 1992). A saturação diz respeito à pureza relativa ou 
+
+quantidade  de  luz  branca  agregada  ao  matiz.  Por  sua  vez,  o  matiz  define  a  cor 
+
+dominante de um objeto. Ou seja, o matiz é o fator que determina o comprimento de 
+
+onda  dominante  que  será  refletido  por  um  objeto  e  este  comprimento  de  onda 
+
+determina  sua  cor.  Aliada  a  estas  duas  componentes  tem-se  a  intensidade,  que 
+
+abarca a noção de brilho da imagem. 
+
+Conforme o apresentado anteriormente, o modelo RGB é definido tomando-se 
+
+como base um cubo unitário que materializa um sistema cartesiano 3D. Por sua vez, 
+
+as  componentes  do  modelo  IHS  de  cores,  matiz  e  saturação,  podem  ser 
+
+representadas, respectivamente, por um triângulo de cores, de acordo com a Figura 
+
+4. Considerando a Figura 4, Gonzalez e Woods (2010) expressam que o matiz 
+
+ do 
+
+ponto  de  cor 
+
+  é  o  ângulo  do  vetor  com  relação  ao  eixo  vermelho.  Assim,  quando 
+
+𝐻𝐻
+
+,  tem-se  a  cor  é  vermelha,  quando 
+
+𝑃𝑃
+
+,  a  cor  é  a  amarela,  e  assim  por 
+
+diante (GONZALEZ, 2010). A saturação do ponto 
+𝐻𝐻 = 0°
+relação ao centro do triângulo. 
+
+𝐻𝐻 = 60°
+
+𝑃𝑃
+
+ corresponde à sua distância com 
+
+Figura 4: Triângulo de representação matiz/saturação 
+Fonte: Gonzalez (2000) 
+
+ 
+ 
+17 
+
+Em adição a isso, Gonzalez e Woods (2010) especificam que, no modelo IHS, 
+
+a  intensidade  é  medida  com  respeito  a  uma  linha  ortogonal  ao  triângulo  (matiz  e 
+
+saturação), passando pelo seu centro. As intensidades de brilho, ao longo desta linha 
+
+variam do preto absoluto, extremo inferior da linha, até o branco  absoluto, extremo 
+
+superior da linha. A combinação do matiz com a saturação e a intensidade resultará 
+
+no subespaço de estrutura piramidal de três lados, conforme mostrado na Figura 5 
+
+(GONZALEZ e WOODS, 2010). 
+
+Figura 5: Estrutura piramidal intensidade/matiz/saturação 
+Fonte: adaptado de Gonzalez e Woods (2010) 
+
+Pontos na superfície da estrutura apresentada na Figura 5 representam uma 
+
+cor  saturada.  O  matiz  desta  cor  é  definido  por  seu  ângulo  com  relação  ao  eixo 
+
+vermelho  e  sua  intensidade  consiste  na  distância  perpendicular  ao  ponto  preto. 
+
+Considerando uma imagem RGB e presumindo-se que os respectivos valores tenham 
+
+sido  normalizados  no  intervalo  [0,  1]  pode-se  chegar  aos  valores  de  intensidade, 
+
+saturação e matiz por meio das equações abaixo (GONZALEZ e WOODS, 2010): 
+
+                                                        (1) 
+
+𝑅𝑅+𝐺𝐺+𝐵𝐵
+
+𝐼𝐼 =
+
+3
+
+ 
+ 
+18 
+
+3
+
+𝑆𝑆 = 1 − �
+
+𝑅𝑅+𝐺𝐺+𝐵𝐵� ∙ [𝑛𝑛í𝑛𝑛(𝑅𝑅, 𝐺𝐺, 𝐵𝐵)]
+
+                                         (3) 
+
+                                   (2) 
+
+Onde: 
+
+𝐻𝐻 = �
+
+𝜃𝜃
+360° − 𝜃𝜃
+
+    𝑠𝑠𝑠𝑠 𝐵𝐵 ≤ 𝐺𝐺
+   𝑠𝑠𝑠𝑠 𝐵𝐵 > 𝐺𝐺
+
+• 
+
+• 
+
+, 
+
+ e 
+
+ são as intensidades de brilho das componentes vermelho, verde e azul, 
+
+normalizadas no intervalo [0, 1]; 
+𝑅𝑅
+
+𝐵𝐵
+
+𝐺𝐺
+
+1
+2[(𝑅𝑅−𝐺𝐺)+(𝑅𝑅−𝐵𝐵)]
+
+−1
+
+𝜃𝜃 = cos
+
+�
+
+[(𝑅𝑅−𝐺𝐺)
+Considerando que os valores 
+
+2
+
+1
+2�
++(𝑅𝑅−𝐵𝐵).(𝐺𝐺−𝐵𝐵)]
+ e 
+
+, 
+
+ foram, a priori, normalizados no intervalo 
+
+[0,  1],  então  os  valores  de  saída  do  matiz  e  da  intensidade  também  estarão 
+𝐵𝐵
+normalizados no intervalo [0, 1]. Porém, Gonzalez e Woods (2010) especificam que, 
+
+𝑅𝑅
+
+𝐺𝐺
+
+para que a saturação esteja normalizada no intervalo [0, 1], deve-se dividir os valores 
+
+decorrentes da equação (3) por 360º. 
+
+Cabe esclarecer que, considerando os sistemas RGB e IHS, pode-se ir de um 
+
+a outro sistema via Transformação IHS. Assim, para se ir do sistema IHS para RGB, 
+
+Gonzalez  e  Woods  (2010)  especificam  que  as  equações  aplicáveis  dependem  dos 
+
+valores  de 
+
+.  Tais  valores  de 
+
+  determinarão  três  setores,  correspondentes  a 
+
+intervalos  de  120º,  que  separam  as  cores  primárias  (ver  Figura  4).  Logo,  após 
+
+multiplicar 
+
+𝐻𝐻
+ por 360º, de modo que os valores de 
+
+𝐻𝐻
+
+ voltem ao seu intervalo original, 
+
+pode-se proceder a transformação como segue (GONZALEZ e WOODS, 2010): 
+
+𝐻𝐻
+
+𝐻𝐻
+
+1)  Se 
+
+, então faça: 
+
+0° ≤ 𝐻𝐻 < 120°
+
+                                                    (4) 
+
+𝐵𝐵 = 𝐼𝐼. (1 − 𝑆𝑆)
+
+                                            (5) 
+
+𝑅𝑅 = 𝐼𝐼. �1 +  
+
+𝑆𝑆.𝑐𝑐𝑐𝑐𝑐𝑐 (𝐻𝐻)
+𝑐𝑐𝑐𝑐𝑐𝑐 (60°−𝐻𝐻)�
+
+                                               (6) 
+
+2)  Se 
+
+, então subtraia 120° de 
+
+𝐺𝐺 = 3. 𝐼𝐼 − (𝑅𝑅 + 𝐵𝐵)
+
+ (i. e., 
+
+) e faça: 
+
+120° ≤ 𝐻𝐻 < 240°
+
+𝐻𝐻
+
+                                                    (7) 
+
+𝐻𝐻 = 𝐻𝐻 − 120°
+
+𝑅𝑅 = 𝐼𝐼. (1 − 𝑆𝑆)
+
+                                            (8) 
+
+𝐺𝐺 = 𝐼𝐼. �1 +  
+
+𝑆𝑆.𝑐𝑐𝑐𝑐𝑐𝑐 (𝐻𝐻)
+𝑐𝑐𝑐𝑐𝑐𝑐 (60°−𝐻𝐻)�
+
+ 
+ 
+19 
+
+                                               (9) 
+
+3)  Se 
+
+, então subtraia 240° de 
+
+𝐵𝐵 = 3. 𝐼𝐼 − (𝑅𝑅 + 𝐺𝐺)
+
+ (i. e., 
+
+) e faça: 
+
+240° ≤ 𝐻𝐻 < 360°
+
+𝐻𝐻
+                                                    (10) 
+
+𝐻𝐻 = 𝐻𝐻 − 240°
+
+𝐺𝐺 = 𝐼𝐼. (1 − 𝑆𝑆)
+
+                                            (11) 
+
+𝐵𝐵 = 𝐼𝐼. �1 +  
+
+𝑆𝑆.𝑐𝑐𝑐𝑐𝑐𝑐 (𝐻𝐻)
+𝑐𝑐𝑐𝑐𝑐𝑐 (60°−𝐻𝐻)�
+
+                                               (12) 
+
+Por fim, ainda segundo Gonzalez e Woods (2010), para se retornar aos valores 
+
+𝑅𝑅 = 3. 𝐼𝐼 − (𝐺𝐺 + 𝐵𝐵)
+
+originais de 
+
+, 
+
+ e 
+
+, deve-se normalizar os valores obtidos no intervalo original. 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+2.3 
+
+Imagens Digitais  
+
+Uma  imagem  digital  é  composta,  basicamente,  por  unidades  denominadas 
+
+pixels  (contração  da  expressão  inglesa  “picture  element”),  as  quais  são  pequenos 
+
+quadrados, coloridos (nas imagens coloridas) ou em tons de cinza (nas imagens em 
+
+tons de cinza e pancromáticas, popularmente conhecidas como imagens “em preto e 
+
+branco”)  (CRÓSTA,  1992).  Essas  pequenas  unidades,  quando  em  conjunto  e 
+
+organizadas em um grid (formato de disposição quadriculado, em linhas e colunas, 
+
+conforme  figura  6),  formam  a  imagem  toda.  A  qualidade  de  uma  imagem  de  uma 
+
+determinada  cena  dependerá  então  da  quantidade  de  pixels  que  a  compõe.  Logo, 
+
+quanto  mais  pixels  a  imagem  da  referida  cena  contiver,  melhor  a  sua  qualidade 
+
+pictórica. Esses pixels, normalmente, são dispostos em um sistema referencial (grid 
+
+retangular) baseado no sistema referencial cartesiano plano, de modo a se facilitar a 
+
+manipulação da imagem em questão. 
+
+A Figura 6 apresenta o sistema referencial da imagem com origem no canto 
+
+superior esquerdo. Neste sistema, a contagem de colunas (
+
+) ocorre com relação ao 
+
+eixo 
+
+, da esquerda para a direita e se inicia em 0 (zero). Já a contagem de linhas (
+
+𝑐𝑐
+
+) 
+
+da imagem, ocorre de cima para baixo e também se inicia em 0 (zero). Dessa forma, 
+
+𝑥𝑥
+
+𝑙𝑙
+
+a  posição  de  um  pixel  qualquer  da  imagem  pode  ser  dada  por  meio  de  um  par 
+
+ordenado (
+
+), ou (
+
+). 
+
+𝑥𝑥, 𝑦𝑦
+
+𝑐𝑐, 𝑙𝑙
+
+ 
+ 
+ 
+20 
+
+Cabe  informar  que,  para  fins  de  manipulação  e  no  intuito  de  se  gerar  uma 
+
+analogia com o primeiro quadrante do plano cartesiano, muitos autores se referem à 
+
+posição dos pixels das imagens considerando pares ordenados no formato (
+
+). 
+
+𝑙𝑙, 𝑐𝑐
+
+Figura 6: Esquematização da disposição dos pixels no sistema cartesiano. 
+Fonte: Elaborado pelo autor. 
+
+Crósta (1992) especifica ainda que, cada pixel é um quadrado que recobre uma 
+
+determinada área de uma cena do mundo real, representando-a pictoricamente. No 
+
+caso de imagens de satélite, a medida de área do mundo real coberta por cada pixel 
+
+será a mesma de qualquer outro pixel pertencente à mesma imagem. Ainda segundo 
+
+o autor, a cada pixel é atribuído, no sistema referencial da imagem, um valor de “
+
+” e 
+
+um  valor  de  “
+
+”,  que  correspondem  às  posições  de  linha  e  coluna  do  elemento, 
+
+𝑥𝑥
+
+tomadas com relação ao seu centro. Por convenção, a origem do sistema referencial 
+
+𝑦𝑦
+
+da imagem se localiza no ponto superior esquerdo da imagem. Além disso, um terceiro 
+
+valor, na variável “
+
+”, é atribuído ao pixel, e se refere à tonalidade de cinza desse pixel, 
+
+a qual pode variar do branco ao preto, passando por tonalidades de cinza. Se forem 
+
+𝑧𝑧
+
+consideradas as imagens coloridas, então, costumeiramente, se terá, para cada pixel, 
+
+três valores de intensidade associados, respectivamente, às componentes R, G e B, 
+
+a fim de que a cor do pixel seja gerada. Na prática, uma imagem colorida é formada 
+
+por  três  imagens  em  tons  de  cinza  que  contêm  as  contribuições  de  bandas 
+
+específicas, R, G e B, do espectro eletromagnético. 
+
+ 
+ 
+21 
+
+Uma imagem pode ser representada matricialmente. Segundo Marques Filho e 
+
+Vieira Neto (1999), os pixels se distribuem em uma matriz de ordem M x N (M linhas 
+
+por N colunas), de modo que a cada pixel está associado um número inteiro (
+
+), que 
+
+varia de 0 a 2n -1, e que indica a tonalidade deste pixel. Sendo assim, quanto maior o 
+
+𝑧𝑧
+
+valor de “
+
+”, maior a quantidade de tons de cinza que poderá ser utilizada na geração 
+
+de uma imagem. 
+
+𝑛𝑛
+
+Figura 7: Representação de uma matriz P de M linhas por N colunas. 
+Fonte: Confeccionado pelo próprio autor. 
+
+De  modo  mais  didático,  tem-se  na  Figura  7  uma  ilustração  do  conceito  de 
+
+distribuição  matricial  de  tons  de  cinza  em  cada  pixel.  Neste  casso, 
+
+,  com  
+
+ e 
+
+, representa a intensidade de brilho (ou nível de cinza) na 
+
+𝑃𝑃(𝑥𝑥, 𝑦𝑦)
+
+posição (
+𝑥𝑥 = 1, … , 𝑀𝑀
+
+). 
+
+𝑦𝑦 = 1, … , 𝑁𝑁
+
+𝑥𝑥, 𝑦𝑦
+
+Figura 8: Exemplo de representação matricial de pixels em tons de cinza. 
+Fonte: Alcântara (2016) 
+
+ 
+ 
+ 
+22 
+
+Na Figura 8 é apresentado um exemplo esquemático de imagem digital. Neste 
+
+exemplo,  efetuou-se  a  ampliação  de  um  pequeno  recorte  de  uma  imagem  e  se 
+
+apresenta,  ao  lado  deste  recorte,  uma  grade  com  os  números  que  definem  as 
+
+intensidades de brilho dos pixels presentes no recorte. 
+
+Conforme o citado anteriormente, as imagens coloridas são, conforme o próprio 
+
+nome diz, imagens que apresentam cor. Essas imagens, em meio digital, podem se 
+
+apresentar em diferentes formatos de representação, tais como o formato RGB (do 
+
+inglês: Red-Green-Blue), que apresenta este nome devido às cores primárias da luz, 
+
+ou o formato IHS (Intensity-Hue-Saturation) (MENESES e ALMEIDA, 2012). O formato 
+
+RGB é o mais usual, mas para a manipulação de imagens de satélite serão utilizados 
+
+também outros formatos, como o citado IHS, que é menos conhecido pelo público de 
+
+modo  geral.  Ressalta-se  que,  as  imagens  coloridas  são  formadas  a  partir  da 
+
+justaposição das componentes de cor constituintes em cada pixel. No caso de uma 
+
+imagem  RGB,  cada  pixel  recebe  uma  contribuição  das  tonalidades  verde,  azul  e 
+
+vermelho,  com  intensidades  particulares,  de  modo  a  formar  a  coloração  final  dos 
+
+pixels e, consequentemente, da imagem como um todo. 
+
+Na  imagem  apresentada  na  Figura  9,  pode-se  verificar  uma  composição 
+
+colorida à direita e suas componentes de cor, separadas à esquerda. Nota-se que, 
+
+cada  imagem  componente  constitui  uma  imagem  em  tons  de  cinza  e  que  a  sua 
+
+composição dá origem à imagem colorida. 
+
+Figura 9: Exemplo de composição colorida. 
+Fonte: Gomes e Queiroz (2001). 
+
+ 
+ 
+23 
+
+2.4  Resoluções de Imagens 
+
+O termo resolução, no âmbito do Sensoriamento Remoto, diz respeito a quatro 
+
+parâmetros  relacionados  à  imagem,  os  quais  são:  resolução  espacial,  resolução 
+
+espectral,  resolução  radiométrica  e  resolução  temporal.  Estes  parâmetros  estão 
+
+intrinsecamente  associados  à  imagem,  definindo-a  e  determinando  sua  possível 
+
+utilidade. Nas subseções que seguem, as definições destes parâmetros são postas. 
+
+2.4.1  Resolução Espacial 
+
+A resolução espacial, também chamada de resolução geométrica, está ligada 
+
+ao detalhamento do espaço imageado pelo satélite. Nas palavras de Crósta (1992): 
+
+A  resolução  espacial  é  definida  pela  capacidade  do  sistema  sensor  em 
+"enxergar" objetos na superfície terrestre; quanto menor o objeto possível de 
+ser  visto,  maior  a  resolução  espacial.  A  maneira  mais  comum  de  se 
+determinar a resolução espacial de um sensor é pelo seu campo instantâneo 
+de  visada  ou  IFOV.  Este  campo  é  determinado  pelas  propriedades 
+geométricas do sistema sensor e define a área do terreno imageado que é 
+"vista" pelo instrumento sensor de uma dada altitude e a um dado momento. 
+O IFOV é medido pelas dimensões da área vista no terreno e, de uma forma 
+simplificada, ele representa o tamanho do pixel [...] (CRÓSTA, 1992, p. 25) 
+
+Em  outras  palavras,  a  resolução  espacial  é,  basicamente,  a  área  do  terreno 
+
+recoberta por um pixel da imagem. Normalmente, se considera um pixel quadrado e, 
+
+por este motivo, a resolução espacial é dada pelo comprimento do lado do quadrado, 
+
+no  terreno,  recoberto  por  este  pixel.  Por  exemplo,  uma  imagem  com  resolução 
+
+espacial de 1 metro terá cada pixel cobrindo uma área equivalente a 1 metro por um 
+
+metro do terreno (
+
+), assim como, uma imagem de resolução espacial de 0,1 metro 
+
+terá cada pixel cobrindo uma área de 0,1 metro por 0,1 metro (
+
+2
+
+1 𝑛𝑛
+
+). Deste modo, 
+
+quanto  numericamente  menor  for  a  resolução  espacial  de  uma  imagem,  mais 
+
+2
+
+0,01 𝑛𝑛
+
+detalhada  ela  será  e,  consequentemente,  maior  será  a  quantidade  de  pixels  que  a 
+
+comporá. A Figura 10 fornece um exemplo no qual uma mesma cena é imageada com 
+
+imagens de diferentes resoluções espaciais. Pode-se perceber que, quanto menor a 
+
+área do terreno abarcada por um pixel, mais detalhada será a imagem, pois pequenos 
+
+detalhes poderão ser observados no plano da imagem. 
+
+ 
+ 
+ 
+ 
+ 
+24 
+
+Figura 10: Ilustração de resoluções espaciais distintas. 
+Fonte: Jensen (2007) apud Alcântara (2016). 
+
+Por vezes, alguns autores se referem à resolução espacial por meio da sigla 
+
+GSD que, em inglês, significa Ground Sample Distance (em português: distância de 
+
+amostra do terreno). 
+
+2.4.2  Resolução Espectral 
+
+A  resolução  espectral  está  relacionada  com  as 
+
+faixas  do  espectro 
+
+eletromagnético que o sensor pode captar. Crósta (1992) explica: 
+
+A resolução espectral é um conceito inerente às imagens multiespectrais de 
+Sensoriamento Remoto. Ela é definida pelo número de bandas espectrais de 
+um  sistema  sensor  e  pela  largura  do  intervalo  de  comprimento  de  onda 
+coberto por cada banda. Quanto maior o número de bandas e menor a largura 
+do  intervalo,  maior  é  a  resolução  espectral  de  um  sensor.  O  conceito  de 
+banda,  pode  ser  exemplificado  no  caso  de  duas  fotografias  tiradas  de  um 
+mesmo objeto, uma em branco-e-preto e a outra colorida; a foto branco-e-
+
+ 
+ 
+ 
+ 
+25 
+
+preto representa o objeto em apenas uma banda espectral, enquanto a foto 
+colorida  representa  o  mesmo  objeto  em  três  bandas  espectrais,  vermelha, 
+azul e verde que, quando combinadas por superposição, mostram o objeto 
+em cores. (CRÓSTA, 1992, p. 25) 
+
+A  resolução  espectral  é  um  parâmetro  que depende  do  sensor  de  captação. 
+
+Em  termos  gerais,  ela  está  relacionada  à  quantidade  de  intervalos  do  espectro 
+
+eletromagnético que o sensor é capaz de captar. Por exemplo, em se considerando a 
+
+faixa  de  luz  visível  do  espectro  eletromagnético,  que  vai  do  vermelho  ao  violeta, 
+
+quanto mais subdivisões esse sensor dispuser para captar essa faixa eletromagnética, 
+
+menor  será  o  intervalo  de  comprimento  de  onda  captado  por  cada  subdivisão,  e 
+
+melhor será a resolução espectral do sensor. Vale frisar que os satélites normalmente 
+
+captam também faixas além do espectro eletromagnético visível.  
+
+Figura 11: Ilustração mostrando um esquema de resolução espectral. À esquerda, resolução 
+multiespectral; à direita, resolução hiper espectral. 
+Fonte: Lu e Fei (2014) apud Alcântara (2016) 
+
+A  Figura  11  acima  ilustra  o  esquema  de  imageamento  feito  por  sensores 
+
+espectrais,  podendo  ser  multiespectral  (menor  resolução)  ou  hiper  espectral  (maior 
+
+resolução),  e  que  se  encontram  embarcados  em  satélites.  A  ilustração  mostra  as 
+
+bandas  espectrais  passíveis  de  serem  capturadas  pelos  respectivos  tipos  de 
+
+sensores. 
+
+2.4.3  Resolução Radiométrica 
+
+A resolução radiométrica, também conhecida como resolução de intensidade, 
+
+está ligada ao número de tons de cinza que a imagem dispõe para ser formada. Nas 
+
+palavras de Crósta (1992): 
+
+A  resolução  radiométrica  é  dada  pelo  número  de  níveis  digitais, 
+representando  níveis  de  cinza,  usados  para  expressar  os  dados  coletados 
+
+ 
+ 
+ 
+ 
+26 
+
+pelo  sensor.  Quanto  maior  o  número  de  níveis,  maior  é  a  resolução 
+radiométrica. Para entender melhor esse conceito, pensemos numa imagem 
+com apenas 2 níveis (branco e preto) em comparação com uma imagem com 
+32  níveis  de  cinza  entre  o  branco  e  o  preto;  obviamente  a  quantidade  de 
+detalhes perceptíveis na segunda será maior do que na primeira e, portanto, 
+a segunda imagem terá uma melhor resolução radiométrica. (CRÓSTA, 1992, 
+p. 26) 
+
+Basicamente, quanto maior a quantidade de níveis de cinza disponíveis para 
+
+compor a imagem, melhor será sua qualidade gráfica. Esses tons de cinza são dados 
+
+como uma potência de 2. Segundo Gonzalez e Woods (2010): 
+
+Com base em algumas considerações relativas ao hardware, o número de 
+níveis de intensidade normalmente é igual a 2k, sendo k um número inteiro 
+[...] O número mais comum é k=8 (8 bits), com 16 bits sendo utilizados em 
+algumas  aplicações  nas  quais  o  realce  em  determinadas  faixas  de 
+intensidade é necessário. A quantização de intensidade utilizando 32 bits é 
+rara. (GONZALEZ e WOODS, 2010, p. 39) 
+
+Sendo  assim,  o  número  de  bits  é  o  expoente  da  potência  2k  e  indica, 
+
+indiretamente, o número de tons de cinza que compõem a imagem. 
+
+Figura 12: Representação de uma mesma imagem em diferentes resoluções radiométricas. 
+Fonte: Alcântara (2016) 
+
+Na Figura 12 é apresentado um exemplo no qual uma mesma cena é imageada 
+
+com  diferentes  quantidades  de  níveis  de  brilho.  Assim,  pode-se  perceber  que  a 
+
+imagem de maior resolução radiométrica (11 bits) é mais detalhada, ou nítida, e que 
+
+apresenta a melhor qualidade visual. 
+
+ 
+ 
+27 
+
+2.4.4  Resolução Temporal 
+
+De acordo com Alcântara (2016), a resolução temporal está ligada ao intervalo 
+
+de tempo com que as imagens ou informações são captadas. Este intervalo de tempo 
+
+correspondente ao tempo que o satélite leva para voltar a cobrir a mesma área. Por 
+
+exemplo,  um  imageamento  de  uma  mesma  região,  realizado  quinzenalmente,  terá 
+
+uma resolução temporal melhor  do que um imageamento efetuado a cada 26 dias. 
+
+Sendo assim, a resolução temporal, também chamada de tempo de revisita, é muito 
+
+útil  no  acompanhamento  da  evolução  geográfica  de  diferentes  localidades  e  seus 
+
+contextos,  como  o  desmatamento  de  florestas.  Cabe  especificar  que,  a  resolução 
+
+temporal está correlacionada com a altitude em que o satélite orbita e com o tipo de 
+
+órbita em que ele está. 
+
+2.5  Fusão de Imagens via Método IHS 
+
+As imagens de satélite comumente utilizadas possuem características diversas, 
+
+principalmente  se  forem  consideradas,  por  exemplo,  as  resoluções  vistas  nas 
+
+subseções anteriores. Isso ocorre devido às características dos sensores de captação 
+
+de imagens. 
+
+Tendo  em  vista  a  resolução  espectral,  verifica-se  que  existem  dois  tipos 
+
+principais de imagens captadas por satélites: as imagens pancromáticas, em tons de 
+
+cinza, e as imagens multiespectrais, que podem dar origem às composições coloridas. 
+
+Se  forem  considerados  os  sensores  de  um  mesmo  satélite,  constata-se  que, 
+
+frequentemente,  as  imagens  pancromáticas  apresentam  melhor  resolução  espacial 
+
+que as respectivas imagens multiespectrais. Porém, se a resolução espacial é uma 
+
+desvantagem  para  as  imagens  multiespectrais,  os  dados  relativos  à  cor  são  uma 
+
+vantagem desejável para os usuários. Deste modo, para que se obtenha dados com 
+
+o melhor das características de ambos os tipos de imagens, pode-se efetuar a fusão 
+
+entre imagens RGB e pancromática, relativas a uma mesma área do terreno, e assim 
+
+se obter um produto em cores e com resolução espacial satisfatória. 
+
+Segundo  Crósta  (1992),  um  método  comumente  utilizado  para  isso  é 
+
+denominado  método  de  fusão  IHS.  Neste  método  considera-se  o  fato  de  que  a 
+
+intensidade  (
+
+)  está  correlacionada  à  imagem  pancromática.  De  acordo  com  Al-
+
+Wassai et al. (2011), este método consiste basicamente em: 
+
+𝐼𝐼
+
+ 
+28 
+
+1)  Registrar as imagens multiespectrais R, G, B e pancromática de uma mesma área 
+
+em  um  mesmo  sistema  referencial  cartográfico  e  efetuar  a  reamostragem  das 
+
+componentes R, G e B para a dimensão da imagem pancromática; 
+
+2)  Efetuar a transformação das imagens das bandas R, G e B reamostradas para o 
+
+sistema IHS. Nesta transformação são utilizadas as equações de (1) a (3). 
+
+3)  Considerando-se que 
+
+ (intensidade) está correlacionada à imagem pancromática, 
+
+substituir 
+
+ pela imagem pancromática; 
+
+𝐼𝐼
+
+4)  Converter a imagem, do sistema IHS para o sistema RGB, obtendo o produto final. 
+
+𝐼𝐼
+
+Para esta transformação são utilizadas as equações de (4) a (12). 
+
+Segundo  Gonzalez  e  Woods  (2010),  na  fusão  IHS  a  substituição  da 
+
+componente  de  intensidade  pela  banda  pancromática  produz  imagens  com  melhor 
+
+definição espacial. Assim, problemas relativos ao sharpening, associados à simples 
+
+reamostragem das bandas R, G e B, são quase que totalmente eliminados. 
+
+A Figura 13 apresenta o esquema dos passos descritos anteriormente. 
+
+Figura 13: Esquema do processo de fusão de imagens por método IHS. 
+Fonte: Confeccionado pelo próprio autor. 
+
+A seguir, é apresentado um exemplo do processo de fusão (INPE, 2021): 
+
+Figura 14: Exemplo de fusão IHS: a) Imagem pancromática (tons de cinza) com alta resolução; b) 
+Imagem colorida (RGB) com baixa resolução; e c) Resultado final da fusão. 
+Fonte: Acervo do Instituto Nacional de Pesquisas Espaciais 
+
+ 
+ 
+ 
+29 
+
+Ao se comparar a imagem das Figuras 14(b) e 14(c), pode-se notar um ganho 
+
+em qualidade pictorial com relação ao resultado da fusão. 
+
+2.6  Equações de Colinearidade  
+
+De modo simplificado, as equações se baseiam na suposta colinearidade entre 
+
+três  elementos  relacionados  à  tomada  das  imagens:  o  centro  óptico  do  sistema  de 
+
+lentes de captação, um ponto qualquer na imagem e seu ponto homólogo no espaço 
+
+físico  imageado  (espaço  objeto).  Assim,  as  equações  de  colinearidade  são 
+
+basicamente materializadas tomando-se por base as relações de proporção entre as 
+
+distâncias  referentes  a  esses  pontos,  podendo-se  também  se  chegar  ao  mesmo 
+
+resultado pelo uso da semelhança de triângulos. 
+
+Figura 15: Esquema de distribuição de angulações e colinearidade em fotogrametria. 
+Fonte: Universidade Federal de Viçosa (adaptado) 
+
+Do esquema da figura acima pode-se depreender as seguintes relações: 
+
+ 
+ 
+ 
+ 
+30 
+
+Onde: 
+
+                                                     (13) 
+
+𝑥𝑥𝑥𝑥
+𝑧𝑧𝑥𝑥 =
+𝑦𝑦𝑥𝑥
+𝑧𝑧𝑥𝑥 =
+
+𝑥𝑥𝑥𝑥
+
+𝑧𝑧𝑥𝑥
+𝑦𝑦𝑥𝑥
+
+𝑧𝑧𝑥𝑥
+
+• 
+
+• 
+
+, 
+
+ e 
+
+ são coordenadas do ponto 
+
+ contido na imagem, tomando-se por base 
+
+𝑦𝑦𝑥𝑥
+
+o  sistema  cartesiano 
+𝑥𝑥𝑥𝑥
+fotogramétrico); 
+
+𝑧𝑧𝑥𝑥
+
+tridimensional  da 
+
+𝑥𝑥
+
+imagem 
+
+(sistema 
+
+referencial 
+
+, 
+
+ e 
+
+ são as coordenadas do ponto P contido no terreno, tomando-se por 
+
+base o sistema cartesiano da imagem (sistema referencial fotogramétrico); 
+𝑥𝑥𝑥𝑥
+
+𝑦𝑦𝑥𝑥
+
+𝑧𝑧𝑥𝑥
+
+Considerando que a coordenada 
+
+ corresponde à distância focal (
+
+) no sensor 
+
+de captação, pode-se substituir 
+
+ por 
+
+, de modo que as equações acima passam a 
+𝑧𝑧𝑥𝑥
+
+𝑓𝑓
+
+ser escritas como: 
+
+𝑧𝑧𝑥𝑥
+
+𝑓𝑓
+
+𝑥𝑥𝑥𝑥 = −𝑓𝑓.
+
+𝑥𝑥𝑥𝑥
+𝑧𝑧𝑥𝑥
+
+(14) 
+
+Segundo Silva (2020), levando-se em conta que tanto as coordenadas do ponto 
+
+𝑦𝑦𝑥𝑥 = −𝑓𝑓.
+
+𝑦𝑦𝑥𝑥
+𝑧𝑧𝑥𝑥
+
+na  imagem  quanto  do  ponto  no  terreno  estão  contidas  em  sistemas  cartesianos 
+
+tridimensionais  distintos,  faz-se  necessária  a  conversão  entre  estes  sistemas,  de 
+
+modo a se obter uma padronização entre pontos no terreno e na imagem. O sistema 
+
+cartesiano tomado como padrão será o do terreno. Para a conversão entre os dois 
+
+sistemas cartesianos tridimensionais, utiliza-se a seguinte relação: 
+
+Onde: 
+
+�
+
+𝑥𝑥𝑥𝑥
+𝑦𝑦𝑥𝑥
+𝑧𝑧𝑥𝑥
+
+� = 𝜆𝜆 . 𝑅𝑅𝜔𝜔𝜔𝜔𝜔𝜔 �
+
+𝑋𝑋 − 𝑋𝑋𝑋𝑋
+𝑌𝑌 − 𝑌𝑌𝑋𝑋
+𝑍𝑍 − 𝑍𝑍𝑋𝑋
+
+�
+
+                                      (15) 
+
+• 
+
+• 
+
+, 
+
+  e 
+
+  são  coordenadas  de  pontos,  considerando  o  sistema  cartesiano 
+
+tridimensional padrão do terreno; 
+𝑋𝑋
+
+𝑌𝑌
+, 
+
+𝑍𝑍
+  e 
+
+  são  coordenadas  do  ponto  P  no  terreno,  considerando  o  sistema 
+
+cartesiano tridimensional da imagem; 
+𝑥𝑥𝑥𝑥
+
+𝑦𝑦𝑥𝑥
+
+𝑧𝑧𝑥𝑥
+
+ 
+ 
+ 
+•  Xo,  Yo  e  Zo  são  coordenadas  do  centro  perspectivo  do  sensor  no  sistema 
+
+31 
+
+ é a matriz de rotação entre os sistemas tridimensionais. Ela pode ser definida 
+
+tridimensional padrão do terreno; 
+
+ é um dado fator de escala; 
+
+ é a distância focal da câmera; 
+
+𝜆𝜆
+
+• 
+
+• 
+
+• 
+
+𝑓𝑓
+como o produto 
+𝑅𝑅𝜔𝜔𝜔𝜔𝜔𝜔
+
+• 
+
+• 
+
+• 
+
+𝑀𝑀𝜔𝜔  =   �
+
+𝑀𝑀𝜔𝜔  =   �
+
+0
+𝑐𝑐𝑋𝑋𝑐𝑐 𝜔𝜔
+
+0
+1
+0
+𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔
+0 −𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 𝑐𝑐𝑋𝑋𝑐𝑐 𝜔𝜔
+𝑐𝑐𝑋𝑋𝑐𝑐 𝜔𝜔 0 −𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔
+1
+𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 0
+
+0
+𝑐𝑐𝑋𝑋𝑐𝑐 𝜔𝜔
+
+0
+
+�
+
+� 
+
+, onde: 
+
+𝑅𝑅𝜔𝜔𝜔𝜔𝜔𝜔  =  𝑀𝑀𝜔𝜔. 𝑀𝑀𝜔𝜔. 𝑀𝑀𝜔𝜔
+
+ é a matriz de rotação ao redor do eixo 
+
+é a matriz de rotação ao redor do eixo 
+
+; 
+
+; 
+
+𝑥𝑥
+
+𝑦𝑦
+
+. 
+
+𝑧𝑧
+
+ é a matriz de rotação ao redor do eixo 
+
+𝑐𝑐𝑋𝑋𝑐𝑐 𝜔𝜔
+𝑀𝑀𝜔𝜔  =   �
+−𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔
+Logo, a matriz 
+0
+
+𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 0
+𝑐𝑐𝑋𝑋𝑐𝑐 𝜔𝜔 0
+1
+
+�
+
+ é dada pela seguinte fórmula: 
+0
+
+𝑅𝑅𝜔𝜔𝜔𝜔𝜔𝜔
+
+𝑅𝑅𝜔𝜔𝜔𝜔𝜔𝜔 =   �
+
+cos 𝑘𝑘 . cos 𝜔𝜔
+
+𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. cos 𝜔𝜔 + cos 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 − cos 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. cos 𝜔𝜔
+− cos 𝜔𝜔 . 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 cos 𝜔𝜔. cos 𝜔𝜔 − 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 cos 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔 + 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔. cos 𝜔𝜔
+
+𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔
+
+− cos 𝜔𝜔 . 𝑐𝑐𝑠𝑠𝑠𝑠 𝜔𝜔
+
+cos 𝜔𝜔. cos 𝜔𝜔
+
+�
+(16) 
+
+Ao se substituir as equações (15) e (16) na equação (14), obtém-se as equações de 
+
+colinearidade, explicitadas na seguinte relação (ANDRADE, 1998 apud SILVA, 2020): 
+
+xp = −𝑓𝑓
+
+𝑟𝑟11(𝑋𝑋 − Xo) + 𝑟𝑟12(𝑌𝑌 − Yo) + 𝑟𝑟13(𝑍𝑍 − Zo)
+𝑟𝑟31(𝑋𝑋 − Xo) + 𝑟𝑟32(𝑌𝑌 − Yo) + 𝑟𝑟33(𝑍𝑍 − Zo)
+
+(17) 
+
+Sendo que: 
+
+yp = −𝑓𝑓
+
+𝑟𝑟21(𝑋𝑋 − Xo) + 𝑟𝑟22(𝑌𝑌 − Yo) + 𝑟𝑟23(𝑍𝑍 − Zo)
+𝑟𝑟31(𝑋𝑋 − Xo) + 𝑟𝑟32(𝑌𝑌 − Yo) + 𝑟𝑟33(𝑍𝑍 − Zo)
+
+Onde: 
+
+xp = x′p − xf
+�
+yp = y′p − xf
+
+• 
+
+, com 
+
+, denotam os elementos da matriz 
+
+; 
+
+•  x’p e y’p são coordenadas do ponto p contido na imagem, tomando-se por base o 
+
+𝑅𝑅𝜔𝜔𝜔𝜔𝜔𝜔
+
+𝑖𝑖, 𝑗𝑗 = 1, … ,3
+
+𝑟𝑟𝑖𝑖𝑖𝑖
+sistema referencial fiducial; 
+
+•  xf  e yf é a coordenada x do centro do plano da imagem; 
+
+ 
+ 
+ 
+ 
+ 
+ 
+32 
+
+Deste  modo,  tomando-se  os  elementos  de  rotação  (ω,  φ,  κ)  e  os  elementos  de 
+
+translação  (Xo,  Yo,  Zo),  pode-se  projetar  as  coordenadas  do  sistema  cartesiano 
+
+tridimensional  da  imagem  para  o  sistema  tridimensional  padrão  do  terreno, 
+
+considerando a coordenada Z conhecida, utilizando-se as equações de colinearidade 
+
+na forma inversa. Segundo Andrade (1998), tais equações são: 
+
+𝑋𝑋 = 𝑋𝑋𝑋𝑋 + (𝑍𝑍 − 𝑍𝑍𝑋𝑋). ( 
+
+𝑟𝑟11. xp + 𝑟𝑟21. yp − 𝑟𝑟31𝑓𝑓
+𝑟𝑟13. xp + 𝑟𝑟23. yp − 𝑟𝑟33𝑓𝑓
+
+ )
+
+(18) 
+
+Por fim, Andrade (1998) especifica que as equações de colinearidade, tanto na 
+
+𝑌𝑌 = 𝑌𝑌𝑋𝑋 + (𝑍𝑍 − 𝑍𝑍𝑋𝑋). (
+
+𝑟𝑟12. xp + 𝑟𝑟22. yp − 𝑟𝑟32𝑓𝑓
+𝑟𝑟13. xp + 𝑟𝑟23. yp − 𝑟𝑟33𝑓𝑓
+
+)
+
+sua forma direta, quanto na sua forma inversa, envolvem seis parâmetros de cunho 
+
+geométrico que são: duas translações, uma em 
+
+ e outra em 
+
+, três rotações em torno, 
+
+respectivamente, dos eixos 
+
+, 
+
+ e 
+
+, e um fator de escala, associado à distância focal 
+𝑦𝑦
+
+𝑥𝑥
+
+. 
+
+𝑓𝑓
+
+𝑥𝑥
+
+𝑦𝑦
+
+𝑧𝑧
+
+2.7  Retificação de imagens 
+
+A retificação de imagens, nas palavras de Silva (2020), “é o processo pelo qual 
+
+ocorre a eliminação das distorções causadas pelos ângulos de atitude da câmera que 
+
+fez a tomada de uma imagem”, ou seja, é a correção da imagem original, a qual sofre 
+
+distorções  devido  aos  efeitos  de  possíveis  inclinações  do  sensor  de  captação  em 
+
+relação ao terreno ou objeto imageado. 
+
+Segundo  Crósta  (1992),  as  principais  fontes  de  distorção  das  imagens  de 
+
+satélite são a rotação da Terra e a instabilidade da plataforma, a qual sofre variações 
+
+na altitude, na velocidade do satélite em relação ao terreno e nos eixos de rotação do 
+
+satélite. Sendo assim, o objetivo deste processo é fazer com que a imagem fique em 
+
+uma  perspectiva,  apesar  de  cônica,  perfeitamente  vertical,  como  se  o  sensor  de 
+
+captação estivesse posicionado ortogonalmente ao objeto, algo que é praticamente 
+
+impossível  durante  o  processo  de  imageamento.  A  precisão  desejada  deve  ser 
+
+comparável  à  de  um  mapa,  ou  seja,  o  processo  deve  apresentar  uma  exatidão 
+
+rigorosa em relação ao objeto imageado. Segundo Cerqueira (2004), neste processo 
+
+ 
+ 
+ 
+ 
+ 
+33 
+
+são  utilizados  modelos  matemáticos,  normalmente  baseados  nas  equações  de 
+
+colinearidade (vistas anteriormente). 
+
+De  modo  bem  simplificado,  pode-se  dizer  que  o  processo  de  retificação  de 
+
+imagens, realizado pelos softwares especializados, consiste no  estabelecimento de 
+
+uma relação entre as coordenadas da imagem original e da imagem retificada, com a 
+
+realocação  de  pixels,  de  modo  a  se  corrigir  as  distorções  da  imagem  original 
+
+(CRÓSTA,1992). 
+
+Segundo  Andrade  (1998),  existe  mais  de  uma  forma  de  se  implementar  o 
+
+algoritmo  de  retificação  de  imagens:  o  método  direto  e  o  método  indireto.  Por  uma 
+
+questão  de  eficiência,  o  algoritmo  descrito  a  seguir  diz  respeito  ao  método  de 
+
+retificação  digital  indireto,  que  utiliza  as  equações  de  colinearidade  na  sua  forma 
+
+direta. Neste caso, as equações de colinearidade, na sua forma direta, são utilizadas 
+
+para 
+
+relacionar 
+
+fotocoordenadas  da 
+
+imagem 
+
+retificada, 
+
+reamostrada,  com 
+
+fotocoordenadas da imagem original, obtendo assim o tom de cinza que preencherá 
+
+a  respectiva  posição  do  grid  da  imagem  retificada.  Para  que  a  retificação  ocorra  a 
+
+contento, duas outras transformações são utilizadas para relacionar os referenciais de 
+
+imagem e o fotogramétrico. Tais transformações são dadas em momento oportuno. 
+
+Os passos que compõem o algoritmo de retificação são os seguintes: 
+
+1)  Leitura  da  imagem  de  entrada  (imagem  original):  no  processo  de  leitura, 
+
+além  das  intensidades  de  brilho  da  imagem  de  entrada,  são  carregados  e 
+
+armazenados os valores relativos à largura e altura da imagem original. 
+
+2)  Leitura  dos  parâmetros  de  transformação:  além  dos  valores  de  brilho  da 
+
+imagem de entrada e de suas dimensões, são lidos em arquivo ou introduzidos 
+
+via  interface  os  valores  dos  ângulos  de  orientação  exterior  (
+
+, 
+
+  e 
+
+),  que 
+
+fornecem  a  atitude  da  câmera  no  momento  da  tomada  da  imagem,  além  da 
+
+𝜔𝜔
+
+𝜔𝜔
+
+𝜔𝜔
+
+distância focal da referida câmera (
+
+). 
+
+3)  Cálculo  da  matriz  de  rotação:  para  o  cálculo  da  matriz  de  rotação  são 
+
+𝑓𝑓
+
+necessários os ângulos 
+
+, 
+
+ e 
+
+ (passo 2) e é utilizada a fórmula prevista na 
+
+equação 16. 
+
+𝜔𝜔
+
+𝜔𝜔
+
+𝜔𝜔
+
+4)  Cálculo das dimensões da imagem retificada (reamostrada): para se ter as 
+
+dimensões  (largura  e  altura)  da  imagem  reamostrada,  inicialmente  são 
+
+tomadas  as  coordenadas  dos  vértices  (cantos)  da  imagem  de  entrada.  Em 
+
+ 
+34 
+
+seguida, estas coordenadas são transformadas do  sistema referencial  digital 
+
+para o sistema referencial com origem no centro da imagem. Assim, a partir do 
+
+sistema referencial digital (
+
+), pode-se obter as coordenadas 
+
+ de pontos 
+
+no sistema referencial com origem no centro da imagem. Essa transformação 
+
+(𝑥𝑥, 𝑦𝑦)
+
+𝑐𝑐, 𝑙𝑙
+
+é dada por: 
+
+Onde: 
+
+𝑊𝑊−1
+
+                                        (19) 
+
+𝑥𝑥
+𝑦𝑦� = �
+
+𝑆𝑆𝑥𝑥
+0
+0 −𝑆𝑆𝑦𝑦� �
+
+�
+
+𝑐𝑐 −
+
+2
+𝐻𝐻−1
+
+𝑙𝑙 −
+
+2
+
+�
+
+• 
+
+• 
+
+• 
+
+• 
+
+ é a dimensão do pixel na direção 
+
+ é a dimensão do pixel na direção 
+
+𝑥𝑥
+
+; 
+
+; 
+
+ representa o número de colunas da imagem; e 
+
+𝑦𝑦
+
+𝑆𝑆𝑥𝑥
+𝑆𝑆𝑦𝑦
+
+ o número de linhas da imagem. 
+
+𝑊𝑊
+
+De posse das coordenadas expressas no sistema referencial com origem no 
+
+𝐻𝐻
+
+centro  da  imagem  e  do  valor  negativo  da  distância  focal  (
+
+),  como  terceira 
+
+coordenada,  são  utilizadas  as  equações  de  colinearidade  inversa  (equação 
+
+−𝑓𝑓
+
+(18)) a fim de se ter as coordenadas dos vértices da imagem retificada, dadas 
+
+no sistema referencial com origem no centro da imagem, com relação à imagem 
+
+retificada.  Por  fim,  as  coordenadas  dos  vértices  da  imagem  retificada  são 
+
+transformadas para o sistema referencial digital por meio da equação: 
+
+�𝑐𝑐
+𝑙𝑙
+
+� = �
+
+−1
+𝑆𝑆𝑥𝑥
+0
+−1� �
+0 −𝑆𝑆𝑦𝑦
+
+𝑥𝑥
+𝑦𝑦� + �
+
+𝑊𝑊−1
+2
+𝐻𝐻−1
+2
+
+                                            (20) 
+
+�
+
+Silva (2020) explica que, em alguns casos como, por exemplo, na retificação 
+
+de imagens, 
+
+ e 
+
+ podem ser unitários, visto que, o que se tem é um rearranjo 
+
+dos  pixels  da  imagem  e  não  uma  relação  dos  pixels  com  coordenadas  de 
+
+𝑆𝑆𝑥𝑥
+
+𝑆𝑆𝑦𝑦
+
+terreno. A partir das coordenadas dos cantos da imagem retificada, pode-se ter 
+
+acesso às suas dimensões. Em relação a isso, explica Silva (2020) ainda que, 
+
+considerando  que  a  imagem  retificada  poderá  não  ser  retangular,  com  base 
+
+nas  novas  coordenadas  dos  cantos  calculadas,  cria-se  um  retângulo 
+
+envolvente que possa abarcar a imagem retificada, de modo a permitir que ela 
+
+seja  visualizada  ao  final  do  processo.  Assim,  cria-se  uma  matriz,  com  as 
+
+ 
+35 
+
+dimensões  do  retângulo  envolvente,  na  qual  serão  alocados  os  valores  de 
+
+brilho relativos à imagem retificada. 
+
+5)  Varredura e preenchimento da imagem retificada: neste passo, toma-se a 
+
+matriz destinada à alocação dos valores de brilho relativos à imagem retificada 
+
+e efetua-se a sua varredura, tomando-se, paulatinamente, as coordenadas de 
+
+seus  pixels  (
+
+),  transformando-os  para  coordenadas  (
+
+),  por  meio  da 
+
+equação 19, e, por meio das equações de colinearidade direta (equação 17) 
+
+𝑥𝑥, 𝑦𝑦
+
+𝑐𝑐, 𝑙𝑙
+
+chega-se  às  coordenadas  (
+
+),  relativas  à  imagem  de  entrada.  Neste  caso, 
+
+para se ter acesso às coordenadas (
+
+𝑥𝑥, 𝑦𝑦
+
+ dos pixels da imagem original, deve-
+
+se  ainda  utilizar  a  equação  20.  Silva  (2020)  especifica  que,  visto  que  as 
+𝑐𝑐, 𝑙𝑙)
+
+coordenadas  (
+
+)  geradas  geralmente  não  coincidem  com  coordenadas  de 
+
+pixel  (valores  inteiros)  da  imagem  original,  utiliza-se  algum  método  de 
+
+𝑐𝑐, 𝑙𝑙
+
+interpolação para se obter o tom de cinza que preencha o respectivo pixel da 
+
+matriz relativa à imagem retificada (reamostrada). 
+
+O resultado final é a imagem retificada, que é salva em arquivo. 
+
+ 
+ 
+ 
+ 
+36 
+
+3  METODOLOGIA 
+
+Este  capítulo  destina-se  à  apresentação  dos  procedimentos  metodológicos 
+
+efetivamente  desenvolvidos  e  realizados  na  pesquisa.  Cabe  especificar  que,  a 
+
+metodologia executada possuiu caráter teórico e experimental. Ou seja, ela consistiu, 
+
+inicialmente,  na  sondagem  do  algoritmo  de  retificação  de  imagens  digitais  e  das 
+
+equações de colinearidade que o integram, a fim de se angariar conhecimento teórico 
+
+e  algorítmico  com  o  objetivo  de  projetar  e  implementar  mudanças  algorítmicas  e 
+
+matemáticas em tais modelos de modo a gerar um novo algoritmo capaz de efetuar a 
+
+fusão de imagens digitais, com base no método IHS. 
+
+Logo,  buscando  detalhar  o  trabalho  realizado  tem-se,  na  seção  3.1,  um 
+
+pequeno preâmbulo, destinado à descrição dos principais recursos computacionais e 
+
+dos  dados  de  entrada,  utilizados  na  pesquisa.  Na  seção  3.2  encontra-se  a 
+
+pormenorização do delineamento metodológico executado para a geração do produto 
+
+final. 
+
+3.1  Preâmbulo 
+
+Considerando que a proposta da pesquisa envolve o uso de imagens, foram 
+
+coletadas  e  utilizadas  imagens  provenientes  do  satélite  CBERS  4,  disponibilizadas 
+
+gratuitamente no site do INPE (http://www.dgi.inpe.br/CDSR/). A escolha do produto 
+
+se  deu  por  conta  de  sua  ótima  qualidade  e  pelo  fato  de  estarem  disponíveis  as 
+
+imagens multiespectrais e a pancromática, necessárias à execução da metodologia. 
+
+As ortoimagens multiespectrais, possuem resolução espacial de 
+
+ e foram geradas 
+
+pelo  sensor  MUX  -  Câmera  Multiespectral  Regular.  Por  sua  vez,  a  imagem 
+
+20𝑚𝑚
+, é proveniente do sensor PAN - Câmera 
+
+pancromática, com resolução espacial de 
+
+Pancromática  e  Multiespectral.  Todas  as  imagens  são  do  formato  GEOTIFF e  vêm 
+5𝑚𝑚
+georreferenciadas  no  Sistema  Referencial  Geodésico  WGS84,  considerando  o 
+
+sistema  de  projeção  UTM  (zona  22).  O  código  EPSG  (European  Petroleum  Survey 
+
+Group)  que  identifica  estes  elementos  geodésicos  é  o  32722,  o  qual  foi  usado  no 
+
+sistema de informações geográficas QGIS. As imagens do sensor MUX e PAN são do 
+
+dia 29/04/2020 e correspondem à orbita 160 e ao ponto 123. Estas imagens dizem 
+
+ 
+ 
+ 
+ 
+37 
+
+respeito ao rio Paraná e imediações, na região compreendida entre Três Lagoas – MS 
+
+e Ilha Solteira - SP. São elas: 
+
+•  Banda 1 = 0,51 - 0,85 µm (PAN): imagem pancromática; 
+
+•  Banda 5 = 0,45 - 0,52 μm (B): componente azul; 
+
+•  Banda 6 = 0,52 - 0,59 μm (G): componente verde; 
+
+•  Banda 7 = 0,63 - 0,69 μm (R): componente vermelha. 
+
+Cabe  especificar  que,  as  imagens  CBERS  não  foram  processadas  em  sua 
+
+totalidade,  uma  vez  que,  a  largura  da  imagem  pancromática  (60  km)  não  se 
+
+equiparava  à  largura  das  imagens  multiespectrais  (120  km),  além  do  que,  o 
+
+processamento integral das imagens fugiria do objetivo do trabalho. Nestes termos, 
+
+foram feitos dois recortes, relativos aos reservatórios das usinas hidrelétricas de Ilha 
+
+Solteira e Engenheiro Souza Dias (Jupiá), os quais são apresentados no capítulo que 
+
+segue. 
+
+Neste caso, os recortes foram feitos por meio do software QGIS. O QGIS é um 
+
+Sistema  de  Informações  Geográficas  (SIG)  gratuito,  criado  por  Gary  Sherman  em 
+
+2002. No entanto, sua versão inicial foi lançada em somente em 2009 (MARQUES, 
+
+2021). 
+
+Segundo  a  página  do  próprio  SIG,  o  QGIS  é  um  Sistema  de  Informação 
+
+Geográfica (SIG) de Código Aberto, licenciado segundo a Licença Pública Geral GNU, 
+
+multiplataforma,  que  permite  a  visualização,  edição  e  análise  de  dados 
+
+georreferenciados (QGIS, 2021). Ele suporta inúmeros formatos de vetores, rasters, 
+
+bases de dados e funcionalidades. Além das funcionalidades nativas do SIG, ele ainda 
+
+conta  com  complementos 
+
+(plugins),  desenvolvidos  e  disponibilizados  por 
+
+colaboradores de todo o mundo no site do QGIS1. A versão utilizada nesta pesquisa 
+
+foi a 3.12.2 București. 
+
+Para a geração dos recortes, inicialmente se ajustou o projeto inicial do QGIS 
+
+ao  sistema  referencial  cartográfico  e  projeção  das 
+
+imagens  do  CBERS  4 
+
+(WGS84/UTM zona 22), adotando no menu “Propriedades” o respectivo código EPSG 
+
+32722,  relativo  aos  ditos  parâmetros  geodésicos.  Após  se  carregar  as  imagens 
+
+(camadas raster), se utilizou a ferramenta raster “Recortar raster pela extensão” para 
+
+1 Disponível em:< https://plugins.qgis.org/>. Acesso: 01/05/2021 
+
+ 
+                                            
+38 
+
+se gerar os recortes das imagens de entrada. Os locais dos recortes foram escolhidos 
+
+por  possuírem  feições  significativas  e  não  possuírem  cobertura  de  nuvens.  Cabe 
+
+informar que estas razões também justificaram a escolha das imagens como um todo. 
+
+Sendo  assim,  de  posse  dos  recortes,  utilizou-se  o  QGIS,  uma  vez  mais,  para  a 
+
+geração de composições coloridas. 
+
+3.2  Delineamento Metodológico da Pesquisa 
+
+O delineamento metodológico é descrito considerando-se dois focos: 
+
+•  As alterações matemáticas e algorítmicas associadas ao processo de retificação 
+
+de imagens digitais; e 
+
+•  A geração do algoritmo de fusão de imagens. 
+
+Logo, as subseções que seguem destinam-se à pormenorização dos referidos 
+
+focos e expressam o cerne da pesquisa empreendida. 
+
+3.2.1  Alterações às equações de colinearidade 
+
+Cabe inicialmente lembrar que, considerando uma imagem aérea, a retificação 
+
+de  imagens  digitais  é  o  processo  destinado,  principalmente,  à  eliminação  das 
+
+distorções presentes em tal imagem, decorrentes dos ângulos de atitude da câmera 
+
+que fez a tomada. Estes ângulos de rotação podem ocorrer em torno do eixo 
+
+ e/ou 
+
+do eixo 
+
+ e/ou do eixo 
+
+. No âmbito da Fotogrametria, estes ângulos de atitude são 
+
+𝑥𝑥
+
+denotados, respectivamente, por ω, φ e κ (ângulos de orientação exterior). Além, dos 
+
+𝑦𝑦
+
+𝑧𝑧
+
+parâmetros  relativos  à  atitude  do  sensor  de  imageamento,  o  modelo  possui  um 
+
+parâmetro associado à escala da imagem e que também está associado à geometria 
+
+da câmera. Este parâmetro é a distância focal 
+
+ que, em conjunto com a altitude de 
+
+voo,  estabelece  um  fator  de  escala  para  a  imagem  gerada.  Por  fim,  pode-se  ainda 
+
+𝑓𝑓
+
+considerar a possibilidade de se efetuar duas translações, uma na direção 
+
+ e outra 
+
+na direção 
+
+. Estas translações podem se dar por meio das coordenadas do centro 
+
+𝑥𝑥
+
+perspectivo, que estão incorporadas às equações de colinearidade. Nestes termos, 
+
+𝑦𝑦
+
+ 
+ 
+ 
+ 
+ 
+os parâmetros considerados na retificação são: três rotações (em torno dos eixos 
+
+, 
+
+ e 
+
+), um fator de escala e duas translações (nas direções dos eixos 
+
+ e 
+
+). 
+
+𝑥𝑥
+
+39 
+
+𝑦𝑦
+
+𝑧𝑧
+
+Cabe lembrar que, o algoritmo de retificação, da forma como foi detalhado na 
+
+𝑦𝑦
+
+𝑥𝑥
+
+seção 2.7, destina-se a efetuar rotações em imagens, possivelmente, em torno dos 
+
+eixos 
+
+, 
+
+  e 
+
+.  Assim,  uma  imagem  de  entrada,  tomada  com  câmera  afetada  de 
+
+variações angulares, possivelmente nos três eixos, pode ser corrigida de distorções 
+
+𝑥𝑥
+
+𝑦𝑦
+
+𝑧𝑧
+
+decorrentes de tais variações. Logo, uma imagem afetada pela atitude da câmera no 
+
+momento da tomada passaria, quando processada, a ser uma imagem de perspectiva 
+
+central. 
+
+Nestes  termos,  cabe informar  que  os  parâmetros,  relativos  às  tais  correções 
+
+angulares  e  que  integram  as  equações  de  colinearidade,  não  foram  alterados. 
+
+Buscou-se deixar essa potencialidade no modelo a fim de que ela estivesse disponível 
+
+e pudesse ser utilizada se necessário. Segundo Al-Wassai et al. (2011), as imagens 
+
+a  serem  fusionadas  devem  ser  registradas  num  mesmo  sistema  referencial 
+
+geodésico,  a  fim  de  que  a  superposição  estabelecida  entre  as  imagens 
+
+multiespectrais  e  a  imagem  pancromática  seja  efetiva.  Logo,  deixar  tais 
+
+parâmetros  à  disposição,  implica  em  poder  se  efetuar  ajustes  angulares  que 
+
+possam  corrigir,  a  posteriori,  possíveis  discrepâncias  angulares  associadas  à 
+
+superposição. 
+
+Andrade (1998), e Wolf e Dewitt (2000) afirmam que a distância focal (
+
+) está 
+
+relacionada  à  escala  da  imagem  capturada.  Tal  informação  foi  bastante  útil  na 
+
+𝑓𝑓
+
+pesquisa empreendida, pois Al-Wassai  et  al.  (2011)  especificam  que  as  imagens 
+
+multiespectrais  devem  ser  reamostradas  para  as  dimensões  da 
+
+imagem 
+
+pancromática. Consequentemente, esta característica associada à distância focal 
+
+, 
+
+que está presente nas equações de colinearidade direta e inversa, pode ser utilizada 
+
+𝑓𝑓
+
+para que a reamostragem preconizada por Al-Wassai et al. (2011) ocorra. 
+
+Nestes termos, buscou-se efetuar alterações no dito parâmetro de modo que 
+
+ele efetuasse o controle da escala. Após estudos, experimentações, e observações 
+
+de efeitos associados à distância focal e suas variações, a exemplo do proposto em 
+
+Silva  (2020),  decidiu-se  pelo  uso  de  dois  parâmetros,  de  modo  que,  a  proporção 
+
+estabelecida entre eles expressasse um fator de escala. Assim, os dois parâmetros, 
+
+ e 
+
+, passaram a substituir o valor da distância focal nas equações de colinearidade 
+
+𝑓𝑓′
+
+ℎ
+
+ 
+direta e inversa. Corroborando com Silva (2020), as equações de colinearidade direta 
+
+e inversa ficaram, respectivamente: 
+
+40 
+
+𝑥𝑥𝑝𝑝 = −ℎ
+
+𝑟𝑟11(𝑋𝑋 − 𝑋𝑋𝐶𝐶𝐶𝐶) + 𝑟𝑟12(𝑌𝑌 − 𝑌𝑌𝐶𝐶𝐶𝐶) + 𝑟𝑟13(−𝑓𝑓′)
+𝑟𝑟31(𝑋𝑋 − 𝑋𝑋𝐶𝐶𝐶𝐶) + 𝑟𝑟32(𝑌𝑌 − 𝑌𝑌𝐶𝐶𝐶𝐶) + 𝑟𝑟33(−𝑓𝑓′)
+
+𝑦𝑦𝑝𝑝 = −ℎ
+
+𝑟𝑟21(𝑋𝑋 − 𝑋𝑋𝐶𝐶𝐶𝐶) + 𝑟𝑟22(𝑌𝑌 − 𝑌𝑌𝐶𝐶𝐶𝐶) + 𝑟𝑟23(−𝑓𝑓′)
+𝑟𝑟31(𝑋𝑋 − 𝑋𝑋𝐶𝐶𝐶𝐶) + 𝑟𝑟32(𝑌𝑌 − 𝑌𝑌𝐶𝐶𝐶𝐶) + 𝑟𝑟33(−𝑓𝑓′)
+
+𝑋𝑋 = −𝑓𝑓′
+
+𝑟𝑟11𝑥𝑥𝑝𝑝 + 𝑟𝑟21𝑦𝑦𝑝𝑝 + 𝑟𝑟31(−ℎ)
+𝑟𝑟13𝑥𝑥𝑝𝑝 + 𝑟𝑟23𝑦𝑦𝑝𝑝 + 𝑟𝑟33(−ℎ)
+
+(21) 
+
+(22) 
+
+Onde: 
+
+𝑌𝑌 = −𝑓𝑓′
+
+𝑟𝑟12𝑥𝑥𝑝𝑝 + 𝑟𝑟22𝑦𝑦𝑝𝑝 + 𝑟𝑟32(−ℎ)
+𝑟𝑟13𝑥𝑥𝑝𝑝 + 𝑟𝑟23𝑦𝑦𝑝𝑝 − 𝑟𝑟33(−ℎ)
+
+  e 
+
+  são  coordenadas  do  ponto  na  imagem  dadas  no  sistema  referencial 
+
+𝑦𝑦𝑝𝑝
+
+fotogramétrico da imagem original; 
+𝑥𝑥𝑝𝑝
+  é  o  primeiro  dos  valores  associados  à  escala  e  que  substituiu  parcialmente  a 
+
+distância focal; 
+ℎ
+
+ é o segundo dos valores associados à escala e que substituiu parcialmente a 
+
+distância focal; 
+𝑓𝑓′
+
+ são os elementos da matriz de rotação; 
+
+  são  coordenadas  de  pontos  no  sistema  referencial  fotogramétrico  da 
+
+  e 
+
+𝑟𝑟𝑖𝑖𝑖𝑖
+, 
+imagem transformada; 
+𝑋𝑋
+
+𝑌𝑌
+, 
+
+𝑍𝑍
+ e 
+
+ são coordenadas do CP no sistema referencial fotogramétrico da 
+
+imagem transformada; 
+𝑋𝑋𝐶𝐶𝐶𝐶
+𝑍𝑍𝑐𝑐𝑝𝑝
+
+𝑌𝑌𝐶𝐶𝐶𝐶
+
+Cabe explicar que, na prática, ao se adotar dois valores, 
+
+ e 
+
+, em lugar da 
+
+distância focal 
+
+, significa que agora há dois parâmetros corresponsáveis pela escala. 
+
+𝑓𝑓′
+
+ℎ
+
+Assim, 
+
+ está associado à imagem de entrada e 
+
+𝑓𝑓
+
+ diz respeito à imagem reamostrada 
+
+(de saída). Dessa forma, a proporção entre estes novos parâmetros implicará em uma 
+
+𝑓𝑓′
+
+ℎ
+
+mudança  de  escala  quando,  por  meio  das  equações  de  colinearidade  direta  ou 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+41 
+
+inversa, se for de um sistema referencial fotogramétrico para outro. Nestes termos, 
+
+pode-se dizer que o fator de escala 
+
+, matematicamente, é expresso por (Silva, 2020): 
+
+𝐸𝐸
+
+𝑓𝑓′
+
+                                                          (23) 
+
+Objetivando  trabalhar  com 
+
+𝐸𝐸 =
+
+ℎ
+
+  de  modo  percentual,  fixou-se 
+
+  =  100.  Nestes 
+
+termos, cabe ao usuário arbitrar o valor de 
+
+𝐸𝐸
+percentual de ampliação/redução da imagem de saída. Por exemplo, se 
+
+𝑓𝑓′
+então as dimensões da imagem de saída (largura e altura) serão iguais às da imagem 
+
+ estabelecerá então um 
+
+. A escolha de 
+
+𝑓𝑓′
+
+ℎ
+
+, 
+
+′
+
+𝑓𝑓
+
+= ℎ = 100
+
+de entrada, considerando que nenhuma rotação foi empreendida. E mais, se forem 
+
+adotados valores de 
+
+ maiores que 100, então ocorrerá a ampliação percentual da 
+
+imagem de saída. Por outro lado, adotar valores de 
+
+𝑓𝑓′
+
+ menores que 100 implicará na 
+
+redução da imagem de saída. 
+
+𝑓𝑓′
+
+Em  adição  ao  que  foi  expresso  sobre  as  alterações  relativas  à  escala, 
+
+automatizou-se a determinação de 
+
+. Para tanto, foram considerados os valores de 
+
+resolução espacial das imagens a serem processas. Ou seja, uma vez que o algoritmo 
+
+𝑓𝑓′
+
+expresso  por  Al-Wassai  et  al.  (2011)  previa  que  as  imagens  multiespectrais 
+
+deveriam ser reamostradas para as dimensões da imagem pancromática, então o 
+
+parâmetro 
+
+ ficou: 
+
+f′
+
+Onde: 
+
+                                                (24) 
+
+′
+
+𝑓𝑓
+
+=
+
+𝑅𝑅𝑅𝑅𝑀𝑀𝑀𝑀
+𝑅𝑅𝑅𝑅𝑃𝑃𝑃𝑃𝑃𝑃 × 100
+
+ é a resolução espacial das imagens multiespectrais; e 
+
+ é a resolução espacial da imagem pancromática. 
+
+• 
+
+• 
+
+𝑅𝑅𝐸𝐸𝑀𝑀𝑀𝑀
+𝑅𝑅𝐸𝐸𝐶𝐶𝑃𝑃𝑃𝑃
+
+A fim de materializar o expresso acima e considerando o exposto na seção 3.1, 
+
+pode-se dizer que, como a resolução espacial das imagens multiespectrais é de 
+
+e a resolução espacial da imagem pancromática é de 
+
+, então tem-se: 
+
+20 𝑚𝑚
+
+5 𝑚𝑚
+
+Assim,  considerando 
+
+′
+
+𝑓𝑓
+
+=
+
+20
+,  chega-se  à  conclusão  de  que  a  imagem 
+5
+
+× 100 = 400
+
+multiespectral resultante do processamento passará a ter 4 vezes as dimensões da 
+
+′
+
+𝑓𝑓
+
+= 400
+
+imagem de entrada e uma quantidade de pixels de 16 vezes a quantidade da imagem 
+
+original. 
+
+ 
+ 
+ 
+Apesar das translações, nas direções 
+
+ e 
+
+, estarem disponíveis para alteração 
+
+42 
+
+nas equações de colinearidade, os parâmetros relativos à elas não foram alterados e 
+
+𝑥𝑥 
+
+𝑦𝑦
+
+permaneceram  fixos.  Porém,  verificou-se  que  se  forem  efetuadas  translações 
+
+planimétricas no sistema referencial fotogramétrico das imagens, então poder-se-á ter 
+
+imagens  resultantes  transladadas  nas  direções 
+
+  e/ou 
+
+.  Porém,  alterações 
+
+algorítmicas deverão ocorrer a fim de se abarcar o processo de translação. 
+
+𝑥𝑥
+
+𝑦𝑦
+
+3.2.2  O algoritmo de fusão de imagens 
+
+Apesar do caráter restrito do algoritmo de retificação de imagens, ele é capaz 
+
+de  correlacionar  duas  imagens  digitais  quaisquer  (imagem  original  e  imagem 
+
+reamostrada). Considerando as alterações descritas na subseção 3.2.1 e o software 
+
+que as incorpora, pode-se afirmar que a imagem reamostrada, além de poder sofrer 
+
+rotações, pode agora também possuir dimensão distinta à da imagem de entrada. 
+
+Cabe especificar que, no software de fusão de imagens construído, o algoritmo 
+
+de retificação foi definido como uma função destinada à reamostragem das imagens 
+
+multiespectrais, conforme o estabelecido por Al-Wassai et al. (2011). Ou seja, uma 
+
+vez que a imagem pancromática é de melhor resolução espacial (
+
+), então ela 
+
+possui  uma  quantidade  maior  de  linhas  e  de  colunas  que  as  imagens 
+
+5 m
+
+multiespectrais relativas à mesma área do terreno. Assim, para que o processo de 
+
+fusão  de  imagens  ocorra  a  contento,  as  imagens  multiespectrais  devem  ser 
+
+reamostradas de modo a ficarem com as mesmas quantidades de linhas e colunas 
+
+da imagem pancromática. 
+
+Para  fins  de  explanação,  serão  considerados  os  passos  apresentados  no 
+
+esquema  da  Figura  16.  Os  referidos  passos  estão  materializados  no  software 
+
+“Fusion”, que foi implementado em C/C++ (aplicação console). 
+
+•  Definição das Imagens 
+
+Inicialmente, ao se executar o software, uma janela do prompt de comando 
+
+do MS-DOS (Microsoft Disk Operating System) se abre e é apresentada uma lista 
+
+de  imagens  de  formato  PGM,  as  quais  se  encontram  no  mesmo  diretório  do 
+
+programa.  Assim,  o  usuário  pode  ter  uma  visão  geral  das  possibilidades  de 
+
+imagens  a  serem  utilizadas  para  processamento.  Cabe  esclarecer  que,  o 
+
+ 
+ 
+ 
+programa não foi construído com interface no padrão “For Windows”, por se tratar 
+
+de uma versão preliminar, destinada à pesquisa somente. 
+
+43 
+
+Figura 16: Etapas do algoritmo de fusão de imagens, materializadas no software “Fusion”. 
+Fonte: Elaborado pelo autor. 
+
+Na Figura 17 é apresentada a interface do Fusion, na qual se pode ver, ao 
+
+final, a solicitação da primeira imagem de entrada (Componente R). Ao introduzir 
+
+o nome da componente, deve-se pressionar “Enter” e o programa, paulatinamente, 
+
+solicitará  a  inserção  das  demais  imagens  (Componente  G,  Componente  B  e 
+
+imagem  pancromática).  O  programa  possui  um  temporizador  destinado  à 
+
+contagem  do  tempo  de  execução.  Além  do  processamento  propriamente  dito,  o 
+
+temporizador computa o tempo de inserção dos nomes das imagens. 
+
+ 
+ 
+44 
+
+Figura 17: Interface do Fusion: Prompt de Comando de MS-DOS. 
+Fonte: Elaborado pelo autor. 
+
+•  Leitura das Imagens 
+
+Após  a  introdução  do  nome  e  do  formato  da  última  imagem,  o  programa 
+
+efetua a leitura das imagens e armazena as suas intensidades de brilho em vetores 
+
+do  tipo 
+
+  (inteiro  sem  sinal  no  intervalo  [0,255]).  As  dimensões  das 
+
+imagens  também  são  armazenadas  e  são  alocadas  em  variáveis  do  tipo 
+
+unsigned char
+
+(inteiro). 
+
+•  Leitura de Parâmetros 
+
+int
+
+Considerando  que  a  rotina  relativa  à  retificação  modificada  incorpora  o 
+
+programa Fusion, os parâmetros relativos às rotações, 
+
+, permaneceram na 
+
+implementação  e  são  lidos  a  partir  de  arquivo  (setup.dat),  juntamente  com  os 
+
+κ, φ e ω
+
+valores das resoluções espaciais das imagens. 
+
+•  Cálculo de 
+
+Uma  vez  que,  as  dimensões  da  imagem  tenham  sido  lidas  quando  do 
+
+f′
+
+carregamento das imagens, efetua-se, de acordo com a equação 28, o cálculo do 
+
+parâmetro 
+
+. 
+
+•  Reamostragem das Imagens Multiespectrais 
+
+f′
+
+Considerando que as imagens multiespectrais possuem dimensões (largura 
+
+e altura) menores que as das respectivas imagens pancromáticas utilizadas e que 
+
+Al-Wassai et al. (2011) preconizam a reamostragem das imagens multiespectrais, 
+
+são enviadas à função de retificação modificada: 
+
+1)  Um único vetor de imagem multiespectral, a ser reamostrado; 
+
+ 
+ 
+ 
+ 
+45 
+
+2)  Dimensões da imagem multiespectral (largura e altura); 
+
+3)  Os valores dos ângulos de rotação, 
+
+, que, neste caso particular 
+
+foram tomados nulos; 
+
+κ, φ e ω
+
+4)  O valor de 
+
+, calculado anteriormente. 
+
+Cabe  especificar  que,  a  referida  função  é  utilizada  (chamada)  três  vezes, 
+
+f′
+
+uma para cada vetor de imagem multiespectral. 
+
+Como saída, a função de retificação modificada retorna o vetor da imagem 
+
+reamostrada  e  as  suas  dimensões.  Ao  se  analisar  e  constatar  a  correção  dos 
+
+resultados  parciais,  verificou-se  que  a  rotina  efetuou  de  modo  exímio  a 
+
+reamostragem. Assim, a ampliação almejada ocorreu a contento. Porém, verificou-
+
+se também que, as dimensões da imagem pancromática excediam as dimensões 
+
+da imagem reamostrada, fato que dificultaria a geração da imagem fusionada. 
+
+Diante  deste  fato,  buscou-se  efetuar  novos  e  sucessivos  recortes  das 
+
+imagens do CBERS 4 a fim de se verificar, sistematicamente, as suas dimensões 
+
+e  se efetuar  cálculos  comparativos. Nestes  termos,  foi  possível  constatar  que  a 
+
+referida  inconsistência  era  proveniente  do  algoritmo  de  recortes  do  QGIS  e  que 
+
+este efeito indesejável, quando da geração de imagens fusionadas por meio deste 
+
+SIG,  poderia  ser  tratado  por  meio  do  recurso  “
+
+”,  que  equiparava 
+
+coerentemente as referidas dimensões. 
+
+Superimpose
+
+O  aspecto  favorável  descoberto  foi  a  presença  de  uma  certa  simetria 
+
+sistemática.  Ou  seja,  como  as  imagens  eram  registradas  no  mesmo  sistema 
+
+referencial  geodésico,  verificou-se  que  as  quantidades  de  linhas  e  colunas 
+
+excedentes  da  imagem  pancromática  diziam  respeito  às  bordas  (ou  quadro)  da 
+
+imagem pancromática. Assim, optou-se por descartar, simetricamente, tal quadro 
+
+da imagem pancromática, de modo que se chegasse à igualdade das dimensões 
+
+para todas as imagens necessárias ao processamento (pancromática e imagens 
+
+multiespectrais reamostradas). 
+
+Algo digno de nota é que, este passo, relacionado à reamostragem, é o que 
+
+torna  a  pesquisa  única.  Ou  seja,  o  processo  de  reamostragem  baseado  no 
+
+algoritmo de retificação de imagens digitais e, consequentemente, nas equações 
+
+de colinearidade, é algo que não se encontra na literatura. 
+
+ 
+ 
+46 
+
+•  Normalização das Imagens no Intervalo [0,1] 
+
+Seguindo  o  preconizado  na  seção  2.2,  os  valores  de  brilho  das  imagens 
+
+reamostradas  foram,  linearmente,  normalizados  no  intervalo  [0,1].  Para  tanto, 
+
+foram criados vetores do tipo 
+
+ (números reais, ou de ponto flutuante, com 
+
+dupla  precisão)  que  receberam  os  valores  de  brilho  dos  vetores  reamostrados 
+
+double
+
+originais  e,  a  partir  destes  novos  vetores,  se  efetuou  a  normalização.  Cabe 
+
+esclarecer  que,  a  normalização  foi  implementada  como  função  e  foi  utilizada 
+
+(chamada) três vezes, uma vez para cada vetor de imagem. 
+
+•  Geração das Componentes 
+
+ (Matiz) e 
+
+ (Saturação) 
+
+Tomando  os  vetores 
+
+H
+
+,  cujos  tons  de  cinza  foram  normalizados  no 
+
+S
+
+intervalo [0,1], e utilizando-se as equações 2 e 3, gerou-se vetores 
+
+double
+
+ relativos 
+
+às  componentes 
+
+  (Matiz)  e 
+
+  (Saturação).  Cabe  esclarecer  que,  como  no 
+
+double
+
+processo  de  fusão  de  imagens  IHS  a  componente 
+
+  (Intensidade)  é  substituída 
+
+H
+
+S
+
+pela imagem pancromática, não foi necessário gerar um vetor relativo à 
+
+I
+
+•  Transformação do Sistema IHS para RGB 
+
+. 
+
+I
+
+Tomando-se os vetores 
+
+, relativos às componentes 
+
+ e 
+
+, e à imagem 
+
+pancromática,  utilizou-se  as  equações  de  4  a  12  para  se  gerar  as  novas 
+
+double
+
+H
+
+S
+
+componentes 
+
+, 
+
+ e 
+
+, que comporão a imagem fusionada. 
+
+•  Normalização das Imagens 
+G
+
+R
+
+B
+
+, 
+
+ e 
+
+ para o Intervalo [0,255] 
+
+Segundo o descrito na seção 2.2, os vetores 
+
+R
+
+G
+
+B
+
+, 
+
+ e 
+
+, resultantes do passo 
+
+anterior,  estão  normalizados  no  intervalo  [0,1].  Assim,  a  fim  de  que  o  resultado 
+
+R
+
+G
+
+B
+
+possa ser adequadamente visualizado a posteriori, efetua-se a normalização dos 
+
+referidos vetores no intervalo [0,255]. 
+
+•  Realce Linear e Geração da Composição Colorida Fusionada 
+
+Cabe esclarecer que, alguns trabalhos encontrados na literatura, bem como, 
+
+os autores Gonzalez e Woods (2010), preconizam que algum pré-processamento 
+
+baseado  em  histograma  pode  ser  utilizado  na  imagem  pancromática  de  modo  a 
+
+melhorar  o  aspecto  pictórico  da  imagem  fusionada.  Porém,  neste  trabalho  este 
+
+tipo  de  pré-processamento  não 
+
+foi  utilizado.  Com 
+
+isso,  buscou-se  um 
+
+conhecimento  epistemológico  acerca  do  processo  de  fusão  em  si,  sem  que 
+
+ 
+47 
+
+nenhum processo acessório modificasse as características das imagens a priori e 
+
+viesse a se propagar, gerando alterações a posteriori. 
+
+Assim,  gerou-se,  em  cada  experimento,  uma  imagem  fusionada  de  baixo 
+
+contraste,  sem  qualquer  tipo  de  pré  ou  pós-processamento,  e  também  uma 
+
+imagem  afetada  de  realce  de  contraste  linear  (pós-processamento).  Tais 
+
+resultados são apresentados no capítulo que segue. 
+
+Informa-se ainda que, as imagens, fusionada “in natura”  e aquela  na qual 
+
+foi aplicado o realce de contraste linear, foram ambas geradas pelo mesmo laço 
+
+,  responsável  pela  composição  da  imagem  de  saída.  Para  tanto,  foram  feitas 
+
+alterações  diretamente  no  próprio  código,  a  fim  de  que  as  imagens  fossem 
+for
+geradas, uma após outra. 
+
+•  Salvamento da Imagem Fusionada 
+
+Após  o  processamento,  o  programa  salva  automaticamente  a  imagem  de 
+
+saída com o nome “Fusion.raw”. Cabe explicar que, o formato da imagem da saída 
+
+não é o mesmo daquele requerido para a imagem de entrada (PGM). Isso se deu, 
+
+por conta de a imagem de saída ser colorida e as imagens de entrada serem em 
+
+tons  de  cinza.  Logo,  haveria  a  necessidade  de  adequação  das  rotinas  de 
+
+salvamento. Porém, foi priorizada a obtenção de resultados para fins de análise 
+
+de  consistência  do  algoritmo  e  da  implementação  propostos,  de  modo  que  se 
+
+considerou os formatos das imagens de entrada e de saída irrelevantes. Por outro 
+
+lado, fixou-se como marco a necessidade de que, para ambos os casos (input e 
+
+output), as imagens fossem matriciais (raster). 
+
+•  Encerramento do Programa 
+
+Ao 
+
+final  do  processamento,  o  programa 
+
+indica  o 
+
+tempo 
+
+total  de 
+
+processamento  e  informa  ao  usuário  que  a  imagem  de  saída  foi  salva.  Para 
+
+encerrar o processamento, basta pressionar qualquer tecla que a janela do prompt 
+
+de comando do MS-DOS se fechará. 
+
+ 
+ 
+ 
+ 
+48 
+
+4  RESULTADOS E ANÁLISES  
+
+Considerando  a  necessidade  de  se  averiguar  a  eficiência  da  metodologia 
+
+elaborada  e  executada,  foram  feitos  experimentos  e  a  posterior  análise  dos 
+
+resultados. Nestes termos, na seção 4.1 são fornecidas algumas informações sobre 
+
+as imagens digitais, que são a fonte de dados para os processamentos realizados. 
+
+Além disso, na seção 4.2 são apresentados os principais resultados, provenientes dos 
+
+experimentos, com as devidas discussões e as conclusões que se pôde depreender 
+
+destas. 
+
+4.1  Dados de Entrada 
+
+Conforme o relatado na seção 3.1, as imagens adquiridas são provenientes do 
+
+satélite  CBERS  4.  Estas 
+
+imagens  ortorretificadas  são  georreferenciadas, 
+
+considerando o Sistema Referencial Geodésico WGS84 e o sistema de projeção UTM 
+
+(zona 22). As imagens são relativas à região de fronteira entre os estados de Mato 
+
+Grosso do Sul e São Paulo, onde se encontra o Rio Paraná.  
+
+Apesar das imagens serem provenientes de um mesmo satélite, o sensor de 
+
+captação  das  imagens  das  bandas 
+
+, 
+
+  e 
+
+  foi  a  Câmera  Multiespectral  Regular 
+
+(MUX)  e  o  sensor  que  realizou  a  captura  da  imagem  pancromática  foi  a  Câmera 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+Pancromática Multiespectral (PAN). Os dados relativos aos sensores MUX e PAN são 
+
+disponibilizados  pelo  site  do  INPE  e  apresentados  a  seguir,  respectivamente,  nas 
+
+Figuras 18 e 19. 
+
+Apesar da grande área abarcada pelas imagens, para fins de experimentação 
+
+se efetuou dois recortes nas respectivas imagens e com estes recortes foram feitos 
+
+os  experimentos.  No  sentido  de  posicionar  as  áreas  de  estudo,  logo  abaixo, 
+
+encontram-se as coordenadas referentes às hidrelétricas abarcadas em cada um dos 
+
+recortes, considerando a ordem em que aparecem na imagem da Figura 20: 
+
+•  Ao  Norte  (mais  acima  na  imagem):  Usina  Hidrelétrica  de  Ilha  Solteira  - 
+
+coordenadas 20.3828° S, 51.3622° W – Município de Ilha Solteira – SP. 
+
+•  Ao  Sul  (mais  abaixo  na  imagem):  Usina  Hidrelétrica  Engenheiro  Souza  Dias  - 
+
+Coordenadas 20°46'45"S, 51°37'45"W – Município de Três Lagoas – MS. 
+
+ 
+ 
+ 
+ 
+49 
+
+Figura 18: Tabela contendo os dados e especificações da câmera MUX, responsável pela captação 
+
+das bandas 
+
+, 
+
+ e 
+
+. 
+
+Fonte: Instituto Nacional De Pesquisas Espaciais 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+Figura 19: Tabela contendo os dados e especificações da câmera PAN, responsável pela captação 
+da imagem pancromática. 
+Fonte: Instituto Nacional de Pesquisas Espaciais 
+
+Na  imagem  da  Figura  20  encontram-se  os  dois  retângulos  que  delimitam  os 
+
+recortes  de  imagem  inerentes  às  áreas  escolhidas.  Conforme  o  especificado,  o 
+
+retângulo superior demarca o reservatório da Hidrelétrica de Ilha Solteira e o retângulo 
+
+inferior delimita o reservatório da hidrelétrica Engenheiro Souza Dias (Jupiá). 
+
+ 
+ 
+ 
+50 
+
+Figura 20: Alocação dos reservatórios hidrelétricos - Retângulo Superior: Reservatório de Ilha 
+Solteira; Retângulo Inferior: Reservatório Engenheiro Souza Dias (Jupiá). 
+Fonte: Acervo do autor 
+
+Ainda  no  sentido  de  demarcar  as  áreas  de  estudo,  tem-se  abaixo  as 
+
+coordenadas  relativas  aos  cantos  superior  esquerdo  e  inferior  direito  de  cada 
+
+retângulo que abarca os reservatórios em questão. Assim, tem-se: 
+
+•  Usina de Ilha Solteira: 
+
+Canto superior esquerdo: zona 22, E 454596,2444, N 7756314,6773. 
+
+Canto inferior direito: zona 22, E 476420,7575, N 7742748,0881. 
+
+•  Usina de Jupiá: 
+
+Canto superior esquerdo: zona 22, E 425103,6593, N 7711780,8737. 
+
+Canto inferior direito: zona 22, E 443978,9138, N 7699099,0621. 
+
+Cada  uma  das  imagens  multiespectrais  (
+
+, 
+
+  e 
+
+)  possui  uma  resolução 
+
+espacial de 
+
+, ou seja, cada pixel da imagem recobre uma área de 20 metros por 
+𝑅𝑅
+
+𝐵𝐵
+
+𝐺𝐺
+
+20 metros. A resolução espacial da imagem pancromática é de 
+
+20 𝑚𝑚
+
+, o que evidência 
+
+uma riqueza de detalhes bastante superior. As composições coloridas e respectivas 
+
+5 𝑚𝑚
+
+componentes podem ser vistas nas Figuras 21 e 22. 
+
+ 
+ 
+51 
+
+(a)                                                               (b) 
+
+(c)                                                              (d) 
+
+Figura 21: Usina de Ilha Solteira: (a) Composição colorida – 
+
+; (b) Componente vermelha; 
+
+(c) Componente verde; (d) Componente azul. 
+Fonte: Acervo do autor 
+
+20 𝑚𝑚
+
+(a)                                                               (b) 
+
+Figura 22: Usina de Jupiá: (a) Composição colorida – 
+
+; (b) Componente vermelha; 
+
+(c)                                                              (d) 
+
+(c) Componente verde; (d) Componente azul. 
+Fonte: Acervo do autor 
+
+20 𝑚𝑚
+
+ 
+  
+ 
+  
+ 
+ 
+  
+ 
+  
+ 
+52 
+
+As  imagens  da  Figura  21  e  22  possuem  uma  tonalidade  escura  devido  a 
+
+características  do  sensor  de  captação.  Assim,  por  vezes  faz-se  necessário  algum 
+
+processamento relativo ao realce do contraste a fim de melhorar seu aspecto pictorial. 
+
+A  seguir,  estão  expostas  as  imagens  pancromáticas  (recortes)  de  alta 
+
+resolução, relativas a cada região de hidrelétrica. Para a geração destes recortes foi 
+
+utilizada a banda 01 da Câmera Pancromática Multiespectral (PAN). 
+
+(a) 
+
+(b) 
+Figura 23: Imagens Pancromáticas: (a) Região da Usina de Ilha Solteira; (b) Região da Usina de 
+Jupiá  
+Fonte: Acervo do autor 
+
+ 
+ 
+ 
+53 
+
+4.2  Resultados Experimentais e Análises  
+
+Nas subseções que seguem são apresentados os resultados da pesquisa, bem 
+
+como, as explanações, elucubrações e conclusões expressas sobre tais resultados. 
+
+4.2.1  Procedimentos preliminares 
+
+Primeiramente,  foi  realizada,  via  software  QGIS,  a  composição  entre  as  três 
+
+imagens  (recortes)  relativas  às  bandas 
+
+, 
+
+  e 
+
+,  obtendo-se  as  imagens  coloridas 
+
+com  resolução  espacial  de  20  metros  para  cada  uma  das  duas  regiões.  Tais 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+composições são apresentadas na Figura 24. Cada imagem colorida possui a mesma 
+
+quantidade de linhas e de colunas que cada uma das três imagens originárias, mais 
+
+especificamente, 944X634 pixels para a imagem da região de Jupiá e 1091X678 pixels 
+
+para a imagem que abarca a região de ilha Solteira. 
+
+Como  as  imagens  pancromáticas  possuem  dimensões  (largura  e  altura) 
+
+maiores que as das imagens relativas às bandas 
+
+, 
+
+ e 
+
+, para que se realizasse a 
+
+fusão  entre  a  imagem  colorida  e  a  pancromática,  foi  necessário  fazer  uma 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+reamostragem  das  imagens  multiespectrais,  de  modo  que  estas  ficassem  com  as 
+
+mesmas  dimensões  das  imagens  pancromáticas  e,  assim,  se  pudesse  realizar  o 
+
+processo de fusão a contento. O processo de reamostragem, que está incorporado ao 
+
+software  Fusion,  desenvolvido  no  âmbito  deste  trabalho,  implicou  na  geração  de 
+
+imagens (recortes) com maior quantidade de linhas e colunas. Porém, como era de 
+
+se esperar, a reamostragem das componentes não implicou na melhoria da qualidade 
+
+pictorial  das  imagens.  Cabe  especificar  ainda  que,  a  dimensão  da  imagem 
+
+pancromática  relativa  à  região  de  Ilha  Solteira  é  de  4361X2709,  ao  passo  que  a 
+
+pancromática  da  região  de  Jupiá  apresenta  dimensão  de  3773X2533.  As  imagens 
+
+coloridas simplesmente reamostradas são apresentadas na Figura 25. 
+
+ 
+ 
+ 
+ 
+ 
+54 
+
+(a) 
+
+(b) 
+
+Figura 24: Composições coloridas: (a) Região da Usina de Ilha Solteira; (b) Região da Usina de 
+Jupiá. 
+Fonte: Acervo do autor 
+
+ 
+ 
+ 
+55 
+
+Figura 25: Imagens coloridas reamostradas relativas às regiões de Ilha Solteira (à esquerda) e de 
+Jupiá (à direita). 
+Fonte: Acervo do autor  
+
+Como a tonalidade das imagens resultantes do processo de reamostragem se 
+
+mostrou escura, visto que não se submeteu as componentes a pré-processamento, 
+
+foi realizado, via software IrfanView, um realce de contraste de cores, de modo que, 
+
+se  melhorasse  a  qualidade  visual  das  imagens.  Os  resultados  são  apresentados  a 
+
+seguir. 
+
+Figura 26: Imagens coloridas reamostradas com realce, relativas às regiões de Ilha Solteira (à 
+esquerda) e de Jupiá (à direita). 
+Fonte: Acervo do autor  
+
+É  importante  frisar  que,  apesar  do  aumento  da  resolução  em  pixels  das 
+
+imagens coloridas no processo de reamostragem e do realce de contraste efetuado 
+
+via IrfanView, a qualidade pictorial da imagem se manteve baixa, o que implica em 
+
+uma ausência de melhora na qualidade quando a simples reamostragem é efetuada. 
+
+4.2.2  A fusão das imagens 
+
+Tendo  já  disponíveis  a  imagem  pancromática  de  alta  resolução  e  a  imagem 
+
+colorida reamostrada de cada região (recortes), reuniu-se as condições necessárias 
+
+para  a  fusão  de  imagens.  O  procedimento  se  baseou  no  método  IHS,  no  qual  se 
+
+ 
+  
+ 
+   
+ 
+ 
+ 
+substitui a componente "Intensidade" da imagem colorida pela imagem pancromática, 
+
+conforme explicado na seção 2.5. Na figura a seguir são mostrados os resultados dos 
+
+experimentos. 
+
+56 
+
+(a) 
+
+(b) 
+Figura 27: Imagens fusionadas: (a) Região da Usina de Ilha Solteira; (b) Região da Usina de Jupiá. 
+Fonte: Acervo do autor 
+
+ 
+ 
+ 
+57 
+
+Como se pode notar, novamente a tonalidade das imagens se mostrou escura, 
+
+sendo necessário a aplicação de um processo de realce de contraste. Tal processo 
+
+foi  realizado  por  dois  caminhos  distintos.  Primeiramente  foi  realizado  um  realce  de 
+
+contraste linear, incorporado ao código do próprio programa Fusion, e se obteve uma 
+
+boa melhora no aspecto visual das imagens. Seguem os resultados na Figura 28. 
+
+Figura 28: Imagens fusionadas resultantes do experimento, com realce  de contraste linear, relativas 
+às regiões de Ilha Solteira (à esquerda) e de Jupiá (à direita). 
+Fonte: Acervo do autor 
+
+Pode-se  verificar  que,  nos  resultados  apresentados  nas  Figuras  27,  28  e  29 
+
+que,  apesar  das  discrepâncias  relativas  ao  contraste,  a  geometria  das  imagens 
+
+fusionadas  se  mostrou  superior  à  das 
+
+imagens  que 
+
+foram  simplesmente 
+
+reamostradas.  Segundo  Gonzalez  e  Woods  (2010)  o  acréscimo  na  qualidade 
+
+geométrica e na nitidez da imagem é proveniente da substituição da componente 
+
+pelos níveis de brilho provenientes da imagem pancromática. Em adição a isso, pode-
+𝐼𝐼
+se  concluir  que  o  software  Fusion  foi  eficaz  em  gerar  imagens  fusionadas  de  alta 
+
+qualidade, a menos do contraste final. Porém, como fora dito anteriormente, em um 
+
+primeiro  momento  se  buscou  efetuar  mudanças  no  algoritmo  de  retificação  de 
+
+imagens  digitais  e  nas  equações  de  colinearidade,  de  modo  que,  estes  elementos 
+
+fossem  agregados  ao  método  de  fusão  IHS  de  imagens.  Assim,  partindo-se  do 
+
+pressuposto de que qualquer pré-processamento poderia falsear os resultados, optou-
+
+se por se processar dados “in natura”. 
+
+Para  fins  de  comparação,  foi  realizado  o  processo  de  realce  automático  das 
+
+imagens  fusionadas  no  software  IrfanView  (ver  Figura  29).  Decorre  de  tal 
+
+processamento  uma  melhora  do  aspecto  visual  das  imagens.  Deste  modo,  essas 
+
+imagens são consideradas o produto final do experimento e expressam um resultado 
+
+bastante satisfatório. 
+
+ 
+   
+ 
+ 
+58 
+
+(a) 
+
+(b) 
+Figura 29: Imagem fusionada realçada: (a) Região da Usina de Ilha Solteira; (b) Região da Usina de 
+Jupiá. 
+Fonte: Acervo do autor  
+
+Cabe ressaltar que, devido à ausência de pré-processamento baseado em 
+
+histograma, indicado para a imagem pancromática (GONZALEZ e WOODS, 2010), as 
+
+ 
+ 
+ 
+59 
+
+cores  passaram  a  ter  alguma  discrepância  com  relação,  por  exemplo,  às  imagens 
+
+simplesmente reamostradas. No entanto, este resultado se assemelha sobremaneira 
+
+com o obtido em outros trabalhos análogos e que usaram softwares comerciais, como 
+
+é o caso de Pisani et al. (2019) e Oliveira (2018). Assim, pode-se dizer que se chegou 
+
+a resultados totalmente passíveis de serem utilizados no âmbito das Geociências. 
+
+(a)                                                                              (b) 
+Figura 30: Comparação de detalhes (região de Ilha Solteira): (a) Imagem colorida inicial; 
+(b) Imagem fusionada 
+Fonte: Acervo do autor 
+
+(a)                                                                              (b) 
+Figura 31: Comparação de detalhes (região de Jupiá): (a) Imagem colorida inicial; 
+(b) Imagem fusionada 
+Fonte: Acervo do autor 
+
+ 
+ 
+ 
+60 
+
+Para uma melhor compreensão acerca dos resultados obtidos, as Figuras 30 e 
+
+31 trazem em destaque detalhes com ênfase na malha urbana, visto que este tipo de 
+
+área apresenta riqueza de detalhes radiométricos e geométricos que podem auxiliar 
+
+na comparação visual do grau de qualidade das imagens. A comparação se dá entre 
+
+a  imagem  gerada  inicialmente  pela  simples  composição  das  bandas 
+
+, 
+
+  e 
+
+,  e  a 
+
+imagem final fusionada, resultante do experimento. 
+
+𝑅𝑅
+
+𝐺𝐺
+
+𝐵𝐵
+
+Analisando  comparativamente  as 
+
+regiões  homólogas,  presentes  na 
+
+composição  colorida  inicial,  de  baixa  resolução  espacial,  e  na  imagem  fusionada, 
+
+pode-se verificar que, tanto no par de imagens apresentadas na Figura 30, quanto no 
+
+par de imagens presentes na Figura 31, a nitidez e a qualidade geométrica da imagem 
+
+fusionada  são  bastante  superiores.  Ou  seja,  como  se  pode  notar,  para  ambas  as 
+
+regiões, houve uma diferença significativa na qualidade dos detalhes mostrados em 
+
+cada imagem, com a melhora na resolução espacial, que passou de 20 metros para 5 
+
+metros.  
+
+Destas  observações,  conclui-se  que,  com    relação  às  imagens  fusionadas 
+
+resultantes,  houve  um  ganho  em  qualidade  geométrica,  visto  que  os  contornos  se 
+
+apresentam  bem  definidos,  e  radiométrica,  considerando  que  as  cores  propiciam  a 
+
+identificação precisa dos alvos. Sendo assim, pode-se depreender que o objetivo do 
+
+trabalho  foi  alcançado,  uma  vez  que,  as  alterações  e  modificações  empreendidas 
+
+propiciaram a geração de resultados satisfatórios. 
+
+ 
+ 
+ 
+61 
+
+5  CONCLUSÕES E RECOMENDAÇÕES: 
+
+A  seguir,  são  feitas  considerações  acerca  da  pesquisa  realizada  e  dos 
+
+experimentos  efetuados,  com  ênfase  nos  resultados  e  nas  conclusões  alcançadas. 
+
+Também  são  feitas  algumas  recomendações  no  sentido  de  contribuir  para  com  os 
+
+possíveis  trabalhos  relacionados  ao  software  desenvolvido,  objetivando  o  seu 
+
+aproveitamento na construção de futuros trabalhos acadêmicos. 
+
+5.1  Conclusões 
+
+A pesquisa envolveu conceitos matemáticos aliados às noções das áreas de 
+
+Geodésia,  Fotogrametria,  Sensoriamento  Remoto  e  Informática.  Ela  consistiu  no 
+
+estudo e posteriores alterações do algoritmo de retificação de imagens digitais, bem 
+
+como, das equações de colinearidade, com vistas à construção de um novo software 
+
+capaz de  efetuar a fusão  de imagens via método IHS. O software, implementado 
+
+em  um  contexto  experimental  acadêmico,  apresentou 
+
+resultados  bastante 
+
+satisfatórios. 
+
+Assim,  da  execução  da  pesquisa,  pôde-se  tirar  algumas  conclusões  úteis  e 
+
+robustas. Primeiramente, ficou evidente que as alterações efetuadas nas equações 
+
+de colinearidade foram condizentes e geraram os resultados satisfatórios esperados, 
+
+e, deste modo, as alterações algorítmicas relacionadas ao algoritmo de retificação de 
+
+imagens  digitais  foram  efetivas  em  gerar  as  imagens  multiespectrais  reamostradas 
+
+necessárias à fusão de imagem via método IHS. Além disso, o descarte do quadro da 
+
+imagem  pancromática,  que  objetivava  parear  as  dimensões  desta  imagem  com  as 
+
+dimensões relativas às imagens multiespectrais, funcionou a contento. Vale ressaltar 
+
+também  que  a  implementação  do  software  Fusion  gerou  os  resultados  esperados, 
+
+sendo que da análise visual depreende-se a boa qualidade destes resultados, os quais 
+
+estão  em  acordo  com  trabalhos  de  mesmo  cerne.  As  manipulações  e  dispositivos 
+
+digitais  utilizados  atuaram  dentro  do  previsto.  Por  fim,  ressalta-se  que  o  software 
+
+QGIS foi de grande valia ao processo de fusão de imagens, pois foi eficaz no registro 
+
+das imagens e na geração de recortes. 
+
+Pelas  conclusões  expostas  acima,  conclui-se  que  houve  um  ganho  científico 
+
+relacionado aos resultados obtidos e ao produto de software gerado. Porém, o ganho 
+
+maior ficou por conta do know-how adquirido pela equipe executora do projeto. 
+
+ 
+ 
+ 
+ 
+62 
+
+5.2  Recomendações 
+
+Entende-se que o produto de software, obtido como resultado deste trabalho, 
+
+poderá ser utilizado futuramente em outros trabalhos cujas temáticas se assemelhem 
+
+àquela trabalhada no âmbito da pesquisa aqui descrita. E mais, entende-se que os 
+
+resultados  alcançados  (imagens  fusionadas)  são  passíveis  de  serem  utilizados  em 
+
+aplicações de geoprocessamento. 
+
+Além  disso,  o  software  aqui  implementado  pode  ser  também  utilizado  no 
+
+ambiente  universitário  ou  em  ambientes  educacionais  de  modo  geral,  como 
+
+ferramenta  didática  no  aprendizado  de  disciplinas  relacionadas  ao  Sensoriamento 
+
+Remoto e à Geografia, além da própria Matemática, servido de exemplo de aplicação 
+
+prática de conceitos matemáticos. 
+
+Buscando  aprimorar  o  produto  científico  e  tecnológico  gerado,  apresenta-se 
+
+algumas  recomendações  para  trabalhos  futuros.  Entre  elas,  sugere-se  efetuar  a 
+
+comparação estatística dos resultados gerados pelo Fusion com resultados gerados 
+
+por outros softwares como, por exemplo, o QGIS. É interessante também que seja 
+
+considerada  possibilidade  de  se  introduzir,  no  software  obtido  neste  trabalho,  as 
+
+potencialidades relativas à manipulação de sistemas referenciais geodésicos, a fim de 
+
+que o registro das imagens possa se tornar um processo interno a ele. Além disso, ao 
+
+Fusion,  é  possível  acrescentar  métodos  eficazes  de  realce  de  contraste,  além  de 
+
+acrescentar  e  automatizar  o  pré-processamento  baseado  em  histograma,  relativo  à 
+
+imagem pancromática, preconizado por Gonzalez e Woods (2010). Em adição a isso, 
+
+é  viável  e  desejável  efetuar  a  substituição  da  interpolação  bilinear,  presente  no 
+
+software  Fusion,  por  algum  outro  método  de  interpolação,  buscando  obter, 
+
+possivelmente, um resultado distinto ou talvez melhor do que o já alcançado. Por fim, 
+
+entende-se ser interessante a recomendação de se implementar para o Fusion uma 
+
+interface amigável (“For Windows”), a fim de tornar a sua utilização mais agradável e 
+
+intuitiva aos possíveis usuários. 
+
+Por  fim,  conclui-se  que  este  trabalho  tenha  gerado  resultados  científicos 
+
+relevantes e uma ferramenta útil ao ambiente acadêmico e a quem dela quiser fazer 
+
+uso. 
+
+ 
+ 
+ 
+ 
+63 
+
+REFERÊNCIAS BIBLIOGRÁFICAS 
+
+AL-WASSAI, F.A.; KALYANKAR, N.V.; AL-ZUKY, A.A. The IHS transformations-
+based image fusion. J. Glob. Res. Comp. Sci., 2 (5), 2011. 
+
+ANDRADE, J. B.; Fotogrametria. Curitiba: SBEE, 1998. 
+
+CERQUEIRA,  Jorge  Dirceu  Melo  de.  Ortorretificação  Digital  de  Imagens  de 
+Satélites  de  Alta  Resolução  Espacial.  Recife,  2004.  Dissertação  (Mestrado)  – 
+Centro de Tecnologia e Geociências, Universidade Federal de Pernambuco. 
+
+CHAVEZ, P. S. Jr.; BOWELL, J.A.. Comparison of spectral information content 
+of  Landsat  thematic  mapper  and  SPOT  for  three  different  sites  in  Phoenix. 
+Photogrammetric Enginnering and Remote Sensing, 54(12):1699-1708. 1988. 
+
+CRÓSTA,  Alvaro  Penteado.  Processamento  digital  de 
+sensoriamento remoto. Ed. rev. Campinas, SP: IG/UNICAMP, 1992. 
+
+imagens  de 
+
+GASPAR, Alberto. Compreendendo a física - Ondas, óptica e Termodinâmica. 
+Manual do professor, Ensino Médio. 3. ed. São Paulo: Ática, 2016. 
+
+GOMES,  Herman  M.;  QUEIROZ,  José  Eustáquio  R. 
+Introdução  ao 
+Processamento Digital de Imagens. Universidade Federal de Campina Grande. 
+em: 
+e 
+Departamento 
+<http://www.dsc.ufcg.edu.br/~hmg/disciplinas/graduacao/vc-2016.2/Rita-Tutorial-
+PDI.pdf>, acesso em 29 mar. 2021. 
+
+Computação. 
+
+Disponível 
+
+Sistemas 
+
+de 
+
+GONZALEZ,  Rafael  C.;  WOODS,  Richard  C..  Processamento  digital  de 
+imagens. 3. ed. São Paulo : Pearson Prentice Hall, 2010. 
+
+INSTITUTO  NACIONAL  DE  PESQUISAS  ESPACIAIS.  Câmeras  Imageadoras 
+CBERS-3  e  4.  Disponível  em:  <http://www.cbers.inpe.br/sobre/cameras/cbers3-
+4.php>, acesso em 12 ago. 2021. 
+
+INSTITUTO  NACIONAL  DE  PESQUISAS  ESPACIAIS.  Fusão  de  Imagens  do 
+Satélite  CBERS-2B  no  SPRING.  Por  Laércio  M.  Namikawa.  Disponível  em:  
+<http://wiki.dpi.inpe.br/doku.php?id=fusaohrcccdcbers2b:exemplo>, acesso em 28 
+mai. 2021. 
+
+LEONARDI,  Silvia  Shizue;  ORTIZ,  Jussara  de  Oliveira;  FONSECA,  Leila  Maria 
+Garcia.  Comparação  de  técnicas  de  fusão  de  imagens  para  diferentes 
+sensores  orbitais.  Anais  XII  Simpósio  Brasileiro  de  Sensoriamento  Remoto, 
+Goiânia, Brasil, 16-21 abril 2005, INPE, p. 4111-4113. 2005. 
+
+MARQUES  FILHO,  Ogê;  VIEIRA  NETO,  Hugo.  Processamento  Digital  de 
+Imagens. Rio de Janeiro: Brasport, 1999. 
+
+MENESES,  P.R.,  ALMEIDA,  T.,  Introdução  ao  Processamento  de  Imagens  de 
+Sensoriamento Remoto. 3. ed., Brasília-DF, 2012. 
+
+ 
+ 
+64 
+
+OLIVEIRA,  Claudianne  Brainer  De  Souza.  Análise  da  integração  espacial  de 
+múltiplos  sensores.  Dissertação  de  Mestrado.  Programa  de  Pós-Graduação  em 
+Ciências. 2018. 
+
+PISANI,  Rodrigo,  BUENO,  Viviane,  FIUZA,  Joice,  ESTELA,  Paulo.  (2019). 
+AVALIAÇÃO DE TÉCNICAS DE FUSÃO DE IMAGENS ORBITAIS UTILIZANDO 
+PRODUTOS  DO  SATÉLITE  CBERS  4  PARA  A  APA  DO  RIO  MACHADO-MG. 
+Caderno de Geografia. 29. 58-71. 10.5752/p.2318-2962.2019v29nespp58. 
+
+SILVA, E. G. Estudo das transformações planas: uma aplicação baseada nas 
+equações  de  colinearidade.  2020.  Dissertação  (Mestrado  Profissional  em 
+Matemática  –  Profmat).  UNEMAT  -  Universidade  do  Estado  de  Mato  Grosso. 
+Sinop-MT. 
+
+UNIVERSIDADE  FEDERAL  DE  VIÇOSA.  Fotogrametria  digital.  Departamento  de 
+Solos.  Disponível  em:  <https://pt.slideshare.net/guest72086/fotogrametria-digital>, 
+acesso em 29 abr. 2021. 
+
+VENTURA,  F.  N.  Fusão  de  imagens  de  sensores  remotos  utilizando  a 
+transformada de wavelet. 2002-08-12. (INPE -TDI/). Dissertação (Mestrado em 
+Computação Aplicada) - Instituto Nacional de Pesquisas Espaciais, São José dos 
+Campos. 2002. 
+
+WOLF,  P.;  DEWITT,  B.  Elements  of  photogrammetry  –  with  applications  in 
+GIS. 3.ed. United States of America: Mc Graw Hill, 2000. 
+
+ 
+ 
+

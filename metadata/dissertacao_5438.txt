@@ -1,0 +1,2558 @@
+ANDRÉ VINÍCIUS SPINA
+
+NÚMEROS PRIMOS E CRIPTOGRAFIA
+
+CAMPINAS
+2014
+
+i
+
+ii
+
+Ficha catalográficaUniversidade Estadual de CampinasBiblioteca do Instituto de Matemática, Estatística e Computação CientíficaMaria Fabiana Bezerra Muller - CRB 8/6162      Spina, André Vinícius, 1986-  Sp46nSpiNúmeros primos e criptografia / André Vinícius Spina. – Campinas, SP : [s.n.],2014.      SpiOrientador: Ricardo Miranda Martins.  SpiDissertação (mestrado profissional) – Universidade Estadual de Campinas,Instituto de Matemática, Estatística e Computação Científica.       Spi1. Números primos. 2. Criptografia - Matemática. I. Martins, RicardoMiranda,1983-. II. Universidade Estadual de Campinas. Instituto de Matemática,Estatística e Computação Científica. III. Título. Informações para Biblioteca DigitalTítulo em outro idioma: Prime numbers and encryptionPalavras-chave em inglês:Primes numbersCryptography - MathematicsÁrea de concentração: Matemática em Rede NacionalTitulação: Mestre em Matemática em Rede NacionalBanca examinadora:Ricardo Miranda Martins [Orientador]Ary Orozimbo ChiacchioAngelo Calil BianchiData de defesa: 31-03-2014Programa de Pós-Graduação: Matemática em Rede NacionalPowered by TCPDF (www.tcpdf.org)ivAbstract
+
+The paper presents a Number Theory introduction, trough a RSA and Diffie-Hellman crypto-
+graphic methods approach, where one can observe situations where they are effective. The mathe-
+matical theory introduced in this paper encompass prime numbers, Modular arithmetic,Primality
+test, groups and other Number Theory related branches.
+
+Keywords: Primes numbers, Cryptography-Mathematics.
+
+Resumo
+
+A pesquisa apresentará uma introdução a Teoria dos Números através de uma abordagem
+sobre os métodos criptográficos RSA e Diffie-Hellman, onde pode-se constatar situações onde eles
+são eficientes. A teoria matemática presente nesse trabalho envolve conhecimentos em números
+primos, aritmética modular, testes de primalidade, grupos e outras questões envolvendo teoria dos
+números.
+
+Palavras-chave: Números primos, Criptografia-Matemática.
+
+vi
+
+Sumário
+
+Dedicatória
+
+Agradecimentos
+
+Introdução
+
+1 PRELIMINARES
+
+1.1 Teorema Fundamental da Aritmética . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.2 Pequeno Teorema de Fermat . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3 Grupos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+viii
+
+ix
+
+1
+
+3
+4
+6
+9
+
+2 TESTES DE PRIMALIDADE
+
+2.1 Teste De Leibniz
+2.2 Teste de Miller
+2.3 Teste de Lucas
+
+15
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+3 MÉTODOS CRIPTOGRÁFICOS
+
+22
+3.1 Criptografia RSA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+3.2 Criptografia Diffie-Hellman . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+4 SEQUÊNCIA DIDÁTICA
+
+35
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.1
+4.2 Objetivos
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.3 Metodologia e Apresentação de Materiais . . . . . . . . . . . . . . . . . . . . . . . . 36
+4.4 Roteiro detalhado da proposta . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+4.5 Considerações finais sobre a aplicação . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+Referências
+
+43
+
+vii
+
+Dedico esta dissertação a toda minha família, amigos e principalmente a meus alunos, que ao
+estudá-la consigam sentir um pouco do prazer que a matemática é capaz de proporcionar.
+
+viii
+
+Agradecimentos
+
+A Deus por ter me dado forças que me permitiram chegar até aqui, por ter me apontado a
+direção a qual me levou a conquistar esse meu sonho. Obrigado Pai, o Senhor é meu caminho,
+minha verdade e minha vida. A minha família por toda a educação, carinho, confiança e paciência
+que me foram concedidas e que serviram de alicerce para o meu comprometimento e paixão com
+os estudos. Muito obrigado por terem me permitido sonhar. Em especial a minha Mãe e meu
+Pai, meus primeiros professores, meu porto seguro. A todos os amigos que Deus colocou no meu
+caminho, os quais me levaram a ser quem sou. A todos os meus professores que me ajudaram a
+chegar até aqui, desde minha mãe que me ensinou minhas primeiras palavras até meu orientador,
+Ricardo Miranda Martin, o qual acompanhou todos os passos da elaboração dessa dissertação.
+Agradeço também a CAPES pelo apoio financeiro e ao IMECC UNICAMP por abrir as portas
+para que eu pudesse realizar o sonho de cursar mestrado.
+
+ix
+
+Introdução
+
+Todos os números inteiros 𝑛 ≥ 2 são formados como produtos de números primos, ou seja,
+os números primos são a matéria prima para a construção dos números. Mas, como encontrar
+números primos? Os números primos aparecem ao acaso no nosso conjunto numérico e descobrir
+uma maneira eficaz de encontrá-los tem sido a tarefa de alguns matemáticos por mais de dois
+mil anos, tarefa que, apesar de alguns avanços, continua sem solução. Assim sendo, dar sentido
+a ordem dos números primos e descobrir uma maneira eficaz de encontrá-los é um problema e,
+também, um desafio.
+
+Nos últimos anos essa questão ganhou uma nova forma de incentivo, devido a um método
+criptográfico chamado RSA, no qual todo o sistema financeiro atual esta apoiado e o qual se
+utiliza de números primos para tornar essas operações seguras. Segurança essa, que se baseia na
+dificuldade de encontrar os fatores primos de um dado número. Se esse problema tivesse solução, se
+fosse possível fatorar um número rapidamente, a segurança do sistema financeiro atual deixaria de
+existir, pois tal método criptográfico seria inutilizado, bem como todas as suas atuais aplicações.
+Sabemos que grande parte das transações que envolvem dinheiro, tais como compras com
+cartão de crédito e até mesmo saques em caixas eletrônicos são feitas via internet, podendo assim,
+serem interceptadas sem que ninguém perceba. Para que essas transações tornem-se seguras,
+mesmo sendo interceptadas por pessoas mal intencionadas, elas devem ser protegidas, de modo
+que somente o destinatário (banco ou empresa do cartão de crédito) consiga ler e utilizar as
+informações ali contidas e para isso usamos a criptografia. Criptografia é o estudo de métodos
+para codificar mensagens de maneira que só o destinatário possa ler e entender o conteúdo que
+ela contém, de modo que para qualquer outra pessoa que consiga ter acesso a tal mensagem essa
+torne-se ilegível, sendo então incapaz de ter acesso às suas informações. Os códigos utilizados na
+criptografia para codificar uma mensagem e também para decodificá-la são chamadas de chaves.
+Embora o conceito utilizado seja bem simples, encontrar uma maneira de codificar tais mensa-
+gens com a segurança necessária, não foi tarefa fácil. Isso é devido à maneira como estas transações
+bancárias ocorrem, por exemplo, quando é realizada uma compra com cartão de crédito via in-
+ternet, o comprador precisa informar a loja sobre os dados de seu cartão de crédito, porém, se
+esses dados forem revelados a outra pessoa, essa pessoa conseguirá fazer compras com tal cartão
+e, assim, para que isso não ocorra, as informações do cartão de crédito precisam ser codificadas
+pelo computador antes de serem enviadas.
+
+O problema é que a codificação feita pelo computador do comprador não pode acontecer de
+maneira aleatória, pois a loja que receberá os dados do cartão de crédito precisa saber decodificar.
+O que ocorre, é que a loja informa como deve ser feito a codificação (a chave de codificação),
+tornando possível para o computador do comprador codificar os dados do cartão de crédito de
+maneira que a loja consiga decodifica-los e, assim, utilizar tais dados. Porém, como o processo de
+
+1
+
+codificação foi enviado via internet pela loja até o comprador, ele fica vulnerável à interceptações
+de terceiros, os quais uma vez sabendo o código (chave) utilizado para codificar os dados do cartão
+de crédito, podem decodificá-los desfazendo a codificação realizada. O que, assim sendo, qualquer
+que seja o código que seu computador utilize para criptografar, ele sempre estará sujeito a cair nas
+mãos de terceiros, tornando assim essa operação nada segura.
+
+Até pouco tempo atrás, isso poderia ser verdade, porém nos dias atuais existem métodos crip-
+tográficos que, mesmo tendo acesso a chave utilizada para codificar a mensagem, decodificá-la não
+é tão simples assim. Decodificar a mensagem simplesmente desfazendo o processo de codificação
+(utilizando um processo inverso ao utilizado para codificar) torna-se tão trabalhoso e demorado de
+maneira que é impossível colocá-lo em prática.
+
+Os métodos criptograficos vêm sendo aprimorados desde a época do Imperador Julio César,
+que utilizava mensagens codificadas para se comunicar com seus soldados durante época de guerra.
+Por volta do ano de 1960 foi inventada a criptografia que utiliza chaves públicas, uma criptografia
+onde mesmo se a chave transmitida for interceptada não será suficiente para a decodificação da
+mensagem. A principal diferença entre a utilização da chave pública de uma chave convencional,
+está na decodificação da mensagem, pois para se decodificar uma mensagem que se utiliza de uma
+chave convencional bastava realizar um processo inverso ao realizado para codificar tal mensagem.
+Já na utilização da chave pública, realizar o processo inverso se torna tão trabalhoso e demorado
+que vem a ser impossível decodificar a mensagem através deste processo. O porque desse processo
+se tornar tão trabalhoso tem a mesma essência do problema em descobrir se um número é primo.
+A chave pública utilizada na criptografia RSA é constituída de um número composto suficiente-
+mente grande, enquanto que a chave que ficará privada (e será utilizada para decodificar) consiste
+dos fatores primos de tal número composto. Como dito anteriormente, é um processo que não
+conhecemos nenhum método eficaz o suficiente, tornando segura a Criptografia RSA. Desfazer o
+processo, ou seja, fatorar tal número ou encontrar os primos que o compõe, é um processo que
+ainda não conhecemos nenhum método eficaz suficiente, e esse fato é o que torna tal chave segura.
+Assim sendo, esse trabalho se pautará no estudo de métodos para se detectar números primos
+e de uma aplicação envolvendo números primos, a Criptografia de Chave Pública, a qual se utiliza
+de propriedades especiais dos números primos. No capítulo 1 será abordado um estudo a partir da
+definição dos números primos, onde, com a ajuda de alguns resultados matemáticos importantes,
+avançaremos o conhecimento sobre os números primos, a ponto de traçar testes de primalidades
+modernos que serão analisados no Capítulo 2 no qual levantaremos as vantagens e desvantagens
+de cada um. Ao final do Capítulo 2 poderá se constatar o grande problema que todos os testes de
+primalidade sofrem, e que será a essência dos métodos criptográficos, que serão apresentados no
+Capítulo 3. No Capítulo 4 será apresentada uma sequência didática idealizada que pode servir de
+molde para uma utilização em sala de aula.
+
+2
+
+Capítulo 1
+
+PRELIMINARES
+
+Será tratado nesse capítulo o estudo de alguns teoremas, ideias e conceitos sobre números
+inteiros os quais são imprescindíveis para a análise e compreensão dos números primos, bem como
+a dificuldade em se detectar a primalidade de um número, sendo esse o grande trunfo do método
+criptográfico RSA.
+
+O resultado mais relevante até o momento para se detectar a primalidade de um número é o
+chamado teste de Miller, o qual utiliza a aritmética modular para analisar e encontrar números
+primos. Esse teste de primalidade é o que se tem de mais moderno para se detectar se um número é
+primo ou não, mas mesmo assim ainda só é viável sua utilização até certo ponto, pois dependendo
+do tamanho do número a ser examinado, tal teste pode demorar tanto tempo para encontrar uma
+resposta, que utilizá-lo se torna inviável.
+Afinal, o que é um número primo?
+
+Definição 1. Um número inteiro positivo é chamado de primo quando possui somente dois divi-
+sores: 1 e ele próprio.
+
+Definição 2. Um número inteiro positivo é chamado de composto quando possui 3 ou mais
+divisores.
+
+Exemplo 1. 8 não é primo, pois 4 divide 8
+5 é primo, pois 2 não divide 5, 3 não divide 5 e 4 não divide 5.
+
+Quando um número 𝑏 divide um número 𝑛, escrevemos: 𝑏 | 𝑛 , exemplo: 4 | 8 (4 divide 8). O
+que equivale a dizer que a divisão de 𝑛 por 𝑏 deixa resto zero ou ainda que: 𝑛 = 𝑏 · 𝑞, exemplo:
+8 = 4 · 2.
+
+Se um número 𝑏 não divide um número 𝑛, escrevemos: 𝑏 (cid:45) 𝑛. O que equivale a dizer que a
+divisão de 𝑛 por 𝑏 deixa resto diferente de zero, ou ainda: 𝑛 = 𝑏 · 𝑞 + 𝑟, com 0 < 𝑟 < 𝑏, exemplo:
+11 = 4 · 2 + 3.
+
+Neste ponto é importante utilizarmos, como recurso, o Algoritmo da Divisão, o qual ajudará
+a identificarmos mais rapidamente os possíveis resultados. Tal Algoritmo nos diz que todo 𝑛 ∈ Z
+pode ser escrito como:
+
+3
+
+Figura 1.1: Algoritmo da divisão
+
+𝑛 = 𝑏 · 𝑞 + 𝑟, onde 0 ≤ 𝑟 < 𝑏, sendo 𝑏 ∈ N.
+Assim sendo, temos os possíveis casos:
+
+• Se 𝑟 = 0, temos que 𝑏 divide 𝑛 e podemos escrever: 𝑏 | 𝑛.
+
+• Se 𝑟 ̸= 0, temos que 𝑏 não divide 𝑛 e escrevemos 𝑏 (cid:45) 𝑛.
+
+Como saber se um número é primo?
+Quanto maior for o número a ser verificado, maior a quantidade de candidatos a divisores este
+
+número terá.
+
+Exemplo 2. 5021 é primo?
+
+Para verificar se ele é primo olhando para a definição de números primos, temos que 5021 é
+primo se for divisível somente por 1e por ele mesmo, logo teria que se verificar se 5021 não é
+divisível por 2, por 3, por 4, por 5, por 6,..., por 5020, o que dá um total de 5018 candidatos a
+verificar.
+
+1.1 Teorema Fundamental da Aritmética
+
+Todos os números não primos podem ser formados como produtos de primos e de maneira
+
+única, é o que diz o Teorema Fundamental da Aritmética:
+
+Teorema 1. (Teorema Fundamental da Aritmética) Um número natural maior que 1, ou é primo,
+ou se escreve de maneira única como um produto de primos, a menos de ordenação.
+
+Demonstração: Vamos primeiro demonstrar que um número natural 𝑛 se escreve como um
+
+produto de primos:
+
+Para isso iremos utilizar o príncipio de indução finita. Observe que 𝑛 = 2, o teorema é valido,
+pois 2 é primo. Suponha agora que o teorema é valido para todo número natural maior que 2 e
+menor que 𝑛 e, então, provaremos que também é válido para 𝑛. Observe que dessa forma 𝑛 não é
+primo e, portanto, existe 2 ≤ 𝑛1 < 𝑛 que divide 𝑛, e então escrevemos 𝑛 = 𝑛1 · 𝑘 sendo 2 ≤ 𝑘 < 𝑛.
+Dessa forma por hipótese de indução, temos que 𝑛1 e 𝑘 podem ser escrito como produto de primos:
+𝑛1 = 𝑝1 · · · 𝑝𝑛 e 𝑘 = 𝑞1 · · · 𝑞𝑛, e então podemos escrever 𝑛 = 𝑛1 · 𝑘 = 𝑝1 · · · 𝑝𝑛 · 𝑞1 · · · 𝑞𝑛.
+
+Falta agora demonstrar a unicidade dessa escrita.
+
+4
+
+Suponha por absurdo que 𝑛 possa ser escrito de duas maneiras diferentes ao menos da ordem
+
+de seus fatores, ou seja:
+𝑛 = 𝑝1 · 𝑝2 · ... · 𝑝𝑛 e também:
+𝑛 = 𝑞1 · 𝑞2 · ... · 𝑞𝑠, com 𝑝𝑖 e 𝑞𝑗 números primos sendo 𝑖 ∈ {1, 2, ..., 𝑛} e 𝑗 ∈ {1, 2, ..., 𝑠}.
+Observe que 𝑝1|𝑛 pois 𝑛 = 𝑝1 · 𝑝2 · ... · 𝑝𝑛 , e dessa forma temos também que:
+
+𝑝1|𝑞1 · 𝑞2 · ... · 𝑞𝑠 que também podemos escrever:
+𝑞1 · 𝑞2.... · 𝑞𝑠 = 𝑝1 · 𝑎
+
+Podemos reordenar os 𝑞𝑗 de forma que 𝑝1 = 𝑞1.
+
+Como 𝑝1 é um número primo e 𝑞𝑗 também são primos, conclui-se que 𝑝1 = 𝑞𝑗 para algum 𝑗.
+
+Desta forma podemos simplificar a igualdade 𝑞1 · 𝑞2 · ... · 𝑞𝑠 = 𝑝1 · 𝑎 obtendo: 𝑞2 · ... · 𝑞𝑠 = 𝑎
+Lembrando que 𝑛 = 𝑝1 · 𝑝2 · ... · 𝑝𝑛 , temos então que 𝑎 = 𝑝2 · ... · 𝑝𝑛, e portanto:
+
+𝑝2|𝑎 , e portanto, como 𝑞2 · ... · 𝑞𝑠 = 𝑎, temos que:
+𝑝2|𝑞2 · ... · 𝑞𝑠 que é o mesmo de:
+𝑞2 · ... · 𝑞𝑠 = 𝑝2 · 𝑏 onde 𝑏 = 𝑝3 · ... · 𝑝𝑛
+
+Como 𝑝2 é um número primo e 𝑞𝑗 também são primos, conclui-se que 𝑝2 = 𝑞𝑗 para algum 𝑗.
+
+Podemos reordenar os 𝑞𝑗 de forma que 𝑝2 = 𝑞2.
+
+Podendo assim simplificar a igualdade 𝑞2 · ... · 𝑞𝑠 = 𝑏 obtendo: 𝑞3 · ... · 𝑞𝑠 = 𝑝3 · ... · 𝑝𝑛
+Prosseguindo desta forma, podemos concluir que 𝑝1 = 𝑞1, 𝑝2 = 𝑞2, ..., 𝑝𝑛 = 𝑞𝑠, provando assim,
+
+que 𝑛 se escreve como produtos de primos de maneira única.
+
+O Teorema Fundamental da Aritmética é o resultado que nos permite escrever qualquer número
+como um produto de primos. No ensino Fundamental o utilizamos em muitas ocasiões, simplificar
+frações, calcular o m.m.c., m.d.c. entre outras aplicações.
+
+Exemplo 3. Escrevendo 10 e 18 como um produto de primos, temos:
+
+10 = 2 · 5
+18 = 32 · 2
+
+O Teorema Fundamental da Aritmética garante que um número composto terá sempre os
+mesmos números primos em sua composição. Desta maneira, utilizando o algoritmo da fatoração
+podemos encontrar os fatores primos de um número e escrevê-lo como um produto de primos.
+
+Podemos melhorar um pouco esse método se notarmos o seguinte:
+Voltando ao exemplo 2, ao verificar que o número 5021 não é divisível por 2, podemos afirmar
+que este número (pelo Teorema Fundamental da Aritmética) não contém o fator 2 em sua decompo-
+sição em fatores primos, e portanto, nenhum outro número que contenha o 2 em sua decomposição
+(os múltiplos de 2) pode dividir o número 5021. Nenhum número do conjunto 𝑀 (2) = {2, 4, 6, 8, ...}
+divide o número 5021.
+
+Utilizando o mesmo pensamento para todos os outros primos menores que 5021, podemos
+concluir que basta verificar então se o número em questão, no caso 5021, é divisível pelos primos
+que serão menores que ele.
+
+Se pensarmos um pouco adiante, conseguiremos deduzir que também não se faz necessário
+
+verificar todos os primos menores que o número em questão.
+
+Exemplo 4. Para o número 73, temos que: 2 não divide 73, 3 não divide 73, 5 não divide 73 e 7
+73 < 9, temos que 9 · 9 > 73 , e dessa forma não existe nenhum fator primo
+não divide 73 e como
+
+√
+
+5
+
+de 73 maior do que
+√
+
+73 ( já que verificamos para todos os menores do que
+
+73, porque se houvesse o outro fator primo também teria que ser maior que
+73,) o que gera um absurdo, uma vez
+
+√
+
+√
+
+que a multiplicação de dois números maiores do que 9 é sempre maior do que 73.
+
+Dessa forma para saber se um número é primo, basta verificar se ele é divisível por algum
+
+número primo menor ou igual a raiz quadrada deste número.
+
+√
+
+No caso do 5021, basta verificar se ele é divisível por algum número primo menor ou igual a
+
+5021 ≃ 71, se nenhuma destas verificações acontecer 5021 será primo.
+
+Embora torne o método mais eficaz ele ainda funciona até certo ponto, já que quando se trata
+de números grandes, os números que precisam ser verificados acabam sendo muitos, sem contar
+que, faz-se necessário conhecer todos os números primos que são menores que a raiz quadrada
+deste.
+
+Para seguir em frente, é fundamental utilizar uma aritmética focada nos restos de divisões, a
+
+chamada arimética modular.
+
+Utilizando a divisão euclidiana, temos que um número 𝑛 ∈ Z pode ser escrito como: 𝑛 = 𝑚·𝑞+𝑟
+
+onde 𝑚 ∈ N e 0 ≤ 𝑟 < 𝑚.
+
+Mas, e se o que se precisa analisar for somente o resto desta divisão sem se preocupar com o
+
+valor do quociente?
+
+Nesse caso, poderemos escrever: 𝑛 ≡ 𝑟 mod 𝑚, ou seja, 𝑛 deixa resto 𝑟 quando dividido por
+
+𝑚, ou ainda de uma maneira mais geral:
+𝑛 ≡ 𝑎 mod 𝑚, dizemos que 𝑛 é congruo a 𝑎 no módulo 𝑚, o que significa que 𝑛 e 𝑎 tem o mesmo
+resto na divisão por 𝑚.
+
+Traçando um paralelo com a divisibilidade, podemos escrever também:
+
+𝑚|𝑛 − 𝑎 ⇔ 𝑛 ≡ 𝑎 mod 𝑚, pois, se 𝑛 e 𝑎 deixam o mesmo resto na divisão por 𝑚, temos que a
+diferença entre 𝑛 e 𝑎 é divisível por 𝑚.
+
+Exemplo 5. 34 ≡ 10 mod 3, pois ambos deixam resto 1 quando divididos por 3. Utilizando
+divisibilidade temos então: 3|34 − 10.
+
+A utilização da aritmética modular facilita-rá cálculos com números grandes, em que, estamos
+
+preocupados somente com o resto que eles deixam quando divididos por algum outro número.
+
+Como ilustração, vejamos um exemplo:
+
+Exemplo 6. Qual o resto da divisão de 475 por 17?
+
+42 ≡ −1 mod 17 pois 42 = 16, portanto:
+4 · 474 ≡ 4 · (42)37 mod 17
+4 · (42)37 ≡ 4 · (−1)37 mod 17
+475 ≡ −4 ≡ 13 mod 17 , ou seja, o resto da divisão de 475 por 17 é 13.
+
+1.2 Pequeno Teorema de Fermat
+
+Um resultado muito importante e que nos auxilia no cálculo de congruências é o Pequeno
+
+Teorema de Fermat.
+
+6
+
+Teorema 2. (Pequeno Teorema de Fermat) Se 𝑝 for um número primo, então 𝑝 divide 𝑎𝑝 − 𝑎 para
+todo número inteiro 𝑎 :
+
+𝑝|𝑎𝑝 − 𝑎, ou ainda: 𝑎𝑝 ≡ 𝑎 mod 𝑝.
+
+Demonstração:
+Uma maneira de se provar tal resultado, é utilizar o Princípio de Indução Finita, já que ele nos
+
+fornece um método eficaz de demonstrações em situações envolvendo números Naturais.
+
+Com o Pequeno Teorema de Fermat faz uso dos Números Inteiros, provaremos primeiro que ele
+
+é válido para os Números Naturais e em seguida estenderems a prova para os Números Inteiros.
+
+Queremos provar então, em um primeiro momento, que a proposição 𝑎𝑝 ≡ 𝑎 mod 𝑝 é válida
+
+para os Números Naturais.
+
+1)Utilizando 𝑎 = 1 como base, temos:
+𝑎𝑝 = 1𝑝 = 1, ∀ primo 𝑝, logo: 1𝑝 ≡ 1 mod 𝑝
+
+2) Após ter concluído que para 𝑎 = 1 é verdade. Suponhamos que 𝑎𝑝 ≡ 𝑎 mod 𝑝, ∀𝑎 ∈ N esta
+
+é nossa Hipótese de Indução.
+
+3) Em seguida utilizando nossa hipótese provaremos que:
+
+(𝑎 + 1)𝑝 ≡ 𝑎 + 1 mod 𝑝
+
+Expandindo (𝑎 + 1)𝑝 segundo o Binômio de Newton: ∑︀𝑝
+Se 𝑖 = 0 , temos (︁𝑝
+· 𝑎𝑝 · 10 = 𝑎𝑝.
+Se 𝑖 = 𝑝 , temos (︁𝑝
+· 𝑎𝑝−𝑝 · 1𝑝 = 1𝑝.
+Logo tirando estes dois casos do somatório, temos:
+
+)︁
+
+)︁
+
+𝑝
+
+0
+
+𝑖=0
+
+)︁
+
+(︁𝑝
+𝑖
+
+· 𝑎𝑝−𝑖 · 1𝑖.
+
+(𝑎 + 1)𝑝 = 𝑎𝑝 + 1𝑝 +
+
+)︃
+
+𝑝−1
+∑︁
+
+𝑖=1
+
+(︃𝑝
+𝑖
+
+· 𝑎𝑝−𝑖 · 1𝑖
+
+Como (︁𝑝
+𝑖
+
+𝑖!
+
+)︁ = 𝑝·(𝑝−1)·...·(𝑝−𝑖+1)
+
+, é sempre inteiro e como 𝑝 não divide 𝑖!, temos que(︁𝑝
+
+)︁ possui 𝑝
+
+𝑖
+
+como um de seus fatores primos e, portanto, 𝑝 divide (︁𝑝
+
+)︁.
+
+𝑖
+
+Em termos de congruência: (︁𝑝
+𝑖
+Assim:
+
+)︁
+
+≡ 0 mod 𝑝.
+
+)︃
+
+𝑝−1
+∑︁
+
+𝑖=1
+
+(︃𝑝
+·
+𝑖
+
+· 𝑎𝑝−𝑖 · 1𝑖 ≡ 0 mod 𝑝.
+
+E como por Hipótese de Indução temos que 𝑎𝑝 ≡ 𝑎 mod 𝑝, ∀𝑎 ∈ N, podemos concluir que:
+
+𝑎𝑝 + 1𝑝 +
+
+)︃
+
+𝑝−1
+∑︁
+
+𝑖=1
+
+(︃𝑝
+𝑖
+
+· 𝑎𝑝−𝑖 · 1𝑖 ≡ 𝑎 + 1 mod 𝑝
+
+Encontrando assim que:
+(𝑎 + 1)𝑝 ≡ 𝑎𝑝 + 1𝑝 + ∑︀𝑝−1
+· 𝑎𝑝−𝑖 · 1𝑖 ≡ 𝑎𝑝 + 1𝑝 ≡ (𝑎 + 1) mod 𝑝.
+𝑖=1
+Desta forma provamos que : 𝑎𝑝 ≡ 𝑎 mod 𝑝 é valido para todo 𝑎 ∈ N
+
+(︁𝑝
+𝑖
+
+)︁
+
+7
+
+Precisamos agora, estender esse resultado para os Números Inteiros (Z), para isso falta que
+
+provemos que 𝑎𝑝 ≡ 𝑎 mod 𝑝 também é valido para os números negativos.
+
+Em um primeiro momento suponha que 𝑝 = 2 e 𝑎 = −𝛼, com 𝛼 positivo:
+(−𝛼)2 ≡ −𝛼 mod 2
+𝛼2 ≡ −𝛼 mod 2
+𝛼2 + 𝛼 ≡ 0 mod 2
+Observe agora que, se 𝛼 for par , ou seja : 𝛼 = 2𝑘, temos: (2𝑘)2 + 2𝑘 ≡ 0 mod 2 , que é
+
+sempre verdade.
+
+Se 𝛼 for ímpar, ou seja: 𝛼 = 2𝑘 + 1, temos:
+(2𝑘 + 1)2 + 2𝑘 + 1 ≡ 2.2𝑘2 + 2 · 2𝑘 + 1 + 2𝑘 + 1 ≡ 0 mod 2, que também é sempre verdade.
+Assim, concluímos que, se 𝑝 = 2, temos que 𝑎𝑝 ≡ 𝑎 mod 𝑝 é sempre verdade ∀𝑎 ∈ Z. Por
+último falta provarmos que, se 𝑝 for um número ímpar (uma vez que o único primo par existente
+é o 2) e 𝑎 um número negativo, continua sendo válido: 𝑎𝑝 ≡ 𝑎 mod 𝑝.
+
+Suponhamos então 𝑎 = −𝛼 e 𝑝 um primo ímpar, sendo 𝛼 ∈ N, temos:
+(−𝛼)𝑝 = −𝛼𝑝, pois 𝑝 é ímpar.
+Utilizemos então 𝛼𝑝 ≡ 𝛼 mod 𝑝, resultado que já provamos para os Números Naturais utili-
+zando o Princípio da Indução Finita, e em seguida podemos multiplicar por (−1) ambos os lados
+da congruência, obtendo:
+
+−𝛼𝑝 ≡ −𝛼 mod 𝑝, como 𝑝 é ímpar:
+(−𝛼)𝑝 ≡ −𝛼 mod 𝑝, resultado então que o Teorema também é valido para os números nega-
+
+tivos.
+
+Como o caso 𝑎 = 0 é trivial, concluimos assim, a demonstração de que 𝑎𝑝 ≡ 𝑎 mod 𝑝 é valido
+
+para todo 𝑎 ∈ Z e 𝑝 primo.
+
+Exemplo 7.
+
+43 ≡ 4 mod 3 ⇒ 43 ≡ 1 mod 3
+
+62 ≡ 6 mod 2 ⇒ 62 ≡ 0 mod 2
+
+É importante observar que o Pequeno Teorema de Fermat diz respeito a congruências cujo
+módulo são apenas números primos, o que traz uma restrição quanto a sua utilização. Essa restrição
+já não existe no Teorema apresentado por Euler o qual abrange todos os números inteiros.
+
+Teorema 3. (Teorema de Euler) Sejam 𝑎 ∈ Z e 𝑛 ∈ N, se (𝑎, 𝑛) = 1 então:
+
+𝑎𝜑(𝑛) ≡ 1 mod 𝑛,
+
+primo com 𝑛, onde é possível calculá-la escrevendo 𝑛 como um produto de primos: 𝑛 = 𝑝𝛼1
+
+sendo 𝜑(𝑛) a quantidade de elementos do conjunto dos possíveis restos na divisão por n que são
+1 ·...·𝑝𝛼𝑛
+𝑛 ,
+com 𝑝1, 𝑝2, ..., 𝑝𝑛 números primos distintos e 𝛼1, 𝛼2, ..., 𝛼𝑛 números inteiros positivos.Desta
+
+forma:
+
+𝜑(𝑛) = 𝜑(𝑝𝛼1
+1
+
+· ... · 𝑝𝛼𝑛
+𝑛
+
+) = 𝑝𝛼1−1
+1
+
+· ... · 𝑝𝛼𝑛−1
+
+𝑛
+
+· (𝑝1 − 1) · ... · (𝑝𝑛 − 1)
+
+8
+
+Observe que se n for um número primo, temos: 𝜑(𝑛) = 𝜑(𝑝) = 𝑝1−1 · (𝑝 − 1) = 𝑝 − 1, e então:
+𝑎𝜑(𝑛) ≡ 1 mod 𝑛 ⇒ 𝑎𝑝−1 ≡ 1 mod 𝑝 , que nada mais é do que o Pequeno Teorema de Fermat
+
+em uma outra versão a qual estudaremos mais adiante.
+
+Para compreender um pouco mais sobre o Pequeno Teorema de Fermat e sobre a ordem de um
+
+número 𝑛, se faz necessário estudar um pouco sobre Grupos.
+
+1.3 Grupos
+
+Um Grupo é um conjunto que possui uma operação bem definida além de satisfazer algumas
+
+propriedades.
+
+Para tal operação estar bem definida ela deve associar a cada dois elementos desse grupo um
+
+terceiro elemento também desse grupo:
+
+Porém para tal conjunto constituir um grupo, precisa também satisfazer as seguintes proprie-
+
+𝑎, 𝑏 ∈ 𝐺 ⇒ 𝑎 * 𝑏 ∈ 𝐺.
+
+dades:
+
+1. Associatividade: 𝑎 * (𝑏 * 𝑐) = (𝑎 * 𝑏) * 𝑐
+
+2. Elemento Neutro: 𝑎 * 𝑒 = 𝑒 * 𝑎 = 𝑎
+
+3. Elemento Inverso 𝑎 * 𝑎′ = 𝑎′ * 𝑎 = 𝑒
+
+Um grupo muito utilizado é o dos Números Inteiros com a operação da adição:
+Temos que 𝑎, 𝑏 ∈ Z ⇒ 𝑎 + 𝑏 ∈ Z e também que vale:
+
+1. Associatividade 𝑎 + (𝑏 + 𝑐) = (𝑎 + 𝑏) + 𝑐
+
+2. Elemento Neutro 𝑎 + 0 = 0 + 𝑎 = 𝑎
+
+3. Elemento Inverso 𝑎 + (−𝑎) = (−𝑎) + 𝑎 = 0
+
+Caracterizando, assim, o conjunto dos Números Inteiros como um grupo para com a adição.
+Entretanto, o conjunto dos Números Inteiros não forma um grupo com a operação de multipli-
+cação,pois apesar da operação estar bem definida: 𝑎, 𝑏 ∈ 𝑍 ⇒ 𝑎 · 𝑏 ∈ Z, e possuir as propriedades
+Associativa e Elemento Neutro, ela não possui Elemento Inverso:
+
+1. Associatividade 𝑎 · (𝑏 · 𝑐) = (𝑎 · 𝑏) · 𝑐;
+
+2. Elemento Neutro 𝑎 · 1 = 1 · 𝑎 = 𝑎.
+
+9
+
+Porém, (cid:64)𝑎′ ∈ Z, tal que: 𝑎 · 𝑎′ = 𝑎′ · 𝑎 = 1, e, portanto, podemos concluir que os Números
+Inteiros não formam um grupo para com a operação de multiplicação, pois ela não possui elemento
+inverso.
+
+Ao se utilizar congruências, os grupos utilizados são os Z𝑛, ou seja, Inteiros módulo 𝑛, vejamos
+
+alguns exemplos:
+
+1) Ao se analisar Z4, temos como classes residuais: ¯0, ¯1, ¯2, ¯3 (os possíveis restos na divisão por
+
+4). Logo, temos uma congruência do tipo: 𝑎 ≡ 𝑏 mod 4 onde 𝑎, 𝑏𝑒 ∈ Z e ¯𝑎 ∈
+
+{︁¯0, ¯1, ¯2, ¯3}︁.
+
+Vejamos se Z4 é um grupo com a operação de adição:
+Temos que 𝑥, 𝑦 ∈ Z ⇒ 𝑥 + 𝑦 ∈ Z e 𝑥 ≡ 𝑏1 mod 𝑛 e 𝑦 ≡ 𝑏2 mod 𝑛 ⇒ 𝑥 + 𝑦 ≡ 𝑏1 + 𝑏2 mod 𝑛.
+Como 𝑏1 𝑒 𝑏2 ∈
+
+, vejamos todas as possibilidades de 𝑏1 + 𝑏2 mod 4 :
+
+{︁¯0, ¯1, ¯2, ¯3}︁
+
++ 0
+0
+0
+1
+1
+2
+2
+3
+3
+
+1
+1
+2
+3
+0
+
+2
+2
+3
+0
+1
+
+3
+3
+0
+1
+2
+
+Tabela 1.1: Adição em Z4
+
+Verifica-se que 𝑏1 + 𝑏2 ∈ Z4 e que:
+
+1. Associatividade: 𝑎 + (𝑏 + 𝑐) = (𝑎 + 𝑏) + 𝑐
+
+2. Elemento Neutro: 𝑎 + 0 = 0 + 𝑎 = 𝑎
+
+3. Elemento Inverso 𝑎 + (−𝑎) = (−𝑎) + 𝑎 = 0
+
+Desta forma Z4 é um grupo com a operação de Adição.
+Vejamos agora se Z4 também é um grupo com a operação de Multiplicação:
+Seguindo os mesmos passos, temos que 𝑥, 𝑦 ∈ Z ⇒ 𝑥 · 𝑦 ∈ Z e 𝑥 ≡ 𝑏1 mod 𝑛 e 𝑦 ≡ 𝑏2
+
+mod 𝑛 ⇒ 𝑥 · 𝑦 ≡ 𝑏1 · 𝑏2 mod 𝑛.
+
+Como 𝑏1 e 𝑏2 ∈
+
+{︁¯0, ¯1, ¯2, ¯3}︁
+
+, vejamos todas as possibilidades de 𝑏1 · 𝑏2 mod 4.
+
+.
+0
+1
+2
+3
+
+0
+0
+0
+0
+0
+
+1
+0
+1
+2
+3
+
+2
+0
+2
+0
+2
+
+3
+0
+3
+2
+1
+
+Tabela 1.2: Multiplicação em Z4
+
+Verifica-se que 𝑏1 · 𝑏2 ∈ Z4 .
+Em seguida precisamos analisar se é válido:
+
+10
+
+1. Associatividade: 𝑎 · (𝑏 · 𝑐) ≡ (𝑎 · 𝑏) · 𝑐 mod 4
+
+2. Elemento Neutro: 𝑎 · 1 ≡ 1 · 𝑎 ≡ 𝑎 mod 4
+
+3. Elemento Inverso 𝑎 · 𝑏 ≡ 𝑏 · 𝑎 ≡ 1 mod 4
+
+As propriedades 1 e 2 podem ser facilmente analisadas pelas propriedades da multiplicação, já
+a propriedade 3 precisa ser analisado com um pouco mais de cuidado. Analisando todas as classes
+residuais de Z4 temos:
+
+Estamos analisando se 𝑎 · 𝑏 ≡ 𝑏 · 𝑎 ≡ 1 mod 4 para todo 𝑎 ∈ Z4∖{0}
+Repare que, quando 𝑎 = 2, não existe nenhum 𝑏 ∈ Z4 tal que:
+
+𝑎 · 𝑏 ≡ 𝑏 · 𝑎 ≡ 1 mod 4
+
+Logo, Z4 não é um grupo com a operação de multiplicação.
+A ausência deste inverso multiplicativo muitas vezes é um problema, inclusive no estudo de
+números primos e de fatoração, onde é utilizada a multiplicação com frequência. Por esse motivo,
+precisamos utilizar um grupo para com a operação de multiplicação, e como a falta do Elemento
+Inverso é sempre um problema, comecemos procurando condições para que 𝑎′, 𝑎 ∈ Z𝑛, tenham a
+propriedade:
+
+𝑎 · 𝑎′ ≡ 𝑎′ · 𝑎 ≡ 1 mod 𝑛, o que só acontecerá se: 𝑎 · 𝑎′ + 𝑞 · 𝑛 = 1, com 𝑛 ∈ Z, observe que
+podemos encontrar tal resultado utilizando o algoritmo extendido de Euclides em (𝑎, 𝑛) = 1, e
+dessa forma para que o conjunto possua Elemento Inverso precisamos encontrar um 𝑛 que seja
+primo com 𝑎.
+
+Observe que ao utilizar o conjunto Z𝑝, sendo 𝑝 um número primo, a condição (𝑎, 𝑝) = 1 é
+respeitada sempre que 𝑝 (cid:45) 𝑎, mas observe que quando 𝑝 | 𝑎, temos que 𝑎 = 𝑝.𝑞 para algum 𝑞 ∈ Z,
+e assim sendo, 𝑎 = ¯0, portanto tal conjunto possui Elemento Inverso para todos os seus elementos
+com excessão é claro do zero (vale lembrar que em um grupo com a operação de multiplicação não
+teremos Elemento Neutro e nem Elemento Inverso para o zero).
+
+Nas congruências podemos obter um grupo para com a operação de multiplicação ao utilizar
+o conjunto Z𝑛 desde que 𝑛 seja um número primo, já que assim, desta maneira, temos também
+o inverso multiplicativo (uma demonstração para tal resultado pode ser encontrada em Coutinho
+2.013 p.141, 142.)
+
+Vamos analisar o conjunto Z5 e provar que ele constitui um grupo para com a operação de
+
+adição e também para com a operação de multiplicação:
+
+Temos que 𝑎, 𝑏, 𝑐 ∈ Z5 ⇒ 𝑎 + 𝑏 ∈ Z e também que vale:
+
+1. Associatividade: 𝑎 + (𝑏 + 𝑐) ≡ (𝑎 + 𝑏) + 𝑐 mod 5;
+
+2. Elemento Neutro: 𝑎 + 0 ≡ 0 + 𝑎 ≡ 𝑎 mod 5;
+
+3. Elemento Inverso 𝑎 + (−𝑎) ≡ (−𝑎) + 𝑎 ≡ 0 mod 5.
+
+Com relação a Multiplicação :
+𝑎, 𝑏 ∈ Z ⇒ 𝑎 · 𝑏 ∈ Z
+
+11
+
+1. Associatividade 𝑎 · (𝑏 · 𝑐) ≡ (𝑎 · 𝑏) · 𝑐 mod 5;
+2. Elemento Neutro 𝑎 · 1 ≡ 1 · 𝑎 ≡ 𝑎 mod 5,sendo 𝑎 ̸= ¯0;
+3. Elemento Inverso 𝑎 · 𝑏 ≡ 𝑏 · 𝑎 ≡ 1 mod 5sendo 𝑎 ̸= ¯0.
+
+Falta atentarmos com a questão do inverso multiplicativo, observe que verificasse que para todo
+
+𝑎 ∈ Z5∖{0} , existe seu inverso multiplicativo 𝑏 ∈ Z5
+
+𝑎 · 𝑏 ≡ 𝑏 · 𝑎 ≡ 1 mod 5
+1 · 1 ≡ 1 · 1 ≡ 1 mod 5
+2 · 3 ≡ 3 · 2 ≡ 1 mod 5
+4 · 4 ≡ 4 · 4 ≡ 1 mod 5
+E, desta forma, Z5 é um grupo tanto para a adição quanto para a multiplicação.
+Voltemos ao Pequeno Teorema de Fermat: ele nos diz que se 𝑝 é primo, temos: 𝑎𝑝 ≡ 𝑎 mod 𝑝,
+tomemos aqui o inverso multiplicativo de 𝑎, ou seja, 𝑏 ∈ Z, tal que: 𝑎 · 𝑏 ≡ 1 mod 𝑝. Podemos
+multiplicar ambos os lados da congruência 𝑎𝑝 ≡ 𝑎 mod 𝑝 por 𝑏, obtendo:
+
+𝑏 · 𝑎𝑝 ≡ 𝑏 · 𝑎 mod 𝑝, e, como 𝑏 é inverso de 𝑎:
+𝑏 · 𝑎 · 𝑎𝑝−1 ≡ 𝑏 · 𝑎 mod 𝑝
+1 · 𝑎𝑝−1 ≡ 1 mod 𝑝
+𝑎𝑝−1 ≡ 1 mod 𝑝.
+Dessa forma, podemos entender com mais alguns detalhes o Pequeno Teorema de Fermat. Já o
+Teorema de Euler que é uma versão mais geral do Pequeno Teorema de Fermat contém o número
+𝜑(𝑛), que chamamos de fução phi de Euler, esse número é a quantidade de elementos de um sistema
+reduzido de resíduos módulo 𝑛, as vezes também chamado de quantidade de classes reduzidas de
+resíduos, observemos a congruência: 𝑥 ≡ 𝑦 mod 14.
+
+A congruência acima apresenta o sistema completo de resíduos: 0, 1, 2, 3, ..., 13, que são os
+
+possíveis restos de uma divisão por 14.
+
+Podemos encontrar também o sistema reduzido de resíduos:1, 3, 5, 9, 11, 13. Esse sistema redu-
+zido de resíduos foi formado apenas com os elementos do sistema completo de resíduos que são
+primos com 14.
+
+Logo como dito acima, temos que 𝜑(14) é a quantidade dos elementos do sistema reduzido de
+
+resíduos, ou seja: 𝜑(14) = 6.
+
+Generalizando, podemos escrever: 𝑥 ≡ 𝑦 mod 𝑛, tem como sistema completo de resíduos:
+0, 1, 2, 3, ..., 𝑛 − 1 e como sistema reduzido de resíduos: Os elementos 𝑖 tais que (𝑖, 𝑛) = 1 e
+𝑖 ∈ {0, 1, 2, 3, 4, 5, ..., 𝑛 − 1} , ou seja, os elementos do sistema completo de resíduos que são primos
+com 𝑛.
+
+Como calcular 𝜑(𝑛), ou seja, como calcular a quantidade de elementos do sistema reduzido de
+
+resíduos?
+
+Começamos com o caso mais simples, quando 𝑛 = 𝑝 ou seja se 𝑛 é um número primo, temos
+que (𝑖, 𝑝) = 1 para todos 𝑖 ∈ {1, 2, 3, 4, 5, ..., 𝑝 − 1} , e, portanto, concluímos que o número de
+elementos desse sistema reduzido de resíduos é 𝑝 − 1, isto é, 𝜑(𝑝) = 𝑝 − 1.
+
+Agora que já sabemos como calcular a ordem de 𝑝 primo, podemos com esse resultado calcular
+
+a ordem de 𝑝𝑘, com 𝑝 primo e 𝑘 ∈ N.
+
+12
+
+Utilizando o mesmo pensamento, buscaremos encontrar todos os (𝑖, 𝑝𝑘) = 1 , onde 𝑖 ∈ {1, 2, 3, ..., 𝑝 − 1},
+
+ou seja, queremos encontrar os 𝑖 ∈ {1, 2, 3, ..., 𝑝 − 1} que não são divisíveis por 𝑝𝑘. Como estra-
+tégia, em primeiro lugar, contaremos todos os que são divisíveis por 𝑝𝑘 e, em seguida, tiramos do
+total, restando assim, os que não são divisíveis por 𝑝𝑘.
+
+Suponhamos 0 ≤ 𝑎 < 𝑝𝑘, sendo 𝑎 divisível por 𝑝, logo 𝑎 se escreve: 𝑎 = 𝑝 · 𝑏 e, portanto,
+
+0 ≤ 𝑏 < 𝑝𝑘−1.
+
+Concluímos, então, que existem 𝑝𝑘−1 inteiros que são divisíveis por 𝑝. Como temos um total
+
+de 𝑝𝑘 números, temos que existem 𝑝𝑘 − 𝑝𝑘−1 números que não são divisíveis por 𝑝.
+
+Logo, 𝜑(𝑝) = 𝑝𝑘 − 𝑝𝑘−1 = 𝑝𝑘−1 · (𝑝 − 1).
+Falta agora provar a seguinte proposição:
+
+Proposição 1. Se 𝑚 e 𝑛 ∈ N com 𝑚 > 1 e 𝑛 > 1 sendo (𝑚, 𝑛) = 1 então: 𝜑(𝑚 · 𝑛) = 𝜑(𝑚) · 𝜑(𝑛)
+
+Demonstração:
+Para provar tal resultado será utilizada a abordagem feita por [?, p. 133]:
+
+Consideremos a seguinte tabela formada pelos números naturais de 1 a 𝑚 · 𝑛:
+
+1
+𝑛 + 1
+...
+
+2
+𝑛 + 2
+...
+
+...
+...
+
+(𝑚 − 1) · · · (𝑛 + 1) 𝑚 − 1 · · · (𝑛 + 2)
+
+...
+
+𝑘
+𝑛 + 𝑘
+...
+(𝑚 − 1) · · · (𝑛 + 𝑘)
+
+...
+...
+
+𝑛
+2 · 𝑛
+...
+
+... 𝑚 · 𝑛
+
+Como se tem que (𝑡, 𝑚 · 𝑛) = 1 se, e somente se, (𝑡, 𝑛) = (𝑡, 𝑚) = 1, para calcular
+𝜑(𝑚 · 𝑛), devemos determinar os inteiros na tabela acima que são simultaneamente
+primos com 𝑛 e 𝑚.
+
+Se o primeiro elemento de uma coluna não for primo com 𝑛, então todos os ele-
+mentos da coluna não são primos com 𝑛. Portanto, os elementos primos com 𝑛 estão
+necessariamente nas colunas restantes que são em número 𝜑(𝑛), cujos elementos são
+primos com 𝑛, como é fácil verificar. Vejamos agora quais são os elementos primos com
+𝑚 em cada uma dessas colunas.
+
+Como (𝑚, 𝑛) = 1 , a sequência :
+
+𝑘, 𝑛 + 𝑘, ..., (𝑚 − 1)𝑛 + 𝑘
+
+forma um sistema completo de resíduo módulo 𝑚 e, portanto, 𝜑(𝑚) desses elementos
+são primos com 𝑚. Logo, o número de elementos simultaneamente primos com 𝑛 e 𝑚
+é 𝜑(𝑚) · 𝜑(𝑛).
+
+Após provado que 𝜑(𝑚 · 𝑛) = 𝜑(𝑚) · 𝜑(𝑛) tais que 𝑚𝑑𝑐(𝑚, 𝑛) = 1 basta tomarmos a decomposição
+em fatores primos de n:
+· ... · 𝑝𝛼𝑛
+𝑛
+
+, temos: 𝜑(𝑛) = 𝜑(𝑝𝛼1
+1
+
+· (𝑝1 − 1) · ... · 𝑝𝛼𝑛−1
+
+· (𝑝𝑛 − 1) =
+
+Se 𝑛 = 𝑝𝛼1
+1
+
+) = 𝑝𝛼1−1
+1
+
+· ... · 𝑝𝛼𝑛
+𝑛
+
+𝑛
+
+𝑝𝛼1−1
+1
+
+· ... · 𝑝𝛼𝑛−1
+
+𝑛
+
+· (𝑝1 − 1) · ... · (𝑝𝑛 − 1).
+
+13
+
+Assim sendo, podemos calcular a ordem de um número, bastando para isso conhecermos a
+sua decomposição em fatores primos. Porém, como vimos até então, saber tal decomposição nem
+sempre é tarefa fácil, pois, dependendo do tamanho do número em questão, torna-se complicado até
+mesmo saber se ele é primo. No capítulo a seguir será apresentado alguns testes de primalidade,
+estes testes são os utilizados nos dias atuais pelos computadores quando se precisa verificar a
+primalidade de um número.
+
+14
+
+Capítulo 2
+
+TESTES DE PRIMALIDADE
+
+Nesse capítulo procuraremos falar sobre testes de primalidade atuais, os quais são utilizados
+pelos computadores para se detectar se um número é primo, analisando as suas vantagens e des-
+vantagens apresentadas. Para tanto, partiremos de uma ideia inicial utilizada pelo matemático
+Leibniz, a qual não estava totalmente certa, mas representou um avanço na maneira de se pensar
+e analisar a primalidade de um número. Após o matemático Fermat ter enunciado seu teorema
+tratado no capítulo anterior, Leibniz pensou que, se um número qualquer 𝑝 satisfaz tal teorema,
+isso bastaria para tal número ser primo.
+
+2.1 Teste De Leibniz
+
+Como dito anteriormente, para Leibniz verificar se um número 𝑝 era primo, ele verificava a
+congruência: 𝑎𝑝−1 ≡ 1 mod 𝑝, ∀𝑎 tal que (𝑎, 𝑝) = 1, então, se isso acontecesse, seria suficiente
+para que esse número fosse primo. Sem ao menos provar tal argumento, Leibniz utilizou essa
+recíproca como seu critério de primalidade, como observaremos abaixo.
+
+Pequeno Teorema de Fermat: Se 𝑝 for um número primo, então tem-se que 𝑝 divide 𝑎𝑝−1 − 1
+
+com (𝑎, 𝑝) = 1, ou seja, 𝑝 é primo ⇒ 𝑎𝑝−1 ≡ 1 mod 𝑝.
+
+Recíproca do Teorema de Fermat: Se 𝑝 divide 𝑎𝑝−1 − 1 sendo (𝑎, 𝑝) = 1, então tem-se que 𝑝 é
+
+um número primo, ou seja, 𝑎𝑝−1 ≡ 1 mod 𝑝, ∀𝑎 ∈ Z tal que (𝑎, 𝑝) = 1 ⇒ 𝑝 é primo.
+
+Um outro detalhe importante em seu teste de primalidade, é que Leibniz utilizava sempre 𝑎 = 2,
+
+para tornar seus cálculos menores.
+
+Teste de Primalidade 1. (Teste de Leibniz) Dado um número ímpar 𝑛 ∈ N, se 2𝑛−1 ≡ 1 mod 𝑛,
+então, 𝑛 é primo.
+
+Então, se Leibniz quizesse descobrir se um número, por exemplo, 229 era primo, bastava para
+
+ele verificar se a congruência abaixo era satisfeita:
+
+2229−1 ≡ 2 mod 229
+2228 ≡ 1 mod 229
+
+15
+
+Com um pouco de cuidado e uma calculadora é possível verificar tal congruência e, portanto,
+
+afirmar que 229 é um número primo.
+
+Porém, esse método nem sempre é verdadeiro, ou seja, a recíproca do Pequeno Teorema de
+Fermat não é válida, pois existem números compostos que também a verificam, exemplo o número
+341:
+
+2341 ≡ 2 mod 341
+
+Acontece que 341 não é um número primo, pois 341 = 11 · 31
+Pode-se concluir então, que este método não traz a certeza de que o número verificado é primo,
+já que as vezes ele acerta e as vezes ele erra. Contudo, mesmo assim, ao se verificar uma grande
+quantidade de números utilizando tal método, foi constatado que ele acerta muito mais do que
+erra, e portanto um número que passa em tal teste tem grande possibilidade de ser primo. Quando
+um número passa por este método e não é primo, passa a se denominar pseudo-primo.
+
+2.2 Teste de Miller
+
+A incerteza causada pelo método de Leibniz não é boa quando o que precisamos é saber se
+um número é primo. Porém, uma mudança neste método realizada por G. L. Miller, em 1976, foi
+capaz de melhorá-lo aumentando sua precisão e retirando em parte esta incerteza.
+
+O Teste de Miller é realizado da seguinte maneira:
+
+Teste de Primalidade 2. (Teste de Miller)
+
+Seja n o número a ser verificado, podemos admitir n ímpar uma vez que, o único primo par é
+
+2. Se n é ímpar temos que 𝑛 − 1 é par e portanto pode ser escrito como:
+
+𝑛 − 1 = 2𝑘 · 𝑞 , onde extraímos a maior potência de 2, sendo assim q um número ímpar.
+Então escolhe-se uma base 𝑏 inteira, tal que 1 < 𝑏 < 𝑛 − 1, se algum número entre 𝑏𝑞,
+𝑏2·𝑞, . . . , 𝑏2𝑘−1·𝑞 for congruente a (−1) módulo 𝑛, ou 𝑏2𝑘·𝑞 for congruente a 1 módulo 𝑛, dessa forma
+temos que 𝑛 é primo.
+
+O exemplo abaixo utiliza um número pequeno para facilitar a compreensão:
+
+Exemplo 8. Seja 𝑛 = 5021, então 𝑛 − 1 = 5020 = 22 · 1255, ou seja:
+
+𝑘 = 2 e 𝑞 = 1255, escolhemos uma base 𝑏 tal que 1 < 𝑏 < 5020, façamos então 𝑏 = 2, se algum
+
+número entre:
+
+21255 e 22510 for congruente a −1 módulo 5021, ou 25020 for congruente a 1 módulo 5021, então
+
+consideremos 5021 um número primo.
+
+Calculando assim tais congruências, teremos:
+21255 ≡ 3658 mod 5021
+22510 ≡ 5020 mod 5021 ⇒ 22510 ≡ −1 mod 5021 e temos para a base 2 que o teste é conclusivo.
+
+É importante saber que o Teste de Miller também não dá certo sempre. Se acaso utilizarmos
+a base 2 e testarmos todos os números entre 1 e 1000000000 ele errará 1282 vezes, o que é um
+número muito pequeno de vezes. Quando um número composto passa pelo Teste de Miller tendo
+como resultado ser um número primo, dizemos que tal número é um pseudoprimo forte para a
+base utilizada. A seguir serão apresentados dois exemplos onde é utilizado o Teste de Miller
+
+16
+
+para verificar a primalidade de um número, para que assim possamos compreender melhor a sua
+utilidade.
+
+Exemplo 9. Queremos saber se 7561 é um número primo:
+
+• Escolhemos como base o número 17, lembrando que a base tem que estar sempre entre 1 e
+
+𝑛 − 1.
+
+• Tiramos uma unidade de 7561, ficando assim com 7560 e em seguida fazemos divisões suces-
+
+sivas por 2 até encontrar um quociente ímpar.
+
+• Calculamos os restos de 𝑏𝑞·2𝑖 por 𝑛, sendo no caso 𝑖 ∈ {0, 1, 2, 3}.
+
+7560 = 23 · 945
+
+𝑏𝑞·𝑖 ≡ 𝑟 mod 7561
+17945 ≡ 1 mod 7561
+17945·2 ≡ 1 mod 7561
+17945·4 ≡ 1 mod 7561
+17945·8 ≡ 1 mod 7561
+
+• Os resultados são analisados da seguinte forma: se 𝑖 = 0 e 𝑟 = 1 ou 𝑖 ≥ 0 e 𝑟 = −1, temos
+
+que 7561 é primo para essa base.
+Como temos 𝑖 = 0 com 𝑟 = 1, nosso resultado é que 7561 é primo para a base 17, ou seja, é
+um pseudoprimo forte para a base 17.
+
+Exemplo 10. Queremos saber se 1256347 é um número primo:
+
+• Escolhemos como base o número 5, lembrando que a base tem que estar sempre entre 1 e
+
+𝑛 − 1;
+
+• Tiramos uma unidade de 1256347, ficando assim com 1256346 e em seguida, fazemos divisões
+
+sucessivas por 2 até encontrar um quociente ímpar: 1256346 = 2 · 628173;
+
+• Calculamos os restos de 𝑏𝑞·2𝑖 por 𝑛 , sendo no caso 𝑖 ∈ {0, 1}.
+
+𝑏𝑞·𝑖 ≡ 𝑟 mod 𝑛
+5628173 ≡ −1 mod 1256347
+5628173·2 ≡ 1 mod 1256347
+
+• Os resultados são analisados da seguinte forma: se 𝑖 = 0 e 𝑟 = 1 ou 𝑖 ≥ 0 e 𝑟 = −1 temos
+
+que 1256347 é primo para esta base.
+Como temos 𝑖 = 0 com 𝑟 = −1 , nosso resultado é que 1256347 é primo para a base 5, ou
+seja, é um pseudo-primo forte para a base 5.
+
+17
+
+Como já dito neste trabalho, ainda não existe um teste de primalidade que determine todos
+os números primos de modo eficiente. Nos casos dos números 7561 e 1256347, por serem números
+pequenos, os computadores atuais conseguem através do Teste de Miller trazer a certeza de que
+se trata de um número primo, basta para isso segundo Coutinho (2013) realizar tal teste para 1
+4
+das bases entre 1 e 𝑛 − 1. Porém se um número for suficientemente grande, o número de bases
+entre 1 e 𝑛 − 1 também será, e assim será impossível, até mesmo para o computador, realizar este
+das bases em tempo hábil. O próprio software xMáxima, que utilizamos para realizar
+teste para 1
+4
+as contas, possui um comando o qual realiza automaticamente um teste de primalidade e, então,
+consegue detectar que se trata de números primos.
+
+O que se faz hoje em dia quando se precisa descobrir se um número é primo é utilizar o Teste
+de Miller para uma quantidade de bases que acredite ser suficiente, fazendo com que a chance de
+erro diminua ainda mais. Alguns softwares utilizam 10 bases previamente escolhidas, e afirmam
+que um número é primo quando ele consegue passar pelo Teste de Miller para todas as 10 bases.
+A seguir analisaremos o Teste de Lucas, o qual é também um teste determinístico de primalidade
+
+com vantagens e desvantagens em relação ao Teste de Miller.
+
+2.3 Teste de Lucas
+
+Esse teste utiliza como estratégia tentar mostrar que a ordem 𝜑(𝑛) (phi de 𝑛) no número 𝑛 a
+ser testado é 𝑛 − 1. Desta maneira sabemos que existem 𝑛 − 1 números menores que 𝑛 os quais
+(𝑎, 𝑛) = 1, e sendo assim conclui-se que 𝑛 é primo.
+
+Teste de Primalidade 3. (Teste de Lucas)
+
+Seja 𝑛 um inteiro positivo ímpar e 𝑏 um inteiro tal que 2 ≤ 𝑏 ≤ 𝑛 − 1. Se: 𝑏𝑛−1 ≡ 1 mod 𝑛 e
+
+𝑛−1
+𝑝
+
+𝑏
+
+̸≡ 1 mod 𝑛 para cada fator primo 𝑝 de 𝑛 − 1 , então 𝑛 é primo.
+
+O teste de Lucas possui a vantagem de afirmar com certeza que um determinado número é
+primo, ou seja, se um número passar em tal teste ele com certeza é um número primo, diferente-
+mente dos testes anteriores, onde quando um número passava no teste havia uma grande chance
+de ser primo, porém em alguns poucos casos o teste falhava.
+
+Exemplo 11. Vamos utilizar o teste de Lucas para saber se o número 7561 é um número primo.
+
+• Escolhemos uma base para realizar o teste, vamos utilizar 𝑏 = 888
+
+• Verificamos se a primeira condição é valida: 𝑏𝑛−1 ≡ 1 mod 𝑛
+
+8887560 ≡ 1 mod 7561
+
+• Verificamos se a segunda condição é válida:
+
+𝑛−1
+𝑝
+
+̸≡ 1 mod 𝑛
+
+𝑏
+para cada fator primo 𝑝 de 𝑛 − 1 , então 𝑛 é primo.
+Logo, para isso, fatoramos 𝑛 − 1. Utilizando o algoritmo da fatoração encontramos 𝑛 − 1 =
+23.33.5.7 e, portanto, temos que verificar para 4 fatores primos:
+
+18
+
+888 7560
+
+2 = 8883780 ≡ −1 mod 7561
+3 = 8882520 ≡ 6262 mod 7561
+5 = 8881512 ≡ 5935 mod 7561
+7 = 8881080 ≡ 5291 mod 7561
+
+888 7560
+
+888 7560
+
+888 7560
+
+Uma vez tendo as duas condições satisfeitas podemos concluir que 7561 é um número primo.
+
+Vale lembrar que, se uma das condições não é satisfeita no teste de Lucas, não significa que o
+
+número que temos não é primo, nesse caso a estratégia é trocar a base que estamos utilizando.
+
+Exemplo 12. Queremos provar que 31 é primo utilizando o teste de Lucas:
+
+• Escolhemos uma base para realizar o teste, vamos utilizar 𝑏 = 2
+
+• Verificamos se a primeira condição 𝑏𝑛−1 ≡ 1 mod 𝑛 é valida:
+
+230 ≡ 1 mod 31;
+
+• Verificamos se a segunda condição 𝑏
+
+̸≡ 1 mod 𝑛 é válida para cada fator primo 𝑝 de 𝑛−1:
+Logo, para isso, fatoramos 𝑛 − 1 = 30. Utilizando o algoritmo da fatoração encontramos
+30 = 2 · 3 · 5 e, portanto, temos que verificar para 3 fatores primos.
+2 30
+
+2 ≡ 1 mod 31
+
+𝑛−1
+𝑝
+
+Observe que o teste falhou já no primeiro fator primo de 𝑛 − 1, porém 31 é um número primo
+muito conhecido. Logo o teste tinha que ter uma resposta positiva, para isso só o que temos a
+fazer é trocar a base e realizar os passos novamente.
+
+• Escolhemos uma nova base para realizar o teste, vamos utilizar 𝑏 = 12;
+
+• Verificamos se a primeira condição 𝑏𝑛−1 ≡ 1 mod 𝑛 é valida:
+
+1230 ≡ 1 mod 31
+
+• Verificamos se a segunda condição 𝑏
+
+𝑛−1
+𝑝
+
+̸≡ 1 mod 𝑛 é válida para cada fator primo 𝑝 de 𝑛−1:
+
+12 30
+
+2 ≡ −1 mod 31
+3 ≡ 25 mod 31
+5 ≡ 2 mod 31
+
+12 30
+
+12 30
+
+Assim, após termos comprovados as duas condições, podemos afirmar que 31 é um número
+
+primo.
+
+19
+
+A escolha de uma base que satisfaça ambas as condições pode ser um tanto trabalhosa. Feliz-
+mente, segundo Coutinho (2013, p.171) “Em 1.975 Brilhart, Lehmer e Selfridge observaram que
+não é necessário usar uma base única no teste de Lucas. Podemos nos dar ao luxo de escolher uma
+base distinta para cada primo. Com isto obtemos um teste um pouco mais eficiente”.
+
+Seja 𝑛 > 0 um inteiro tal que: 𝑛 − 1 = 𝑝𝑒1
+
+1 · · · 𝑝𝑒𝑟
+
+𝑟 , onde 𝑝1 < · · · < 𝑝𝑟 são primos. Se, para cada
+
+𝑖 = 1, · · · , 𝑟, existirem inteiros positivos 𝑏𝑖 com 2 ≤ 𝑏𝑖 ≤ 𝑛 − 1 que satisfaçam:
+
+𝑖 ≡ 1 mod 𝑛
+𝑏𝑛−1
+
+𝑛−1
+𝑝𝑖
+
+̸≡ 1 mod 𝑛, então 𝑛 é primo. Não sendo necessário que os 𝑏𝑖’s sejam todos distintos.
+
+𝑏
+𝑖
+Vejamos como utilizar tal versão aprimorada deste teste de primalidade:
+
+Exemplo 13. Vamos utilizar o teste de Lucas para provar que o número 7 é um número primo.
+
+• Escolhemos uma nova base para realizar o teste, valor utilizar 𝑏 = 2
+
+• Verificamos se a primeira condição 𝑏𝑛−1 ≡ 1 mod 𝑛 é valida:
+
+26 ≡ 1 mod 7;
+
+• Verificamos se a segunda condição é válida:
+
+𝑛−1
+𝑝
+
+̸≡ 1 mod 𝑛 para cada fator primo 𝑝 de 𝑛 − 1. Assim sendo, 𝑛 é primo.
+
+𝑏
+Logo, para isso fatoramos 𝑛−1 = 6. Utilizando o algoritmo da fatoração encontramos 6 = 2·3
+e, portanto, temos que verificar para 2 fatores primos.
+
+𝑛−1
+𝑝
+
+̸≡ 1 mod 𝑛
+
+𝑏
+2 6
+2 ≡ 1 mod 7 , e o teste falha, desta forma mudamos a base para 3.
+3 6
+2 ≡ −1 mod 7
+3 6
+3 ≡ 2 mod 7,
+
+tendo como saida assim que o número 7 é primo.
+
+Apesar do teste de Lucas possuir a grande vantagem de ter como saída a certeza de que um
+determinado número é primo, ele padece também de um grande problema. Já que ao se observar
+com atenção seu enunciado percebemos que ele tem que ser verificado para cada fator primo
+de 𝑛 − 1, ou seja, precisamos fatorar 𝑛 − 1, e como já sabemos fatorar um número suficientemente
+grande pode levar tanto tempo que se torna inviável.
+
+No teste de Lucas a estratégia utilizada é provar que a ordem de 𝑛 é igual a 𝜑(𝑛), significando
+assim que se 𝑎 < 𝑛 é um inteiro positivo, temos (𝑎, 𝑛) = 1 o que significaria que 𝑛 é primo. Para
+encontrar a ordem de um número 𝑛, ou seja, encontrar a quantidade de números menores que 𝑛 e
+que também são primos com 𝑛, em um primeiro pensamento, pode se tentar contar os elementos
+um a um, tarefa essa impossível se o número em questão for grande o suficiente. Para contornar
+esse problema, faz se uso do Teorema da Raiz Primitiva.
+
+Quando 𝜑(𝑛) é a ordem de 𝑎 com respeito a 𝑛, então dizemos que 𝑎 é uma raiz primitiva módulo
+
+𝑛. 𝑎 é raiz primitiva com respeito a 𝑛 ⇔ ordem de 𝑎 com respeito a 𝑛 é igual 𝜑(𝑛) .
+
+20
+
+Teorema 4. (Teorema da Raiz Primitiva)
+
+Se a é raiz primitiva de p, então:
+𝑎 mod 𝑝, 𝑎2 mod 𝑝, 𝑎3 mod 𝑝, ..., 𝑎𝑝−1 mod 𝑝, são distintos e pertencem a {︁¯1... ¯𝑝 − 1}︁
+
+, ou
+
+seja, a raiz primitiva gera todos os elementos do grupo multiplicativo Z𝑝.
+
+A seguir é apresentado um exemplo para melhor ilustrar o Teorema:
+
+Exemplo 14. Vamos calcular a ordem de 5 com respeito a 9, o que podemos denotar como:
+𝑜𝑟𝑑9(5).
+
+Como sabemos que 𝜑(9) = 𝜑(32) = 32−1 · (3 − 1) = 6 e que 𝑜𝑟𝑑9(5)|𝜑(9) = 6, basta calcular as
+
+potências dos divisores de 6 para encontrarmos tal ordem:
+
+51 ≡ 5 mod 9
+52 ≡ 7 mod 9
+53 ≡ 8 mod 9
+56 ≡ 1 mod 9
+
+Desta forma 𝑜𝑟𝑑95 = 6. Como 𝑜𝑟𝑑95 = 6 = 𝜑(9), dizemos que 5 é uma raiz primitiva módulo 9.
+
+O Teorema da raiz primitiva nos garante que sempre existirá um número 𝑏 que cumpra as
+
+condições descritas acima se 𝑛 for realmente um número primo.
+
+No capítulo a seguir será abordado métodos criptográficos os quais se utilizam dos teoremas
+que foram apresentados até então, juntamente com as fragilidades dos testes de primalidade exis-
+tente. Será possível analisar como a dificuldade em se fatorar um número serve de apoio para a
+Criptografia RSA e também como o Teorema da raiz primitva é útil para o método criptográfico
+Diffie-Hellman os quais estudaremos mais adiante.
+
+21
+
+Capítulo 3
+
+MÉTODOS CRIPTOGRÁFICOS
+
+Será abordado neste capítulo, uma aplicação matemática que nos últimos anos passou a tirar
+proveito da dificuldade em se fatorar um número e, também, da dificuldade em descobrir se um
+número (∈ N) é primo, a criptografia.
+
+A criptografia é muito utilizada nos dias atuais para proteger transações financeiras realizadas
+através do computador. Um exemplo muito comum são as compras realizadas via Internet e pagas
+com cartão de crédito, nelas o comprador digita o número e alguns dados de seu cartão de crédito
+no site da loja e somente com estas informações é realizado o pagamento da compra. Se esses
+dados caíssem nas mãos de um terceiro, ele conseguiria utilizar este cartão para novas compras
+em seu nome, sem nenhuma dificuldade. Por esse motivo, essas informações do cartão de crédito
+precisam ser codificadas de maneira que somente o destinatário real (a loja) consiga compreender.
+Essa codificação precisa atender alguns requisitos para que possa ser eficaz, o primeiro deles é
+que o destinatário (em nosso exemplo, a loja) saiba como decodificar os dados. Portanto, a
+codificação não pode ocorrer de forma aleatória, significando assim que tanto a loja quanto o
+comprador precisam saber como codificar tais dados. Mas, nesse ponto temos um problema, pois
+a comunicação entre a loja e o comprador está sendo realizada via internet e, da mesma maneira
+que os dados do cartão de crédito podem ser interceptados por um terceiro (e por este motivo
+precisam ser codificados), a codificação utilizada também corre este risco. Assim quando a loja
+comunica ao comprador o código que ele utilizará para codificar, esse código não é mais seguro.
+
+Tal fato era verdade até algum tempo atrás, pois antigamente as maneiras conhecidas de se
+codificar tinham uma relação muito forte com as de decodificar, bastando para isso “desfazer"a
+codificação ( voltar os passos realizados para codificar). O que acontece é que quando vamos codi-
+ficar alguma informação, existe uma “receita"contendo o passo a passo do processo de codificação,
+chegando assim ao terminar esse processo no resultado final que é a mensagem codificada. Se
+essa maneira de codificar (“receita") caísse nas mãos de um terceiro, juntamente com a mensagem
+codificada, bastava para ele voltar os passos realizados para codificar, conseguindo decodificar tal
+mensagem.
+
+Como dito anteriormente isto era verdade até algum tempo atrás, o que acontece é que existe
+uma maneira de se codificar a qual não sofre deste mal, pois ao tentar realizar tal processo inverso
+
+22
+
+da codificação, esse processo se torna tão trabalhoso a ponto de ser impossível ser realizado, ou
+seja, um processo fácil de ser feito mais muito difícil de ser desfeito, garantindo assim que mesmo
+se um terceiro soubesse como a codificação foi realizada, este terceiro não conseguiria decodificar os
+dados. Essa nova maneira de se codificar é conhecida como Criptografia de Chave Pública, levando
+em conta que o processo de codificação pode se tornar público sem comprometer a segurança do
+método.
+
+Na Criptografia de Chave Pública a codificação é realizada utilizando uma chave (método de
+codificação) pública, porém para ser decodificada se faz necessário o uso de uma outra chave
+(método), chave esta que, fica privada somente ao destinatário da mensagem, ou seja, aquele que
+decodificará tal mensagem. O que resolve o problema descrito acima, haja visto que desta forma
+a pessoa que irá codificar os dados não precisa conhecer o método de decodificação e, dessa forma,
+mesmo que exista um terceiro que encontre a mensagem criptografada junto com o método de
+codificação, este terceiro não conseguirá decodificar tais dados.
+
+A Criptografia de Chave Pública utilizada no exemplo da compra via internet paga com cartão
+de credito é conhecida como Criptografia RSA, sigla essa que leva as iniciais de seus criadores
+R.L.Rivest, A. Shamir e L. Adleman, como homenagem. Vejamos a seguir como tal método se
+utiliza da matemática para seu funcionamento.
+
+3.1 Criptografia RSA
+
+Aqui vamos entender um pouco como funciona o método RSA. A chave de codificação utilizada
+neste método é composta pelo número 𝑛 formado pelo produto de dois números primos distintos
+𝑎 e 𝑏, tal chave é conhecida como chave pública. A chave de decodificação é composta pelos dois
+números primos 𝑎 e 𝑏, essa é a chave privada. Embora exista aparentemente uma proximidade
+entre ambas, não é possível encontrar a chave privada (os dois números primos 𝑎 e 𝑏) a partir da
+chave pública 𝑛, pois, para isso, precisaríamos decompor a chave 𝑛. Como vimos até agora, se um
+número for grande o suficiente, se torna impossível até mesmo com a utilização de um computador
+decompor esse número, em tempo hábil.
+
+Dados necessários para a utilização da criptografia RSA:
+
+• escolhe-se dois números primos distintos 𝑝 e 𝑞 grandes o suficiente e calcula-se o produto 𝑝 · 𝑞
+
+, o resultado chamamos de 𝑛 (𝑛 = 𝑝 · 𝑞):
+
+• 𝑛 é utilizado para codificar a mensagem (𝑛 é a chave pública);
+
+• 𝑝 e 𝑞 são utilizados para decodificar a mensagem (𝑝 e 𝑞 são as chaves privadas);
+
+• para quebrar o código RSA é necessário fatorar 𝑛 descobrindo assim os números 𝑝 e 𝑞, porém
+ao se utilizar números grandes o suficiente (de cerca de 100 digitos), fatorá-lo se torna um
+processo inviável, devido ao tempo que os métodos atuais levariam, sendo assim impossível
+de colocá-los em prática.
+
+Assim sendo, as chaves de codificação e de decodificação são números, e a codificação é realizada
+por meio do cálculo de uma potência módulo 𝑛 (chave pública de codificação). Para que isso seja
+
+23
+
+possível, a mensagem a ser codificada precisa ser um número inteiro e, portanto, quando tal
+mensagem for um texto devemos converter tal texto em uma sequência de números para assim
+codificá-la.
+
+1. Na primeira etapa, converteremos as letras em números de dois dígitos para evitar ambigui-
+
+dades, conforme a tabela a seguir:
+
+11
+
+J K L M
+F G H
+A B C D E
+10
+22
+19
+17
+16
+15
+14
+12
+N O P Q R S T U V W X Y Z
+35
+29
+23
+
+I
+18
+
+32
+
+34
+
+33
+
+31
+
+30
+
+13
+
+26
+
+20
+
+24
+
+28
+
+21
+
+25
+
+27
+
+Na conversão, o espaço entre duas palavras é substituido pelo número 99 e, desta forma,
+temos a mensagem convertida para uma sequência de números.
+
+2. Feito toda a conversão da mensagem a ser codificada para números, o próximo passo é a
+escolha dos dois números primos distintos 𝑝 e 𝑞, os quais chamaremos de parâmetros e o
+cálculo de 𝑛, tal que 𝑛 = 𝑝 · 𝑞.
+
+3. O último passo antes de iniciarmos a codificação em si, é quebrar a sequência de números em
+blocos, de maneira que cada bloco produzido seja menor que o número 𝑛. Existem diversas
+maneiras em que pode-se quebrar os blocos, porém, eles não podem ser iniciados com 0, a fim
+de evitar problemas na hora de decodificar. Esses blocos não correspondem a letras, símbolos
+ou qualquer outra unidade linguística e, portanto, elimina a possibilidade da utilização da
+decodificação por frequência.
+
+4. Após esta etapa, já pode-se dar início a codificação da mensagem que esta divida em blocos.
+Para codificar a mensagem é utilizada a chave pública a qual é composta pelos números 𝑛
+e 𝑒, sendo 𝑒 um inteiro positivo inversível módulo 𝜑(𝑛), ou seja, 𝑚𝑑𝑐(𝑒, 𝜑(𝑛)) = 1. Observe
+que o cálculo de 𝜑(𝑛) é possível se soubermos a chave de decodificação, pois 𝑛 = 𝑝.𝑞 e assim
+sendo 𝜑(𝑛) = 𝜑(𝑝 · 𝑞) = (𝑝 − 1) · (𝑞 − 1). Dessa forma, juntamente com 𝑛 temos como parte
+da chave de codificação o número 𝑒.
+
+5. Seja 𝑏 o bloco a ser codificado, logo 𝑏 é um inteiro positivo menor que 𝑛. Denotando o bloco
+codificado como 𝐶(𝑏), calculamos 𝐶(𝑏) através do seguinte cálculo: 𝑏𝑒 ≡ 𝐶(𝑏) mod 𝑛, sendo
+0 ≤ 𝐶(𝑏) < 𝑛 , dessa forma podemos dizer que 𝐶(𝑏) é o resto da divisão de 𝑏𝑒 por 𝑛.
+Feita a codificação de todos os blocos, blocos esses que, após terem sido codificados, não
+podem mais serem reunidos de modo a formar novamente um grande número, pois se isto
+ocorrer será impossível sua decodificação.
+
+6. Para realizar a decodificação se faz necessário a posse de dois números: 𝑛 e 𝑑 , onde 𝑑 é o
+
+inverso de 𝑒 módulo 𝜑(𝑛). Os números 𝑑 e 𝑒 formam a chave de decodificação.
+De posse da chave de decodificação juntamente com os blocos já codificados, precisamos
+compreender quais são os passos que nos permitem reconstruir os blocos originais de antes
+da codificação.
+
+24
+
+7. Seja 𝑎 o bloco codificado, o qual queremos decodificar, e 𝐷(𝑎) o resultado do processo desta
+decodificação. Calculamos 𝐷(𝑎) da seguinte forma: 𝑎𝑑 ≡ 𝐷(𝑎) mod 𝑛, sendo 0 ≤ 𝐷(𝑎) < 𝑛
+, dessa forma podemos dizer que 𝐷(𝑎) é o resto da divisão de 𝑎𝑑 por 𝑛.
+Desta forma temos que encontrar 𝑑. Observe que ele pode ser calculado com facilidade
+através do algoritmo euclidiano estendido, desde que 𝜑(𝑛) e 𝑒 sejam conhecidos.
+
+8. Após este passo precisamos provar que, sendo 𝑏 um bloco da mensagem original, temos
+𝐷(𝐶(𝑏)) = 𝑏 , ou seja, decodificando um bloco da mensagem codificada, sempre encontramos
+o bloco da mensagem original correspondente. Em seguida, basta colocar novamente os
+blocos em uma sequência longa de números e convertê-los na mensagem original.
+
+A seguir um exemplo de como a Criptografia RSA pode ser utilizada:
+
+Exemplo 15. Vamos codificar a mensagem “NÚMEROS INTEIROS”.
+
+1. Num primeiro momento devemos converter as letras em números com auxílio da tabela:
+
+11
+
+F G H
+A B C D E
+J K L M
+22
+17
+16
+14
+12
+10
+15
+19
+N O P Q R S T U V W X Y Z
+35
+29
+23
+
+I
+18
+
+28
+
+25
+
+13
+
+24
+
+21
+
+26
+
+32
+
+20
+
+31
+
+30
+
+34
+
+33
+
+27
+
+Assim sendo, conseguimos a sequência numérica a seguir:
+
+23302214272428991823291418272428
+
+2. O próximo passo é a escolha dos parâmetros, ou seja, dos dois números primos 𝑝 e 𝑞. Para
+simplificar um pouco, escolheremos números primos pequenos a fim de facilitar as contas, as
+quais podem ser realizadas até mesmo com a calculadora científica do computador, tornando
+mais evidente o método que está sendo utilizado.
+Seja então, 𝑝 = 11 e 𝑞 = 13 , sendo assim temos 𝑛 = 143
+
+3. Temos que quebrar esta sequência numérica em pequenos blocos, de maneira que cada bloco
+
+seja menor que o número 𝑛, em nosso caso menor que 143.
+23302214272428991823291418272428
+
+Assim procedendo, temos os blocos separados por um traço:
+23 − 30 − 22 − 142 − 72 − 42 − 89 − 91 − 82 − 32 − 91 − 41 − 82 − 72 − 42 − 8
+
+4. Em seguida calculamos 𝜑(𝑛) a fim de encontrar um número 𝑒 tal que 𝑚𝑑𝑐(𝑒, 𝜑(𝑛)) = 1, onde:
+
+𝜑(𝑛) = 𝜑(𝑝.𝑞) = 𝜑(13.11) = 12.10 = 120
+Também, a fim de facilitar os cálculos, visto que, o objetivo deste exemplo é evidenciar o
+método que está sendo utilizado, utilizaremos 𝑒 = 7, podemos fazer isto pois 𝑚𝑑𝑐(7, 120) = 1.
+Produzimos assim os itens necessário da chave pública (de codificação), que são os números
+“𝑒” e “𝑛”.
+
+25
+
+5. De posse da chave de codificação e dos blocos convertidos em números, podemos dar início
+
+à codificação:
+
+23 − 30 − 22 − 142 − 72 − 42 − 89 − 91 − 82 − 32 − 91 − 41 − 82 − 72 − 42 − 8
+𝑏𝑒 ≡ 𝐶(𝑏) mod 𝑛 , sendo 𝐶(𝑏) < 𝑛
+237 ≡ 23 mod 143
+307 ≡ 134 mod 143
+227 ≡ 22 mod 143
+1427 ≡ 142 mod 143
+727 ≡ 19 mod 143
+427 ≡ 81 mod 143
+897 ≡ 67 mod 143
+917 ≡ 130 mod 143
+827 ≡ 69 mod 143
+327 ≡ 98 mod 143
+917 ≡ 130 mod 143
+417 ≡ 24 mod 143
+827 ≡ 69 mod 143
+727 ≡ 19 mod 143
+427 ≡ 81 mod 143
+87 ≡ 57 mod 143
+Feito os cálculos, temos os blocos agora codificados:
+
+23 − 134 − 22 − 142 − 19 − 81 − 67 − 130 − 69 − 98 − 130 − 24 − 69 − 19 − 81 − 57
+
+6. Para realizar a decodificação da mensagem, se faz necessário os números 𝑛 e 𝑑, então devemos
+
+calcular o valor de 𝑑 para que possamos prosseguir com a decodificação:
+𝑑.𝑒 ≡ 1 mod 𝜑(𝑛)
+𝑑.7 ≡ 1 mod 120
+103.7 ≡ 1 mod 120 , encontramos 𝑑 = 103, utilizando aqui o algoritmo de Euclides estendido
+com os números 7 e 120.
+Temos assim a chave privada (de decodificação), composta por 𝑑 e 𝑛.
+
+7. De posse da chave privada (𝑛 = 143, 𝑑 = 103) e dos blocos codificados, podemos iniciar a
+
+decoficação que acontecerá da seguinte maneira:
+
+23 − 134 − 22 − 142 − 19 − 81 − 67 − 130 − 69 − 98 − 130 − 24 − 69 − 19 − 81 − 57
+𝑎 ≡ 𝐷(𝑎)𝑑 mod 𝑛, sendo 𝐷(𝑎) < 𝑛 , 𝑎 um bloco codificado e 𝐷(𝑎) o bloco já decodificado.
+
+26
+
+𝑎 ≡ 𝐷(𝑎)𝑑 mod 𝑛
+23103 ≡ 23 mod 143
+134103 ≡ 30 mod 143
+22103 ≡ 22 mod 143
+142103 ≡ 142 mod 143
+19103 ≡ 72 mod 143
+81103 ≡ 42 mod 143
+67103 ≡ 89 mod 143
+130103 ≡ 91 mod 143
+69103 ≡ 82 mod 143
+98103 ≡ 32 mod 143
+130103 ≡ 91 mod 143
+24103 ≡ 41 mod 143
+69103 ≡ 82 mod 143
+19103 ≡ 72 mod 143
+81103 ≡ 42 mod 143
+57103 ≡ 8 mod 143
+E assim, conseguimos realizar toda a decodificação, encontrando novamente os blocos numé-
+ricos de antes da codificação:
+
+23 − 30 − 22 − 142 − 72 − 42 − 89 − 91 − 82 − 32 − 91 − 41 − 82 − 72 − 42 − 8
+
+8. Como último passo, devemos então, juntar os blocos de maneira a formar uma grande lista
+de números e em seguida converter novamente os números nas letras conforme tabela descrita
+anteriormente.
+
+23302214272428991823291418272428
+
+23 − 30 − 22 − 14 − 27 − 24 − 28 − 99 − 18 − 23 − 29 − 14 − 18 − 27 − 24 − 28
+NÚMEROS INTEIROS
+
+Ao observar a codificação e a decodificação do método de Criptografia RSA observamos que,
+
+para codificar, utilizamos:
+
+𝑏𝑒 ≡ 𝐶(𝑏) mod 𝑛, com 𝐶(𝑏) < 𝑛, e, para decodificar, utilizamos:
+𝑎𝑑 ≡ 𝐷(𝑎) mod 𝑛, com 𝐷(𝑎) < 𝑛.
+Porém, observamos que na etapa de codificação utilizamos 𝐶(𝑏) para o bloco já codificado e na
+
+etapa de decodificação este mesmo bloco codificado passou a se denominar 𝑎, logo 𝐶(𝑏) = 𝑎.
+
+Logo, temos que provar que 𝐷(𝐶(𝑏)) = 𝑏 para 1 ≤ 𝑏 ≤ 𝑛 − 1.
+Desta forma podemos utilizar congruências, pois tanto 𝐷(𝐶(𝑏)) quanto 𝑏 são menores que 𝑛 :
+
+𝐷(𝐶(𝑏)) ≡ 𝐷(𝑏𝑒) ≡ (𝑏𝑒)𝑑 ≡ 𝑏𝑒·𝑑 mod 𝑛.
+
+27
+
+Lembrando que: 𝑒 · 𝑑 ≡ 1 mod 𝜑(𝑛), ou ainda, 𝑒 · 𝑑 = 1 + 𝑘 · 𝜑(𝑛), com 𝑘 ∈ Z, segue que:
+𝑏𝑒·𝑑 ≡ 𝑏1+𝑘·𝜑(𝑛) mod 𝑛.
+𝑏1+𝑘·𝜑(𝑛) ≡ 𝑏1 · (𝑏𝜑(𝑛))𝑘 mod 𝑛
+Como sabemos fatorar 𝑛, podemos calcular 𝜑(𝑛) (𝜑(𝑛) = 𝜑(𝑝·𝑞) = (𝑝−1)·(𝑞 −1)), substituindo
+
+em nossa congruência:
+
+𝑏1+𝑘·𝜑(𝑛) ≡ 𝑏1 · (𝑏((𝑝−1)·(𝑞−1)))𝑘 mod 𝑛
+𝑏1 · 𝑏(𝑝−1)·(𝑞−1)·𝑘 ≡ 𝑏1 · (𝑏(𝑝−1))(𝑞−1)·𝑘 mod 𝑛
+Temos até o momento:
+𝐷(𝐶(𝑏)) ≡ 𝐷(𝑏𝑒) ≡ (𝑏𝑒)𝑑 ≡ 𝑏𝑒·𝑑 ≡ 𝑏1 · (𝑏(𝑝−1))(𝑞−1)·𝑘 mod 𝑛
+Pelo Pequeno Teorema de Fermat sabemos que:
+𝑏1 · (𝑏(𝑝−1))(𝑞−1)·𝑘 ≡ 𝑏 · 1(𝑞−1)·𝑘 mod 𝑝
+Analogamente encontramos que :
+𝑏1 · (𝑏(𝑞−1))(𝑝−1)·𝑘 ≡ 𝑏 · 1(𝑝−1)·𝑘 mod 𝑞
+Como 𝑝 e 𝑞 são primos distintos , temos (𝑝, 𝑞) = 1, das congruências acima temos:
+𝑝|𝑏(𝑒·𝑑) − 𝑏 e 𝑞|𝑏(𝑒·𝑑) − 𝑏, e assim podemos concluir que:
+𝑝 · 𝑞|𝑏(𝑒·𝑑) − 𝑏 , como 𝑛 = 𝑝 · 𝑞, podemos escrever em termos de congruência:
+𝑏(𝑒·𝑑) ≡ 𝑏 mod 𝑛
+Concluimos assim, que:
+𝐷(𝐶(𝑏)) ≡ 𝑏 mod 𝑛.
+Mostramos, que esse método funciona, mas precisamos agora entender um pouco sobre o que
+torna o RSA seguro. A segurança deste método reside no fato de que a pessoa que codifica os
+dados tem acesso apenas a chave pública (os números 𝑛 e 𝑒) enquanto que para decodificar os
+dados faz-se necessário conhecer a chave privada (os números 𝑛 e 𝑑), ou seja o RSA se torna seguro
+devido a grande dificuldade em calcular 𝑑 conhecendo apenas 𝑛 e 𝑒.
+
+Sabemos que 𝑑 é o inverso de 𝑒 módulo 𝜑(𝑛), desta forma bastaria aplicar o algoritmo de
+Euclides estendido aos números 𝑒 e 𝜑(𝑛), porém assim se faz necessário conhecer 𝜑(𝑛) e, para isso,
+devemos fatorar 𝑛, o que já vimos ser muito difícil se 𝑛 for grande o suficiente. Logo, só é possível
+calcular 𝑑 se soubermos os valores de 𝑝 e 𝑞 tal que 𝑛 = 𝑝 · 𝑞 e tais valores só estão disponíveis a
+quem decodificará a mensagem, tornando o método de Criptografia RSA seguro.
+
+Assim sendo, podemos entender como e porquê este método de Criptografia funciona. Em
+seguida será apresentada uma aplicação mais prática que a anterior, utilizando números maiores
+para codificar e decodificar os dados de um cartão de crédito, que foi utilizado em uma compra via
+internet. As contas realizadas no exemplo a seguir foram feitas utilizando o software xMaxima.
+
+Exemplo 16. João está realizando uma compra via internet, a qual decidiu pagar com seu cartão
+de crédito. Ao efetivar sua compra, João deve preencher os seus dados pessoais bem como seu
+endereço para o qual será enviado seu produto e, em algum momento, após esta etapa ele será en-
+caminhado a uma página na qual deverá efetuar o pagamento pela compra realizada. Nessa página
+João deverá informar os dados do seu cartão de crédito e, ao digitar tais dados, seu computador
+codificará esses dados com a chave pública que foi enviada pelo site da loja.
+
+A loja é a responsável pela distribuição da chave pública, dessa maneira vários compradores
+podem utilizar a mesma chave pública sem nenhum problema, pois somente ela tem a chave privada
+a qual permite decodificar tais dados e, assim, conseguir compreender os dados enviados. Desse
+
+28
+
+modo, a loja envia ao computador de João a chave pública composta dos números 𝑛 = 11.413 e
+𝑒 = 3.
+
+João digita o número de seu cartão de crédito: 1234567812345678, o seu computador os separa
+
+em blocos e em seguida os codifica:
+123 − 4567 − 8123 − 456 − 78
+1233 ≡ 548 mod 11413
+45673 ≡ 1558 mod 11413
+81233 ≡ 10.120 mod 11413
+4563 ≡ 11.025 mod 11413
+783 ≡ 6.619 mod 11413
+O Computador após codificar os blocos em que foram separados os dados, os envia para a loja:
+548 − 1558 − 10120 − 11025 − 6619
+A loja, de posse da chave privada composta pelos números 𝑑 = 7467 e 𝑛 = 11413, recebe os
+blocos devidamente codificados e então realiza os cálculos para decodificar os dados contidos nos
+blocos.
+
+5487467 ≡ 123 mod 11413
+15587467 ≡ 4567 mod 11413
+101207467 ≡ 8123 mod 11413
+110257467 ≡ 456 mod 11413
+66197467 ≡ 78 mod 11413
+Encontrando assim os blocos já decodificados:
+123 − 4567 − 8123 − 456 − 78
+Bastando agora juntá-los, voltando assim a forma original dos dados do cartão de crédito.
+Uma vez com os dados necessários em mãos, a loja efetua o pagamento e envia a mercadoria,
+concretizando a compra.
+
+Os números primos utilizados no exemplo acima possuem apenas 3 casas decimais e, mesmo
+assim, já se faz necessário o uso de um software matemático capaz de calcular com números grandes,
+em operações reais os números primos utilizados possuem cerca de 100 dígitos.
+
+3.2 Criptografia Diffie-Hellman
+
+Uma outra criptografia que também utiliza chave pública é a criptografia de Diffie-Hellman,
+esse método tem sua segurança baseada na dificuldade em se encontrar logarítmos discretos e foi
+criado para solucionar o seguinte problema:
+
+Imagine que duas pessoas Alice e Bob precisam se comunicar via internet de maneira segura,
+ou seja, de forma que somente Alice leia as mensagens enviadas por Bob e de que somente Bob leia
+as mensagens enviadas por Alice. Para ter segurança tais mensagens devem ser codificadas a fim
+de evitar que um terceiro as interceptem obtendo acesso as informações descritas nas mensagens.
+Pensando assim, quando Alice mandar uma mensagem para Bob, ela deve codificá-la de ma-
+neira que somente Bob consiga decodificar e ler a mensagem, e também quando ele mandar uma
+mensagem para Alice ele deve condificá-la de maneira que somente ela consiga decodificar e ler a
+
+29
+
+mensagem. O Problema aqui é que, quando um deles transmite a mensagem codificada deve tam-
+bém enviar uma chave contendo as informações necessárias para que o receptor possa decodificá-las
+e, se essa informação for interceptada, um terceiro pode ter acesso as mensagens trocadas, deixando
+assim de serem secretas.
+
+Esse problema teria solução simples se Alice e Bob pudessem se encontrar e combinar com
+antecedência a chave que utilizariam, porém o problema aqui apresentado trata de situações onde
+o único meio de comunicação possível é a internet e, portanto, eles devem encontrar uma maneira
+segura de combinarem uma chave a ser usada, podendo assim se comunicarem de maneira segura.
+Segundo Pires (2010), Whitfield Diffie e Martin Hellman propuseram uma solução para este
+problema, a qual ficou conhecida como protocolo Diffie-Hellman para a troca de chaves. O Pro-
+tocolo Diffie-Hellman é uma maneira segura de compartilhar uma chave, através de uma série de
+procedimentos, duas pessoas conseguem compartilhar uma chave de codificação e decodificação
+sem que mais ninguém tenha acesso, podendo utilizá-la para codificar as mensagens que serão
+enviadas ao parceiro e decodificar as mensagens que serão recebidas pelo mesmo.
+
+Vejamos como funciona tal procedimento para troca de chaves, talvez a melhor maneira de se
+compreender o funcionamento deste método Criptografico seja utilizando um “esquema de cores".
+Vamos voltar ao nosso problema de início, no qual duas pessoas precisavam se comunicar via
+internet de maneira segura, a Alice e o Bob.
+
+Antes de iniciar a conversa Alice e Bob devem utilizar a troca de chaves, para isto eles seguem
+
+os passos a seguir:
+
+1. Combinam uma cor que será de conhecimento de ambos (c), além dessa cor cada um também
+
+escolhe uma outra cor secreta a qual não mostrarão a ninguém.
+
+2. Alice mistura a cor comum (c) a sua cor secreta (a) produzindo uma nova cor (ca) e então
+
+a envia para Bob.
+
+3. Bob também mistura a cor comum (c) a sua cor secreta (b) produzindo também uma nova
+
+cor (cb) e então a envia para Alice.
+
+4. Alice recebe a cor obtida da mistura feita por Bob (cb) e então adiciona a esta mistura sua
+
+cor secreta obtendo uma nova cor (cba).
+
+5. O mesmo é feito por Bob, ele pega a mistura feita por Alice e adiciona sua cor secreta,
+
+obtendo assim a mesma nova cor (cab) obtida por Alice.
+
+Mesmo que em ordem diferente, a cor encontrada por Bob e a cor encontrada por Alice são
+iguais, pois foram produzidas com os mesmos ingredientes, esta nova cor é o segredo comum de
+Alice e Bob.
+
+Se alguém interceptar as cores enviadas entre Alice e Bob, essa pessoa não conseguirá descobrir
+os ingredientes necessários para obter a nova cor que é o segredo a ser utilizado por Alice e Bob.
+Isso devido ao fato de que antes de enviar a cor secreta, cada um a misturou a cor comum formando
+assim uma nova cor, e após ter misturado duas cores obtendo uma terceira é impossível desfazer
+o processo para descobrir as cores secretas de Alice e de Bob as quais são ingredientes para a cor
+secreta.
+
+30
+
+Ao compararmos o procedimento das cores ao método Diffie-Hellman temos que a cor secreta
+obtida será a chave secreta que Alice e Bob utilizariam para conversarem em segurança, vejamos
+como tal método funciona utilizando números ao invés de cores.
+
+1. Alice e Bob combinam dois números 𝛼, 𝑝 ∈ N , sendo 𝑝 primo e 𝛼 uma raiz primitiva de 𝑝,
+
+esses números são a chave pública do método.
+
+2. Em seguida, Alice escolhe um número que seja menor que 𝑝 e o mantém em segredo, ou seja,
+𝑥𝑎 < 𝑝. Bob também escolhe um número menor que 𝑝 e o mantém em segredo, ou seja,
+𝑥𝑏 < 𝑝.
+
+3. O próximo passo de Alice é misturar seu número secreto com a chave pública, para isso
+
+calcula 𝑦𝑎 da seguinte forma:
+𝛼𝑥𝑎 ≡ 𝑦𝑎 mod 𝑝, sendo 𝑦𝑎 < 𝑝.
+Bob também executa esse passo misturando seu número secreto com a chave pública, pro-
+duzindo assim 𝑦𝑏 da seguinte forma:
+𝛼𝑥𝑏 ≡ 𝑦𝑏 mod 𝑝, sendo 𝑦𝑏 < 𝑝.
+
+4. Nesta etapa Alice envia para Bob o número obtido de seu cálculo: 𝑦𝑎 e Bob também envia
+
+para Alice o número obtido de seu cálculo: 𝑦𝑏.
+
+5. Alice então recebe o número 𝑦𝑏 enviado por Bob e faz o seguinte cálculo para obter o número
+
+𝑘:
+𝑏 ≡ 𝑘 mod 𝑝.
+𝑦𝑥𝑎
+Bob também realiza seus cálculos para obter 𝑘:
+𝑎 ≡ 𝑘 mod 𝑝.
+𝑦𝑥𝑏
+
+Com isto Alice e Bob chegam ao mesmo número 𝑘, sem terem compartilhado tal número com
+
+mais ninguém, essa é a chave privada do método Diffie-Hellman.
+
+Vejamos um exemplo numérico para melhor entendermos o funcionamento deste método Crip-
+
+tográfico:
+
+Exemplo 17.
+
+1. Alice e Bob combinam a chave pública que será utilizada: 5 e 113, sendo que
+
+5 é raiz primitiva de 113.
+
+2. Alice escolhe seu número privado: 16.
+
+Bob também escolhe seu número privado: 73.
+
+3. Alice mistura seu número privado com a chave pública:
+
+516 ≡ 30 mod 113, e encontra assim o número 30, Bob também executa esse passo mistu-
+rando seu número privado com a chave pública:
+
+573 ≡ 76 mod 113, encontrando assim o número 76.
+
+31
+
+4. Alice envia para Bob o número 30, e Bob envia para Alice o número 76.
+
+5. Alice então recebe o número 76 enviado por Bob e faz o seguinte cálculo para obter o número
+
+𝑘 :
+7616 ≡ 𝑘 mod 113, sendo 0 ≤ 𝑘 < 113
+7616 ≡ 106 mod 113
+Encontrando 𝑘 = 106.
+
+6. Bob recebe o número 30 enviado por Alice e faz o seguinte cálculo para obter o número 𝑘 :
+
+3073 ≡ 𝑘 mod 113, sendo 0 ≤ 𝑘 < 113
+3073 ≡ 106 mod 113
+Encontrando 𝑘 = 106.
+
+Alice e Bob agora possuem a chave privada 106, que será utilizada por ambos para codificarem
+
+e decoficarem suas mensagens e assim se comunicarem em segurança.
+
+O próximo passo é entender o porque deste método ser considerado seguro, apesar de toda a
+combinação da chave a ser utilizada ter ocorrido via internet, sendo assim passível de interceptação.
+Vejamos:
+
+• Ao iniciar Alice e Bob combinaram dois números 𝑎 = 5 e 𝑝 = 113 que formariam a chave
+pública. Esses números foram enviados de um para o outro e portanto poderiam cair nas
+mãos de um interceptador que no caso em questão chamaremos de Eva.
+
+• Após Alice ter “misturado"seu número secreto com a chave pública ela envia o número
+encontrado 𝑦𝑎 = 30 para Bob. Ao ser enviado esse número também pode cair nas mãos de
+Eva.
+
+• Bob também envia o número 𝑦𝑏 = 76 encontrado da “mistura"da chave pública com seu
+
+número secreto. Esse número ao ser enviado também pode ser interceptado por Eva.
+
+Desta forma Eva ao investigar a conversa entre Alice e Bob consegue interceptar os números
+𝑎, 𝑝, 𝑦𝑎 e 𝑦𝑏(5, 113, 30, 76), porém nenhum deles corresponde a chave secreta 𝑘 que será utilizada
+por Alice e Bob.
+
+O número 𝑘 = 106 foi calculado das seguintes forma:
+(516)73 ≡ (30)73 ≡ 106 mod 113
+(573)16 ≡ (76)16 ≡ 106 mod 113
+Para que Eva consiga descobrir o valor de 𝑘 ela precisa resolver:
+5𝑥𝑎 ≡ 30 mod 113 ou
+5𝑥𝑏 ≡ 76 mod 113
+Neste caso temos que 𝑥𝑎 é chamado de logaritmo discreto de 30 módulo 113 na base 5, temos
+
+também que 𝑥𝑏 é o logaritmo discreto de 76 módulo 113 na base 5. Podemos denotá-los por:
+
+𝑑𝑙𝑜𝑔5,113(30) = 𝑥𝑎 e 𝑑𝑙𝑜𝑔5,113(76) = 𝑥𝑏.
+
+32
+
+Os logaritmos discretos são os responsáveis por garantir a segurança do método Diffie-Hellman,
+isso devido a complexidade em resolver tais congruências como as descritas acima. Obviamente
+existem softwares computacionais capazes de resolver tais congruências, mas isso é devido a estar-
+mos utilizando apenas números pequenos. Porém, na prática, o Algoritmo Diffie-Hellman utiliza
+um número primo de centenas de dígitos, aumentando de tal maneira as possibilidades para tal
+logaritmo discreto que os softwares conhecidos para se calcular demorariam anos para conseguir
+encontrar uma resposta, tornando assim tal busca por encontrar a chave utilizada um fracasso.
+
+Os softwares computacionais inventados para calcular estes logaritmos discretos operam pelo
+método da tentativa e erro. Portanto, quanto maiores forem os números que estão sendo utilizados,
+mais tempo este software demorará para encontrar uma resposta, até que em determinado ponto
+os números utilizados sejam grande o suficiente para que o tempo gasto torne estes softwares
+ineficazes e garantindo a segurança deste método criptográfico.
+
+Após ter comprovado a segurança da chave utilizada no método Diffie-Hellman, pode-se dar
+início a etapa de codificação. Nesta etapa o método Diffie-Hellman já foi utilizado, na verdade tal
+método é util apenas para o acordo da senha que sera utilizada durante a conversa para codificação
+e decodificação das mensagens, e se faz necessário utilizar um método de codificação e decodificação
+das mensagens.
+
+Para concluírmos o nosso exemplo da Alice e do Bob, utilizaremos um método simples, onde
+mudamos a posição do alfabeto conforme a chave obtida, lembrando que a chave que Alice e Bob
+tinham combinado era 106. tabela. Na verdade tem mais opções, mas estas são as mais simples.
+
+f
+
+c
+
+e
+
+a
+
+b
+
+/
+h
+d
+1 B C D E F G H I
+0 A B C D E F G H I
+6 G H I
+
+i
+l m
+k
+J K L M N
+J K L M
+J K L M N O P Q R S
+
+g
+
+j
+
+r
+
+s
+
+o
+
+q
+
+p
+
+n
+
+z
+/
+1 O P Q R S T U V W X Y Z A
+0 N O P Q R S T U V W X Y Z
+6 T U V W X Y Z A B C D E F
+
+w x
+
+u
+
+y
+
+v
+
+t
+
+Alice envia para Bob a seguinte mensagem:
+“Qual mesmo o dia do aniversário de sua mãe?”
+Codificando a mensagem utilizando alternadamente os alfabetos permutados de ordem (1, 0 e
+
+6) obtém-se:
+
+RUGNEYNOUEIGEOGOIBFRYBROPDKTUGNAK
+Como Bob possui a chave de codificação e decodificação, ele decodifica, compreende a mensagem
+
+e, então, responde à Alice:
+
+“Será dia nove”
+Que é enviada até a Alice codificada:
+TEXBDOBNUWE
+
+33
+
+Alice, por possuir o código, compreende a resposta enviada por Bob. Qualquer outra pessoa
+
+que intercepte a conversa obterá a conversa criptografada:
+
+Alice: RUGNEYNOUEIGEOGOIBFRYBROPDKTUGNAK
+Bob: TEXBDOBNUWE,
+não sendo possível descobrir qual o significado.
+Na prática existem softwares capazes de aplicar o Algoritmo Diffie-Hellman, bem como realizar
+toda a parte de codificação e decodificação, ficando por parte do usuário somente escrever o texto
+em tal software munido de sua senha privada. Toda a informação enviada de um computador para
+o outro acontecerá de maneira segura. Porém, esse método sofre de uma fraqueza se comparado a
+criptografia RSA.
+
+Se o computador da Alice ou o do Bob for invadido por um hacker e este por sua vez obtiver
+as informações contidas no computador, o método Diffie-Hellman perde sua segurança assim, tal
+hacker consegue acesso direto à senha de codificação e decodificação, não sendo necessário ele
+interceptar os dados que estão sendo enviandos pela internet e descobrir o logaritmo discreto, o
+qual comentamos anteriormente. Como a senha de codificação e decodificação é uma só, se tal
+hacker conseguir acesso a um dos computadores utilizados para a comunicação, a segurança do
+método Diffie-Hellman ficará comprometida.
+
+Dizemos assim, que, para que o método Diffie-Hellman ser realmente eficaz, ele deverá ocorrer
+em um ambiente em que se possa garantir a segurança dos computadores contra vírus e invasões
+de hackers. Tal mal já não ocorre na criptografia RSA, pois mesmo que o hacker obtenha todo o
+acesso ao computador de quem está codificando, conseguindo acesso à chave de codificação, essa
+chave não é util para decodificar os dados.
+
+A criptografia RSA possui a vantagem de somente o computador do destinatário precisar se-
+gurança. Por esse motivo, o método criptográfico utilizado nas operações financeiras é o RSA, o
+que o torna mais utilizado do que o método Diffie-Hellman, porém isso não significa que o último
+não tenha suas aplicações, ele pode ser usado em conversas entre duas pessoas, por exemplo, na
+troca de e-mails confidenciais entre duas pessoas.
+
+A seguir será apresentado um modelo de sequência didática, no qual aplicaremos os conceitos
+
+vistos aqui, no cotidiano escolar.
+
+34
+
+Capítulo 4
+
+SEQUÊNCIA DIDÁTICA
+
+Será apresentada a seguir uma sequência didática idealizada tendo como intuito o ensino dos
+conteúdos matemáticos contidos neste trabalho. Ela será apresentada através de uma abordagem
+investigativa em sala de aula, na qual será abordada a dificuldade em se encontrar números primos
+e em se fatorar números inteiros. Dificuldades essas que servirão de suporte para uma aplicação:
+a Criptografia de chave pública. Vale lembrar que esta é uma sequência didática idealizada e,
+desse modo, deverá ser adaptada a cada realidade escolar visando suprir sempre às necessidades
+da escola em questão.
+
+A sequência didática apresenta alguns conteúdos matemáticos referentes aos aprendidos pelos
+alunos durante o Ensino Fundamental e Médio, sendo que os conteúdos restantes podem ser en-
+sinados durante o caminhar da atividade, deste modo ela poderá ter como público-alvo os alunos
+que estão cursando qualquer um dos três anos do Ensino Médio. Porém, visto que ela apresenta
+conteúdos como: potências, logarítmos e análise do resto de divisões com números inteiros, que
+são assuntos tratados no durante o 1ž ano do Ensino Médio, seria de bom tom o desenvolvimento
+dessa atividade ao final desta etapa de ensino.
+
+Em um primeiro momento, será abordada a dificuldade em se encontrar números primos. Nessa
+etapa os alunos apresentarão conhecimentos já adquiridos sobre números primos e, juntamente
+com o professor, irão estudar os testes de primalidades existentes, se atentando as dificuldades que
+esses métodos apresentam conforme aumenta-se o tamanho dos números a serem analisados. É
+justamente nessa etapa que o professor ficará encarregado de aproximar os alunos do conhecimento
+e, para tanto, deverá apresentar o conhecimento matemático que se faz necessário na utilização
+desses testes de primalidades.
+
+Feito isso, os alunos utilizarão tais testes de modo a analisarem até onde conseguem ser eficientes
+e, em seguida, será apresentado através de vídeos uma aplicação que se utiliza da fragilidade dos
+testes de primalidade, a Criptografia de chave pública. Os alunos após terem contato com tal
+aplicação, aprenderão a utilizá-las. O professor formará pequenos grupos de alunos, os quais
+trocarão mensagens codificadas. É importante frisar que o professor deve ser sempre o mediador,
+ou seja, deve ser aquele que instiga e aproxima o aluno da busca pelo conhecimento.
+
+35
+
+4.1
+
+Introdução
+
+Este plano de aula terá como intuito estimular a curiosidade e o interesse dos alunos por meio de
+aplicações práticas dos conteúdos abordados durante esse trabalho. As atividades aqui preparadas
+permitirão ao aluno analisar e compreender melhor o funcionamento dos métodos criptográficos
+estudados bem como a importância que a matemática tem para o funcionamento deles.
+
+Os educandos realizarão uma investigação na busca de descobrir métodos eficazes para en-
+contrar números primos e fatorar números inteiros, para que possam compreender a dificuldade
+existente nesses dois itens quando estamos tratando de números grandes, dificuldade essa, que é
+responsável pela segurança do método Criptográfico RSA. Em um segundo momento, eles serão
+convidados a utilizarem os métodos criptográficos RSA e Diffie-Hellman para que possam se co-
+municar em segredo, contextualizando assim, o conteúdo aprendido em sala de aula. A abordagem
+apresentada neste trabalho tem como objetivo ser uma ponte para que o aluno se aproxime e iden-
+tifique a importância da matemática aprendida na escola em aplicações práticas, promovendo uma
+participação mais ativa a com o ensejo de construir um conhecimento matemático com significado.
+Essa sequência didática poderá proporcionar o aumento da capacidade de percepção do aluno,
+uma vez que motivados e convencidos da importância da matemática em seu dia a dia, poderão
+estudá-la com novos olhares, ampliando assim o raio de utilização dos seus conhecimentos matemá-
+ticos, uma vez que está ligada à resolução de problemas da realidade, ajudando-os a compreender
+melhor a importância da matemática em sua vida cotidiana, conforme concepções apresentadas
+por Araújo (2009). O aluno poderá adquirir uma compreensão mais ampla dos conceitos aqui
+discutidos, já que buscaremos focar mais no despertar da criatividade do discente, para que ele
+consiga utilizar o pensamento lógico matemático em um raio maior de situações.
+
+4.2 Objetivos
+
+A abordagem apresentada neste trabalho tem como objetivo ser uma ponte para que o aluno se
+aproxime e identifique a importância da matemática aprendida na escola em aplicações práticas,
+promovendo assim uma participação mais ativa e visando construir um conhecimento matemático
+com significado.
+
+A escolha de uma aplicação presente nos dias atuais e ligada a tecnologia, tem por objetivo
+evidenciar a importância da matemática na sociedade e, assim, ser um motivador para o estudo
+dessa disciplina, promovendo uma maior dedicação, comprometimento e interesse do aluno.
+
+O maior objetivo deste trabalho é dar ao aluno uma compreensão mais ampla dos conceitos
+aqui discutidos, na busca de instigá-los ao pensamento lógico, bem como despertar sua criatividade
+nas mais diversas situações nas quais se é possível aplicar seus conceitos.
+
+4.3 Metodologia e Apresentação de Materiais
+
+Por meio de uma atividade aplicada, será possível mostrar aos educandos aplicações da mate-
+mática aprendida na escola. Tal atividade tem como intenção mostrar como a matemática aliada
+com ideias criativas são úteis na resolução de problemas que pareciam não ter solução.
+
+36
+
+Através de uma problemática inicial o professor instigará o aluno a refletir sobre seu grau
+de complexidade, promovendo assim uma maior atenção e comprometimento na construção do
+conhecimento necessário para resolver tal problemática.
+
+A avaliação acontecerá durante todo o projeto, com o intuito de observar a autonomia e a
+participação de cada educando, para que possam compreender e participar de maneira ativa das
+aulas. Também deverão ocorrer observações, mediações e se necessário futuras intervenções e
+mudanças no caminhar do projeto, visando se adequar a realidade da sala. A avaliação se dará
+por meio da:
+
+• Observação do professor nas interações entre aluno-aluno e professor-aluno;
+
+• Relatório;
+
+• Aulas expositivas;
+
+• Irabalho em grupo.
+
+4.4 Roteiro detalhado da proposta
+
+Na atividade em questão, o sócio-interacionismo terá papel de destaque, pois é interagindo com
+seus colegas e professor que o adolescente construirá suas conclusões necessárias a cada etapa do
+projeto. O construtivismo também terá sua relevância no que diz respeito à sequência de ideias e
+pensamentos que resultarão na solução do problema apresentado.
+
+Percebe-se também neste projeto, que a busca pelo conhecimento será algo contínuo, construído
+
+por etapas, e que cada passo dado será de grande importância para àqueles que virão.
+
+1. Levantamento da Problemática
+
+Numa primeira etapa o professor deverá apresentar uma problemática para os alunos, a qual
+servirá como questão norteadora de seus estudos além de ter a função de motivá-los durante
+os estudos.
+
+Tal problemática será iniciada tendo em vista a dificuldade existente até hoje em se encon-
+trar números primos e também de se fatorar números inteiros e como matemáticos famosos
+souberam utilizar tal dificuldade para seu benefício, utilizando-a em uma aplicação que é
+utilizada cada vez com maior frequência a criptografia RSA e de Diffie-Hellman, que são
+responsáveis por proteger comunicações via-internet tornando tal meio de comunicação um
+ambiente seguro.
+
+Para isso, o professor fará uma abordagem a fim de levantar o conhecimento dos alunos sobre
+como encontrar números inteiros e, a partir de tal, através de uma investigação mediada pelo
+professor, os alunos deverão aprimorar tal método de se encontrar números primos, passando
+desde o crivo de Erastótenes até os mais atuais como o teste de Miller e o de Lucas, para
+os quais os alunos precisarão ter conhecimento sobre alguns conteúdos matemáticos como
+congruências e alguns teoremas, que precisarão ser trabalhados durante essa investigação.
+
+37
+
+Após a familiarização com os testes de primalidades mais atuais, será apresentada sua prin-
+cipal aplicação utilizada nos dias atuais, a Criptografia de chave pública. Para isso, pode ser
+utilizado vídeos como os listados nas referências, os quais exemplificam o funcionamentode
+tais métodos criptográficos, evidenciando a matemática utilizada. É importante ressaltar
+que o professor deve agir como mediador escolhendo momentos que julgar mais importan-
+tes, fazendo comentários que auxiliem os alunos a se aproximarem mais do tema e, assim,
+ajudando a fixar a ideia que está sendo utilizada.
+
+Após a exibição dos vídeos e explicação teórica sobre o assunto, deve se abrir um espaço
+para um debate, no qual através de perguntas o professor tenta aproximar os alunos cada
+vez mais do conhecimento matemático necessário, deixando claro assim quais os conteúdos
+que serão aprendidos e os quais são necessário para utilizar tais técnicas Criptográficas, o
+que além de incentivá-los, deixará claro o objetivo a ser alcançado.
+
+2. Pressupostos Teóricos
+
+Para a segunda etapa o professor deverá recordar conteúdos já estudados em anos anteriores
+pelos alunos sobre os números inteiros como a definição de números primos, o algoritmo da
+divisão, o algoritmo fatoração e o crivo de Erastóstenes. Nesta etapa, pode se lançar como
+desafio para os alunos alguns números ímpares grandes de até 10 algarismos para que eles
+tentem fatorar tais números, e caso não consigam, peça que já que não se é possível fatorá-los
+para que provem que tais números são primos.
+
+Exemplos de números a serem aplicados:
+
+4051 − 6967 − 3739 − 12547 − 654369 − 1256347 − 25365351 − 231258657
+Após terem vivenciado a dificuldade em se determinar se um número é primo ou não, o
+professor pode argumentar sobre a existência de testes de primalidade que surgiram ao longo
+da história matemática, bem como o avanço de sua eficiência em detectar se um número
+é primo. Após essa etapa, o professor pode introduzir o conceito de divisibilidade e de
+congruências, assim como os Teoremas de Fermat e Euler que servirão de ferramentas para
+os testes de primalidade que aprenderão a seguir.
+
+3. Testes de Primalidade
+
+Nesta etapa serão apresentados alguns testes de primalidade que surgiram ao longo da história
+da matemática:
+
+• Divisão por tentativa
+
+• Crivo de Eratóstenes
+
+• Teste de primalidade de Leibniz
+
+• Teste de primalidade de Miller
+
+• Teste de primalidade de Lucas
+
+38
+
+O professor poderá abordar as vantagens e desvantagens da utilização de cada um dos tes-
+tes de primalidade, bem como compará-los, evidenciando assim a evolução do pensamento
+humano durante a construção do conhecimento.
+
+Além do conhecimento sobre os testes de primalidade essa etapa tem por objetivo mostrar a
+dificuldade em se fatorar um número e, até mesmo, de detectar se tal número é primo.
+
+É de suma importância que o aluno compreenda tal dificuldade, pois ela será utilizada nos
+métodos criptográficos da próxima etapa.
+
+4. Criptografia
+
+Nesta etapa os alunos se dividirão em grupos com quantidade pré-estabelecido pelo professor,
+e terão que se comunicar com um outro grupo em segredo, para isso utilizarão os métodos
+criptográficos apresentados neste trabalho.
+
+Em um primeiro momento será utilizada a criptografia Diffie-Hellman. Para isso, cada grupo
+de aluno deverá se comunicar com um outro grupo, aos pares, o professor será responsável
+por analisar e ver se o método esta sendo empregado corretamente. É importante aqui, que
+o professor auxilie os alunos na escolha da chave pública, definindo o tamanho dos números
+a serem utilizados, o que depende diretamente dos instrumentos que serão utilizados para
+realizar os cálculos (calculadora científica, calculadora do computador, softwares matemáti-
+cos).
+
+Após os alunos terem trocado mensagens utilizando a criptografia Diffie-Hellman, será a vez
+de utilizarem a criptografia RSA. Para isso, o professor será o destinatário das mensagens.
+Portanto, o professor escolherá a chave privada e criará a chave pública do método RSA,
+repassando somente a chave pública para os outros grupos e ficando de posse da chave
+privada, a qual utilizará para decodificar as mensagens enviadas a ele pelos grupos.
+
+4.5 Considerações finais sobre a aplicação
+
+Os alunos poderão realizar uma redação sobre as aulas apresentadas a fim de identificarem o
+conhecimento adquirido e expressarem suas opiniões sobre o modelo de atividade realizada. Será
+importante buscar destacar o quanto a criatividade acompanha o desenvolvimento da Matemática.
+Espera-se que o aluno aumente sua capacidade de interligar os conteúdos vistos em sala de aula a
+outras aplicações, conseguindo identificar situações onde possa utilizar tais conhecimentos.
+
+Araújo(2009) nos diz que o aprendizado é algo que precisa ser interiorizado, ou seja, precisa
+estar numa zona proximal de conhecimento, para que assim seja possível unir o conhecimento que
+está descobrindo com os que já possui, fazendo sentido tal aprendizado. Desta forma, sempre que
+descobrimos algo ele se tornará alicerce para novas descobertas, e que o aprender faz parte do ser
+humano.
+
+O uso do vídeo e das histórias deverá ajudar o aluno a entrar no mundo imaginário, a fim de
+vivenciar a problemática vivida ao longo do tempo, reviver etapas da construção do conhecimento
+e perceber como o raciocínio pode ser utilizado para resolver situações complicadas. Com isso,
+
+39
+
+construir um conhecimento mais amplo, no intuito de conseguir utilizá-lo não só em situações
+“programadas”, mas sim, em situações reais com naturalidade e dinamismo.
+
+40
+
+Conclusão
+
+Durante este trabalho foi possível estudar propriedades fundamentais sobre Números Inteiros,
+através de uma aplicação muito utilizada no dia a dia a Criptografia de chave pública, a qual
+só se tornou possível através de ideias criativas que utilizam tecnologia aliada a conhecimentos
+matemáticos.Tivemos como norte o estudo dos números primos e da Criptografia a medida que
+avançavamos por entre conteúdos matemáticos que tal aplicação se utiliza.
+
+Foi possível observar ainda, de maneira lógica, o avanço da eficiência dos métodos utilizados
+para detectar números primos, conseguindo distinguir com eficiencia um números primos com
+tamanho considerável. O trabalho apresentou a evolução de alguns testes de primalidades, evi-
+denciando as ideias e o processo de construção de cada um, até alcançar os testes de primalidades
+atuais: o teste de primalidade de Lucas Lehmer o qual consegue detectar com exatidão núme-
+ros primos até um certo tamanho, e o Teste de Miller cujo qual devida sua tamanha eficiência é
+utilizado por softwares computacionais nos dias atuais.
+
+Porém, constatou-se que apesar de tal melhora nos testes de primalidades, ainda não existe
+um método que consiga detectar se um número qualquer é primo, pois os testes de primalidade
+apresentados funcionam até certo ponto, sendo que se o número a ser testado for muito grande,
+tal teste perde sua eficiência devido a capacidade limitada do computador, o qual pode levar anos
+para terminar tal teste, tornando assim o mesmo inviável.
+
+Com o passar dos tempos, vimos que o problema matemático de se detectar a primalidade
+de um número, e até mesmo de se encontrar fatores primos de números inteiros teve um grande
+avanço, porém, quando se trata de números muito grande, esse problema ainda continua sem
+solução. Vimos também, que o fato desse problema continuar sem solução, passou a ser a chave
+para resolver um outro problema: o problema da troca de chaves, pois tal dificuldade em se detectar
+números primos e fatorar números Inteiros, se torna então solução para a troca de informações
+de maneira segura via internet, através da criptografia de chave publica (RSA e Diffie-Hellman),
+aplicação essa que se tornou essencial para o desenvolvimento de nossa sociedade. Desta maneira,
+pode-se perceber que se usada de maneira criativa, a matemática torna-se suporte para novas
+aplicações.
+
+A Escrita em Códigos (Criptografia) desperta a curiosidade humana em explorar o desco-
+nhecido, motivando assim a busca pelo saber . A Criptografia presente neste trabalho faz uso
+de conhecimentos matemáticos importantes, assim sendo foi possível durante a abordagem aqui
+apresentada, estudar desde conceitos básicos como números primos, divisibilidade e fatoração até
+conceitos mais avançados como o estudo de grupos, congruências e testes de primalidades para
+números grandes. A utilização desta aplicação a qual esta presente atualmente no meio digital
+teve por objetivo apresentar a importância da matemática no meio em que vivemos, analisando
+e compreendendo seu método de funcionamento, o que consequentemente promoveu um interesse
+
+41
+
+maior pela matemática, incentivando e despertando para um aprendizado mais significativo.
+
+No último capitulo foi apresentada uma sequência didática, visando a aplicação em sala de aula
+dos conteúdos, conceitos e aplicações estudados ao longo dessa dissertação para alunos do ensino
+médio, a fim de ilustrar uma proposta que busca despertar o raciocínio lógico dos alunos através
+de uma abordagem investigativa cuja qual instiga o aluno na busca pelo conhecimento.
+
+Ao longo de todo este trabalho foi possível notar também, a evolução da matemática através dos
+tempos, ao estudarmos os testes de primalidade pode-se notar como o conhecimento matemático
+existente se torna alicerce para que um novo passo possa surgir, através da evolução de ideias
+e da maneira de pensar. Essa evolução do pensamento humano permite o surgimento de novas
+aplicações como a criptografia de chave pública, a qual se tornou indispensável no mundo financeiro
+atual.
+
+42
+
+Referências Bibliográficas
+
+[1] Khan
+
+Academy.
+
+Documentário:
+
+Criptografia
+
+diffie-hellman.
+
+http://www.youtube.com/watch?v=YEBfamv-_do (acesso em 24/02/2014).
+
+[2] Khan Academy. Documentário: Criptografia rsa. https://www.youtube.com/watch?v=wXB-
+
+V_Keiu8 (acesso em 24/02/2014).
+
+[3] Site do software matemático maxima.
+
+http://MAXIMA.sourceforge.net
+
+(acesso em
+
+13/03/2014).
+
+[4] SPM. Documentário: Números primos. http://www.youtube.com/watch?v=FCMyFgUK5jM
+
+(acesso em 24/02/2014).
+
+[5] SPM. Documentário: A chave das chaves. http://www.youtube.com/watch?v=Vm1Y6Kr9DCw
+
+(acesso em 24/02/2014).
+
+[6] HEFEZ A. Elementos de aritmética. Coleção Textos Universitários, SBM, 2011.
+
+[7] SANTOS B.
+
+Introdução ao software maxima. Centro de Matemática da Universidade do
+
+Porto, CMUP, 2009.
+
+[8] COUTINHO S. C. Números inteiros e criptografia rsa. Coleção Matemática e Aplicações,
+
+IMPA, 2013.
+
+[9] ARAÚJO J. L. Uma abordagem sócio-crítica da modelagem matemática: a perspectiva da
+educação matemática crítica. ALEXANDRIA Revista de Educação em Ciência e Tecnologia,
+2(2):55–68, Julho 2009.
+
+[10] PIRES R. M. Aplicação do algoritmo diffie-hellman no compartilhamento de volumes crip-
+tografados do truecrypt. Departamento de Ciência da Computação, Universidade Federal de
+Goiás, 2010.
+
+43
+
+

@@ -1,0 +1,3497 @@
+CESAR AUGUSTO ROSA
+
+NÚMEROS ALEATÓRIOS
+GERAÇÃO, QUALIDADE E APLICAÇÕES
+
+Santo André, 2016
+
+UNIVERSIDADE FEDERAL DO ABC
+
+CENTRO DE MATEMÁTICA, COMPUTAÇÃO E COGNIÇÃO
+
+CESAR AUGUSTO ROSA
+
+NÚMEROS ALEATÓRIOS
+GERAÇÃO, QUALIDADE E APLICAÇÕES
+
+Orientador: Prof. Dr. Vinicius Cifú Lopes
+
+Dissertação de mestrado apresentada ao Centro de
+
+Matemática, Computação e Cognição para
+
+obtenção do título de Mestre
+
+ESTE EXEMPLAR CORRESPONDE A VERSÃO FINAL DA DISSERTAÇÃO
+
+DEFENDIDA PELO ALUNO CESAR AUGUSTO ROSA,
+
+E ORIENTADA PELO PROF. DR. VINICIUS CIFÚ LOPES.
+
+SANTO ANDRÉ, 2016
+
+Dedico este trabalho ao pequeno Hugo.
+
+ii
+
+A G R A D E C I M E N T O S
+
+Agradeço ao meu pai, Fabio Luiz (in memorian) e à minha mãe, Flora, pelo empe-
+
+nho e sacrifício por garantir aos ﬁlhos a melhor educação possível. Agradeço à minha
+
+esposa Adriana pela paciência, compreensão e apoio. Aos meus irmãos Leilah e Fabi-
+
+nho, pelo incentivo e ajuda. Agradeço aos professores da UFABC pela disposição, aos
+
+colegas de mestrado pelo companheirismo, aos professores do IMPA, que me inﬂuen-
+
+ciaram, à distância. Agradeço à instituição UFABC por me proporcionar um curso com
+
+excelência. Agradeço aos professores que compõem a banca, Cristian Colleti e Gleici-
+
+ane Aragão. Agradeço especialmente meu orientador, Prof. Vinicius Cifú Lopes, pela
+
+paciência, pelas ideias e por me corrigir as falhas.
+
+Enﬁm agradeço ao meu pequeno Hugo, que com seus 4 anos, até assistia comigo
+
+aulas em vídeo e desenhava lindamente em meus cadernos de estudo. Sem isso nada
+
+teria graça.
+
+iii
+
+“Ao contrário dos ilusionistas, que nunca revelam como
+
+operam seus truques, os matemáticos não sentem essa
+
+necessidade de guardar segredo.”
+
+(Martin Gardner, Ah, Apanhei-te!)
+
+iv
+
+R E S U M O
+
+Este trabalho apresenta brevemente o conceito de aleatoriedade e de sequência de
+
+números aleatórios. Em especial são apresentados alguns exemplos de problemas que
+
+podem ser resolvidos utilizando “bons” números aleatórios associados a algoritmos
+
+computacionais. Também é explicada a diferença entre números verdadeiramente ale-
+
+atórios e pseudoaleatórios. São introduzidos alguns métodos básicos de geração de
+
+números pseudoaleatórios, envolvendo alguns conceitos matemáticos, principalmente
+
+teoria elementar dos números. Em seguida são mencionados alguns testes de quali-
+
+dade e métodos de transformação de variáveis. Ao ﬁnal é apresentada uma sugestão
+
+de atividade para o ensino médio.
+
+Palavras-chave: Simulação, probabilidade, números aleatórios, números pseudoa-
+
+leatórios, congruências, método congruencial linear, teste de sequência.
+
+v
+
+A B S T R A C T
+
+This thesis brieﬂy presents the concepts of randomness and random numbers se-
+
+quence. More speciﬁcally, we discuss a few examples of problems which can be solved
+
+using the concept of “good” random numbers, associated to computational algorithms.
+
+We mention as well the difference between true random numbers and pseudo random
+
+numbers. Then we introduce a number of basic methods to generate pseudo random
+
+numbers, in which we discuss the related mathematical concepts, mainly from elemen-
+
+tary numbers theory. A presentation follows, of some quality tests applicable to the
+
+theory, and methods of variable transformation. We close with a suggestion of how to
+
+use those concepts in an activity targeting high school students.
+
+Keywords: Simulation, probability, random numbers, pseudo random numbers, con-
+
+gruencies, linear congruential methods, run test.
+
+vi
+
+C O N T E Ú D O
+
+Introdução
+
+1 P R O B L E M A S
+
+1.1 Problema do Álbum de Figurinhas
+
+. . . . . . . . . . . . . . . . . . . . .
+
+1
+
+4
+
+4
+
+1.2 Problema da Formação do Triângulo . . . . . . . . . . . . . . . . . . . . 13
+
+1.3 Cálculo de Integrais Deﬁnidas . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+1.4 Soma de Riemann . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+
+2 N Ú M E R O S V E R D A D E I R A M E N T E A L E AT Ó R I O S
+
+3 G E R A D O R E S D E N Ú M E R O S P S E U D O A L E AT Ó R I O S
+
+20
+
+24
+
+3.1 Alguns Métodos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+3.2 Um Pouco de Aritmética . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+3.2.1 Aritmética do Relógio . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+3.2.2 Algumas Propriedades de Congruências
+
+. . . . . . . . . . . . . . 29
+
+3.3 Método Linear Congruencial . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+3.3.1 Gerador RANDU . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+3.3.2 Outros Geradores . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+4 T E S T E S E T R A N S F O R M A Ç Õ E S
+
+44
+
+4.1 Teste de Hipótese. Teste de Aderência.
+
+. . . . . . . . . . . . . . . . . . . 44
+
+4.2 Outros Testes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+4.2.1 “Run Test” . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+4.2.2 Mais Testes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+4.3 Transformações . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+
+5 U M A A P L I C A Ç Ã O PA R A E N S I N O M É D I O
+
+52
+
+5.1 Problema de Monty Hall
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+5.2 Conclusão . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+
+Bibliograﬁa
+
+57
+
+vii
+
+I N T R O D U Ç Ã O
+
+Pode causar certa estranheza para um público em geral – e aqui incluímos estudantes
+
+de ensino médio e fundamental – um trabalho sobre números aleatórios. Aﬁnal, nú-
+
+meros são entidades que representam naturalmente quantidades e medidas. Quando
+
+acrescentamos o adjetivo aleatório parece vir imediatamente a pergunta: como assim
+
+números aleatórios? O foco da questão passa a ser aleatório. Mas o que vem a ser isso?
+
+Tecnicamente podemos simplesmente dizer, de acordo com Filho (1995, p. 61), que
+
+um número aleatório é uma variável aleatória com distribuição uniforme no intervalo
+
+(0,1). Mas esta deﬁnição técnica não deve obstar o senso comum do que seja aleató-
+
+rio; ao jogarmos um dado, o resultado é absolutamente imprevisível, embora saibamos
+
+algo sobre ele a priori. Cada face, considerando o dado honesto, tem uma chance em
+
+seis de ser observada em um lançamento, ou seja, tem probabilidade 1/6. Assim, se sa-
+
+bemos apenas a probabilidade de um evento ocorrer, então esse evento é dito aleatório.
+
+Mas chegamos a um evento aleatório, e não a um número aleatório, ainda. Como
+
+aﬁrmar que um número é aleatório? Se associarmos o número da face ao experimento
+
+do lançamento do dado, teremos os números de 1 a 6 sendo obtidos, aleatoriamente,
+
+conforme o experimento for sendo repetido. Vamos a um resultado: 6, 6, 3, 2, 3, 4,
+
+5, 1, 5, 2. Essa sequência foi obtida no lançamento de um dado honesto por 10 vezes.
+
+Essa é uma sequência aleatória, pois cada face foi sorteada por mero acaso, conside-
+
+rando uma importante premissa: o dado é honesto. Um dado honesto é um dado que
+
+não favorece um resultado em detrimento de outro. (Se o dado fosse, por exemplo,
+
+mais pesado em um lado, ele favoreceria mais a observação de uma face do que as
+
+demais, o que naturalmente geraria um resultado viciado. A nova sequência ainda
+
+seria aleatória visto que os resultados ainda seriam imprevisíveis, embora não possua
+
+mais uma distribuição uniforme.) Então, repetindo um experimento uma grande quan-
+
+tidade de vezes, teremos uma sequência observada de valores. Agora, como saber se
+
+tal sequência é mesmo aleatória? Parece haver (e de fato há) um certo critério que
+
+pode determinar que uma dada sequência pareça ser mesmo aleatória. Isso dependerá
+
+de que tal sequência seja submetida a alguns testes estatísticos e que a hipótese de
+
+1
+
+Introdução
+
+aleatoriedade não seja rejeitada.
+
+A geração de números aleatórios não é feita por mera curiosidade. Há um vasto
+
+campo de aplicações onde os números aleatórios constituem uma matéria-prima im-
+
+prescindível na obtenção de resultados. A aplicação mais comum de números aleató-
+
+rios é a simulação de sistemas, mais especialmente sistemas estocásticos (e aqui neste
+
+trabalho vamos adotar estocástico como sinônimo de aleatório, muito embora a rigor
+
+não seja). Esse tipo de simulação é também conhecida como Método Monte Carlo. Este
+
+método consiste basicamente na obtenção de resultados numéricos através de amos-
+
+tras aleatórias. Por este método, um experimento pode ser realizado repetidamente
+
+um grande número de vezes até se obter um resultado numérico — que pode ser uma
+
+probabilidade, ou um parâmetro populacional. Esse método pode ser aplicado se o
+
+sistema estudado possui aleatoriedade na ocorrência de eventos que a ele pertencem.
+
+Dessa forma os números aleatórios serão uma fonte de dados, aptos a gerarem as amos-
+
+tras aleatórias. Por exemplo, se queremos simular a formação de ﬁla de automóveis
+
+em um semáforo instalado em um cruzamento, precisamos ter um gerador que gerará
+
+números aleatórios, que, especialmente manipulados, simularão uma chegada virtual
+
+de veículos ao cruzamento, obedecendo a um parâmetro de intervalo de tempo entre
+
+chegadas. Uma ﬁla poderá se formar quando o semáforo estiver fechado e diminuirá
+
+assim que aparecer o sinal verde.
+
+Há ainda aplicações em diversas áreas, como segurança da informação (geração
+
+de senhas aleatórias seguras), criptograﬁa (com caracterização especial de imprevi-
+
+sibilidade do próximo bit aleatório), estética computacional, entretenimento (bingos,
+
+cassinos, etc), entre outras.
+
+Neste trabalho apresentaremos alguns dos aspectos mais relevantes sobre números
+
+aleatórios, tais como aplicações, geração e testes de qualidade, bem como um exem-
+
+plo de aplicação a ser abordado em sala de aula, no ensino médio. No Capítulo 1
+
+apresentaremos alguns problemas que podem ser resolvidos com a ajuda de núme-
+
+ros aleatórios, além de exemplos de estimação de integrais deﬁnidas. No Capítulo 2
+
+trataremos de números verdadeiramente aleatórios. No Capítulo 3 mostraremos os
+
+números pseudoaleatórios, bem como uma breve apresentação do ferramental mate-
+
+mático que rege uma substantiva quantidade de geradores. Ainda no mesmo capítulo
+
+iremos mostrar alguns geradores. Abordaremos testes de qualidade de números aleató-
+
+2
+
+Introdução
+
+rios no Capítulo 4, onde também mencionamos algumas transformações para se obter
+
+outros números aleatórios. Por ﬁm, no último capítulo, apresentaremos uma sugestão
+
+de aplicação para o ensino médio. Desta forma cobrimos os principais pontos do tema
+
+de números aleatórios.
+
+3
+
+1
+
+P R O B L E M A S
+
+Vamos apresentar neste capítulo alguns exemplos de problemas com duas aborda-
+
+gens diferentes: a clássica (ou probabilística, ou matemática) e a simulação usando
+
+números aleatórios.
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+Um exemplo de aplicação simples e de fácil assimilação é a da coleção de ﬁgurinhas.
+
+Digamos ter adquirido um álbum de ﬁgurinhas e queremos completar o álbum. Assim,
+
+podemos estar interessados em saber qual é a quantidade esperada de ﬁgurinhas que
+
+devem ser adquiridas para que o álbum ﬁque completo. Na Teoria das Probabilida-
+
+des esse valor é conhecido como esperança. Não vamos considerar que se compram
+
+ﬁgurinhas em pacotinhos com 3, 4 ou 5 ﬁgurinhas, podemos retirar esse fato do pro-
+
+blema sem perder sua essência e generalidade. É sabido, primeiramente, que quando
+
+se compra ﬁgurinhas num envelope, não sabemos quais são as ﬁgurinhas que estamos
+
+comprando, portanto as ﬁgurinhas são adquiridas de forma aleatória. Cada ﬁgurinha é
+
+numerada de 1 a N, onde N é o número total de ﬁgurinhas do álbum. É muito intuitivo
+
+admitir que quanto maior o número de ﬁgurinhas de um álbum, mais delas tenhamos
+
+que comprar. Isso indica claramente que a quantidade esperada de ﬁgurinhas a ser
+
+comprada é função de N. Estamos admitindo aqui que não iremos trocar ﬁgurinhas.
+
+E também vamos admitir que a obtenção aleatória de cada ﬁgurinha é independente
+
+uma da outra, ou seja, se obtivermos a ﬁgurinha número 12, a probabilidade de se
+
+obter novamente a ﬁgurinha 12, ou qualquer outra, não se altera.
+
+4
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+Esse assunto já foi estudado fartamente, como podemos veriﬁcar no artigo de Car-
+
+valho (2010, p. 37). O pesquisador concluiu que o número esperado m de ﬁgurinhas
+
+a serem compradas é
+
+(cid:18)
+
+m = N
+
+1 +
+
+1
+2
+
++ . . . +
+
+(cid:19)
+
+1
+N
+
+onde N é a quantidade de ﬁgurinhas do álbum.
+
+Para entender como o pesquisador chegou a esta conclusão, teremos que estudar
+
+alguns aspectos da Teoria de Probabilidades. Como visto nos dois parágrafos anteri-
+
+ores, o valor esperado, ou simplesmente esperança, é uma quantidade que se espera
+
+ser observada, dado que seja feito um certo experimento aleatório. Esse valor pode
+
+se traduzir também como a média de valores observada em um experimento. Para
+
+exempliﬁcar, vamos analisar um caso mais simples: Jogamos uma moeda não viciada
+
+10 vezes. Qual é a quantidade mais provável de caras observadas? A resposta para
+
+essa pergunta é 5. Embora não saibamos, antes de realizar o experimento, qual será o
+
+número obtido, o resultado mais provável é 5. Se repetirmos o experimento muitas e
+
+muitas vezes, digamos 100 vezes, cada um consistindo de 10 lançamentos, obteremos
+
+100 resultados, e quando calcularmos a média destes resultados, estaremos próximos
+
+de 5. Quanto maior for a quantidade de repetições deste experimento, mais próximo
+
+de 5 estaremos. Não vamos neste momento analisar o que há por trás deste aparente
+
+fenômeno. Porém podemos desde já deﬁnir que o valor médio esperado (ou esperança)
+
+é a somatória de todos os valores possíveis multiplicados cada um deles pela probabili-
+
+dade de cada valor ser observado. Se num experimento aleatório podemos observar os
+
+valores x1, x2, x3, . . ., com probabilidades p1, p2, p3, . . ., respectivamente, então o valor
+médio esperado é m = p1x1 + p2x2 + p3x3 + . . .
+
+Para aplicar essa deﬁnição no caso da moeda lançada 10 vezes, vamos atribuir valor
+
+1 para cara e 0 para coroa. Como a moeda é honesta, a probabilidade de obter cara é
+1
+2 . Assim, o valor esperado será de
+
+m =
+
+.1 +
+
+1
+2
+(cid:124)
+
+1
+2
+
+.1 + . . . +
+
+(cid:123)(cid:122)
+10 parcelas
+
+=
+
+1
+2
+
+1
+2
+
+.1
+(cid:125)
+
+.10 = 5
+
+Agora sabemos o que signiﬁca esperança, ou valor esperado, ou valor médio. Mas
+
+antes de chegar no problema das ﬁgurinhas, vamos ainda analisar uma outra situa-
+
+5
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+ção: vamos supor que queiramos saber, em média, quantos lançamentos de um dado
+
+devemos ter até que a face 6 seja obtida. Sabemos que a face 6 deverá sair com pro-
+babilidade 1
+6 , portanto contamos com a sorte para que a face 6 saia em apenas um
+lançamento. É muito mais provável não sair face 6 porque essa probabilidade é de 5
+6 .
+Mas sabemos que podemos obter 6 com uma tentativa, com duas, três, etc., enﬁm, o
+
+número de tentativas pode ser qualquer valor inteiro positivo. Queremos agora saber,
+
+em média, quantas tentativas são necessárias até obter face 6. Desta forma, estamos
+
+diante de uma situação semelhante à do lançamento do dado: se há probabilidade p1
+de obter face 6 com uma tentativa, p2 com 2 tentativas, p3 com 3 tentativas, e assim
+por diante, resta apenas saber qual é a probabilidade pn para n tentativas. Obter face
+6 (sucesso) na n-ésima tentativa implica em obter face diferente de 6 (fracasso) nas
+n − 1 tentativas anteriores. Assim, para uma tentativa considerando a probabilidade p
+como sucesso (obter face 6), teremos 1 − p como fracasso (obter face diferente de 6)
+e consequentemente, pn = (1 − p)n−1 p.
+
+A rigor, o número de tentativas independentes necessárias até se obter sucesso em
+
+um experimento é uma variável aleatória discreta que obedece a uma Distribuição
+
+Geométrica com parâmetro p, onde p é a probabilidade de obter sucesso. Uma refe-
+
+rência deste assunto pode ser encontrado em Magalhães, Lima (2000, p. 76). Neste
+
+momento não faremos mais comentários a respeito do assunto de variáveis aleatórias,
+
+pois o conteúdo abordado até aqui é suﬁciente para o estudo do caso.
+
+Resta-nos saber agora qual é o valor médio esperado (ou esperança) de tentativas
+
+até se obter face 6. Mas ao invés de fazer esse cálculo particular, vamos generalizar.
+
+Vamos calcular, para um experimento aleatório, o valor médio de tentativas necessá-
+
+rias até se obter o primeiro sucesso, dado que as tentativas são independentes uma da
+
+outra. Como vimos anteriormente, o valor médio é dado por:
+
+m = p1.1 + p2.2 + p3.3 + . . . =
+
+= p.1 + (1 − p).p.2 + (1 − p)2.p.3 + . . .
+
+Essa soma inﬁnita assemelha-se à soma de elementos de uma progressão geométrica,
+
+embora em absoluto não seja. Entretanto podemos reescrevê-la convenientemente as-
+
+sim:
+
+6
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+m = p + p(1 − p) + p(1 − p)2 + p(1 − p)3 + . . .
+
++p(1 − p) + p(1 − p)2 + p(1 − p)3 + . . .
+
++p(1 − p)2 + p(1 − p)3 + . . .
+...
+
+Vamos denotar cada linha i da soma acima, por Li. Então teremos:
+
+m = L1 + L2 + L3 + . . .
+
+Podemos observar que L1 é a soma dos termos de uma progressão geométrica cujo
+primeiro termo a1 vale p e cuja razão q vale (1 − p). Sabemos do ensino médio, que a
+soma dos n primeiros termos de uma PG é dada pela expressão:
+
+Sn = a1
+
+1 − qn
+1 − q
+
+Cabe observar que a soma de L1 possui inﬁnitos termos. Assim, para n muito grande,
+
+tendendo ao inﬁnito, devemos calcular o limite da soma no inﬁnito:
+
+n→+∞ Sn = lim
+lim
+
+n→+∞ a1
+
+1 − qn
+1 − q
+
+Mas como temos q = (1 − p) e a1 = p, então:
+
+S = lim
+
+n→+∞ Sn = lim
+
+n→+∞ a1
+
+1 − (1 − p)n
+1 − (1 − p)
+
+= a1
+
+1 − limn→+∞(1 − p)n
+p
+
+=
+
+a1
+p
+
+Logo, para L1, temos a1 = p, então
+
+L1 =
+
+p
+p
+
+= 1
+
+7
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+Podemos agora observar também que todas as linhas Li são somas de elementos de
+
+uma PG. Em particular L2 possui a1 = p(1 − p) e é calculado assim:
+
+L2 =
+
+p(1 − p)
+p
+
+= 1 − p
+
+Por sua vez L3 é a soma de termos de uma PG cujo primeiro termo é p(1 − p)2, então
+
+calculamos:
+
+L3 =
+
+p(1 − p)2
+p
+
+= (1 − p)2
+
+Aplicando essa ideia indutivamente, podemos calcular a soma dos Li:
+
+m = L1 + L2 + L3 + . . . = 1 + (1 − p) + (1 − p)2 + . . .
+
+Mas isso é a soma dos termos de uma nova PG inﬁnita, cujo primeiro termo a1 = 1 e
+
+razão q = (1 − p). Logo essa soma será:
+
+m =
+
+1
+p
+
+Com isso concluímos que a quantidade esperada de repetições (independentes) que
+p , onde p é a probabilidade
+
+devem ser realizadas até se obter o primeiro sucesso é m = 1
+
+8
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+de sucesso. Isso se aplica ao caso dos lançamentos de um dado até se obter a primeira
+
+face 6. Neste caso teremos
+
+m =
+
+= 6
+
+1
+1
+6
+
+Isso signiﬁca que, em média, são necessários 6 lançamentos de um dado para se
+
+obter uma face 6.
+
+Agora vamos voltar ao álbum de ﬁgurinhas. Vamos denotar por N a quantidade
+
+total de ﬁgurinhas do álbum e por n a quantidade de ﬁgurinhas que já estão coladas
+no álbum, em um certo momento, sendo que n está entre zero e N (0 ≤ n ≤ N). A
+esta altura, compramos (sorteamos) uma ﬁgurinha. Ela terá probabilidade q = n
+N de
+ser repetida. Consequentemente, a probabilidade de sucesso p de não ser repetida é
+p = 1 − q = 1 − n
+
+N = N−n
+N .
+
+De posse do valor de p (p = N−n
+
+N ), podemos desde já conhecer a quantidade média
+de ﬁgurinhas que devem ser adquiridas (sorteadas) até se obter a próxima ﬁgurinha
+
+não repetida. De acordo com o que ﬁzemos há pouco, essa quantidade média é dada
+por 1
+
+p , que neste caso será 1
+
+p = N
+
+N−n .
+
+Agora vamos adotar a seguinte estratégia: ao iniciar a coleção, temos n = 0 ﬁguri-
+
+nhas; logo a chance de sucesso ao adquirir a primeira ﬁgurinha é 1. Esta quantidade
+
+N−1 . Da mesma forma, F3 = N
+
+será designada por F0. Em seguida precisaremos adquirir, em média, a quantidade F1
+de ﬁgurinhas até ser colada a segunda ﬁgurinha no álbum. Essa quantidade calcula-
+mos assim: F1 = N
+N−3 e assim por diante, até
+FN−1. Então, o total esperado m de ﬁgurinhas que devem ser adquiridas até completar
+o álbum é o total de ﬁgurinhas esperado até colar a 1a ﬁgurinha, mais o total esperado
+de ﬁgurinhas até colar a 2a ﬁgurinha, mais o total esperado de ﬁgurinhas até colar a
+3a ﬁgurinha, e assim por diante, até colar a última ﬁgurinha, o que traduz da seguinte
+
+N−2 , F4 = N
+
+forma:
+
+m = F0 + F1 + F2 + . . . + FN−1
+
+Substituindo os Fi pelas expressões em função de N, teremos:
+
+m = 1 +
+
+N
+N − 1
+
++
+
+N
+N − 2
+
++ . . . +
+
+N
+2
+
++ N =
+
+9
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+=
+
+N
+N
+
++
+
+= N
+
+N
+N − 1
+(cid:18)
+1
+2
+
+1 +
+
++
+
+N
+N − 2
+
++ . . . +
+
+N
+2
+
++ N =
+
++ . . . +
+
+1
+N − 1
+
++
+
+1
+N
+
+(cid:19)
+
+.
+
+Assim, se conhecemos a quantidade N de ﬁgurinhas do álbum, podemos calcular
+
+a quantidade média de ﬁgurinhas que iremos adquirir, bastando para isso substituir
+
+o valor de N na fórmula acima. Por exemplo, o álbum de ﬁgurinhas oﬁcial da Copa
+
+do Mundo 2014 possuía 649 ﬁgurinhas (ver PANINI). Sem considerar trocas, a quan-
+
+tidade de ﬁgurinhas a ser comprada, em média, para completar o álbum, pode ser
+
+calculada pela fórmula acima. Porém o cálculo é extenso e será necessária ajuda de
+
+uma planilha eletrônica ou um programa de cálculo, ou mesmo uma aplicação online,
+
+como o Wolfram Alpha (ver WOLFRAMALPHA). Para o álbum de 649 ﬁgurinhas da
+
+Copa do Mundo de 2014, o valor calculado com a aplicação online foi de 4577,67; ou
+
+seja espera-se adquirir em média 4578 ﬁgurinhas para se preencher o álbum — des-
+
+considerando trocas.
+
+No entanto, esse problema poderia ser tratado sob o ponto de vista da simulação
+
+(Monte Carlo) — assim como outro qualquer que envolva aleatoriedade. Vamos ver
+
+agora como poderemos resolver esse problema através da simulação, e consequente-
+
+mente, dos números aleatórios. Vamos inicialmente analisar a mecânica do problema
+
+com o ﬂuxograma da Figura 1.
+
+10
+
+1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+Figura 1: Fluxograma de uma coleção de ﬁgurinhas.
+
+O esquema da Figura 1 pode ser facilmente implementado através de um programa
+
+de computador. Neste trabalho e para este exemplo apresentamos uma implementa-
+
+ção em linguagem Perl. A seguir, o código fonte:
+
+11
+
+SimNãoSimNão1.1 P R O B L E M A D O Á L B U M D E F I G U R I N H A S
+
+Listagem 1.1: Código-fonte Perl para simular o problema do álbum de ﬁgurinhas
+
+use strict ;
+
+use warnings ;
+
+srand ( time ^ $$ );
+
+my $qtd_fig = 30; # Quantidade de figurinhas do album
+
+my % album ; # Hash para ’ colar ’ as figurinhas
+
+for ( my $i =1; $i <= $qtd_fig ; $i ++)
+
+{ $album { $i } = 0; }
+
+my $cheio = 0; # var . booleana com status do album
+
+my $qtd_coladas = 0;
+
+my $qtd_compradas = 0;
+
+while (1)
+
+{
+
+$qtd_compradas ++;
+
+my $r = 1 + int ( rand (30)); # Gera um inteiro aleatorio entre 1 e 30
+
+if ( $album { $r } == 0)
+
+{
+
+}
+
+}
+
+$album { $r } = 1 ;
+
+$qtd_coladas ++;
+
+if ( $qtd_coladas == $qtd_fig ) # Album cheio
+
+{
+
+}
+
+last ;
+
+print " Total de figurinhas compradas ........: " . $qtd_compradas . " \ n " ;
+
+O código anterior é simples, ele apenas segue a ideia da Figura 1. Não iremos co-
+
+mentar sintaxe de linguagens e estruturas de controle, do tipo For ou If, pois o foco do
+
+trabalho não é esse. No entanto chama-nos a atenção, neste código, duas declarações:
+
+srand e rand. São basicamente dois procedimentos de geração de aleatoriedade, dis-
+
+ponibilizados pelos desenvolvedores da linguagem. O procedimento srand, de acordo
+
+com o site de documentação do Perl (ver PERL), inicializa o gerador de números alea-
+
+tórios da função rand, dando a ele um novo valor semente. Sem nenhum parâmetro,
+
+srand escolhe uma semente (semi-)aleatória. Neste exemplo, srand gera uma semente
+
+com base no tempo do sistema, operado com o valor do Process ID do programa. Já a
+
+função rand retorna um número aleatório entre 0 e 1, usando a semente gerada por
+
+srand.
+
+12
+
+1.2 P R O B L E M A D A F O R M A Ç Ã O D O T R I Â N G U L O
+
+Embora tenhamos falado sobre declarações especíﬁcas de uma linguagem de progra-
+
+mação, surgiu um outro conceito no parágrafo anterior: semente. Isso terá importante
+
+papel na determinação de números aleatórios, e será um dos temas deste trabalho.
+
+Esse assunto será abordado posteriormente.
+
+De volta ao álbum de ﬁgurinhas, vamos fazer neste ponto um comparativo dos dois
+
+métodos de resolução do seguinte problema: “Compramos um álbum de ﬁgurinhas com
+
+30 cromos ao todo. Dado que não serão feitas trocas, quantas ﬁgurinhas em média tere-
+
+mos que comprar para completar o álbum?”
+
+O método baseado em Teoria das Probabilidades aﬁrma que basta usarmos N = 30
+
+na fórmula
+
+(cid:18)
+
+m = N
+
+1 +
+
+1
+2
+
++ . . . +
+
+(cid:19)
+
+1
+N − 1
+
++
+
+1
+N
+
+que obteremos m, o número médio esperado de ﬁgurinhas a serem adquiridas. Efetu-
+
+ando o cálculo usando o Wolfram Alpha, conseguimos o valor m = 119,8496.
+
+Por outro lado, se executarmos o programa do código acima uma grande quantidade
+
+de vezes, chegaremos aproximadamente ao mesmo número. Realizamos uma simula-
+
+ção 10 vezes, sendo que cada simulação executa o código acima para 1000 (hum mil)
+
+álbuns e calcula a média das quantidades obtidas. Obtivemos 10 resultados, a saber:
+
+119,506; 119,673; 117,992; 120,567; 120,703;
+
+119,069; 119,714; 118,463; 121,025; 118,986.
+
+Chegamos sempre a resultados muito próximos entre si e do valor teórico. Este exem-
+
+plo é uma amostra da capacidade de resolução de problemas utilizando o método
+
+Monte Carlo e números aleatórios.
+
+1.2 P R O B L E M A D A F O R M A Ç Ã O D O T R I Â N G U L O
+
+Um outro interessante problema a ser estudado através de uma simulação Monte
+
+Carlo é o problema da formação de um triângulo:
+
+13
+
+1.2 P R O B L E M A D A F O R M A Ç Ã O D O T R I Â N G U L O
+
+Se dois pontos estão localizados de forma aleatória em um intervalo unitário,
+
+então eles dividem o intervalo em três segmentos. Qual é a probabilidade de
+
+que estes três segmentos formem um triângulo?
+
+Figura 2: Dados aleatoriamente x e y, com 0 < x < y < 1, podemos obter um triângulo caso
+seja satisfeita a desigualdade triangular.
+
+Tomando dois pontos, x e y, aleatoriamente entre 0 e 1, vamos denotar por x o ponto
+de menor coordenada, e y o outro ponto. Desta forma teremos os segmentos x, y − x e
+1 − y (Figura 2). Para veriﬁcar se formam um triângulo, vamos usar a desigualdade tri-
+angular, que requer que em um triângulo, a soma de dois lados quaisquer seja sempre
+
+maior que o terceiro lado. Há três desigualdades a considerar:
+
+(I) x < (y − x) + (1 − y) ⇔ 2x < 1 ⇔ x < 1
+2
+
+(II) (y − x) < x + (1 − y) ⇔ 2y < 2x + 1 ⇔ y < x + 1
+2
+
+(III) (1 − y) < x + (y − x) ⇔ 1 < 2y ⇔ y > 1
+2
+
+Ainda devemos considerar a condição x < y.
+
+Podemos calcular a probabilidade de que um triângulo seja formado se as condições
+
+(I), (II) e (III) são satisfeitas dado que x < y. Cada uma das condições pode ser repre-
+
+sentada por polígonos, conforme Figura 3.
+
+A condição (I) é formada pelos triângulos A, B, C e E.
+
+A condição (II) é formada pelos triângulos B, C, D, E, F e o quadrado G.
+
+14
+
+1.2 P R O B L E M A D A F O R M A Ç Ã O D O T R I Â N G U L O
+
+A condição (III) é formada pelos triângulos A, B, D e F.
+
+A condição x < y é formada pelos triângulos A, B, C e D.
+
+Figura 3: Gráﬁco auxiliar para cálculo de probabilidade de um triângulo ser formado.
+
+Assim queremos calcular a seguinte probabilidade condicional:
+
+P( Formar Triângulo | x < y ) =
+
+P(I ∩ I I ∩ I I I ∩ (x < y))
+P(x < y)
+
+O numerador a ser calculado equivale à intersecção de todas as condições, que re-
+
+sulta na área do triângulo B, em destaque na Figura 3. Esta área é igual a
+
+P(x < y) =
+
+1
+2
+
+, a probabilidade de formar um triângulo é:
+
+P( Formar Triângulo
+
+| x < y ) =
+
+1/8
+1/2
+
+=
+
+1
+4
+
+1
+8
+
+. Como
+
+(cid:3)
+
+Esta forma de calcular a probabilidade é o método usado na Teoria de Probabili-
+
+dades, com apoio de argumentos geométricos. Entretanto também podemos estimar
+
+esta probabilidade com o uso de números aleatórios e um algoritmo, numa simulação
+
+15
+
+1.2 P R O B L E M A D A F O R M A Ç Ã O D O T R I Â N G U L O
+
+computacional, tal qual o problema das ﬁgurinhas. Vamos considerar os seguintes
+
+passos:
+
+(1) Sorteamos a1 e a2, onde 0 < a1 < 1 e 0 < a2 < 1;
+
+(2) x := min{a1, a2};
+
+(3) y := max{a1, a2};
+
+(4) Se x < 1
+
+2 e y < x + 1
+
+2 e y > 1
+
+2 , contamos um triângulo;
+
+(5) Voltar ao passo (1) mais N − 1 vezes;
+
+(6) A probabilidade (aproximada) de formar um triângulo é o números de triângulos
+
+dividido por N.
+
+Uma implementação desse algoritmo é mostrada em seguida, desenvolvida em um
+
+programa em linguagem Perl. Está ﬁxada a quantidade de 50 mil experimentos.
+
+Listagem 1.2: Código-fonte Perl para simular o problema do fechamento do triângulo
+
+use strict ;
+
+use warnings ;
+
+use Math :: Random :: MT :: Perl qw ( srand rand );
+
+my $a1 ; # numero sorteado
+
+my $a2 ; # numero sorteado
+
+my $x ; # menor dos numeros sorteados
+
+my $y ; # maior dos numertos sorteados
+
+my $qtd_triang = 0; # Quantidade de triangulos
+
+my $N = 50000; # Quantidade de experimentos
+
+my $tot =0 ;
+
+for ( my $i =0 ; $i < $N ; $i ++)
+
+{
+
+}
+
+$a1 = rand ();
+
+$a2 = rand ();
+
+if ( $a1 < $a2 )
+
+{ $x = $a1 ;
+
+$y = $a2 ;
+
+}
+
+else
+
+{
+
+$x = $a2 ;
+
+$y = $a1 ;
+
+}
+
+if ( ( $x <0.5) and ( $y <( $x +0.5)) and ( $y >0.5) )
+
+{
+
+$qtd_triang ++;
+
+}
+
+my $prob = ( $qtd_triang / $N );
+
+print " Probabilidade estimada : $prob \ n " ;
+
+16
+
+1.3 C Á L C U L O D E I N T E G R A I S D E F I N I D A S
+
+A quantidade de experimentos pode ser parametrizada no código, mas a ideia é que
+
+quanto maior essa quantidade, mais próximo da verdadeira probabilidade (25%) es-
+
+taremos. Podemos observar esse resultado quando fazemos por exemplo, uma certa
+
+quantidade de ensaios, cada um com uma quantidade de experimentos diferente. Apre-
+
+sentaremos aqui uma tabela (Tabela 1) de resultados onde foram realizados 100 en-
+
+saios com 50 experimentos cada e obtivemos a média e a variância. Os mesmos 100
+
+ensaios e os mesmos indicadores foram realizados para 500, 5.000 e 50.000 experi-
+
+mentos cada.
+
+Quantidade de experimentos
+
+50
+
+500
+
+5000
+
+50000
+
+Média 26.64 25.00 24.99
+
+24.99
+
+Variância 29.59
+
+3.60
+
+0.35
+
+0.04
+
+Tabela 1: Resultados obtidos do programa Perl que simula o problema do fechamento do
+
+triângulo.
+
+O que podemos observar é que com 500 experimentos já obtivemos a resposta cor-
+
+reta, embora alguma variância ainda tenha sido observada. Mas por exemplo, com
+
+100 ensaios de 50 mil experimentos aleatórios, a média foi de praticamente 25% e a
+
+variância quase zero.
+
+A conclusão é que o algoritmo chegou ao resultado aproximadamente correto com
+
+uma pequena margem de erro. Tal desvio pode ser cada vez menor, desde que seja
+
+aumentada a quantidade de experimentos. Mas não apenas isso: deve-se ter uma
+
+sequência de números aleatórios com “qualidade”, ou seja, que sejam de fato aleatórios
+
+ou que se pareçam como tais. Essa característica será discutida mais à frente. Este é
+
+mais um exemplo da capacidade de resolução de problemas com o uso de números
+
+aleatórios.
+
+1.3 C Á L C U L O D E I N T E G R A I S D E F I N I D A S
+
+Uma clássica aplicação de números aleatórios é o cálculo estimado de integrais de-
+
+ﬁnidas, através de uma simulação Monte Carlo. Segundo Gentle (2003, p. 229), em
+
+geral, para se estimar expressões matemáticas complexas, os métodos numéricos por
+
+17
+
+1.4 S O M A D E R I E M A N N
+
+aproximação são preferidos, embora o Monte Carlo seja uma alternativa. Há casos em
+
+que este método é a única forma viável de tratar o problema computacionalmente.
+
+Vamos abordar aqui uma breve ideia de como isso funciona. Vamos supor que que-
+
+remos calcular (estimar) o valor da seguinte integral, a que chamaremos θ:
+
+θ =
+
+(cid:90) b
+
+a
+
+g(x) dx
+
+onde g(x) é uma função contínua em [a, b], com a < b. O valor médio de g é, por
+deﬁnição,
+
+E(g) =
+
+(cid:82) b
+a g(x) dx
+b − a
+
+=
+
+θ
+b − a
+
+.
+
+Então, θ = (b − a) · E(g) e E(g) será substituído por uma média discreta 1
+n
+
+∑n
+
+i=1 g(xi).
+
+Agora vamos adotar alguns passos para calcular θ :
+
+1. Sorteamos aleatoriamente n valores de xi, representados por x1, x2, . . . , xn
+
+2. Calculamos g(xi) para 1 ≤ i ≤ n
+
+3. Calculamos a média da seguinte forma:
+
+1
+n
+
+n
+∑
+i=1
+
+g(xi)
+
+4. Multiplicamos a média do item anterior por (b − a)
+
+O resultado é uma estimativa de θ.
+
+1.4 S O M A D E R I E M A N N
+
+Um outro exemplo para estimar integrais é calcular a soma de Riemann, através do
+
+uso de sorteios aleatórios de números em um intervalo [a, b]. Uma referência para
+
+soma de Riemann é Guidorizzi (1991, p. 298).
+
+Seja um intervalo real [a, b]. Vamos deﬁnir uma partição P, ﬁnita, como o conjunto
+{x0, x1, x2, . . . , xn}, com a = x0 < x1 < x2 < . . . < xn = b. Desta forma, com a parti-
+ção P obtemos n subintervalos do intervalo [a, b] (A reunião de todos os subintervalos
+equivale ao intervalo todo).
+
+Vamos deﬁnir também, para cada índice i (i = 1, 2, . . . , n), a amplitude do intervalo
+[xi−1, xi] com o símbolo ∆xi, sendo que ∆xi = xi − xi−1. Cabe esclarecer que as ampli-
+
+18
+
+1.4 S O M A D E R I E M A N N
+
+tudes não são necessariamente iguais, mas arbitrárias (aleatórias).
+
+Agora vamos admitir uma função f deﬁnida em [a, b] e seja P uma partição, como
+foi deﬁnida anteriormente. Para cada i (1 ≤ i ≤ n), seja ci um número no intervalo
+[xi−1, xi], escolhido aleatoriamente. Uma ideia desta deﬁnição está na Figura 4.
+
+Figura 4: Partição de um intervalo [a, b].
+
+A soma de Riemann de f , no intervalo [a, b], relativa à partição P e aos valores ci é
+
+deﬁnida como
+
+n
+∑
+i=1
+
+f (ci)∆xi = f (c1)∆x1 + f (c2)∆x2 + . . . + f (cn)∆xn
+
+sendo que a integral de f no intervalo [a, b] pode ser aproximada pela soma acima.
+
+Desta forma, uma soma de Riemann pode ser obtida com um conjunto de números
+
+aleatórios entre a e b. Após formar cada subintervalo [xi−1, xi] podemos sortear, para
+todo i um ci aleatório entre xi−1 e xi e calcular f (ci). Assim, ao ﬁnal, obteremos a soma
+de Riemann, com a ajuda de números aleatórios, e por conseguinte uma estimativa da
+
+integral de f em [a, b].
+
+19
+
+2
+
+N Ú M E R O S V E R D A D E I R A M E N T E A L E AT Ó R I O S
+
+Aleatoriedade é um termo comum atualmente, e parece ser, de senso comum, co-
+
+nhecido como falta de um padrão, ou como falta de um comportamento previsível. Se
+
+soubermos como foi formada uma sequência numérica, ou seja, se conhecermos sua lei
+
+de formação, ou se for possível determinar sua lei de formação, então essa sequência
+
+não será aleatória, mas sim determinística. Ou, na melhor das hipóteses, chamaremo-
+
+la de pseudoaleatória (veremos isso mais à frente). Porém se não houver certeza sobre
+
+qual será o próximo elemento da sequência, será dita aleatória. Exemplos já foram
+
+abordados no capítulo anterior. Números aleatórios, como também já mencionamos,
+
+são essenciais em algumas aplicações tais como criptograﬁa, amostras estatísticas, si-
+
+mulações Monte Carlo, entre outras. Esta última é atualmente, exclusivamente com-
+
+putacional, ou seja, necessitamos de números aleatórios em grande quantidade e com
+
+muita rapidez. Além disso tais números precisam ser de fato aleatórios, ou concebidos
+
+de tal forma que se pareçam com números verdadeiramente aleatórios.
+
+Isso nos remete a um fato sutil: se tais números precisam se parecer com números
+
+aleatórios, ou seja, se devem possuir alguma característica que os categoriza como ale-
+
+atórios, então deve haver algo verdadeiramente aleatório para servir como uma base
+
+de comparação. De fato há o que chamamos de Números Verdadeiramente Aleatórios,
+
+ou a sigla em inglês TRN (True Random Numbers). Para obter tais números bastaria ob-
+
+servar um experimento aleatório e anotar os resultados. O lançamento de uma moeda
+
+é o exemplo mais básico de aleatoriedade: atribuindo 1 a cara e 0 a coroa, quando lan-
+
+çamos e repetimos o experimento uma grande quantidade de vezes, obteremos uma
+
+sequência aleatória de zeros e uns. Este processo é de fato um gerador de números
+
+verdadeiramente aleatórios, que doravante designaremos TRNG (True Random Number
+
+Generator). De posse de uma sequência de zeros e uns que foram obtidos pelo lan-
+
+20
+
+N Ú M E R O S V E R D A D E I R A M E N T E A L E AT Ó R I O S
+
+çamento sucessivo de uma moeda, podemos obter uma sequência de outros números
+
+aleatórios da forma que desejarmos. Com a sequência em mãos, podemos dividi-la em
+
+subsequências menores, todas com o mesmo tamanho. Por exemplo, se temos uma
+
+sequência muito grande de zeros e uns podemos segmentar esta sequência de cinco
+
+em cinco dígitos. Com um pacote de cinco dígitos podemos formar um número de 5
+bits, ou seja, um número de 0 a 25 − 1 = 31. Assim, naturalmente, esta sequência (su-
+ﬁcientemente grande) de zeros e uns nos fornece números aleatórios entre 0 e 2k − 1,
+onde k é um número natural arbitrário. Podemos também obter números aleatórios
+(inteiros) entre a e b, com a < b, mesmo que a e b não sejam da forma 2k − 1, do
+seguinte modo: fazemos c = b − a, e geramos números aleatórios entre 0 e c. Como c
+não é da forma 2k − 1, escolhemos α tal que 2α é o menor inteiro da forma 2k maior
+do que c. Então bastará dividir a sequência de zeros e uns em pedaços de tamanho α e
+
+converter essa cadeia, que representa um número do sistema binário, em um número
+de base decimal. Pode ocorrer desse número estar no intervalo ]c, 2α], e portanto fora
+do intervalo [0, c]. Neste caso, tal valor deve ser descartado e uma nova sequência
+
+deve ser considerada, até que a sequência forme um número que esteja no intervalo
+
+[0, c]. Somando a obteremos um número aleatório entre a e b. Devemos observar
+
+atentamente que a obtenção dos números aleatórios conforme foi descrito é realizada
+
+mediante um algoritmo.
+
+Convenciona-se usar, entretanto, números aleatórios uniformemente distribuídos en-
+
+tre 0 e 1, conforme Gentle (2003, p. 5), ou Knuth (1998, p. 10), ou Ross (2010, p.
+
+518). Representamos pela notação U(0, 1), que tecnicamente é uma variável aleató-
+
+ria contínua uniforme, no intervalo entre 0 e 1. Embora não obrigatória, adotar essa
+
+representação permite que números sejam mais facilmente transformados em outras
+
+distribuições de probabilidade a serem usados em aplicações de forma geral. Não é di-
+
+fícil observar que no caso de números aleatórios uniformemente distribuídos, gerados
+
+no intervalo [a, b], para obter uma sequência de números aleatórios no intervalo [0, 1],
+basta subtrair a e dividir cada um deles por b − a.
+
+Para alguma aplicação que requeira números aleatórios em grande quantidade, é
+
+evidente que lançar moedas ou jogar dados é inviável. Há, todavia, formas alterna-
+
+tivas de se obter TRNs, em larga escala; tais fontes são das mais diversas naturezas:
+
+conversão de imagens astronômicas (espaciais), de ruídos elétricos de um semicondu-
+
+21
+
+N Ú M E R O S V E R D A D E I R A M E N T E A L E AT Ó R I O S
+
+tor, decaimento radioativo, etc.
+
+Uma das fontes possíveis de TRNs pode ser encontrada em arquivos especiais em sis-
+
+temas computacionais Unix, como o /dev/random e /dev/urandom. Tais arquivos arma-
+
+zenam resultados provenientes de atividades do sistema, como interações de usuários
+
+com o mouse, via teclado, coleta de uso de interfaces de rede, de disco, de memória.
+
+Em geral, especialistas informam que tal fonte de números possui baixa entropia, o
+
+que caracterizaria este gerador como de baixa qualidade, conforme Katzgraber (2010,
+
+p. 4).
+
+Podemos reproduzir aqui uma amostra deste tipo de TRN gerados em um sistema
+
+operacional Unix (Solaris). O comando seguinte,
+
+cat /dev/urandom | tr -dc ’[0-9]’
+
+produz resultados como:
+
+0854383549631161655433888803043970761966936964439173277474512580537
+
+5227176789461692817910244562490432824610413234724456688226250104408
+
+3838618685754094086219166843289981860744847209073095096660569361364
+
+9957950144759999980186614720645237624702922896419060763579303175167
+
+5399194902925602248035575407260435746491142986343447855355367488674
+
+5736144548668884317972650497569804887344729329297519644836913570525
+
+0665005733155544855416609527466260106216699992443140773640050458955
+
+9809689743542748388416792164865926681691143754465910221780874220971
+
+0175627046666272224211542149162084469126664188622965994261114220279
+
+6566759296988485748402287191122152080782245596464821281363294162626
+
+1297414884102205244737704673146016198062100891524223243448399020578
+
+3361212106530700258618170715087228522613227796309079522343185284208
+
+0224977647160923821453165252181031630075328028744651444808262794694
+
+1523521917691478835264666760972445161108653216680401343286287247062
+
+3003968907046732851191222384170329546008120806399409508914075862730
+
+97518581
+
+A Web possui também alguns sites que oferecem TRNs, de graça, ou até como ser-
+
+viço pago. Podemos conferir um em RANDOM.ORG. Neste site há diversas opções
+
+grátis, como lançamento de uma moeda, de dados, dígitos aleatórios, embaralhador
+
+22
+
+N Ú M E R O S V E R D A D E I R A M E N T E A L E AT Ó R I O S
+
+de cartas, sorteios de loterias, etc. De acordo sua apresentação, os números são de fato
+
+verdadeiramente aleatórios e provenientes de observação de ruído atmosférico.
+
+23
+
+3
+
+G E R A D O R E S D E N Ú M E R O S
+
+P S E U D O A L E AT Ó R I O S
+
+Neste capítulo vamos deﬁnir o que são números pseudoaleatórios, mostrar alguns
+
+métodos de geração de tais números, bem como fazer uma breve apresentação de
+
+fundamentos matemáticos que constituem estes geradores.
+
+3.1 A L G U N S M É T O D O S
+
+Já no início da era dos computadores imaginou-se se haveria alguma forma efetiva
+
+de obter números aleatórios sem ter que se recorrer a métodos mecânicos ou ma-
+
+nuais. A resposta para essa questão é SIM e talvez a primeira proposta tenha sido
+
+o método criado pelo matemático John von Neumann, em 1946, conhecido como o
+
+método do quadrado do meio. Consiste em sacar os dígitos centrais de um número,
+
+elevá-lo ao quadrado e obter, assim, um novo número. Se, por exemplo, desejamos
+
+obter uma sequência de números aleatórios de quatro dígitos, tomamos um número
+
+inicial de quatro dígitos (que será conhecido como semente) e elevamo-lo ao quadrado.
+
+Desse valor calculado, tomamos os quatro dígitos centrais e obtemos assim um novo
+
+número aleatório. Um exemplo numérico: partindo da semente X0 = 4928, temos
+X2
+0 = 24285184. Sacando os 4 dígitos centrais ﬁcamos com X1 = 2851. Este processo
+pode seguir indeﬁnidamente, com a obtenção de mais números aleatórios.
+
+Cabe aqui uma observação importante: sendo cada número determinado pelo valor
+
+anterior, como pode essa sequência ser aleatória? De acordo com Knuth (1998, p. 3),
+
+o próprio von Neumann concordava que seria um pecado admitir que os números obti-
+
+dos assim fossem aleatórios. De fato a sequência não é aleatória, mas o que importa é
+
+24
+
+3.1 A L G U N S M É T O D O S
+
+Teste de algumas sementes de 4 dígitos
+
+Semente
+
+Comportamento
+
+2008
+
+2009
+
+2010
+
+2011
+
+2012
+
+2013
+
+2014
+
+2015
+
+Finalizou com o ciclo 6100, 2100, 4100, 8100
+
+Finalizou com o ciclo 9600, 1600, 5600, 3600
+
+Mesmo caso da semente 2008
+
+Degenerou para zero
+
+Mesmo caso da semente 2008
+
+Mesmo caso da semente 2008
+
+Mesmo caso da semente 2008
+
+Degenerou para zero
+
+Tabela 2: Alguns resultados do método do quadrado do meio
+
+que parece ser. Isso para certas aplicações é suﬁciente e a falsa aleatoriedade não será
+
+relevante, embora para outras não. Exatamente pelo fato de serem gerados através
+
+de algum método matemático ou algorítmico, tais números são ditos pseudoaleatórios
+
+e tais geradores serão aludidos aqui como PRNG (Pseudo Random Numbers Generators).
+
+Houve nos anos 1950, segundo Knuth (1998, p. 4), diversos trabalhos sobre esse
+
+método, que acabaram por contestar sua aplicabilidade pura, embora outras pesquisas
+
+endossassem alguns casos especiais. Vamos abordar um exemplo: se quisermos gerar
+
+números de 4 dígitos, podemos iniciar com uma semente e observar os resultados; há
+
+casos onde a sequência degenera para zero e outros onde fecha um ciclo (Ver Tabela 2).
+
+Ainda segundo Knuth (1998, p. 4), N. Metropolis utilizando o método do quadrado
+
+do meio, conseguiu uma sequência de 750.000 números de 38 bits antes de ocorrer
+
+uma degeneração, além da sequência ter sido aprovada em testes estatísticos de alea-
+
+toriedade. Mas apesar disso o método ainda apresenta mais fraquezas do que virtudes.
+
+A título didático, Knuth (1998, p. 5), também apresentou um método próprio, que
+
+batizou de algoritmo K, mas sua própria conclusão foi a de que números aleatórios
+
+não podem ser gerados com métodos escolhidos aleatoriamente.
+
+Convém introduzir uma deﬁnição: por semente devemos entender o valor inicial
+
+X0, a partir do qual os demais números serão gerados. Além disso, consideremos
+
+25
+
+3.1 A L G U N S M É T O D O S
+
+uma sequência a0, a1, a2, ... de números aleatórios. Sejam k e n naturais de forma que
+0 ≤ k < n. O período da sequência é o menor valor n − k, quando an = ak e também
+quando an+j = ak+j, para qualquer j ≥ 0.
+
+O método de von Neumann, bem como outros que serão abordados são, como con-
+
+vencionamos chamar, PRNGs. E mais, por não serem verdadeiramente aleatórios, sem-
+
+pre deverão ser submetidos a testes de aleatoriedade, ou testes de qualidade. Mais à
+
+frente esse assunto será abordado.
+
+Uma importante observação que devemos mencionar: tanto o método do quadrado
+
+do meio quanto os demais métodos a serem apresentados aqui, são capazes de ge-
+
+rar sequências de inteiros pseudoaleatórios, mas para efeito prático, sempre se faz
+
+uma redução de tais números a uma sequência de variáveis aleatórias de distribuição
+
+uniforme no intervalo [0,1]. Desta forma e com uma transformação apropriada, a
+
+sequência poderá representar outras distribuições de probabilidade.
+
+Os PRNGs possuem algumas vantagens em relação aos TRNGs, segundo Katzgraber
+
+(2010, p. 4), considerando aspectos computacionais:
+
+• A geração é rápida;
+
+• Os PRNGs não requerem equipamento especial;
+
+• Se necessário, pode-se reproduzir a exata sequência de números aparentemente
+
+aleatórios. Por exemplo, para veriﬁcação de como um programa funciona ou
+
+para reproduzir um teste nas mesmas condições.
+
+Por outro lado paga-se um preço:
+
+• PRNGs possuem período ﬁnito e começam a se repetir a partir de um certo ponto.
+
+Por esta razão, é desejável que este período seja o mais longo possível;
+
+• Pode haver alguma autocorrelação na sequência gerada, em particular quando
+
+se faz algum agrupamento. Isso é indesejável pois pode comprometer a aleatori-
+
+edade. Veremos esse fenômeno na Figura 7.
+
+26
+
+3.1 A L G U N S M É T O D O S
+
+A característica principal de um PRNG é que uma sequência pode ser gerada de
+
+forma recorrente: cada xn da sequência pode estar em função de seus antecessores:
+
+xn = f (xn−1, xn−2, ..., xn−k)
+
+Uma recorrência precisa de valores iniciais, então no mínimo haverá um valor inicial
+
+(semente) caso ela dependa de apenas um antecessor, ou vários (bloco de sementes,
+
+ou seed block). Observamos que, no caso de um único antecessor, a primeira repetição
+
+de valor já fecha um ciclo periódico, mas no caso de vários antecessores, podem-se re-
+
+petir valores dentro do período, sem fechar o ciclo. O objetivo será obter uma função
+
+f de modo que a sequência gerada seja longa e a mais aleatória possível.
+
+Após o método de von Neumann surgiu outro método que apresenta resultados mais
+
+interessantes: D. H. Lehmer apresentou em 1949 o método congruencial linear. Este
+
+método tornou-se bastante popular por apresentar vantagens em relação ao método
+
+anterior e também por possuir propriedades matemáticas interessantes. O método con-
+
+siste basicamente em escolher adequadamente quatro parâmetros, a saber:
+
+• m, o módulo, sendo m um inteiro positivo.
+
+• a, o multiplicador, com 0 ≤ a < m.
+
+• c, o incremento, com 0 ≤ c < m.
+
+• X0, o valor inicial ou semente, com 0 ≤ X0 < m.
+
+Para deﬁnir a sequência, usamos uma operação aritmética chamada “módulo” (mod),
+
+que explicaremos na próxima seção. A sequência será obtida por uma recorrência li-
+
+near assim
+
+Xn+1 := (aXn + c) mod m, para n ≥ 0
+
+Com esta recorrência teremos uma sequência de período ﬁnito de no máximo m. A
+
+sequência pode prosseguir sendo gerada inﬁnitamente, mas o período será ﬁnito e a
+
+partir do ﬁm do primeiro período, os elementos começarão a se repetir.
+
+Vamos, antes de prosseguir na análise deste tipo de gerador, esclarecer alguns ele-
+
+mentos de um ferramental matemático importante: congruências.
+
+27
+
+3.2 U M P O U C O D E A R I T M É T I C A
+
+3.2 U M P O U C O D E A R I T M É T I C A
+
+Uma vez que o método linear congruencial é baseado em aritmética modular (ou
+
+congruências), cabe agora escrevermos um pouco sobre alguns fundamentos de uma
+
+parte dessa disciplina matemática. Esse assunto também é conhecido como Teoria Ele-
+
+mentar dos Números.
+
+Dizemos que dois números inteiros a e b são congruentes módulo m, onde m é um
+
+número inteiro positivo, se os restos das divisões de a e b por m são iguais, ou seja, se
+m divide a − b. Em símbolos:
+
+a ≡ b mod m ⇐⇒ m|(a − b)
+
+Em seguida veremos uma aplicação que ilustra uma forma lúdica do uso de con-
+
+gruências.
+
+3.2.1 Aritmética do Relógio
+
+A aritmética modular, ou congruência, pode ser facilmente entendida quando a apli-
+
+camos às contas relacionadas ao ponteiro de horas do relógio. Há 12 horas disponíveis
+
+para as quais um ponteiro pode apontar. Então, se quisermos somar (ou subtrair) uma
+
+certa quantidade de horas a uma dada posição inicial dos ponteiros, podemos fazê-lo
+
+utilizando o módulo 12. Desta forma obteremos a posição ﬁnal do ponteiro das horas.
+
+Por exemplo, se a posição inicial do relógio marca 07:00, 22 horas além o relógio mar-
+cará 7 + 22 = 29 ≡ 5 mod 12, ou seja, 05:00. Em palavras, 29 é congruente a 5 módulo
+12. Segue uma ilustração (criada com código LATEX):
+
+10
+
+9
+
+8
+
+12
+
+11
+
+1
+
+7
+
+5
+
+6
+
+2
+
+3
+
+4
+
++ 22 horas =
+
+10
+
+9
+
+8
+
+12
+
+11
+
+1
+
+7
+
+6
+
+5
+
+2
+
+3
+
+4
+
+28
+
+3.2 U M P O U C O D E A R I T M É T I C A
+
+Uma vez que congruências são operações com números inteiros, também podemos
+
+subtrair qualquer quantidade inteira de horas a uma certa posição inicial de horas do
+
+relógio. Por exemplo, se tivermos inicialmente o relógio indicando 07:00, 33 horas
+antes o relógio indicava 10 horas. Observemos: 7 − 33 = −26 ≡ 10 mod 12. Aqui,
+para sair de −26 e chegar em 10, somamos a 26 múltiplos de 12 até obter um número
+positivo: −26 + 3 × 12 = 10.
+
+3.2.2 Algumas Propriedades de Congruências
+
+Da deﬁnição decorre que congruência é uma relação de equivalência. Segundo Hefez
+
+(2011, p. 110), formalmente podemos descrever isto conforme a proposição abaixo:
+
+Proposição 3.2.1. Seja m > 0 um inteiro positivo e sejam quaisquer a, b e c ∈ N.
+Então:
+
+(I) a ≡ a mod m (propriedade reﬂexiva),
+
+(II) Se a ≡ b mod m, então b ≡ a mod m (propriedade simétrica),
+
+(III) Se a ≡ b mod m e b ≡ c mod m, então a ≡ c mod m (propriedade transitiva).
+
+Prova: A prova destas propriedades é bastante simples. Vamos a elas:
+
+(I) Como m|0, então m|(a − a), logo a ≡ a mod m.
+
+(II) Se a ≡ b mod m então m|(a − b), o que implica em a − b = k.m, com k ∈ Z.
+
+Desse modo, b − a = (−k)m, então m|(b − a) e b ≡ a mod m.
+
+(III) De fato, se a ≡ b mod m e b ≡ c mod m, então existem inteiros p e q tais que
+
+a − b = p.m
+
+e
+
+b − c = q.m
+
+Então
+a − c = (a − b) + (b − c) = p.m + q.m = (p + q)m, logo a ≡ c mod m.
+
+Por ser a congruência uma relação de equivalência, há uma certa semelhança com a
+
+igualdade dos inteiros. Vejamos as proposições a seguir:
+
+Proposição 3.2.2. Seja m > 0 um inteiro positivo e sejam quaisquer a, b, c e d inteiros.
+Se a ≡ b mod m e c ≡ d mod m, então:
+
+(cid:3)
+
+29
+
+3.2 U M P O U C O D E A R I T M É T I C A
+
+(I) (a + c) ≡ (b + d) mod m.
+
+(II) ac ≡ bd mod m.
+
+Prova: seguem as demonstrações (elementares):
+
+(I) m|(a − b) e m|(c − d) =⇒ m|((a − b) + (c − d)) =⇒ m|((a + c) − (b + d)) =⇒
+
+(a + c) ≡ (b + d) mod m.
+
+(II) m|(a − b) =⇒ ∃ q ∈ Z tal que a − b = mq =⇒ ad − bd = mqd =⇒ ad =
+mqd + bd. Temos também m|(c − d) =⇒ ∃ p ∈ Z tal que c − d = mp =⇒
+ac − ad = mpa. Somando as duas igualdades obtidas, ac − bd = m(pa + qd) =⇒
+m|(ac − bd) =⇒ ac ≡ bc mod m.
+
+(cid:3)
+
+Proposição 3.2.3. Seja m > 0 um inteiro positivo e sejam quaisquer a e b inteiros.
+Então:
+
+(I) Se a ≡ b mod m e n|m, com n > 0, então a ≡ b mod n.
+
+(II) Se a ≡ b mod m e c > 0, então ac ≡ bc mod mc.
+
+(III) Se a ≡ b mod m e se um inteiro d > 0 divide a, b e m, então
+
+a
+d
+
+≡
+
+b
+d
+
+mod
+
+m
+d
+
+.
+
+Estas propriedades também tem provas bastante elementares e estão dadas a seguir:
+
+(I) n|m =⇒ m = n.q, com algum q ∈ Z. Além disso, temos m|(a − b) =⇒
+
+nq|(a − b) =⇒ a − b = n(pq) =⇒ a ≡ b mod n.
+
+(II) Se a ≡ b mod m e c > 0 então m|(a − b) =⇒ a − b = mq, com algum q ∈ Z.
+Multiplicando a última igualdade por c, ﬁcamos com c(a − b) = mqc =⇒ ac −
+bc = mc(q) =⇒ ac ≡ bc mod (mc).
+
+(III) a ≡ b mod m =⇒ m|(b − a) =⇒ b − a = m.q, com q ∈ Z, q > 0. Assim
+
+b
+d
+
+−
+
+a
+d
+
+= q.
+
+m
+d
+
+=⇒
+
+a
+d
+
+≡
+
+b
+d
+
+mod
+
+m
+d
+
+.
+
+(cid:3)
+
+Podemos notar que todos os possíveis restos da divisão de algum inteiro por m são
+os números 0, 1, 2, . . . , m − 1, em qualquer ordem. Esse conjunto de números chamare-
+mos de sistema completo de resíduos (restos) módulo m. Como se observa, tal conjunto
+
+possui m elementos.
+
+30
+
+3.2 U M P O U C O D E A R I T M É T I C A
+
+Outra característica interessante que podemos notar é que um certo número inteiro
+
+pode ser associado a outros inteiros quando estes deixam o mesmo resto na divisão por
+
+m. Este conjunto de inteiros que deixam o mesmo resto na divisão por algum inteiro
+m, com m > 0 é chamado de classe de congruência módulo m.
+
+Tomemos um exemplo: para m = 5, teremos 5 diferentes classes de congruências, a
+
+saber:
+
+{. . . , −10, −5, 0, 5, 10, . . .}
+
+{. . . , −9, −4, 1, 6, 11, . . .}
+
+{. . . , −8, −3, 2, 7, 12, . . .}
+
+{. . . , −7, −2, 3, 8, 13, . . .}
+
+{. . . , −6, −1, 4, 9, 14, . . .}
+
+Observando a primeira das classes listadas acima, podemos aﬁrmar que tais núme-
+ros são congruentes entre si, ou seja, −10 é congruente a −5, que é congruente a 0 e
+assim para todos os demais. Embora exista uma semelhança entre congruência e igual-
+
+dade nos inteiros, ressaltamos que a congruência está relacionada à operação “resto”.
+
+Dois números inteiros são congruentes entre si se deixam o mesmo resto na divisão
+
+por um m inteiro dado. Apesar disso eles não são necessariamente iguais.
+
+Gentle (2003, p. 8), observa que para um m > 0 dado, há exatamente m classes de
+congruências módulo m, sendo que a união de todas as classes forma o conjunto de
+
+todos os inteiros.
+
+Se denotarmos por a a classe de congruência que deixa resto a na divisão por m,
+teremos um conjunto ﬁnito, que podemos denotar por Z/mZ, que será a reunião de
+todas as classes de congruência módulo m. Então escrevemos
+
+Z/mZ = {a, a ∈ Z}
+
+Cada classe de congruência a corresponde a um resíduo a e consiste das translações
+
+de a por múltiplos de m, isto é, a = {a + km, k ∈ Z}.
+
+31
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Assim, por ser a congruência uma relação satisfazendo as Proposições 3.2.1 e 3.2.2,
+o conjunto Z/mZ, acrescido das operações de soma e multiplicação é chamado de
+anel dos inteiros módulo m. (Obs.: Anel é um conjunto dotado de operações de adição
+
+e multiplicação e possui certas propriedades. Uma referência para este assunto pode
+
+ser visto em Martinez, Moreira, Saldanha e Tengan (2010, p. 39)).
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+O método, como vimos, consiste em obter valores recursivamente através da relação
+
+Xn+1 := (aXn + c) mod m, n ≥ 0
+
+(3.1)
+
+Essa sequência Xn, como vimos anteriormente, pode ser devidamente transformada
+em uma sequência com distribuição uniforme no intervalo [0, 1], representada como
+
+U(0, 1). Para isso fazemos a simples transformação:
+
+Un =
+
+Xn
+m
+
+Os valores de X0, a, c e m devem ser escolhidos a priori e em seguida toda a sequên-
+cia poderá ser obtida. Vejamos um exemplo: seja X0 = a = 7, c = 2 e m = 18. A
+sequência obtida é:
+
+7, 15, 17, 13, 3, 5, 1, 9, 11, 7, 15, 17 . . .
+
+Podemos observar que o período é igual a 9, isto é, obtivemos nove números entre
+
+0 e 17. Quando um dos números que já foi gerado anteriormente, aparecer de novo,
+
+implica que o período chegou ao ﬁm e um ciclo idêntico será gerado novamente. Va-
+
+mos agora então observar os números do primeiro ciclo: pareceram embaralhados. É
+
+algo como selecionar ao acaso 9 números entre 0 e 17, em sequência, sem reposição.
+
+Porém, indesejavelmente apenas números ímpares foram gerados e isso não parece ser
+
+então tão aleatório.
+
+Alterando o incremento de 2 para 1, obtivemos outra sequência:
+
+7, 14, 9, 10, 17, 12, 13, 2, 15, 16, 5, 0, 1, 8, 3, 4, 11, 6, 7, 14, 9, . . .
+
+Agora, a situação foi diferente: o período foi o máximo, 18, logo pares e ímpares
+
+foram obtidos. Além disso, tal como no exemplo anterior, os números “pareceram”
+
+32
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+aleatórios, tal como se ﬁzéssemos um sorteio sem reposição dos números 0 a 17. Mas
+
+ainda houve um incoveniente: pares e ímpares se alternam e isso mais uma vez levanta
+
+suspeitas. A efetividade do método, ao que parece, dependerá de boas escolhas dos
+
+parâmetros. Faremos isso.
+
+As sequências de números pseudoaleatórios gerados por este método, serão, como
+
+esperamos, regidas por uma escolha adequada dos parâmetros. O incremento c pode
+
+ser igual a zero, conforme a ideia original de Lehmer. Neste caso, c = 0, de acordo
+
+com Knuth (1998, p. 11), usa-se o nome método linear congruencial multiplicativo, en-
+quanto que com c (cid:54)= 0 denota-se método linear congruencial misto. A ideia é a de que
+c (cid:54)= 0 permitiria obter períodos mais longos.
+
+De início podemos rejeitar os casos a = 1 e a = 0. Os resultados serão degenerados.
+Por exemplo, vamos analisar o caso X0 = 7, a = 1, c = 2 e m = 18. A sequência obtida
+consiste de uma progressão aritmética com módulo:
+
+7, 9, 11, 13, 15, 17, 1, 3, 5 . . .
+
+Não parece aleatório, portanto só vale a pena analisar os casos em que a ≥ 2.
+
+Vamos agora retrabalhar e generalizar a equação (3.1). Antes de mais nada, convém
+
+ressaltar que uma equação de recorrência como esta pode ser resolvida e que sua solu-
+
+ção pode ser entendida como calcular qualquer termo da recorrência, não em função
+
+do seu termo anterior (ou mais do que um termo), mas sim em função apenas dos
+
+parâmetros iniciais, encontrando uma fórmula. E mais, por estarmos trabalhando com
+
+um conjunto ﬁnito (inteiros positivos menores que m), vamos sempre considerar que
+
+os resultados a cada operação serão reduzidos ao resto módulo m.
+
+O caso c = 0 é um caso muito simples. Sabemos que Xn ≡ aXn−1 mod m, então
+X1 ≡ aX0 mod m. Deduzimos X2 em função de X0 da seguinte forma: se X2 ≡
+aX1 mod m, então X2 ≡ a(aX0) mod m, ou seja, X2 ≡ a2X0 mod m. Analogamente. e
+de forma recursiva, concluímos que
+
+É uma progressão geométrica com módulo.
+
+Xn ≡ anX0 mod m
+
+33
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Quando c (cid:54)= 0, temos um trabalho adicional: partindo da recorrência Xn ≡ aXn−1 +
+
+c mod m, teremos para:
+
+• n = 1: X1 ≡ aX0 + c mod m
+
+• n = 2: X2 ≡ aX1 + c ≡ a(aX0 + c) + c = a2X0 + ac + c mod m
+
+• n = 3: X3 ≡ aX2 + c ≡ a3X0 + a2c + ac + c mod m
+
+...
+
+• n = n: Xn ≡ anX0 + (an−1 + an−2 + . . . + a + 1)c mod m
+
+Da Álgebra, sabemos que (a − 1) divide (an − 1), e isto equivale a:
+
+an − 1
+a − 1
+
+= an−1 + an−2 + . . . + a + 1
+
+Desta forma podemos reescrever a equação da seguinte forma:
+
+Xn ≡ anX0 +
+
+(an − 1)c
+a − 1
+
+mod m.
+
+Há mais propriedades matemáticas interessantes na geração de uma sequência li-
+
+near congruencial. Antes de estudar uma dessas propriedades vamos antes analisar
+
+duas proposições:
+
+Proposição 3.3.1. Dados a, b e c inteiros positivos, a equação ax + by = c possui solu-
+ções inteiras x, y ∈ Z se e somente se, mdc(a, b)|c.
+
+Prova: Vamos supor que (x0, y0) é solução. Assim, ax0 + by0 = c. Temos que mdc(a, b)|a
+e mdc(a, b)|b, então
+
+mdc(a, b)|(ax0 + by0) = c.
+
+Por outro lado, se mdc(a, b)|c, então existe d ∈ Z tal que c = d.mdc(a, b). Sabemos
+que, das propriedades de divisão euclidiana e do máximo divisor comum, existem
+m, n ∈ Z tais que am + bn = mdc(a, b). Essa identidade também é conhecida como
+Relação de Bézout. Assim, c = d.(am + bn) ⇒ c = a(dm) + b(dn), portanto
+
+c = ax0 + by0.
+
+34
+
+(cid:3)
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Proposição 3.3.2. Dados a, b e m ∈ Z, com m > 0, a equação ax ≡ b mod m possui
+solução única módulo m, x ∈ Z, se mdc(a, m) = 1.
+
+Prova: Se mdc(a, m) = 1, então existem x0, y0 ∈ Z tais que ax0 + my0 = 1 (Relação de
+Bézout). Multiplicando a equação por b, teremos ax0b + my0b = b. Fazendo x = x0b e
+y = y0b, ﬁcaremos com ax + my = b, portanto ax ≡ b mod m.
+
+Para provar a unicidade, vamos supor que existem x e y de forma que ax ≡ b mod m
+e ay ≡ b mod m. Subtraindo uma equação da outra obteremos a(x − y) ≡ b − b =
+0 mod m. Assim, m|a(x − y), e como mdc(a, m) = 1, temos que m|(x − y), portanto
+x ≡ y mod m. Com isto concluímos a unicidade.
+
+(cid:3)
+
+Agora temos condição de avaliar a seguinte proposição (Knuth (1998, p. 11)):
+
+Proposição 3.3.3. Em uma sequência linear congruencial Xn+1 := (aXn + c) mod m, se
+a e m são primos entre si, então X0 sempre se repetirá.
+
+Prova: Seja a sequência linear congruencial
+
+X0, X1, X2, . . . , Xk−1, Xk, . . . , Xr−1, Xr, . . .
+
+gerada por Xn+1 := (aXn + c) mod m, com mdc(a, m) = 1. Consideremos Xr como o
+primeiro valor repetido desta sequência. Se Xr for igual a um Xk para algum k tal que
+0 < k < r, necessariamente Xr−1 (cid:54)= Xk−1. Com isso teríamos Xr determinado por Xk−1
+e Xr−1, o que é absurdo pois Xn é unicamente determinado por Xn−1 quando a e m
+são primos entre si, conforme Proposição 3.3.2. Logo, k = 0.
+
+(cid:3)
+
+O caso de um gerador congruencial linear multiplicativo puro, ou seja, quando c = 0,
+
+é digno de menção. Neste caso em particular, o período teórico máximo m não pode
+
+ser alcançado e há uma razão para isso. Vamos observar a forma deste gerador:
+
+Xn+1 := aXn mod m
+
+Caso Xn = 0 a sequência degenerará imediatamente para zero. E mais, se houver
+algum d divisor de m e se Xn é múltiplo de d, de acordo com a Proposição 3.2.3, todos
+
+35
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+os sucessores Xn+1, Xn+2, . . . dessa sequência serão múltiplos de d. Desta forma quere-
+mos que todo Xn seja relativamente primo com m. A quantidade de inteiros positivos
+que são relativamente primos com m é dado por uma função especial chamada ﬁ de
+
+Euler e denotada por ϕ(m). Veremos isso um pouco adiante.
+
+Observando o termo geral da sequência multiplicativa:
+
+Xn ≡ anX0 mod m,
+
+(3.2)
+
+temos que o período vai depender de a e de m. Vamos agora considerar um k inteiro
+
+positivo, o menor possível tal que
+
+ak ≡ 1 mod m
+
+Quando isto ocorrer, é fácil observar que a sequência começará se repetir, pois teremos
+
+Xk ≡ akX0 ≡ 1.X0 mod m ⇒ Xk ≡ X0 mod m.
+
+Então o período não poderá ser maior do que k. Esse valor de k que procuramos é
+
+resultado de um teorema fundamental da teoria elementar dos números: o Teorema
+
+de Euler–Fermat.
+
+Na seção 3.2 conhecemos as classes de congruência módulo m. Uma classe a é um
+
+conjunto de inteiros positivos que deixam resto a quando divididos por m. A notação é:
+
+a = {x ∈ Z, x ≡ a mod m}
+
+O conjunto que reúne todas as classes de congruência módulo m pode ser denotada
+
+por Z/mZ. Assim:
+
+Z/mZ = {a , a ∈ Z} = {0, 1, . . . , m − 1}
+
+Isto signiﬁca que Z/mZ é a reunião de todas as classes de congruência módulo m.
+
+Como só existem m classes de congruências, o conjunto Z/mZ é ﬁnito.
+
+Há um subconjunto notável de Z/mZ, denotado por (Z/mZ)∗ e deﬁnido como
+
+sendo todas as classes cujos elementos são primos com m. Assim:
+
+(Z/mZ)∗ = {a , mdc(a, m) = 1}
+
+36
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Agora podemos deﬁnir a função ﬁ de Euler como sendo a quantidade de elementos
+
+de (Z/mZ)∗:
+
+ϕ(m) := |(Z/mZ)∗|
+
+(Obs.: Estamos adotando o símbolo “|
+
+|” para designar a quantidade de elementos
+
+do conjunto).
+
+Em outras palavras, ϕ(m) conta quantos inteiros positivos entre 1 e m são primos
+
+com m. Por exemplo:
+
+ϕ(4) = |{1, 3}|= 2
+ϕ(8) = |{1, 3, 5, 7}|= 4
+ϕ(12) = 4, etc.
+
+Após a deﬁnição da função ﬁ de Euler, podemos enunciar o Teorema de Euler-Fermat.
+
+Teorema 3.3.1. (Euler–Fermat) Sejam m, a ∈ N com m > 1 e a e m primos entre si.
+Então,
+
+aϕ(m) ≡ 1 mod m.
+
+A demonstração deste teorema vai além do propósito deste trabalho, mas pode ser
+
+encontrado nas seguintes referências: Hefez (2011, p. 132), ou Martinez, Moreira,
+
+Saldanha e Tengan (2010, p. 47).
+
+Observando a equação (3.4), quando tivermos o menor k tal que ak ≡ 1 mod m, é
+porque k é o período. Se o menor valor de k que satisfaz ak ≡ 1 mod m for igual a
+ϕ(m), diremos que a é raiz primitiva de m, ou raiz primitiva módulo m.
+
+Não é difícil observar que quando m é primo, teremos ϕ(m) = m − 1. Então podemos
+obter maiores períodos quando m é primo e quando a é raiz primitiva de m. Vamos
+
+fazer um exemplo.
+
+Sejam m = 31 e a = 9. Então vamos calcular os números aleatórios gerados por
+
+Xn := 9Xn−1 mod 31
+
+37
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+escolhendo, por exemplo, a semente X0 = 17. O resultado segue:
+
+17, 29, 13, 24, 30, 22, 12, 15, 11, 6, 23, 21, 3, 27, 26, 17 . . .
+
+O período foi 15. Então 15 é o menor inteiro positivo tal que 915 ≡ 1 mod 31. Mas
+
+ϕ(31) = 30, logo 9 não é raiz primitiva de 31.
+
+Então vamos mudar o multiplicador, vamos considerar a = 24 e calcular novamente
+
+a sequência. Assim, obteremos:
+
+17, 5, 27, 28, 21, 8, 6, 20, 15, 19, 22, 1, 24, 18, 29,
+
+14, 26, 4, 3, 10, 23, 25, 11, 16, 12, 9, 30, 7, 13, 2, 17, . . .
+
+Agora conseguimos o período 30. E há uma razão para isso: 24 é raiz primitiva
+
+de 31 (ou raiz primitiva módulo 31). Signiﬁca que o menor k inteiro positivo tal que
+24k ≡ 1 mod 31 é k = 30.
+
+Obter um período longo não é a única característica desejada em um gerador. Ele
+
+deve apresentar números que pareçam ser aleatórios. Isso implica que deve passar por
+
+testes, sejam eles visuais, gráﬁcos ou estatísticos. Vamos agora entender porque esse
+
+exemplo acima não seria exatamente uma boa sequência. Um critério visual, apenas
+
+observando os números, não desperta desconﬁança. Entretanto, agrupando-os em pa-
+
+res com sobreposição (overlapping), (5,27), (27,28), (28,21),...(2,17), (17,5), e em
+
+seguida traçando um gráﬁco de pontos pareados, obteremos a imagem da Figura 5,
+
+onde há uma aparente correlação.
+
+Os geradores congruenciais lineares, segundo Katzgraber (2010, p. 6), são reco-
+
+nhecidamente problemáticos por possuir algum tipo de correlação e não são recomen-
+
+dados para simulações numéricas, apesar da rapidez de sua geração em computador.
+
+Podem ser usados, no entanto, como geradores de sementes para outros tipos de gera-
+
+dores mais complexos.
+
+Notadamente um gerador congruencial linear que foi muito usado e que possui uma
+
+característica indesejável, será analisado em seguida.
+
+38
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Figura 5: Pares com sobreposição. Gráﬁco construído em Microsoft Excel.
+
+3.3.1 Gerador RANDU
+
+RANDU foi um gerador congruencial linear multiplicativo programado em main-
+
+frames IBM nas décadas de 1960 e 1970, com a ﬁnalidade de gerar PRNs com rapi-
+
+dez. Isso foi possível por usar o multiplicador a = 65539, incremento c = 0 e módulo
+m = 231, proporcionando mais velocidade na obtenção dos PRNs em máquinas de
+32-bits. Entretanto existe uma correlação entre os números obtidos, conforme po-
+demos veriﬁcar com a seguinte manipulação: Se Xn ≡ 65539Xn−1 mod 231, então
+Xn ≡ 655392Xn−2 mod 231. Então,
+
+Xn ≡ (65536 + 3)2Xn−2 mod 231
+
+Xn ≡ (216 + 3)2Xn−2 mod 231
+
+Xn ≡ 232Xn−2 + 6.216Xn−2 + 9Xn−2 mod 231
+
+Como 232 ≡ 0 mod 231, temos Xn ≡ 6.216Xn−2 + 9Xn−2 mod 231. Assim,
+
+Xn ≡ 6(65539 − 3)Xn−2 + 9Xn−2 mod 231
+
+Como Xn−1 ≡ 65539Xn−2 mod 231, teremos
+
+Xn ≡ 6Xn−1 − 9Xn−2 mod 231
+
+39
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Se a sequência for gerada com 3n valores, podemos agrupá-la em triplas (vi, vi+1, vi+2)
+e desta forma obteremos uma matriz n × 3. Estas triplas, devidamente apresentadas
+em um gráﬁco, mostrarão que os pontos situam-se em 15 planos de R3. Em geral os
+
+pontos parecerão aleatoriamente situados no espaço, mas se rotacionado adequada-
+
+mente, o gráﬁco revelará os pontos sobre os planos (Figuras 6 e 7).
+
+Observação: as Figuras 6 e 7 foram geradas pelo software R, com o seguinte código:
+
+library(rgl)
+
+with(randu, plot3d(x, y, z, axes = TRUE, xlab = , ylab = , zlab = ))
+
+rgl.viewpoint(theta = 0, phi = 0, fov = 0, zoom = 0.7)
+
+Figura 6: Pontos gerados pelo RANDU, agrupados em triplas. Parecem aleatoriamente distribuídos
+
+no espaço.
+
+Desde sua introdução por Lehmer, as propriedades dos geradores lineares congruen-
+
+ciais multiplicativos tem sido largamente estudados. Há o fato apontado por Marsaglia
+
+(1968, p. 25), que demonstra que, como dissemos anteriormente, há um defeito na
+
+sequência de números aleatórios gerados. Esse defeito não pode ser removido por es-
+
+colhas arbitrárias de módulos, multiplicadores ou semente. Se n-uplas (v1, v2, ..., vn)
+de valores da sequência forem vistos como pontos em um cubo n–dimensional, então
+
+todos os pontos estarão localizados em um número relativamente pequeno de hiper-
+
+planos. É o caso do RANDU.
+
+40
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Figura 7: Pontos gerados pelo RANDU. Quando visualizados sob certo ângulo, revelam que os
+
+pontos situam-se sobre 15 planos.
+
+3.3.2 Outros Geradores
+
+Há inúmeros exemplos de PRNGs, com base nos lineares congruenciais, que podem
+
+apresentar resultados semelhantes, melhores ou até piores. Knuth (1998, p. 26),
+
+aponta que, do contrário do que se imagina, um incremento na expressão da sequência
+
+poderia gerar menos aleatoriedade. Por exemplo, uma expressão do tipo
+
+Xn+1 := ((aXn) mod (m + 1) + c) mod m
+
+será menos aleatória em comparação a Xn := (aXn + c) mod m.
+
+Também é possível pensar em sequências em que Xn é determinado por mais do
+que um antecessor. O exemplo mais simples deste caso é a sequência de Fibonacci, já
+
+adaptada ao módulo m,
+
+Xn+1 := Xn + Xn−1 mod m
+
+Knuth (1998, p. 26), classiﬁcou-a como de aleatoriedade insatisfatória. Porém po-
+
+demos usá-la de forma mais genérica:
+
+41
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+Xn := (Xn−j (cid:12) Xn−k) mod m,
+
+0 < j < k
+
+Este gerador é conhecido como Lagged Fibonacci, ou seja, uma sequência semelhante
+
+à sequência de Fibonacci, mas onde cada termo Xn da sequência depende de valores
+deslocados de n − j e n − k. Decorre da equação desta sequência que são necessários k
+
+valores para semente. Isto é chamado de bloco de sementes ou seed block, de tamanho
+k. Segundo Katzgraber (2010, p. 7), comumente se usa m = 2M, com M = 32 ou 64.
+O símbolo (cid:12) representa um dos operadores: adição, multiplicação ou OU exclusivo
+
+(XOR).
+
+De acordo com Gentle (2003, p. 33), o Lagged Fibonacci é um bom gerador desde
+
+que seja feita uma boa escolha dos parâmetros j, k e m. Se m for primo, o período pode
+ser maior do que mk − 1, mas em geral, como dito antes, m é usualmente potência de
+2 e o período máximo possível para m = 2M é 2k−12M−1.
+
+Cabe aqui uma explicação sobre o operador binário XOR, para o qual adotaremos
+
+o símbolo ⊕. Este é um operador lógico entre dois valores (operandos), que resulta
+
+1 (verdadeiro) quando os operandos possuem valores lógicos distintos, ou 0 (falso)
+
+quando os operandos possuem o mesmo valor lógico. Em lógica elementar, pode ser
+
+também designado por disjunção exclusiva, quando aplicado a duas proposições, p e q.
+
+A operação só será verdadeira quando p é verdadeira ou q é verdadeira, mas não am-
+
+bas. No cotidiano é comum nos depararmos com situações do tipo: “para sobremesa,
+
+você pode escolher fruta ou doce”, quando se quer na realidade dizer que podemos
+
+escolher apenas uma delas, não ambas.
+
+A operação ⊕ pode ser apresentada como uma tabela–verdade, conforme podemos
+
+veriﬁcar na Tabela 3. Para operar dois números inteiros positivos, devemos reescrevê-
+
+los na notação “base 2” e em seguida operar bit a bit, conforme a Tabela 3 (Aqui, um
+bit é um símbolo 0 ou 1). Por exemplo, para calcular 5 ⊕ 9 devemos escrever os operan-
+dos na base 2 e aplicar ⊕ a cada par de bits correspondentes (primeiro com primeiro,
+segundo com segundo, etc.): (0101)2 ⊕ (1001)2 = (1100)2, sendo que (1100)2 equivale
+a 12 em numeração decimal. Assim, 5 ⊕ 9 = 12. Para conhecer mais sobre bases e
+sistemas de numeração, podemos consultar Hefez (2010, capítulo 4).
+
+42
+
+3.3 M É T O D O L I N E A R C O N G R U E N C I A L
+
+ou exclusivo (XOR)
+
+p
+
+0
+
+0
+
+1
+
+1
+
+q
+
+0
+
+1
+
+0
+
+1
+
+p ⊕ q
+
+0
+
+1
+
+1
+
+0
+
+Tabela 3: Tabela–verdade p ⊕ q.
+
+Especiﬁcamente o operador XOR é tratado num contexto de outro tipo de gerador
+
+conhecido como generalised feedback shift register (registradores de deslocamento li-
+
+near). Nesta categoria de geradores encontram-se atualmente os PRNGs mais eﬁcien-
+
+tes, como o WELL e o Mersenne Twister.
+
+Este último foi desenvolvido por Makoto Matsumoto e Takuji Nishimura, em 1997,
+
+mas ainda permanece sendo relançado, como o TinyMT, lançado em 2015. A origem
+
+do nome Mersenne Twister é devido à utilização de um primo especial, conhecido
+como um dos primos de Mersenne, 219937 − 1 e “twister” associado a um tornado, algo
+embaralhado, retorcido. Os criadores também acharam curioso o nome por conter
+
+as iniciais de ambos (MT). O Mersenne Twister hoje está implementado em diversos
+
+softwares matemáticos, estatísticos ou de uso geral, tais como Matlab, Python, R, etc,
+
+através do código mt19937(), exatamente por possuir as melhores características que
+um PRNG poderia conter: um período gigantesco de 219937 − 1, rápido, usa pouca me-
+mória, distribuído em código fonte em linguagem C padrão. Os autores advertem que
+
+o algoritmo é para uso em simulações Monte Carlo e não deve ser usado para crip-
+
+tograﬁa. Os criadores possuem uma página na internet onde se podem obter muitas
+
+informações e o código-fonte. Ver o endereço em MATSUMOTO; NISHIMURA na bibli-
+
+ograﬁa.
+
+Os PRNGs, para que sejam usados com alguma ﬁnalidade, devem ter algumas boas
+
+características que foram comentadas até aqui. Vamos então analisar alguns testes e
+
+validações para os PRNGs.
+
+43
+
+4
+
+T E S T E S E T R A N S F O R M A Ç Õ E S
+
+Ao longo deste texto falamos em boas propriedades de números aleatórios, ou seja,
+
+características que os tornariam próximos de números verdadeiramente aleatórios ou
+
+que ao menos se pareçam como tais. Naturalmente, podemos aplicar inicialmente
+
+testes estatísticos com o objetivo de avaliar se uma coleção de números pode ser com-
+
+parada a uma variável aleatória de distribuição uniforme no intervalo [0, 1]. Generica-
+
+mente esse tipo de teste é denominado como Teste de Hipótese. Mais especiﬁcamente,
+
+é um Teste de Aderência.
+
+4.1 T E S T E D E H I P Ó T E S E . T E S T E D E A D E R Ê N C I A .
+
+A estrutura do teste é formular duas hipóteses, que chamaremos H0 (hipótese nula)
+
+e H1 (hipótese alternativa) da seguinte forma:
+
+H0: Os números gerados representam uma variável aleatória com distribui-
+ção uniforme no intervalo [0, 1].
+
+H1: Os números gerados não representam uma variável aleatória com dis-
+tribuição uniforme no intervalo [0, 1].
+
+A hipótese H0, caso não seja rejeitada, implica em aceitar que devem-se ao acaso as
+discrepâncias entre o conjunto de números aleatórios e a variável aleatória de distri-
+
+buição uniforme. Após aplicar o teste, devemos exclusivamente rejeitar ou não rejeitar
+
+a hipótese H0.
+
+Importante também é observarmos que esse teste não considera a ordem dos núme-
+
+ros da sequência. Portanto, está longe ainda de avaliar com segurança se a sequência
+
+44
+
+4.1 T E S T E D E H I P Ó T E S E . T E S T E D E A D E R Ê N C I A .
+
+possui propriedades que a caracterizariam como uma boa sequência de números alea-
+
+tórios. Esse tipo de teste (de aderência) apenas assegura, com uma pequena margem
+
+de erro, que o conjunto de valores possui distribuição uniforme naquele intervalo.
+
+O primeiro teste de aderência que vai rejeitar ou não a hipótese H0 é o teste de
+chi-quadrado (pronunciamos qui quadrado). Esse teste consiste em classiﬁcar valo-
+
+res observados x1, x2, . . . , xn em k classes que sejam mutuamente exclusivas. Sejam
+f1, f2, . . . , fk as quantidades de elementos de cada classe e sejam p1, p2, . . . , pk as quan-
+tidades esperadas em cada classe de acordo com a distribuição uniforme U(0, 1). (Aqui
+
+vamos adotar U(0, 1) a representação de uma distribuição uniforme nesse intervalo).
+
+É fácil observar aqui que
+
+k
+∑
+i=1
+
+fi =
+
+k
+∑
+i=1
+
+pi = n
+
+É possível mostrar que se os vetores f = ( f1, f2, . . . , fk) e p = (p1, p2, . . . , pk) são
+provenientes de uma mesma população (neste caso de uma variável aleatória U(0, 1),
+
+então a estatística seguinte:
+
+χ2 =
+
+k
+∑
+i=1
+
+( fi − pi)2
+pi
+
+(4.1)
+
+é proveniente de uma variável aleatória X com distribuição chi-quadrado com k − 1
+graus de liberdade. Vale lembrar que o signiﬁcado de graus de liberdade (ver Bussab e
+
+Morettin (2006, p. 392)) é que se temos k compartimentos para armazenar n valores,
+podemos fazer a distribuição livremente em k − 1 compartimentos, porque o último
+compartimento obrigatoriamente deverá conter a diferença entre n e o que já foi dis-
+
+tribuído.
+
+Dado um nível de signiﬁcância α, o teste consistirá em rejeitar H0 sempre que o χ2
+for maior do que um valor teórico previamente tabelado, conhecido como valor crítico.
+Este valor denotamos por χ2
+crit. Se o valor crítico for menor que o calculado, a hipótese
+H0 deve ser rejeitada, ou seja, implicará que os números gerados aleatoriamente não
+estão distribuídos segundo uma variável aleatória U(0, 1). O valor crítico de χ2 pode
+ser encontrado em uma tabela ou pode ser calculado dinamicamente por algum pacote
+
+45
+
+4.1 T E S T E D E H I P Ó T E S E . T E S T E D E A D E R Ê N C I A .
+
+estatístico computacional.
+
+Mas há, na verdade, a possibilidade de cometermos um erro na decisão após a apli-
+
+cação do teste. Se rejeitamos H0 quando ela for verdadeira, cometeremos um erro
+chamado de erro tipo I. Na prática, se adotarmos α = 5%, implica que temos 5% de
+
+probabilidade de cometermos o erro tipo I. Nos testes de hipótese como este, sempre
+
+devemos ter algum nível de signiﬁcância. Mais detalhes podem ser vistos em extensa
+
+bibliograﬁa relacionada à Estatística, como em Magalhães, Lima (2000, p. 244).
+
+No capítulo sobre TRN’s apresentamos uma sequência de números aleatórios prove-
+
+nientes de uma coleta bruta do dispositivo /dev/urandom (ver página 25), que pode-
+
+mos supor, após uma reorganização, como sendo pertencentes a uma variável aleatória
+
+de distribuição U(0, 1), portanto passível de ser testada pelo teste de chi-quadrado. A
+
+reorganização consistirá em particionar a sequência da seguinte forma: tomamos os
+
+4 primeiros algarismos, que representam um número que pode variar de 0 a 9999 e
+dividimo-lo por 104, assim obtendo um número entre 0 e 1. Repetimos o procedimento
+para os 4 próximos e assim por diante até o ﬁm, de forma a se obter uma nova sequên-
+
+cia de números aleatórios. Após a reorganização podemos montar uma tabela com 6
+
+classes e suas respectivas frequências observadas e esperadas (Tabela 4).
+
+Intervalos
+
+0 (cid:96) 1
+6
+
+1
+
+6 (cid:96) 2
+
+6
+
+2
+
+6 (cid:96) 3
+
+6
+
+3
+
+6 (cid:96) 4
+
+6
+
+4
+
+6 (cid:96) 5
+
+6
+
+5
+6 (cid:96) 1
+
+frequência observada
+
+46
+
+48
+
+44
+
+49
+
+31
+
+35
+
+frequência esperada
+
+42.17
+
+42.17
+
+42.17
+
+42.17 42.17 42.17
+
+Tabela 4: Dados do /dev/urandom. Total de 253 números.
+
+Usando (4.1), chegamos a χ2 = 6, 5173. Temos aqui 5 graus de liberdade e se esco-
+lhermos α = 0, 05, o valor crítico é χ2
+crit = 11, 07. Esse valor pode ser obtido através
+de uma tabela de valores da estatística chi-quadrado ou pode mesmo ser calculado
+crit > χ2,
+dinamicamente através de um software estatístico. Nessas condições, como χ2
+não rejeitamos H0, logo a distribuição dos dados do /dev/urandom representa uma
+variável U(0, 1).
+
+46
+
+4.2 O U T R O S T E S T E S
+
+Embora ainda exista outros testes de aderência, como o de Kolmogorov–Smirnoff
+
+(ver Bussab e Morettin (2006, p. 404)), eles não são suﬁcientes para assegurar a
+
+desejada qualidade de uma sequência de números aleatórios. Portanto outros tipos de
+
+testes devem ser aplicados.
+
+4.2 O U T R O S T E S T E S
+
+O teste chi-quadrado não considerou a ordem em que os números são obtidos. Ao
+
+contrário, apenas a frequência de classes (partições) foi considerada, a ﬁm de avaliar
+
+se os números estavam uniformemente distribuídos. Porém a ordem é absolutamente
+
+essencial na análise da qualidade da sequência. Há uma boa quantidade de testes que
+
+podem ser aplicados para essa veriﬁcação. Um teste bastante conhecido é o “run test”.
+
+4.2.1 “Run Test”
+
+Este teste é usado para decidir se os números de uma sequência são originados por
+
+algum processo aleatório. Run test é também conhecido como Teste de Sequências,
+
+segundo Morettin e Toloi (2004, p. 61).
+
+Uma sequência, neste contexto, é deﬁnida como uma série de crescimento ou de de-
+
+crescimento de valores. O número de crescimentos e de decrescimentos é o tamanho
+
+da sequência. Em uma sequência de números aleatórios Xn, a probabilidade de Xi+1
+ser maior ou menor do que Xi segue uma distribuição binomial, que forma a base do
+teste.
+
+Em primeiro lugar, em um teste de sequências, devemos contar o número de elemen-
+
+tos da sequência. Não há uma maneira única de contar, mas de maneira geral temos
+
+que transformar a sequência em uma cadeia com dois símbolos (binária). Por exem-
+
+plo, o lançamento de um dado pode produzir um número par (P) ou ímpar (I). Desta
+
+forma, 20 lançamentos de um dado pode produzir uma sequência aleatória como esta:
+
+PI IPPPPPIPIPIPPPPI IP
+
+47
+
+4.2 O U T R O S T E S T E S
+
+Nesta série o número de sequências é 11, pois há 11 agrupamentos contíguos de P’s
+
+ou I’s.
+
+Numa sequência de números aleatórios podemos denotar valores acima da mediana
+
+como positivos e abaixo da mediana como negativos. (Mediana é um número m tal
+
+que metade dos valores são menores do que m, e metade maiores do que m). Uma
+
+sequência será então uma série de valores consecutivamente positivos (negativos). O
+
+teste pode ser deﬁnido como um teste de hipótese com:
+
+H0: A sequência foi gerada de forma aleatória.
+
+H1: A sequência não foi gerada de forma aleatória.
+
+A estatística calculada nesse teste é:
+
+Z =
+
+R − R
+SR
+
+(4.2)
+
+onde R é o número observado de sequências, R é o número esperado de sequências e
+
+SR é o desvio padrão do número de sequências. Calculamos os valores de R e SR da
+seguinte forma:
+
+R =
+
+2n1n2
+n1 + n2
+
++ 1
+
+(cid:115)
+
+SR =
+
+2n1n2(2n1n2 − n1 − n2)
+(n1 + n2)2(n1 + n2 − 1)
+
+(4.3)
+
+(4.4)
+
+sendo que n1 e n2 denotam o número de valores positivos e negativos da série, respecti-
+vamente. Logo n1 + n2 representa o total de elementos e α é o nível de signiﬁcância do
+teste. A referência da utilização destas fórmulas pode ser obtida em NIST/SEMATECH.
+
+Para uma amostra grande, com n1 > 20 e n2 > 20, podemos aproximar a estatística
+
+a uma distribuição normal padrão. Rejeitamos a hipótese nula H0 se
+
+|Z|> Z1− α
+
+2
+
+é o valor da variável Z (normal padrão), chamado de valor crítico, situado
+
+onde Z1− α
+no limite onde a probabilidade é de 1 −
+
+2
+
+α
+2
+
+. Para mais informações sobre distribuição
+
+48
+
+4.2 O U T R O S T E S T E S
+
+normal, podemos consultar Magalhães e Lima (2000, p. 181). Então, com α = 5%,
+
+= 1, 96, logo, a estatística com valor absoluto maior do que 1, 96 indicará não-
+
+Z1− α
+aleatoriedade. Também mais informações sobre “run test” podemos ver em Knuth
+
+2
+
+(1998, p. 66-69) e em Morettin e Toloi (2006, p. 61).
+
+Podemos aplicar o teste na amostra do /dev/urandom, mas antes precisamos agrupar
+
+a lista de números. Adotando números de 4 dígitos, obteremos: 0854, 3835, 4963, etc.,
+
+até o ﬁnal da lista. Assim, conseguimos ao todo 253 números. Para obter o número de
+
+sequências, contamos a quantidade de crescimentos e decrescimentos. O teste gerou
+
+os seguintes resultados:
+
+Mediana: 4716
+
+Números de sequências: R = 135
+
+n1 = 127
+n2 = 126
+R = 127, 5
+
+SR = 7, 94
+Z = 0, 94
+
+Como 0, 94 < 1, 96, não rejeitamos H0, ou seja, a sequência foi gerada de forma
+
+aleatória.
+
+4.2.2 Mais Testes
+
+Como comentamos anteriormente, há uma boa quantidade de testes para avaliar a
+
+qualidade de sequências de números aleatórios. Fizemos uma avaliação visual, pode-
+
+mos fazer uma avaliação gráﬁca simples, podemos observar um gráﬁco da sequência
+
+pareada em overlapping, um gráﬁco tridimensional com os dados agrupados em triplas
+
+(caso do RANDU) e testes estatísticos. Podemos somar a estes testes, outros como o
+
+de simples correlação e de momentos (estes podem ser vistos em Katzgraber (2010, p.
+
+9-10)).
+
+Há ainda, em última instância, testes agrupados em suítes, como o DIEHARD, de G.
+
+Marsaglia. Mais informações sobre o DIEHARD podem ser obtidas em MARSAGLIA.
+
+49
+
+4.3 T R A N S F O R M A Ç Õ E S
+
+4.3 T R A N S F O R M A Ç Õ E S
+
+Até aqui usamos sequências de números aleatórios, essencialmente como uma variá-
+
+vel aleatória com distribuição uniforme entre 0 e 1. Apesar de, por exemplo no caso
+
+das ﬁgurinhas, sortearmos números entre 1 e N, com N um inteiro positivo, conven-
+
+cionamos adotar que uma sequência de números aleatórios pertence a uma variável
+
+aleatória uniforme entre 0 e 1. No entanto se houver necessidade de se obter uma
+
+sequência aleatória de outra distribuição de probabilidade, será possível obtê-la atra-
+
+vés de uma transformação. Por exemplo, podemos obter uma amostragem de uma
+variável aleatória de distribuição normal com média µ e variância σ2 mediante uma
+transformação de um conjunto de variáveis aleatórias de distribuição uniforme entre
+
+0 e 1.
+
+Há diferentes técnicas para transformar uma uniforme em outra distribuição, sendo
+
+uma delas o método da transformação inversa.
+
+É possivel fazer essa transformação usando a função de distribuição acumulada da
+
+variável da qual desejamos obter a sequência. Deﬁne-se uma função de distribuição
+
+acumulada (de probabilidade) como:
+
+F(x) = P(X ≤ x)
+
+onde X é a variável e x é um possível valor que X pode assumir. Como F(x) representa
+
+uma probabilidade, o contradomínio é o intervalo [0, 1]. Mais informações sobre esta
+
+função podem ser vistas em Bussab e Morettin (2006, p. 138).
+
+Conforme Ross (2010, p. 520), seja U uma variável aleatória uniforme no intervalo
+
+[0,1]. Para qualquer variável de distribuição contínua F (aqui devemos entender F
+
+como uma função de distribuição acumulada), se deﬁnirmos uma variável aleatória Y
+
+como
+
+Y = F−1(U)
+
+então Y tem distribuição F. Aqui F−1 é a função inversa de F. Para demonstrar, lembre
+que F é crescente e faça:
+
+P(Y ≤ y) = P(F−1(U) ≤ y) = P(U ≤ F(y)) = P(u ∈ [0, F(y)]) = F(y)
+
+Uma visualização gráﬁca deste método de transformação, para o caso contínuo, é
+
+fornecida por Bussab e Morettin (2006, p. 236). Para o caso discreto, é apresentada
+
+50
+
+4.3 T R A N S F O R M A Ç Õ E S
+
+uma pequena alteração no gráﬁco da função de distribuição acumulada.
+
+O método pode ser aplicado com eﬁciência, por exemplo, para se obter uma variável
+
+de distribuição exponencial de acordo com Ross (2010, p. 521): dada uma variável
+aleatória exponencial com função de distribuição acumulada F(x) = 1 − e−x, então
+temos que achar o valor x tal que F(x) = u, dado que u pertence a uma U(0, 1). Assim,
+
+temos
+
+1 − e−x = u
+
+então e−x = 1 − u. Aplicamos logaritmo nos dois lados da igualdade:
+ln(e−x) =
+ln(1 − u) e concluímos que x = − ln(1 − u). Aqui encontramos F−1(U) = − ln(1 − U),
+sendo U uma variável uniforme no intervalo (0,1). Assim, F−1 possui distribuição
+exponencial com média 1. Da mesma forma, − ln(U) também tem distribuição expo-
+nencial com média 1 pois (1 − U) é também uniforme entre 0 e 1.
+
+Há outros métodos de obtenção de números aleatórios com distribuição de proba-
+
+bilidade que não a uniforme entre 0 e 1. Ross (2010, p. 521), apresenta o método
+
+da rejeição e o método polar para obtenção de variáveis aleatórias normais e mais
+
+exemplos de obtenção de distribuição de Poisson, binomial, entre outras, além de uma
+
+abordagem do método de redução de variância.
+
+51
+
+5
+
+U M A A P L I C A Ç Ã O PA R A E N S I N O M É D I O
+
+O assunto referente à aleatoriedade pode despertar curiosidade em alunos do ensino
+
+médio. Um tema conhecido é o das loterias, que pode ser abordado após os alunos te-
+
+rem estudado probabilidades. Podemos lançar questões do tipo: “Será que os sorteios
+
+são aleatórios?”, “Como é realizado o sorteio?” ou ainda “Se os sorteios são aleatórios,
+
+porque historicamente há uma dezena que aparece com maior frequência?”
+
+Uma abordagem como essa pode introduzir intuitivamente o conceito (a ideia) de
+
+aleatoriedade. Ao que nos parece, um sorteio de bolas em um globo giratório parece
+
+ser algo absolutamente aleatório, imprevisível. O que mais poderia se parecer com um
+
+sorteio? Lançar moeda, jogar um dado, girar uma roleta, etc. Podemos comentar que
+
+executar um experimento desses várias vezes e anotar seus resultados seria uma forma
+
+de criar uma “tábua” de aleatoriedade, uma fonte de números aleatórios.
+
+5.1 P R O B L E M A D E M O N T Y H A L L
+
+Para ilustrar a utilidade de números aleatórios, o professor poderia simular em classe
+
+o clássico problema a seguir: o professor convida um aluno para participar de um jogo
+
+e o enuncia em seguida: “Sobre a mesa há três envelopes: A, B e C. Em um deles
+
+ﬁngiremos que há um cheque de mil reais, enquanto nos outros dois ﬁngiremos que
+
+há uma moeda de um real. Você pode escolher um dos envelopes”. Após a escolha de
+
+um envelope pelo aluno, o professor abre um dos envelopes não escolhidos e revela
+
+uma moeda. Restam portanto dois envelopes fechados, sendo que um deles é o que
+
+foi escolhido pelo aluno. Em seguida o professor propõe ao aluno: “Você gostaria de
+
+mudar sua escolha para o outro envelope? Ou prefere ﬁcar com o mesmo?”. A questão
+
+52
+
+5.1 P R O B L E M A D E M O N T Y H A L L
+
+principal do problema é: qual é a melhor estratégia para ganhar o prêmio de mil reais?
+
+Mudar de envelope ou manter a escolha inicial? Ou seria indiferente?
+
+Esse é o famoso problema de Monty Hall, em homenagem ao apresentador de um
+
+programa televisivo norte-americano. Uma análise mais profunda e pitoresca desse
+
+problema e sua enorme repercussão pode ser conferida em Mlodinow (2008, p. 51).
+
+Desde que não conheçam o problema e sua solução, o que se supõe é que os alu-
+
+nos achem em sua maioria, que parece ser indiferente trocar ou não. O principal
+
+argumento para não ver nenhuma vantagem em trocar a escolha inicial é a de que
+
+restaram dois envelopes fechados e que um deles há um prêmio e no outro não. Ha-
+
+veria assim, 50% de chance para cada um dos envelopes conter o prêmio. Embora
+
+questionável, esse raciocínio parece bastante razoável e difícil de rebater rapidamente.
+
+Seria importante que os alunos defendessem racionalmente seus pontos de vista. Se
+
+alguns optarem por trocar, por acharem mais vantajoso, deverão fazê-lo com alguma
+
+justiﬁcativa razoável.
+
+Uma ideia inicial para se questionar a tese dos 50% seria a seguinte: há três envelo-
+
+pes na mesa, com a mesma probabilidade de conter o prêmio. Logo, uma escolha de
+um dos envelopes tem 1/3 de chance de ser o premiado. Como pode o fato de abrir um
+envelope mudar a probabilidade anterior? De fato, não muda. Ademais, já sabemos a
+
+priori que um envelope seria aberto, então a probabilidade deveria ser 50% no início,
+
+o que é um absurdo. Se a probabilidade do envelope inicial conter o cheque é ainda
+de 1/3, então a probabilidade do outro envelope ainda fechado conter o cheque, deve
+ser de 2/3, pela deﬁnição de probabilidade — que supõe-se que os alunos já conheçam.
+
+A questão central é a de que o professor, no papel de Monty Hall, precisa escolher
+
+um de dois envelopes para abrir e, com certa probabilidade, só pode abrir um determi-
+
+nado (no caso do aluno ter escolhido o outro com a moeda). Vale lembrar que tanto o
+
+professor, quanto o apresentador de TV sabem previamente o conteúdo de cada enve-
+
+lope.
+
+O professor poderia então propor uma solução experimental. Por que não simular
+
+o problema? Os passos para se fazer esta atividade seriam razoavelmente simples e
+
+53
+
+5.1 P R O B L E M A D E M O N T Y H A L L
+
+poderiam ser realizados com a colaboração de todos. Números aleatórios e uma tabela
+
+são os ingredientes. Um modelo seria a tabela mostrada na Figura 8 adiante. E para
+
+obter números aleatórios, uma boa opção é o lançamento de um dado.
+
+Um experimento consistiria em separar a turma em três equipes, cada uma com uma
+
+função, seguindo as seguintes intruções:
+
+• Sorteio do envelope do prêmio: A primeira equipe ﬁca encarregada de lançar
+
+um dado e obter o resultado de onde estará o prêmio. Caso a face sorteada for
+
+1 ou 2, o prêmio estará no envelope A. Se a face sorteada no dado for 3 ou 4,
+
+envelope B. E ﬁnalmente se sair 5 ou 6, envelope C. O resultado é anotado.
+
+• Sorteio do envelope escolhido: A segunda equipe segue exatamente os passos
+
+da primeira equipe. Porém o resultado é o envelope que o participante do jogo
+
+escolhe. O resultado é anotado.
+
+• Preenchimento da tabela: A terceira ﬁca responsável por preencher a tabela e
+
+calcular o placar.
+
+O cálculo do placar é feito da seguinte forma: vamos supor que o sorteado para
+
+conter o prêmio seja o envelope A, e que a escolha do concorrente do jogo seja pelo
+
+envelope B. Num jogo real o apresentador revelaria o conteúdo do envelope C (que
+
+não contém o prêmio) e perguntaria ao concorrente se ele deseja trocar a escolha para
+
+o envelope A. Caso a opção seja por trocar (coluna “Troca”), o concorrente ganha o
+
+prêmio. Caso permaneça com a escolha original, não ganha o prêmio. Assim, marca-
+
+mos 1 na coluna “Troca” e zero na coluna “Não Troca”. Esse critério é adotado então,
+
+qualquer que seja a combinação de prêmio e escolha.
+
+É conveniente, entretanto, que o professor explique que apenas um experimento
+
+não é suﬁciente para simular. Assim, solicita que cada uma das equipes repita o pro-
+
+cedimento 20 vezes, digamos. Na prática, a primeira equipe sorteia 20 resultados e os
+
+anota, a segunda equipe faz o mesmo e a terceira equipe lança todos os resultados e
+
+faz o placar ﬁnal. Surpreendentemente o resultado dará clara vantagem na troca da
+
+escolha inicial em relação à não troca. Esse exemplo pode despertar nos estudantes
+
+uma noção mais clara sobre probabilidades e aleatoriedade.
+
+54
+
+5.1 P R O B L E M A D E M O N T Y H A L L
+
+Figura 8: Tabela para auxiliar problema de Monty Hall
+
+Opcionalmente ao lançamento do dado, o professor poderá, caso possua recursos
+
+como acesso à Internet, computador e projetor, abrir algum endereço de Internet a
+
+ﬁm de obter uma listagem de números aleatórios de forma rápida e eﬁciente. Talvez
+
+a melhor sugestão seja RANDOM.ORG. Há a opção de gerar grande quantidade de
+
+números aleatórios em sequência — que neste exemplo estão entre 1 e 3. O profes-
+
+sor pode explicar que em situações diferentes, de caráter cientíﬁco e/ou proﬁssional,
+
+grande quantidade de números aleatórios em sequência precisa ser obtida em um curto
+
+tempo, o que inviabiliza a obtenção manual, como o lançamento do dado.
+
+55
+
+TrocaCBANão TrocaPrêmioEscolhaPrêmioEscolhaPrêmioEscolha5.2 C O N C L U S Ã O
+
+5.2 C O N C L U S Ã O
+
+Números aleatórios têm incontestável utilidade, sobretudo após a tecnologia tornar-
+
+se inerente ao desenvolvimento cientíﬁco. As simulações, o método Monte Carlo, en-
+
+tre outras aplicações, encontram nos números aleatórios um insumo essencial para
+
+obtenção de resultados. Ademais, a geração de números aleatórios, seus métodos e
+
+aplicações ainda possuem campo para pesquisa, por ser uma área relativamente nova,
+
+iniciada em meados do século 20.
+
+Para estudantes de ensino médio, uma vez que conheçam os fundamentos de pro-
+
+babilidades, os números aleatórios e simulações podem ser um interessante comple-
+
+mento, além de ilustrar resolução de problemas e aplicações práticas.
+
+56
+
+B I B L I O G R A F I A
+
+[1] CARVALHO, P. C. P. Quantas ﬁgurinhas comprar para completar o álbum da
+
+copa? Revista do Professor de Matemática, n. 73, 2010, pp. 37-41.
+
+[2] FILHO, C. P. Introdução à Simulação de Sistemas. Editora da UNICAMP, 1995.
+
+[3] GENTLE, J. E. Random Numbers Generation and Monte Carlo Methods. Springer,
+
+2003.
+
+[4] GUIDORIZZI, H. L. Um Curso de Cálculo. Livros Técnicos e Cientíﬁcos, 1991.
+
+[5] HEFEZ, A. Elementos de Aritmética. SBM, 2011.
+
+[6] KATZGRABER, H. G. Random Numbers in Scientiﬁc Computing: An In-
+
+troduction.
+
+Lecture given at
+
+the International Summer School Mo-
+
+dern Computational Science, Oldenburg, Germany, 2010. Disponível em
+
+http://arxiv.org/pdf/1005.4117.pdf. Acesso em 20 nov. 2014.
+
+[7] KNUTH, D. E. The Art of Computer Programming: Seminumerical Algorithms. 3
+
+ed., v. 2. Addison Wesley, 1998.
+
+[8] MAGALHÃES, M. N.; LIMA, A. C. P. Noções de Probabilidade e Estatística. USP,
+
+2000.
+
+[9] MARSAGLIA, G. Random Numbers Fall Mainly in The Planes. Proceedings of
+
+the National Academy of Sciences of the United States of America, v. 61, 1968,
+
+pp. 25-28.
+
+[10] MARSAGLIA, G. The Marsaglia Random Number CDROM including the Diehard
+
+Battery of Tests of Randomness. Disponível em http://stat.fsu.edu/pub/diehard/.
+
+Acesso em 4 jun. 2015.
+
+[11] MARTINEZ, F. B.; MOREIRA, C. G.; SALDANHA, N.; TENGAN, E. Teoria dos
+
+Números, um passeio com primos e outros números familiares pelo mundo inteiro.
+
+IMPA, 2010.
+
+[12] MATSUMOTO, M.; NISHIMURA, T. Mersenne Twister Home Page. Disponível
+
+em http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/emt.html. Acesso em
+
+57
+
+BIBLIOGRAFIA
+
+25 jul. 2015.
+
+[13] MLODINOW, L. O Andar do Bêbado. Zahar, 2008.
+
+[14] MORETTIN, P. A.; BUSSAB, W. O. Estatística Básica. Saraiva, 2006.
+
+[15] MORETTIN, P. A.; TOLOI, C. M. C. Análise de Séries Temporais. Blücher, 2006.
+
+[16] NIST/SEMATECH.
+
+e-Handbook of Statistical Methods. Disponível
+
+em
+
+http://www.itl.nist.gov/div898/handbook/eda/section3/eda35d.htm
+
+Acesso
+
+em 7 set. 2015
+
+[17] PANINI. Disponível em http://www.torcidapanini.com.br Acesso em 28 out.
+
+2014.
+
+[18] PERL. Disponível em http://perldoc.perl.org/ Acesso em 20 jul. 2015.
+
+[19] RANDOM.ORG. Disponível em https://www.random.org Acesso em 21 jul.
+
+2015.
+
+[20] ROSS, S. Probabilidade: Um Curso Moderno com Aplicações. Bookman, 2010.
+
+[21] WOLFRAMALPHA. Disponível em http://www.wolframalpha.com/ Acesso em
+
+5 ago. 2015
+
+58
+
+

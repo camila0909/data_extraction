@@ -1,0 +1,3446 @@
+Uso de Algoritmo genØtico no
+ajuste linear atravØs de dados
+experimentais
+
+por
+
+Erinaldo Leite Siqueira Jœnior
+
+2015
+
+Uso de Algoritmo genØtico no
+ajuste linear atravØs de dados
+experimentais
+
+†
+
+por
+
+Erinaldo Leite Siqueira Jœnior
+
+sob orienta(cid:231)ªo de
+
+Prof. Dr. Napoleon Caro Tuesta
+
+Projeto de Trabalho de Conclusªo de Curso do
+
+Curso de P(cid:243)s-Gradua(cid:231)ªo em MatemÆtica em rede
+
+Nacional - PROFMAT - DM - CCEN - UFPB, como
+
+requisito parcial para obten(cid:231)ªo do t(cid:237)tulo de Mestre
+
+em MatemÆtica.
+
+Maio/2015
+
+Joªo Pessoa - PB
+
+† Este trabalho contou com apoio (cid:28)nanceiro da Capes.
+
+Uso de Algoritmo genØtico no
+ajuste linear atravØs de dados
+experimentais
+
+Erinaldo Leite Siqueira Jœnior
+
+Trabalho de Conclusªo de Curso do Curso de P(cid:243)s-
+
+Gradua(cid:231)ªo em MatemÆtica em rede Nacional
+
+-
+
+PROFMAT - DM - CCEN - UFPB, como requisito
+
+parcial para obten(cid:231)ªo do t(cid:237)tulo de Mestre em
+
+MatemÆtica.
+
+Orientador:
+
+Prof. Dr.Napoleon Caro Tuesta
+Universidade Federal da Para(cid:237)ba
+
+Banca Examinadora:
+
+Prof. Dr. Lizandro Sanchez Challapa
+Universidade Federal da Para(cid:237)ba
+
+Prof. Dr. Kleber Napoleªo N. O. Barros
+Universidade Estadual de Campina Grande
+
+SumÆrio
+
+Lista de Figuras
+
+Lista de Tabelas
+
+Resumo
+
+Abstract
+
+1 Introdu(cid:231)ªo e Motiva(cid:231)ªo
+
+2 Algoritmo GenØtico
+
+2.1 Computa(cid:231)ªo evolutiva . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Hist(cid:243)rico computa(cid:231)ªo evolutiva . . . . . . . . . . . . . . . . . . .
+
+2.3 Contexto biol(cid:243)gico . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. vii
+
+p. ix
+
+p. 10
+
+p. 11
+
+p. 1
+
+p. 5
+
+p. 5
+
+p. 6
+
+p. 8
+
+2.4 Componentes de um algoritmo evolutivo . . . . . . . . . . . . . .
+
+p. 10
+
+2.4.1 Representa(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 10
+
+2.4.2 Fun(cid:231)ªo de avalia(cid:231)ªo (Fun(cid:231)ªo de (cid:28)tness) . . . . . . . . . . .
+
+p. 12
+
+2.4.3 Popula(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 12
+
+2.4.4 Mecanismo de sele(cid:231)ªo dos reprodutores . . . . . . . . . . .
+
+p. 13
+
+2.4.5 Operadores de varia(cid:231)ªo: muta(cid:231)ªo e recombina(cid:231)ªo . . . . .
+
+p. 15
+
+Muta(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 15
+
+Recombina(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 15
+
+2.4.6 Mecanismo de sele(cid:231)ªo dos sobreviventes (Substitui(cid:231)ªo)
+
+. .
+
+p. 16
+
+2.5 Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico . . . . . . . . . . . . . . . . . .
+
+p. 20
+
+2.5.1 Representa(cid:231)ªo do gen(cid:243)tipo - AG . . . . . . . . . . . . . . .
+
+p. 20
+
+2.5.2 Operador de Muta(cid:231)ªo - AG . . . . . . . . . . . . . . . . .
+
+p. 21
+
+2.5.3 Operador de recombina(cid:231)ªo - AG . . . . . . . . . . . . . . .
+
+p. 21
+
+2.5.4 Modelo de popula(cid:231)ªo . . . . . . . . . . . . . . . . . . . . .
+
+p. 22
+
+2.5.5 Mecanismo de sele(cid:231)ªo dos reprodutores . . . . . . . . . . .
+
+p. 23
+
+Sele(cid:231)ªo proporcional ao (cid:28)tness . . . . . . . . . . . . . . . .
+
+p. 23
+
+Sele(cid:231)ªo por ranking . . . . . . . . . . . . . . . . . . . . . .
+
+p. 24
+
+2.5.5.1
+
+Sele(cid:231)ªo pelo algoritmo roleta . . . . . . . . . . .
+
+p. 25
+
+Sele(cid:231)ªo por torneio . . . . . . . . . . . . . . . . . . . . . .
+
+p. 25
+
+2.5.6 Mecanismo de sele(cid:231)ªo dos sobreviventes (substitui(cid:231)ªo)
+
+. .
+
+p. 26
+
+SobrevivŒncia dos gen(cid:243)tipos mais novos . . . . . . . . . . .
+
+p. 26
+
+SobrevivŒncia baseada no valor da fun(cid:231)ªo de (cid:28)tness . . . .
+
+p. 27
+
+2.6 Algoritmo genØtico utilizado no trabalho . . . . . . . . . . . . . .
+
+p. 27
+
+3 Metodologia
+
+p. 28
+
+3.1 Banco de dados . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 28
+
+3.2 AnÆlise de Regressªo . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 30
+
+3.3 Testando a normalidade dos dados e dos res(cid:237)duos
+
+. . . . . . . . .
+
+p. 34
+
+3.3.1 Testes de Hip(cid:243)tese na regressªo linear simples . . . . . . .
+
+p. 35
+
+3.3.2 ANOVA - AnÆlise de Vari(cid:226)ncia . . . . . . . . . . . . . . .
+
+p. 38
+
+3.4 Modelando o algoritmo genØtico . . . . . . . . . . . . . . . . . . .
+
+p. 41
+
+Popula(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 41
+
+4 Resultados
+
+ReferŒncias
+
+ReferŒncias BibliogrÆ(cid:28)cas
+
+p. 46
+
+p. 49
+
+p. 49
+
+Lista de Figuras
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+Diagrama de dispersªo para idade de homens e mulheres [20].
+
+. .
+
+p. 2
+
+Ilustra(cid:231)ªo do comparativo entre computa(cid:231)ªo evolutiva e a evolu(cid:231)ªo
+
+natural em suas abordagens para solucionar seus problemas. [14] .
+
+p. 6
+
+Ilustra(cid:231)ªo da caracter(cid:237)stica mon(cid:243)tona e nªo negativa da fun(cid:231)ªo de
+
+avalia(cid:231)ªo (Eiben, 2008).
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+p. 17
+
+Ilustra(cid:231)ªo de um gen(cid:243)tipo em sua codi(cid:28)ca(cid:231)ªo binÆria. Note que,
+
+neste exemplo, a cada 4 bits formamos um alelo. . . . . . . . . . .
+
+p. 20
+
+Ilustra(cid:231)ªo do processo de muta(cid:231)ªo na codi(cid:28)ca(cid:231)ªo binÆria, atravØs
+
+do processo bit (cid:29)ip. Em (a) o gen(cid:243)tipo inicial e em (b) o mesmo
+
+gen(cid:243)tipo ap(cid:243)s a muta(cid:231)ªo.
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+p. 21
+
+Ilustra(cid:231)ªo do operador de recombina(cid:231)ªo atuando sobre dois
+
+gen(cid:243)tipos pais atravØs de uma recombina(cid:231)ªo de um œnico ponto. .
+
+p. 22
+
+Ilustra(cid:231)ªo do operador de recombina(cid:231)ªo atuando sobre dois
+
+gen(cid:243)tipos pais atravØs de uma recombina(cid:231)ªo de trŒs pontos. Note
+
+que as partes 2 e 4 de cada fen(cid:243)tipo foram permutadas. . . . . . .
+
+p. 23
+
+Dispersªo das notas semestrais, Prova 1 × Prova 2.
+
+. . . . . . . .
+
+p. 31
+
+Ilustra(cid:231)ªo para a tabela do teste Shapiro-Wilk. [33]
+
+. . . . . . . .
+
+p. 36
+
+10 Dispersªo das notas semestrais, Prova 1 × Prova 2 e o ajuste linear
+
+proposto.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+p. 40
+
+11 Dispersªo dos res(cid:237)duos apresentando a tendŒncia de normalidade,
+
+con(cid:28)rmada mediante teste. . . . . . . . . . . . . . . . . . . . . . .
+
+p. 41
+
+12 GrÆ(cid:28)co da simula(cid:231)ª: Gera(cid:231)ıes × Fitness . . . . . . . . . . . . . .
+
+p. 47
+
+13 Ajuste linear proposto pelo indiv(cid:237)duo 10.
+
+. . . . . . . . . . . . . .
+
+p. 47
+
+14 Dispersªo dos res(cid:237)duos indiv(cid:237)duo 10. . . . . . . . . . . . . . . . . .
+
+p. 48
+
+Lista de Tabelas
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+Desempenho semestral Turma de Estat(cid:237)stica - Tabula(cid:231)ªo. . . . . .
+
+p. 28
+
+Estat(cid:237)sticas descritivas para o desempenho da turma.
+
+. . . . . . .
+
+p. 29
+
+Estimadores para o intercepto α e a inclina(cid:231)ªo β.
+
+. . . . . . . . .
+
+p. 32
+
+Quadro para o teste Shapiro-Wilk.
+
+. . . . . . . . . . . . . . . . .
+
+p. 35
+
+Quadro para o cÆlculo da anÆlise de vari(cid:226)ncia.
+
+. . . . . . . . . . .
+
+p. 39
+
+Quadro para o cÆlculo da anÆlise de vari(cid:226)ncia.
+
+. . . . . . . . . . .
+
+p. 40
+
+Popula(cid:231)ªo otimizada para o algoritmo genØtico.
+
+. . . . . . . . . .
+
+p. 46
+
+10
+
+Resumo
+
+Neste trabalho abordaremos o problema de ajuste linear para dados
+
+experimentais atravØs de um mØtodo de otimiza(cid:231)ªo bio-inspirado,
+
+isto Ø, que
+
+mimetiza conceitos biol(cid:243)gicos na tentativa de buscar resultados (cid:243)timos ou sub-
+
+(cid:243)timos. O mØtodo utilizado Ø o algoritmo genØtico (AG), AG faz uso da teoria
+
+da evolu(cid:231)ªo Darwiniana para buscar a melhor rota para o ponto de mÆximo
+
+desejado. Tradicionalmente, o ajuste linear Ø feito atravØs do mØtodo de m(cid:237)nimos
+
+quadrados. Tal mØtodo Ø e(cid:28)ciente, porØm Ø de dif(cid:237)cil justi(cid:28)cativa para as turmas
+
+prØ-cÆlculo. Diante disso, a alternativa do AG vem como um procedimento exaustivo
+
+computacionalmente, entretanto de fÆcil justi(cid:28)cativa para essas turmas. Assim, a
+
+proposta do trabalho Ø comparar os resultados de ajuste linear para alguns cenÆrios
+
+de controle atravØs dos dois mØtodos e certi(cid:28)car a qualidade dos ajustes obtidos pelo
+
+mØtodo aproximado. No (cid:28)nal do trabalho constatou-se que os resultados encontrados
+
+sˆ¿o s(cid:243)lidos o bastante para justi(cid:28)car o mØtodo alternativo e que a proposta da
+
+utiliza(cid:231)ªo desse processo de otimiza(cid:231)ªo tem potencial para despertar interesse em
+
+outras Æreas da matemÆtica.
+
+Palavras-chave:Algoritmo GenØtico, Otimiza(cid:231)ªo, Ajuste Linear,
+
+M(cid:237)nimos Quadrados, Computa(cid:231)ªo natural.
+
+11
+
+Abstract
+
+In this paper we discuss the problem of linear (cid:28)tting to experimental data using a
+
+method bio-inspired of optimization, i.e., it imitates the biological concepts attempt
+
+to (cid:28)nd optimal or suboptimal results. The method used is the genetic algorithm
+
+(GA), AG makes use of the theory of Darwinian evolution to (cid:28)nd the best route
+
+for the desired maximum point. Traditionally, the linear (cid:28)tting is made through
+
+the method of least squares. The method is e(cid:30)cient, but is di(cid:30)cult to justify
+
+the pre-calculus classes. Therefore, the alternative AG comes as a computationally
+
+exhaustive procedure, however easy justi(cid:28)cation for these classes. Thus, the purpose
+
+of this study is to compare the results of linear (cid:28)tting for some control scenarios using
+
+this methods and certify the quality of the adjustments obtained by the approximate
+
+method. At the end of the work it was found that the results are solid enough to
+
+justify the alternative method and the proposed use of this optimization process has
+
+the potential to spark interest in other areas of mathematics.
+
+Keywords: Genetic Algorithm Optimization, Adjust Linear Least
+
+Squares, Natural Computing.
+
+1
+
+1
+
+Introdu(cid:231)ªo e Motiva(cid:231)ªo
+
+A regressªo linear Ø um mØtodo para estimar a variÆvel Y (em geral a resposta
+
+para o experimento feito) em fun(cid:231)ªo das observa(cid:231)ıes sob a variÆvel X. Em
+
+geral, consiste de obter uma rela(cid:231)ªo funcional entre as variÆveis dependentes e
+
+independentes, e atravØs disso, ajustar os valores provÆveis para a variÆvel Y dentro
+
+do intervalo observado [9].
+
+Para obtermos a reta ajustada aos dados Ø poss(cid:237)vel apresentar o grÆ(cid:28)co da
+
+dispersªo dos pontos observados (x, y) em que x Ø a observa(cid:231)ªo trabalhada e y Ø a
+
+variÆvel resposta obtida, conforme (cid:28)gura 1.
+
+(cid:201) fÆcil perceber que qualquer reta ajustada ao diagrama nªo poderÆ conter todos
+
+os pontos do diagrama, isso se deve em sua grande maioria a erros de medi(cid:231)ªo do
+
+experimento, ou casualidades inerentes ao experimento o que assegura que o evento
+
+estudado nªo Ø um fen(cid:244)meno matemÆtico. A partir disso, Ø necessÆrio que seja
+
+utilizado metodologias que otimizem a reta ajustada com a (cid:28)nalidade de que as
+
+dist(cid:226)ncias de qualquer ponto a reta seja m(cid:237)nima.
+
+Uma alternativa para isso Ø a utiliza(cid:231)ªo do mØtodo de m(cid:237)nimos quadrados que
+
+consiste numa tØcnica de otimiza(cid:231)ªo matemÆtica que procura encontrar o melhor
+
+ajuste para um conjunto de dados tentando minimizar a soma dos quadrados das
+
+diferen(cid:231)as entre o valor estimado e os dados observados (chamadas geralmente de
+
+res(cid:237)duos) [31]:
+
+2
+
+Figura 1: Diagrama de dispersªo para idade de homens e mulheres [20].
+
+Seja Y a variÆvel resposta para o modelo de(cid:28)nido por:
+
+Y = α + β · X + (cid:15)
+
+(1.1)
+
+em que:
+
+α Ø o par(cid:226)metro do modelo chamado fator linear;
+
+β Ø o par(cid:226)metro do modelo chamado fator de inclina(cid:231)ªo da variÆvel X;
+
+(cid:15) Ø o erro, ou varia(cid:231)ªo de Y que nªo pode ser explicada pelo modelo.
+
+Assim, ao estimar o modelo usando as observa(cid:231)ıes teremos a representa(cid:231)ªo:
+
+yi = α + β · xi + (cid:15)i
+
+(1.2)
+
+sendo i uma das n observa(cid:231)ıes da base de dados, i ∈ 1, 2, . . . , n. Para o mØtodo de
+
+m(cid:237)nimos quadrados minimizamos o res(cid:237)duo quadrado:
+
+S(a, b) =
+
+n
+(cid:88)
+
+i=1
+
+e2
+1 =
+
+n
+(cid:88)
+
+(yi − bxi − a)2
+
+i=1
+
+3
+
+(1.3)
+
+Para minimizar, calcula-se a derivada parcial com rela(cid:231)ªo a a e b e igualando a
+
+zero:
+
+∂S(a, b)
+∂a
+
+= −2
+
+n
+(cid:88)
+
+i=1
+
+(yi − bxi − a) = 0
+
+∂S(a, b)
+∂b
+
+= −2
+
+n
+(cid:88)
+
+i=1
+
+xi(yi − bxi − a) = 0
+
+Distribuindo e dividindo a expressªo (1.4) por 2n:
+
+∂S(a,b)
+∂a
+2n
+
+= −
+
+(cid:80)n
+
+i=1(yi − bxi − a)
+n
+
+= 0
+
+− y + bx + a = 0
+
+a = y − b¯x
+
+(1.4)
+
+(1.5)
+
+(1.6)
+
+(1.7)
+
+(1.8)
+
+Com ¯y e ¯x sendo as mØdias amostrais de y e x respectivamente. Substituindo o
+
+resultado na expressªo 1.5:
+
+− 2
+
+n
+(cid:88)
+
+i=1
+
+xi(yi − bxi − a) = 0
+
+(1.9)
+
+− 2
+
+n
+(cid:88)
+
+i=1
+
+xi(yi − bxi − y + bx) = −2
+
+n
+(cid:88)
+
+i=1
+
+xi(yi − y + bx − bxi) = 0
+
+(1.10)
+
+4
+
+n
+(cid:88)
+
+[xi(yi − y) + bxi(x − xi)] =
+
+i=1
+
+n
+(cid:88)
+
+i=1
+
+xi(yi − y) + b
+
+n
+(cid:88)
+
+i=1
+
+xi(x − xi) = 0
+
+(1.11)
+
+− b
+
+n
+(cid:88)
+
+i=1
+
+xi(xi − x) = −
+
+n
+(cid:88)
+
+i=1
+
+xi(yi − y)
+
+(1.12)
+
+b =
+
+(cid:80)n
+(cid:80)n
+
+i=1 xi(yi − y)
+i=1 xi(xi − x)
+
+(1.13)
+
+em que (1.8) e (1.13) sªo as estima(cid:231)ıes para α e β para o ajuste da reta.
+
+O grande problema em se trabalhar com o mØtodo de m(cid:237)nimos quadrados
+
+nas escolas bÆsicas no momento em que Ø ensinado tratamento da informa(cid:231)ªo
+
+/ estat(cid:237)stica bÆsica estÆ no fato de apenas apresentar os estimadores a e b sem
+
+apresentar o desenvolvimento do racioc(cid:237)nio que remete a cÆlculo diferencial, em
+
+especial de vÆrias variÆveis, tema esse que nªo Ø abordado no curr(cid:237)culo mØdio.
+
+Uma alternativa a essa metodologia Ø recorrer a processos de otimiza(cid:231)ªo
+
+computacional para o ajuste dos par(cid:226)metros devido a facilidade de compreensªo da
+
+ideia da recorrŒncia por parte do alunado, mesmo que nªo seja poss(cid:237)vel atingir o n(cid:237)vel
+
+de explicitar a programa(cid:231)ªo envolvida. Um mØtodo particularmente interessante Ø
+
+o algoritmo genØtico que consiste num processo de busca que tem embasamento
+
+em evolu(cid:231)ªo genØtica (tema trabalhado em sala de aula por outras disciplinas)
+
+facilitando a compreensªo do mØtodo e a aceita(cid:231)ªo em sala [5].
+
+O objetivo do trabalho Ø comparar os resultados obtidos atravØs de bancos de
+
+dados entre o mØtodo de m(cid:237)nimos quadrados e o mØtodo de algoritmo genØtico
+
+evidenciando as potencialidades e fraquezas desse mØtodo alternativo.
+
+5
+
+2 Algoritmo GenØtico
+
+2.1 Computa(cid:231)ªo evolutiva
+
+(cid:201) poss(cid:237)vel de(cid:28)nir a computa(cid:231)ªo evolutiva como uma Ærea de pesquisa da
+
+modelagem computacional que tem como principal ponto de inspira(cid:231)ªo o processo
+
+de evolu(cid:231)ªo natural.
+
+Notadamente, Ø poss(cid:237)vel perceber como col(cid:244)nias de
+
+formigas, a pr(cid:243)pria evolu(cid:231)ªo genØtica, enxame de abelhas entre outros apresentam
+
+formas caracter(cid:237)sticas de eliminar as tentativas menos prÆticas ou danosas e
+
+repetir/melhorar na popula(cid:231)ªo os casos em que houve mais sucesso ou que ao menos
+
+nªo levaram a perdas ([24]; [1]).
+
+Tal (cid:28)loso(cid:28)a Ø usada como metodologia para resolu(cid:231)ªo de problemas que podem
+
+ser transcritos como um dilema evolucionÆrio, com base nisso e se apropriando da
+
+observa(cid:231)ªo de como a natureza soluciona tais dilemas, a computa(cid:231)ªo evolucionÆria
+
+surge como uma forma de resolu(cid:231)ªo de problemas baseado em tentativa-e-erro
+
+(direcionado) ([14]).
+
+Mas como de(cid:28)nir a evolu(cid:231)ªo natural e sua interpreta(cid:231)ªo em computa(cid:231)ªo
+
+evolutiva? Tome um cenÆrio ambiental em que neste vive uma popula(cid:231)ªo que
+
+tem como objetivo sobreviver e se reproduzir. A adaptabilidade desses indiv(cid:237)duos
+
+serÆ governada pelas caracter(cid:237)sticas do cenÆrio no qual a popula(cid:231)ªo estÆ inserida,
+
+essa adaptabilidade indica o quanto eles conseguiram seu objetivo (sobreviver e se
+
+multiplicar). Sob o ponto de vista de resolu(cid:231)ªo de problema por tentativa-e-erro, a
+
+popula(cid:231)ªo servirÆ como uma cole(cid:231)ªo de poss(cid:237)veis solu(cid:231)ıes para o problema, como sªo
+
+solu(cid:231)ıes, Ø poss(cid:237)vel medir o quanto essas poss(cid:237)veis solu(cid:231)ıes respondem ao problema
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.2. Hist(cid:243)rico computa(cid:231)ªo evolutiva
+
+(e quªo boa Ø a solu(cid:231)ªo, e tal critØrio serÆ utilizado para de(cid:28)nir as chances dessa
+
+poss(cid:237)vel solu(cid:231)ªo permanecer na cole(cid:231)ªo e servir de par(cid:226)metro para solu(cid:231)ıes futuras).
+
+Figura 2: Ilustra(cid:231)ªo do comparativo entre computa(cid:231)ªo evolutiva e a evolu(cid:231)ªo natural
+em suas abordagens para solucionar seus problemas. [14]
+
+2.2 Hist(cid:243)rico computa(cid:231)ªo evolutiva
+
+A utiliza(cid:231)ªo dos princ(cid:237)pios apresentados por Charles Darwin na tentativa de
+
+resolu(cid:231)ªo de problemas de forma aut(cid:244)noma teve in(cid:237)cio na dØcada de 40, bem
+
+antes da dissemina(cid:231)ªo de computadores; David B. Fogel em seu livro Evolutionary
+
+Computation: The Fossil Record ([17]) apresenta os artigos que fundamentam a
+
+computa(cid:231)ªo evolutiva. Em 1948, Turing prop(cid:244)s o processo de busca intitulado
+
+(cid:16)Busca genØtica(cid:17) ([38]) e em 1962, Bremermann ([8]) executou experimentos em
+
+otimiza(cid:231)ªo atravØs de evolu(cid:231)ªo e recombina(cid:231)ªo.
+
+Varia(cid:231)ıes da metodologia ocorreram na dØcada de 60 em trŒs locais distintos:
+
+- Nos Estados Unidos, nos anos de 1965 e 1966, os primeiros artigos sobre
+
+programa(cid:231)ªo evolutiva foram publicados por Fogel, Owens e Walsh. A programa(cid:231)ªo
+
+evolucionÆria foi inventada por Lawrence J. Fogel (1928-2007) enquanto fazia parte
+
+da Funda(cid:231)ªo da ciŒncia nacional em 1960, em sua varia(cid:231)ªo, Fogel trabalhava em
+
+uma sØrie de experimentos em que as mÆquinas de estados (cid:28)nitos representam
+
+organismos individuais em uma popula(cid:231)ªo de solucionadores de problemas. Estes
+
+modelos grÆ(cid:28)cos sªo usados para descrever o comportamento, Ø por isso que chamou
+
+sua abordagem de programa(cid:231)ªo evolutiva ([18];[19]).
+
+6
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.2. Hist(cid:243)rico computa(cid:231)ªo evolutiva
+
+- Na Alemanha, Rechenberg e Schwefel na Universidade TØcnica de Berlin
+
+apresentaram a estratØgia evolutiva para resolu(cid:231)ªo de problemas de otimiza(cid:231)ªo
+
+cont(cid:237)nua de par(cid:226)metros de controle e sªo descritas de forma completa no
+
+trabalho Evolutionstrategie: Optimierung Technisher Systeme nach Prinzipien des
+
+Biologischen Evolution de 1973; a grande mudan(cid:231)a apresentada nessa tØcnica Ø dada
+
+pela utiliza(cid:231)ªo de um operador muta(cid:231)ªo baseado em uma distribui(cid:231)ªo Normal ([34]).
+
+- Novamente nos Estados Unidos, John Henry Holland denominou seu mØtodo por
+
+algoritmo genØtico, mØtodo este que Ø usado para achar solu(cid:231)ıes aproximadas em
+
+problemas de otimiza(cid:231)ªo e busca. Os algoritmos genØticos diferem dos algoritmos
+
+tradicionais de otimiza(cid:231)ªo em quatro aspectos ([13];[22];[23]):
+
+• Baseiam-se em uma codi(cid:28)ca(cid:231)ªo do conjunto das solu(cid:231)ıes poss(cid:237)veis, e nªo nos
+
+par(cid:226)metros da otimiza(cid:231)ªo em s(cid:237);
+
+• Os resultados sªo apresentados como uma popula(cid:231)ªo de solu(cid:231)ıes e nªo como
+
+uma solu(cid:231)ªo œnica;
+
+• Usam transi(cid:231)ıes probabil(cid:237)sticas e nªo determin(cid:237)sticas;
+
+• Nªo necessitam de nenhum conhecimento inerente ao problema, apenas de uma
+
+forma de avalia(cid:231)ªo dos resultados (particularmente, o aspecto mais interessante
+
+do mØtodo). Pois, uma vez que Ø retirada a responsabilidade de se conhecer
+
+a singularidade da resolu(cid:231)ªo de um problema, o algoritmo estÆ apto a utilizar
+
+o procedimento em problemas de natureza aleat(cid:243)ria ou que se tenha pouco
+
+conhecimento acerca de sua din(cid:226)mica. ([21])
+
+Por cerca de 15 anos essas Æreas foram desenvolvidas separadamente, porØm,
+
+na dØcada de 90 passaram a ser vistos como representa(cid:231)ıes diferentes de uma
+
+mesma tecnologia que (cid:28)cou conhecida como computa(cid:231)ªo evolutiva. Uma quarta
+
+corrente seguindo as idØias gerais surgiu, programa(cid:231)ªo genØtica, defendida por
+
+Koza ([26]; [27]). Na programa(cid:231)ªo genØtica, consiste numa tØcnica automÆtica de
+
+7
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.3. Contexto biol(cid:243)gico
+
+programa(cid:231)ªo que propicia a evolu(cid:231)ªo de programas de computadores para resolverem
+
+(ou aproximar a resolu(cid:231)ªo) de problema.
+
+A terminologia contempor(cid:226)nea denota todos os campos da computa(cid:231)ªo
+
+evolutiva, os algoritmos contidos nessa terminologia sªo chamados de algoritmos
+
+evolutivos, e esta classi(cid:28)ca(cid:231)ªo considera a programa(cid:231)ªo evolutiva, estratØgia
+
+evolutiva, algoritmo genØtico e programa(cid:231)ªo genetica como sub-Æreas pertencentes
+
+a variantes deste.
+
+Uma vertente mais recente Ø a computa(cid:231)ªo de enxames, o algoritmo conhecido
+
+como Otimiza(cid:231)ªo por Enxame de Part(cid:237)culas (PSO - Particle Swarm Optimization).
+
+O algoritmo PSO foi proposto inicialmente por J. Kennedy e R. Eberhart (Kennedy,
+
+1995) e Ø um tØcnica inspirada no comportamento social de bandos de pÆssaros. A
+
+busca por alimento e a intera(cid:231)ªo entre os pÆssaros ao longo do v(cid:244)o sªo modeladas
+
+como um mecanismo de otimiza(cid:231)ªo. No caso, a Ærea sobrevoada Ø equivalente ao
+
+espa(cid:231)o de busca e encontrar o local com maior quantidade de comida corresponde a
+
+encontrar a solu(cid:231)ªo (cid:243)tima.
+
+2.3 Contexto biol(cid:243)gico
+
+Pode-se dizer que a teoria da evolu(cid:231)ªo tem participa(cid:231)ªo fundamental na
+
+compreensªo deste cap(cid:237)tulo (e com isso, compreensªo dos algoritmos genØticos),
+
+da(cid:237), Ø necessÆrio conhecer algumas de(cid:28)ni(cid:231)ıes:
+
+• Um gene Ø uma sequŒncia de bases de DNA que codi(cid:28)cam para uma caracter(cid:237)stica,
+
+por exemplo, cor de cabelo ou da pele;
+
+• Um alelo Ø o valor de uma caracter(cid:237)stica. O gene da cor do cabelo pode ter um
+
+alelo preto ou um alelo vermelho em diferentes pessoas.
+
+Com isso, Ø poss(cid:237)vel de(cid:28)nir a evolu(cid:231)ªo:
+
+Evolu(cid:231)ªo Ø a varia(cid:231)ªo da frequŒncia alØlica na popula(cid:231)ªo ao longo do tempo
+
+([37]).
+
+8
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.3. Contexto biol(cid:243)gico
+
+Nessa de(cid:28)ni(cid:231)ªo, conceitua-se sobre a popula(cid:231)ªo. Ou seja, toda vez que nasce
+
+uma crian(cid:231)a de cabelos pretos, entªo a frequŒncia da popula(cid:231)ªo quanto ao gene cor
+
+de cabelo tem a frequŒncia do alelo preto aumentada (analogamente, para o caso de
+
+morte de um homem de cabelos pretos), da(cid:237), Ø poss(cid:237)vel notar que a frequŒncia alØlica
+
+muda a todo tempo, jÆ que nascem e morrem pessoas a todo instante. En(cid:28)m, nota-
+
+se que a evolu(cid:231)ªo acontece a todo tempo (podemos de(cid:28)nir o par(cid:226)metro t discreto
+
+sob esse caso jÆ que o evento nascimento/morte pode ser discretizado atØ um passo
+
+de tempo em que nasce/morre um œnico indiv(cid:237)duo).
+
+Como a evolu(cid:231)ªo produz novos indiv(cid:237)duos? HÆ duas formas opostas que
+
+conduzem a evolu(cid:231)ªo: varia(cid:231)ªo e sele(cid:231)ªo. Varia(cid:231)ªo Ø o processo que produz novos
+
+alelos e, mais lentamente, genes. Varia(cid:231)ªo tambØm pode mudar os genes que sªo
+
+e nªo sªo expressos em um dado indiv(cid:237)duo, o mØtodo de fazer isso Ø a reprodu(cid:231)ªo
+
+sexual com a sua intera(cid:231)ªo de genes dominantes e recessivos. Sele(cid:231)ªo Ø o processo
+
+em que alguns alelos sobrevivem e outros nªo. Em resumo, a varia(cid:231)ªo aumenta a
+
+diversidade e a sele(cid:231)ªo a diminui.
+
+O processo de varia(cid:231)ªo Ø complexo e ocorre a n(cid:237)vel molecular. Bi(cid:243)logos
+
+aprendem novos sistemas para gerar varia(cid:231)ªo a n(cid:237)vel molecular. Sele(cid:231)ªo biol(cid:243)gica Ø
+
+melhor entendida do que a varia(cid:231)ªo biol(cid:243)gica. Por outro lado, a sele(cid:231)ªo natural -
+
+sobrevivŒncia dos mais adaptados ao meio em que vivem - tem sido o principal tipo
+
+de sele(cid:231)ªo biol(cid:243)gica ([12]; [32]).
+
+Na computa(cid:231)ªo evolutiva, as opera(cid:231)ıes sobre a estrutura de dados (popula(cid:231)ªo)
+
+que geram a varia(cid:231)ªo recebem os nomes de muta(cid:231)ªo e cruzamento e atuam por
+
+mudan(cid:231)as aleat(cid:243)rias nessa estrutura e misturando partes de estruturas diferentes,
+
+respectivamente.
+
+JÆ a sele(cid:231)ªo, pode ser interpretada como qualquer algoritmo
+
+que favore(cid:231)a estruturas com maior adaptabilidade ao nosso problema. HÆ muitos
+
+mØtodos poss(cid:237)veis de sele(cid:231)ªo.
+
+Muta(cid:231)ıes biol(cid:243)gicas no DNA de algum organismo, sob um ponto de vista
+
+aleat(cid:243)rio, sªo tipicamente neutras. Muitos trechos do DNA nªo codi(cid:28)cam
+
+informa(cid:231)ªo œtil (conhecida). A parte do DNA que codi(cid:28)ca informa(cid:231)ªo œtil utiliza
+
+9
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+uma codi(cid:28)ca(cid:231)ªo robusta o que assegura que modi(cid:28)ca(cid:231)ıes de base simples nªo alteram
+
+a funcionalidade do gene. A rede de intera(cid:231)ªo entre os genes Ø, por s(cid:237) s(cid:243), robusta
+
+com multiplas c(cid:243)pias de alguns genes e mœltiplos genes que executam uma mesma
+
+tarefa espec(cid:237)(cid:28)ca ([30]).
+
+SerÆ usado esse referecial para abordar os componentes de um algoritmo
+
+evolutivo.
+
+2.4 Componentes de um algoritmo evolutivo
+
+Um algoritmo evolutivo apresenta componentes bem caracter(cid:237)sticos que devem
+
+ser bem de(cid:28)nidos na elabora(cid:231)ªo da codi(cid:28)ca(cid:231)ªo do problema que serÆ otimizado, sªo
+
+estes:
+
+• Representa(cid:231)ªo - De(cid:28)ni(cid:231)ªo dos indiv(cid:237)duos;
+
+• Fun(cid:231)ªo de avalia(cid:231)ªo (Fun(cid:231)ªo de ajuste ou Fun(cid:231)ªo de (cid:28)tness);
+
+• Popula(cid:231)ªo;
+
+• Mecanismo de sele(cid:231)ªo dos reprodutores;
+
+• Operadores de varia(cid:231)ªo: muta(cid:231)ªo e recombina(cid:231)ªo;
+
+• Mecanismo de sele(cid:231)ªo dos sobreviventes (Substitui(cid:231)ªo).
+
+nesse passo, serÆ discutido cada um desses componentes na tentativa de identi(cid:28)car
+
+cada particularidade associada a eles.
+
+2.4.1 Representa(cid:231)ªo
+
+Essa Ø a etapa em que se deve con(cid:28)gurar a conexªo entre o cenÆrio do problema
+
+e o espa(cid:231)o de solu(cid:231)ªo do problema. Os objetos que formam poss(cid:237)veis solu(cid:231)ıes no
+
+contexto original do problema sªo referenciados como fen(cid:243)tipos, enquanto que as
+
+10
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+estruturas de dados, ou seja, indiv(cid:237)duos de um algoritmo evolutivo sªo chamados de
+
+gen(cid:243)tipos.
+
+Inicia-se de(cid:28)nindo o mapeamento que relaciona os fen(cid:243)tipos (poss(cid:237)veis solu(cid:231)ıes)
+
+com os gen(cid:243)tipos, de forma que cada gen(cid:243)tipo corresponde a um fen(cid:243)tipo no
+
+cenÆrio do problema. O espa(cid:231)o-gen(cid:243)tipo pode ser completamente diferente do
+
+espa(cid:231)o-fen(cid:243)tipo, por exemplo, o problema em questªo pode ser achar o ponto de
+
+mÆximo absoluto de uma fun(cid:231)ªo real de variÆveis reais; como Ø uma fun(cid:231)ªo real,
+
+seu conjunto de fen(cid:243)tipo tem representa(cid:231)ªo decimal e alguØm pode codi(cid:28)car seus
+
+elementos gen(cid:243)tipos em representa(cid:231)ªo binÆria (completamente distinto do espa(cid:231)o-
+
+fen(cid:243)tipo), assim, toda a busca por solu(cid:231)ıes (cid:243)timas se dÆ no espa(cid:231)o gen(cid:243)tipo, isto Ø,
+
+no espa(cid:231)o de representa(cid:231)ªo binÆria.
+
+Sempre que se encontra uma solu(cid:231)ªo (cid:243)tima (ou sub-(cid:243)tima) no espa(cid:231)o-gen(cid:243)tipo,
+
+Ø poss(cid:237)vel obter a solu(cid:231)ªo associada no espa(cid:231)o-fen(cid:243)tipo atravØs da decodi(cid:28)ca(cid:231)ªo da
+
+estrutura de dados ao (cid:28)nal do processo de otimiza(cid:231)ªo.
+
+A terminologia adotada para computa(cid:231)ªo evolutiva denomina por: poss(cid:237)vel
+
+solu(cid:231)ªo, fen(cid:243)tipo ou indiv(cid:237)duo os pontos do espa(cid:231)o de poss(cid:237)veis solu(cid:231)ıes, o pr(cid:243)prio
+
+espa(cid:231)o de poss(cid:237)veis solu(cid:231)ıes Ø chamado de espa(cid:231)o-fen(cid:243)tipo.
+
+JÆ o gen(cid:243)tipo,
+
+cromossomos e novamente indiv(cid:237)duo podem ser usados para pontos onde a busca
+
+evolucionÆria ocorre (espa(cid:231)o-gen(cid:243)tipo).
+
+HÆ tambØm muitos termos relacionando os elementos de um indiv(cid:237)duo, cada
+
+componente do indiv(cid:237)duo Ø chamado de variÆvel, locus, posi(cid:231)ªo ou gene. Um objeto
+
+em tal lugar pode ser chamado de valor ou um alelo.
+
+O trabalho de Nicol N. Schraudolph intitulado Dynamic parameter encoding for
+
+genetic algorithms apresenta uma interessante codi(cid:28)ca(cid:231)ªo din(cid:226)mica para evitar o
+
+dilema de sacri(cid:28)car a precisªo da representa(cid:231)ªo numØrica ou a e(cid:28)ciŒncia na busca
+
+por uma solu(cid:231)ªo (cid:243)tima quando se trabalha com otimiza(cid:231)ªo de fun(cid:231)ıes de valor real
+
+([35]).
+
+11
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+2.4.2 Fun(cid:231)ªo de avalia(cid:231)ªo (Fun(cid:231)ªo de (cid:28)tness)
+
+A fun(cid:231)ªo de avalia(cid:231)ªo tem o papel de apresentar os requisitos para a adapta(cid:231)ªo,
+
+ela Ø o par(cid:226)metro para a sele(cid:231)ªo dos gen(cid:243)tipos pais que darªo origem a novos
+
+representantes mais adaptados ou nªo. AtravØs da fun(cid:231)ªo de avalia(cid:231)ªo Ø poss(cid:237)vel
+
+medir o quanto um gen(cid:243)tipo estÆ resolvendo o problema associado, sua medida de
+
+qualidade estÆ associada ao espa(cid:231)o dos gen(cid:243)tipos.
+
+Em geral, a fun(cid:231)ªo de (cid:28)tness Ø qualquer fun(cid:231)ªo que capta a qualidade nos
+
+gen(cid:243)tipos, qualidades estas que o tornam mais pr(cid:243)ximos da solu(cid:231)ªo (cid:243)tima ou sub-
+
+(cid:243)tima para o problema. PorØm, hÆ casos em que a fun(cid:231)ªo de (cid:28)tness pode vir a ser
+
+a pr(cid:243)pria fun(cid:231)ªo associada ao contexto do problema ou uma simples tranforma(cid:231)ªo
+
+desta.
+
+No artigo The E(cid:27)ects of Fitness Functions on Genetic Programming-Based
+
+Ranking Discovery For Web Search escrito por Weiguo Fan, Ø apresentado o estudo
+
+a respeito da fun(cid:231)ªo de (cid:28)tness com rela(cid:231)ªo (cid:224) e(cid:28)ciŒncia e (cid:224) efetividade de algoritmos
+
+evolutivos. O autor conclui que a adequa(cid:231)ªo da fun(cid:231)ªo de (cid:28)tness Ø fundamental
+
+para a melhoria no desempenho ([16]).
+
+2.4.3 Popula(cid:231)ªo
+
+A popula(cid:231)ªo contØm as poss(cid:237)veis solu(cid:231)ıes (representa(cid:231)ªo destas), nesses termos,
+
+a popula(cid:231)ªo Ø uma cole(cid:231)ªo de gen(cid:243)tipos. Ela Ø um passo da evolu(cid:231)ªo, seus indiv(cid:237)duos
+
+sªo estÆticos, isto Ø, nªo sofrem adapta(cid:231)ªo nem se modi(cid:28)cam dentro da popula(cid:231)ªo
+
+sob uma gera(cid:231)ªo (cid:28)xa; em geral, a quantidade de indiv(cid:237)duos contidos na popula(cid:231)ªo
+
+se mantØm (cid:28)xa durante todo o processo de busca evolutiva.
+
+Os operadores de varia(cid:231)ªo atuam a n(cid:237)vel de indiv(cid:237)duos, isto Ø, uma vez que o
+
+indiv(cid:237)duo Ø selecionado tais operadores atuam. JÆ os operadores de sele(cid:231)ªo agem
+
+a n(cid:237)vel de popula(cid:231)ªo, da(cid:237), levam em conta a caracter(cid:237)stica de todos os gen(cid:243)tipos
+
+envolvidos na popula(cid:231)ªo e decide sua a(cid:231)ªo em fun(cid:231)ªo dessa.
+
+12
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+A medida de diversidade estÆ associdada ao nœmero de diferentes solu(cid:231)ıes que
+
+estªo contidas em um dado momento da popula(cid:231)ªo, assim, Ø poss(cid:237)vel perceber que
+
+como a popula(cid:231)ªo Ø mutÆvel e nesse contexto altera seus indiv(cid:237)duos ao longo do
+
+tempo, a diversidade tende a ser modi(cid:28)cada durante toda a busca. (cid:201) importante
+
+compreender que embora seja poss(cid:237)vel ter um œnico valor de (cid:28)tness, ao (cid:28)m de um
+
+processo de busca, nªo signi(cid:28)ca que se tenha um œnico gen(cid:243)tipo; tambØm, um œnico
+
+fen(cid:243)tipo nªo signi(cid:28)ca que se tenha um œnico gen(cid:243)tipo. Por outro lado, o contrÆrio
+
+nªo Ø verdadeiro, se houver um œnico gen(cid:243)tipo terÆ um œnico valor de (cid:28)tness e
+
+tambØm um œnico fen(cid:243)tipo associado.
+
+Alander J. T. em seu trabalho On optimal population size of genetic algorithms
+
+apresenta um estudo sobre o tamanho (cid:243)timo da popula(cid:231)ªo como fun(cid:231)ªo da
+
+complexidade do problema, o autor conclui que em mÆquinas sequenciais para
+
+problemas de complexidade moderada, o tamanho (cid:243)timo da popula(cid:231)ªo Ø fun(cid:231)ªo
+
+do tamanho do vetor que representa um gen(cid:243)tipo. JÆ em arquitetura paralela,
+
+o tamanho (cid:243)timo Ø maior que o correspondente caso em arquitetura sequencial e
+
+que o tamanho exato Ø sens(cid:237)vel a detalhes na implementa(cid:231)ªo ([2]). JÆ o trabalho
+
+de Arabas J.,
+
+intitulado GAVaPS-a genetic algorithm with varying population
+
+size apresenta uma abordagem de popula(cid:231)ªo variÆvel que aumenta ou diminui em
+
+fun(cid:231)ªo de algumas caracter(cid:237)sticas da pesquisa, ele justi(cid:28)ca que se o tamanho da
+
+popula(cid:231)ªo for muito pequeno a convergŒncia pode ser muito rÆpida e levaria a um
+
+mÆximo/m(cid:237)nimo local; e que se a popula(cid:231)ªo for muito grande, haverÆ desperd(cid:237)cio dos
+
+recursos computacionais e o tempo de espera por uma melhoria pode ser demasiado
+
+longo ([3]).
+
+2.4.4 Mecanismo de sele(cid:231)ªo dos reprodutores
+
+Os mecanismos adotados para selecionar os reprodutores sªo quaisquer
+
+algoritmos que bene(cid:28)ciam um gen(cid:243)tipo proporcionalmente (cid:224) sua qualidade na
+
+fun(cid:231)ªo de avalia(cid:231)ªo. Nesse sentido, os melhores gen(cid:243)tipos terªo maior chance de
+
+se tornarem os gen(cid:243)tipos-pais (um gen(cid:243)tipo serÆ de(cid:28)nido como gen(cid:243)tipo-pai se o
+
+13
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+mesmo for selecionado atravØs de algum mecanismo de sele(cid:231)ªo dos reprodutores).
+
+A composi(cid:231)ªo do mecanismo de sele(cid:231)ªo dos reprodutores e o mecanismo de sele(cid:231)ªo
+
+dos sobreviventes sªo responsÆveis pela melhora na qualidade da popula(cid:231)ªo atravØs
+
+da elimina(cid:231)ªo/inser(cid:231)ªo de indiv(cid:237)duos menos/mais quali(cid:28)cados.
+
+Vale salientar que o algoritmo que terÆ o papel de selecionar os gen(cid:243)tipos
+
+tem caracter(cid:237)sticas estocÆsticas,
+
+isto Ø, a sele(cid:231)ªo do indiv(cid:237)duo mais quali(cid:28)cado
+
+nªo Ø determin(cid:237)stico, e sim probabilisticamente, de forma que,
+
+indiv(cid:237)duos mais
+
+quali(cid:28)cados terªo maior probabilidade de serem selecionados.
+
+Probabilidade
+
+esta que Ø proporcional (cid:224) sua qualidade (quªo melhor for a qualidade, maior
+
+serÆ a probabilidade de sele(cid:231)ªo associada a tal gen(cid:243)tipo), embora todos os
+
+indiv(cid:237)duos tenham probabilidade positiva dando a possibilidade que o gen(cid:243)tipo
+
+menos quali(cid:28)cado tambØm possa ser selecionado. Essa condi(cid:231)ªo garante que a
+
+sele(cid:231)ªo nªo sentencie que a fun(cid:231)ªo de avalia(cid:231)ªo tenda para um mÆximo/m(cid:237)nimo
+
+local, assegurando a diversidade dos alelos que se encontram espalhados por toda
+
+a popula(cid:231)ªo (basta imaginar o caso em que dado um momento da evolu(cid:231)ªo, haja
+
+somente uma qualidade limitada de alelos comuns aos gen(cid:243)tipos mais quali(cid:28)cados.
+
+Da(cid:237), se vier a selecionar deterministicamente os mais quali(cid:28)cados, estÆ apenas
+
+combinando a mesma cole(cid:231)ªo de alelos, e assim, a cota superior da fun(cid:231)ªo de
+
+avalia(cid:231)ªo seria limitada a combina(cid:231)ªo dos alelos mais signi(cid:28)cativos desse subconjunto
+
+pr(cid:243)prio dos alelos da popula(cid:231)ªo).
+
+O problema do Caixeiro viajante - Travelling Salesman Problem ([4]) consiste de
+
+um problema de otimiza(cid:231)ªo em que se busca a melhor rota passando uma œnica vez
+
+por diversos pontos em uma topologia qualquer, Ø apresentado por Larraæaga em
+
+seu trabalho Genetic Algorithms for the Travelling Salesman Problem: A Review
+
+of Representations and Operators ([28]). Neste trabalho o autor apresenta os
+
+operadores de sele(cid:231)ªo, dentre outros operadores, em diversas representa(cid:231)ıes (binÆria,
+
+caminho, adjacŒncia, ordinal e matricial) veri(cid:28)cando os desempenhos experimentais
+
+de tais operadores em fun(cid:231)ªo das diversas representa(cid:231)ıes.
+
+JÆ o trabalho de Goldberg e Deb, intitulado A comparative analysis of selection
+
+14
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+schemes used in genetic algorithms ([21]) apresenta uma anÆlise sobre os operadores
+
+de sele(cid:231)ªo mais utilizados em computa(cid:231)ªo evolutiva, entre eles temos: reprodu(cid:231)ªo
+
+proporcional, ranking, torneio e genitor (estado estacionÆrio). Como resultado, sªo
+
+fornecidas solu(cid:231)ıes aproximadas e exatas para simula(cid:231)ıes, bem como tempo de
+
+convergŒncia œtil e taxa de crescimento; a principal contribui(cid:231)ªo Ø dada por sugestªo
+
+de caminhos para investiga(cid:231)ªo anal(cid:237)tica mais detalhada das tØcnicas de sele(cid:231)ªo.
+
+2.4.5 Operadores de varia(cid:231)ªo: muta(cid:231)ªo e recombina(cid:231)ªo
+
+Os operadores de varia(cid:231)ªo atuam nos gen(cid:243)tipos modi(cid:28)cando-os a (cid:28)m de obter
+
+melhoramentos na qualidade do indiv(cid:237)duo, isto Ø, recebem gen(cid:243)tipos selecionados na
+
+popula(cid:231)ªo atravØs de operadores de sele(cid:231)ªo e os modi(cid:28)ca seguindo algum algoritmo.
+
+Basicamente hÆ dois tipos de operadores: Muta(cid:231)ªo e recombina(cid:231)ªo ou cruzamento.
+
+Muta(cid:231)ªo
+
+A muta(cid:231)ªo tem a tarefa de modi(cid:28)car o gen(cid:243)tipo selecionado atuando diretamente
+
+na modi(cid:28)ca(cid:231)ªo de um ou mais alelos atravØs de alguma rotina estocÆstica que de(cid:28)ne
+
+o alelo que sofrerÆ a muta(cid:231)ªo (Essa condi(cid:231)ªo garante que as modi(cid:28)ca(cid:231)ıes ocorram
+
+em diferentes segmentos e assegure gen(cid:243)tipos distintos a cada aplica(cid:231)ªo da muta(cid:231)ªo,
+
+mesmo que seja utilizado o mesmo gen(cid:243)tipo como entrada para o operador).
+
+Sob o espa(cid:231)o dos fen(cid:243)tipos, isto Ø, o espa(cid:231)o de solu(cid:231)ıes, o ato de aplicar o
+
+operador muta(cid:231)ªo Ø na verdade tomar uma nova solu(cid:231)ªo para o problema em estudo.
+
+Assim, Ø poss(cid:237)vel perceber que para um tempo t, su(cid:28)cientemente grande, a muta(cid:231)ªo
+
+possibilitarÆ que atravØs de computa(cid:231)ªo evolutiva se obtenha o (cid:243)timo (mÆximo ou
+
+m(cid:237)nimo) global ([15]).
+
+Recombina(cid:231)ªo
+
+A recombina(cid:231)ªo (ou cruzamento) Ø a cria(cid:231)ªo de gen(cid:243)tipos. Assim, uma vez
+
+que atravØs de um operador de sele(cid:231)ªo foram escolhidos os gen(cid:243)tipos pais, a
+
+15
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+recombina(cid:231)ªo atua selecionando um (ou mais de um) ponto de corte de forma
+
+aleat(cid:243)ria em que serÆ permutado os alelos de um gen(cid:243)tipo pai para outro. Em
+
+outras palavras, o processo de recombina(cid:231)ªo transmite parte da informa(cid:231)ªo (alelos)
+
+dos pais para os (cid:28)lhos. Tal atitude, gera gen(cid:243)tipos (cid:28)lhos que compıem parte dos
+
+alelos de cada um de seus gen(cid:243)tipos pais.
+
+(cid:201) poss(cid:237)vel perceber que a escolha aleat(cid:243)ria do ponto de corte (a partir de
+
+que momento a informa(cid:231)ªo serÆ misturada) garante que mesmo que, por ventura,
+
+escolha-se em um outro momento os mesmos gen(cid:243)tipos pais para obter informa(cid:231)ªo,
+
+terÆ pouca chance de que os atuais gen(cid:243)tipos (cid:28)lhos sejam semelhantes (no quesito
+
+informa(cid:231)ªo genØtica) de outros gen(cid:243)tipos (cid:28)lhos gerados anteriormente por esses
+
+selecionados.
+
+O espa(cid:231)o dos fen(cid:243)tipos encara tal modi(cid:28)ca(cid:231)ªo como uma nova solu(cid:231)ªo obtida
+
+atravØs de uma fun(cid:231)ªo de outras duas solu(cid:231)ıes, que naquele momento, se mostravam
+
+as melhores solu(cid:231)ıes para o problema.
+
+No trabalho Adaptive probabilities of crossover and mutation in genetic
+
+algorithms ([36]) foi apresentada uma abordagem sobre operadores de muta(cid:231)ªo e
+
+recombina(cid:231)ªo sob o ponto de vista adaptativo, isto Ø, a probabilidade de muta(cid:231)ªo
+
+e recombina(cid:231)ªo varia dependendo do valor da fun(cid:231)ªo de avalia(cid:231)ªo dos gen(cid:243)tipos
+
+envolvidos. Essa tentativa visa a proteger as solu(cid:231)ıes de alto valor de (cid:28)tness.
+
+Ainda nesse trabalho, tambØm Ø poss(cid:237)vel de(cid:28)nir o valor (cid:243)timo para a probabilidade
+
+de muta(cid:231)ªo e recombina(cid:231)ªo para cada caso, nªo sendo necessÆrio arbitrar uma
+
+probabilidade para esses operadores de forma geral. O autor justi(cid:28)ca que essa
+
+abordagem se mostra satisfat(cid:243)ria em dois sentidos: Manter a diversidade da
+
+popula(cid:231)ªo e sustentar a capacidade de convergŒncia do algoritmo.
+
+2.4.6 Mecanismo de sele(cid:231)ªo dos sobreviventes (Substitui(cid:231)ªo)
+
+Uma vez que se tenha uma cole(cid:231)ªo de gen(cid:243)tipos (popula(cid:231)ªo), e ap(cid:243)s a aplica(cid:231)ªo
+
+dos operadores de sele(cid:231)ªo - muta(cid:231)ªo - recombina(cid:231)ªo, terÆ tambØm os gen(cid:243)tipos (cid:28)lhos.
+
+16
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+A quantidade de elementos na cole(cid:231)ªo deve ser constante para nªo prejudicar o
+
+desempenho computacional no processo de busca, assim, devemos ter um mecanismo
+
+que substituirÆ tantos quantos forem os gen(cid:243)tipos (cid:28)lhos na popula(cid:231)ªo. PorØm,
+
+isso ocorre no melhor caso em que todos os gen(cid:243)tipos (cid:28)lhos tem valor em sua
+
+fun(cid:231)ªo de avalia(cid:231)ªo maior que o de seus gen(cid:243)tipos pais, caso contrÆrio, sua inser(cid:231)ªo
+
+nªo contribuiria em nada para a convergŒncia da fun(cid:231)ªo de avalia(cid:231)ªo para seu
+
+(cid:243)timo global (de fato, como todos os gen(cid:243)tipos (cid:28)lhos tem alelos ofertados por seus
+
+gen(cid:243)tipos pais a menos dos alelos alterados pelo processo mutacional, e que o valor
+
+de suas fun(cid:231)ıes de avalia(cid:231)ªo nªo superaram o valor apresentado pelos gen(cid:243)tipos
+
+pais, podemos concluir que os alelos pertencentes ao gen(cid:243)tipo (cid:28)lho se distanciaram
+
+ainda mais do gen(cid:243)tipo (cid:243)timo).
+
+Com rela(cid:231)ªo (cid:224) caracter(cid:237)stica, o mecanismo de sele(cid:231)ªo dos sobreviventes se
+
+assemelha muito ao procedimento apresentado pelo operador de sele(cid:231)ªo que farÆ seu
+
+julgamento atravØs do valor da fun(cid:231)ªo de (cid:28)tness, embora sua concep(cid:231)ªo (diferente
+
+do operador de sele(cid:231)ªo) Ø dada de forma determin(cid:237)stica. Ou seja, o critØrio de
+
+substitui(cid:231)ªo serÆ feito na tentativa de melhorar a popula(cid:231)ªo. Com isso, uma forma
+
+Ø classi(cid:28)car atravØs do (cid:28)tness e a partir disso identi(cid:28)car os de menor valor (cole(cid:231)ªo
+
+de gen(cid:243)tipos + gen(cid:243)tipos (cid:28)lhos) e da(cid:237), eliminar tantos gen(cid:243)tipos quanto forem
+
+necessÆrios para manter a cole(cid:231)ªo com a mesma cardinalidade da gera(cid:231)ªo anterior.
+
+Figura 3:
+avalia(cid:231)ªo (Eiben, 2008).
+
+Ilustra(cid:231)ªo da caracter(cid:237)stica mon(cid:243)tona e nªo negativa da fun(cid:231)ªo de
+
+17
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+A cada passo teremos uma fun(cid:231)ªo de avalia(cid:231)ªo mon(cid:243)tona e nªo negativo. Na
+
+Figura 3 apresentamos uma ilustra(cid:231)ªo da curva da fun(cid:231)ªo de avalia(cid:231)ªo, tambØm Ø
+
+poss(cid:237)vel perceber o ciclo que se forma entre selecionar - mutacionar - recombinar -
+
+substituir, (cid:29)uxograma mostrado na pÆgina 19.
+
+Por (cid:28)m, uma vez o ciclo formado, Ø necessÆrio que se de(cid:28)na como iniciar e
+
+(cid:28)nalizar o processo de busca. Geralmente o critØrio para iniciar a popula(cid:231)ªo Ø
+
+o preenchimento aleat(cid:243)rio de todos os alelos. Assim, serÆ obtida uma cole(cid:231)ªo de
+
+gen(cid:243)tipo bem heterogŒnea.
+
+Quanto (cid:224) (cid:28)naliza(cid:231)ªo, ao conhecer o valor da fun(cid:231)ªo de (cid:28)tness (cid:243)timo, Ø poss(cid:237)vel
+
+estabelecer um critØrio de precisªo (digamos (cid:15) > 0), e com isso, obter um critØrio
+
+de parada para a busca tªo logo se obtenha um valor para fun(cid:231)ªo de avalia(cid:231)ªo de
+
+algum candidato com dist(cid:226)ncia menor que (cid:15). Por outro lado, em um sentido mais
+
+realista, geralmente nªo Ø de conhecimento o ponto (cid:243)timo ou nªo hÆ garantia de
+
+que se consiga chegar tªo pr(cid:243)ximo do mesmo para satisfazer um critØrio de parada
+
+nesse contexto. Assim, cabe utilizar outra abordagem para (cid:28)nalizar um processo de
+
+busca:
+
+• Exceder o tempo limite de CPU;
+
+• Atingir uma quantidade de avalia(cid:231)ıes do (cid:28)tness;
+
+• Treinamento sem progresso,
+
+isto Ø, nªo ocorrer mudan(cid:231)a por um tempo
+
+determinado;
+
+• A diversidade de gen(cid:243)tipos decaia atØ um limiar prØ-estabelecido.
+
+Basta que um desses critØrios seja adotado para que se garanta a (cid:28)naliza(cid:231)ªo do
+
+processo de busca.
+
+18
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.4. Componentes de um algoritmo evolutivo
+
+Inicializa(cid:231)ªo
+
+Cole(cid:231)ªo de
+
+gen(cid:243)tipo
+
+Operador
+
+sele(cid:231)ªo
+
+Atualiza
+
+Gen(cid:243)tipos
+
+popula(cid:231)ªo
+
+pais
+
+Operador
+
+de recom-
+
+bina(cid:231)ªo
+
+e sele(cid:231)ªo
+
+Gen(cid:243)tipos
+
+(cid:28)lho
+
+(cid:201) melhor
+
+que pior
+
+da popu-
+
+la(cid:231)ªo?
+
+Nªo
+
+19
+
+Pare
+
+Sim
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+2.5 Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+Agora que sªo conhecidos os componentes necessÆrios para trabalhar com
+
+computa(cid:231)ªo evolutiva, a compreensªo serÆ direcionada para a forma de codi(cid:28)car
+
+um problema atravØs da abordagem criada por Holland, isto Ø, algoritmo genØtico
+
+- AG. Nªo somente serÆ abordada essa tØcnica, como serÆ focado na abordagem
+
+adotada para modelagem do problema no pr(cid:243)ximo cap(cid:237)tulo.
+
+2.5.1 Representa(cid:231)ªo do gen(cid:243)tipo - AG
+
+Uma representa(cid:231)ªo em que o gen(cid:243)tipo (indiv(cid:237)duo) Ø um string binÆrio, isto Ø,
+
+um vetor (denomina-se vetor no sentido de informar que o posicionamento de cada
+
+bit tem import(cid:226)ncia) formado apenas por 0 ou 1.
+
+Neste sentido, o vetor como um todo Ø um indiv(cid:237)duo e cada alelo Ø um
+
+agrupamento de bits, digamos 4 bits. Da(cid:237), Ø poss(cid:237)vel representar nœmeros que variam
+
+de 0 atØ 15 em cada alelo, neste exemplo.
+
+Figura 4: Ilustra(cid:231)ªo de um gen(cid:243)tipo em sua codi(cid:28)ca(cid:231)ªo binÆria. Note que, neste
+exemplo, a cada 4 bits formamos um alelo.
+
+Na Figura 4 Ø ilustrado o que seria um gen(cid:243)tipo na codi(cid:28)ca(cid:231)ªo binÆria para
+um vetor pertencente ao conjunto {0, 1}24. Da(cid:237), fazendo a decodi(cid:28)ca(cid:231)ªo nota-se
+que se trata do vetor fen(cid:243)tipo (cid:104)4, 11, 12, 13, 5, 13(cid:105), isto Ø, um vetor do conjunto
+{0, 1, · · · , 15}6. Assim Ø poss(cid:237)vel perceber que o espa(cid:231)o fen(cid:243)tipo estÆ univocamente
+correspondido com espa(cid:231)o gen(cid:243)tipo tornando-o um isomor(cid:28)smo do espa(cid:231)o que
+
+compıe nosso problema.
+
+20
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+Outras formas de representa(cid:231)ªo sªo poss(cid:237)veis como Ø o caso da representa(cid:231)ªo
+
+por nœmeros inteiros ou representa(cid:231)ªo de nœmero real (ponto (cid:29)utuante).
+
+2.5.2 Operador de Muta(cid:231)ªo - AG
+
+Na codi(cid:28)ca(cid:231)ªo binÆria o processo de muta(cid:231)ªo Ø realizado atravØs de uma pequena
+
+probabilidade pm > 0, assim, sob tal probabilidade o alelo selecionado tem seu valor
+
+alterado (de 0 para 1 ou de 1 para 0, tambØm conhecido como bit (cid:29)ip). A quantidade
+
+de elementos que sofrem muta(cid:231)ªo geralmente Ø dado por K · pm, em que K Ø o
+
+comprimento do gen(cid:243)tipo.
+
+Por exemplo, suponha um gen(cid:243)tipo formado por K = 20 bits, sendo cada alelo
+
+formado por 4 bits, se (cid:28)xarmos a probabilidade de muta(cid:231)ªo de pm = 5% haverÆ
+
+a possibilidade mutar 1 bit desse gen(cid:243)tipo 1 = 0, 05 · 20 = pm · K. Na Figura 5
+
+Ø ilustrado o processo de muta(cid:231)ªo, os pontos que sofrerªo a mudan(cid:231)a tambØm sªo
+
+escolhidos aleatoriamente dentre todos os pontos que compıem o indiv(cid:237)duo.
+
+Figura 5:
+Ilustra(cid:231)ªo do processo de muta(cid:231)ªo na codi(cid:28)ca(cid:231)ªo binÆria, atravØs do
+processo bit (cid:29)ip. Em (a) o gen(cid:243)tipo inicial e em (b) o mesmo gen(cid:243)tipo ap(cid:243)s a
+muta(cid:231)ªo.
+
+2.5.3 Operador de recombina(cid:231)ªo - AG
+
+O operador de recombina(cid:231)ªo geralmente associado a uma probabilidade de
+
+ocorrŒncia pr que varia entre [0, 5; 1, 0]. Assim, se aplicado um teste o valor for
+
+menor ou igual a pr, o operador de recombina(cid:231)ªo gera os fen(cid:243)tipos (cid:28)lhos atravØs da
+
+21
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+recombina(cid:231)ªo de seus alelos; caso contrÆrio, os fen(cid:243)tipos (cid:28)lhos sªo gerados de forma
+
+assexuada (atravØs de uma c(cid:243)pia direta dos seus pais).
+
+A recombina(cid:231)ªo na representa(cid:231)ªo binÆria pode ocorrer sob o ponto de corte
+
+diretamente sobre 1 ponto entre os bits (em que a partir do ponto de corte toda
+
+a informa(cid:231)ªo do gen(cid:243)tipo 1 Ø repassado para o gen(cid:243)tipo 2 e vice-versa) ou atravØs
+
+de n pontos atravØs da permuta dos bits que se encontram entre dois pontos de
+
+corte distintos. A sele(cid:231)ªo do ponto de corte Ø dado aleatoriamente seguindo algum
+
+processo de sele(cid:231)ªo.
+
+Figura 6: Ilustra(cid:231)ªo do operador de recombina(cid:231)ªo atuando sobre dois gen(cid:243)tipos pais
+atravØs de uma recombina(cid:231)ªo de um œnico ponto.
+
+Nas Figuras 6 e 7 ilustramos as duas situa(cid:231)ıes, na primeira a atua(cid:231)ªo do operador
+
+de recombina(cid:231)ªo para 1 ponto e a atua(cid:231)ªo para um caso em que tomamos 3 pontos
+
+em um gen(cid:243)tipo de comprimento K = 20.
+
+2.5.4 Modelo de popula(cid:231)ªo
+
+HÆ dois tipos de modelos populacionais, o modelo geracional e o de estado
+
+estacionÆrio ([15]):
+
+22
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+Figura 7: Ilustra(cid:231)ªo do operador de recombina(cid:231)ªo atuando sobre dois gen(cid:243)tipos
+pais atravØs de uma recombina(cid:231)ªo de trŒs pontos. Note que as partes 2 e 4 de cada
+fen(cid:243)tipo foram permutadas.
+
+• Geracional - Neste modelo toda a cole(cid:231)ªo de gen(cid:243)tipos Ø selecionada para
+
+receber os operadores de varia(cid:231)ªo, com isso, sªo gerados gen(cid:243)tipos (cid:28)lhos
+
+em quantidade igual (cid:224) cardinalidade da cole(cid:231)ªo de gen(cid:243)tipos pais. Ap(cid:243)s
+
+cada gera(cid:231)ªo, toda a cole(cid:231)ªo Ø substitu(cid:237)da pelos gen(cid:243)tipos (cid:28)lhos gerados.
+
+Esse modelo apresenta uma situa(cid:231)ªo indesejada quando a muta(cid:231)ªo modi(cid:28)ca
+
+os alelos mais signi(cid:28)cativos e ao modi(cid:28)car toda popula(cid:231)ªo perde-se tal
+
+informa(cid:231)ªo, da(cid:237), o indiv(cid:237)duo sofre uma perda em sua adaptabilidade nessa
+
+gera(cid:231)ªo.
+
+• Estado estacionÆrio - Neste modelo nªo Ø a cole(cid:231)ªo que modi(cid:28)ca a cada gera(cid:231)ªo
+
+e sim parte dela. Assim uma quantidade q (menor que a cardinalidade da
+
+cole(cid:231)ªo) serÆ substitu(cid:237)da por q gen(cid:243)tipos (cid:28)lhos; a porcentagem de elementos
+
+que serªo selecionados Ø dada por q/K em que K Ø a cardinalidade da cole(cid:231)ªo.
+
+Para Whitney, em seu algoritmo Genitor, o valor de q Ø igual a 1, e com isso,
+
+o percentual de indiv(cid:237)duos selecionados Ø dado por 1/K ([39]).
+
+2.5.5 Mecanismo de sele(cid:231)ªo dos reprodutores
+
+Sele(cid:231)ªo proporcional ao (cid:28)tness
+
+Consiste de selecionar os gen(cid:243)tipos pais atravØs da propor(cid:231)ªo gerada pela
+
+compara(cid:231)ªo do valor fun(cid:231)ªo de avalia(cid:231)ªo com rela(cid:231)ªo (cid:224) soma dos valores da fun(cid:231)ªo
+
+23
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+de (cid:28)tness da cole(cid:231)ªo de gen(cid:243)tipo. A expressªo proporcional Ø dada por:
+
+f pi =
+
+fi
+(cid:80)K
+i=1 fi
+
+(2.1)
+
+em que fi Ø o valor da fun(cid:231)ªo de avalia(cid:231)ªo para o gen(cid:243)tipo i.
+
+O principal problema desse mØtodo Ø a convergŒncia prematura, em que um
+
+gen(cid:243)tipo obtenha um valor muito alto para sua fun(cid:231)ªo de avalia(cid:231)ªo e com isso passe
+
+a dominar o processo de sele(cid:231)ªo for(cid:231)ando toda a cole(cid:231)ªo a ser uma combina(cid:231)ªo de
+
+seus alelos. Da(cid:237), a busca evolutiva (cid:28)caria restrita a um (cid:243)timo local que dependa
+
+dos alelos desse gen(cid:243)tipo ([23]). Uma tentativa de diminuir a possibilidade dessa
+
+convergŒncia seria a condi(cid:231)ªo de que o indiv(cid:237)duo com valor de (cid:28)tness muito alto
+
+jÆ houver sido selecionado para gera(cid:231)ªo de um (cid:28)lho, este terÆ um fator associado
+
+que temporariamente diminua seu valor de (cid:28)tness dando possibilidade aos demais
+
+gen(cid:243)tipos de distribuir sua informa(cid:231)ªo genØtica.
+
+Sele(cid:231)ªo por ranking
+
+Nesse mØtodo, Ø feito um mapeamento do valor da fun(cid:231)ªo de (cid:28)tness atravØs
+
+de uma fun(cid:231)ªo que de(cid:28)na sua probabilidade de escolha. Em geral, Ø adotada uma
+
+expressªo linear ou exponencial. Para o caso em que a expressªo Ø linear usa-se
+
+como par(cid:226)metro um valor t (1, 0 < t ≤ 2, 0), da(cid:237), uma poss(cid:237)vel expressªo linear Ø
+
+dada por:
+
+Pranking (i) =
+
+2 − t
+K
+
++
+
+2i (t − 1)
+K (K − 1)
+
+(2.2)
+
+em que K Ø a cardinalidade da cole(cid:231)ªo de gen(cid:243)tipos e o (cid:237)ndice i se refere ao gen(cid:243)tipo
+
+i.
+
+Essa abordagem visa melhorar o critØrio de sele(cid:231)ªo nos momentos em que toda a
+
+cole(cid:231)ªo apresenta valor de (cid:28)tness muito pr(cid:243)ximo, e sob o mØtodo de sele(cid:231)ªo anterior,
+
+viria a ser uma escolha praticamente aleat(cid:243)ria sem evidenciar a qualidade que cada
+
+24
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+gen(cid:243)tipo associe (mesmo que seja muito sutil tal qualidade) ([6]).
+
+2.5.5.1 Sele(cid:231)ªo pelo algoritmo roleta
+
+Esse algoritmo visa obter os indiv(cid:237)duos atravØs de um procedimento semelhante
+
+a uma roleta.
+
+Inicialmente Ø utilizado o ranking ou o (cid:28)tness proporcional
+
+para de(cid:28)nirmos a probabilidade Pi para cada indiv(cid:237)duo i da cole(cid:231)ªo contendo
+
+K elementos. Esse procedimento compartilha o mesmo problema da sele(cid:231)ªo
+
+proporcional que pode gerar convergŒncia prematura.
+
+Uma vez de(cid:28)nida a probabilidade de cada indiv(cid:237)duo proporcional ao valor de
+
+sua fun(cid:231)ªo de avalia(cid:231)ªo, sªo tomados os pontos acumulados:
+
+aj =
+
+j
+(cid:88)
+
+i=1
+
+Pi
+
+(2.3)
+
+assim, haverÆ a lista (0, a1, a2, . . . , aK) que representam os pontos de acumulados
+
+das probabilidades dos indiv(cid:237)duos i. Note ainda que o intervalo [ai−1, ai] = PK, isto
+
+Ø, cada parti(cid:231)ªo dessa lista diz respeito ao intervalo proporcional ao valor de (cid:28)tness
+
+para o indiv(cid:237)duo correspondente.
+
+Sabendo que:
+
+K
+(cid:88)
+
+i=1
+
+Pi = 1
+
+(2.4)
+
+basta que se selecione aleatoriamente um ponto entre o intervalo [0, 1], e dado a
+
+parti(cid:231)ªo em que esse ponto perten(cid:231)a, serÆ selecionado o indiv(cid:237)duo correspondente.
+
+Sele(cid:231)ªo por torneio
+
+O procedimento por torneio tem caracter(cid:237)sticas mais simplistas,
+
+ideal para
+
+grandes popula(cid:231)ıes ou cole(cid:231)ıes que nªo ocorra acesso a todas as informa(cid:231)ıes naquele
+
+25
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.5. Codi(cid:28)ca(cid:231)ªo de algoritmo genØtico
+
+presente. Sua grande vantagem Ø nªo ter a necessidade de fazer uma avalia(cid:231)ªo com
+
+rela(cid:231)ªo (cid:224) toda a popula(cid:231)ªo, e sim a uma amostragem desta.
+
+Inicialmente, de(cid:28)ne-se a quantidade de gen(cid:243)tipos pais que serªo selecionados,
+
+digamos k, da(cid:237), selecionam-se n elementos da popula(cid:231)ªo aleatoriamente (claramente
+
+n < K), e de posse desses gen(cid:243)tipos serÆ avaliado o de melhor valor de (cid:28)tness.
+
+Chama-se esse indiv(cid:237)duo de g1, e se repete o procedimento atØ que se obtenha todos
+
+os k gen(cid:243)tipos desejados.
+
+Notoriamente, quanto maior for a quantidade de elementos no torneio, melhor
+
+serÆ a chance de se obter gen(cid:243)tipos com alto valor de (cid:28)tness e menor serÆ a chance
+
+de que ocorra um torneio completamente preenchido de indiv(cid:237)duos com baixo valor
+
+de (cid:28)tness ([7]).
+
+2.5.6 Mecanismo de sele(cid:231)ªo dos sobreviventes (substitui(cid:231)ªo)
+
+SobrevivŒncia dos gen(cid:243)tipos mais novos
+
+Nesse contexto, nªo importa quªo alto seja o valor de (cid:28)tness obtido por um
+
+gen(cid:243)tipo, ele s(cid:243) permanecerÆ na popula(cid:231)ªo uma quantidade (cid:28)xa de gera(cid:231)ıes. Assim,
+
+os indiv(cid:237)duos mais velhos (cid:16)morrem(cid:17) ao completar seu ciclo de vida dando lugar para
+
+os mais novos.
+
+Perceba que a l(cid:243)gica adotada nªo visa uma fun(cid:231)ªo do tipo serra, em que os
+
+valores de (cid:28)tness atingem um patamar mais elevado e depois de uma quantidade
+
+(cid:28)xa de gera(cid:231)ıes perdem esse efeito e voltam ao patamar anteriormente estabelecido;
+
+espera-se que os alelos signi(cid:28)cativos tiveram tempo su(cid:28)ciente para serem repassados
+
+para os demais gen(cid:243)tipos mais novos, e a partir disso, assegurar que o (cid:243)timo local
+
+alcan(cid:231)ado nªo seja perdido (geralmente).
+
+(cid:201) poss(cid:237)vel perceber que o modelo de popula(cid:231)ªo geracional, em que todos sªo
+
+substitu(cid:237)dos, pode ser considerado a aplica(cid:231)ªo do caso trivial do mecanismo de
+
+sele(cid:231)ªo por sobrevivŒncia, em que, o ciclo de vida de qualquer gen(cid:243)tipo Ø de uma
+
+œnica gera(cid:231)ªo.
+
+26
+
+Cap(cid:237)tulo 2. Algoritmo GenØtico
+
+2.6. Algoritmo genØtico utilizado no trabalho
+
+SobrevivŒncia baseada no valor da fun(cid:231)ªo de (cid:28)tness
+
+O caso mais utilizado Ø sem dœvida o de substitui(cid:231)ªo do pior gen(cid:243)tipo. Da(cid:237), se
+
+tivermos k gen(cid:243)tipos (cid:28)lho e K elementos na popula(cid:231)ªo, isto Ø K + k elementos para
+
+que sejam selecionados K dentre estes; Ø feito um ranking com rela(cid:231)ªo ao valor de
+
+(cid:28)tness de todos os K +k indiv(cid:237)duos, e por (cid:28)m, selecionado os K primeiros elementos.
+
+Esse tipo de estratØgia tem o problema de convergir para (cid:243)timos locais, assim,
+
+sªo normalmente associados a grandes cole(cid:231)ıes de gen(cid:243)tipos ou exigŒncias de nªo
+
+haver mais de um gen(cid:243)tipo com a mesma combina(cid:231)ªo de alelos.
+
+Outra caracter(cid:237)stica Ø o elitismo, nesse caso, os indiv(cid:237)duos de mais alto valor
+
+de (cid:28)tness permanecem na popula(cid:231)ªo. Geralmente vem associado (cid:224) estratØgia de
+
+sobrevivŒncia dos mais novos, garantindo assim que a condi(cid:231)ªo de um indiv(cid:237)duo
+
+velho com alto valor de (cid:28)tness permane(cid:231)a na popula(cid:231)ªo nos casos em que nenhum
+
+dos indiv(cid:237)duos gerados melhoram ou estabilizam o valor da fun(cid:231)ªo de (cid:28)tness.
+
+2.6 Algoritmo genØtico utilizado no trabalho
+
+Neste trabalho, utilizaremos uma variante melhorada do algoritmo genØtico,
+
+o algoritmo melhorado do Leung ([29]) utilizado para treinar os par(cid:226)metros da
+
+redes neurais. Resultados comparativos mostram a superioridade dessa variante
+
+com rela(cid:231)ªo ao algoritmo genØtico tradicional.
+
+27
+
+28
+
+3 Metodologia
+
+3.1 Banco de dados
+
+O banco de dados que serÆ utilizado foi obtido atravØs do desempenho semestral
+
+de uma turma de 40 alunos do curso de Licenciatura em Qu(cid:237)mica do Instituto
+
+Federal de Pernambuco - IFPE, como foram realizadas duas avalia(cid:231)ıes, hÆ 40 pontos
+
+cartesianos (N ota1, N ota2), a dispersªo das notas Ø apresentada na tabela 1:
+
+Tabela 1: Desempenho semestral Turma de Estat(cid:237)stica - Tabula(cid:231)ªo.
+(1.5, 5.5)
+(8.2, 7.6)
+(3.1, 2.9)
+(5.3, 7.9)
+(5.5, 6.5)
+(4.8, 5)
+(2.7, 1.8)
+(2.5, 2.9)
+
+(9.5, 8.3)
+(7.9, 6.1)
+(1.8, 1)
+(7.4, 6.9)
+(4.2, 3.9)
+(3.1, 1.6)
+(2.3, 4.1)
+(0.9, 2.5)
+
+(9, 4)
+(8.5, 9)
+(7.5, 8.5)
+(7.1, 5.1)
+(4.1, 6.1)
+(5.1, 4.3)
+(2, 2.3)
+(3.7, 4.1)
+
+(10, 8.5)
+(8.3, 7)
+(5.8, 5)
+(6.2, 6.1)
+(4.3, 2.6)
+(0.5, 0.5)
+(4, 5)
+(1.5, 3.1)
+
+(7, 3.1)
+(9.5, 6)
+(8, 9)
+(3, 5)
+(5.9, 4)
+(6.5, 7.9)
+(1.1, 1)
+(1, 1.8)
+
+As estat(cid:237)sticas bÆsicas das notas Ø apresentada na tabela 2.
+
+Para medir o n(cid:237)vel de correla(cid:231)ªo serÆ usado o coe(cid:28)ciente de correla(cid:231)ªo de Pearson
+
+ou coe(cid:28)ciente de correla(cid:231)ªo produto-momento. Esse coe(cid:28)ciente mede o grau de
+
+associa(cid:231)ªo linear (e a dire(cid:231)ªo dessa correla(cid:231)ªo - se positiva ou negativa) entre duas
+
+variÆveis mØtricas. Normalmente se representa por ρ. Quando o valor de ρ = 1
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.1. Banco de dados
+
+Tabela 2: Estat(cid:237)sticas descritivas para o desempenho da turma.
+1o Quartil Mediana MØdia
+5.008
+4.838
+
+3o Quartil MÆximo
+10.000
+9.000
+
+M(cid:237)nimo
+0.500
+0.500
+
+7.425
+6.600
+
+2.650
+2.900
+
+4.950
+5.000
+
+1a Prova
+2a Prova
+
+signi(cid:28)ca que hÆ uma forte correla(cid:231)ªo positiva entre as variÆveis, jÆ se ρ = −1 hÆ
+
+uma forte correl(cid:231)ªo negativa entre as variÆveis e se ρ = 0, entªo nªo hÆ dependŒncia
+
+linear entre as duas variÆveis. Entretanto, um ρ = 0 nªo signi(cid:28)ca que nªo haja
+
+dependŒncia, somente garante-se que esta nªo seja linear. Tendo en(cid:28)m −1 ≤ ρ ≤ 1.
+
+Para calcular o coe(cid:28)ciente de Pearson utiliza-se a expressªo [10]:
+
+ρ =
+
+(cid:112)(cid:80)n
+
+i=1(xi − ¯x)(yi − ¯y)
+
+(cid:80)n
+i=1(xi − ¯x)2 · (cid:112)(cid:80)n
+
+i=1(yi − ¯y)2
+
+(3.1)
+
+em que x1, x2, · · · , xn sªo as notas da turma para a primeira prova, y1, y2, · · · , yn
+
+sªo as notas da turma para a segunda prova. Ainda, ¯x e ¯y sªo as mØdias aritmØticas
+
+para a primeira e segunda prova, respectivamente.
+
+A interpreta(cid:231)ªo do coe(cid:28)ciente de Pearson Ø dada por:
+
+• ρ = 1 correla(cid:231)ªo perfeita;
+
+• ρ > 0.7 positivo ou negativo indica uma forte correla(cid:231)ªo;
+
+• 0.3 ≤ ρ < 0.7 positivo ou negativo indica uma correla(cid:231)ªo moderada;
+
+• 0 < ρ < 0.3 positivo ou negativo indica uma fraca correla(cid:231)ªo;
+
+• ρ = 0 correla(cid:231)ªo inexistente.
+
+AlØm disso, Ø poss(cid:237)vel discutir a interpreta(cid:231)ªo geomØtrica para o coe(cid:28)ciente de
+
+Pearson. Basta tomar as sØries x = (x1, x2, · · · , xn) e y = (y1, y2, · · · , yn) como
+
+sendo vetores em um espa(cid:231)o de dimensªo n: x =< x1 − ¯x, x2 − ¯x, · · · , xn − ¯x > e
+
+y =< y1 − ¯x, y2 − ¯x, · · · , yn − ¯x >.
+
+29
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.2. AnÆlise de Regressªo
+
+Assim, o cosseno do (cid:226)ngulo α entre esses dois vetores Ø dado pela expressªo
+
+(produto escalar normado):
+
+cos(α) =
+
+portanto cos(α) = ρ.
+
+i=1(xi − ¯x) · (yi − ¯y)
+
+(cid:80)n
+i=1(xi − ¯x)2 · (cid:112)(cid:80)n
+
+i=1(yi − ¯y)2
+
+(cid:112)(cid:80)n
+
+(3.2)
+
+Dessa forma, o coe(cid:28)ciente de correla(cid:231)ªo Ø o cosseno do (cid:226)ngulo entre dois vetores.
+
+• Se ρ = 1, o (cid:226)ngulo α = 0, os dois vetores sªo colineares;
+
+• Se ρ = 0, o (cid:226)ngulo α = 90o, os dois vetores sªo ortogonais;
+
+• Se ρ = −1, o (cid:226)ngulo α = 180o, os dois vetores sªo colineares com sentidos
+
+opostos.
+
+Por (cid:28)m, α = arccos(ρ) [11].
+
+Aplicando o coe(cid:28)ciente de Pearson ao banco de dados obtemos o valor ρ =
+
+0, 77813 indicando uma forte correla(cid:231)ªo positiva entre os notas da primeira e da
+
+segunda prova. A Figura 8 apresenta a dispersªo das notas como pares ordenados, Ø
+
+poss(cid:237)vel perceber a tendŒncia linear positiva apresentada pelo coe(cid:28)ciente de Pearson.
+
+3.2 AnÆlise de Regressªo
+
+A anÆlise de regressªo consiste na realiza(cid:231)ªo de uma anÆlise estat(cid:237)stica com
+
+o objetivo de veri(cid:28)car a existŒncia de uma rela(cid:231)ªo funcional entre uma variÆvel
+
+dependente (segunda nota) com uma ou mais variÆveis independentes (primeira
+
+prova). De outro modo, Ø a tentativa de explicar as varia(cid:231)ıes ocorridas na variÆvel
+
+dependente em fun(cid:231)ªo das varia(cid:231)ıes apresentadas pela variÆvel independente.
+
+30
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.2. AnÆlise de Regressªo
+
+Figura 8: Dispersªo das notas semestrais, Prova 1 × Prova 2.
+
+Na tentativa de estabelecer a equa(cid:231)ªo, Ø poss(cid:237)vel fazer o grÆ(cid:28)co (chamado grÆ(cid:28)co
+
+de dispersªo, Figura 8) para veri(cid:28)car como se comportam os valores da variÆvel
+
+dependente (Y) em fun(cid:231)ªo da variÆvel independente (X).
+
+O comportamento apresentado por Y em rela(cid:231)ªo a X pode ter qualquer formato:
+
+linear, quadrÆtico, cœbico, exponencial, logar(cid:237)tmico e etc. Para se estabelecer o
+
+modelo para explicar o fen(cid:244)meno, deve-se veri(cid:28)car qual o tipo de curva e a equa(cid:231)ªo
+
+do modelo matemÆtico que mais se aproxime dos pontos representados no diagrama
+
+de dispersªo.
+
+Claramente, nªo serÆ poss(cid:237)vel obter uma curva que se ajuste a todos os pontos,
+
+em sua maioria, os pontos estarªo a uma certa dist(cid:226)ncia da curva-modelo. Isso se
+
+deve ao fato de que o banco de dados em estudos nªo ser oriundo de uma fun(cid:231)ªo
+
+matemÆtica, muito alØm disso, o banco de dados foi originado por um experimento
+
+estocÆstico que se encontra sujeito a erros de medi(cid:231)ªo e outras caracter(cid:237)sticas
+
+aleat(cid:243)rias. Dessa forma, a regressªo tem como objetivo obter o modelo matemÆtico
+
+31
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.2. AnÆlise de Regressªo
+
+que melhor se ajusta ao banco de dados.
+
+Um dos mØtodos para obten(cid:231)ªo dos estimadores das constantes do modelo
+
+Ø MØtodo de M(cid:237)nimos Quadrados que visa obter a minimiza(cid:231)ªo dos res(cid:237)duos
+
+ocasionados entre os valores observados no banco de dados e os valores estimados
+
+pelo modelo. Tal demonstra(cid:231)ªo para o caso de regressªo linear simples foi
+
+apresentado na Introdu(cid:231)ªo e Motiva(cid:231)ªo 1.
+
+Diante disso, os estimadores obtidos para o modelo:
+
+y = α + β · x + (cid:15)
+
+(3.3)
+
+Sªo apresentados na Tabela 3.
+
+Tabela 3: Estimadores para o intercepto α e a inclina(cid:231)ªo β.
+
+Valor Erro padrªo
+
+Intercepto α 1,45334
+Inclina(cid:231)ªo β 0,67632
+R2 Ajustado 0,5951
+
+0,50642
+0,08856
+N / A
+
+assim, o modelo preliminar baseado em regressªo linear simples para explicar a
+
+dependŒncia linear entre a primeira e segunda prova Ø dado por:
+
+y = 1, 45334 + 0, 67632 · x + (cid:15)
+
+(3.4)
+
+a interpreta(cid:231)ªo livre sugere que se ele tirar zero na primeira prova, espera-se que
+
+tire 1,45 na segunda. O aumento de uma unidade na primeira prova implica em um
+
+aumento de 0,68 na segunda.
+
+Isso posto, Ø poss(cid:237)vel determinar a nota cr(cid:237)tica para prever a aprova(cid:231)ªo na
+
+disciplina. Assumindo a mØdia de 6, 0, temos que seria necessÆrio obter nota acima
+
+ou igual a 5, 27333 para assegurar a aprova(cid:231)ªo na disciplina atravØs do modelo linear
+
+32
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.2. AnÆlise de Regressªo
+
+proposto.
+
+Ainda, Ø preciso notar que o valor do R2 ajustado foi de 0, 5951. Essa estat(cid:237)stica
+
+fornece informa(cid:231)ªo sobre o ajuste do modelo para o banco de dados, assumindo
+
+a "porcentagem"da varia(cid:231)ªo de Y que Ø explicada pela regressªo, ou quanto da
+
+varia(cid:231)ªo na variÆvel dependente Y estÆ sendo explicada pela variÆvel X.
+
+O R2 Ø obtido pela expressªo:
+
+R2 =
+
+SQReg
+SQT otal
+
+= 1 −
+
+SQRes
+SQT otal
+
+(3.5)
+
+em que SQRes Ø a soma dos quadrados dos res(cid:237)duos - soma das diferen(cid:231)a entre as
+
+amostras da variÆvel dependente (segunda prova) e as amostras estimadas para a
+
+segunda prova a partir do modelo; SQTotal Ø a soma dos quadrados totais - somat(cid:243)rio
+
+dos quadrados das amostra da variÆvel indepentende (primeira prova) subtra(cid:237)do do
+
+quadrado do somat(cid:243)rio das amostras da variÆvel independente dividido pelo total
+
+de amostras.
+
+JÆ o R2 ajustado Ø a mesma propor(cid:231)ªo s(cid:243) que penalizando a inclusªo de
+
+regressores (amostras) pouco explicativas. Sua expressªo Ø dada por [10]:
+
+R2
+
+ajustado = 1 −
+
+n − 1
+n − (k + 1)
+
+(1 − R2)
+
+(3.6)
+
+em que k + 1 representa o nœmero de variÆveis explicativas mais a constante, n Ø a
+quantidade de amostras e R2 Ø o coe(cid:28)ciente determinado anteriormente.
+
+Com isso, temos que o modelo foi capaz de explicar 59, 51% do banco de dados
+
+trabalhado.
+
+33
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+3.3 Testando a normalidade dos dados e dos
+
+res(cid:237)duos
+
+A normalidade dos res(cid:237)duos Ø uma suposi(cid:231)ªo essencial para que os resultados
+
+do ajuste do modelo de regressªo linear sejam con(cid:28)Æveis. Podemos veri(cid:28)car essa
+
+suposi(cid:231)ªo por meio de grÆ(cid:28)co de Papel de probabilidade e por meio de testes tais
+
+como Shapiro-Wilk, Anderson-Darling e Kolmogorov-Smirnov.
+
+Neste trabalho serÆ utilizado o teste de Shapiro-Wilk, e sua justi(cid:28)cativa se deve
+
+ao fato de ser um teste bem ajustado para amostras menores do que 50.
+
+O teste de hip(cid:243)teses utilizado Ø dado por:
+
+• H0 : Os erros (desvios) da caracter(cid:237)stica em estudo seguem a distribui(cid:231)ªo
+
+normal;
+
+• H1 : Os erros nªo seguem a distribui(cid:231)ªo normal.
+
+ou seja, Ø necessÆrio nªo rejeitar H0 para assegurar normalidade para os dados.
+
+O n(cid:237)vel de signi(cid:28)c(cid:226)ncia adotado Ø o n(cid:237)vel padrªo de 5%. A estat(cid:237)stica para aferir
+
+o teste Ø dado por:
+
+Wc =
+
+g2
+SQE
+
+(3.7)
+
+em que:
+
+e SQE:
+
+g =
+
+n/2
+(cid:88)
+
+i=1
+
+ai,n · (xn−i+1 − xi)
+
+(3.8)
+
+SQE =
+
+n
+(cid:88)
+
+i=1
+
+e2
+i =
+
+n
+(cid:88)
+
+i=1
+
+(xi − ¯x)2
+
+34
+
+(3.9)
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+os valores para ai,n sªo obtidos atravØs da tabela para teste Shapiro-Wilk, a Figura
+
+9 ilustra a tabela necessÆria.
+
+A conclusªo do teste Ø dada pela anÆlise do valor de Wc, se o valor de Wc for
+
+menor que o valor cr(cid:237)tico Wt obtido na tabela em fun(cid:231)ªo do tamanho da amostra
+
+(n) e signi(cid:28)c(cid:226)ncia (α), rejeita-se H0 e conclui-se que a caracter(cid:237)stica em estudo da
+
+popula(cid:231)ªo ou os erros nªo seguem a distribui(cid:231)ªo normal, caso contrÆrio, aceita-se
+
+H0 [10].
+
+Utilizando o teste de Shapiro-Wilk em ambos os bancos de dados, prova 1 e
+
+prova 2, obtØm-se o resultado apresentado na tabela 4. (cid:201) poss(cid:237)vel perceber que os
+
+valores obtidos no teste foram 0, 9539 e 0, 96429, respectivamente, em ambos os casos
+
+foi constatado que nªo rejeita-se H0 o que con(cid:28)rma a normalidade dos res(cid:237)duos, isto
+
+Ø, a vari(cid:226)ncia dos erros Ø constante.
+
+Tabela 4: Quadro para o teste Shapiro-Wilk.
+GL Estat(cid:237)stica W Prob < W
+40
+40
+
+0,1033
+0,23414
+
+0,9539
+0,96429
+
+3.3.1 Testes de Hip(cid:243)tese na regressªo linear simples
+
+(cid:201) necessÆrio que ap(cid:243)s feita a regressªo e ajustado o modelo, veri(cid:28)que-se a
+
+adequabilidade por meio de testes de hip(cid:243)teses ou intervalo de con(cid:28)an(cid:231)a.
+
+Isso s(cid:243) Ø verdade se for pressuposto que os erros tenham distribui(cid:231)ªo normal.
+
+Para constatar esse fato, Ø poss(cid:237)vel usar o teste de aderŒncia (qui-quadrado) ou
+
+recorrer ao teste de Shapiro-Wilk. Neste trabalho foi utilizado o segundo teste e sua
+
+descri(cid:231)ªo foi apresentada neste cap(cid:237)tulo na se(cid:231)ªo de normalidade 3.3.
+
+35
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+Figura 9: Ilustra(cid:231)ªo para a tabela do teste Shapiro-Wilk. [33]
+
+Como hÆ dois par(cid:226)metros no modelo trabalhado, pode-se realizar os seguintes
+
+testes:
+
+• H0: β=β∗ contra H1: β (cid:54)= β∗
+
+• H0: α= α∗ contra H1: α (cid:54)= α∗
+
+Em cada um a estat(cid:237)stica de teste e as conclusıes seriam:
+
+tcalc =
+
+β − β∗
+
+(cid:113)
+
+ˆV ar( ˆβ)
+
+(3.10)
+
+em que
+
+36
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+ˆV ar( ˆβ) =
+
+ˆσ2
+i=1(xi − ¯x)2
+
+(cid:80)n
+
+(3.11)
+
+e a regra de decisªo para o primeiro teste Ø:
+
+- Se |tcalc| ≥ t(α/2,n−2), entªo se rejeita a hip(cid:243)tese nula (H0).
+
+em que t(a,b) Ø o valor da distribui(cid:231)ªo t-Student para o n(cid:237)vel de signi(cid:28)c(cid:226)ncia 2a e a
+quantidade de amostras b + 2.
+
+JÆ para o segundo teste, temos:
+
+tcalc =
+
+α − α∗
+
+(cid:113)
+
+ˆV ar(ˆα)
+
+em que
+
+ˆV ar( ˆβ) = ˆσ2
+
+(cid:18) 1
+n
+
++
+
+¯X 2
+i=1(xi − ¯x)2
+
+(cid:80)n
+
+(cid:19)
+
+e a regra de decisªo para o segundo teste Ø a mesma:
+
+- Se |tcalc| ≥ t(α/2,n−2), entªo se rejeita a hip(cid:243)tese nula (H0).
+
+Atentar para a estimativa da vari(cid:226)ncia dos erros que Ø dada por:
+
+ˆσ2 =
+
+SQRes
+n − 2
+
+=
+
+com SP Dxy sendo:
+
+(cid:80)n
+
+i=1 y2
+
+i −
+
+((cid:80)n
+
+i=1 yi)2
+n
+n − 2
+
+− ˆβ · SP Dxy
+
+n
+(cid:88)
+
+i=1
+
+(xi − ¯x) · (yi − ¯y) −
+
+((cid:80)n
+
+i=1 xi)((cid:80)n
+n
+
+i=1 yi)
+
+O caso especial, e o que geralmente se estÆ interessado Ø:
+
+• H0: β=0 contra H1: β (cid:54)= 0
+
+37
+
+(3.12)
+
+(3.13)
+
+(3.14)
+
+(3.15)
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+esse teste de hip(cid:243)tese estÆ relacionado com a signi(cid:28)c(cid:226)ncia da regressªo, assim se
+
+nªo for rejeitado H0 Ø o mesmo que concluir que nªo hÆ rela(cid:231)ªo linear entre X e Y.
+
+Por outro lado, se H0 for rejeitado, indicaria que X Ø importante para explicar a
+
+variabilidade em Y.
+
+3.3.2 ANOVA - AnÆlise de Vari(cid:226)ncia
+
+De maneira alternativa, pode-se testar a signi(cid:28)c(cid:226)ncia da regressªo pelo mØtodo
+
+de AnÆlise de Vari(cid:226)ncia (ANOVA).
+
+O mØtodo em s(cid:237), consiste em fazer uma parti(cid:231)ªo da variabilidade total da variÆvel
+
+resposta Y em outros componentes de acordo com o modelo e o teste a ser feito.
+
+Pode-se veri(cid:28)car a identidade:
+
+(cid:88) (cid:0)Yi − ¯Y (cid:1)2 =
+
+(cid:88) (cid:16) ˆYi − ¯Y
+
+(cid:17)2
+
++
+
+(cid:88) (cid:16)
+
+Yi − ˆY
+
+(cid:17)2
+
+(3.16)
+
+Ou simplesmente:
+
+SQTotal = SQRegressªo + SQRes(cid:237)duo
+
+em que:
+
+SQTotal = Varia(cid:231)ªo total de Y;
+
+SQRegressªo = Varia(cid:231)ªo em Y explicada pela regressªo ajustada;
+
+SQRes(cid:237)duo = Varia(cid:231)ªo nªo explicada pela regressªo.
+
+A ANOVA Ø baseada no quadro 5:
+
+A estat(cid:237)stica F, Ø baseada na distribui(cid:231)ªo F de Snedecor, serve para testar a
+
+signi(cid:28)c(cid:226)ncia da regressªo, isto Ø, testar:
+
+• H0: β = 0 contra H1: β (cid:54)= 0
+
+e a regra de decisªo Ø dada por:
+
+38
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+Tabela 5: Quadro para o cÆlculo da anÆlise de vari(cid:226)ncia.
+
+FV
+Regressªo
+Res(cid:237)duo
+Total
+
+SQ
+
+GL
+QM
+SQRes QMReg = SQReg QM Reg
+1
+QM Res
+QMRes= SQRes
+SQRes
+n-2
+n−2
+n-2 SQTotal
+
+F
+
+Se Fcalc ≥ F(α,1,n−2), entªo rejeita-se H0. Ao rejeitarmos H0, assume-se que nªo
+
+hÆ rela(cid:231)ªo linear entre os par(cid:226)metros da regressªo.
+
+A equa(cid:231)ªo obtida, apenas estabelece uma rela(cid:231)ªo funcional, entre a variÆvel
+
+dependente e a variÆvel independente, para representar o fen(cid:244)meno em estudo.
+
+Portanto, a simples obten(cid:231)ªo da equa(cid:231)ªo estimada nªo responde ao pesquisador
+
+se a varia(cid:231)ªo da variÆvel independente in(cid:29)uencia signi(cid:28)cativamente na varia(cid:231)ªo da
+
+variÆvel dependente.
+
+Para responder a essa pergunta, Ø necessÆrio realizar o teste estat(cid:237)stico para as
+
+estimativas dos coe(cid:28)cientes da equa(cid:231)ªo da regressªo estimada. Um teste que pode
+
+ser utilizado para veri(cid:28)car tal fato Ø o teste F da anÆlise de vari(cid:226)ncia. Portanto,
+
+Ø necessÆrio realizar uma anÆlise de vari(cid:226)ncia dos dados observados, em fun(cid:231)ªo do
+
+modelo proposto [10].
+
+Para o banco de dados adotado nesse trabalho, a Tabela 6 apresenta os resultados
+
+da anÆlise de vari(cid:226)ncia na tentativa de assegurar a signi(cid:28)c(cid:226)ncia do modelo proposto.
+
+Nessa tabela Ø poss(cid:237)vel perceber que a ANOVA mostrou-se signi(cid:28)cante, isto Ø, o
+
+par(cid:226)metro β Ø diferente de zero e com isso hÆ rela(cid:231)ªo linear entre os par(cid:226)mentros
+
+(nota da segunda prova tem rela(cid:231)ªo linear com a nota da primeira prova).
+
+Apresentamos na Figura 10 a dispersªo dos pontos e a reta ajustada a partir
+
+da regressªo linear, e na (cid:28)gura 11 apresentamos a plotagem da variÆvel independe
+
+em fun(cid:231)ªo dos res(cid:237)duos mostrando a tendŒncia de normalidade apresentada pelos
+
+dados.
+
+39
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.3. Testando a normalidade dos dados e dos res(cid:237)duos
+
+FV
+Regressªo
+Res(cid:237)duo
+Total
+
+GL
+1
+38
+38
+
+Tabela 6: Quadro para o cÆlculo da anÆlise de vari(cid:226)ncia.
+QM
+
+SQ
+
+F
+
+Prob > F
+
+139,47562 139,47562 58,31923 3, 44082 × 10−9
+90,88038
+230,356
+
+2,39159
+
+Figura 10: Dispersªo das notas semestrais, Prova 1 × Prova 2 e o ajuste linear
+proposto.
+
+40
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.4. Modelando o algoritmo genØtico
+
+Figura 11: Dispersªo dos res(cid:237)duos apresentando a tendŒncia de normalidade,
+con(cid:28)rmada mediante teste.
+
+3.4 Modelando o algoritmo genØtico
+
+Popula(cid:231)ªo
+
+Para inicializa(cid:231)ªo do algoritmo serÆ gerada uma popula(cid:231)ªo de 10 indiv(cid:237)duos
+
+(Cole(cid:231)ªo de gen(cid:243)tipos). Os gen(cid:243)tipos serªo gerados aleatoriamente atravØs de duas
+
+amostra de uma distribui(cid:231)ªo uniforme cont(cid:237)nua UC(−3, 3) e UC(0, 5) (A primeira
+
+diz respeito ao intercepto e a segunda diz respeito a inclina(cid:231)ªo, como atravØs de
+
+estudos anteriores foi poss(cid:237)vel constatar que se trata de uma inclina(cid:231)ªo positiva o
+
+intervalo foi restrito de 0 a 5, jÆ para o intercepto a dispersªo dos dados denotam
+
+um intercepto passando pelos nœmeros -3 a 3).
+
+Este par ordenado (UC(−3, 3), UC(0, 5)) serÆ calculado para cada um dos 10
+
+indiv(cid:237)duos da popula(cid:231)ªo original. A partir desse par ordenado do indiv(cid:237)duo i Ø
+
+41
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.4. Modelando o algoritmo genØtico
+
+obtida a equa(cid:231)ªo da reta, ri, e sªo usados os pontos da primeira prova na reta ri
+
+para obter as notas ajustadas da segunda prova para ri. Ficando com a sequŒncia
+
+de pontos:
+
+em que 1 ≤ i ≤ 40.
+
+(cid:0)yi
+
+1, yi
+
+2, yi
+
+3, · · · , yi
+40
+
+(cid:1)
+
+(3.17)
+
+Sendo assim, a popula(cid:231)ªo inicial Ø formada por 10 pares ordenados aleat(cid:243)rios
+
+obtidos por distribui(cid:231)ıes uniformes discretas.
+
+Neste trabalho serÆ utilizado o algoritmo apresentado pelo Leung (Algoritmo 1).
+
+O algoritmo 1 apresenta o algoritmo melhorado para um AG. Iniciando pela
+
+constru(cid:231)ªo da popula(cid:231)ªo P (τ ) em que τ Ø o nœmero de gera(cid:231)ıes, sendo assim a
+
+popula(cid:231)ªo de origem da otimiza(cid:231)ªo Ø dada por P (0).
+
+A popula(cid:231)ªo original que foi obtida pelo mero preenchimento estocÆstico Ø entªo
+
+submetida a avalia(cid:231)ªo quanto ao seu valor de (cid:28)tness, o (cid:28)tness utilizado no trabalho
+
+foi dado por:
+
+ff itness =
+
+SQReg
+SQT otal
+
+=
+
+(cid:80) (cid:0)Yi − ¯Y )(cid:1)2
+(cid:80) (cid:16) ˆYi − ¯Y
+
+(cid:17)2 = R2
+
+(3.18)
+
+Ø uma escolha plaus(cid:237)vel para a fun(cid:231)ªo de (cid:28)tness, jÆ que 0 ≤ R2 ≤ 1, e quanto maior
+foi o valor do R2 maior serÆ o ajustamento da curva aos dados.
+
+Em seguida, o algoritmo entra em um la(cid:231)o condicional em que o processo se
+
+repete atØ a condi(cid:231)ªo de (cid:28)naliza(cid:231)ªo esteja satisfeita. Para esse trabalho a condi(cid:231)ªo
+
+de (cid:28)naliza(cid:231)ªo foi a de completar as 4000 evolu(cid:231)ıes sem mudan(cid:231)a no melhor (cid:28)tness
+
+da popula(cid:231)ªo.
+
+Em sequŒncia, Ø realizada a sele(cid:231)ªo de dois indiv(cid:237)duos, Ta e Tb, da popula(cid:231)ªo
+
+inicialmente avaliada atravØs do procedimento de roleta ([14]), a probabilidade de
+
+42
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.4. Modelando o algoritmo genØtico
+
+ocorrer sele(cid:231)ªo Ø 1 (Em toda gera(cid:231)ªo haverÆ sele(cid:231)ªo), logo ap(cid:243)s dado in(cid:237)cio ao
+
+procedimento de cruzamento, seja Ti o indiv(cid:237)duo i (cole(cid:231)ªo de notas) da popula(cid:231)ªo:
+
+C1 =
+
+Ta + Tb
+2
+
+=
+
+(cid:20)ta1 + tb1
+2
+
+,
+
+ta2 + tb2
+2
+
+(cid:21)
+
+(3.19)
+
+em que ti Ø a mØdia aritmØtica entre as taxas i dos indiv(cid:237)duos selecionados no passo
+
+anterior, 0 ≤ i ≤ 2;
+
+C2 = tM AX · (1 − p) + max ([ta1, ta2] , [tb1, tb2]) · p
+
+(3.20)
+
+em que tM AX Ø a cole(cid:231)ªo dos valores de limiar mÆximo para cada par(cid:226)metro avaliado
+
+e p Ø o peso associado, que em questªo foi utilizado o valor p = 0, 3;
+
+C3 = tM IN · (1 − p) + min ([ta1, ta2] , [tb1, tb2]) · p
+
+(3.21)
+
+em que tM IN Ø a cole(cid:231)ªo dos valores de limiar m(cid:237)nimos para cada par(cid:226)metros
+
+avaliado;
+
+C4 =
+
+(tM AX + tM IN ) (1 − p) + ([ta1, ta2] + [tb1, tb2]) · p
+2
+
+(3.22)
+
+uma vez gerados os quatro candidatos a indiv(cid:237)duo de cruzamento, Ø feita a avalia(cid:231)ªo
+
+de cada um dos candidatos e Ø escolhido aquele que apresentar maior valor de (cid:28)tness.
+
+Ap(cid:243)s escolhermos o indiv(cid:237)duo (cid:28)lho gerado pelo cruzamento, Tc, Ø dado in(cid:237)cio ao
+
+processo de muta(cid:231)ªo:
+
+Tmi = Tc + Td = [tc1, tc2] + [b1∆1, b2∆2]
+
+(3.23)
+
+em que bj, 1 ≤ j ≤ 2, assume valor 0 ou 1. ∆k, 1 ≤ k ≤ 2 sªo nœmeros
+
+aleatoriamente gerados tais a soma do par(cid:226)metro tk e o ∆k podem assumir valores
+
+entre o limiar inferior e superior do par(cid:226)metro k. Assim, sªo geradas 3 muta(cid:231)ıes:
+
+43
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.4. Modelando o algoritmo genØtico
+
+A primeira, com apenas um bj assumindo valor 1 e todos os demais igual a 0 (a
+
+escolha de qual assumirÆ o valor 1 Ø dada atravØs de uma amostra aleat(cid:243)ria de uma
+
+distribui(cid:231)ªo uniforme discreta, Ud(1, 2)); a segunda, alguns dos bj escolhidos para
+
+assumir valor 1 e os demais valor 0; a terceira, todos os bj assumem valor 1. Por
+
+(cid:28)m, cada uma das trŒs muta(cid:231)ıes sªo avaliadas atravØs da fun(cid:231)ªo de (cid:28)tness.
+
+Em seguida, uma amostra aleat(cid:243)ria de uma distribui(cid:231)ªo uniforme cont(cid:237)nua
+
+entre 0 e 1 Ø testada contra a probabilidade de aceita(cid:231)ªo (que para o trabalho
+
+foi de(cid:28)nida como 10%), se a amostra for menor que a probabilidade de aceita(cid:231)ªo,
+
+entªo Tmi, 1 ≤ i ≤ 3 com maior valor de (cid:28)tness irÆ substituir o indiv(cid:237)duo com
+
+pior valor de (cid:28)tness na popula(cid:231)ªo. Se a amostra for maior ou igual do que a
+
+probabilidade de aceita(cid:231)ªo, entªo cada Tmi Ø testado contra o pior indiv(cid:237)duo da
+
+popula(cid:231)ªo, substituindo-o se tiver maior valor de (cid:28)tness.
+
+O procedimento se repete a cada gera(cid:231)ªo do algoritmo, a quantidade de gera(cid:231)ıes
+
+foi (cid:28)xada para um limite de 4000 gera(cid:231)ıes.
+
+44
+
+Cap(cid:237)tulo 3. Metodologia
+
+3.4. Modelando o algoritmo genØtico
+
+begin
+
+τ ← 0
+Inicializa P(τ )
+Avalia f (P(τ ))
+while (Nªo atingir condi(cid:231)ªo de parada) do
+
+// τ : nœmero de itera(cid:231)ıes;
+// P(τ ): popula(cid:231)ªo para itera(cid:231)ªo τ ;
+// f (P(τ )): fun(cid:231)ªo de (cid:28)tness ;
+
+begin
+
+τ ← τ + 1 ;
+Seleciona 2 pais p1 e p2 de P(τ − 1);
+Realiza a opera(cid:231)ªo de cruzamento pelas expressıes 3.18 a 3.21 ;
+Realiza a opera(cid:231)ªo de muta(cid:231)ªo pela expressªo 3.22 para gerar 3
+(cid:28)lhos nos1, nos2 e nos3 ;
+// reproduz um novo P(τ )
+if (Nœmero aleat(cid:243)rio < pa // pa: probabilidade de aceita(cid:231)ªo) then
+O (cid:28)lho de maior valor da fun(cid:231)ªo de (cid:28)tness entre nos1, nos2 e
+nos3 substitui o indiv(cid:237)duo com o menor valor da fun(cid:231)ªo de
+(cid:28)tness da popula(cid:231)ªo;
+
+else
+
+begin
+
+if (f (nos1) > menor valor de (cid:28)tness na popula(cid:231)ªo
+P(τ − 1)) then
+
+nos1 substitui o indiv(cid:237)duo com o menor valor de (cid:28)tness;
+
+end
+if (f (nos2) > menor valor de (cid:28)tness na popula(cid:231)ªo
+P(τ − 1)) then
+
+nos2 substitui o indiv(cid:237)duo com o menor valor de (cid:28)tness;
+
+end
+if (f (nos3) > menor valor de (cid:28)tness na popula(cid:231)ªo
+P(τ − 1)) then
+
+nos3 substitui o indiv(cid:237)duo com o menor valor de (cid:28)tness;
+
+end
+
+end
+Avalia f (P(τ ))
+
+end
+
+end
+
+end
+
+end
+
+Algoritmo 1: Rotina do algoritmo genØtico melhorado (Leung, 2003).
+
+45
+
+46
+
+4 Resultados
+
+Ap(cid:243)s a realiza(cid:231)ªo da simula(cid:231)ªo, foi poss(cid:237)vel constatar melhora no valor do R2
+
+ajustado. A Tabela 7 apresente a popula(cid:231)ªo gerada ao (cid:28)nal da simula(cid:231)ªo.
+
+Tabela 7: Popula(cid:231)ªo otimizada para o algoritmo genØtico.
+Indiv(cid:237)duo Intercepto Inclina(cid:231)ªo R2 ajustado
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+0,55422
+1,03927
+2,9434
+0,78138
+-0,05289
+0,94551
+1,51314
+1,24087
+1,45849
+1,45291
+
+0,90334
+0,75751
+0,41097
+0,88439
+0,90073
+0,79774
+0,70645
+0,70255
+0,67399
+0,6758
+
+0,56616
+0,46018
+0,02108
+0,22405
+0,3316
+0,50012
+0,47945
+0,58973
+0,59015
+0,59501
+
+(cid:201) notÆvel que ao (cid:28)nal da simula(cid:231)ªo o resultado foi satisfat(cid:243)rio se comparado
+
+ao modelo gerado pela regressªo linear. Houve uma sens(cid:237)vel diferen(cid:231)a quando
+
+confrontamos o melhor indiv(cid:237)duo da simula(cid:231)ªo e o resultado da regressªo.
+
+A Figura 12 apresenta a evolu(cid:231)ªo da simula(cid:231)ªo. Note que o melhor indiv(cid:237)duo
+
+da popula(cid:231)ªo s(cid:243) se apresenta na gera(cid:231)ªo de nœmero 2797 e que permanece sem
+
+melhoramentos atØ o (cid:28)m da simula(cid:231)ªo (O que poderia por s(cid:237) s(cid:243) determinar o
+
+encerramento da simula(cid:231)ªo) e perceba tambØm o comportamento quase assint(cid:243)tico
+
+da curva quando ignorado o fato dela ser uma curva de(cid:28)nida por saltos.
+
+Cap(cid:237)tulo 4. Resultados
+
+Figura 12: GrÆ(cid:28)co da simula(cid:231)ª: Gera(cid:231)ıes × Fitness
+
+Isso serve para validar ainda mais o modelo apresentado pela regressªo. As
+
+Figuras 13 e 14 apresentam, respectivamente, o ajuste linear apresentado pelo melhor
+
+indiv(cid:237)duo da popula(cid:231)ªo (indiv(cid:237)duo 10) e a dispersªo dos res(cid:237)duos.
+
+Figura 13: Ajuste linear proposto pelo indiv(cid:237)duo 10.
+
+47
+
+Cap(cid:237)tulo 4. Resultados
+
+Figura 14: Dispersªo dos res(cid:237)duos indiv(cid:237)duo 10.
+
+Pode-se notar a e(cid:28)cÆcia do mØtodo para o ajustamento de curvas. O prop(cid:243)sito do
+
+trabalho nªo visa propor um mØtodo para substituir o tªo bem estabelecido mØtodo
+
+de regressªo linear, o principal prop(cid:243)sito Ø apresentar a alternativa e confrontar os
+
+resultados quanti(cid:28)cando-os.
+
+A abordagem se mostra salutar como cap(cid:237)tulo a parte de um curso de estat(cid:237)stica
+
+e/ou cÆlculo numØrico.
+
+A interdisciplinaridade apresentada pela alternativa ainda levanta alguns t(cid:243)picos
+
+interessantes para discussªo como a integra(cid:231)ªo acadŒmica entre Æreas como:
+
+Computa(cid:231)ªo, Biologia, Estat(cid:237)stica e MatemÆtica.
+
+Isso posto, o enriquecimento
+
+cultural Ø enorme nªo somente para o alunado, como tambØm para os professores
+
+envolvidos na atividade.
+
+48
+
+49
+
+ReferŒncias
+
+[1] AL SALAMI, N. M. A., Ant Colony Optimization Algorithm, UbiCC Journal,
+
+v. 4, n. 3, p. 823-826,2009.
+
+[2] ALANDER, J. T., On optimal population size of genetic algorithms, In:
+CompEuro ’92 - COMPUTER SYSTEMS AND SOFTWARE. The Hague,
+Netherlands, Proceedings, 1992, p. 65-70.
+
+[3] ARABAS, J., MICHALEWICZ, Z., MULAWKA, J., GAVaPS-a genetic
+In: Evolutionary Computation,
+algorithm with varying population size,
+1994.
+Intelligence. Orlando,
+FL, Proceedings of the First IEEE Conference on Evolutionary
+Computation, 1994, p. 73-78 v.1.
+
+IEEE World Congress on Computational
+
+[4] APPLEGATE, D. L.; BIXLY, R. E.; CHV`TAL, V.; COOK, W. J., The
+Traveling Salesman Problem: A Computational Study, Princeton
+University Press, 2006, 606 p.
+
+[5] Algoritmo
+
+em
+http://pt.wikipedia.org/wiki/Algoritmo_gen%C3%A9tico.
+
+Acessado
+
+genØtico
+
+-
+
+16/08/2014:
+
+[6] BAKER, J. E., Reducing bias and ine(cid:30)ciency in the selection algorithm.
+In. GREFENSTETTE, J. J. Eds., Proceedings of the 2nd International
+Conference on Genetic Algorithms and Their Applications. Lawrence
+Erlbaum, Hillsdale, New Jersey, 1987, p. 14-21.
+
+[7] BLICKLE, T., THIELE, L., A comparison of selection schemes used in
+genetic algorithms. Tech. Rep. TIK Report 11, December 1995, Computer
+Engineering and Communication Networks Lab, Swiss Federal Institute of
+Techmology, 1995.
+
+[8] BREMERMANN, H.J. Optimization Through Evolution and Recombination,
+In M.C. Yovits et al, Editors, Self-Organizing Systems, Spartan Books,
+Washington, DC: 1962, p. 93-106.
+
+[9] Cap(cid:237)tulo 9 - Regressªo Linear
+
+e
+
+dre Peternelli, acessado em 16/08/2014:
+nelli/inf162.www.16032004/materiais/CAPITULO9.pdf.
+
+correla(cid:231)ªo - Prof. Luiz Alexan-
+http://www.dpi.ufv.br/ peter-
+
+ReferŒncias BibliogrÆficas
+
+[10] CASELLA, G., BERGER, R. L., Statistical Inference. Cengage Learning,
+
+2nd edition, 2001, 660p.
+
+[11] Coe(cid:28)ciente
+
+de Correla(cid:231)ªo
+
+em 16/12/2014:
+http://pt.wikipedia.org/wiki/Coe(cid:28)ciente_de_correla%C3%A7%C3%A3o_de
+_Pearson
+
+- Acessado
+
+Pearson
+
+[12] DAWKINS, R. O relojoeiro cego. A teoria da evolu(cid:231)ªo contra o des(cid:237)gnio
+
+divino. Editora Companhia das Letras. 1991, 488p.
+
+[13] DE JONG, K. A., An Analysis of the Behaviour of a Class of Genetic
+Adaptive Systems, Tese (Doctor of Philosophy), University of Michigan,
+1975.
+
+[14] EIBEN, A. E., SMITH, J. E., Introduction to Evolutionary Computing
+
+(Natural Computing Series), Springer, 2008, 315 p.
+
+[15] EIBEN, A. E., AARTS, E. H. L., VAN HEE, K. M., Global convergence
+of genetic algorithms: a Markov chain analysis, In: SCHWEFEL, H. -P.,
+M˜NNER, R., Eds., Proceedings of the 1st Conference on Parallel
+Problem Solving from Nature n. 496 in Lecture Notes in Computer
+Science, Springer, Berlin, Heidelberg, New York, 1991.
+
+[16] FAN, W., FOX, E. A., PATHAK, P., WU, H., The E(cid:27)ects of Fitness Functions
+on Genetic Programming-Based Ranking Discovery For Web Search, Journal
+of the American Society for Information Science and Technology, v.
+55, n. 7, p. 628-636, 2004.
+
+[17] FOGEL, D. B., Evolutionary Computation: The Fossil Record, IEEE
+
+press, Piscataway, NJ, 1998, 656 p.
+
+[18] FOGEL, L. J., OWENS, A. J., WALSH, M. J., Arti(cid:28)cial intelligence through a
+simulation of evolution. In: CALLAHAN, A., MAXFIELD, M., FOGEL, L.J.,
+Eds., Biophysics and Cybernetic Systems. Spartan, Washington DC, p.
+131-156, 1965.
+
+[19] FOGEL, L. J., OWENS, A. J., WALSH, M. J., Arti(cid:28)cial Intelligence
+
+through Simulated Evolution. Wiley, Chichester, UK, 1966.
+
+[20] GrÆ(cid:28)go
+
+de
+
+16/08/2014:
+http://wikiciencias.casadasciencias.org/wiki/images/4/44/Img_Diagrama_ou
+_gr%C3%A1(cid:28)co_de_dispers%C3%A3o_Gra(cid:28)co_1.png.
+
+dispersªo,
+
+acessado
+
+em
+
+50
+
+ReferŒncias BibliogrÆficas
+
+[21] GOLDBERG, D. E., DEB, K., A Comparative Analysis of Selection Schemes
+Used in Genetic Algorithms, Foundations of Genetic Algorithms, p 69-93.
+1991.
+
+[22] HOLLAND, J. H., Genetic algorithms and the optimal allocation of trials,
+
+SIAM J. of Computing, v. 2, p. 88-105, 1973.
+
+[23] HOLLAND, J. H., Adaption in Natural and Arti(cid:28)cial Systems, MIT
+
+Press, Cambridge, MA, 1992, 211 p.
+
+[24] KARABOGA, D., BASTURK, B., A powerful and e(cid:30)cient algorithm for
+arti(cid:28)cial bee colony (ABC) algorithm,
+
+numerical
+Journal of Global Optimization, v. 39, n. 3, p. 459-471, 2007.
+
+function optimization:
+
+[25] KENNEDY, J., EBERHART, R. Particle swarm optimization. In Proc. of the
+IEEE Int. Conf. on Neural Networks, Piscataway, NJ., 1995. p. 1942-1948.
+
+[26] KOZA, J. R., Genetic Programming, MIT Press, Cambridge, MA, 1992,
+
+840 p.
+
+[27] KOZA, J. R., Genetic Programming II, MIT Press, Cambridge, MA, 1994,
+
+768 p.
+
+[28] LARRA(cid:209)AGA, P., KUIJPRES, C. M. H., MURGA, R. H.,
+
+INZA, I.,
+DIZDAREVIC, S., Genetic Algorithms for the Travelling Salesman Problem:
+A Review of Representations and Operators, Arti(cid:28)cial Intelligence Review, v.
+13, p. 129-170, 1999.
+
+[29] LEUNG, F. H. F. Tuning of the structure and parameters of a neural
+network using an improved genetic algorithm, IEEE transactions on
+neural networks, V. 14, N. 1, pp. 79-88, 2003.
+
+[30] LEWIN, B., Genes VII. Oxford University Press, New York, 2000, 990 p.
+
+[31] MØtodo
+
+m(cid:237)nimos
+
+16/08/2014:
+-
+http://pt.wikipedia.org/wiki/M%C3%A9todo_dos_m%C3%ADnimos_quadra
+dos.
+
+quadrados
+
+Acessado
+
+em
+
+[32] RIDLEY, M. Evolution. 3rd edition, Blackwell Publishing, 2004, 751p.
+
+[33] SHAPIRO., Tabela para o teste Shapiro-Wilk - Acessado em 16/12/2014:
+http://docentes.esa.ipcb.pt/estatistica/apontamentos/Testes_Ajustamento.pdf
+
+[34] SCHWEFEL, H. -P., Numerical Optimisation of Computer Models,
+
+Wiley, New York, 1981, 398 p.
+
+51
+
+ReferŒncias BibliogrÆficas
+
+[35] SCHRAUDOLPH, N. N., BELEW, R. K., Dynamic Parameter Encoding for
+
+Genetic Algorithms, Machine Learning, v. 9, p. 9-21, 1992.
+
+[36] SRINIVAS, M., PATNAIK, L. M., Adaptive probabilities of crossover and
+mutation in genetic algorithms, IEEE Transactions on Systems, Man and
+Cybernetics, v. 24, n. 4, p. 656-667, 1994.
+
+[37] TELLES, M. P. C., DINIZ-FILHO, J. A. F., COELHO, A. S. G., CHAVES,L. J.,
+Autocorrela(cid:231)ªo espacial das freq(cid:252)Œncias alØlicas em subpopula(cid:231)ıes de cagaiteira
+(Eugenia dysenterica DC., Myrtaceae) no sudeste de GoiÆs, Revista brasil.
+Bot., v. 24, n. 2, p. 145-154, 2001.
+
+[38] TURING, A. M. (1948), Intelligent Machinery, In: Mechanical Intelligence,
+Collected Works, D. C. Ince ed., Amsterdam : North-Holland, 1992, p. 49. As
+to initiative, it is exampli(cid:28)ed by the research of algorithms for open arithmetical
+problems.
+
+[39] WHITNEY, L. D., KAUTH, J., Genitor: A di(cid:27)erent genetic algorithm.
+In: Proceedings of the Rocky Mountain Conference on Arti(cid:28)cial
+Intelligence. 1988, p. 118-130.
+
+52
+
+

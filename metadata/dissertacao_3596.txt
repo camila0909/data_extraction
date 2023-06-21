@@ -1,0 +1,3152 @@
+Universidade Federal do Piau´ı
+
+Centro de Ciˆencias da Natureza
+
+P´os-Graduac¸˜ao em Matem´atica
+Mestrado Profissional em Matem´atica - PROFMAT
+
+Modelagem Matem´atica na Programa¸c˜ao Linear:
+
+M´etodo Simplex e Aplica¸c˜oes
+
+Jerson Leite Alves
+
+Teresina - 2016
+
+2
+
+Jerson Leite Alves
+
+Disserta¸c˜ao de Mestrado:
+
+Modelagem Matem´atica na Programa¸c˜ao Linear: M´etodos
+
+Simplex e Aplica¸c˜oes
+
+Disserta¸c˜ao
+
+submetida
+
+`a Coordena¸c˜ao
+
+Acadˆemica Institucional do Programa de
+
+Mestrado Proﬁssional em Matem´atica em
+
+Rede Nacional na Universidade Federal
+
+do Piau´ı, oferecido em associa¸c˜ao com a
+
+Sociedade Brasileira de Matem´atica, como
+
+requisito parcial para obten¸c˜ao do grau de
+
+Mestre em Matem´atica.
+
+Orientador:
+
+Prof. Dr. Jurandir de Oliveira Lopes
+
+Teresina - 2016
+
+Dedico este trabalho `a minha fam´ılia.
+
+Agradecimentos
+
+Agrade¸co primeiramente a Deus pois ele ´e a base de tudo.
+
+Aos meus pais, Maria Jos´e e Jos´e Alves, por serem os principais respons´aveis por todas
+
+as minhas conquistas.
+
+Aos meus irm˜aos, Myllenna e Jeﬀerson, por serem motiva¸c˜ao para n˜ao desistir.
+
+Aos meus av´os maternos, Luzia e Cicero (in Memorian), e os av´os paternos, Luzia e
+
+Vicente.
+
+Aos meus Tios, sem esquecer de mencionar Antˆonio Neto e Celene, Anuncia¸c˜ao (Amor),
+
+Assun¸c˜ao (Sun¸ca) e Basilio, por dar for¸ca e vibrar a cada conquista.
+
+Aos meus primos, sem esquecer de mencionar Glauber, Jarbas, Germano, Tiago, Mateus,
+
+Pedro Ricardo e Pedro Lucas.
+
+As amigas Kamila, Karmem, Marina, Socorro, Dona L´u e Marcinha por sempre me darem
+
+os melhores conselhos.
+
+Aos amigos Giancarlo, Jadiel, Jo˜ao Justino, Geraldino e Wendel.
+
+Aos demais amigos do mestrado: Huerllen, Gilson, Samuel, Delano, Rubens, Rene´e,
+
+Bruno, Gideone e Perivaldo.
+
+Aos amigos da gradua¸c˜ao: Lucas, Jordan, Sandoel, Kadu, Rui, Carlo Adriano, Vitaliano,
+
+Gilson, Aline, Elesb˜ao, At´ecio, Mariane, Whanderson Bruno, M´ario e Antˆonio (veludo).
+
+Agrade¸co aos meus coordenadores Ismeraldo e Eldelita pela amizade e apoio no cresci-
+
+mento proﬁssional e acadˆemico.
+
+Ao meu orientador, Jurandir, por ser al´em de um excelente orientador, um grande amigo.
+
+A todos os professores do departamento de matem´atica.
+
+3
+
+4
+
+Aos professores, Rui e Gilvan, por compor a banca.
+
+Agrade¸co a FSA e a UESPI pelo apoio ﬁnanceiro.
+
+5
+
+“Trabalhe duro em silˆencio, deixe o seu
+
+sucesso fazer barulho!”.
+
+6
+
+Resumo
+
+O presente trabalho aborda os conceitos b´asicos sobre Modelagem Matem´atica apli-
+
+cado a Programa¸c˜ao linear. Neste sentido, faremos algumas modelagens e resolu¸c˜oes de
+
+Modelos de Programa¸c˜ao Linear usando o M´etodo Simplex e tambem atrav´es de recursos
+
+computacionais para mostrar resultados importantes a respeito de solu¸c˜oes de Modelos
+
+de Programa¸c˜ao Linear.
+
+Esse tema ´e bastante apropriado, principalmente, a alunos e professores que buscam
+
+motiva¸c˜ao para os estudo de matem´atica e resolu¸c˜ao de problemas do cotidiano. Usa-
+
+remos, algumas aplica¸c˜oes nas ´areas de Gest˜ao Hospitalar, Agricultura e Nutri¸c˜ao com
+
+an´alise te´orica e pr´atica dos resultados obtidos.
+
+Palavras-chave: Modelagem Matem´atica, Programa¸c˜ao Linear, Simplex, Solver.
+
+7
+
+8
+
+Abstract
+
+The present paper approached basic concepts about Mathematical Modeling by li-
+
+near programming. We use the concepts of functions of several variables and computer
+
+resources to show important results about Linear Programming Models solutions.
+
+This theme is very appropriate, especially to students and teachers who seek motiva-
+
+tion for the study of mathematics and solving daily problems. We use some applications
+
+in the areas of Hospital Management, Agriculture and Nutrition with theoretical and
+
+practical analysis of the results.
+
+Key words: Mathematical Modeling, Linear Programming, Simplex, Solver.
+
+9
+
+10
+
+Sum´ario
+
+Introdu¸c˜ao
+
+1 Modelagem Matem´atica
+
+15
+
+17
+
+1.1 Programa¸c˜ao Linear
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+1.2 Modelos de Programa¸c˜ao Linear . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+1.2.1 Opera¸c˜oes Elementares . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+1.2.2 Modelando Problemas atrav´es da Programa¸c˜ao Linear
+
+. . . . . . . 22
+
+1.3 Deﬁni¸c˜oes e Resultados Preliminares
+
+. . . . . . . . . . . . . . . . . . . . . 24
+
+1.4 O M´etodo Simplex . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+1.4.1 O Algor´ıtmo Primal Simplex . . . . . . . . . . . . . . . . . . . . . . 31
+
+1.4.2 Melhoria de uma solu¸c˜ao b´asica . . . . . . . . . . . . . . . . . . . . 32
+
+1.5 Uso de Recursos Computacionais
+
+. . . . . . . . . . . . . . . . . . . . . . . 45
+
+2 Aplica¸c˜oes
+
+49
+
+2.1 Nutri¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+2.2 Gest˜ao Hospitalar . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+2.3 Agricultura . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+
+3 Considera¸c˜oes Finais
+
+Referˆencias Bibliogr´aﬁcas
+
+57
+
+59
+
+11
+
+12
+
+SUM ´ARIO
+
+Introdu¸c˜ao
+
+A ciˆencia ´e uma atividade essencialmente desenvolvida pelo ser humano que procura
+
+entender a natureza por meio de teorias adequadas; ainda que a natureza continue exis-
+
+tindo e funcionando independente das teorias cient´ıﬁcas, o homem utiliza tais teorias
+
+para avan¸car seus conhecimentos que possibilitam num futuro tomar decis˜oes e agir cor-
+
+retamente. A ciˆencia contemporˆanea, entretanto, ´e fruto de experiencias planiﬁcadas e
+
+auxiliadas por teorias sujeitas a evolu¸c˜ao. A consistˆencia de uma teoria ou sua pr´opria
+
+valida¸c˜ao tem sido dependente, muitas vezes, da linguagem matem´atica que a envolve.
+
+Segundo [10], toda teoria espec´ıﬁca ´e, na verdade, um modelo matem´atico de um peda¸co
+
+da realidade.
+
+O objetivo fundamental do uso da matem´atica ´e de fato extrair a parte essencial
+
+da situa¸c˜ao-problema e formaliz´a-la em um contexto abstrato onde o pensamento possa
+
+ser absorvido com uma economia de linguagem. Dessa forma, a matem´atica pode ser
+
+vista como um instrumento intelectual capaz de sintetizar id´eias concebidas em situa¸c˜oes
+
+emp´ıricas que est˜ao quase sempre camuﬂadas num emaranhado de vari´aveis.
+
+A Modelagem Matem´atica aparece como uma metodologia alternativa bastante in-
+
+teressante para o ensino da Matem´atica que pode ser utilizada no Ensino Fundamental
+
+e no Ensino M´edio e vem sendo explorada para tentar dar mais motiva¸c˜ao ao processo
+
+de ensino-aprendizagem de Matem´atica. Pois se desenvolve de maneira criativa, moti-
+
+vadora e eﬁcaz, ela pode proporcionar diversos benef´ıcios, como por exemplo, facilita¸c˜ao
+
+da aprendizagem, prepara¸c˜ao para futuras proﬁss˜oes, desenvolvimento do racioc´ınio, de-
+
+senvolvimento do aluno como cidad˜ao cr´ıtico, compreens˜ao do papel s´ocio-cultural da
+
+Matem´atica tornando-a mais importante e agrad´avel.
+
+Os alunos n˜ao percebendo a necessidade imediata do que estuda em Matem´atica vem
+
+perdendo o interesse e a motiva¸c˜ao. A maioria dos alunos manipula as formas avaliati-
+
+13
+
+14
+
+SUM ´ARIO
+
+vas para conseguirem a nota ou a certiﬁca¸c˜ao de que precisam para o emprego ou para
+
+se libertar dos estudos ou da press˜ao que seus pais fazem. Diante dessa realidade, a
+
+interven¸c˜ao ocorrida, inicia-se no ensino fundamental, onde come¸ca o problema, pois, a
+
+expectativa ´e muito grande por parte do aluno que, na maioria das vezes, ´e frustrada, teve
+
+o como objetivo produzir um aumento de interesse, atrav´es de uma maior aproxima¸c˜ao
+
+da realidade, nos alunos.
+
+O presente trabalho mostra a Modelagem Matem´atica por meio da Programa¸c˜ao Li-
+
+near como ferramenta de otimiza¸c˜ao aplicada em problemas das mais diveras ´areas, dentre
+
+elas escolhemos a Agricultura fazendo um planejamento da planta¸c˜ao de gr˜aos, a Nutri¸c˜ao
+
+fazendo uma programa¸c˜ao de dieta e a Administra¸c˜ao fazendo um estudo sobre a quanti-
+
+dade de funcion´arios em rela¸c˜ao a demanda m´ınima exigida. E s˜ao apresentados de forma
+
+detalhada as etapas do Algoritmo Simplex na forma primal, assim como a implementa¸c˜ao
+
+do Solver como recurso computacional para a resolu¸c˜ao de Problemas de Programa¸c˜ao
+
+Linear (PPL).
+
+Cap´ıtulo 1
+
+Modelagem Matem´atica
+
+Quando se procura reﬂetir sobre uma por¸c˜ao da realidade, na tentativa de explicar, de
+
+entender, ou de agir sobre ela, o processo usual ´e selecionar, argumentos ou parˆamentros
+
+considerados essenciais e formaliz´a-los atrav´es de um sistema artiﬁcial: o modelo ma-
+
+tem´atico. Denominamos por Modelo Matem´atico, um conjunto de s´ımbolos e rela¸c˜oes
+
+matem´aticas que representam de alguma forma o objeto estudado.
+
+A Modelagem Matem´atica tem sido estudada desde os anos 80 e devido ao grande
+
+avan¸co das tecnologias, muitas das atividades do dia-a-dia passaram a ser realizadas por
+
+computadores. Com toda esta evolu¸c˜ao ocasionada pelo avan¸co da inform´atica, os con-
+
+ceitos matem´aticos tornaram-se impl´ıcitos, pois os programas de computa¸c˜ao s˜ao capazes
+
+de realizar c´alculos em uma fra¸c˜ao de segundo, o que manualmente levariam horas para
+
+o ser humano resolver.
+
+Neste sentido, muitas pessoas questionam sobre o papel da matem´atica na forma¸c˜ao
+
+de nossos alunos, qual o professor que nunca ouviu aquela velha pergunta que os alunos
+
+sempre fazem: “onde eu aplico isso?”. Uma resposta para esta quest˜ao ´e a Modela-
+
+gem Matem´atica, pois ela tem como objetivo interpretar e compreender os mais diversos
+
+fenˆomenos do nosso cotidiano, devido ao “poder” que a Modelagem proporciona pelas
+
+aplica¸c˜oes dos conceitos matem´aticos. Podemos descrever estes fenˆomenos, analis´a-los
+
+e interpret´a-los com o prop´osito de gerar discuss˜oes reﬂexivas sobre tais fenˆomenos que
+
+cercam nosso cotidiano.
+
+A Modelagem Matem´atica n˜ao deve ser utilizada apenas para justiﬁcar o conte´udo
+
+que est´a sendo ensinado, mas sim deve valorizar a raz˜ao, o motivo pelo qual o aluno deve
+
+15
+
+16
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+aprender Matem´atica, e a importˆancia que isto representa na forma¸c˜ao dele como cidad˜ao
+
+respons´avel e participativo na sua sociedade.
+
+Fazer Modelagem Matem´atica n˜ao ´e apenas resolver problemas no quadro usando
+
+situa¸c˜oes do cotidiano, como acontece com muitos professores hoje que pensam estar
+
+fazendo modelagem, na verdade eles apenas est˜ao resolvendo um problema como outro
+
+qualquer. Neste sentido pode-se dizer que Modelagem Matem´atica ´e o processo que
+
+envolve a obten¸c˜ao de um modelo que tenta descrever matematicamente um fenˆomeno da
+
+nossa realidade para tentar compreendˆe-lo e estud´a-lo, criando hip´oteses e reﬂex˜oes sobre
+
+tais fenˆomenos.
+
+Uma s´erie de pontos podem ser levantados para destacar a relevˆancia da modelagem
+
+matem´atica quando utilizada como instrumento de pesquisa:
+
+1. Pode estimular novas id´eias e t´ecnicas experimentais;
+
+2. Pode dar informa¸c˜oes em diferentes aspectos dos inicialmente previstos;
+
+3. Pode ser um m´etodo para se fazer interpola¸c˜oes, extrapola¸c˜oes e previs˜oes;
+
+4. Pode sugerir prioridades de aplica¸c˜oes de recursos e pesquisas e eventuais tomadas
+
+de decis˜ao;
+
+5. Pode preencher lacunas onde existem falta de dados experimentais;
+
+6. Pode servir como recurso para melhor entendimento da realidade;
+
+7. Pode servir de linguagem universal para compreens˜ao e entrosamento entre pesqui-
+
+sadores em diversas ´areas do conhecimento.
+
+Ao trabalharmos Modelagem Matem´atica dois pontos s˜ao fundamentais: aliar o tema a
+
+ser escolhido com a realidade de nossos alunos e aproveitar as experiˆencias extra-classe dos
+
+alunos aliadas `a experiˆencia do professor em sala de aula. Aﬁnal a Modelagem Matem´atica
+
+´e um conjunto de etapas que tem como objetivo ﬁnal fornecer uma descri¸c˜ao matem´atica
+
+de um dado fenˆomeno, ou situa¸c˜ao do cotidiano. Tal descri¸c˜ao, que geralmente ´e feita por
+
+meio de equa¸c˜oes ou inequa¸c˜oes, ´e chamada de modelo matem´atico.
+
+Atualmente a modelagem ´e utilizada em diversas ´areas, como por exemplo: no estudo
+
+da prolifera¸c˜ao de doen¸cas infecciosas, produ¸c˜ao de materias para constru¸c˜ao civil, es-
+
+trat´egias de pesca, efeitos biol´ogicos de radia¸c˜oes, movimenta¸c˜ao de animais, movimento
+
+1.1. PROGRAMAC¸ ˜AO LINEAR
+
+17
+
+de rios, estrat´egias de vacina¸c˜ao, teoria da decis˜ao, crescimento de cidades, tr´afego urbano,
+
+controle biol´ogico de pragas, entre outros.
+
+O campo da Programa¸c˜ao Matem´atica ´e enorme e suas t´ecnicas consagram-se face a
+
+sua grande utilidade na resolu¸c˜ao de problemas de otimiza¸c˜ao. Nesse ramo do conheci-
+
+mento se destacam os modelos de Programa¸c˜ao Linear, caso particular dos modelos de
+
+programa¸c˜ao em que as vari´aveis s˜ao cont´ınuas e apresentam comportamento linear, tanto
+
+em rela¸c˜ao as restri¸c˜oes quanto em rela¸c˜ao a fun¸c˜ao objetivo.
+
+1.1 Programa¸c˜ao Linear
+
+A Programa¸c˜ao Linear consiste em m´etodos para resolver problemas de Otimiza¸c˜ao
+
+com restri¸c˜oes (injun¸c˜oes) em que a Fun¸c˜ao Objetivo ´e linear em rela¸c˜ao `as vari´aveis
+
+de controle x1, x2, ..., xn e o dom´ınio destas vari´aveis ´e injucionado por um sistema de
+
+inequa¸c˜oes lineares.
+
+De maneira formal, o problema de Programa¸c˜ao Linear consiste em determinar a
+
+solu¸c˜ao (x1, x2, ...xn) que maximize a Fun¸c˜ao Objetivo dada por:
+
+z = f (x1, x2, ...xn) = c1x1 + c2x2 + ... + cnxn.
+
+Podemos ainda deﬁnir a Fun¸c˜ao Objetivo como:
+
+z = f (x1, x2, ...xn) =
+
+n
+(cid:88)
+
+j=1
+
+cjxj.
+
+Precisamos maximizar z obedecendo `as m restri¸c˜oes (injun¸c˜oes) impostas `as n vari´aveis
+
+xj:
+
+
+
+
+
+
+Ou ainda,
+
+a11x1 + a12x2 + . . . + a1nxn ≤ b1
+
+...
+
+a21x1 + a22x2 + . . . + a2nxn ≤ b2
+...
+am1x1 + am2x2 + . . . + amnxn ≤ bm.
+
+. . .
+
+...
+
+...
+
+18
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+n
+(cid:88)
+
+j=1
+
+aijxj ≤ bi
+
+para i = 1, 2, . . . , m.
+
+Onde:
+
+xj ≥ 0 ´e a vari´avel a ser designada ou produzida;
+
+cj ´e o coeﬁciente de lucro (ou de custo) para a vari´avel xj;
+
+z ´e a Fun¸c˜ao Objetivo a ser maximizada;
+
+aij ´e o coeﬁciente da vari´avel xj na injun¸c˜ao i;
+
+bi ´e o valor limite da restri¸c˜ao i;
+
+j = 1, 2, ..., n ´e o n´umero de vari´aveis; e i = 1, 2, ..., m ´e o n´umero de injun¸c˜oes
+
+impostas.
+
+Utilizando nota¸c˜ao matricial, o problema de Otimiza¸c˜ao Linear pode ser escrito como:
+
+Maximizar
+
+Sujeita as restri¸c˜oes:
+
+onde
+
+z = cx.
+
+Ax ≤ b,
+
+c = [cj] ´e um vetor linha;
+
+x = [xj] e b = [bi] s˜ao vetores coluna;
+
+A = [aij] ´e uma matriz m × n.
+
+As inequa¸c˜oes de injun¸c˜ao delimitam uma regi˜ao convexa e fechada de solu¸c˜oes vi´aveis,
+
+denominada regi˜ao de injun¸c˜oes ou regi˜ao vi´avel. Devido a todas as equa¸c˜oes (e ine-
+
+qua¸c˜oes) envolvidas serem lineares, o valor ´otimo da Fun¸c˜ao Objetivo z s´o pode ocorrer
+
+em um dos v´ertices da regi˜ao das solu¸c˜oes vi´aveis. Para determinarmos a solu¸c˜ao ´otima
+
+basta procurarmos o valor da Fun¸c˜ao Objetivo nos v´ertices da regi˜ao vi´avel. Estes v´ertices
+
+correspondem `a interse¸c˜ao de pelo menos duas equa¸c˜oes de injun¸c˜ao. As aﬁrma¸c˜oes an-
+
+teriores ser˜ao demonstradas mais adiante.
+
+1.2. MODELOS DE PROGRAMAC¸ ˜AO LINEAR
+
+19
+
+1.2 Modelos de Programa¸c˜ao Linear
+
+Segundo [8], um modelo de Programa¸c˜ao Linear (PL) ´e um modelo matem´atico de
+
+otimiza¸c˜ao na qual a fun¸c˜ao objetivo ´e linear e todas as restri¸c˜oes tambem s˜ao lineares.
+
+Estes modelos s˜ao um tipo especial de modelos de otimiza¸c˜ao. Para que um determinado
+
+sistema possa ser representado por meio de um modelo de (PL), ele deve possuir as
+
+seguintes caracteristicas:
+
+Proporcionalidade: a quantidade de recurso consumido por uma dada atividade
+
+deve ser proporcional ao n´ıvel dessa atividade na solu¸c˜ao ﬁnal do problema. Al´em disso,
+
+o custo de cada atividade ´e proporcional ao n´ıvel de opera¸c˜ao da atividade.
+
+N˜ao Negatividade: deve ser poss´ıvel desenvolver dada atividade em qualquer n´ıvel
+
+n˜ao negativo e qualquer propor¸c˜ao de um dado recurso deve sempre ser utilizado.
+
+Aditividade: o custo total ´e a soma das parcelas associadas a cada atividade.
+
+Separabilidade: pode-se identiﬁcar de forma separada o custo (ou consumo de re-
+
+cursos) espec´ıﬁco das opera¸c˜oes de cada atividade.
+
+1.2.1 Opera¸c˜oes Elementares
+
+Um mesmo modelo de (PL), composto pelo conjunto de equa¸c˜oes j´a apresentados
+
+anteriormente, pode, sem perda de propriedades matem´aticas, ser reescrito em cada uma
+
+das formas b´asicas. Esse processo de tradu¸c˜ao ´e realizado atraves das seguintes opera¸c˜oes
+
+elementares:
+
+1. Mudan¸ca no crit´erio de otimiza¸c˜ao, ou seja, transforma¸c˜ao de maximiza¸c˜ao para
+
+minimiza¸c˜ao e vice-versa.
+
+Observe que maximizar uma fun¸c˜ao f (x) ´e corresponte a minimizar (−f (x)) e mi-
+
+nimizar f (x) corresponte a maximizar (−f (x)).
+
+2. Transforma¸c˜ao de uma vari´avel livre xn ∈ R, em vari´aveis n˜ao negativas. Neste
+
+caso, a mudan¸ca exigir´a a substitui¸c˜ao da vari´avel em quest˜ao por duas vari´aveis
+
+auxiliares, ambas n˜ao negativas, cuja soma ´e igual a vari´avel original.
+
+xn = x1n − x2n onde x1n ≥ 0, x2n ≥ 0.
+
+20
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+3. Transforma¸c˜ao de desigualdades em igualdades e vice-versa. Nesta situa¸c˜ao, temos
+
+dois casos a analisar:
+
+Caso 1: Transforma¸c˜ao de restri¸c˜oes de menor ou igual em igualdade.
+
+x1 + x2 + · · · + xn ≤ b.
+
+Para transformar em uma restri¸c˜ao de igualdade podemos introduzir uma vari´avel
+
+de folga xn+1 capaz de garantir a desigualdade, o que gera:
+
+x1 + x2 + · · · + xn + xn+1 = b,
+
+com xn+1 ≥ 0.
+
+Caso 2: Transforma¸c˜ao de restri¸c˜oes de maior ou igual em igualdade.
+
+x1 + x2 + · · · + xn ≥ b.
+
+Para transformar em uma restri¸c˜ao de igualdade podemos introduzir uma vari´avel
+
+de folga xn+1 capaz de garantir a desigualdade, o que gera:
+
+x1 + x2 + · · · + xn − xn+1 = b,
+
+com xn+1 ≥ 0.
+
+1.2.2 Modelando Problemas atrav´es da Programa¸c˜ao Linear
+
+Podemos decompor o processo de organiza¸c˜ao de um modelo de Programa¸c˜ao Linear
+
+nas seguintes etapas:
+
+1. Deﬁni¸c˜ao das atividades: Ap´os a an´alise do problema, as atividades que comp˜oem
+
+s˜ao deﬁnidas. Normalmente, associada a cada atividade uma unidade de medida
+
+deve ser adotada.
+
+1.2. MODELOS DE PROGRAMAC¸ ˜AO LINEAR
+
+21
+
+2. Deﬁni¸c˜ao dos recursos: Considerando os insumos dispon´ıveis dentro de cada
+
+atividade, determina-se os recursos que est˜ao sendo usados e produzidos em cada
+
+uma.
+
+3. C´alculo dos coeﬁcientes de insumo/produ¸c˜ao: ´E indispens´avel estabelecer
+
+claramente como as atividades e os recursos est˜ao relacionados em termos de recursos
+
+necess´arios por unidade de atividade produzida.
+
+4. Determina¸c˜ao das condi¸c˜oes externas: Considerando que os recursos s˜ao limi-
+
+tados, cumpre determinar a quantidade de cada recurso dispon´ıvel para o processo
+
+modelado. Essas s˜ao as denominadas condi¸c˜oes externas do modelo.
+
+5. Formaliza¸c˜ao do Modelo: Consiste em associar quantidades n˜ao negativas
+
+x1, x2, . . . , xn a cada uma das atividades, escrever as equa¸c˜oes de balanceamento e
+
+indicar o uso de cada recurso.
+
+Sendo assim, qualquer Problema de Programa¸c˜ao Linear (PPL) pode ser escrito na
+
+forma matricial como:
+
+max
+
+z = cx
+
+s.a. Ax = b
+
+x ≥ 0
+
+onde x ≥ 0 ´e dizer que todas as componente xi ≥ 0, com i = 1, 2, . . . , n.
+
+Vamos formular o seguinte exemplo:
+
+Exemplo .1 O Problema da Pequena F´abrica
+
+Considere a situa¸c˜ao de decidir sobre o n´umero de unidades a serem produzidas por
+
+certo fabricante de dois tipos de produto A e B. Os lucros por unidade do produto A e do
+
+produto B s˜ao, respectivamente, 2 e 5 unidades monet´arias. Cada unidade do produto A
+
+requer 3 horas de m´aquina e 9 unidades de mat´eria-prima, enquanto o produto B requer
+
+4 horas de m´aquina e 7 unidades de mat´eria-prima.
+
+Os tempos m´aximos dispon´ıveis de horas de m´aquina e de materia prima s˜ao 200 horas
+
+e 300 unidades, respectivamente. Formule o problema de forma a otimizar o lucro total.
+
+22
+
+Solu¸c˜ao:
+
+1. Escolha da vari´avel de decis˜ao:
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+xi
+
+:= quantidade de unidades do produto A (i = 1) e do produto B (i = 2)
+
+fabricadas.
+
+2. Elabora¸c˜ao da fun¸c˜ao objetivo:
+
+Maximizar z(x1, x2) = 2x1 + 5x2
+
+Neste caso, otimizar o lucro total ´e equivalente a maximizar.
+
+3. Formula¸c˜ao das restri¸c˜oes:
+
+Restri¸c˜ao associada `a disponibilidade de tempo de m´aquina:
+
+3x1 + 4x2 ≤ 200;
+
+Restri¸c˜ao associada `a disponibilidade de mat´eria-prima:
+
+9x1 + 7x2 ≤ 300;
+
+Restri¸c˜oes de n˜ao negatividade:
+
+x1 ≥ 0 e x2 ≥ 0.
+
+1.3 Deﬁni¸c˜oes e Resultados Preliminares
+
+Deﬁni¸c˜ao .1 Uma base de uma matriz Am×n ´e uma matriz quadrada de m vetores coluna
+linearmente independentes em Rm. As vari´aveis associadas a essas colunas denominare-
+
+mos vari´aveis b´asicas.
+
+Dessa maneira, podemos decompor a matriz A em outras duas matrizes B e R, onde
+
+B ´e uma matriz invert´ıvel m × m e R ´e uma matriz m × (n − m), assim como podemos
+
+decompor o vetor como x em xT = [xT
+
+B, xT
+b´asicas de m componentes e xR ´e o vetor das restantes n − m vari´aveis n˜ao b´asicas.
+
+R], onde xB representa o vetor das vari´aveis
+
+Denotaremos por I ´e o conjunto dos ´ındices correspondentes `as vari´aveis b´asicas, e J
+
+´e o ´ındice das vari´avies n˜ao b´asicas.
+
+Deﬁni¸c˜ao .2 Seja B uma base associada `a matriz A. O vetor x dado por xT = [xT
+
+B, 0]
+
+onde xB = B−1b ´e chamado de solu¸c˜ao b´asica do (P P L).
+
+1.3. DEFINIC¸ ˜OES E RESULTADOS PRELIMINARES
+
+23
+
+Deﬁni¸c˜ao .3 Uma solu¸c˜ao b´asica sem componentes negativas de um (P P L) ´e denomi-
+
+nada solu¸c˜ao b´asica vi´avel
+
+Deﬁni¸c˜ao .4 Uma solu¸c˜ao b´asica sem componentes negativas que otimiza um (P P L) ´e
+
+denominada solu¸c˜ao b´asica vi´avel ´otima
+
+Exemplo .2
+
+Seja o seguinte sistema de equa¸c˜oes que constitui um conjunto de restri¸c˜oes de algum
+
+problema de Programa¸c˜ao Linear:
+
+x1 + 2x2 ≤ 4;
+
+x2 ≤ 1.
+
+Passando para a forma padr˜ao de representa¸c˜oes temos:
+
+A matriz A ´e dada por:
+
+x1 + 2x2 + x3 = 4;
+
+x2 + x4 = 1.
+
+
+
+
+
+A =
+
+
+
+ .
+
+1 2 1 0
+
+0 1 0 1
+
+E pode ser decomposta por :
+
+B =
+
+
+
+
+
+1 0
+
+0 1
+
+
+
+ ,
+
+R =
+
+
+
+
+
+1 2
+
+0 1
+
+
+
+ .
+
+Nesse caso xB = [x3, x4] e xR = [x1, x2].
+
+Escolhendo x1 = x2 = 0, x3 = 4 e x4 = 1. Assim o vetor xT = [4, 1, 0, 0] ´e uma solu¸c˜ao
+
+b´asica n˜ao degenerada.
+
+Deﬁni¸c˜ao .5 O conjunto C = {x ∈ Rn | Ax = b, x ≥ 0} denomina-se conjunto de
+
+solu¸c˜oes vi´aveis.
+
+Teorema .1 O conjunto C das solu¸c˜oes vi´aveis de um modelo de programa¸c˜ao linear ´e
+
+um conjunto convexo.
+
+24
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Demonstra¸c˜ao: Devemos provar que: para quaisquer dois ponto distintos x1, x2
+
+pertencentes a C, a combina¸c˜ao linear convexa desses pontos tambem pertence a C, isto
+
+´e:
+
+x1, x2 ∈ C
+
+⇒
+
+
+
+
+x = αx1 + (1 − α)x2 ∈ C
+
+
+
+com 0 < α < 1.
+
+Sejam x1, x2 duas solu¸c˜oes vi´aveis de C, assim:
+
+Ax1 = b
+
+e
+
+x1 ≥ 0
+Dado x deﬁnido como:
+
+Ax2 = b
+
+x2 ≥ 0.
+
+Ent˜ao:
+
+x = αx1 + (1 − α)x2
+
+com 0 < α < 1
+
+Ax = A[αx1 + (1 − α)x2]
+
+= αAx1 + (1 − α)Ax2
+
+= αb + (1 − α)b = b.
+
+al´em disso x ≥ 0, uma vez que:
+
+pois,
+
+x = αx1 + (1 − α)x2 ≥ 0
+
+x1 ≥ 0, x2 ≥ 0 e 0 < α < 1.
+
+Deﬁni¸c˜ao .6 Seja P um conjunto convexo, dizemos que x ∈ P ´e um ponto extremo do
+
+conjunto, se n˜ao existe α ∈ (0, 1), tal que, x = αx1 + (1 − α)x2, com x1 (cid:54)= x, x2 (cid:54)= x e
+
+x1, x2 ∈ P .
+
+Teorema .2 Um ponto x ∈ C ´e uma solu¸c˜ao b´asica vi´avel se , e somente se, x ´e um
+
+(cid:2)
+
+ponto extremo(v´ertice) de C.
+
+Demonstra¸c˜ao: Seja x ∈ C, ent˜ao:
+
+Ax = b.
+
+x ≥ 0.
+
+1.3. DEFINIC¸ ˜OES E RESULTADOS PRELIMINARES
+
+25
+
+Suponha x uma solu¸c˜ao b´asica vi´avel, sem perda de generalidade, as vari´aveis b´asicas
+
+s˜ao as m primeiras:
+
+x =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+
+x2
+...
+xm
+
+0
+...
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+xB
+
+0
+
+Suponha, por absurdo, que x n˜ao seja um ponto extremo do conjunto C. Ent˜ao x
+
+pode ser escrito como combina¸c˜ao convexa de dois pontos distintos de x. Sejam y e z
+
+esses pontos. Da´ı:
+
+x = αy + (1 − α)z
+
+0 < α < 1.
+
+Como y, z ∈ C, ent˜ao:
+
+Ay = b
+
+y ≥ 0
+
+e
+
+Az = b
+
+z ≥ 0.
+
+Observando x = αy + (1 − α)z veja que:
+
+
+
+
+
+xB
+
+0
+
+
+
+
+
+ =
+
+
+
+(1 − α)yB + αzB
+
+(1 − α)yR + αzR
+
+
+
+
+
+Logo, yR = zR = 0. Por outro lado, sendo yT = [yB
+
+0]T e zT = [zB
+
+0]T , da´ı,
+
+Ay = [B R][y] = ByB ⇔ ByB = b ⇔ yB = B−1b ⇔ y = x
+
+Az = [B R][z] = BzB ⇔ BzB = b ⇔ zB = B−1b ⇔ z = x
+
+Consequentemente, x = y = z.
+
+Absurdo! Pois os pontos y e z s˜ao distintos x. de Logo x ´e um ponto extremo do
+
+26
+
+conjunto C.
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Veja que em todos os passos desta demonstra¸c˜ao a correspondencia ´e biun´ıvoca.
+
+(cid:2)
+
+O Teorema a seguir ´e o principal resultado deste trabalho e pode ser mais detalhado
+
+em [2].
+
+Teorema .3 ( Teorema Fundamental da Programa¸c˜ao Linear ) Dado um modelo
+
+de programa¸c˜ao linear na forma padr˜ao onde Am×n ´e uma matriz de posto m,
+
+max
+
+z = cx,
+
+s.a. Ax = b,
+
+x ≥ 0.
+
+(I) - Se existe uma solu¸c˜ao vi´avel, ent˜ao existe uma solu¸c˜ao b´asica vi´avel.
+
+(II) - Se existe uma solu¸c˜ao vi´avel ´otima, ent˜ao existe uma solu¸c˜ao b´asica vi´avel ´otima.
+
+Demonstra¸c˜ao:
+
+(I) - Sejam A1, A2, . . . , An os vetores coluna da matriz A. Suponha x = [x1, x2, . . . , xn]
+
+uma solu¸c˜ao vi´avel. Ent˜ao:
+
+x1A1 + x2A2 + · · · + xnAn = b.
+
+(1)
+
+Suponha que exatamente p das vari´aveis xi s˜ao positivas, e sem perda de generalidade,
+
+que s˜ao as p primeiras vari´aveis. Assim podemos reescrever (1) como:
+
+x1A1 + x2A2 + · · · + xpAp = b.
+
+(2)
+
+Temos ent˜ao que considerar dois casos, quando os vetores A1, A2, ..., Ap s˜ao linearmente
+
+independentes (LI) ou linearmente dependentes (LD).
+
+1.3. DEFINIC¸ ˜OES E RESULTADOS PRELIMINARES
+
+27
+
+Suponha que A1, A2, . . . , Ap s˜ao (LI), ent˜ao, p ≤ m. Se p = m, a solu¸c˜ao x ´e uma
+
+solu¸c˜ao b´asica . Se p < m, ent˜ao podemos selecionar (m–p) vetores entre os (n–p) res-
+
+tantes tal que o conjunto dos m vetores formado por A1, A2, . . . , Ap e os (m–p) escolhidos
+
+s˜ao LI, pois o posto de A ´e m. Atribuindo o valor zero as m–p vari´aveis correspondentes,
+
+obtemos uma solu¸c˜ao b´asica vi´avel (degenerada neste caso).
+
+Por outro lado, suponha que A1, A2, . . . , Ap s˜ao LD. Ent˜ao, por deﬁni¸c˜ao, existe uma
+
+combina¸c˜ao n˜ao trivial destes vetores que ´e nula. Isto ´e, existem constantes y1, y2, . . . , yp,
+
+com pelo menos uma delas positiva, tal que
+
+y1A1 + y2A2 + · · · + ypAp = 0.
+
+(3)
+
+Multiplicando (3) por k ∈ R e subtraindo de (2), temos:
+
+(x1 − ky1)A1 + (x2 − ky2)A2 + · · · + (xp − kyp)Ap = b.
+
+(4)
+
+A express˜ao (4) ´e v´alida para qualquer k e, para cada k, as componentes xi–kyi
+
+correspondem a uma solu¸c˜ao de (1), embora a restri¸c˜ao xi–kyi ≥ 0 possa ser violada.
+
+Fazendo y = [y1, y2, . . . , yp, 0, 0, . . . , 0] vemos que, para qualquer k , uma solu¸c˜ao de (4) ´e
+
+x − ky.
+
+Para k = 0, x ´e a solu¸c˜ao b´asica vi´avel inicial. Quando k cresce positivamente, como
+
+estamos suponto pelo menos um yi > 0, temos que pelo menos uma componente xi − kyi
+
+tende a zero. Escolha k = min{ xi
+yi
+
+: yi > 0}. Para este valor de k, a solu¸c˜ao dada por
+
+x − ky ´e vi´avel e possui no m´aximo p–1 vari´aveis positivas. Repetindo este processo, se
+
+necess´ario, podemos eliminar as vari´aveis positivas at´e que se tenha uma solu¸c˜ao vi´avel
+
+com as colunas correspondentes LI, situa¸c˜ao onde o caso anterior se aplica.
+
+Portanto existe uma solu¸c˜ao b´asica vi´avel.
+
+(II) - Suponha x = [x1, x2, . . . , xn] uma solu¸c˜ao vi´avel ´otima e, como no caso da
+
+prova da parte (I) acima, suponha que somente p vari´aveis, x1, x2, . . . , xp, sejam positivas.
+
+28
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Temos, de novo, dois casos.
+
+Suponha que A1, A2, . . . , Ap s˜ao LI, ent˜ao p ≤ m. E a demonstra¸c˜ao ´e an´aloga ao
+
+caso (I). Por outro lado, quando os vetores A1, A2, . . . , Ap s˜ao LD e tamb´em ´e tratado
+
+da mesma forma com no caso (I), mas neste caso temos que mostrar que k na solu¸c˜ao
+
+x − ky ´e ´otimo. Para isso, sabemos que o valor da fun¸c˜ao objetivo para a solu¸c˜ao x–ky ´e
+
+z = cx–cky.
+
+Para k suﬁcientemente pequeno, x–ky ´e uma solu¸c˜ao vi´avel para valores positivos e
+
+negativos de k. Podemos ent˜ao concluir que cy = 0, pois caso contr´ario, se cy (cid:54)= 0, um
+
+valor pequeno de k com um sinal apropriado poderia ser encontrado para fazer cx–cky
+
+maior que cx, mantendo ainda a viabilidade, o que contraria a hip´otese que x ´e uma
+
+solu¸c˜ao ´otima. Logo cy = 0.
+
+Portanto, com isso obt´em-se uma nova solu¸c˜ao vi´avel com um n´umero menor de com-
+
+ponentes positivas, situa¸c˜ao onde o caso (I) se aplica. Consequentemente existe uma
+
+solu¸c˜ao b´asica vi´avel ´otima.
+
+(cid:2)
+
+1.4 O M´etodo Simplex
+
+O modelo de progra¸c˜ao linear esta associado a um conjunto de equa¸c˜oes ou inequa¸c˜oes
+
+onde pretende-se otimizar uma fun¸c˜ao objetivo. Vimos na se¸c˜ao anterior que a solu¸c˜ao
+
+´otima esta sempre em um v´ertice do conjunto das solu¸c˜oes vi´aveis, pois o n´umero de
+
+v´ertices ´e Cn,m =
+
+m!(n−m)! . Mesmo assim a diﬁculdade de resolver um (PPL) ´e grande.
+Logo podemos resumir em dois blocos as diﬁculdades que dever˜ao ser vencidas por quem
+
+n!
+
+deseja encontrar a solu¸c˜ao ´otima de um (PPL).
+
+1. Como obter solu¸c˜oes b´asicas vi´aveis do sistema de equa¸c˜oes.
+
+2. Como evitar o teste de todas as solu¸c˜oes b´asicas vi´aveis poss´ıveis para garantir a
+
+otimiza¸c˜ao do sistema.
+
+1.4. O M ´ETODO SIMPLEX
+
+29
+
+´E nesse contexto que o algoritmo Simplex se destaca como uma das grandes contri-
+
+bui¸c˜oes `a Programa¸c˜ao Matem´atica. Trata-se de um algoritmo extremamente eﬁciente
+
+para a solu¸c˜ao de um (PPL) o qual j´a est´a dispon´ıvel em v´arios softwares gratuitos, e com
+
+base neles foram desenvolvidos v´arios outros m´etodos.
+
+O Simplex ´e um algoritmo que se utiliza de um ferramental baseado na ´Algebra Linear
+
+para determinar por um m´etodo interativo uma solu¸c˜ao ´otima de um Problema de Pro-
+
+grama¸c˜ao Linear (PPL), caso exista. Sua concep¸c˜ao b´asica ´e simples e, por isso mesmo,
+
+eﬁciente. De modo geral, o algoritmo parte de uma solu¸c˜ao vi´avel, solu¸c˜ao essa normal-
+
+mente extrema (v´ertice). A partir dessa solu¸c˜ao inicial vai identiﬁcando novas solu¸c˜oes
+
+vi´aveis cujo valor da fun¸c˜ao objetivo nesta solu¸c˜ao ´e igual ou maior que a corrente. O
+
+algoritmo, portanto, possui um crit´erio de escolha que permite encontrar sempre novas
+
+(e melhores) solu¸c˜oes do conjunto de solu¸c˜oes vi´aveis, e um outro crit´erio que consegue
+
+determinar se a solu¸c˜ao escolhida ´e ou n˜ao uma solu¸c˜ao ´otima.
+
+Antes de desenvolvermos o algoritmo propriamente dito s˜ao necess´arias algumas de-
+
+ﬁni¸c˜oes que ser˜ao utilizadas no m´etodo.
+
+1.4.1 O Algor´ıtmo Primal Simplex
+
+O algoritmo Simplex descreve uma sequˆencia de passos para a solu¸c˜ao de sistemas
+
+de equa¸c˜oes lineares sujeitos a uma fun¸c˜ao objetivo. Basicamente, ele disp˜oes sobre trˆes
+
+situa¸c˜oes:
+
+1. O m´etodo de invers˜ao da matriz b´asica m × m deduzida a partir de A, uma matriz
+
+de restri¸c˜oes m × n.
+
+2. As condi¸c˜oes de troca de coluna da vari´avel dentro da matriz b´asica, para que
+
+exista garantia de uma melhoria no valor da solu¸c˜ao ao longo do desenvolvimento
+
+dos passos do algoritmo.
+
+30
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+3. As regras de parada do algoritmo e a interpreta¸c˜ao dessa situa¸c˜ao ﬁnal.
+
+Eventualmente, o algoritmo pode ser adaptado para promover a escolha da base b´asica
+
+vi´avel inicial, ou solu¸c˜ao b´asica vi´avel de partida. N˜ao entraremos em detalhes no modo
+
+de escolha da solu¸c˜ao b´asica vi´avel inicial, no entanto, pode ser encontrado na ´ıntegra em
+
+[8].
+
+1.4.2 Melhoria de uma solu¸c˜ao b´asica
+
+Considerando que exista uma solu¸c˜ao b´asica vi´avel para o seguinte problema de pro-
+
+grama¸c˜ao linear:
+
+max
+
+z = cx,
+
+s.a. Ax = b,
+
+x ≥ 0.
+
+onde A ´e a matriz m×n, de posto m, podemos decompor o vetor c em suas componentes
+
+b´asicas e n˜ao b´asicas c = [cB, cR], e supor que a solu¸c˜ao b´asica vi´avel existente seja
+
+
+
+
+ cujo valor associado ´e dado pela seguinte
+
+B−1b
+
+0
+
+representada por um vetor x =
+
+express˜ao:
+
+z = c
+
+
+
+
+
+B−1b
+
+0
+
+
+
+
+
+ = [cB, cR]
+
+
+
+
+
+
+ = cBB−1b.
+
+B−1b
+
+0
+
+Queremos agora encontrar uma solu¸c˜ao x b´asica vi´avel, a qual est´a em fun¸c˜ao das
+
+vari´aveis b´asicas e n˜ao-b´asicas da seguinte forma:
+
+x =
+
+
+
+
+
+xB
+
+xR
+
+
+
+, sendo b = Ax ⇒ b = BxB + RxR
+
+Aplicando B−1 a inversa de B e isolando xB, temos:
+
+xB = B−1b − B−1RxR = B−1b −
+
+B−1ajxj
+
+(cid:88)
+
+j∈J
+
+dessa forma pode-se reescrever a express˜ao z = cx como:
+
+1.4. O M ´ETODO SIMPLEX
+
+31
+
+z = cx
+
+= cBxB + cRxR
+B−1b − (cid:80)
+
+= cB
+
+(cid:20)
+
+j∈J
+
+B−1ajxj
+
+(cid:21)
+
++ (cid:80)
+
+j∈J
+
+B−1cjxj
+
+= z − (cid:80)
+
+(zj − cj)xj
+
+j∈J
+
+onde zj = cBB−1aj para cada vari´avel n˜ao b´asica.
+
+A equa¸c˜ao acima mostra a possibilidade do estabelecimento de um crit´erio para o
+
+processo de melhoria da solu¸c˜ao b´asica. Quando o valor do termo zj − cj ´e estritamente
+
+menor que zero existe a chance de, com a entrada da vari´avel de ´ındice j na base, aumentar
+
+o valor da fun¸c˜ao objetivo em (zj − cj)xj, desde que essa vari´avel possa assumir um
+
+valor positivo. Se denominarmos k o ´ındice dessa vari´avel n˜ao b´asica e fazendo xj = 0
+
+∀j ∈ J − {k}.
+
+z = z − (zk − ck)xk
+
+Observando a equa¸c˜ao acima, veja que a vari´avel xk deve ser incrementada ao m´aximo
+
+para que ocorra o processo de melhoria. Com o crescimento de xk, o valor de z aumenta
+
+na nova solu¸c˜ao b´asica proporcionalmente ao valor de zk − ck.
+
+Veja que
+
+xB = B−1b − B−1akxk = b − ykxk
+
+onde yk = B−1ak e b = B−1b.
+
+Denotando as componentes do vetor xB e de b respectivamente por xB1, xB2, . . . , xBm
+
+e b1, b2, . . . , bm, temos, ﬁnalmente, a seguinte express˜ao:
+
+
+
+
+
+
+
+
+
+
+
+xB1
+
+xB2
+
+. . .
+
+xBm
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b1
+
+b2
+
+. . .
+
+bm
+
+
+
+
+
+
+
+
+
+
+
+y1k
+
+y2k
+
+. . .
+
+ymk
+
+
+
+
+
+
+
+
+
+
+
+−
+
+xk
+
+A express˜ao acima mostra que:
+
+32
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Se existir algum yik < 0, ent˜ao o xBi associado pode crescer indeﬁnidamente com o
+
+crescimento de xk. Ou seja, a solu¸c˜ao n˜ao tem valor ﬁnito.
+
+Do contr´ario, se existem yik > 0, ent˜ao xBi decresce com o incremento de xk. Para
+
+satisfazer a condi¸c˜ao de n˜ao negatividade de uma solu¸c˜ao b´asica vi´avel, a nova vari´avel
+
+xk s´o poder´a crescer at´e que a primeira componente xBi seja reduzida a zero, o que
+
+corresponde ao m´ınimo entre todos os bi
+yik
+
+para os valores positivos de yik, ou seja,
+
+bs
+ysk
+
+= xs = min
+
+(cid:20) bi
+yik
+
+(cid:21)
+: yik > 0
+
+onde i ∈ I tal que yik > 0.
+
+Note que para garantir a independˆencia linear da coluna k com as demais colunas da
+
+base ´e indispens´avel que ysk (cid:54)= 0. E pelo crit´erio
+
+z = z − (zk − ck)xk ⇒ z > z,
+
+a vari´avel xk dever´a entrar na base melhorando o valor da fun¸c˜ao objetivo, e a nova base
+
+continuar´a linearmente independente.
+
+Assim de acordo com [1] e com o que concluimos a cima, podemos formalizar o processo
+
+de escolha da solu¸c˜ao b´asica vi´avel inicial, crit´erio de troca de vari´aveis na base e regra
+
+de parada da seguinte forma:
+
+1. Calcular os valores zj − cj, ∀j ∈ J:
+
+- Se zj − cj ≥ 0, ∀j ∈ J, ent˜ao a solu¸c˜ao b´asica vi´avel xB ´e ´otima e z = z. Pare!
+
+- Caso contr´ario, deﬁna J1 = {j ∈ J|zj − cj < 0}
+
+2. Se yj < 0 para pelo menos um j ∈ J1, n˜ao existe solu¸c˜ao ´otima ﬁnita. Pare!
+
+- Caso contr´ario, determine k de modo que zk − ck = min{zj − cj}, com j ∈ J
+
+Na coluna k encontre xs de forma que vale a rela¸c˜ao:
+
+bs
+ysk
+
+= xs = min
+
+(cid:20) bi
+yik
+
+(cid:21)
+: yik > 0
+
+com i ∈ I tal que yik > 0.
+
+3. Considere a nova base B deduzida a partir da anterior pela substitui¸c˜ao de as por
+
+ak
+
+1.4. O M ´ETODO SIMPLEX
+
+33
+
+B = (B − {as}) ∪ {ak}
+
+Calcular a nova solu¸c˜ao b´asica vi´avel:
+
+xB = B−1b
+
+R = (R − {ak}) ∪ {as})
+
+I = (I − {s}) ∪ {k})
+
+J = (J − {k}) ∪ {s})
+
+Atualizar:
+
+e repita o processo.
+
+Em alguns casos pode ocorrer que o valor da fun¸c˜ao objetivo n˜ao aumente, e nesses ca-
+
+sos o algoritmo pode retornar ao mesmo v´ertice ap´os uma certa quantidade de intera¸c˜oes.
+
+Nesse caso pode-se usar a Regra de Bland, que pode ser vista com detalhes em [8].
+
+Exemplo .3 Faremos agora um exemplo utilizando a nota¸c˜ao matricial com invers˜ao de
+
+matrizes.
+
+M ax
+
+s.a. :
+
+z = 3x1 + 5x2
+
+x1 ≤ 4
+
+x2 ≤ 6
+
+3x1 + 2x2 ≤ 18
+
+x1, x2 ≥ 0
+
+Resolu¸c˜ao
+
+Dessa maneira, reescrevemos o (PPL)da seguinte maneira:
+
+34
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+max
+
+s.a.
+
+z = 3x1 + 5x2 + 0x3 + 0x4 + 0x5
+
+x1 + x3 = 4
+
+x2 + x4 = 6
+
+3x1 + 2x2 + x5 = 18
+
+x1, x2 ≥ 0
+
+onde x3, x4, x5 ≥ 0 s˜ao as vari´aveis de folga.
+
+Dessa maneira, as matrizes A, b e c s˜ao dadas por:
+
+A = [a1, a2, a3, a4, a5] =
+
+
+
+
+
+
+
+
+1 0 1 0 0
+
+0 1 0 1 0
+
+3 2 0 0 1
+
+
+
+
+
+
+
+
+,
+
+b = [4 6 18]T e c = [3 5 0 0 0].
+
+Consideremos a base composta pelas vari´aveis x3, x2, x5, ou seja,
+
+B = [a3, a2, a5] =
+
+
+
+
+
+
+
+
+1 0 0
+
+0 1 0
+
+0 2 1
+
+
+
+
+
+
+
+
+.
+
+Nesse caso as vari´aveis x1 e x4 s˜ao n˜ao b´asicas. I = {3, 2, 5} e J = {1, 4}.
+
+Calculando a inversa da base temos:
+
+B−1 =
+
+
+
+
+
+
+
+
+1
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0 −2 1
+
+
+
+
+
+
+
+
+.
+
+Da´ı, podemos calcular xB, xR e z da seguinte forma:
+
+xB =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x3
+
+x2
+
+x5
+
+= B−1b =
+
+
+
+
+
+
+
+
+1
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0 −2 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+
+6
+
+18
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+4
+
+6
+
+6
+
+=
+
+1.4. O M ´ETODO SIMPLEX
+
+xR =
+
+
+
+
+
+x1
+
+x4
+
+
+
+
+
+ =
+
+
+
+
+
+ .
+
+0
+
+0
+
+Assim,
+
+z = cx = cBxB + cRxR = [0 5 0].[4 6 6]T = 30
+
+35
+
+Para veriﬁcar se podemos melhorar a solu¸c˜ao z, ser´a necess´ario calcular os valores
+
+zj − cj para j ∈ J, ou seja:
+
+z1 − c1 = cBB−1a1 − c1 = cBy1 − c1 = [0 5 0].
+
+z4 − c4 = cBB−1a4 − c4 = cBy4 − c4 = [0 5 0].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0 −2 1
+
+1
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0 −2 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+0
+
+3
+
+0
+
+1
+
+0
+
+− 3 = −3
+
+− 0 = 5
+
+Como z1 − c1 < 0, ent˜ao, pelo criterio de melhoria, x1 entrar´a na base. Por outro lado,
+
+observando
+
+com 1 ≤ i ≤ m, ou seja,
+
+bs
+ysk
+
+= xs = min
+
+(cid:20) bi
+yik
+
+(cid:21)
+: yik > 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x3
+
+x2
+
+x5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+
+6
+
+6
+
+−
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+0
+
+3
+
+x1
+
+=
+
+Dessa forma min{
+
+4
+1
+relativo a vari´avel x5.
+
+,
+
+6
+3
+
+} = 2, assim x5 sai da base, pois ocorre o m´ınimo dos quocientes
+
+A nova base ser´a formada pelas vari´aveis x3, x2, x1, ou seja:
+
+B = [a3, a2, a1] =
+
+
+
+
+
+
+
+
+1 0 1
+
+0 1 0
+
+0 2 3
+
+
+
+
+
+
+
+
+.
+
+36
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Agora as vari´aveis x4 e x5 s˜ao n˜ao b´asicas. I = {3, 2, 1} e J = {4, 5}.
+
+Calculando a inversa da base temos:
+
+
+
+
+
+
+
+
+B−1 =
+
+
+
+
+
+
+
+
+.
+
+1
+
+0
+
+2
+
+3 − 1
+0
+1
+
+3
+
+0 − 2
+3
+
+1
+3
+
+Da´ı, podemos calcular xB, xR e z da seguinte forma:
+
+1
+
+0
+
+2
+
+3 − 1
+0
+1
+
+3
+
+0 − 2
+3
+
+1
+3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+
+6
+
+18
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+2
+
+6
+
+2
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+x3
+
+x2
+
+x1
+
+x4
+
+x5
+
+xB =
+
+xR =
+
+
+
+
+
+
+
+
+= B−1b =
+
+
+
+
+
+
+
+
+
+
+
+
+ =
+
+
+
+
+
+ .
+
+0
+
+0
+
+z = cx = cBxB + cRxR = [0 5 3].[2 6 2]T = 36.
+
+Para veriﬁcar a melhoria a solu¸c˜ao z ser´a necess´ario calcular os valores zj − cj para
+
+j ∈ J, ou seja:
+
+z4 − c4 = cBB−1a4 − c4 = cBy4 − c4 = [0 5 3].
+
+z5 − c5 = cBB−1a5 − c5 = cBy5 − c5 = [0 5 3].
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+0
+
+2
+
+3 − 1
+0
+1
+
+3
+
+0 − 2
+3
+
+1
+3
+
+1
+
+0
+
+2
+
+3 − 1
+0
+1
+
+3
+
+0 − 2
+3
+
+1
+3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+1
+
+0
+
+0
+
+0
+
+1
+
+− 0 = 3.
+
+− 0 = 1.
+
+como zj − cj > 0, ∀j ∈ J assim pelo algoritmo a solu¸c˜ao encontrada ´e ´otima, onde
+
+x1 = 2, x2 = 6 e z = 36.
+
+Para facilitar a execu¸c˜ao dos c´alculos, podemos utilizar um formato tabular para o
+
+desenvolvimento do algoritmo Simplex. Esse formato ´e um recurso a mais para que pos-
+
+samos acompanhar melhor os c´alculos do desenvolvimento. De forma geral, descrevemos
+
+1.4. O M ´ETODO SIMPLEX
+
+um (PPL) como:
+
+37
+
+M ax
+
+z = c1x1 + c2x2 + · · · + cnxn
+
+sujeito a :
+
+a11x1 + a12x2 + · · · + a1nxn ≤ b1
+
+a21x1 + a22x2 + · · · + a2nxn ≤ b2
+...
+am1x1 + am2x2 + · · · + amnxn ≤ bm
+
+Da´ı, seguem-se os seguintes passos:
+
+x1, x2, . . . , xn ≥ 0
+
+1. Introduzir as vari´aveis de folga, uma para cada desigualdade.
+
+2. Montar um quadro para os c´alculos, colocando os coeﬁcientes de todas as vari´aveis
+
+com seus respectivos sinais e, na primeira linha incluir os coeﬁcientes da fun¸c˜ao
+
+objetivo transformada: z − c1x1 − c2x2 − · · · − cnxn = 0.
+
+3. Estabelecer uma solu¸c˜ao b´asica inicial, usualmente atribuindo valor zero as vari´aveis
+
+originais e achando os valores positivos para as vari´aveis de folga.
+
+4. Como pr´oxima vari´avel a entrar na base, escolher a vari´avel n˜ao b´asica que fornece,
+
+na primeira linha, a maior contribui¸c˜ao para o aumento da fun¸c˜ao objetivo (ou seja,
+
+dos negativos o que tiver maior valor absoluto). Se todas as vari´aveis que est˜ao fora
+
+da base tiverem coeﬁcientes nulos ou positivos na primeira linha, a solu¸c˜ao atual ´e
+
+´otima. Se alguma dessas vari´aveis tiver coeﬁciente nulo, isto signiﬁca que ela pode
+
+ser introduzida na base sem aumentar o valor da fun¸c˜ao objetivo. Isso quer dizer
+
+que temos outra solu¸c˜ao ´otima , com o mesmo valor da fun¸c˜ao objetivo.
+
+5. Para escolher a vari´avel que deve deixar a base, deve-se realizar o seguinte procedi-
+
+mento:
+
+(a) Dividir os elementos da ´ultima coluna pelos correspondentes elementos posi-
+
+tivos da coluna da vari´avel que vai entrar na base. Caso n˜ao haja nenhum
+
+elemento positivo nessa coluna, o processo deve parar, j´a que a solu¸c˜ao seria
+
+ilimitada.
+
+38
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+(b) O menor quociente indica a equa¸c˜ao cuja respectiva vari´avel b´asica dever´a ser
+
+anulada, tornando-se vari´avel n˜ao-b´asica.
+
+6. Empregando opera¸c˜oes v´alidas com as linhas da matriz, transformar o quadro de
+
+c´alculos de modo a encontrar a nova solu¸c˜ao b´asica. A coluna da nova vari´avel
+
+b´asica dever´a se tornar um vetor identidade, no qual o elemento 1 aparece na linha
+
+correspondente a vari´avel que est´a sendo anulada.
+
+7. Retornar ao passo 4 para inicial outra intera¸c˜ao.
+
+Exemplo .4
+
+Resolu¸c˜ao
+
+max
+
+s.a. :
+
+z = 3x1 + 5x2
+
+x1 ≤ 4
+
+x2 ≤ 6
+
+3x1 + 2x2 ≤ 18
+
+x1, x2 ≥ 0
+
+Veja que o (PPL) acima possui a fun¸c˜ao objetivo z = 3x1 + 5x2, a qual podemos
+
+reescrevˆe-la por z − 3x1 − 5x2 = 0. Por outro lado, temos 3 restri¸c˜oes x1 ≤ 4, x2 ≤ 6
+
+e 3x1 + 2x2 ≤ 18, que vamos inserir vari´aveis de folga com o intuito de transformar as
+
+inequa¸c˜oes em equa¸c˜oes. Dessa maneira, reescrevemos as express˜oes e enumeramos as
+
+equa¸c˜oes:
+
+z − 3x1 − 5x2 = 0
+
+x1 + k = 4
+
+x2 + w = 6
+
+(1)
+
+(2)
+
+(3)
+
+3x1 + 2x2 + y = 18 (4)
+
+x1, x2 ≥ 0
+
+onde k, w, y ≥ 0 s˜ao as vari´aveis de folga.
+
+1.4. O M ´ETODO SIMPLEX
+
+39
+
+Considere a tabela abaixo com os coeﬁcientes das vari´aveis das equa¸c˜oes encontradas,
+
+onde cada linha da tabela corresponde a uma equa¸c˜ao.
+
+Observe na linha (1) os termos negativos, e escolha o de maior valor absoluto. Neste
+
+caso −5, e marque a coluna onde ele est´a localizado.
+
+Dessa forma min{
+
+6
+1
+
+,
+
+18
+2
+
+} = 6, assim a linha 3 deve ser marcada.
+
+40
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+A interse¸c˜ao entre a linha e a coluna marcadas ´e denominado pivˆo. Neste caso pivˆo =
+
+1. A linha que cont´em o pivˆo ´e denominada linha pivˆo.
+
+Destaque a linha pivˆo e divida todos os elementos desta linha pelo pivˆo. A linha
+
+resultande ´e denominada nova linha pivˆo (NLP).
+
+Com a nova linha pivˆo em m˜aos (NLP), multiplica-se ela pelo oposto do elemento
+
+correspondente a cada linha na coluna escolhida inicialmente e soma-se o resultado com
+
+a atual linha e a linha resultante substituir´a a atual linha. Como mostra a ﬁgura abaixo:
+
+Com isso geramos uma nova tabela com novas linhas.
+
+1.4. O M ´ETODO SIMPLEX
+
+41
+
+Como ainda existem valores negativos na primeira linha, ent˜ao repetimos o algoritmo.
+
+Devemos repetir o processo at´e que n˜ao exista mais nenhum valor negativo na primeira
+
+linha.
+
+Observe novamente na linha (1) os termos negativos, e escolha o de maior valor abso-
+
+luto. Neste caso −3, e marque a coluna onde ele est´a localizado.
+
+Mais uma vez observe min{
+
+4
+1
+
+,
+
+6
+3
+
+} = 2, assim a linha 4 deve ser marcada.
+
+42
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+A interse¸c˜ao entre a linha e a coluna marcadas ´e o pivˆo, neste caso pivˆo = 3. A linha
+
+pivˆo ser´a a (4).
+
+E repetindo o processo teremos:
+
+Com isso geramos uma nova tabela com novas linhas.
+
+Como n˜ao temos mais termos negativos na primeira linha, ent˜ao paramos o processo.
+
+E observa-se as colunas LI, estas representam as vari´aveis b´asicas (VB). As demais s˜ao as
+
+n˜ao b´asicas (VR), e igualamos a zero.
+
+1.5. USO DE RECURSOS COMPUTACIONAIS
+
+43
+
+
+
+
+
+
+VB
+
+VR
+
+x1 = 2
+
+w = 0
+
+x2 = 6
+
+y = 0
+
+k = 2
+
+Portanto a solu¸c˜ao do nosso PPL ´e x1 = 2, x2 = 6 e z = 36.
+
+1.5 Uso de Recursos Computacionais
+
+O uso de recursos computacionais no ensino de matem´atica vem se mostrando uma
+
+ferramenta muito eﬁciente pois mostra agilidade na resolu¸c˜ao de problemas, al´em de
+
+fazer com que o aluno veja na pr´atica onde cada c´alculo ´e utilizado na sua realidade.
+
+As aulas se tornam mais dinˆamicas e assim fazem com que o aluno n˜ao ﬁque apenas
+
+na posi¸c˜ao de receptor de informa¸c˜oes e passe a posi¸c˜ao de protagonista do processo de
+
+ensino-aprendizagem.
+
+Um Problema de Programa¸c˜ao Linear pode ser resolvido utilizando alguns recursos
+
+computacionais na busca pela solu¸c˜ao ´otima. Neste trabalho procurou-se dar ˆenfase na
+
+resolu¸c˜ao de um PPL utilizando a extens˜ao Solver do Excel.
+
+Para tal, voltemos ao Exemplo .4, e vamos observar a resolu¸c˜ao dele utilizando este
+
+recurso.
+
+Deﬁna a fun¸c˜ao objetivo e destaque os coeﬁcientes das vari´aveis, e ainda, reserve
+
+c´elulas para onde a solu¸c˜ao do problema ser´a colocada. Logo abaixo, escreva a fun¸c˜ao
+
+objetivo na linguagem do Excel como na ﬁgura abaixo:
+
+44
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Escreva logo a baixo as restri¸c˜oes tambem destacando os coeﬁcientes das vari´aveis. E
+
+as colunas LHF e DHF representam, respectivamente, 1o e 2o membros das inequa¸c˜oes
+
+restri¸c˜oes. Descreva em LHF e DHF as restri¸c˜oes na linguagem do Excel como na ﬁgura
+
+abaixo:
+
+1.5. USO DE RECURSOS COMPUTACIONAIS
+
+45
+
+Abra a exten¸c˜ao Solver na aba Dados da barra de tarefas. Em seguida, deﬁna a c´elula
+
+de destino como o local onde o valor m´aximo da fun¸c˜ao objetivo ser´a apresentado. Insira
+
+as restri¸c˜oes utilizando LHF e RHF como na ﬁgura abaixo:
+
+Agora, v´a em Op¸c˜oes e marque Presumir modelo linear, pois nosso caso ´e um
+
+problema de progma¸c˜ao linear e marque tambem Presumir n˜ao negativos, pois nossas
+
+solu¸c˜oes s˜ao n˜ao negativas. Em seguida ”OK”.
+
+Por ﬁm, clique em Resolver, e a solu¸c˜ao encontrada ´e exibida.
+
+46
+
+CAP´ITULO 1. MODELAGEM MATEM ´ATICA
+
+Clique em ”OK”, e o problema est´a solucionado com x1 = 2, x2 = 6 e z = 36.
+
+Cap´ıtulo 2
+
+Aplica¸c˜oes
+
+2.1 Nutri¸c˜ao
+
+Uma aplica¸c˜ao muito interessante e bastante utilizada ´e a elabora¸c˜ao de dietas levando
+
+em considera¸c˜ao todas as condi¸c˜oes cl´ıncas de pacientes. No problema abaixo, o objetivo
+
+´e determinar numa dieta de redu¸c˜ao cal´orica, as quantidades de certos alimentos que
+
+dever˜ao ser ingeridos diariamente, de modo que determinados requisitos nutricionais sejam
+
+satisfeitos a custo m´ınimo.
+
+Suponha que, por motivos justiﬁc´aveis, uma certa dieta alimentar esteja restrita a
+
+leite desnatado, carne magra de boi, carne de peixe e uma salada de composi¸c˜ao bem
+
+conhecida. Sabendo-se ainda que os requisitos nutricionais ser˜ao expressos em termos de
+
+vitaminas A, C e D e controlados por suas quantidades m´ınimas (em miligramas), uma
+
+vez que s˜ao indispens´aveis a preserva¸c˜ao da sa´ude da pessoa que estar´a se submetendo a
+
+dieta. A tabela a seguir resume a quantidade de cada vitamina em disponibilidade nos
+
+alimentos e sua necessidade di´aria para a boa sa´ude de uma pessoa.
+
+47
+
+48
+
+CAP´ITULO 2. APLICAC¸ ˜OES
+
+Modelando esta situa¸c˜ao atrav´es de Programa¸c˜ao Linear obtemos:
+
+1. Escolha das vari´aveis de decis˜ao:
+
+xl := quantidade de litros de leite;
+
+xc := quantidade de Kg de carne;
+
+xp := quantidade de Kg de peixe;
+
+xs := quantidade de salada em por¸c˜oes de 100g.
+
+2. Elabora¸c˜ao da fun¸c˜ao objetivo Minimizar Custo:
+
+z = 2xl + 4xc + 1, 5xp + xs
+
+3. Restri¸c˜oes relevantes:
+
+(a) Restri¸c˜ao associada `a demanda de vitamina A:
+
+2xl + 2xc + 10xp + 20xs ≥ 11
+
+(b) Restri¸c˜ao associada `a demanda de vitamina C:
+
+50xl + 20xc + 10xp + 30xs ≥ 70
+
+(c) Restri¸c˜ao associada `a demanda de vitamina E:
+
+80xl + 70xc + 10xp + 80xs ≥ 250
+
+(d) N˜ao negatividade:
+
+xl ≥ 0, xc ≥ 0, xp ≥ 0 e xs ≥ 0.
+
+Agora implementando as informa¸c˜oes acima na extens˜ao Solver do Excel temos:
+
+2.2. GEST ˜AO HOSPITALAR
+
+49
+
+Logo, a solu¸c˜ao indica que deve-se comer salada e n˜ao comer nenhum tipo de carne
+
+ou tomar leite.
+
+2.2 Gest˜ao Hospitalar
+
+Um determinado hospital que trabalha com demanda durante as 24 horas do dia. As
+
+necessidades de enfermeiros distibuem-se segundo a tabela:
+
+50
+
+CAP´ITULO 2. APLICAC¸ ˜OES
+
+O hor´ario de trabalho de um enfermeiro ´e de 8 horas seguidas e s´o pode ser iniciado no
+
+come¸co de cada turno, isto ´e, `as 8 ou 12 ou 16 ou 20 ou 04 horas. A gerencia ﬁnanceira do
+
+hospital deseja elaborar um modelo que minimize o gasto com m˜ao-de-obra. Considerando
+
+que cada enfermeiro recebe R$100 por hora de trabalho no per´ıodo diurno (08 `as 20h) e
+
+R$125 no per´ıodo noturno (20 `as 08h).
+
+Modelando esta situa¸c˜ao atrav´es de Programa¸c˜ao Linear obtemos:
+
+1. Escolha das vari´aveis de decis˜ao:
+
+xi := n´umero de enfermeiros que iniciam sua jornada no turno i;
+
+2. Elabora¸c˜ao da fun¸c˜ao objetivo Minimizar Custo:
+
+z = 800x1 + 800x2 + 900x3 + 1000x4 + 1000x5 + 900x6
+
+3. Restri¸c˜oes relevantes:
+
+(a) N´umero de enfermeiros necess´arios no turno 1:
+
+x1 + x6 ≥ 51
+
+(b) N´umero de enfermeiros necess´arios no turno 2:
+
+x2 + x1 ≥ 58
+
+(c) N´umero de enfermeiros necess´arios no turno 3:
+
+x3 + x2 ≥ 62
+
+(d) N´umero de enfermeiros necess´arios no turno 4;
+
+x4 + x3 ≥ 41
+
+(e) N´umero de enfermeiros necess´arios no turno 5;
+
+x5 + x4 ≥ 32
+
+(f) N´umero de enfermeiros necess´arios no turno 6.
+
+x6 + x5 ≥ 19
+
+2.3. AGRICULTURA
+
+(g) N˜ao negatividade:
+
+x1 ≥ 0, x2 ≥ 0, x3 ≥ 0, x4 ≥ 0, x5 ≥ 0 e x6 ≥ 0.
+
+51
+
+Logo, a solu¸c˜ao indica que deve-se ter as seguintes quantidades de enfermeiros distri-
+
+buidos por turno:
+
+x1 = 51, x2 = 34, x3 = 28, x4 = 13, x5 = 19 e x6 = 0.
+
+2.3 Agricultura
+
+Uma cooperativa agr´ıcola opera 3 fazendas que possuem produtividades aproximada-
+
+mente iguais. A produ¸c˜ao total por fazenda depende fundamentalmente da ´area dispon´ıvel
+
+para o plantio e da ´agua de irriga¸c˜ao. A cooperativa procura diversiﬁcar sua produ¸c˜ao
+
+de modo que pretende plantar este ano trˆes tipos de cultura em cada fazenda a saber:
+
+milho, arroz e feij˜ao. Cada tipo de cultura demanda por uma certa quantidade de ´agua.
+
+Para reduzir o conﬂito no uso das colheitadeiras, que s˜ao alugadas pela cooperativa,
+
+estabeleceram-se limites de ´area de produ¸c˜ao dentro de cada tipo de cultura. Para evitar
+
+52
+
+CAP´ITULO 2. APLICAC¸ ˜OES
+
+a concorrˆencia entre os cooperados, acordou-se que a produ¸c˜ao de ´area cultivada seja a
+
+mesma para cada uma das fazendas. As tabelas abaixo resumem os dados tecnol´ogicos.
+
+Pretende-se elaborar um programa de produ¸c˜ao que deﬁna a ´area de cada cultura
+
+que ser´a plantada em cada fazenda, de modo a maximizar o lucro total da produ¸c˜ao da
+
+cooperativa.
+
+Modelando esta situa¸c˜ao atrav´es de Programa¸c˜ao Linear obtemos:
+
+1. Escolha das vari´aveis de decis˜ao:
+
+xiM := quantidade de unidades de hectares, que na fazenda (i = 1, 2, 3), ser´a desti-
+
+nada a cultura de milho;
+
+xiA := quantidade de unidades de hectares, que na fazenda (i = 1, 2, 3), ser´a desti-
+
+nada a cultura de arroz;
+
+xiF := quantidade de unidades de hectares, que na fazenda (i = 1, 2, 3), ser´a desti-
+
+nada a cultura de feij˜ao.
+
+2.3. AGRICULTURA
+
+53
+
+2. Elabora¸c˜ao da fun¸c˜ao objetivo Maximizar Lucro:
+
+z = 5000(x1M + x2M + x3M ) + 4000(x1A + x2A + x3A) + 1800(x1F + x2F + x3F )
+
+3. Restri¸c˜oes relevantes:
+
+(a) Restri¸c˜oes associadas a ´area de cultivo:
+
+*Fazenda 1
+
+x1M + x1A + x1F ≤ 400
+
+*Fazenda 2
+
+x2M + x2A + x2F ≤ 650
+
+*Fazenda 3
+
+x3M + x3A + x3F ≤ 350
+
+(b) Restri¸c˜oes associadas ao consumo de ´agua:
+
+*Fazenda 1
+
+5, 5x1M + 4x1A + 3, 5x1F ≤ 1800
+
+*Fazenda 2
+
+5, 5x2M + 4x2A + 3, 5x2F ≤ 2200
+
+*Fazenda 3
+
+5, 5x3M + 4x3A + 3, 5x3F ≤ 950
+
+(c) Restri¸c˜oes associadas ao plantio por cultura:
+
+*Fazenda 1
+
+x1M + x2M + x3M ≤ 660
+
+*Fazenda 2
+
+x1A + x2A + x3A ≤ 880
+
+*Fazenda 3
+
+x1F + x2F + x3F ≤ 400
+
+(d) Restri¸c˜oes associadas `a propor¸c˜ao da ´area cultivada:
+
+x1M + x1A + x1F
+400
+
+=
+
+x2M + x2A + x2F
+650
+
+=
+
+x3M + x3A + x3F
+350
+
+54
+
+CAP´ITULO 2. APLICAC¸ ˜OES
+
+4. Restri¸c˜oes de n˜ao negatividade:
+
+x1M ≥ 0, x2M ≥ 0, x3M ≥ 0, x1A ≥ 0, x2A ≥ 0, x3A ≥ 0, x1F ≥ 0, x2F ≥ 0 e
+
+x3F ≥ 0.
+
+Agora implementando as informa¸c˜oes acima na extens˜ao Solver do Excel temos:
+
+Logo, a solu¸c˜ao indica que deve-se produzir milho apenas nas fazendas 1 e 2, produzir
+
+arroz apenas nas fazendas 2 e 3 e n˜ao produzir feij˜ao esse ano.
+
+Cap´ıtulo 3
+
+Considera¸c˜oes Finais
+
+A modelagem matem´atica atrav´es da programa¸c˜ao linear se mostra muito eﬁciente e ´e
+
+interdisciplinar por natureza, pois utiliza os resultados e os instrumentos de outras ´areas
+
+como ponto de partida para o seu desenvolvimento, assim, ao compar´a-lo com o m´etodo
+
+tradicional que ´e usado para ensinar a Matem´atica em salas de aula, ﬁca em evidˆencia
+
+que para os alunos, que existe sim rela¸c˜ao entre o que ´e aprendido na sala de aula com o
+
+mundo que est´a a sua volta.
+
+As atividades investigativas, caracter´ısticas da modelagem matem´atica, exigem o exerc´ıcio
+
+constante tanto do professor quanto dos alunos de habilidades como a busca, a sele¸c˜ao,
+
+a organiza¸c˜ao, o levantamento de hip´oteses, a manipula¸c˜ao, an´alise, interpreta¸c˜ao e va-
+
+lida¸c˜ao de informa¸c˜oes. Os professores em sua forma¸c˜ao inicial, e mesmo na sua pr´atica
+
+proﬁssional, est˜ao acostumados a utilizar os exemplos e exerc´ıcios j´a formulados pelos
+
+livros did´aticos. Por isso, quando apresentados `a proposta da modelagem, onde pratica-
+
+mente n˜ao h´a nada pronto, sentem um impacto muito grande e diﬁculdades em coloc´a-la
+
+em pratica. Percebe-se que a partir das situa¸c˜oes-problema apresentadas na proposta, os
+
+conceitos de maximiza¸c˜ao, minimiza¸c˜ao e solu¸c˜ao ´otima surgem de forma natural, onde
+
+cada nova informa¸c˜ao interage com algum aspecto relevante da estrutura cognitiva do
+
+indiv´ıduo.
+
+Para que aconte¸ca uma aprendizagem signiﬁcativa dos alunos, ser´a necess´ario que o
+
+professor tenha a coragem de sair da rotina e inovar sua postura em sala de aula. Dessa
+
+forma, ´e preciso valer-se de metodologias signiﬁcativas para o ensino onde possamos deixar
+
+que o aluno trabalhe sua criatividade e assim, ir se inteirando ao conte´udo com o aux´ılio
+
+55
+
+56
+
+CAP´ITULO 3. CONSIDERAC¸ ˜OES FINAIS
+
+do professor. Neste aspecto, temos a modelagem matem´atica como via para uma educa¸c˜ao
+
+signiﬁcativa preparando o aluno n˜ao s´o de maneira acadˆemica, mas tambem na forma¸c˜ao
+
+do cidad˜ao como cr´ıtico e analista do que acontece a sua volta.
+
+Nesse sentido, a proposta busca contribuir com a pr´atica dos professores de Ma-
+
+tem´atica interessados em utilizar a modelagem matem´atica por meio da programa¸c˜ao
+
+linear, utilizando-se de matem´atica b´asica permitindo aos alunos aprenderem de modo
+
+signiﬁcativo, relacionando a Matem´atica com a realidade que est´a em sua volta e com
+
+outras ´areas, a partir da oportunidade que lhe s˜ao dadas atuando na constru¸c˜ao do seu
+
+pr´oprio conhecimento. Assim, os alunos realmente compreendem o que est˜ao fazendo
+
+e s˜ao capazes de aplicar os conhecimentos matem´aticos adquiridos em outras situa¸c˜oes-
+
+problema contextualizadas.
+
+Diante dessas possibilidades, ´e preciso que a modelagem, na perspectiva da Educa¸c˜ao
+
+Matem´atica, seja utilizada como ferramenta para compreens˜ao das ciˆencias e para a ati-
+
+vidade humana, como instrumento da vida cotidiana, como instrumento do exerc´ıcio dos
+direitos democr´aticos. ´E importante que pesquisas cient´ıﬁcas se ocupem em investigar de
+
+que forma o aprendiz relaciona e compreende os conceitos matem´aticos trabalhados com
+
+o uso da modelagem na perspectiva construtivista.
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] Andrade, E.L. - Introdu¸c˜ao `a Pesquisa Operacional: m´etodos e modelos para an´alise
+
+de decis˜oes. 5.ed. - Rio de Janeiro: LTC, 2015.
+
+[2] D. Luenberger, Introduction to Linear and Nonlinear Programming. Addison Wesley,
+
+1973.
+
+[3] Hefez, A. Fernandes, C.- Introdu¸c˜ao a ´Algebra Linear. Cole¸c˜ao PROFMAT, Rio de
+
+Janeiro: SBM, 2012.
+
+[4] Izmailov, A. Otimiza¸c˜ao volume 1. Condi¸c˜oes de Otimalidade, elementos de an´alise
+
+convexa e de dualidade. 3.ed. Rio de Janeiro: IMPA, 2014
+
+[5] Lima, E.L. - Geometria Anal´ıtica e ´Algebra Linear. - 2.ed. - IMPA, Rio de Janeiro,
+
+2013.
+
+[6] Lima, E.L. - ´Algebra Linear. - 7.ed. - IMPA, Rio de Janeiro, 2008.
+
+[7] Lima, E.L. - A matem´atica do ensino m´edio volume 1. - 9.ed. - SBM, Rio de Janeiro,
+
+2006.
+
+[8] Marco Cesar Goldbarg and Henrique Pacca L. Luna. - Otimiza¸c˜ao Combinat´oria e
+
+Programa¸c˜ao Linear: modelos e algoritmos. 2.ed. - Rio de Janeiro: Editora Campus,
+
+2005.
+
+[9] Oliveira, E. C., M´etodos matem´aticos para engenharia. - 2.ed. - SBM, Rio de Janeiro.
+
+2010.
+
+[10] Rodney, C.B. - Ensino-aprendizagem com Modelagem Matem´atica. - S˜ao Paulo -
+
+Contexto, 2002.
+
+57
+
+

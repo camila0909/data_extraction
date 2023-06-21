@@ -13,6 +13,11 @@ with open(file, "r") as file:
 
 lines = [line.strip() for line in lines]
 
+
+################################################################
+#****************FUNÇÕES DE TRATAMENTO DE TEXTOS***************#
+################################################################
+
 #Define função de formtação de texto
 
 def format_text(txt):
@@ -20,6 +25,89 @@ def format_text(txt):
     txt = sub('[^\n\.\?\:\;\!A-Za-z0-9 -]+', '', txt).strip()
     return txt.upper()
 
+def fix_accents_bugs_in_pdf_conversion(txt):
+  to_replace = {
+      '¸c': 'ç',
+      '˜a': 'ã',
+      '~a': 'ã',
+      '´a': 'á',
+      'ˆa': 'â',
+      'a~': 'ã',
+      '˜a': 'ã',
+      '^a': 'â',
+      '´e': 'é',
+      '˜e': 'e',
+      '~e': 'e',
+      'ˆe': 'ê',
+      '^e': 'ê',
+      '´ı': 'í',
+      '´o': 'ó',
+      'ˆo': 'ô',
+      '^o': 'ô',
+      '˜o': 'õ',
+      '~o': 'õ',
+      '´u': 'ú',
+      '˜a': 'ã',
+      '´a': 'á',
+      '^a':'â',
+      '¸C':'Ç',
+      '˜A': 'Ã',
+      '~A': 'Ã',
+      '´A': 'Á',
+      'ˆA': 'Â', 
+      'ˆA': 'Â',
+      '´E': 'É',
+      '˜E': 'E',
+      '~E': 'E',
+      'ˆE': 'Ê',#Verificar porque o uso do acento ^ no lugar de ˆ, alterou caracteres que não precisavam ser alterados.
+      '´I': 'Í',
+      '´O': 'Ó',
+      'ˆO': 'Ô',
+      '˜O': 'Õ',
+      '~O': 'Õ',
+      '´U': 'Ú',
+      '˜A': 'Ã',
+      '´A': 'Á',
+      '\n': ' ',
+}
+  for key in to_replace:
+    txt = re.sub(key, to_replace[key], txt)
+  return txt
+
+def standardize_delimiters(text):
+  to_replace = {
+      ',': ';',
+}
+  for key in to_replace:
+    text = re.sub(key, to_replace[key], text)
+  return text
+
+def split_delimiters(text):
+    return re.split(r'[,;]', text)
+
+def limpeza_geral(text):
+  to_replace = {
+      ',':'',
+      ';':'',
+      ':':'',
+      '?':'',
+      '!':'',
+      '.':'',
+}
+  for key in to_replace:
+    text = re.sub(key, to_replace[key], text)
+  return text
+
+def concat_list(data):
+    result = "".join(["".join(x) for x in data])
+    return result
+
+
+
+
+################################################################
+#************************FUNÇÕES DE BUSCA**********************#
+################################################################
 # Define função encontrar_abstract
 
 def encontrar_abstract(lista):
@@ -83,11 +171,10 @@ def encontrar_local(lista):
         
     if len(co_orientador) == 0:
         co_orientador.append("NAO POSSUI")
-        co_orientador = (co_orientador[0])
+        #local_encontrado = local_encontrado[0]
     else:        
-        co_orientador = lines[lines.index(co_orientador[0])]
-    if local_encontrado:
-        local_encontrado = lines[lines.index(local_encontrado[0])]
+        co_orientador = co_orientador[0]
+    
 
     return local_encontrado, co_orientador
 
@@ -104,8 +191,10 @@ def encontrar_ano(lista):
             encontrou_string = True
         if encontrou_string:
             break
-    return ano[0]
-
+    if ano != []:
+        return ano[0]
+    else:
+        return None
 #Busca Keywords
 
 def encontrar_keywords(lista):
@@ -138,7 +227,7 @@ def encontrar_palavras_chave(lista):
         palavras_chave = palavras_chave[0] + palavras_chave[1]
         return palavras_chave
     else:
-        return palavras_chave[0]
+        return palavras_chave
 
 #Define função que retorna o nome do orientador
 

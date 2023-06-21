@@ -1,0 +1,4998 @@
+Universidade Federal da Para(cid:237)ba
+Centro de CiŒncias Exatas e da Natureza
+Departamento de MatemÆtica
+Mestrado Pro(cid:28)ssional em MatemÆtica
+em Rede Nacional PROFMAT
+
+Curvas de BØzier
+
+por
+
+EVERT ELVIS BATISTA DE ALMEIDA
+
+sob orienta(cid:231)ªo do
+
+Prof. Dr. Lenimar Nunes de Andrade
+
+Trabalho de conclusªo de curso apre-
+sentado ao Corpo Docente do Mestrado
+Prossional em MatemÆtica em Rede Na-
+cional PROFMAT CCEN-UFPB, como
+requisito parcial para obtencªo do t(cid:237)tulo
+de Mestre em MatemÆtica
+
+Fevereiro/2015
+Joªo Pessoa - PB
+
+Curvas de BØzier
+
+por
+
+EVERT ELVIS BATISTA DE ALMEIDA
+
+Disserta(cid:231)ªo apresentada ao Corpo Docente do Mestrado Pro(cid:28)ssional em MatemÆtica
+em Rede Nacional PROFMAT CCEN-UFPB, como requisito parcial para obten(cid:231)ªo do
+t(cid:237)tulo de Mestre em MatemÆtica.
+
+`rea de Concentra(cid:231)ªo:MatemÆtica.
+
+Aprovada por:
+
+Prof. Dr. LENIMAR NUNES DE ANDRADE -UFPB (Orientador)
+
+Prof. Dr. FRANK SINATRA GOMES DA SILVA - UFRPE
+
+Prof. Dr. EDSON DE FIGUEIR˚DO LIMA JUNIOR - UFPB
+
+Fevereiro/2015
+
+Agradecimentos
+
+Quero agradecer aos meus colegas das turma principalmente ao galego (Eri-
+naldo), aos meus professores que tiveram toda paciŒncia para transmitir o conhe-
+cimento ao longo do curso. Aos meus familiares que suportaram minha ausŒncia
+durante os sÆbados e todas as horas de estudo. Em especial a minha adorÆvel com-
+panheira Erika Maria Lins por todo apoio e compreensªo durante esta jornada.
+
+iii
+
+Dedicat(cid:243)ria
+
+Ao meu av(cid:244) EufrÆsio, que
+deus tenha em bom lugar.
+In memorium
+
+iv
+
+Resumo
+
+Neste trabalho fazemos uma introdu(cid:231)ªo (cid:224)s Curvas de BØzier, importante item
+da aplica(cid:231)ªo matemÆtica que originou-se na indœstria automobil(cid:237)stica francesa e que
+tŒm aplica(cid:231)ıes a vÆrias Æreas cient(cid:237)(cid:28)cas. Diversos conceitos bÆsicos sªo revisitados
+tais como curvas de(cid:28)nidas parametricamente, polin(cid:244)mios de Bernstein e polin(cid:244)mios
+de interpola(cid:231)ªo. Ao longo do texto, Ø abordado o algoritmo de Casteljau para
+constru(cid:231)ªo de curva e suas derivadas. Sªo implementados exemplos de constru(cid:231)ªo
+usando o GeoGebra e LATEX.
+
+Resumo
+
+In this work we will make an introduction an important application mathematics
+called Bezier curves. The history of this curve originated in industry automobile
+French , and found many applications in various (cid:28)elds of science. Revisit some
+concepts such as parametric functions, polynomials Bernstein and interpolation for
+de(cid:28)nition the curves Bezier. We will discuss the algorithm Casteljau which facilitates
+the construction of the curve and determine derivative. Throughout the text we will
+implement some examples with Geogebra software and LATEX in addition to discuss
+relevant issues that arouse public interest.
+
+SumÆrio
+
+Abstract
+
+i
+
+1 Revisªo matemÆtica
+
+2
+2
+Introdu(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.1
+3
+1.2 Curvas parametrizadas
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5
+1.3 Polin(cid:244)mios de Bernstein . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3.1 Propriedades dos polin(cid:244)mios de Bernstein . . . . . . . . . . . .
+9
+Interpola(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+Interpolador de Lagrange
+1.4.1
+. . . . . . . . . . . . . . . . . . . . . . 11
+Interpolador Linear . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1.4.2
+
+1.4
+
+2 Curvas de BØzier
+
+15
+2.1 Uma breve hist(cid:243)ria das curvas de BØzier e sua import(cid:226)ncia . . . . . . . 15
+2.2 De(cid:28)ni(cid:231)ªo das Curvas de
+
+BØzier
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+2.2.1 Propriedades das Curvas de BØzier . . . . . . . . . . . . . . . . . 19
+2.2.2 Algoritmo de Casteljau . . . . . . . . . . . . . . . . . . . . . . . . 20
+2.2.3 CÆlculo da Derivada em rela(cid:231)ªo a Curva de BØzier . . . . . . . 22
+2.2.4 CÆlculo da integral da Curva de BØzier . . . . . . . . . . . . . . 23
+
+3 Exemplos e Resultados
+
+3.1 Exemplos
+
+28
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+3.1.1 Exemplo 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+3.1.2 Exemplo 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+3.1.3 Exemplo 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+3.1.4 Exemplo 4 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+3.1.5 Exemplo 5 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+3.1.6 Exemplo 6 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+3.1.7 Exemplo 7 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+4 Resultados
+
+4.1
+
+considera(cid:231)ıes (cid:28)nais
+
+38
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+i
+
+A Construindo curvas
+de BØzier usando o
+Geogebra e com o LATEX
+40
+A.1 Introdu(cid:231)ªo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+A.2 Constru(cid:231)ªo no Geogebra . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+A.3 Usando o PSTricks . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+A.4 Usando o ambiente (cid:28)gure . . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+A.5 Usando o PGF . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+A.6 Usando o TEXdraw . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+A.7 Usando o pacote bez123 . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+
+B Teorema da Aproxima(cid:231)ªo de Weierstrass
+
+ReferŒncias BibliogrÆ(cid:28)cas
+
+56
+
+58
+
+Lista de Figuras
+
+1.1 Reta gerada da forma P (cid:20) tv constru(cid:237)da no Geogebra. . . . . . . . . . .
+circunferŒncia gerada da forma x2 (cid:20) y2 (cid:0) 4 constru(cid:237)da no Geogebra. . .
+1.2
+e y (cid:0) 2 sen
+circunferŒncia gerada da forma x (cid:0) 2 cos
+2πt
+2πt
+1.3
+. . . . . .
+(cid:136)
+(cid:136)
+(cid:141)
+(cid:141)
+e y (cid:0) r sen
+1.4 Elipse gerada da forma x (cid:0) R cos
+2πt
+. . . . . . . . .
+.
+(cid:141)
+(cid:136)
+1.5 A trajet(cid:243)ria el(cid:237)ptica ou circular descrita por um ponto (cid:28)xo na barra
+
+2πt
+(cid:141)
+
+(cid:136)
+
+4
+5
+6
+7
+
+dependendo da razªo entre os pontos A e B.
+
+. . . . . . . . . . . . . . .
+1.6 Bernstein de grau 1. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.7 Bernstein de grau 2. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.8 Bernstein de grau 3. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.9 Usando o Geogebra para veri(cid:28)car o polin(cid:244)mio interpolador.
+1.10 Imagem de um pato usada na interpola(cid:231)ªo.
+1.11 Pontos interpolados sobre a imagem do pato pelo polin(cid:244)mio de La-
+
+8
+8
+9
+9
+. . . . . . 13
+. . . . . . . . . . . . . . . . 13
+
+grange.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+1.12 Exemplo de interpola(cid:231)ªo linear usando o software wxMaxima. . . . . . 14
+
+2.1 Projeto de ve(cid:237)culo usando curvas de BØzier. . . . . . . . . . . . . . . . . 15
+2.2 Formas geradas por alguns software usando as curvas de BØzier.
+. . . 16
+2.3 Usando curvas em cirurgias plÆsticas. . . . . . . . . . . . . . . . . . . . . 17
+Inv(cid:243)lucros convexo nas curvas Curvas de BØzier variando os pontos
+2.4
+de controle.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+2.5 Pontos da curva com trŒs Pontos de controle gerada segundo o algo-
+
+ritmo de Casteljau e habilitando o lugar geomØtrico no Geogebra . . . 25
+2.6 Curvas de Bezier com trŒs usando o rastro no geogebra . . . . . . . . . 26
+2.7 Curvas de BØzier com quatro pontos de controle usando o rastro . . . 26
+2.8 Pontos gerados pelo algoritmo De Casteljau com t (cid:0) 0.5 . . . . . . . . . 27
+. . 27
+2.9 Derivada da Curva gerada pelos pontos
+
+0, 0
+(cid:141)
+3.1 Pol(cid:237)gono de controle formado por 17 pontos.
+3.2 Pol(cid:237)gono de controle formado por 17 pontos variando o t com incre-
+
+(cid:136)
+(cid:136)
+. . . . . . . . . . . . . . . 29
+
+0, 2
+(cid:141)
+
+4, 0
+(cid:141)
+
+8, 2
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+,
+
+,
+
+mentos de 0.2.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+3.3 Po(cid:237)gono de controle formado por 17 pontost (cid:0) 0.5.
+. . . . . . . . . . . . 30
+3.4 Curva de BØzier usando trŒs coordenadas no espa(cid:231)o. . . . . . . . . . . . 30
+
+iii
+
+Implementando o algoritmo de Casteljau e variando t.
+
+. . . . . . . . 31
+3.5 Gerando o Pol(cid:237)gono de controle com os dois pentÆgonos.
+. . . . . . . . . 31
+3.6
+3.7 Usando o lugar geomØtrico para gerar a Curva de BØzier em Espiral. . 32
+3.8 Espiral formada por alguns pontos de controle de uma sequŒncia de
+
+,
+
+,
+
+,
+
+,
+
+(cid:136)
+
+e
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+0, 2
+(cid:141)
+
+0, 1
+(cid:141)
+
+0, 2
+(cid:141)
+
+0, 1
+(cid:141)
+
+1, 0
+(cid:141)
+
+(cid:16)1, 0
+(cid:141)
+
+3.9
+3.10 Curva gerada pelos pontos
+0, 1
+(cid:141)
+
+tri(cid:226)ngulos. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+. . . . . . . . . . . . . . . . . 34
+Implementa(cid:231)ªo do algoritmo de Castejau.
+1, 1
+,
+,
+(cid:141)
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+(cid:136)
+. . . . . . . . . . . . . . . . . . . . 35
+3.11 Escolha dos pontos sobre a imagem.
+3.12 Variando o par(cid:226)metro t observamos os pontos intermediÆrios gerados.
+35
+. . . . . . . . . . . . . . . . . 36
+3.13 Curva gerada usando o lugar geomØtrico.
+(cid:16)1, 0
+(cid:16)1, 1
+,
+3.14 Curva gerada para os pontos
+(cid:141)
+(cid:141)
+. . . . . . . . . . . . . . . . . . 36
+a derivada nªo existe para estes valores.
+em t (cid:0) 0.5 a
+,
+0, 0
+(cid:141)
+. . . . . . . . . . . . . . . . . . . 37
+
+derivada nªo existe para estes valores.
+
+(cid:136)
+(cid:16)1, 0
+(cid:141)
+(cid:16)1, 0
+,
+0, 2
+(cid:141)
+(cid:141)
+. . . . . . . . . . . . . . . . . . 37
+
+a derivada nªo existe para estes valores.
+
+3.16 Curva gerada para os pontos
+
+3.15 Curva gerada para os pontos
+
+0, 1
+(cid:141)
+0, (cid:16)1
+(cid:141)
+
+em t (cid:0) 0.5
+
+em t (cid:0) 0.5
+
+(cid:16)1, 1
+(cid:141)
+
+1, 1
+(cid:141)
+
+1, 1
+(cid:141)
+
+1, 0
+(cid:141)
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+(cid:136)
+
+(cid:136)
+
+,
+
+,
+
+,
+
+,
+
+. . . . . . . . . . . . . 41
+A.1 Sele(cid:231)ªo da op(cid:231)ªo Ponto na barra de ferramenta.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+A.2 Escolha dos Pontos.
+A.3 Constru(cid:231)ªo dos segmentos. . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+. . . . . . . . . . . . . . . . . . . 42
+A.4 Segmento gerado pelos pontos A e B.
+A.5 Constru(cid:231)ªo dos segmentos dos pontos B, C e D.
+. . . . . . . . . . . . . 43
+. . . . . . . . . . . . . . . . . . . 43
+A.6 Implementa(cid:231)ªo do controle deslizante.
+A.7 De(cid:28)nindo o interlalo do par(cid:226)metro t. . . . . . . . . . . . . . . . . . . . . 44
+A.8 Controle deslizante t.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+. . 45
+A.9 Constru(cid:231)ªo do ponto sobre o segmento usando a caixa de entrada.
+A.10 Ponto sobre o segmento AB.
+. . . . . . . . . . . . . . . . . . . . . . . . 45
+A.11 Pontos F e G sobre os segmentos BC e CD.
+. . . . . . . . . . . . . . . 46
+A.12 Constru(cid:231)ªo do segmento EF .
+. . . . . . . . . . . . . . . . . . . . . . . . 46
+A.13 Segmentos EF e F G.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+A.14 Constru(cid:231)ªo dos pontos sobre os segmentos EF e F G. . . . . . . . . . . 47
+A.15 Pontos H e G. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+. . . . . . . . . . . . . . 48
+A.16 Gerando o ponto J usando a caixa de entrada.
+A.17 Ponto J.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+A.18 Sele(cid:231)ªo do lugar geomØtrico na barra de ferramenta. . . . . . . . . . . . 49
+A.19 Gerando a curva de BØzier em rela(cid:231)ªo ao ponto J e o par(cid:226)metro t.
+. . 50
+A.20 Varia(cid:231)ªo do ponto J usando o controle deslizante.
+. . . . . . . . . . . . 51
+A.21 Curva gerada com o comando psbezier . . . . . . . . . . . . . . . . . . . 52
+A.22 Curva gerada com o comando clvec do TEXdraw . . . . . . . . . . . . 54
+
+1
+
+Cap(cid:237)tulo 1
+
+Revisªo matemÆtica
+
+1.1
+
+Introdu(cid:231)ªo
+
+A educa(cid:231)ªo brasileira tem passado nas œltimas dØcadas por um per(cid:237)odo de gran-
+des transforma(cid:231)ıes, tanto no (cid:226)mbito da condu(cid:231)ªo das pol(cid:237)ticas educacionais quanto
+no processo ensino-aprendizagem, estabelecido a partir da evolu(cid:231)ªo ((cid:224)s vezes in-
+volu(cid:231)ªo) das teorias de ensino. Tal revolu(cid:231)ªo vem produzindo uma nova cultura,
+colocando o conhecimento cient(cid:237)(cid:28)co-tecnol(cid:243)gico na condi(cid:231)ªo de um efetivo e indis-
+pensÆvel fator de produ(cid:231)ªo no mundo capitalista.
+
+O estabelecimento de eixos norteadores para o desenvolvimento de a(cid:231)ıes que
+promovam a efetividade e a e(cid:28)cÆcia do ensino-aprendizagem deve ser uma prÆtica
+nas institui(cid:231)ıes de ensino, objetivando o atendimento de uma parcela cada vez maior
+da popula(cid:231)ªo, em busca do desenvolvimento local, regional e nacional.
+
+O ensino de matemÆtica vem passando por uma fase de revisªo no que diz respeito
+ao conteœdo ministrado em sala de aula, revisitar alguns temas, (cid:224)s vezes so(cid:28)sticados
+mas de fÆcil entendimento, pode ser uma excelente estratØgia para incentivar a
+curiosidade dos estudantes, e despertar o interesse pela matemÆtica.
+
+Neste trabalho de conclusªo do curso de mestrado pro(cid:28)ssional fazemos uma breve
+descri(cid:231)ªo sobre a hist(cid:243)ria da Curva de BØzier e suas aplica(cid:231)ıes em inœmeras Æreas
+da ciŒncia.
+
+Uma revisªo matemÆtica com alguns t(cid:243)picos que fundamentam a constru(cid:231)ªo
+das Curvas de BØzier serÆ realizada neste primeiro cap(cid:237)tulo.vamos revisitar alguns
+conceitos para melhor entendimento da de(cid:28)ni(cid:231)ªo da Curva de BØzier. Come(cid:231)amos
+de(cid:28)nindo curvas parametrizadas e polin(cid:244)mios de Bernstein. Por (cid:28)m de(cid:28)nimos in-
+terpola(cid:231)ªo, e introduzimos exemplos de interpola(cid:231)ªo pelo polin(cid:244)mio de Lagrange e
+interpola(cid:231)ªo linear.
+
+No estudo da curva de BØzier algumas atividades foram implementadas ao longo
+da revisªo matemÆtica para ilustrar os conceitos abordados. No segundo cap(cid:237)tulo
+serÆ apresentada a curva de BØzier e sua fundamenta(cid:231)ªo matemÆtica, com alguns
+
+2
+
+1.2. CURVAS PARAMETRIZADAS CAP˝TULO 1. REVISˆO MATEM`TICA
+
+exemplos implementados no Geogebra.
+
+No terceiro cap(cid:237)tulo abordamos alguns exemplos propostos e outros retirados do
+
+livro de referŒncia Farin [2].
+
+Os resultados obtidos foram discutidos nas conclusıes e considera(cid:231)ıes (cid:28)nais, no
+
+quarto cap(cid:237)tulo.
+
+O presente trabalho foi realizado com apoio da CAPES, Coordena(cid:231)ªo de Aper-
+
+fei(cid:231)oamento de Pessoal de N(cid:237)vel Superior.
+
+1.2 Curvas parametrizadas
+
+Em aplica(cid:231)ıes computacionais existem diversas maneiras de representar um ob-
+jeto grÆ(cid:28)co, mas destacamos duas que sªo comumente usadas a descri(cid:231)ªo paramØ-
+trica ou impl(cid:237)cita.
+
+Na descri(cid:231)ªo paramØtrica a curva Ø de(cid:28)nida por uma fun(cid:231)ªo f (cid:2) I ‘ R (cid:0) R2, f
+t
+(cid:141)
+
+(cid:0)
+, onde I Ø um intervalo na reta. Na f(cid:237)sica as equa(cid:231)ıes paramØtricas
+x
+(cid:136)
+possuem uma interpreta(cid:231)ªo interessante, considerando a variÆvel t > I como sendo o
+tempo, a curva dada por f
+
+representa uma part(cid:237)cula no plano [10].
+
+t
+(cid:141)(cid:141)
+
+t
+(cid:141)
+
+, y
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+Uma reta, por exemplo, implicitamente representada pela equa(cid:231)ªo r (cid:2) ax(cid:20)by (cid:20)c (cid:0)
+0, esta reta r pode ser representada no plano por um ponto P > r [9], e o vetor v
+que determina a sua dire(cid:231)ªo, (cid:28)gura 1.1 . A forma vetorial da equa(cid:231)ªo paramØtrica
+da reta Ø dada por
+
+t
+(cid:141)
+
+(cid:136)
+
+t
+(cid:136)
+(cid:141)
+, v (cid:0)
+Se P (cid:0)
+(cid:0)
+t
+(cid:141)
+paramØtrica de r em coordenadas:
+
+x0, y0
+
+v1, v2
+
+e f
+
+f
+
+(cid:136)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:0) P (cid:20) tv, t > R.
+
+, y
+
+x
+
+t
+
+(cid:136)
+
+(cid:141)
+
+t
+(cid:141)(cid:141)
+
+(cid:136)
+
+, entªo podemos escrever a equa(cid:231)ªo
+
+(cid:136)
+
+(cid:201) fÆcil perceber que podemos representar uma circunferŒncia usando duas ma-
+
+x
+
+t
+
+, y
+
+(cid:136)
+
+(cid:136)
+
+(cid:141)
+
+t
+(cid:141)(cid:141)
+
+(cid:136)
+
+(cid:0)
+
+x0, y0
+
+(cid:136)
+
+(cid:20) t
+(cid:136)
+
+(cid:141)
+
+v1, v2
+
+(cid:141)
+
+neiras distintas, por exemplo.
+
+x2 (cid:20) y2 (cid:0) 4
+
+ou
+
+.
+
+2πt
+(cid:141)
+
+x (cid:0) 2 sen
+(cid:136)
+2πt
+(cid:141)
+
+y (cid:0) 2 cos
+(cid:136)
+
+3
+
+1.2. CURVAS PARAMETRIZADAS CAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.1: Reta gerada da forma P (cid:20) tv constru(cid:237)da no Geogebra.
+
+A primeira forma apresenta uma di(cid:28)culdade, apenas os valores positivos de y sªo
+gerados, pois as coordenadas sªo dadas por
+, (cid:28)gura 1.2 . A forma para-
+mØtrica gera todos os pontos da circunferŒncia e de maneira suave para a mÆquina,
+(cid:28)gura 1.3 .
+
+x, ”4 (cid:16) x2
+
+(cid:141)
+
+(cid:136)
+
+Na equa(cid:231)ªo da elipse podemos simpli(cid:28)car bastante a expressªo:
+
+x2
+R2
+
+(cid:20)
+
+y2
+r2
+
+(cid:0) 1
+
+onde R Ø o raio maior e r Ø o raio menor, (cid:28)gura 1.4 . Na forma paramØtrica temos:
+
+2πt
+(cid:141)
+
+x (cid:0) R cos
+(cid:136)
+2πt
+(cid:141)
+
+y (cid:0) r sen
+
+(cid:136)
+Uma situa(cid:231)ªo bastante interessante Ø apresentada na (cid:28)gura 1.5, onde uma barra
+tem suas extremidades nos eixos X e Y, podendo deslizar apenas ao longo dos eixos,
+um ponto (cid:28)xo descreve uma trajet(cid:243)ria que varia entre Elipses e uma circunferŒncia
+variando a posi(cid:231)ªo do ponto, (cid:28)gura 1.5.
+
+4
+
+1.3. POLIN(cid:212)MIOS DE BERNSTEINCAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.2: circunferŒncia gerada da forma x2 (cid:20) y2 (cid:0) 4 constru(cid:237)da no Geogebra.
+
+1.3 Polin(cid:244)mios de Bernstein
+
+Basicamente, um polin(cid:244)mio de Bernstein Ø capaz de aproximar uma fun(cid:231)ªo con-
+t(cid:237)nua f de(cid:28)nida em um intervalo fechado e limitado [a, b], bem como ajustar curvas
+ou superf(cid:237)cies.
+
+Estes polin(cid:244)mios tambØm permitem uma aproxima(cid:231)ªo com conjunto de dados.
+Mas nªo necessariamente reproduz exatamente o conjunto de dados. Isto Ø, o grÆ(cid:28)co
+da fun(cid:231)ªo de aproxima(cid:231)ªo nªo passa atravØs dos dados, mas perto deles. Como ferra-
+menta de ajuste, estes polin(cid:244)mios tŒm vÆrias vantagens, principalmente no desenho
+assistido por computador(CAD) [5].
+
+HÆ circunst(cid:226)ncias ou experiŒncias que devem encontrar ou manter uma boa apro-
+xima(cid:231)ªo em vez de procurar interpola(cid:231)ªo dos dados.Os polin(cid:244)mios de Bernstein sªo
+chamadas assim porque sªo a base fundamental para a prova de Bernstein que condu-
+ziu ao teorema da aproxima(cid:231)ªo de Weierstrass (ver apŒndice B) . Esta demonstra(cid:231)ªo
+tem um profundo impacto em muitas Æreas. Os polin(cid:244)mios de Bernstein estªo liga-
+dos com a teoria de Probabilidade, com problemas de momentos e com a teoria de
+somas de sØries divergentes.
+
+Problemas interessantes em anÆlise complexa, alguns dos quais ainda nªo total-
+
+5
+
+1.3. POLIN(cid:212)MIOS DE BERNSTEINCAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.3: circunferŒncia gerada da forma x (cid:0) 2 cos
+(cid:136)
+
+2πt
+(cid:141)
+
+e y (cid:0) 2 sen
+(cid:136)
+
+.
+
+2πt
+(cid:141)
+
+mente resolvidos, referem-se ao comportamento dos polin(cid:244)mios de Bernstein fun(cid:231)ıes
+anal(cid:237)ticas. O cÆlculo da expansªo binomial
+
+1 (cid:0)
+
+t (cid:20)
+
+1 (cid:16) t
+
+(cid:141)(cid:141)
+
+(cid:136)
+
+n (cid:0)
+
+n
+Q
+i(cid:0)0 (cid:140)
+
+n
+i (cid:145)
+
+.
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+n(cid:16)i.ti
+
+(cid:136)
+, i (cid:0) 0, ..., n;
+0, 1
+(cid:5)
+
+com t >
+(cid:0)
+diferentes graus n.
+
+isto nos permite obter o polin(cid:244)mio de Bernstein em
+
+(cid:0)
+
+Bn
+i (cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+n
+i (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+n(cid:16)i.ti
+
+com t >
+
+, i (cid:0) 0, ..., n
+0, 1
+(cid:5)
+Bernstein de grau 1, (cid:28)gura 1.6:
+
+(cid:0)
+
+(cid:0)
+
+B1
+0(cid:136)
+
+t
+(cid:141)
+
+B1
+1(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+(cid:0)
+
+1
+0 (cid:145)
+
+.
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+1(cid:16)0.t0 (cid:0) 1 (cid:16) t
+
+1
+1 (cid:145)
+
+(cid:140)
+
+.
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+1(cid:16)1.t1 (cid:0) t
+
+6
+
+1.3. POLIN(cid:212)MIOS DE BERNSTEINCAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.4: Elipse gerada da forma x (cid:0) R cos
+(cid:136)
+
+2πt
+(cid:141)
+
+e y (cid:0) r sen
+
+.
+
+2πt
+(cid:141)
+
+(cid:136)
+
+Bernstein de grau 2. (cid:28)gura 1.7:
+
+(cid:0)
+
+B2
+0(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+2
+0 (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+2.t0 (cid:0)
+
+2
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+(cid:0)
+
+B2
+1(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+2
+1 (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+2(cid:16)1.t1 (cid:0) 2
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+t
+
+(cid:136)
+
+(cid:0)
+
+t
+
+B2
+2(cid:136)
+
+(cid:141)
+
+(cid:140)
+
+2
+2 (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+2(cid:16)2.t2 (cid:0) t2
+
+Bernstein de grau 3, (cid:28)gura 1.8:
+
+(cid:0)
+
+B3
+0(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+3
+0 (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+3.t0 (cid:0)
+
+3
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+(cid:0)
+
+B3
+1(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+2
+1 (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+3(cid:16)1.t1 (cid:0) 3
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+2t
+
+7
+
+1.3. POLIN(cid:212)MIOS DE BERNSTEINCAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.5: A trajet(cid:243)ria el(cid:237)ptica ou circular descrita por um ponto (cid:28)xo na barra
+dependendo da razªo entre os pontos A e B.
+
+Figura 1.6: Bernstein de grau 1.
+
+(cid:0)
+
+B2
+3(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+3
+2 (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+3(cid:16)2.t2 (cid:0) 3
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+t2
+
+(cid:0)
+
+B3
+3(cid:136)
+
+t
+(cid:141)
+
+(cid:140)
+
+3
+3 (cid:145)
+
+.
+(cid:136)
+
+1 (cid:16) t
+
+(cid:141)
+
+3(cid:16)3.t3 (cid:0) t3
+
+8
+
+1.3. POLIN(cid:212)MIOS DE BERNSTEINCAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.7: Bernstein de grau 2.
+
+Figura 1.8: Bernstein de grau 3.
+
+1.3.1 Propriedades dos polin(cid:244)mios de Bernstein
+
+Podemos citar algumas propriedades dos polin(cid:244)mios de Bernstein [5]:
+
+(cid:136) Sªo linearmente independente, de fato, dividindo P
+
+n(cid:16)i (cid:0) 0 por
+n
+i(cid:0)0 citi
+n
+i(cid:0)0 cisi (cid:0) 0 o que implica que c0 (cid:0) c1 (cid:0) c2 (cid:0)
+
+1 (cid:16) t
+
+(cid:136)
+
+(cid:141)
+
+n e usando s (cid:0) t
+
+1(cid:16)t obtemos P
+
+1 (cid:16) t
+(cid:136)
+(cid:141)
+... (cid:0) cn (cid:0) 0.
+
+(cid:136) Sªo SimØtricos,
+
+Bn
+i (cid:136)
+
+t
+(cid:141)
+
+(cid:0) Bn
+
+n(cid:16)i(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+(cid:8)
+
+(cid:140)
+
+n
+i (cid:145)
+
+.ti.
+(cid:136)
+
+1 (cid:16) t
+
+(cid:141)
+
+n(cid:16)i (cid:0)
+
+n
+n (cid:16) i (cid:145)
+
+(cid:140)
+
+.
+(cid:136)
+
+1 (cid:16) t
+(cid:141)
+
+n(cid:16)i.ti
+
+.
+Como a expressªo 1 (cid:0)
+1 (cid:0)
+
+1 (cid:16) t
+
+(cid:20) t
+(cid:141)
+
+(cid:141)
+
+(cid:136)(cid:136)
+
+(cid:136) As ra(cid:237)zes sªo 0 e 1,
+
+t (cid:20)
+
+1 (cid:16) t
+
+(cid:136)
+
+(cid:136)
+
+(cid:141)(cid:141)
+
+n pode ser escrita da seguinte forma:
+
+n, explica esta propriedade na expansªo binomial.
+
+9
+
+1.3. POLIN(cid:212)MIOS DE BERNSTEINCAP˝TULO 1. REVISˆO MATEM`TICA
+
+Bn
+i (cid:136)
+
+0
+(cid:141)
+
+(cid:0) Bn
+
+n(cid:16)i(cid:136)
+
+(cid:0)
+
+1
+(cid:141)
+
+(cid:156)
+
+1
+0
+
+para
+
+i (cid:0) 0
+i A 0 ¡
+
+Veri(cid:28)que que para t (cid:0) 0 os termos t apresentarªo valores nulos. Para t (cid:0) 1 os
+termos 1 (cid:16) t apresentarªo valores nulos, isto pode ser facilmente comprovado
+nos grÆ(cid:28)cos apresentados anteriormente.
+
+(cid:136) A soma de todas parti(cid:231)ıes do polin(cid:244)mios de Bernstein possui valor 1,
+
+n
+i(cid:0)0 Bn
+t
+P
+i (cid:136)
+(cid:141)
+expressªo:
+
+(cid:0) 1, para todo t > R. Esta propriedade Ø facilmente veri(cid:28)cada para
+
+1 (cid:0)
+
+t (cid:20)
+
+(cid:136)
+
+(cid:136)
+
+1 (cid:16) t
+
+(cid:141)(cid:141)
+
+n (cid:0)
+
+n
+Q
+i(cid:0)0 (cid:140)
+
+n
+i (cid:145)
+
+.
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+n(cid:16)i.ti
+
+Logo ao somar a expressªo teremos como resultado o valor 1.
+
+,
+
+0, 1
+(cid:141)
+
+(cid:136)
+A 0, para todo t >
+
+(cid:136) Sªo positivos para
+n
+i(cid:0)0 Bn
+t
+P
+i (cid:136)
+(cid:141)
+Como t C 0,
+1(cid:16)t
+(cid:141)
+(cid:136)
+n
+A 0.
+i(cid:0)0 Bn
+t
+que P
+i (cid:136)
+(cid:141)
+(cid:136) Satisfaz a rela(cid:231)ªo de recorrŒncia
+
+(cid:136)
+
+0, 1
+(cid:141)
+
+C 0 e os coe(cid:28)cientes binomial sªo positivos, podemos concluir
+
+onde Bn
+(cid:16)1
+
+(cid:1) Bn
+
+n(cid:20)1
+
+Bn(cid:20)1
+i
+(cid:1) 0 e B0
+0
+
+(cid:136)
+(cid:1) 1
+
+t
+(cid:141)
+
+(cid:0) tBn
+
+i(cid:16)1(cid:136)
+
+t
+(cid:141)
+
+(cid:20)
+
+1 (cid:16) t
+(cid:141)
+
+Bn
+i (cid:136)
+
+t
+(cid:141)
+
+,
+
+(cid:136)
+
+Esta rela(cid:231)ªo de recorrŒncia vem da identidade:
+
+n (cid:20) 1
+i
+
+(cid:140)
+
+(cid:0)
+
+(cid:145)
+
+(cid:140)
+
+n
+i (cid:16) 1 (cid:145)
+
+(cid:20)
+
+(cid:140)
+
+n
+i (cid:145)
+
+Os polin(cid:244)mios Bernstein, Ø gerados pela rela(cid:231)ªo de recorrŒncia , e pode ser cal-
+culado utilizando um mØtodo semelhante ao utilizado para o cÆlculo do binomial
+onde os coe(cid:28)cientes estªo no tri(cid:226)ngulo de Pascal. Cada valor Ø a mØdia ponderada
+dos dois valores mais pr(cid:243)ximos acima dele, onde os pesos sªo t e 1 (cid:16) t.
+
+o polin(cid:244)mio de Bernstein segue o esquema de distribui(cid:231)ªo generalizada abaixo:
+
+B0
+0
+0 B1
+1
+1 B2
+2
+(cid:6)
+
+B1
+0 B2
+(cid:6)
+1 Bn
+2
+
+(cid:8)
+. . . Bn
+n
+
+B2
+
+(cid:7)
+0 Bn
+
+Bn
+
+10
+
+1.4.
+
+INTERPOLA˙ˆO
+
+CAP˝TULO 1. REVISˆO MATEM`TICA
+
+Podemos ver a expansªo atØ o quinto grau do polin(cid:244)mio.
+
+1
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+t
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+1 (cid:16) t
+(cid:141)
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+(cid:136)
+
+t2
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+2t(1-t)
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+1 (cid:16) t
+2
+(cid:141)
+(cid:136)
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+t
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+1 (cid:16) t
+3t2
+(cid:141)
+(cid:136)
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+1 (cid:16) t
+2
+3t
+(cid:141)
+(cid:136)
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+1 (cid:16) t
+3
+(cid:141)
+(cid:136)
+t (cid:6) (cid:7)(cid:136)1(cid:16)t(cid:141)
+
+t4
+
+4t3
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+6t2
+
+2
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+4t
+(cid:136)
+
+1 (cid:16) t
+
+3
+
+(cid:141)
+
+4
+
+1 (cid:16) t
+(cid:141)
+
+(cid:136)
+
+1.4
+
+Interpola(cid:231)ªo
+
+x
+
+Entre os problemas que nos deparamos no dia a dia consiste em dada uma
+para um dado x. A aproxima(cid:231)ªo de fun(cid:231)ıes
+tabela encontrar os valores de f
+por polin(cid:244)mios Ø uma das ideias mais antigas da anÆlise numØrica, e ainda uma das
+mais usadas para resolver o problema supracitado. (cid:201) bastante fÆcil entender por
+que razªo isso acontece. Os polin(cid:244)mios sªo facilmente computÆveis, suas derivadas e
+integrais sªo novamente polin(cid:244)mios e suas ra(cid:237)zes podem ser encontradas com relativa
+facilidade [1].
+
+(cid:141)
+
+(cid:136)
+
+A simplicidade dos polin(cid:244)mios permite que a aproxima(cid:231)ªo polinomial seja obtida
+de vÆrios modos, entre os quais podemos citar: Interpola(cid:231)ªo, MØtodo dos M(cid:237)nimos
+Quadrados, Mini-Max, etc, portanto Ø vantajoso substituir uma fun(cid:231)ªo complicada
+por um polin(cid:244)mio que a represente. AlØm disso temos o Teorema de Weirstrass
+que a(cid:28)rma que: toda fun(cid:231)ªo cont(cid:237)nua pode ser arbitrariamente aproximada por um
+polin(cid:244)mio.
+
+Veremos aqui como aproximar uma fun(cid:231)ªo usando MØtodos de Interpola(cid:231)ªo Po-
+linomial de Lagrange e Linear. Estes mØtodos sªo usados como uma aproxima(cid:231)ªo
+para uma fun(cid:231)ªo f
+em situa(cid:231)ıes em que a fun(cid:231)ªo Ø extremamente complicada e
+de dif(cid:237)cil manejo. Entªo, (cid:224)s vezes, Ø interessante sacri(cid:28)car a precisªo em benef(cid:237)cio
+da simpli(cid:28)ca(cid:231)ªo dos cÆlculos.
+
+x
+
+(cid:141)
+
+(cid:136)
+
+1.4.1
+
+Interpolador de Lagrange
+
+Dados um conjunto de n (cid:20) 1 pontos no plano grÆ(cid:28)co da fun(cid:231)ªo yi (cid:0) f
+
+, tais
+(cid:136)
+, cujo grÆ(cid:28)co passa
+(cid:136)
+(cid:0) yi, i (cid:0) 1, ...n(cid:20)1. Assim, por um ponto œnico
+
+, hÆ polin(cid:244)mio de grau n, P
+xi
+
+x
+
+(cid:141)
+
+(cid:141)
+
+xi
+
+,
+
+x1, y1
+
+xn(cid:20)1, yn(cid:20)1
+x2, y2
+que
+(cid:141)
+pelos n(cid:20)1 pontos dados, ou seja, P
+(cid:136)
+
+, ...,
+
+(cid:136)
+
+(cid:141)
+
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+(cid:141)
+
+11
+
+1.4.
+
+INTERPOLA˙ˆO
+
+CAP˝TULO 1. REVISˆO MATEM`TICA
+
+passa uma reta horizontal (polin(cid:244)mio de grau zero = constante), por dois pontos
+passa uma reta (polin(cid:244)mio de primeiro grau), por trŒs pontos passa uma parÆbola
+(polin(cid:244)mio de segundo grau), etc. HÆ muitas maneiras pela qual se pode encontrar
+o polin(cid:244)mio de grau n que passa pelos n (cid:20) 1 pontos dados, embora ele seja œnico, ou
+seja, o polin(cid:244)mio pode ser escrito de diversas formas equivalentes. Talvez a forma
+mais simples seja a que chamamos Polin(cid:244)mio interpolador de Lagrange [7].
+
+Pnx (cid:0)
+
+n(cid:20)1
+Q
+i(cid:0)1
+
+yi,
+
+pi
+
+x
+
+(cid:141)
+
+(cid:136)
+
+onde cada pi Ø um polin(cid:244)mio de grau n de(cid:28)nido por
+
+pi
+
+x (cid:16) xi(cid:16)1
+...
+(cid:136)
+(cid:141)
+xi (cid:16) xi(cid:16)1
+...
+(cid:136)
+(cid:141)
+Como exemplo de aplica(cid:231)ªo dada a tabela encontrar o polin(cid:244)mio interpolador de
+
+x (cid:16) xi(cid:20)1
+(cid:141)
+xi (cid:16) xi(cid:20)1
+(cid:141)
+
+x (cid:16) x2
+(cid:141)(cid:136)
+xi (cid:16) x2
+(cid:141)(cid:136)
+
+x (cid:16) xn(cid:20)1
+(cid:141)
+xi (cid:16) xn(cid:20)1
+
+x (cid:16) x1
+xi (cid:16) x1
+
+(cid:0) (cid:136)
+(cid:136)
+
+...
+(cid:136)
+...
+(cid:136)
+
+(cid:141)(cid:136)
+(cid:141)(cid:136)
+
+x
+
+(cid:141)
+
+(cid:141)
+
+(cid:136)
+
+.
+
+Lagrange:
+
+Solu(cid:231)ªo:
+
+(cid:141)
+
+x f
+x
+(cid:136)
+-1 15
+0 8
+3 -1
+
+P3
+
+x
+
+(cid:136)
+
+(cid:141)
+
+(cid:0) 15(cid:21) (cid:136)x(cid:16)0(cid:141)(cid:136)x(cid:16)3(cid:141)
+(cid:136)(cid:16)1(cid:16)0(cid:141)(cid:136)(cid:16)1(cid:16)3(cid:141)
+
+(cid:20)8(cid:21) (cid:136)x(cid:20)1(cid:141)(cid:136)x(cid:16)3(cid:141)
+(cid:136)0(cid:20)1(cid:141)(cid:136)0(cid:16)3(cid:141)
+
+(cid:16)1(cid:21) (cid:136)x(cid:20)1(cid:141)(cid:136)x(cid:16)0(cid:141)
+(cid:136)3(cid:20)1(cid:141)(cid:136)3(cid:16)0(cid:141)
+
+(cid:0) 15(cid:21) x2(cid:16)3x
+
+4
+
+(cid:20)8(cid:21) (cid:136)x2(cid:16)2x(cid:16)3(cid:141)
+
+(cid:16)3
+
+(cid:16)1(cid:21) x2(cid:20)x
+12 .
+
+Agrupando os termos semelhantes, segue que:
+P3
+
+(cid:0) x2 (cid:16) 6x (cid:20) 8, (cid:28)gura 1.9 .
+
+x
+
+(cid:136)
+
+(cid:141)
+
+Vamos usar na (cid:28)gura 1.10 para interpolar utilizando o interpolador de Lagrange,
+
+(cid:28)gura 1.11 .
+
+1.4.2
+
+Interpolador Linear
+
+x
+
+xi
+
+Suponhamos que a fun(cid:231)ªo f
+
+seja conhecida nos pontos xi, i (cid:0) 1, 2, 3, ..., n (cid:20) 1
+(cid:0) yi. Temos entªo n intervalos entre pontos consecutivos
+onde f
+.A
+maneira mais simples de unir estes pontos por uma linha cont(cid:237)nua Ø tra(cid:231)ar uma reta
+a reta que une
+entre cada dois pontos
+os pontos
+
+. Vamos chamar de gi
+
+xi(cid:20)1, yi(cid:20)1
+
+xi, xi(cid:20)1
+
+x
+
+(cid:136)
+
+(cid:141)
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+e
+
+xi, yi
+
+e
+(cid:136)
+A equa(cid:231)ªo da gi
+
+(cid:141)
+
+xi, yi
+(cid:136)
+xi(cid:20)1, yi(cid:20)1
+x
+
+(cid:141)
+.
+(cid:141)
+
+Ø, entªo,
+
+(cid:136)
+(cid:136)
+
+(cid:141)
+
+(cid:0) yi (cid:20)
+
+gi
+
+x
+
+(cid:136)
+
+(cid:141)
+
+x (cid:16) xi
+
+(cid:136)
+
+yi(cid:20)1 (cid:16) yi
+xi(cid:20)1 (cid:16) xi
+
+(cid:141)
+
+(cid:1) yi (cid:20)
+
+x (cid:16) xi
+
+(cid:136)
+
+∆yi
+∆xi
+
+.
+
+(cid:141)
+
+12
+
+1.4.
+
+INTERPOLA˙ˆO
+
+CAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.9: Usando o Geogebra para veri(cid:28)car o polin(cid:244)mio interpolador.
+
+Figura 1.10: Imagem de um pato usada na interpola(cid:231)ªo.
+
+Usaremos os dois mØtodos estudados para fazer uma interpola(cid:231)ªo em uma (cid:28)gura
+disposta em um plano cartesiano, para realizar a interpola(cid:231)ªo foi usado o software
+wxMaxima. O Polin(cid:244)mio mais sinuoso linha vermelha Ø o interpolador de Lagrange
+enquanto que a linha Azul Ø o interpolador linear, (cid:28)gura 2.12 [1] .
+
+13
+
+1.4.
+
+INTERPOLA˙ˆO
+
+CAP˝TULO 1. REVISˆO MATEM`TICA
+
+Figura 1.11: Pontos interpolados sobre a imagem do pato pelo polin(cid:244)mio de La-
+grange.
+
+Figura 1.12: Exemplo de interpola(cid:231)ªo linear usando o software wxMaxima.
+
+14
+
+Cap(cid:237)tulo 2
+
+Curvas de BØzier
+
+2.1 Uma breve hist(cid:243)ria das curvas de BØzier e sua
+
+import(cid:226)ncia
+
+Arquitetos navais renascentistas na ItÆlia foram os primeiros a usar tØcnicas en-
+volvendo sec(cid:231)ıes c(cid:244)nicas [2]. Antes disso, os navios eram feitos a mªo, sem qualquer
+matemÆtica envolvida. Essas tØcnicas de design foram re(cid:28)nadas atravØs dos sØculos,
+culminando com o uso de vigas de madeiras dobradas nas formas ideais atravØs de
+pesos, vem da(cid:237) a origem do nome "splines". No in(cid:237)cio do sØculo XX, com o invento
+dos aviıes o uso das sec(cid:231)ıes c(cid:244)nicas foram mais difundidas devido (cid:224) necessidade de
+suavizar a trajet(cid:243)ria do ar ao longo da superf(cid:237)cie da aeronave. O autom(cid:243)vel surgiu
+como um dos (cid:237)cones do sØculo XX, precisando de novos projetos que viabilizasse a
+produ(cid:231)ªo em massa, com o uso de CAD/CAM(desenho auxiliado por computador
+Fabrica(cid:231)ªo assistida por computador).
+
+Figura 2.1: Projeto de ve(cid:237)culo usando curvas de BØzier.
+
+No (cid:28)nal da dØcada de 1950, tornou-se poss(cid:237)vel a usinagem em 3D de blocos de
+
+15
+
+2.1. UMA BREVE HIST(cid:211)RIA DAS CURVAS DE B(cid:201)ZIER E SUA
+IMPORT´NCIA
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+madeira ou a(cid:231)o, na constru(cid:231)ªo dos moldes. Estes moldes poderiam, entªo, ser usa-
+dos como matrizes para estampagem de pe(cid:231)as como o cap(cid:244) e a lataria de carros. O
+grande problema destes mØtodos de produ(cid:231)ªo foi a falta de software adequado que
+permitisse a comunica(cid:231)ªo com as mÆquinas. A (cid:28)m realizar desenhos em computa-
+dores, geralmente contamos com linhas e curvas. As linhas sªo fÆceis de desenhar
+dando ao computador o primeiro e œltimo ponto temos informa(cid:231)ªo su(cid:28)ciente para
+gerar os pontos colineares aos pontos dados. As curvas, no entanto possuem um
+grau de complexidade maior, embora possamos desenhar curvas com facilidade (cid:224)
+mªo livre, nos computadores estas curvas precisam ser de(cid:28)nidas como uma fun(cid:231)ªo
+matemÆtica, mas nem todas as fun(cid:231)ıes que conhecemos podem se adequar a mai-
+oria dos problemas de computa(cid:231)ªo grÆ(cid:28)ca. Outro problema encontrado era que as
+curvas precisavam ser representadas numericamente. O uso de formas paramØtricas
+surgiram como solu(cid:231)ªo, pois atØ entªo nªo era poss(cid:237)vel gerar curvas muito complexa
+que pudessem ser interpretadas por mÆquinas de controle numØrico os CNC’s.
+
+As curvas de BØzier foram bastante promissoras e sªo usadas na maioria das
+situa(cid:231)ıes em que se requer o desenho de uma curva. A homenagem ao engenheiro
+FrancŒs Pierre BØzier(1910-1999), se deve ao fato dele ser o principal responsÆvel
+por levÆ-las ao conhecimento de todos atravØs de seus trabalho de design (traba-
+lhando para a Renault durante muitos anos e publicando suas investiga(cid:231)ıes em
+1962), embora ele nªo tenha sido o primeiro. Podemos ser tentados a dizer que o
+matemÆtico Paul de Casteljau foi o primeiro, investigando a natureza dessas curvas
+em 1959, enquanto trabalhava na Citroºn, no entanto, De Casteljau nªo publicou
+seu trabalho.
+
+Figura 2.2: Formas geradas por alguns software usando as curvas de BØzier.
+
+As curvas BØzier foram desenvolvidas de forma independente por De Casteljau
+da Citroºn e por BØzier na Renault servindo para desenvolvimento de um mØtodo de
+produ(cid:231)ªo de autom(cid:243)veis, fazendo com que estas empresas possu(cid:237)ssem um design mais
+suave e agradÆvel em seus produtos. Independente de quem criou o que importa Ø que
+essas curvas sªo bastante œteis, pois ligando vÆrias curvas de BØzier sua combina(cid:231)ªo
+
+16
+
+2.1. UMA BREVE HIST(cid:211)RIA DAS CURVAS DE B(cid:201)ZIER E SUA
+IMPORT´NCIA
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+gera uma œnica curva suave. Ao desenhar em softwares como o Photoshop, Flash
+ou Inkscape, as curvas desenhadas sªo simplesmente Curvas de BØzier, (cid:28)gura 2.2 .
+As Curvas de BØzier se diferenciam de outras tØcnicas na Øpoca por terem uma
+grande (cid:29)exibilidade e alta capacidade de adapta(cid:231)ªo. Elas podem ser constru(cid:237)das
+em qualquer comprimento e diversidade de forma, unindo o ponto de extremidade
+de uma curva ao ponto de in(cid:237)cio de uma outra. Estas curvas podem expandir e se
+transformar em superf(cid:237)cies de BØzier.
+
+Entre as aplica(cid:231)ıes recentes, temos o uso de software em cirurgias plÆsticas onde
+
+o paciente pode visualizar os contornos antes do procedimento, (cid:28)gura 2.3.
+
+Figura 2.3: Usando curvas em cirurgias plÆsticas.
+
+O Processo de constru(cid:231)ªo da curva de BØzier Ø bastante intuitivo, levando o
+usuÆrio a realizar uma constru(cid:231)ªo sem grandes conhecimentos, isto era favorÆvel,
+pois os designs nªo dominavam os conceitos de matemÆtica. Ao longo das dØcadas a
+computa(cid:231)ªo grÆ(cid:28)ca se tornou uma grande ferramenta para constru(cid:231)ıes geomØtricas.
+No (cid:226)mbito de ensino o estudo das curvas de BØzier permite revisitar alguns concei-
+tos como proporcionalidade, geometria anal(cid:237)tica, parametriza(cid:231)ªo de curvas, mØdias,
+fun(cid:231)ıes e polin(cid:244)mios. Aplica(cid:231)ıes como cria(cid:231)ªo de ambientes virtuais, constru(cid:231)ªo de
+desenhos animados, ajustamento de curvas, reconstru(cid:231)ªo de (cid:28)guras em 3D e na me-
+dicina em processamento de imagens podem ser citadas, o que Ø bastante motivador
+observar os conceitos matemÆticos sendo utilizados no mundo real.
+
+Ao longo do trabalho estudamos os conceitos bÆsicos que levaram ao seu desen-
+volvimento como os polin(cid:244)mios de Bernstein e curvas paramØtricas. Faremos uma
+abordagem sobre as propriedades das curvas de BØzier, e casos especiais. Com os
+conceitos bÆsicos estudados no cap(cid:237)tulo anterior de(cid:28)nimos as Curvas de BØzier e
+desenvolvemos as ideias intuitivas para gerar estas curvas. O Conhecimento do Al-
+goritmo De Casteljau facilita a implementa(cid:231)ªo posterior em software matemÆticos
+como wxMaxima e o Geogebra.
+
+Por (cid:28)m, mostramos exemplos propostos e outros sugeridos no livro de referŒncia
+[2]. A computa(cid:231)ªo grÆ(cid:28)ca Ø um combust(cid:237)vel motivador para o estudo das Curvas de
+
+17
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+BØzier, estÆ atualizado com as bases deste tema traz uma seguran(cid:231)a para abordÆ-lo
+durante as aulas. O tema revisa alguns conteœdos matemÆticos bÆsicos, e serve bem
+como aplica(cid:231)ªo do conhecimento. Fazer uma compara(cid:231)ªo da curva de BØzier com
+outros mØtodos de interpola(cid:231)ªo como o Polin(cid:244)mio de Lagrange e a interpola(cid:231)ªo linear
+Ø bastante relevante para o estudo, pois traz uma resposta clara pela predile(cid:231)ªo por
+essas curvas.
+
+2.2 De(cid:28)ni(cid:231)ªo das Curvas de
+
+BØzier
+
+Essencialmente o que a constru(cid:231)ªo de De Casteljau faz Ø uma mØdia ponderada
+entre diversos pontos dados inicialmente. Os pesos desta mØdia em cada ponto sªo
+fun(cid:231)ıes do par(cid:226)metro t; como em cada etapa faz-se uma interpola(cid:231)ªo linear sobre
+os pontos da etapa anterior essas fun(cid:231)ıes sªo polin(cid:244)mios de grau n, veri(cid:28)que que
+temos n (cid:20) 1 pontos e o polin(cid:244)mio Ø um grau menor que o nœmero de pontos [9].
+
+As curvas de BØzier podem ser de(cid:28)nidas como:
+
+(cid:0)
+
+C
+
+t
+(cid:141)
+
+(cid:136)
+
+N
+Q
+i(cid:0)0
+
+PiBn
+i (cid:136)
+
+t
+
+(cid:141)
+
+em que Bn
+escolhidos previamente. Temos entªo:
+
+i sªo os polin(cid:244)mios de Bernstein de grau n e Pi sªo os pontos de controle
+
+(cid:0)
+
+x
+
+t
+(cid:141)
+
+(cid:136)
+
+N
+Q
+i(cid:0)0
+
+xiBn
+i (cid:136)
+
+t
+(cid:141)
+
+x, y
+
+(cid:0)
+
+,
+
+2, 2
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+t
+(cid:141)
+Problema: Ache a curva de Bezier que possui os pontos de controle:
+
+yiBn
+i (cid:136)
+
+t
+(cid:141)
+
+y
+
+(cid:136)
+
+(cid:0)
+
+N
+Q
+i(cid:0)0
+
+1, 1.5
+,
+(cid:136)
+(cid:136)
+(cid:141)
+Solu(cid:231)ªo:
+
+3.5, 0
+(cid:141)
+
+,
+
+4, 1
+(cid:141)
+
+(cid:136)
+
+x
+
+(cid:136)
+
+(cid:0) 2B3
+t
+t
+0(cid:136)
+(cid:141)
+(cid:141)
+1 (cid:16) t
+2t3 (cid:20) t2
+(cid:141)
+(cid:136)
+
+(cid:20) 3.5B3
+t
+2(cid:136)
+(cid:141)
+2 (cid:20) 4
+1 (cid:16) t
+(cid:136)
+(cid:141)
+
+(cid:20) 1B3
+t
+1(cid:136)
+(cid:141)
+(cid:20) 3.5t
+(cid:136)
+t3 (cid:20) 12t2 (cid:16) 17t (cid:20) 8
+2
+(cid:20) 1.5B3
+(cid:20) 0B3
+t
+t
+1(cid:136)
+2(cid:136)
+(cid:141)
+(cid:141)
+1 (cid:16) t
+(cid:20) 0t
+1 (cid:16) t
+2
+(cid:141)
+(cid:141)
+(cid:141)
+t3 (cid:16) 9t2 (cid:20) 6t (cid:16) 2
+.
+2
+
+(cid:136)(cid:136)
+
+.
+
+(cid:0)
+
+(cid:20) 4B3
+t
+3(cid:136)
+(cid:141)
+3 (cid:0)
+1 (cid:16) t
+(cid:141)
+
+t
+(cid:141)
+(cid:20) 1
+
+(cid:20) 1B3
+t
+3(cid:136)
+(cid:141)
+1 (cid:16) t
+(cid:141)
+
+(cid:136)(cid:136)
+
+(cid:0)
+
+3
+
+(cid:141)
+
+(cid:0)
+
+y
+(cid:136)
+t3
+
+(cid:0) 2B3
+t
+0(cid:136)
+(cid:141)
+(cid:20) 1.5
+t2
+(cid:141)(cid:136)
+(cid:136)
+
+(cid:141)
+
+2
+(cid:136)
+
+18
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+2.2.1 Propriedades das Curvas de BØzier
+
+Algumas propriedades das curvas de BØzier [2] sªo:
+
+(cid:136) Invari(cid:226)ncia a transforma(cid:231)ıes a(cid:28)ns:
+
+Interpola(cid:231)ªo linear Ø invariante a
+transforma(cid:231)ıes a(cid:28)ns. A curva de BØzier Ø gerada por interpola(cid:231)ıes lineares
+alinhadas. Logo, tambØm Ø invariante a transforma(cid:231)ıes a(cid:28)ns. Ou seja, calcu-
+lar um determinado ponto na curva de BØzier original e, em seguida, aplicar
+uma transforma(cid:231)ªo a(cid:28)m ou aplicar esta mesma transforma(cid:231)ªo a(cid:28)m a todos os
+pontos de controle e, em seguida, gerar o ponto na curva de BØzier, nªo farÆ
+diferen(cid:231)a alguma.
+
+(cid:136) Invari(cid:226)ncia a transforma(cid:231)ıes a(cid:28)ns de par(cid:226)metros: Muitas vezes, se
+pensa que uma curva de BØzier Ø de(cid:28)nida ao longo do intervalo
+. Isto Ø
+feito porque ele Ø conveniente, nªo porque Ø necessÆrio. O algoritmo de Castel-
+jau Ø "cego"para o intervalo real, pois Ø a curva Ø de(cid:28)nida usando propor(cid:231)ıes.
+Pode-se, portanto, pensar na curva como sendo de(cid:28)nida sobre qualquer inter-
+valo arbitrÆrio a @ u @ b na reta real, onde t (cid:0) u(cid:16)a
+b(cid:16)a . Esta propriedade Ø herdada
+a partir do processo de interpola(cid:231)ªo linear. Novamente, a interpola(cid:231)ªo linear
+Ø invariante a transforma(cid:231)ıes a(cid:28)ns de par(cid:226)metro. E assim Ø, tambØm, a curva
+a, b
+de BØzier. Ou seja, podemos de(cid:28)nir uma Curva de BØzier no intervalo
+(cid:0)
+da seguinte maneira:
+
+0, 1
+(cid:5)
+(cid:0)
+
+(cid:5)
+
+(cid:0)
+
+br
+i (cid:136)
+
+u
+(cid:141)
+
+b (cid:16) u
+b (cid:16) a
+
+r(cid:16)1
+i (cid:20)
+
+b
+
+u
+(cid:141)
+
+(cid:136)
+
+u (cid:16) a
+b (cid:16) a
+
+r(cid:16)1
+i(cid:20)1 .
+
+u
+
+b
+
+(cid:136)
+
+(cid:141)
+
+Esta propriedade Ø particularmente interessante para compor objetos com mais
+de uma curva de BØzier que tenha alguma propriedade particular desejada.
+
+(cid:136) Propriedade do inv(cid:243)lucro convexo: Para t >
+
+t
+(cid:141)
+ou na borda do inv(cid:243)lucro convexo da poligonal de controle.
+
+, bn
+0, 1
+(cid:5)
+(cid:0)
+
+(cid:136)
+
+localize-se dentro
+
+j
+
+Isto ocorre uma vez que cada br intermediÆrio Ø obtido como uma combina(cid:231)ªo
+baricŒntrica convexa anterior br(cid:16)1
+em nenhum passo do algoritmo de Casteljau
+que produz pontos fora do inv(cid:243)lucro convexo de bi. Uma simples consequŒncia
+da propriedade fecho convexo Ø que um controle planar pol(cid:237)gono sempre gera
+uma curva plana. A import(cid:226)ncia da propriedade fecho convexo estÆ no que
+Ø conhecido como veri(cid:28)ca(cid:231)ªo de interferŒncia. Suponha que queremos saber
+se duas curvas BØzier se cruzam, por exemplo, cada um pode representar o
+caminho de um bra(cid:231)o de rob(cid:244), e nosso objetivo Ø ter certeza de que os dois
+caminhos nªo se interceptam, evitando assim colisıes dos rob(cid:244)s. Em vez de
+realmente calcular uma poss(cid:237)vel intersec(cid:231)ªo, podemos realizar um teste muito
+mais simples: circunscrever a menor caixa poss(cid:237)vel em torno de cada curva de
+modo que suas bordas sejam paralelas ao sistema de coordenadas. Tais caixas
+
+19
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+sªo chamadas Minmax, e sªo criadas pelas coordenadas m(cid:237)nimas e mÆximas
+do pol(cid:237)gono de controle. Claramente cada caixa contØm o seu pol(cid:237)gono de
+controle, seu inv(cid:243)lucro convexo e a curva de BØzier correspondente, (cid:28)gura 2.4
+. Podemos veri(cid:28)car se as duas caixas estªo sobrepostas, tendo assim a certeza
+de que as duas curvas nªo se cruzam. Se as caixas se sobrepıem, n(cid:243)s ter(cid:237)amos
+que realizar uma modi(cid:28)ca(cid:231)ªo nos pontos de controle das curvas.
+
+Figura 2.4: Inv(cid:243)lucros convexo nas curvas Curvas de BØzier variando os pontos de
+controle.
+
+(cid:136) A curva de BØzier interpola sempre os extremos: a curva de BØzier
+passa sempre atravØs dos extremos b0 e bn, tendo como base a propriedade
+(cid:0) bn, os dois
+das ra(cid:237)zes dos polin(cid:244)mios de Bernstein temos: bn
+pontos extremos da curva sªo os mais importantes na constru(cid:231)ªo, e a inversªo
+de posi(cid:231)ªo nªo interfere no formato da curva.
+
+(cid:0) b0 , bn
+
+1
+(cid:141)
+
+0
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+2.2.2 Algoritmo de Casteljau
+
+O algoritmo descrito Ø fundamental para o dom(cid:237)nio da curva de BØzier, no en-
+tanto Ø surpreendentemente simples. Seu principal atrativo Ø a bela intera(cid:231)ªo entre
+geometria e a Ælgebra [2] [5].
+
+20
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+Descri(cid:231)ªo do algoritmo:
+Entrada: um conjunto n pontos p0
+Sa(cid:237)da: Um ponto pn
+0 calculado atravØs de interpola(cid:231)ıes sucessivas avaliadas em t.
+p0
+i , t
+DECASTELJAU
+(cid:136)
+(1) fa(cid:231)a r (cid:0) 1 atØ n
+fa(cid:231)a i (cid:0) 0 atØ n (cid:16) r
+(2)
+(cid:2)
+(3)
+
+i , e um valor de t > R.
+
+1 (cid:16) t
+
+(cid:141)
+
+pr(cid:16)1
+i
+
+(cid:20) tpr(cid:16)1
+i(cid:20)1 .
+
+pr
+i
+
+(cid:136)
+
+(cid:141)
+
+Os pontos obtidos na sa(cid:237)da representam a curva de BØzier e os que foram usa-
+dos na entradas recebe o nome de pol(cid:237)gono de controle, os pontos intermediÆrios sªo
+bastantes œteis na implementa(cid:231)ªo de superf(cid:237)cies, (cid:28)guras 2.5, 2.6 e 2.7 . Usualmente
+o valor de t >
+
+0, 1
+.
+(cid:5)
+
+(cid:0)
+
+Podemos representar o algoritmo segundo o esquema:
+
+p0
+p1
+p1
+0
+p2
+p1
+p2
+0
+1
+(cid:8)
+(cid:6)
+(cid:6)
+(cid:6)
+n(cid:16)2 (cid:5) pn
+pn p1
+n(cid:16)1 p2
+0 .
+
+A regra do algoritmo de Casteljau Ø tomar sempre a mØdia ponderada de dois
+pontos, gerando um ponto na pr(cid:243)xima linha conforme o esquema apresentado acima.
+O algoritmo (cid:28)naliza quando o œltimo ponto Ø gerado, o mesmo procedimento Ø
+0, 1
+repetido para vÆrios valores de t no intervalo
+, assim obtemos o per(cid:28)l da curva.
+(cid:5)
+(cid:0)
+4, 0
+0, 2
+(cid:141)
+(cid:141)
+
+No exemplo encontrado em Farin [2]: Dados os pontos
+
+0, 0
+(cid:141)
+
+8, 2
+(cid:141)
+
+e
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+,
+
+,
+
+2, temos o esquema representado acima
+
+com t (cid:0) 1
+
+0
+0 (cid:9)
+
+0
+2 (cid:9) (cid:4)
+
+0
+1 (cid:9)
+
+8
+2 (cid:9) (cid:4)
+
+4
+2 (cid:9) (cid:4)
+
+2
+3
+2 (cid:9)
+
+4
+0 (cid:9) (cid:4)
+
+6
+1 (cid:9) (cid:4)
+
+5
+3
+2 (cid:9) (cid:4)
+
+7
+2
+3
+2 (cid:9)
+
+.
+
+(cid:4)
+
+(cid:4)
+
+(cid:4)
+
+(cid:4)
+
+Veri(cid:28)que que todos os pontos que aparecem na (cid:28)gura foram calculados no es-
+
+quema do exemplo, (cid:28)gura 2.8.
+
+21
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+2.2.3 CÆlculo da Derivada em rela(cid:231)ªo a Curva de BØzier
+
+Sabemos que a Curva de BØzier Ø de(cid:28)nida por n(cid:20)1 pontos de controle P0, P1, . . . , Pn(cid:20)1
+
+(cid:0)
+
+u
+
+e tem a seguinte equa(cid:231)ªo:
+n
+i(cid:0)0 PiBn
+C
+i (cid:136)
+(cid:141)
+em que Bn
+t
+Ø de(cid:28)nida por:
+i (cid:136)
+
+t
+(cid:141)
+
+P
+
+(cid:136)
+
+(cid:141)
+
+, a @ u @ b, t (cid:0)
+
+u (cid:16) a
+b (cid:16) a
+
+.
+
+n!
+n (cid:16) 1
+(cid:141)
+Uma vez que os pontos de controle sªo constantes e independentes da variÆvel t
+.
+
+, o cÆlculo da derivada da curva C (cid:156)
+se reduz ao cÆlculo das derivadas de Bn
+t
+i (cid:136)
+Com algumas manipula(cid:231)ıes algØbricas simples, temos o seguinte resultado para :
+
+1 (cid:16) t
+(cid:141)
+
+Bn
+i (cid:136)
+
+n(cid:16)i.
+
+t
+(cid:141)
+
+t
+(cid:141)
+
+ti
+
+i!
+
+(cid:0)
+
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+!
+
+d
+du
+
+Bn
+i (cid:136)
+
+t
+(cid:141)
+
+(cid:0) B
+
+(cid:156)n
+i (cid:136)
+
+t
+(cid:141)
+
+(cid:0) n
+(cid:136)
+
+Bn(cid:16)1
+i(cid:16)1 (cid:136)
+
+t
+(cid:141)
+
+(cid:16) Bn(cid:16)1
+i
+
+.
+
+t
+(cid:141)(cid:141)
+
+(cid:136)
+
+Entªo, calculando a derivada da curva C
+
+temos o seguinte:
+
+d
+dt
+
+C
+
+t
+(cid:141)
+
+(cid:136)
+
+(cid:0) C (cid:156)
+
+(cid:0)
+
+t
+(cid:141)
+
+(cid:136)
+
+u
+(cid:136)
+(cid:141)
+n(cid:16)1
+Bn(cid:16)1
+Q
+i
+i(cid:0)0
+
+Usamos Qp0 (cid:0) n
+(cid:136)
+
+P2 (cid:16) P1
+(cid:141)
+, a expressªo acima se reduz ao seguinte:
+
+, Qp1 (cid:0) n
+
+P1 (cid:16) P0
+
+(cid:141)
+
+(cid:136)
+
+Pn(cid:16)1
+
+(cid:141)
+
+n
+
+t
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+Pi(cid:20)1 (cid:16) Pi
+
+.
+
+(cid:141)
+
+, Qp2 (cid:0) n
+
+P3 (cid:16) P2
+
+(cid:136)
+
+(cid:141)
+
+, (cid:5), Qpn(cid:16)1 (cid:0) n
+
+Pn (cid:16)
+
+(cid:136)
+
+C (cid:156)
+
+(cid:0)
+
+t
+
+(cid:136)
+
+(cid:141)
+
+n(cid:16)1
+Q
+i(cid:0)0
+
+Bn(cid:16)1
+i
+
+Q pi.
+
+(cid:136)
+
+t
+(cid:141)
+com t (cid:0) 1
+
+0, 0
+0, 2
+8, 2
+Dados os pontos
+(cid:141)
+(cid:141)
+(cid:141)
+para o valor de t (cid:0) 1
+2, (cid:28)gura 2.9 :
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+,
+
+,
+
+e
+
+4, 0
+(cid:141)
+
+(cid:136)
+
+2, encontrar a primeira derivada
+
+0
+0 (cid:9)
+
+0
+2 (cid:9)
+
+8
+2 (cid:9)
+
+0
+2 (cid:9)
+
+8
+0 (cid:9)
+
+(cid:4)
+
+(cid:4)
+
+4
+1 (cid:9)
+
+(cid:4)
+
+4
+0 (cid:9) (cid:4)
+
+(cid:16)4
+(cid:16)2 (cid:9) (cid:4)
+
+2
+(cid:16)1 (cid:9) (cid:4)
+
+3
+0 (cid:9)
+
+(cid:4)
+
+(cid:4)
+
+(cid:4)
+
+(cid:4)
+
+Uma alternativa para o cÆlculo da derivada seria usando a diferen(cid:231)a p2
+
+1 (cid:16) p2
+0:
+
+22
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+5
+3
+2 (cid:9)
+
+(cid:16)
+
+(cid:4)
+
+2
+3
+2 (cid:9)
+
+(cid:0)
+
+(cid:4)
+
+3
+0 (cid:9)
+
+(cid:4)
+
+Para calcular derivadas de ordem superior usamos esta expressªo para o operador
+
+de diferen(cid:231)a:
+
+Qrpj (cid:0) Qr(cid:16)1pj(cid:20)1 (cid:16) Qr(cid:16)1pj.
+
+Listamos alguns exemplos:
+
+Q0pi (cid:0) pi
+Q1pi (cid:0) pi(cid:20)1 (cid:16) pi
+Q2pi (cid:0) pi(cid:20)2 (cid:16) 2pi(cid:20)1 (cid:20) pi
+Q3pi (cid:0) pi(cid:20)3 (cid:16) 3pi(cid:20)2 (cid:20) 3pi(cid:20)1 (cid:16) pi.
+
+Este fator a direita sªo os coe(cid:28)cientes binomiais, formando um tri(cid:226)ngulo de
+
+Pascal, este padrªo se mantØm e podemos generalizar:
+
+Qrpi (cid:0)
+
+r
+Q
+j(cid:0)0 (cid:140)
+
+r
+j (cid:145) (cid:136)
+
+(cid:16)1
+(cid:141)
+
+r(cid:16)jpi(cid:20)j
+
+A r-Øsima derivada da curva de BØzier Ø dada por:
+
+(cid:141)
+Observamos dois casos especiais para t (cid:0) 0 e t (cid:0) 1, onde obtemos:
+
+(cid:136)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+dr
+dtr
+
+C n
+
+t
+
+(cid:0)
+
+n!
+n (cid:16) r
+
+n(cid:16)r
+Q
+j(cid:0)0
+
+!
+
+QrpjBn(cid:16)t
+
+j
+
+t
+
+.
+
+e
+
+dr
+dtr
+
+C n
+
+(cid:0)
+
+0
+(cid:141)
+
+(cid:136)
+
+n!
+n (cid:16) r
+
+(cid:136)
+
+!
+
+(cid:141)
+
+Qr p0
+
+dr
+dtr
+
+C n
+
+(cid:0)
+
+1
+(cid:141)
+
+(cid:136)
+
+n!
+n (cid:16) r
+
+(cid:136)
+
+!
+
+(cid:141)
+
+Qr pn(cid:16)r.
+
+2.2.4 CÆlculo da integral da Curva de BØzier
+
+A curva de BØzier representada por:
+
+(cid:0)
+
+C
+
+u
+
+(cid:136)
+
+(cid:141)
+
+n
+Q
+i(cid:0)0
+
+piBn
+i (cid:136)
+
+t
+(cid:141)
+
+, t (cid:0)
+
+u (cid:16) a
+b (cid:16) a
+
+23
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+em que a integral Ø dada por [2] [5]:
+
+onde
+
+(cid:0)
+
+u
+
+c
+
+(cid:136)
+
+(cid:141)
+
+S C
+
+u
+
+(cid:136)
+
+(cid:141)
+
+du (cid:0)
+
+n(cid:20)1
+Q
+i(cid:0)0
+
+ciBn(cid:20)1
+
+i
+
+t
+(cid:141)
+
+(cid:136)
+
+ci (cid:0) ci(cid:16)1 (cid:20)
+
+b (cid:16) a
+n (cid:20) 1
+
+pi(cid:16)1 (cid:0)
+
+c0 (cid:20)
+
+b (cid:16) a
+n (cid:20) 1 (cid:136)
+
+p0 (cid:20) p1 (cid:20) (cid:5) (cid:20) pi(cid:16)1
+
+, i (cid:0) n (cid:20) 1, (cid:5), 1
+
+(cid:141)
+
+e c0 Ø a constante de integra(cid:231)ªo, isto pode ser veri(cid:28)cado derivando c
+expressªo anterior e da C
+igualdade:
+
+. A partir da
+que interpola os extremos p0 e pn se deduz a seguinte
+
+u
+(cid:141)
+
+u
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+S C
+
+u
+(cid:141)
+
+(cid:136)
+
+du (cid:0)
+
+b (cid:16) a
+n (cid:20) 1 (cid:136)
+
+p0 (cid:20) p1 (cid:20) (cid:5) (cid:20) pn
+
+(cid:141)
+
+e em particular:
+
+1
+
+S
+0
+
+Bn
+
+i(cid:0)0(cid:136)
+
+t
+(cid:141)
+
+dt (cid:0)
+
+1
+n (cid:20) 1
+
+24
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+Figura 2.5: Pontos da curva com trŒs Pontos de controle gerada segundo o algoritmo
+de Casteljau e habilitando o lugar geomØtrico no Geogebra
+
+25
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+Figura 2.6: Curvas de Bezier com trŒs usando o rastro no geogebra
+
+Figura 2.7: Curvas de BØzier com quatro pontos de controle usando o rastro
+
+26
+
+2.2. DEFINI˙ˆO DAS CURVAS DE
+B(cid:201)ZIER
+
+CAP˝TULO 2. CURVAS DE B(cid:201)ZIER
+
+Figura 2.8: Pontos gerados pelo algoritmo De Casteljau com t (cid:0) 0.5
+
+Figura 2.9: Derivada da Curva gerada pelos pontos
+
+,
+
+0, 0
+(cid:141)
+
+,
+
+0, 2
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+8, 2
+(cid:141)
+
+(cid:136)
+
+e
+
+4, 0
+(cid:141)
+
+(cid:136)
+
+27
+
+Cap(cid:237)tulo 3
+
+Exemplos e Resultados
+
+Neste cap(cid:237)tulo resolvemos alguns exemplos propostos sobre Curvas de BØzier,
+dois destes estªo na referŒncia [2] . Por (cid:28)m, faremos algumas conclusıes sobre o
+tema estudado e os exemplos abordadas.
+
+3.1 Exemplos
+
+Vamos apresentar alguns exemplos de constru(cid:231)ıes e aplica(cid:231)ıes das curvas de
+
+BØzier.
+
+3.1.1 Exemplo 1
+
+Como primeiro exemplo vamos detalhar os passos para a constru(cid:231)ªo da Curva
+
+de BØzier usando o Geogebra.
+
+Como primeiro exemplo usamos um pol(cid:237)gono de controle com 17 pontos escolhi-
+dos aleatoriamente no Geogebra usando o mouse para determinar os pontos, como
+vemos na (cid:28)gura 3.1. Conclu(cid:237)da a escolha dos pontos, implementamos o algoritmo de
+Casteljau nas planilhas dispon(cid:237)vel do software usando o par(cid:226)metro t para determinar
+os pontos ao longo da curva de BØzier.
+
+Para concluir e desenhar a curva usamos o comando lugar geomØtrico do œltimo
+ponto gerado na planilha em fun(cid:231)ªo par(cid:226)metro t observado na (cid:28)gura 3.3. Podemos
+veri(cid:28)car a movimenta(cid:231)ªo dos pontos gerados no algoritmo de Casteljau ao variar o
+par(cid:226)metro t com incrementos de 0.2, na (cid:28)gura 3.2.
+
+3.1.2 Exemplo 2
+
+No exemplo 2 temos uma implementa(cid:231)ªo da curva usando trŒs coordenadas no
+,
+. Estes
+
+espa(cid:231)o. Os pontos escolhidos sªo:
+
+e
+
+,
+
+2, 0, 0
+(cid:141)
+
+(cid:136)
+
+(cid:16)1, (cid:16)3, 2
+(cid:141)
+
+(cid:136)
+
+(cid:16), 3, 2
+(cid:141)
+
+(cid:136)
+
+(cid:16)2, 0, 0
+(cid:141)
+
+(cid:136)
+
+28
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.1: Pol(cid:237)gono de controle formado por 17 pontos.
+
+Figura 3.2: Pol(cid:237)gono de controle formado por 17 pontos variando o t com incrementos
+de 0.2.
+
+29
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.3: Po(cid:237)gono de controle formado por 17 pontost (cid:0) 0.5.
+
+pontos seguem uma dada simetria e foram utilizados para gerar um feito interessante
+na curva no espa(cid:231)o. Usamos as planilhas do software Geogebra para gerar os pontos
+intermediﬂios, e o lugar geomØtrico para determinar a curva mostrada na (cid:28)gura 3.4.
+
+Figura 3.4: Curva de BØzier usando trŒs coordenadas no espa(cid:231)o.
+
+30
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+3.1.3 Exemplo 3
+
+NAs (cid:28)guras 3.5, 3.6 e 3.7 tentamos gerar um espiral usando como pontos de
+
+controle os vØrtices de (cid:28)guras pentagonal inscritas.
+
+Figura 3.5: Gerando o Pol(cid:237)gono de controle com os dois pentÆgonos.
+
+Figura 3.6: Implementando o algoritmo de Casteljau e variando t.
+
+31
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.7: Usando o lugar geomØtrico para gerar a Curva de BØzier em Espiral.
+
+3.1.4 Exemplo 4
+
+O mØtodo para gerar a curva Ø idŒntico ao utilizado no exemplos anterior, em
+particular a (cid:28)gura 3.8 possui uma sequŒncia de tri(cid:226)ngulos equilÆteros e os vØrtices
+estªo localizados no ponto mØdio do antecessor.
+
+3.1.5 Exemplo 5
+
+Este exemplo foi retirado do livro do Farin [2] cap(cid:237)tulo 4. Suponha uma curva
+de BØzier planar tem um pol(cid:237)gono de controle que Ø simØtrico com respeito ao eixo
+y. Esta curva tambØm Ø simØtrica em rela(cid:231)ªo ao o eixo y? Considerar o pol(cid:237)gono
+0, 1
+de controle
+. Ao gerar a
+(cid:141)
+curva sugerida no problema veja que nªo existe uma simetria com o eixo y, (cid:28)guras
+3.9 e 3.10 .
+
+(cid:16)1, 1
+(cid:141)
+
+(cid:16)1, 0
+(cid:141)
+
+0, 2
+(cid:141)
+
+1, 0
+(cid:141)
+
+0, 2
+(cid:141)
+
+0, 1
+(cid:141)
+
+0, 1
+(cid:141)
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+,
+
+,
+
+,
+
+,
+
+,
+
+,
+
+,
+
+3.1.6 Exemplo 6
+
+O exemplo das (cid:28)gura 3.11, 3.12 e 3.13, Ø bastante prÆtico, inserimos uma (cid:28)gura
+no nosso caso um pato em pleno voo, escolhemos alguns pontos para gerar a curva. A
+implementa(cid:231)ªo Ø feita utilizando o algoritmo de Casteljau como nos casos anteriores,
+e usamos o lugar geomØtrico para determinar a Curva observada na (cid:28)gura 3.13 . A
+silhueta formada pela curva Ø bastante pr(cid:243)xima do per(cid:28)l aerodin(cid:226)mico do pato.
+
+32
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.8: Espiral formada por alguns pontos de controle de uma sequŒncia de
+tri(cid:226)ngulos.
+
+3.1.7 Exemplo 7
+
+Mais um exemplo encontrado em Farin [2] cap(cid:237)tulo 5 que trata de derivada. Con-
+e
+sidere a curva de BØzier cœbica dada pelos pontos de controle
+(cid:16)1, 0
+. Em t = 1/2, esta curva possui um limite: a sua primeira derivada desapa-
+(cid:136)
+(cid:141)
+rece e mostra uma curva fechada, ao permutar os pontos de A e B mantendo assim
+um pol(cid:237)gono de controle simØtrico. Observe na (cid:28)gura 3.14 que a derivada nos pontos
+dados nªo existe para t (cid:0) 0.5. Gerar outras con(cid:28)gura(cid:231)ıes simØtrica onde tambØm
+
+(cid:16)1, 1
+(cid:141)
+
+1, 0
+(cid:141)
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+,
+
+,
+
+33
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.9: Implementa(cid:231)ªo do algoritmo de Castejau.
+
+Figura 3.10: Curva gerada pelos pontos
+0, 2
+.
+(cid:141)
+
+1, 0
+(cid:141)
+
+0, 1
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+,
+
+(cid:16)1, 0
+(cid:141)
+
+,
+
+(cid:136)
+
+,
+
+0, 1
+(cid:141)
+
+(cid:136)
+
+,
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+,
+
+0, 2
+(cid:141)
+
+(cid:136)
+
+,
+
+0, 1
+(cid:141)
+
+(cid:136)
+
+(cid:16)1, 1
+(cid:141)
+
+,
+
+(cid:136)
+
+nªo existe derivada para t (cid:0) 0.5, na (cid:28)gura 3.15 e 3.16 .
+
+34
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.11: Escolha dos pontos sobre a imagem.
+
+Figura 3.12: Variando o par(cid:226)metro t observamos os pontos intermediÆrios gerados.
+
+35
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.13: Curva gerada usando o lugar geomØtrico.
+
+Figura 3.14: Curva gerada para os pontos
+derivada nªo existe para estes valores.
+
+,
+
+1, 0
+(cid:141)
+
+(cid:136)
+
+(cid:16)1, 1
+(cid:141)
+
+,
+
+(cid:136)
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+e
+
+(cid:16)1, 0
+(cid:141)
+
+(cid:136)
+
+em t (cid:0) 0.5 a
+
+36
+
+3.1. EXEMPLOS
+
+CAP˝TULO 3. EXEMPLOS E RESULTADOS
+
+Figura 3.15: Curva gerada para os pontos
+derivada nªo existe para estes valores.
+
+,
+
+0, 1
+(cid:141)
+
+(cid:136)
+
+,
+
+0, 0
+(cid:141)
+
+(cid:136)
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+e
+
+(cid:16)1, 0
+(cid:141)
+
+(cid:136)
+
+em t (cid:0) 0.5 a
+
+Figura 3.16: Curva gerada para os pontos
+derivada nªo existe para estes valores.
+
+0, (cid:16)1
+(cid:141)
+
+,
+
+(cid:136)
+
+,
+
+0, 2
+(cid:141)
+
+1, 1
+(cid:141)
+
+(cid:136)
+
+(cid:136)
+
+e
+
+(cid:16)1, 0
+(cid:141)
+
+(cid:136)
+
+em t (cid:0) 0.5 a
+
+37
+
+Cap(cid:237)tulo 4
+
+Resultados
+
+A implementa(cid:231)ªo usando o algoritmo de Casteljau facilita bastante a constru(cid:231)ªo
+da curva de BØzier, ao contrÆrio do processo com segmentos de reta, a implementa(cid:231)ªo
+usando o software Geogebra ocorre com muita e(cid:28)ciŒncia usando a aba de planilha.
+O uso do comando lugar geomØtrico desenha a curva de BØzier muito melhor que
+o comando rastro, alØm de permitir uma recon(cid:28)gura(cid:231)ªo instant(cid:226)nea da curva ao
+mudar os pontos de controle, (cid:28)guras 3.1, 3.2 e 3.3.
+
+Na curva de BØzier com os pontos de controle dados segundo trŒs coordenadas no
+espa(cid:231)o, a implementa(cid:231)ªo via algoritmo De Casteljau Ø essencial para sua constru(cid:231)ªo,
+pois o software demonstra uma certa di(cid:28)culdade na manipula(cid:231)ªo de segmentos de
+reta no espa(cid:231)o, algo que Ø aceitÆvel dado o fato da versªo em trŒs dimensıes ser
+bastante recente. A implementa(cid:231)ªo realizada na (cid:28)gura 3.4 devido a escolha de
+pontos simØtricos tornou a curva bastante interessante transpondo lateralmente o
+eixo z.
+
+Nas espirais usamos como pontos de controle pol(cid:237)gonos inscritos, nas (cid:28)guras 3.5
+e 3.8 alguns pontos do vØrtices foram omitidos dos pontos de controle para que nªo
+houvesse uma auto-intersec(cid:231)ªo da curva. Estas duas situa(cid:231)ıes espirais poderiam
+simular um escoamento rotacional de uma part(cid:237)cula.
+
+O exemplo das (cid:28)guras 3.9 e 3.10 apesar de serem simØtricos os trŒs pontos se
+repetem no pol(cid:237)gono de controle gerando uma auto-intersec(cid:231)ªo na curva, do contrÆrio
+ocorreria uma simetria na curva em rela(cid:231)ªo ao eixo y.
+
+A implementa(cid:231)ªo usada nas (cid:28)guras 3.11, 3.12 e 3.13 Ø um exemplo bastante
+oportuno que pode ser utilizado em situa(cid:231)ıes diversas onde se deseja determinar a
+silhueta de uma imagem atravØs dos pontos de contorno. A varia(cid:231)ªo do par(cid:226)metro
+t Ø capaz de simular o (cid:29)uxo aerodin(cid:226)mico ao longo do dorso do pato. A situa(cid:231)ªo
+apresentada pode servir de motiva(cid:231)ªo para modelar (cid:29)uxos l(cid:237)quidos ou gases.
+
+O problema sugerido em Farin [2] representado nas (cid:28)guras 3.14, 3.15 e 3.16,
+demonstra como a simetria dos pontos gera uma curva cuja derivada para t (cid:0) 0.5
+nªo existe, ao variar a posi(cid:231)ªo dos pontos A e B, gerando posi(cid:231)ıes simØtrica entre
+
+38
+
+4.1. CONSIDERA˙(cid:213)ES FINAIS
+
+CAP˝TULO 4. RESULTADOS
+
+os quatro pontos notamos esta propriedade.
+
+4.1
+
+considera(cid:231)ıes (cid:28)nais
+
+O estudo das curvas de BØzier Ø um exemplo de aplica(cid:231)ªo matemÆtica que leva (cid:224)
+uma profunda discussªo em temas diversos. Abordamos ao longo do texto fun(cid:231)ıes
+paramØtricas, polin(cid:244)mios, Bin(cid:244)mio de Newton, tri(cid:226)ngulo de Pascal, propor(cid:231)ıes, ve-
+tores, derivadas e integrais. Alguns conceitos bastante œteis em computa(cid:231)ªo grÆ(cid:28)ca
+foram introduzidos, o que proporciona um combust(cid:237)vel na motiva(cid:231)ªo pelo tema. As
+curvas de BØzier sªo parte introdut(cid:243)ria para curvas mais e(cid:28)cientes como os B-splines
+e as superf(cid:237)cies de BØzier, que poderiam ser tratadas em situa(cid:231)ıes posteriores.
+
+A contribui(cid:231)ªo deixada por esta dissertaˆ(cid:159)ˆ¿o pode ser vista com um aditivo
+motivador da criatividade humana no processo de ensino-aprendizagem. As trans-
+forma(cid:231)ıes que ocorrem na educa(cid:231)ªo, alØm da necessidade de formar alunos que
+sejam capazes de investigar situa(cid:231)ıes e tomar decisıes ou tirar suas pr(cid:243)prias con-
+clusıes sobre os resultados, estimulam o professor a desenvolver atividades como as
+descritas neste trabalho.
+
+39
+
+ApŒndice A
+
+Construindo curvas
+de BØzier usando o
+Geogebra e com o LATEX
+
+A.1
+
+Introdu(cid:231)ªo
+
+Neste apŒndice mostramos algumas forma de constru(cid:231)ªo da curva de BØzier
+utilizando o Geogebra de maneira detalhada e o LATEX. O fato de ser implementado
+em variados programas mostra a import(cid:226)ncia dessas curvas de BØzier e que elas
+podem ser utilizadas em vÆrias aplica(cid:231)ıes. VÆrios pacotes e implementa(cid:231)ıes do
+LATEXforam encontradas em uma breve pesquisa. A seguir vamos mostrar alguns
+neste apŒndice.
+
+A.2 Constru(cid:231)ªo no Geogebra
+
+1”Passo: Clique na op(cid:231)ªo Ponto mostrado pela seta vermelha na aba da (cid:28)gura
+
+A.1.
+
+2”Passo: Escolha quatro pontos no ambiente de constru(cid:231)ªo do Geogebra, como
+
+monstra na (cid:28)gura A.2.
+
+3”Passo: Selecione a op(cid:231)ªo segmento nas ferramentas do Geogebra, como mons-
+
+tra a (cid:28)gura A.3.
+
+4”Passo: Clique nos pontos A e B para gerar o segmento de reta a, como monstra
+
+na (cid:28)gura A.4.
+
+5”Passo: Construa os outros dois segmentos b e c, como monstra a (cid:28)gura A.5.
+6”Passo: Selecione a op(cid:231)ªo controle deslizante para inserir o par(cid:226)metro t na
+
+constru(cid:231)ªo da curva, (cid:28)gura A.6 .
+
+7”Passo: Clique no ambiente de constru(cid:231)ªo e aparecerÆ um menu para alterar
+
+40
+
+A.2. CONSTRU˙ˆO NO GEOGEBRA
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.1: Sele(cid:231)ªo da op(cid:231)ªo Ponto na barra de ferramenta.
+
+Figura A.2: Escolha dos Pontos.
+
+o nome e os valores mÆximos e m(cid:237)nimos para t, como monstra a seta vermelha na
+(cid:28)gura A.7 e A.8.
+
+(cid:28)gura A.9.
+
+8”Passo: Clique na caixa de entrada para inserir a expressªo, (cid:28)gura A.9 .
+9”Passo: Insira a expressªo t
+(cid:136)
+
+B (cid:16) A
+(cid:141)
+10”Passo: O ponto E Ø gerado com o 9” passo como monstra a (cid:28)gura A.10.
+11”Passo: Usando a caixa de entrada gere os pontos F e G, como monstra a
+
+(cid:20) A na caixa de entrada, como monstra a
+
+(cid:28)gura A.11.
+
+41
+
+A.2. CONSTRU˙ˆO NO GEOGEBRA
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.3: Constru(cid:231)ªo dos segmentos.
+
+Figura A.4: Segmento gerado pelos pontos A e B.
+
+12”Passo: Construa os segmentos ligando os pontos E ao F e F ao G, como
+
+monstra a (cid:28)guras A.12 e A.13.
+
+(cid:136)
+
+E
+
+(cid:141)
+
+G (cid:16) F
+
+13”Passo: Use a caixa de entrada para gerar o ponto H com a expressªo t
+(cid:136)
+(cid:20) E e t
+14” Passo: Construa um segmento entre os pontos H e I, (cid:28)gura A.16. O œltimo
+(cid:20) H, (cid:28)gura A.17
+
+(cid:20) F para gerar o ponto I, como monstra a (cid:28)gura A.14 e A.15 .
+
+ponto Ø gerado usando a caixa de entrada com a expressªo t
+.
+
+I (cid:16) H
+
+F (cid:16)
+
+15”Passo: Use o lugar geomØtrico na barra de ferramenta conforme monstra a
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+42
+
+A.2. CONSTRU˙ˆO NO GEOGEBRA
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.5: Constru(cid:231)ªo dos segmentos dos pontos B, C e D.
+
+Figura A.6: Implementa(cid:231)ªo do controle deslizante.
+
+seta vermelha, (cid:28)gura A.18 . Clique no ponto J e no controle deslizante para gerar
+a Curva de BØzier, (cid:28)gura A.19 .
+
+16”Passo: Mova o controle deslizante para veri(cid:28)car o movimento dos segmentos
+
+e do ponto J ao longo da Curva de BØzier, (cid:28)gura A.20 .
+
+43
+
+A.3. USANDO O PSTRICKS
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.7: De(cid:28)nindo o interlalo do par(cid:226)metro t.
+
+Figura A.8: Controle deslizante t.
+
+A.3 Usando o PSTricks
+
+Uma forma de gerar curvas de BØzier com o LATEX Ø utilizando o comando:
+\psbezier*[par]{arrows}(x0,y0)(x1,y1)(x2,y2)(x3,y3) O \psbezier dese-
+nha uma curva com os quatro pontos de controle. Assim como foi visto na teoria,
+a fun(cid:231)ªo interpola os primeiro e o œltimo ponto, com os pontos intermediÆrios exer-
+cendo in(cid:29)uŒncia sobre a trajet(cid:243)ria [12]. O exemplo:
+\psbezier[linewidth=2pt,showpoints=true]{->}(0,0)(1,4)(2,1)(4,3.5),
+
+44
+
+A.3. USANDO O PSTRICKS
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.9: Constru(cid:231)ªo do ponto sobre o segmento usando a caixa de entrada.
+
+Figura A.10: Ponto sobre o segmento AB.
+
+mostra a curva da (cid:28)gura A.21.
+
+O comando showpoints=true coloca todos os pontos de controle, e os conecta
+
+por linhas tracejadas, isto Ø œtil quando se ajusta a curva de bezier.
+
+45
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.11: Pontos F e G sobre os segmentos BC e CD.
+
+Figura A.12: Constru(cid:231)ªo do segmento EF .
+
+A.4 Usando o ambiente (cid:28)gure
+
+Existe a possibilidade de gerar curvas quadrÆticas de BØzier dentro do ambiente
+
+picture, mas Ø necessÆrio fazer alguns cÆlculos [4]. O comando
+
+\multiput(x1,y1)(x2,y2){n}{objecto}
+
+Tem 4 argumentos: o ponto inicial, o vetor de transla(cid:231)ªo de um objecto para o
+
+pr(cid:243)ximo, nœmero de objetos, e o objeto a ser desenhado. O comando:
+
+46
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.13: Segmentos EF e F G.
+
+Figura A.14: Constru(cid:231)ªo dos pontos sobre os segmentos EF e F G.
+
+\linethickness
+aplica-se a segmentos horizontais e verticais mas nunca a segmentos de reta obl(cid:237)-
+quos ou circulares. No entanto, Ø aplicado a curvas quadrÆticas de BØzier. Os co-
+mandos \put(x, y){\oval(w, h)} ou \put(x, y){\oval(w, h)[posi(cid:231)ªo]} pro-
+duzem uma oval centrada em (x, y) com largura w e altura h. O argumento opcional
+posi(cid:231)ªo que pode ser um entre b, t, l, r, refere-se a top (topo), bottom (fundo), left
+(esquerda), right (direita), e podem ser combinados como ilustra o exemplo.
+
+47
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.15: Pontos H e G.
+
+Figura A.16: Gerando o ponto J usando a caixa de entrada.
+
+\setlength{\unitlength}{0.75cm}
+\begin{picture}(6,4)
+\linethickness{0.075mm}
+\multiput(0,0)(1,0){7}%
+{\line(0,1){4}}
+\multiput(0,0)(0,1){5}%
+{\line(1,0){6}}
+\thicklines
+
+48
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.17: Ponto J.
+
+Figura A.18: Sele(cid:231)ªo do lugar geomØtrico na barra de ferramenta.
+
+\put(2,3){\oval(3,1.8)}
+\thinlines
+\put(3,2){\oval(3,1.8)}
+\thicklines
+\put(2,1){\oval(3,1.8)[tl]}
+\put(4,1){\oval(3,1.8)[b]}
+\put(4,3){\oval(3,1.8)[r]}
+\put(3,1.5){\oval(1.8,0.4)}
+
+49
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.19: Gerando a curva de BØzier em rela(cid:231)ªo ao ponto J e o par(cid:226)metro t.
+
+\end{picture}
+
+(cid:39)
+
+(cid:36)
+
+(cid:36)
+
+(cid:39)
+
+(cid:36)
+
+(cid:38)
+(cid:39)
+
+(cid:11)
+(cid:10)
+
+(cid:38)
+
+(cid:37)
+
+(cid:37)
+(cid:8)
+(cid:9)
+
+(cid:37)
+
+(cid:38) (cid:37)
+
+A espessura das linhas pode ser controlada com dois tipos de comandos:
+
+\linethickness{comprimento} por um lado, \thinlines e \thicklines por ou-
+tro. Enquanto que \linethickness{comprimento} s(cid:243) se aplica a linhas verticais e
+horizontais (e curvas quadrÆticas de BØzier), \thinlines e \thicklines aplicam-se
+tambØm a segmentos obl(cid:237)quos assim como a c(cid:237)rculos e ovais.
+
+No exemplo seguinte a (cid:28)gura mostra o efeito do comando \linethickness em
+linhas horizontais ou verticais, e o efeito dos comandos \thinlines e \thicklines
+em segmentos de reta obl(cid:237)quos. TambØm mostra que ambos os tipos de comando
+afetam as curvas quadrÆticas de BØzier, cada comando substituindo todos os ante-
+riores.
+
+\setlength{\unitlength}{1.0cm}
+
+50
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.20: Varia(cid:231)ªo do ponto J usando o controle deslizante.
+
+\begin{picture}(6,4)
+\centering
+\linethickness{0.075mm}
+\multiput(0,0)(1,0){7}
+{\line(0,1){4}}
+\multiput(0,0)(0,1){5}
+{\line(1,0){6}}
+\thicklines
+\put(0.5,0.5){\line(1,5){0.5}}
+\put(1,3){\line(4,1){2}}
+\qbezier(0.5,0.5)(1,3)(3,3.5)
+\thinlines
+\put(2.5,2){\line(2,-1){3}}
+\put(5.5,0.5){\line(-1,5){0.5}}
+
+51
+
+A.4. USANDO O AMBIENTE FIGURE
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+Figura A.21: Curva gerada com o comando psbezier
+
+\linethickness{1mm}
+\qbezier(2.5,2)(5.5,0.5)(5,3)
+\thinlines
+\qbezier(4,2)(4,3)(3,3)
+\qbezier(3,3)(2,3)(2,2)
+\qbezier(2,2)(2,1)(3,1)
+\qbezier(3,1)(4,1)(4,2)
+\end{picture}.
+
+(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)(cid:24)
+
+(cid:4)(cid:4)
+(cid:4)
+
+(cid:4)
+(cid:4)
+
+(cid:4)
+(cid:4)
+
+(cid:4)
+(cid:4)
+
+(cid:4)
+(cid:4)
+
+(cid:4)
+(cid:4)
+
+(cid:4)
+(cid:4)
+
+(cid:68)(cid:68)
+
+(cid:68)
+(cid:68)
+
+(cid:68)
+(cid:68)
+
+(cid:68)
+(cid:68)
+
+(cid:68)
+(cid:68)
+
+(cid:68)
+(cid:68)
+
+(cid:68)
+(cid:68)
+
+(cid:72)(cid:72)(cid:72)(cid:72)(cid:72)(cid:68)
+
+(cid:72)(cid:72)(cid:72)
+
+.
+
+(cid:72)
+(cid:72)(cid:72)(cid:72)
+
+(cid:72)(cid:72)(cid:72)
+
+(cid:72)(cid:72)(cid:72)
+
+52
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+A.5. USANDO O PGF
+
+A.5 Usando o PGF
+
+Neste procedimento temos outra forma de desenhar as curvas de BØzier.
+
+\path . . . ..controls <c> and <d>..<y>
+Este comando gera as curvas de BØzier quadrÆticas, logos os pontos de controle sªo
+dados trŒs a trŒs, no caso c, d e y sªo pontos [8]. outra op(cid:231)ªo Ø terminar com o
+atributo cycle. Vemos dois exemplos de utiliza(cid:231)ªo do comando.
+
+ou cycle> ...;
+
+\begin{center}
+\begin{tikzpicture}{!c}
+\draw[line width=5pt](0,0)..controls(4,4) ..(8,4)
+..controls(8,4)and(10,4)..(10,0);
+\draw[color=gray](0,0)--(4,4)--(8,4)--(8,4) --(10,4)--(10,0);
+\end{tikzpicture}
+\end{center}
+
+\begin{center}
+\begin{tikzpicture}
+\draw[line width=10pt] (0,0) -- (10,0) .. controls (5,5) .. cycle;
+\end{tikzpicture}
+\end{center}
+
+53
+
+A.6. USANDO O TEXDRAW
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+A.6 Usando o TEXdraw
+
+Curvas de Bezier desenhadas com o pacote TEXdraw usa quatro coordenadas
+de referŒncia, duas como os pontos (cid:28)nais e outras duas para controlar a forma da
+curva.
+\clvec (x1 y1)(x2 y2)(x3 y3)
+A curva Ø desenhada a partir da posi(cid:231)ªo atual atØ a coordenada (y3 x3). As coorde-
+nadas (x1 y1) e (Y2 x2) servem como pontos de controle para a curva [3]. Apenas
+a œltima cota dada Ø utilizado para atualizar o tamanho do desenho. Note-se que
+apenas 3 pares de coordenadas sªo especi(cid:28)cados. O outro ponto Ø a posi(cid:231)ªo atual
+antes do comando \clvec ser executado. Apenas a œltima coordenar especi(cid:28)cada
+no comando \clvec Ø usado para determinar a extensªo do desenho. Embora a
+curva de Bezier passe pelos pontos inicial e (cid:28)nal, em geral, a curva nªo vai atingir
+os pontos de controle intermediÆrios. A curva Ø sempre encapsulada pelo quadrilÆ-
+tero convexo de(cid:28)nido pelas extremidade e os dois pontos de controle intermediÆrios.
+Vejamos um exemplo dado pelos comandos:
+
+\btexdraw
+\move(5,5)
+\clvec(5,6)(6,5)(6,6)
+\etexdraw
+
+Figura A.22: Curva gerada com o comando clvec do TEXdraw
+
+A.7 Usando o pacote bez123
+
+Outra maneira de desenhar as curvas de BØzier Ø utilizando o pacote do LATEX
+bez123 [11]. O comando \cbezier[<N>](p0)(p1)(p2)(p3) desenha uma curva
+
+54
+
+A.7. USANDO O PACOTE BEZ123
+
+AP˚NDICE A. CONSTRUINDO CURVAS
+DE B(cid:201)ZIER USANDO O
+GEOGEBRA E COM O LATEX
+
+cœbica de BØzier usando N pontos iniciando no ponto p0 e (cid:28)nalizando no ponto
+p3, com os pontos p1 e p2 como intermediÆrios. Realizando as rotinas a seguir
+produziremos as seguintes curvas:
+
+\begin{center}
+\setlength{\unitlength}{0.2cm}
+\begin{picture}(6,4)
+
+\cbezier[300](0,0)(10,30)(20,0)(30,30)
+
+\end{picture}
+\end{center}
+
+\begin{center}
+\setlength{\unitlength}{0.2cm}
+\begin{picture}(6,4)
+\cbezier[300](0,0)(10,30)(20,0)(30,30)
+\end{picture}
+\end{center}
+
+Neste exemplos usamos 300 pontos para de(cid:28)nir as curvas usando o comando
+
+\cbezier.
+
+55
+
+ApŒndice B
+
+Teorema da Aproxima(cid:231)ªo de
+Weierstrass
+
+Teorema B.1 (Weierstrass) Seja f (cid:2)(cid:0)
+a, b
+(cid:5)
+(cid:0)
+(cid:15) A 0 existe um polin(cid:244)mio p
+(cid:16) p
+t
+f
+(cid:136)
+(cid:141)
+a(cid:20)xb. Entªo x (cid:0) 1
+a (cid:20) xb
+. Seja
+
+Demonstra(cid:231)ªo. Seja t (cid:0)
+. Seja ˜f
+(cid:0) f
+0, 1
+(cid:136)
+(cid:5)
+(cid:0)
+
+t
+(cid:141)
+1(cid:16)x
+(cid:141)
+1 (cid:16) x
+
+se, x >
+
+tal que
+
+t
+(cid:141) S
+
+(cid:136)
+(cid:136)(cid:136)
+
+x
+
+(cid:141)
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:136)
+
+S
+
+uma fun(cid:231)ªo cont(cid:237)nua. Para todo
+
+@ (cid:15), para todo t >
+
+.
+(cid:5)
+
+a, b
+(cid:0)
+a, b
+(cid:0)
+
+(cid:5)
+
+e t >
+
+t(cid:16)a
+
+(cid:141)
+
+b(cid:16)a (cid:136)
+
+se, e somente
+
+e
+
+(cid:0)
+
+x
+
+˜p
+(cid:136)
+
+(cid:141)
+
+n
+Q
+k(cid:0)0
+
+k
+n (cid:141) (cid:140)
+
+˜f
+(cid:136)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+n(cid:16)k
+
+(cid:141)
+
+(cid:0) ˜p
+
+p
+
+t
+(cid:141)
+
+(cid:136)
+
+1
+b (cid:16) a (cid:136)
+
+(cid:139)
+
+t (cid:16) a
+
+(cid:141)(cid:144)
+
+Este Ø o polin(cid:244)mio de Bernstein. Vamos usar o fato de que
+
+n
+Q
+k>A (cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+(cid:141)
+
+n(cid:16)k B
+
+n
+Q
+k(cid:0)0 (cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+(cid:141)
+
+n(cid:16)k (cid:0) 1,
+
+(B.1)
+
+para qualquer A b 0, 1, 2, . . . , n. Como f Ø cont(cid:237)nua existe δ A 0 tal que
+
+x (cid:16) y
+S
+
+@ δ (cid:212)(cid:8)
+
+x
+
+˜f
+(cid:136)
+S
+
+(cid:16) ˜f
+(cid:136)
+
+y
+
+@
+
+(cid:15)
+2
+
+.
+
+S
+
+Sejam b1 (cid:0) x (cid:16) δ e b2 (cid:0) x (cid:20) δ. Seja M (cid:0) maxx>(cid:0)o,1(cid:5)
+tal que 4M e(cid:16)2δ2n @ (cid:15)
+b2 B
+
+(cid:141)
+˜f
+. Seja n
+(cid:136)
+S
+2. Vamos usar o seguinte fato que serÆ demostrado a seguir:
+B b1
+
+(cid:0) maxt>(cid:0)a,b(cid:5)
+
+t
+(cid:141)S
+
+f
+S
+
+B 1 ou 0 B k
+n
+
+(cid:141)S
+
+x
+
+(cid:141)
+
+(cid:136)
+
+k
+n
+
+(B.2)
+
+1 (cid:16) x
+
+k
+n
+
+x
+
+(cid:136)
+
+(cid:141)
+
+1(cid:16) k
+
+n B e(cid:16)2(cid:136)x(cid:16)b(cid:141)2b
+
+k
+n
+
+1 (cid:16) b
+
+1(cid:16) k
+n
+
+(cid:141)
+
+(cid:136)
+
+(B.3)
+
+56
+
+AP˚NDICE B. TEOREMA DA APROXIMA˙ˆO DE WEIERSTRASS
+
+Entªo por A.1, A.2 e A.3 temos que
+
+x
+
+˜f
+(cid:136)
+S
+
+(cid:141)
+
+x
+
+(cid:16) ˜p
+(cid:136)
+
+(cid:141)S
+
+(cid:0)
+
+n
+Q
+S
+k(cid:0)0
+
+x
+
+˜f
+(cid:136)
+
+(cid:141) (cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+(cid:141)
+
+n(cid:16)k (cid:16)
+
+n
+Q
+k(cid:0)0
+
+k
+n(cid:141) (cid:140)
+
+˜f
+(cid:136)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+n(cid:16)k
+
+(cid:141)
+
+S
+
+B
+
+n
+Q
+k(cid:0)0S
+
+˜f
+(cid:136)
+
+k
+n(cid:141)
+
+(cid:16) ˜f
+(cid:136)
+
+x
+
+(cid:141)S (cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+(cid:141)
+
+n(cid:16)k B
+
+B
+
+(cid:15)
+2
+
+(cid:20) 2M Q
+S k
+n
+
+(cid:16)xSCδS
+
+˜f
+(cid:136)
+
+k
+n (cid:141)
+
+(cid:16) ˜f
+(cid:136)
+
+x
+
+(cid:141)S (cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+(cid:141)
+
+n(cid:16)k B
+
+B
+
+(cid:15)
+2
+
+(cid:20) 2M Q
+Cb2
+
+k
+n
+
+(cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+n(cid:16)k (cid:20) 2M Q
+Bb1
+
+k
+n
+
+(cid:141)
+
+(cid:140)
+
+n
+k (cid:145)
+
+xk
+
+(cid:136)
+
+1 (cid:16) x
+
+n(cid:16)k
+
+(cid:141)
+
+B
+
+(cid:15)
+2
+
+(cid:20) 4M e(cid:16)2δ2n B (cid:15).
+
+Lema B.1 Se 0 B x B b B k
+n
+
+B 1 ou 0 B k
+n
+
+B b @ x B 1, entªo
+
+1 (cid:16) x
+
+k
+n
+
+x
+
+(cid:136)
+
+(cid:141)
+
+1(cid:16) k
+
+n B e(cid:16)2(cid:136)x(cid:16)b(cid:141)2b
+
+k
+n
+
+1 (cid:16) b
+
+1(cid:16) k
+n
+
+(cid:141)
+
+(cid:136)
+
+.
+
+Demonstra(cid:231)ªo. Precisamos mostrar que
+
+n
+
+x k
+b k
+
+n
+
+1 (cid:16) x
+1 (cid:16) b
+
+1(cid:16) k
+n
+
+(cid:141)
+1(cid:16) k
+n
+
+B e(cid:16)2(cid:136)x(cid:16)b(cid:141)2,
+
+(cid:136)
+
+(cid:136)
+
+(cid:141)
+
+ou aplicando-se o logaritmo nesta desigualdade, que
+
+(cid:0) ln
+
+H
+
+x
+
+(cid:141)
+
+(cid:136)
+
+.
+
+n
+
+x k
+b k
+
+n
+
+(cid:136)
+
+(cid:136)
+
+1 (cid:16) x
+1 (cid:16) b
+
+1(cid:16) k
+n
+
+(cid:141)
+1(cid:16) k
+n
+
+(cid:141)
+
+x (cid:16) b
+
+(cid:20) 2
+(cid:136)
+
+(cid:141)
+
+2 B 0
+
+(cid:0) 0.
+
+b
+
+Temos que H
+(cid:141)
+(a) Se 0 B x B b B k
+n
+B 1
+x
+
+4, entªo
+
+(cid:136)
+
+x (cid:16) 1
+(cid:141)
+
+(cid:136)
+
+H (cid:156)
+
+x
+
+(cid:136)
+
+(cid:141)
+(b) Se 0 B k
+n
+x(cid:136)1(cid:16)x(cid:141), entªo
+
+1
+
+4 B
+
+B 1, vamos mostrar que H (cid:156)
+
+C 0. Como, para 0 @ x @ 1,
+
+x
+
+(cid:141)
+
+(cid:136)
+
+(cid:16) x
+k
+n
+1 (cid:16) x
+
+(cid:0)
+
+x
+
+x (cid:16) b
+
+(cid:20) 4
+(cid:136)
+
+(cid:20) 4
+(cid:136)
+B b @ x B 1, vamos mostrar que H (cid:156)
+
+C 4
+(cid:136)
+
+(cid:16) x
+
+(cid:141)
+
+(cid:136)
+
+(cid:141)
+
+(cid:141)
+
+k
+n
+
+x (cid:16) b
+
+(cid:16) b
+
+C 0.
+
+k
+n
+
+(cid:0) 4
+(cid:136)
+
+(cid:141)
+(cid:141)
+B 0. Como, para 0 @ x @ 1,
+
+x
+
+(cid:141)
+
+(cid:136)
+
+H (cid:156)
+
+(cid:0)
+
+x
+
+(cid:136)
+
+(cid:141)
+
+x
+
+(cid:16) x
+k
+n
+1 (cid:16) x
+
+(cid:136)
+
+(cid:141)
+
+x (cid:16) b
+
+(cid:20) 4
+(cid:136)
+
+B
+
+(cid:141)
+
+x
+
+(cid:16) x
+k
+n
+1 (cid:16) x
+
+(cid:136)
+
+(cid:141)
+
+(cid:20)
+
+x
+
+x (cid:16) b
+1 (cid:16) x
+
+(cid:136)
+
+(cid:141)
+
+(cid:0)
+
+x
+
+(cid:16) b
+k
+n
+1 (cid:16) x
+
+(cid:136)
+
+(cid:141)
+
+B 0
+
+57
+
+ReferŒncias BibliogrÆ(cid:28)cas
+
+[1] Campos, F. F. Algoritmos NumØricos. 2“ed. Rio de Janeiro. LTC (2007).
+
+[2] Farin, G, Curves and Surfaces for CAGD:A Practical Guide. 5“ edition, Ari-
+
+zona, Morgan Kaufmann Publishers (2002).
+
+[3] Kabal, P. TEXdraw: PostScript Drawings from TEX. 2“ed. University Mon-
+
+treal, Quebec (1995).
+
+[4] Oetiker,T.,Partl, H., Hyna, I., Schlegl, E. Uma nªo tªo pequena introdu(cid:231)ªo ao
+LATEX2.09. Zentraler Informatikdienst der Universit(cid:228)t f(cid:252)r Bodenkultur Wien
+(2011).
+
+[5] Paluszny, M. , Prautzs, H., Boehm, W. MØtodo de BØzier y B-splines.1“ed.
+
+Universit(cid:228)tsverlag Karlsruhe (2005).
+
+[6] Santos,
+
+Aproxima(cid:231)ªo
+Teorema
+acesso: http://www.mat.ufmg.br/(cid:3) regi, em 23/03/2015.
+
+J.,
+
+da
+
+R.
+
+de Weierstrass.
+
+[7] Scherer, C., MØtodos Computacionais da F(cid:237)sica. 1“ed. Sªo Paulo. Editora Li-
+
+vraria da F(cid:237)sica (2005).
+
+[8] Tantau, T. The TikZ and PGF Packages Manual for version 3.0.0. Institut f(cid:252)r
+
+Theoretische Informatik Universit(cid:228)t zu L(cid:252)beck (2013).
+
+[9] Velho, L., Gomes, J. Fundamentos da Computa(cid:231)ªo grÆ(cid:28)ca. 1“ edi(cid:231)ªo , Rio de
+
+Janeiro, SBM (2008).
+
+[10] Vince, J. Mathematics For Graphics. 2“ed. Springer-Verlag (2006).
+
+[11] Wilson, P., Press, H. The bez123 and multiply packages.(2002).
+
+[12] Zandt,T. V. PSTricks: PostScript macros for Generic TeX. Fontaine-
+
+bleau(Paris)(2003).
+
+58
+
+

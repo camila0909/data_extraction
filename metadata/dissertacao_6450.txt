@@ -1,0 +1,994 @@
+2013: Trabalho de Conclus˜ao de Curso do Mestrado Proﬁssional em Matem´atica - PROFMAT
+Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+F´ormulas do Tra¸co e o C´alculo de Matrizes Inversas
+
+Marc´ılio Silva Andrade 1
+Carlos Alberto Raposo da Cunha2
+
+Resumo: Neste trabalho utilizaremos a forma canˆonica de Jordan para provar o Teorema
+de Hamilton-Cayley e como aplica¸c˜ao introduziremos uma t´ecnica para obter a inversa de
+operadores lineares utilizando um algoritmo recursivo, ver [1], para calcular os coeﬁcientes
+do polinˆomio caracter´ıstico.
+
+Palavras-chave: Jordan, F´ormulas do Tra¸co, Hamilton-Cayley, Matrizes Inversas.
+
+1
+
+Introdu¸c˜ao
+
+Seja V um espa¸co vetorial de dimens˜ao ﬁnita n sobre um corpo F e L(V) o conjunto
+das transforma¸c˜oes lineares T : V −→ V. ´E bem conhecido da teoria de ´algebra linear que
+L(V) ´e um espa¸co vetorial isomorfo ao espa¸co das matrizes M = Mn×n((cid:60)). Neste sentido,
+constitui-se um importante problema obter, para cada T ∈ L(V), um representante A no
+espa¸co M. Tamb´em sabemos que matrizes semelhantes representam o mesmo operador linear
+T relativamente a distintas bases do espa¸co vetorial V. A quest˜ao que se coloca ´e obter uma
+base especial do espa¸co V para a qual a matriz que representa o operador T seja diagonal.
+Se todas as ra´ızes do polinˆomio caracter´ıstico estiverem no corpo F e forem distintas ent˜ao
+a base do espa¸co na qual o operador ´e representado por uma matriz diagonal ´e exatamente
+a base constitu´ıda pelos autovetores associados aos respectivos distintos autovalores e por-
+tanto, a matriz que representa o operador linear possui em sua diagonal principal os distintos
+autovalores e zero nos demais elementos. Para o caso em que nem todos os autovalores s˜ao
+distintos o operador pode ou n˜ao possuir uma representa¸c˜ao diagonal. No Caso de n˜ao ser
+poss´ıvel obter uma base de autovetores, podemos obter uma decomposi¸c˜ao em blocos, isto ´e,
+a diagonal principal ser´a constitu´ıda de blocos “conhecido como blocos de Jordan”e os demais
+elementos ser˜ao blocos nulos. Considerando que sempre podemos extender o corpo b´asico
+atrav´es da adjun¸c˜ao de ra´ızes at´e obter um corpo que possua todas as ra´ızes do polinˆomio
+caracter´ıstico, em certo sentido o c´alculo do Polinˆomio Caracter´ıstico ´e fundamental para a
+diagonaliza¸c˜ao de operadores lineares.
+
+Quest˜ao relevante ´e obter a inversa de um operador linear. Para dimens˜oes pequenas
+´e poss´ıvel obter a inversa de modo simples, entretanto para dimens˜oes maiores o c´alculo
+
+1Aluno de Mestrado Proﬁssional em Matem´atica, Turma 2011
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+E-mail: marciliosandrade@yahoo.com.br
+
+2Orientador do Trabalho de Conclus˜ao de Curso
+
+Departamento de Matem´atica e Estat´ıstica - DEMAT, UFSJ
+E-mail: raposo@ufsj.edu.br
+
+se torna exaustivo. Neste trabalho aplicaremos o teorema de Hamilton-Cayley combinado
+com as f´ormulas do tra¸co e apresentamos uma t´ecnica para calcular a inversa de operadores
+lineares. A t´ecnica consiste em utilizar recursivamente as f´ormulas do tra¸co o que reduz o
+problema ao c´alculo de potˆencias da matriz que representa o operador linear.
+
+Este trabalho est´a estruturado do seguinte modo:
+Na se¸c˜ao 2 enunciamos a Forma Canˆonica de Jordan e referenciamos um texto que apre-
+
+senta uma eﬁciente receita para o c´alculo da Matriz de Jordan.
+
+Na se¸c˜ao 3 provamos o Teorema de Hamilton-Cayley.
+Na se¸c˜ao 4 apresentamos um algoritmo para o c´alculo dos coeﬁcientes do Polinˆomio Ca-
+
+racter´ıstico.
+
+Na se¸c˜ao 5 mostramos a praticidade do algoritmo para o c´alculo de Matrizes Inversas.
+Finalmente na se¸c˜ao 6 deixamos ao leitor algumas atividades que complementam o conte´udo
+
+deste trabalho.
+
+2 Forma Canˆonica de Jordan
+
+Nesta se¸c˜ao enunciaremos o teorema de Jordan.
+
+Deﬁni¸c˜ao 2.1 Seja λ um autovalor associado a um Operador Linear T, a multiplicidade
+alg´ebrica de λ ´e deﬁnida como sendo a dimens˜ao do subespa¸co gerado pelo autovetor associado
+a este autovalor.
+
+Deﬁni¸c˜ao 2.2 O polinˆomio
+
+p(λ) = det(A − λI) = (−1)n(λn + c1λn−1 + · · · + cn)
+
+´e chamado o polinˆomio caracter´ıstico da matriz A = (aii)n.
+
+Teorema 2.1 Seja T : V → V um Operador Linear cujos polinˆomios caracter´ıstico e mini-
+mal s˜ao respectivamente
+
+p(λ) = (λ − λ1)n1(λ − λ2)n2 · · · (λ − λr)nr,
+m(λ) = (λ − λ1)m1(λ − λ2)m2 · · · (λ − λr)mr.
+
+Ent˜ao T possui uma representa¸c˜ao matricial diagonal J
+
+J =
+
+
+
+
+
+
+
+
+
+
+
+J11
+0
+·
+0
+0
+·
+
+0
+J12
+·
+0
+0
+·
+
+0
+· · ·
+0
+· · ·
+· · ·
+·
+· · · Jr1
+0
+· · ·
+·
+· · ·
+
+
+
+
+
+
+
+
+
+
+
+.
+
+0
+0
+0
+0
+·
+·
+0
+0
+Jr2 0
+·
+·
+
+Os blocos Jij satisfazem Jij = λiI + Ni, isto ´e,
+
+Jij =
+
+
+
+
+
+
+
+
+
+λi
+1
+0 λi
+·
+·
+0
+0
+0
+0
+
+· · ·
+0
+· · ·
+0
+·
+·
+· · · λi
+· · ·
+
+0
+0
+·
+1
+0 λi
+
+
+
+
+
+
+
+
+
+0
+1
+· · ·
+0
+0
+
+2
+
+
+
+
+
+
+
+
+
+0
+λi
+0 λi
+·
+·
+0
+0
+0
+0
+
+=
+
+0
+0
+· · ·
+0
+0
+
+· · ·
+0
+· · ·
+0
+·
+·
+· · · λi
+· · ·
+
+0
+0
+·
+0
+0 λi
+
+
+
+
+
+
+
+
+
++
+
+
+
+
+
+
+
+
+
+0 1
+0 0
+·
+·
+0 0
+0 0
+
+0
+1
+· · ·
+0
+0
+
+· · · 0 0
+· · · 0 0
+·
+·
+·
+· · · 0 1
+· · · 0 0
+
+
+
+
+
+
+
+
+
+= λiI + Ni,
+
+onde Nij ´e uma matriz nilpotente e para cada autovalor λi os blocos Jij correspondente tem
+as seguintes propriedades:
+
+• Existe ao menos um Jij de ordem mi, todos os outros s˜ao de ordem menor ou igual.
+
+• A soma das ordens dos Jij ´e igual a ni.
+
+• O n´umero de blocos Jij ´e igual a multiplicidade alg´ebrica de λi.
+
+• O n´umero de blocos Jij de cada ordem poss´ıvel ´e determinado de modo ´unico por T.
+
+Demonstra¸c˜ao: Para a demonstra¸c˜ao deste teorema ver [1] e para calcular a matriz de
+(cid:3)
+Jordan ver [2].
+
+3 Teorema de Hamilton-Cayley
+
+Nesta se¸c˜ao apresentaremos o Teorema de Hamilton-Cayley e aplicaremos este teorema
+
+para o c´alculo de operadores inversos.
+
+Teorema 3.1 Toda matriz quadrada anula o seu polinˆomio caracter´ıstico.
+
+Demonstra¸c˜ao: Seja A uma matriz quadrada com o polinˆomio caracter´ıstico
+
+p(λ) = (−1)n(λ − λ1)(λ − λ2) · · · (λ − λn)
+
+(1)
+
+e seja J uma matriz de Jordan semelhante a A.
+
+J =
+
+
+
+
+
+
+
+
+
+λ1
+∗
+0 λ2
+0
+0
+·
+·
+0
+0
+
+0
+∗
+λ3
+· · ·
+· · ·
+
+· · ·
+· · ·
+∗
+·
+0
+
+0
+0
+· · ·
+·
+0
+
+
+
+
+
+
+
+
+
+0
+0
+0
+·
+λn
+
+,
+
+onde ∗ = 0 ou 1.
+
+Seja Ji = J − λiI, i = 1, 2, · · ·, n de modo que P (J) = (−1)nJ1J2 · · · Jn, desde que a
+fatora¸c˜ao de P (λ) seja v´alida para o polinˆomio matricial P (x). Mas a i-´esima linha Ji tem ∗
+na coluna i + 1 e zeros no restante. Portanto a n-´esima linha de Jn ´e uma linha de zeros, as
+duas ´ultimas linhas Jn−1Jn s˜ao de zeros, as ´ultimas trˆes linhas de Jn−2Jn−1Jn s˜ao de zeros
+e assim por diante, logo, a multiplica¸c˜ao sucessiva dos Ji d´a P (J) = 0. Como P (A) ´e uma
+(cid:3)
+matriz semelhante a P (J), podemos concluir que P (A) = 0.
+
+3
+
+Como aplica¸c˜ao deste teorema podemos calcular a inversa de uma matriz invers´ıvel A,
+
+do seguinte modo: Seja
+
+p(λ) = (−1)n(λn + c1λn−1 + · · · + cn)
+
+(2)
+
+o polinˆomio caracter´ıstico de A. Como A ´e n˜ao singular, λ = 0 n˜ao ´e um valor caracter´ıstico,
+e portanto cn (cid:54)= 0. Temos ent˜ao
+
+isto ´e,
+
+An + c1An−1 + · · · + cn−1A + cnI = 0
+
+An + c1An−1 + · · · + cn−1A = −cnI
+
+e operando com A−1 obtemos
+
+A−1 = −c−1
+
+n (An−1 + c1An−2 + · · · + cn−1I)
+
+e portanto para obter a matriz inversa A−1 basta encontrar os coeﬁcientes ci, i = 1, 2, · · ·, n.
+
+4 F´ormulas do Tra¸co
+
+Nesta se¸c˜ao utilizamos um algoritmo recursivo para calcular os coeﬁcientes do polinˆomio
+caracter´ıstico o qual combinado com o teorema de Hamilton-Cayley fornece uma t´ecnica
+simples e eﬁciente para calcular matrizes inversas. Este algoritmo ´e o n´ucleo matem´atico do
+trabalho de R. R. Silva [3].
+
+Deﬁni¸c˜ao 4.1 O tra¸co de uma matriz quadrada A, indicado por trA, ´e a soma dos n-valores
+caracter´ısticos de A;
+
+n
+(cid:88)
+
+trA =
+
+λi.
+
+Lembrando que matrizes semelhantes possuem os mesmos valores caracter´ısticos, podemos
+concluir que matrizes semelhantes possuem o mesmo tra¸co. Podemos deﬁnir o tra¸co de uma
+Transforma¸c˜ao Linear T como sendo o tra¸co de qualquer matriz que represente T. A seguir
+provaremos que o tra¸co de uma matriz ´e a soma dos elementos da diagonal principal.
+
+i=1
+
+Teorema 4.1 Seja
+
+Ent˜ao
+
+A =
+
+
+
+
+
+
+
+a11 a12
+a21 a22
+...
+...
+an1 an2
+
+... a1n
+... a2n
+...
+...
+... ann
+
+
+
+
+
+
+
+trA =
+
+n
+(cid:88)
+
+i=1
+
+aii.
+
+4
+
+Demonstra¸c˜ao: Considere o polinˆomio caracter´ıstico de A,
+
+det(A − λI) = (−1)n(λn + c1λn−1 + · · · + cn)
+
+= (−1)n(λ − λ1) · · · (λ − λn).
+
+Pela forma do determinante, o coeﬁciente de λn−1 ´e,
+
+(−1)n−1
+
+n
+(cid:88)
+
+i=1
+
+aii = (−1)nc1,
+
+enquanto que pela forma fatorada obtemos
+
+Logo,
+
+(−1)n+1
+
+n
+(cid:88)
+
+i=1
+
+λi = (−1)nc1.
+
+trA =
+
+n
+(cid:88)
+
+i=1
+
+λi =
+
+n
+(cid:88)
+
+i=1
+
+aii.
+
+(cid:3)
+
+Como uma consequˆencia obtemos a equa¸c˜ao
+
+c1 = −trA.
+
+Os outros ci podem ser determinados atrav´es do seguinte resultado.
+
+Teorema 4.2 Os coeﬁcientes do polinˆomio caracter´ıstico de uma matriz A s˜ao obtidos re-
+cursivamente por
+
+c1 = −trA
+c2 = −2−1[c1trA + trA2]
+c3 = −3−1[c2trA + c1trA2 + trA3]
+
+.
+.
+.
+
+cn = −n−1[cn−1trA + cn−2trA2 + · · · + c1trAn−1 + trAn].
+
+Demonstra¸c˜ao: Para a prova deste teorema ver [3].
+
+(cid:3)
+
+5
+
+5 Aplica¸c˜ao das F´ormulas do Tra¸co
+
+5.1
+
+Inversa de um Operador Linear
+
+Considerando que existe uma bije¸c˜ao entre a classe de operadores lineares deﬁnidos em
+um espa¸co vetorial de dimens˜ao ﬁnita n e a classe das matrizes M (n × n), o c´alculo da matriz
+inversa ´e importante para o c´alculo de operadores inversos.
+
+Vamos ent˜ao calcular a inversa do Operador Linear T : (cid:60)3 → (cid:60)3, deﬁnido por
+
+T (x, y, z) = (y, z, −x + y + z).
+
+Inicialmente obtemos [T ]β onde β ´e a base canˆonica do (cid:60)3,
+
+T (1, 0, 0) = (0, 0, −1) = 0e1 + 0e2 − 1e3
+T (0, 1, 0) = (1, 0, 1) = 1e1 + 0e2 + 1e3
+T (0, 0, 1) = (0, 1, 1) = 0e1 + 1e2 + 1e3
+
+(3)
+(4)
+(5)
+
+e da´ı [T ]β ´e dada pela matriz
+
+A =
+
+
+
+
+
+0
+0
+
+1 0
+0 1
+−1 1 1
+
+
+
+
+
+e o polinˆomio caracter´ıstico ´e dado por p(λ) = (−1)3(λ3 − λ2 − λ + 1). Como A ´e um zero
+do seu polinˆomio caracter´ıstico teremos
+
+multiplicando a esquerda por A−1 obtemos
+
+A3 − A2 − A + I = 0
+
+de onde segue que
+
+A−1 = −A2 + A + I
+
+
+
+
+
+A−1 =
+
+1
+1
+0
+
+
+
+ .
+
+1 −1
+0
+0
+0
+1
+
+No c´alculo da matriz inversa foi importante determinar os coeﬁcientes do polinˆomio ca-
+
+racter´ıstico do Operador.
+
+Para valores grandes de n pode ser dif´ıcil calcularmos diretamente estes coeﬁcientes, e
+
+neste sentido o Teorema 4.2 fornece uma alternativa vi´avel.
+
+5.2 C´alculo da Matriz Inversa
+
+Como uma aplica¸c˜ao do Teorema 4.2 vamos calcular a inversa da matriz
+
+A =
+
+
+
+
+
+0
+0
+
+1 0
+0 1
+−1 1 1
+
+
+
+ .
+
+6
+
+Em conformidade com (2), o polinˆomio caracter´ıstico desta matriz de ordem 3 × 3 tem a
+
+seguinte forma
+
+p(λ) = (−1)3(λ3 + c1λ2 + c2λ + c3).
+
+Utilizando o Teorema de Hamilton-Cayley obtemos
+
+A3 + c1A2 + c2A + c3I = 0
+
+e multiplicando por A−1 temos
+
+de onde segue que
+
+A−1(A3 + c1A2 + c2A + c3I) = 0
+A2 + c1A + c2I + c3A−1 = 0
+
+A−1 = −c−1
+
+3 (A2 + c1A + c2I).
+
+Agora calculamos as matrizes
+
+A2 =
+
+A3 =
+
+
+
+
+
+
+
+
+
+0
+
+0 1
+−1 1 1
+−1 0 2
+
+−1 1 1
+−1 0 2
+−2 1 2
+
+
+
+
+
+
+
+
+
+e portanto, utilizando as F´ormulas do Tra¸co, calculamos os coeﬁcientes do polinˆomio conforme
+abaixo
+
+c1 = −trA = −1
+c2 = −2−1[c1trA + trA2] = −1
+c3 = −3−1[c2trA + c1trA2 + trA3] = 1,
+
+de onde segue que
+
+A−1 = −A2 + A + I,
+
+o que resulta, por substitui¸c˜ao das matrizes A e A2 na ´ultima equa¸c˜ao, a inversa de A,
+
+
+
+
+
+A−1 =
+
+1
+1
+0
+
+
+
+ .
+
+1 −1
+0
+0
+0
+1
+
+Para ﬁnalizar deixamos ao leitor algumas atividades que complementam os resultados
+
+estudados neste trabalho.
+
+7
+
+6 Atividades
+
+6.1 Encontre f (A) onde
+
+6.2 Mostre que
+
+A =
+
+(cid:19)
+
+(cid:18) 1 −2
+5
+4
+
+A =
+
+(cid:19)
+
+(cid:18) 1 4
+2 3
+
+e f (λ) = λ2 − 3λ + 7.
+
+´e um zero de f (λ) = λ2 − 4λ − 5.
+
+6.3 Seja A uma matriz triangular. Encontre o polinˆomio caracter´ıstico de A.
+
+6.4 Calcule o polinˆomio caracter´ıstico e a inversa de cada matriz abaixo.
+
+A =
+
+
+
+
+
+1 2 3
+2 3 0
+0 1 2
+
+
+
+ ,
+
+B =
+
+
+
+
+
+−2
+
+1
+0 −1
+2
+1
+
+
+
+ ,
+
+3
+1
+0
+
+
+
+
+
+
+
+C =
+
+1 −1
+1 −1
+1
+0
+1
+0
+0 −1
+1
+0
+0 −1
+1
+0
+
+
+
+
+
+
+
+.
+
+6.5 Determine se as matrizes
+
+A =
+
+(cid:19)
+
+(cid:18) 1
+
+4
+−1 3
+
+e B =
+
+(cid:18) −1
+
+1
+0 −1
+
+(cid:19)
+
+s˜ao semelhantes.
+
+6.6 Seja
+
+A =
+
+
+
+
+
+1 2 3
+0 2 3
+0 0 3
+
+
+
+ .
+
+A ´e semelhante a uma matriz diagonal? Se for encontre esta matriz.
+
+6.7 Prove as seguintes propriedades do tra¸co.
+
+(i) Se A ´e nilpotente, trA = 0
+
+(ii) tr(A + B) = trA + trB
+
+(iii) trAB = trBA
+
+6.8 Prove que qualquer matriz e sua transposta s˜ao semelhantes.
+
+8
+
+6.9 Se λ1, λ2, · · ·λn s˜ao os distintos autovalores de um operador T : V → V, mostre que
+det[T] = λ1λ2 · · · λn.
+
+6.10 Prove que uma Transforma¸c˜ao Linear ´e invers´ıvel se, e somente se, nenhum dos seus
+autovalores ´e nulo.
+
+6.11 Prove que uma condi¸c˜ao suﬁciente para que um Operador Linear T : V → V seja
+representado por uma matriz diagonal ´e que os autovalores de T sejam todos distintos.
+
+6.12 Mostre com um exemplo que todos os autovalores distintos n˜ao ´e condi¸c˜ao necess´aria
+para a diagonaliza¸c˜ao de operadores.
+
+6.13 Determine a forma de Jordan das seguintes matrizes:
+
+
+
+
+
+7
+4
+
+4 −1
+7 −1
+4
+
+
+
+ ,
+
+
+
+
+
+0
+0
+
+0
+1
+1
+0
+−1 −3 −3
+
+
+
+
+
+−4 −4
+
+6.14 Seja T : (cid:60)4 → (cid:60)4, deﬁnida por T (x, y, z, u) = (y, z, u, 4x − 4y − 3z + 4u). Determine
+a matriz de Jordan de T.
+
+6.15 Suponha que os polinˆomios caracter´ıstico e minimal de um operador t sejam respec-
+tivamente p(λ) = (λ − 2)4(λ − 3)3 e m(λ) = (λ − 2)2(λ − 3). Quais as poss´ıveis formas
+canˆonicas de Jordan para o Operador T.
+
+Coment´ario e Agradecimento Final
+
+O algoritmo recursivo apresentado neste trabalho, pode ser aplicado no ensino m´edio, na
+medida que basta deﬁnir polinˆomio caracter´ıstico de uma matriz invers´ıvel A, enunciar o
+Teorema de Hamilton-Cayley e atrav´es do c´alculo das potˆencias da matriz A, encontrarmos
+os coeﬁcientes do polinˆomio caracter´ıstico e de forma pr´atica e conclusiva, exibirmos a inversa
+A−1.
+
+Agrade¸co aos professores do DEMAT/UFSJ que ministraram as disciplinas no mestrado
+PROFMAT 2011−2013, os quais com empenho e competˆencia foram fonte de inspira¸c˜ao para
+lutarmos at´e concluirmos o programa. Agrade¸co o apoio e compreens˜ao de minha esposa
+S´ılvia, meus ﬁlhos Lucas e Rodrigo que se sacriﬁcaram e nos momentos mais dif´ıceis foram
+os grandes incentivadores. Aos companheiros do PROFMAT que participaram diretamente
+desta trajet´oria e aos familiares e amigos pelo apoio de sempre. Por ﬁm a CAPES pelo apoio
+ﬁnanceiro.
+
+9
+
+Referˆencias
+
+[1] K. Hoﬀman & R. Kunzy; ´Algebra Linear., LTC, S˜ao Paulo, 1979.
+
+[2] L. N. Andrade; A forma canˆonica de Jordan., Texto, UFPB-CCEN-Departamento de
+
+Matem´atica, 1999. link: http://mat.ufpb.br/ lenimar/textos/index.html
+
+[3] R. R. Silva; The Trace Formulas Yield the Inverse Metric. Journal of Mathematical
+
+Physics, 39, 6206, (1998).
+
+[4] D. T. Finkbeiner; Introdu¸c˜ao `as Matrizes e Transforma¸c˜oes Lineares., Ao Livro T´ecnico
+
+S. A., Rio de Janeiro, 1970.
+
+10
+
+

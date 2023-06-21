@@ -1,0 +1,3585 @@
+UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ - UTFPR
+MESTRADO PROFISSIONAL EM MATEMÁTICA EM REDE NACIONAL
+PROFMAT
+
+MARCÉLIA PICOLOTTO DA SILVA TEIXEIRA
+
+DETECÇÃO DE COMUNIDADES EM GRAFOS
+
+CURITIBA
+
+2019
+
+MARCÉLIA PICOLOTTO DA SILVA TEIXEIRA
+
+DETECÇÃO DE COMUNIDADES EM GRAFOS
+
+Dissertação apresentada ao Mestrado Proﬁssional em
+Matemática em Rede Nacional da Universidade Tec-
+nológica Federal do Paraná em Curitiba - PROFMAT-
+UTCT como requisito parcial para obtenção do grau
+de Mestre.
+Orientador: João Luis Gonçalves
+
+CURITIBA
+
+2019
+
+             Dados Internacionais de Catalogação na Publicação  T266d   Teixeira, Marcélia Picolloto da Silva                   Detecção de comunidades em grafos [recurso eletrônico] /               Marcélia Picolloto da Silva Teixeira.-- 2019.                   1 arquivo texto (53 f.) : PDF : 1,26 MB.                                  Modo de acesso: World Wide Web.                    Texto em português com resumo em inglês.                    Dissertação (Mestrado) - Universidade Tecnológica                Federal do Paraná. Programa de Mestrado Profissional em                Matemática em Rede Nacional. Área de Concentração: Análise                Numérica, Curitiba, 2019.                     Bibliografia: f. 43-44.                    1. Matemática - Dissertações. 2. Teoria dos grafos. 3. Álgebra                linear. 4. Matrizes (Matemática). 5. Autovalores. 6. Autovetores.                7. Redes sociais on-line. 8. Professores de matemática -                Formação. 9. Prática de ensino. 10. Matemática - Estudo e ensino                (Ensino médio). I. Gonçalves, João Luis, orient. II. Universidade                Tecnológica Federal do Paraná. Programa de Mestrado                Profissional em Matemática em Rede Nacional. III. Título.                                                                                     CDD: Ed. 23 -- 510 Biblioteca Central do Câmpus Curitiba – UTFPR Bibliotecária: Luiza Aquemi Matsumoto CRB-9/794     Ministério da Educação Universidade Tecnológica Federal do Paraná Diretoria de Pesquisa e Pós-Graduação     TERMO DE APROVAÇÃO DE DISSERTAÇÃO Nº 64  A Dissertação de Mestrado intitulada “Detecção de Comunidades em Grafos”, defendida em sessão pública pela candidata Marcélia Picolloto da Silva Teixeira, no dia 22 de abril de 2019, foi julgada para a obtenção do título de Mestre, área de concentração Análise Numérica, e aprovada em sua forma final, pelo Programa de Pós-Graduação em Matemática em Rede Nacional – PROFMAT.  BANCA EXAMINADORA:  Prof. Dr. João Luis Gonçalves - Presidente – UTFPR Prof. Dr. Roy Wilhelm Probst - UTFPR Prof. Dr. José Carlos Corrêa Eidam - UFPR  A via original deste documento encontra-se arquivada na Secretaria do Programa, contendo a assinatura da Coordenação após a entrega da versão corrigida do trabalho.  Curitiba, 22 de abril de 2019.    Carimbo e Assinatura do(a) Coordenador(a) do Programa AGRADECIMENTOS
+
+Primeiramente agradeço a Deus por ter estado ao meu lado, por me agraciar com
+serenidade e sabedoria, guiando minhas escolhas para o bem. Por me dar força para suportar
+o desaﬁo de me manter focada no estudo por esses três ano, conseguindo conciliar a segunda
+licenciatura em Física com esse mestrado proﬁssional.
+
+Aos meus pais por me apoiarem todas as vezes que me mantive ausente para estudar.
+Em especial, agradeço aos meus ﬁlhos que de certa forma não aceitaram, mas respeitaram a
+minha decisão de cursar esse mestrado. Tainá, por todas as traduções dos livros, artigos e textos
+e Eduardo por não ter cumprido a ameaça de queimar meus cadernos. E deixo aqui registrado as
+minhas desculpas pelas viagens que não ﬁzemos, pelos ﬁlmes que não assistimos, pelas trilhas
+que não desbravamos, pelos piqueniques que não comemos e pelas conversas que não tivemos.
+
+Ao amor da minha vida que, mesmo sem imaginar, seria o grande incentivo dessa jornada.
+
+À CAPES pela recomendação do PROFMAT por meio do parecer do Conselho Técnico
+
+Cientíﬁco da Educação Superior e pelo incentivo ﬁnanceiro.
+
+À Sociedade Brasileira de Matemática que na busca da melhoria do ensino de Matemática
+
+na Educação Básica viabilizou a implementação do PROFMAT.
+
+Aos meus professores do PROFMAT que grandemente contribuiram para que a minha
+
+prática em sala de aula fosse enriquecida, através dos conhecimentos por eles empregados.
+
+Ao meu orientador pela sua insistência, por não ter me deixado desistir. Por todas os
+conceitos que me ensinou, entre eles o da humildade. Agradeço o tempo que disponibilizou para
+esse projeto e por ter me apresentado um ramo da matemática fabuloso. Por ter dispertado minha
+curiosidade e por não ter medido esforços para que esse trabalho chegasse ao ﬁm.
+
+RESUMO
+
+PICOLOTTO DA SILVA TEIXEIRA, Marcélia. Detecção de Comunidades em Grafos. 54 f.
+Dissertação - Programa de Mestrado Proﬁssional em Matemática em Rede Nacional - PROFMAT,
+Universidade Tecnológica Federal do Paraná. Curitiba, 2019.
+
+Neste trabalho apresentamos o método do corte mínimo para a detecção de comunidades em
+grafos, ilustramos o método com exemplos e propomos um roteiro de trabalho, para a aplicação
+desse método pelo professor de matemática. O objetivo desse roteiro é que o professor seja capaz
+de implementar uma sequência de aulas com conteúdos abordados de forma não usual no Ensino
+Médio, em que caberá aos estudantes detectar comunidades em grafos que representem redes de
+seu interesse. No método e nas atividades propostas o conteúdo de matrizes é tratado de uma
+forma diferente da usual, sem associação a resolução de sistemas lineares, usando autovalores e
+autovetores.
+
+Palavras-chave: Grafos. Autovalores. Detecção de Comunidades.
+
+ABSTRACT
+
+PICOLOTTO DA SILVA TEIXEIRA, Marcélia. Detection of Communities in Graphs. 54
+pg. Dissertation - Programa de Mestrado Proﬁssional em Matemática em Rede Nacional -
+PROFMAT, Universidade Tecnológica Federal do Paraná. Curitiba, 2019.
+
+In this work we present the minimum cut method for the detection of communities in graphs, we
+illustrate the method with examples and we propose an work routine such that the math teacher
+could apply communities detection activity for high school students, where it is up to them to
+detect communities in graphs that represent networks of their daily lives. In the proposed method
+and activities the matrix subject is treated in a unusual way, not associated with the resolution of
+linear systems, applying eigenvalues and eigenvectors.
+
+Keywords: Graph. Eigenvalues. Communities Detection.
+
+LISTA DE ILUSTRAÇÕES
+
+.
+
+Figura 1 – Grafo com 5 vértices 6 arestas.
+. . . . . . . . . . . . . . . . . . . . . . . .
+Figura 2 – Grafo da família Silva . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figura 3 – Grafo ponderado.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figura 4 – Diagrama das pontes de Konignsberg no documento original (Euler, 1741) .
+. . . . . . .
+Figura 5 – 7 comunidades apresentadas em (BEVERIDGE; SHAN, 2016)
+Figura 6 – Comunidades detectadas pelo corte mínimo . . . . . . . . . . . . . . . . .
+Figura 7 – Charge de Simon Kneebone sobre as pontes de Konignsberg (à esquerda),
+representação gráﬁca do problema (centro) e grafo modelo gerado (à direita)
+
+34
+Figura 8 – Topologia de redes de comunicação (à esquerda) e bases nitrogenadas (à direita) 37
+37
+Figura 9 – Grafo de uma rede social
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+38
+Figura 10 – Ícones de redes sociais . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+39
+. . . . . . . . . . . . . . . . . . . . .
+Figura 11 – Modelo para planilha de adjacência.
+
+12
+13
+14
+21
+29
+30
+
+1
+
+2
+
+2.1
+2.2
+2.3
+2.4
+
+3
+
+3.1
+
+4
+
+4.1
+4.2
+4.2.1
+4.2.2
+4.2.3
+4.3
+4.3.1
+4.4
+4.4.1
+4.4.2
+4.5
+
+5
+
+SUMÁRIO
+
+INTRODUÇÃO .
+
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+CONCEITOS FUNDAMENTAIS DA TEORIA DE GRAFOS . . . . . .
+
+12
+
+COMUNIDADES EM GRAFOS . . . . . . . . . . . . . . . . . . . . . .
+
+Aspectos Históricos da Detecção de Comunidades . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Redes Sociais
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Corte Mínimo .
+CORTE MÍNIMO EM GRAFOS PONDERADOS . . . . . . . . . . . . . .
+
+.
+.
+
+.
+.
+
+EXPERIMENTO COMPUTACIONAL . . . . . . . . . . . . . . . . . .
+Comunidades do Livro Storm of Swords
+
+. . . . . . . . . . . . . . . . . . .
+
+PROPOSTA DE APLICAÇÃO EM NÍVEL MÉDIO . . . . . . . . . . .
+
+Embasamento teórico para o professor
+. . . . . . . . . . . . . . . . . . . .
+Proposta de aula sobre conceitos fundamentais . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+Aula sobre teoria de grafos
+Aula sobre autovalor e autovetor
+. . . . . . . . . . . . . . . . . . . . . . .
+Aulas sobre álgebra linear aplicada à teoria de grafos . . . . . . . . . . . . .
+Proposta de roteiro de aula sobre comunidades e redes sociais . . . . . . . .
+Aula sobre conceito de rede e comunidade . . . . . . . . . . . . . . . . . .
+Proposta de atividade prática para a detecção de comunidades . . . . . . . .
+Aula questionário para detecção de comunidades . . . . . . . . . . . . . . .
+Aula sobre corte mínimo e detecção de comunidades no R . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Estudo de caso .
+
+.
+
+.
+
+20
+
+20
+22
+22
+26
+
+28
+
+28
+
+32
+
+32
+33
+34
+34
+35
+36
+36
+38
+38
+40
+41
+
+CONCLUSÃO .
+
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+43
+
+REFERÊNCIAS .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+44
+
+ANEXOS
+
+46
+
+ANEXO A – CÓDIGO EM R PARA O MÉTODO DO CORTE MÍNIMO 47
+
+ANEXO B – CÓDIGO EM R PARA DETECÇÃO DE COMUNIDADE
+USANDO A MODULARIDADE E O MÉTODO DE LOU-
+VAIN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+54
+
+INTRODUÇÃO
+
+10
+
+Os grafos são objetos matemáticos simples e particularmente eﬁcientes para descrever
+diversos fenômenos. Além disso, a teoria por trás da amigável modelagem com grafos é bastante
+robusta e suportada em outras áreas da matemática. Portanto, ao usar grafos descrevemos bem
+o problema e também abrimos um grande leque de ferramentas matemáticas para a resolução
+desses problemas.
+
+O problema incipiente da teoria de grafos foi o Problema das Sete Pontes de Königsberg.
+Em (EULER, 1741), a cidade de Königsberg era cortada por um rio de forma que duas ilhas são
+formadas e ligando as margens do rio existiam sete pontes. O problema em questão é se seria
+possível atravessar todas as sete pontes passando apenas uma vez por cada uma. Euler resolveu
+o problema em 1741, usando grafos, mas a aplicabilidade da teoria de grafos na ciência não
+parecia relevante. Em 1847, Kirchhoff, que coincidentemente é natural de Königsberg, usou a
+idea de grafos para estudar circuitos elétricos, gerando a teoria de árvores, que chamou a atenção
+de outros cientista para a teoria de grafos.
+
+Muitos problemas atuais estão sendo modelados usando a teoria de grafos, por exem-
+plo problemas associados a redes sociais, designer de redes de transportes, identiﬁcação de
+complexos de proteínas, mapeamento de atividades neurais e pareamento entre grupos. Além
+desses, alguns problemas mais abstratos e intrínsecos à teoria de grafos, com grande potencial
+de aplicação são comuns, como os de coloração, planiﬁcação, caminho mínimo, caminhos
+eulerianos e caminhos hamiltonianos.
+
+Várias dissertações, inclusive do PROFMAT, já trataram do tema teoria de grafos, veja
+por exemplo (ASSIS, 2016) , (COSTA, 2017), (MALTA, 2008) e (NOGUEIRA, 2015). De forma
+geral, esses trabalhos apresentam uma introdução à teoria de grafos e tratam um problema com
+uma abordagem voltada a aplicação no Ensino Médio. Embora não conste na grade curricular, a
+teoria de grafos tem interseções com diversos de seus conteúdos, como matrizes e determinantes,
+que são tratados nesse trabalho, e também funções, análise combinatória e probabilidade.
+
+Nossos objetivos nesse trabalho são apresentar uma breve introdução à teoria de grafos
+e a alguns conceitos de álgebra linear, tratar o problema de detecção de comunidades e propor
+uma atividade compatível com o nível médio sobre grafos e detecção de comunidade.
+
+O trabalho está estruturado da seguinte maneira: no Capítulo 1 apresentamos conceitos
+da teoria de grafos e de álgebra linear que serão fundamentais para os problemas tratados. No
+Capítulo 2, além da parte histórica e conceitos sobre redes apresentamos uma abordagem para
+o problema de detectar comunidades, no qual exploramos o método de corte mínimo, contido
+em (NEWMAN, 2006). No Capítulo 3 apresentamos a implementação do método discutido no
+capítulo anterior e os resultados obtidos no experimento computacional e comparamos esses
+
+11
+
+resultados com o mesmo experimento, apresentado em (BEVERIDGE; SHAN, 2016). E no
+Capítulo 4 apresentamos uma proposta de atividade de nível médio envolvendo a detecção de
+comunidades na qual conteúdos de matrizes e teoria de grafos deverão ser utilizados. Envolvemos,
+ainda, nesse capítulo, a utilização de um software computacional, ver (SANTANA, 2017). Os
+códigos para a implementação do método implementado estão disponíveis nos anexos deste
+trabalho.
+
+1 CONCEITOS FUNDAMENTAIS DA TEORIA DE GRAFOS
+
+12
+
+Neste capítulo, apresentamos, de forma breve, os conceitos e resultados da teoria de
+grafos e da álgebra linear que são fundamentais ao tema que trataremos nos próximos capí-
+tulos, a detecção de comunidades. Os conceitos e demonstrações apresentadas nesse capítulo
+foram retiradas, essencialmente de (NETTO; JURKIEWICZ, 2009), (DIESTEL, 2005), (ORTIZ;
+MOREIRA, 2016) e (FEOLILOFF P.; WAKABAYASHI, 2012).
+
+O primeiro conceito é justamente o de grafo, visto em (FEOLILOFF P.; WAKA-
+
+BAYASHI, 2012).
+
+Deﬁnição 1.1. Um Grafo G é deﬁnido como um par de conjuntos, o conjunto dos vértices, V , e
+o das arestas, E, sendo os elementos de E pares de elementos de V . Denotamos G por G(V, E).
+
+Exemplo 1.2. Seja o grafo G(V, E), com o conjunto de vértices V = {Ana, Edu, Isa, Tai, Fer}
+e o conjunto de arestas
+
+E = {(Ana, Edu), (Edu, Isa), (Ana, T ai), (T ai, F er), (Ana, F er), (Edu, F er)} .
+
+Este grafo pode ser representado como na Figura 1, mas outras representações também
+
+são possíveis.
+
+Ana
+
+e1
+
+e3
+
+Tai
+
+e5
+
+Edu
+
+e2
+
+Isa
+
+e4
+
+e6
+
+Fer
+
+Figura 1 – Grafo com 5 vértices 6 arestas.
+
+Neste exemplo, os vértices são pessoas e as arestas representam, por exemplo, a relação
+de amizade entre os vértices, isto é, E = {(v, w)|v é amigo de w}. Como consideramos a
+amizade uma relação simétrica, pois se v é amigo de w então, w é amigo de v, as arestas que
+ligam os vértices não possuem orientação.
+
+Assim chamamos G(V, E) no Exemplo 1.2 de um grafo não direcionado, ou seja, um
+
+grafo em que as arestas são deﬁnidas como pares não ordenados de vértices.
+
+Existem situações em que o sentido das ligações entre os vértices é importante. Nesse
+caso, as arestas são deﬁnidas como pares ordenados de vértices, sendo o primeiro vértice do
+par, o vértice de saída e o segundo o vértice, de chegada. Nesse contexto, as arestas possuem
+
+13
+
+um sentido que é representado por uma seta, que aponta do vértice de saída para o vértice de
+chegada. Segundo (NETTO; JURKIEWICZ, 2009), grafos com essa característica são chamados
+grafos direcionados.
+
+Exemplo 1.3. Seja o grafo G(V, E), com o conjunto de vértives, V ={ João Santos, Maria
+Santos Silva, Paulo Silva, Antônio Santos, Antônia Silva, José Silva}, membros de uma mesma
+família, e o conjunto de arestas, E= {(João, Antônio), (Maria, Antônio), (Maria, Antônia),
+(Paulo, Antônia), (Antônia, José)}. Esse grafo pode ser representado pela Figura 2.
+
+José
+
+Antônio
+
+Antônia
+
+João
+
+Maria
+
+Paulo
+
+Figura 2 – Grafo da família Silva
+
+O conjunto das arestas, nesse exemplo, é deﬁnido como E = {(v, w)|v é pai/mãe de w}.
+A relação deﬁnida por E não é simétrica pois se v é pai ou mãe de w, não implica que w é
+pai ou mãe de v. Há, portanto, uma orientação na relação, com um correspondente efeito na
+representação gráﬁca de G, portanto esse grafo é direcionado.
+
+A cardinalidade dos conjuntos que deﬁnem o grafo são propriedades importantes e são
+
+deﬁnidas como a seguir.
+
+Deﬁnição 1.4. Deﬁne-se |V |, a ordem de G, como o número de vértices do grafo G(V, E) e,
+analogamente, deﬁne-se |E|, o tamanho de G, como o número de arestas de G(V, E).
+
+Então, usando a Deﬁnição 1.4 e a Figura 1, temos que a ordem do grafo do Exemplo 1.2
+é 5 e o seu tamanho é 6. Já para o grafo do Exemplo 1.3, da Figura 2 temos que, a ordem é 6 e o
+tamanho é 5.
+
+Em algumas situações queremos representar, usando grafos, as relações entre diferentes
+vértices, que têm entre si intensidades diferentes. Para contemplar essas diferentes intensidades,
+introduzimos a deﬁnição de grafo ponderado.
+
+Deﬁnição 1.5. Um grafo é dito ponderado quando suas arestas possuem pesos. Usamos a
+notação cij para denotar o peso da aresta entre os vértices i e j.
+
+Considere representar o número de interações entre cada par de amigos em uma rede
+social. Neste caso, podemos escolher o peso cij de cada aresta (i, j), como o número de interações
+entre os vértices i e j, por exemplo considere o grafo da Figura 3.
+
+14
+
+Tai
+
+2
+
+7
+
+Ana
+
+6
+
+4
+
+Edu
+
+3
+
+Isa
+
+5
+
+Fer
+
+Figura 3 – Grafo ponderado.
+
+Analisando a Figura 3, ﬁca visualmente claro que que Tai e Fer interagiram 7 vezes, na
+
+rede social, enquanto Edu e Isa interagiram por 3 vezes.
+
+Uma vez que um vértice não necessariamente tem arestas com todos os demais vértices, o
+número de vértices com que cada vértice está conectado também é uma característica importante
+do grafo. Essa característica está no grau de cada vértice e para todo o grafo na matriz de graus,
+conforme deﬁnidos a seguir.
+
+Deﬁnição 1.6. Deﬁne-se grau de um vértice v, denotado por d(v), como o número de arestas
+que incidem em v. Caso o grafo seja ponderado, d(v) é a soma dos pesos das arestas que
+incidem em v.
+
+Logo na Figura 1, do Exemplo 1.2, podemos observar que o grau de Ana é 3, o grau de
+
+Tai é 2 e o de Isa é 1.
+
+Deﬁnição 1.7. A matriz de graus D(G) de G é a matriz diagonal de ordem n cujas entradas
+Dij são:
+
+Dij =
+
+
+
+
+d(vi)
+
+
+0
+
+se i = j
+
+se i 6= j.
+
+Ou seja, a matriz de graus possui as entradas da diagonal principal como sendo o grau de
+
+cada vértice.
+
+Para o grafo do Exemplo 1.2, a matriz de graus é:
+
+D =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3 0 0 0 0
+0 3 0 0 0
+0 0 1 0 0
+0 0 0 2 0
+0 0 0 0 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Para o grafo ponderado apresentado na Figura 3, a matriz de graus ponderada, denotada
+
+15
+
+por Dp, é:
+
+Dp =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12
+0
+0
+0
+0
+
+0 0
+0
+0
+14 0 0
+0
+3 0
+0
+0
+0
+0 9
+0
+0 0 16
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Em um grafo não direcionado, dois vértices v e w são adjacentes se há uma aresta
+
+a = (v, w) em E. Por exemplo, os vértices Ana e Edu no grafo da Figura 1 são adjacentes.
+
+A informação sobre as adjacências entre todos os vértices do grafo é sintetizada na matriz
+
+de adjacência, deﬁnida a seguir.
+
+Deﬁnição 1.8. Seja G = G(V, E) um grafo com n vértices. A matriz adjacência Aij de G é a
+matriz quadrada de ordem n de entradas:
+
+Aij =
+
+
+
+
+
+
+(i, j) ∈ E para i, j ∈ V,
+
+se
+
+1,
+0, caso contrário.
+
+Se o grafo for ponderado, a matriz de adjacência é deﬁnida como:
+
+Apij =
+
+
+
+
+
+
+(i, j) ∈ E para i, j ∈ V,
+
+se
+
+cij,
+0, caso contrário.
+
+(1.1)
+
+(1.2)
+
+O grafo representado na Figura 1, por exemplo, tem como matriz adjacência
+
+A =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1 0 1 1
+1 0 1 0 1
+0 1 0 0 0
+1 0 0 0 1
+1 1 0 1 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+Para o grafo ponderado da Figura 3 tem seguinte matriz de adjacência podenrada
+
+Ap =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 6 0 2 4
+6 0 3 0 5
+0 3 0 0 0
+2 0 0 0 7
+4 5 0 7 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+Deﬁnição 1.9. Sejam D a matriz diagonal dos graus dos vértices de um grafo G e A a matriz
+de adjacência de G. A matriz laplaciana do grafo G é a matriz L, deﬁnida por
+
+L = D − A.
+
+(1.3)
+
+16
+
+A matriz laplaciana é relevante em diversos contextos da teoria de grafos, pois reune em
+
+si toda a informação sobre a conectividade do grafo.
+
+Em especial, o segundo menor autovalor da matriz laplaciana, denominado conectividade
+algébrica, desempenha um papel relevante em diversas aplicações, por exemplo os problemas de
+ﬂuxo de redes.
+
+Um grande número de propriedades relacionadas ao espectro da matriz laplaciana é
+apresentado em (ROCHA, 2015). Neste trabalho utilizaremos apenas o autovetor de Fiedler,
+autovetor associado ao segundo menor autovalor da matriz laplaciana, para a detecção de
+comunidades.
+
+Aplicando a Deﬁnição 1.9, no Exemplo 1.2, obtemos
+
+L =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3 0 0 0 0
+0 3 0 0 0
+0 0 1 0 0
+0 0 0 2 0
+0 0 0 0 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+−
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1 0 1 1
+1 0 1 0 1
+0 1 0 0 0
+1 0 0 0 1
+1 1 0 1 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+3 −1
+−1
+0 −1
+−1
+0
+−1 −1
+
+0 −1 −1
+0 −1
+0
+0
+2 −1
+3
+
+3 −1
+1
+0
+0 −1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(1.4)
+
+Essa mesma deﬁnição pode ser aplicada para grafos ponderados, como o grafo apresen-
+
+tado na Figura 3, cuja matriz laplaciana ponderada é:
+
+Lp =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+12
+0
+0
+0
+0
+
+0
+0
+0 0
+0
+14 0 0
+0
+3 0
+0
+0 9
+0
+0
+0 0 16
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+−
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 6 0 2 4
+6 0 3 0 5
+0 3 0 0 0
+2 0 0 0 7
+4 5 0 7 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 −2 −4
+12 −6
+0 −5
+−6 14 −3
+0
+0
+3
+0 −3
+0
+−2
+9 −7
+0
+0 −7 16
+−4 −5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(1.5)
+
+A matriz laplaciana é fonte de grande número de propriedades do grafo associado a ela,
+como já mencionamos. No entanto, para os ﬁns desta dissertação apenas algumas propriedades
+da matriz laplaciana são relevantes.
+
+Uma delas, é o fato de que a soma dos termos da i-ésima coluna (ou linha) da matriz
+
+laplaciana é zero, ou seja,
+
+Lij = 0.
+
+X
+
+j
+
+(1.6)
+
+Por exemplo, para a matriz da Equação 1.4, o somatório das entradas da segunda linha
+−1+3−1+0−1 = 0, assim como o somatório das entradas da quarta coluna, −1+0+0+2−1 =
+0. O mesmo acontece na matriz da Equação 1.5, para qualquer linha ou coluna.
+
+A justiﬁcativa para essa propriedade é que as entradas da i-ésima linha, fora da diagonal
+representam a existência de arestas adjacentes ao vértice i, logo a soma dessas entradas resulta
+no grau do vértice i, que é justamente o valor que consta na i-ésima entrada da diagonal, com
+sinal oposto. Portanto a soma de todas as entradas será zero.
+
+17
+
+Considerando a deﬁnição matriz laplaciana, essa propriedade continua sendo válida
+
+também para a matriz lapalciana ponderada.
+
+Essa propriedade da matriz laplaciana é útil no Teorema 1.12. Mas antes de enunciá-lo,
+
+apresentamos as deﬁnições de autovalor e autovetor de uma matriz.
+
+Deﬁnição 1.10. Seja A ∈ Mn(R), uma matriz n × n. Um par (λ, ~v), sendo λ ∈ R e ~v um vetor
+do Rn, com ~v 6= ~0, é um par de autovalor e de autovetor de A se
+
+Av = λ~v.
+
+Os autovalores e autovetores podem ser determinados como a solução para o sistema
+(A − λI)~v = ~0. Para matrizes pequenas a resolução desse sistema é simples, porém para
+matrizes grandes faz-se necessário o uso de métodos computacionais que em geral oferecem
+uma aproximação para os autovalores e autovetores de uma matriz.
+
+Vejamos no Exemplo 1.11 como determinar os autovalores e os autovetores associados a
+
+uma matriz.
+
+Exemplo 1.11. Seja a matriz A =
+
+
+
+
+
+3
+4
+2 −1
+
+
+, aplicando a Deﬁnição 1.10,
+
+Av = λv =⇒ Av − λv = 0 =⇒ Av − λI2v = 0 =⇒ (A − λI)v = 0,
+
+então
+
+
+
+
+
+
+
+
+
+3
+4
+2 −1
+
+
+ −
+
+
+
+
+
+λ 0
+0 λ
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ =
+
+
+
+
+
+
+
+
+
+0
+0
+
+x
+y
+
+
+
+
+
+4 − λ
+2
+
+3
+−1 − λ
+
+
+
+
+
+
+
+
+
+x
+y
+
+
+ =
+
+
+
+
+
+
+
+
+
+0
+0
+
+(1.7)
+
+Resolvendo o determinante obtemos
+
+(4 − λ)(−1 − λ) − 6 = 0 =⇒ λ2 − 3λ − 10 = 0 =⇒
+
+
+
+
+λ1 = 5
+
+
+
+λ2 = −2
+
+Os autovetores associados aos autovalores, λ1 e λ2, são determinados com a Equação
+
+1.7.
+
+Para λ1 = 5
+
+
+
+
+
+4 − λ
+2
+
+3
+−1 − λ
+
+
+
+
+
+
+
+
+
+x
+y
+
+
+ =
+
+
+
+
+
+0
+0
+
+
+ =⇒
+
+
+
+
+
+−1
+3
+2 −6
+
+
+
+
+
+
+
+
+
+x
+y
+
+
+ =
+
+
+
+
+
+
+
+
+
+0
+0
+
+=⇒
+
+
+
+
+−x + 2y = 0
+
+
+
+3x − 6y = 0
+
+=⇒ x = 2y
+
+18
+
+Logo, para o autovalor λ1 = 5, está associado o autovetor v = (2y, y)T , com y 6= 0.
+
+Para λ1 = −2
+
+
+
+
+
+4 − λ
+2
+
+3
+−1 − λ
+
+
+
+
+
+
+
+
+
+x
+y
+
+
+ =
+
+
+
+
+
+0
+0
+
+
+ =⇒
+
+
+
+
+
+6 3
+2 1
+
+
+
+
+
+
+
+
+
+x
+y
+
+
+ =
+
+
+
+
+
+
+
+
+
+0
+0
+
+=⇒
+
+
+
+
+6x + 2y = 0
+
+
+
+3x + y = 0
+
+=⇒ −3x = y
+
+Logo, para o autovalor λ1 = −2, está associado o autovetor v = (x, −3x)T , com x 6= 0.
+
+Teorema 1.12. Seja G um grafo com n vértices e L sua matriz laplaciana. Sejam λ1 ≤ λ2 ≤
+. . . ≤ λn os autovalores de L. Então:
+
+(i) λ1 = 0 e o vetor ~1 é o autovetor associado.
+
+(ii) G é conexo se, e somente se, λ2 > 0.
+
+As demonstrações desses resultados estão disponíveis em (ROCHA, 2015). No item
+j Lij = 0, pois para ~v1 = ~1 = (1, 1, . . . , 1) temos
+
+(i), 0 ser um autovalor é consequência de P
+L ~v1 = ~0 = 0 ~v1.
+
+Como todos os autovalores de L são não negativos, λ1 = 0 é o menor autovalor e seu
+
+vetor normalizado se dá por ~v1 =
+
+(1, 1, · · · ).
+
+1
+√
+n
+
+Os grafos que consideraremos nos próximos capítulos são grafos não direcionados
+e portanto suas matrizes de adjacências, de graus e laplacianas, ponderadas ou não, serão
+simétricas. Matrizes simétricas têm boas propriedades, principalmente quanto a seus autovalores
+e autovetores.
+
+Apresentamos a seguir os resultados para matrizes simétricas que são mais relevantes
+para essa dissertação. Esses e outros resultados pertinentes podem ser encontrados em (DIESTEL,
+2005).
+
+Teorema 1.13. Se A é uma matriz real simétrica, então seus autovalores são reais.
+
+Demonstração. Seja z = a + bi um número complexo, chamamos de conjugado de z o número
+z = a − bi. Se Aij é a matriz com entradas complexas, o conjugado de Aij é denotado por A. Se
+A é uma matriz real A = A se deve ao fato de que o conjugado de um número real é o próprio
+número.
+
+Seja λ autovalor de A com autovetor correspondente v. Então Av = λv e, usando
+
+conjugados complexos, temos Av = λv. Segue que,
+
+Av = Av = Av = λv = λv
+
+pois A é real. Usando o fato de que A é simétrica e tomando as transpostas, temos
+
+vT A = vT AT = (Av)T =
+
+(cid:17)T
+
+(cid:16)
+
+λv
+
+= λvT
+
+19
+
+logo,
+
+assim,
+
+. Se
+
+então,
+
+e assim,
+
+(cid:16)
+
+λ
+
+vT v
+
+(cid:17)
+
+= vT (λv) = vT (Aλ) = v
+
+(cid:16)
+
+(cid:17)
+vT A
+
+= v
+
+(cid:16)
+
+λvT (cid:17)
+
+= λ
+
+(cid:16)
+
+vT v
+
+(cid:17)
+
+(cid:16)
+
+λ
+
+vT v
+
+(cid:17)
+
+− λ
+
+(cid:16)
+
+vT v
+
+(cid:17)
+
+= 0 =⇒
+
+(cid:16)
+
+λ − λ
+
+(cid:17) (cid:16)
+
+(cid:17)
+
+vT v
+
+= 0
+
+v =
+
+v =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a1 + b1i
+...
+an + bni
+
+a1 − b1i
+...
+an − bni
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+vT v =
+
+(cid:16)
+
+1 + b2
+a2
+1
+
+(cid:17)
+
++ . . . +
+
+(cid:16)
+n + b2
+a2
+n
+
+(cid:17)
+
+6= 0
+
+. Já que v 6= 0, por ser autovetor. Concluímos que
+
+λ − λ = 0 =⇒ λ = λ
+
+. Logo λ é real.
+
+Outro resultado importante diz sobre a ortogonalidade dos autovetores de uma matriz
+
+simétrica.
+
+Teorema 1.14. Autovetores, associados a autovalores distintos, de matrizes reais simétricas são
+ortogonais.
+
+Demonstração. Sejam A uma matriz real simétrica, v e w autovetores de A associados aos
+autovalores λ1 e λ2, respectivamente, com λ1 6= λ2. Temos que Av = λ1v e Aw = λ2w. Segue
+então que:
+
+wT (λ1v) = λ1wT v = λ1vT w = (λ1v)T w = (Av)T w = AT vT w = vT (Aw) = vT (λ2w) ,
+
+e portanto
+
+(cid:16)
+
+vT w
+
+(cid:17)
+
+λ1
+
+= λ2
+
+(cid:16)
+
+vT w
+
+(cid:17)
+
+.
+
+Como λ1 6= λ2, temos que vT w = 0 portanto v e w são ortogonais.
+
+2 COMUNIDADES EM GRAFOS
+
+20
+
+As redes sociais virtuais, devido a grande adesão, são uma fonte de informações que
+podem impulsionar mercados já existentes e mesmo criar novos mercados, ou mesmo fomentar
+política públicas que melhorem a vida das pessoas. Entretanto, essa quantidade enorme de
+informação precisa de tratamento para que se torne um conhecimento útil. Alguns dos tratamentos
+mais relevantes para dados tão complexos e tão grandes é o agrupamento em comunidades,
+que dependendo do contexto pode ajudar a resolver a diferentes problemas. Assim, detectar
+comunidades tornou-se um problema muito interessante e suas aplicações vão além de redes
+sociais.
+
+Comumente grafos representam redes, sendo os vértices representantes dos objetos da
+
+rede e as arestas caracterizando as conexões entre esses objetos.
+
+Uma comunidade em uma rede ou grafo pode ser caracterizada de diferentes formas.
+Consideraremos apenas uma caracterização de comunidades, a caracterização via corte mínimo,
+apresentada em (NEWMAN, 2006). Nessa caracterização cada comunidade é um subconjunto
+de vértices e o grafo é dividido em comunidades disjuntas e não vazias de forma que o número
+de arestas que conectam vértices de diferentes comunidades seja o menor possível. Outras
+condições podem ser impostas como o número de comunidades e o número de vértices em cada
+comunidade.
+
+Observemos que as comunidades impõem uma partição a um grafo, mas uma partição
+
+não necessariamente representa as comunidades de um grafo.
+
+Apresentaremos nas seções a seguir aspectos históricos e conceituais acerca da detecção
+
+de comunidades, bem como um método para realizar essa detecção em grafos.
+
+2.1 ASPECTOS HISTÓRICOS DA DETECÇÃO DE COMUNIDADES
+
+Um dos primeiros problemas matemáticos que foi preciso resolver recorrendo à teoria
+
+dos grafos é o conhecido problema das pontes de Konignsberg.
+
+Segundo (RODRIGUES, 2009), a cidade de Konigsberg, conhecida hoje, por Kalinegrado,
+na Russia, ﬁca nas margens do rio Pregel. No meio desse rio existem duas ilhas e sete pontes
+unem as quatro massas de terra que o permeiam. O problema que se punha era o de saber se seria
+possível percorrer todas as sete pontes num caminho que não as repetisse.
+
+Euler resolveu esse problema em 1741, provando a inexistência de uma solução. Ele
+tomou as quatro massas de terra como vértices e as sete pontes como arestas, então o caminho
+desejado equivale a percorre todas as arestas do grafo passando uma única vez por cada aresta.
+Porém tal caminho só é possível se zero ou dois vértices estejam conectados a um número par de
+
+21
+
+Figura 4 – Diagrama das pontes de Konignsberg no documento original (Euler, 1741)
+
+arestas. Como o grafo em questão tem seus 4 vértices com grau ímpar, não existe o caminho
+desejado. Uma discussão mais detalhada pode ser encontrada em (RODRIGUES, 2009).
+
+De Sola Pool e Kochen escreveram em 1958 um artigo que só viria a ser publicado em
+
+1978, ver (POOL; KOCHEN, 1978) em que questionam:
+
+• Quantos indivíduos conhece cada um dos membros de uma rede? Ou em termos da teoria
+
+de grafos, qual o grau de cada pessoa na rede?
+
+• Qual é a distribuição desses conhecimentos ou grau? Qual o valor médio e quais os valores
+
+maiores e menores?
+
+• Que tipos de indivíduos tem o maior número de contatos? São estes os indivíduos mais
+
+inﬂuentes na rede social?
+
+• Como é que os contatos se organizam? Qual é efetivamente a estrutura da rede?
+
+Essas questões são precursoras do conceito de comunidade.
+
+Esse artigo, mesmo antes de ser publicado, serviu de inspiração para Stanley Milgram
+que detectou pequenas comunidades em uma rede. Em parceria com Jeffrey Travers, em 1969,
+Stanley Milgram, escreveu um artigo com os detalhes desse experimento, conhecido por teoria
+dos seis graus de separação, veja em (MILGRAN; TRAVERS, 1969).
+
+A partir daí vários modelos para a detecção de redes foram estudados. Os trabalhos
+mais recentes nas áreas de Machine Learning e Inteligência Artiﬁcial em alguns casos também
+realizam detecções de comunidades e por serem áreas em franco desenvolvimento e com grande
+potencial, a detecção de comunidades tornou-se um problema de destaque.
+
+O campo da Teoria de Grafos, hoje em dia é vasto e muito formalismo matemático é
+necessário para compreender essa teoria. Nessa dissertação, estudaremos uma forma simples de
+detecção de comunidades, que seja possível de aplicar em nível médio e que motive os estudantes
+
+22
+
+prosseguirem estudando temas relacionados. Para um conhecimento mais profundo sugerimos o
+livro (DIESTEL, 2005).
+
+2.2 REDES SOCIAIS
+
+Grafos estão inerentes em diversas áreas, mas são muitas vezes chamados de redes
+ou outros termos similares. Por exemplo as redes biológicas, redes de comunicação, redes de
+informação, redes de negócio, redes de mercados econômicos, redes sociais, entre outras.
+
+As redes que usaremos para a proposta didática de aplicação da detecção de comunidades
+
+serão as redes sociais.
+
+Em (LéVI-STRAUSS, 1987), Claude Lévi-Strauss diz que cada um de nós é uma espécie
+de encruzilhada onde acontecem coisas. O Artigo (MAIA L. F., 2014) deﬁne rede social como
+uma rede na qual o conjunto de objetos são as pessoas e as conexões entre elas são relações
+sociais, ou seja, é uma estrutura composta por pessoas ou organizações, conectadas por diversos
+tipos de relações.
+
+Atualmente, vários pesquisadores tem se dedicado a compreeender quais são as proprie-
+dades dos grafos com o objetivo de conhecer como uma rede se comporta, gerando conhecimento
+útil a partir de um grafo.
+
+Podemos perceber, nos últimos tempos, um forte crescimento nas redes sociais e nelas
+observamos vários modelos de interação. Dentre as redes sociais atuais aquelas que mais agradam
+os brasileiros, segundo o sistema de pesquisa Social Media Trends 2018, veja em (CONTENT,
+2019), são: Instagram, Facebook, Pinterest, Twitter, WhatsApp e YouTube. Essas redes sociais
+mostram a atual tendência de organização e comunicação entre as pessoas.
+
+2.3 CORTE MÍNIMO
+
+Para detectar comunidades de redes, ou seja grafos que têm muitos vértices, algoritmos
+eﬁcientes precisam ser criados. Aqui iremos abordar o método corte mínimo, em que o conjunto
+de vértices é dividido em subconjuntos disjuntos e não vazios de forma que o número de arestas
+que conectam vértices de diferentes grupos é o menor possível.
+
+Um dos primeiros conceitos acerca do particionamento de grafos foi levantado por
+Kernighan e Lin (1970), segundo eles, o problema do particionamento de um grafo G = (V,E)
+consiste em dividir o grafo em k subconjuntos de vértices. Para essa divisão são desconsideradas
+algumas arestas, aquelas que são adjacentes a vértices que não estão no mesmo grupo. O número
+de arestas desconsideradas para criar o particionamento é chamado de corte.
+
+O método consiste portanto na partição dos vértices de um grafo em dois subconjuntos
+disjuntos de tal modo que o corte seja minimizado. Caso a partição obtida não represente satisfa-
+
+toriamente as comunidades que procuramos, podemos particionar novamente as comunidades
+obtidas.
+
+O essencial para esse método é modelar o corte em termos das comunidades.
+
+23
+
+Iniciamos deﬁnindo o corte, denotado por R, para um grafo G que tem matriz de
+adjacência A e matriz laplaciana L. O corte está associado a uma partição em dois grupos G1 e
+G2 e é deﬁnido como:
+
+R =
+
+1
+2
+
+Aij.
+
+X
+
+i∈G1
+j∈G2
+
+(2.1)
+
+Na Equação 2.1 o fator 1
+
+2 compensa a contagem duplicada das arestas que compõe o
+corte. Essa deﬁnição só é aplicável se os grupos/comunidades são conhecidos e essa é uma
+limitação quando desejamos justamente encontrar esses grupos/comunidades.
+
+Para reescrever o corte, R, de forma mais conveniente, consideramos um vetor de escolha,
+
+s, de forma que a i-ésima entrada é deﬁnida por:
+
+si =
+
+
+
+
+
+
++1 se o vértice pertence a G1
+−1 se o vértice pertence a G2.
+
+Note que s satisfaz a condição de sT s = n e ainda,
+
+1
+2
+
+(1 − sisj) =
+
+
+
+
+
+
+1 se i e j são de grupos diferentes
+0 se i e j são do mesmo grupo.
+
+(2.2)
+
+(2.3)
+
+Para o vetor de escolha deﬁnido dessa forma, podemos reescrever a Equação 2.1 como:
+
+R =
+
+=
+
+=
+
+1
+2
+1
+2
+1
+4
+
+X
+
+i,j
+
+X
+
+i,j
+
+X
+
+i,j
+
+Aij
+
+1
+2
+
+(1 − sisj) Aij
+
+(1 − sisj) Aij.
+
+(2.4)
+
+O número de arestas conectadas ao vértice i, ou seja o grau do vértice i, ki, pode ser
+
+representado como
+
+e usando a Equação 2.5, temos
+
+ki = X
+
+Aij,
+
+j
+
+X
+
+i,j
+
+Aij = X
+
+ki = X
+
+i ki = X
+s2
+
+sisjkiδij,
+
+i
+
+i
+
+i,j
+
+na qual s2
+
+i = 1, já que si = ±1 e
+
+δi =
+
+
+
+
+
+
+1 se i = j
+0 caso contrário.
+
+(2.5)
+
+(2.6)
+
+(2.7)
+
+Portanto, o corte pode ser descrito como
+
+R =
+
+1
+4
+
+X
+
+i,j
+
+sisj(kiδij − Aij).
+
+24
+
+(2.8)
+
+Observando que, (kiδi,j − Ai,j) = Li,j, onde L é a matriz laplaciana do grafo, podemos
+
+escrever o corte R da seguinte forma
+
+R =
+
+1
+4
+
+sT L s.
+
+(2.9)
+
+Nosso objetivo é encontrar s que minimiza R e da Equação 2.9 temos que R está
+
+fortamente relacionado com a matriz laplaciana L.
+
+Como L tem boas propriedades, simétrica, real e não negativa deﬁnida, é vantajoso usar
+o espectro de L. Usando o Teorema 1.14 para a matriz L, temos que os autovalores de L são não
+negativos, os autovetores associados a autovalores distintos são ortogonais e existe uma base
+ortonormal de autovetores de L para o Rn.
+
+Seja β = {~v1, ~v2, · · · ~vn} uma base ortonormal de autovetores de L. O vetor de escolha ~s
+
+pode, portanto, ser escrito como uma combinação linear dos vetores de β, isto é
+
+~s =
+
+n
+X
+
+i=1
+
+ai~vi,
+
+em que ai = ~vi
+
+T ~s.
+
+Devido a ortonormalidade da base β temos ainda que
+
+n = ~sT ~s =
+
+!T
+
+ai~vi
+
+~s =
+
+  n
+X
+
+i=1
+
+n
+X
+
+i=1
+
+ai(~vi
+
+T ~s) =
+
+n
+X
+
+i=1
+
+a2
+i .
+
+(2.10)
+
+(2.11)
+
+Então partindo da Equação 2.9 e suprimindo o fator 1
+
+4, o qual não interfere na minimiza-
+
+ção, temos,
+
+R = sT L s
+
+=
+
+  n
+X
+
+i=1
+
+T
+
+ai~vi
+
+!
+
+
+
+L
+
+
+
+n
+X
+
+j=1
+
+
+
+aj ~vj
+
+
+
+= X
+
+aiajλjδi,j
+
+i,j
+n
+X
+
+i=1
+
+=
+
+a2
+i λi,
+
+(2.12)
+
+em que λi é o autovalor associado ao autovetor ~vi. Sem perda de generalidade, assumimos que
+os autovalores estão indexados em ordem crescente, isto é,
+
+λ1 (cid:54) λ2 (cid:54) λ3 (cid:54) · · · (cid:54) λn.
+
+(2.13)
+
+Observamos da Equação 2.12 que a tarefa de minimizar R é equivalente a escolher
+
+quantidades para ai, tal que
+
+a2
+i λi seja mínimo.
+
+n
+X
+
+25
+
+i=1
+
+Como todos os autovalores são não negativos, λ1 = 0 e a2
+
+i ≥ 0 temos que
+
+n
+X
+
+i=1
+
+a2
+i λi ≥ 0.
+
+Por outro lado,
+
+n
+X
+
+a2
+i λi = 0 se ai = 0 para i = 2, 3, 4, . . . , n, mesmo que a1 6= 0. Ou seja, o
+
+corte mínimo é 0 e ocorre quando o vetor de escolha é múltiplo de ~v1, isto é, ~s = a1~v1.
+
+i=1
+
+Quando interpretamos esta solução, observamos que ela é trivial, pois, conforme mos-
+tramos no Teorema 1.12, ~v1 = ~1 e se ~s = ~v1 então todos os vértices estariam na mesma
+comunidade.
+
+Para evitar essa solução trivial, uma opção é ﬁxar o tamanho dos dois grupos. Se um
+
+grupo tem tamanho n1 e o outro n2, então a1 será ﬁxado, pois
+(n1 − n2)2
+2
+
+a2
+1 = ( ~v1
+
+T ~s)2 =
+
+.
+
+(2.14)
+
+Com essa restrição em a1 e a restrição sT s = n para o vetor de escolha, a minização
+de R ocorre se ~s é proporcional a ~v2, o autovetor associado ao segundo menor autovalor. O
+autovetor ~v2 é chamado de vetor de Fiedler.
+
+A escolha desse vetor, coloca todo o peso da quantidade a ser minimizada R, no segundo
+menor autovalor λ2, conhecido como conectividade algébrica, deﬁnido por Miroslav Fiedler
+(1973), (ROCHA, 2015).
+
+A restrição imposta sobre ~s na Equação 2.2, signiﬁca que, na maioria dos casos, ~s não
+
+será paralelo a ~v2, o que diﬁculta a minimização.
+
+Logo, a forma de escolher uma solução para que ~s se torne o mais próximo possível de
+
+ser paralelo a ~v2 é a que maximiza a quantidade
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+T ~s| =
+
+| ~v2
+
+X
+
+i
+
+v2isi
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+,
+
+onde v2i é o i-ésimo elemento de ~v2.
+
+Observe, que através da desigualdade triangular, temos
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+n
+X
+
+i=1
+
+v2isi
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:54) X
+i
+
+|v2i|.
+
+Assim o vetor de escolha mais próximo possível de ser paralelo a ~v2 é ~s tal que
+
+pois nesse caso
+
+si =
+
+
+
+
++1
+
+
+
+−1
+
+se ~v2i ≥ 0
+
+se ~v2i < 0,
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+n
+X
+
+i=1
+
+v2isi
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+= X
+
+|v2i|.
+
+i
+
+(2.15)
+
+(2.16)
+
+(2.17)
+
+(2.18)
+
+26
+
+Contudo, observamos que essa escolha não satisfaz a condição de que o número de +1 e
+−1 elementos de s sejam iguais aos tamanhos desejados de n1 e n2 dos dois grupos. Mas essa
+não é uma condição que desejamos impor neste trabalho.
+
+O método de particionamento espectral é capaz de trazer resultados bastante satisfatórios
+
+para o caso em que λ2 que está distante dos demais autovalores λ3, λ4, · · · , λn.
+
+2.4 CORTE MÍNIMO EM GRAFOS PONDERADOS
+
+Em (NEWMAN, 2004), Newman aﬁrma que em uma rede o ﬂuxo máximo depende da
+capacidade de ﬂuxo de cada aresta. Assim, detectar uma comunidade tal que o ﬂuxo dentro da
+mesma seja máximo exige que consideremos além da conectividade a conectividade ponderada,
+em que as arestas recebem pesos não necessariamente iguais.
+
+Portanto, quando a relação entre os vértices de um grafo tem diferentes intensidades,
+essas diferenças devem ser consideradas na detecção de comunidades. Assim, faz-se necessário
+um método de corte mínimo ponderado.
+
+O corte para um grafo ponderado, com matriz de adjacência ponderada Ap e matriz
+
+laplaciana ponderada Lp, será denotado por Rp, e deﬁnido como:
+
+Rp =
+
+1
+2
+
+X
+
+i∈G1
+j∈G2
+
+Apij .
+
+(2.19)
+
+Como na sessão anterior, o fator 1
+
+2 compensa a contagem duplicada das arestas que
+
+compõe o corte.
+
+O vetor de escolha é deﬁnido como no corte mínimo, tornando a Equação 2.19
+
+Rp =
+
+1
+4
+
+X
+
+i,j
+
+(1 − sisj) Apij .
+
+(2.20)
+
+A soma do peso de arestas conectadas ao vértice i, ou seja o grau ponderado do vértice i,
+
+ki, pode ser representado como
+
+ki = X
+
+Apij ,
+
+j
+
+e usando a Equação 2.21 em um somatório duplo, temos
+
+X
+
+i,j
+
+Apij = X
+
+ki = X
+
+i ki = X
+s2
+
+sisjkiδij,
+
+i
+
+i
+
+i,j
+
+na qual s2
+
+i = 1, já que si = ±1 e
+
+δi =
+
+
+
+
+
+
+1 se i = j
+0 caso contrário.
+
+(2.21)
+
+(2.22)
+
+(2.23)
+
+Portanto,
+
+R =
+
+1
+4
+
+X
+
+i,j
+
+sisj(kiδij − Apij ).
+
+27
+
+(2.24)
+
+Observando que, (kiδi,j − Api,j ) = Lpi,j , podemos escrever o corte Rp da seguinte forma
+
+Rp =
+
+1
+4
+
+sT Lp s.
+
+(2.25)
+
+Veja que o corte mínimo ponderado é análogo ao corte mínimo, apenas substituindo a
+matriz laplaciana pela laplaciana ponderada. Como a matriz laplaciana ponderada também é real,
+simétrica, não negativa deﬁnida, podemos aplicar exatamente a ela a mesma análise espectral do
+corte mínimo, quanto a minimização do corte ponderado.
+
+Assim o vetor escolha, ~s, para o corte mínimo ponderado deve ser o mais próximo possí-
+vel de ser paralelo ao autovetor, ~v2, associado ao segundo menor autovalor de Lp. Considerando
+as restrição da Equação 2.2 temos que as entradas de ~s serão deﬁnidas como
+
+si =
+
+
+
+
++1
+
+
+
+−1
+
+se ~v2i ≥ 0
+
+se ~v2i < 0.
+
+(2.26)
+
+3 EXPERIMENTO COMPUTACIONAL
+
+28
+
+Neste capítulo vamos aplicar o método apresentado no Capítulo 2. Embora tenhamos
+adotado uma caracterização matemática para o conceito de comunidade, ainda é difícil aﬁrmar
+que em um experimento as comunidades foram detectadas corretamente. Diante disso, vamos
+aplicar o método de corte mínimo a um problema para o qual outro método de detecção de
+comunidades já foi aplicado e as comunidades detectadas foram aceitas como corretas, tanto por
+cientistas que estudam esse assunto quanto por conhecedores do grafo em questão.
+
+3.1 COMUNIDADES DO LIVRO STORM OF SWORDS
+
+Em (BEVERIDGE; SHAN, 2016) foi apresentada uma análise baseada em grafos do
+livro A Storm of Swords, o terceiro livro da coleção A Song of Ice and Fire e na qual está baseada
+a série televisiva Game of Thrones. Dentre outros aspectos, como centralidade e proximidade,
+são detectadas comunidades de personagens do livro. O grafo extraído do livro A Storm of
+Swords, tem como vértices os personagens principais, 107 ao todo, e as 352 arestas entre os
+vértices/personagens foram criadas se existia alguma interação entre os vértices. Ainda, as arestas
+são ponderadas conforme o número de interações dos vértices. O arquivo contendo as arestas
+acima está disponível em:
+
+https://github.com/melaniewalsh/sample-social-network-datasets/blob/master
+
+/sample-datasets/game-of-thrones/got-edges.csv
+
+O resultado obtido por (BEVERIDGE; SHAN, 2016) e reproduzido neste trabalho
+
+conforme o código no anexo B, apresentou 7 comunidades, conforme a Figura 5.
+
+Mais precisamente, as comunidades detectadas são:
+
+Comunidade 1={ Bran, Hodor, Jojen, Luwin, Meera, Rickon, Nan, Theon},
+
+Comunidade 2 ={Belwas, Daario, Daenerys, Irri, Jorah, Missandei, Rhaegar, Viserys,
+
+Barristan, Illyrio, Drogo, Aegon, Kraznys, Rakharo, Worm },
+
+Comunidade 3 ={Aemon, Alliser, Craster, Eddison, Gilly, Janos, Jon, Mance, Rattleshirt,
+
+Samwell, Val, Ygritte, Grenn, Karl, Bowen, Dalla, Orell, Qhorin, Styr },
+
+Comunidade 4 ={ Arya, Beric, Eddard, Gendry, Sandor, Anguy, Thoros },
+
+Comunidade 5 ={ Davos, Melisandre, Shireen, Stannis, Cressen, Salladhor },
+
+Comunidade 6 ={Aerys, Amory, Balon, Brienne, Bronn, Cersei, Gregor, Jaime, Joffrey,
+Jon Arryn, Kevan, Loras, Lysa, Meryn, Myrcella, Oberyn, Podrick, Renly, Robert, Robert
+Arryn, Sansa, Shae, Tommen, Tyrion, Tywin, Varys, Walton, Petyr, Elia, Ilyn, Pycelle, Qyburn,
+Margaery, Lancel, Olenna, Marillion, Ellaria, Mace, Chataya, Doran },
+
+29
+
+Figura 5 – 7 comunidades apresentadas em (BEVERIDGE; SHAN, 2016)
+
+Comunidade 7 ={ Brynden, Catelyn, Edmure, Hoster, Lothar, Rickard, Robb, Roose,
+
+Walder, Jeyne, Roslin, Ramsay }.
+
+As sete comunidades detectadas em (BEVERIDGE; SHAN, 2016) reﬂetem bem as
+
+relações descritas no livro, conforme discutido em (BEVERIDGE; SHAN, 2016).
+
+O método usado em (BEVERIDGE; SHAN, 2016) é um pouco diferente do método do
+corte mínimo, essencialmente a diferença está na caracterização das comunidades que é baseada
+na modularidade, também apresentada em (NEWMAN, 2006). Além disso, em (BEVERIDGE;
+SHAN, 2016) foi usado o método de Aproximação Rápida de Louvain, originalmente proposto
+em (BLONDEL V. D.; LEFEBVRE, 2008), para maximizar a modularidade. Esse método tem
+como uma de suas caracteríticas a detecção automática do número de comunidades, característica
+esta que não tratamos em nossa apresentação do método do corte mínimo.
+
+Aplicamos o método do corte mínimo no mesmo grafo, com o objetivo de comparar
+nossos resultados com os apresentados em (BEVERIDGE; SHAN, 2016). Como o método
+do corte mínimo não detecta automaticamente o número de comunidades, realizamos divisões
+sucessivas, pois a cada divisão pelo método do corte mínimo o grafo ou subgrafo é decomposto
+
+em duas comunidades. Foram aplicadas 7 vezes o método do corte mínimo. Como resultado
+obtivemos 8 comunidades, apresentadas na Figura 6.
+
+30
+
+Figura 6 – Comunidades detectadas pelo corte mínimo
+
+Mais precisamente, nossas comunidades são:
+
+Comunidade A= { Bran, Hodor, Jojen, Luwin, Meera, Rickon, Nan},
+
+Comunidade B= { Belwas, Daario, Daenerys, Irri, Jorah, Missandei, Rhaegar, Viserys,
+
+Barristan, Illyrio, Elia, Drogo, Aegon, Kraznys, Rakharo, Worm },
+
+Comunidade C= { Aemon, Alliser, Craster, Eddison, Gilly, Janos, Jon, Mance, Rattleshirt,
+
+Samwell, Val, Ygritte, Grenn, Karl, Bowen, Dalla, Orell, Qhorin, Styr },
+
+Comunidade D= { Arya, Beric, Eddard, Gendry, Sandor, Anguy, Thoros},
+
+Comunidade E= { Davos, Melisandre, Shireen, Stannis, Cressen, Salladhor },
+
+Comunidade F= { Aerys, Amory, Balon, Brienne, Bronn, Cersei, Gregor, Jaime, Joffrey,
+Jon Arryn, Kevan, Loras, Lysa, Meryn, Myrcella, Oberyn, Podrick, Renly, Robert, Robert Arryn,
+Sansa, Shae, Tommen, Tyrion, Tywin, Varys, Walton, Petyr, Ilyn, Pycelle, Qyburn, Margaery,
+Lancel, Olenna, Marillion, Ellaria, Mace, Chataya, Doran },
+
+31
+
+Comunidade G= { Brynden, Edmure, Lothar, Rickard, Robb, Walder, Theon, Jeyne,
+
+Roslin, Ramsay},
+
+Comunidade H= { Catelyn, Hoster, Roose}.
+
+Os resultados são bem parecidos, em particular as comunidades 3, 4 e 5 são exatamente
+iguais às comunidades C, D e E. Existem nas demais comunidades 3 diferenças principais, que
+são:
+
+• Nos resultados de (BEVERIDGE; SHAN, 2016) o personagem Theon está na comunidade
+1, cujo principal personagem é Bran, e nos resultados do corte mínimo Theon está na
+comunidade G, cujo principal personagen é Robb.
+
+• Nos resultados de (BEVERIDGE; SHAN, 2016) a personagem Elia está na comunidade
+6, cujo principal personagem é Tyrion, e nos resultados de corte mínimo Elia está na
+comunidade B, que é a comunidade cujo principal personagem é a Daenerys.
+
+• A comunidade 7 dos resultados de (BEVERIDGE; SHAN, 2016) é, a menos do personagem
+Theon, a união das comunidades G e H dos resultados obtidos com o método do corte
+mínimo.
+
+Essas diferenças, segundo nosso conhecimento sobre a estória, são plausíveis.
+
+4 PROPOSTA DE APLICAÇÃO EM NÍVEL MÉDIO
+
+32
+
+Neste capítulo iremos subsidiar o professor de matemática, de Ensino Médio, ao trabalho
+com detecção de comunidades. Numa proposta que vai desde o estudo bibliográﬁco, por parte
+do professor, até a detecção de comunidades, orientada pelo professor e observada pelos alunos.
+
+O objetivo dessa proposta é trazer uma ideia de trabalho com matrizes de forma diferenci-
+ada, atual e que desperte interesse, se não curiosidade, por parte dos estudantes. Logo, sugerimos
+que o estudo de matrizes venha acompanhado de conceitos novos, raramente abordados no
+Ensino Médio, mas que estão, no ramo da Álgebra Linear, intrinsecamente ligados ao conceitos
+matriciais e que são objetos de estudo desse conteúdo.
+
+Outro forte argumento é trazer para dentro da sala de aula, um conteúdo recheado de
+aplicação reais, ou seja, conteúdos que promovam a resolução de situações problema do cotidiano
+e que tenham signiﬁcado para o aluno. O que está de acordo com a nova BNCC (Base Nacional
+Comum Curricular), de 2018, (BNCC, 2018) que orienta ser necessário utilizar estratégias,
+conceitos e procedimentos matemáticos, em seus campos – Aritmética, Álgebra, Grandezas e
+Medidas, Geometria, Probabilidade e Estatística –, para interpretar, construir modelos e resolver
+problemas em diversos contextos, analisando a plausibilidade dos resultados e a adequação das
+soluções propostas, de modo a construir argumentação consistente.
+
+Claramente conseguimos atingir essa competência, enunciada na BNCC, trazendo para o
+estudo de matrizes, a detecção de comunidades. O aluno não só será capaz de compreender uma
+aplicação real do estudo das matrizes, como estará apto a perceber que a matemática é ferramenta
+fundamental para a organização de redes, seja ela uma rede social, uma rede de negócios ou até
+mesmo uma situação cotidiana, como por exemplo, o mapa rodoviário de sua cidade, que está
+em rede.
+
+Com o objetivo de dar suporte ao professor, desenvolvemos o roteiro que segue.
+
+4.1 EMBASAMENTO TEÓRICO PARA O PROFESSOR
+
+O primeiro passo para que o professor de matemática, se sinta seguro e preparado para
+inovar sua aula, é se aprofundar no assunto. Buscando referências bibliográﬁcas que o auxiliem
+na compreensão geral do contexto, de detecção de comunidades, tanto no aspecto matemático
+como no histórico.
+
+Portanto antes de iniciar o assunto em sala de aula, com seus alunos do Ensino Médio,
+
+sugerimos que o professor leia os capítulos anteriores dessa dissertação.
+
+No Capítulo 1, podem ser feitos os estudos preliminares, para que os conceitos relacio-
+nados a Álgebra Linear, pertinentes a aplicação, sejam relembrados. Além disso, partimos do
+
+33
+
+pressuposto que nem todas as universidades, no curso de licenciatura em matemática, têm em
+seu currículo o estudo de Grafos.
+
+Então, além dos tópicos de conceitos e teoremas descritos nessa dissertação o professor
+de matemática pode compreender o tema com maior profundidade consultando (LAWSON,
+1997), um livro conceitual mais tradicional, que trás conceitos importantes. Com uma abordagem
+mais atual e aplicável, sugerimos (CASTRO A. M.; VIAMONTE, 2013), (MONTEIRO, 2010)
+e (ORTIZ; MOREIRA, 2016), o primeiro vem com um capítulo com uma breve introdução ao
+software MATLAB.
+
+A parte histórica da detecção de comunidades irá auxiliar em sala de aula a sensibilizar
+os alunos para o tema. Fazer com que eles percebam que tópicos, como esse de redes, não
+surgiram apenas nos dias atuais. Isso pode favorecer no despertar da curiosidade e motivação
+dos estudantes.
+
+Para ajudar o professor, nesse aspecto, envolvemos essa dissertação com fatos históricos
+que podem ser percebidos, principalmente no Capítulo 2. Para enriquecer a construção histórica
+do tema sugerimos a leitura de (NEWMAN, 2006), (RODRIGUES, 2009) e principalmente
+(EVES, 2007), esse é um livro de leitura agradável e que certamente servirá de base histórica
+não apenas para o tocante ao tema iniciado por Euler (1741), como também para outros temas
+pertinentes ao trabalho do professor em sala de aula.
+
+Para entender como se construiu o conceito de rede, o Artigo (VERMELHO S. C.;
+BEERTONCELLO, 2015), aborda a construção desse conceito ao longo do tempo e é capaz de
+trazer exemplos de redes usuais.
+
+Em uma das aulas propomos o uso do software RStudio, tutorial em (SANTANA, 2017),
+
+para conhecer seu funcionamento e aplicações, sugerimos a leitura do material disponível em
+
+http://material.curso-r.com/rbase/.
+
+De domínio dos conceitos, agora o professor é capaz de desenvolver uma aula introdutória
+
+à detecção de comunidades.
+
+4.2 PROPOSTA DE AULA SOBRE CONCEITOS FUNDAMENTAIS
+
+É importante que o professor direcione o aluno à aprendizagem. Para que isso aconteça é
+fundamental introduzir deﬁnições e exemplos, que permitam que os estudantes compreendam os
+conceitos e sejam capazes de aplicá-los.
+
+Para que o aluno chegue a compreensão dos objetivos de se detectar comunidades,
+deve partir dos conceitos chaves, da Álgebra Linear e da Teoria de Grafos. Claro que o nível
+de aprofundamento não deve ser universitário e sim, básico. Tão pouco é necessário fazer as
+demonstrações dos teoremas para os alunos.
+
+34
+
+Segue, uma proposta de roteiro para aulas introdutórias, sobre o detecção de comunidades
+em grafos. Salientamos que é importante que o aluno já tenha visto os conteúdos de matrizes e
+determinantes. A parte aqui sugerida é uma complementação desses conteúdos.
+
+4.2.1 AULA SOBRE TEORIA DE GRAFOS
+
+Conteúdo: Teoria de Grafos.
+
+Objetivos: Conhecer a evolução histórica da Teoria de Grafos e compreender a aplicação
+
+dessa teoria em detecção de comunidades.
+
+Ações: Inicie a aula entregando para cada aluno o xerox da Figura 7. Com base nessa
+
+ﬁgura, inicie contando o problema das sete pontes de Konignsberg, veja Capítulo 2.
+
+Figura 7 – Charge de Simon Kneebone sobre as pontes de Konignsberg (à esquerda), representa-
+
+ção gráﬁca do problema (centro) e grafo modelo gerado (à direita)
+
+Em seguida, de preferência em projeção, deﬁna grafo, aresta e vértice, utilizando, para
+
+isso, o modelo de grafo gerado pelo esquema das pontes de Konignsberg.
+
+Siga a aula comentando o experimento de Milgram, conhecido como "os seis passos de
+separação de Milgram", em seguida passe o vídeo "Seis graus de separação", do canal Nerdologia
+no Youtube, , disponível em <https://www.youtube.com/watch?v=YMI3CrChwSk>. Use esse
+vídeo para reforçar a importância e utilidade do estudo de grafos.
+
+Observação: sugerimos, para o professor, o documentário "Seis Graus de Separação
+
+(Documentário-2008)", também no Youtube, em
+
+https://www.youtube.com/watch?v=BQ7UDWn_uws,
+
+para que possa fazer observações pertinentes ao assunto com os alunos.
+
+4.2.2 AULA SOBRE AUTOVALOR E AUTOVETOR
+
+Conteúdo: Autovalor e autovetor.
+
+Objetivos: Compreender os conceitos de autovetor e autovalor. Perceber que esses
+
+conceitos estão ligados aos conceitos matriciais.
+
+35
+
+Ações: Iniciar a aula, inserindo os conceitos de autovalor e autovetor, por meio de um
+
+exemplo, como o do no Capítulo 1, dessa dissertação.
+
+Depois dessa introdução expositiva, os alunos reforçam os conceitos estudados, resol-
+
+vendo uma lista de exercícios sobre o assunto.
+
+Lista de exercícios sobre autovalor e autovetor
+
+1) Veriﬁcar, utilizando a deﬁnição, se os vetores dados são autovetores
+das correspondentes matrizes:
+
+a) v = (−2, 1)T
+
+
+
+
+
+2 2
+1 3
+
+
+ b) v = (1, 1, 2)T
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 1 1
+0 2 1
+0 2 3
+
+2) Determinar os autovalores e os autovetores das seguintes matrizes:
+
+
+
+
+
+a)
+
+3
+1
+−1 5
+
+
+ b)
+
+
+
+
+
+
+ c)
+
+2 1
+3 4
+
+
+
+
+
+
+
+
+1 −1 0
+2
+3
+2
+2
+1
+1
+
+
+
+
+
+
+
+
+
+
+d)
+
+
+
+
+
+
+3
+0 −1
+8
+
+3 −2
+0
+6 −5
+
+
+
+
+
+
+
+
+4.2.3 AULAS SOBRE ÁLGEBRA LINEAR APLICADA À TEORIA DE
+
+GRAFOS
+
+Conteúdo: Álgebra linear associada à Teoria de Grafos (matriz adjacência, matriz diago-
+
+nal de graus, matriz laplaciana e suas propriedades).
+
+Objetivos: Apresentar para os alunos novos conceitos relacionados a Álgebra, no to-
+cante matrizes, e que são aplicados na Teoria dos Grafos e consequentemente na detecção de
+comunidades.
+
+Ações: Iniciar a aula expondo um exemplo de grafo usando os próprios alunos, como nos
+Exemplos 1 e 3, dessa dissertação. E a partir desses modelos introduza concomitantemente para
+grafos não direcionados e ponderados, os conceitos algébricos que estão abordados no Capítulo
+1.
+
+A medida que vai avançando na aplicação dos conceitos através de exemplos é importante
+que se faça o registro formal dos conceitos estudados. Pois, exercícios soltos, sem conceitos
+podem levar o aluno a resolver outros exercícios aplicando uma estratégia do tipo "siga o
+modelo", e dessa forma acaba não retendo os conteúdos matemáticos como deveria.
+
+Assim que concluir essa parte, solicite aos alunos que se reunam em equipes de 5
+
+integrantes. Entregue para cada equipe o seguinte roteiro de atividade:
+
+36
+
+Atividade prática
+
+1o passo Abram, individualmente, o WhatsApp e registrem, no caderno
+
+seus 10 primeiros contatos.
+
+2o passo
+3o passo Registre o nome de 10 colegas que estiveram com você durante o
+
+Escolha outras duas redes sociais e faça o mesmo.
+
+4o passo
+
+5o passo
+
+6o passo
+
+7o passo
+
+intervalo nas últimas semanas.
+
+Escreva o nome de 10 colegas que, em algum momento, realizaram
+uma tarefa, um exercício, ou trabalho, com você dentro de sala de aula.
+
+Escreva o nome de 10 colegas que estudaram com você em séries
+anteriores.
+
+Escreva o nome de 10 colegas que estiveram com você em alguma
+atividade fora da escola.
+
+Em equipe, mas cada um em seu caderno, monte um grafo, com o
+conjunto de vértices sendo V = membro da equipe, e arestas
+E =nome listado em algum dos passos de 1 a 6.
+Só deve contar como uma aresta válida se a ligaçao aparecer na lista
+dos dois vértces adjacentes.
+
+8o passo Repita o seu modelo de grafo e nele coloque a quantidade de vezes
+que o nome desses vértices aparecem ligados, consultando todas as
+listas da equipe. Formando um grafo ponderado.
+
+9o passo Compare os grafos de toda a equipe.
+10o passo Nos dois grafos obtidos, faça o estudo algébrico.
+
+Observação: Essa descrição é para duas aulas, sugerimos que ainda na primeira aula, o
+professor tente iniciar a atividade em equipe, pelo menos até o 3o passo. Dessa forma poderá
+observar e intervir nas dúvidas que surgirem. E os alunos poderão ter algum tempo para pensarem
+sobre essas questões, assim aqueles que não conseguiram completar suas primeiras listas, podem
+fazê-lo. No ﬁnal dessa atividade, o professor deve comentar com os alunos os resultados.
+
+4.3 PROPOSTA DE ROTEIRO DE AULA SOBRE COMUNIDADES E RE-
+
+DES SOCIAIS
+
+4.3.1 AULA SOBRE CONCEITO DE REDE E COMUNIDADE
+
+Conteúdo: Conceitos e exemplos de redes sociais e detecção de comunidades
+
+Objetivos: Explorar exemplos de redes e como foram detectados as comunidades em
+
+redes.
+
+Ações: Inicie a aula instigando a curiosidade dos alunos com as imagens da Figura
+8. Questione os alunos sobre o tipo de rede que eles percebem nas imagens. Se conhecem
+
+outras redes como essas. Se são capazes de formular uma rede como as do exemplo. Nessa hora
+deseja-se que eles remetam as redes sociais propriamente ditas. E a partir disso, o professor,
+lança para eles a imagem da Figura 9 e com ela formaliza os conceitos de rede.
+
+37
+
+Figura 8 – Topologia de redes de comunicação (à esquerda) e bases nitrogenadas (à direita)
+
+Figura 9 – Grafo de uma rede social
+
+Em seguida, utize o projetor ou cartelas com imagens impressas dos ícones de redes
+sociais, como nos exemlos da Figura 10, desaﬁando os alunos para ver qual reconhece mais
+redes pelas imagens.
+
+Logo após essa atividade, o professor, deve fazer conexão, perguntando, como as co-
+munidades se formam dentro de uma dessas redes. Como saber quais pessoas formam uma
+comunidade? Como estão interligadas essas pessoas? Que vantagens têm na detecção dessas
+comunidades? Com essas perguntas, e outras a critério do professor, deve ouvir as respostas dos
+alunos e ao mesmo tempo formalizar os conceitos de detecção de comunidades.
+
+Na outra metade, dessa aula, o professor deve explorar o experimento de detecção de
+
+comunidades, exempliﬁcado nessa dissertação, no Capítulo 3.
+
+38
+
+Figura 10 – Ícones de redes sociais
+
+Observações: As fontes das imagens da Figura 8 são respectivamente, <https://pt.
+wikipedia.org/wiki/Topologia_de_rede> e <https://mundoeducacao.bol.uol.com.br/biologia/
+a-formacao-acidos-nucleicos.htm>. Já a fonte para a imagem da Figura 9, é <https://www.
+gta.ufrj.br/ensino/eel879/trabalhos_vf_2009_2/victor/Introduo.html>.
+
+4.4 PROPOSTA DE ATIVIDADE PRÁTICA PARA A DETECÇÃO DE CO-
+
+MUNIDADES
+
+4.4.1 AULA QUESTIONÁRIO PARA DETECÇÃO DE COMUNIDADES
+
+Conteúdo: Análise de dados
+
+Objetivos: realizar o levantamento de dados para a detecção de comunidades.
+
+Ações: Antes dessa aula o professor deve montar um questionário num formulário online,
+
+com as perguntas:
+
+1. Das disciplinas do Ensino Médio quais são as que você mais se identiﬁca?
+
+2. Quais atividades você costuma fazer durante suas horas vagas ou nos ﬁns de semana?
+
+39
+
+3. Dos alunos de sua turma, quais os três que mais curtiram suas publicações nas redes
+
+sociais?
+
+4. Dos alunos de sua turma, quais interagem mais com você dentro da descola?
+
+5. Dos alunos de sua turma, quais interagem mais com você fora da escola?
+
+Como alternativa para as questões sugerimos,
+
+1. Colocar três caixas de seleção para as disciplinas curriculares, para ﬁcar bem claro a
+
+questão de prioridade.
+
+2. Permitir que só seja possível selecionar três opções, dentre elas, cinema, shopping, parques,
+esportes, estudar, video game, vídeos da internet, blogs, artesanato, ﬁlmes, séries, outros.
+
+3. Colocar três caixas de seleção para o aluno selecionar por ordem os nomes dos alunos de
+
+sua turma. Inserir a opção nenhum.
+
+4. Idem ao item 3.
+
+5. Idem ao item 3.
+
+O professor deve fornecer aos alunos o link para a realização do questionário. Precisa,
+baixar nos computadores da escola o software para geração de grafos, o qual, aqui, sugerimos o
+RStudio. Deve também deixar, em cada computador, salvo uma planilha com o nome dos alunos,
+escrito, cada um numa célula, da primeira linha e da primeira coluna, como demonstrado na
+Figura 11
+
+Figura 11 – Modelo para planilha de adjacência.
+
+Na aula, em posse dos resultados fornecidos pelo formulário online, o professor deve
+encaminhar os alunos ao laboratório de informática e orientá-los para preencher a planilha
+de adjacência. Cada dupla receberá os dados de 6 alunos, referentes as questões 3, 4 e 5 do
+questionário. Outra dulpla, receberá os mesmos nomes, a ﬁm de que os erros de lançamento dos
+dados, nas planilhas, sejam minimizados.
+
+Para preencher a planilha o aluno deve seguir seguir os critérios:
+
+40
+
+(i) Se o colega foi mencionado em primeiro peso 3;
+
+(ii) Se o colega foi mencionado em segundo peso 2;
+
+(iii) Se o colega foi mencionado em terceiro peso 1 e;
+
+(iv) Se o colega não foi mencionado peso 0.
+
+Outros dois grupos de duplas devem receber os dados referentes as questões 1 e 2 do
+
+questionário. Para o primeiro grupo considerar os critérios:
+
+(i) Se o colega marcou as mesmas disciplinas, na mesma ordem, o peso é 3;
+
+(ii) Se o colega marcou as duas primeiras opções igauis o peso é 2;
+
+(iii) Se o colega marcou a primeira opção igual o peso é 1 e;
+
+(iv) Se o colega, marcou mesmas disciplinas em ordem diferente ou não marcou disciplinas
+
+comuns o peso é 0.
+
+O segundo grupo de duplas analisará a questão 2 do questionário, nos aspectos:
+
+(i) Se o colega selecionou três atividades em comum, peso 3;
+
+(ii) Se o colega selecionou duas atividades em comum, peso 2;
+
+(iii) Se o colega mencionou apenas uma atividade em comum, peso 1 e;
+
+(iv) Se o colega não mencionou nenhuma atividade comum, peso 0.
+
+A ﬁm de facilitar, o professor deve criar um email para essa atividade. Solicitar que os
+alunos enviem a planilha, para que ele possa compilar e agrupar os dados analisados pelos alunos
+em um único arquivo. Esse arquivo deve ser salvo com extensão CSV para ser manipulado no
+ambiente R.
+
+4.4.2 AULA SOBRE CORTE MÍNIMO E DETECÇÃO DE COMUNIDADES
+
+NO R
+
+Conteúdo: Corte mínimo e uso do RStudio
+
+Objetivos: Utilizar o RStudio para detectar comunidades. Confrontar os resultados com o
+real. Conhecer o método do corte mínimo e a relação desse método com o autovalor e autovetor.
+
+Ações: Antes de iniciar essa aula é importante que o professor já tenha alimentado o
+software R, em todas as máquinas do laboratório de informática, com os dados necessários para
+a detecção das comunidades na turma.
+
+41
+
+No início da aula levar a turma para o laboratório de informática e situar os alunos
+quanto ao ambiente R e como a implementação da detecção de comunidades acontece nele. É
+importante, que nesse momento, o professsor explique aos alunos que o método de corte mínimo
+é apenas um algoritmo de detecção de comunidades e que existem outros, até mais eﬁcientes que
+este, mas não tão simples.
+
+Sugerimos que o professor explique que o corte mínimo se utiliza de um vetor de escolha
+para detectar comunidades e que ele está associado ao segundo menor autovalor e exatamemte
+onde está esta informação nos códigos inseridos em R, bem como explique como isso acontece.
+
+Para que o professor, consiga realizar a dinâmica de detectar comunidades usando o R,
+deve entender como foi implementado o experimento descrito no Capítulo 3. Compreender como
+ele se construiu, estudando os códigos de implementação que constam no Anexo ??. Cabe ao
+professor decidir se irá, ou não, realizar com alunos detecções sucessivas, porém, sugerimos
+que, o próprio professor, reﬁne as comunidades para expor aos alunos e fazer, assim as devidas
+análises.
+
+4.5 ESTUDO DE CASO
+
+Nessa sessão vamos relatar a experiência de desenvolver essa proposta em sala de aula
+
+com os alunos do segundo ano do Ensino Médio.
+
+A escola estadual onde a proposta foi aplicada está situada numa região de intenso
+comércio, tem grande procura pela comunidade e por alunos oriundos de escolas particulares.
+Dos trinta e seis alunos da turma sondada, apenas dois são novos, os demais estudam juntos
+desde o ano anterior. Todos os estudantes dessa turma possuem smartphones e em sua maioria
+com acesso a Internet, fato que tornou fácil o desenvolvimento das atividades aqui propostas.
+
+A apresentação de grafos despertou curiosidade e interesse por parte dos alunos. Até
+mesmo os mais introspectivos contribuiram com ideias sobre o tema. Uma parte dos estudantes
+conseguiram vislumbrar aplicações futuras usando grafos, um deles sinalizou interesse em
+estudar assuntos relacionados a grafos pós conclusão do Ensino Médio.
+
+A utilização das redes sociais como meio investigativo para construir grafos e o uso da
+tecnologia para implementá-los envolveu os estudantes, que se identiﬁcaram com as atividades
+propostas e foram capazes de perceber que a matemática vai além dos conteúdos curriculares
+expostos nos bancos escolares.
+
+As atividades relacionadas a conceitos, exemplos e exercícios sobre teoria de grafos e
+álgebra linear foi de fácil assimilação, pois os alunos já tinham intimidade com o estudo de
+matrizes. Porém o tópico relacinado a detecção de comunidades usando o corte mínimo ﬁcou
+confuso para compreensão dos alunos e assim, precisou de alguns ajustes.
+
+Ao invés de abordar o método corte mínimo em seus detalhes, foi mais eﬁciente conceituá-
+
+42
+
+lo a partir da matriz laplaciana e da escolha do autovetor associado ao segundo menor autovalor,
+com um exemplo de como e porque isso acontece. Mostrar os comandos no software fez o aluno
+compreender a aplicação dos conceitos de autovetor e autovalor para a implementação do corte
+mínimo para detectar comunidades.
+
+Os alunos não demonstraram reter as deﬁnições acerca de corte mínimo em si, porém
+sabem que esse método se utiliza dos conceitos relacionados a matrizes, autovalores e autovetores.
+
+A quantidade de aulas destinadas a disciplina de matemática no Ensino Médio não
+contribui para a inclusão de atividades desse tipo em todos os conteúdos, mas escolas da rede
+estadual trabalham com atividades de feira do conhecimento ou projetos de iniciação cientíﬁca
+que são momentos oportunos para desenvolver temas como o abordado nessa dissertação.
+
+5 CONCLUSÃO
+
+43
+
+Os conceitos atrelados a àlgebra linear e a teoria de grafos apresentadas nesse trabalho
+foram de suma importância para a ideia de aplicação do tema de detecçao de comunidades em
+grafos. Serviu como base para o cálculo do corte mínimo e além disso, foi capaz de transpor
+a sala de aula, com conteúdos não usuais e que podem favorecer o professor do Ensino Médio
+a integrar à suas aulas aplicações reais e úteis, despertando no estudante mais entusiasmo em
+estudar matemática.
+
+Nesta dissertação abordamos o método do corte mínimo para a detecção de comunidades
+em grafos, ponderados ou não. Além disso implementamos o método do corte mínimo e o usamos
+para detectar comunidades em um problema padrão. Comparativamente com outro resultado da
+literatura, nossos resultados foram bastante satisfatórios. Isso mostra a viabilidade do método e
+motiva a aplicação desse tema em aulas de nível médio.
+
+A implementação se deu sobre o terceiro livro da coleção A Song of Ice and Fire, pelo
+fato de existir um trabalho cientíﬁco realizado por (BEVERIDGE; SHAN, 2016) e publicado.
+A implementação do método corte mínimo para os outros dois livros da coleção, ﬁcará como
+desejo de trabalhos futuros.
+
+Na parte ﬁnal do trabalho, apresentamos uma proposta de uma sequência de aulas, sobre
+detecção de comunidades em grafos para o nível médio. Essa proposta está suportada nas demais
+partes da dissertação.
+
+Diante do exposto nesse trabalho, podemos concluir que as disciplinas do PROFMAT na
+UTFPR serviram de incentivo e motivação ao tema. Além disso foram capazes de enriquecer o
+meu conhecimento matemático, não apenas para a parte física dessa disssertação, mas também
+em relação a minha prática quanto professora de matemática.
+
+REFERÊNCIAS
+
+44
+
+ASSIS, J. S. M. Grafos Eurelianos no Ensino Médio. Rio de Janeiro: IMPA, 2016. 10
+
+BEVERIDGE, A.; SHAN, J. Network of thrones. Math Horizons, v. 23, n. 4, p. 18–22, 2016.
+8, 11, 28, 29, 31, 43
+
+BLONDEL V. D., G. J.-L. L. R.; LEFEBVRE, E. Fast unfolding of communities in large
+networks. Fast unfolding of communities in large networks, n. 10, 2008. 29
+
+BNCC. Base Nacional Comum Curricular: Ensino Médio. Brasília: MEC/Secretaria de
+Educação Básica, 2018. 32
+
+CASTRO A. M., S. A. V.; VIAMONTE, A. J. Álgebra Matricial, conceitos, exercícios e
+aplicações. Porto: Publindústria, 2013. 33
+
+CONTENT, M. D. R. Social Media Trends 2018. [S.l.]:
+https://inteligencia.rockcontent.com/social-media-trends-2018/, 2019. 22
+
+COSTA, R. V. Grafos: Algumas aplicações a nível médio. Dissertação (PROFMAT) —
+Universidade de Brasília, 2017. 10
+
+DIESTEL, R. Graph Theory. Hanburg: Springer, 2005. 12, 18, 22
+
+EULER, L. Solutio problematis ad geometriam situs pertinentis. Math Horizons, v. 8, n. 53, p.
+128–140, 1741. 10
+
+EVES, H. Introdução à História da Matemática. São Paulo: Unicamp, 2007. 33
+
+FEOLILOFF P., K. Y.; WAKABAYASHI, Y. Introdução à teoria de gafos. São Paulo:
+IME-USP, 2012. 12
+
+LAWSON, T. Álgebra Linear. São Paulo: Blucher, 1997. 33
+
+LéVI-STRAUSS, C. Mito e signiﬁcado. Lisboa: Edições 70, 1987. 22
+
+MAIA L. F., N. H. B. O. C. F. Detecção de comunidades numa rede de relacionamento de alunos.
+Revista Eletrônica Sistemas e Gestão, n. 9, p. 480–487, 2014. 22
+
+MALTA, G. H. S. Grafos no Ensino Médio: uma inserção possível. Dissertação (PROFMAT)
+— Unversidade do Rio Grande do Sul, 2008. 10
+
+MILGRAN, S.; TRAVERS, J. An experimental study of the small world problem. Sociometry,
+v. 32, n. 4, p. 425–443, 1969. 21
+
+MONTEIRO, L. H. A. Sistemas Dinâmicos Complexos. São Paulo: Livraria da Física, 2010.
+33
+
+NETTO, P. O. B.; JURKIEWICZ, S. Grafos: Introdução e prática. São Paulo: Blucher, 2009.
+12, 13
+
+NEWMAN, M. Analysis of weighted networks. arXiv:cond-mat/0407503v1, v. 01, 2004. 26
+
+45
+
+NEWMAN, M. Finding community structure in networks using eigenvectors of matrices.
+arXiv:physics/0605087v3, v. 03, 2006. 10, 20, 29, 33
+
+NOGUEIRA, D. K. Introdução à Teoria de Grafos: proposta para o ensino médio. Dissertação
+(PROFMAT) — Universidade de Brasília, 2015. 10
+
+ORTIZ, A. A. D.; MOREIRA, T. G. V. Tópicos na Interseção entre a Teoria de Grafos e
+Álgebra. Rio de Janeiro: SBM, 2016. 12, 33
+
+POOL, I. S.; KOCHEN, M. Contacts and inﬂuence. Social Networks, v. 1, n. 1, 1978. 21
+
+ROCHA, I. d. S. Generalização da Teoria de Fiedler para a conectividade algébrica.
+Dissertação (doutorado) — Universidade Federal do Rio Grande do Sul, 2015. 16, 18, 25
+
+RODRIGUES, D. M. Detecção de Comunidades no sistema de correio eletrônico
+universitário. Dissertação (Mestrado) — Instituto Superior da Ciências do Trabalho e da
+Empresa, 2009. 20, 21, 33
+
+SANTANA, V. Tutorial R/RStudio. FEA/USP, 2017. 11, 33
+
+VERMELHO S. C., V. A. P. M.; BEERTONCELLO, V. Sobre o conceito de redes sociais e seus
+pesquisadores. Educ. Pesquisa, v. 41, n. 4, p. 863–881, 2015. 33
+
+ANEXOS
+
+ANEXO A – CÓDIGO EM R PARA O MÉTODO DO CORTE
+
+MÍNIMO
+
+47
+
+library(igraph)# carrega o pacote igraph, que contem
+MyData<-read.csv(file=".../stormofswords.csv", header = TRUE, sep=",")
+
+metodos uteis para grafos.
+
+from<-MyData[[1]]
+to<-MyData[[2]]
+weight<-MyData[[3]]
+EdgeList <- data.frame(from, to)
+Storm<- graph_from_data_frame( d= EdgeList, directed = FALSE)
+E(Storm)$weight<-weight
+V(Storm)$size<-5
+
+n=gorder(Storm)
+m=gsize(Storm)
+L<-laplacian_matrix(Storm,weights = NULL)
+
+ev<-eigen(L)
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+s<-matrix(0,n,1)# vetor de escolha
+#preenche o vetor de escolha conforme as entradas do
+#autovetor associado ao segundo menor autovalor
+for(i in 1:n){
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1
+
+}
+
+# criar subgrafo para nova divisao
+subX<-c()
+Sub1<-c() #primeira comunidade
+for(i in 1:n){
+
+if(s[i,1]==1) {
+
+b<-i
+subX<-c(subX,b)
+
+}
+else{
+
+b<-i
+Sub1<-c(Sub1,b)
+
+}
+
+}
+
+Com1<-V(Storm)[Sub1]
+Storm2<-induced_subgraph(Storm,subX)
+n=gorder(Storm2)
+
+48
+
+m=gsize(Storm2)
+
+L<-laplacian_matrix(Storm2,weights = NULL)
+ev<-eigen(L)
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+
+s<-matrix(0,n,1)# vetor de escolha
+for(i in 1:n){#preenche o vetor de escolha
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1
+
+}
+
+# criar subgrafos para novas divisoes
+subA<-c()
+subB<-c()
+for(i in 1:n){
+
+if(s[i,1]==-1) {
+
+b<-i
+subA<-c(subA,b)}
+else{
+b<-i
+subB<-c(subB,b)}
+
+}
+
+Storm3<-induced_subgraph(Storm2,subA)
+n=gorder(Storm3)
+m=gsize(Storm3)
+
+L<-laplacian_matrix(Storm3,weights = NULL)
+ev<-eigen(L)
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+s<-matrix(0,n,1)# vetor de escolha
+for(i in 1:n){#preenche o vetor de escolha
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1
+
+}
+
+sub2<-c()
+sub3<-c()
+for(i in 1:n){
+
+if(s[i,1]==-1) {
+
+b<-i
+sub2<-c(sub2,b)}
+
+else{
+
+b<-i
+sub3<-c(sub3,b)}
+
+}
+
+49
+
+Com2<-V(Storm3)[sub2]
+Com3<-V(Storm3)[sub3]
+
+# criar subgrafos para novas divisoes
+Storm4<-induced_subgraph(Storm2,subB)
+n=gorder(Storm4)
+m=gsize(Storm4)
+
+L<-laplacian_matrix(Storm4,weights = NULL)
+ev<-eigen(L)
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+s<-matrix(0,n,1)# vetor de escolha
+for(i in 1:n){ #preenche o vetor de escolha
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1
+
+}
+
+# cria subgrafo para nova divisao
+subC<-c()
+sub4<-c()
+for(i in 1:n){
+
+if(s[i,1]==-1) {
+
+b<-i
+subC<-c(subC,b)
+
+}
+else{
+
+b<-i
+sub4<-c(sub4,b)
+
+}
+
+}
+
+Com4<-V(Storm4)[sub4]
+
+Storm5<-induced_subgraph(Storm4,subC)
+n=gorder(Storm5)
+m=gsize(Storm5)
+
+L<-laplacian_matrix(Storm5,weights = NULL)
+ev<-eigen(L)
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+s<-matrix(0,n,1)# vetor de escolha
+for(i in 1:n){#preenche o vetor de escolha
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1
+
+}
+
+# cria subgrafo para nova divisao
+
+50
+
+sub5<-c()
+subD<-c()
+for(i in 1:n){
+
+if(s[i,1]==-1) {
+
+b<-i
+sub5<-c(sub5,b)
+
+}
+else{
+
+b<-i
+subD<-c(subD,b)
+
+}
+
+}
+
+Com5<-V(Storm5)[sub5]
+Storm6<-induced_subgraph(Storm5,subD)
+n=gorder(Storm6)
+m=gsize(Storm6)
+L<-laplacian_matrix(Storm6,weights = NULL)
+ev<-eigen(L)
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+s<-matrix(0,n,1)# vetor de escolha
+#preenche o vetor de escolha
+for(i in 1:n){
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1
+
+}
+
+# cria subgrafo para nova divisao
+sub6<-c()
+subE<-c()
+for(i in 1:n){
+
+if(s[i,1]==1) {
+
+b<-i
+sub6<-c(sub6,b)
+
+}
+else{
+
+b<-i
+subE<-c(subE,b)
+
+}
+
+}
+
+Com6<-V(Storm6)[sub6]
+Storm7<-induced_subgraph(Storm6,subE)
+n=gorder(Storm7)
+m=gsize(Storm7)
+L<-laplacian_matrix(Storm7,weights = NULL)
+ev<-eigen(L)
+
+Evalues=ev[[1]]
+Evectors<-ev[[2]]
+s<-matrix(0,n,1)# vetor de escolha
+for(i in 1:n){
+
+if(Evectors[i,n-1]>=0) s[i,1]=1 else s[i,1]=-1 #preenche o vetor de escolha.
+
+51
+
+}
+
+sub7<-c()
+sub8<-c()
+for(i in 1:n){
+
+if(s[i,1]==1) {
+
+b<-i
+sub7<-c(sub7,b)
+
+}
+else{
+
+b<-i
+sub8<-c(sub8,b)
+
+}
+
+}
+
+Com7<-V(Storm7)[sub7]
+Com8<-V(Storm7)[sub8]
+
+#Atribuicao de cores as diferentes comunidades detectadas
+for(i in 1:length(Com1))
+{
+
+for(j in 1:107 )
+{
+
+if(Com1[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"yellow"
+
+}
+
+}
+
+}
+
+for(i in 1:length(Com2))
+{
+
+for(j in 1:107 )
+{
+
+if(Com2[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"lightblue"
+
+}
+
+}
+
+}
+
+52
+
+for(i in 1:length(Com3))
+{
+
+for(j in 1:107 )
+{
+
+if(Com3[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"green"
+
+}
+
+}
+
+}
+
+for(i in 1:length(Com4))
+{
+
+for(j in 1:107 )
+{
+
+if(Com4[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"violet"
+
+}
+
+}
+
+}
+
+for(i in 1:length(Com5))
+{
+
+for(j in 1:107 )
+{
+
+if(Com5[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"slateblue1"
+
+}
+
+}
+
+}
+
+for(i in 1:length(Com6))
+{
+
+for(j in 1:107 )
+{
+
+if(Com6[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"tan1"
+j=108
+
+}
+
+}
+
+}
+
+for(i in 1:length(Com7))
+
+53
+
+{
+
+for(j in 1:107 )
+{
+
+if(Com7[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"seagreen3"
+j=108
+
+}
+
+}
+
+}
+
+for(i in 1:length(Com8))
+{
+
+for(j in 1:107 )
+{
+
+if(Com8[i]$name==V(Storm)[j]$name)
+{
+
+V(Storm)[j]$color<-"sienna2"
+j=108
+
+}
+
+}
+
+}
+plot(Storm, layout=coords)
+
+ANEXO B – CÓDIGO EM R PARA DETECÇÃO DE COMUNIDADE
+
+USANDO A MODULARIDADE E O MÉTODO DE LOUVAIN
+
+54
+
+library(igraph)
+MyData<-read.csv(file=".../stormofswords.csv", header = TRUE, sep=",")
+
+from<-MyData[[1]]
+to<-MyData[[2]]
+weight<-MyData[[3]]
+EdgeList <- data.frame(from, to)
+Storm<- graph_from_data_frame( d= EdgeList, directed = FALSE)
+E(Storm)$weight<-weight
+V(Storm)$size<-4
+V(Storm)$label.cex = 0.8 #tamanho do nome de cada vertice
+
+clusterlouvain <- cluster_louvain(Storm)
+
+set.seed(17)
+coords <-layout.fruchterman.reingold(Storm)
+plot(Storm, vertex.color=rainbow(7,alpha=0.4)[clusterlouvain$membership],
+layout=coords)
+
+

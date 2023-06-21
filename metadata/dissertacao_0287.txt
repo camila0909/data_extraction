@@ -1,0 +1,6014 @@
+UNIVERSIDADE DE BRASÍLIA 
+
+INSTITUTO DE CIÊNCIAS EXATAS 
+
+DEPARTAMENTO DE MATEMÁTICA 
+
+FILTRO DE KALMAN APLICADO NO ENSINO MÉDIO 
+
+SIDNEY CLAUDINO SILVESTRE 
+
+Brasília, 2020 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SIDNEY CLAUDINO SILVESTRE 
+
+FILTRO DE KALMAN APLICADO NO ENSINO MÉDIO 
+
+Dissertação apresentada ao Departamento de 
+
+Matemática da Universidade de Brasília, como 
+
+parte dos requisitos do Programa de Mestrado 
+
+Profissionalizante  em  Matemática  em  Rede 
+
+Nacional – PROFMAT, para obtenção do grau 
+
+de  
+
+Mestre 
+
+Orientador:  Prof.  Dr.  Vinicius  de  Carvalho 
+
+Rispoli 
+
+Brasília 
+2020 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SIDNEY CLAUDINO SILVESTRE 
+
+FILTRO DE KALMAN APLICADO NO ENSINO MÉDIO 
+
+Dissertação  apresentada  ao  Departamento 
+de Matemática da Universidade de Brasília, 
+como  parte  dos  requisitos  do  Programa  de 
+Mestrado  Profissional  em  Matemática  - 
+PROFMAT, para obtenção do grau de 
+
+MESTRE EM MATEMÁTICA 
+
+Brasília, 30 de Setembro de 2020 
+
+Banca Examinadora 
+
+___________________________________ 
+
+Prof. Vinicius de Carvalho Rispoli - Mat/UnB 
+
+(Orientador) 
+
+___________________________________ 
+
+Prof. Dr.  Matheus Bernardini de Souza - FGA/UnB 
+
+(Membro 1) 
+
+___________________________________ 
+
+Profa. Dra. Rafaela Fernandes do Prado - IFB 
+
+(Membro 2) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Dedico  este  trabalho  aos  meus  pais,  José 
+
+Silvestre e Cecília, ao meu filho João Vinícius 
+
+e  a  minha  esposa  Caroline,  pois  é  na 
+
+instituição chamada família em que encontro a 
+
+base para todas as minhas conquistas. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+AGRADECIMENTOS 
+
+Agradeço, em primeiro lugar, a Deus, que está ao meu lado todos os dias me 
+
+dando  força  para  nunca  desistir  dos  meus  sonhos  e  objetivos,  alimentando  minha 
+
+esperança por um “amanhã” ainda melhor e por ter proporcionado a um menino da 
+
+periferia, de escola pública, porém com muitos sonhos, a oportunidade de atingir seus 
+
+objetivos e ir além do que muitos imaginavam.  
+
+Aos  meus  pais,  por  sempre  terem  me  estimulado  e  mostrado  que  o  único 
+
+caminho para o sucesso passa pela dedicação e pelos estudos, e por nunca terem 
+
+deixado que eu desistisse dos meus sonhos.  
+
+A todos os colegas de turma do PROFMAT, que sempre se mostraram solícitos, 
+
+e, em especial, aos queridos Francisco Wagner, Douglas, Clébia, Cláudio, Fabiano, 
+
+Rodrigo,  Mayco  e  Juci,  com  os  quais  desfrutei  grandes  momentos  de  estudo  e  de 
+
+crescimento intelectual. 
+
+Agradeço  a  todos  os  funcionários  do  Departamento  de  Matemática  e  do 
+
+Instituto de Ciências Exatas da UNB, em especial aos professores do PROFMAT e ao 
+
+meu  orientador,  professor  Dr.  Vinicius  de  Carvalho  Rispoli  que  sempre  se  mostrou 
+
+dedicado e  pronto  para  ajudar a  todos  os  alunos  nesse  processo que não foi  nada 
+
+fácil. 
+
+A  todos  que  acreditaram  em  mim,  que  me  apoiaram  e  que  sempre  me 
+
+estimularam a continuar nessa empreitada. 
+
+Ao CNPq/CAPES pelo apoio e por manter um Mestrado Profissional de tão alto 
+
+nível e de grande relevância para o processo de formação de professores. 
+
+ 
+ 
+ 
+ 
+ 
+RESUMO 
+
+Este trabalho tem como foco a aplicação do Filtro de Kalman em situações problemas 
+
+que recaiam em comportamentos lineares e Gaussianos, com vistas à utilização no 
+
+ensino básico. São apresentadas algumas sugestões de aplicabilidade e a construção 
+
+de roteiros para mostrar o funcionamento do Filtro de Kalman em situações reais e 
+
+que  contemple  o  contexto  de  um  estudante  do  ensino  básico,  sendo  que  para  se 
+
+chegar  a  esse  ponto,  será  necessário  passar  por  toda  a  construção  do  método 
+
+desenvolvido  por  Kalman,  por  algumas  técnicas  de  operações  algébricas  e 
+
+aritméticas,  aprofundadas  nos  estudos  de  matrizes,  estatística  e  probabilidade. 
+
+Portanto,  a  realização  deste  trabalho,  além  de  fomentar  a  aplicação  do  filtro  de 
+
+Kalman,  também  possui  como  objetivo  subsidiar  o  professor  para  a  aplicação  do 
+
+método  em  sua  sala  de aula, por meio de  situações  simples  e  do  cotidiano de  seu 
+
+aluno,  sendo  que,  para  isso,  basta  seguir  os  passos  descritos  por  meio  de  uma 
+
+sequência didática proposta para aplicação no ensino médio.  
+
+Palavras-chave:  Filtro  de  Kalman.  Probabilidade.  Distribuição  Gaussiana.  Ruído. 
+
+Sistema linear dinâmico. Sequência didática. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ABSTRACT 
+
+This research focuses on the application of the Kalman filter in situations that relapse 
+
+into  linear  and  Gaussian  behaviors,  with  a  view  to  use  in  basic  education.  Some 
+
+suggestions of applicability and the construction of scripts to show the functioning of 
+
+the Kalman filter in real situations and that contemplates the context of a student of 
+
+basic education are presented. To reach this point, it will be necessary to go through 
+
+all  the  construction  of  the  method  developed  by  Kalman,  by  some  techniques  of 
+
+algebraic and arithmetic operations, deepened in the study of matrices, statistics and 
+
+probability.  Therefore,  the  accomplishment  of  this  work,  besides  promoting  the 
+
+application of the Kalman filter, also has the objective of subsidizing the teacher for the 
+
+application of the method in his classroom, through simple situations and the daily life 
+
+of his student, being enough to follow the steps described through a didactic sequence 
+
+proposed for the application in high school. 
+
+Key-words:  Kalman  filter,  probability,  gaussian  distribution,  noise,  dynamic  linear 
+
+system, didactic sequence. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LISTA DE FIGURAS 
+
+Figura 1 – Distribuição de Probabilidade Gaussiana ....................................................... 25 
+
+Figura 2 – Elementos da Função de Distribuição Gaussiana ........................................... 26 
+
+Figura 3 – Nível de água em um tanque ........................................................................ 49 
+
+Figura 4 – Posições do veículo ..................................................................................... 65 
+
+Figura 5 – Posição provável do automóvel .................................................................... 67 
+
+Figura 6 – Posições do automóvel ................................................................................ 68 
+
+Figura 7 – Ganho de Kalman ........................................................................................ 69 
+
+Figura 8 – Comparando o Ganho de Kalman e Estimando a Posição do Automóvel .......... 70 
+
+Figura 9 – Posição do automóvel para 𝑡 = 2 .................................................................. 71 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LISTA DE TABELAS 
+
+Tabela 1 – Exemplo de matriz de variância-covariância para três variáveis ...................... 31 
+
+Tabela 2 – Fases da estimativa .................................................................................... 45 
+
+Tabela 3 – Valores obtidos para fase de Previsão e Atualização ..................................... 53 
+
+Tabela 4 – Tanque enchendo a uma taxa constante ....................................................... 55 
+
+ 
+ 
+ 
+ 
+ 
+ 
+LISTA DE GRÁFICOS 
+
+Gráfico 1 – Estimando o nível do tanque ....................................................................... 54 
+
+Gráfico 2 - Estimando o Nível no Tanque para 𝑞 = 0,001 ................................................ 55 
+
+Gráfico 3 – Estimando o Nível do Tanque para 𝑞 = 0,01 ................................................. 56 
+
+Gráfico 4 – Estimando o Nível do Tanque para 𝑞 = 0,1 ................................................... 57 
+
+Gráfico 5 – Estimando o Nível do Tanque para 𝑞	 = 	1 .................................................... 57 
+
+Gráfico 6 – Ruído de medição real de ± 0,3 ................................................................... 62 
+
+Gráfico 7 – Filtro usando um nível constante ................................................................. 63 
+
+Gráfico 8 – Resultado para c = 0,5, r = 0,05 e l = 1 ......................................................... 64 
+
+ 
+ 
+ 
+ 
+ 
+ 
+SUMÁRIO 
+
+INTRODUÇÃO ......................................................................................................... 14 
+
+1. FUNDAMENTAÇÃO TEÓRICA PARA APLICAÇÃO DO FILTRO DE KALMAN 17 
+
+1.1 Estatística Básica ............................................................................................. 18 
+
+1.1.1 Medidas de Centralidade ................................................................................. 18 
+
+1.1.2 Medidas de dispersão ...................................................................................... 20 
+
+1.2 Analisando ruídos............................................................................................. 21 
+
+1.3 Variável aleatória .............................................................................................. 22 
+
+1.3.1 Variáveis aleatórias discretas .......................................................................... 23 
+
+1.3.2 Variáveis aleatórias contínuas ......................................................................... 24 
+
+1.4 Distribuição Gaussiana ou Distribuição Normal ............................................ 24 
+
+1.4.1 Média e Variância da Distribuição Gaussiana ou Normal ................................ 27 
+
+1.5 Vetores Aleatórios ............................................................................................ 29 
+
+1.5.1 Matriz de covariância ....................................................................................... 30 
+
+1.5.2 Matriz de Variância .......................................................................................... 31 
+
+1.6 Sistema Dinâmico Linear ................................................................................. 32 
+
+2. FILTRO DISCRETO ............................................................................................. 35 
+
+2.1 Modelo padrão para aplicação da Filtragem Discreta ................................... 35 
+
+2.2 Equações do Filtro de Kalman ........................................................................ 36 
+
+2.3 Equações de Previsão - Atualização ............................................................... 38 
+
+2.4 Ganho de Kalman Ideal .................................................................................... 41 
+
+2.5 Ajustando o Filtro de Kalman .......................................................................... 46 
+
+2.6 Modelo alternativo para fase de previsão....................................................... 46 
+
+3. APLICAÇÕES DO FILTRO DE KALMAN ............................................................ 49 
+
+3.1 Modelagem 1: Estimando o nível de água em um tanque ............................. 49 
+
+3.1.1 Primeira opção: um modelo estático ................................................................ 50 
+
+3.1.2 Segunda opção: um modelo para enchimento do tanque................................ 58 
+
+3.1.3 Terceira opção: Constante, mas instável (com ondulações) ........................... 63 
+
+3.2 Modelagem 2: Estimando a posição de um automóvel ................................. 65 
+
+4. SEQUÊNCIA DIDÁTICA PARA APLICAÇÃO DO FILTRO KALMAN NO ENSINO 
+
+MÉDIO ............................................................................................................. 73 
+
+ 
+ 
+ 
+ 
+ 
+4.1 Sequência didática como um recurso pedagógico ....................................... 73 
+
+4.1.1 A sequência ..................................................................................................... 75 
+
+4.2 Uma sequência didática para aplicação do Filtro de Kalman ....................... 76 
+
+5. CONSIDERAÇÕES FINAIS ................................................................................. 86 
+
+REFERÊNCIAS ........................................................................................................ 87 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+14 
+
+INTRODUÇÃO  
+
+O  Filtro  de  Kalman  é  uma  excelente  ferramenta  matemática  para  produzir 
+
+previsões do estado de um sistema, usando medidas estatísticas coletadas dentro de 
+
+um intervalo de tempo, desenvolvido pelo matemático Rudolf Emil Kalman e publicado 
+
+em  1960  em  seu  trabalho  “A  New  Approach  to  Linear  Filtering  and  Prediction 
+
+Problems", cujo contexto era a disputa pela corrida espacial entre a União Soviética e 
+
+os  Estados  Unidos,  evidenciando  um  possível  estudo  voltado  para  aplicação 
+
+aeroespacial.  O  filtro  tem  como  base  principal  verificar,  dentro  de  um  processo  de 
+
+controle ou medidas, as incertezas intrínsecas associadas ao sistema e/ou objeto de 
+
+controle  (termômetro,  velocímetro,  GPS,  balança,  etc.)  com  o  intuito  de  criar  um 
+
+modelo  analítico  que  expresse  o  comportamento  do  erro,  baseado  em  uma 
+
+modelagem matemática para que se possa maximizar a precisão de uma medida ou 
+
+informação.  
+
+Um exemplo prático da atuação do Filtro de Kalman no cotidiano de boa parte 
+
+das pessoas, se dá com a utilização do GPS. A atuação do Filtro fica evidente quando, 
+
+por  exemplo,  o  GPS  orienta  a  pessoa  a  fazer  uma  curva  à  direita  e  por  motivo  de 
+
+distração o comando não foi obedecido e seguiu-se em linha reta. O tempo que o GPS 
+
+leva para identificar que a pessoa não seguiu a orientação e prosseguiu em linha reta, 
+
+corresponde ao instante em que ele começará a recalcular a rota, sendo que quanto 
+
+menor esse intervalo de tempo para a identificação no não cumprimento da trajetória, 
+
+menor  será  o  ruído  do  sensor  e  o  Filtro  de  Kalman  estará  atuando  de  forma  a 
+
+potencializar a estimativa do estado. 
+
+O  Filtro  de  Kalman  é  considerado  por  muitos  o  grande  avanço  da  teoria  de 
+
+estimação do século XX. Muitas realizações que ocorreram desde a sua introdução 
+
+talvez não fossem possíveis sem ele. As principais aplicações da filtragem de Kalman 
+
+estão nos sistemas de controle modernos, na navegação e no rastreamento de todos 
+
+os tipos de veículos. 
+
+A  teoria  da  estimação  teve  seu  desenvolvimento  aguçado  por  estudos 
+
+astronômicos, que foram intensificados pela corrida espacial, na segunda metade do 
+
+século  XX,  sendo  que  Rudolf  Kalman  teve  sua  significativa  contribuição  ao 
+
+desenvolver um algoritmo de filtragem, ao qual leva seu nome, Filtro de Kalman (KF). 
+
+ 
+ 
+15 
+
+É reconhecido e considerado, por muitos, até hoje, o principal trabalho científico sobre 
+
+estimação  de  estados,  sendo  uma das  principais  saídas  para muitos  problemas  do 
+
+setor  aeroespacial.  O  impacto  do  filtro  de  Kalman  se  solidifica  com  aplicações  em 
+
+diverças áreas da matemática aplicada. O KF mostrou-se fundamental no sucesso do 
+
+programa  Apollo,  que  enviou  os  primeiros  humanos  à  Lua.  O  filtro  Kalman  e  suas 
+
+extensões  posteriores  a  problemas  não  lineares  talvez  representem  o  subproduto 
+
+mais amplamente aplicado na teoria de controle moderno. Assim, como exemplos de 
+
+sua diversidade, podem-se mencionar os ônibus espaciais da NASA, os submarinos 
+
+da  marinha  dos  EUA,  as  armas  aeroespaciais,  como  mísseis  de  cruzeiro,  pilotos 
+
+automáticos,  processamento  de  dados  sísmicos,  usina  nuclear  instrumentação, 
+
+controle  de  processo,  previsão  do  tempo,  econometria,  monitoramento  de  saúde, 
+
+processamento de dados médicos, visão computacional, gerenciamento e controle de 
+
+tráfego, posicionamento, rastreamento, navegação e controle do motor, entre outros. 
+
+Nesse sentido: 
+
+A primeira aplicação prática para o Filtro de Kalman foi encontrada por 
+Stanley  F.  Shimidt  que  trabalhava  no  projeto  Apollo  da  NASA  cujo 
+objetivo  era  levar  uma  nave  à  Lua  e  trazê-la  de  volta  à  Terra.  No 
+momento ele tinha problemas na estimação de trajetórias e controle. 
+Shimidt trabalhou no que seria a primeira implementação completa do 
+Filtro  de  Kalman  e  tornou  o  mesmo  parte  integrante  do  sistema  de 
+controle  da  Apollo.  Também  por  inuência  de  Shimidt,  o  Filtro  de 
+Kalman foi incluído no sistema de navegação do cargueiro aéreo C5A. 
+Neste caso, o Filtro de Kalman resolveu o problema da fusão sensorial, 
+quando  combinou  dados  de  radar  com  aqueles  provenientes  de 
+sensores inerciais para estimar a trajetória do avião. Desde então o 
+Filtro de Kalman vem sendo parte integrante da maioria dos sistemas 
+onboard  de  estimação  de  trajetória  e  controle  em  aeronaves. 
+(GONÇALVES, 2005, p.52) 
+
+O Filtro de Kalman pode ser usado para prever o comportamento de sistemas 
+
+que  são,  ou  não,  controlados  pelo  ser  humano,  como,  por  exemplo,  a  localização 
+
+instantânea de um automóvel, a reconstrução de uma trajetória, o posicionamento de 
+
+um satélite, o movimento de corpos celestes, o rastreamento de um objeto, a fusão 
+
+de dados de um radar, as medições de profundidades estabilizadoras, entre outros. O 
+
+filtro  de  Kalman  possui  aplicação  nas  mais  diversas  áreas  do  conhecimento,  entre 
+
+elas,  física,  química,  biologia,  medicina,  computação,  matemática,  engenharia, 
+
+economia e etc. Com isso, fica evidente que a utilização do filtro é muito ampla e tem 
+
+sua potencialidade voltada para comportamentos lineares e Gaussianos, podendo ser 
+
+aplicados recursivamente. Se o sistema não for linear, uma boa saída é a aplicação 
+
+ 
+ 
+ 
+16 
+
+de métodos de aproximação Gaussiana. Para aplicações que recaiam em restrições 
+
+não  lineares,  o  leitor  pode  consultar  a  referência  (TEXEIRA;  TÔRRES;  AGUIRRE, 
+
+2019). 
+
+Portanto, uma descrição simples e direta para o filtro de Kalman pode ser dada 
+
+da  seguinte  forma:  conjunto  de  equações  matemáticas  que  constitui  um  processo 
+
+recursivo  de estimação,  sendo  possível  constatar que é  um  procedimento aplicável 
+
+quando  os  modelos  estão  escritos  sob  a  forma  espaço-estado.  Além  disso,  o  KF 
+
+permite  a  estimação  dos  parâmetros  desconhecidos  do  modelo  por  meio  da 
+
+minimização  de  um  erro  de  previsão  que,  propriamente,  se  trata  de  uma  forma  de 
+
+minimizar  a  média  do  erro  ao  quadrado  para,  assim,  obter  uma  estimativa  o  mais 
+
+próximo  possível  do  seu  valor  real.  O  filtro  é  muito  poderoso  em  vários  aspectos, 
+
+suporta estimativas de estados passados, presentes e até futuros. Para mais detalhes 
+
+sobre  o  estudo  a  teoria  da  estimação,  veja  (FERNANDES,  2019;  GONÇALVES, 
+
+2005). 
+
+No primeiro capítulo desta dissertação, abordaremos a fundamentação teórica 
+
+essencial  para  a  aplicação  do  Filtro  de  Kalman,  passando  por  toda  a  análise 
+
+probabilistica e algébrica necessária para a sua colocação em prática.  
+
+Em seguida, no segundo capítulo, são apresentados o modelo de filtragem, as 
+
+equçaões associadas ao KF e uma forma de ajustar as equações para que se obtenha 
+
+uma melhor precisão na estimativa. 
+
+Posteriormente, no terceiro capítulo, trabalhamos duas aplicações do Filtro de 
+
+Kalman, seguindo as etapas propostas no capítulo anterior. 
+
+  Por fim, no quarto capítulo, é abordado o conceito de uma sequência didática. 
+
+Para concluir, é sugerida uma sequência didática para aplicação do referido conceito 
+
+no Ensino Médio. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+17 
+
+CAPÍTULO 1 
+
+FUNDAMENTAÇÃO TEÓRICA PARA APLICAÇÃO DO FILTRO DE KALMAN 
+
+A  teoria  de  filtragem  de  Kalman  é  baseada  no  uso  de  duas  fontes  de 
+
+informações  incertas:  uma  modelagem  matemática  que  represente  a  situação 
+
+problema (em que podemos ter um erro associado a possíveis aproximações) e as 
+
+medições (em que podemos ter um erro associado à imprecisão do objeto de medida). 
+
+Porém, nas situações em que é possível verificar ou colher alguma informação sobre 
+
+o sistema, essa poderá ser outra fonte de informação para melhorar as estimativas e 
+
+maximizar a precisão dos resultados a serem obtidos. 
+
+Com  a  modelagem  da  situação  problema  (função  matemática  que  melhor 
+
+represente a situação real), é possível, com um valor de entrada (domínio da função) 
+
+na equação, obter um valor de saída (imagem da função). Logo, há uma previsão de 
+
+como o sistema se comporta. Agora, com um sensor se avança para a segunda etapa, 
+
+que é a medição. Com isso, teremos duas informações, uma obtida matematicamente 
+
+e a outra por meio de uma medição/aferição, sendo que o ponto-chave é uma média 
+
+ponderada entre as duas informações.  
+
+Kalman, em sua teoria, colocou em prática que quanto mais incerteza se tem 
+
+na medida do sensor, mais peso nessa média ponderada se dará para a modelagem, 
+
+ou vice-versa; isto é, quanto mais incerteza se tem com a modelagem, mais peso se 
+
+dará para a medida do sensor. Esse processo continuará recursivamente até se obter 
+
+a  informação  mais  precisa  que  possa  representar  a  situação  problema.  Logo,  um 
+
+processo  estatístico  de  controle  das  medidas  de  centralidade  (média)  e  dispersão 
+
+(variância) é fundamental para a obtenção do resultado mais preciso possível. Vale 
+
+observar  que  essa  técnica  de  filtragem,  utilizando  as  médias  ponderadas,  é  válida 
+
+para  sistemas  ou  modelagens  lineares;  para  situações  não  lineares,  é  bem  usual 
+
+linearizar a modelagem a cada medida, utilizando, assim, a aplicação de métodos de 
+
+aproximações Gaussianas. Com isso, poderão ser estimados os estados passados, o 
+
+estado presente e mesmo previstos os estados futuros. 
+
+Podemos perceber que o Filtro de Kalman é uma ferramenta muito poderosa 
+
+quando  se  trata  de  controlar  sistemas  ruidosos;  portanto,  para  que  sua  aplicação 
+
+ 
+  
+18 
+
+ocorra de forma eficiente e eficaz, precisamos abordar alguns conceitos algébricos e 
+
+probabilísticos  com  o  intuito  de  tornar  determinados  pontos  o  mais  claro  possível, 
+
+sendo que, para isso, utilizaremos as próximas seções para alguns detalhamentos. 
+
+1.1 Estatística Básica  
+
+A  estatística,  sendo  a  ciência  que  estuda  a  coleta,  a  organização,  a 
+
+classificação, a análise, o registro e interpretação de dados por amostras, terá uma 
+
+grande  importância  para  os  estudos,  análises  e  abordagens  que  teremos  neste 
+
+trabalho. Portanto, tangenciaremos alguns conceitos que serão de suma importância 
+
+para o desenvolvimento e aplicação do Filtro de Kalman, entre eles as medidas de 
+
+centralidade e de dispersão. 
+
+1.1.1 Medidas de Centralidade 
+
+São  medidas  que  representam  um  único  valor,  entorno  do qual  os  dados  da 
+
+variável  em  observação  se  distribuem.  As  três  medidas  de  centralidade  com  maior 
+
+usualidade são: 
+
+Moda: é definida como o valor que aparece com maior frequência dentre os valores 
+
+observados, ou seja, é o dado que aparece mais vezes. Sendo que esse conjunto de 
+
+dados  da  amostra  pode  ser  amodal  (nenhuma  moda,  com  isso,  nenhum  valor  se 
+
+repete),  unimodal  (uma  moda,  com  isso,  teremos  um  único  valor  com  maior 
+
+frequência), bimodal (duas modas, com isso, dois valores com a maior frequência) ou 
+
+multimodal  (três  ou  mais  modas,  com  isso,  três  ou  mais  valores  com  a  maior 
+
+frequência). Representaremos a moda de uma amostra por 𝑀*. 
+
+Mediana: é a medida que ocupa a posição central do conjunto de dados, ou seja, a 
+
+metade  das  observações  estará  antes  da  mediana  e  a  outra  metade  estará  após. 
+
+Representaremos a mediana de uma amostra por 𝑀+, e para determinar seu valor é 
+
+preciso  organizar  os  dados  e,  em  seguida,  verificar  se  o  número  de  elementos  da 
+
+amostra é par ou ímpar. Ao ordenar os dados em ordem crescente (ou decrescente) 
+
+da forma 𝑥., 𝑥/, 𝑥0, …	, 𝑥2, em que 𝑛 é a quantidade de elementos na amostra, há dois 
+
+casos a serem considerados: 
+
+ 
+ 
+           
+ 
+ 
+ 
+19 
+
+Sendo 𝑛 ímpar, a mediana será encontrada da seguinte forma:  
+
+𝑀+, = 𝑥24.
+/
+ é o valor do elemento que se encontra na posição 924.
+
+/
+
+(1.1) 
+
+:, se  𝑛 par, a 
+
+em que 𝑥567
+8
+
+mediana será encontrada da seguinte forma:  
+
+𝑀+, =
+
+𝑥2
+/ 	
+
+	+		𝑥2
+/
+
+4.
+
+2
+
+(1.2) 
+
+em que 𝑥5
+8
+
+ e  𝑥5
+8
+
+4. são os valores dos elementos que se encontram na 
+
+posição 92
+/
+
+:  e 92
+/
+
++ 1:, respectivamente. 
+
+Média:  é  a  medida  que  representa  o  ponto  de  concentração  dos  valores  de  um 
+
+conjunto de dados, ou seja, o valor médio entre todos os valores da amostra, podendo 
+
+ser utilizada para representar um conjunto de dados, tabelados ou não. Essa medida 
+
+de centralidade pode ser subdividida em média aritmética simples e média aritmética 
+
+ponderada e a representaremos por 𝑋	= . 
+
+Média  Aritmética  Simples:  Nada  mais  é  do  que  a  razão  entre  a  soma  dos 
+
+valores observados pela quantidade de elementos da amostra. 
+
+𝑋> = 	
+
+2
+∑ 𝑥@
+@A.
+𝑛
+
+(1.3) 
+
+em que 𝑥@ é o valor observado do 𝑖 − é𝑠𝑖𝑚𝑜 dado e 𝑛 é a quantidade de elementos 
+da amostra. 
+
+Média  Aritmética  ponderada:  Uma  média  aritmética  será  considerada 
+
+ponderada se os valores observados tiverem pesos diferentes:  
+
+𝑋	= = 	
+
+2
+∑
+@A.		
+2
+∑
+@A.		
+
+𝑥@ ⋅ 𝑃@
+𝑃@
+
+(1.4) 
+
+em que 𝑥@ é o valor observado do 𝑖-ésimo dado e 𝑃@ é o respectivo peso. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+20 
+
+1.1.2 Medidas de dispersão 
+
+São  as  medidas  que  representam  o  grau  de  variação  entre  a  média  e  os 
+
+elementos de um conjunto de dados, ou seja, mostra o quão próxima ou distante uma 
+
+distribuição está da sua média. Essas medidas nos possibilitam realizar uma análise 
+
+mais  completa  do  fenômeno  a  ser  estudado,  permitindo  comparar  fenômenos  de 
+
+mesma natureza e mostrando de que forma os valores se afastam ou aproximam do 
+
+valor de tendência central. Algumas medidas de dispersão com maior usualidade são 
+
+o desvio, a variância e o desvio padrão. É comum utilizarmos as medidas de dispersão 
+
+com intuito de confronta-las com as medidas de tendência central e, juntas, elas serão 
+
+utilizadas em algumas propriedades de distribuições.  
+
+Desvio  Médio:  o  Desvio  Médio  nada  mais  é  do  que  uma  medida  de  dispersão  dos 
+
+dados em relação à média de uma amostra, ou seja, analisa o “distanciamento” em 
+
+relação a essa média. Esta medida trabalha com a média das distâncias entre cada 
+
+elemento  da  amostra  e  seu  valor  médio,  a  representaremos  por  𝐷𝑚  e  seu  valor  é 
+
+calculado da seguinte forma: 
+
+𝐷𝑚 = 	
+
+|𝑥. − 	 𝑋>| + |𝑥/ − 	 𝑋>| + |𝑥0 − 	 𝑋>| + ⋯ + |𝑥2 − 	 𝑋>|
+𝑛
+
+(1.5) 
+
+em que  𝑋> é a média aritmética de uma amostra de números 𝑥., 𝑥/, 𝑥0, …	, 𝑥2 e 𝑛 é a 
+quantidade de elementos. 
+
+Variância: a Variância de uma amostra nada mais é do que a medida de dispersão 
+
+que  mostra  o  quão  distante  cada  elemento  desse  conjunto  está  do  valor  central 
+
+(média),  ou  seja,  quanto  menor  é  a  variância,  mais  próximos  os  valores  estão  da 
+
+média  e  quanto  maior  ela  é,  mais  os  valores  estão  distantes  da  média.  A 
+
+representaremos por 𝑉  e seu valor será calculado da seguinte forma: 
+
+𝑉 = 	
+
+(𝑥. − 𝑋>)/ +	 (𝑥/ − 𝑋>)/ + (𝑥0 − 𝑋>)/ + ⋯ + 	 (𝑥2 − 𝑋>)/	
+𝑛
+
+(1.6) 
+
+em que  𝑋> é a média aritmética de uma amostra de números 𝑥., 𝑥/, 𝑥0, …	, 𝑥2 e 𝑛 é a 
+quantidade de elementos da amostra. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+21 
+
+Desvio  Padrão:  o  Desvio  Padrão  nada mais é  do que  uma medida  que  expressa  o 
+
+grau  de  dispersão  de  um  conjunto  de  dados,  ou  seja,  o  desvio  padrão  indica  a 
+
+concentração dos dados em torno da média (o quanto está mais próximo ou distante 
+
+da média); portanto, quanto mais próximo de 0 for o desvio padrão, mais homogêneo 
+
+são os dados, com isso, um desvio pequeno indica que os dados estão mais próximos 
+
+da média, já quando o desvio padrão é alto, temos o indício que os dados se espalham 
+
+ao  longo  dos  valores.  Representaremos  o  desvio  padrão  por  𝐷𝑝  e  seu  valor  será 
+
+exatamente a raiz quadrada da variância; portanto, teremos: 
+
+𝐷𝑝 = √𝑉, ou 
+
+(1.7) 
+
+𝐷𝑝 = 	 R
+
+(𝑥. − 𝑋>)/ + 	 (𝑥/ − 𝑋>)/ + (𝑥0 − 𝑋>)/ + ⋯ + 	 (𝑥2 − 𝑋>)/	
+𝑛
+
+1.2 Analisando ruídos  
+
+De forma generalista, o ruído é uma contribuição indesejada, que proporciona 
+
+o  incremento  de  um  erro  associado  à  medida  ou  modelagem  de  uma  situação 
+
+problema. Existem estudos sobre vários tipos de ruídos relacionados a um contexto 
+
+definido. 
+
+Neste  trabalho  mencionaremos  ruído  relacionados  a  processos  de  medição, 
+
+por meio de um sensor qualquer e ruídos associados a estimativas.  
+
+O  ruído  num  processo  de  medição,  modelagem  ou  estimativa,  estará 
+
+diretamente  relacionado aos  erros  associados  aos  respectivos processos,  podendo 
+
+existir vários fatores para a contribuição do aumento ou diminuição do erro dentro de 
+
+uma etapa de estimativa, entre eles, fatores climáticos, temperatura ambiente, ajuste 
+
+inadequado  de  um  aparelho  de  medição,  modelagem  equivocada  de  uma  situação 
+
+problema, entre outros.  
+
+É de suma importância darmos a devida atenção a modelagem do ruído, para 
+
+que  se  possa  minimizar  o  erro  e  entender  de  maneira  mais  fidedigna  o  que  está 
+
+ocorrendo em uma dada situação.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+22 
+
+Vale  observar  que  para  uma  estimativa  precisa  dos  valores  de  um  processo 
+
+dependente  do  tempo,  temos  que  modelar  o  próprio  processo,  incluindo  ruídos 
+
+futuros. A  solução  “ótima”  para  um  problema  que  possua  ruídos  e  que  esteja 
+
+representado  na  forma  espaço-estado,  pode ser  alcançada  com  a  aplicação  de  um 
+
+Filtro Kalman apropriado. 
+
+1.3 Variável aleatória  
+
+Uma  variável  aleatória  é  representada  pelo  resultado  numérico  de  um 
+
+experimento  aleatório  dentro  de  um  espaço  amostral  conhecido.  Vejamos  alguns 
+
+exemplos de variável aleatória: o resultado que se pode obter com um lançamento de 
+
+uma moeda (cara ou coroa), lançamento de um dado (face 1, 2, 3, 4, 5 ou 6), a altura 
+
+de um estudante dentro de uma turma, o tempo decorrido do plantio até a germinação 
+
+de uma determinada semente, entre outros. 
+
+Uma  variável  aleatória  𝑋  será  definida  pela  função  𝑋: Ω	 → ℝ,  em  que  Ω  é  o 
+
+espaço  amostral  de  todos  os  resultados  possíveis  do  experimento  aleatório 
+
+correspondente. Ao relacionarmos essa análise à probabilidade, teremos uma função 
+
+de distribuição de probabilidade associada à uma variável aleatória. 
+
+Vamos  considerar  que  o  espaço  amostral  Ω  é  um  conjunto  finito  ou  infinito 
+
+enumerável e  que ℘	(Ω)  é  o  conjunto  das  partes de Ω.  A  função de  distribuição  de 
+
+probabilidade da variável aleatória 𝑋 é definida por 
+
+P:	℘	(Ω) 	 → 	 [0,1]  
+
+           𝐴	 ↦ 	𝑃(𝐴),  
+
+com 𝑃(𝛺) 	 = 	1, e se os eventos 𝐴 e 𝐵 são tais que 𝐴	 ⊆ 	𝐵	 ⊆ 	𝛺	  teremos que 𝑃(𝐴) 	 ≤
+
+	𝑃(𝐵). 	Dados  dois  eventos  𝐴  e  𝐵,  eles  serão  independentes  se  𝑃(𝐴	 ∩ 	𝐵) = 	𝑃(𝐴) ⋅
+
+𝑃(𝐵).	 
+
+Também  é  pertinente  descrever  uma  variável  aleatória  𝑋  por  meio  de  sua 
+
+função de distribuição cumulativa de probabilidade, assim para para 𝑎 ∈ ℝ define-se 
+
+a distribuição cumulativa de probabilidade como sendo 
+
+𝑃(𝑋	 ≤ 	𝑎) = 𝑃({ω ∶ 	ω	 ∈ 	Ω	 ∧ 	X	(ω) ≤ 	𝑎	}).  
+
+A função densidade de probabilidade 𝑓l: ℝ → ℝ satisfaz a seguinte relação: 
+
+ 
+ 
+ 
+           
+23 
+
+𝑃	(𝑎	 ≤ 	𝑋	 ≤ 	𝑏) 	 = 	 ∫ 𝑓l
+
+𝒃
+𝒂
+
+(𝑥)𝑑𝑥.  
+
+Portanto,  podemos  chegar  à  conclusão  que  uma  variável  aleatória  é 
+
+uma variável que  pode  assumir  diferentes  valores  numéricos,  definidos  para  um 
+
+evento de um espaço amostral  Ω. As variáveis aleatórias se subdividem em duas: as 
+
+variáveis aleatórias discretas e as variáveis aleatórias contínuas. 
+
+1.3.1 Variáveis aleatórias discretas 
+
+Uma  variável  aleatória  discreta  pode  ser  classificada  como  uma  função   𝑋, 
+
+definida no espaço amostral  Ω e assumindo valores em um conjunto enumerável de 
+
+possibilidades; portanto, ela pode assumir valores que podem ser contados, ou seja, 
+
+estarão  associadas  a  um  valor  finito  ou  finito  enumerável.  A  seguir,  temos  alguns 
+
+exemplos que estão associados à variável aleatória discreta: 
+
+Considere  o  lançamento  de  dois  dados  honestos  e  que  seja  definida  uma 
+
+variável  aleatória  𝑋  como  a  soma  das  faces  superiores.  Nessa  situação  temos  um 
+
+exemplo  de  variável  aleatória  discreta  (finita),  pois  as  possibilidades  para  𝑋  se 
+
+resumem a {2, 3, 4, 5, 6, 7, 8, 9, 10, 11	𝑒	12}, vale observar que teremos um valor inteiro 
+
+em todas os possíveis resultados para soma das duas faces, de modo que não existe 
+
+a  possibilidade  da  soma  dar  um  valor  decimal,  como  6,3  por  exemplo,  portanto  os 
+
+resultados  correspondem  as  possibilidades  do  espaço  amostral  Ω.  Já  uma  variável 
+
+aleatória  𝑌  que  está  relacionada  ao  número  pontos  que  pertencem  a  uma 
+
+circunferência é um exemplo de variável aleatória discreta (infinita), pois existe uma 
+
+infinidade de pontos que pertencem a circunferência, porém nunca terá a metade de 
+
+um ponto sobre a circunferência, ou seja, não haverá frações no número do número 
+
+de  pontos,  sendo  que  as  possibilidades  para  𝑌  poderão  ser  expressas  por 
+
+{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, … , 1000, … }. A primeiro momento o resultado 
+
+não é conhecido, mas é sempre possível de se determinar. Entre outros exemplos de 
+
+situações que podem ser representadas variáveis aleatórias discretas, está o número 
+
+de pessoas infectadas por um vírus, o número de coras em três lançamentos de uma 
+
+moeda,  o  número  de  peças  com  defeito,  etc.  Temos  algumas  distribuições  de 
+
+probabilidade  discretas  bastante  utilizadas,  as  que  mais  se  destacam  são  a 
+
+distribuição  binomial,  a  distribuição  geométrica,  a  distribuição  de  Bernoulli,  a 
+
+distribuição hipergeométrica e a distribuição de Poisson  
+
+ 
+ 
+ 
+24 
+
+1.3.2 Variáveis aleatórias contínuas 
+
+Uma  variável  aleatória  contínua  pode  ser  classificada  como  uma  função   𝑋, 
+
+definida  no  espaço  amostral   Ω e  pode  assumir  qualquer  valor  numérico  em  um 
+
+determinado intervalo de números reais. Isto é, uma variável aleatória contínua nada 
+
+mais é do que uma variável para a qual o conjunto de possibilidades que ela fornece 
+
+é um conjunto infinito não enumerável. A seguir, temos alguns exemplos que estão 
+
+associados à variável aleatória contínua: 
+
+ O  resultado  da  corrida  dos  100𝑚  rasos  nas  Olimpíadas  é  um  exemplo  de 
+
+variável  aleatória  contínua.  Sabe-se  que  os  valores  esperados  para  o  resultado 
+
+poderão assumir uma infinidade de possibilidades, dentro no intervalo de tempo entre 
+
+7 segundos a 14 segundos (vale observar que, até a presente data, o recorde mundial 
+
+dos 100𝑚 rasos pertence a Usain Bolt com a marca de 9,58𝑠), pois sempre existirá 
+
+uma  fração  ou  decimal  para  medir  a  menor  diferença  possível  entre  os  resultados 
+
+obtidos, como, por exemplo, 10 segundos, 2 décimos de segundos, 5 centésimos de 
+
+segundos e assim por diante. Então,  X é uma variável aleatória contínua que assume 
+
+valores no intervalo [7, 14].	Entre outros exemplos de variáveis aleatórias contínuas, 
+
+estão valores de velocidade, peso, altura, temperatura, etc. Entre as distribuições de 
+
+probabilidade  contínuas  mais  conhecidas  temos  a  distribuição  Gaussiana (também 
+
+chamada distribuição normal), distribuição uniforme contínua, distribuição exponencial 
+
+e  a  distribuição  Gama.  Abordaremos  de  forma  mais  detalhada  a  Distribuição 
+
+Gaussiana, pois ela será referência para aplicação do Filtro Kalman. 
+
+1.4 Distribuição Gaussiana ou Distribuição Normal 
+
+Quando  se  fala  em  análise  de  dados  em  probabilidade  e  estatística,  a 
+
+distribuição Gaussiana ou Normal possui um grande destaque por ser muito utilizada 
+
+para modelar fenômenos naturais. Um vasto número desses fenômenos, apresentam 
+
+comportamentos que podem ser aproximados ao da distribuição Gaussiana com um 
+
+alto grau de sucesso, e, portanto podem ser consideradas como se de fato fosse. Um 
+
+dos  principais  conceitos  associados  a  essa  distribuição  é  o  de  ruído,  que 
+
+trabalharemos de forma detalhada para aplicação do Filtro de Kalman. 
+
+ 
+ 
+           
+ 
+ 
+25 
+
+A  distribuição  Gaussiana  foi  estudada  pela  primeira  vez  no 
+século XVII, quando se observou que os padrões em erros de 
+medidas seguiam uma distribuição simétrica em forma de sino. 
+Ela foi apresentada pela primeira vez em forma matemática em 
+1733,  por  DeMoivre,  que  a  deduziu  como  forma-limite  da 
+distribuição binomial. A distribuição era, também, conhecida por 
+Laplace antes de 1775. Por um erro histórico, tem sido atribuída 
+a  Gauss,  cuja  primeira  referência  publicada  relativa  a  essa 
+distribuição apareceu em 1809, e o termo distribuição Gaussiana 
+tem  sido  usado  com  frequência.  Várias  tentativas  foram  feitas 
+durante  os  séculos  XVIII  e  XIX  para  estabelecer  essa 
+distribuição como a lei de probabilidade subjacente a todas as 
+variáveis  aleatórias  contínuas;  assim,  o  nome  normal  também 
+passou a ser usado (Willian W. Hines, Douglas C. Montgomery, 
+David M. Goldsman, Connie M. Borror, 4ª edição, pág. 128).   
+
+A função de distribuição de probabilidade Gaussiana de uma variável aleatória 
+
+𝑋 é definida da seguinte forma:  
+
+𝑓l(𝑥) =
+
+((cid:127)~(cid:128))8		
+/(cid:129)8
+
+ℯ~
+
+1
+
+𝜎√2𝜋
+
+(1.8) 
+
+Com 𝑥 ∈ ℝ, em que 𝜇 representa a média ou esperança da distribuição normal e 𝜎/ 
+
+representa  a  variância  (abordaremos  esses  dois  pontos  mais  adiante).  Observe,  a 
+
+seguir,  alguns  gráficos,  no  mesmo  plano  cartesiano,  que  representam  função  de 
+
+distribuição Gaussiana de probabilidade. 
+
+Figura 1 – Distribuição de Probabilidade Gaussiana 
+
+4
+3,5
+3
+2,5
+2
+1,5
+1
+0,5
+0
+-0,5
+
+-8
+
+-6
+
+-4
+
+-2
+
+0
+
+2
+
+4
+
+6
+
+8
+
+Para μ = 0 e σ^2=0,2
+
+Para μ = 0 e σ^2=0,8
+
+Para μ = 0 e σ^2=0,4
+
+Para μ = 2 e σ^2=0,5
+
+Fonte: elaborado pelo autor. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+26 
+
+Temos  algumas  características  ao  observar  com  relação  a  uma  distribuição 
+
+Gaussiana: 
+
+a)  O  ponto  máximo  de  𝑓l(𝑥)  ocorre  quando  𝑥 = 𝜇,  o  que  nos  leva  ao  seguinte 
+
+valor máximo para a função:  
+
+                                            𝑓(cid:131)(cid:132)(cid:127) =   .
+(cid:129)√/(cid:133)
+
+b)  Os pontos de inflexão da função 𝑓 são: 
+
+𝑥 = 𝜇 + 𝜎    e    𝑥 = 𝜇 − 𝜎 
+
+c)  𝑓(𝜇 + 𝑥) = 𝑓(𝜇 − 𝑥),  o  que  nos  leva  à  conclusão  de  que  a  densidade  é 
+
+simétrica em torno de 𝜇. 
+
+d)  𝐸(𝑋) = 𝜇   e   𝑉𝑎𝑟(𝑋) = 𝜎/  (mostraremos esses dois fatos a seguir) 
+
+e)  ∫ 𝑓l(𝑥) = 1
+
+(cid:136)
+~(cid:136)
+
+Figura 2 – Elementos da Função de Distribuição Gaussiana  
+
+Fonte: elaborada pelo autor. 
+
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+27 
+
+1.4.1 Média e Variância da Distribuição Gaussiana ou Normal 
+
+O valor esperado (também chamado de valor médio ou esperança), para uma 
+
+variável aleatória 𝑋, é definido por 
+
+(cid:136)
+𝐸(𝑋) = (cid:137) 𝑥 ⋅ 𝑓l(𝑥)𝑑𝑥
+~(cid:136)
+
+, 
+
+(1.9) 
+
+como estamos nos referindo a uma distribuição Gaussiana, temos então que  
+
+𝑓l(𝑥) =
+
+((cid:127)~(cid:128))8		
+/(cid:129)8
+
+ℯ~
+
+1
+
+𝜎√2𝜋
+
+o que nos leva à conclusão que, para encontrarmos a média ou esperança da referida 
+
+distribuição, basta encontrarmos o resultado da seguinte expressão  
+
+(cid:136)
+
+𝐸(𝑋) = (cid:137) 𝑥 ⋅
+
+~(cid:136)
+
+1
+
+𝜎√2𝜋
+
+ℯ ~
+
+((cid:127)~(cid:128))8		
+
+/(cid:129)8 𝑑𝑥
+
+, 
+
+(1.10) 
+
+para resolver essa integral faremos a seguinte mudança de variável 𝑧 = (𝑥 − 𝜇) 𝜎⁄ , o 
+
+que nos levará a 𝑥 = 𝜎 ⋅ 𝑧 − 𝜇 e 𝑑𝑧 = (1 𝜎⁄ )𝑑𝑥, portanto 𝑑𝑥 = 𝜎𝑑𝑧 e, assim, obtemos 
+
+(cid:136)
+
+𝐸(𝑋) = (cid:137)
+
+~(cid:136)
+
+1
+
+√2𝜋
+
+(𝜇 + 𝜎𝑧)ℯ~	
+
+			(cid:140)8		
+
+/ 𝑑𝑧
+
+																																															= 	µ (cid:137)
+
+~(cid:136)
+
+(cid:136)
+
+			(cid:140)8		
+
+/ 𝑑𝑧
+
+ℯ~	
+
+1
+
+√2𝜋
+
+(cid:136)
+
++ σ (cid:137)
+
+~(cid:136)
+
+1
+
+√2𝜋
+
+			(cid:140)8		
+
+/ 𝑑𝑧
+
+. 
+
+𝑧ℯ ~	
+
+Como o integrando da primeira integral é a função de densidade Gaussiana, com 𝜇 =
+
+0	e  𝜎/ = 1,  o  valor  da  primeira  integral  é  1  (Pela  propriedade  “e”  da  distribuição 
+
+Gaussiana). A segunda integral tem valor zero, isto é, 
+
+Assim,  
+
+𝐸(𝑋) = 𝜇 ⋅ 	1 + 𝜎 ⋅ 	0 
+
+𝐸(𝑋) = 𝜇 
+
+(1.11) 
+
+ 
+           
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+28 
+
+          Já  a  variância,  é  um  parâmetro  que  define  como  os  valores  de  uma  variável 
+
+aleatória são distribuídos com relação à média 𝜇. É definido da seguinte maneira: 
+
+𝑉𝑎𝑟(𝑋) = 𝐸[(𝑋 − 𝜇)/] 
+
+(1.12) 
+
+Para distribuição Gaussiana, temos que 
+
+(cid:136)
+
+	𝑉𝑎𝑟(𝑋) = (cid:137) (𝑥 − 𝜇)/
+
+~(cid:136)
+
+1
+
+𝜎√2𝜋
+
+((cid:127)~(cid:128))8		
+
+ℯ ~
+
+/(cid:129)8 𝑑𝑥
+
+, 
+
+Fazendo a mesma troca de variável realizada anteriormente 𝑧 = (𝑥 − 𝜇) 𝜎⁄ ,	obtemos  
+
+(cid:136)
+
+𝑉𝑎𝑟(𝑋) = (cid:137) 𝜎/𝑧/ 1
+√2𝜋
+
+~(cid:136)
+
+			(cid:140)8		
+
+/ 𝑑𝑧
+
+ℯ ~	
+
+																	= 𝜎/ (cid:137) 𝑧/ 1
+√2𝜋
+
+~(cid:136)
+
+(cid:136)
+
+			(cid:140)8		
+
+/ 𝑑𝑧
+
+ℯ~	
+
+𝑉𝑎𝑟(𝑋) =  𝜎/(0 + 1) 
+
+𝑉𝑎𝑟(𝑋) = 𝜎/. 
+
+(1.13) 
+
+Em resumo, a média e a variância da função de distribuição Gaussiana são 𝜇 
+
+e 𝜎/, respectivamente. Os resultados obtidos nesta seção serão de grande utilidade 
+
+para  tralhamos  matematicamente  o  conceito  do  “ruído”  associado  a  um  processo 
+
+aleatório  𝑋(cid:143).  E  para  mais  detalhes  sobre  o  estudo  das  variáveis  aleatórias  e 
+
+distribuição de probabilidade Gaussiana o leitor pode consultar a referência (HOEL; 
+
+PORT; STONE, 1972) e (HINES; MONTGOMERY; GOLDSMAN; BORROR, 2006). 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+29 
+
+1.5 Vetores Aleatórios 
+
+Um  vetor  𝑍  será  considerado  aleatório  quando  cada  uma  das  suas 
+
+componentes corresponderem a variáveis aleatórias, portanto ao trabalharmos com 
+
+um  vetor  𝑍 = (𝑍., 𝑍/, 𝑍0, … , 𝑍2)  com  𝑛 > 1  e  com  componentes  𝑍@  sendo  variáveis 
+
+aleatórias, em que 𝑖 ≤ 𝑛, teremos então que o vetor 𝑍 será um vetor aleatório com 𝑛 
+
+dimensões  e  descrito  por  uma  função  de  distribuição  de  probabilidade  definida  no 
+
+espaço  amostral  Ω,  com  𝑃@ :  ℘	(𝛺) → 	 [0,1],  em  que  as  funções  𝑃., … , 𝑃2  definem  a 
+distribuição conjunta para o dado vetor aleatório. Vejamos alguns exemplos: 
+
+Numa  certa  fábrica  um  analista  de  qualidade  realiza  uma  contagem  dos 
+
+produtos defeituosos e bons, denotando por 𝐷 os itens defeituosos e por 𝐵 os itens 
+
+bons. Então, teríamos: 
+
+          𝛺 = {𝜔 = (𝜔., 𝜔/, 𝜔0, …	, 𝜔/5) ∶ 		 𝜔@	𝜖	{𝐷, 𝐵}	, 𝑖 = 1, 2, 3, … , 𝑛} 
+
+          Definindo, 𝑋 como a quantidade de produtos defeituosos e 𝑌 como a quantidade 
+
+produtos bons e utilizando a notação (𝑋, 𝑌)(𝜔) = (𝑋(𝜔), 𝑌(𝜔)). 
+
+          Para 𝑛 = 2, teremos então 𝛺 = {𝜔.;	𝜔/;	𝜔0;	𝜔(cid:149)} com 𝜔. = (𝐵, 𝐵), 𝜔/ = (𝐷, 𝐵), 
+
+𝜔0 = (𝐵, 𝐷) e 𝜔(cid:149) = (𝐷, 𝐷). Com isso, os vetores aleatórios ficariam da seguinte forma: 
+
+(𝑋, 𝑌)(𝜔.) = (0, 2); (𝑋, 𝑌)(𝜔/) = (1, 1); (𝑋, 𝑌)(𝜔0) = (1, 1); (𝑋, 𝑌)(𝜔(cid:149)) = (2, 0) 
+
+         É importante observar que para  𝑛 = 2 temos um vetor aleatório bidimensional e 
+
+o vetor pode ser caracterizado como discreto, pois todas as variáveis aleatórias que 
+
+compõem o vetor, são discretas. 
+
+         Um outro exemplo, analisado de forma menos aprofundada, seria numa partida 
+
+de vôlei disputada entre as equipes 𝐴 e 𝐵, verificarmos o número de sets vencidos por 
+
+cada uma das equipes, em que definiremos as seguintes variáveis: 
+
+𝑋 = 𝑛ú𝑚𝑒𝑟𝑜𝑠	𝑑𝑒	𝑠𝑒𝑡𝑠	𝑣𝑒𝑛𝑐𝑖𝑑𝑜𝑠	𝑝𝑒𝑙𝑎	𝑒𝑞𝑢𝑖𝑝𝑒	𝐴 e 𝑌 = 𝑛ú𝑚𝑒𝑟𝑜𝑠	𝑑𝑒	𝑠𝑒𝑡𝑠	𝑣𝑒𝑛𝑐𝑖𝑑𝑜𝑠	𝑝𝑒𝑙𝑎	𝑒𝑞𝑢𝑖𝑝𝑒	𝐵. 
+
+Então teremos que o vetor  𝑍 = (𝑋, 𝑌) é aleatório e discreto. 
+
+ 
+ 
+   
+ 
+ 
+30 
+
+1.5.1 Matriz de covariância 
+
+Considerando o vetor aleatório 𝑋 = (𝑋., 𝑋/,	𝑋0, … , 𝑋2), a matriz de covariância é 
+
+uma matriz simétrica, formada pelas covariâncias das 𝑛 variáveis aleatórias, em que 
+
+cada elemento 𝜎@(cid:155) da matriz terá a seguinte lei de formação:  
+
+𝐶𝑂𝑉(cid:158)𝑋@, 𝑋(cid:155)(cid:159) = 𝐸(cid:160)(𝑋@ − 𝜇@)(cid:158)𝑋(cid:155) − 𝜇(cid:155)(cid:159)¡ = 𝜎@(cid:155) 
+
+(1.14) 
+
+em  que  𝜇@ = 	𝐸[𝑋@]  é  o valor  esperado  (média) do 𝑖 − é𝑠𝑖𝑚𝑜  elemento  do  vetor 𝑋. 
+
+Portanto, a matriz de covariância de 𝑋 é 
+
+¢
+
+𝐸[(𝑋. − 𝜇.)(𝑋. − 𝜇.)] 𝐸[(𝑋. − 𝜇.)(𝑋/ − 𝜇/)] … 𝐸[(𝑋. − 𝜇.)(𝑋2 − 𝜇2)]
+𝐸[(𝑋/ − 𝜇/)(𝑋2 − 𝜇2)]
+𝐸[(𝑋/ − 𝜇/)(𝑋. − 𝜇.)]
+⋮
+⋮
+𝐸[(𝑋2 − 𝜇2)(𝑋2 − 𝜇2)]
+𝐸[(𝑋2 − 𝜇2)(𝑋. − 𝜇.)]
+
+𝐸[(𝑋/ − 𝜇/)(𝑋/ − 𝜇/)]
+⋮
+𝐸[(𝑋2 − 𝜇2)(𝑋/ − 𝜇/)]
+
+…
+⋱
+…
+
+¥ 
+
+Sendo assim, também podemos escrever a matriz de covariância da seguinte forma: 
+
+𝐶𝑂𝑉(𝑋) = ¢
+
+𝜎.. 𝜎./ … 𝜎.2
+𝜎/2
+𝜎./
+⋮
+⋮
+𝜎22
+𝜎.2
+
+𝜎//
+⋮
+𝜎/2
+
+…
+⋱
+…
+
+¥ 
+
+Vale  lembrar que  se  trata de  uma matriz  simétrica, portanto 𝜎./ = 	 𝜎/., 𝜎.0 =
+
+	𝜎0., ... , 𝜎@(cid:155) = 	 𝜎(cid:155)@. 
+
+Teremos então uma equivalência para a definição acima: 
+
+𝐶𝑂𝑉(cid:158)𝑋@, 𝑋(cid:155)(cid:159) = 𝐸[(𝑋@ − 𝐸[𝑋@])(cid:158)𝑋(cid:155) − 𝐸[𝑋(cid:155)](cid:159)
+
+ƒ
+
+(1.15) 
+
+Note  que  os  elementos  da  diagonal  principal  da  matriz  é  formada  pela 
+
+𝐶𝑂𝑉(𝑋@, 𝑋@), que é igual a 𝑉𝐴𝑅(𝑋@). 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+31 
+
+1.5.2 Matriz de Variância 
+
+A  diagonal  principal  da  matriz  de  covariância  corresponde  a  variância  do 
+
+elemento 𝑋@ e ele mesmo, portanto a matriz de variância é uma extensão do conceito 
+
+de  matriz  de  covariância.  Por  esse  fato,  a  matriz  de  variância  é  frequentemente 
+
+chamada de matriz de covariância. 
+
+/ 
+𝑉𝐴𝑅(𝑋) = 𝐶𝑂𝑉(𝑋@, 𝑋@) = 𝐸[(𝑋@ − 𝐸[𝑋@])(𝑋@ − 𝐸[𝑋@])ƒ] = [𝐸(𝑋@ − 𝐸[𝑋@])/]ƒ = 𝜎@@ = 𝜎@
+
+Um ponto interessante a ser analisado é que a diagonal principal da matriz de 
+
+covariância  contém 
+
+todas  as  variâncias  das  componentes  𝑋	@ ,  para 
+
+𝑖	 =
+
+	1,2, . . . , 𝑛.   multiplicadas  por  ela  mesma,  ou  seja,  será  𝜎/,  em  que  todos  os  outros 
+
+elementos são covariâncias entre dois componentes diferentes 𝑋	@ e 𝑋	(cid:155).  
+
+Por exemplo, ao se criar uma matriz de variância-covariância, hipotética, para 
+
+três variáveis aleatórias  X, Y e Z obtemos a Tabela 1, a seguir, e podemos observar 
+
+as variações apresentadas em negrito ao longo da diagonal; a variância de X, Y, e Z 
+
+são 1,5; 2,8; e 0,9 respectivamente. A covariância entre X e Y é −0,86, entre X e Z é 
+
+−0,15 e entre Y e Z é 0,48. 
+
+Tabela 1 – Exemplo de matriz de variância-covariância para três variáveis  
+
+𝐗 
+
+𝟏, 𝟓 
+
+−0,86 
+
+−0,15 
+
+𝐗 
+
+𝒀 
+
+𝒁 
+
+𝐘 
+
+𝐙 
+
+−0,86 
+
+−0,15 
+
+𝟐, 𝟖 
+
+0,48 
+
+0,48 
+
+𝟎, 𝟗 
+
+Fonte: elaborado pelo autor. 
+
+(cid:181)
+
+𝟏, 𝟓 −0,86 −0,15
+0,48
+−0,86 𝟐, 𝟖
+𝟎, 𝟗
+−0,15 0,48
+
+¶ 
+
+Matriz de variância-covariância 
+
+          Como  se  sabe  que  a  matriz  de  variância-covariância  é  simétrica,    pode-se 
+
+verificar que de fato a covariância entre X e Y, X e Z e entre Y e Z é a mesma que a 
+
+ 
+           
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+32 
+
+covariância entre Y e X, Z e X e entre Z e Y, respectivamente. Portanto, podemos verificar 
+
+que  a  covariância  para  cada  par  de  variáveis  aleatórias  aparecem  duas  vezes  na 
+
+matriz, o que nos faz concluir que de fato a covariância entre a 𝑖 − é𝑠𝑖𝑚𝑎 e a 𝑗 − é𝑠𝑖𝑚𝑎 
+
+variáveis aleatórias é apresentada nas posições (𝑖, 𝑗) e (𝑗, 𝑖). 
+
+A  matriz  de  variância-covariância  é  utilizada  em  várias  aplicações 
+
+estatísticas/probabilísticas  com  o  intuito  de  estimar  parâmetros,  sendo  que  um  dos 
+
+principais  objetivos  é  calcular  erros  padrão  de  estimadores  ou  funções  de 
+
+estimadores. Para mais detalhes sobre o estudo de vetor aleatório, matriz de variância 
+
+e covariância, o leitor pode consultar a referência (SANTOS, 2001). 
+
+1.6 Sistema Dinâmico Linear  
+
+Os estudos em sistemas dinâmicos tiveram a sua origem através da mecânica 
+
+Newtoniana. O intuito desta área da matemática é solucionar e entender problemas 
+
+postos na forma de espaço-estado. 
+
+Um  dos  principais  pesquisadores  sobre  sistemas  dinâmicos  é 
+Jules Henri Poincaré (1854 – 1912), matemático francês, é um 
+dos  precursores  dos  estudos  sobre  sistemas  dinâmicos 
+(autônomos),  tendo  apresentado  as  descrições  do  que  hoje  é 
+conhecido como plano de fase, bem como estudos sobre ponto 
+crítico, estabilidade e também sobre a existência de ciclos limites 
+para  sistemas  não  lineares;  porém,  outros  autores  também 
+contribuíram  para  esses  resultados,  como,  por  exemplo,  os 
+matemáticos  Bendixon,  Dulac,  Hartann  e  Grobman. 
+(FERREIRA, 2016, pág. 1) 
+
+Sistemas  dinâmicos  são  os  sistemas  fora  do  equilíbrio,  compostos  por 
+
+equações  dependentes  do  tempo,  caracterizados  por  estados  que  mudam  com  o 
+
+transcorrer  do  tempo.  São  usados  com  muita  frequência  para  modelar  e  fazer 
+
+previsões  de  estados  futuros  e  até  mesmo  de  estados  passados  ou  presente,  que 
+
+recaiam  em  sistemas  biomatemáticos,  com  vasta  aplicação  em  contextos  físicos, 
+
+biológicos,  financeiros,  etc.  Uma  análise  qualitativa  de  sistemas  dinâmicos,  diz 
+
+respeito  a  uma  estabilidade  do  sistema  nas  proximidades  ou  vizinhança  de  um  ou 
+
+mais pontos críticos do sistema.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+33 
+
+Um sistema dinâmico é composto por equações diferenciais ordinárias (EDO’s), 
+
+de ordem 𝑛, e servem para o melhor entendimento de fenômenos no que diz respeito 
+
+à natureza das observações, sendo que poderá ser necessário fazer uma modelagem 
+
+matemática para representar a situação problema. Neste trabalho teremos que nos 
+
+empoderar  dos  conhecimentos  que  permeiam  um  sistema  dinâmico  linear  e  ter  a 
+
+noção de que os problemas recairão em EDO’s de primeira ordem.  
+
+Seguindo o modelo proposto por (FERREIRA, 2016), em seu trabalho Sistemas 
+
+Dinâmicos  Lineares  no  ℝ/,  teremos  que  matematicamente,  um  sistema  dinâmico 
+
+linear contínuo será definido pela equação abaixo: 
+
+Ẋ = A ⋅ X 
+
+(1.16) 
+
+Vale salientar que a notação 𝑋̇  é comumente usada na física e engenharias, 
+
+por exemplo, como abreviação da derivada de 𝑋 em relação a variável temporal 𝑡, isto 
+
+é, 𝑋̇ = 𝑑𝑋 𝑑𝑡⁄ . Além disso, tem-se que  
+
+𝐴 = ”
+
+𝑎.. … 𝑎.2
+				⋱ 			⋮
+⋮
+𝑎2. … 𝑎22
+
+» 
+
+é a matriz dos coeficientes reais constantes.  
+
+Sendo assim, um sistema dinâmico linear no ℝ2, poderá ser representado na 
+
+sua forma matricial conforme a seguir: 
+
+(cid:181)
+
+𝑥.̇
+⋮
+𝑥̇ 2̇
+
+¶ = ”
+
+𝑎.. … 𝑎.2
+				⋱ 			⋮
+⋮
+𝑎2. … 𝑎22
+
+» ⋅ (cid:181)
+
+𝑥.
+⋮
+𝑥2
+
+¶ 
+
+o que na forma de sistema linear seria equivalente a: 
+
+…
+
+𝑥.̇ = 𝑎.. ⋅ 𝑥. + ⋯ + 𝑎.2 ⋅ 𝑥2
+	⋮					⋮																					⋱												⋮					
+𝑥2̇ = 𝑎2. ⋅ 𝑥. + ⋯ + 𝑎22 ⋅ 𝑥2
+
+Com  isso,  o  vetor 𝑛-dimensional X ∈ ℝ2 especifica  o  estado  do processo  em 
+
+estudo,  e  𝐴  é  a  matriz    𝑛 × 𝑛  do  sistema  dinâmico.  Ao  realizarmos  uma  análise 
+
+algébrica um pouco mais aprofundada, se pode observar que o sinal e a relação das 
+
+raízes  do  polinômio  característico  associado  a  matriz  𝐴,  serão  det(𝐴 − λI) = 0, 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+34 
+
+portanto  teremos  os  autovalores  de 𝐴,  sendo  que  isso  determina  a  estabilidade  do 
+
+sistema dinâmico, ou seja, o estado converge para um “certo valor esperado”. 
+
+Vejamos o exemplo da situação a seguir: 
+
+Um radar de identificação de velocidade, em um certo ponto de uma estrada, 
+
+identifica  um  veículo  que  se  move  ao  longo  de  uma  linha  reta. A  localização  do 
+
+automóvel é descrita pela coordenada 𝑥	(nesta linha), sendo que o movimento descrito 
+
+possui  velocidade  𝑣  e  aceleração  constante  𝑎. Não  consideramos  o  início  ou  o  fim 
+
+deste  movimento.  O  estado  do  processo  é  caracterizado  pelo  vetor  𝑋 = (𝑥, 𝑣, 𝑎)ƒ  e 
+
+temos que 𝑋̇ = (𝑣, 𝑎, 0)ƒ pois 
+
+Teremos então que 
+
+𝑥̇ = 𝑣, 𝑣̇ = 𝑎 e 𝑎̇ = 0 
+
+𝑣
+𝑋̇ = ”
+𝑎
+0
+
+» = (cid:181)
+
+0 1 0
+0 0 1
+0 0 0
+
+¶ ⋅ ”
+
+𝑥
+𝑣
+𝑎
+
+» = A ⋅ X 
+
+Isso define a matriz 𝐴 do sistema, com tipo 3 × 3.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+35 
+
+CAPÍTULO 2 
+
+FILTRO DISCRETO 
+
+Com  uma  sequência  de  observações/medições  ruidosas  𝑦˜, 𝑦., … , 𝑦(cid:143)~.  para 
+
+uma sistema dinâmico linear, o objetivo do filtro de Kalman será estimar o estado 𝑋(cid:143) =
+
+(𝑥.,(cid:143), 𝑥/,(cid:143), 𝑥0,(cid:143), … , 𝑥2,(cid:143)) do sistema de modo que o erro de estimativa seja minimizado; 
+
+portanto, visa-se à aplicação de um estimador, de forma recursiva, para que a posição 
+
+estimada  seja  a  mais  próxima  possível  da  posição  real.  Para  o  detalhamento  da 
+
+aplicação  e  análise  das  equações  associadas  ao  filtro  de  Kalman,  após  um 
+
+levantamento bibliográfico, é chegado o momento de aprofundar a pesquisa de forma 
+
+propriamente dita e para isso utilizaremos o modelo proposto por  GERIG (2006) com 
+
+o  objetivo  de  trabalhar  da  forma  mais  clara  possível  com  os  conceitos  e  equações 
+
+envolvidas na aplicação do filtro. 
+
+2.1 Modelo padrão para aplicação da Filtragem Discreta 
+
+Nós assumiremos alguns pontos relevantes para aplicação do filtro de forma a 
+
+esclarecer alguns significados importantes: 
+
+•  𝐹(cid:143) é a matriz de transição de estado, ela é aplicada ao estado anterior 𝑋(cid:143)~.(que 
+
+é conhecido); 
+
+•  𝐵(cid:143) é a matriz de controle, ela é aplicada a um vetor de controle 𝑢(cid:143), e a um vetor 
+
+de  ruído  do  processo  𝑊(cid:143) cuja  distribuição  conjunta  é  uma  distribuição 
+
+Gaussiana com matriz de variância 𝑄(cid:143) e  
+
+𝜇@,(cid:143) = 𝐸(cid:160)𝑤@,(cid:143)¡ = 0, para 𝑖 = 1, 2, 3, …	 , 𝑛 
+
+•  𝑌(cid:143) é o vetor de observação do estado 𝑋(cid:143); 
+
+•  𝐻(cid:143) é a matriz de observação 𝐻(cid:143); 
+
+•  𝑉(cid:143) é o vetor que corresponde ao ruído de observação, cuja distribuição conjunta 
+
+também é uma distribuição Gaussiana com matriz de variância  
+
+𝑅(cid:143) e 𝜇@,(cid:143) = 𝐸(cid:160)𝑉@,(cid:143)¡ = 0 para 𝑖 = 1, 2, 3, …	, 𝑛 
+
+ 
+ 
+ 
+ 
+36 
+
+É importante observar que tanto o ruído do processo quanto o de observação, 
+
+possuem  comportamentos  Gaussiano,  o  que  nos  possibilitará  realizar  uma  análise 
+
+probabilística bem detalhada quanto ao comportamento do erro. 
+
+2.2 Equações do Filtro de Kalman 
+
+Vamos  agora  descrever  matematicamente  o  Filtro  Kalman,  pensando  num 
+
+melhor entendimento para sua colocação em prática da forma mais eficaz possível, 
+
+para  isso,  utilizaremos  o  embasamento  teórico  consolidado  na  seção  1.6  (Sistema 
+
+Dinâmico Linear) como norteador na construção das suas equações. 
+
+O  filtro  de  Kalman  é  um  mecanismo  iterativo  para  filtrar  uma  sequências  de 
+
+variáveis de estado {𝑋˜, 𝑋., 𝑋/, ⋯ }, em tempo discreto, que evoluem de forma ruidosa 
+
+baseado em algum sistema dinâmico linear conhecido. De forma mais específica, a 
+
+hipótese feita sobre o comportamento dinâmico das variáveis de estado são: 
+
+𝑋(cid:143) = 𝐹(cid:143). 𝑋(cid:143)~. + 𝐵(cid:143) ⋅ 𝑢(cid:143) + 𝑊(cid:143),  
+
+(2.1) 
+
+em  que  𝐹(cid:143) = 𝑒 ˚(cid:143)⋅¸  é  uma  matriz  conhecida,  possivelmente  dependente  do  tempo, 
+chamada  de  matriz  de  transição,  𝐵(cid:143)  é  conhecida  como  matriz  de  controle,  𝑢(cid:143)  é 
+
+chamado de vetor de controle e 𝑊(cid:143)	é o termo de ruído do processo. Vale observar que 
+a  matriz  𝐹(cid:143) = 𝑒 ˚(cid:143)⋅¸ = 𝐼 + ∑ ˚(cid:143)˝⋅¸˝
+
+  está  associada  à  solução  do  sistema  dinâmico 
+
+(cid:136)
+@A.
+
+@!
+
+linear e mais informações podem ser obtidas na referência (FERREIRA, 2016). 
+
+Além  da  hipótese  inicial,  também  consideramos  que  são  feitas  medições 
+
+ruidosas  da  variável  de  estado  𝑋  a  cada  passo  de  tempo.  No  contexto  do  filtro  de 
+
+Kalman, iremos considerar que serão feitas medidas ruidosa 𝑌(cid:143) no tempo 𝑡 que estão 
+
+relacionada com a variável de estado 𝑋(cid:143) por meio de uma transformação linear e a 
+
+possível adição de mais ruído 𝑉(cid:143): 
+
+𝑌(cid:143) = 𝐻(cid:143) ⋅ 𝑋(cid:143) + 𝑉(cid:143),  
+
+(2.2) 
+
+aqui  𝐻(cid:143) é também uma matriz conhecida e chamada de matriz de observação. 
+
+          Para explicitar melhor todas as partes das equações (2.1) e (2.2), vamos dar 
+
+continuidade  ao  exemplo  trabalhado  ao  final  da  seção  1.6.  Continuaremos  a 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+37 
+
+considerar um movimento linear e com aceleração constante. Desta forma, temos que 
+
+o  estado  futuro  da  posição,  velocidade  e  aceleração  do  movimento  do  veículo  no 
+
+exemplo são dadas pelas seguintes equações horárias para o movimento retilínio e 
+
+uniforme: 
+
+𝛥𝑡/
+2
+
+𝑎,	
+
+𝑥(cid:143)4. = 𝑥(cid:143) + 𝛥𝑡 ⋅ 𝑣(cid:143) +
+
+𝑣(cid:143)4. = 𝑣(cid:143) + Δ𝑡 ⋅ 𝑎,	
+
+𝑎(cid:143)4. = 𝑎(cid:143). 
+
+Teremos então, que o vetor de estados futuros 𝑋(cid:143)4. = [𝑥(cid:143)4. 𝑣(cid:143)4. 𝑎(cid:143)4.]ƒ (note que: 
+𝑎(cid:143) = 𝑎) será dada pela seguinte equação: 
+
+𝑋(cid:143)4. = ¢
+
+𝑥(cid:143) + 𝛥𝑡 ⋅ 𝑣(cid:143) +
+𝑣(cid:143) + 𝛥𝑡 ⋅ 𝑎
+𝑎
+
+𝛥𝑡/
+2
+
+¥ = (cid:181)
+
+1
+0
+0
+
+𝛥𝑡
+1
+0
+
+𝛥𝑡//2
+𝛥𝑡
+1
+
+¶ ⋅ 𝑋(cid:143) = 𝐹(cid:143) ⋅ 𝑋(cid:143), 
+
+(2.3) 
+
+em que 𝐹(cid:143) é a matriz de transição de estados. Observe que a equação (2.3) acima 
+
+equivale a uma versão discreta do sistema dinâmico apresentado no capítulo anterior 
+
+pela equação (1.16). Importante observar que o tempo 𝑡 aqui considerado equivale ao 
+
+instante de tempo 𝑡˜ + 𝑡 ⋅ Δ𝑡, em que Δ𝑡 representa a diferença entre os instantes 𝑡 e 
+
+𝑡 + 1. 
+
+Com relação a observação que será feita pelo radar 𝑌(cid:143) = (𝑋(cid:143), 0, 0)ƒ, verifica-se 
+que apenas a localização no referido instante está sendo medida e assim podemos 
+
+obter a matriz de observação 𝐻(cid:143), através da seguinte equação: 
+
+𝑌(cid:143) = (cid:181)
+
+1
+0
+0
+
+0
+0
+0
+
+0
+0
+0
+
+¶ ⋅ 𝑋(cid:143) = 𝐻(cid:143) ⋅ 𝑋(cid:143) 
+
+Neste exemplo teremos que os vetores de ruído 𝑊(cid:143) e 𝑉(cid:143) não foram levados em 
+
+conta, portanto os consideramos nulos sob as premissas de comportamentos ideais 
+
+fornecidas. A matriz de controle 𝐵(cid:143) e o vetor de controle 𝑢(cid:143) também não foram usados 
+
+neste exemplo e foram representados pela matriz nula e vetor nulo, respectivamente.  
+
+Com isso teremos as seguintes equações representando a situação problema 
+
+proposta: 
+
+𝑋(cid:143) = 𝐹(cid:143). 𝑋(cid:143)~.  
+
+𝑌(cid:143) = 𝐻(cid:143) ⋅ 𝑋(cid:143)  
+
+(2.4) 
+
+(2.5) 
+
+ 
+ 
+				
+				
+ 
+ 
+38 
+
+É  importante  observar  que  a  matriz  de  controle  𝐵(cid:143) e  o  vetor  de  controle  𝑢(cid:143) 
+
+definem algum tipo de interferência ou influência  no momento 𝑡 que não é inerente 
+
+ao próprio processo. Com isso o exemplo precisa ser remodelado para a introdução 
+
+dos ruídos tanto no processo, quanto na medição, para assim recairmos nas equações 
+
+(2.1) e (2.2), tornando pertinente a aplicação e uso do Filtro de Kalman. Sendo assim, 
+
+aprimoraremos a modelagem do exemplo para que a aplicação dos conceitos do filtro 
+
+que  já  foram  detalhados  e  de  alguns  que  vamos  trabalhar  nas  próximas  seções, 
+
+tragam  uma  estimativa mais  precisa possível,  portanto quando  construirmos  todo o 
+
+embasamento teórico retornaremos a ele.  
+
+2.3 Equações de Previsão – Atualização 
+
+A  partir  desta  seção,  utilizaremos  as  seguintes  notações  especiais  para 
+
+representarmos  os  pontos  que  trataremos  ao  longo  da  construção  das  equações 
+
+envolvidas no Filtro de Kalman. 
+
+Teremos então as seguintes representações: 
+
+𝑋(cid:210): Estado estimado. 
+
+𝐹: Matriz de transição de estados.  
+
+𝑢: Variáveis de controle. 
+
+𝐵: Matriz de controle (isto é, mapeamento de controle para variáveis de estado). 
+
+𝑃: Matriz de variância do estado (ou seja, erro de estimativa). 
+
+𝑄: Matriz de variância do processo (ou seja, erro devido ao processo). 
+
+𝑌: Variáveis de medição. 
+
+𝐻: Matriz de medição (ou seja, mapeamento de medidas para o estado). 
+
+𝐾: Ganho de Kalman. 
+
+𝑅: Matriz de variação da medição (ou seja, erro das medições). 
+
+Os subscritos que utilizaremos são os seguintes:  
+
+t | t →	Representa o período ou instante atual. 
+
+t - 1 | t - 1→ Representa o período anterior. 
+
+t | t - 1 → Representa as etapas intermediárias ou transição. 
+
+ 
+ 
+ 
+ 
+ 
+39 
+
+A  aplicação  do  Filtro  de  Kalman  serão  divididas  em  duas  etapas,  que 
+
+chamaremos de fase de previsão e fase de atualização, em que cada uma delas será 
+
+composta por algumas equações. 
+
+O filtro de Kalman opera de tal forma em que são aplicadas de forma sucessivas 
+
+identidades sobre a distribuição Gaussiana para estimar a evolução do estado 𝑋 de 
+
+um objeto considerando uma sequência de observações {𝑌(cid:143)} deste mesmo objeto. 
+
+Para  chegarmos  as  expressões  desejadas  para  cada  uma  das  duas  fases, 
+
+vamos  considerar  uma  sequência  de  observações  𝑌(cid:143)  é  feita.  Além  disso,  será 
+
+considerado  que  o  sistema  dinâmico  linear  tem  comportamento  Gaussiano,  isto  é, 
+
+estamos  considerando  que  o  estado  𝑋(cid:143)~.  transcorrido  todas  as  observações  até  o 
+
+instante  𝑡 − 1,  se  comporte  como  uma  função  de  distribuição  de  probabilidade 
+
+Gaussiana multivariada: 
+
+                     ℘(𝑋(cid:143)~.|𝑌(cid:143)~.) = 𝒩(cid:158)𝑋(cid:143)~.; 𝑋(cid:210)(cid:143)~.|(cid:143)~., 𝑃(cid:143)~.|(cid:143)~.(cid:159), 
+
+(2.6) 
+
+em  que  ℘(𝑋(cid:143)~.|𝑌(cid:143)~.) = ℘(𝑋(cid:143)~. ∩ 𝑌(cid:143)~.)/℘(𝑌(cid:143)~.) 
+representa  a  probabilidade 
+condicional,  𝒩(cid:158)𝑋(cid:143)~.; 𝑋(cid:210)(cid:143)~.|(cid:143)~., 𝑃(cid:143)~.|(cid:143)~.(cid:159)  a  distribuição  de  probabilidade  normal  dada 
+pela equação (1.8) com 𝜇 = 𝑋(cid:210)(cid:143)~.|(cid:143)~. e 𝜎 = 𝑃(cid:143)~.|(cid:143)~., e finalmente 𝑌(cid:143)~. indica todas as 
+observações até o instante 𝑡 − 1. Além disso, 𝑋(cid:210)(cid:143)|(cid:143) denota a estimativa do estado 𝑋(cid:143) no 
+tempo 𝑡 e 𝑃(cid:143)|(cid:143) a matriz de variância do erro 𝑋(cid:143) − 𝑋(cid:210)(cid:143)|(cid:143). 
+
+Aqui será importante considerar que o ruído do processo 𝑊(cid:143) seja independente 
+
+de 𝑋(cid:143) e que ele seja dado por uma distribuição Gaussiana com matriz de covariância 
+
+conhecida  𝑄(cid:143)  e  𝜇@,(cid:143) = 𝐸(cid:160)𝑤@,(cid:143)¡ = 0,  para  𝑖 = 1, 2, 3, …	, 𝑛.  Observe  que  nosso  modelo 
+
+dinâmico sobre a variável de estado é dado pela equação (2.1) e o mesmo pode ser 
+
+simplificado considerando que a variável de controle 𝑢(cid:143) é nula. Neste caso obtemos: 
+
+																				𝑋(cid:143) = 𝐹(cid:143). 𝑋(cid:143)~. + 𝑊(cid:143), 
+
+(2.7) 
+
+Com  isso  podemos  prever  como  se  comporta  o  estado  𝑋(cid:143)  (no  instante  𝑡)  dada  a 
+
+informação  𝑌(cid:143)~..  Neste  caso,  é  imediato  observar  que  𝑋(cid:143)  é  obtido  através  de  uma 
+
+transformação linear em 𝑋(cid:143)~. e o acréscimo de ruído Gaussiano. Desta forma, através 
+
+de resultados conhecidos sobre a distribuição Gaussiana pode-se provar que: 
+
+                          ℘(𝑋(cid:143)|𝑌(cid:143)~.) = 𝒩(cid:158)𝑋(cid:143); 𝑋(cid:210)(cid:143)|(cid:143)~., 𝑃(cid:143)~.|(cid:143)~.(cid:159), 
+
+em que 
+
+representa o  estado de transição e 
+
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑋(cid:210)(cid:143)~.|(cid:143)~.,  
+
+(2.8) 
+
+(2.9) 
+
+ 
+ 
+40 
+
+representa a matriz de variância do estado, ou seja, erro de estimativa da etapa de 
+
+𝑃(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑃(cid:143)~.|(cid:143)~.𝐹(cid:143)
+
+ƒ + 𝑄(cid:143),  
+
+(2.10) 
+
+transição.  
+
+Esse  processo  pode  ser  repetido  diversas  vezes,  de  forma  a  condicionar  o 
+
+verdadeiro  valor  da  observação  𝑌(cid:143).  Como  sabemos  que  o  processo 
+
+tem 
+
+comportamento linear, podemos representar a observação da seguinte forma: 
+
+																					𝑌(cid:143) = 𝐻(cid:143). 𝑋(cid:143) + 𝑉(cid:143), 
+
+(2.11) 
+
+em que o ruído 𝑉(cid:143) correspondente da observação possui distribuição conjunta também 
+
+Gaussiana com matriz de variância 𝑅(cid:143) e 𝜇@,(cid:143) = 𝐸(cid:160)𝑉@,(cid:143)¡ = 0 para 𝑖 = 1, 2, 3, …	, 𝑛. Com 
+
+isso é possível determinar a distribuição conjunta de probabilidade entre 𝑋(cid:143) e 𝑌(cid:143), dadas 
+
+as  observações  anteriores  𝑌(cid:143)~.  (℘(𝑋(cid:143), 𝑌(cid:143)|𝑌(cid:143)~.	)).  Desta  forma,  chegaremos  as 
+
+equações para a fase de predição, tendo em vista o comportamento dinâmico, linear 
+
+e Gaussiano de todo processo. 
+
+Para  a  fase  de  atualização,  obtemos  o  valor  𝑌(cid:143)  e  aplicamos  a  distribuição 
+
+conjunta ℘(𝑋(cid:143)|𝑌(cid:143)) na equação (2.6), com isso chegamos ao seguinte resultado: 
+
+℘(𝑋(cid:143)|𝑌(cid:143)) = 𝒩(cid:158)𝑋(cid:143); 𝑋(cid:210)(cid:143)|(cid:143), 𝑃(cid:143)|(cid:143)(cid:159), 
+
+em que a covariância da medida 𝑌(cid:143) dado um 𝑌(cid:143)~. será: 
+
+𝑆(cid:143) = 𝐻(cid:143). 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ + 𝑅(cid:143)  
+
+(2.12) 
+
+(2.13) 
+
+Após  a  descrição  dessas  equações  associadas  as  duas 
+
+fases  de 
+
+implementação do Filtro Kalman, podemos agora, de forma mais direta, resumir a fase 
+
+de previsão e de atualização da seguinte maneira:  
+
+Fase de Previsão do filtro. Nesta etapa de aplicação do Filtro Kalman, calculamos o 
+
+estado  previsto  utilizando  uma  modelagem  matemática  para  representação  da 
+
+situação problema e a matriz de variância prevista usando a matriz de transição de 
+
+estado 𝐹(cid:143), a matriz de controle 𝐵(cid:143) e matriz de variância do ruído do processo 𝑄(cid:143), como 
+
+dado no modelo: 
+
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑋(cid:210)(cid:143)~.|(cid:143)~. + 𝐵(cid:143) ⋅ 𝑢(cid:143)  
+
+𝑃(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑃(cid:143)~.|(cid:143)~.𝐹(cid:143)
+
+ƒ + 𝑄(cid:143)  
+
+(2.14) 
+
+(2.15) 
+
+É importante observar novamente que as expressões acima estão relacionadas 
+
+a  equação  que  representa  um  sistema  dinâmico  linear,  a  diferença  é  que  agora 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+41 
+
+estamos nos referindo a estimativas de estado contabilizando ruídos relacionados ao 
+
+processo   
+
+Fase de atualização do filtro. Nesta segunda etapa de aplicação do Filtro Kalman, 
+calculamos o vetor residual de medição 𝑍(cid:214)(cid:143) e a matriz de variância residual 𝑆(cid:143), usando 
+
+a matriz observação 𝐻(cid:143) e a variância do ruído de observação 𝑅(cid:143), conforme obtido no 
+
+modelo de medição,  ou  seja,  é  uma  etapa  voltada  para  se  trabalhar  com  os  dados 
+
+relacionados ao processo de coleta da medição. 
+
+𝑍(cid:214)(cid:143) = 𝑌(cid:143) − 𝐻(cid:143) ⋅ 𝑋(cid:210)(cid:143)|(cid:143)~.  
+
+𝑆(cid:143) = 𝐻(cid:143). 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ + 𝑅(cid:143)  
+
+(2.16) 
+
+(2.17) 
+
+Após  as  duas  etapas  de  implementação  do  Filtro  de  Kalman,  chegamos  ao 
+
+objetivo final, que é a estimativa do estado. Agora basta calcular o vetor de estimativa 
+
+de estado atualizado, ou seja, encontrar a solução da estimativa para o tempo 𝑡. Vale 
+
+salientar  que  a  estimativa  será  encontrada  na  fase  de  atualização  e  por  meio  da 
+
+seguinte equação: 
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ 𝑍(cid:214)(cid:143),  
+
+(2.18) 
+
+em que  𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ ⋅ 𝑆(cid:143)
+
+~.  é conhecido como ganho de Kalman e será detalhado 
+
+na próxima seção. 
+
+Para  mais  detalhes  sobre  a  dedução  das  equações  referentes  as  fases  de 
+
+atualização e previsão do Filtro Kalman, veja (GREWAL; ANDREWS, 2001; MANKE, 
+
+2018). 
+
+2.4 Ganho de Kalman Ideal  
+
+Definiremos 𝐾(cid:143) como o ganho de Kalman, em que representará uma correção 
+
+ao vetor de variáveis de estado após a observação da variável 𝑌, o que nos leva a 
+
+possibilidade  de  encará-lo  como  uma  ponderação  entre  os  erros  associados  ao 
+
+processo  de  previsão  e  atualização,  sendo  visto  como  o  ajuste  necessário  para 
+
+potencializar  o  processo  de  estimação,  que  atualizado  a  cada 
+
+iteração. 
+
+Matematicamente teremos a seguinte representação para o ganho de Kalman ideal: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ ⋅ 𝑆(cid:143)
+
+~.  
+
+42 
+
+(2.19) 
+
+Ao aplicarmos a equação do ganho de Kalman (𝐾(cid:143)) na equação de atualização 
+do  estado  (𝑋(cid:210)(cid:143)|(cid:143)),  teremos  o  impacto  da  minimização  do  erro  quadrático  médio  𝐸 =
+[(𝑋(cid:143) − 𝑋(cid:143)|(cid:143))/], que é equivalente a minimizar o rastreio de 𝑃(cid:143)|(cid:143) (equivalente a soma dos 
+
+elementos na diagonal principal). 
+
+Desta forma, teremos que a matriz de variância da estimativa atualizada, será 
+
+reescrita para: 
+
+𝑃(cid:143)|(cid:143) = (𝐼 − 𝐾(cid:143) ⋅ 𝐻(cid:143))𝑃(cid:143)|(cid:143)~.  
+
+(2.20) 
+
+Essa  equação  se  mostra  necessária  para  aplicação  na  fase  de  previsão,  no 
+
+tempo 𝑡 + 1, em que ela precisa ser aplicada no início do processo de cada estimativa. 
+
+Agora sim, podemos aplicar o exemplo proposto na seção 2.2, pois já temos 
+
+todo  o  embasamento  teórico  necessário  para  aplicação  do  Filtro  Kalman  em  uma 
+
+situação problema mais completa. 
+
+Vamos adaptar o exemplo a seguinte situação: O veículo está supostamente 
+
+se movendo ao longo de uma linha reta, mas agora com aceleração aleatória 𝑎(cid:143) entre 
+
+o  tempo  𝑡 − 1  e  tempo  𝑡,  no  qual  assumimos  que  a  distribuição  é  Gaussiana  com 
+
+média  zero  e  variância  𝜎(cid:132)
+
+/.  As  medidas  das  posições  do  veículo  também  são 
+
+supostamente ruidosas, portanto possuem algum erro referente às medições, ou seja, 
+
+ruído Gaussiano com média zero e variância 𝜎(cid:215)
+
+/. O vetor de estado desse processo é 
+
+dado por  
+
+𝑋(cid:143) = 	 (𝑥(cid:143), 𝑥̇ (cid:143))ƒ, onde 𝑥̇ (cid:143) indica a velocidade 𝑣(cid:143). 
+
+Da mesma forma que no exemplo inicial, não assumimos nenhum controle do 
+
+processo (matriz de controle), ou seja, 𝑢(cid:143) é o vetor nulo. O que nos levará ao seguinte 
+
+ponto:  
+
+Com 𝐹(cid:143) = 𝑒 ˚(cid:143).¸ = 𝐼/ + 𝛥𝑡. (cid:216)
+
+0 1
+0 0
+
+(cid:217) = (cid:216)
+
+1 𝛥𝑡
+1
+0
+
+(cid:217), 𝑋(cid:143)~. = (cid:216)
+
+𝑥(cid:143)~.
+𝑣(cid:143)~.
+
+(cid:217) e 𝑊(cid:143) = 𝑎(cid:143) (cid:218)𝛥𝑡//2
+𝛥𝑡
+
+(cid:219) obtemos 
+
+𝑋(cid:143) = 𝐹(cid:143)𝑋(cid:143)~. + 𝑊(cid:143) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+43 
+
+trazendo esta equação para forma matricial obteremos: 
+
+𝑋(cid:143) = (cid:216)
+
+1 𝛥𝑡
+1
+0
+
+(cid:217) (cid:216)
+
+𝑥(cid:143)~.
+𝑣(cid:143)~.
+
+(cid:217) + 𝑎(cid:143) (cid:218)𝛥𝑡//2
+𝛥𝑡
+
+(cid:219) 
+
+com a matriz de variância 
+
+𝑄(cid:143) = 𝑊[𝑊(cid:143)𝑊(cid:143)
+
+ƒ] = 	 𝐺(cid:143)𝐸[𝑎(cid:143)
+
+/]𝐺(cid:143)
+
+ƒ = 𝜎(cid:132)
+
+/ (cid:218)
+
+𝛥𝑡(cid:149)/4 𝛥𝑡0/2
+𝛥𝑡/ (cid:219) 
+𝛥𝑡0/2
+
+Isso  nos  mostra  que  de  fato  𝐹(cid:143),  𝑄(cid:143) e  𝐺(cid:143) são  grandezas  escalares  e  portanto 
+
+independentes de 𝑡, e por esse motivo, em específico,  poderão ser chamadas de 𝐹, 
+
+𝑄	e 𝐺, respectivamente. 
+
+Para a medição da posição do objeto no tempo 𝑡 utilizaremos a equação (2.2) 
+
+trazendo essa equação para forma matricial, obteremos: 
+
+𝑌(cid:143) = 𝐻 ⋅ 𝑋(cid:143) + 𝑉(cid:143) 
+
+𝑌(cid:143) = (cid:216)
+
+1 0
+0 0
+
+(cid:217) 𝑋(cid:143) + (cid:216)
+
+𝑣(cid:143)
+0
+
+(cid:217) 
+
+em que 𝑉(cid:143) é o ruído de observação, com matriz de variância 
+
+𝑅 = 𝐸[𝑉(cid:143)𝑉(cid:143)
+
+ƒ] = 	 (cid:218)
+
+/ 0
+𝜎(cid:215)
+0
+0
+
+(cid:219) 
+
+Vamos considerar que a posição inicial é igual a 𝑋(cid:210)˜|˜ = (0,0)ƒ, em que esta posição é 
+
+conhecida com um certo nível de precisão, portanto teremos a matriz de variância zero 
+
+𝑃˜|˜ = (cid:216)
+
+0 0
+0 0
+
+(cid:217) 
+
+Caso tenhamos um nível significativo de imprecisão, teremos que 
+
+𝑃˜|˜ = (cid:216)
+
+𝑐 0
+0 𝑐
+
+(cid:217) 
+
+com um 𝑐 > 	0 real adequadamente grande. 
+
+Agora já podemos aplicar as equações do Filtro Kalman para estimar a posição 
+do veículo em 𝑡 = 1. Inicialmente, prevemos 𝑋(cid:210).|˜ e calculamos sua matriz de variância 
+
+𝑃.|˜, seguindo as equações de previsão (2.14) e (2.15). 
+
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹(cid:143)𝑋(cid:210)(cid:143)~.|(cid:143)~. + 𝐵(cid:143)𝑢(cid:143) 
+
+ 
+ 
+44 
+
+𝑃(cid:143)|(cid:143)~. = 𝐹(cid:143)𝑃(cid:143)~.|(cid:143)~.𝐹(cid:143)
+
+ƒ + 𝑄(cid:143) 
+
+Como consideramos 𝐵(cid:143) e 𝑢(cid:143) nulos e sabendo que 𝐹(cid:143) e 𝑄(cid:143) são escalares, teremos: 
+
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹𝑋(cid:210)(cid:143)~.|(cid:143)~.  
+𝑃(cid:143)|(cid:143)~. = 𝐹𝑃(cid:143)~.|(cid:143)~.𝐹ƒ + 𝑄  
+
+(2.21) 
+
+(2.22) 
+
+Em seguida, calculamos os dados auxiliares 𝑍(cid:214). e 𝑆., tomando como base as 
+equações de atualização (2.16) e (2.17), lembrando que 𝐻(cid:143) e 𝑅(cid:143) são escalares e os 
+
+representaremos por 𝐻 e 𝑅, respectivamente: 
+
+									𝑍(cid:214). = 𝑌(cid:143) − 𝐻𝑋(cid:210)(cid:143)|(cid:143)~. 
+
+          𝑆(cid:143) = 𝐻𝑃(cid:143)|(cid:143)~.𝐻ƒ + 𝑅 
+
+(2.23) 
+
+(2.24) 
+
+Isso  nos  permite  calcular  o  ganho  de  Kalman  ideal  𝐾.  e  a  atualização  𝑋(cid:210).|., 
+
+levando em consideração todos os ruídos relacionados as duas etapas de aplicação 
+
+do Filtro, seguindo as equações (2.16) e (2.17): 
+
+𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~.𝐻ƒ𝑆(cid:143)
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143)𝑍(cid:214)(cid:143)  
+
+~.  
+
+     (2.25) 
+
+     (2.26) 
+
+Por  fim,  calculamos 𝑃.|. para repetir  todo  o  processo  de  aplicação  em 𝑡 = 2, 
+
+seguindo a equação (2.20) e lembrando que  𝐻(cid:143) é escalar e representamos por 𝐻: 
+
+                                             𝑃(cid:143)|(cid:143) = (𝐼 − 𝐾(cid:143) ⋅ 𝐻)𝑃(cid:143)|(cid:143)~. 
+
+     (2.27) 
+
+Todo o processo para os demais instantes 𝑡, poderá ser calculado da mesma 
+
+forma,  nos  levando  a  um  processo  de  iteração.  É  importante  observar  que  esses 
+
+cálculos  passam  por  operações  entre  matrizes  ou  operações  com  álgebra  vetorial, 
+
+que quando analisados de maneira formal, nos aparenta algo com um certo grau de 
+
+complexidade. Por outro lado, a implementação do Filtro de Kalman (fase de previsão 
+
+e atualização) é bastante simples e que pode ser aplicado facilmente por um estudante 
+
+do  ensino  médio  por  exemplo.  Para  mais  um  exemplo  de  aplicação,  fica  como 
+
+sugestão (FRANCISCO, 2014). 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+45 
+
+Portanto, podemos concluir que o Filtro de Kalman pode ser apresentado em 
+
+duas fases: previsão e atualização de dados. A fase de previsão usa a estimativa do 
+
+estado no tempo anterior 𝑡 − 1 para chegar a uma estimativa no tempo atual 𝑡 ou até 
+
+mesmo em estados futuros, não incluindo, ainda, a informação vinda do estado atual, 
+
+ou seja, utiliza mecanismos de recursão. Já na fase de atualização, a estimativa da 
+
+fase de previsão é combinada com a observação atual e com o ganho de kalman, para 
+
+melhorar a estimativa do estado e potencializar a medida para o estado estimado em 
+
+análise.  Vejamos  a  tabela  abaixo  que  nos  mostra  as  equações  necessárias  para 
+
+implementação  do  Filtro  de  Kalman  em  situações  que  recaiam  na  forma  espaço-
+
+estado. 
+
+Tabela 2 – Fases da estimativa 
+
+Previsão (Atualização de tempo/estado) 
+
+Atualiza o estado no decorrer do tempo 
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹(cid:143). 𝑋(cid:210)(cid:143)~.|(cid:143)~. + 𝐵(cid:143). 𝑢(cid:143) 
+
+Atualização da matriz de erro de 
+covariância 
+
+𝑃(cid:143)|(cid:143)~. = 𝐹(cid:143). 𝑃(cid:143)~.|(cid:143)~.𝐹(cid:143)
+
+ƒ + 𝑄(cid:143) 
+
+Atualização (Atualização de Medida) 
+Cálculo do ganho de Kalman 
+
+𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~.. 𝐻(cid:143)
+
+ƒ. 𝑆(cid:143)
+
+~. 
+
+Estimativa do estado atualizado 
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143). 𝑍(cid:214)(cid:143) 
+Atualiza o sinal estimado com as novas medidas 
+𝑍(cid:214)(cid:143) = 𝑌(cid:143) − 𝐻(cid:143). 𝑋(cid:210)(cid:143)|(cid:143)~. 
+
+Atualiza a matriz erro de covariância 
+𝑃(cid:143)|(cid:143) = (𝐼 − 𝐾(cid:143). 𝐻(cid:143))𝑃(cid:143)|(cid:143)~. 
+
+Fonte: elaborada pelo autor. 
+
+A  aplicação  de  forma  recursiva  do  processo  de  previsão  e  atualização  nos 
+
+conduzirá ao melhor valor possível para estimação do estado de um sistema dinâmico, 
+
+linear e modelado no espaço de estados. Para mais detalhes sobre a implementação 
+
+do Filtro Kalman, o leitor pode consultar a referência (GREG; GARY, 2001) e (RHUDY; 
+
+SALGUERO; HOLAPPA, 2017). 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+46 
+
+2.5 Ajustando o Filtro de Kalman 
+
+O ajuste do Filtro Kalman é um passo muito importante dentro do processo de 
+
+estimativa,  pois  nem  sempre  a  modelagem  para  a  situação  problema  ou  para  as 
+
+equações  dos  ruídos  se  mostrarão  eficientes  por  algum  equívoco  cometido  na 
+
+modelagem como um todo, com isso, é muito importante que seja realizado um ajuste 
+
+no  filtro,  caso  não  haja  convergência  dos  valores  estimados,  (essa  ação  pode  ser 
+
+aplicada na modelagem da situação problema ou em uma verificação na modelagem 
+
+do  ruídos)  com  o  intuito  de  fazer  com  que  as  estimativas  se  aproximem  o  mais 
+
+rapidamente possível dos valores reais, ou seja, para que o filtro funcione de maneira 
+
+mais  eficiente  e  eficaz.  A  elaboração  das  matrizes  de  variância  𝑄(cid:143)  e  𝑅(cid:143) ,  ou  da 
+
+constante 𝑐	 ≥ 	0 em 𝑃˜|˜ , influencia o número de intervalos de tempo aplicados no 
+
+filtro  de  Kalman,  de  modo  que  os  estados  previstos  convirjam  para  os  estados 
+
+verdadeiros  o  mais  rápido  possível,  ou  seja,  potencializa  a  "convergência"  do 
+
+processo  de  estimação.  Basicamente,  quando  assumimos  uma  maior  incerteza,  ou 
+
+seja, maior valor para 𝑐	 ≥ 	0, ou valores maiores em 𝑄(cid:143) e 𝑅(cid:143), teremos a consequência 
+~. na definição do ganho 
+
+de maiores valores de 𝑃(cid:143)|(cid:143)~. ou 𝑆(cid:143); devido ao uso do inverso 𝑆(cid:143)
+
+de  Kalman,  isso  diminui  os  valores  em  𝐾(cid:143) e  a  contribuição  do  vetor  residual  de 
+medição na equação de atualização do estado (𝑋(cid:210)(cid:143)|(cid:143)). Por exemplo, no caso extremo 
+
+em que temos certeza absoluta sobre a correção do estado inicial 	𝑍˜|˜ (ou seja, 𝑐 =
+
+0), então não se precisa assumir nenhum ruído no sistema e no processo de medição 
+
+(como  na  aplicação  do  exemplo  da  seção  2.2),  então  as  matrizes  𝑃(cid:143)|(cid:143)~.  e  𝑆(cid:143) se 
+
+reduzirão a matrizes nulas, o que nos conduz a um estado previsto é igual ao estado 
+
+atualizado.  
+
+2.6 Modelo alternativo para fase de previsão 
+
+Quando nos deparamos com um modelo contínuo para representar a situação 
+
+problema a ser modelada,  teremos a opção de trabalhar com uma matriz "A" para o 
+
+processo dinâmico linear dado em (1.16) 
+
+Ẋ = A ⋅ X 
+
+Com isso, será mais simples usar as equações (2.6) e (2.7) 
+
+ 
+ 
+ 
+ 
+47 
+
+𝑋(cid:210)̇
+(cid:143)|(cid:143)~. = 𝐴𝑋(cid:210)(cid:143)~.|(cid:143)~. + 𝐵(cid:143). 𝑢(cid:143) 
+𝑃(cid:143)|(cid:143)~. = 𝐴𝑃(cid:143)~.|(cid:143)~.𝐴ƒ + 𝑄(cid:143) 
+
+em vez daqueles que usam matrizes discretas 𝐹(cid:143). (Claro, isso também define matrizes 
+
+modificadas  𝐵(cid:143),  agora  definidas  pelo  impacto  de  controle  sobre  as  derivadas  de 
+
+vetores  de  estado).  Esta  modificação,  na  fase  de  previsão,  não  tem  nenhuma 
+
+consequência formal sobre a fase de atualização. Portanto, temos todos os aparatos, 
+
+ferramentas  algébricas  e  aritméticas  para  a  aplicação  do  Filtro  de  Kalman  em 
+modelagens contínuas ou discretas.  
+
+Antes de aplicarmos o filtro de maneira completa em uma situação problema, 
+
+podemos estabelecer uma espécie de roteiro a ser seguido, a fim de proporcionar a 
+
+minimização  do  ruído  (erro),  utilizaremos  o  modelo  proposto  por  (FANDI,  2008), 
+
+assumindo  a  construção  de  um  modelo  para  o  sistema  de  previsão  do  estado  e 
+
+fazendo com que o KF seja significativo: 
+
+1º Entendendo a situação: veja o problema, “quebre a cabeça”, tente entender o que 
+
+de  fato  está  acontecendo.  Se  for  cometido  algum  erro  nessa  etapa,  certamente  o 
+
+trabalho a ser realizado será totalmente comprometido. 
+
+2º Modelando o problema do processo de estado: comece com um modelo básico, 
+
+o  mais  próximo  possível  da  sua  realidade  e  do  seu  entendimento  da  situação 
+
+problema. Pode não funcionar efetivamente no início, mas isso pode ser refinado mais 
+
+tarde ao longo do processo de estimativa. 
+
+3º Modelando o processo de medição: analise como você vai medir o processo e 
+
+quais as melhores opções a seu alcance para serem utilizadas como aparelhos e/ou 
+
+sensores  para  aferir  as  medições.  Sempre  trabalhe  com  o  aparelho  ou  sensor  de 
+
+medição  mais  eficiente  possível  dentro  do  contexto  a  ser  aplicado.  O  espaço  de 
+
+medição pode não estar no mesmo espaço que o objeto a ser analisado (por exemplo, 
+
+usando um radar para estimar a localização de um automóvel, ou de um avião). 
+
+4º Modelando o ruído (erro): isso precisa ser feito tanto para a estimação do estado, 
+
+quanto  para  o  processo  de  medição.  O  Filtro  de  Kalman  possui  como  base  de 
+
+implementação o ruído Gaussiano, por isso, faça a análise da variância e covariância, 
+
+ou  seja,  dos  erros  associados  ao  processo,  para  verificar  se  o  ruído  é,  ou  não, 
+
+ 
+ 
+48 
+
+significativo. Portanto, verifique se o erro do seu modelo é adequado, ou não, para a 
+
+situação.  
+
+5º Testando o filtro: muitas vezes, por descuido, se deixa de lado essa importante 
+
+etapa.  Use  dados  hipotéticos,  se  necessário  (por  exemplo,  se  o  processo  não  for 
+
+seguro  para  testar  em  tempo  real  ou  no  meio  Ambiente).  Veja  se  o  filtro  está  se 
+
+comportando como deveria.  
+
+6. Refinando o filtro: uma boa alternativa para corrigir a convergência do processo 
+
+de estimativa é alterar os parâmetros de ruído, conforme for trabalhado, isso é o mais 
+
+fácil de mudar. Caso a convergência da estimativa não seja corrigida adequadamente, 
+
+volte mais, pode ser necessário repensar e remodelar a 2ª e 3ª etapa desse processo. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+49 
+
+CAPÍTULO 3 
+
+APLICAÇÕES DO FILTRO DE KALMAN 
+
+Neste capítulo, seguindo as etapas de aplicação do filtro, propostas no capítulo 
+
+anterior, mostraremos duas aplicações/modelagem do Filtro de Kalman com algumas 
+
+variantes dentro da situação problema. 
+
+3.1 Modelagem 1: Estimando o nível de água em um tanque 
+
+ 1º Entendendo a situação: 
+
+Vamos considerar uma situação simples, trabalhada em (FAN DI, 2008), que 
+mostra  uma  maneira  de  medir  o  nível  de  água  em  um  tanque. Isso  é  mostrado  na 
+
+Figura 3, a seguir: 
+
+Figura 3 – Nível de água em um tanque 
+
+Fonte: elaborada pelo autor.  
+
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+50 
+
+A  ideia  é  estimar  o  nível  de  água  no  tanque;  vale  observar  que  este  valor  é 
+
+desconhecido. As  medições  obtidas  são  do  nível  da  "boia"  (que  pode  ser  um 
+
+dispositivo eletrônico ou um simples dispositivo mecânico).  
+
+A água pode estar em um processo de: 
+
+• Enchimento constante, esvaziamento constante ou estático (ou seja, o nível 
+
+médio do tanque está aumentando, diminuindo ou constante). 
+
+• Enchimento com uma taxa que muda a cada instante ou estagnado com uma 
+
+instabilidade do sistema (ou seja, o nível relativo do flutuador para o nível médio 
+
+do tanque está mudando ao longo do tempo ou estático). 
+
+3.1.1 Primeira opção: um modelo estático 
+
+2º Modele o processo de estado 
+
+Vamos esboçar várias maneiras de modelar essa situação simples, mostrando 
+
+o poder de eficiência do Filtro Kalman. O primeiro é o modelo mais básico, em que o 
+
+tanque é nivelado (isto é, o verdadeiro nível é constante L = c). Vale observar que o 
+
+processo  de  estado,  nesta  situação,  corresponde  a  um  vetor  de  apenas  uma 
+
+componente.    Usando  as  equações  de  previsão  e  atualização,  apresentadas  no 
+
+capítulo  2  deste  trabalho,  a  variável de  estado  pode  ser  reduzida a  um  escalar  (ou 
+
+seja, 𝑋(cid:210) = 𝑥 em que 𝑥 é a estimativa de L). 
+
+Neste primeiro momento, vamos assumir um modelo constante, portanto 𝑥(cid:143)4. =
+
+𝑥(cid:143), com isso 𝐴 = 0 e 𝐹(cid:143)	 = 	1, para qualquer 𝑡	 ≥ 	0. As variáveis de controle 𝐵 e 𝑢 não 
+
+são usadas (ou seja, vamos considerar ambas = 0). 
+
+3º Modele o processo de medição 
+
+Nesta modelagem, já temos o nível do flutuador dado e com seu valor fixo. Isso 
+
+é representado por 𝑌 = 𝑦. O valor que estamos medindo pode ser uma medida em 
+
+escala  (por  exemplo,  uma  medição  de  1  cm  em  um  mostrador  mecânico  pode 
+
+realmente ter cerca de 10 cm no nível "verdadeiro" do tanque).  
+
+Por uma questão de simplicidade, assumiremos que a medida exata estará na 
+
+mesma escala que a nossa estimativa de estado 𝑥 (isto é, 𝐻 = 1) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+51 
+
+4º Modele o ruído 
+
+Para esse modelo, o processo é escalar, portanto 𝑃 = 𝑝 e vamos assumir que 
+
+há  ruído  de  medição  (ou  seja,  𝑅 = 𝑟). Se  o  processo  não  estiver  bem  definido, 
+
+ajustaremos  o  ruído  (ou  seja,  𝑄 = 𝑞).  No  desenrolar  do  processo  de  estimativa  do 
+
+nível da água, aplicaremos os efeitos da alteração desses parâmetros e ruídos, para 
+
+ficar  evidenciado  o  impacto  na  estimação  do  estado,  portanto  analisaremos  as 
+
+consequências que os ruídos podem trazer para o processo de estimativa. 
+
+5º Teste o filtro 
+
+Nessa etapa é possível simplificar as equações de previsão e atualização do 
+
+Filtro Kalman (é importante observar que ao invés de trabalharmos com equações na 
+
+forma  vetorial,  vamos  trabalhar  na  forma  escalar,  pois  trata-se  de  uma  situação 
+
+unidimensional). Elas ficam da seguinte forma: 
+
+             Previsão: 
+
+𝑥(cid:143)|(cid:143)~. = 𝑥(cid:143)~.|(cid:143)~. 
+
+𝑝(cid:143)|(cid:143)~. = 𝑝(cid:143)~.|(cid:143)~. + 𝑞(cid:143) 
+
+            Atualização: 
+
+𝐾(cid:143) = 𝑝(cid:143)|(cid:143)~.(𝑝(cid:143)|(cid:143)~. + 𝑟)~. 
+
+𝑥(cid:143)|(cid:143) = 𝑥(cid:143)|(cid:143)~. + 𝐾(cid:143)(𝑦(cid:143) − 𝑥(cid:143)|(cid:143)~.) 
+
+𝑝(cid:143)|(cid:143) = (1 − 𝐾(cid:143))	𝑝(cid:143)|(cid:143)~. 
+
+O  filtro  está  agora  completamente  definido. Vamos  substituir  os  valores  nas 
+
+equações de previsão e atualização. Para o primeiro teste, assumimos o nível de água 
+
+no tanque é 𝐿	 = 	1.  
+
+Inicializamos  o  estado  com  um  valor  arbitrário,  com  uma  variância 
+
+extremamente  alta,  pois  é  completamente  desconhecido:  𝑥˜ = 0  e  𝑝˜ = 1000.  Se 
+
+iniciarmos  com  um  valor  mais  significativo,  obteremos  uma  convergência  mais 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+             
+                              
+rápida. Para o ruído do sistema, vamos escolher q = 0,0001, pois achamos que temos 
+
+um modelo com certa precisão. Vamos começar esse processo: 
+
+52 
+
+Previsão: 
+
+𝑥.|˜ = 0 
+
+𝑝.|˜ = 1000 + 0,0001 
+
+A medida hipotética que obtemos para a medida do nível do tanque é 𝑦. = 0,9 
+
+(devido ao ruído). Assumimos um ruído de medição de 𝑟 = 0,1. Para a medição do 
+
+nível da água pode-se utilizar uma trena ou algum outro sensor de medição. 
+
+Atualização: 
+
+𝐾. = 1000,0001(1000,0001 + 0,1)~. = 0,9999 
+𝑥.|. = 0 + 0,9999(0,9 − 0) = 0,8999 
+
+𝑝.|. = (1 − 0,9999)1000,0001 = 0,1000 
+
+Na  Etapa  1,  a  inicialização  de  0,  aproximou-se  do  verdadeiro  valor  do 
+
+sistema. Além disso, a variância (erro) foi reduzida a um valor razoável. 
+
+ Prosseguindo para a próxima etapa de aplicação das equações, obtemos: 
+
+Previsão: 
+
+𝑥/|. = 0,8999 
+
+𝑝/|. = 0,1000 + 0,0001 = 0,1100 
+
+A medida hipotética que obtemos neste momento para a medida do nível do 
+
+tanque é 𝑦/ = 0,8 (devido ao ruído). 
+
+Atualização: 
+
+𝐾/ = 0,1001(0,1001 + 0,1)~. = 0,5002 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+53 
+
+𝑥/|/ = 0,8999 + 0,5002(0,8 − 0,8999) = 0,8499 
+
+𝑝/|/ = (1 − 0,5002)0,1001 = 0,0500 
+
+ Note  que a  variação  está  diminuindo  a  cada  iteração. Se  nós  continuarmos, 
+
+com valores hipotéticos 𝑦(cid:143), iremos obter os seguintes resultados: 
+
+Tabela 3 – Valores obtidos para fase de Previsão e Atualização 
+
+PREVISÃO 
+
+ATUALIZAÇÃO 
+
+𝑡 
+
+3 
+
+4 
+
+5 
+
+ 6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+𝑥(cid:143)|(cid:143)~. 
+
+0,8499 
+
+0,9334 
+
+0,9501 
+
+0,9501 
+
+0,9669 
+
+1,0006 
+
+0,9878 
+
+0,9722 
+
+𝑝(cid:143)|(cid:143)~. 
+
+0,0501 
+
+0,0335 
+
+0,0252 
+
+0,0202 
+
+0,0169 
+
+0,0146 
+
+0,0128 
+
+0,0115 
+
+𝑦(cid:143) 
+
+𝐾(cid:143) 
+
+𝑥(cid:143)|(cid:143) 
+
+𝑝(cid:143)|(cid:143) 
+
+1,1 
+
+0,3339 
+
+0,9334 
+
+0,0334 
+
+1 
+
+0,2509 
+
+0,9501 
+
+0,0251 
+
+0,95 
+
+1,05 
+
+1,2 
+
+0,9 
+
+0,85 
+
+1,15 
+
+0,2012 
+
+0,9501 
+
+0,0201 
+
+0,1682 
+
+0,9669 
+
+0,0168 
+
+0,1447 
+
+1,0006 
+
+0,0145 
+
+0,1272 
+
+0,9878 
+
+0,0127 
+
+0,1136 
+
+0,9722 
+
+0,0114 
+
+0,1028 
+
+0,9905 
+
+0,0103 
+
+Fonte: elaborada pelo autor. 
+
+É possível perceber, pela Tabela 3 acima, que o modelo funciona com sucesso 
+
+e boa precisão. Depois da estabilização (cerca de 𝑡 = 4), o estado estimado possui 
+
+um erro de, no máximo, 0,05, mesmo que as medições estejam entre 0,8 e 1,0 (ou 
+
+seja, erro de no máximo 0,2). Com a continuidade do processo de aplicação e iteração 
+
+das equações, obteremos o seguinte gráfico: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+           
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Gráfico 1 – Estimando o nível do tanque 
+
+54 
+
+1,4
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+a
+u
+g
+Á
+e
+d
+
+l
+
+e
+v
+i
+N
+
+0
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+Tempo (s)
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+Agora vejamos algumas conclusões que se pode chegar até o momento. 
+
+Se  for  criado  um  modelo  baseado  na  situação  real,  a  estimativa  de  estado 
+
+estará próxima do valor verdadeiro, mesmo quando as medições são muito ruidosas 
+
+(ou seja, um erro de 20%, produziu apenas uma Imprecisão de aproximadamente 5%). 
+
+Esse é o principal objetivo do Filtro Kalman, ou seja, minimizar a imprecisão para que 
+
+a estimativa seja potencializada. 
+
+Agora  vamos  alterar  a  situação  problema  para  analisar  o  que  vai  acontecer: 
+
+manteremos a mesma modelagem construída para um modelo estático, porém desta 
+
+vez, a situação será a seguinte: o tanque está enchendo a uma taxa constante: 
+
+𝐿(cid:143)	 = 	 𝐿(cid:143)~.	 + 	𝑓 
+
+Vamos supor que o tanque esteja enchendo a uma taxa de 𝑓 = 0,1 frame por 
+
+vez, e começamos com uma inicialização de 𝐿˜ = 0. Vamos assumir que a medição e 
+
+o ruído do processo permanecem os mesmos (ou seja, 𝑞 = 0,001 e 𝑟 = 0,1). 
+
+Vejamos o que irá acontecer: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+55 
+
+Tabela 4 – Tanque enchendo a uma taxa constante 
+
+PREVISÃO 
+
+ MEDIÇÃO E ATUALIZAÇÃO 
+
+𝑡 
+
+0 
+
+1 
+
+2 
+
+𝑥(cid:143)|(cid:143)~. 
+- 
+
+𝑝(cid:143)|(cid:143)~. 
+- 
+
+0,0000 
+
+1000,0001 
+
+0,1175 
+
+ 3  0,2048 
+
+4 
+
+5 
+
+6 
+
+0,2452 
+
+0,3096 
+
+0,3642 
+
+0,1001 
+
+0,0501 
+
+0,0335 
+
+0,0252 
+
+0,0202 
+
+𝑦(cid:143) 
+- 
+
+0,11 
+
+0,29 
+
+0,32 
+
+0,50 
+
+0,58 
+
+0,54 
+
+𝐾(cid:143) 
+- 
+
+𝑥(cid:143)|(cid:143) 
+0 
+
+𝑝(cid:143)|(cid:143) 
+1000 
+
+0,9999 
+
+0,1175 
+
+0,1000 
+
+0,5002 
+
+0,2048 
+
+0,0500 
+
+0,3339 
+
+0,2452 
+
+0,0334 
+
+0,2509 
+
+0,3096 
+
+0,0251 
+
+0,2012 
+
+0,3642 
+
+0,0201 
+
+0,1682 
+
+0,3945 
+
+0,0168 
+
+L 
+
+0 
+
+0,1 
+
+0,2 
+
+0,3 
+
+0,4 
+
+0,5 
+
+0,6 
+
+                                                Fonte: elaborada pelo autor. 
+
+ Agora, podemos ver que, com o tempo, o estado estimado se estabiliza (ou seja, a 
+variação fica muito baixa). Podemos ver isso no Gráfico 2, a seguir: 
+
+Gráfico 2 - Estimando o Nível no Tanque para 𝑞 = 0,001 
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+0
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+        
+ 
+ 
+ 
+ 
+56 
+
+Observe  que  o  estado  estimado  está  abaixo  do  nível  real. Este  problema  no 
+
+processo  de  estimativa  não  é  desejado,  pois  um  filtro  deve  remover  o  ruído,  não 
+
+fazendo  uma  leitura  imprecisa. Nesse  caso,  o  estado  estimado  tem  um  erro  muito 
+
+maior (comparado à realidade) do que o ruído do processo de medição. 
+
+Existem dois itens que podem estar causando isso: 
+
+• O modelo que escolhemos. 
+
+•  A  confiabilidade  do  nosso  modelo  de  processo  (ou  seja,  nosso  valor  𝑞 
+
+escolhido). 
+
+          Pode-se mudar o valor de 𝑞. A razão para a escolha 𝑞 = 0,0001 foi pensarmos 
+
+que o modelo fornecia uma boa estimativa do verdadeiro processo. No entanto, neste 
+
+caso, isso não acontece. Vamos supor que haja um erro maior com o modelo, dessa 
+
+forma, vamos aumentar o valor de 𝑞. Agora vamos considerar 𝑞 = 0,01: 
+
+Gráfico 3 – Estimando o Nível do Tanque para 𝑞 = 0,01   
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+0
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+Portanto, os benefícios de aumentarmos o erro ficaram evidenciados por meio 
+
+de um impacto positivo no processo de estimação. Contudo, o estado estimado ainda 
+
+ 
+ 
+ 
+ 
+ 
+57 
+
+apresenta mais erros do que o ruído real. Vamos aumentar esse valor novamente e 
+
+considerar 𝑞 = 0,1 e observar a nova análise no gráfico abaixo: 
+
+Gráfico 4 – Estimando o Nível do Tanque para 𝑞 = 0,1   
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+0
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+Os valores para estimativa do estado estão se aproximando do valor real e há 
+
+menos  erros  que  o  valor  do  ruído  de  medição.  Vamos  tentar  𝑞 = 1  para  ver  o  que 
+
+acontece: 
+
+Gráfico 5 – Estimando o Nível do Tanque para 𝑞	 = 	1 
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+0
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+ 
+ 
+ 
+ 
+ 
+Agora quase não há diferença em relação ao valor medido. O que ocorreu foi 
+
+uma remoção menor de ruído, mas não muito. Quase não há sentido em ter o filtro.                                                              
+
+58 
+
+Então, podemos chegar as seguintes conclusões: 
+
+Se temos um modelo mal definido, não teremos uma boa estimativa. Mas pode-
+
+se melhorar o modelo aumentando a ponderação do erro, ou seja, dando mais peso 
+
+ao  erro  estimado. Isso  permitirá  que  o  Filtro  Kalman  confie  mais  nos  valores  de 
+
+medição, mas ainda permite alguma remoção de ruído. Uma possibilidade é alterar o 
+
+erro de medição e rever qual é o efeito dessa mudança, sendo que isso possibilita um 
+
+ajuste no filtro sem ter que alterar a modelagem da situação problema. 
+
+ Um  ponto  importante  de  se  observar  é  que  o  ajuste  do  filtro,  ao  longo  do 
+
+processo, é uma cartada bastante viável para que o estado estimado se aproxime, ao 
+
+máximo, dos valores reais e uma boa forma de realizar estes ajustes é dando mais ou 
+
+menos peso, de acordo com a necessidade da situação problema, aos erros ou ruídos 
+
+associados à aplicação do filtro, ou seja, o ponto chave é a média ponderada entre as 
+
+duas informações. O que Kalman colocou em prática foi que quanto mais incerteza se 
+
+tem  na  medida  do  sensor,  mais  peso  nessa  média  ponderada  se  dará  para  a 
+
+modelagem, ou vice-versa; portanto, quanto mais incerteza se tem com a modelagem, 
+
+mais  peso  se  dará  para  a  medida  do  sensor.  Esse  processo  continuará 
+
+recursivamente  até  se  obter  a  informação  mais  precisa  que  possa  representar  a 
+
+situação problema. 
+
+3.1.2 Segunda opção: um modelo para enchimento do tanque 
+
+Nessa próxima etapa, vamos seguir o mesmo passo a passo realizado no caso 
+
+anterior para que possamos nos familiarizar ainda mais com a etapas de modelagem 
+
+e aplicação do Filtro Kalman. 
+
+2º Modele o processo de estado 
+
+Para  obter  melhores  resultados,  precisamos  alterar  nossa  modelagem 
+
+construída para o problema anterior. Vamos redefinir isso, então. 
+
+Portanto, o modelo real é:  
+
+𝐿(cid:143)	 = 	 𝐿(cid:143)~.	 + 	𝑓  
+
+(3.1) 
+
+ 
+ 
+ 
+ 
+           
+ 
+ 
+	
+59 
+
+Isso se traduz em uma transição contínua de processo de: 
+
+𝑋 = (𝑥., 𝑥(cid:224))ƒ 
+
+𝐴 = 9
+
+0 1
+0 0
+
+: 
+
+onde 𝑥. é o nível L e 𝑥(cid:224) = ,(cid:127)7
+
+,(cid:143)
+
+ é a taxa de enchimento estimada, e a matriz 𝐴 representa 
+
+o  tanque  enchendo  continuamente  na  taxa  𝑥(cid:224)  (definido  por  𝑓  na  escala  de  tempo 
+
+usada).  No  entanto,  queremos  um  processo discreto. Então,  a  matriz 𝐴  precisa  ser 
+
+discreta no tempo. Basta aplicar a soma infinita conforme indicado na equação (2.1) 
+
+da página 36 deste trabalho: 
+
+ 𝑋(cid:143) = 𝐹(cid:143) ⋅ 𝑋(cid:143)~. + 𝐵(cid:143) ⋅ 𝑢(cid:143) + 𝑤(cid:143) com 𝐹(cid:143) = 𝑒 ˚(cid:143).¸ = 𝐼 + ∑ ˚(cid:143)˝⋅¸˝
+
+(cid:136)
+@A.
+
+@!
+
+,  
+
+Observe que 𝐴@ é zero nas quatro componentes, para todos os 𝑖 > 1: 
+
+𝐹(cid:143) = 9
+
+1 𝛥𝑡
+1
+0
+
+: 
+
+para todo 𝑡 ≥ 0. Iremos ignorar 𝐵 e 𝑢	novamente, ou seja, ambos são iguais a 0. 
+
+3º Modele o processo de medição 
+
+Nesse  caso,  não  podemos  medir  diretamente  a  taxa  de  preenchimento,  mas 
+
+ainda assumirá uma medição ruidosa de L. Portanto, temos: 
+
+𝐻	 = 	 (1, 0) 
+
+𝑌	 = 	 (𝑦, 0)ƒ 
+
+Indicando que não há medição da taxa de enchimento e que 𝑦 é a medida estimada 
+
+de	𝑥.. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+           
+ 
+ 
+60 
+
+4º Modele o ruído 
+
+O processo de medição não mudou, o que significa que o ruído não mudou (ou 
+
+seja,  𝑅	 = 	𝑟).  O  processo  mudou,  por  isso  precisamos  redefinir  o  ruído.  Agora,  se 
+
+assumirmos que o ruído está apenas na parte de enchimento do processo, isso nos 
+
+daria um modelo de ruído contínuo com 
+
+𝑄 = Æ
+
+0
+0
+0 𝑞(cid:224)
+
+(cid:226) 
+
+Em que 𝑞(cid:224) é o ruído de enchimento. 
+
+Agora, esse processo contínuo pode ser aproximado por um modelo discreto 
+
+usando a seguinte integral: 
+
+(cid:230)(cid:143)
+𝑄(Δ𝑡) = (cid:137) 𝑒 ¸ª𝑄𝑒 ¸(cid:228)ª𝑑𝜏
+
+˜
+
+Usando essa tradução contínua para discreta, podemos usar o 𝐴 e 𝑄 contínuos 
+
+para aproximar o 𝑄 discreto. Isso nos dá (após alguns cálculos - a serem ignorados 
+aqui; agora aplique a soma infinita da potência de 𝑒): 
+
+𝑄 =
+
+𝛥𝑡0𝑞(cid:224)
+3
+𝛥𝑡/𝑞(cid:224)
+2
+
+⎛
+
+⎝
+
+𝛥𝑡/𝑞(cid:224)
+2
+
+⎞ 
+𝛥𝑡𝑞(cid:224) ⎠
+
+Para simplificar, assumimos uma taxa de amostragem contínua de ∆t = 1. Portanto, 
+
+𝐹(cid:143) = 9
+
+1 1
+0 1
+
+:		e  𝑄 = º
+
+(cid:236)(cid:237)
+0
+(cid:236)(cid:237)
+/
+
+(cid:236)(cid:237)
+/
+𝑞(cid:224)
+
+(cid:238) 
+
+Além disso, como o processo não é mais escalar, a matriz de covariância é 
+
+ 
+ 
+           
+ 
+ 
+	 
+ 
+ 
+ 
+ 
+ 
+61 
+
+𝑃 = 9
+
+𝑝(cid:239)
+𝑝(cid:239)(cid:224)
+
+𝑝(cid:239)(cid:224)
+𝑝(cid:224)
+
+: 
+
+Em que o subscrito denota a variação relativa e 𝑝(cid:239)(cid:224)	é a covariância (que é simétrica, 
+
+ou seja, 𝑝(cid:239)(cid:224) = 𝑝(cid:224)(cid:239)) 
+
+5º Teste o filtro 
+
+As equações de previsão e atualização, apresentadas na Tabela 3, mostrada 
+
+anteriormente,  podem  ser  um  pouco  simplificadas,  mas,  para  nossos  propósitos,  é 
+
+melhor apenas inserir as informações acima nas equações. Vale lembrar que lá na 
+
+etapa 2, deste exemplo, consideramos 𝐵 e 𝑢 novamente nulos, ou seja, ambos iguais 
+
+a 0 (𝐾 pode ser simplificado). Assim obtemos: 
+
+Previsão: 
+
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑋(cid:210)(cid:143)~.|(cid:143)~. 
+
+𝑃(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑃(cid:143)~.|(cid:143)~.𝐹(cid:143)
+
+ƒ + 𝑄(cid:143) 
+
+Atualização: 
+          𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ 𝑍(cid:214)(cid:143), em que 𝑍(cid:214)(cid:143) = 𝑌(cid:143) − 𝐻(cid:143) ⋅ 𝑋(cid:210)(cid:143)|(cid:143)~., com isso obteremos: 
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ (𝑌(cid:143) − 𝐻(cid:143) ⋅ 𝑋(cid:210)(cid:143)|(cid:143)~.) 
+
+          𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ ⋅ 𝑆(cid:143)
+
+~. em que 𝑆(cid:143) = 𝐻(cid:143) ⋅ 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ + 𝑅(cid:143), com isso obteremos: 
+
+𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ ⋅ (𝐻(cid:143) ⋅ 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ + 𝑅(cid:143))~. 
+
+𝑃(cid:143)|(cid:143) = (𝐼 − 𝐾(cid:143) ⋅ 𝐻(cid:143))𝑃(cid:143)|(cid:143)~. 
+
+Desta  vez,  temos  um  modelo  preciso  de  uma  taxa  de  preenchimento 
+
+constante. Nós assumiremos que temos um ruído de 𝑟 = 0,1 e uma precisão do ruído 
+
+ 
+ 
+ 
+ 
+           
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+62 
+
+do  processo  de  𝑞(cid:224) = 0,00001.  Não  temos  ideia  do  estado  inicial  ou  da  taxa  de 
+preenchimento; portanto, faremos 𝑋˜ = (0,0)ƒ com uma variação inicial de: 
+
+𝑃˜|˜ = 9
+
+1000
+0
+
+0
+1000
+
+: 
+
+Estamos assumindo que não temos ideia de nenhum dos valores e estamos 
+
+assumindo que existe pouca ou nenhuma correlação entre eles. 
+
+Precisamos testar esses resultados sob diferentes condições. O primeiro teste 
+
+será  verificar  se  o  modelo  está  sendo  preenchido  a uma  taxa  constante  de  0,1  por 
+
+período de tempo, com um ruído de medição real de ±0,3. Se traçarmos isso em um 
+
+gráfico, teremos o seguinte: 
+
+Gráfico 6 – Ruído de medição real de ±0,3 
+
+2,5
+
+2
+
+1,5
+
+1
+
+0,5
+
+0
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+16
+
+18
+
+20
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+Observa-se que o filtro se adapta rapidamente ao valor verdadeiro. Em nenhum 
+
+momento foi fornecido ao Filtro Kalman informações sobre a real taxa de enchimento, 
+
+o próprio algoritmo descobriu tudo de forma automática, mesmo com uma inicialização 
+
+com certa incerteza ou imprecisão. Na verdade, se dermos uma inicialização ruim ao 
+
+Filtro Kalman, será necessário a primeira medida como uma inicialização boa. 
+
+Agora vamos ver o que acontece se tentarmos atrapalhar o funcionamento do 
+
+Filtro Kalman usando um nível constante (ou seja, não há enchimento real): 
+
+ 
+ 
+ 
+ 
+ 
+ 
+63 
+
+Gráfico 7 – Filtro usando um nível constante  
+
+1,6
+
+1,4
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+0
+
+- 
+
+0
+
+2
+
+4
+
+6
+
+8
+
+10
+
+12
+
+14
+
+16
+
+Valor para estimativa de estado
+
+Valor de medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+O  filtro  estabiliza  exatamente  no  mesmo  período  de  tempo  que  antes. Isto  é 
+
+porque o modelo estabiliza com uma taxa de preenchimento de 0. 
+
+3.1.3 Terceira opção: Constante, mas instável (com ondulações) 
+
+Agora vamos testar um caso extremo. Assumiremos que a água está em um 
+
+nível  constante  (não  está  passando  por  nenhum  processo  de  enchimento  ou 
+
+esvaziamento, a quantidade de água é fixa), mas está variando no tanque por conta 
+
+de  alguma  vibração  ou  instabilidade  proposta. Esta  situação  problema  pode  ser 
+
+modelada como uma onda senoidal, ou seja, uma função trigonométrica da seguinte 
+
+forma: 
+
+𝐿 = 𝑐 ⋅ 𝑠𝑒𝑛(2π ⋅ r ⋅ ∆t) + 𝑙  
+
+(3.2) 
+
+onde 𝑐 é um fator de escala de amplitude, 𝑟 é a taxa de ciclo ou período e 𝑙 é o nível 
+
+médio (à medida que a instabilidade tende a zero ao longo do tempo). 
+
+Se usarmos 𝑐	 = 	0,5, 𝑟	 = 	0,05 e 𝑙	 = 	1, obteremos o seguinte resultado: 
+
+ 
+ 
+ 
+ 
+ 
+           
+ 
+ 
+ 
+ 
+ 
+Gráfico 8 – Resultado para 𝑐	 = 	0,5, 𝑟	 = 	0,05 e 𝑙	 = 	1  
+
+64 
+
+2
+
+1,8
+
+1,6
+
+1,4
+
+1,2
+
+1
+
+0,8
+
+0,6
+
+0,4
+
+0,2
+
+0
+
+0
+
+5
+
+10
+
+15
+
+20
+
+25
+
+30
+
+35
+
+Valor para estimativa de estado
+
+Valor para medição
+
+Valor real
+
+Fonte: elaborado pelo autor. 
+
+Há duas coisas que se deve observar sobre o Filtro Kalman: 
+
+1. O modelo é mais suave que a medição ruidosa, mas há um atraso em relação 
+
+ao valor real. Isso é comum quando o filtro está atuando num sistema que não está 
+
+modelado corretamente. 
+
+2.  A  amplitude  do  filtro  está  ficando  cada  vez  menor.  Isso  ocorre  porque  o 
+
+modelo está lentamente convergindo para o que pensa que é a verdade... um nível 
+
+constante, que é preciso em relação ao tempo. 
+
+Caso  seja  útil  modelar  a  instabilidade  ou  as  ondulações  corretamente, 
+
+precisaremos  usar  o  que  é  chamado  de  Filtro  Kalman  estendido,  que  levará  em 
+
+consideração  a  não  linearidade  do  sistema  e  aplicará  métodos  de  aproximação 
+
+Gaussiana  e  técnicas  de  linearização.  Como  o  objetivo  deste  trabalho  está 
+
+relacionado a situações lineares, não focaremos na resolução de situações em que 
+
+seja necessário implementar métodos de linearização. Como já falado anteriormente, 
+
+para  aplicações  que  recaiam  em  restrições  não  lineares,  o  leitor  pode  consultar  a 
+
+referência (TEXEIRA; TÔRRES; AGUIRRE, 2019). 
+
+Na  próxima  aplicação  do  filtro,  o  foco  será  uma  análise  probabilística  do 
+
+resultado  estimado  em  comparação  com  o  valor  real.  Para  isso,  analisaremos  a 
+
+distribuição de probabilidade dos resultados obtidos.  
+
+ 
+ 
+ 
+65 
+
+3.2 Modelagem 2: Estimando a posição de um automóvel 
+
+Neste exemplo, daremos uma atenção maior para as relações probabilísticas 
+
+associadas à aplicação do Filtro de Kalman (comportamento Gaussiano, distribuição 
+
+de probabilidade, etc.), já que, na modelagem da situação problema 1, trabalhamos a 
+
+aplicação do filtro de forma “bruta”, sem fazer uma análise mais apurada do que temos 
+
+por trás dos resultados.        
+
+Seguindo  as  etapas  de  aplicação  do  Filtro  propostas  no  capítulo  anterior, 
+
+teremos: 
+
+1º Entendendo a situação 
+
+Trabalharemos com uma situação em que um automóvel se desloca em linha 
+
+reta e com velocidade constante. O nosso objetivo será estimar a posição do veículo, 
+
+com a maior precisão possível, em instantes diferentes.  
+
+Figura 4 – Posições do veículo 
+
+Fonte: elaborada pelo autor.  
+
+As  medições  obtidas  representarão  a  posição  do  automóvel  partindo  de  um 
+
+ponto  inicial,  que  consideraremos  0,  nos  instantes 1𝑠, 2𝑠, 3𝑠  e  assim  por  diante.  Os 
+
+resultados, para estimar a posição, poderão ser obtidos utilizando um radar, GPS ou 
+
+até mesmo uma trena (a depender da distância a ser medida). Portanto, eles poderão 
+
+ser verificados por um dispositivo eletrônico ou um simples dispositivo mecânico.  
+
+2º Modele o processo de estado 
+
+Modelar  essa  situação  é  relativamente  simples.  Usando  as  equações  de 
+
+previsão e atualização, a variável de estado pode ser reduzida a um escalar (ou seja, 
+
+𝑋(cid:210) = 𝑥 onde 𝑥 é a estimativa da posição 𝑃). As variáveis de controle 𝐵 e 𝑢 não são 
+
+usadas (ou seja, ambas = 0). 
+
+          Portanto, o modelo real para qualquer 𝑡	 ≥ 	0 é:  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+66 
+
+𝑃(cid:143)	 = 	 𝑃(cid:143)~.	 + 	𝑓  
+
+(3.3) 
+
+em que 𝑃˜ = 0, representa a posição inicial do veículo (como mencionado na etapa 1 
+
+desta modelagem), 𝑃. a posição no instante 1𝑠, 𝑃/ a posição no instante 2𝑠	e assim 
+
+por diante, em que 𝑃(cid:143) representa a posição no instante 𝑡 em segundos e 𝑓 representa 
+
+o deslocamento entre dois segundos consecutivos. 
+
+3º Modele o processo de medição 
+
+Em  nosso  modelo,  temos  a  medida  do  deslocamento  percorrido  pelo 
+
+automóvel. Isso  é  representado  por  𝑌 = 𝑦.  O  valor  que  estamos  aferindo  pode  ser 
+
+uma medida em escala ou, de fato, representar a unidade de medida correspondente 
+
+no dispositivo de medição. 
+
+Por  uma  questão  de  simplificação,  assumiremos  que  tanto  a  medida  exata, 
+
+quanto a estimativa do estado 𝑥, estarão na mesma escala, portanto, 𝐻 = 1) 
+
+4º Modele o ruído 
+
+Para este modelo, vamos assumir que há ruído de medição (ou seja, 𝑅 = 𝑟). O 
+
+processo  é  escalar,  portanto  𝑃 = 𝑝. Se  o  processo  não  estiver  bem  definido, 
+
+ajustaremos  o  ruído  (ou  seja,  𝑄 = 𝑞).  Agora,  aplicaremos  os  efeitos  da  alteração 
+
+desses parâmetros e ruídos. 
+
+5º Teste o filtro 
+
+As  equações  de  previsão  e  atualização,  apresentadas  na  Tabela  2, 
+
+apresentada anteriormente neste trabalho, podem ser simplificadas. Vale lembrar que 
+
+lá  na  etapa  2  deste  exemplo,  decidimos  ignorar  𝐵  e  𝑢  novamente,  ou  seja,  ambos 
+
+iguais a 0 (𝐾 pode ser simplificado). Assim temos, 
+
+Previsão: 
+
+𝑋(cid:210)(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑋(cid:210)(cid:143)~.|(cid:143)~. 
+
+𝑃(cid:143)|(cid:143)~. = 𝐹(cid:143) ⋅ 𝑃(cid:143)~.|(cid:143)~.𝐹(cid:143)
+
+ƒ + 𝑄(cid:143) 
+
+ 
+ 
+ 
+ 
+ 
+           
+ 
+ 
+ 
+ 
+ 
+ 
+67 
+
+Atualização: 
+          𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ 𝑍(cid:214)(cid:143), em que 𝑍(cid:214)(cid:143) = 𝑌(cid:143) − 𝐻(cid:143) ⋅ 𝑋(cid:210)(cid:143)|(cid:143)~., com isso obteremos: 
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ (𝑌(cid:143) − 𝐻(cid:143). 𝑋(cid:210)(cid:143)|(cid:143)~.) 
+
+          𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ ⋅ 𝑆(cid:143)
+
+~. em que 𝑆(cid:143) = 𝐻(cid:143) ⋅ 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ + 𝑅(cid:143), com isso obteremos 
+
+𝐾(cid:143) = 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ ⋅ (𝐻(cid:143) ⋅ 𝑃(cid:143)|(cid:143)~. ⋅ 𝐻(cid:143)
+
+ƒ + 𝑅(cid:143))~. 
+
+𝑃(cid:143)|(cid:143) = (1 − 𝐾(cid:143) ⋅ 𝐻(cid:143))𝑃(cid:143)|(cid:143)~. 
+
+Temos um modelo aparentemente preciso para realizar a estimativa da posição 
+
+do automóvel; agora, é só aplicar o filtro de forma recursiva. 
+
+Inicializamos o estado na posição estimada de 10𝑚, há uma certa imprecisão 
+
+nessa medida devido a um ruído referente ao aparelho de medição (que pode ser um 
+
+sensor digital, analógico ou até mesmo uma trena); portanto, o valor está em torno de 
+
+10𝑚.  Podemos  fazer essa análise  por  meio  de  uma  curva Gaussiana  para  verificar 
+
+que o automóvel se encontra por volta dos 10𝑚, ou seja, essa é a maior probabilidade 
+
+para a posição, sendo possível estar um pouco à frente ou atrás.  
+
+Figura 5 – Posição provável do automóvel 
+
+Fonte: elaborada pelo autor. 
+
+Dando continuidade, suponha que no instante 1𝑠 a medida obtida pelo radar ou 
+
+trena  foi  de 15𝑚  (vale  lembrar  que  se  sabe  a posição  inicial  e  as  equações  para  o 
+
+espaço  e  velocidade).  Também  suponha  que,  ao  aplicarmos  as  equações  para  o 
+
+espaço  e  velocidade  mencionadas  anteriormente,  o  estado  estimado  obtido  foi  de 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+68 
+
+16,5𝑚.  Então,  vamos  encontrar  uma  estimativa  calculando  a  média  entre  os  dois 
+valores encontrados, .(cid:244)4.ı,(cid:244)
+
+= 15,75𝑚, surge um questionamento: será que a média 
+
+/
+
+entre os valores obtidos com a medição e com as equações de posição será a melhor 
+
+estimativa? 
+
+Outra possibilidade e uma resposta para esta pergunta será pegar a variação 
+
+média,  variância,  entre  as  medidas  obtidas  e  aí  encontrar  a  estimativa  ótima  entre 
+
+15𝑚 e 16,5𝑚, utilizando a função de densidade de probabilidade, aliada com o Filtro 
+
+de  Kalman,  pois  já  nos  certificamos  de  que  essa  relação  sempre  nos  fornece 
+
+estimativas com uma boa precisão.    
+
+Figura 6 – Posições do automóvel 
+
+Fonte: elaborada pelo autor. 
+
+Podemos observar que esta medida de 15𝑚 possui uma probabilidade maior e 
+
+uma  variância  menor,  já  o  valor  de  16,5𝑚  possui  uma  probabilidade  menor  e  uma 
+
+variância  maior,  o  que  nos  leva  a  constatar  um  ruído  associado  ao  processo  de 
+
+medição e outro relacionado ao estado. Portanto, temos os dados para calcularmos o 
+
+ganho  de  Kalman  (𝐾(cid:143)),  em  que  representaremos  o  erro  associado  ao  processo  de 
+
+medição por 𝐸(cid:131)+, e o erro decorrente ao processo de estado por 𝐸+(cid:246)(cid:143). 
+
+𝐾(cid:143) =
+
+𝐸+(cid:246)(cid:143)
+𝐸+(cid:246)(cid:143) + 𝐸(cid:131)+,
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+69 
+
+Ao analisarmos essa expressão, podemos concluir que se o denominador for 
+
+muito grande e os valores para o estado estimado forem estáveis, o ganho de Kalman 
+
+se aproximará de 0 (para que isto aconteça, basta que o ruído da medição seja muito 
+
+grande)  e,  quando  as  medidas  são  acuradas  e  os  valores  para  o  estado  estimado 
+
+forem instáveis, o ganho de Kalman se aproximará de 1 (para que isto aconteça, basta 
+
+que o ruído da medição seja “muito pequeno” e se aproxime de 0).  
+
+Figura 7 – Ganho de Kalman 
+
+Fonte: elaborada pelo autor.  
+
+Agora, vamos partir para a equação de atualização com o intuito de obtermos 
+
+a  melhor  estimativa.  Para  isso,  aplicaremos  os  valores  na  referida  equação  de 
+
+atualização:  
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ (𝑌(cid:143) − 𝐻(cid:143) ⋅ 𝑋(cid:210)(cid:143)|(cid:143)~.) 
+
+Vale  observar  que,  como  estamos  trabalhando  com  somente  1  aparelho  de 
+
+medição, adotaremos 𝐻(cid:143) = 1, obtendo, assim, a seguinte equação para atualização 
+
+de estado: 
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ (𝑌(cid:143) − 𝑋(cid:210)(cid:143)|(cid:143)~.) 
+
+A próxima etapa é tentar minimizar o erro aplicado e, para isso, utilizaremos a 
+
+seguinte equação: 
+
+𝑃(cid:143)|(cid:143) = (1 − 𝐾(cid:143). 𝐻(cid:143))𝑃(cid:143)|(cid:143)~. 
+
+Como já sabemos que foi adotado 𝐻(cid:143) = 1, a equação para o erro pode ser simplificada:   
+
+𝑃(cid:143)|(cid:143) = (1 − 𝐾(cid:143))𝑃(cid:143)|(cid:143)~. 
+
+Podemos perceber que a equação acima é uma recorrência que nos possibilita 
+
+determinar o erro em um determinado instante 𝑡,	a partir do instante anterior 𝑡 − 1. 
+
+Como o objetivo deste exemplo não é detalhar todos os termos das equações 
+
+envolvidas no KF, pois isso já foi feito anteriormente, iremos supor 𝐾. = 0,75 e faremos 
+
+as devidas substituições nas equações da fase de atualização. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+70 
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143). (𝑌(cid:143) − 𝑋(cid:210)(cid:143)|(cid:143)~.) 
+𝑋(cid:210).|. = 	16,5 + 0,75(15 − 16,5) 
+𝑋(cid:210).|. = 15,375𝑚 
+
+Figura 8 – Comparando o Ganho de Kalman e Estimando a Posição do Automóvel 
+
+Fonte: elaborada pelo autor. 
+
+Ao analisarmos a distribuição de probabilidade ou curva Gaussiana, podemos 
+
+verificar que, após aplicarmos o filtro de Kalman, potencializamos a probabilidade para 
+
+o valor estimado da posição do automóvel e diminuímos a variância ou erro associado 
+
+à estimativa. 
+
+Agora, para a estimativa da posição para o instante 𝑡 = 2, vamos incrementar 
+
+um ruído externo (algum obstáculo que possibilite uma interferência na medição, como 
+
+uma placa, animal, outro veículo, etc.). Esse fato faz com que o valor obtido pelo radar 
+
+tenha uma imprecisão maior que na situação proposta para 𝑡 = 1. 
+
+Vamos supor, de forma hipotética, que agora o estado estimado, por meio das 
+
+equações horárias da velocidade e espaço, seja de 22,3𝑚, que a posição estimada 
+
+pelo  radar  corresponda  a  20,4𝑚  e  que  o  ganho  de  Kalman  seja  𝐾/ = 0,65  (é 
+
+necessário  observar  que  o  ganho  de  Kalman  diminuiu  com  relação  a  𝑡 = 1,  pois  a 
+
+variância/erro do estado estimado pelo radar aumentou e, com isso, o denominador 
+
+da fração relacionada a 𝐾(cid:143) diminuirá). 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Substituindo  os  referidos  valores  nas  equações  de  atualização,  obteremos  o 
+
+seguinte resultado: 
+
+71 
+
+𝑋(cid:210)(cid:143)|(cid:143) = 𝑋(cid:210)(cid:143)|(cid:143)~. + 𝐾(cid:143) ⋅ (𝑌(cid:143) − 𝑋(cid:210)(cid:143)|(cid:143)~.) 
+𝑋(cid:210)/|/ = 	22,3 + 0,65(20,4 − 22,3) 
+𝑋(cid:210)/|/ = 21,065𝑚 
+
+Figura 9 – Posição do automóvel para 𝑡 = 2  
+
+Fonte: elaborada pelo autor. 
+
+Há algumas coisas que devemos observar sobre esta situação proposta: 
+
+1.  Fazer  uma  análise  probabilística  para  a  estimativa  do  estado  é  de 
+
+suma  importância  para  entender  que  à  medida  que  aplicamos  o  filtro  de 
+
+Kalman,  estaremos  aumentando  a  probabilidade  ou  precisão  para  o  estado 
+
+estimado,  utilizando  uma  ponderação  dos  resultados  obtidos  na  fase  de 
+
+previsão e atualização. Para mais detalhes sobre uma análise probabilística do 
+
+Filtro de Kalman, o leitor pode consultar a referência (MAYBECK, 1979) 
+
+2.  À  medida  que  aumentamos  os  ruídos,  também  aumentamos  a 
+
+imprecisão dos resultados obtidos. Então, combinar mais de um mecanismo de 
+
+medição não será uma má ideia. 
+
+3.  Agora,  podemos  responder  à  pergunta  proposta  na  5ª  etapa  dessa 
+
+modelagem (Será que a média entre os valores obtidos com a medição e com 
+
+as equações de posição será a melhor estimativa?). A média entre os valores 
+
+ 
+ 	
+ 
+ 
+ 
+ 
+72 
+
+encontrados  foi  de  15,75𝑚  e  o  estado  estimado  de  maior  probabilidade, 
+
+utilizando o Filtro de Kalman, para 𝑡 = 1 foi de 15,375𝑚, ou seja, se tivermos 
+
+que  apostar  em  qual  das  duas  medidas  o  automóvel  estará  mais  próximo, 
+
+certamente a chance maior de ganhar será ao apostarmos no resultado obtido 
+
+por meio do KF, pois ele nos fornece a maior probabilidade de acordo com a 
+
+distribuição Gaussiana construída para essa situação.     
+
+ 
+           
+ 
+ 
+ 
+ 
+73 
+
+CAPÍTULO 4 
+
+SEQUÊNCIA DIDÁTICA PARA APLICAÇÃO DO FILTRO KALMAN NO 
+
+ENSINO MÉDIO 
+
+Neste  capítulo,  apresentaremos  conceitualmente  um  modelo  de  sequência 
+
+didática, como proposto por Zabala (2007), que será considerado como a base para 
+
+o desenvolvimento e a aplicação do KF no ensino médio. Na sequência didática que 
+
+apresentaremos  na  sequência  deste  trabalho,  serão propostas  duas  aplicações  em 
+
+situações problemas. 
+
+4.1 Sequência didática como um recurso pedagógico  
+
+Sequência  didática  é  um  conjunto  de  atividades  ligadas  entre  si,  pensadas, 
+
+planejadas  e  executadas  com  o  objetivo  de  consolidar  um  determinado  conteúdo 
+
+dentro de uma habilidade ou competência. As sequências didáticas são organizadas 
+
+de  acordo  com  o  alvo  que  o  professor  quer  alcançar  para  aprendizagem  de  seus 
+
+alunos e envolvem atividades e ações que podem levar várias aulas para se chegar 
+
+ao ponto desejado.  
+
+Uma  sequência  didática  também  pode  ser  uma  maneira  de  encaixar  os 
+
+conteúdos em um tema e, por sua vez, a outro, podendo tornar o conhecimento em 
+
+um processo interdisciplinar, associado ao trabalho pedagógico e acompanhado de 
+
+um desenvolvimento lógico. Assim, temos que a sequência didática é “um conjunto de 
+
+atividades ordenadas, estruturadas e articuladas para a realização de certos objetivos 
+
+educacionais, que têm um princípio e um fim conhecidos tanto pelo professor como 
+
+pelos alunos” (ZABALA, 2007, p. 18). Nesse sentido:  
+
+Para que exista uma sequência didática é necessário apresentar ao 
+aluno atividades práticas, lúdicas com material concreto e diferenciado 
+apresentando  desafios  cada  vez  maiores  aos  alunos  permitindo  a 
+construção  do  conhecimento.  Segundo  a  Revista  Escola,  um  dos 
+pioneiros em pesquisas sobre como os alunos aprendem Matemática, 
+o  francês  Guy  Brousseau  desenvolveu  a  Teoria  das  Situações 
+Didáticas, que se baseia no princípio de que ''cada conhecimento ou 
+saber pode ser determinado por uma situação, entendida como uma 
+
+ 
+ 
+ 
+           
+ 
+74 
+
+ação  entre  duas  ou  mais  pessoas  (PERETTI;  TONIN  DA  COSTA, 
+2013, p.6). 
+
+O  estudante,  ao  iniciar  seu  processo  de  construção  e  consolidação  da 
+
+aprendizagem  matemática  na  escola,  precisa  envolver-se  com  atividades  que  o 
+
+motivem  e  o  auxiliem,  de  forma  a  conduzi-lo  a  uma  aprendizagem  significativa,  na 
+
+qual, ao manipular certos recursos pedagógicos, ele potencializará a construção e a 
+
+reconstrução do conhecimento, dando um novo significado ao processo de ensino e 
+
+aprendizagem. 
+
+A aplicação de uma sequência didática tem como objetivo tornar o processo de 
+
+aprendizagem mais atraente e motivador, tanto para o aluno quanto para o professor, 
+
+pois as trocas de experiência entre todos os envolvidos no processo potencializam a 
+
+relação  professor-aluno  e,  inclusive,  entre  os  pares,  deixando  evidenciar  que  as 
+
+relações intra e inter-pessoais devem ser consideradas dentro do ambiente escolar. 
+
+Isso estimula uma aprendizagem colaborativa e significativa, em que a realidade e o 
+
+contexto em que o estudante está inserido serão levados em conta para a elaboração 
+
+das  atividades  que  nortearão  o  trabalho  pedagógico  que  será  desenvolvido,  sem 
+
+deixar de lado a intencionalidade em toda e qualquer ação proposta.  
+
+A aprendizagem significativa não é medida pela quantidade de erros e acertos, 
+
+mas,  sim,  pelas  trocas  vivenciadas e  compartilhadas  entre  os envolvidos.  Por  isso, 
+
+uma  sequência  didática  bem  conduzida,  com  intencionalidade,  proporcionando 
+
+compartilhamento  de  experiências  entre  todos  os  participantes,  inserida  dentro  da 
+
+realidade dos estudantes, proporciona reflexões sobre a temática abordada e levará 
+
+facilmente  os  alunos  a  uma  consolidação  eficiente  e  eficaz  das  habilidades  e 
+
+competências envolvidas na ação proposta, dando, assim, um significado concreto à 
+
+temática abordada. Nesse sentido, os autores pontuam que: 
+
+Além de termos o domínio de técnicas de memorização, no processo 
+de  aprendizagem  devemos  adquirir  a  capacidade  de  atuar 
+criticamente de forma autônoma, ativa e participativa diante de novas 
+situações.  Muitos  sabem  que  a  matemática  desenvolve  o  raciocínio 
+lógico e contribui para a compreensão de outras matérias incluídas no 
+currículo  escolar.  As  atividades  matemáticas  sendo  propostas  de 
+forma contextualizada contribuirão positivamente em muitos aspectos 
+da  vida  escolar,  atingindo  os  objetivos  no  processo  ensino-
+aprendizagem.  Conforme  os  Parâmetros  Curriculares  Nacionais  de 
+Matemática:  As  necessidades  cotidianas  fazem  com  que  os  alunos 
+desenvolvam  uma  inteligência  essencialmente  prática,  que  permite 
+reconhecer  problemas,  buscar  e  selecionar  informações,  tomar 
+decisões  e  portanto,  desenvolver  uma  ampla  capacidade  para  lidar 
+
+ 
+ 
+  
+75 
+
+com  a  atividade  matemática.  Quando  essa  capacidade  é 
+potencializada  pela  escola,  a  aprendizagem  apresenta  melhor 
+resultado (PERETTI; TONIN DA COSTA, 2013, p.2). 
+
+Ao aplicar uma sequência didática, se faz necessário efetuar uma investigação 
+
+prévia dos conhecimentos e pré-requisitos dos alunos e, a partir desses, planejar uma 
+
+variedade  de  aulas  com  desafios  e/ou  problemas  diferenciados,  podendo  ter  como 
+
+base jogos (gamificação associada à aprendizagem), análise e reflexão ou algum tipo 
+
+de experimentação. É importante que à medida que se avance no planejamento, se 
+
+aumente a complexidade dos desafios e orientações, permitindo um aprofundamento 
+
+do tema proposto.  
+
+O professor, ao pensar na configuração e aplicação das sequências didáticas, 
+
+estará  trilhando  um  dos  caminhos  mais  acertados  para  melhorar  a  sua  prática 
+
+pedagógica. Assim, ele estimula a formação de sujeitos ativos capazes de transformar 
+
+o meio em que vive, de forma consciente e intencional. 
+
+De acordo com Zabala (2007), uma sequência didática deve conter início, meio 
+
+e fim, com apresentação, desenvolvimento e finalização com uma avaliação. O autor 
+
+pontua que há diferentes modelos de aula, em que se pode ter uma mais conceitual, 
+
+outra mais procedimental, ou ainda outra mais atitudinal. 
+
+ Para  esta  sequência  didática  que  propomos  aqui,  seguiremos  o  modelo 
+
+proposto por Zabala (2007) para a implementação da sequência didática que vamos 
+
+sugerir com o objetivo de realizar a aplicação do Filtro Kalman no ensino médio. 
+
+4.1.1 A sequência  
+
+Apresentação 
+
+O professor apresenta uma situação problema. Em seguida, expõe aos alunos 
+
+uma  situação  conflitante  que  pode  ser  solucionada  por  meios  matemáticos, 
+
+linguísticos, físicos ou de qualquer outra área. 
+
+Busca por soluções 
+
+O  professor pede  aos alunos que exponham  diferentes  formas  de  resolver  o 
+
+problema ou situação. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+76 
+
+Exposição do conceito e o algoritmo 
+
+O professor aproveita as propostas dos alunos para elaborar o novo conceito e 
+
+ensinar o modelo de algoritmo, o problema ou a situação. 
+
+Generalização 
+
+O professor demonstra a função do modelo conceitual e o algoritmo em todas 
+
+aquelas situações que cumprem determinadas condições. 
+
+Aplicação 
+
+Os alunos, individualmente, aplicam o modelo a diversas situações. 
+
+Exercitação 
+
+Os alunos realizam exercícios em que fazem uso do algoritmo. 
+
+Prova ou exame 
+
+Em classe, todos os alunos respondem às perguntas e fazem os exercícios do 
+
+exame durante uma hora. 
+
+Avaliação 
+
+O professor comunica aos alunos os resultados obtidos. 
+
+4.2 Uma sequência didática para aplicação do Filtro de Kalman 
+
+A  seguir,  detalharemos  uma  sequência  didática  para  aplicação  do  Filtro  de 
+
+Kalman no ensino médio, que pode ser aplicada de forma interdisciplinar com outras 
+
+disciplinas,  como 
+
+física,  robótica,  entre  outras.  É 
+
+importante  salientar  que, 
+
+previamente,  o  professor  deverá  ter  trabalhado  os  conteúdos,  habilidades  e 
+
+competências associadas à estatística e probabilidade com abordagem da distribuição 
+
+Gaussiana. Se o professor já tiver trabalhado os tópicos mencionados anteriormente, 
+
+é  importante  destinar  algumas  aulas  de  revisão  e  retomada  das  habilidades 
+
+necessárias para a implementação da sequência didática proposta.    
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+77 
+
+Disciplina: Matemática 
+
+Professor:  
+
+Série: 3ª Série do Ensino Médio 
+
+Conteúdos trabalhados (factual, conceitual, procedimental e atitudinal):  
+
+•  Estatística,  
+
+•  Probabilidade,  
+
+•  Funções,  
+
+•  Movimento Retilíneo Uniforme (MRU), 
+
+•  Movimento Retilíneo Uniformemente Variado (MRUV). 
+
+Habilidades (BNCC): 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+(EM13MAT102) Analisar  tabelas,  gráficos  e  amostras de pesquisas  estatísticas 
+
+apresentadas  em  relatórios  divulgados  por  diferentes  meios  de  comunicação, 
+
+identificando, quando  for  o  caso,  inadequações que  possam  induzir  a erros de 
+
+interpretação, como escalas e amostras não apropriadas. 
+
+(EM13MAT202) Planejar  e  executar  pesquisa  amostral  sobre  questões 
+
+relevantes,  usando  dados  coletados  diretamente  ou  em  diferentes  fontes,  e 
+
+comunicar os resultados por meio de relatório contendo gráficos e interpretação 
+
+das medidas de tendência central e das medidas de dispersão (amplitude e desvio 
+
+padrão), utilizando ou não recursos tecnológicos. 
+
+(EM13MAT203) Aplicar conceitos matemáticos no planejamento, na execução e 
+
+na análise de ações envolvendo a utilização de aplicativos e a criação de planilhas 
+
+(para o controle de orçamento familiar, simuladores de cálculos de juros simples 
+
+e compostos, entre outros), para tomar decisões. 
+
+(EM13MAT301) Resolver e elaborar problemas do cotidiano, da Matemática e de 
+
+outras  áreas  do  conhecimento,  que  envolvem  equações  lineares  simultâneas, 
+
+usando técnicas algébricas e gráficas, com ou sem apoio de tecnologias digitais. 
+
+(EM13MAT302) Construir modelos empregando as funções polinomiais de 1º ou 
+
+2º graus, para resolver problemas em contextos diversos, com ou sem apoio de 
+
+tecnologias digitais. 
+
+(EM13MAT311) Identificar e descrever o espaço amostral de eventos aleatórios, 
+
+realizando contagem das possibilidades, para resolver e elaborar problemas que 
+
+envolvem o cálculo da probabilidade. 
+
+(EM13MAT312) Resolver  e  elaborar  problemas  que  envolvem  o  cálculo  de 
+
+probabilidade de eventos em experimentos aleatórios sucessivos. 
+
+ 
+78 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+• 
+
+(EM13MAT313) Utilizar, quando necessário, a notação científica para expressar 
+
+uma medida, compreendendo as noções de algarismos significativos e algarismos 
+
+duvidosos, e reconhecendo que toda medida é inevitavelmente acompanhada de 
+
+erro. 
+
+(EM13MAT315) Investigar  e  registrar,  por  meio  de  um  fluxograma,  quando 
+
+possível, um algoritmo que resolve um problema. 
+
+(EM13MAT316) Resolver  e  elaborar  problemas,  em  diferentes  contextos,  que 
+
+envolvem cálculo e interpretação das medidas de tendência central (média, moda, 
+
+mediana) e das medidas de dispersão (amplitude, variância e desvio padrão). 
+
+(EM13MAT406) Construir  e  interpretar  tabelas  e  gráficos  de  frequências  com 
+
+base em dados obtidos em pesquisas por amostras estatísticas, incluindo ou não 
+
+o uso de softwares que inter-relacionem estatística, geometria e álgebra. 
+
+(EM13MAT501) Investigar  relações  entre  números  expressos  em  tabelas  para 
+
+representá-los no plano cartesiano, identificando padrões e criando conjecturas 
+
+para generalizar e expressar algebricamente essa generalização, reconhecendo 
+
+quando essa representação é de função polinomial de 1º grau. 
+
+(EM13MAT511) Reconhecer  a  existência  de  diferentes  tipos  de  espaços 
+
+amostrais,  discretos  ou  não,  e  de  eventos,  equiprováveis  ou  não,  e  investigar 
+
+implicações no cálculo de probabilidades. 
+
+Tempo da Sequência Didática:  
+
+5 a 7 aulas de 50 minutos 
+
+Materiais necessários para a sequência didática: 
+
+Lápis,  borracha,  caneta,  régua,  Datashow,  fita  métrica/trena,  cronômetro,  5 
+
+galões de água de 20 litros, calculadora, torneira e mangueira para enchimento 
+
+do galões, carrinho com controle remoto, arduino com módulo GPS (poderá 
+
+ser substituído por uma trena a laser ou algum outro sensor de posição).  
+
+Aula 1 e 2: 
+
+•  Organização  da  turma:  Separar  os  alunos  em  grupos  com  4  ou  5 
+
+componentes, se possível em um ambiente amplo como por exemplo 
+
+uma sala de vídeo. 
+
+• 
+
+Introdução:  O  professor  trabalhará  o  primeiro  tópico  proposto  por 
+
+Zabala (Apresentação).  Nesse  momento  o  professor  apresentará  aos 
+
+seus  estudantes  um  breve  histórico  do  trabalho  de  Kalman  com 
+
+ 
+ 
+79 
+
+estimativas  de  estado  e  a  importância  que  essa  técnica  possui  em 
+
+diversas áreas do conhecimento. Em seguida o professor irá expor duas 
+
+situações  problemas,  a  primeira  será  a  do  enchimento  do  vasilhame 
+
+com água (mostrado neste trabalho na modelagem 1: estimando o nível 
+
+de água no tanque, utilizando o modelo de preenchimento). A segunda 
+
+situação  será  a  estimativa  para  a  posição  de  um  automóvel  em 
+
+deslocamento (mostrado neste trabalho na modelagem 2: estimando a 
+
+posição de um automóvel). 
+
+•  Desenvolvimento:  
+
+1)  O professor promoverá uma discussão coletiva com seus alunos 
+
+com relação à importância e aplicação da estimativa de estado 
+
+no  contexto  em  que  os  participantes  estão  inseridos  (como 
+
+sugestão, poderá ser apresentado algum vídeo de aplicação do 
+
+Filtro de Kalman).  
+
+2)  O  professor 
+
+irá  mostrar  a 
+
+importância  de  uma  análise 
+
+probabilística para a obtenção de uma estimativa coerente. 
+
+3)   Apresentar  a  importância  de  minimizar  o  erro  no  processo  de 
+
+obtenção do estado estimado. 
+
+4)  Apresentar  aos  alunos  a  modelagem  1  e  2  mostradas  neste 
+
+trabalho (estimativa do nível da água no tanque e da posição de 
+
+um automóvel). 
+
+5)  Discutir  com  os  alunos  outras  possibilidades  de  aplicação  do 
+
+Filtro de Kalman. 
+
+6)  Apresentar  dois  problemas:  Estimar  o  nível de  água  dentro  de 
+
+um galão com enchimento constante e estimar a posição de um 
+
+automóvel, ambos os casos em vários instantes diferentes.  
+
+•  Conclusão: 
+
+A  aula  será  finalizada  com  a  seguinte  demanda:  solicitar aos  grupos 
+
+para que apresentem ao menos uma forma de resolver os problemas 
+
+propostos.   
+
+ 
+ 
+ 
+80 
+
+Aula 3: 
+
+•  Organização da turma: Manter os alunos nos mesmos grupos da última 
+
+aula. 
+
+• 
+
+Introdução:  O  professor  trabalhará  o  segundo  tópico  proposto  por 
+
+Zabala  (Busca  por  soluções).  É  importante  que  o  professor  sempre 
+
+estimule  e  instigue  os  grupos  com  questionamentos  direcionados, 
+
+motivando-os a novas respostas. 
+
+•  Desenvolvimento: Durante esse encontro cada grupo irá expor a sua 
+
+ideia  para  a  resolução  dos  problemas  propostos  na  aula  anterior.  O 
+
+professor vai atuar como mediador e sempre tomando o cuidado para 
+
+não  “podar”  as  ideias trazidas pelos  alunos. Vale  lembrar  que  certos 
+
+questionamentos por parte do professor poderão estimular os grupos a 
+
+irem reformulando seus conceitos idealizados.  
+
+•  Conclusão: A aula será finalizada com os seguintes questionamentos:  
+
+1)  Será  que  existem  fórmulas  e  ou  equações  que  facilitem  o 
+
+processo de estimativa de estado? 
+
+2)  Como  podemos  fazer  para  potencializar  a  precisão  do  estado 
+
+estimado? 
+
+Aula 4: 
+
+•  Organização da turma: manter os alunos nos mesmos grupos da última 
+
+aula. 
+
+• 
+
+Introdução: O professor trabalhará o terceiro e quarto tópicos proposto 
+
+por  Zabala  (Exposição  do  conceito  e  o  algoritmo  e  Generalização). 
+
+Nesse  encontro  o  professor  aproveitará  as  propostas  dos  alunos, 
+
+apresentadas e modeladas na aula anterior, para elaborar e formalizar 
+
+o conceito e ensinar o modelo de algoritmo para resolução do problema 
+
+por meio do Filtro de Kalman. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+81 
+
+•  Desenvolvimento: Durante essa aula o professor apresentará todas as 
+
+equações  envolvidas  na  fase  de  previsão  e  atualização,  incluindo  as 
+
+expressões  para  o  erro  e  ganho  de  Kalman,  sem  deixar  de  lado  a 
+
+análise  probabilística  associada  para  obtenção  da  melhor  estimativa 
+
+para o estado. 
+
+•  Conclusão: A aula será finalizada com o seguinte questionamento:  
+
+1)  Será que o modelo proposto por Kalman é suficiente para estimar 
+
+o  estado  em  qualquer 
+
+instante  utilizando  a 
+
+ideia  de 
+
+recursividade? 
+
+Aulas 5 e 6: 
+
+•  Organização da turma: Manter os alunos nos mesmos grupos da última 
+
+aula. 
+
+• 
+
+Introdução:  O  professor  trabalhará  o  quinto  e  sexto  tópicos  proposto 
+
+por Zabala (Aplicação e Exercitação). Nesse encontro os estudantes, 
+
+em  seus  grupos,  aplicarão  o  filtro  de  Kalman  nas  duas  situações 
+
+propostas  e  irão  estimar  o  estado  nos  dois  problemas.  O  professor 
+
+poderá aplicar as duas situações problemas ou escolher uma das duas 
+
+para aplicação. 
+
+•  Desenvolvimento:   
+
+Procedimentos para aplicação 1 (Preenchimento de um galão): 
+
+Passo 1: O professor entregará 1 galão de 20 litros vazio, 1 trena e 
+
+1 cronômetro para cada grupo. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+82 
+
+Passo 2: Os grupos serão conduzidos a um ambiente que possua 
+
+uma mangueira ligada a uma torneira ou diretamente à torneira, desde que o 
+
+galão esteja apoiado em uma superfície plana. 
+
+Passo 3: O professor deverá fixar os intervalos de tempo para que 
+
+os  alunos  possam  fazer  as  medições  do  nível  da  água  no  galão.  Como 
+
+sugestão, o intervalo de tempo para as medições poderá ser estabelecido de 
+
+5 em 5 segundos.  
+
+Passo 4: O professor poderá limitar o processo de medição a 3 ou 
+
+4  instantes,  porém  cada  grupo  deverá  realizar  a  mesma  quantidade  de 
+
+aferições.  
+
+Passo 5: Ao final de cada instante o preenchimento do galão será 
+
+pausado  imediatamente  para  a  realização  da  medida  referente  ao  nível  da 
+
+agua.  Esse  processo  deverá  ser  repetido  de  acordo  com  a  quantidade  de 
+
+medições estipuladas pelo professor. 
+
+Passo 6: O grupo poderá ser divido de forma que cada componente 
+
+tenha uma atuação durante o procedimento de medição. É importante que o 
+
+professor  estimule  os  grupos  a  promoverem  suas  próprias  escolhas  com  o 
+
+intuito  de  potencializar  as  relações  entra  e  interpessoais.  Como  sugestão, 
+
+cada grupo poderá deixar 1 componente para ficar responsável pela marcação 
+
+do  tempo  com  o  cronômetro,  1  componente  responsável  pelo  controle  do 
+
+enchimento, 1 componente responsável pela utilização da trena na medida do 
+
+nível da água e mais 1 ou 2 componentes responsável (eis) pela anotação dos 
+
+valores  de  níveis  obtidos  e  observando  todo  o  processo,  com  o  objetivo  de 
+
+identificar possíveis falhas durante o processo de medição.   
+
+Passo  7:  Se  for  observado  algum  erro  durante  o  processo  de 
+
+medição, pode-se reiniciar todo o procedimento de enchimento. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+83 
+
+Observação: durante todo o processo de medição a vazão da água deverá ser 
+
+a mesma para todos os instantes e para todos os grupos. 
+
+Passo  8:  Após  o  grupo  finalizar  o  processo  de  medição,  poderá 
+
+retornar à sala de aula para discutir os valores obtidos. 
+
+Passo 9: Agora os grupos irão aplicar as equações de previsão e 
+
+atualização do filtro de Kalman para estimar o nível de água em cada instante, 
+
+estabelecido no passo 4. 
+
+Procedimentos para aplicação 2 (posição de um carrinho): 
+
+Passo 1: O professor entregará 1 carrinho com controle remoto, 1 
+
+sensor para aferição da posição (pode ser um arduino com módulo GPS, uma 
+
+trena  a  laser,  ou  outro  sensor  a  escolha  do professor)  e  1  cronômetro  para 
+
+cada grupo. 
+
+       Passo 2: Os grupos serão conduzidos a um ambiente aberto, como 
+
+por exemplo a quadra de esportes ou pátio da escola. 
+
+Passo 3: O professor deverá fixar os intervalos de tempo para que 
+
+os alunos possam fazer as medições da posição encontrada para o carrinho. 
+
+Como  sugestão,  o  intervalo  de  tempo  para  as  medições  poderá  ser 
+
+estabelecido de 5 em 5 segundos.  
+
+Passo 4: O professor poderá limitar o processo de medição a 3 ou 
+
+4  instantes,  porém  cada  grupo  deverá  realizar  a  mesma  quantidade  de 
+
+aferições. 
+
+Passo 5: Ao final de cada instante a posição do carrinho deverá ser 
+
+registrada. Esse processo deverá ser repetido de acordo com a quantidade de 
+
+medições estipuladas pelo professor. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+84 
+
+Passo 6: O professor deverá orientar aos grupos que o movimento 
+
+do  carrinho  será  em  linha  reta e  com  velocidade  constante  e  que  a posição 
+
+inicial será considerada 0. 
+
+Passo 7: O grupo poderá ser divido de forma que cada componente 
+
+tenha uma atuação durante o procedimento de medição. É importante que o 
+
+professor  estimule  os  grupos  a  promoverem  suas  próprias  escolhas  com  o 
+
+intuito  de  potencializar  as  relações  entra  e  interpessoais.  Como  sugestão, 
+
+cada grupo poderá deixar 1 componente para ficar responsável pela marcação 
+
+do  tempo  com  o  cronômetro,  1  componente  responsável  pelo  controle  e 
+
+movimento do carrinho, 1 componente responsável pela utilização do sensor 
+
+de medição da posição (arduinio, trena ou outros dispositivos) e mais 1 ou 2 
+
+componentes  responsável  (eis)  pela  anotação  dos  valores  das  posições 
+
+obtidas e observando todo o processo, com o objetivo de identificar possíveis 
+
+falhas durante o processo de medição. 
+
+   Passo  8:  Se  for  observado  algum  erro  durante  o  processo  de 
+
+medição, pode-se reiniciar todo o procedimento novamente. 
+
+Passo  9:  Após  o  grupo  finalizar  o  processo  de  medição,  poderá 
+
+retornar à sala de aula para discutir os valores obtidos. 
+
+Passo 10: Agora os grupos irão aplicar as equações de previsão e 
+
+atualização do filtro de Kalman para estimar a posição do carrinho em cada 
+
+instante, estabelecido no passo 4. 
+
+OBS: É importante salientar que o professor deverá mediar toda a situação 
+problema utilizando a técnica e as etapas de aplicação do filtro de Kalman 
+apresentadas na seção 2.6 deste trabalho 
+
+Aula 7: 
+
+•  Organização da turma: Manter os alunos nos mesmos grupos da última 
+
+aula. 
+
+• 
+
+Introdução: O professor trabalhará o sétimo e oitavo tópicos proposto 
+
+por Zabala (Prova ou Exame e Avaliação). Nesse encontro ocorrerá um 
+
+grande debate e exposição das conclusões obtidas com a aplicação do 
+
+filtro de Kalman. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+85 
+
+•  Desenvolvimento:  Durante  essa  aula  o  professor  mediará  uma 
+
+discussão entre os grupos, para comparar os estados estimados com 
+
+os  valores  obtidos  no  processo  de  medição.  Para  fechar  esse 
+
+momento, o professor poderá destacar que o filtro de Kalman é uma 
+
+ótima ferramenta para estimar estado e que os aparelhos de medição 
+
+possuem  uma  imprecisão  na  obtenção  dos  valores,  sendo  que  este 
+
+erro  será  minimizado  com aplicação  do filtro,  aproximando  assim,  os 
+
+valores obtidos com a aplicação do filtro de Kalman aos valores reais. 
+
+A aula deverá ser finalizada com a resposta à pergunta feita ao final da 
+
+aula  4  (Será  que  o  modelo  proposto  por  Kalman  é  suficiente  para 
+
+estimar  o  estado  em  qualquer 
+
+instante  utilizando  a 
+
+ideia  de 
+
+recursividade?). 
+
+•  Avaliação:  Cada  grupo  realizará,  de  forma  ativa  e  colaborativa,  um 
+
+mapa mental abrangendo o máximo de conceitos, ações e habilidades 
+
+trabalhadas durante a sequência didática proposta.  
+
+Aula 8 
+
+•  Organização da turma: Manter os alunos nos mesmos grupos da última 
+
+aula. 
+
+• 
+
+Introdução: O professor trabalhará o oitavo tópico proposto por Zabala 
+
+(Avaliação).  Nesse  encontro  o  professor  promoverá  uma  avaliação 
+
+relacionada às abordagens da sequência didática proposta. 
+
+•  Avaliação:  Cada  grupo  construirá,  de  forma  ativa  e  colaborativa,  um 
+
+mapa mental abrangendo o máximo de conceitos, ações e habilidades 
+
+trabalhadas durante a sequência didática proposta.  
+
+•  Devolutiva: Após cada grupo finalizar a demanda proposta, o professor 
+
+passará  em  equipe  por  equipe  para  debater  os  itens  abordados  no 
+
+mapa  mental  e 
+
+fazer  um 
+
+fechamento  do 
+
+trabalho  com  um 
+
+compartilhamento  de  feedback  entre  aluno  com  aluno  e  professor 
+
+aluno. 
+
+ 
+ 
+ 
+ 
+ 
+86 
+
+CAPÍTULO 5 
+
+CONSIDERAÇÕES FINAIS 
+
+Nesta  dissertação,  foi apresentado  o Filtro  de  Kalman  como  uma  ferramenta 
+
+para estimativas de estado, passando por uma análise probabilística e algébrica, com 
+
+destaque para a distribuição de probabilidade e sistemas dinâmicos lineares. Foram 
+
+apresentadas  as equações  associadas  à aplicação  do  KF  (equações  de  previsão  e 
+
+atualização).  Não  podemos  deixar  de  mencionar  as  duas  aplicações,  citadas  neste 
+
+trabalho, que serviram como base para a construção de uma sequência didática para 
+
+ser aplicada no ensino médio, tendo como base o modelo proposto por Zabala (2007).  
+
+À primeira vista, esta temática associada ao problema de filtragem parece ser 
+
+rebuscada o suficiente para tornar a aplicação no ensino básico bastante improvável; 
+
+porém,  ao  analisar  as  aplicações  e  as  situações  do  cotidiano  em  que  a  temática 
+
+aparece,  a aplicação  se  apresentou  de  forma  extremamente palpável  para  a  etapa 
+
+final do ensino médio. Ela se mostrou, inclusive, propícia para ser desenvolvida em 
+
+uma prática interdisciplinar com outras áreas do conhecimento, como física, química, 
+
+biologia, robótica,  entre  outras.  Portanto,  o  que  parecia tão distante  do  contexto  da 
+
+educação  básica,  agora  se  tornou  viável  e  como  um  agente  potencializador  da 
+
+interação  entre  diversas  áreas  do  saber,  dando  um  robusto  embasamento  para  a 
+
+construção  e  a  consolidação  do  conhecimento  por  meio  de  uma  interação  entre  a 
+
+prática e a teoria. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+87 
+
+REFERÊNCIAS  
+
+BRASIL, Ministério da Educação. Base Nacional Comum Curricular. 2018. 
+Disponível em: http://basenacionalcomum.mec.gov.br/ Acesso em: 01 set. 2020. 
+
+FERNANDES, Marcos Rogério. Filtragem Estocástica: variação da Estimativa como 
+Fonte de Incerteza. 2019. Dissertação (Mestrado em Engenharia Elétrica)- 
+Faculdade de Engenharia Elétrica e de Computação, Unicamp, 2019. Disponível em: 
+http://repositorio.unicamp.br/jspui/bitstream/REPOSIP/334481/1/Fernandes_Marcos
+Rogerio_M.pdf. Acesso em: 01 set. 2020.  
+
+FERREIRA, João Socorro Pinheiro. Sistemas Dinâmicos Lineares no R2. In: 
+COLÓQUIOS DE MATEMATICA DAS REGIÕES, REGIÃO NORTE, 1. 2016, 
+Macapá: Editora SBM, Unifap, 2016. 
+
+FRANCISCO, Fernando da Luz; BARRETO, Gilmar. Aplicação didática do filtro de 
+kalman usando uma câmera digital. In: CONGRESSO BRASILEIRO DE 
+EDUCAÇÃO EM ENGENHARIA. 2014, Juiz de Fora, MG. Anais [...]. Juiz de Fora, 16 
+a 19 de setembro, 2014. Disponível em: 
+http://www.abenge.org.br/cobenge/arquivos/5/Artigos/128947.pdf . Acesso em: 01 
+set. 2020. 
+
+GONÇALVES, Dimas J. Aspectos Matemáticos do Filtro de Kalman Discreto. 2005. 
+61 fl. Dissertação (Mestrado em Matemática)- Instituto de Matemática, Estatística e 
+Computação Científica, Unicamp, Campinas, SP, 2005.  
+
+KALMAN, Rudolf Emil. A New Approach to Linear Filtering and Prediction Problems. 
+ASME, Journal of Basic Engineering, Baltimore, v. 82 (series D), p. 35-45, 1960.  
+
+MAYBECK, Peter S. Stochastic models, estimation and control. Volume 1. New York: 
+Academic Press, 1979. 
+
+PEREIRA, G. A. S. Filtro de Kalman: teoria e aplicações. 1999. Monografia 
+(Trabalho de Conclusão de Curso em Engenharia Elétrica)- Centro de Pesquisa e 
+Desenvolvimento em Engenharia Elétrica, Universidade Federal de Minas Gerais, 
+1999. 
+
+PERETTI, Lisiane; TONIN DA COSTA, Gisele Maria. Sequência Didática na 
+matemática, Rei – Revista de Educação do Ideau, Uruguai, v. 8, n.17, p. 1-15, jun. 
+2013. 
+
+TEIXEIRA, Bruno O. S.; TÔRRES, Leonardo A. B.; AGUIRRE, Luis A. Filtragem de 
+Kalman com restrições para sistemas não lineares: revisão e novos resultados. Sba: 
+Controle & Automação, Campinas, SP, v. 21, n.2, mar./ apr. 2010. Disponível em: 
+https://www.scielo.br/scielo.php?script=sci_arttext&pid=S0103-17592010000200003. 
+Acesso em: 01 set. 2020. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+88 
+
+WELCH,  Greg; BISHOP,  Gary. An Introduction to the Kalman Filter. UNC-Chapel 
+Hill, tr 95-041, jul. 2006. Disponível em: http://www.sci.utah.edu/~gerig/CS6320-
+S2013/Materials/MI37slides-Kalman.pdf. Acesso em: 01 set. 2020. 
+
+FAN DI, Kalman Filter Tank Filling, Universidade de Hong Kong, set.2008, disponível 
+em: https://www.cs.cornell.edu/courses/cs4758/2012sp/materials/MI63slides.pdf 
+
+RHUDY, Matthew B., SALGUERO, Roger A., HOLAPPA, Keaton. A Kalman Filtering 
+Tutorial For Undergraduate Students, International Journal of Computer Science & 
+Engineering Survey, 08(01):01-18, 2017. 
+
+ZABALA, Antoni. A Prática Educativa: como ensinar. Tradução Ernani F. da F. Rosa. 
+Porto Alegre: Artmed, 2007.  
+
+SANTOS, Reginaldo. Matriz de Variância e Covariância e o Teorema de Gauss-
+Markov, set. 2001, Departamento de Matemática, UFMG. 
+
+HOEL Paul Gerhard; PORT, Sidney; STONE, Charles, Introduction to Probability 
+Theory, Editora Houghtion Mifflin, 1972. 
+
+HINES, Willian W., MONTGOMERY, Douglas C., GOLDSMAN, David M., BORROR, 
+Connie M.. Probabilidade e estatística na Engenharia, Editora LTC, 4ª edição, 2006. 
+
+MANKE,  João  Victor.  Estimação  de  Sistemas  Através  de  Filtros  Kalman,  2018, 
+Monografia (Trabalho de Conclusão de Curso em Engenharia Elétrica)-Departamento 
+de Engenharia Elétrica, Universidade Federal de Santa Catarina, Julho de 2018 
+
+GREWAL, Mohinder; ANDREWS, Angus, Kalman Filtering: Theory and Practice 
+Using MATLAB, Editora Wiley-Interscience, 2001. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

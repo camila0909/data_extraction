@@ -1,0 +1,4866 @@
+UNIVERSIDADE FEDERAL DE SÃO CARLOS
+
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA
+
+MESTRADO PROFISSIONAL EM MATEMÁTICA EM REDE NACIONAL -
+
+PROFMAT
+
+THAÍS REIGADAS SALVADOR
+
+UM ESTUDO DO MÉTODO SIMPLEX
+
+E SUA APLICAÇÃO NA RADIOTERAPIA
+
+Sorocaba
+
+2016
+
+UNIVERSIDADE FEDERAL DE SÃO CARLOS
+
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA
+
+MESTRADO PROFISSIONAL EM MATEMÁTICA EM REDE NACIONAL -
+
+PROFMAT
+
+UM ESTUDO DO MÉTODO SIMPLEX
+
+E SUA APLICAÇÃO NA RADIOTERAPIA
+
+Orientadora: Profa. Dra. Silvia Maria Simões de Carvalho
+
+Thaís Reigadas Salvador
+
+Sorocaba
+
+2016
+
+UM ESTUDO DO MÉTODO SIMPLEX
+
+E SUA APLICAÇÃO NA RADIOTERAPIA
+
+Dissertação apresentada ao Programa de Mes-
+trado Proﬁssional em Matemática em Rede
+Nacional - PROFMAT -do Centro de Ciências
+Exatas e Tecnologia da Universidade Federal
+de São Carlos, como exigência parcial para a
+obtenção do título de mestre sob orientação
+da Professora Doutora Sílvia Maria Simões
+de Carvalho.
+
+Sorocaba
+
+2016
+
+Ficha catalográfica elaborada pelo DePT da Biblioteca Comunitária UFSCar 
+ Processamento Técnico 
+com os dados fornecidos pelo(a) autor(a)
+
+S182e
+
+Salvador, Thaís Reigadas
+   Um estudo do método simplex e sua aplicação na
+radioterapia / Thaís Reigadas Salvador. -- São Carlos
+: UFSCar, 2016.
+   67 p.
+
+   Dissertação (Mestrado) -- Universidade Federal de
+São Carlos, 2016.
+
+   1. Programação linear. 2. Método simplex. 3.
+Radioterapia. I. Título.
+
+Dedico este trabalho aos meus pais, meu vôdri-
+
+nho Antônio e vódrinha Rosa, pelo incentivo,
+
+palavras de otimismo e pelas orações. Dedico
+
+a Virgem Maria, agradecendo por sua incessá-
+
+vel intercessão. Totus tuus ego sum, et omnia
+
+mea tua sunt.
+
+AGRADECIMENTOS
+
+Agradeço a Santíssima Trindade, por todas as graças e proteção que recebi ao
+
+longo destes anos. Simplesmente nada seria possível se não fosse por vontade de Deus e
+
+sua Sabedoria para iluminar meus pensamentos nos momentos que acreditei que não seria
+
+possível a conclusão desse trabalho.
+
+Aos meus pais, Maurílio e Fátima, por toda ajuda, apoio e incentivo para que eu
+
+me tornasse uma pessoa melhor a cada dia.
+
+Aos meus "vôdrinhos"Antônio e Rosa, por todo amor, sabedoria, incentivo e orações,
+
+sempre.
+
+Aos meus professores do Mestrado que me ensinaram muito mais que lições de
+
+matemática e teorias, mas que são responsáveis pela proﬁssional que serei no futuro.
+
+Em especial a minha orientadora, professora Dra. Silvia Maria Simões de Carvalho,
+
+que sempre esteve ao meu lado com paciência, dedicação, incentivo, amizade e conﬁança.
+
+Obrigada por ter me concedido esta oportunidade.
+
+À todos os companheiros de mestrado, do meu pólo de Sorocaba, do IMPA e dos
+
+grupos de estudos na internet. Sou grata por toda amizade, carinho e ajuda recebida
+
+durante todo esse processo. É agradavelmente curioso como laços de amizade podem se
+
+estreitar em tão pouco tempo.
+
+Um agradecimento especial ao Pe William que o tempo todo me incentivou, apoiando
+
+em suas orações e palavras amigas que tantas vezes vieram nos momentos que mais precisei.
+
+Muito obrigada meu grande amigo.
+
+À Roseli, psicóloga e amiga. Obrigada por ter sido luz no meu caminho.
+
+Aos meus amigos que ajudaram direta ou indiretamente na construção deste trabalho
+
+e aos que estiveram presentes em momentos diversos. Obrigada por compreenderem minhas
+
+faltas, por todo apoio e torcida.
+
+À CAPES, pelo apoio ﬁnanceiro.
+
+A fé e a razão constituem como que as duas asas
+
+pelas quais o espírito humano se eleva
+
+para a contemplação da verdade.
+
+S. João Paulo II
+
+RESUMO
+
+Este trabalho visa apresentar uma aplicação do Método Simplex para resolução de um
+
+problema de planejamento ótimo para o tratamento de câncer por radioterapia. O Método
+
+Simplex, proposto por George Dantzig, é um procedimento matricial que percorre pontos
+
+extremos da região factível em busca de uma solução ótima do problema. O planejamento
+
+ótimo para radioterapia pode ser auxiliado pela Programação Linear, onde a preocupação
+
+é aplicar uma radiação suﬁcientemente alta no órgão ou tumor e ao mesmo tempo, poupar
+
+signiﬁcativamente regiões saudáveis ou órgãos de risco.
+
+Palavras-chaves: Programação Linear. Método Simplex. Radioterapia.
+
+ABSTRACT
+
+This work presents an application of the Simplex Method for solving an optimal planning
+
+problem for cancer treatment by radiotherapy. The Simplex Method, proposed by George
+
+Dantzig, is a matrix procedure walks along extreme points of the feasible region in search
+
+of an optimal solution problem. The optimal planning for radiation therapy can be aided
+
+by Linear Programming, where the concern is to aplly a high enough radiation in the
+
+tumor while saving signiﬁcantly healthy regions or critical organs.
+
+Key-words: Linear Programming. Simplex Method. Radiotherapy.
+
+LISTA DE ILUSTRAÇÕES
+
+Figura 1 – Solução Geométrica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+Figura 2 – As três regiões do plano: aix = bi aix < bi
+Figura 3 – Região factível de restrições do tipo aix ≤ bi, (i = 1, 2, ...m).
+Figura 4 – Região Factível de S . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Figura 5 – Determinando a solução ótima x∗(Problema de Maximização)
+Figura 6 – Solução ótima única: (a) Região Limitada. (b) Região Ilimitada. . . . . 32
+
+. . . . . . . . 29
+
+e aix > bi.
+
+. . . . . . 29
+
+. . . . .
+
+31
+
+Figura 7 – Múltiplas soluções ótimas: (a) Região Limitada. (b) Região Ilimitada. . 32
+
+Figura 8 – Solução ilimitada. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+Figura 9 – Solução infactível . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+Figura 10 – Imagem de tomograﬁa computadorizada com estruturas anatômicas
+
+selecionadas.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+Figura 11 – Imagem dividida em pixels (matriz de pixels).
+
+. . . . . . . . . . . . . . 49
+
+Figura 12 – Geometria de uma imagem de pixel 2 × 2 com ângulos
+
+π
+4
+
+,
+
+3π
+4
+
+,
+
+5π
+4
+
+e
+
+7π
+4
+
+.
+
+49
+
+LISTA DE TABELAS
+
+Tabela 1 – Correspondência entre o programa primal e o dual.
+
+. . . . . . . . . . . 34
+
+Tabela 2 – Como organizar o problema no formato tableau . . . . . . . . . . . . . 44
+
+Tabela 3 – Tableau antes do pivoteamento . . . . . . . . . . . . . . . . . . . . . . 45
+
+Tabela 4 – Tableau após o pivoteamento . . . . . . . . . . . . . . . . . . . . . . . 46
+
+Tabela 5 – Estrutura da matriz de deposição de dose A . . . . . . . . . . . . . . .
+
+51
+
+Tabela 6 – Valores adotados no modelo, referentes à prescrição de dose
+
+. . . . . . 58
+
+Tabela 7 – Resultados numéricos da otimização da função (5.1)
+
+. . . . . . . . . . 59
+
+Tabela 8 – Comparação entre os resultados dos Métodos Simplex e Pontos Interiores 60
+
+SUMÁRIO
+
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+BREVE HISTÓRICO . . . . . . . . . . . . . . . . . . . . . . . .
+
+Modelos Matemáticos . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Programação Linear . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+14
+
+16
+
+17
+
+PROBLEMA DE PROGRAMAÇÃO LINEAR . . . . . . . . .
+
+19
+
+Soluções Básicas
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+Notação Matricial
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+O Teorema Fundamental da Programação Linear . . . . . . . .
+
+Relações de Convexidade . . . . . . . . . . . . . . . . . . . . . . .
+
+Resolução Gráﬁca de Problemas Lineares . . . . . . . . . . . . .
+
+Exemplos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Dualidade Linear . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+O MÉTODO SIMPLEX . . . . . . . . . . . . . . . . . . . . . . .
+
+Pivoteamento . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Pontos Extremos Adjacentes . . . . . . . . . . . . . . . . . . . . .
+
+3.2.1
+
+Determinando qual variável sairá da base . . . . . . . . . . . . .
+
+3.3
+
+3.4
+
+3.5
+
+Determinando a Solução Factível Mínima . . . . . . . . . . . . .
+
+Soluções Degeneradas . . . . . . . . . . . . . . . . . . . . . . . . .
+
+O Método Simplex no Formato de Tableau . . . . . . . . . . . .
+
+3.5.1
+
+Pivoteamento no Tableau . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+4.1
+
+4.2
+
+4.3
+
+PROGRAMAÇÃO LINEAR NA RADIOTERAPIA . . . . . .
+
+Breve Relato Histórico sobre a Radioterapia . . . . . . . . . . .
+
+Formulação do Modelo Matemático . . . . . . . . . . . . . . . .
+
+Problema de Otimização Linear . . . . . . . . . . . . . . . . . . .
+
+4.3.1
+
+Propriedades das Restrições Elásticas . . . . . . . . . . . . . . .
+
+MÉTODO SIMPLEX APLICADO AO MODELO DE TRA-
+
+TAMENTO POR RADIOTERAPIA . . . . . . . . . . . . . . .
+
+Resultados Computacionais
+
+. . . . . . . . . . . . . . . . . . . . .
+
+CONCLUSÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+61
+
+1
+
+1.1
+
+1.2
+
+2
+
+2.1
+
+2.2
+
+2.3
+
+2.4
+
+2.5
+
+2.5.1
+
+2.6
+
+3
+
+3.1
+
+3.2
+
+5
+
+5.1
+
+6
+
+22
+
+23
+
+25
+
+27
+
+30
+
+34
+
+37
+
+37
+
+39
+
+39
+
+40
+
+43
+
+43
+
+44
+
+47
+
+47
+
+48
+
+54
+
+56
+
+57
+
+58
+
+Referências
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+62
+
+ANEXOS
+
+64
+
+ANEXO A – MODELO DE PROGRAMAÇÃO UTILIZADO 65
+
+INTRODUÇÃO
+
+12
+
+O conceito de Otimização está normalmente associado à decisão estratégica de
+
+quantidades limitadas de recursos entre atividades competitivas, de forma que a solução
+
+produzida seja a melhor possível. Ela está presente no cotidiano, pois sempre que é preciso
+
+tomar uma decisão, procura-se escolher entre as várias alternativas aquela que, naquele
+
+momento, dê maior satisfação. Nos últimos anos, a matemática vem estudando como
+
+encontrar essa solução ótima.
+
+A Pesquisa Operacional atua exatamente nesse campo. Ela criou e cria ferramentas,
+
+processos e modelos que permitirão tornar as decisões as mais lógicas e racionais possíveis.
+
+É um ramo da ciência que cuida da criação de metodologias especíﬁcas para promover o
+
+gerenciamento de decisões.
+
+A Programação Linear usa um modelo matemático para descrever o problema. O
+
+termo linear signiﬁca que todas as funções matemáticas do modelo são funções lineares.
+
+A palavra programação não se refere a programação de computadores e deve ser vista
+
+como um sinônimo de planejamento. Assim, deﬁne-se a programação linear como sendo
+
+o planejamento de atividades para obter um resultado ótimo, isto é, um resultado que
+
+atenda, da melhor forma possível, a um determinado objetivo.
+
+Em 1947, George B. Dantzig desenvolveu o chamado Método Simplex para resolver
+
+problemas de programação lineares. Desde então tem havido um grande progresso dessa
+
+disciplina tanto em desenvolvimentos teóricos e computacionais como na exploração de
+
+novas aplicações. O Método Simplex recolhe grande aceitação para a resolução desses
+
+problemas, devido não só a sua simplicidade mas principalmente à sua capacidade em
+
+produzir soluções em tempo aceitável.
+
+Atualmente existem outros algoritmos teoricamente mais eﬁcientes para problemas
+
+lineares, exibindo um comportamento polinomial em relação ao esforço de determinação
+
+da solução ótima, como os métodos elipsóide e algoritmo de pontos interiores. No entanto
+
+o Método Simplex e sua variante dual-simplex continuam a ser os processos mais usados
+
+na prática para a resolução desses problemas.
+
+O surgimento de computadores digitais possibilitou devenvolver e utilizar novas
+
+metodologias para resolver uma grande variedade de problemas reais. A utilização dessas
+
+técnicas atraiu o interesse em diversas áreas, e vem sendo aplicadas às áreas de produção,
+
+logística, indústria, serviços públicos e privados, saúde, etc.
+
+Dentre os problemas de saúde mundiais, o câncer vem se tornado um dos principais
+
+13
+
+assuntos de pesquisa para várias áreas do conhecimento. Muitas dessas pesquisas são
+
+conduzidas com o objetivo de desenvolver e avaliar novas formas de terapia ou simplesmente
+
+novas metodologias ou protocolos de tratamento. Devido a existência de uma grande
+
+variedade de algoritmos para reconstrução tomográﬁca e cálculo de dose absorvida na
+
+radioterapia, diferentes aplicações envolvendo técnicas matemáticas foram propostas e
+
+ainda são constantemente aprimoradas.
+
+Dentre essas técnicas, a programação linear se destaca pela sua intensa e ampla
+
+aplicação, além dos resultados obtidos serem considerados promissores. O objetivo do
+
+tratamento é eliminar as células do tumor através de radiação ao mesmo tempo em que
+
+procura evitar a destruição de células vizinhas saudáveis também afetadas pela radiação.
+
+Para o planejamento do tratamento com radiocirurgia, as imagens de tomograﬁa
+
+computadorizadas são digitalizadas e fundidas com imagens de ressonância magnética, obti-
+
+das previamente. A partir destas imagens, são localizadas as estruturas críticas e tumorais
+
+e posteriormente são feitos cálculos para determinação tridimensional de isocentros, curvas
+
+de isodoses, dose a ser prescrita, posição, número e respectivo peso de campos isocêntricos
+
+conformais, além de outros. Este planejamento é elaborado pela equipe radioneurocirúrgica
+
+visando a obtenção de um tratamento adequado e ideal para cada caso.
+
+Os planos de tratamento são comumente baseados nos níveis de dose desejados
+
+para especíﬁcos tipos de tumores e órgãos de risco na região irradiada. Esses níveis de
+
+dose são escolhidos de forma que uma alta probabilidade de cura seja atingida e ao mesmo
+
+tempo, que a probabilidade de complicações em qualquer órgão de risco seja mínima.
+
+O objetivo dessa dissertação é o planejamento ótimo em radioterapia, buscando
+
+a solução ótima através do Método Simplex e sua comparação com o Método de Pontos
+
+Interiores.
+
+No capítulo 1 é feito um breve relato histórico a respeito da Programação Linear.
+
+No Capitulo 2 encontram-se os conceitos básicos de Problemas de Programação Linear. O
+
+desenvolvimento do Método Simplex encontra-se no Capítulo 3. No Capítulo 4, apresenta-
+
+se o modelo para a formulação do tratamento por radioterapia. Discute-se a aplicação
+
+do Método Simplex na aplicação do modelo proposto e os resultados computacionais no
+
+Capítulo 5 e as conclusões no Capítulo 6.
+
+1 BREVE HISTÓRICO
+
+14
+
+A Programação Linear é uma ferramenta da Pesquisa Operacional (PO) aplicada à
+
+solução de problemas que objetiva a otimização de um sistema em estudo [1]. O problema
+
+de otimizar uma função linear, sujeita a restrições lineares, teve sua origem com os
+
+estudos de Fourier sobre sistemas lineares de inequações, em 1826. No entanto, só em 1939
+
+Kantorovich, matemático russo, faz notar a importância prática destes problemas, criando
+
+assim um algoritmo para a sua solução [8].
+
+O termo pesquisa operacional é uma tradução direta do inglês operational research,
+
+cujo surgimento ocorreu no início da década de 1940, coincidindo com a Segunda Guerra
+
+Mundial [11]. Nesse período, a Inglaterra convocou um grupo de cientistas para estudar
+
+problemas de estratégias e táticas associadas com a defesa do país. Numa atuação clássica,
+
+um grupo de especialistas (matemáticos, físicos, engenheiros,etc) foi designado para avaliar
+
+e reposicionar adequadamente os radares do sistema de defesa aérea do país antes e
+
+durante o período de guerra. O surgimento deste termo é atribuído ao superintendente
+
+da estação A. P. Rowe, que em 1938, coordenava equipes para examinar a eﬁciência de
+
+técnicas de operações advindas de experimentos com interceptação de radares. Em 1941,
+
+foi inaugurada a Seção de Pesquisa Operacional do Comando da força Aérea de Combate.
+
+Após o ﬁm da guerra, a Pesquisa Operacional evoluiu rapidamente na Inglaterra e
+
+nos Estados Unidos. Muitos dos especialistas, que estiveram envolvidos no planejamento de
+
+operações militares, deram continuidade a suas pesquisas, agora visando também operações
+
+não militares. Em 1947, foi implantado o projeto SICOOP (Scientiﬁc Computation of
+
+Optimal Programs) no Pentágono, com o objetivo de apoiar as decisões de operações
+
+da força aérea americana. O projeto continha um grupo de pesquisa coordenado pelo
+
+economista Arcshall Wood e pelo matemático George Dantzig.
+
+Durante esse projeto, Dantzig desenvolveu, formalizou e testou o Método Simplex
+
+para resolver Problemas de Programação Linear (otimização linear), com base nos trabalhos
+
+precursores de Kantorovich. Após a guerra, ele foi impulsionado a encontrar formas
+
+eﬁcientes de desenvolver esta metodologia. Dantzig foi o primeiro a reconhecer que um
+
+programa de planejamento poderia ser expresso por um sistema de inequações lineares,
+
+assim como foi o primeiro a apresentar, na forma de uma expressão matemática explícita,
+
+um critério para seleção do melhor plano, ao que hoje chamamos função objetivo.
+
+A utilização dessas técnicas atraiu o interesse de diversas áreas e a partir da
+
+década de 1950 foram aplicadas por cientistas ingleses e americanos em diversos problemas
+
+procedentes do setor público e privado, envolvendo setores industriais e ﬁnanceiros como
+
+15
+
+mineração, metalúrgico, construção civil e militar, têxtil, transportes, coleta de lixo, polícia,
+
+entre outros. Desde então, vem sendo aplicadas às mais diversas áreas de produção e
+
+logística, incluindo indústrias de alimentação, eletrônica, telecomunicações, organização de
+
+serviços públicos e privados, saúde, etc. A natureza dos problemas é bastante abrangente
+
+e complexa, exigindo assim uma abordagem detalhada dos múltiplos aspectos envolvidos.
+
+Seu desenvolvimento ao longo das últimas décadas é devido, principalmente, a
+
+dois fatores: o acirramento da concorrência no período pós-guerra, o que implicou numa
+
+melhoria do planejamento empresarial para sobrevivência e manutenção das empresas, e
+
+o rápido e acentuado desenvolvimento da tecnologia no terreno das telecomunicações e
+
+cibernética. O surgimento de computadores digitais na década de 1950 tornou possível
+
+desenvolver e utilizar novas metodologias para resolver uma grande variedade de problemas
+
+reais. A medida que a capacidade computacional disponível foi crescendo, tornou-se possível
+
+resolver problemas cada vez mais complexos.
+
+Em 1952, foi fundada a sociedade cientíﬁca americana de Pesquisa Operacional
+
+ORSA (Operations Research Society of America) e,em 1953, a sociedade inglesa ORS
+
+(Operational Research Society) e a americana de ciências de administração TIMS (The
+
+Intitute of Management Sciences), já em 1957, na Inglaterra, foi realizada a primeira
+
+conferência internacional desse tema.
+
+Por volta do ﬁm da década de 60, surgem as questões educacionais, principalmente,
+
+no tocante da maior publicação literária do assunto e na presença em cursos de pós-
+
+graduação. Esse estudo iniciou-se no Brasil no início dessa década também, por meio
+
+de alguns trabalhos pioneiros de proﬁssionais de empresas e, principalmente, no meio
+
+acadêmico. O primeiro simpósio ocorreu em 1968 no ITA, em São José dos Campos, SP.
+
+Em seguida, foi fundada a SOBRAPO (Sociedade Brasileira de Pesquisa Operacional) que
+
+publica periódicos há mais de 25 anos.
+
+Desde então há um grande progresso tanto em desenvolvimentos teóricos e com-
+
+putacionais como na exploração de novas aplicações da Programação Linear. O Método
+
+Simplex recolhe grande aceitação para a resolução desses programas devido não só a
+
+sua simplicidade, mas principalmente à sua capacidade em produzir soluções em tempo
+
+aceitável. No entanto, é importante referir que se trata de um algoritmo não-polinomial,
+
+pois é possível encontrar uma classe de problemas lineares para os quais o Método Simplex
+
+exibe um esforço de crescimento exponencial, com a dimensão do problema [8].
+
+Em 1984, Narendra Karmakar introduz um novo método de Pontos Interiores
+
+para resolver problemas de Programação Linear, o que constituirá um enorme avanço nos
+
+princípios teóricos e práticos da área.
+
+Atualmente, existem outros algoritmos teoricamente mais eﬁcientes para Problemas
+
+16
+
+de Programação Linear, exibindo um comportamento polinomial em relação ao esforço
+
+de determinação da solução ótima. São exemplos disso o Método do Elipsóide e os já
+
+muito famosos algoritmos de Pontos Interiores. No entanto, o Método Simplex continua
+
+a ser o processo mais usado na prática para a resolução de programas lineares. Além
+
+disso, esse algoritmo ou a sua variante dual-simplex pode ser usado eﬁcientemente na
+
+resolução de programas lineares para os quais os algoritmos de Pontos Interiores ainda
+
+não se mostraram suﬁcientemente competitivos.
+
+A Pesquisa Operacional, com um enfoque mais clássico, é deﬁnida como a arte de
+
+aplicar técnicas de modelagem a problemas de decisão por meios de métodos matemáticos
+
+e estatísticos, buscando encontrar uma solução ótima de maneira sistêmica, que leva
+
+em consideração a interação com o ambiente interno e externo para a formulação da
+
+modelagem de um problema. A construção do modelo matemático é a parte mais reﬁnada,
+
+não havendo regras para sua construção, sugere-se um roteiro que ajuda a ordenar o
+
+raciocínio. A seguir um pouco mais sobre os modelos matemáticos.
+
+1.1 MODELOS MATEMÁTICOS
+
+A matemática tem uma importância fundamental na descrição de fenômenos
+
+naturais, sociais, econômicos entre outros. As leis que regem esses fenômenos, se possível,
+
+podem ser descritas por relações matemáticas, dando origem ao que chamamos de modelos
+
+matemáticos. Modelos são representações da realidade, no qual o objetivo é reproduzir o
+
+sistema de modo a aumentar a sua produtividade. Exemplos de modelos matemáticos são
+
+os modelos de:
+
+• programação linear (otimização linear);
+
+• programação inteira (otimização discreta);
+
+• programação em redes (otimização em redes) e
+
+• programação não linear (otimização não linear).
+
+A modelagem e análise de um problema de Programação Linear desenvolve-se
+
+através de vários passos. A fase de formulação do problema envolve um estudo detalhado
+
+do sistema e consequente recolha de dados, a identiﬁcar as suas restrições ou limitações e
+
+a sua função objetivo [8]. O problema em análise pode, frequentemente, ser apenas uma
+
+parcela de um sistema mais global. O passo seguinte envolve a identiﬁcação do problema
+
+através de um modelo matemático. É necessário algum cuidado para assegurar que o
+
+modelo seja matemáticamente tratável e represente satisfatoriamente o sistema em análise.
+
+17
+
+Este compromisso deverá ser estabelecido de forma equilibrada e, as hipóteses subjacentes
+
+ao modelo, deverão ser consideradas de forma adequada.
+
+Uma vez obtido o modelo linear, que é constituído pela função objetivo e pelas
+
+restrições, os métodos de programação linear se encarregam de encontrar uma solução
+
+ótima, que pode ser tanto a maximização de um lucro, quanto a minimização de custos.
+
+O terceiro passo envolve a obtenção de uma solução para a qual, deve ser escolhido
+
+o Método Simplex, ou uma sua variante, ou uma técnica de Pontos Interiores. A quarta
+
+fase envolve testes, análises e (possivelmente) restruturação do modelo. A solução do
+
+modelo pode ser examinada, tal como a sua sensibilidade, a vários parâmetros do sistema,
+
+estudando o seu comportamento em vários cenários de hipóteses diferentes. Esta análise
+
+de sensibilidade permite um melhor conhecimento do sistema e servirá para averiguar a
+
+viabilidade do modelo, através da comparação dos resultados calculados com os resulta-
+
+dos esperados, utilizando a experiência recolhida no passado. Nesta etapa, pretende-se
+
+enriquecer o modelo através da incorporação de outros aspectos importantes do sistema,
+
+que tenham sido anteriomente ignorados, ou mesmo optar-se por simpliﬁcar o modelo. O
+
+último passo envolve a aplicação de todo o processo.
+
+A criação de um modelo implica em algo simbólico, que simpliﬁca a realidade
+
+mediante o uso de relações matemáticas de algumas variáveis envolvidas, porém mantém
+
+as essências de causa-efeito do problema estudado. No que tange a Pesquisa Operacional,
+
+podemos ter vários exemplos clássicos de modelos, entre um dos mais básicos e interessantes
+
+que envolvem misturas (alimentos, rações, fertilizantes, concreto, poluentes, entre outros).
+
+Esses tipos de problemas consistem em combinação de materiais (naturais ou não) para
+
+gerar novos materiais ou produtos com características desejáveis, como é o caso por
+
+exemplo das misturas de massa de reboco (cal, areia, cimento e água) ou de concreto
+
+(areia, brita, cimento e água), que em proporções diferentes ou com adição de alguma
+
+substância adquirem propriedades para um ﬁm especíﬁco, como acabamento e fundação,
+
+respectivamente [10].
+
+1.2 PROGRAMAÇÃO LINEAR
+
+Na operacionalização de um problema surgirão situações onde tem-se que tomar
+
+decisões, por existirem fatores limitadores ou recursos escassos que representam restrições
+
+ou limitações existentes. O modelo de Programação Linear consiste na descrição de um
+
+sistema organizado com o auxílio de um modelo matemático, e através da resolução deste
+
+modelo, encontrar a melhor solução. Este problema, para o qual a Programação Linear
+
+proporciona uma solução, pode ser resumido em: maximizar ou minimizar alguma variável
+
+dependente, que é função linear de diversas variáveis independentes, sujeita a muitas
+
+18
+
+restrições.
+
+O problema de otimização de uma função linear teve sua origem com os estudos
+
+de Dantzig, quem publicou o Algoritmo Simplex, em 1947, John Von Neumman, que
+
+desenvolveu a Teoria da Dualidade no mesmo ano, e Lwonid Kantorovich, um matemático
+
+russo, que utiliza técnicas similares na economia antes de Dantzig, e ganhador do Prêmio
+
+Nobel em economia em 1975.
+
+No próximo capítulo, serão abordados os principais elementos de um Problema de
+
+Programação Linear e suas características.
+
+2 PROBLEMA DE PROGRAMAÇÃO LINEAR
+
+19
+
+O Problema de Programação Linear [8] consiste em determinar o valor de n variáveis
+
+x1, x2, . . . , xn, que otimiza o valor de uma função linear:
+
+num conjunto deﬁnido por m restrições lineares:
+
+f (x1, x2, . . . , xn),
+
+gi(x1, x2, . . . , xn) = bi,
+
+i = 1, 2, . . . , m.
+
+O Problema de Programação Linear é caracterizado pelo fato de f (x1, x2, . . . , xn)
+e gi(x1, x2, . . . , xn), com i = 1, 2, . . . , m, serem funções lineares, cuja forma padrão é a
+seguinte:
+
+M inimizar
+
+f (x1, x2, . . . , xn) = c1x1 + c2x2 + . . . + cnxn
+
+Sujeito a
+
+...
+
+a11x1 + a12x2 + . . . + a1nxn = b1
+a21x1 + a22x2 + . . . + a2nxn = b2
+...
+am1x1 + am2x2 + . . . + amnxn = bm
+x1 ≥ 0, x2 ≥ 0, . . . , xn ≥ 0.
+
+...
+
+...
+
+(2.1)
+
+onde:
+
+• f é chamada de Função Objetivo;
+
+• o sistema de equações lineares gi(x1, x2, . . . , xn) = bi, para i = 1, 2, . . . , m, deﬁne as
+
+Restrições do Problema;
+
+• as desiguadades xj ≥ 0 constituem as condições de não negatividade das variáveis;
+
+• os números reais cj com j = 1, 2, . . . , n são chamados Coeﬁcientes de Custo e
+representam o prejuízo (lucro) unitário associado à variável de decisão xj com
+j = 1, 2, . . . , n, no caso do problema ser de minimização (maximização);
+
+• os Coeﬁcientes Tecnológicos aij para i = 1, 2, . . . , m e j = 1, 2, . . . , n representam a
+medida unitária exigida pela variável de decisão xj em relação ao recurso associado
+à restrição de ordem i, com i = 1, 2, . . . , m;
+
+• o coeﬁcientes bi, para i = 1, 2, . . . , m, são chamados de Termos Independentes das
+
+restrições e representam as limitações dos recursos associados às restrições.
+
+20
+
+Qualquer problema de otimização linear pode ser escrito na forma padrão, desen-
+
+volvendo modiﬁcações simples. Assim, um problema de minimização pode converter-se
+
+num problema de maximização, pois:
+
+Máximo
+
+n
+X
+
+j=1
+
+cjxj = −Mínimo
+
+n
+X
+
+(−cj)xj.
+
+j=1
+
+Além disso, toda desigualdade ai1x1 + ai2x2 + . . . + ainxn ≤ bi pode ser transfor-
+mada numa igualdade, por introdução de uma variável adicional com condição de não
+
+negatividade. Com efeito a desigualdade anterior é equivalente a:
+
+ai1x1 + ai2x2 + . . . + ainxn + xn+i = bi,
+
+com
+
+xn+i ≥ 0.
+
+Do mesmo modo da desigualdade ai1x1 + ai2x2 + . . . + ainxn ≥ bi pode ser escrita
+
+na forma:
+
+com
+
+ai1x1 + ai2x2 + . . . + ainxn − xn+i = bi,
+
+xn+i ≥ 0.
+
+As novas variáveis xn+i designam-se por Variáveis de Desvio ou Variáveis de Folga.
+
+Este problema pode ainda ser escrito de forma equivalente em notação matricial.
+Com efeito, considerando os vetores c, x ∈ Rn e b ∈ Rm e a matriz A ∈ Rm×n deﬁnidos a
+seguir:
+
+c =
+
+
+
+
+
+
+
+
+
+
+
+
+c1,
+c2
+...
+cn
+
+
+
+
+
+
+
+
+
+
+
+
+, x =
+
+
+
+
+
+
+
+
+
+
+
+
+x1,
+x2
+...
+xn
+
+
+
+
+
+
+
+
+
+
+
+
+, b =
+
+
+
+
+
+
+
+
+
+
+
+
+b1,
+b2
+...
+bm
+
+
+
+
+
+
+
+
+
+
+
+
+e A =
+
+
+
+
+
+
+
+
+
+
+
+
+a12
+a11
+a22
+a21
+...
+...
+am1 am2
+
+. . . a1n
+. . . a2n
+...
+. . .
+. . . amn
+
+
+
+
+
+
+
+
+
+
+
+
+,
+
+então o problema de otimização linear consiste na determinação do vetor x ∈ Rn,
+
+tal que:
+
+M inimizar f (x) = cT x
+Sujeito a
+
+Ax = b
+
+x ≥ 0.
+
+Os conceitos apresentados neste capítulo serão utilizados ao longo dos próximos.
+
+21
+
+2.1 SOLUÇÕES BÁSICAS
+
+Considerando o sistema de equações
+
+Ax = b,
+
+supondo que das n colunas de A selecionam-se um conjunto de m colunas linearmente
+
+independentes (este conjunto existe se o posto de A é m) [5]. Para simpliﬁcar a notação
+
+seleciona-se as m primeiras colunas de A e denotada por B a matriz m × m dessas colunas.
+
+A matriz B é então não singular podendo assim resolver a equação
+
+BxB = b,
+
+onde xB ∈ Rm. Tomando x = (xB, 0) (ou seja, ﬁxando os m primeiros componentes de
+x igualando a xB e os restantes componentes igualando a zero) obtem-se a solução para
+Ax = b. Tem-se então a seguinte deﬁnição:
+
+Deﬁnição 2.1. Tomando simultaneamente um conjunto de m equações lineares em n
+
+incógnitas de Ax = b, seja B uma submatriz não singular m × m formada pelas colunas
+
+de A. Então, se para todos n − m componentes de x não associados com as colunas de B
+
+são ﬁxadas como iguais a zero, a solução do resultado do conjunto restante são chamadas
+
+de soluções básicas de Ax = b com relação a matriz básica B(ou simplesmente base). Os
+
+componente de x associados com as colunas de B são chamadas de variáveis básicas.
+
+Na deﬁnição acima, refere-se a B como base, uma vez que B é constituído por m
+colunas linarmente independentes que podem ser consideradas como base no espaço Em.
+As soluções básicas correspondem a uma expressão para o vetor b como uma combinação
+
+linear destes vetores de base.
+
+Em geral, a equação Ax = b pode não ter soluções básicas. Entretanto, pode-se
+
+evitar diﬁculdades analisando estrutura da matriz A. Primeiro, assumindo que n > m, ou
+
+seja, o número de variáveis xi é maior que o número de equações da restrição. Segundo,
+assumindo que as linhas de A são linearmente independentes, e correspondem as m
+
+equações lineares independentes. A dependência linear entre as linhas de A, levaria a
+
+restrições contraditórias ou uma redundância que poderia ser eliminada.
+
+Deﬁnição 2.2. (Posto completo) A matriz A (m × n), tem m < n, e as m linhas de A
+
+são linearmente independentes.
+
+Com base na deﬁnição acima, o sistema Ax = b sempre terá solução e, na verdade,
+
+sempre terá pelo menos uma solução básica.
+
+As variáveis básicas de uma solução básica não são necessariamente todas nulas.
+
+Isto pode ser notado pela deﬁnição abaixo.
+
+22
+
+Deﬁnição 2.3. Se uma ou mais variáveis básicas de uma solução básica tem valor igual
+
+a zero, a solução é chamada de solução básica degenerada.
+
+Em uma solução básica não-degenerada as variáveis básicas, e consequentemente
+
+a base B são os componentes positivos da solução. Há uma ambiguidade com a solução
+
+básica degenerada, contudo as variáveis nulas básicas e não básicas podem ser trocadas.
+
+Até agora, na discussão de soluções básicas, tratou-se apenas as restrições de
+
+igualdade sem fazer referência à restrição de positividade nas variáveis. Deﬁnições similares
+
+aplicam-se quando estas restrições devem ser consideradas. Considerando agora o sistema
+
+de restrições
+
+Ax = b
+
+x ≥ 0,
+
+que representam as restrições de um sistema linear na forma padrão.
+
+Deﬁnição 2.4. Um vetor x é chamado de factível se satisfaz todas as restrições do sistema
+
+acima. Uma solução factível do sistema e também básica, é chamada de solução básica
+
+factível; se esta solução também for uma solução básica degenerada, é chamada de solução
+
+factível básica degenerada.
+
+2.2 NOTAÇÃO MATRICIAL
+
+Pode-se também utilizar a notação matricial para deﬁnir as soluções básicas e não
+
+básicas [9]. Essa caracterização permite descrever algebricamente o Método Simplex.
+
+Considerando o sistema Ax = b e x ≥ 0, onde A é uma matriz m × n e b é um vetor
+
+m × 1. Supondo que o posto (A, b)= posto(A) = m. Depois de reorganizar adequadamente
+
+as colunas de A, tem-se que A = [B, N ] onde B é uma matriz invertível m × m e N uma
+
+para a equação Ax = b, onde:
+
+matriz m × (n − m). A solução x =
+
+e
+
+(cid:21)
+
+(cid:20) xB
+xN
+
+xB = B−1b,
+
+xN = 0,
+
+é chamado de solução básica do sistema. Se xB ≥ 0, é chamada de solução básica factível.
+Neste momento a matriz B é chamada de matriz básica (ou simplesmente base) e N é
+
+chamada de matriz não básica. As componentes xB são chamadas de variáveis básicas (ou
+variáveis dependentes) e as componentes de xN são chamadas de variáveis não básicas (ou
+variáveis independentes). Se xB > 0, então x é chamado de variável básica factível não
+degenerada.
+
+23
+
+2.3 O TEOREMA FUNDAMENTAL DA PROGRAMAÇÃO LINEAR
+
+Nesta seção, através do Teorema Fundamental da Programação Linear, estabe-
+
+lecemos a importância das soluções básicas factíveis na solução. O método de prova do
+
+Teorema é tão importante quanto o resultado. O Teorema mostra que é necessário apenas
+
+considerar as soluções básicas factíveis quando se busca uma solução ótima para o Problema
+
+de Programação Linear, isto porque o valor ótimo sempre é encontrado através de uma
+
+solução, cuja respectiva forma padrão é dada por:
+
+M inimizar
+
+cT x
+
+Sujeito a Ax = b
+
+x ≥ 0.
+
+Uma solução factível que minimize o valor da função objetivo, respeitando as
+
+restrições da função é chamada de solução factível ótima. Se a solução é uma solução
+
+básica, então ela é solução básica factível ótima.
+
+Teorema 2.1. (Teorema Fundamental da Programação Linear) Dada uma função linear
+
+da forma padrão onde A é uma matriz (m × n) de posto m,
+
+1. se existe uma solução factível, então existe uma solução básica factível;
+
+2. se existe uma solução factível ótima, então existe uma solução básica factível ótima.
+
+Prova: (item 1) Sejam a1, a2, . . . , an os vetores da coluna da matriz A. Suponha
+que x = (x1, x2, . . . , xn) seja uma solução factível. Então, em termos da coluna de A, esta
+solução satisfaz:
+
+x1a1, x2a2 + . . . + xnan = b.
+
+(2.2)
+
+Supondo que exatamente p das variáveis xi são maiores do que zero, e por conveni-
+
+ência elas são as p primeiras variáveis, poderá (2.2) ser reescrita como:
+
+x1a1, x2a2 + . . . + xpap = b.
+
+Há dois casos a serem considerados agora: se os vetores a1, a2, . . . , ap são linear-
+
+mentes dependentes ou linearmente independentes.
+
+CASO 1: Supondo que a1, a2, . . . , ap são linearmente independentes. Logo, p ≤ m.
+Se p = m, a solução é básica e a prova está concluída. Se p < m , então selecionando m − p
+
+24
+
+vetores dos n − p vetores restantes tal que restará m vetores linearmente independentes.
+
+Atribuindo como sendo zero as m − p variáveis restantes, obtem-se uma solução básica
+
+factível (degenerada neste caso).
+
+CASO 2: Supondo que a1, a2, . . . , ap são linearmente dependentes. Então, existe
+uma combinação não trivial desses vetores cujo valor é nulo. Isto é, existem constantes
+
+y1, y2, . . . , yp onde pelo menos uma delas é positiva, sendo assim:
+
+y1a1 + y2a2 + . . . + ypap = 0.
+
+Multiplicando essa equação pela escalar ε e subtraindo de (2.2) obtem-se:
+
+(x1 − εy1)a1 + (x2 − εy2)a2 + . . . + (xp − εyp)ap = b.
+
+Essa expressão acima é válida para qualquer ε, e para cada ε, as componentes
+
+xi − εyi correspondem a uma solução da equação, embora a restrição xi − εyi ≥ 0 possa
+ser violada. Assumindo y = (y1, y2, . . . , yp, 0, 0, . . . , 0), a solução de (2) para qualquer valor
+de ε é:
+
+x − εy.
+
+Para ε = 0, a solução é uma solução básica factível. Quando ε aumenta a partir
+
+de zero, as componentes também podem decrescer, crescer, ou permanecer constantes,
+
+dependendo se os valores correspondentes de yi são negativos, positivos ou nulos. Pelo
+menos um dos valores de yi é positivo, logo pelo menos uma das componentes irá decrescer
+enquanto ε irá crescer. Aumentando o valor de ε até que uma ou mais componentes
+
+tornem-se nulas. Isto é, considerando que
+
+ε = min{xi/yi : yi > 0}.
+
+Para este valor de ε a solução dada por:
+
+x − εy,
+
+é factível e possui no máximo p − 1 variáveis positivas. Repetindo o processo, se necessário,
+
+pode-se eliminar as variáveis positivas até encontrar uma solução factível com as colunas
+
+correspondentes linearmente independente, situação onde o caso 1 se aplica.
+
+Prova: (item 2) Supondo que x = (x1, x2, . . . , xn) seja uma solução factível ótima
+e, como no caso da prova (item 1) acima, supondo que existem exatamente p variáveis
+
+positivas (x1, x2, . . . , xp). Novamente tem-se dois casos; no Caso 1, correspondente ao
+linearmente independente, o procedimento é equivalente ao descrito acima.
+
+25
+
+No Caso 2 o procedimento também é o mesmo que o anterior, mas deve ser
+
+demonstrado que para qualquer ε na solução (x − εy) é ótimo. Para isso, sabe-se que o
+
+valor da solução x − εy é:
+
+cT x − εcT y.
+
+(2.3)
+
+Para ε suﬁcientemente pequeno, x − εy é uma solução factível para valores de ε
+positivos ou negativos. Podendo então concluir que cT x = 0. Pois se cT y 6= 0, um valor
+pequeno de ε com sinal apropriado poderia ser encontrado para fazer (2) menor que cT x
+mantendo a factibilidade. Isto contraria a hipótese assumida que x é uma solução ótima.
+Logo, cT y = 0.
+
+Assim sendo, tem-se uma menor solução factível com um número menor de variáveis
+
+positivas também ótimas, o restante da prova segue exatamente como descrito no (item 1)
+[5]. (cid:3)
+
+O Teorema reduz a tarefa de encontrar as soluções básicas factíveis dos Problemas
+
+de Programação Linear. Quando um problema tem n variáveis e m restrições há pelo
+
+menos,
+
+!
+
+  n
+m
+
+=
+
+n!
+m!(n − m)!
+
+,
+
+soluções básicas (que corresponde ao número de combinações para escolher m de n
+
+colunas), sendo este um número ﬁnito de possibilidades. O Teorema Fundamental produz
+
+uma solução óbvia, porém ﬁnita. Explorando melhor a técnica de prova bem quanto a
+
+aﬁrmação do Teorema, o procedimento do Simplex é derivado.
+
+Deve notar-se que a prova do Teorema Fundamental dada acima é de um caráter
+
+algébrico simples. Na próxima seção será apresentado uma interpretação geométrica deste
+
+Teorema, ou seja, em termos da teoria geral de conjuntos convexos.
+
+2.4 RELAÇÕES DE CONVEXIDADE
+
+O desenvolvimento feito até aqui do Teorema Fundamental foi baseado em proprie-
+
+dades de sistemas de equações lineares. Este resultado, entretanto, tem uma interpretação
+
+nos termos da teoria de conjuntos convexos, podendo levar não apenas uma derivação
+
+alternativa do Teorema como também dar um entendimento geométrico mais claro para o
+
+resultado. A principal ligação entre a teoria algébrica e a geométrica é a relação formal
+
+entre as soluções básicas factíveis na forma de pontos extremos de um poliedro. Um
+
+26
+
+ponto x ∈ Rn é um Ponto Extremo de um conjunto convexo K, se x ∈ K e não pertence
+ao interior de um segmento de reta que une dois pontos de K. Esta correspondência é
+
+estabelecida a seguir:
+
+Deﬁnição 2.5. Seja um conjunto C ∈ Rm. Dados dois pontos quaisquer x1 e x2 ∈ C
+pertencentes ao conjunto e α ∈ [0, 1]. Se αx1 + (1 − α)x2 ∈ C então, pode-se dizer que
+e x1 e x2 são chamados pontos extremos e C é um conjunto convexo. Não obedecendo a
+relação, então é dito não convexo.
+
+Teorema 2.2. (Teorema da equivalência entre pontos extremos e soluções básicas) Seja
+
+A uma matriz (m × n) de posto m e b um vetor (m × 1). Seja K o poliedro convexo, o
+conjunto dos pontos K = {x ∈ Rn|Ax = b e x ≥ 0}. Um vetor x é um ponto extremo de
+P se, e somente se, x é uma solução básica factível.
+
+Prova: Supondo que x = (x1, x2, . . . , xm, 0, 0, . . . , 0) seja uma solução básica factível
+
+de Ax = b. Então:
+
+x1a1, x2a2 + . . . + xmam = b,
+
+onde a − 1, . . . , am são m colunas de A linearmente independentes. Suponha que x possa
+ser expresso como uma combinação convexa de dois pontos y e z de K, isto é:
+
+x = αy + (1 − α)z, 0 < α < 1, y 6= z.
+
+Como todas as componentes de x, y, e z são não negativas e como 0 < α < 1,
+
+conclui-se imediatamente que as (n − m) componentes de y e z são nulas. Então em
+
+particular, tem-se que:
+
+e
+
+y1a1, y2a2 + . . . + ymam = b,
+
+z1a1, z2a2 + . . . + zmam = b.
+
+Como os vetores a1, a2, . . . , am são linearmente independentes, tem-se que x = y = z.
+
+Logo x é um ponto extremo de K.
+
+Reciprocamente, supondo que x é um ponto extremo de K. Assumindo que as
+
+componentes não nulas de x sejam as primeiras k componentes.
+
+Então:
+
+x1a1, x2a2 + . . . + xkak = b,
+
+com xi > 0, i = 1, 2,com . . . , k. Para mostrar que x é uma solução básica factível, deve-
+se mostrar que os vetores a1, . . . , ak são linearmente independentes. Desenvolvendo por
+
+contradição. Supondo que a1, a2, . . . , ak são linearmente independentes. Então, existe uma
+combinação linear não trivial que é nula, isto é:
+
+27
+
+y1a1, y2a2 + . . . + ykak = 0.
+
+Deﬁnindo o vetor n × 1 y = (y1, y2, . . . , yk, 0, 0, . . . , 0).
+
+Como xi > 0, com 1 ≤ i ≤ k, é possível escolher ε tal que:
+
+Tem-se então que:
+
+(x + εy ≥ 0, x − εy ≥ 0).
+
+x =
+
+1
+2
+
+(x + εy) +
+
+1
+2
+
+(x − εy),
+
+o que expressa x como uma combinação convexa de dois pontos distintos de K. Este fato
+
+não pode ocorrer, pois x é um ponto extremo de K. Logo, a1, a2, . . . , ak são linearmente
+independentes e x é uma solução básica factível [5]. (cid:3)
+
+Esta correspondência entre pontos extremos e solução básica factível permite provar
+
+uma propriedade geométrica que um poliedro convexo K deﬁne o conjunto de restrições
+
+de um Problema de Programação Linear.
+
+Corolário 2.1. Se conjunto convexo K correspondente a Ax = b, x ≥ 0, não é vazio,
+
+então ele possui pelo menos um ponto extremo.
+
+Corolário 2.2. Se existir uma solução ótima ﬁnita para o problema de programação linear,
+
+então existe uma solução ótima ﬁnita que é um ponto extremo do conjunto de restrições.
+
+Corolário 2.3. O conjunto de restrições K correspondente a Ax = b, x ≥ 0 possui, no
+
+máximo, um número ﬁnito de pontos extremos.
+
+Corolário 2.4. Se um conjunto K de um politopo convexo de Ax = b, x ≥ 0 é limitado,
+
+então K é um poliedro convexo, isto é, K consiste de pontos que são combinações lineares
+
+de um número ﬁnito de pontos.
+
+2.5 RESOLUÇÃO GRÁFICA DE PROBLEMAS LINEARES
+
+Nesta seção serão apresentados, e resolvidos de forma gráﬁca, alguns exemplos
+
+de Problemas de Programação Linear contendo duas variáveis. Apesar de ser restrita
+
+a problemas de pequeno porte, a solução gráﬁca oferece elementos facilitadores para a
+
+compreensão dos procedimentos do Método Simplex.
+
+Considerando o seguinte Problema de Programa Linear:
+
+28
+
+M inimizar
+
+cT x
+
+Sujeito a Ax = b
+
+x ≥ 0,
+
+n
+X
+
+Nota-se que a região factível consiste em todos os vetores x que satisfazem Ax = b e
+x ≥ 0. Entre todos esses pontos, deseja-se encontrar uma solução mínima para cT x. Nota-se
+também que os pontos tem o mesmo valor da função objetivo z que satisfaz a equação
+
+cT x = z, ou seja,
+
+n
+X
+
+cjxj = z. Se z é uma função a ser minimizada, então
+
+cjxj = z é
+
+uma reta e deve ser movida paralelamente a si mesma na direção que minimiza a função
+
+j−1
+
+j−1
+
+objetivo até encontrar um ponto ótimo. Esta direção é −c, e portanto, a reta é movida na
+
+direção de −c tanto quanto possível, até alcançar o(s) ponto(s) da região factível.
+
+Este processo é ilustrado na Figura 1 . Percebe-se que o ponto ótimo é alcançado
+1 + c2x∗
+na linha c1x1 + c2x2 = z∗, onde z∗ = c1x∗
+2, não poderá se mover além da direção
+−c = (−c1, −c2), porque só poderá seguir até a direção da região factível. Ou seja, para
+um problema de maximização, a reta cT x = z deve ser movida tanto quanto possível na
+direção de c, mantendo-se dentro da região factível.
+
+Figura 1 – Solução Geométrica
+
+FONTE: Bazaraa et al,p.19, adaptado pela autora.
+
+O processo anterior é conveniente para os problemas que têm duas variáveis e é
+
+impraticável para problemas com mais de três variáveis [11]. Vale a pena notar que o ponto
+ótimo x∗ na Figura 1 é um dos cinco pontos dos vértices que são chamados de pontos
+extremos.
+
+Em notação matricial, a restrição é (ai)T x ≤ bi, em que (ai)T = (ai1 ai2) é a linha
+i da matriz A e a equação da reta é (ai)T x = bi. Estas restrições dividem o espaço R2 em
+3 partes:
+
+29
+
+• x ∈ R2 tal que (ai)T x = bi;
+
+• x ∈ R2 tal que (ai)T x < bi;
+
+• x ∈ R2 tal que (ai)T x > bi.
+
+O gradiente ai (coeﬁcientes da equação da reta), é perpendicular à reta (ai)T x = bi,
+
+e aponta para os pontos tais que (ai)T x ≤ bi conforme a Figura 2.
+
+Figura 2 – As três regiões do plano: aix = bi aix < bi
+
+e aix > bi.
+
+FONTE: Arenales et al,p.60, adaptado pela autora.
+
+Figura 3 – Região factível de restrições do tipo aix ≤ bi, (i = 1, 2, ...m).
+
+FONTE: Arenales et al,p.60, adaptado pela autora.
+
+Finalmente, basta encontrar na região factível Figura 3) a solução x∗ que minimize
+a função objetivo f (x), isto é, a solução ótima. Observando a curva de nível cT x = f ∗ da
+
+função f em que f ∗ = f (x∗), observa-se que todo conjunto S está do lado para onde o
+gradiente aponta.
+
+2.5.1 EXEMPLOS
+
+30
+
+M aximizar f (x1, x2) = x1 + 2x2
+
+Sujeito a
+
+x1 + x2 ≤ 4
+
+x1 ≤ 2
+
+x2 ≤ 3
+
+x1, x2 ≥ 0.
+
+(a)
+
+(b)
+
+(c)
+
+(d)
+
+Na Figura 4, cada restrição está graﬁcamente representada com sua respectiva reta
+
+(a), (b) e (c). Como são inequações, os pontos que as satisfazem deﬁnem semi-espaços, isto é,
+
+a região acima ou abaixo da reta, à direita ou à esquerda da reta. Por outro lado, a restrição
+
+(d) informa que a região está no primeiro quadrante do plano. Logo, tem-se a região factível
+
+denominada por S = {(x1, x2) tal que x1 + x2 ≤ 4, x1 ≤ 2, x2 ≤ 3, x1 ≥ 0, x2 ≥ 0} (região
+escurecida da Figura 4).
+
+Figura 4 – Região Factível de S
+
+FONTE: Arenales et al, p.57.
+
+A função objetivo f (x1, x2) = x1 +x2, deﬁnida no conjunto S, pode assumir inﬁnitos
+valores. O conjunto de pontos que atribui o mesmo valor à função objetivo é chamado
+curvas de nível, representada na Figura 5 pela reta tracejada f (1) = 0.
+
+Figura 5 – Determinando a solução ótima x∗(Problema de Maximização)
+
+31
+
+FONTE: Arenales et al, p.58, adaptado pela autora.
+
+Ao deﬁnir a região factível, o vetor dos coeﬁcientes
+
+(cid:21)
+
+(ou seja o vetor gradiente
+
+(cid:20) 1
+2
+
+denotado por ∇f ) é perpendicular à reta x1 + 2x2 = 0 e aponta no sentido em que a função
+f cresce. Com isso, pode-se visualizar que qualquer ponto de S atribui valor maior que
+
+zero à função f . Como pretende-se maximizar f , conclui-se, graﬁcamente, que a solução
+factível x(1) =
+
+não é uma solução ótima.
+
+(cid:21)
+
+(cid:20)0
+0
+
+Analisando outra solução factível x(2) =
+
+
+ =
+
+
+
+
+
+x(1)
+1
+x(1)
+2
+
+(cid:20) 2
+0
+
+(cid:21)
+, em que a função objetivo
+
+vale f (2) = f (x(2)) = 2 e a curva de nível x1 + 2x2 = 2 está representada, na Figura 5
+por f (2) = 2. Como o gradiente não se altera, essa reta é paralela à anterior, f (1) = 0.
+Novamente, o gradiente aponta no sentido em que f cresce e podemos identiﬁcar no gráﬁco
+outros pontos de S que atribuem valores maiores que 2 à função objetivo. Logo, x(2) não é
+uma solução ótima.
+
+Continuando com esse procedimento (de identiﬁcar pontos que atribuem valores
+
+maiores à função objetivo), chega-se a um extremo x∗ =
+
+f (x∗) = 7. A curva de nível x1 + 2x2 = 7 nos permite observar que todos os pontos de S
+atribuem valores menores do que 7 à função objetivo, uma vez que o gradiente aponta no
+sentido de crescimento de f . De outra forma, a solução x∗ que satisfaz todas as restrições
+simultaneamente e maximiza f (x) existe, e é única:
+
+#
+
+" x∗
+1
+x∗
+2
+
+=
+
+(cid:20) 1
+3
+
+(cid:21)
+, para o qual
+
+x∗ =
+
+(cid:21)
+
+(cid:20)x1
+x2
+
+=
+
+(cid:21)
+
+.
+
+(cid:20)1
+3
+
+Neste exemplo, tem-se uma solução ótima única. Outros casos podem ocorrer
+
+dependendo da estrutura do problema. Os casos possíveis que possam surgir são resumidos
+
+a seguir:
+
+32
+
+• Solução ótima única: Se a solução ótima é única, isto ocorre quando existe um ponto
+
+extremo, como ilustrado nas Figuras 6 (a) e (b). Na Figura 6(a) a região factível
+
+é limitada, e na Figura 6(b) a região factível não é limitada, embora em ambos os
+
+casos há uma única solução factível (no caso, solução mínima).
+
+Figura 6 – Solução ótima única: (a) Região Limitada. (b) Região Ilimitada.
+
+FONTE: Bazaraa et al, p.21, adaptado pela autora.
+
+• Múltiplas soluções ótimas: Este caso é ilustrado na Figura 7. Nota-se que a Figura 7
+
+(a) a região factível é limitada. As soluções ótimas consistem nos pontos do segmento
+1 e x∗
+de reta entre os vértices x∗
+2. Pode-se ter também, um conjunto ilimitado de
+soluções ótimas, como a semi-reta indicada na Figura 7 (b).
+
+Figura 7 – Múltiplas soluções ótimas: (a) Região Limitada. (b) Região Ilimitada.
+
+FONTE: Bazaraa et al, p.22, adaptado pela autora.
+
+• Solução ilimitada: Este caso é ilustrado na Figura 8 onde tanto a região factível
+
+quanto o conjunto solução da função objetivo são ilimitados. Neste caso, um problema
+
+de otimização linear pode não ter solução ótima, apesar de ter soluções factíveis.
+
+Figura 8 – Solução ilimitada.
+
+33
+
+FONTE: Bazaraa et al, p.22, adaptado pela autora.
+
+• Solução infactível: A inexistência de solução ótima também pode ocorrer pela
+
+inexistência de solução factível, isto é, tem-se um conjunto vazio de soluções, ilustrado
+
+na Figura 9. Isto ocorre quando as restrições são conﬂitantes, não sendo possível
+
+satisfazer a função objetivo.
+
+Figura 9 – Solução infactível
+
+FONTE: Arenales et al, p.65.
+
+34
+
+2.6 DUALIDADE LINEAR
+
+Para cada problema linear resolvido, existe um outro problema linear associado que
+
+pode ser resolvido simultaneamente. Este outro problema satisfaz algumas propriedades
+
+importantes. Por uma questão de referência, chama-se o problema original de Programação
+
+Linear de Problema Primal, e o seu correspondente de Problema Dual. Ambos os problemas
+
+são construídos a partir dos mesmo coeﬁcientes de custos e suas restrições, mas de tal
+
+maneira que se um deles é de minimização, o outro é de maximização. A deﬁnição desses
+
+problemas é apresentado a seguir.
+
+Dado o problema linear, chamado de Primal:
+
+M inimizar
+
+z =
+
+Sujeito a
+
+cT x
+Ax = b
+
+x ≥ 0,
+
+deﬁne-se o correspondente Dual como o seguinte Problema Linear:
+
+M aximizar
+
+w =
+
+Sujeito a
+
+bT u
+AT u ≤ c.
+
+(2.4)
+
+(2.5)
+
+Se A é uma matriz de ordem m × n veriﬁcam-se as seguintes correspondências
+
+entre os dois problemas:
+
+Tabela 1 – Correspondência entre o programa primal e o dual.
+
+Número de Restrições
+
+Número de Variáveis
+
+PRIMAL
+
+m
+
+n
+
+DUAL
+
+n
+
+m
+
+Variáveis e Restrições
+
+variáveis ≥ 0
+
+restrições de ≤
+
+restrições de igualdade variáveis sem restrições
+
+Matriz
+
+Coeﬁciente de Custo
+
+Termos Independentes
+
+A
+
+c
+
+b
+Fonte:Júdice et al,p. 28.
+
+AT
+
+b
+
+c
+
+Deﬁnição 2.6. (Restrições duais e solução dual factível) O conjunto de restrições AT u ≤ c
+é chamado de restrições duais, e todo vetor u que satisfaça as restrições duais é chamado
+
+de solução dual factível.
+
+Supondo que o Problema Primal contém uma desigualdade. Dado que no Dual
+
+existem desigualdades do tipo ≤, supoem-se que essa desigualdade é da forma ≥. Então o
+
+problema linear terá a seguinte forma:
+
+35
+
+M inimizar z = cT x
+Sujeito a
+
+A1x ≥ b1
+x ≥ 0.
+
+Incluindo a variável de folga xn+1 nessa desigualdade, obtem-se o programa equiva-
+
+lente:
+
+M inimizar z = cT x + 0xn+1
+Sujeito a
+
+A1 − xn+1 = b1
+x ≥ 0, xn+1 ≥ 0.
+
+O dual desse problema é:
+
+M aximizar w = b1u1
+Sujeito a
+
+AT
+1 u1 ≤ c
+−u1 ≤ 0.
+
+Portanto u1 ≥ 0. Assim, a variável dual correspondente a uma restrição de desi-
+
+gualdade ≥ do primal tem restrição de sinal.
+
+Considerando agora o caso de um programa linear com restrição de igualdade e
+
+uma variável sem restrição de sinal, isto é:
+
+M inimizar z = cT + cn+1xn+1
+Sujeito a
+
+aT x + an+1xn+1 = b1
+x ≥ 0.
+
+Se for escrito xn+1 na forma x0
+
+n+1 − x00
+
+n+1 com x0
+
+n+1, x00
+
+n+1 ≥ 0, obtem-se o seguinte
+
+problema equivalente:
+
+M inimizar z = cT x + cn+1x0
+aT x + an+1x0
+Sujeito a
+n+1, x00
+x ≥ 0, x0
+
+n+1 − cn+1x00
+n+1 − an+1x00
+n+1 ≥ 0.
+
+n+1
+n+1 = b1
+
+O dual tem então a seguinte forma:
+
+36
+
+M aximizar w = b1u1
+Sujeito a
+
+au1 ≤ c
+an+1u1 ≤ cn+1
+−an+1 ≤ −cn+1.
+
+Das duas últimas igualdades tem-se:
+
+an+1u1 = cn+1.
+
+Ou seja, toda variável sem restrição de sinal no primal corresponde a uma igualdade
+
+no dual.
+
+A seguir estabelecem-se algumas propriedades dos programas duais.
+
+Teorema 2.3. O dual do dual de um problema linear é um problema primal.
+
+Teorema 2.4. (Dualidade fraca) Se KP = {x ∈ Rn : Ax = b, x ≥ 0} e KD = {u ∈ Rm :
+AT u ≤ c} são os conjuntos admissíveis do primal e do dual respectivamente, então para
+quaisquer x ∈ KP e u ∈ KD tem-se que
+
+bT u ≤ cT x.
+
+Demonstração: Se x ∈ KP e u ∈ KD então:
+
+bT u = (Ax)T u = xT AT u ≤ xT c = cT x,
+
+pois x ≥ 0 e AT u ≤ c [8]. (cid:3)
+
+O Método Simplex é o algoritmo primal mais conhecido para a resolução de
+
+problemas lineares. No próximo capítulo será discutido com detalhes esse algoritmo.
+
+3 O MÉTODO SIMPLEX
+
+37
+
+A idéia do Método Simplex é partir de uma solução básica factível (isto é, um
+
+ponto extremo) do conjunto de restrições de um problema na forma padrão, para outra
+
+solução básica factível, melhorando os valores da função objetivo até um ponto ótimo.
+
+3.1 PIVOTEAMENTO
+
+Considerando o sistema de equações lineares abaixo:
+
+a11x1 + a12x2 + . . . + a1nxn = b1
+a21x1 + a22x2 + . . . + a2nxn = b2
+...
+am1x1 + am2x2 + . . . + amnxn = bm,
+
+...
+
+...
+
+...
+
+(3.1)
+
+onde m ≥ n. Escrevendo na forma de matriz tem-se:
+
+Ax = b.
+
+Interpretando o espaço En como o conjunto de m relações lineares que podem ser solucio-
+nadas por um vetor x. Assim, denotando por ai as linhas i da matriz A, pode-se expressar
+(3.1) como:
+
+a1x = b1
+a2x = b2
+...
+amx = bm.
+
+(3.2)
+
+Esta é uma interpretação mais natural de (3.1) como um conjunto de m equações.
+
+Se as equações (3.2) são linearmente independentes, pode-se substituir uma equação
+
+dada por qualquer múltiplo dele mesmo não nulo, com qualquer combinação linear de outras
+
+equações no sistema. Isto leva ao conhecido sistema de eliminação de Gauss, onde equações
+
+múltiplas são adequadamente substituídas de outra para compor um forma triangular ou
+
+canônica. Assim, se as primeiras m colunas de a são linearmente independentes, então o
+
+sistema (3.1) pode, após uma sequência de multiplicações e subtrações, ser convertido na
+
+forma canônica seguinte:
+
+x1
+
+x2
+
++y1,m+1xm+1 +y1,m+2xm+2 + . . . +y1,nxn = y10
++y2,m+1xm+1 +y2,m+2xm+2 + . . . +y2,nxn = y20
+
+...
+
+...
+
+38
+
+(3.3)
+
+xm +ym,m+1xm+1
+
++ . . .
+
++ym,nxn = ym0
+
+Na representação canônica desse sistema, as variáveis x1, x2, . . . , xm são chamadas
+
+de básicas e as outras são as não básicas. Um solução básica desse sistema é da forma:
+
+x1 = y10, x2 = y20, . . . , xm = ym0
+
+xm+1 = 0, . . . , xn = 0,
+
+ou na forma vetorial x = (y0, 0) onde y0 é da forma (m × 1) e o vetor 0 é da forma
+(n − m, ×1) .
+
+Também é comum representar o sistema (3.3) na forma de matriz ou tableau:
+
+1 0
+
+0 1
+...
+...
+0 0
+
+0 y1,m+1
+0 y2,m+1
+...
+...
+1 ym,m+1
+
+. . .
+
+. . .
+
+y1n
+y10
+y2n
+y20
+...
+...
+. . . ymn ym0.
+
+(3.4)
+
+Uma questão resolvida por pivoteamento tem a seguinte forma: dado um sistema
+
+da forma canônica, supondo uma variável básica seja não-básica e uma variável não básica
+
+seja básica; qual é a nova forma canônica correspondente ao novo conjunto de variáveis
+
+básicas? O procedimento é simples. Seja o sistema (3.3), substituindo a variável básica
+
+xp, 1 ≤ p ≤ m, pela variável não básica xq. Isto pode ser feito se, e somente se, ypq é
+diferente de zero; isto é possível pela divisão da linha p por ypq obtendo uma unidade
+como coeﬁciente de xq na equação de ordem p, e então subtraindo múltiplos adequados da
+linha p de cada uma das linhas a ﬁm de conseguir zero como coeﬁciente de xq em todas as
+outras equações. Isto transforma a coluna de ordem q do tableau em valor zero, exceto a
+
+variável de ordem p (que é unitária), e não afetando as colunas das outras variáveis básicas.
+Chamando os novos coeﬁcientes da forma canônica por y0
+
+ij, teremos explicitamente:
+
+
+
+
+
+
+y0
+ij = yij −
+ypj
+ypq
+
+y0
+pj =
+
+ypj
+ypq
+
+yiq,
+
+i 6= p
+
+A equação acima são as equações pivô que surgem frequentemente na Programação
+
+Linear. O elemento ypq á chamado no sistema original de elemento pivô.
+
+39
+
+3.2 PONTOS EXTREMOS ADJACENTES
+
+Existem condições especiais que devem ser consideradas a ﬁm de que a operação
+
+de pivoteamento mantenha a factibilidade. A seguir, será visto como é possível selecionar
+
+os elementos pivôs, para tranformar uma solução básica factível em outra.
+
+Ao mostrar que, embora não seja possível especiﬁcar qual par de variáveis serão
+
+trocadas a ﬁm de manter a não negatividade, é possível especiﬁcar qual variável não básica
+
+deverá se tornar a básica, e consequentemente, qual variável básica irá se tornar não básica.
+
+Um argumento signiﬁcativo, que pode simpliﬁcar vários pressupostos da Programa-
+
+ção Linear é descrito abaixo:
+
+Deﬁnição 3.1. (Solução não degenerada) Cada solução básica factível de Ax=b, com
+
+xB > 0 é uma solução básica factível não degenerada.
+
+Essa deﬁnição é utilizada durante todo o desenvolvimento do Método Simplex, desde
+
+que as soluções sejam substituídas adequadamente. A seguir, será visto como determinar
+
+quais variáveis serão trocadas, a ﬁm de determinar melhores soluções para o sistema.
+
+3.2.1 DETERMINANDO QUAL VARIÁVEL SAIRÁ DA BASE
+
+Considerando x = (x1, x2, . . . , xm, 0, 0, . . . , 0) como solução básica factível, ou como
+
+representação equivalente:
+
+x1a1 + x2a2 + . . . + xmam = b.
+
+(3.5)
+
+Com base na Deﬁnição 3.1, xi > 0, para i = 1, 2, . . . , m. Considerando também a
+representação da variável aq, q > m. Representando a variável na forma de base tem-se:
+
+aq = y1qa1 + y2qa2 + . . . + ymqam.
+
+Multiplicando a expressão acima por ε ≥ 0 e subtraindo de (3.5) obtêm-se:
+
+(x1 − εy1q)a1 + (x2 − εy2q)a2 + . . . + (xm − εymq)am + εaq = b.
+
+(3.6)
+
+Assim, para qualquer ε ≥ 0 a expressão acima resulta em b como uma combinação
+
+linear de no máximo m + 1 variáveis. Para ε = 0 tem-se uma solução básica factível. A
+
+medida que ε aumenta, os coeﬁcientes de aq também aumentam, e para valores suﬁci-
+entemente pequenos de ε, a expressão tem uma solução factível, porém não básica. Os
+
+coeﬁcientes das outras variáveis irão aumentar ou diminuir linearmente a medida que ε é
+
+40
+
+aumentado. Se nenhuma variável diminuir, pode-se igualar os valores correspondentes ao
+
+primeiro lugar onde um (ou mais) coeﬁcientes desaparecem. Isto é:
+
+ε = min(i){xi/yiq : yiq > 0}.
+
+(3.7)
+
+Neste caso, tem-se uma nova solução básica factível com o vetor aq substituindo o
+vetor ap onde p corresponde ao índice mínimo em (3.7). Se o mínimo na (3.7) é conseguido
+por mais que índice i então a nova solução é degenerada e qualquer uma das variáveis com
+
+componente zero pode ser considerado como sendo o que deixou a base.
+
+3.3 DETERMINANDO A SOLUÇÃO FACTÍVEL MÍNIMA
+
+A ideia do Método Simplex é selecionar uma coluna de modo que a nova solução
+
+básica factível para a função objetivo seja menor que a anterior. Através de cálculos
+
+elementares, que serão descritos abaixo, é possível determinar qual variável entrará na
+
+base para que o valor da função objetivo diminua, e depois de alguns cálculos, é possível
+
+determinar qual variável irá sair a ﬁm de manter a factibilidade. A expressão entrar na
+
+base signiﬁca fazer uma variável não básica deixar o valor nulo e crescer até o máximo
+
+valor que lhe seja possivel e, portanto, positiva ou eventualmente nula.
+
+Supondo ter a seguinte solução básica factível:
+
+(xb, 0) = (y10, y20, . . . , ym0, 0, 0, . . . , 0),
+
+junto com o tableau tem-se um matriz identidade nas primeiras m colunas como mostradas
+
+abaixo:
+
+a1 a2
+0
+1
+
+. . . am
+0
+
+0
+...
+0
+
+1
+...
+0
+
+0
+...
+1
+
+am+1
+y1,m+1
+y2,m+1
+...
+ym,m+1
+
+b
+
+. . .
+
+. . .
+
+. . .
+
+an
+y10
+y1n
+y20
+y2n
+...
+...
+. . . ymn ym0.
+
+(3.8)
+
+O valor da função objetivo para qualquer valor de x é:
+
+z = c1x1 + c2x2 + . . . cnxn,
+
+(3.9)
+
+e consequentemente para a solução básica, o valor correspondente é:
+
+z0 = cT
+
+BxB,
+
+(3.10)
+
+onde cT
+
+B = [c1, c2, . . . , cm].
+
+Embora seja natural usar a solução básica (xB, 0) quando se tem um tableau (3.8),
+se valores arbitrários são atribuídos para xm+1, xm+2, . . . , xn, as variáveis restantes podem
+ser resolvidas como:
+
+41
+
+x1 = y10 −
+
+x2 = y20 −
+...
+
+xm = ym0 −
+
+n
+X
+
+j=m+1
+n
+X
+
+j=m+1
+
+y1jxj
+
+y2jxj
+
+n
+X
+
+j=m+1
+
+ymjxj.
+
+(3.11)
+
+Usando (3.9) pode-se subtrair x1, x2, . . . , xm da forma geral (3.11). Fazendo isso
+
+obtem-se:
+
+z = cT x = z0 + (cm+1 − zm+1)xm+1 + (cm+2 − zm+2)xm+2 + . . . + (cn − zn)xn,
+
+(3.12)
+
+onde
+
+zj = y1jc1 + y2jc2 + . . . + ymjcm, m + 1 ≤ j ≤ n,
+
+(3.13)
+
+que é uma relação fundamental para determinar a coluna pivô. Um ponto importante
+
+é que, esta equação oferece o valor da função objetivo z para qualquer solução de Ax = b em
+
+termos das variáveis xm+1, . . . , xn. A partir disso, pode-se determinar se existe vantagem
+em trocar a solução básica por uma outra variável não básica. Por exemplo, se cj − zj
+é negativo para qualquer j, m + 1 ≤ j ≤ n, então ao aumentar xj de zero para algum
+valor positivo que diminua o custo total, tem-se uma solução melhor. As fórmulas (3.12) e
+
+(3.13) proporcionam as mudanças que seriam necessárias nos valores das variáveis básicas
+
+x1, x2, . . . , xm para satisfazer as mudanças em xj.
+
+Olhando para essa relação de uma outra maneira: considerando yi como sendo a
+
+i-ésima coluna do tableau. Assim, qualquer solução satisfaz
+
+x1e1 + x2e2 + . . . + xmem = y0 − xm+1ym+1 − xm+2ym+2 − . . . − xnyn.
+
+Calculando o produto interno desta equação com o vetor C T
+
+B, tem-se:
+
+m
+X
+
+i=1
+
+cix1 = cT
+
+By0 −
+
+n
+X
+
+j=m+1
+
+zjxj,
+
+42
+
+onde zj = cT
+
+Byj. Então adicionando
+
+n
+X
+
+j=m+1
+
+cjxj em ambos os membros, tem-se:
+
+cT x = z0 +
+
+n
+X
+
+(cj − zj)xj,
+
+j=m+1
+
+(3.14)
+
+como anteriormente.
+
+Teorema 3.1. (Melhor solução básica factível) Seja z0 uma solução básica factível não
+degenerada, supondo para algum j tal que cj − zj < 0. Então, existe uma solução básica
+factível com valor z < z0. Se a coluna aj puder ser substituída por algum vetor na base
+original que obtenha uma nova solução básica factível, esta nova solução terá z < z0. Se
+aj não puder ser substituída, então o conjunto K de soluções factíveis é não limitado e a
+função objetivo pode se tornar arbitrariamente pequena.
+
+Prova: O resultado é uma consequência imediata da discussão anterior. Seja
+
+(x1, x2, . . . , xm, 0, 0, . . . , 0) a solução básica factível com valor z0 com cm+1−zm+1 < 0. Então
+nesse caso, tem-se uma nova solução básica factível na forma de (x0
+m, 0, 0, . . . , 0)
+com x0
+
+m+1 > 0, substituindo em (3.12) tem-se
+
+2, . . . , x0
+
+1, x0
+
+z − z0 = (cm+1 − zm+1)x0
+
+m+1 < 0,
+
+e consequentemente z < z0 para qualquer solução. Deseja-se x0
+m+1 maior possível. Como
+x0
+m+1 é crescente, as outras componentes podem crescer, permanecerem constantes, ou
+decrescer. Assim, x0
+i = 0, i ≤ m onde obterá uma nova solução
+m+1 pode crescer ilimitadamente [5] .(cid:3)
+básica factível, ou se nenhum x0
+
+m+1 pode crescer até x0
+
+i for decrescente, x0
+
+Foi visto que, em qualquer etapa cj − zj < 0, para algum j, é possível ter na função
+objetivo xj positivo e crescente. A última questão retrata se cj − zj ≥ 0, para todo j,
+indica otimalidade.
+
+Teorema 3.2. (Condição de otimalidade) Se para alguma solução básica factível cj −zj ≥ 0
+para todo j, então a solução é ótima.
+
+A prova segue de (3.12), com qualquer solução básica factível tem-se que xi ≥ 0
+para todo i, e consequentemente o valor de z na função objetivo satisfará z − z0 ≥ 0 [5]. (cid:3)
+
+Como as constantes cj − zj desempenham um papel importante no desenvolvimento
+do Método Simplex, é conveniente utilizar a notação abreviada rj = cj − zj e rj se referem
+como os coeﬁcientes de custo relativo, ou também, coeﬁciente de custo reduzido. Esses
+
+coeﬁcientes expressam o custo relativo de uma base.
+
+3.4 SOLUÇÕES DEGENERADAS
+
+É possível que, no decorrer do processo Simplex, possam aparecer soluções básicas
+
+factíveis degeneradas. Muitas vezes, essas soluções podem ser manipuladas como uma
+
+43
+
+solução básica factível não degenerada. No entanto, é possível que depois que uma nova
+
+coluna q seja selecionada para entrar na base, a razão mínima entre
+
+seja igual a zero,
+
+yi0
+yiq
+
+o que implica que a váriável de valor nula seja a variável a sair da base. Isto signiﬁca que
+
+a nova variável xq irá entrar com valor nulo, a função objetivo não irá decrescer, e a nova
+nova solução básica factível também será uma solução degenerada. Este processo pode
+
+ocorrer por várias etapas até que a solução original degenerada seja obtitida novamente.
+
+Isto gera um ciclo que poderá se repetir indeﬁnidamente.
+
+Uma das formas de de resolver o problema de solução degenerada é fazer uma
+
+perturbação no valor.
+
+3.5 O MÉTODO SIMPLEX NO FORMATO DE TABLEAU
+
+A cada iteração, o próximo conjunto de sistemas de equaçõs lineares precisa
+solucionar: BxB = b, wB = cT
+B, e Byk = ak. Vários procedimentos para solucionar e
+melhorar este sistema nos levará a algoritmos diferentes. Nesta seção será apresentado o
+
+formato de tableau [9].
+
+Seja uma solução inicial básica factível x com base B. O Problema de Programação
+
+Linear pode ser representado como:
+
+M inimizar z
+
+sujeito a
+
+z −cT
+
+N xN = 0
+
+BxB − cT
+BxB + N xN = b
+
+xB, xN ≥ 0.
+
+De cada equação de (3.15) tem-se:
+
+xB + B−1N xN = B−1b.
+
+Multiplicando (3.19) por cT
+
+B e adicionando na equação (3.16) tem-se:
+
+z + 0xB + (cT
+
+BB−1N − cT
+
+N )xN = cT
+
+BB−1b,
+
+(3.15)
+
+(3.16)
+
+(3.17)
+
+(3.18)
+
+(3.19)
+
+(3.20)
+
+BB−1b.
+Como xN = 0, e pelas equações (3.19) e (3.20) tem-se xB = B−1b e z = cT
+Também a partir de (3.19) e (3.20) pode-se representar convenientemente a atual solução
+
+básica factível com a base B nos seguintes tableau. Representa-se por z como sendo uma
+
+variável (básica) a ser minimizada. A linha objetivo será referenciada como linha 0 e as
+
+demais como linha de 1 a m. A coluna do lado direito indicará os valores das variáveis
+
+básicas (incluindo a função objetivo). As variáveis básicas são identiﬁcadas na coluna da
+
+esquerda, como a seguir:
+
+44
+
+Tabela 2 – Como organizar o problema no formato tableau
+
+z
+0
+1
+
+xB
+I
+0
+
+xN
+B−1N
+BB−1N − cN
+cT
+
+xB
+z
+
+B−1b
+BB−1b
+cT
+
+linhas de 1 a m
+linha 0
+
+Fonte: Bazaraa et al, p.126, adaptada pela autora.
+
+O tableau no qual z e xB será resolvido em termos de xN é chamado de forma
+BB−1b e das
+canônica. Este tableau não fornece somente o valor da função objetivo cT
+variáveis básicas B−1b na coluna da direita, como também fornece todas as informações
+BB−1N −cT
+necessárias para proceder com o Método Simplex. A linha de custos apresenta cT
+N ,
+que consiste nos valores de (zj − cj) das variáveis não básicas. A linha zero informa se há
+uma solução ótima (se cada zj − cj ≤ 0), e qual variável não básica irá aumentar caso
+contrário. Se xk é crescente, então o vetor yk = B−1ak que aparece no tableu na linha
+de 1 a m abaixo da variável xk, ajudará a determinar por quanto xk pode aumentar. Se
+yk ≤ 0, então xk pode aumentar indeﬁnidamente, e o valor ótimo da função objetivo é
+ilimitado. Por outro lado, se yk tem pelo menos um componente positivo, o crescimento
+em xk será interrompido por alguma variável básica atual, que torna-se zero. O teste da
+razão mínima (que pode ser realizada desde que B−1 = b e yk sejam ambas possíveis no
+tableau) determina o valor da variável de bloqueio. Deseja-se um esquema que:
+
+1. Atualize as variáveis básicas e seus valores;
+
+2. Atualize os valores de (zj − cj) das novas variáveis não básicas;
+
+3. Atualize a coluna yj.
+
+3.5.1 PIVOTEAMENTO NO TABLEAU
+
+As operações acima podem ser executadas simultaneamente por uma operação
+
+de pivoteamento. Se xk entrar na base e xBr sair da base, então o pivotemento pode ser
+inciado como a seguir:
+
+1. Divida a linha r por yrk;
+
+45
+
+2. Para i = 1, . . . , m e i 6= r, atualize a linha i adicionando a ela −yik vezes a nova
+
+linha r;
+
+3. Atualize a linha zero adicionando a ela ck − zk vezes a linha r. As próximas Tabelas
+3 e 4 representam, respectivamente, a situação antes e depois da operação de
+
+pivoteamento.
+
+Tabela 3 – Tableau antes do pivoteamento
+
+xB1
+...
+
+xBr
+...
+xBm
+z
+
+xB1
+1
+...
+
+. . . xBr
+0
+. . .
+...
+
+. . .
+· · ·
+
+xBm
+0
+...
+
+xj
+y1j
+...
+
+. . .
+· · ·
+
+0
+...
+0
+0
+
+· · ·
+
+· · ·
+· · ·
+
+· · ·
+
+· · ·
+
+1
+...
+0
+0
+FONTE: Bazaraa et al,p.127.
+
+yrj
+...
+ymj
+zj − cj
+
+· · ·
+· · ·
+
+· · ·
+· · ·
+
+0
+...
+1
+0
+
+xk
+y1k
+...
+yrk
+
+...
+ymk
+zk − ck
+
+. . .
+· · ·
+
+· · ·
+
+· · ·
+· · ·
+
+b1
+...
+
+br
+...
+bm
+cT
+Bb
+
+Examinando as implicações da operação de pivoteamento:
+
+1. A variável xk entrou na base e xBr deixou a base. Isto ﬁca registrado no lado esquerdo
+do tableau pela troca de xBr com xk. Para a próxima iteração, a nova xBr é agora
+xk.
+
+2. O lado direito do tableau representa agora os valores atualizados das variáveis básicas
+
+(lembrando que xk =
+
+br
+yrk
+
+). As variáveis não básicas tem valor igual a zero.
+
+3. Supondo que as colunas originais das novas variáveis básicas e não básicas sejam bB
+
+e cN respectivamente. Através de uma sequência de operações nas linhas elementares
+
+(de acordo com as regras de pivoteamento de Gauss, caracterizada por pivoteamento
+
+nas iterações intermediárias), o tableau original torna-se um tableau atualizado onde
+
+bB é substituído pela matriz identidade (I). Assim, este novo pivoteamento resulta em
+um novo tableau onde a nova bB−1 cN abaixo das variáveis não básicas e um conjunto
+de (zj − cj) valores atualizados para as novas variáveis não básicas, como também os
+valores das novas variáveis básicas e da função objetivo.
+
+46
+
+r
+b
+
+k
+r
+y
+
+)
+k
+c
+−
+
+k
+z
+(
+
+−
+b
+TB
+c
+
+r
+b
+
+k
+r
+y
+
+...
+
+r
+b
+
+k
+m
+y
+
+k
+r
+y
+
+−
+m
+b
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+r
+b
+
+k
+1
+y
+
+k
+r
+y
+
+...
+
+−
+
+1
+b
+
+·
+
+·
+
+·
+
+k
+x
+
+0
+
+...
+
+1
+
+...
+
+0
+
+0
+
+o
+t
+n
+e
+m
+a
+e
+t
+o
+v
+i
+p
+
+o
+
+s
+ó
+p
+a
+
+u
+a
+e
+l
+b
+a
+T
+–
+
+4
+
+a
+l
+e
+b
+a
+T
+
+·
+
+·
+
+·
+
+k
+1
+y
+
+−
+
+j
+1
+y
+
+j
+r
+y
+
+k
+r
+y
+
+...
+
+j
+x
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+k
+m
+y
+
+·
+
+·
+
+·
+
+)
+k
+c
+−
+
+k
+z
+(
+
+.
+8
+2
+1
+.
+p
+,
+l
+a
+
+t
+e
+
+j
+r
+y
+−
+
+k
+r
+y
+
+...
+
+k
+j
+r
+y
+
+k
+r
+y
+
+j
+r
+y
+
+k
+r
+y
+
+−
+
+j
+
+m
+y
+
+−
+
+j
+c
+−
+
+j
+z
+
+:
+
+a
+a
+r
+a
+z
+a
+B
+E
+T
+N
+O
+F
+
+m
+B
+x
+
+0
+
+...
+
+0
+
+...
+
+1
+
+0
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+r
+B
+x
+
+k
+1
+y
+−
+
+k
+r
+y
+
+...
+
+1
+
+k
+r
+y
+
+...
+
+k
+m
+y
+−
+
+k
+r
+y
+
+k
+z
+−
+
+k
+c
+
+k
+r
+y
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+1
+B
+x
+
+1
+
+...
+
+0
+
+...
+
+0
+
+0
+
+1
+B
+x
+
+...
+
+r
+B
+x
+
+...
+
+m
+B
+x
+
+z
+
+4 PROGRAMAÇÃO LINEAR NA RADIOTERAPIA
+
+47
+
+4.1 BREVE RELATO HISTÓRICO SOBRE A RADIOTERAPIA
+
+Nas últimas décadas, o impacto do câncer na sociedade ganhou grande dimensão,
+
+tornando-se uma preocupação mundial, sendo no Brasil uma das primeiras posições nas
+
+taxas de mortalidade das macrorregiões, ao lado das doenças do aparelho circulatório,
+
+causas externas, entre outras. O câncer é uma doença que tem início quando ocorre uma
+
+mutação genética no DNA da célula, onde o mecanismo de controle do crescimento normal
+
+do tecido celular é alterado. As modalidades existentes de tratamento do câncer são:
+
+cirurgia, radioterapia e quimioterapia.
+
+O tratamento por radioterapia tem como objetivo a eliminação das células cance-
+
+rígenas através de radiação ou alívio dos sintomas, e ao mesmo tempo procura evitar a
+
+destruição de células vizinhas saudáveis também afetadas pela radiação [12].
+
+Do ponto de vista matemático, o desaﬁo consiste em emitir uma alta dosagem de
+
+radiação no tumor, suﬁciente para sua eliminação e interrupção do crescimento de células
+
+tumorais, e simultaneamente, minimizar a radiação nas regiões vizinhas compostas de
+
+tecido saudável, reduzindo ao máximo as complicações nestas regiões que são muitas vezes
+
+críticas.
+
+No ínicio do uso da radioterapia, administrava-se tanta dose de radiação quanto se
+
+julgava o paciente ser capaz de suportar. O limite da dose era, geralmente, estabelecido
+
+pela tolerância da pele [13].
+
+Há dois tipos principais de radioterapia: a teleterapia e a braquiterapia. Dar-se-á
+
+mais ênfase neste trabalho ao primeiro tipo. Neste caso, nem a fonte de radiação nem o
+
+aparelho que a emite, ﬁcam em contato direto com o paciente. Por isso, a radiação atinge,
+
+além do tumor, todos os órgãos e tecidos que estiverem no caminho. Já na braquiterapia,
+
+a fonte de radiação é colocada no interior do paciente, na região que deve receber o
+
+tratamento. É uma espécie de implante radioativo não-permanente [6].
+
+Usualmente para o tratamento usa-se um feixe, com forma retangular, que passa
+
+através dos diferentes tipos de tecidos do corpo do paciente, e dependendo da atenuação e
+
+da profundidade dos tecidos, uma grande quantidade de energia é depositada em diferentes
+
+pontos dentro do corpo. Para o tratamento de radioterapia deve-se levar em conta a
+
+distribuição de dose profunda no eixo central e caracterizar o feixe de radiação. Para se
+
+representar e ter-se noção da distribuição e absorção de dose ao longo do volume e no
+
+plano faz-se a curva de isodose, que são linhas que representam pontos de mesma dose, em
+
+48
+
+um determinado arranjo de feixes de radiação. Para o cálculo matemático, são utilizados
+
+dados clínicos do tumor para cada paciente tratado. Estes cálculos podem ser auxiliados
+
+pelos modelos matemáticos através da Programação Linear.
+
+4.2 FORMULAÇÃO DO MODELO MATEMÁTICO
+
+Quando o câncer é diagnosticado e há a indicação médica para o tratamento por
+
+radioterapia, são realizados vários exames no paciente, com a ﬁnalidade de conhecer a
+
+localização, forma, e volume do tumor, bem como os tecidos críticos presentes na região a
+
+ser tratada. São feitos exames de tomograﬁa computadorizada para uma coleta de dados
+
+segura, e na Radiocirurgia, é necessário juntamente com a tomograﬁa computadorizada,
+
+um exame de ressonância magnética.
+
+Com base nesses dados, a dose a ser recebida no tumor e o volume a ser irradiado
+
+podem ser prescritos pelo médico radioterapeuta. Juntamente com um físico, o radiotera-
+
+peuta pode, então, através da análise das curvas de isodose, deﬁnir qual melhor tipo de
+
+tratamento e a técnica a ser utilizada.
+
+Após a obtenção das imagens através da tomograﬁa computadorizada ou da
+
+ressonância magnética, a dose mínima a ser aplicada no tumor é prescrita assim como as
+
+doses máximas que os tecidos críticos e saudáveis podem receber. Através dessas imagens,
+
+faz-se a seleção das estruturas anatômicas de interesse.
+
+Figura 10 – Imagem de tomograﬁa computadorizada com estruturas anatômicas selecionadas.
+
+FONTE: Fernandes,p.53.
+
+Com as imagens obtidas, as estruturas de interesse podem ser então mapeadas
+
+(lesão e tecido crítico) através de uma divisão em pixels. Cada pixel é relacionado a uma
+
+densidade eletrônica e recebe coordenadas especíﬁcas (i, j), as quais serão usadas na
+
+criação do planejamento conformacional ou planejamento 3D do tratamento, como mostra
+
+a Figura 11.
+
+Figura 11 – Imagem dividida em pixels (matriz de pixels).
+
+49
+
+FONTE:Fernandes,p.54.
+
+O número de ângulos é ﬁxado de forma que sejam considerados os k ângulos de
+
+localização para emissão dos feixes principais de radiação contendo em cada ângulo η
+
+subfeixes. Os sistemas de tratamento modernos são capazes de realizar combinações entre
+
+estes subfeixes de modo a utilizá-los ao longo de um arco completo, fazendo com que o
+
+planejamento utilize k · η subfeixes. Esta decomposição dos feixes de radiação é baseada
+
+nos fundamentos teóricos e práticos da radioterapia com intensidade modulada (IMRT).
+
+A geometria de um modelo usando raios elementares, onde n = 2, p = 4 e η = 4 é indicada
+
+na Figura 12. Os intervalos entre os ângulos é
+
+, e o ângulo inicial é (usualmente) zero.
+
+π
+4
+
+Figura 12 – Geometria de uma imagem de pixel 2 × 2 com ângulos
+
+π
+4
+
+,
+
+3π
+4
+
+,
+
+5π
+4
+
+e
+
+7π
+4
+
+.
+
+FONTE:Holder,p.3.
+
+No planejamento de tratamento, depois de deﬁnidas as coordenadas (i, j) dos pixels,
+
+com 1 ≤ i ≤ η1, 1 ≤ j ≤ η2, calcula-se a dose total D(i,j) a ser recebida pelo paciente em
+
+50
+
+cada pixel de coordenadas (i, j). Desta forma, pode-se estimar a dose a ser recebida em
+
+cada tecido do paciente (crítico, saudável e tumor), na região a ser tratada, preocupando-se
+
+em não exceder a dose suportada pelos tecidos críticos e saudável e emitir a dose suﬁciente
+
+de forma a eliminar o tumor.
+
+Este modelo pode ser representado pela seguinte formulação:
+
+M inimizar
+
+f =
+
+m
+X
+
+m
+X
+
+Dij
+
+Sujeito a
+
+onde,
+
+i=1
+n
+X
+
+j=1
+wpAp
+
+Dij =
+
+ij ∀(i, j)
+
+p=1
+l ≤ Dij
+w ≥ 0,
+
+∀(i, j) ∈ Γ
+
+• Dij representa a dosagem total recebida pelo paciente na posição (i, j);
+
+• Aij representa a dosagem nominal emitida pelo raio p na posição (i, j);
+
+• w representa a ponderação da dosagem emitida pelos raios;
+
+• l representa a dosagem mínima a ser recebida pelo tumor;
+
+• Γ representa o subconjunto de posições onde se encontra o tumor;
+
+• n representa o número de raios;
+
+• m representa o número total de pixels.
+
+Deﬁnindo os seguintes subconjuntos:
+
+• R representa o subconjunto de posições onde se encontra tecido crítico (saudável) ou
+
+estrutura crítica;
+
+• N representa o subconjunto de posições onde se encontram os demais tecidos saudá-
+
+veis;
+
+é possível formular um modelo com ponderações em cada região do paciente priviliegiando
+
+ou penalizando algumas áreas à quantidade de dosagem a ser recebida.
+
+Feito a delimitação das estruturas, o plano de tratamento deve ser elaborado de
+
+forma a administrar a dose de radiação no tumor, buscando assim a homogeneidade do
+
+Tabela 5 – Estrutura da matriz de deposição de dose A
+
+51
+
+. . .
+
+η
+
+1
+
+2
+
+k
+· · ·
+
+η
+
+1
+. . .
+
+1
+
+2
+
+η
+
+1
+
+(a, i)
+2
+. . .
+
+2
+
+A(p,a,i)
+
+→ a
+→ i
+1
+p
+2
+.
+.
+.
+m
+
+plano de tratamento, de acordo com a determinação da prescrição de dose das regiões de
+
+interesse.
+
+Holder [2] formula alguns modelos de Programação Linear a partir de ponderações
+
+em cada região da imagem do paciente, considerando ou privilegiando o tipo de tecido a
+
+ser exposto às doses de radiação.
+
+Sendo x(a,i) a dose ao longo do i-ésimo subfeixe, para i = 1, 2, . . . , η do a-ésimo
+ângulo, para a = 1, 2, . . . , k e d(p,a,i) a distância entre a fonte posicionada no ângulo a
+emitindo o subfeixe i (de dose x(a,i)) e o pixel p. A deposição de dose no pixel p devido ao
+i-ésimo subfeixe do a-ésimo ângulo, A(p,a,i), é deﬁnida como:
+
+A(p,a,i) = Se−µd(p,a,i),
+
+(4.1)
+
+O termo S corresponde a área geométrica do pixel p que recebe a dose x(a,i). Com
+os componente de A(p,a,i) pode-se construir a matriz de deposição de dose A, onde as linhas
+de A são indexadas por p e as colunas são indexadas por (a, i), conforme mostra a matriz
+
+(4.2), desta forma, a matriz A tem dimensão m × kη.
+
+O fator e−µd(p,a,i) mede a atenuação da radiação sobre o tecido, e os valores deste
+coeﬁciente de atenuação (µ) dependem da energia do raio. O coeﬁciente de atenuação mede
+
+a característica do tecido com relação a sua densidade que são grandezas proporcionais,
+
+isto é, quanto menor a densidade do tecido, menos o coeﬁciente de atenuação.
+
+A matriz dose de propagação sem atenuação (µ = 0) do exemplo da Figura 12, é
+
+dada por:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+0
+
+0
+
+1
+2
+
+0
+
+1
+2
+
+1
+2
+
+1
+2
+
+1
+2
+
+1
+2
+
+1
+2
+
+0
+
+1
+2
+
+0
+
+0
+
+0
+
+1
+2
+
+0
+
+0
+
+0
+
+1
+2
+
+1
+2
+
+0
+
+1
+2
+
+1
+2
+
+0
+
+1
+2
+
+1
+2
+
+1
+2
+
+0
+
+0
+
+0
+
+1
+2
+
+1
+2
+
+1
+2
+
+0
+
+0
+
+0
+
+1
+2
+
+0
+
+0
+
+1
+2
+
+1
+2
+
+1
+2
+
+0
+
+0
+
+0
+
+1
+2
+
+0
+
+0
+
+0
+
+1
+2
+
+1
+2
+
+0
+
+1
+2
+
+1
+2
+
+1
+2
+
+1
+2
+
+0
+
+1
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+1
+2
+
+0
+
+0
+
+Os elementos de x podem ser ordenados da seguinte forma:
+
+52
+
+(4.2)
+
+[x(1,1) x(1,2) . . . x(1,η) x(2,1) . . . x(2,η) . . . x(k,1) . . . x(k,η)],
+
+(4.3)
+
+assim, a dose de radiação no pixel p é o p-ésimo componente de:
+
+A∗x.
+
+(4.4)
+
+Embora a matriz de propagação da dose permita modelar facilmente os limites
+
+superior e inferior da radiação para algum pixel na imagem, elaborar um plano de
+
+tratamento não é uma tarefa trivial. Por exemplo: um plano de tratamento pode preescrever
+
+que o tumor não receba menos do que 80 Gy, onde Gy é a dose absorvida, usualmente
+
+medida em joules por quilograma (J/kg), também denominada gray (Gy): 1Gy=1J/kg.
+
+Por outro lado, o plano de tratamento pode não permitir que alguma estrutura crítica
+
+receba mais do que 40 Gy [7].
+
+A maioria das pesquisas tem utilizado modelos de otimização com restrições lineares,
+
+com uma das duas funções objetivos mais evidentes, maximização da dose no tumor ou
+
+minimização da dose na estrutura crítica. Uma vez que esta maximização leva geralmente
+
+a altas doses, outros trabalhos buscam maximizar a dose mínima do tumor ou minimizar
+
+a dose máxima da estrutua crítica [4].
+
+As metas listadas abaixo indicam que este problema tem uma grande quantidade
+
+de parâmetros a considerar na decisão do que seria desejável para um plano de tratamento:
+
+• Transmitir uma dose uniformemente letal na região do tumor;
+
+• Transmitir uma radiação tão pequena quanto possível na estrutura crítica;
+
+• Obter uma dose total tão pequena quanto possível;
+
+53
+
+• Reduzir a frequência de doses altas fora da região do tumor;
+
+• Controlar o número de raios utilizados no plano de tratamento.
+
+Na busca de doses uniformes, Holder propôs um modelo de otimização linear para
+
+auxiliar no planejamento ótimo de Radiocirurgia. Este modelo tem sido muito citado na
+
+literatura por apresentar bons resultados em termos de planos conformais. Assim optou-se
+
+pelo estudo e implementação deste modelo, que será discutido a seguir.
+
+Seja, mT o número de pixels do tumor, mC o número de pixels da estrutura crítica
+e mG o número de pixels do tecido saudável. Logo o número total de pixels é dado por
+m = mG + mT + mC. Assim, no modelo de Holder, a matriz de deposição de dose A é
+divida em três partes:
+
+A =
+
+
+
+
+
+
+
+
+AT
+AC
+AG
+
+
+
+
+
+
+
+
+.
+
+(4.5)
+
+Em que, as linhas da matriz de deposição de dose são reorganizadas de forma que T
+
+está relacionado ao conjunto de pixels que compreendem a lesão ou tumor, C ao conjunto
+
+de pixels compreendidos pelo tecido crítico ou órgãos de risco e G ao conjunto de pixels
+
+do tecido saudável.
+
+Assim, a imagem seccional da Tomograﬁa Computadorizada é convertida em uma
+
+matriz de pixels, que são classiﬁcados para representar tumorais ou não-tumorais. Devido
+
+à divisão em pixels, no modelo que será apresentado, a prescrição da dose é dada em forma
+
+de vetor e deﬁnida por quatro limites, com a seguinte notação:
+
+• ut representa o vetor de limite superior para radiação no tumor (ut ∈ RmT );
+
+• lt representa o vetor de limite inferior para radiação no tumor (lt ∈ RmT );
+
+• uc representa o vetor de limite superior para radiação na estrutura crítica (uc ∈ RmC );
+
+• ug representa o vetor de limite superior para radiação no restante de tecido saudável
+
+(ug ∈ RmG).
+
+Obviamente tem-se que 0 < lt ≤ ut, uc ≥ 0, e ug ≥ 0. Se uma dose letal uniforme
+é transmitida ao tumor, o limite superior e inferior para os pixels do tumor são obtidos
+
+através das metas estabelecidas.
+
+Supondo que as metas estabelecidas para uma célula sejam tg, os valores de uti e lti
+são geralmente (1 + ε)tg e (1 − ε)tg, respectivamente, onde ε é a porcentagem da variação
+
+54
+
+para a dosagem do tumor e é denominado nível de uniformidade do tumor. Valores típicos
+
+de ε encontrados na literatura vão de 0,02 à 0,15.
+
+O vetor ug representa a maior quantidade de radiação permitida para algum pixel
+(saudável). Em geral tecidos saudáveis não devem receber mais do que 10% da dose
+
+estabelecida para o tumor. Ou seja, ug = tg(1 + 0, 10).
+
+As linhas da matriz de deposição de dose são reagrupadas nas linhas que representam
+
+as regiões cancerosas, as estruturas críticas e o restante de tecido saudável. Esta reordenação
+
+é representada pelas sub-matrizes AT , AC e AG conforme indicado em (4.5).
+
+Os subfeixes que não atingem o tumor são removidos pela eliminação das colunas
+
+de A que tem o vetor zero na coluna correspondente da submatriz AT . Assim, sem perda
+de generalidade, consira-se que a matriz AT não tem colunas nulas. Portanto tem-se
+A ∈ Rm×n, AT ∈ RmT ×n, AC ∈ RmC ×n, e AG ∈ RmG×n.
+
+4.3 PROBLEMA DE OTIMIZAÇÃO LINEAR
+
+O modelo proposto por [2] admite um conjunto de restrições sobre as limitações de
+
+quantidade de dose em cada tipo de tecido. A função objetivo é representada pela soma
+
+ponderada de três metas:
+
+• lT t, que mede o quanto falta para que o plano encontrado consiga aplicar a dose
+
+mínima na região do tumor;
+
+• uT
+
+c c que mede a quantidade de radiação acima da prescrita recebida pela região
+crítica;
+
+• uT
+
+g g que mede a quantidade de radiação acima da prescrita nos demais tecidos
+saudáveis.
+
+O escalar positivo w pondera a importância da formulação de um plano que obtenha
+a dose mínima na região do tumor, isto é, valores grandes de w forçam lT t a ser tão pequeno
+quanto possível. Seria desejável que existisse valor para um ﬁnito w ≥ 0 tal que o valor
+ótimo da componente lT t fosse zero o que garantiria ao tumor receber o nível de radiação
+para sua eliminação.
+
+O modelo proposto pode ser representado pela seguinte formulação:
+
+M inimizar wlT t + uT
+Sujeito a
+
+c c + uT
+g g
+lt − Lt ≤ AT x ≤ ut
+ACx ≤ uc + UCc
+AGx ≤ ug + UGg
+0 ≤ Lt ≤ lt
+−uc ≤ UCc
+UGg ≥ 0
+x ≥ 0,
+
+55
+
+(4.6)
+
+onde:
+
+• w: escalar positivo;
+
+• x: dose do subfeixe que entra na imagem para alcançar o pixel p,(x ∈ Rn);
+
+• t ∈ RmT , t ≥ 0;
+
+• c : c ∈ RmC ;
+
+• g : g ∈ RmG, g ≥ 0
+
+As restrições lt = Lt ≤ AT x, ACx ≤ uc + UCc, e AG ≤ ug + UGg, são denominadas
+elásticas, pois seus limites podem variar de acordo com os vetores t, c, e g, respectivamente.
+
+As matrizes L, UC e UG deﬁnem como medir a elasticidade, e l, uc e ug controlam
+
+a penalização ou recompensa com relação à elasticidade.
+
+Valores ﬁxos de l, uc, ug, L, UC e UG deﬁnem um conjunto de funções elásticas. E
+
+estas são incorporadas pelas seguintes razões:
+
+1. a restrição elástica garante que algum conjunto de funções elásticas, (4.6) é sempre
+
+estritamente factível;
+
+2. a diferença dos limites nas funções elásticas nos permitem incorporar diferentes
+
+objetivos de tratamento.
+
+Como discutido anteriormente, o modelo (4.6) é um Problema de Programação
+
+Linear e pode ser resolvido pelo Método Simplex. Resolver este problema, signiﬁca de-
+terminar x∗, t∗, c∗ e g∗ que otimizem a função objetivo e atinjam as metas estabelecidas
+da melhor forma possível. Assim, com o vetor de dose ótimo x, conforme mostrado em
+
+56
+
+(4.4), é possível calcular a dose de radiação total, ou integral, para cada pixel. Com o
+
+conhecimento da distribuição ótima de dose nos tecidos é possível construir as curvas de
+
+isodose.
+
+4.3.1 PROPRIEDADES DAS RESTRIÇÕES ELÁSTICAS
+
+Considere a seguinte deﬁnição:
+
+Deﬁnição 4.1. A prescrição (ut, lt, uc, ug) admite a uniformidade do tratamento do tumor
+se existe um plano, x ≥ 0, tal que lt ≤ AT x ≥ ut.
+
+O Teorema abaixo foi demonstrado em [2].
+
+Teorema 4.1. Seja x∗(w), t∗(w), c∗(w), g∗(w)) uma solução ótima de (4.6). Para qualquer
+conjunto de funções elásticas temos que lT t∗(w) = O(
+), desde que a prescrição admita a
+uniformidade do tratamento do tumor.
+
+1
+w
+
+Este teorema mostra que se a prescrição do tratamento é viável, o déﬁcit de radiação
+
+no tumor é uniformemente limitada pelo inverso de w. Utilizando este resultado é possível,
+
+resolvendo apenas um problema de programação linear, interpretar o resultado e concluir
+
+se existe um tratamento que atende à prescrição violando ou não os limites ug e uc [2].
+
+5 MÉTODO SIMPLEX APLICADO AO MODELO DE TRATAMENTO
+
+POR RADIOTERAPIA
+
+57
+
+Nesta seção será aplicado o Método Simplex para o modelo 4.6.
+
+O próximo passo consiste em obter um problema de programação linear na forma
+
+padrão, contento apenas restrições de igualdade. Como a imagem está em pixels, os limites
+
+de dose devem ser divididos pela quantidade de pixels dos respectivos órgãos, para garantir
+
+a uniformidade da dose [7]. Logo, na função objetivo, os valores dos limites de dose serão
+e, onde l ∈ RmT , uC ∈ RmC , uG ∈ RmG e e = vetor
+
+e, e ug =
+
+e, uc =
+
+l =
+
+1
+mC
+
+1
+mG
+
+1
+mT
+unitário.
+
+Seja AT x = a, substituindo a restrição canalizada por lt − t ≤ a ≤ ut, como
+
+L = I, Uc = I e Ug = I, obtem-se o seguinte problema:
+
+M inimizar w
+
+Sujeito a
+
+1
+mT
+
+eT t +
+
+eT c +
+
+1
+mC
+a + su = ut
+
+1
+mG
+
+eT g
+
+a + t − sl
+AT x − a
+
+= lt
+= 0
+
+ACx + sc − c = 0
+AGx − g + sg = ug
+= ut
+
+t + st
+
+(t, c, g, s, su, sl, sc, sg, st) ≥ 0.
+
+Assim, obtem-se a seguinte matriz de restrições:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+I
+
+I
+
+0
+
+0
+
+0
+
+I
+
+0
+
+0
+
+0
+
+0
+
+−I AT
+0 AC 0 −I
+0 AG 0
+I
+0
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+I
+
+0
+
+0 0 0
+
+0 −I 0 0 0
+
+0
+
+0
+
+0
+
+0
+
+0 0 0
+
+I 0 0
+
+0 I 0
+
+0 0 I
+
+0 −I 0
+
+0
+
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a
+
+x
+
+t
+
+c
+
+g
+
+su
+sl
+sc
+sg
+st
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ut
+lt
+0
+
+0
+
+uc
+ut
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+(5.1)
+
+(5.2)
+
+A seguir, tem-se os resultados da aplicação do problema 5.1, usando o programa
+
+de otimização de MATLAB c(cid:13) 10, apresentado no anexo A.
+
+58
+
+5.1 RESULTADOS COMPUTACIONAIS
+
+Serão apresentados e discutidos a seguir, alguns resultados obtidos na implemen-
+
+tação computacional do modelo matemático (4.6), visando auxiliar no planejamento
+
+radiocirurgico ótimo. O problema foi resolvido em um Microcomputador macbook-pro,
+
+processador 2,5 GHz, i5, memória 4GB, 1600 MHz, DDR3.
+
+Seguindo a metodologia descrita, inicialmente o câncer é diagnosticado e indicado
+
+o tratamento por radioterapia. Posteriormente, são realizadas imagens de tomograﬁa
+
+computadorizada para dimensionamento do tumor e localização das regiões de interesse
+
+(tumorais, críticas e saudáveis). Assim, o médico determina a dose a ser adimistrada no
+
+tumor (tg).
+
+A imagem de tomograﬁa é dividida em pixels e são obtidas as posições geométricas
+
+das localizações dos pixels referentes aos tecidos críticos, saudáveis e tumorais para serem
+utilizadas na construção da matriz de dose A = [AT AC AG]T , conforme deﬁnida em
+(4.5).
+
+Para aplicação do modelo 4.6, considera-se hipotéticamente, que o paciente apre-
+
+senta um tumor esférico, com diâmetro de 15mm, envolto por tecido crítico, exempliﬁcando
+
+um tumor de medula, onde o há diﬁculdade no planejamento devido a lesão estar totalmente
+
+envolvido por uma estrutura crítica.
+
+Neste caso, foi indicado um tratamento radiocirúrgico com dose tumoral de 80 Gy,
+
+onde Gy representa a quantidade de energia de radiação ionizante absorvida (ou dose) por
+
+unidade de massa (1 Gray(Gy)= 1J/kg). Foi considerada uma porcentagem de variação
+
+ε = 2%, assim a estrutura crítica pode receber até 40 Gy e a saudável no máximo 60
+
+Gy. Como o escalar positivo (w) pondera a importância para que o tumor receba a dose
+
+mínima, foi considerado dois valores para comparação, sendo eles w = 0, 1 e w = 40. Os
+
+demais limitantes escontram-se na Tabela 6.
+
+Tabela 6 – Valores adotados no modelo, referentes à prescrição de dose
+
+Valor adotado
+ut
+lt
+uc
+ug
+tg
+
+Gy
+81,6
+78,4
+40
+60
+80
+
+A lesão considerada contém quatro pixels (2 × 2 pixels), o tecido crítico ao redor
+
+da lesão compreende 16 pixels (4 × 4 pixels). O sistema de planejamento desenvolvido
+
+59
+
+graus, onde cada feixe é
+
+π
+2
+
+3π
+2
+
+usa uma grade de 16 × 16 pixels, com 4 ângulos de 0,
+
+, π e
+
+composto por 6 sub-feixes. Para melhorar o desempenho computacional, foram restringidas
+
+somente as regiões que tendem a formar pixels quentes, que são os pixels que receberão
+
+radiação, sendo a estrutura saudável considerada com 36 pixels. Os pixels que não vão
+
+receber radiação são chamados de pixels frios [3].
+
+Para a construção das matrizes AT , AC e AG, de deposição de dose para o tumor,
+estruturas críticas e tecidos saudáveis, respectivamente, utilizou-se a equação discutida e
+
+exempliﬁcada em (4.1), na Tabela 5 e em (4.3).
+
+A função objetivo de 5.1 é a soma de três metas: alcançar uma dosagem suﬁcien-
+
+temente alta para eliminar a lesão e não exceder a dose máxima nos tecidos críticos e
+
+saudáveis. A Tabela 7 resume os resultados numéricos obtidos quanto ao valor da função
+
+objetivo, número de iterações e tempo de execução em segundos.
+
+Tabela 7 – Resultados numéricos da otimização da função (5.1)
+
+Variáveis
+Valor da função objetivo
+Iterações
+Tempo
+Tolerância
+Excesso de dose no tumor
+Excesso de dose no tecido crítico
+Excesso de dose no tecido saudável
+
+w = 0, 1
+2, 9553 × 10−06
+38
+0, 010718s
+1, 0 × 10−06
+0, 1232 × 10−06
+0, 1142 × 10−06
+0, 0045 × 10−06
+
+w = 40
+2, 9800 × 10−06
+38
+0, 011471s
+1, 0 × 10−06
+0, 1133 × 10−06
+0, 1242 × 10−06
+0, 0045 × 10−06
+
+Analisando os resultados na Tabela 7, pode-se perceber que a função minimizada
+
+obteve valor muito baixo, o que representa uma boa conformação das curvas de isodoses,
+
+garantindo assim um tratamento seguro. Os excessos de dose nas regiões críticas e saudáveis
+
+e o déﬁcit de dose na região tumoral é praticamente zero, mostrando portanto que o tumor
+
+recebeu a dose necessária para sua eliminação e que o limite de dose permitido para as
+
+outras regiões não foi ultrapassado.
+
+O peso de w decide a importância da uniformidade de dose no tumor. Como percebe-
+
+se pelos resultados, se w for pequeno, indica que encontrar um plano de tratamento que
+
+alcance o limite inferior de dose no tumor não é tão importante. Com o aumento de w
+
+aumenta-se as chances que o plano de tratamento alcance uma dose tumoral uniforme e
+
+precisa. Portanto maiores valores para w forçam o excesso de dose no tumor ser o mínimo
+
+possível.
+
+Na Tabela 8 foram utilizados os resultados obtidos por [4], relativo ao método
+
+Primal-Dual de pontos interiores. Os valores referente à prescrição de dose foram os mesmos
+
+utilizados neste trabalho, conforme a Tabela 6.
+
+Tabela 8 – Comparação entre os resultados dos Métodos Simplex e Pontos Interiores
+
+60
+
+Método
+
+Primal-Dual com Cholesky
+
+Primal-Dual sem Cholesky
+
+Método Simplex
+
+Matriz
+16 pixels
+4096 pixels
+16 pixels
+4096 pixels
+156 pixels
+
+Iterações Tempo
+0,05s
+75,3s
+0,05s
+76,3s
+0,01s
+
+12
+14
+12
+14
+38
+
+Fonte:Cid,p.56 e 57.Adaptada pelo autor.
+
+Observa-se nos resultados da Tabela 8 que ambos os métodos atingiram sua meta
+
+de minimizar a função objetivo, mas percebe-se que o tempo computacional do Simplex foi
+
+melhor que o de Pontos Interiores. O número de iterações bem mais elevado no Simplex,
+
+pode ser explicado pelo fato que ele procura apenas por soluções básicas, o que resulta em
+
+iterações mais baratas, o que não ocorre nos Pontos Interiores, em que as soluções não
+
+precisam ser básicas.
+
+Apesar das dimensões das matrizes serem diferentes, o comportamento em ambos
+
+os métodos se mostrou eﬁciente para o planejamento ótimo do modelo proposto, onde
+
+podemos observar sua eﬁcácia no tratamento.
+
+6 CONCLUSÃO
+
+61
+
+Neste trabalho foram apresentados os principais conceitos sobre Programação Linear
+
+e o Método Simplex, aplicados em um plano de tratamento de tumor por radioterapia e
+
+um modelo com base na programação linear para o auxílio no planejamento ótimo.
+
+O desenvolvimento do Método Simplex trouxe grande avanço para a Programação
+
+Linear. Como apresentado, este procedimento percorre as soluções básicas, indo de um
+
+vértice a outro, deﬁnindo uma sequência de vértices com valores que se aproximam do
+
+ótimo.
+
+Uma explicação para o Simplex obter mais iterações para o tratamento via radiote-
+
+rapia é que ele encontra soluções básicas, logo algum tecido crítico está recebendo uma
+
+dose mínima e algum tecido saudável uma dose máxima, o que não ocorre com os métodos
+
+de Pontos Interiores, já que as soluções não precisam ser básicas.
+
+Pode-se perceber que o modelo matemático (4.6) proposto pode ser uma ferramenta
+
+de grande importância na construção de planos de tratamento otimizado, pois fornece
+
+um conjunto de soluções ótimas, que associadas com o tratamento realizado, poderá
+
+possibilitar uma terapia de alta qualidade.
+
+Para um trabalho futuro, pretende-se estudar o Método de Pontos Interiores para
+
+implementá-lo e aplicá-lo ao mesmo modelo estudado neste trabalho, com as mesmas
+
+matrizes e valores utilizados, a ﬁm de obter comparações mais precisas em relação aos
+
+métodos pesquisados.
+
+REFERÊNCIAS
+
+62
+
+[1] SILVA Alexandro de Castro da, Daniel Lujan Zanini, Evandro Robiatti, and Oscar Ales-
+
+sandro de Matos. Resolução de três problemas reais de programação linear, variando-se
+
+o sinal das inequações nas restrições. Funec, 2011.
+
+[2] HOLDER Allen. Designing radiotherapy plans with elastic constraints and interior
+
+point methods, volume 6. Health care management science, 2003.
+
+[3] MARTINS Andréa Camila dos Santos. O método de pontos interiores no planejamento
+
+da radioterapia. Universidade Estadual Paulista (UNESP), 2011.
+
+[4] CID Cecília Bollini Barboza. Planejamento do tratamento por radioterapia através de
+
+métodos de pontos interiores. Master’s thesis, Dissertação de Mestrado,ICMC-USP-São
+
+Carlos., 2003.
+
+[5] LUENBERGER David G and Yinyu Ye. Linear and nonlinear programming, volume 2.
+
+Springer, 2008.
+
+[6] FERNANDES David Moreira. Método de pontos interiores no planejamento ótimo do
+
+tratamento de câncer por radioterapia. Master’s thesis, Universidade Estadual Paulista
+
+(UNESP), 2009.
+
+[7] JOHNS Harold Elford and John Robert Cunningham. Physics of radiology. Thomas,
+
+1974.
+
+[8] JÚDICE Joaquim J, Pedro Martins, Marta Paschoal, and Jorge Santos. Programaçao
+
+Linear. Departamento de Matemática, Universidade de Coimbra, Coimbra, 2006.
+
+[9] BAZARAA Mokhtar S. John J Jarvis, Hanif D. Sherali. Linear Programming and
+
+Network Flows. Wiley, fourth edition, 2010.
+
+[10]CANTAO Luiza Amalia Pinto and Felipe Sanches Stark. Programaçao Linear–PL.
+
+Unesp- Sorocaba, 2010.
+
+[11]ARENALES Marcos, Vinicius Armentano, and Reinaldo Morabito. Pesquisa operacio-
+
+nal: para cursos de engenharia. Elsevier, 2007.
+
+[12]SOUSA Péricles Crisóstomo de. Programação linear no planejamento do tratamento
+
+de câncer por radiocirurgia. Master’s thesis, Universidade Estadual Paulista (UNESP),
+
+2008.
+
+[13]VIANA Rodrigo Sartorelo Salemi. Programação Linear aplicada à criação de planeja-
+
+mentos otimizados em radioterapia. Master’s thesis, Programa de Pós-Graduação em
+
+Biometria, IB, UNESP., 2010. Dissertação de Mestrado.
+
+63
+
+Anexos
+
+ANEXO A – MODELO DE PROGRAMAÇÃO UTILIZADO
+
+65
+
+O modelo a seguir foi elaborado para solucionar problemas usando o Método
+
+Simplex. São comandos de programação especíﬁcos para o software MATLAB c(cid:13).
+
+function [x,y,f_obj,iteracao,base]=simplex2(A,b,c,base,fase)
+
+tol=1e-3;
+
+maximo=1e5;
+
+[m,n]=size(A);
+
+A=sparse(A);
+
+b=sparse(b);
+
+c=sparse(c);
+
+bneg=ﬁnd(b < 0);
+
+A(bneg,:)=-A(bneg,:);
+
+b(bneg)=-b(bneg);
+
+%=============================================
+
+[L,U]=lu(A(:,base));
+
+L=sparse(L);
+
+U=sparse(U);
+
+xb=U (L b);%<<<<<—– Vetor de solução basica
+
+iteracao=0;
+
+while iteracao<maximo
+
+y=L’ \ (U’\ c(base));% <<<<< —–Vetor multiplicativo e solucao do problema
+
+dual
+
+%**************************
+
+% Este procedimento gera um vetor com indices referentes as colunas da
+
+%matriz A e logo depois apaga os indices referentes a suas colunas basicas.
+
+66
+
+nbas=[1:n];
+
+nbas(base)=[
+
+];
+
+%============================
+
+r=c(nbas)-(A(:,nbas)’*y);%<<<<—- Vetor de custos relativos das variaveis nao
+
+basicas
+
+%****************************
+
+% Veriﬁcando a Otimalidade do Problema
+
+if min(r) >= -tol
+
+if fase==1
+
+disp(’*************************************************’)
+
+disp(’* "YES \0/ "Chegamos ao otimo da fase 1 *’)
+
+disp(’*************************************************’)
+
+else
+
+disp(’*************************************************’)
+
+disp(’* "YES \0/ "Chegamos ao otimo da FASE 2 *’)
+
+disp(’*************************************************’)
+
+end
+
+break
+
+end
+
+%==================================
+
+[valor,j]=min(r); % <<<<<—– Encontra o indice "j"da variavel nao basica q
+
+entrara na base
+
+Ntil=U\ (L\ A(:,nbas(j)));%<<<<<—–Atualizando a coluna Nj nao basica de A
+
+%**********************************
+
+% Veriﬁcando se o Problema eh Ilimitado
+
+if Ntil <= tol
+
+disp(’******************************************************’)
+
+disp(’ "AHHH :( "===»Problema Ilimitado«=== *’)
+
+disp(’******************************************************’)
+
+67
+
+break
+
+end
+
+s=ﬁnd(Ntil>tol); %««<—–Buscando os indices de Ntil que sao >0.
+
+[valor,i]=min(xb(s)./Ntil(s)); %«<–Obtendo o indice "i"da variavel basica que saira
+
+da base
+
+base(s(i))= nbas(j); %««<—–Atualizando a Base.
+
+%*********************************** % Atualizando a fatoracao LU da base
+
+[L,U]=lu(A(:,base));
+
+L=sparse(L);
+
+U=sparse(U);
+
+%===================================
+
+xb=U\(L\b);%<<<<<—– Atualizando o vetor de soluçao basica
+
+iteracao=iteracao+1
+
+end
+
+baseﬁnal=base
+
+x=zeros(n,1);
+
+x(base)=xb;%««<—– Vetor Otimo encontrado
+
+x=sparse(x);
+
+f_obj=c’*x%<<<<<—– Valor da Funcao Objetivo no Otimo encontrado
+
+iteracao
+
+

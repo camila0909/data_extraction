@@ -1,0 +1,1029 @@
+2016: Trabalho de Conclus˜ao de Curso do Mestrado Proﬁssional em Matem´atica - PROFMAT
+Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+ESTUDO DA CONSTANTE DE FEIGENBAUM
+
+Fl´avio Heleno Graciano 1
+Carlos Alberto Raposo2 Joelson Dayvison Veloso Hemes3
+
+Resumo: O presente trabalho discute a observa¸c˜ao feita por Feigenbaum na d´ecada de 70,
+quando ele percebeu que o mapa log´ıstico apresentava um diagrama cuja cascata de bifurca¸c˜ao
+em fun¸c˜ao de um parˆametro de controle,os intervalos entre as bifurca¸c˜oes diminuiam de
+modo que cada intervalo era aproximadamente 1
+5 do intervalo anterior. Mostraremos que
+Feigenbaum constatou que a raz˜ao de cada intervalo pelo intervalo posterior tende para uma
+constante e calculamos essa constante usando o chamado Expoente de Lyapunov.
+
+Palavras-chave: Bifurca¸c˜oes; Constante de Feigenbaum.
+
+1 Os alugueis de Berlim
+
+1.1 Sistemas Dinˆamicos
+
+Podemos entender Sistemas Dinˆamicos como sistemas que tem sua evolu¸c˜ao descrita por uma
+lei matem´atica bem deﬁnida, como os que encontramos na F´ısica, na Qu´ımica, na Biologia, na
+Economia, Meteorologia e em quase todos os ramos do conhecimento. A lei de evolu¸c˜ao pode
+ser uma fun¸c˜ao ou uma equa¸c˜ao diferencial. O objetivo ´e construir uma teoria matem´atica
+destes processos que permita compreender e prever sua evolu¸c˜ao. S˜ao usados m´etodos das
+mais diversas ´areas da Matem´atica e m´etodos computacionais.
+
+Mostraremos em 1.2, um pequeno exemplo de aplica¸c˜ao proposto pelo f´ısico Ricardo
+Marino em sua p´agina, www.todasasconﬁguracoes.com, onde ele fala sobre Os alugu´eis de
+Berlin e tenta resolver o problema da Berlin gananciosa.
+
+1.2 O Problema da Berlin Gananciosa
+
+Em Berlim, a lei diz que o valor do aluguel de uma casa n˜ao pode ser superior `a 10% do valor
+m´edio dos alugueis das casas do bairro . Ou seja, se a m´edia do bairro ´e 22 euros o metro
+quadrado, um aluguel n˜ao pode ser mais alto que 24,2 euros o metro quadrado. Simples
+
+1Aluno de Mestrado Proﬁssional em Matem´atica, Turma 2015
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+E-mail: ﬂavio.graciano@ifsuldeminas.edu.br
+
+2Orientador do Trabalho de Conclus˜ao de Curso
+
+Departamento de Matem´atica e Estat´ıstica - DEMAT, UFSJ
+E-mail: raposo@ufsj.edu.br
+
+3Co-orientador do Trabalho de Conclus˜ao de Curso
+
+Ifsuldeminas/Campus Inconﬁdentes
+E-mail: joelson.hermes@ifsuldeminas.edu.br
+
+assim. Essa ´e uma ideia bem divertida, que fez f´ısico Ricardo Marino considerar o Problema
+da Berlim gananciosa.
+
+Nessa nova Berlim, a lei ´e um pouco mais r´ıgida. Uma pessoa n˜ao pode impor um aluguel
+maior que a m´edia de seus vizinhos cuja diferen¸ca entre a m´edia e o aluguel seja maior
+que 10%. A pergunta ´e: ´e poss´ıvel que exista uma cidade com essa lei em que todas as
+pessoas cobram o maior aluguel poss´ıvel pela lei? Ou seja, obrigando as pessoas a cobrarem
+exatamente 110% da m´edia de seus vizinhos, ´e poss´ıvel haver uma cidade em que todas as
+pessoas consegam cobrar essa quantia?
+
+Para bem deﬁnir o problema, vamos estabelecer hip´oteses fundamentadas na realidade.
+A primeira: minha cidade ´e unidimensional. Segunda: casas na periferia n˜ao tˆem esperan¸ca
+Isso ﬁxa as
+de ganhar dinheiro no aluguel em rela¸c˜ao aos vizinhos e possuem pre¸co ﬁxo.
+condi¸c˜oes de contorno do problema. Dado um pre¸co ﬁxo nas casas da periferia, ´e poss´ıvel
+que o resto da cidade cobre um aluguel superior em α porcento `a m´edia de seus vizinhos?
+
+A resposta ´e: depende do α. H´a valores em que isso ´e poss´ıvel, mas existe um limite para
+a extors˜ao de seus inquilinos se vocˆe precisa respeitar a regra dos α porcento. Para entender
+o que acontece, vamos considerar a ﬁgura (1):
+
+Figura 1: Ilustra¸c˜ao para o problema da Berlim gananciosa.
+
+A regra geral das casas da Berlim gananciosa ´e:
+
+xn =
+
+(1 + α)
+2
+
+(xn+1 + xn−1)
+
+desenvolvendo teremos:
+
+α(xn+1 + xn−1) = xn+1 + xn−1 − 2xn
+
+(1)
+
+(2)
+
+O termo `a direita ´e segunda derivada discreta do aluguel. Eu tenho que dividir esse termo
+da direita por um diferencial ao quadrado para obter uma derivada, e esse diferencial ´e o
+tamanho de meu grid na derivada discreta. Em termos do modelo, eu deﬁno que a posi¸c˜ao
+de cada casa ´e dada pela vari´avel (cid:96) e a distˆancia entre duas casas ´e dada por (cid:52)(cid:96)2. Dividindo
+ambos os lados da equa¸c˜ao por (cid:52)(cid:96)2 nos obtemos:
+
+α
+(cid:52)(cid:96)2 (xn+1 + xn−1) =
+
+xn+1 + xn−1 − 2xn
+(cid:52)(cid:96)2
+
+(3)
+
+O lado direito dessa equa¸c˜ao, quando a cidade ´e bem grande e as casas s˜ao bem pr´oximas,
+d(cid:96)2 ,enquanto o termo da esquerda pode ser simpliﬁcado j´a que a soma dos
+
+1+α. Isso tudo resulta na seguinte equa¸c˜ao diferencial:
+
+converge para d2x
+vizinhos ´e 2xn
+
+2
+
+sendo
+
+σ.x((cid:96)) =
+
+d2x
+d(cid:96)2
+
+σ =
+
+2α
+(1 + α)d(cid:96)2
+
+(4)
+
+(5)
+
+Esse d(cid:96) ´e a distˆancia entre duas casas. Suponhamos que a cidade toda tenha tamanho 1,
+em unidades de tamanho de cidade, ent˜ao a distˆancia m´edia entre duas casas ´e d(cid:96) = 1/N ,
+onde N ´e no n´umero de casas. Para que essa equa¸c˜ao diferencial fa¸ca sentido, eu preciso que
+σ n˜ao seja nem zero, nem inﬁnito, ent˜ao, como exigˆencia, eu preciso que α diminua conforme
+d(cid:96) diminui, ou seja, preciso que:
+
+σ =
+
+2α
+
+(1 + α)d(cid:96)2 ∼ 1 ∼
+
+1
+N 2
+
+(6)
+
+Trabalhando um pouco mais com recursos de ´algebra e equa¸c˜oes diferenciais, veremos que
+existe um limite m´aximo no lucro dos propriet´arios que diminui conforme tamanho da cidade
+aumenta, e ´e dado por:
+
+α <
+
+π2
+2N 2
+
+(7)
+
+2 Mapa Log´ıstico
+
+2.1 Conceitos Importantes
+
+Para entendermos melhor o trabalho precisamos lembrar que Mapa, ´e a denomina¸c˜ao dada
+`a um sistema dinˆamico que evolue de forma discresta. Na evolu¸c˜ao de um sistema, cada
+valor assumido em cada itera¸c˜ao ´e chamado de estado do sistema, o conjunto desses estados
+´e chamado de ´orbita e o conjunto de todas as ´orbitas poss´ıveis ´e chamado de espa¸co de fases.
+Se for dada uma condi¸c˜ao incial no sistema, pr´oxima a um certo valor e a evolu¸c˜ao deste
+sistema convergir para esse valor e permanacer ao longo das inﬁntas itera¸c˜oes, esse valor ´e
+chamado ponto ﬁxo.
+
+Um ponto ﬁxo ´e est´avel quando m´odulo da derivada da express˜ao matem´atica do sis-
+tema neste ponto for um valor menor que um, inst´avel quando for maior que um e onde
+esse valor for um, teremos os pontos de bifurca¸c˜oes. Nos pontos de bifurca¸c˜oes, ocorrem as
+mudan¸cas de estabilidades.
+
+2.2 Apresenta¸c˜ao do Mapa Log´ıstico
+
+O mapa log´ıstico ´e uma regra matem´atica descrita pelo bi´ologo Robert May em 1976 com o
+objetivo de descrever o crescimento populacional de insetos. Ele ´e dado pela equa¸c˜ao:
+
+Xn+1 = RXn(1 − Xn)
+
+(8)
+
+3
+
+onde Xn ´e o n´umero de indiv´ıduos na n-´esima gera¸c˜ao, e R ´e um parˆametro de controle
+que pertence ao intervalo [0,4). Al´em da Biologia, podemos encontrar aplica¸c˜oes relacionadas
+`a F´ısica, Qu´ımica, Engenharia, Matem´atica e outros.
+
+A equa¸c˜ao do mapa log´ıstico ´e muito explorada no meio cient´ıﬁco, uma vez que ´e uma
+equa¸c˜ao simples podendo ser analisada at´e mesmo por alunos do ensino m´edio. Ela apresenta
+no¸c˜oes fundamentais de dinˆamica n˜ao linear, apresentando equil´ıbrio, periodicidade, caos,
+bifurca¸c˜oes e fractais. Muitos aspectos da equa¸c˜ao log´ıstica ainda n˜ao s˜ao rigorosamente
+entendidos e s˜ao estudados por muitos matem´aticos. Al´em disso, previs˜oes derivadas do
+mapa log´ıstico foram veriﬁcadas em experimentos com fraca turbulˆencia, oscila¸c˜oes de rea¸c˜oes
+qu´ımicas, circuitos el´etricos n˜ao lineares e v´arios outros sistemas.
+
+Para encontrarmos os pontos ﬁxos para o mapa log´ıstico, vamos fazer Xn+1 = Xn = X,
+
+fazendo isso chegamos a seguinte equa¸c˜ao.
+
+X[1 − R(1 − X)] = 0
+
+(9)
+
+a qual apresenta as seguintes solu¸c˜oes: X = 0 e X = 1 − 1
+
+R , que s˜ao os pontos ﬁxos para
+
+o mapeamento estudado. Analisando a estabilidade para esses pontos ﬁxos temos:
+Ponto Fixo 1: (X = 0) Deﬁnindo F (R, X) = RX(1 − X) temos que ∂(F )
+
+∂(x) = R − 2RX.
+= R, a estabilidade ocorre quando o m´odulo dessa derivada ´e menor que 1,
+
+ent˜ao ∂(F )
+∂(x)
+logo:
+
+(cid:12)
+(cid:12)
+(cid:12)X=0
+
+|R| < 1 ⇒ −1 < R < 1, como R≥ 0, temos que 0 ≤ R < 1,
+
+ou seja, o ponto ﬁxo X = 0 ´e assint´oticamente est´avel para R ∈ [0, 1).
+Ponto Fixo 2: X = 1 − 1
+R
+Pelo intem anterior, temos que ∂(F )
+∂(x)
+
+(cid:12)
+(cid:12)
+(cid:12)X=1− 1
+
+= 2 − R, logo a estabilidade ocorre quando
+
+R
+1 < R < 3. Em R = 1 teremos um ponto ﬁxo do tipo transcr´ıtico e em R = 3 teremos uma
+duplica¸c˜ao e essa duplica¸c˜ao de per´ıodo ser´a de extrema importˆancia para nosso trabalho.
+
+Para encontrarmos pontos ﬁxos posteriores, devemos fazer itera¸c˜oes na equa¸c˜ao do mapa
+
+log´ıstico, por exemplo, para Xn+2 teremos:
+
+Xn+2 = RXn+1(1 − Xn+1)
+
+(10)
+
+Substituindo (8) em (10) teremos
+
+Xn+2 = R[RXn(1 − Xn)]((1 − R(Xn(1 − Xn)))
+
+Fazendo Xn+2 = Xn+1 = Xn = X teremos:
+
+X = R[RX(1 − X)]((1 − (RX(1 − X)))
+
+Reagrupando os termos teremos:
+
+(R2X − R2X 2)(1 − RX + RX 2) − X = 0
+
+4
+
+Multiplicando e colocando X em evidˆencia teremos:
+
+X(R3X 3 − 2R3X 2 + (R3 − R2)X − R2 + 1) = 0
+
+(11)
+
+Dessa forma,teremos que uma das ra´ızes ser´a zero e as outras ser˜ao encontradas resolvendo
+
+a equa¸c˜ao:
+
+R3X 3 − 2R3X 2 + (R3 − R2)X − R2 + 1 = 0
+
+(12)
+
+Dividindo a equa¸c˜ao (12) por R − 1
+
+R ,que ´e uma das ra´ızes encontradas anteriormente
+
+teremos a equa¸c˜ao:
+
+−R3X 2 + (R3 + R2)X + (−R2 − R) = 0
+
+(13)
+
+Resolvendo a equa¸c˜ao do segundo grau teremos,
+
+√
+X = (R−1)±
+
+2R
+
+R2−2R−3
+
+.
+
+√
+
+√
+
+Encontrando as ra´ızes da equa¸c˜ao acima e estudando a estabilidade para elas, veriﬁcare-
+
+mos um ponto ﬁxo est´avel para 3 < R < 1 +
+
+6 e 1 +
+
+6 ´e um novo ponto de bifurca¸c˜ao.
+
+Para encontrarmos pontos cr´ıticos de itera¸c˜oes posteriores, a resolu¸c˜ao anal´ıtica ﬁca ex-
+tremamente invi´avel uma vez que o grau do polinˆomio ser´a alto, sendo necess´ario m´etodos
+num´ericos para que novos pontos de bifurca¸c˜ao sejam encontrados.
+
+3 Mapa Log´ıstico-Like
+
+Podemos dizer que o mapa log´ıstico like ´e uma generaliza¸c˜ao do mapa log´ıstico e vem sendo
+objeto de estudo de v´arias pesquisas na atualidade, de modo especial podemos citar o grupo
+de pesquisa em dinˆamica n˜ao linear na Unesp-Rio Claro.
+
+A equa¸c˜ao do mapa logisto like ´e dada por
+
+Xn+1 = RXn(1 − X γ
+n)
+
+(14)
+
+onde γ ≥ 1, e como no mapa log´ıstico, R ´e um parˆametro de controle e X a vari´avel
+dinˆamica. ´E importante observar que se γ = 1, recuperamos o caso do mapa log´ıstico. Na
+ﬁgura (2), temos o diagrama de bifurca¸c˜ao do mapa log´ıstico-like para γ = 2.
+
+Para encontrarmos os pontos ﬁxos, novamente vamos fazer Xn+1 = Xn = X, assim
+
+chegaremos a seguinte equa¸c˜ao.
+
+X[1 − R(1 − X γ)] = 0
+
+(15)
+
+A primeira solu¸c˜ao da equa¸c˜ao (15) ´e X=0 e a segunda obtemos resolvendo a equa¸c˜ao:
+
+Assim teremos:
+
+1 − R(1 − X γ) = 0
+
+5
+
+As solu¸c˜oes encontradas para a equa¸c˜ao (15) s˜ao os pontos ﬁxos do mapa log´ıstico like.
+
+Analisando os pontos ﬁxos deste mapa chagamos nos seguintes resultados:
+
+X γ = 1 − 1
+R .
+
+Ponto Fixo 1: X = 0
+Fazendo F (R, X) = Xn+1 = RXn(1 − X γ
+(cid:12)
+(cid:12)
+(cid:12)X=0
+
+∂(F )
+∂(X)
+
+= R, a estabilidade ocorre quando o m´odulo dessa derivada ´e menor que 1, logo:
+
+n), temos que ∂(F )
+
+∂(X) = R − R(γ + 1)X γ. Ent˜ao
+
+|R| < 1 ⇒ −1 < R < 1, como R≥ 0, temos que 0 ≤ R < 1.
+
+sendo assim, o ponto ﬁxo X=0 ´e assintoticamente est´avel para 0 ≤ R <1.
+Ponto Fixo 2: X γ = 1 − 1
+R
+Para esse caso teremos duas possibilidades:
+
+i) γ par.
+
+Se γ for um n´umero par teremos dois pontos ﬁxos,
+
+X = ± (cid:2)1 − 1
+
+R
+
+(cid:3) 1
+γ .
+
+Analisando a estabilidade desses dois pontos ﬁxos chegaremos aos seguintes resultados
+
+∂(F )
+∂(X)
+
+(cid:12)
+(cid:12)
+(cid:12)X=P F
+
+= R − R(γ + 1)
+
+(cid:104)
+± (cid:0)1 − 1
+
+R
+
+(cid:105)γ
+
+(cid:1) 1
+
+γ
+
+,
+
+como γ ´e par,
+
+∂(F )
+∂(X)
+
+(cid:12)
+(cid:12)
+(cid:12)X=P F
+
+= −Rγ + γ + 1,
+
+deste modo a estabilidade acontece quando
+
+−1 < −Rγ + γ + 1 < 1.
+
+Desenvolvendo a desigualdade concluimos que
+
+1 < R < 2+γ
+γ ,
+
+ou seja, o ponto ﬁxo ´e est´avel para R ∈
+Para R = 1 teremos uma bifurca¸c˜ao do tipo forquilha.
+
+.
+
+1, 2+γ
+γ
+
+(cid:16)
+
+(cid:17)
+
+ii)γ n˜ao ´e par.
+Se γ n˜ao for par, n˜ao teremos raizes duplas e o ponto ﬁxo ser´a dado pela equa¸c˜ao:
+
+X = (cid:2)1 − 1
+
+R
+
+(cid:3) 1
+γ .
+
+6
+
+Figura 2: Diagrama de bifurca¸c˜oes do mapa log´ıstico like para γ = 2.
+
+Esse ponto ﬁxo ´e est´avel para R ∈
+
+(cid:16)
+
+1, 2+γ
+γ
+
+(cid:17)
+
+. Para R = 1 a bifurca¸c˜ao ser´a do tipo
+
+transcr´ıtica.
+
+Podemos observar que, se γ n˜ao ´e par, teremos dois pontos ﬁxos e se γ ´e par 3 pontos
+
+ﬁxos.
+
+4 Expoentes de Lyapunov
+
+Quando evoluimos duas condi¸c˜oes iniciais pr´oximas, tanto no mapa log´ıstico quanto no mapa
+log´ıstico like, elas podem se afastar ao longo da trajet´oria do espa¸co de fases, ou seja, ao
+evoluirmos a dinˆamica no tempo duas condi¸c˜oes inciais que estavam pr´oximas podem se
+afastar de maneira exponencial. Para avaliarmos essa disperss˜ao entre as condi¸c˜oes iniciais,
+usamos os expoentes de Lyapunov .O expoente de Lyapunov para o sistema dinˆamico ´e um
+indicador de caos ´e obtido a partir da distˆancia de duas condi¸c˜oes iniciais distintas.
+
+Seja xn+1 = F (xn) um mapeamento discreto e F(X) uma fun¸c˜ao n˜ao linear.Considere as
+condi¸c˜oes iniciais x0 com x0 + ε, com ε pequeno e d a distˆancia entre xn+1 = F (xn) ap´os n
+iteradas do mapa. Teremos que d ´e dado por:
+
+d = (cid:12)
+
+(cid:12)F (n)(x0 + ε) − F (n)(x0)(cid:12)
+(cid:12)
+
+Deﬁnindo a distˆancia relativa
+(cid:12)F (n)(x0 + ε) − F (n)(x0)(cid:12)
+(cid:12)
+(cid:12)
+ε
+
+d
+ε = lim
+ε→0
+
+= |F (cid:56)(n)(x0)|
+
+Podemos supor que,
+
+|F (cid:56)(n)(x0)| = eλn
+
+(16)
+
+onde λ ´e o expoente de Lyapunov.
+
+7
+
+Se λ > 0, o expoente de Lyapunov ´e positivo e o sistema tem componentes ca´oticos.
+Se λ < 0, a ´orbita ´e dita peri´odica ou quase peri´odica
+Aplicando ln na equa¸c˜ao (8) teremos
+
+λn = ln|F (cid:56)(n)(x0)|
+
+(17)
+
+Reescrevendo F (cid:56)(n), temos:
+Para n = 2,
+F (cid:56)(2)(x0) = F (F (x0)) = F (x1)
+
+F (cid:56)(2)(x0) = ∂F 2
+
+∂x = ∂F
+∂x1
+
+. ∂F
+∂x0
+
+Para n = 3
+F (cid:56)(3)(x0) = F (F (F (x0)))
+
+F (cid:56)(3)(x0) = ∂F 3
+
+∂x = ∂F
+∂x2
+
+. ∂F
+∂x1
+
+. ∂F
+∂x0
+
+Para o caso geral temos:
+F (cid:56)(n)(x0) = ∂F
+. ∂F
+∂xn−2
+∂xn−1
+Levando esse resultado na equa¸c˜ao (17)
+
+... ∂F
+∂x1
+
+∂F
+∂x0
+
+λ =
+
+1
+n
+
+ln
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+∂F
+∂xn−1
+
+.
+
+∂F
+∂xn−2
+
+...
+
+∂F
+∂x1
+
+.
+
+∂F
+∂x0
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+ou seja:
+
+λ =
+
+1
+n
+
+n−1
+(cid:88)
+
+i=0
+
+ln
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+∂F
+∂x
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)xi
+
+(18)
+
+(19)
+
+Neste trabalho, o uso do Expoente de Lyapunov foi fundamental. Usamos o fato de que,
+quando λ > 0 a evolu¸c˜ao de um mapa tem comportamento ca´otico, quando λ < 0, a evolu¸c˜ao
+de um mapa tem comportamento peri´odico ou quase peri´odico e principalmente o fato de
+que quando λ = 0, encontraramos os pontos onde ocorrem as mundan¸cas de estabilidade, ou
+seja os pontos de bifurca¸c˜ao, atrav´es dos quais podemos calcular a constante de Feigenbaum
+para o mapa log´ıstico e para o mapa log´ıstico-like.
+
+5 A constante de Feigenbaum
+
+5.1 Conceito da constante de Feigenbaum
+
+Na d´ecada de 70, Feigenbahum ao estudar o comportamento do mapa log´ıstico variando
+do parˆametro de controle R, observou que esse sistema dinˆamico convergia para um valor
+apenas quando R est´a entre 1 e 3. Para um R entre 3 e 3,45, convergia para dois,quando
+R estava entre 3,45 e 3,544, convergia para quatro possibilidades e entre 3.54 e 3.56 tinha
+oito possibilidades, ou seja acontecia duplica¸c˜oes de per´ıodo com o aumento do parˆametro
+R. Feigenbahum percebeu que esses valores aumentavam exponencialmente, e que o intervalo
+
+8
+
+de R em que eles aconteciam ﬁcavam cada vez menores. Obvervou tamb´em que o primeiro
+intervalo era quase cinco vezes maior que o segundo, enquanto o segundo tamb´em era quase
+cinco vezes maior que o terceiro e assim sucessivamente. Al´em disso, notou que depois de
+um valor de R tornava-se imposs´ıvel prever os valores desse sistema.
+
+Quando construimos o diagrama de bifurca¸c˜oes (gr´aﬁco da vari´avel X em fun¸c˜ao do
+parˆametro de controle R)podemos observar a presen¸ca de pontos ﬁxos, orbitas peri´odicas
+e caos, o que conﬁrma as observa¸c˜oes feitas por Feigenbaum. A ﬁgura (3) mostra o diagrama
+de bifurca¸c˜oes para o mapa log´ıstico e nele podemos observar as duplica¸c˜oes de per´ıodo que
+ocorrem nas bifurca¸c˜oes devido as mudan¸cas de estabilidade dos pontos ﬁxos. Tais bifurca¸c˜oes
+acontecem exatamente nos pontos onde ocorre essas mundan¸cas.
+
+Figura 3: Diagrama de bifurca¸c˜oes do mapa log´ıstico.
+
+Chamando de Rn, Rn+1, Rn+2.... os pontos onde ocorrem as bifurca¸c˜oes de duplica¸c˜ao de
+
+per´ıodo, Feigenbaum descobriu que:
+
+lim
+n→∞
+
+Rn − Rn−1
+Rn+1 − Rn
+
+= 4, 669201609... = δ
+
+(20)
+
+onde δ foi chamado de constante de Feigenbaum.
+Outra observa¸c˜ao relevante foi que a cascata de bifurca¸c˜ao de duplica¸c˜ao de per´ıodo se
+
+acumula no ponto onde
+
+lim
+n→∞
+
+Rn = R∞ = 3, 5699456...
+
+(21)
+
+5.2 Universalidade
+
+Durante seus estudos, Feigenbaum indagou se em outros mapas discretos pudessem acontecer
+fatos semelhantes ao que ele descobriu no mapa log´ıstico. Um dos mapas estudados por ele
+foi o mapa quadr´atico dado por:
+
+9
+
+Xn+1 = R − X 2
+n
+
+(22)
+
+onde a ´e o parˆametro de controle, e 0 ≤ R ≤ 2. Como podemos ver na ﬁgura (4), este
+
+mapa tem um diagrama de bifur¸ca˜oes muito parecido com mapa log´ıstico.
+
+Figura 4: Diagrama de bifur¸ca˜oes do mapa quadr´atico.
+
+Mas a semelhan¸ca mais interessante est´a na da raz˜ao entre os intervalos entre os pontos
+de bifurca¸c˜ao, ele veriﬁcou que cada intervalo era aproximadamente um quinto do intervalo
+posterior. Aprofundando nos estudos chegou a mesma conclus˜ao que havia chegado no caso
+do mapa log´ıstico, ou seja:
+
+limn→∞
+
+Rn − Rn−1
+Rn+1 − Rn
+
+= 4, 669201609... = δ
+
+onde Rn, Rn+1, Rn+2.... s˜ao valores de R onde acontecem as bifurca¸c˜oes, que evidentimente
+n˜ao s˜ao os mesmos, assim como o valor em que a cascata de bifurca¸c˜ao se acumula n˜ao ´e o
+mesmo que o do mapa log´ıstico.
+
+O mesmo estudo foi feito para outros modelos com caracteristica unimodal, ou seja, s´o
+tem um m´aximo e foi concluido que a costante de Feigenbaum ´e comum a todos esses modelos.
+
+6 O C´alculo da constante de Feigenbaum para o mapa
+
+log´ıstico via expoente de Lyapunov
+
+A maior diﬁculdade ao calcular a constante de Feigenbaum para os mapas log´ıstico e log´ıstico-
+like como tamb´em em outros modelos, est´a no m´etodo usado para encontrar os pontos de
+bifurca¸c˜ao das itera¸c˜oes de ordens elevadas. No caso do modelo log´ıstico s´o conseguimos
+
+10
+
+calcular algebricamente os pontos de bifurca¸c˜ao at´e a terceira itera¸c˜ao, a partir da´ı tere-
+mos polinˆomios de graus elevados que inviabilizam os c´alculos alg´ebricos, como j´a vimos
+anteriormente. Para o log´ıstico like, n˜ao conseguimos nem isso, quando usamos γ > 1.
+
+O grande objetivo deste trabalho foi encontrar a constante de Feigenbaum atrav´es do uso
+
+do expoente de Lyapunov, que como j´a vimos ´e dado por:
+
+λ = 1
+n
+
+n−1
+(cid:88)
+
+i=0
+
+ln
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+∂F
+∂x
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)xi
+
+.
+
+Para isso devemos lembrar que um ponto ﬁxo ´e est´avel quando
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+< 1. Al´em disso, os valores do parˆametro de controle onde ∂(F )
+∂(x)
+
+(cid:12)
+(cid:12)
+(cid:12)xi
+
+∂(F )
+∂(x)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+−1 < ∂(F )
+∂(x)
+os valores onde ocorrem as bifurca¸c˜oes.
+
+(cid:12)
+(cid:12)
+(cid:12)xi
+
+< 1, ou seja,
+(cid:12)
+(cid:12)
+(cid:12)xi
+
+= ±1, s˜ao
+
+Analisando a express˜ao matem´atica do expoente de lyapunov e lembrando que ln|1| = 0,
+podemos perceber que os valores de R onde ocorrem as bifurca¸c˜oes s˜ao os valores para os
+quais o expoente de lyapunov vale zero, ou seja ∂(F )
+
+∂(x) = ±1,.
+
+Com base nisso, trabalhamos para tentar encontrar a constante de Feigenbaum para o
+
+mapa log´ıstico e o mapa log´ıstico-like com γ = 2 e γ = 3.
+
+Para isso, usamos o programa fortran para estudarmos o comportamento do expoente de
+lyapunov em fun¸c˜ao do parˆametro R e encontrarmos os valores para os quais o expoente de
+lyapunov ´e igual a zero.
+
+Nas ﬁguras (5) e (6) mostramos simultˆaneamente o diagrama de bifurca¸c˜ao do mapa
+log´ıstico e do mapa log´ıstico-like, com γ = 2, plotados juntamentente o gr´aﬁco de seus
+respectivos expoente de lyapunov em fun¸c˜ao do parˆametro de controle R. Podemos visualisar
+com facilidade que na regi˜ao onde o expoente ´e negativo temos regularidade no diagrama
+de bifurca¸c˜ao, onde ´e positivo temos caos e de forma especial para este trabalho, podemos
+observar que nos pontos de bifurca¸c˜ao o expoente de lyapunov vale zero.
+
+Inicialmente trabalhamos o modelo log´ıstico e para ele conseguimos visualisar oito pontos
+de onde o expoente de lyapunov obteve valor zero, ou seja, oito pontos de bifurca¸c˜ao como
+mostra os valores da tabela (1). De posse desses valores conseguimos calcular seis valores da
+
+raz˜ao
+
+Rn − Rn−1
+Rn+1 − Rn
+
+satisfat´oria.
+
+que se a aproximam da constante encontrada por Feigenbaun de maneira
+
+Na tabelas (2) e (3), repetimos os c´alculos para os mapa log´ostico like com γ = 2 e
+
+γ = 3 respectivamente. Novamente podemos observar que a raz˜ao
+
+tende para a
+
+contante encontrada por Feigenbaum. Al´em disso, notamos que para os trˆes valores de γ, a
+raz˜ao se aproxima da constante esperada. Outra observa¸c˜ao importante, foi que para valores
+de γ maiores , a convergˆencia da raz˜ao para essa contante ´e mais r´apida.
+
+Rn − Rn−1
+Rn+1 − Rn
+
+11
+
+Diagrama de Bi-
+Figura 5:
+furca¸c˜ao e Expoente de Lyapunov
+em fun¸c˜ao de R do mapa log´ıstico
+
+Figura 6: Diagrama de Bifurca¸c˜ao e Expo-
+ente de Lyapunov em fun¸c˜ao de R do mapa
+log´ıstico-like com γ = 2
+
+n Rn
+3
+1
+3,44948974...
+2
+3,54408974...
+3
+3,56440703...
+4
+3,56875930...
+5
+3,56969154...
+6
+3,56989124...
+7
+3,56993400...
+8
+
+Rn − Rn−1
+0,44948974
+0,09460000
+0,02031729
+0,00435227
+0,00093226
+0,00019970
+0,00004276
+
+= δn
+
+Rn−Rn−1
+Rn+1−Rn
+4,75147767
+4,65613278
+4,66820532
+4,66851522
+4,66830245
+4,67025257
+
+Tabela 1: Tabela de valores para c´alculo da constante de Feigenbaum no modelo log´ıstico via
+expoente de lyapunov
+
+n Rn
+2
+1
+2,23606683...
+2
+2,28803077...
+3
+2,29922785...
+4
+2,30162893...
+5
+2,30214313...
+6
+2,30225336...
+7
+
+Rn − Rn−1
+0,23606683
+0,05119639
+0,11197080
+0,00240108
+0,00051338
+0,00011023
+
+= δn
+
+Rn−Rn−1
+Rn+1−Rn
+4,54280000
+4,57213125
+4,66335144
+4,67700339
+4,66158176
+
+Tabela 2: Tabela de valores para c´alculo da constante de Feigenbaum no modelo log´ıstico
+like com γ = 2 via expoente de lyapunov
+
+12
+
+n Rn
+1
+1
+1,666689...
+2
+1,828180...
+3
+1,86434...
+4
+1,872499...
+5
+1,874193...
+6
+1,874556...
+7
+
+Rn − Rn−1
+0,666689
+0,161491
+0,0364554
+0,007865
+0,0001694
+0,000363
+
+Rn−Rn−1
+= δn
+Rn+1−Rn
+4,129579977
+4,42982384
+4,4,63514303
+4,64285714
+4,66666666
+
+Tabela 3: Tabela de valores para c´alculo da constante de Feigenbaum no modelo log´ıstico
+like com γ = 3 via expoente de lyapunov
+
+7 Resultados e Conclus˜oes
+
+Neste trabalho falamos do mapa log´ıstico e mapa log´ıstico like, encontramos seus pontos ﬁxos
+e estudamos estabilidade para esses mapas nas primeira itera¸c˜oes. Introduzimos o conceito
+do expoente de Lyapunov e falamos da importˆancia dele para nosso trabalho. Falamos da
+forma de como sugiram as primeiras id´eias da constante de Feigenbaum e mostramos o valor
+que foi encontrado para essa constante e falamos tamb´em sobre sua universalidade. Final-
+mente mostramos como procedemos para encontrarmos a constante de Feigenbaum em nosso
+trabalho. Apresentamos os dados encontrados atrav´es de trˆes tabelas e atrav´es desses dados
+pudemos comprovar a eﬁciˆencia do m´etodo usado para encontrar a constande de Feigenbaum.
+
+8 Agradecimentos
+
+Em primeiro lugar, eu gostaria de agradecer a Deus pela oportunidade de cursar o PROF-
+MAT. Tamb´em agrade¸co ao Professor Edson Dˆenis Leonel da Unesp-Rio Claro, por me
+auxiliar na escolha do tema e no desenvolvimento do trabalho, ao Professor Carlos Alberto
+Raposo por aceitar a me orientar no tema escolhido,ao amigo Professor Joelson Dayvison
+Veloso Hermes pela co-orienta¸c˜ao e de modo especial, a minha esposa Rose e aos meus ﬁlhos
+Ruan e Laura, por compreeder a minha ausˆencia durante as enumeras horas de estudo.
+
+Referˆencias
+
+N. F. Ferreira e C. P. C, Prado; Caos Uma Introdu¸c˜ao, Editora Edgard Bl¨ucher Ltda, 1994.
+
+R. M. N. Teixera, D. S. Rando, F. C. Geraldo, R. N. C. Fillho, J. A. Oliveira, E. D. Leonel e
+S. T. Melo; Convergence towards asymptotic state in 1-D mappings: A scaling investigation.
+Physics Letters A,2015
+
+R. . Viana.; Introdu¸c˜ao `a Dinˆamica N˜ao-Linear e Caos.
+Acesso em 25 dezembro de 2015.
+< https : //pt.scribd.com/document/76909765/introducao − dinamica − nao − linear − e −
+teoria − do − caos >
+
+13
+
+F. J.; Estudo do mapa log´ıstico.
+Trabalho de conclus˜ao de curso de Licenciatura em F´ısica, 2012.
+www.mundof isico.joinville.udesc.br/arquivo.php?idArquivo = 132.
+
+http://www.todasasconﬁguracoes.com/tag/feigenbaum/;Artur ´Avila, o domador do caos.
+2014
+
+14
+
+

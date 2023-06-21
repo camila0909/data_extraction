@@ -1,0 +1,7564 @@
+UNIVERSIDADE FEDERAL DE MATO GROSSO DO SUL
+
+INSTITUTO DE MATEM ´ATICA
+
+PROGRAMA DE P ´OS GRADUAC¸ ˜AO
+
+MESTRADO PROFISSIONAL EM MATEM ´ATICA
+EM REDE NACIONAL
+
+LUCAS SANTOS CARDOZO DE S ´A
+
+UM ESTUDO SOBRE M´ETODOS DE RESOLUC¸ ˜AO DE RECORRˆENCIA
+
+LINEAR
+
+CAMPO GRANDE - MS
+
+2019
+
+UNIVERSIDADE FEDERAL DE MATO GROSSO DO SUL
+
+INSTITUTO DE MATEM ´ATICA
+
+PROGRAMA DE P ´OS GRADUAC¸ ˜AO
+
+MESTRADO PROFISSIONAL EM MATEM ´ATICA
+EM REDE NACIONAL
+
+LUCAS SANTOS CARDOZO DE S ´A
+
+UM ESTUDO SOBRE M´ETODOS DE RESOLUC¸ ˜AO DE RECORRˆENCIA
+
+LINEAR
+
+Orientador: Prof. Dra. Elen Viviani Pereira Spreaﬁco
+
+Disserta¸c˜ao apresentada ao Programa de P´os-
+
+Gradua¸c˜ao em Matem´atica em Rede Nacional
+
+do Instituto de Matem´atica da Universidade
+
+Federal de Mato Grosso do Sul-INMA/UFMS
+
+como parte dos requisitos para obten¸c˜ao do
+
+t´ıtulo de Mestre.
+
+Campo Grande - MS
+
+2019
+
+Um Estudo Sobre M´etodos de Resolu¸c˜ao de Recorrˆencia Linear
+
+Lucas Santos Cardozo de S´a
+
+Disserta¸c˜ao apresentada ao Programa de P´os-Gradua¸c˜ao Mestrado Proﬁssional em ma-
+
+tem´atica em Rede Nacional do Instituto de Matem´atica da Universidade Federal de Mato
+
+Grosso do Sul-INMA/UFMS como parte dos requisitos para obten¸c˜ao do t´ıtulo de Mestre.
+
+Aprovado pela Banca Examinadora:
+
+Prof. Dra. Elen Viviani Pereira Spreaﬁco - UFMS
+
+Prof. Dr. Aurelio Ribeiro Leite de Oliveira - UNICAMP
+
+Prof. Dra. Rubia Mara de Oliveira Santos - UFMS
+
+Campo Grande – MS, 28 de Novembro de 2019
+
+Resumo
+
+Este trabalho apresenta alguns m´etodos para determinar a solu¸c˜ao de uma recorrˆencia
+
+linear. Estes s˜ao divididos em duas categorias, sendo chamado de m´etodo tradicional aqueles
+
+que utilizam de composi¸c˜ao de fun¸c˜oes exponenciais e aqueles que a solu¸c˜ao ´e obtida pelo uso
+
+de fun¸c˜oes geradoras. O outro ´e o chamado m´etodo de BenTaher-Rachidi, que consiste em uma
+
+abordagem para inverter as matrizes de Vandermonde e, consequentemente, obter a solu¸c˜ao
+
+particular de recorrˆencias lineares. Finalmente, com o software Scilab, s˜ao destacadas algumas
+
+das vantagens e desvantagens ao abordar atrav´es do m´etodo apresentado por BenTaher-Rachidi.
+
+Palavras-chave: Recorrˆencia Linear, Fun¸c˜oes Geradoras, Matriz de Vandermonde.
+
+Abstract
+
+This paper presents some methods to determine the solution of a linear recurrence. These
+
+are divided into two categories, being called the traditional method those that use the compo-
+
+sition of exponential functions and those that the solution is obtained by the use of generating
+
+functions. The other is the so-called BenTaher-Rachidi method which consists of an approach
+
+to invert Vandermonde matrices and consequently to obtain the particular solution of linear
+
+recurrences. Finally, with Scilab software, some of the advantages and disadvantages of the
+
+approach through the method presented by BenTaher-Rachidi are highlighted.
+
+Keywords: Linear recurrence, Generating Function, Vandermonde matrix.
+
+Sum´ario
+
+1 Introdu¸c˜ao
+
+2 Conceitos B´asicos
+
+2.1 Sistemas lineares
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.1.1 M´etodo de elimina¸c˜ao de Gauss . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Matriz de Vandermonde . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3 Polinˆomios . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3 Recorrˆencias - m´etodo tradicional
+
+3.1 Recorrˆencia Linear de 1a ordem . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1.1 Equa¸c˜oes do tipo an+1 = an + h(n) . . . . . . . . . . . . . . . . . . . . .
+
+1
+
+3
+
+3
+
+5
+
+11
+
+14
+
+19
+
+20
+
+20
+
+3.1.2 Equa¸c˜oes do tipo an+1 = f (n)an . . . . . . . . . . . . . . . . . . . . . . . 22
+
+3.1.3 Equa¸c˜oes do tipo an+1 = f (n)an + h(n)
+
+. . . . . . . . . . . . . . . . . .
+
+3.2 Recorrˆencia Linear de 2a ordem . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.3 Recorrˆencia Linear com coeﬁcientes constantes . . . . . . . . . . . . . . . . . . .
+
+3.4 Recorrˆencias - fun¸c˜oes geradoras . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4 M´etodo de BenTaher-Rachidi e Simula¸c˜oes
+
+24
+
+28
+
+36
+
+44
+
+49
+
+4.1 Polinˆomio caracter´ıstico cont´em somente ra´ızes simples . . . . . . . . . . . . . .
+
+49
+
+4.1.1
+
+Simula¸c˜ao das recorrˆencias que apresentam polinˆomio caracter´ıstico com
+
+ra´ızes de multiplicidade um . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2 Polinˆomio caracter´ıstico apresenta ra´ızes com multiplicidade maior que um . . .
+
+4.2.1
+
+Simula¸c˜ao das recorrˆencias que apresentam polinˆomio caracter´ıstico com
+
+51
+
+54
+
+alguma raiz de multiplicidade maior que um . . . . . . . . . . . . . . . .
+
+57
+
+Lista de Figuras
+
+2.1 Dispositivo pr´atico de Briot-Ruﬃni.
+
+. . . . . . . . . . . . . . . . . . . . . . . . 17
+
+2.2 Dispositivo pr´atico de Briot-Ruﬃni para p(x) = x3 − 4x2 + 6x − 4.
+
+. . . . . . .
+
+18
+
+3.1 Representa¸c˜ao do “quebra-cabe¸cas”torre de Hanoi..
+
+. . . . . . . . . . . . . . . .
+
+3.2 N´umero de regi˜oes que o plano ´e dividido com I-uma, II-duas e III-trˆes retas. . .
+
+3.3 Representa¸c˜ao dos pares de coelhos ao longo de 4 meses.
+
+. . . . . . . . . . . . .
+
+3.4 Cinco primeiras constru¸c˜oes dos n´umeros triangulares.
+
+. . . . . . . . . . . . . .
+
+3.5 Cinco primeiras constru¸c˜oes dos n´umeros quadrados.
+
+. . . . . . . . . . . . . . .
+
+3.6 Cinco primeiras constru¸c˜oes dos n´umeros pentagonais.
+
+. . . . . . . . . . . . . .
+
+4.1 Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem dois.
+
+. . . .
+
+4.2 Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem trˆes.
+
+. . . .
+
+4.3 Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem quatro. . . .
+
+4.4 Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem oito.
+
+. . . .
+
+4.5 Tempo de processamento de uma recorrˆencia de ordem trˆes (raiz com multipli-
+
+26
+
+27
+
+35
+
+41
+
+42
+
+43
+
+52
+
+52
+
+53
+
+54
+
+cidade).
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+57
+
+4.6 Tempo de processamento de uma recorrˆencia de ordem quatro (raiz com multi-
+
+plicidade).
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+58
+
+Cap´ıtulo 1
+
+Introdu¸c˜ao
+
+Rela¸c˜oes de recorrˆencia s˜ao amplamente estudadas nas diversas ´areas do conhecimento. Seu
+
+uso na matem´atica aparece desde a antiguidade, sendo encontrada durante o s´eculo I no livro
+
+Metrica, escrito pelo matem´atico Heron de Alexandria, onde mostra como aproximar uma raiz
+
+quadrada atrav´es de uma sequˆencia recorrente [15].
+
+Em 1202, Leonardo de Pisa, tamb´em conhecido como Fibonacci, em seu livro Liber Abaci
+
+resolve um famoso problema descrito no Cap´ıtulo 12 de seu livro sobre a reprodu¸c˜ao de coelhos,
+
+gerando a conhecida sequˆencia de Fibonacci que pode ser descrita por uma recorrˆencia. Na ´area
+
+da an´alise matem´atica, tamb´em pode ser encontrado o m´etodo de Newton-Raphson, divulgado
+
+em 1690, que permite determinar ra´ızes de fun¸c˜ao de forma recursiva. No campo da an´alise
+
+combinat´oria, diversos problemas podem ser modelados por recorrˆencias, como por exemplo
+
+o jogo proposto pelo matem´atico francˆes Edouard Lucas em 1883 conhecido como Torre de
+
+Hanoi.
+
+Apesar dessa rela¸c˜ao aparecer ao longo da hist´oria em diversos per´ıodos, a deﬁni¸c˜ao for-
+
+mal de sequˆencias deﬁnidas em fun¸c˜ao de seus pr´oprios termos, conhecida como rela¸c˜ao de
+
+recorrˆencia, nasce entre o ﬁnal do s´eculo XIX e in´ıcio do s´eculo XX [17].
+
+Atualmente, o estudo de sequˆencias recursivas tem ganhado grande importˆancia devido a
+
+facilidade de implementa¸c˜ao de algoritmos que usam desse artif´ıcio na resolu¸c˜ao de problemas
+
+computacionais.
+
+Academicamente, os alunos tˆem seu primeiro contato com esse t´opico durante o ensino
+
+m´edio, onde se ´e abordado de forma impl´ıcita o estudo das progress˜oes aritm´eticas e geom´etricas.
+
+Apesar de n˜ao aprofundado durante esse per´ıodo, frequentemente ´e utilizado como um recurso
+
+na resolu¸c˜ao de problemas de olimp´ıadas de matem´atica (OBMEP, OBM, entre outras).
+
+1
+
+Nesse trabalho temos o intuito de estudar recorrˆencias apresentando m´etodos tradicionais,
+
+visto em geral nos cursos de matem´atica, como tamb´em m´etodos menos divulgados na literatura
+
+para obten¸c˜ao da solu¸c˜ao de uma recorrˆencia.
+
+No Cap´ıtulo 2 apresentamos as f´ormulas mais relevantes e os conte´udos que s˜ao necess´arios
+
+para melhor compreens˜ao dos t´opicos seguintes, realizando um estudo de sistemas lineares,
+
+matrizes e polinˆomios.
+
+No Cap´ıtulo 3 trabalhamos com mais detalhes as diferentes resolu¸c˜oes utilizando os m´etodos
+
+tradicionais de resolu¸c˜ao de recorrˆencias, usualmente abordados em livros de gradua¸c˜ao como
+
+[1] e [5].
+
+No Cap´ıtulo 4 mostramos o m´etodo de resolu¸c˜ao de recorrˆencias apresentado no artigo de
+
+BenTaher-Rachidi, [2], e realiza-se compara¸c˜oes desse m´etodo com um dos m´etodos previamente
+
+apresentado no Cap´ıtulo 3, destacando vantagens e desvantagens na solu¸c˜ao de cada um dos
+
+m´etodos computacionalmente.
+
+Por ﬁm, apresentamos as considera¸c˜oes ﬁnais e em anexo o c´odigo utilizado na obten¸c˜ao dos
+
+gr´aﬁcos mostrados no Cap´ıtulo 4, encerrando com a bibliograﬁa utilizada ao longo do texto.
+
+2
+
+Cap´ıtulo 2
+
+Conceitos B´asicos
+
+Neste cap´ıtulo s˜ao abordados temas fundamentais para determina¸c˜ao da solu¸c˜ao de uma
+
+recorrˆencia linear atrav´es do conceito de sistema linear e suas representa¸c˜oes. Tamb´em ser˜ao
+
+apresentados os conceitos de polinˆomios e suas propriedades, juntamente da deﬁni¸c˜ao de matriz
+
+de Vandermonde, conceitos esses que s˜ao utilizados ao longo do trabalho nos cap´ıtulos seguintes.
+
+Utilizamos as seguintes referˆencias para a confec¸c˜ao deste cap´ıtulo [3], [8], [11].
+
+2.1 Sistemas lineares
+
+Deﬁni¸c˜ao 1 Dados os n´umeros reais α1, ..., αn, β, a equa¸c˜ao
+
+α1x1 + ... + αnxn = β,
+
+onde xi ∈ R ´e chamado de equa¸c˜ao linear sobre R nas inc´ognitas x1, ..., xn. Uma solu¸c˜ao dessa
+
+equa¸c˜ao ´e a sequˆencia (b1, ..., bn) tal que α1b1 + ... + αnbn = β.
+
+Exemplo 1 A equa¸c˜ao x1 + 3x2 − x3 = 5 ´e uma equa¸c˜ao linear que admite como uma poss´ıvel
+
+solu¸c˜ao a terna (1, 1, −1), ou seja, x1 = 1, x2 = 1 e x3 = −1 satisfazem a equa¸c˜ao x1+3x2−x3 =
+
+5.
+
+Deﬁni¸c˜ao 2 Um sistema com m equa¸c˜oes lineares ´e um conjunto de m equa¸c˜oes lineares con-
+
+sideradas simultaneamente. Uma solu¸c˜ao de um sistema ´e uma n-upla (c1, ..., cn) de n´umeros
+
+reais que ´e solu¸c˜ao simultˆanea de cada uma das equa¸c˜oes do sistema.
+
+Um sistema linear com m equa¸c˜oes, cada equa¸c˜ao com n inc´ognitas, pode ser representado
+
+como mostrado em (2.1):
+
+3
+
+
+
+
+
+
+a11x1 + a12x2 + . . . + a1nxn = c1
+
+a21x1 + a22x2 + . . . + a2nxn = c2
+...
+a1mx1 + a1mx2 + . . . + a1mxn = cm
+
+.
+
+(2.1)
+
+Exemplo 2 Considere o sistema linear
+
+
+
+
+3x1 + 7x2 + 4x3 = 1
+
+
+
+2x1 + 4x2 + 5x3 = 3
+
+Uma solu¸c˜ao desse sistema de 2 equa¸c˜oes e 3 inc´ognitas ´e dado por (−1, 0, 1), ou seja,
+
+x1 = −1, x2 = 0 e x3 = 1, pois essa terna, em particular, satisfaz ambas equa¸c˜oes lineares
+
+simultaneamente.
+
+Vejamos agora algumas propriedades de um sistema linear.
+
+Dado um sistema linear de m equa¸c˜oes e n inc´ognitas, as solu¸c˜oes desse sistema linear n˜ao
+
+se alteram ao realizar as seguintes opera¸c˜oes:
+
+a) Permuta¸c˜ao: Trocar a posi¸c˜ao de duas linhas entre si.
+
+Considere (x1, x2, ...xn) solu¸c˜ao do sistema linear (2.2),
+
+
+
+
+
+
+a11x1 + a12x2 + . . . + a1nxn = b1
+
+a21x1 + a22x2 + . . . + a2nxn = b2
+...
+am1x1 + am2x2 + . . . + amnxn = bm
+
+.
+
+(2.2)
+
+Note que pela deﬁni¸c˜ao de solu¸c˜ao de um sistema linear, a n-upla (x1, x2, ..., xn) deve satis-
+
+fazer simultaneamente todas as equa¸c˜oes lineares, assim ao trocar alguma das linhas de posi¸c˜ao,
+
+a solu¸c˜ao n˜ao ser´a alterada.
+
+b) Multiplica¸c˜ao por escalar (diferente de zero): Multiplicar toda uma linha por um
+
+mesmo escalar.
+
+Note que se (x1, x2, ..., xn) ´e solu¸c˜ao da equa¸c˜ao linear, ak1x1+...+aknxn = bk, ao multiplicar
+
+por um real λ (cid:54)= 0, a equa¸c˜ao λak1x1 + ... + λaknxn = λbk tamb´em ´e satisfeita pela solu¸c˜ao
+
+inicial, pois λak1x1 + ... + λaknxn = λ(ak1x1 + ... + aknxn) = λbk.
+
+c) Soma de composi¸c˜ao de linhas: Somar linhas do sistema em quest˜ao multiplicadas
+
+por um escalar.
+
+4
+
+Se (x1, x2, ..., xn) ´e solu¸c˜ao da equa¸c˜ao linear, ai1x1 +...+ainxn = bi e aj1x1 +...+ajnxn = bj,
+
+ent˜ao (ai1 + λaj1)x1 + ... + (ain + λajn)xn = bi + λbj tamb´em ´e satisfeita por essa solu¸c˜ao. De
+
+fato,
+
+(ai1 + λaj1)x1 + ... + (ain + λajn)xn = ai1x1 + λaj1x1 + ... + ainxn + λajnxn
+
+⇒ (ai1 + λaj1)x1 + ... + (ain + λajn)xn = ai1x1 + ... + ainxn + λ(aj1x1 + ... + ajnxn)
+
+⇒ (ai1 + λaj1)x1 + ... + (ain + λajn)xn = bi + λbj.
+
+Essas propriedades podem ser utilizadas na obten¸c˜ao das solu¸c˜oes de sistemas lineares.
+
+Um sistema linear ´e classiﬁcado de acordo com o n´umero de solu¸c˜oes, sendo incompat´ıvel
+
+quando n˜ao admitir solu¸c˜ao, compat´ıvel determinado se admitir somente uma solu¸c˜ao e
+
+compat´ıvel indeterminado quando admitir inﬁnitas solu¸c˜oes.
+
+Um sistema linear compat´ıvel e determinado como deﬁnido anteriormente ´e um sistema de
+
+equa¸c˜oes lineares que apresenta somente uma solu¸c˜ao satisfazendo todas as equa¸c˜oes simultane-
+
+amente. Tais sistemas podem ser apresentados atrav´es de m equa¸c˜oes lineares de m inc´ognitas
+
+cada.
+
+Existem m´etodos conhecidos na obten¸c˜ao da solu¸c˜ao desse tipo de sistema, como por exem-
+
+plo o m´etodo de Cramer, adi¸c˜ao e do escalonamento. Apresentamos somente o m´etodo do
+
+escalonamento.
+
+2.1.1 M´etodo de elimina¸c˜ao de Gauss
+
+Utilizando as Propriedades (a), (b) e (c) o sistema linear (2.1) quando compat´ıvel determi-
+
+nado e m = n pode ser representado na forma escalonada (2.3).
+
+
+
+
+
+
+a11x1 + a12x2 + ... + a1mxm = c1
+
+a22x2 + ... + a2nxm = c2
+
+. . .
+
+ammxm = cm
+
+Apresentando como solu¸c˜ao do sistema o conjunto (x1, x2, ..., xm) tal que xm =
+
+ck −
+
+k−1
+(cid:88)
+
+i=0
+
+akm−ixm−i
+
+akk
+
+xk =
+
+, onde k ∈ N, com 1 ≤ k ≤ m − 1.
+
+(2.3)
+
+cm
+amm
+
+e
+
+Exemplo 3 Determine a solu¸c˜ao do sistema linear compat´ıvel determinado (2.4) utilizando o
+
+m´etodo do escalonamento.
+
+5
+
+
+
+
+
+2x1 + 5x2 − x3 = 5
+
+x1 + x2 − 2x3 = −5
+
+−4x1 + 2x2 + x3 = 3
+
+Utilizando a Propriedade a) em (2.4) ´e poss´ıvel reescrever o sistema como (2.5).
+
+
+
+
+
+x1 + x2 − 2x3 = −5
+
+2x1 + 5x2 − x3 = 5
+
+−4x1 + 2x2 + x3 = 3
+
+(2.4)
+
+(2.5)
+
+Atrav´es da Propriedade c) em (2.5) ´e poss´ıvel eliminar a primeira inc´ognita da segunda e
+
+terceira linha fazendo duas vezes a linha um, menos linha dois e quatro vezes a linha um, menos
+
+linha trˆes, respectivamente, obtendo (2.6).
+
+
+
+
+
+x1 + x2 − 2x3 = −5
+
+−3x2 − 3x3 = −15
+
+2x2 − 9x3 = −23
+
+(2.6)
+
+Utilizando a Propriedade b) ´e poss´ıvel simpliﬁcar a linha dois de (2.6) multiplicando todos
+
+os termos por um ter¸co, resultando em (2.7).
+
+
+
+
+
+x1 + x2 − 2x3 = −5
+
+−x2 − x3 = −5
+
+2x2 − 9x3 = −23
+
+(2.7)
+
+Por ﬁm, basta utilizar novamente a Propriedade c) em (2.7), fazendo duas vezes a linha
+
+dois, mais linha trˆes.
+
+
+
+
+
+x1 + x2 − 2xn = −5
+
+−x2 −
+
+xn
+
+= −5
+
+−11xn = −33
+
+(2.8)
+
+Obtendo o sistema escalonado (2.8), onde ´e poss´ıvel obter x3 = 3 da terceira linha. Substi-
+
+tuindo na segunda linha se obt´em x2 = 2 e ﬁnalmente da primeira linha x1 = −1.
+
+Logo, a terna (−1, 2, 3) ´e solu¸c˜ao do sistema linear.
+
+Todo sistema linear pode ser representado atrav´es de sua forma matricial, ou seja, o sistema
+
+linear (2.9)
+
+6
+
+
+
+
+
+
+a11x1 + a12x2 + . . . + a1nxn = b1
+
+a21x1 + a22x2 + . . . + a2nxn = b2
+...
+a1mx1 + a1mx2 + . . . + a1mxn = bm
+
+(2.9)
+
+pode ser representado por Ax = b, onde
+
+A =
+
+
+
+
+
+
+
+
+
+
+
+a11
+
+a12
+
+. . . a1n
+
+a21
+a22
+...
+...
+am1 am2
+
+. . . a2n
+...
+. . .
+. . . amn
+
+
+
+
+
+
+
+
+
+
+
+m×n
+
+,
+
+x =
+
+
+
+
+
+
+
+
+
+
+
+x1
+
+x2
+...
+xn
+
+
+
+
+
+
+
+
+
+
+
+n×1
+
+,
+
+b =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b1
+
+b2
+...
+bm
+
+.
+
+m×1
+
+Atrav´es da forma matricial de um sistema linear ´e poss´ıvel determinar mais propriedades e
+
+explicar a unicidade da solu¸c˜ao no caso compat´ıvel e determinado.
+
+Para estudar um sistema linear no seu formato matricial ´e importante estudar o determi-
+
+nante associado a essa matriz. Ent˜ao, dado um sistema linear existe uma matriz associada a
+
+esse sistema. Assim, estudar esse sistema linear ´e estudar a sua matriz associada.
+
+Vejamos como efetuar o c´alculo do determinante atrav´es do Teorema de Laplace.
+
+Deﬁni¸c˜ao 3 O cofator de um elemento ai,j de uma matriz A ´e um escalar dado por Cof (Ai,j) =
+
+(−1)i+jdet(Ai,j), onde det(Ai,j) ´e o determinante da matriz A ao se retirar a i − ´esima linha
+
+e j − ´esima coluna.
+
+Com isso, ´e poss´ıvel calcular o determinante de uma matriz A de ordem n.
+
+Teorema 1 (Teorema de Laplace) Dado uma matriz A de ordem n, seu determinante ´e
+
+dado por
+
+ou ainda,
+
+det(A) =
+
+det(A) =
+
+n
+(cid:88)
+
+i=1
+
+n
+(cid:88)
+
+j=1
+
+ai,j · Cof (Ai,j),
+
+ai,j · Cof (Ai,j)
+
+de acordo com a escolha da i − ´esima linha ou j − ´esima coluna.
+
+Exemplo 4 Seja uma matriz de ordem 2 da forma
+
+
+
+
+
+A =
+
+
+
+ ,
+
+a11 a12
+
+a21 a22
+
+7
+
+seu determinante ´e dado por
+
+det(A) = a11 · a22 − a21 · a12.
+
+Exemplo 5 (Regra de Sarrus) Seja uma matriz de ordem 3 da forma
+
+A =
+
+
+
+
+
+
+
+
+a11 a12 a13
+
+a21 a22 a23
+
+a31 a32 a33
+
+
+
+
+
+
+
+
+,
+
+seu determinante ´e dado pela express˜ao (2.10).
+
+det(A) = (a11·a22·a33+a12·a23·a31+a13·a21·a32)−(a31·a22·a13+a21·a12·a33+a11·a32·a23). (2.10)
+
+A partir de uma matriz A ´e poss´ıvel deﬁnir outras matrizes como por exemplo a matriz
+
+transposta e a matriz inversa, essa ´ultima se A ´e uma matriz quadrada.
+
+Vejamos a seguir a deﬁni¸c˜ao de matriz transposta.
+
+Deﬁni¸c˜ao 4 Seja a matriz
+
+A =
+
+
+
+
+
+
+
+
+
+
+
+a11
+
+a12
+
+. . . a1n
+
+a21
+a22
+...
+...
+am1 am2
+
+. . . a2n
+...
+. . .
+. . . amn
+
+
+
+
+
+
+
+
+
+
+
+m×n
+
+,
+
+a matriz transposta de A, representada por At, ´e a matriz onde o elemento da i − ´esima linha e
+
+j − ´esima coluna de A se encontra na j − ´esima linha e i− ´esima coluna de At, respectivamente,
+
+ou seja,
+
+At =
+
+
+
+
+
+
+
+
+
+
+
+a11
+
+a21
+
+. . . an1
+
+a22
+...
+
+a12
+. . . an2
+...
+...
+. . .
+a1m a2m . . . anm
+
+
+
+
+
+
+
+
+
+
+
+n×m
+
+.
+
+Atrav´es de propriedades do determinante ´e poss´ıvel obter propriedades do sistema linear
+
+associado. Vejamos algumas propriedades do determinante.
+
+Proposi¸c˜ao 1 Sejam A, B matrizes de ordem n. Ent˜ao valem
+
+Prop. 1: Se A apresenta uma linha ou coluna em que todos seus elementos s˜ao combina¸c˜ao
+
+linear de outras linhas ou colunas, respectivamente, ent˜ao det(A) = 0.
+
+8
+
+Prop. 2: Se A tem todos seus elementos multiplicados por uma constante k, ent˜ao seu
+
+determinante ser´a dado por kn · det(A).
+
+Prop. 3: O determinante de A ´e igual ao de sua transposta, ou seja, det(A) = det(At).
+
+Prop. 4: Ao trocar duas linhas ou colunas entre si de A, seu determinante ser´a multiplicado
+
+por (−1).
+
+Prop. 5: O determinante de uma matriz triangular, ou seja, uma matriz em que todas as
+
+entradas abaixo ou acima da diagonal principal s˜ao nulas ´e dado pelo produt´orio dos elementos
+
+da diagonal principal.
+
+Prop. 6: O determinante da matriz resultante do produto de matrizes quadradas ´e o produto
+
+entre os determinantes de cada matriz, ou seja, det(A · B) = det(A) · det(B).
+
+Prop. 7: O determinante de uma matriz n˜ao ´e alterado ao adicionar uma combina¸c˜ao linear
+
+das linhas ou colunas a uma outra linha ou coluna, respectivamente.
+
+O item 7 da Proposi¸c˜ao 1 representa o Teorema de Jacobi [3].
+
+Deﬁni¸c˜ao 5 A inversa de uma matriz quadrada A, quando existir, ´e a matriz represetada por
+
+A−1 tal que AA−1 = A−1A = I, onde I ´e a matriz identidade formada por um em sua diagonal
+
+principal e zero em suas demais entradas.
+
+Voltemos a resolu¸c˜ao do sistema Ax = b. Para problemas em que a matriz A ´e uma matriz
+
+invert´ıvel, a solu¸c˜ao do problema em quest˜ao ´e dado por x = A−1 · b.
+
+Assim, faz-se necess´ario determinar a inversa de uma matriz. Para isso, utiliza-se o conceito
+
+de matriz adjunta de A, representada por A.
+
+Deﬁni¸c˜ao 6 Seja uma matriz A quadrada de ordem n, sua matriz adjunta ´e dada pela express˜ao
+
+
+
+
+
+
+
+
+
+
+
+A =
+
+Cof (A11) Cof (A21)
+
+. . . Cof (An1)
+
+Cof (A12) Cof (A22)
+
+...
+
+...
+
+. . . Cof (An2)
+. . .
+
+...
+
+Cof (A1n) Cof (A2n)
+
+. . . Cof (Ann)
+
+
+t
+
+
+
+
+
+
+
+
+
+.
+
+(2.11)
+
+E com isso ´e poss´ıvel apresentar o Teorema 2.
+
+Teorema 2 Dado a matriz quadrada de ordem n, ent˜ao A · A = A · A = det(A)In.
+
+9
+
+Demonstra¸c˜ao:
+
+Note que o termo da i − ´esima linha e j − ´esima coluna do produto
+
+A · A ´e dado por
+
+ai1Cof (Aj1) + ... + ainCof (Ajn) =
+
+
+
+
+
+
+det(A) se i = j,
+
+0
+
+se i (cid:54)= j,
+
+pelo Teorema de Laplace e Propriedade 1 da Proposi¸c˜ao 1.
+
+De forma an´aloga esse resultado ´e obtido para A · A, obtendo A · A = A · A = det(A)In.
+
+Corol´ario 1 Uma matriz quadrada A de ordem n ´e invert´ıvel se e somente se det(A) (cid:54)= 0.
+
+Demonstra¸c˜ao:
+
+Se A ´e invert´ıvel, existe matriz A−1 tal que A·A−1 = I. Pela Propriedade
+
+6 da Proposi¸c˜ao 1,
+
+det(A) · det(A−1) = 1 ⇒ det(A−1) =
+
+1
+det(A)
+
+.
+
+Como o determinante de A−1 deve existir, conclui-se que det(A) (cid:54)= 0.
+
+A volta decorre diretamente do Teorema 2, pois
+
+A · A = A · A = det(A)In ⇒ A ·
+
+1
+det(A)
+
+A =
+
+1
+det(A)
+
+A · A = In,
+
+ou seja, se det(A) (cid:54)= 0, existe a inversa de A dada por A−1 = 1
+
+det(A)A.
+
+Os principais conceitos como as demonstra¸c˜oes referentes a determinantes de uma matriz
+
+n˜ao s˜ao apresentados de modo formal, atentando apenas a regras pr´aticas para seu uso. O
+
+leitor que apresentar interesse pode encontrar mais informa¸c˜oes na referˆencia [7].
+
+Vejamos mais um exemplo.
+
+Exemplo 6 Determine a matriz inversa associada ao sistema linear (2.12) e sua solu¸c˜ao.
+
+
+
+
+
+2x1 + x2 + x3 = 0
+
+−x1 + 3x2 − 2x3 = 1
+
+x1 + 2x2 − x3 = 3
+
+(2.12)
+
+Escrevendo o sistema linear 2.12 na sua forma matricial, Ax = b, tem-se
+
+
+
+
+
+
+
+
+2
+
+1
+
+0
+
+−1 3 −2
+
+1
+
+2 −1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+x1
+
+x2
+
+x3
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+0
+
+1
+
+3
+
+=
+
+Primeiramente, note que A ´e invers´ıvel, pois ao aplicar a f´ormula obtida no Exemplo 5,
+
+det(A) = −6, logo det(A) (cid:54)= 0.
+
+10
+
+Tomando a matriz
+
+A−1 =
+
+
+
+
+
+
+
+
+a d g
+
+b
+
+e h
+
+c f
+
+i
+
+
+
+
+
+
+
+
+,
+
+pela deﬁni¸c˜ao de matriz inversa ´e poss´ıvel escrever a rela¸c˜ao
+
+
+
+
+
+
+
+
+2
+
+1
+
+1
+
+−1 3 −2
+
+1
+
+2 −1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+a d g
+
+b
+
+e h
+
+c f
+
+i
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+,
+
+1 0 0
+
+0 1 0
+
+0 0 1
+
+obtendo trˆes sistemas lineares apresentados a seguir.
+
+
+
+
+
+2a + 1b + 1c = 1
+
+−1a + 3b − 2c = 0
+
+,
+
+−1a + 2b − 1c = 0
+
+
+
+
+
+2d + 1e + 1f = 0
+
+−1d + 3e − 2f = 1
+
+,
+
+−1d + 2e − 1f = 0
+
+
+
+
+
+2g + 1h + 1i = 0
+
+−1g + 3h − 2i = 0
+
+.
+
+−1g + 2h − 1i = 1
+
+Resolvendo os sistemas lineares,
+
+a =
+
+−1
+6
+
+,
+
+b =
+
+−1
+2
+
+,
+
+c =
+
+5
+6
+
+,
+
+d =
+
+1
+2
+
+,
+
+e =
+
+1
+2
+
+,
+
+f =
+
+−1
+2
+
+,
+
+g =
+
+5
+6
+
+,
+
+h =
+
+1
+2
+
+,
+
+i =
+
+−7
+6
+
+.
+
+Assim,
+
+A−1 =
+
+
+
+
+
+
+
+
+−1
+6
+
+−1
+2
+
+1
+2
+
+5
+6
+
+1
+2
+
+1
+2
+
+
+
+
+
+
+
+
+,
+
+5
+6
+
+−1
+2
+
+−7
+6
+
+e consequentemente ´e poss´ıvel obter
+
+x = A−1b ⇒ x =
+
+
+
+
+
+
+
+
+−1
+6
+
+−1
+2
+
+1
+2
+
+5
+6
+
+1
+2
+
+1
+2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+0
+
+1
+
+3
+
+5
+6
+
+−1
+2
+
+−7
+6
+
+⇒ x =
+
+
+
+
+
+
+
+
+2
+
+−1
+
+−3
+
+
+
+
+
+
+
+
+,
+
+ou seja, x1 = 2, x2 = −1 e x3 = −3.
+
+2.2 Matriz de Vandermonde
+
+A matriz de Vandermonde ´e um t´opico importante a ser abordado, pois estar´a associado
+
+na resolu¸c˜ao de sistemas lineares por meio do m´etodo de BenTaher-Rachidi, t´opico dessa dis-
+
+serta¸c˜ao. Segue sua deﬁni¸c˜ao.
+
+11
+
+Deﬁni¸c˜ao 7 Uma matriz de Vandermonde ´e uma matriz em que suas linhas (ou colunas) s˜ao
+
+formadas por progress˜oes geom´etricas com primeiro termo igual a um.
+
+Teorema 3 O determinante de uma matriz de Vandermonde de ordem n na forma
+
+M =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+a1
+
+a2
+1
+...
+an−1
+1
+
+1
+
+a2
+
+a2
+2
+...
+an−1
+2
+
+. . .
+
+. . .
+
+1
+
+an
+
+. . .
+. . .
+
+a2
+n
+...
+. . . an−1
+
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+n×n
+
+,
+
+(2.13)
+
+´e dado por:
+
+det(M ) =
+
+(cid:89)
+
+(aj − ai)
+
+i<j
+
+(2.14)
+
+Demonstra¸c˜ao: A prova ser´a feita por indu¸c˜ao em n. Para n = 2, temos a determinante
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+1
+
+a1 a2
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+= a2 − a1,
+
+que se verﬁca de imediato.
+
+Agora supondo que a aﬁrma¸c˜ao ´e v´alida para uma matriz de Vandermonde M de ordem
+
+n (2.13), basta provar que a express˜ao (2.14) ´e v´alida para uma matriz de Vandermonde de
+
+ordem n + 1.
+
+De fato, seja M uma matriz de Vandermonde de ordem n + 1, ent˜ao
+
+det(M ) =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+1
+
+...
+
+1
+
+a1 a2
+
+1 an
+an
+2
+
+... an+1
+...
+... an
+
+n+1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+.
+
+(2.15)
+
+Seja Ci a i − ´esima coluna da matriz M , utilizando a Propriedade 7 da Proposi¸c˜ao 1 sobre
+
+determinantes, ao fazer a opera¸c˜ao Ci = Ci−C1, com i > 1, o determinante de (2.16) permanece
+
+igual ao determinante de (2.15).
+
+det(M ) =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+0
+
+...
+
+0
+
+... an+1 − a1
+...
+... an
+
+n+1 − an
+1
+
+a1 a2 − a1
+
+1 an
+an
+
+2 − an
+1
+
+12
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(2.16)
+
+Seja Li a i − ´esima linha da matriz M , utilizando a Propriedade 7 novamente, fazendo
+
+a opera¸c˜ao Li+1 = Li+1 − a1Li, com i > 1, o determinante de (2.17) permanece igual ao
+
+determinante de (2.16).
+
+det(M ) =
+
+⇒ det(M ) =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(2.17)
+
+1
+
+0
+
+0
+
+...
+
+0
+
+a2 − a1
+
+an+1 − a1
+
+...
+...
+... an
+
+0 an
+
+2 − an−1
+
+2 a1
+
+n+1 − an−1
+
+n+1a1
+
+1
+
+0
+
+0
+
+a2 − a1
+
+0 (a2 − a1)an−1
+
+2
+
+...
+
+...
+...
+...
+
+0
+
+an+1 − a1
+
+(an+1 − a1)an−1
+n+1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+Por ﬁm, pela Propriedade 2 dos determinantes, basta colocar em evidˆencia o termo ai − a1
+
+de (2.17) para cada coluna com i > 1, obtendo (2.18).
+
+det(M ) = (a2 − a1)...(an+1 − a1)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+0
+
+0
+
+1
+
+0 an−1
+2
+
+...
+
+0
+
+1
+
+...
+...
+... an−1
+n+1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(2.18)
+
+Aplicando o Teorema de Laplace em (2.18), para a primeira linha, ´e poss´ıvel escrever o
+
+determinante como apresentado na equa¸c˜ao (2.19).
+
+det(M ) = (a2 − a1)...(an+1 − a1)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+an−1
+2
+
+1
+
+...
+...
+... an−1
+n+1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+,
+
+(2.19)
+
+onde,
+
+´e a hip´otese de indu¸c˜ao.
+
+Logo,
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+an−1
+2
+
+1
+
+...
+...
+... an−1
+n+1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:89)
+
+(aj − ai)
+
+=
+
+i<j
+
+det(M ) =
+
+(cid:89)
+
+(aj − ai),
+
+para todo n natural maior ou igual a dois.
+
+i<j
+
+13
+
+Exemplo 7 Calcule o determinante da matriz A =
+
+
+
+
+
+
+
+
+1
+
+1
+
+1
+
+3 −2 1
+
+9
+
+4
+
+1
+
+
+
+
+
+.
+
+
+
+Primeiramente observe que A ´e uma matriz de Vandermonde. Utilizando a regra de deter-
+
+minantes para matrizes de Vandermonde, pode-se calcular o determinante pela f´ormula (2.14),
+
+sendo assim,
+
+det(A) = (−2 − 3)(1 − 3)(1 − (−2)) ⇒ det(A) = −5 · (−2) · 3 ⇒ det(A) = 30.
+
+Outra forma para o c´alculo da determinante da matriz A ´e dado ao se aplicar a regra de
+
+Sarrus, apresentada no Exemplo 5. De fato,
+
+det(A) = (1 · (−2) · 1 + 1 · 1 · 9 + 1 · 3 · 4) − (9 · (−2) · 1 + 3 · 1 · 1 + 1 · 4 · 1)
+
+⇒ det(A) = (−2 + 9 + 12) − (−18 + 3 + 4) ⇒ det(A) = 19 + 11 ⇒ det(A) = 30.
+
+Nas se¸c˜oes seguintes apresentaremos o conceito de polinˆomio caracter´ıstico de uma matriz.
+
+Esse conceito relaciona um polinˆomio com uma matriz atrav´es de seu determinante. Por isso
+
+se faz necess´ario o estudo de algumas caracter´ısticas dos polinˆomios.
+
+2.3 Polinˆomios
+
+Nessa se¸c˜ao ´e apresentado algumas caracter´ısticas importantes de polinˆomios como seu
+
+valor em determinado ponto e m´etodos para o c´alculo da raiz de um polinˆomio. Em seguida ´e
+
+apresentado como calcular a derivada de um polinˆomio qualquer de grau n.
+
+Deﬁni¸c˜ao 8 (Polinˆomio) Os polinˆomios ou fun¸c˜oes polinomiais s˜ao um caso particular de
+
+fun¸c˜ao, sendo formado pela soma de monˆomios, ou seja, termos do tipo anxn, onde an ´e uma
+
+constante, xn ´e uma vari´avel e n ´e um n´umero natural.
+
+Escrevemos de modo geral,
+
+p(x) = anxn + an−1xn−1 + ... + a1x + a0.
+
+Um polinˆomio pode ser classiﬁcado de acordo com seu grau.
+
+Deﬁni¸c˜ao 9 (Grau de um polinˆomio) O grau de um polinˆomio de uma vari´avel ´e o maior
+
+valor de n tal que an (cid:54)= 0.
+
+14
+
+Exemplo 8 A fun¸c˜ao p1(x) = x3 − 2x2 ´e um polinˆomio de grau trˆes. J´a a fun¸c˜ao p3(x) =
+
+5x2 − 3x + 4x1/2 n˜ao ´e um polinˆomio, pois um de seus termos apresenta x elevado a um n´umero
+
+n˜ao inteiro, ou seja, n˜ao ´e um monˆomio.
+
+As fun¸c˜oes polinomiais podem assumir valores diferentes de acordo com a escolha do valor
+
+de seu dom´ınio. Esses resultados ser˜ao chamados de valor num´erico do polinˆomio.
+
+Deﬁni¸c˜ao 10 O valor de um polinˆomio ´e o valor que a fun¸c˜ao assume para um dado ponto de
+
+seu dom´ınio.
+
+Exemplo 9 Seja o polinˆomio p : R → R, tal que p(x) = x3 − 8. Ent˜ao o valor que p assume
+
+para os valores de seu dom´ınio x = 0 e x = 2, ´e respectivamente, p(0) = −8 e p(2) = 0.
+
+Os valores do dom´ınio que satisfa¸ca a equa¸c˜ao p(x) = 0 apresentam grande importˆancia,
+
+sendo esses valores chamados de ra´ızes, deﬁnido a seguir.
+
+Deﬁni¸c˜ao 11 (Raiz de polinˆomio) A raiz de um polinˆomio p ´e o valor de x em seu dom´ınio
+
+que satisfaz a equa¸c˜ao p(x) = 0.
+
+No Exemplo 9 ´e poss´ıvel aﬁrmar que x = 2 ´e uma raiz de p(x) = x3 − 8. O Teorema a seguir
+
+aﬁrma a respeito da existˆencia de ra´ızes em um polinˆomio qualquer de grau maior ou igual a
+
+um.
+
+Teorema 4 (Teorema Fundamental da ´Algebra) Seja p um polinˆomio complexo, com grau
+maior ou igual a um. Ent˜ao existe z0 ∈ C que satisfaz p(z0) = 0.
+
+O Teorema Fundamental da ´Algebra tamb´em assegura que um polinˆomio de grau n com
+
+coeﬁcientes complexos apresenta n ra´ızes n˜ao necessariamente distintas. Informa¸c˜oes adicionais
+
+em rela¸c˜ao ao Teorema podem ser encontradas na referˆencia [6].
+
+As ra´ızes de um polinˆomio podem exigir t´ecnicas diferentes, de acordo com seu grau, para
+
+serem obtidas. Vejamos para os graus 1 e 2.
+
+Um polinˆomio de 1o grau ´e um polinˆomio em que o expoente mais alto de x ´e um, sendo
+
+assim pode ser escrito como p(x) = ax + b, onde a, b ∈ R, a (cid:54)= 0. Ent˜ao,
+
+p(x) = 0 ⇒ ax + b = 0 ⇒ x =
+
+−b
+a
+
+.
+
+−b
+Logo, a raiz de um polinˆomio de 1o grau ´e dado por x =
+a
+da ´Algebra ´e poss´ıvel garantir que essa ´e a ´unica raiz existente.
+
+e pelo Teorema Fundamental
+
+15
+
+Exemplo 10 Seja p : R → R o polinˆomio p(x) = −2x + 8. Como p ´e um polinˆomio de grau
+
+um, sua raiz ´e dada por x = 4, pois p(4) = 0.
+
+Um polinˆomio de 2o grau ´e um polinˆomio em que o expoente mais alto de x ´e dois. Os
+
+polinˆomios de segundo grau s˜ao da forma p(x) = ax2 + bx + c, onde a, b, c ∈ R, a (cid:54)= 0. Para
+
+determinar suas ra´ızes ´e necess´ario a seguinte manipula¸c˜ao.
+
+ax2 + bx + c = 0 ⇒ x2 +
+
+b
+a
+
+x +
+
+c
+a
+
+(cid:18)
+
+= 0 ⇒
+
+x +
+
+(cid:19)2
+
+b
+2a
+
+(cid:19)2
+
+−
+
+(cid:18) b
+2a
+
++
+
+c
+a
+
+= 0.
+
+Completando quadrados, obtemos
+
+(cid:18)
+
+x +
+
+(cid:19)2
+
+b
+2a
+
+=
+
+b2
+4a2 −
+
+4ac
+4a2 ⇒ x +
+
+b
+2a
+
+= ±
+
+√
+
+b2 − 4ac
+2a
+
+.
+
+Fazendo ∆ = b2 − 4ac, ent˜ao
+
+√
+
+−b ±
+2a
+
+∆
+
+x =
+
+A f´ormula (2.20) ´e conhecida como f´ormula de Bhaskara.
+
+(2.20)
+
+Os problemas que envolvem determinar as ra´ızes de um polinˆomio de segundo grau com
+
+coeﬁcientes constantes s˜ao classiﬁcados em 3 casos, sendo eles:
+
+a) ∆ > 0; neste caso o polinˆomio admite duas ra´ızes reais distintas,
+
+b) ∆ = 0; neste caso o polinˆomio admite duas ra´ızes reais iguais,
+
+c) ∆ < 0; neste caso o polinˆomio admite duas ra´ızes complexas conjugadas entre si.
+
+Exemplo 11 Determine a raiz do polinˆomio p(x) = x2 − 3x + 2.
+
+Primeiramente, ´e poss´ıvel aﬁrmar que o polinˆomio apresenta duas ra´ızes distintas, pois
+
+∆ = b2 − 4ac ⇒ ∆ = 1 > 0.
+
+Com isso,
+
+x =
+
+√
+
+∆
+
+−b ±
+2a
+
+⇒ x =
+
+−(−3) ±
+2(1)
+
+√
+
+1
+
+Logo, x = 1 ou x = 2 s˜ao as duas ra´ızes de p.
+
+As f´ormulas utilizadas para polinˆomios de ordem 3 e 4 s˜ao de forma geral complexas e
+
+n˜ao pr´aticas, sendo utilizadas apenas em ´ultimo recurso. Para polinˆomios de grau superior a 4,
+
+Galois [4] mostra n˜ao ser poss´ıvel criar uma f´ormula geral para o c´alculo de suas ra´ızes. Quando
+
+o polinˆomio apresenta ra´ızes racionais o uso de t´ecnicas como a pesquisa de ra´ızes racionais e
+
+o dispositivo pr´atico de Briot-Ruﬃni costumam ser mais convenientes.
+
+16
+
+Teorema 5 (Pesquisa de ra´ızes racionais) Dado o polinˆomio p(x) = anxn + an−1xn−1 +
+
+... + a2x2 + a1x + a0, caso o polinˆomio apresente alguma raiz racional, essa raiz ser´a da forma
+
+x =
+
+r
+s
+
+, onde r ´e um divisor de a0 e s ´e um divisor de an.
+
+Demonstra¸c˜ao:
+
+Suponha que p admite uma raiz racional, ou seja, p
+
+(cid:17)
+
+(cid:16) r
+s
+
+= 0, onde
+
+mdc(r, s) = 1.
+
+Assim,
+
+an
+
+(cid:17)n
+
+(cid:16)r
+s
+
++ an−1
+
+(cid:17)n−1
+
+(cid:16)r
+s
+
++ ... + a2
+
+(cid:17)2
+
+(cid:16)r
+s
+
++ a1
+
+(cid:17)
+
+(cid:16)r
+s
+
++ a0 = 0
+
+⇒ −a0sn = r(anrn−1 + an−1rn−2s + ... + a2rsn−2 + a1sn−1)
+
+Como r (cid:45) s, ent˜ao r | a0, pois −a0sn = r · k, com mdc(r, s) = 1 e k ∈ Z.
+
+Da mesma forma,
+
+−anrn = s(an−1rn−1 + ... + a2r2sn−2 + a1rsn−1 + a0sn−1).
+
+E, analogamente, como s (cid:45) r, ent˜ao s | an, pois −anrn = s · k(cid:48), com mdc(r, s) = 1 e k(cid:48) ∈ Z.
+
+O dispositivo pr´atico de Briot-Ruﬃni ´e utilizado para realizar divis˜oes de polinˆomios onde
+
+o divisor deve ser um polinˆomio de primeiro grau.
+
+Seja p(x) = anxn + ... + a1x + a0, para calcular a divis˜ao de p(x) por x − r, utiliza-se o
+
+algoritmo a seguir:
+
+Figura 2.1: Dispositivo pr´atico de Briot-Ruﬃni.
+
+O termo bn−1 ´e sempre igual a an, enquanto os demais s˜ao obtidos por bk = bk+1r + ak+1.
+
+Basta seguir esse procedimento at´e o ´ultimo coeﬁciente, sendo c o resto da divis˜ao polinomial
+
+p(x)/(x − r). Caso p seja divis´ıvel por r, ou seja, c = 0, ent˜ao ´e poss´ıvel determinar as demais
+
+ra´ızes de p atrav´es da equa¸c˜ao bn−1xn−1 + bn−2xn−2 + ... + b1x + b0 = 0.
+
+Exemplo 12 Determine todas as ra´ızes do polinˆomio p(x) = x3 − 4x2 + 6x − 4.
+
+17
+
+Utilizando a t´ecnica de pesquisa de ra´ızes racionais, caso p admita uma raiz racional, ela
+
+deve ser uma das seguintes op¸c˜oes:
+
+r ∈ {±1, ±2, ±4}
+
+Note que o ´unico valor que satisfaz p(x) = 0 ocorre quando x = 2, logo essa ´e a ´unica raiz
+
+racional de p.
+
+Utilizando o dispositivo pr´atico de Briot-Ruﬃni, ´e poss´ıvel reduzir o problema para a equa¸c˜ao
+
+de segundo grau x2 − 2x + 2 = 0, como apresentado na ﬁgura 2.2.
+
+Figura 2.2: Dispositivo pr´atico de Briot-Ruﬃni para p(x) = x3 − 4x2 + 6x − 4.
+
+A equa¸c˜ao x2−2x+2 = 0 tem ∆ = −4 < 0, logo apresenta duas ra´ızes complexas conjugadas.
+
+Utilizando a f´ormula de Bh´askara, ´e poss´ıvel determinar que a solu¸c˜ao dessa equa¸c˜ao ´e dada
+
+para x = 1 + i ou x = 1 − i, onde i ´e a unidade imagin´aria.
+
+Com isso, as ra´ızes do polinˆomio p s˜ao x = 2, x = 1 + i ou x = 1 − i.
+
+Uma outra caracter´ıstica fundamental de polinˆomios ´e a derivada de um polinˆomio. Apesar
+
+de suas diversas aplicabilidades e fun¸c˜oes na matem´atica, nesse trabalho estamos interessados
+
+na obten¸c˜ao do polinˆomio que representa a derivada de um polinˆomio p, sendo representado
+
+por p(cid:48)(x).
+
+Deﬁni¸c˜ao 12 (Derivada de um polinˆomio) Seja p(x) = anxn + an−1xn−1 + ... + a1x + a0
+
+um polinˆomio de grau n, ent˜ao sua derivada ´e dada por
+
+p(cid:48)(x) = nanxn−1 + (n − 1)an−1xn−2 + ... + a1.
+
+Exemplo 13 Determine a derivada do polinˆomio p(x) = x6 − 3x2 + 4x − 7. Utilizando a regra
+
+do tombo, p(cid:48)(x) = 6x5 − 6x + 4.
+
+Ap´os deﬁnir alguns conceitos de sistemas lineares, matrizes e polinˆomios, daremos in´ıcio ao
+
+t´opico de principal interesse desse trabalho que trata das sequˆencias recorrentes.
+
+18
+
+Cap´ıtulo 3
+
+Recorrˆencias - m´etodo tradicional
+
+Nessa se¸c˜ao ´e apresentado os principais m´etodos tradicionalmente encontrados em livros
+
+did´aticos, como [1] e [5], para a resolu¸c˜ao de problemas de recorrˆencias lineares.
+
+Deﬁni¸c˜ao 13 (Recorrˆencia) A sequˆencia de n´umeros reais deﬁnida por
+
+an+k = f (n, an+k−1, an+k−2, ..., an) + h(n),
+
+(3.1)
+
+onde f e h s˜ao fun¸c˜oes e n ∈ N, ´e chamada de sequˆencia recorrente e sua express˜ao (3.1)
+
+conhecida como rela¸c˜ao de recorrˆencia.
+
+Quando os termos de uma rela¸c˜ao de recorrˆencia n˜ao dependerem da fun¸c˜ao h, ou seja, a
+
+equa¸c˜ao (3.1) apresentar h(n) = 0, chamaremos de rela¸c˜ao de recorrˆencia homogˆenea.
+
+As sequˆencias recorrentes tamb´em podem ser classiﬁcadas como linear caso possam ser
+
+escritas na forma
+
+an+k = f1(n)an+k−1 + f2(n)an+k−2 + ... + fk(n)an + h(n).
+
+(3.2)
+
+Tais sequˆencias s˜ao chamadas de sequˆencias recorrentes lineares e generalizam as progress˜oes
+
+aritm´eticas, geom´etricas e polinomiais.
+
+As recorrˆencias tamb´em podem ser classiﬁcadas de acordo com sua ordem, que ´e expressa
+
+de forma mais detalhada nesse cap´ıtulo.
+
+Em [1] deﬁne-se que resolver uma rela¸c˜ao ou equa¸c˜ao de recorrˆencia signiﬁca encontrar
+
+uma f´ormula fechada para a recorrˆencia, ou seja, uma express˜ao que forne¸ca cada termo an da
+
+sequˆencia em fun¸c˜ao apenas de n e n˜ao dos termos anteriores. Tal express˜ao ´e chamada solu¸c˜ao
+
+da recorrˆencia.
+
+Apresentamos agora distintos m´etodos de resolu¸c˜ao da recorrˆencia linear de acordo com sua
+
+classiﬁca¸c˜ao quanto `a ordem.
+
+19
+
+3.1 Recorrˆencia Linear de 1a ordem
+
+As recorrˆencias lineares s˜ao classiﬁcadas de primeira ordem quando cada termo da sequˆencia
+
+´e obtido utilizando o termo imediatamente anterior, ou seja, tomando k = 1, a equa¸c˜ao (3.2)
+
+pode ser escrita como
+
+an+1 = f (n)an + h(n),
+
+onde f e h s˜ao fun¸c˜oes que podem depender de n e f n˜ao ´e a fun¸c˜ao nula.
+
+3.1.1 Equa¸c˜oes do tipo an+1 = an + h(n)
+
+As fun¸c˜oes do tipo an+1 = an + h(n) s˜ao classiﬁcadas como recorrˆencias lineares de primeira
+
+ordem n˜ao homogˆeneas, com f (n) = 1.
+
+Note que,
+
+a2 = a1 +
+
+a3 = a2 +
+
+h(1)
+
+h(2)
+
+a4 = a3 +
+...
+an = an−1 + h(n − 1)
+
+h(3)
+...
+
+...
+
+e, fazendo o somat´orio, obt´em-se:
+
+an = a1 +
+
+n−1
+(cid:88)
+
+i=1
+
+h(i).
+
+(3.3)
+
+A express˜ao obtida acima ´e uma solu¸c˜ao gen´erica para a recorrˆencia dada. A solu¸c˜ao
+
+espec´ıﬁca desse problema ´e determinada ao estipular um valor ﬁxo de a1 que chamaremos de
+
+condi¸c˜ao de contorno
+
+Exemplo 14 Seja a recorrˆencia an+1 = an + 3, com a1 = 2. A solu¸c˜ao dessa recorrˆencia tem
+
+a forma da equa¸c˜ao (3.3), dada por
+
+an = a1 +
+
+n−1
+(cid:88)
+
+i=1
+
+h(i) ⇒ an = 2 +
+
+n−1
+(cid:88)
+
+i=1
+
+3.
+
+Ao somar n − 1 vezes o n´umero 3, ´e poss´ıvel escrever a solu¸c˜ao do problema como
+
+an = 2 + 3(n − 1) ⇒ an = 3n − 1.
+
+Um tipo de sequˆencia de grande importˆancia, estudada no ensino m´edio que pode ser ex-
+
+pressa como uma recorrˆencia linear de primeira ordem n˜ao homogˆenea, com a fun¸c˜ao f (n) = 1,
+
+´e a chamada progress˜ao aritm´etica.
+
+20
+
+Deﬁni¸c˜ao 14 Uma progress˜ao aritm´etica an, comn ∈ N, tamb´em chamada de P.A., ´e uma
+
+sequˆencia em que seus termos s˜ao deﬁnidos atrav´es da soma entre um termo imediatamente
+
+anterior ao que se deseja obter e um valor constante chamado de raz˜ao (r). As progress˜oes
+
+aritm´eticas podem ser deﬁnidas pela recorrˆencia linear de primeira ordem n˜ao homogˆenea e
+
+escritas como
+
+an+1 = an + r.
+
+(3.4)
+
+Os conceitos fundamentais de progress˜ao aritm´etica estudados no ensino m´edio podem ser
+estudados atrav´es do uso de recorrˆencias. ´E poss´ıvel expressar a f´ormula do termo geral de
+
+uma progress˜ao aritm´etica atrav´es da solu¸c˜ao da recorrˆencia que a deﬁne.
+
+Seja a1 o primeiro termo e r o valor da raz˜ao de uma P.A., tem-se que a equa¸c˜ao (3.4) ´e um
+
+caso particular da f´ormula (3.3), onde h(n) = r para todo n ∈ N.
+
+Ent˜ao, a f´ormula do termo geral de uma P.A. ´e dada por
+
+an = a1 +
+
+n−1
+(cid:88)
+
+i=1
+
+r ⇒ an = a1 + (n − 1)r.
+
+Outro importante t´opico das progress˜oes aritm´eticas ´e a soma de seus termos.
+
+Lema 1 A soma dos n primeiros n´umeros naturais ´e dada por
+
+sn =
+
+n(n + 1)
+2
+
+(3.5)
+
+Demonstra¸c˜ao: A prova ser´a feita por indu¸c˜ao em n.
+
+Para n = 1,
+
+que ´e verdadeiro.
+
+s1 =
+
+1(1 + 1)
+2
+
+⇒ s1 = 1,
+
+Agora supondo que a aﬁrma¸c˜ao ´e v´alida para a soma dos n primeiros n´umeros naturais,
+
+basta provar que a express˜ao (3.5) ´e v´alida para a soma dos n + 1 primeiros naturais.
+
+Seja sn+1 a soma dos n + 1 primeiros n´umeros naturais,
+
+sn+1 = 1 + 2 + ... + n + (n + 1).
+
+(3.6)
+
+Note que a equa¸c˜ao (3.6) pode ser escrita como sn+1 = sn + (n + 1).
+
+Utilizando a hip´otese de indu¸c˜ao, ´e poss´ıvel escrever (3.6) como apresentado a seguir.
+
+sn+1 =
+
+n(n + 1)
+2
+
++ (n + 1)
+
+21
+
+Obt´em-se,
+
+(n + 1)(n + 2)
+2
+Logo, a equa¸c˜ao (3.5) ´e v´alida para todo n ∈ N.
+
+sn+1 =
+
+.
+
+A equa¸c˜ao (3.5) ´e tamb´em conhecida como soma de Gauss.
+
+Dado uma sequˆencia de termos em progress˜ao aritm´etica, (a1, a2, ..., an, ...), e seja Sn a soma
+
+dos n primeiros termos dessa sequˆencia, ´e poss´ıvel escrever a recorrˆencia
+
+Sn+1 = Sn + an+1
+
+que representa o pr´oximo termo da sequˆencia Sn.
+
+Como an ´e uma progress˜ao aritm´etica, utilizando a express˜ao (3.4),
+
+Sn+1 = Sn + a1 + nr.
+
+Solucionando essa recorrˆencia linear de primeiro grau n˜ao homogˆenea,
+
+Sn = S(1) +
+
+n−1
+(cid:88)
+
+i=1
+
+(a1 + nr).
+
+i=1
+n−1
+(cid:88)
+
+Note que S1 = a1 e que
+
+n−1
+(cid:88)
+
+(a1 + nr) =
+
+n−1
+(cid:88)
+
+(a1) + r
+
+i=1
+
+n−1
+(cid:88)
+
+i=1
+
+(n). Ao somar n − 1 vezes a constante
+
+a1 se obt´em (n − 1)a1, e r
+
+(n) representa uma soma de Gauss de n − 1 termos multiplicada
+
+por r. Assim,
+
+i=1
+
+Sn = a1 + (n − 1)a1 + r
+
+(n − 1)n
+2
+
+⇒ Sn =
+
+[a1 + (a1 + (n − 1)r)n]
+2
+
+.
+
+Mas, a1 + (n − 1)r = an+1, obtendo
+
+Sn =
+
+(a1 + an)n
+2
+
+,
+
+que ´e a f´ormula do somat´orio de uma P.A. apresentada usualmente nos livros did´aticos de
+
+ensino m´edio.
+
+3.1.2 Equa¸c˜oes do tipo an+1 = f (n)an
+
+As fun¸c˜oes do tipo an+1 = f (n)an s˜ao classiﬁcadas como recorrˆencias lineares de primeira
+
+ordem homogˆeneas, ou seja, h(n) = 0.
+
+22
+
+Note que,
+
+e, fazendo o produt´orio, obt´em-se:
+
+a2 =
+
+a3 =
+
+f (1)a1
+
+f (2)a2
+
+f (3)a3
+...
+
+a4 =
+...
+an = f (n − 1)an−1
+
+an =
+
+n−1
+(cid:89)
+
+i=1
+
+f (i)a1.
+
+(3.7)
+
+A express˜ao (3.7) ´e uma solu¸c˜ao gen´erica para a recorrˆencia linear de 1a ordem homogˆenea
+
+dada.
+
+Exemplo 15 (Fatorial) Determine a solu¸c˜ao da recorrˆencia an+1 = (n + 1)an, onde a1 = 1.
+
+Note que o problema em quest˜ao se trata de uma recorrˆencia linear de primeira ordem
+
+homogˆenea, podendo aplicar a t´ecnica previamente apresentada.
+
+Utilizando a f´ormula (3.7) obtida anteriormente, com f (n) = n + 1, tem-se que
+
+an =
+
+n−1
+(cid:89)
+
+i=1
+
+f (i)a1 ⇒ an =
+
+n−1
+(cid:89)
+
+(i + 1)a1.
+
+i=1
+
+O produto dos n primeiros n´umeros naturais ´e representado por n!, sendo assim, a solu¸c˜ao
+
+do problema ´e dado por
+
+an = a1n!.
+
+Como a1 = 1, a recorrˆencia em quest˜ao representa a opera¸c˜ao fatorial, ou seja, an = n!.
+
+Outra sequˆencia de grande relevˆancia vista durante o ensino m´edio, que ´e expressa como
+
+uma recorrˆencia linear homogˆenea, ´e a chamada progress˜ao geom´etrica.
+
+Deﬁni¸c˜ao 15 Uma progress˜ao geom´etrica an, com n ∈ N, tamb´em chamada de P.G., ´e uma
+
+sequˆencia em que seus termos s˜ao deﬁnidas atrav´es do produto entre um termo imediatamente
+
+anterior ao que se deseja obter e um valor constante chamado de raz˜ao (q). As progress˜oes
+
+geom´etricas podem ser deﬁnidas pela recorrˆencia linear de primeira ordem homogˆenea
+
+an+1 = anq,
+
+(3.8)
+
+Os conceitos fundamentais de progress˜ao geom´etrica estudados no ensino m´edio podem ser
+
+estudados atrav´es do uso de recorrˆencias de forma an´aloga ao realizado com as progress˜oes
+
+23
+
+aritm´eticas. ´E poss´ıvel expressar a f´ormula do termo geral de uma progress˜ao geom´etrica
+
+atrav´es da solu¸c˜ao da recorrˆencia que a deﬁne.
+
+Seja a1 o primeiro termo e q o valor da raz˜ao de uma P.G., tem-se que a equa¸c˜ao (3.8) ´e
+
+um caso particular da f´ormula (3.7), onde f (n) = q para todo n ∈ N.
+
+Ent˜ao, a f´ormula do termo geral de uma P.G. ´e dada por
+
+an =
+
+n−1
+(cid:89)
+
+i=1
+
+qa1 ⇒ an = a1qn−1.
+
+De forma an´aloga `as progress˜oes aritm´eticas, tamb´em ´e poss´ıvel apresentar f´ormulas que
+
+representam a soma dos termos de uma P.G.
+
+Seja Sn a soma dos n primeiros termos de uma progress˜ao geom´etrica,
+
+Sn = a1 + a2 + ... + an.
+
+Multiplicando a express˜ao anterior pela raz˜ao q dessa progress˜ao geom´etrica,
+
+qSn = qa1 + qa2 + ... + qan ⇒ qSn = a2 + a3 + ... + an+1.
+
+Calculando qSn − Sn, obt´em-se
+
+(q − 1)Sn = an+1 − a1,
+
+e utilizando a f´ormula do termo geral de uma progress˜ao geom´etrica,
+
+Sn =
+
+a1(qn − 1)
+q − 1
+
+.
+
+Outra express˜ao estudada durante o ensino m´edio ´e a soma inﬁnita dos termos de uma P.G.,
+
+que representa o valor da soma Sn quando n ´e suﬁcientemente grande.
+
+Essa soma somente faz sentido, ou seja, tende para um n´umero real, quando |q| < 1. Quando
+
+isso ocorrer, essa soma ´e obtida de forma intuitiva e representada por
+
+S∞ =
+
+a1
+1 − q
+
+,
+
+(3.9)
+
+sendo nada mais que lim
+n→∞
+
+Sn.
+
+3.1.3 Equa¸c˜oes do tipo an+1 = f (n)an + h(n)
+
+De forma geral, as sequˆencias recorrentes s˜ao escritas como an+1 = f (n)an + h(n), com f e
+
+h n˜ao nulas. Essas s˜ao recorrˆencias lineares de primeira ordem n˜ao homogˆeneas.
+
+24
+
+Teorema 6 Dada a recorrˆencia an+1 = f (n)an + h(n), se xn ´e solu¸c˜ao da recorrˆencia ho-
+
+mogˆenea xn+1 = f (n)xn ent˜ao
+
+an = xn
+
+(cid:32)
+
+a1
+x1
+
++
+
+n−1
+(cid:88)
+
+i=1
+
+h(i)
+f (i)xi
+
+(cid:33)
+
+.
+
+Demonstra¸c˜ao:
+
+Para obter a solu¸c˜ao da recorrˆencia an+1 = f (n)an + h(n) , tome a
+
+substitui¸c˜ao an = xnyn, onde xn ´e uma solu¸c˜ao n˜ao nula da recorrˆencia homogˆenea xn+1 =
+
+f (n)xn.
+
+Com isso, a equa¸c˜ao inicial pode ser escrita como xn+1yn+1 = f (n)xnyn + h(n). Mas, xn+1 =
+
+f (n)xn, ent˜ao f (n)xnyn+1 = f (n)xnyn + h(n).
+
+Obtendo a seguinte recorrˆencia linear,
+
+yn+1 = yn +
+
+h(n)
+f (n)xn
+
+que ´e uma recorrˆencia linear de primeira ordem n˜ao homogˆenea que tem solu¸c˜ao dada pela
+
+equa¸c˜ao (3.3),
+
+n−1
+(cid:88)
+
+yn = y1 +
+
+Retornando a vari´avel de interesse, yn = an
+xn
+
+h(i)
+f (i)xi
+
+i=1
+, a solu¸c˜ao ´e dada por
+
+an = xn
+
+(cid:32)
+
+a1
+x1
+
++
+
+n−1
+(cid:88)
+
+i=1
+
+h(i)
+f (i)xi
+
+(cid:33)
+
+.
+
+Exemplo 16 Determine a solu¸c˜ao da recorrˆencia an+1 = 2an − 1, com a1 = 3.
+
+Seja xn a solu¸c˜ao da equa¸c˜ao homogˆenea xn+1 = 2xn.
+
+Ela apresenta solu¸c˜ao xn = x12n−1 e adotando x1 = 1, ´e poss´ıvel escrever a solu¸c˜ao da
+
+equa¸c˜ao homogˆenea como
+
+xn = 2n−1.
+
+Assim, tomando f (n) = 2 e h(n) = −1 para todo n ∈ N, e an = xnyn ´e poss´ıvel reduzir o
+
+problema dado na recorrˆencia yn+1 = yn − 1
+2n .
+
+Resolvendo a recorrˆencia linear de primeira ordem n˜ao homogˆenea yn+1 = yn − 2, obt´em-se
+
+Mas, como yn =
+
+an
+xn
+
+yn = y1 −
+
+(cid:19)
+
+n−1
+(cid:88)
+
+i=1
+
+(cid:18) 1
+2i
+
+⇒ yn = y1 − 1 +
+
+1
+2n−1 .
+
+, a solu¸c˜ao geral da recorrˆencia ´e dada por
+
+(cid:18)
+
+an = xn
+
+3 − 1 +
+
+(cid:19)
+
+1
+2n−1
+
+25
+
+⇒ an = 2n + 1.
+
+Muitos problemas s˜ao modelados atrav´es de recorrˆencias lineares de 1a ordem, sendo desta-
+
+cados os problemas conhecidos como Torre de Hanoi e Pizza de Steiner.
+
+A Torre de Hanoi ´e um “quebra-cabe¸cas”que consiste em uma base contendo trˆes estacas,
+
+no qual s˜ao dispostos discos uns sobre os outros numa das estacas em ordem decrescente de
+
+diˆametro.
+
+Figura 3.1: Representa¸c˜ao do “quebra-cabe¸cas”torre de Hanoi..
+
+Este jogo foi inventado pelo matem´atico francˆes ´Edouard Lucas inspirado numa lenda Hindu,
+
+em 1883. Detalhes a respeito da hist´oria do jogo e mais informa¸c˜oes s˜ao encontradas em [16].
+
+As regras consistem em mover um disco de cada vez e nunca um disco maior deveria ﬁcar
+
+por cima de um disco menor. O objetivo ´e transferir todos os discos de uma estaca a outra.
+
+Uma pergunta advinda do jogo Torre de Hanoi ´e determinar o menor n´umero de movimentos
+
+para resolver o “quebra-cabe¸ca”.
+
+Exemplo 17 (Torre de Hanoi) Para exempliﬁcar o problema em quest˜ao, vamos determinar
+
+o menor n´umero de movimentos para resolver o problema da Torre de Hanoi quando se tem 5
+
+discos.
+
+Primeiramente ´e necess´ario modelar esse problema, que pode ser feito atrav´es do uso de
+
+recorrˆencia.
+
+Seja an o menor n´umero de movimentos para transferir n discos de um pilar para outro, sa-
+
+tisfazendo as condi¸c˜oes do problema. Agora considere um total de n + 1 discos. Para solucionar
+
+esse problema ´e necess´ario mover n discos para determinado pilar, levando an movimentos, em
+
+seguida colocar o maior disco no pilar novo e realizar novamente an movimentos para retornar
+
+os n discos movidos inicialmente para cima do maior disco.
+
+26
+
+Logo, o problema ´e modelado pela recorrˆencia
+
+an+1 = 2an + 1,
+
+(3.10)
+
+que se trata de uma recorrˆencia linear de primeira ordem n˜ao homogˆenea. Perceba tamb´em
+
+que a1 = 1, pois havendo somente um disco ´e necess´ario apenas um movimento para resolver o
+
+“quebra-cabe¸ca”.
+
+Seja xn a solu¸c˜ao da recorrˆencia homogˆenea xn+1 = 2xn, utilizando a f´ormula (3.7), obt´em-
+
+se xn = 2n−1x1. Em particular, tomando x1 = 1,,
+
+xn = 2n−1.
+
+Realizando a transforma¸c˜ao an = xnyn na equa¸c˜ao (3.10),
+xnyn
+xn+1
+
+xn+1yn+1 = 2xnyn + 1 ⇒ yn+1 = 2
+
++
+
+1
+xn+1
+
+,
+
+mas xn = 2n−1, logo
+
+yn+1 = yn + 2−n.
+
+Utilizando a equa¸c˜ao (3.3) e o somat´orio de uma progress˜ao geom´etrica,
+
+yn = y1 + 1 −
+
+1
+2n−1 .
+
+Como an = xnyn, ent˜ao y1 = 1 e retornando a vari´avel de interesse,
+
+an = 2n − 1.
+
+Com isso, o problema seria determinado utilizando n = 5, ou seja, a5 = 31 movimentos.
+
+Vejamos outro problema pr´atico. O geˆometra alem˜ao Jacob Steiner (1796-1863) propˆos e
+
+resolveu, em 1826, o problema conhecido como Pizza de Steiner que consistia em determinar o
+
+maior n´umero de partes em que se pode dividir o plano com n linhas.
+
+Pensando no plano como se fosse uma grande pizza, temos uma explica¸c˜ao para o nome do
+
+problema. ´E poss´ıvel visualizar alguns casos na ﬁgura 3.2.
+
+Figura 3.2: N´umero de regi˜oes que o plano ´e dividido com I-uma, II-duas e III-trˆes retas.
+
+27
+
+Exemplo 18 (Pizza de Steiner) Dando sequˆencia no problema solucionado por Steiner, va-
+
+mos determinar qual ´e o maior n´umero de partes em que se pode dividir um plano com 10
+
+linhas.
+
+Note que a representa¸c˜ao geom´etrica do problema com um grande n´umero de linhas se torna
+
+muito trabalhoso, sendo mais vi´avel solucionar o problema algebricamente.
+
+Para isso, o problema ´e primeiramente modelado atrav´es de uma recorrˆencia. Analisando
+
+a ﬁgura 3.2, percebe-se que cada nova reta adicionada deve cruzar todas as outras para que o
+
+plano se divida no maior n´umero de regi˜oes.
+
+Seja pn o maior n´umero de regi˜oes em que o plano ´e dividido com n retas. Ao adicionar
+
+uma reta que cruza as demais, n + 1 regi˜oes s˜ao geradas al´em das pn regi˜oes anteriores, ou
+
+seja,
+
+pn+1 = pn + n + 1.
+
+Utilizando a equa¸c˜ao (3.3), a solu¸c˜ao dessa recorrˆencia ´e dada por,
+
+pn = p1 +
+
+n−1
+(cid:88)
+
+(n + 1) ⇒ pn = 2 + n(n − 1)/2 + (n − 1) ⇒ pn =
+
+i=1
+
+(n − 1)(n + 2)
+2
+
++ 2.
+
+Assim, conclui-se que 10 linhas podem separar o plano em no m´aximo p10 = 56 regi˜oes.
+
+3.2 Recorrˆencia Linear de 2a ordem
+
+As recorrˆencias lineares s˜ao classiﬁcadas de segunda ordem quando cada termo da sequˆencia
+
+´e obtido utilizando os dois termos imediatamente anteriores. Ou seja, tomando k = 2, a equa¸c˜ao
+
+(3.2) pode ser escrita como
+
+an+2 = f (n)an+1 + g(n)an + h(n),
+
+onde f , g e h s˜ao fun¸c˜oes que podem depender de n ∈ N e g n˜ao ´e a fun¸c˜ao nula.
+
+Quando as fun¸c˜oes f e g s˜ao constantes e h(n) = 0, para todo n ∈ N, ´e poss´ıvel estabe-
+
+lecer uma rela¸c˜ao entre a recorrˆencia e uma equa¸c˜ao de segundo grau, chamada de equa¸c˜ao
+
+caracter´ıstica.
+
+Deﬁni¸c˜ao 16 (Equa¸c˜ao Caracter´ıstica) Seja uma recorrˆencia linear de 2a ordem do tipo
+
+xn+2 + pxn+1 + qxn = 0. A equa¸c˜ao de segundo grau x2 + px + q = 0 ´e chamada de equa¸c˜ao
+
+caracter´ıstica associada a recorrˆencia linear xn+2 + pxn+1 + qxn = 0.
+
+28
+
+A solu¸c˜ao de uma recorrˆencia linear de 2a ordem com coeﬁcientes constantes ´e dada de
+
+acordo com o discriminante (∆), e consequentemente, as ra´ızes de sua equa¸c˜ao caracter´ıstica
+
+associada.
+
+Teorema 7 Se a equa¸c˜ao caracter´ıstica apresenta duas ra´ızes distintas, r1 e r2, a solu¸c˜ao geral
+
+da recorrˆencia linear de 2a ordem associada ´e dada por
+
+xn = C1rn
+
+1 + C2rn
+2 ,
+
+(3.11)
+
+onde C1 e C2 s˜ao constantes.
+
+Demonstra¸c˜ao:
+
+Primeiramente, vamos mostrar que a equa¸c˜ao (3.11) ´e de fato solu¸c˜ao
+
+da recorrˆencia xn+2 + pxn+1 + qxn, quando ∆ = p2 − 4q > 0.
+
+Da equa¸c˜ao (3.11), tem-se
+
+xn+1 = C1rn+1
+
+1 + C2rn+1
+
+2
+
+e
+
+xn+2 = C1rn+2
+
+1 + C2rn+2
+
+2
+
+,
+
+onde r1 e r2 s˜ao ra´ızes distintas da equa¸c˜ao caracter´ıstica associada a recorrˆencia.
+
+Substituindo os valores de xn, xn+1 e xn+2 na express˜ao xn+2 + pxn+1 + qxn, obt´em-se:
+xn+2 + pxn+1 + qxn = C1rn+2
+1 + C2rn+2
+2 + pC1rn+1
+1 + pC2rn+1
+2 (r2
+1 + pr1 + q) + C2rn
+1 (r2
+2 + pr2 + q)
+
+2 + qC1rn
+
+1 + qC2rn
+2
+
+xn+2 + pxn+1 + qxn = C1rn
+1 + pr1 + q = r2
+
+Mas, r2
+
+2 + pr2 + q = 0, pois r1 e r2 s˜ao ra´ızes da equa¸c˜ao x2 + px + q.
+
+Logo, xn+2 + pxn+1 + qxn = 0, mostrando que xn ´e solu¸c˜ao.
+
+Agora, vamos mostrar que toda solu¸c˜ao de uma recorrˆencia linear homogˆenea de segunda
+
+ordem ´e escrita da forma da equa¸c˜ao (3.11).
+
+Seja yn uma solu¸c˜ao qualquer de xn+2 +pxn+1 +qxn = 0, ´e poss´ıvel determinar as constantes
+
+C1 e C2 que satisfazem o sistema (3.12),
+
+
+
+
+
+
+C1r1 + C2r2 = y1
+
+C1r2
+
+1 + C2r2
+
+2 = y2
+
+.
+
+(3.12)
+
+Solucionando o sistema, obt´em-se
+
+C1 =
+
+r2
+2y1 − r2y2
+r1r2(r2 − r1)
+
+e
+
+C2 =
+
+r1y2 − r2
+1y1
+r1r2(r2 − r1)
+
+,
+
+com r1 e r2 n˜ao nulos e r1 (cid:54)= r2.
+1 + C2rn
+
+Seja zn = yn − (C1rn
+
+2 ). Basta mostrar que zn = 0 para todo n ∈ N.
+
+29
+
+Note que zn tamb´em ´e solu¸c˜ao da rela¸c˜ao de recorrˆencia em quest˜ao, pois
+
+zn+2 + pzn+1 + qzn = (yn+2 + pyn+1 + qyn) − C1rn
+
+1 (r2
+
+1 + pr1 + q) − C2rn
+
+2 (r2
+
+2 + pr2 + q),
+
+e do fato de que yn ´e solu¸c˜ao da recorrˆencia e r1 e r2 s˜ao ra´ızes da equa¸c˜ao x2 + px + q = 0.
+
+Do sistema (3.12), C1r1 + C2r2 = y1 e C1r2
+
+1 + C2r2
+
+2 = y2, tem-se que z1 = z2 = 0. E como a
+
+recorrˆencia zn+2 + pzn+1 + qzn = 0, todos os termos obtidos dessa sequˆencia s˜ao zero.
+
+Logo, zn = 0 para todo n ∈ N, o que mostra que yn = C1r2
+
+1 + C2r2
+2.
+
+Exemplo 19 A recorrˆencia xn+2 − 2xn+1 + 3xn = 0 tem como equa¸c˜ao caracter´ıstica associada
+
+a equa¸c˜ao x2 − 2x − 3 = 0, que admite r1 = −1 e r2 = 3 como solu¸c˜ao.
+
+Logo, a solu¸c˜ao geral da recorrˆencia ´e dada por xn = C1(−1)n + C23n.
+
+O Exemplo 17 apresenta como solu¸c˜ao uma fam´ılia de sequˆencias que satisfazem a re-
+
+corrˆencia. Para determinar uma sequˆencia em espec´ıﬁco ´e necess´ario determinar as constantes
+
+C1 e C2 atrav´es das condi¸c˜oes de contorno, ou seja, de informa¸c˜oes adicionais a respeito da
+
+sequˆencia que se procura.
+
+Exemplo 20 Determine a solu¸c˜ao da recorrˆencia do Exemplo 17, sabendo que x1 = 2 e x2 = 5.
+
+Como a solu¸c˜ao dessa recorrˆencia tem a forma xn = C1(−1)n + C23n, basta resolver o
+
+sistema linear (3.13) para determinar as constantes C1 e C2.
+
+
+
+
+
+
+−C1 + 3C2 = 2
+
+C1 + 9C2 = 5
+
+Resolvendo o sistema,
+
+Logo, a solu¸c˜ao ´e dada por xn =
+
+C1 =
+
+−1
+4
+(−1)n+1
+4
+
+e
+
+C2 =
+
++
+
+7
+12
+
+· 3n.
+
+(3.13)
+
+.
+
+7
+12
+
+.
+
+Teorema 8 Se a equa¸c˜ao caracter´ıstica apresenta discriminante nulo, ∆ = 0, a solu¸c˜ao geral
+
+da recorrˆencia linear de 2a ordem associada ´e dada por
+
+xn = C1rn + C2nrn,
+
+(3.14)
+
+onde C1 e C2 s˜ao constantes e r ´e raiz da equa¸c˜ao.
+
+30
+
+Demonstra¸c˜ao: De forma an´aloga a demonstra¸c˜ao do Teorema 7, vamos provar que a
+
+equa¸c˜ao (3.14) ´e solu¸c˜ao da recorrˆencia xn+2 + pxn+1 + qxn, quando ∆ = 0.
+
+Da equa¸c˜ao (3.14), tem-se
+
+xn+1 = C1rn+1 + C2(n + 1)rn+1
+
+e
+
+xn+2 = C1rn+2 + C2(n + 2)rn+2,
+
+onde r ´e a raiz de multiplicidade dois da equa¸c˜ao caracter´ıstica associada a recorrˆencia.
+
+Substituindo os valores de xn, xn+1 e xn+2 na express˜ao xn+2 + pxn+1 + qxn, obt´em-se:
+
+xn+2 + pxn+1 + qxn = C1rn+2 + C2(n + 2)rn+2 + pC1rn+1 + pC2(n + 1)rn+1 + qC1rn + qC2nrn
+
+xn+2 + pxn+1 + qxn = C1rn(r2 + pr + q) + C2rn((n + 2)r2 + p(n + 1)r + qn)
+
+xn+2 + pxn+1 + qxn = C1rn(r2 + pr + q) + C2rn(n(r2 + pr + q) + 2r2 + pr)
+
+Como ∆ = 0, ent˜ao r =
+
+−p
+2
+
+. Logo, a express˜ao 2r2 + pr = 0. E tamb´em r2 + pr + q = 0,
+
+pois r ´e raiz da equa¸c˜ao x2 + px + q.
+
+Assim, xn+2 + pxn+1 + qxn = 0, mostrando que xn satisfaz a equa¸c˜ao.
+
+Agora, basta provar que toda solu¸c˜ao dessa recorrˆencia ´e da forma da equa¸c˜ao (3.14).
+Seja yn uma solu¸c˜ao qualquer de xn+2 +pxn+1 +qxn = 0. ´E poss´ıvel determinar as constantes
+
+C1 e C2 que satisfazem o sistema (3.15),
+
+
+
+
+C1r + C2r = y1
+
+
+
+C1r2 + C2r2 = y2
+
+.
+
+(3.15)
+
+Solucionando o sistema, obt´em-se
+
+C1 =
+
+2y1r − y2
+r2
+
+e
+
+C2 =
+
+y2 − ry1
+r2
+
+,
+
+com r (cid:54)= 0.
+
+Seja zn = yn − (C1rn + C2nrn). Basta mostrar que zn = 0 para todo n ∈ N.
+
+Note que zn tamb´em ´e solu¸c˜ao da rela¸c˜ao de recorrˆencia em quest˜ao, pois
+
+zn+2 +pzn+1 +qzn = (yn+2 +pyn+1 +qzn)−C1rn(r2 +pr +q)−C2rn(r2 +pr +q)−C2rn+1(2r +p),
+
+e do fato de que yn ´e solu¸c˜ao da recorrˆencia, r ´e solu¸c˜ao da equa¸c˜ao x2 + px + q = 0 e 2r + p = 0.
+
+Do sistema (3.15), C1r + C2r = y1 e C1r2 + C2r2 = y2, tem-se que z1 = z2 = 0. E como a
+
+recorrˆencia zn+2 + pzn+1 + qzn = 0, todos os termos obtidos dessa sequˆencia s˜ao zero.
+
+Logo, zn = 0 para todo n ∈ N, o que mostra que yn = C1rn + C2nrn.
+
+Exemplo 21 Determine a solu¸c˜ao da recorrˆencia xn+2 − 4xn+1 + 4 = 0, quando x1 = 0 e
+
+x2 = 8.
+
+31
+
+A equa¸c˜ao caracter´ıstica associada a recorrˆencia dada ´e x2 − 4x + 4 = 0 que tem ∆ = 0 e,
+
+consequentemente, x = 2 como ´unica raiz dessa equa¸c˜ao.
+
+Logo, a solu¸c˜ao geral da recorrˆencia ´e dada por xn = C12n + C2n2n.
+
+E resolvendo o sistema,
+
+obt´em-se como solu¸c˜ao
+
+
+
+
+2C1 + 2C2 = 0
+
+,
+
+
+
+4C1 + 8C2 = 8
+
+C1 = −2
+
+e
+
+C2 = 2.
+
+Logo, a solu¸c˜ao ´e dada por xn = −2 · 2n + 2n · 2n, ou ainda,
+
+xn = (n − 1)2n+1.
+
+Quando o discriminante for menor que zero, o problema pode ser resolvido da mesma forma
+
+que o caso (a), pois as duas solu¸c˜oes s˜ao distintas, j´a que ∆ < 0 implica em duas ra´ızes
+
+complexas conjugadas, r1 = a + bi e r2 = a − bi, com b (cid:54)= 0.
+
+Para evitar trabalhar com n´umeros complexos, a solu¸c˜ao de uma recorrˆencia linear de 2a
+
+ordem pode ser escrita utilizando a f´ormula de Moivre. Seja r = a + bi ∈ C, com a, b ∈ R,
+
+rn = ρn(cos(nθ) + isen(nθ)),
+
+√
+
+a2 + b2 e θ ´e o ˆangulo entre [0, 2π) que satisfaz simultaneamente as equa¸c˜oes
+
+e sen(θ) =
+
+b
+ρ
+
+.
+
+onde ρ =
+a
+ρ
+
+cos(θ) =
+
+Com isso a solu¸c˜ao obtida pela equa¸c˜ao (3.11) ´e escrita como
+
+xn = ρn(C1cos(nθ) + C2sen(nθ)),
+
+(3.16)
+
+onde C1 e C2 s˜ao constantes.
+
+Exemplo 22 Determine a solu¸c˜ao da recorrˆencia xn+2 − 2
+
+A equa¸c˜ao caracter´ıstica da recorrˆencia ´e dada por x2 − 2
+
+minante menor que zero e ra´ızes r1 =
+
+3 + i e r2 =
+
+3 − i.
+
+√
+
+√
+
+√
+
+3xn+1 + 4xn, onde x1 = x2 = 1.
+√
+
+3x + 4 = 0 que apresenta discri-
+
+Utilizando a forma polar dos n´umeros complexos, ρ = 2 e θ =
+
+recorrˆencia ´e dado pela f´ormula (3.16).
+
+π
+6
+
+, a solu¸c˜ao geral da
+
+xn = 2n (cid:16)
+
+C1cos
+
+(cid:17)
+
+(cid:16)
+
+n
+
+π
+6
+
++ C2sen
+
+(cid:17)(cid:17)
+
+.
+
+(cid:16)
+
+n
+
+π
+6
+
+32
+
+Das condi¸c˜oes de contorno ´e poss´ıvel construir o sistema linear,
+
+
+
+
+
+
+2C1cos (cid:0) π
+4C1cos (cid:0) π
+
+6
+
+3
+
+(cid:1) + 2C2sen (cid:0) π
+(cid:1) + 4C2sen (cid:0) π
+
+6
+
+3
+
+equivalente a
+
+
+
+
+
+
+√
+
+3C1 + C2 = 1
+√
+
+2C1 + 2
+
+3C2 = 1
+
+(cid:1) = 1
+(cid:1) = 1
+
+,
+
+.
+
+Resolvendo o sistema, obt´em-se
+
+√
+2
+
+3 − 1
+4
+
+C1 =
+
+e
+
+C2 =
+
+√
+
+3 − 2
+4
+
+.
+
+Logo, a solu¸c˜ao da recorrˆencia ´e dada por
+
+xn = 2n−2 (cid:16)
+
+(2
+
+√
+
+3 − 1)cos
+
+(cid:17)
+
+(cid:16)
+
+n
+
+π
+6
+
+√
+
++ (
+
+3 − 2)sen
+
+(cid:17)(cid:17)
+
+.
+
+(cid:16)
+
+n
+
+π
+6
+
+Agora considerando as equa¸c˜oes de segunda ordem de coeﬁcientes constantes n˜ao homogˆenea,
+
+ou seja, h(n) (cid:54)= 0, vamos encontrar as solu¸c˜oes do problema
+
+xn+2 + pxn+1 + qxn = h(n),
+
+(3.17)
+
+em termos da solu¸c˜ao das equa¸c˜oes de 2a ordem com coeﬁcientes constantes homogˆenea. Segue
+
+o resultado.
+
+Teorema 9 Se an ´e uma solu¸c˜ao da equa¸c˜ao
+
+xn+2 + pxn+1 + qxn = h(n),
+
+ent˜ao a substitui¸c˜ao xn = an + yn transforma a equa¸c˜ao em
+
+yn+2 + pyn+1 + qyn = 0.
+
+(3.18)
+
+Demonstra¸c˜ao: Realizando a substitui¸c˜ao xn = an + yn na equa¸c˜ao (3.17), obt´em-se
+
+(an+2 + pan+1 + qan) + (yn+2 + pyn+1 + qyn) = h(n),
+
+mas an+2 + pan+1 + qan = h(n), pois an ´e solu¸c˜ao da equa¸c˜ao (3.17).
+
+Logo, simpliﬁcando a equa¸c˜ao, yn+2 + pyn+1 + qyn = 0.
+
+Note que a equa¸c˜ao (3.18) pode ser resolvida utilizando os Teoremas 5 e 6 apresentados neste
+
+cap´ıtulo. Sendo assim, a solu¸c˜ao de problemas como a equa¸c˜ao (3.17) ´e dada por duas parcelas,
+
+33
+
+sendo uma a solu¸c˜ao da rela¸c˜ao de recorrˆencia homogˆenea e outra uma solu¸c˜ao qualquer da
+
+n˜ao homogˆenea. Essa solu¸c˜ao, para alguns casos, pode ser obtida atrav´es de tentativas.
+
+Os valores utilizados na obten¸c˜ao da solu¸c˜ao particular para os casos em que a fun¸c˜ao h ´e
+
+um polinˆomio, uma fun¸c˜ao exponencial ou uma combina¸c˜ao dessas duas ´e apresentado a seguir.
+
+Caso a fun¸c˜ao h seja um polinˆomio, ou seja, h(n) = aknk + ak−1nk−1 + ... + a1n + a0, ´e
+
+esperado que a solu¸c˜ao particular seja dada por um polinˆomio de grau k,
+
+tn = Cknk + Ck−1nk−1 + ... + C1n + C0,
+
+onde Ci ´e um coeﬁciente a determinar.
+
+Quando a fun¸c˜ao h for uma fun¸c˜ao exponencial, h(n) = a · bn, e h(n) n˜ao ´e uma solu¸c˜ao da
+
+recorrˆencia homogˆenea, a solu¸c˜ao particular da recorrˆencia n˜ao homogˆenea ´e dada por,
+
+tn = Cbn,
+
+onde C ´e uma constante a determinar.
+
+Se h for um produto ou adi¸c˜ao de uma fun¸c˜ao polinomial com uma fun¸c˜ao exponencial,
+
+a solu¸c˜ao particular ´e dada por, respectivamente, um produto ou uma adi¸c˜ao de solu¸c˜oes
+
+particulares para polinˆomios e exponenciais.
+
+Por ﬁm, se h ´e solu¸c˜ao da recorrˆencia homogˆenea, a solu¸c˜ao particular ´e dada por n · h(n).
+
+Caso a fun¸c˜ao n·h(n) tamb´em seja solu¸c˜ao da recorrˆencia homogˆenea, ent˜ao a solu¸c˜ao particular
+
+ser´a dada por n2 · h(n).
+
+Exemplo 23 Dada a sequˆencia descrita pela recorrˆencia xn+2 − xn+1 − 12xn = 2n + n − 1,
+
+determine a solu¸c˜ao geral dessa recorrˆencia.
+
+Solucionando a recorrˆencia homogˆenea, yn+2 − yn+1 − 12yn = 0, obt´em-se
+
+yn = C1(4)n + C2(−3)n.
+
+Note que h(n) = 2n + n − 1 ´e a adi¸c˜ao de uma fun¸c˜ao exponencial (diferente da solu¸c˜ao)
+
+com um polinˆomio, sendo assim, uma solu¸c˜ao particular ´e dada por xp = C32n + C4n + C5.
+
+Para determinar as constantes C3, C4 e C5, basta substituir xp na recorrˆencia
+
+xn+2 − xn+1 − 12xn = 2n + n − 1.
+
+Obtendo,
+
+C32n+2 + C4(n + 2) + C5 − (C32n+1 + C4(n + 1) + C5) − 12(C32n + C4n + C5) = 2n + n − 1.
+
+34
+
+Mas, como xp ´e solu¸c˜ao da recorrˆencia, as seguintes rela¸c˜oes devem ser satisfeitas.
+
+
+
+
+
+−10C32n = 2n
+
+−12C4n = n
+
+.
+
+C4 − 12C5 = −1
+
+Logo,
+
+C3 =
+
+−1
+10
+
+,
+
+C4 =
+
+−1
+12
+
+e
+
+C5 =
+
+11
+144
+
+.
+
+Como a solu¸c˜ao geral de xn ´e dada pela soma da solu¸c˜ao particular com a solu¸c˜ao ho-
+
+mogˆenea, tem-se
+
+xn = C1(4)n + C2(−3)n −
+
+2n
+10
+
+−
+
+n
+12
+
++
+
+11
+144
+
+.
+
+Um dos problemas mais conhecidos que pode ser modelado por uma recorrˆencia linear de
+
+2a ordem ´e o problema de Fibonacci.
+
+Exemplo 24 (Sequˆencia de Fibonacci) Um homem pˆos um par de coelhos num lugar cer-
+
+cado por todos os lados por um muro. Quantos pares de coelhos podem ser gerados a partir
+
+desse par em um ano se, supostamente, todos os meses cada par d´a `a luz um novo par, que ´e
+
+f´ertil a partir do segundo mˆes?
+
+´E poss´ıvel ilustrar o problema de Fibonacci atrav´es da ﬁgura 3.3 [13].
+
+Figura 3.3: Representa¸c˜ao dos pares de coelhos ao longo de 4 meses.
+
+Note que o problema pode ser modelado por uma recorrˆencia como apresentado a seguir.
+
+35
+
+Seja Fn+1 o n´umero de pares de coelho ao se passar n + 1 meses. No mˆes seguinte, os
+
+coelhos existentes no n − ´esimo mˆes ir˜ao reproduzir, gerando Fn novos pares de coelho al´em
+
+dos j´a existentes. Com isso ´e poss´ıvel escrever a recorrˆencia,
+
+Fn+2 = Fn+1 + Fn.
+
+(3.19)
+
+Perceba que essa sequˆencia se inicia em n = 0, j´a que antes de se passar 1 mˆes j´a existia
+
+um par de coelhos. Nesse caso, as condi¸c˜oes de contorno s˜ao dadas por F0 = F1 = 1.
+
+O polinˆomio caracter´ıstico da equa¸c˜ao (3.19) ´e dado por
+
+x2 − x − 1 = 0,
+√
+
+√
+
+que apresenta como ra´ızes x1 =
+
+1 −
+2
+Logo, a solu¸c˜ao geral de (3.19) ´e dada por
+
+1 +
+2
+
+5
+
+e
+
+5
+
+.
+
+Fn = C1
+
+(cid:33)n
+
+5
+
+(cid:32)
+
+√
+
+1 +
+2
+
+(cid:32)
+
+√
+5
+
+1 −
+2
+
+(cid:33)n
+
+.
+
++ C2
+
+Utilizando as condi¸c˜oes de contorno,
+
+
+
+
+
+
+C1
+(cid:16) 1+
+(cid:17)
+√
+2
+
+5
+
++
+
+C1 +
+
+C2
+(cid:17)
+(cid:16) 1−
+√
+2
+
+5
+
+= 1
+
+C2 = 1
+
+.
+
+(3.20)
+
+Solucionando o sistema linear (3.20) a solu¸c˜ao particular da recorrˆencia (3.19) ´e dada por,
+
+Fn =
+
+(cid:34)(cid:32)
+
+√
+5
+
+1 +
+2
+
+1
+√
+5
+
+(cid:33)n
+
+(cid:32)
+
+−
+
+√
+
+1 +
+2
+
+(cid:33)n(cid:35)
+
+5
+
+.
+
+Para o problema em quest˜ao, ap´os um ano existiria um total de F12 = 144 pares de coelho.
+
+De forma an´aloga `as recorrˆencias lineares com coeﬁcientes constantes de ordem dois, pode-se
+
+estender os conceitos de equa¸c˜ao caracter´ıstica e o m´etodo de determinar suas solu¸c˜oes atrav´es
+
+de uma combina¸c˜ao de fun¸c˜oes exponenciais para recorrˆencias de ordem superior.
+
+3.3 Recorrˆencia Linear com coeﬁcientes constantes
+
+Nessa se¸c˜ao ´e apresentado a solu¸c˜ao de recorrˆencias lineares com coeﬁcientes constantes de
+
+qualquer ordem utilizando uma abordagem an´aloga ao m´etodo abordado em recorrˆencias de
+
+ordem dois com coeﬁcientes constantes.
+
+36
+
+Essas recorrˆencias s˜ao um caso particular da equa¸c˜ao (3.2), onde as fun¸c˜oes f1, f2, ..., fk s˜ao
+
+todas constantes, apresentando a forma da equa¸c˜ao (3.21).
+
+an+k = c1an+k−1 + c2an+k−2 + ... + ckan + h(n).
+
+(3.21)
+
+A equa¸c˜ao (3.21) ´e classiﬁcada como uma recorrˆencia linear com coeﬁcientes constantes de
+
+ordem k. Podendo ser n˜ao homogˆenea se h(n) (cid:54)= 0 ou homogˆenea se h for a fun¸c˜ao nula.
+
+Para determinar a solu¸c˜ao da recorrˆencia (3.21), no caso em que seja homogˆenea, associa-se
+
+uma equa¸c˜ao de k − ´esimo grau como realizado com as recorrˆencias de ordem dois, tamb´em
+
+chamada equa¸c˜ao caracter´ıstica.
+
+A equa¸c˜ao caracter´ıstica associada a recorrˆencia
+
+an+k + q1an+k−1 + q2an+k−2 + ... + qkan = 0
+
+´e dada por
+
+xk + q1xk−1 + ... + qk−1x + qk = 0,
+
+onde q1, q2, ..., qk s˜ao n´umeros reais.
+
+Teorema 10 Seja r1, ..., rt, com respectivas multiplicidades m1, ..., mt, as ra´ızes da equa¸c˜ao
+
+caracter´ıstica associada a recorrˆencia
+
+an+k + q1an+k−1 + q2an+k−2 + ... + qkan = 0,
+
+ent˜ao a solu¸c˜ao dessa recorrˆencia ´e dada por
+
+an = C1rn
+
+1 + ... + Cm1nm1−1rn
+
+1 + ... + Ck−mt+1rn
+
+t + ... + Cknmt−1rn
+t ,
+
+onde C1, ..., Ck s˜ao coeﬁcientes a determinar e m1 + ... + mt = k
+
+Exemplo 25 Considere a recorrˆencia de ordem trˆes an+3 − 7an+2 + 16an+1 − 12an = 0. A
+
+equa¸c˜ao caracter´ıstica associada a essa recorrˆencia ´e dada por x3 − 7x2 + 16x − 12 = 0, que
+
+apresenta como solu¸c˜ao r1 = 2, com multiplicidade dois, e uma raiz simples r2 = 3.
+
+Assim, a solu¸c˜ao geral dessa recorrˆencia ´e dada por
+
+an = C12n + C2n2n + C33n,
+
+onde C1, C2 e C3 s˜ao coeﬁcientes a determinar.
+
+37
+
+Essas recorrˆencias s˜ao utilizadas na aplica¸c˜ao de diversos problemas, como na generaliza˜ao
+
+de sequˆencias (P.A., P.G., polinˆomios, entre outras). O estudo de s´eries e os chamados n´umeros
+
+poligonais s˜ao alguns dos casos vistos na sequˆencia.
+
+Como visto anteriormente, uma progress˜ao geom´etrica pode ser descrita por uma recorrˆencia
+
+linear de primeira ordem homogˆenea (3.8).
+
+As progress˜oes aritm´eticas podem ser escritas como recorrˆencias lineares com coeﬁcientes
+
+constantes. Como a raz˜ao de uma P.A. ´e dada pela subtra¸c˜ao de qualquer termo da sequˆencia
+
+por seu antecessor, ent˜ao r = an+1 − an, ou ainda, r = an+2 − an+1, obtendo a rela¸c˜ao an+2 −
+
+an+1 = an+1 − an.
+
+Logo, uma P.A. tamb´em pode ser descrita pela recorrˆencia linear homogˆenea de segunda
+
+ordem
+
+an+2 − 2an+1 + an = 0.
+
+Os polinˆomios tamb´em s˜ao representados por recorrˆencias de coeﬁcientes constantes.
+
+Teorema 11 A recorrˆencia de ordem k + 1,
+
+an+k+1 =
+
+k
+(cid:88)
+
+i=0
+
+(−1)i
+
+(cid:18)k + 1
+i + 1
+
+(cid:19)
+
+an+k−i,
+
+(3.22)
+
+generaliza os polinˆomios de grau k.
+
+Demonstra¸c˜ao: A recorrˆencia (3.22) apresenta como equa¸c˜ao caracter´ıstica,
+
+xk+1 −
+
+k
+(cid:88)
+
+i=0
+
+(−1)i
+
+(cid:19)
+
+(cid:18)k + 1
+i + 1
+
+xk−i = 0.
+
+Note que o termo a esquerda da igualdade pode ser escrita como
+
+´e o desenvolvimento atrav´es do binˆomio de Newton de (x − 1)k+1.
+
+k+1
+(cid:88)
+
+i=0
+
+(−1)i
+
+(cid:18)k + 1
+i
+
+(cid:19)
+
+xk−i, que
+
+Logo, a solu¸c˜ao da equa¸c˜ao ´e dada por x = 1, com multiplicidade k + 1, obtendo como
+
+solu¸c˜ao da recorrˆencia,
+
+ou ainda,
+
+an = C0(1)n + C1n(1)n + ... + Cknk(1)n,
+
+an = C0(1)n + C1n + ... + Cknk,
+
+onde C0, C1, ..., Ck s˜ao coeﬁcientes reais e an ´e um polinˆomio de grau k.
+
+38
+
+As sequˆencias do tipo (an+b)qn, muitas vezes chamadas de progress˜oes aritm´etica-geom´etrica,
+
+tamb´em podem ser representadas por esse tipo de recorrˆencia.
+
+Note que,
+
+xn+1 − qxn = (a(n + 1) + b)qn − q(an + b)qn ⇒ xn+1 − qxn = aqn+1,
+
+que ´e uma progress˜ao geom´etrica de raz˜ao q.
+
+Assim, xn+2 − qxn+1 = q(xn+1 − qxn), obtendo a recorrˆencia linear homogˆenea de segunda
+
+ordem,
+
+xn+2 − 2qxn+1 + q2xn = 0.
+
+Para mostrar a aplicabilidade desse tipo de recorrˆencia, vamos introduzir o conceito do
+
+operador diferen¸ca (∆) e com isso, apresentar as chamadas progress˜oes aritm´etica de ordem k.
+
+Deﬁni¸c˜ao 17 Dada uma sequˆencia an, o operador diferen¸ca de primeira ordem dessa sequˆencia
+
+´e deﬁnida como
+
+∆an = an+1 − an.
+
+Da mesma forma, ´e poss´ıvel estender a Deﬁni¸c˜ao 16, introduzindo o operador diferen¸ca de
+
+ordem k.
+
+Deﬁni¸c˜ao 18 O operador diferen¸ca de ordem k ´e dado por
+
+∆kan = ∆k−1an+1 − ∆k−1an,
+
+onde ∆an = an+1 − an.
+
+Note que uma progress˜ao aritm´etica, dada por uma recorrˆencia linear com coeﬁcientes
+
+constantes de 2a ordem apresenta ∆an = r, em que r ´e uma constante.
+
+´E poss´ıvel estender esse conceito para a chamada progress˜ao aritm´etica de ordem k.
+
+Deﬁni¸c˜ao 19 Uma progress˜ao aritm´etica de ordem k ´e uma sequˆencia an que satisfaz a rela¸c˜ao
+
+∆kan = r, onde r ´e uma constante.
+
+O seguinte Teorema permite estudar as progress˜oes aritm´eticas de ordem k atrav´es de
+
+polinˆomios.
+
+Teorema 12 Toda progress˜ao aritm´etica de ordem k pode ser representada por um polinˆomio
+
+de grau k.
+
+39
+
+Demonstra¸c˜ao: Dada uma progress˜ao aritm´etica de ordem k, tem-se que
+
+∆kan = r,
+
+e desenvolvendo o operador atrav´es da deﬁni¸c˜ao at´e que se obtenha apenas termos da sequˆencia,
+
+obt´em-se
+
+k
+(cid:88)
+
+i=0
+
+(−1)i
+
+(cid:18)k
+i
+
+(cid:19)
+
+an+k−i = r,
+
+mas o Teorema 11 mostra que a parcela da esquerda da equa¸c˜ao acima representa um polinˆomio
+
+de grau k. Com isso, solucionar uma progress˜ao aritm´etica de ordem k ´e an´alogo a determinar
+
+os coeﬁcientes de um polinˆomio de grau k.
+
+Exemplo 26 Dada a sequˆencia de n´umeros reais deﬁnida por sn+1 = sn + n2, com a1 = 1,
+
+essa sequˆencia representa a soma dos n primeiros naturais ao quadrado,
+
+(sn)n∈N = (1, 1 + 22, 1 + 22 + 32, ..., 1 + 22 + 32 + ... + n2).
+
+A sequˆencia sn ´e uma progress˜ao aritm´etica de ordem trˆes, pois ∆3sn ´e constante para todo
+
+n ∈ N, como apresentado a seguir.
+
+∆sn = sn+1 − sn ⇒ ∆sn = n2,
+
+∆2sn = ∆sn+1 − ∆sn ⇒ ∆2sn = (n + 1)2 − n2 ⇒ 2n + 1,
+
+∆3sn = ∆2sn+1 − ∆2sn ⇒ ∆3sn = 2(n + 1) + 1 − 2n − 1 ⇒ ∆3sn = 2.
+
+Consequentemente ´e poss´ıvel concluir que o termo geral dessa sequˆencia ´e dado por um
+
+polinˆomio de terceiro grau,
+
+sn = ax3 + bx2 + cx + d.
+
+Utilizando as condi¸c˜oes de contorno, s1 = 1, s2 = 5, s3 = 14, s4 = 30, ´e poss´ıvel montar o
+
+sistema linear (3.23),
+
+
+
+
+
+
+a + b + c + d = 1
+
+8a + 4b + 2c + d = 5
+
+27a + 9b + 3c + d = 14
+
+64a + 16b + 4c + d = 30
+
+,
+
+(3.23)
+
+que apresenta como solu¸c˜ao a =
+
+1
+3
+
+, b =
+
+1
+6
+
+, c =
+
+1
+3
+
+, d =
+
+1
+6
+
+.
+
+40
+
+Logo, a sequˆencia que representa a soma dos quadrados dos n primeiros naturais ´e dada por
+
+sn =
+
+n3
+3
+
++
+
+n2
+6
+
++
+
+n
+3
+
++
+
+1
+6
+
+,
+
+ou ainda, tradicionalmente apresentada como
+
+sn =
+
+n(n + 1)(2n + 1)
+6
+
+.
+
+O ´ultimo caso apresentado nessa se¸c˜ao envolvendo recorrˆencias lineares com coeﬁcientes
+
+constantes contempla as sequˆencias dos n´umeros ﬁgurados, entrando em detalhes a respeito
+
+dos n´umeros poligonais.
+
+Deﬁni¸c˜ao 20 Os n´umeros ﬁgurados s˜ao uma sequˆencia de n´umeros obtida atrav´es da cons-
+
+tru¸c˜ao geom´etrica de pontos equidistantes. Quando a ﬁgura formada pelo conjunto de pontos
+
+forma um pol´ıgono regular, esses n´umeros s˜ao chamados de n´umeros poligonais.
+
+As ﬁguras 3.4, 3.5 e 3.6 mostram a constru¸c˜ao para se obter os n´umeros triangulares,
+
+quadrados e pentagonais, respectivamente.
+
+Figura 3.4: Cinco primeiras constru¸c˜oes dos n´umeros triangulares.
+
+Perceba que a n− ´esima ﬁgura apresenta n pontos em sua extrema diagonal esquerda, sendo
+
+assim, seja Tn o n´umero de pontos da n − ´esima ﬁgura, tem-se que
+
+Tn+1 = Tn + n + 1.
+
+Logo, os n´umeros triangulares s˜ao uma progress˜ao aritm´etica de ordem dois, pois
+
+∆Tn = n + 1 ⇒ ∆2Tn = 1.
+
+Para determinar sua solu¸c˜ao, pelo Teorema 12, somente ´e necess´ario determinar os coeﬁci-
+
+entes do polinˆomio
+
+Tn = an2 + bn + c,
+
+41
+
+com as condi¸c˜oes de contorno T1 = 1, T2 = 3 e T3 = 6.
+
+Com isso, ´e poss´ıvel construir o sistema linear
+
+
+
+
+
+a + b + c = 1
+
+4a + 2b + c = 3
+
+,
+
+9a + 3b + c = 6
+
+que apresenta como solu¸c˜ao a =
+
+1
+2
+
+, b =
+
+1
+2
+
+e c = 0.
+
+Ent˜ao,
+
+Tn =
+
+n2 + n
+2
+
+.
+
+Figura 3.5: Cinco primeiras constru¸c˜oes dos n´umeros quadrados.
+
+Analisando a constru¸c˜ao dos n´umeros quadrados, seja Qn o n´umero de pontos da n − ´esima
+
+ﬁgura, percebe-se que a ﬁgura seguinte ´e constru´ıda adicionando n + 1 pontos na lateral direita
+
+mais n pontos na parte superior, ou seja,
+
+Qn+1 = Qn + n + 1 + n ⇒ Qn+1 = Qn + 2n + 1.
+
+Da mesma forma que a recorrˆencia dos n´umeros triangulares foi solucionada ´e poss´ıvel
+
+encontrar a f´ormula fechada que representa os n´umeros quadrados.
+
+Note que os problemas de progress˜oes aritm´eticas de ordem k ou de modo mais geral, os
+
+exerc´ıcios envolvendo recorrˆencias com coeﬁcientes constantes resultam em sistemas lineares
+
+que s˜ao t˜ao complexos quanto a ordem da recorrˆencia. Sendo assim, ´e interessantes procurar
+
+m´etodos alternativos de resolu¸c˜ao que sejam mais r´apidos e envolvam menos opera¸c˜oes.
+
+Especiﬁcamente na sequˆencia dos n´umeros quadrados, note que ´e poss´ıvel representar o
+
+problema de outra forma. Perceba que a n − ´esima ﬁgura ´e constru´ıda pela jun¸c˜ao de dois
+
+triˆangulos que apresentam a mesma quantia de pontos que os n´umeros triangulares da n−´esima
+
+e (n − 1) − ´esima posi¸c˜oes.
+
+42
+
+Ent˜ao, Qn = Tn + Tn−1, que j´a foi determinado.
+
+Por ﬁm, substituindo as f´ormulas obtidas para os n´umeros triangulares, obt´em-se
+
+Qn =
+
+n2 + n
+2
+
++
+
+(n − 1)2 + n − 1
+2
+
+⇒ Qn = n2.
+
+Figura 3.6: Cinco primeiras constru¸c˜oes dos n´umeros pentagonais.
+
+Por ﬁm, o mesmo procedimento adotado para os n´umeros triangulares pode ser utilizado
+
+para se obter a sequˆencia que deﬁne os n´umeros pentagonais.
+
+Note que, ∆2Pn = 3. Logo, a sequˆencia que descreve os n´umeros pentagonais ´e dada por
+
+um polinˆomio de segundo, Pn = an2 + bn + c.
+
+Utilizando as condi¸c˜oes de contorno e resolvendo o sistema linear obtido delas, conclui-se
+
+que
+
+Pn =
+
+3n2 − n
+2
+
+.
+
+(3.24)
+
+Da mesma forma realizada para determinar a sequˆencia que deﬁne os n´umeros quadrados,
+
+´e poss´ıvel solucionar o problema dos n´umeros pentagonais ao relacionar sua sequˆencia com
+
+as sequˆencias previamente obtidas dos n´umeros triangulares e quadrados. Note que Pn =
+
+Qn + Tn−1, sendo esses valores previamente obtidos, torna-se simples chegar ao resultado (3.24)
+
+Para obter a solu¸c˜ao espec´ıﬁca de uma recorrˆencia ´e necess´ario determinar os coeﬁcientes
+
+que aparecem na solu¸c˜ao geral, sendo necess´ario resolver um sistema linear de mesma ordem
+que a recorrˆencia em quest˜ao. ´E evidente que recorrˆencias de alta ordem levam um maior tempo
+
+de resolu¸c˜ao, havendo necessidade de outras abordagens para contornar esse problema, como
+
+apresentado no caso dos n´umeros quadrados e o m´etodo alternativo dos n´umeros pentagonais.
+
+Uma outra ferramenta utilizada para evitar trabalhar com sistemas lineares de alta ordem ´e
+
+conhecida como fun¸c˜ao geradora que ´e apresentada a seguir.
+
+43
+
+3.4 Recorrˆencias - fun¸c˜oes geradoras
+
+De acordo com Sampaio [14] ´e poss´ıvel deﬁnir fun¸c˜ao geradora como mostrado a seguir.
+
+Deﬁni¸c˜ao 21 Uma fun¸c˜ao f (x) ´e uma fun¸c˜ao geradora para uma sequˆencia de n´umeros reais
+
+(a0, a1, a2, ...), relativa `a sequˆencia de fun¸c˜oes (f0(x), f1(x), f2(x), ...) se:
+
+f (x) = a0f0(x) + a1f1(x) + a2f2(x) + ... + anfn(x) + ...,
+
+ou ainda,
+
+f (x) =
+
+∞
+(cid:88)
+
+n=0
+
+anfn(x).
+
+As fun¸c˜oes geradoras podem ser classiﬁcadas como ordin´arias ou exponenciais.
+
+Deﬁni¸c˜ao 22 Deﬁnimos f (x) uma fun¸c˜ao geradora ordin´aria quando
+
+f (x) = a0 + a1x + a2x2 + ... + anxn + ...,
+
+ou ainda,
+
+f (x) =
+
+∞
+(cid:88)
+
+n=0
+
+anxn.
+
+Como exemplo, x3+2x2−1 ´e a fun¸c˜ao geradora ordin´aria para a sequˆencia (−1, 0, 2, 1, 0, 0, 0, ...).
+
+Deﬁni¸c˜ao 23 Deﬁnimos f (x), a fun¸c˜ao geradora exponencial quando
+
+f (x) = a0 + a1x +
+
+a2x2
+2!
+
++ ... +
+
+anxn
+n!
+
++ ...,
+
+ou ainda,
+
+f (x) =
+
+∞
+(cid:88)
+
+n=0
+
+anxn
+n!
+
+.
+
+Exemplo 27 Como exemplo, a fun¸c˜ao exponencial, ex, que pode ser representada pela ex-
+∞
+(cid:88)
+
+pans˜ao de Taylor em torno de x = 0 como
+
+´e a fun¸c˜ao geradora exponencial para a
+
+xn
+n!
+
+sequˆencia an = 1, ∀n ∈ N.
+
+n=0
+
+Como apresentado anteriormente, as fun¸c˜oes geradoras s˜ao apresentadas atrav´es de somas
+
+inﬁnitas. Sendo assim, o estudo de algumas s´eries se torna de fundamental importˆancia para
+
+que se possa trabalhar com esse recurso.
+
+Uma s´erie de fundamental importˆancia para essa se¸c˜ao ´e a conhecida expans˜ao em s´erie de
+
+Taylor, j´a vista no Exemplo 27.
+
+44
+
+Teorema 13 Seja uma fun¸c˜ao f , sua expans˜ao em s´erie de Taylor em torno de um ponto x0
+
+´e dada por
+
+f (x) =
+
+∞
+(cid:88)
+
+r=0
+
+f r(x0)(x − x0)r
+r!
+
+.
+
+(3.25)
+
+Mais detalhes a respeito da f´ormula (3.25) podem ser encontradas em [9].
+
+Com o uso da f´ormula (3.25) ´e poss´ıvel gerar a s´erie que representa a expans˜ao do binˆomio
+
+de Newton quando n ∈ R.
+
+Exemplo 28 Seja x, n ∈ R, ent˜ao ao aplicar a f´ormula (3.25) na fun¸c˜ao f (x) = (1 + x)n, com
+
+x0 = 0, tem-se
+
+Logo,
+
+f (x) =
+
+∞
+(cid:88)
+
+r=0
+
+n!
+(n − r)!
+
+·
+
+xr
+r!
+
+⇒ f (x) =
+
+∞
+(cid:88)
+
+r=0
+
+n!
+r!(n − r)!
+
+xr.
+
+(1 + x)n =
+
+∞
+(cid:88)
+
+r=0
+
+(cid:18)n
+r
+
+(cid:19)
+
+xr.
+
+(3.26)
+
+Na subse¸c˜ao 3.1.2 desse trabalho ´e apresentado a equa¸c˜ao (3.9) que representa a soma de
+
+inﬁnitos termos de uma progress˜ao geom´etrica. Agora, de forma mais abrangente, demonstra-se
+
+um caso geral que ´e utilizado na resolu¸c˜ao de problemas envolvendo fun¸c˜oes geradoras.
+
+Teorema 14 Para n ∈ N vale a identidade
+
+∞
+(cid:88)
+
+r=0
+
+Demonstra¸c˜ao: Note que
+
+(cid:19)
+
+(cid:18)n + r − 1
+r
+
+xrp =
+
+1
+(1 − xp)n .
+
+(3.27)
+
+1 + xp + x2p + x3p + ... =
+
+1
+1 − xp ,
+
+pela f´ormula (3.9).
+
+Assim,
+
+(1 + xp + x2p + x3p + ...)n =
+
+1
+
+(1 − xp)n = (1 − xp)−n.
+
+Fazendo uso da expans˜ao binomial (3.26)
+
+(1 + xp + x2p + x3p + ...)n =
+
+∞
+(cid:88)
+
+r=0
+
+(cid:18)−n
+r
+
+(cid:19)
+
+(−xp)r =
+
+∞
+(cid:88)
+
+r=0
+
+(cid:18)−n
+r
+
+(cid:19)
+
+(−1)r(x)pr.
+
+Por ﬁm, pela deﬁni¸c˜ao do coeﬁciente binomial,
+
+(cid:18)−n
+r
+
+(cid:19)
+
+(−1)r =
+
+(−n)(−n − 1)...(−n − r + 1)(−1)r
+r!
+
+45
+
+(cid:18)−n
+r
+
+(cid:19)
+
+(−1)r =
+
+(n)(n + 1)...(n + r − 1)
+r!
+
+(cid:18)−n
+r
+
+(cid:19)
+
+(−1)r =
+
+(n + r − 1)(n + r − 2)...(n + 1)n(n − 1)!
+r!(n − 1)!
+
+(cid:19)
+
+(cid:18)−n
+r
+
+(−1)r =
+
+(n + r − 1)!
+r!(n − 1)!
+
+=
+
+(cid:18)n + r − 1
+r
+
+(cid:19)
+.
+
+(1 + xp + x2p + x3p + ...)n =
+
+∞
+(cid:88)
+
+r=0
+
+(cid:19)
+
+(cid:18)n + r − 1
+r
+
+xpr
+
+Logo,
+
+∞
+(cid:88)
+
+r=0
+
+(cid:19)
+
+(cid:18)n + r − 1
+r
+
+xpr =
+
+1
+(1 − xp)n .
+
+Perceba que n˜ao estamos preocupados com a convergˆencia da s´erie, pois em nenhum mo-
+
+mento h´a necessidade de atribuir valores a x.
+
+Outro recurso necess´ario para o estudo das fun¸c˜oes geradoras s˜ao as chamadas fra¸c˜oes
+
+parciais.
+
+Deﬁni¸c˜ao 24 (Fra¸c˜oes Parciais) Toda fra¸c˜ao de polinˆomios com coeﬁcientes reais, F (t) =
+
+f (t)
+g(t) , onde
+
+g(t) =
+
+n
+(cid:89)
+
+k=1
+
+= (t − ak),
+
+e o grau de f (t) ´e menor que g(t) pode ser escrita na forma de fra¸c˜oes parciais, ou seja,
+
+onde A1, A2, ..., An ∈ R.
+
+F (t) =
+
+n
+(cid:88)
+
+k=1
+
+Ak
+t − ak
+
+,
+
+Com isso, realizando algumas manipula¸c˜oes alg´ebricas ´e poss´ıvel determinar a solu¸c˜ao de
+
+recorrˆencias. As fun¸c˜oes geradoras s˜ao utilizadas em diversas recorrˆencias, incluindo casos
+
+n˜ao lineares. Como visto anteriormente, muitas recorrˆencias podem ser transformadas em
+
+recorrˆencias lineares com coeﬁcientes constantes, sendo apresentado um m´etodo de resolu¸c˜ao
+
+somente para esse caso.
+
+Considere a equa¸c˜ao (3.21), com h(n) = 0 e primeiro termo a0,
+
+an+k = c1an+k−1 + c2an+k−2 + ... + ckan.
+
+46
+
+Seja g a fun¸c˜ao geradora associada a sequˆencia (an)n≥0, ent˜ao
+
+Considere tamb´em r o polinˆomio
+
+g(x) =
+
+∞
+(cid:88)
+
+r=0
+
+arxr.
+
+r(x) = 1 −
+
+k
+(cid:88)
+
+r=1
+
+crxr.
+
+Com isso,
+
+pois bn+k =
+
+k
+(cid:88)
+
+r=0
+
+cran+k−r = 0.
+
+g(x)r(x) =
+
+k−1
+(cid:88)
+
+r=0
+
+brxr = B(x),
+
+Logo, a fun¸c˜ao geradora g ´e uma fun¸c˜ao racional dada por g(x) =
+
+B(x)
+r(x)
+
+.
+
+Da mesma forma, deﬁnida a equa¸c˜ao caracter´ıstica associada a uma recorrˆencia, tem-se que
+
+o polinˆomio caracter´ıstico da sequˆencia ´e dado por
+
+f (x) = xk −
+
+k
+(cid:88)
+
+r=1
+
+crxk−r.
+
+Comparando as fun¸c˜oes f e r, vale a rela¸c˜ao r(x) = xkf (
+
+1
+x
+
+).
+
+Sejam αi e mi a i − ´esima raiz do polinˆomio caracter´ıstico e sua respectiva multiplicidade,
+
+kx =
+
+s
+(cid:89)
+
+r=1
+
+(1 − αrx)mr,
+
+onde s ´e o n´umero de ra´ızes distintas de f.
+
+Como g ´e uma fun¸c˜ao racional, pode-se expressar essa fun¸c˜ao em termos de fra¸c˜oes parciais,
+
+g(x) =
+
+s
+(cid:88)
+
+mi(cid:88)
+
+i=1
+
+j=1
+
+βij
+(1 − αix)j ,
+
+onde βij s˜ao os coeﬁcientes que tornam a expans˜ao em fra¸c˜oes parciais verdadeira.
+
+Utilizando a equa¸c˜ao (3.27),
+
+βij
+(1 − αix)j =
+
+∞
+(cid:88)
+
+n=0
+
+(cid:19)
+
+(cid:18)j + n − 1
+n
+
+βij
+
+i xn =
+αn
+
+∞
+(cid:88)
+
+n=0
+
+(cid:19)
+
+(cid:18)j + n − 1
+j − 1
+
+βij
+
+i xn.
+αn
+
+E note que,
+
+mi(cid:88)
+
+j=1
+
+βij
+
+(cid:19)
+
+(cid:18)j + n − 1
+j − 1
+
+i = Pi(n)αn
+αn
+i ,
+
+onde Pi ´e um polinˆomio de grau menor ou igual a mi − 1.
+
+Logo,
+
+g(x) =
+
+∞
+(cid:88)
+
+s
+(cid:88)
+
+n=0
+
+i=1
+
+Pi(n)αn
+
+i xn =
+
+∞
+(cid:88)
+
+n=0
+
+anxn.
+
+47
+
+Concluindo que a sequˆencia (an)n∈N ´e dada por
+
+an =
+
+s
+(cid:88)
+
+i=1
+
+Pi(n)αn.
+
+Exemplo 29 Determine a solu¸c˜ao da rela¸c˜ao de recorrˆencia an = 3an−1 − 2an−2, com a0 = 1
+
+e a1 = 3, atrav´es do uso das fun¸c˜oes geradoras.
+
+Seja, f (x) = (cid:80)∞
+
+n=0 anxn a fun¸c˜ao geradora da sequˆencia an.
+
+Reescrevendo o problema como, anxn = 3an−1xn − 2an−2xn, e somando os termos para
+
+n ≥ 2,
+
+Logo,
+
+∞
+(cid:88)
+
+n=2
+
+anxn =
+
+∞
+(cid:88)
+
+n=2
+
+3an−1xn −
+
+∞
+(cid:88)
+
+n=2
+
+2an−2xn
+
+f (x) − a0 − a1x = 3x (f (x) − a0) − 2x2f (x)
+
+⇒ f (x) =
+
+a0 + (a1 − 3a0)x
+1 − 3x + 2x2 ⇒ f (x) =
+
+1
+1 − 3x + 2x2 .
+
+Separando a express˜ao de f em fra¸c˜oes parciais,
+
+E como
+
+ent˜ao,
+
+f (x) =
+
+−1
+1 − x
+
++
+
+2
+1 − 2x
+
+.
+
+1
+1 − kx
+
+=
+
+∞
+(cid:88)
+
+n=0
+
+knxn,
+
+f (x) = −
+
+∞
+(cid:88)
+
+n=0
+
+xn + 2
+
+∞
+(cid:88)
+
+n=0
+
+2nxn ⇒ f (x) =
+
+∞
+(cid:88)
+
+n=0
+
+(2n+1 − 1)xn.
+
+Com isso, ´e poss´ıvel concluir que a resolu¸c˜ao da recorrˆencia em quest˜ao ´e dada por
+
+an = 2n+1 − 1.
+
+A se¸c˜ao seguinte introduz uma outra abordagem que contorna a resolu¸c˜ao de sistemas
+
+lineares utilizando abordagens mais simples, sem necessidade de se trabalhar com s´eries. Esse
+
+m´etodo ao longo do trabalho ´e chamado de m´etodo de BenTaher-Rachidi, [2].
+
+48
+
+Cap´ıtulo 4
+
+M´etodo de BenTaher-Rachidi e
+
+Simula¸c˜oes
+
+Na se¸c˜ao 3.3 desse trabalho ´e apresentada a forma da solu¸c˜ao de uma recorrˆencia linear de
+
+ordem k com coeﬁcientes constantes, sendo necess´ario para determinar a solu¸c˜ao geral somente
+
+as ra´ızes do polinˆomio caracter´ıstico associado `a recorrˆencia. Em contrapartida, a diﬁculdade
+
+em obter a solu¸c˜ao particular ´e proporcional ao grau da recorrˆencia, sendo necess´ario resolver
+
+um sistema linear de mesma ordem.
+
+Com isso, nessa se¸c˜ao apresentamos o m´etodo de BenTaher-Rachidi [2] que na ´ıntegra ´e um
+
+m´etodo utilizado para inverter matrizes de Vandermonde.
+
+Para simpliﬁcar o estudo desse m´etodo, divide-se em dois casos, sendo analisado primeiro as
+
+recorrˆencias lineares cujo polinˆomio caracter´ıstico apresenta somente ra´ızes simples e em seguida
+
+obt´em-se a f´ormula para problemas em que o polinˆomio caracter´ıstico apresente alguma raiz
+
+com multiplicidade maior que um.
+
+4.1 Polinˆomio caracter´ıstico cont´em somente ra´ızes sim-
+
+ples
+
+Seja a solu¸c˜ao geral de uma recorrˆencia que apresenta como polinˆomio caracter´ıstico somente
+
+ra´ızes simples dada por
+
+Vn = β1,0xλ1 + ... + βk,0xλk,
+
+49
+
+ou seja, o polinˆomio caracter´ıstico da recorrˆencia apresenta somente ra´ızes com multiplicidade
+
+igual a um, e considere conhecida as condi¸c˜oes de contorno V1, ..., Vk, ent˜ao a solu¸c˜ao particular
+
+dessa recorrˆencia ´e obtida ao determinar os valores das constantes βi,0, determinados ao resolver
+
+o sistema linear (4.1) dado por
+
+
+
+
+
+
+β1,0
+
++
+
+β2,0
+
++ . . . +
+
+βr,0
+
+= V0
+
+λ1β1,0 + λ2β2,0 + . . . + λrβr,0 = V1
+...
+2 β2,0 + . . . + λr−1
+
+1 β1,0 + λr−1
+λr−1
+
+r βr,0 = Vr−1.
+
+.
+
+(4.1)
+
+Como apresentado na se¸c˜ao 2.1, o sistema (4.1) pode ser escrito na forma matricial Ax = b,
+
+onde A ´e a matriz dos coeﬁcientes dada por
+
+A =
+
+
+
+
+
+
+
+
+
+
+
+1
+
+1
+
+. . .
+
+1
+
+λ1,0
+...
+λk−1
+1,0
+
+λ2,0
+...
+λk−1
+2,0
+
+. . . λk,0
+...
+. . .
+. . . λk−1
+k,0
+
+
+
+
+
+
+
+
+
+
+
+.
+
+(4.2)
+
+Para determinar o valor dos coeﬁcientes de interesse, um m´etodo consiste em obter a matriz
+
+inversa de A, sendo os coeﬁcientes dados pela express˜ao x = A(−1)b.
+
+O primeiro questionamento em rela¸c˜ao a essa t´ecnica ´e em rela¸c˜ao a existˆencia da matriz
+
+inversa. Para isso, note que a matriz (4.2) ´e uma matriz de Vandermonde, e consequentemente,
+
+sua determinante ´e dada pela express˜ao (2.14).
+
+Como λi (cid:54)= λj para todo i (cid:54)= j, ent˜ao det(A) (cid:54)= 0, garantindo a existˆencia da matriz inversa.
+
+Logo, basta determinar a inversa de A para obter os coeﬁcientes desejados. No artigo de
+
+BenTaher-Rachidi [2] mostra-se uma t´ecnica para encontrar essa matriz, e consequentemente,
+
+a solu¸c˜ao espec´ıﬁca da recorrˆencia.
+
+Teorema 15 (Teorema 2.2, [2]) Seja uma recorrˆencia linear homogˆenea cujo o polinˆomio
+
+caracter´ıstico, p(z) = zr − a0zr−1 − ... − ar−2z − ar−1, com ar−1 (cid:54)= 0, tenha apenas ra´ızes simples
+
+λ1, ..., λk e sejam conhecidos os valores de V0, ..., Vk−1, ent˜ao a solu¸c˜ao dessa recorrˆencia ´e dada
+
+pela equa¸c˜ao (4.3).
+
+Vn =
+
+k
+(cid:88)
+
+i=1
+
+1
+p(cid:48)(λi)
+
+(cid:32) k−1
+(cid:88)
+
+p=0
+
+Ap
+λp+1
+i
+
+(cid:33)
+
+λn
+i ,
+
+(4.3)
+
+para n ≥ k, onde Ap = ak−1Vp + ... + apVk−1.
+
+50
+
+Note que essa abordagem n˜ao requer a resolu¸c˜ao de um sistema linear como ´e exigido ao
+
+utilizar o m´etodo tradicional.
+
+Exemplo 30 Determine uma express˜ao para a rela¸c˜ao de recorrˆencia Vn+1 = 3Vn − 2Vn−1,
+
+sabendo que V0 = 1 e V1 = 2.
+
+O polinˆomio caracter´ıstico da recorrˆencia ser´a dado por p(z) = z2 − 3z + 2, com λ1 = 1 e
+
+λ2 = 2 e ambos com multiplicidade um, m1 = m2 = 1. Com isso ´e poss´ıvel aplicar o m´etodo
+
+BenTaher-Rachidi e a solu¸c˜ao da recorrˆencia ser´a dada pela f´ormula (4.3),
+
+Vn =
+
+1
+p(cid:48)(λ1)
+
+(cid:18) A0
+λ0+1
+1
+
++
+
+A1
+λ1+1
+1
+
+(cid:19)
+
+λn
+1 +
+
+1
+p(cid:48)(λ2)
+
+(cid:18) A0
+λ0+1
+2
+
++
+
+A1
+λ1+1
+2
+
+(cid:19)
+
+λn
+2 .
+
+Com isso, basta determinar as contantes Ap e p(cid:48)(λi).
+
+A0 = a1V0 + a0V1 ⇒ A0 = −2 · 1 + 3 · 2 ⇒ A0 = 4
+
+A1 = a1V1 ⇒ A1 = −2 · 2 ⇒ A1 = −4.
+
+Derivando o polinˆomio p(z), p(cid:48)(z) = 2z − 3, logo p(cid:48)(1) = −1 e p(cid:48)(2) = 1. E portanto,
+
+substituindo na equa¸c˜ao, obt´em-se
+
+Vn = 2n.
+
+4.1.1 Simula¸c˜ao das recorrˆencias que apresentam polinˆomio carac-
+
+ter´ıstico com ra´ızes de multiplicidade um
+
+Ao estudar diferentes m´etodos para resolu¸c˜ao de um mesmo problema ´e interessante avaliar
+
+quais s˜ao as vantagens e desvantagens que um apresenta em rela¸c˜ao ao outro. Para isso,
+
+foram realizadas simula¸c˜oes utilizando o software computacional Scilab com os dois m´etodos
+
+e um gr´aﬁco apresentando o tempo de execu¸c˜ao ´e gerado. Para obter um tempo m´edio para
+
+representar o tempo de processamento de cada m´etodo foram realizadas cem simula¸c˜oes.
+
+O resultado das simula¸c˜oes para cada caso listado ´e apresentado nas ﬁguras a seguir.
+
+51
+
+Figura 4.1: Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem dois.
+
+A primeira simula¸c˜ao feita consiste em resolver a recorrˆencia de ordem dois, Vn+1 = Vn +
+
+Vn−1, que ´e a conhecida sequˆencia de Fibonacci descrita na se¸c˜ao 3.2. Nessa simula¸c˜ao o tempo
+
+m´edio de processamento utilizando o m´etodo de Taher-Rachidi ´e inferior a 0,6 ms enquanto o
+
+m´etodo tradicional ´e superior a 1,2 ms, mostrando que o m´etodo de Taher-Rachidi demanda
+
+menor tempo de resposta para resolver recorrˆencias de ordem baixa.
+
+Figura 4.2: Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem trˆes.
+
+Da mesma forma, soluciona-se a recorrˆencia Vn+1 = 3Vn −Vn−1 −2Vn−2, que tem ordem trˆes,
+
+52
+
+e novamente o m´etodo de Taher-Rachidi demanda um menor tempo. ´E importante notar que
+
+ao aumentar a ordem da recorrˆencia, ambos os m´etodos aumentam o tempo de processamento,
+
+por´em o m´etodo tradicional apresenta um menor aumento.
+
+Figura 4.3: Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem quatro.
+
+A terceira simula¸c˜ao consiste em resolver a recorrˆencia de ordem quatro, Vn+1 = Vn+7Vn−1−
+
+Vn−2 − 6Vn−3, e percebe-se que o m´etodo tradicional exige um menor tempo de processamento
+
+para essa recorrˆencia, seguindo um crescimento mais expressivo de tempo para o m´etodo de
+
+BenTaher-Rachidi.
+
+53
+
+Figura 4.4: Tempo de processamento para uma rela¸c˜ao de recorrˆencia de ordem oito.
+
+Por ﬁm, utiliza-se a recorrˆencia Vn+1 = −4Vn + 40Vn−1 + 98Vn−2 − 539Vn−3 − 406Vn−4 +
+
+1940Vn−5 + 312Vn−6 − 1440Vn−7, que apresenta ordem oito. Veriﬁca-se, como anteriormente,
+
+que o crescimento do tempo de processamento do m´etodo de Taher-Rachidi segue crescendo
+
+de forma mais intensa quando comparado com o m´etodo tradicional, levando a uma diferen¸ca
+
+para concluir o processamento cada vez mais expressiva.
+
+Note que as recorrˆencias estudadas com maior ˆenfase ao longo da gradua¸c˜ao e as principais
+
+sequˆencias vistas durante o ensino m´edio s˜ao descritas por recorrˆencias de baixa ordem, de
+
+segunda e terceira ordem, sendo os casos em que o m´etodo de BenTaher-Rachidi apresentou
+
+um desempenho computacional melhor, justiﬁcando a importˆancia do estudo desse m´etodo.
+
+4.2 Polinˆomio caracter´ıstico apresenta ra´ızes com mul-
+
+tiplicidade maior que um
+
+Para o caso em que o polinˆomio caracter´ıstico n˜ao apresenta somente ra´ızes simples, os
+
+coeﬁcientes a serem determinados s˜ao fun¸c˜oes polinomiais, sendo utilizado o Teorema a seguir.
+
+Teorema 16 (Teorema 2.4, [2]) Dada uma recorrˆencia em que seu polinˆomio caracter´ıstico,
+
+p(z) = zr − a0zr−1 − ... − ar−2z − ar−1, com ar−1 (cid:54)= 0, apresenta como ra´ızes λ1, ..., λs com
+
+multiplicidades m1, ..., ms, respectivamente, ent˜ao a solu¸c˜ao espec´ıﬁca dessa recorrˆencia ´e dada
+
+por
+
+54
+
+onde
+
+Vn =
+
+s
+(cid:88)
+
+i=i
+
+Qi(n)λn
+i ,
+
+Qi(x) =
+
+r−1
+(cid:88)
+
+p=0
+
+ApHi,p,(λ1,...,λs)(x),
+
+Ap = ar−1Vp + ... + apVr−1,
+
+Hi,p,(λ1,...,λs)(n) =
+
+(cid:88)
+
+κi,p,[ki](n)Ωi,p(λ1, ..., λs),
+
+k1+...+ks=mi−1
+
+κi,p,[ki](n) =
+
+(−1)mi−1−ki
+k1!k2!...ks!
+
+(n − p − 1)!
+(n − p − ki − 1)!
+
+,
+
+Ωi,p(λ1, ..., λs) =
+
+(cid:81)s
+
+(cid:105)
+
+(cid:104) (mj +kj −1)!
+(mj −1)!
+j=1,j(cid:54)=i(λi − λj)mj +kj
+
+j=1,j(cid:54)=i
+(cid:81)s
+
+.
+
+λp+ki+1
+i
+
+(4.4)
+
+(4.5)
+
+(4.6)
+
+(4.7)
+
+(4.8)
+
+(4.9)
+
+Observe que o somat´orio da equa¸c˜ao (4.7) ocorre sobreo que chamamos de equa¸c˜ao diofan-
+
+tina. Segue sua deﬁni¸c˜ao.
+
+Deﬁni¸c˜ao 25 Uma equa¸c˜ao polinomial de duas ou mais vari´aveis que admita apenas valores
+
+inteiros ´e chamada de equa¸c˜ao diofantina.
+
+Os distintos m´etodos para obter as solu¸c˜oes de uma equa¸c˜ao diofantina podem ser encon-
+
+trados em [10].
+
+Mais detalhes a respeito da formula¸c˜ao das express˜oes (4.3) e (4.4) s˜ao encontrados nas
+
+referˆencias [2] e [12].
+
+Exemplo 31 Determine a solu¸c˜ao da recorrˆencia Vn+1 = 5Vn − 8Vn−1 + 4Vn−2, onde V0 = 1,
+
+V1 = 1 e V2 = 2.
+
+O polinˆomio caracter´ıstico dessa recorrˆencia ´e dado por p(x) = x3 − 5x2 + 8x − 4 e apresenta
+
+como ra´ızes λ1 = 1, com m1 = 1 e λ2 = 2, com m2 = 2.
+
+Analisando a recorrˆencia tamb´em se obt´em os valores das constantes a0 = 5, a1 = −8 e
+
+a2 = 4. Utilizando a f´ormula (4.6), calcula-se
+
+A0 = a2V0 + a1V1 + a0V2 ⇒ A0 = 6,
+
+55
+
+A1 = a2V1 + a1V2 ⇒ A1 = −12,
+
+A2 = a2V2 ⇒ A2 = 8.
+
+Se i = 1, ent˜ao k1 + k2 = m1 − 1 = 0, logo k1 = k2 = 0. Assim, as equa¸c˜oes (4.8) e (4.9)
+
+resultam em,
+
+Ent˜ao,
+
+κ1,p,[k1](n) =
+
+(−1)m1−1−k1
+k1!k2!
+
+(n − p − 1)!
+(n − p − k1 − 1)!
+
+⇒ κ1,0,[0] = κ1,1,[0] = κ1,2,[0] = 1,
+
+Ω1,0 = Ω1,1 = Ω1,2 = 1.
+
+H1,0 = H1,1 = H1,2 = 1.
+
+Da mesma forma, se i = 2, ent˜ao k1 + k2 = m2 − 1 = 1, logo k1 = 1 e k2 = 0 ou k1 = 0 e
+
+k2 = 1. Para o primeiro caso,
+
+κ2,0,[0] = κ2,1,[0] = κ2,2,[0] = −1,
+
+Ω2,0 =
+
+1
+2
+
+,
+
+Ω2,1 =
+
+1
+4
+
+,
+
+Ω2,2 =
+
+1
+8
+
+.
+
+Para o segundo caso,
+
+κ2,0,[1] = n − 1,
+
+κ2,1,[1] = n − 2,
+
+κ2,2,[1] = n − 3,
+
+Ω2,0 =
+
+1
+4
+
+,
+
+Ω2,1 =
+
+1
+8
+
+,
+
+Ω2,2 =
+
+1
+16
+
+.
+
+H2,0 =
+
+n − 3
+4
+
+,
+
+H2,1 =
+
+n − 4
+8
+
+,
+
+H2,2 =
+
+n − 5
+16
+
+.
+
+Logo,
+
+Assim, obt´em-se
+
+Q1(n) = A0H1,0 + A1H1,1 + A2H1,2 ⇒ Q1(n) = 2,
+
+Q2(N ) = A0H2,0 + A1H2,1 + A2H2,2 ⇒ Q2(n) =
+
+n − 2
+2
+
+.
+
+E consequentemente,
+
+Vn = 2 +
+
+(cid:19)
+
+(cid:18) n − 2
+2
+
+2n.
+
+56
+
+4.2.1 Simula¸c˜ao das recorrˆencias que apresentam polinˆomio carac-
+
+ter´ıstico com alguma raiz de multiplicidade maior que um
+
+Apesar de problemas envolvendo polinˆomios caracter´ısticos que apresentem somente ra´ızes
+
+simples se apresentarem r´apidos e simples para obten¸c˜ao de sua solu¸c˜ao, o Exemplo 31 se
+
+mostrou longo pela simples adi¸c˜ao de uma raiz com multiplicidade dois.
+
+Algumas simula¸c˜oes utilizando o m´etodo de BenTaher-Rachidi foram realizadas para os
+
+casos em que o polinˆomio caracter´ıstico apresenta alguma raiz com multiplicidade maior que
+
+um.
+
+Figura 4.5: Tempo de processamento de uma recorrˆencia de ordem trˆes (raiz com multiplici-
+
+dade).
+
+A ﬁgura 4.5 mostra o tempo de processamento para solucionar a recorrˆencia Vn+1 = 5Vn −
+
+8Vn−1 + 4Vn−2 que apresenta como ra´ızes de seu polinˆomio caracter´ıstico os valores λ1 = 1 e
+
+λ2 = 2 com multiplicidades um e dois, respectivamente.
+
+J´a nesse caso, com o menor n´umero de ra´ızes com multiplicidade maior que um, o m´etodo
+
+de BenTaher-Rachidi acarreta um maior tempo de resposta quando comparado com o m´etodo
+
+tradicional.
+
+57
+
+Figura 4.6: Tempo de processamento de uma recorrˆencia de ordem quatro (raiz com multipli-
+
+cidade).
+
+A segunda simula¸c˜ao se utiliza da recorrˆencia de ordem quatro, Vn+1 = 10Vn − 33Vn−1 +
+44Vn−2 − 20Vn−3. ´E poss´ıvel perceber que ao aumentar a ordem da recorrˆencia, no m´etodo de
+
+BenTaher-Rachidi ocorreu um grande aumento em seu tempo de processamento, enquanto o
+
+m´etodo tradicional houve pouco aumento.
+
+Da mesma forma que resolver a recorrˆencia do Exemplo 31 se mostrou complicado, a re-
+
+solu¸c˜ao pelo software tamb´em acarretou em um maior tempo de execu¸c˜ao quando comparado
+
+com o m´etodo tradicional.
+
+Outro detalhe importante que deve ser levado em conta ´e em rela¸c˜ao ao trabalho de imple-
+
+menta¸c˜ao do m´etodo de BenTaher-Rachidi para recorrˆencias que apresentem em seu polinˆomio
+
+caracter´ıstico ra´ızes com multiplicidade maior que um. De acordo com a ordem da recorrˆencia
+
+foi necess´ario implementar algoritmos diferentes pela grande diﬁculdade de se resolver a equa¸c˜ao
+
+k1 + ... + ks = mi − 1 que aparece em (4.7).
+
+58
+
+Conclus˜ao
+
+Esse trabalho tem o intuito de apresentar um dos m´etodos amplamente conhecidos na
+
+resolu¸c˜ao de problemas envolvendo recorrˆencias como tamb´em apresentar um m´etodo pouco
+
+divulgado.
+
+Ao trazer distintas maneiras de se resolver um mesmo problema, procura-se destacar vanta-
+
+gens e desvantagens que um m´etodo apresenta em rela¸c˜ao ao outro, justiﬁcando a importˆancia
+
+das diferentes abordagens.
+
+No Cap´ıtulo 4 desse trabalho conclui-se que o m´etodo de BenTaher-Rachidi ´e capaz de
+
+solucionar equa¸c˜oes recorrentes lineares de ordens dois e trˆes de modo mais r´apido, quando
+comparado com o m´etodo inicialmente apresentado no Cap´ıtulo 3. ´E importante notar que
+
+em sua maior parte, as recorrˆencias estudadas no ensino m´edio (PA, PG e recorrˆencias que
+
+modelam problemas de olimp´ıada) s˜ao dessa ordem, justiﬁcando a importˆancia do estudo desse
+
+m´etodo.
+
+Em trabalhos futuros, pode-se realizar um estudo a respeito da implementa¸c˜ao dos c´odigos,
+
+principalmente nos que se referem `as recorrˆencias que apresentam polinˆomio caracter´ıstico com
+
+raiz de multiplicidade maior que um, aprimorando a velocidade de solu¸c˜ao. Note que maior
+
+parte do tempo para esses casos envolvem a solu¸c˜ao de uma equa¸c˜ao diofantina, logo uma
+
+melhor abordagem computacional nessa parte geraria uma melhora nos resultados.
+
+Por ﬁm, espera-se que esse trabalho sirva como meio de consulta para um estudo r´apido nos
+
+m´etodos de resolu¸c˜ao de recorrˆencia como tamb´em para instigar aos futuros leitores a estudar
+
+esse m´etodo aqui apresentado.
+
+59
+
+Apˆendice A
+
+Programa¸c˜ao utilizada na obten¸c˜ao dos gr´aﬁcos 4.1, 4.2, 4.3 e 4.4.
+
+/∗−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− MENU−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+// e x e r c i c i o = 1 p a r a r e c o r r ˆe n c i a : V( n+1) = V( n ) + V( n−1)
+
+// e x e r c i c i o = 2 p a r a r e c o r r ˆe n c i a : V( n+1) = 3V( n ) − V( n−1) − 2V( n−2)
+
+// e x e r c i c i o = 3 p a r a r e c o r r ˆe n c i a : V( n+1) = 4V( n ) + 7V( n−1) − V( n−2) − 6V( n−3)
+
+// e x e r c i c i o = 4 p a r a r e c o r r ˆe n c i a : V( n+1) = −4V( n ) + 40V( n−1) + 98V( n−2) − 539V( n−3) − 406V( n−4) +
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−∗//
+
++ 1940V( n−5) + 312V( n−6) − 1440V( n−7)
+
+// l i m p a o s d a d os a n t i g o s do programa
+
+// M´etodo de BenTaher−R a c h i d i
+
+// i n i c i a o c r o n ˆo m e t r o
+
+c l e a r
+
+e x e r c i c i o = 2 ;
+
+c r o n o m e t r o = 1 ;
+
+w h i l e c r o n o m e t r o <= 1 0 0 ,
+
+t i c ( ) ;
+
+i f
+
+e x e r c i c i o == 1 t h e n
+
+p = p o l y ([ −1 −1 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+c o n t o r n o = [ 1 1 ] ’
+
+e l s e i f
+
+e x e r c i c i o == 2 t h e n
+
+p = p o l y ( [ 2 1 −3 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+c o n t o r n o = [ 1 1 5 ] ’
+
+e l s e i f
+
+e x e r c i c i o == 3 t h e n
+
+p = p o l y ( [ 6 1 −7 −4 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+c o n t o r n o = [ 1 1 5 3 ] ’
+
+e l s e
+
+end
+
+p = p o l y ( [ 1 4 4 0 −312 −1940 406 539 −98 −40 4 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+// p o l i n ˆo m i o c a r a c t e r´ı s t i c o da r e c o r r ˆe n c i a −−> p ( z ) = z ˆ r − a {0}∗ z ˆ ( r −1) − . . . − a { r −1}
+
+c o n t o r n o = [ 1 1 0 −10 10 1 2 −1] ’
+
+// c o n d i ¸c ˜o e s de c o n t o r n o do p r o b l e m a −−> V( 0 ) , V( 1 ) ,
+
+. . . , V( r −1)
+
+v e t o r = c o e f f ( p )
+
+f o r
+
+i = 0 : ( d e g r e e ( p ) −1) , c o e f i c i e n t e s ( i +1) = v e t o r ( d e g r e e ( p)− i ) ; end
+
+c o e f i c i e n t e = c o e f i c i e n t e s ∗( −1)
+
+// c o e f i c i e n t e s a { 0 } , a { 1 } ,
+
+. . . , a {n} da r e c o r r ˆe n c i a
+
+d e r i v a d a p = d e r i v a t ( p )
+
+// d e r i v a d a do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+r a i z = r o o t s ( p )
+
+// r a´ı z e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+i = 1 : d e g r e e ( p ) ,
+
+f o r k = 0 : d e g r e e ( p ) −1 , OMEGA( i , k+1) = 0 ; end ; end
+
+f o r
+
+i = 1 : d e g r e e ( p ) ,
+
+f o r k = 0 : d e g r e e ( p ) −1 ,
+
+f o r
+
+j = 0 : k , OMEGA( i , k+1) = OMEGA( i , k+1) +
+
+c o e f i c i e n t e ( d e g r e e ( p)+ j −k ) / ( ( r a i z ( i ) ˆ ( j +1))∗ h o r n e r ( d e r i v a d a p ,
+
+r a i z ( i ) ) ) ; end ; end ; end
+
+c o n s t a n t e s = (OMEGA∗ c o n t o r n o ) ;
+
+tempo1 ( c r o n o m e t r o ) = t o c ( ) ;
+
+c r o n o m e t r o = c r o n o m e t r o + 1 ;
+
+end ;
+
+// R e c o r r ˆe n c i a //
+
+f o r
+
+i = 0 : 1 5 , F( i +1) = 0 ; end
+
+f o r
+
+i = 0 : 1 5 ,
+
+f o r
+
+j = 1 : d e g r e e ( p ) , F( i +1) = F( i +1) + c o n s t a n t e s ( j ) ∗ ( r a i z ( j ) ) ˆ i ; end ; end
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− //
+
+60
+
+c r o n o m e t r o = 1 ;
+
+// M´etodo t r a d i c i o n a l
+
+w h i l e c r o n o m e t r o <= 1 0 0 ,
+
+t i c ( ) ;
+
+d e f f ( ’ v = a r r e d ( x , n ) ’ , ’ v = round ( x ∗ ( 1 0 ˆ n ) ) / ( 1 0 ˆ n ) ’ )
+
+i f
+
+e x e r c i c i o == 1 t h e n
+
+p o l = p o l y ([ −1 −1 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+c o n t o r n o = [ 1 1 ] ’
+
+e l s e i f
+
+e x e r c i c i o == 2 t h e n
+
+p o l = p o l y ( [ 2 1 −3 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+c o n t o r n o = [ 1 1 5 ] ’
+
+e l s e i f
+
+e x e r c i c i o == 3 t h e n
+
+p o l = p o l y ( [ 6 1 −7 −4 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+c o n t o r n o = [ 1 1 5 3 ] ’
+
+e l s e
+
+p o l = p o l y ( [ 1 4 4 0 −312 −1940 406 539 −98 −40 4 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+// p o l i n ˆo m i o c a r a c t e r´ı s t i c o da r e c o r r ˆe n c i a −−> p ( z ) = z ˆ r − a {0}∗ z ˆ ( r −1) − . . . − a { r −1}
+
+c o n t o r n o = [ 1 1 0 −10 10 1 2 −1] ’
+
+// c o n d i ¸c ˜o e s de c o n t o r n o do p r o b l e m a −−> V( 0 ) , V( 1 ) ,
+
+. . . , V( r −1)
+
+end
+
+r = d e g r e e ( p o l ) ;
+
+r a i z = r o o t s ( p o l ) ;
+
+i = 1 ;
+
+num = 0 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , num = num + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+f o r
+
+i = 1 : r−num , m( i ) = 1 ; end ;
+
+i = 1 ;
+
+j = 1 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , m( j ) = m( j ) + 1 ;
+
+// m u l t i p l i c i d a d e de cada r a i z e n c o n t r a d a no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+e l s e
+
+j = j + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+p = 0 ;
+
+s = l e n g t h (m) ;
+
+f o r
+
+i = 1 : s ,
+
+// n´umero de r a´ı z e s d i f e r e n t e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+j = 1 : i , p = p + m( j ) ; end ;
+
+lambda ( i ) = r a i z ( p ) ;
+
+// d i f e r e n t e s
+
+r a´ı z e s e n c o n t r a d a s no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+p = 0 ;
+
+end ;
+
+f o r
+
+j = 1 : r ,
+
+f o r
+
+i = 1 : r , A( j , i ) = lambda ( i ) ˆ j ; end ; end ;
+
+n = p o l y ( 0 , ” n ” ) ;
+
+x = i n v (A) ∗ c o n t o r n o ;
+
+tempo3 ( c r o n o m e t r o ) = t o c ( ) ;
+
+c r o n o m e t r o = c r o n o m e t r o + 1 ;
+
+end ;
+
+// R e c o r r ˆe n c i a //
+
+f o r n = 1 : 1 0 , V( n ) = 0 ; end ;
+
+f o r n = 1 : 1 0 ,
+
+f o r
+
+i = 1 : s , V( n ) = V( n ) + x ( i ) ∗ lambda ( i ) ˆ n ; end ; end ;
+
+f o r n = 1 : 1 0 , V( n ) = a r r e d (V( n ) , 5 ) ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−− G r ´a f i c o s −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+t = 1 : 1 : 1 0 0 ;
+
+p l o t 2 d ( t ,
+
+[ 1 0 0 0 ∗ tempo1 ( t ’ ) , 1000∗ tempo3 ( t ’ ) ] , [ 5 , 2 ] ) ;
+
+l e g e n d s ( [ ’ BenTaher−R a c h i d i ’ ; ’ t r a d i c i o n a l ’ ] , [ 5 , 2 ] , o p t=”u r ” )
+
+61
+
+i f
+
+e x e r c i c i o == 1 t h e n
+
+x t i t l e ( ’ R e c o r r ˆe n c i a : V( n+1) = V( n ) + V( n − 1 ) ’ ,
+
+’ no − c o m p i l a ¸c ˜a o ’ ,
+
+’ tempo ( ms ) ’ )
+
+;
+
+e l s e i f
+
+e x e r c i c i o == 2 t h e n
+
+x t i t l e ( ’ R e c o r r ˆe n c i a : V( n+1) = 3V( n ) − V( n−1) − 2V( n − 2 ) ’ ,
+
+’ no − c o m p i l a ¸c ˜a o ’ ,
+
+’ tempo ( ms ) ’ )
+
+;
+
+e l s e i f
+
+e x e r c i c i o == 3 t h e n
+
+x t i t l e ( ’ R e c o r r ˆe n c i a : V( n+1) = 4V( n ) + 7V( n−1) − V( n−2) − 6V( n − 3 ) ’ ,
+
+’ no − c o m p i l a ¸c ˜a o ’ ,
+
+’ tempo ( ms ) ’ )
+
+;
+
+e l s e
+
+x t i t l e ( ’ R e c o r r ˆe n c i a : V( n+1) = −4V( n ) + 40V( n−1) + 98V( n−2) − 539V( n−3) − 406V( n−4) + 1940V( n−5) +
+
+312V( n−6) − 1440V( n − 7 ) ’ ,
+
+’ no − c o m p i l a ¸c ˜a o ’ ,
+
+’ tempo ( ms ) ’ )
+
+;
+
+end
+
+x g r i d
+
+62
+
+Apˆendice B
+
+Programa¸c˜ao utilizada na obten¸c˜ao do gr´aﬁco 4.5.
+
+c l e a r
+
+c r o n o m e t r o = 1 ;
+
+w h i l e c r o n o m e t r o <= 1 0 0 ,
+
+// l i m p a o s d a d o s a n t i g o s do programa
+
+// m´etodo de BenTaher−R a c h i d i
+
+t i c ( ) ;
+
+// i n i c i a o c r o n ˆo m e t r o
+
+d e f f ( ’ v = a r r e d ( x , n ) ’ , ’ v = round ( x ∗ ( 1 0 ˆ n ) ) / ( 1 0 ˆ n ) ’ )
+
+p o l = p o l y ([ −4 8 −5 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+// p o l i n ˆo m i o c a r a c t e r´ı s t i c a da r e c o r r ˆe n c i a −−> p ( z ) = z ˆ r − a0 ∗ z ˆ ( r −1) − . . . − a ( r −1)
+
+c o n t o r n o = [ 1 1 2 ] ’
+
+// c o n d i ¸c ˜o e s de c o n t o r n o do p r o b l e m a −−> V( 0 ) , V( 1 ) ,
+
+. . . , V( r −1)
+
+r = d e g r e e ( p o l ) ;
+
+// ordem da r e c o r r ˆe n c i a
+
+v e t o r = c o e f f ( p o l ) ;
+
+f o r
+
+i = 0 : ( d e g r e e ( p o l ) −1) , c o e f i c i e n t e s ( i +1) = v e t o r ( d e g r e e ( p o l )− i ) ; end ;
+
+c o e f i c i e n t e = c o e f i c i e n t e s ∗ ( − 1 ) ;
+
+// c o e f i c i e n t e s a0 , a1 ,
+
+. . . , a ( r −1) da r e c o r r ˆe n c i a
+
+r a i z = round ( r o o t s ( p o l ) ) ;
+
+// r a´ı z e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+i = 1 : r , A( i ) = 0 ; end ;
+
+f o r
+
+i = 1 : r ,
+
+f o r p = i : r , A( i ) = A( i ) + c o e f i c i e n t e ( r−p+i ) ∗ c o n t o r n o ( p ) ; end ; end ;
+
+// Ap = a ( r −1)∗V( p ) + . . . + a ( p ) ∗V( r −1)
+
+i = 1 ;
+
+num = 0 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , num = num + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+f o r
+
+i = 1 : r−num , m( i ) = 1 ; end ;
+
+i = 1 ;
+
+j = 1 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , m( j ) = m( j ) + 1 ;
+
+// m u l t i p l i c i d a d e de cada r a i z e n c o n t r a d a no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+e l s e
+
+j = j + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+p = 0 ;
+
+s = l e n g t h (m) ;
+
+f o r
+
+i = 1 : s ,
+
+// n´umero de r a´ı z e s d i f e r e n t e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+j = 1 : i , p = p + m( j ) ; end ;
+
+lambda ( i ) = r a i z ( p ) ;
+
+// d i f e r e n t e s
+
+r a´ı z e s e n c o n t r a d a s no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+p = 0 ;
+
+end ;
+
+63
+
+// p a r a i = 1 ( n e s s e c a s o ,
+
+lambda1 = 2 e m1 = 2 )
+
+// D e f i n i n d o a m a t r i z k : k1 , k2 ,
+
+. . . , k s p a r a i = 1 ( k1 + k2 + . . . + k s = mi − 1 )
+
+i = 1 ;
+
+f o r c o n t = 1 : s , Q( c o n t ) = 0 ; end ;
+
+w h i l e i <= s ,
+
+s o l u c o e s = f a c t o r i a l (m( i ) − 1 + s − 1 ) / ( f a c t o r i a l (m( i ) −1)∗ f a c t o r i a l ( s − 1 ) ) ;
+
+// n´umero de s o l u ¸c ˜o e s p r a e q u a ¸c ˜a o k1 + k2 + . . . + k s = mi − 1
+
+j = 1 ;
+
+f o r p = 0 : (m( i ) −1) , m a t r i z k ( p+1 , j ) = m( i )−1−p ; end ;
+
+// m a t r i z d a s d i f e r e s n t e s
+
+s o l u ¸c ˜o e s k1 + k2 + . . . + k s = mi − 1 p a r a d e t e r m i n a d o v a l o r de i
+
+j = 2 ;
+
+f o r p = 0 : (m( i ) −1) , m a t r i z k ( p+1 , j ) = p ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−− KAPPA −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+n=p o l y ( 0 , ” n ” ) ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j = 1 : r , p r o d u t o f a t o r i a l 1 ( c o n t 1 , j ) = 1 ; end ; end ;
+
+f o r c o n t 2 = 1 : s o l u c o e s ,
+
+f o r p = 0 : r −1 ,
+
+i f m a t r i z k ( c o n t 2 , i ) == 0 t h e n p r o d u t o f a t o r i a l 1 ( c o n t 2 , p+1) = 1 ;
+
+e l s e
+
+f o r
+
+j 1 = 1 : m a t r i z k ( c o n t 2 , i ) , p r o d u t o f a t o r i a l 1 ( c o n t 2 , p+1) = p r o d u t o f a t o r i a l 1 ( c o n t 2 , p
+
++1)∗( n − j 1 − p ) ; end ;
+
+end ;
+
+end ;
+
+end ;
+
+f o r
+
+j = 1 : s o l u c o e s , p r o d u t o f a t o r i a l 2 ( j ) = 1 ; end ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j =1: s , p r o d u t o f a t o r i a l 2 ( c o n t 1 ) =
+
+p r o d u t o f a t o r i a l 2 ( c o n t 1 ) ∗ f a c t o r i a l ( m a t r i z k ( c o n t 1 , j ) ) ; end ; end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 : r , KAPPA( a , b ) = ( ( ( − 1 ) ˆ (m( i ) − 1 − m a t r i z k ( a , i ) ) ) /
+
+p r o d u t o f a t o r i a l 2 ( a ) ) ∗ p r o d u t o f a t o r i a l 1 ( a , b ) ; end ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+//−−−−−−−−−−−−−−−−−−−−−−−−− OMEGA −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j = 1 : r , p r o d u t o f a t o r i a l 3 ( c o n t 1 , j ) = 1 ; end ; end ;
+
+i f
+
+i f
+
+i == 1 t h e n j = 2 ; end ;
+
+i == 2 t h e n j = 1 ; end ;
+
+f o r c o n t 2 = 1 : s o l u c o e s ,
+
+f o r p = 0 : r −1 ,
+
+i f m a t r i z k ( c o n t 2 ,
+
+j ) == 0 t h e n p r o d u t o f a t o r i a l 3 ( c o n t 2 , p+1) = 1 ;
+
+e l s e
+
+f o r
+
+j 1 = 1 : m a t r i z k ( c o n t 2 ,
+
+j ) , p r o d u t o f a t o r i a l 3 ( c o n t 2 , p+1) = p r o d u t o f a t o r i a l 3 ( c o n t 2 , p
+
++1)∗(m( j ) + j 1 − 1 ) ; end ;
+
+end ;
+
+end ;
+
+end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 :
+
+r , p r o d u t o r i o 2 ( a , b ) = ( lambda ( i ) − lambda ( j ) ) ˆ (m( j ) +
+
+m a t r i z k ( a , j ) ) ; end ; end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 :
+
+r , OMEGA( a , b ) = p r o d u t o f a t o r i a l 3 ( a , b ) / ( ( lambda ( i ) ˆ ( b +
+
+m a t r i z k ( a , i ) ) ) ∗ p r o d u t o r i o 2 ( a , b ) ) ; end ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−− H( i , j ) −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+f o r p = 1 : r , H( p ) = 0 ; end ;
+
+f o r p = 1 : r ,
+
+f o r c o n t = 1 : s o l u c o e s , H( p ) = H( p ) + KAPPA( c o n t , p ) ∗OMEGA( c o n t , p ) ; end ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− Q( i ) −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+f o r c o n t = 1 : r , Q( i ) = Q( i ) + A( c o n t ) ∗H( c o n t ) ; end ;
+
+64
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+i = i + 1 ;
+
+end ;
+
+tempo2 ( c r o n o m e t r o ) = t o c ( ) ;
+
+// tempo de c o m p i l a ¸c ˜a o
+
+c r o n o m e t r o = c r o n o m e t r o + 1 ;
+
+end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+c r o n o m e t r o = 1 ;
+
+w h i l e c r o n o m e t r o <= 1 0 0 ,
+
+t i c ( ) ;
+
+// m´etodo t r a d i c i o n a l
+
+// i n i c i a o c r o n ˆo m e t r o
+
+d e f f ( ’ v = a r r e d ( x , n ) ’ , ’ v = round ( x ∗ ( 1 0 ˆ n ) ) / ( 1 0 ˆ n ) ’ )
+
+p o l = p o l y ([ −4 8 −5 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+// p o l i n ˆo m i o c a r a c t e r´ı s t i c o da r e c o r r ˆe n c i a −−> p ( z ) = z ˆ r − a0 ∗ z ˆ ( r −1) − . . . − a ( r −1)
+
+c o n t o r n o = [ 1 1 2 ] ’
+
+r = d e g r e e ( p o l ) ;
+
+r a i z = round ( r o o t s ( p o l ) ) ;
+
+// r a´ı z e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+i = 1 ;
+
+num = 0 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , num = num + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+f o r
+
+i = 1 : r−num , m( i ) = 1 ; end ;
+
+i = 1 ;
+
+j = 1 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , m( j ) = m( j ) + 1 ;
+
+// m u l t i p l i c i d a d e de cada r a i z e n c o n t r a d a no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+e l s e
+
+j = j + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+p = 0 ;
+
+s = l e n g t h (m) ;
+
+f o r
+
+i = 1 : s ,
+
+// n´umero de r a´ı z e s d i f e r e n t e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+j = 1 : i , p = p + m( j ) ; end ;
+
+lambda ( i ) = r a i z ( p ) ;
+
+// d i f e r e n t e s
+
+r a´ı z e s e n c o n t r a d a s no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+p = 0 ;
+
+end ;
+
+n = p o l y ( 0 , ” n ” ) ;
+
+c o n t = 1 ;
+
+f o r
+
+i = 1 : s ,
+
+f o r
+
+j = 1 :m( i ) ,
+
+v e t o r ( c o n t ) = lambda ( i ) ∗ n ˆ ( j − 1 ) ;
+
+c o n t = c o n t + 1 ;
+
+end ;
+
+end ;
+
+c o n t = 1 ;
+
+b = 1 ;
+
+f o r a = 1 : r ,
+
+f o r
+
+i = 1 : s ,
+
+f o r
+
+j = 1 :m( i ) ,
+
+H( a , b ) = v e t o r ( b ) ∗ ( lambda ( i ) ˆ ( c o n t − 1 ) ) ;
+
+b = b + 1 ;
+
+65
+
+end ;
+
+end ;
+
+c o n t = c o n t + 1 ;
+
+b = 1 ;
+
+end ;
+
+f o r
+
+i = 1 : r ,
+
+f o r
+
+j = 1 : r ,
+
+A( i , j ) = h o r n e r (H( i , j ) ,
+
+i ) ;
+
+end ;
+
+end ;
+
+x = i n v (A) ∗ c o n t o r n o ;
+
+// c o n s t a n t e s da s o l u ¸c ˜a o
+
+tempo4 ( c r o n o m e t r o ) = t o c ( ) ;
+
+// tempo de c o m p i l a ¸c ˜a o
+
+c r o n o m e t r o = c r o n o m e t r o + 1 ;
+
+end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−− G r ´a f i c o s −−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+t = 1 : 1 : 1 0 0 ;
+
+p l o t 2 d ( t ,
+
+[ 1 0 0 0 ∗ tempo2 ( t ’ ) , 1000∗ tempo4 ( t ’ ) ] , [ 5 , 2 ] ) ;
+
+l e g e n d s ( [ ’ BenTaher−R a c h i d i ’ ; ’ t r a d i c i o n a l ’ ] , [ 5 , 2 ] , o p t=”u r ” )
+
+x t i t l e ( ’ R e c o r r ˆe n c i a : V( n+1) = 5V( n ) − 8V( n−1) + 4V( n − 2 ) ’ ,
+
+’ no − c o m p i l a ¸c ˜a o ’ ,
+
+’ tempo ( ms ) ’ )
+
+;
+
+x g r i d
+
+66
+
+Apˆendice C
+
+Programa¸c˜ao utilizada na obten¸c˜ao do gr´aﬁco 4.6.
+
+c l e a r
+
+c r o n o m e t r o = 1 ;
+
+w h i l e c r o n o m e t r o <= 1 0 0 ,
+
+// l i m p a o s d a d o s a n t i g o s do programa
+
+t i c ( ) ;
+
+// i n i c i a o c r o n ˆo m e t r o
+
+d e f f ( ’ v = a r r e d ( x , n ) ’ , ’ v = round ( x ∗ ( 1 0 ˆ n ) ) / ( 1 0 ˆ n ) ’ )
+
+p o l = p o l y ( [ 2 0 −44 33 −10 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+// p o l i n ˆo m i o c a r a c t e r´ı s t i c a da r e c o r r ˆe n c i a −−> p ( z ) = z ˆ r − a0 ∗ z ˆ ( r −1) − . . . − a ( r −1)
+
+c o n t o r n o = [ 1 1 2 3 ] ’
+
+// c o n d i ¸c ˜o e s de c o n t o r n o do p r o b l e m a −−> V( 0 ) , V( 1 ) ,
+
+. . . , V( r −1)
+
+r = d e g r e e ( p o l ) ;
+
+// ordem da r e c o r r ˆe n c i a ( g r a u do p o l i n ˆo m i o c a r a c t e r´ı s t i c o )
+
+v e t o r = c o e f f ( p o l ) ;
+
+f o r
+
+i = 0 : ( d e g r e e ( p o l ) −1) , c o e f i c i e n t e s ( i +1) = v e t o r ( d e g r e e ( p o l )− i ) ; end ;
+
+c o e f i c i e n t e = c o e f i c i e n t e s ∗ ( − 1 ) ;
+
+// c o e f i c i e n t e s a0 , a1 ,
+
+. . . , a ( r −1) da r e c o r r ˆe n c i a
+
+r a i z = a r r e d ( r o o t s ( p o l ) , 5 ) ;
+
+// r a´ı z e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+i = 1 : r , A( i ) = 0 ; end ;
+
+f o r
+
+i = 1 : r ,
+
+f o r p = i : r , A( i ) = A( i ) + c o e f i c i e n t e ( r−p+i ) ∗ c o n t o r n o ( p ) ; end ; end ;
+
+// Ap = a ( r −1)∗V( p ) + . . . + a ( p ) ∗V( r −1)
+
+i = 1 ;
+
+num = 0 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , num = num + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+f o r
+
+i = 1 : r−num , m( i ) = 1 ; end ;
+
+i = 1 ;
+
+j = 1 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , m( j ) = m( j ) + 1 ;
+
+// m u l t i p l i c i d a d e de cada r a i z e n c o n t r a d a no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+e l s e
+
+j = j + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+p = 0 ;
+
+s = l e n g t h (m) ;
+
+f o r
+
+i = 1 : s ,
+
+// n´umero de r a´ı z e s d i f e r e n t e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+j = 1 : i , p = p + m( j ) ; end ;
+
+lambda ( i ) = r a i z ( p ) ;
+
+// d i f e r e n t e s
+
+r a´ı z e s e n c o n t r a d a s no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+p = 0 ;
+
+end ;
+
+// p a r a i = 1 ( n e s s e c a s o ,
+
+lambda1 = 2 e m1 = 2 )
+
+67
+
+// D e f i n i n d o a m a t r i z k : k1 , k2 ,
+
+. . . , k s p a r a i = 1 ( k1 + k2 + . . . + k s = mi − 1 )
+
+i = 1 ;
+
+f o r c o n t = 1 : s , Q( c o n t ) = 0 ; end ;
+
+w h i l e i <= s ,
+
+c o n t = 0 ;
+
+l i n h a 1 = 0 ;
+
+s o l u c o e s = f a c t o r i a l (m( i ) − 1 + s − 1 ) / ( f a c t o r i a l (m( i ) −1)∗ f a c t o r i a l ( s − 1 ) ) ;
+
+// n´umero de s o l u ¸c ˜o e s p r a e q u a ¸c ˜a o k1 + k2 + . . . + k s = mi − 1
+
+w h i l e c o n t < m( i ) ,
+
+i f
+
+c o n t < m( i ) − 1 t h e n
+
+j = 1 ;
+
+f o r p = 0 : (m( i )− c o n t ) , m a t r i z k ( p+1+l i n h a 1 , j ) = m( i )−1−p−c o n t ; end ;
+
+// m a t r i z d a s d i f e r e s n t e s
+
+s o l u ¸c ˜o e s k1 + k2 + . . . + k s = mi − 1 p a r a d e t e r m i n a d o v a l o r de i
+
+j = 2 ;
+
+f o r p = 0 : (m( i )− c o n t ) , m a t r i z k ( p+1+l i n h a 1 , j ) = p ; end ;
+
+j = 3 ;
+
+f o r p = 0 : (m( i )− c o n t ) , m a t r i z k ( p+1+l i n h a 1 , j ) = c o n t ; end ;
+
+j = 4 ;
+
+f o r p = 0 : (m( i )− c o n t ) , m a t r i z k ( p+1+l i n h a 1 , j ) = p+1+l i n h a 1 ; end ;
+
+l i n h a 1 = l i n h a 1 + p ;
+
+e l s e
+
+j = 1 ;
+
+f o r p = 0 : (m( i )− c o n t −1) , m a t r i z k ( p+1+l i n h a 1 , j ) = m( i )−1−p−c o n t ; end ;
+
+// m a t r i z d a s d i f e r e s n t e s
+
+s o l u ¸c ˜o e s k1 + k2 + . . . + k s = mi − 1 p a r a d e t e r m i n a d o v a l o r de i
+
+j = 2 ;
+
+f o r p = 0 : (m( i )− c o n t −1) , m a t r i z k ( p+1+l i n h a 1 , j ) = p ; end ;
+
+j = 3 ;
+
+f o r p = 0 : (m( i )− c o n t −1) , m a t r i z k ( p+1+l i n h a 1 , j ) = c o n t ; end ;
+
+j = 4 ;
+
+f o r p = 0 : (m( i )− c o n t −1) , m a t r i z k ( p+1+l i n h a 1 , j ) = p+1+l i n h a 1 ; end ;
+
+l i n h a 1 = l i n h a 1 + p ;
+
+end ;
+
+c o n t = c o n t + 1 ;
+
+end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−KAPPA−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+n=p o l y ( 0 , ” n ” ) ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j = 1 : r , p r o d u t o f a t o r i a l 1 ( c o n t 1 , j ) = 1 ; end ; end ;
+
+f o r c o n t 2 = 1 : s o l u c o e s ,
+
+f o r p = 0 : r −1 ,
+
+i f m a t r i z k ( c o n t 2 , i ) == 0 t h e n p r o d u t o f a t o r i a l 1 ( c o n t 2 , p+1) = 1 ;
+
+e l s e
+
+f o r
+
+j 1 = 1 : m a t r i z k ( c o n t 2 , i ) , p r o d u t o f a t o r i a l 1 ( c o n t 2 , p+1) = p r o d u t o f a t o r i a l 1 ( c o n t 2 , p
+
++1)∗( n − j 1 − p ) ; end ;
+
+end ;
+
+end ;
+
+end ;
+
+f o r
+
+j = 1 : s o l u c o e s , p r o d u t o f a t o r i a l 2 ( j ) = 1 ; end ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j =1: s , p r o d u t o f a t o r i a l 2 ( c o n t 1 ) =
+
+p r o d u t o f a t o r i a l 2 ( c o n t 1 ) ∗ f a c t o r i a l ( m a t r i z k ( c o n t 1 , j ) ) ; end ; end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 : r , KAPPA( a , b ) = ( ( ( − 1 ) ˆ (m( i ) − 1 − m a t r i z k ( a , i ) ) ) /
+
+p r o d u t o f a t o r i a l 2 ( a ) ) ∗ p r o d u t o f a t o r i a l 1 ( a , b ) ; end ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−OMEGA−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j = 1 : r , p r o d u t o f a t o r i a l 3 ( c o n t 1 , j ) = 1 ; end ; end ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j = 1 : r , p r o d u t o r i o 1 ( c o n t 1 , j ) = 1 ; end ; end ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j = 1 : r , p r o d u t o r i o 2 ( c o n t 1 , j ) = 1 ; end ; end ;
+
+68
+
+j = 1 ;
+
+i f
+
+i == j
+
+t h e n j = j + 1 ; end ;
+
+w h i l e j <= s ,
+
+f o r c o n t 2 = 1 : s o l u c o e s ,
+
+f o r p = 0 : r −1 ,
+
+i f m a t r i z k ( c o n t 2 ,
+
+j ) == 0 t h e n p r o d u t o f a t o r i a l 3 ( c o n t 2 , p+1) = 1 ;
+
+e l s e
+
+p r o d u t o f a t o r i a l 3 ( c o n t 2 , p +1)∗(m( j ) + j 1 − 1 ) ; end ;
+
+f o r
+
+j 1 = 1 : m a t r i z k ( c o n t 2 ,
+
+j ) , p r o d u t o f a t o r i a l 3 ( c o n t 2 , p+1) =
+
+end ;
+
+end ;
+
+end ;
+
+f o r c o n t 1 = 1 : s o l u c o e s ,
+
+f o r
+
+j 1 = 1 : r , p r o d u t o r i o 1 ( c o n t 1 , j 1 ) =
+
+p r o d u t o r i o 1 ( c o n t 1 , j 1 ) ∗ p r o d u t o f a t o r i a l 3 ( c o n t 1 , j 1 ) ; end ; end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 : r , p r o d u t o r i o 2 ( a , b ) = p r o d u t o r i o 2 ( a , b ) ∗ ( lambda ( i ) −
+
+lambda ( j ) ) ˆ (m( j ) + m a t r i z k ( a , j ) ) ; end ; end ;
+
+j = j + 1 ;
+
+i f
+
+i == j
+
+t h e n j = j + 1 ; end ;
+
+end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 :
+
+r , OMEGA( a , b ) = p r o d u t o r i o 1 ( a , b ) / ( ( lambda ( i ) ˆ ( b +
+
+m a t r i z k ( a , i ) ) ) ∗ p r o d u t o r i o 2 ( a , b ) ) ; end ; end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 :
+
+r ,
+
+r e s e r v a ( a , b ) = OMEGA( a , b ) ; end ; end ;
+
+f o r a = 1 : s o l u c o e s ,
+
+f o r b = 1 :
+
+r , OMEGA( a , b ) = r e s e r v a ( s o l u c o e s −a +1 ,b ) ; end ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−H( i , j)−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+f o r p = 1 : r , H( p ) = 0 ; end ;
+
+f o r p = 1 : r ,
+
+f o r c o n t = 1 : s o l u c o e s , H( p ) = H( p ) + KAPPA( c o n t , p ) ∗OMEGA( c o n t , p ) ; end ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−Q( i)−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+f o r c o n t = 1 : r , Q( i ) = Q( i ) + A( c o n t ) ∗H( c o n t ) ; end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+i = i + 1 ;
+
+end ;
+
+tempo2 ( c r o n o m e t r o ) = t o c ( ) ;
+
+// tempo de c o m p i l a ¸c ˜a o
+
+c r o n o m e t r o = c r o n o m e t r o + 1 ;
+
+end ;
+
+//−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−−//
+
+c r o n o m e t r o = 1 ;
+
+w h i l e c r o n o m e t r o <= 1 0 0 ,
+
+t i c ( ) ;
+
+// i n i c i a o c r o n ˆo m e t r o
+
+d e f f ( ’ v = a r r e d ( x , n ) ’ , ’ v = round ( x ∗ ( 1 0 ˆ n ) ) / ( 1 0 ˆ n ) ’ )
+
+p o l = p o l y ( [ 2 0 −44 33 −10 1 ] ,
+
+’ z ’ ,
+
+’ c o e f f ’ )
+
+// p o l i n ˆo m i o c a r a c t e r´ı s t i c o da r e c o r r ˆe n c i a −−> p ( z ) = z ˆ r − a0 ∗ z ˆ ( r −1) − . . . − a ( r −1)
+
+c o n t o r n o = [ 1 1 2 −1] ’
+
+// c o n d i ¸c ˜o e s de c o n t o r n o do p r o b l e m a −−> V( 0 ) , V( 1 ) ,
+
+. . . , V( r −1)
+
+r = d e g r e e ( p o l ) ;
+
+// ordem da r e c o r r ˆe n c i a ( g r a u do p o l i n ˆo m i o c a r a c t e r´ı s t i c o )
+
+r a i z = a r r e d ( r o o t s ( p o l ) , 4 ) ;
+// r a´ı z e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o ∗∗∗∗ANALISAR PRECIS˜AO∗∗∗∗
+
+i = 1 ;
+
+num = 0 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , num = num + 1 ; end ;
+
+i = i + 1 ;
+
+69
+
+end ;
+
+f o r
+
+i = 1 : r−num , m( i ) = 1 ; end ;
+
+i = 1 ;
+
+j = 1 ;
+
+w h i l e i < r ,
+
+i f ( a r r e d ( r a i z ( i ) , 5 ) == a r r e d ( r a i z ( i + 1 ) , 5 ) ) , m( j ) = m( j ) + 1 ;
+
+// m u l t i p l i c i d a d e de cada r a i z e n c o n t r a d a no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+e l s e
+
+j = j + 1 ; end ;
+
+i = i + 1 ;
+
+end ;
+
+p = 0 ;
+
+s = l e n g t h (m) ;
+
+// n´umero de r a´ı z e s d i f e r e n t e s do p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+f o r
+
+i = 1 : s ,
+
+f o r
+
+j = 1 : i , p = p + m( j ) ; end ;
+
+lambda ( i ) = r a i z ( p ) ;
+
+// d i f e r e n t e s
+
+r a´ı z e s e n c o n t r a d a s no p o l i n ˆo m i o c a r a c t e r´ı s t i c o
+
+p = 0 ;
+
+end ;
+
+n = p o l y ( 0 , ” n ” ) ;
+
+c o n t = 1 ;
+
+f o r
+
+i = 1 : s ,
+
+f o r
+
+j = 1 :m( i ) ,
+
+v e t o r ( c o n t ) = lambda ( i ) ∗ n ˆ ( j − 1 ) ;
+
+c o n t = c o n t + 1 ;
+
+end ;
+
+end ;
+
+c o n t = 1 ;
+
+b = 1 ;
+
+f o r a = 1 : r ,
+
+f o r
+
+i = 1 : s ,
+
+f o r
+
+j = 1 :m( i ) ,
+
+H( a , b ) = v e t o r ( b ) ∗ ( lambda ( i ) ˆ ( c o n t − 1 ) ) ;
+
+b = b + 1 ;
+
+end ;
+
+end ;
+
+c o n t = c o n t + 1 ;
+
+b = 1 ;
+
+end ;
+
+f o r
+
+i = 1 : r ,
+
+f o r
+
+j = 1 : r ,
+
+A( i , j ) = h o r n e r (H( i , j ) ,
+
+i ) ;
+
+end ;
+
+end ;
+
+x = i n v (A) ∗ c o n t o r n o ;
+
+// c o n s t a n t e s da s o l u ¸c ˜a o
+
+tempo4 ( c r o n o m e t r o ) = t o c ( ) ;
+
+// tempo de c o m p i l a ¸c ˜a o
+
+c r o n o m e t r o = c r o n o m e t r o + 1 ;
+
+end ;
+
+t = 1 : 1 : 1 0 0 ;
+
+p l o t 2 d ( t , [ 1 0 0 0 ∗ tempo2 ( t ’ ) , 1 0 0 0 ∗ tempo4 ( t ’ ) ] , [ 5 , 2 ] ) ;
+
+l e g e n d s ( [ ’ BenTaher−R a c h i d i ’ ; ’ t r a d i c i o n a l ’ ] , [ 5 , 2 ] , o p t=”u r ” )
+
+x t i t l e ( ’ R e c o r r ˆe n c i a : V( n+1) = 10V( n ) − 33V( n−1) + 44V( n−2) − 20V( n − 3 ) ’ ,
+
+’ no − c o m p i l a ¸c ˜a o ’ ,
+
+’ tempo ( ms ) ’ )
+
+;
+
+x g r i d
+
+70
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] ANDERSON, I. A First Course in Discrete Mathematics. Springer, London, 2001.
+
+[2] BEN-TAHER, R.; RACHIDI, M. Solving some generalized Vandermonde systems and in-
+
+verse of their associate matrices via new approaches for the Binet formula. University of My
+
+Ismail, Meknes, 2016.
+
+[3] CALLIOLI, C. A.; DOMINGUES, H. H.; Roberto, C. F. ´Algebra linear e aplica¸c˜oes. 6. ed.
+
+reform. S˜ao Paulo, SP. Atual, 1993.
+
+[4] CARVALHO, K. M. A ´algebra das equa¸c˜oes polinomiais e sua solubilidade. Disserta¸c˜ao de
+
+mestrado , UNICAMP, 2015.
+
+[5] CARVALHO, P. C. P.; MORGADO, A. C. O. Matem´atica Discreta. 2. ed. Rio de Janeiro,
+
+RJ. Sociedade Brasileira de Matem´atica, 2015.
+
+[6] DE OLIVEIRA, O. R. B. The Fundamental Theorem of Algebra: An Elementary and
+
+Direct Proof. The Mathematical Intelligencer, Vol 33, No 2, 2011.
+
+[7] DOMINGUES, H. H.; IEZZI, G.. ´Algebra Moderna. 4. ed. reform. S˜ao Paulo, SP. Atual,
+
+2003.
+
+[8] GUIDORIZZI, H. L. Um curso de c´alculo - vol. 1. 5. ed. Livros T´ecnicos e Cient´ıﬁ
+
+cos, Rio de Janeiro, 2001.
+
+[9] GUIDORIZZI, H. L. Um curso de c´alculo - vol. 2. 5. ed. Livros T´ecnicos e Cient´ıﬁ
+
+cos, Rio de Janeiro, 2001.
+
+[10] HEFEZ, A. Aritm´etica. 2. ed. SBM, Rio de Janeiro, 2016.
+
+[11] LIMA, E. L. ´Algebra linear. 1. ed. Rio de Janeiro: IMPA, 2014.
+
+71
+
+[12] MOULINE, M.;RACHIDI, M. Application of Markov Chains Properties to r-Generalized
+
+Fibonacci Sequences. , Universite Mohammed, Marocco, 1998.
+
+[13] PINHO, A. O problema dos Coelhos. http://sites.google.com/site/leonardoﬁbonacci7/o-
+
+problema-dos-coelhos, acesso em 28/04/2019.
+
+[14] SAMPAIO, C. A. A. Fun¸c˜oes Geradoras e Aplica¸c˜oes em Parti¸c˜oes. Disserta¸c˜ao de Mes-
+
+trado, UNICAMP, 1998.
+
+[15] SMYLY, J. G. Square roots in Heron of Alexandria. Hermathena, no. 63, 1944.
+
+[16] SILVA, P. O. Torre de Hanoi: Uma Proposta Pedag´ogica para Aprendizagem Matem´atica
+
+e Aquisi¸c˜ao do Conhecimento Cient´ıﬁco no Ensino Superior. Disserta¸c˜ao de Mestrado,
+
+UFERSA, 2019.
+
+[17] WOLFRAM, S. A New Kind of Science. Wolfram Media, Champaign,
+
+IL, 2002.
+
+https:www.wolframscience.com, acesso em 24/04/2019.
+
+72
+
+

@@ -1,0 +1,1407 @@
+2016: DISSERTAC¸ ˜AO DE MESTRADO
+Mestrado Proﬁssional em Matem´atica - PROFMAT, Universidade Federal de S˜ao Jo˜ao Del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+Estudo dos Pontos Cr´ıticos de uma Superf´ıcie de Resposta
+
+Jussara Ribeiro de Rezende 1
+Andr´ea Cristiane dos Santos Delﬁno2
+
+Resumo: A metodologia de superf´ıcie de resposta consiste em uma cole¸c˜ao de t´ecnicas
+estat´ısticas e matem´aticas que desempenham um papel importante no desenvolvimento, me-
+lhoria e otimiza¸c˜ao de processos. A mais extensiva aplica¸c˜ao da metodologia de superf´ıcie
+de resposta ´e na ´area industrial, particularmente em situa¸c˜oes em que s˜ao necess´arias muitas
+vari´aveis que potencialmente inﬂuenciam em alguma medida de desempenho ou na qualidade
+caracter´ıstica de um produto ou processo. Um experimento que costumeiramente ´e utilizado,
+conjuntamente com a metodologia de superf´ıcie de resposta, ´e o delineamento composto
+central. Este delineamento ´e muito utilizado devido a sua eﬁciˆencia com rela¸c˜ao do n´umero
+de tratamentos utilizados. Neste trabalho, pretende-se apresentar a metodologia de superf´ıcie
+de resposta conjuntamente com o delineamento composto central, com intuito de apresentar
+o estudo da obten¸c˜ao dos pontos cr´ıticos da fun¸c˜ao ajustada. Para ilustrar a metodologia,
+ser´a utilizado um exemplo descrito por Montgomery (2013), em que um engenheiro estuda a
+produ¸c˜ao de um processo qu´ımico (Y ), observando-se os fatores tempo de rea¸c˜ao em minutos
+(X1) e temperatura de rea¸c˜ao em ◦F (X2), com dois n´ıveis cada. Para organizar os n´ıveis dos
+fatores que comp˜oem os tratamentos, combina¸c˜ao de todos os n´ıveis dos fatores investigados
+que provocam efeito sobre a vari´avel resposta, utilizou-se o esquema fatorial 22, ou seja, a
+combina¸c˜ao de dois fatores com dois n´ıveis cada, num delineamento composto central. O
+delineamento composto central ´e constitu´ıdo pelas partes c´ubica, axial e central; atrav´es
+desse plano de ajuste, determina-se a regi˜ao experimental, na qual foi realizado o estudo dos
+2 e centro na origem do sistema
+pontos cr´ıticos, limitada por um lugar geom´etrico de raio
+de coordenadas cartesianas. Para os estudo dos pontos cr´ıticos da fun¸c˜ao ajustada, denotada
+por ˆY , primeiramente, recorreu-se ao crit´erio da derivada primeira para encontrar os extremos
+relativos da fun¸c˜ao; em seguida, utilizou-se o teste da segunda derivada para analisar se o
+ponto ´e de m´aximo, m´ınimo ou de sela. Veriﬁcou-se atrav´es da f´ormula de Taylor a rela¸c˜ao da
+matriz das segundas derivadas de ˆY , matriz Hessiana, com a determina¸c˜ao dos pontos cr´ıticos.
+Tanto para o ajuste do modelo, como para o estudo dos pontos cr´ıticos, utilizou-se o software
+R (R Core Team, 2016). O modelo ajustado aos dados foi ˆY = 79, 93995 + 0, 99505X1 −
+1, 37645X 2
+2 . O estudo da fun¸c˜ao apontou que a superf´ıcie do modelo
+´e cˆoncava com pontos cr´ıticos para o tempo de rea¸c˜ao em 87 minutos e para temperatura
+em 176,5◦F. A an´alise dos autovalores, indicaram pontos cr´ıticos de m´aximo, o qual resulta
+numa produ¸c˜ao m´axima em 80,21%.
+
+1 −0, 5152X2 −1, 00134X 2
+
+√
+
+Palavras-chave: Autovalores e Autovetores, Pontos Cr´ıticos, Regress˜ao M´ultipla, Superf´ıcie
+de Resposta.
+
+1Aluna de Mestrado do PROFMAT, Turma 2014, Universidade Federal de S˜ao Jo˜ao Del-Rei - UFSJ,
+
+jussararibeirorezende@hotmail.com
+
+2Professora orientadora, Departamento de Matem´atica e Estat´ıstica - DEMAT, UFSJ,
+
+andrea@ufsj.edu.br
+
+2
+
+1
+
+Introdu¸c˜ao
+
+A metodologia da superf´ıcie de resposta ´e utilizada na modelagem e an´alise de problemas
+nos quais a vari´avel de resposta de interesse ´e inﬂuenciada por diversas vari´aveis indepen-
+dentes ou fatores e cujo objetivo ´e otimizar a vari´avel resposta (Montgomery, 2013).
+
+De modo geral tem-se interesse em avaliar as rela¸c˜oes existentes entre os principais fatores
+que comp˜oem um processo e uma vari´avel resposta de interesse. Nestas situa¸c˜oes, tem-se
+como objetivo, a partir de uma f´ormula matem´atica da fun¸c˜ao, determinar qual ´e a condi¸c˜ao
+de opera¸c˜ao do processo que levar´a `a obten¸c˜ao de um valor ´otimo para a vari´avel resposta.
+A an´alise da superf´ıcie de resposta ´e feita de forma sequencial.Primeiramente tenta-se ajustar
+uma fun¸c˜ao de baixa ordem para modelar os dados, se esta for uma boa aproxima¸c˜ao dos
+fatores para a vari´avel resposta, ent˜ao tem-se uma fun¸c˜ao linear. Por outro lado, quando uma
+modelagem linear n˜ao ´e eﬁciente, utiliza-se um modelo de segunda ordem. Uma superf´ıcie
+de resposta ´e a ﬁgura obtida quando uma vari´avel resposta ´e representada graﬁcamente em
+fun¸c˜ao de dois ou mais fatores do processo. Os resultados destes processos geralmente s˜ao
+obtidos por meio de experimentos.
+
+Um experimento que auxilia em tal determina¸c˜ao ´e o denominado delineamento composto
+central. Este experimento ´e constitu´ıdo por trˆes partes: fatorial, axial e central. Os pontos
+axiais contribuem na estimativa dos termos quadr´aticos do modelo de 2a ordem; os pontos
+centrais, quando repetidos, contribuem tanto na estimativa dos efeitos quadr´aticos quanto
+na estimativa do erro puro; e os pontos fatoriais est˜ao associados aos termos lineares e de
+intera¸c˜ao.
+
+Em fun¸c˜oes de duas ou mais vari´aveis, ou seja, dois ou mais fatores que provocam efeito
+sobre uma resposta, ´e necess´ario utilizar o crit´erio da derivada primeira e o teste da segunda
+derivada para a obten¸c˜ao e o estudo dos pontos cr´ıticos da fun¸c˜ao ajustada; determinando
+se estes s˜ao pontos de m´aximo, m´ınimo ou sela. A rela¸c˜ao entre a matriz das segundas
+derivadas parciais da fun¸c˜ao com a determina¸c˜ao dos pontos cr´ıticos pode ser veriﬁcada
+atrav´es da f´ormula de Taylor.
+
+Devido `a enorme quantidade de dados gerados em um determinado processo, tornou-se
+cada vez mais comum o desenvolvimento de m´etodos computacionais, pois permitem de forma
+autom´atica o levantamento de detalhes suﬁcientes que auxiliam na deﬁni¸c˜ao das prioridades
+e no planejamento direcionado das a¸c˜oes que visam oportunidades de melhoria. Os pacotes
+estat´ısticos fornecem as fun¸c˜oes, os gr´aﬁcos e apontam a regi˜ao ´otima, mas n˜ao mostram
+como encontrar os pontos cr´ıticos da fun¸c˜ao ajustada.
+
+Sendo assim, o objetivo desse trabalho ´e apresentar o estudo e a forma de encontrar os
+pontos cr´ıticos da fun¸c˜ao ajustada em um planejamento de experimento usando superf´ıcie de
+resposta.
+
+2 Material e M´etodo
+
+2.1 Material
+
+Para o ajuste da superf´ıcie de resposta, utilizou-se os dados de um experimento apresen-
+tado por Montgomery (2013). O experimento em quest˜ao foi utilizado por um engenheiro
+qu´ımico para investigar as condi¸c˜oes de funcionamento que maximizam a produ¸c˜ao de um
+determinado processo. Os fatores utilizados para tal ﬁm foram: tempo de rea¸c˜ao em minutos
+(X1) e temperatura de rea¸c˜ao em ◦F (X2). A vari´avel resposta (Y ) analisada foi a produ¸c˜ao.
+O ensaio foi instalado em delineamento composto central, com 2 fatores e dois n´ıveis cada,
+
+3
+
+cinco pontos centrais e quatro pontos axiais. Os n´ıveis dos pontos fatoriais s˜ao expressos
+da seguinte forma: (1,1), (-1,1), (-1,-1), (1,-1), sendo que (1) representa o n´ıvel alto de um
+fator e o (-1) representa o n´ıvel baixo do fator. Os pontos centrais s˜ao representados pelo
+par (0,0) e os pontos axiais foram:(0; 1,414), (0; -1,414), (1,414; 0), (-1,414; 0). Na Ta-
+bela 1 encontram-se os dados no esquema do delineamento, constando as vari´aveis originais,
+as vari´aveis codiﬁcadas e a vari´avel resposta. Por simplicidade ser´a utilizada as vari´aveis
+codiﬁcadas.
+
+Tabela 1: Conﬁgura¸c˜oes do delineamento do composto central para a vari´avel produ¸c˜ao
+
+Vari´aveis originais
+(X2)
+(X1)
+170,00
+80,00
+180,00
+80,00
+170,00
+90,00
+180,00
+90,00
+175,00
+85,00
+175,00
+85,00
+175,00
+85,00
+175,00
+85,00
+175,00
+85,00
+175,00
+92,07
+175,00
+77,93
+182,07
+85,00
+167,93
+85,00
+
+Vari´aveis codiﬁcadas
+
+(X1)
+-1
+-1
+1
+1
+0
+0
+0
+0
+0
+1,414
+-1,414
+0
+0
+
+(X2)
+-1
+1
+-1
+1
+0
+0
+0
+0
+0
+0
+0
+1,414
+-1,414
+
+Resposta
+Y(rendimento)
+
+76,5
+77,0
+78,0
+79,5
+79,9
+80,3
+80,0
+79,7
+79,8
+78,4
+75,6
+78,5
+77,0
+
+2.2 M´etodo
+
+2.2.1 Metodologia de Superf´ıcie de Resposta
+
+Segundo Myers & Montgomery (1995) a superf´ıcie resposta ´e uma cole¸c˜ao de t´ecnicas
+estat´ısticas e matem´aticas ´uteis para desenvolvimento, melhoramento e otimiza¸c˜ao de pro-
+cessos. Esta metodologia ´e muito adequada na ind´ustria, principalmente em situa¸c˜oes em
+que v´arias vari´aveis podem inﬂuenciar a performance e a qualidade do produto ou processo.
+Al´em de grande aplicabilidade na ind´ustria, a metodologia de superf´ıcie de resposta tem
+
+sido utilizada em outras ´areas do conhecimento.
+
+Uma suposi¸c˜ao feita a um produto, processo ou sistema envolve uma vari´avel resposta
+Y , que tamb´em ´e chamada de vari´avel dependente, e vari´aveis de entrada X, chamadas de
+vari´aveis independentes (Myers & Montgomery, 1995).
+
+Esta rela¸c˜ao pode ser expressa por:
+
+Y = f (X1, X2, ..., Xk) + (cid:15),
+
+(1)
+
+em que (cid:15) representa o erro aleat´orio. Assume-se que o erro aleat´orio tenha distribui¸c˜ao normal
+com m´edia zero e variˆancia σ2.
+
+Aplicando o operador esperan¸ca em Y tem-se que:
+
+E(Y ) = E[f (X1, X2, ..., Xk) + (cid:15)] = f (X1, X2, ..., Xk) = η.
+
+A superf´ıcie resposta ´e representada por:
+
+η = f (X1, X2, ..., Xk)
+
+4
+
+(2)
+
+(3)
+
+De acordo com Montgomery & Runger (2009), geralmente a rela¸c˜ao funcional entre Y
+e X ´e desconhecida. Desta forma a primeira etapa na metodologia de superf´ıcie resposta ´e
+estabelecer uma aproxima¸c˜ao adequada entre Y e X. De modo geral, utiliza-se um polinˆomio
+de baixo grau em alguma regi˜ao das vari´aveis independentes. Desta forma, se a resposta for
+bem modelada por uma fun¸c˜ao linear das vari´aveis independentes ent˜ao tem-se o modelo de
+primeira ordem cuja fun¸c˜ao ´e dada por:
+
+Y = β0 + β1X1 + β2X2 + ... + βkXk + (cid:15)
+
+(4)
+
+em que:
+Y : vari´avel dependente ou resposta;
+βi, com i = 1 . . . k, s˜ao parˆametros, tamb´em chamados de coeﬁcientes de regress˜ao;
+Xi, com i = 1 . . . k s˜ao as vari´aveis independentes.
+
+Nos casos em que h´a curvatura no sistema, um modelo polinomial de maior grau dever´a
+
+ser utilizado. Um modelo de segunda ordem ´e dado por:
+
+Y = β0 +
+
+k
+(cid:88)
+
+i=1
+
+βiXi +
+
+k
+(cid:88)
+
+i=1
+
+βiiXi
+
+2 +
+
+k−1
+(cid:88)
+
+N
+(cid:88)
+
+i=1
+
+j=2,
+i<j
+
+βijXiXj + (cid:15)i
+
+(5)
+
+em que:
+Y : vari´avel dependente ou resposta;
+βi com i = 1 . . . k s˜ao parˆametros, tamb´em chamados de coeﬁcientes de regress˜ao;
+βii, com i = 1 . . . k s˜ao parˆametros, tamb´em chamados de coeﬁcientes de regress˜ao;
+βij, com i = 1 . . . k − 1 e j = 2 . . . N s˜ao parˆametros, tamb´em chamados de coeﬁcientes de
+regress˜ao;
+Xi, com i = 1 . . . k, s˜ao as vari´aveis independentes.
+Xij, com i = 1 . . . k − 1 e j = 2...N , s˜ao as vari´aveis independentes.
+
+A qualidade nas estimativas depende do m´etodo de estima¸c˜ao utilizado e do plano ex-
+perimental adequado. O delineamento experimental mais utilizado para se analisar uma
+superf´ıcie ´e o Delineamento Composto Central (DCC).
+
+5
+
+2.2.2 Esquema fatorial
+
+Segundo Montgomery & Runger (2009) os esquemas fatoriais s˜ao utilizados quando h´a
+interesse em se estudar v´arios fatores. Estes mesmos autores classiﬁcam este tipo de plane-
+jamento como uma t´ecnica poderosa.
+
+Tal planejamento ´e eﬁciente, pois permite a an´alise de v´arios fatores simultaneamente.
+Uma forma de expressar este planejamento ´e o chamado planejamento 2k, ou seja k fatores
+com 2 n´ıveis. Os fatores referem-se as vari´aveis independentes de um experimento que podem
+ser controladas pelo pesquisador e os seus n´ıveis s˜ao os valores espec´ıﬁcos atribu´ıdos a eles. O
+mais simples deles ´e o 22, sendo 2 fatores com 2 n´ıveis cada. De acordo com Montgomery &
+Runger (2009), os n´ıveis baixos e altos de um fator podem ser representados, respectivamente,
+pelos sinais (-) e (+). Esta nota¸c˜ao ´e chamada de geom´etrica. As combina¸c˜oes dos n´ıveis dos
+fatores, s˜ao chamadas de tratamentos, e para o caso em quest˜ao, tem-se 4 tratamentos. O
+coeﬁciente utilizado para os sinais ´e o valor 1. Sendo assim, tem-se as combina¸c˜oes: (-1,-1);
+(1,-1); (-1,1) e (1,1).
+
+Neste trabalho ser´a abordado o fatorial 2k, mas outras formas de esquema tamb´em s˜ao
+
+poss´ıveis.
+
+2.2.3 Delineamento Composto Central (DCC)
+
+O Delineamento Composto Central (DCC) ´e um dos mais populares delineamentos para
+
+ajuste de modelos de at´e segunda ordem (Myers & Montgomery,1995).
+
+O Delineamento Composto Central (DCC) ´e constitu´ıdo por trˆes partes: c´ubica (fatorial),
+axial(α) e central. Em geral, um DCC para k fatores, cujos n´ıveis codiﬁcados ser˜ao combi-
+nados, ´e dado pelo conjunto constitu´ıdo pelos seguintes tratamentos com n´ıveis codiﬁcados:
+(1,1,...,1); (-1,1,..,1);...;(-1,-1,...,-1) referentes `a parte fatorial, totalizando 2k combina¸c˜oes;
+(−α, 0, ..., 0); (α, 0, ..., 0); (0, −α, ..., 0); ...; (0, 0, ..., −α); (0, 0, ..., α) referentes a parte axial, to-
+talizando 2k combina¸c˜oes e (0,0,...,0) referente ao ponto central.
+
+No total, s˜ao 2k + 2k + 1 combina¸c˜oes entre os n´ıveis dos k fatores investigados.
+Portanto, o Delineamento Composto Central (DCC) para os dois fatores que inﬂuenciam
+no processo de rendimento do experimento utilizado pelo engenheiro qu´ımico, com n´ıveis
+codiﬁcados sem repeti¸c˜ao no ponto central, gera nove tratamentos (22 + 2.2 + 1) conforme
+apresentado na Tabela 2. Os pontos axiais s˜ao situados nos eixos do sistema de coordenadas
+com distˆancia ±α da origem (±
+
+2).
+
+√
+
+Tabela 2: Combina¸c˜oes entre os n´ıveis codiﬁcados dos fatores X1 e X2.
+
+X1(codiﬁcado)
+
+X2(codiﬁcado)
+
+Pontos fatoriais
+
+Pontos axiais
+
+Pontos central
+
+-1
+1
+-1
+1
+-α
+α
+0
+0
+0
+
+-1
+-1
+1
+1
+0
+0
+-α
+α
+0
+
+Tratamento
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+6
+
+Segundo Myers & Montgomery (1995), s˜ao os pontos axiais que contribuem na estimativa
+de termos quadr´aticos dos modelos de segunda ordem. Os respons´aveis, de grande modo, na
+estimativa dos efeitos de intera¸c˜oes s˜ao os pontos fatoriais, que s˜ao as combina¸c˜oes geralmente
+utilizadas em ajustes de modelos de primeira ordem com ou sem intera¸c˜oes duplas entre
+os fatores. O ponto central, al´em de ser respons´avel tamb´em pela estimativa dos efeitos
+quadr´aticos, possibilita a estimativa do erro puro, quando ele ´e repetido.
+
+2.2.4 M´aximos e M´ınimos
+
+Segundo Flemming & Gon¸calves (1992) dada uma fun¸c˜ao com uma vari´avel, tem-se:
+
+Deﬁni¸c˜ao 2.1 Uma fun¸c˜ao f tem um m´aximo relativo em c, se existir um intervalo aberto
+I, contendo c, tal que f (c) ≥ f (x) para todo x ∈ I ∩ D(f ).
+
+Deﬁni¸c˜ao 2.2 Uma fun¸c˜ao tem um m´ınimo relativo em c, se existir um intervalo aberto I,
+contendo c, tal que f (c) ≤ f (x) para todo x ∈ I ∩ D(f ).
+
+Proposi¸c˜ao 2.1 Suponhamos que f (x) existe para todos os valores de x ∈ (a, b) e que f tem
+um extremo relativo em c, onde a < c < b. Se f (cid:48)(c) existe, ent˜ao f (cid:48)(c) = 0
+
+Proposi¸c˜ao 2.2 Seja f : [a, b] −→ R uma fun¸c˜ao cont´ınua, deﬁnida em um intervalo fe-
+chado [a, b]. Ent˜ao f assume m´aximo e m´ınimo absoluto em [a, b].
+
+Deﬁni¸c˜ao 2.3 Dizemos que f (c) ´e o m´aximo absoluto da fun¸c˜ao f se c ∈ D(f ), e f (c) ≥
+f (x) para todos os valores de x no dom´ınio de f .
+
+Deﬁni¸c˜ao 2.4 Dizemos que f (c) ´e o m´ınimo absoluto da fun¸c˜ao f se c ∈ D(f ), e f (c) ≤
+f (x) para todos os valores de x no dom´ınio de f .
+
+De acordo com Leithold (1994), estendendo-se o conceito de fun¸c˜oes de uma vari´avel para
+
+fun¸c˜oes com duas vari´aveis, tem-se:
+
+Deﬁni¸c˜ao 2.5 Diz-se que uma fun¸c˜ao de duas vari´aveis tem um m´aximo relativo em um
+ponto (x0, y0) se h´a um c´ırculo centrado em (x0, y0), de modo que f (x0, y0) ≥ f (x, y) para
+todos os pontos (x, y) do dom´ınio de f que est˜ao dentro do c´ırculo, e diz-se que f tem um
+m´aximo absoluto em (x0, y0) se f (x0, y0) ≥ f (x, y) para todos os pontos (x,y) do dom´ınio de
+f .
+
+Deﬁni¸c˜ao 2.6 Diz-se que uma fun¸c˜ao de duas vari´aveis tem um m´ınimo relativo em um
+ponto (x0, y0) se h´a um c´ırculo centrado em (x0, y0), de modo que f (x0, y0) ≤ f (x, y) para
+todos os pontos (x, y) do dom´ınio de f que est˜ao dentro do c´ırculo, e diz-se que f tem um
+m´ınimo absoluto em (x0, y0) se f (x0, y0) ≤ f (x, y) para todos os pontos (x,y) do dom´ınio de
+f .
+
+2.2.5 Crit´erios para determinar os extremos de uma fun¸c˜ao
+
+Para fun¸c˜oes de uma vari´avel, segundo Flemming & Gon¸calves (1992), tem-se:
+
+Teorema 2.1 Crit´erio da derivada primeira para determina¸c˜ao dos extremos de
+uma fun¸c˜ao
+Seja f uma fun¸c˜ao cont´ınua num intervalo fechado [a, b] que possui derivada em todo o ponto
+
+7
+
+do intervalo (a, b), exceto possivelmente num ponto c.
+(i) Se f (cid:48)(x) > 0 para todo x < c e f (cid:48)(x) < 0 para todo x > c, ent˜ao f tem um m´aximo
+relativo em c.
+(ii) Se f (cid:48)(x) < 0 para todo x < c e f (cid:48)(x) > 0 para todo x > c, ent˜ao f tem um m´ınimo
+relativo em c.
+
+Teorema 2.2 Crit´erio da derivada segunda para determina¸c˜ao dos extremos de
+uma fun¸c˜ao
+Sejam f uma fun¸c˜ao deriv´avel num intervalo (a, b) e c um ponto cr´ıtico de f neste intervalo,
+isto ´e, f (cid:48)(c) = 0, com a < c < b. Se f admite a derivada f ” em (a, b), temos:
+(i) Se f ”(c) < 0, f tem um valor m´aximo relativo em c.
+(ii) Se f ”(c) > 0, f tem um valor m´ınimo relativo em c.
+
+Segundo Leithold (1994), para fun¸c˜oes com duas vari´aveis tem-se que:
+
+Deﬁni¸c˜ao 2.7 Extremo relativo
+Se a fun¸c˜ao cont´ınua f com duas vari´aveis admitir um valor m´ınimo ou m´aximo relativo
+num ponto (x0, y0), diz-se que tal ponto ´e um extremo relativo de f .
+
+Para que isso ocorra, se existirem
+
+f (x0, y0) e
+
+f (x0, y0) deve-se ter
+
+f (x0, y0) = 0 e
+
+∂
+∂x
+
+∂
+∂y
+
+∂
+∂x
+
+f (x0, y0) = 0. O ponto (x0, yo) tamb´em ´e chamado de ponto cr´ıtico de f .
+
+∂
+∂y
+
+Teorema 2.3 Teorema do valor extremo para fun¸c˜oes de duas vari´aveis
+Seja R uma regi˜ao fechada no plano xy, e seja f uma fun¸c˜ao de duas vari´aveis cont´ınua
+em R. Ent˜ao, existe pelo menos um ponto em R onde f tem valor m´aximo absoluto, e pelo
+menos um ponto em R onde f tem um valor m´ınimo absoluto.
+
+Teorema 2.4 Teste da segunda derivada
+Seja f uma fun¸c˜ao de duas vari´aveis, tal que f e suas derivadas primeira e segunda sejam
+cont´ınuas em algum disco aberto B((x0, y0); r). Suponha al´em disso, que fx(x0, y0) = 0 e
+fy(x0, y0) = 0. Seja
+
+D = fxx(x0, y0)fyy(x0, y0) − f 2
+
+xy(x0, y0)
+
+(i) f tem um valor m´ınimo relativo em (x0, y0) se fxx(x0, y0).fyy(x0, y0) − f 2
+fxx(x0, y0) > 0 (ou fyy(x0, y0) > 0))
+(ii) f tem um valor m´aximo relativo em (x0, y0) se fxx(x0, y0).fyy(x0, y0) − f 2
+fxx(x0, y0) < 0 (ou fyy(x0, y0) < 0))
+(iii) f tem um ponto de sela em (x0, y0) se fxx(x0, y0).fyy(x0, y0) − f 2
+(iiii) Nenhuma conclus˜ao pode ser tirada se fxx(x0, y0).fyy(x0, y0) − f 2
+
+xy(x0, y0) < 0
+xy(x0, y0) = 0
+
+xy(x0, y0) > 0 e
+
+xy(x0, y0) > 0 e
+
+Observa-se que D ´e o determinante da matriz das derivadas de f, no ponto (x0, y0).
+
+D =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+fxx fxy
+fyx fyy
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+Se f for uma fun¸c˜ao que satisfaz o Teorema 2.4 e se ambas fx(x, y) e fy(x, y) existirem em
+todos os pontos de R, ent˜ao os extremos de f ocorrer˜ao num ponto (x0, y0), onde fx(x0, y0) = 0
+e fy(x0, y0) = 0 ou num ponto de fronteira de R.
+
+8
+
+2.2.6 Concavidade e Pontos de Inﬂex˜ao
+
+Flemming & Gon¸calves (1992), descrevem que para a an´alise da concavidade e o estudo
+
+do ponto de inﬂex˜ao tem-se que
+
+Deﬁni¸c˜ao 2.8 Uma fun¸c˜ao f ´e dita cˆoncava para cima no intervalo (a, b), se f (cid:48)(x) ´e cres-
+cente neste intervalo.
+
+Deﬁni¸c˜ao 2.9 Uma fun¸c˜ao f ´e dita cˆoncava para baixo no intervalo (a, b), se f (cid:48)(x) for
+decrescente neste intervalo.
+
+Para reconhecer os intervalos onde uma curva tem concavidade voltada para cima ou para
+
+baixo basta analisar o sinal da derivada f ”(x).
+
+Proposi¸c˜ao 2.3 Seja f uma fun¸c˜ao cont´ınua no intervalo [a, b] e deriv´avel at´e a segunda
+ordem no intervalo(a,b):
+(i) Se f ”(x) > 0 para todo x ∈ (a, b), ent˜ao f ´e cˆoncava para cima em (a,b).
+(ii) Se f ”(x) < 0 para todo x ∈ (a, b), ent˜ao f ´e cˆoncava para baixo em (a,b).
+
+Podem existir pontos no gr´aﬁco de uma fun¸c˜ao nos quais a concavidade muda de sentido.
+
+Esses pontos s˜ao chamados pontos de inﬂex˜ao.
+
+Deﬁni¸c˜ao 2.10 Um ponto P (c, f (c)) do gr´aﬁco de uma fun¸c˜ao cont´ınua f ´e chamado de
+ponto de inﬂex˜ao, se existe um intervalo (a, b) contendo c, tal que uma das seguintes situa¸c˜oes
+ocorram:
+(i) f ´e cˆoncava para cima em (a, c) e cˆoncava para baixo em (c, b).
+(ii) f ´e cˆoncava para baixo em (a, c) e cˆoncava para cima em (c, b).
+
+Leithold (1994), descreve que em fun¸c˜oes de uma ´unica vari´avel, a derivada ´e nula para
+qualquer candidato a m´aximo ou m´ınimo, seja porque a fun¸c˜ao p´ara de crescer ou porque
+inicia sua ascens˜ao. Para fun¸c˜oes de v´arias vari´aveis, garante-se a ocorrˆencia de pontos
+cr´ıticos somente por meio dos pontos em que todas as derivadas parciais sejam nulas.
+
+Se a fun¸c˜ao ´e de n vari´aveis precisa-se considerar valores pr´oximos da fun¸c˜ao em n di-
+
+mens˜oes.
+(i) Ponto de m´aximo: em um pequeno intervalo n-dimensional ao redor do ponto, todos os
+valores da fun¸c˜ao s˜ao menores ou iguais a ele;
+(ii) Ponto de m´ınimo: em um pequeno intervalo n-dimensional ao redor do ponto, todos os
+valores da fun¸c˜ao s˜ao maiores ou iguais a ele;
+(iii) Ponto de sela: Ocorre em gr´aﬁcos tridimensionais de fun¸c˜oes de duas vari´aveis. Tal ponto
+representa um m´aximo em uma dimens˜ao e um m´ınimo em alguma outra, ou representa um
+ponto de inﬂex˜ao em uma ou v´arias dimens˜oes.
+
+O estudo do ponto cr´ıtico da fun¸c˜ao, neste artigo, ser´a feito baseando-se nas segundas
+
+derivadas da fun¸c˜ao e utilizando o conceito de autovalores e autovetores.
+
+2.2.7 F´ormula de Taylor
+
+De acordo com Flemming & Gon¸calves(1992) a f´ormula de Taylor consiste num m´etodo
+
+de aproxima¸c˜ao de uma fun¸c˜ao por um polinˆomio, com um erro poss´ıvel de ser estimado.
+
+Deﬁni¸c˜ao 2.11 F´ormula de Taylor
+
+Seja f : I −→ R uma fun¸c˜ao que admite derivadas at´e ordem n num ponto c do intervalo
+I. O polinˆomio de Taylor de ordem n de f no ponto c, que denotamos por Pn(x), ´e dado por
+
+9
+
+Pn(x) = f (c) + f (cid:48)(c)(x − c) +
+
+f ”(c)
+2!
+
+(x − c)2 + ... +
+
+f n(c)
+n!
+
+(x − c)n
+
+Dado um polinˆomio de Taylor de grau n de uma fun¸c˜ao f (x), denota-se por Rn(x) a
+
+diferen¸ca entre f (x) e Pn(x), isto ´e, Rn(x) = f (x) − Pn(x).
+Logo, f (x) = Pn(x) + Rn(x).
+
+f (x) = f (c) + f (cid:48)(c)(x − c) +
+
+f ”(c)
+2!
+
+(x − c)2 + ... +
+
+f n(c)
+n!
+
+(x − c)n + Rn(x)
+
+(6)
+
+Proposi¸c˜ao 2.4 F´ormula de Taylor
+Seja f : [a, b] −→ R uma fun¸c˜ao deﬁnida num intervalo [a, b]. Suponha que as derivadas
+f (cid:48), f ”, ..., f n existam e sejam cont´ınuas em [a, b] e que f n+1 exista em (a, b). Seja c um ponto
+qualquer ﬁxado em [a, b]. Ent˜ao, para cada x ∈ [a, b], x (cid:54)= c, existe um ponto z entre c e x tal
+
+que fn(x) = f (c) + f (cid:48)(c)(x − c) +
+
+f ”(c)
+2!
+
+(x − c)2 + ... +
+
+f n(c)
+n!
+
+(x − c)n +
+
+f n+1(z)
+(n + 1)!
+
+(x − c)n+1
+
+Seja f (x, y), para o caso de uma fun¸c˜ao de duas vari´aveis. A f´ormula de Taylor nos
+
+fornece:
+
+f (x, y) = f (x0, y0) + (cid:52)x
+
+∂f (x0, y0)
+∂x
+
++ (cid:52)y
+
+∂f (x0, y0)
+∂y
+
++
+
+1
+2
+
+[
+
+∂2f (x0, y0)
+∂x2
+
+((cid:52)x)2 +
+
+(7)
+
++ 2
+
+∂2f (x0, y0)
+∂x∂y
+
+. (cid:52) x. (cid:52) y +
+
+∂2f (x0, y0)
+∂y2
+
+((cid:52)y)2 + R
+
+em que R ´e o resto (erro) da aproxima¸c˜ao. Tal f´ormula permite relacionar a matriz Hessiana
+(matriz das segundas derivadas da fun¸c˜ao) com determina¸c˜ao dos pontos cr´ıticos. Dado
+
+a =
+
+∂2f (x0, y0)
+∂x2
+
+((cid:52)x)2, b =
+
+∂2f (x0, y0)
+∂x∂y
+
+(cid:52) x (cid:52) y, c =
+
+∂2f (x0, y0)
+∂y2
+
+((cid:52)y)2
+
+.
+
+Obt´em-se uma express˜ao para os termos quadr´aticos:
+
+Q((cid:52)x, (cid:52)y) = a((cid:52)x)2 + 2b (cid:52) x (cid:52) y + c((cid:52)y)2 = f (x, y) − f (x0, y0).
+
+(8)
+
+Para os pontos cr´ıticos, onde a primeira derivada ´e nula, pode-se escrever a express˜ao na
+
+forma matricial:
+
+Q((cid:52)x, (cid:52)y) = (cid:2) (cid:52)x (cid:52)y (cid:3)
+
+(cid:20) a b
+c
+b
+
+(cid:21) (cid:20) (cid:52)x
+(cid:52)y
+
+(cid:21)
+
+Logo, tem-se a matriz Hessiana
+
+(cid:20) a b
+c
+b
+
+(cid:21)
+
+=
+
+
+
+
+
+
+
+∂2f
+∂x2
+∂2f
+∂x∂y
+
+
+
+
+
+
+
+∂2f
+∂x∂y
+∂2f
+∂y2
+
+De acordo com Leithold (1994), pode-se relacionar a matriz Hessiana com uma cˆonica
+em um plano; sendo poss´ıvel diagonaliz´a-la usando o processo idˆentico ao da rota¸c˜ao de uma
+
+10
+
+cˆonica. Ao desenhar as curvas de n´ıvel da fun¸c˜ao, pode-se perceber outra semelhan¸ca entre
+a forma da matriz e a caracter´ıstica do ponto cr´ıtico: quando o ponto ´e de sela, geralmente
+obtˆem-se hip´erboles; quando ´e de m´aximo ou m´ınimo, costuma-se ter elipses ou c´ırculos.
+Uma das propriedades das hip´erboles ´e apresentar autovalores de sinais contr´arios em sua
+matriz de termos quadr´aticos, enquanto que as elipses possuem autovalores de sinais iguais.
+Logo, a an´alise do ponto cr´ıtico est´a relacionada com os sinais dos autovalores da matriz
+Hessiana. Se os sinais dos autovalores s˜ao todos positivos, o ponto em quest˜ao ´e ponto de
+m´ınimo; se entre os sinais dos autovalores ao menos um for positivo e um for negativo, o
+ponto ´e de sela; sendo todos os sinais dos autovalores negativos, o ponto ´e de m´aximo.
+
+Segundo Leithold (1994), para fun¸c˜oes de duas vari´aveis pode-se determinar as mesmas
+caracter´ısticas observando o sinal do primeiro elemento da matriz Hessiana e seu determi-
+nante. Caso o determinante seja negativo, o ponto em quest˜ao ´e um ponto de sela; se o
+determinante ´e positivo, deve-se analisar o sinal do primeiro elemento da matriz Hessiana:
+sendo positivo, o ponto ´e de m´ınimo; caso contr´ario o ponto ´e de m´aximo. N˜ao obt´em-se
+nenhuma informa¸c˜ao caso o determinante seja zero.
+
+2.2.8 Autovalores e Autovetores
+
+Segundo Boldrini (1986) considerando uma transforma¸c˜ao especial T : V −→ W .
+
+em que λ ´e o autovalor (escalar) e v ´e autovetor (se v ≥ 0). Como toda transforma¸c˜ao linear
+pode ser escrita pela multiplica¸c˜ao de uma matriz por um vetor ent˜ao:
+
+T (v) = λv
+
+(9)
+
+Igualando-se as Equa¸c˜oes (9) e (10) tem-se:
+Av = λ v ou Av - λ v= 0 que resulta no sistema homogˆeneo:
+
+T (v) = Av
+
+(A − λI)v = 0
+
+(10)
+
+(11)
+
+em que A ´e uma matriz (n x n), v = 0 ´e sempre solu¸c˜ao (trivial).
+
+Os vetores v ≥ 0 para os quais existe um λ que resolve a Equa¸c˜ao (11) s˜ao chamados
+de autovetores da matriz A e os valores de λ, que conjuntamente com v resolvem a equa¸c˜ao
+s˜ao chamados de autovalores da matriz A associados aos respectivos autovetores. Para que
+a Equa¸c˜ao (11) tenha solu¸c˜ao al´em da trivial ´e necess´ario que o determinante da matriz dos
+coeﬁcientes seja zero, ou seja,
+
+det(A − λI) = 0
+
+(12)
+
+o que resulta em um polinˆomio de grau n em λ, conhecido como polinˆomio caracter´ıstico.
+As ra´ızes do polinˆomio caracter´ıstico s˜ao os autovalores da matriz A. Para se encontrar os
+autovetores basta substituir o valor do autovalor na equa¸c˜ao original e encontrar o autove-
+tor. O autovalor ser´a, ent˜ao, associado ao autovetor encontrado. Na verdade, o autovetor
+encontrado forma uma base para o espa¸co de solu¸c˜ao da Equa¸c˜ao (11), dado o respectivo
+autovalor. Logo, qualquer m´ultiplo do autovetor tamb´em ´e um autovetor. Portanto, sendo
+A a matriz canˆonica que representa um operador linear T, temos:
+
+(i) autovalores λ de T ou de A: s˜ao as ra´ızes da equa¸c˜ao
+
+det(A - λ I) = 0,
+
+11
+
+(ii) autovetores v de T ou de A: para cada λ, s˜ao as solu¸c˜oes da equa¸c˜ao
+
+Av = λv ou (A - λ I)v = 0.
+
+2.2.9
+
+Localiza¸c˜ao do ponto estacion´ario
+
+Suponha que o interesse seja encontrar os n´ıveis x1, x2, ..., xk, que maximizam a res-
+posta estimada. Segundo Montgomery (2013), este ponto, se existir, ser´a dado pelo conjunto
+x1, x2, ..., xk para o qual as derivadas parciais s˜ao iguais a zero.
+
+∂ ˆY
+∂x1
+
+=
+
+∂ ˆY
+∂x2
+
+= ... =
+
+∂ ˆY
+∂xk
+
+= 0
+
+(13)
+
+Este ponto ´e chamado de ponto estacion´ario e pode representar um ponto de m´aximo, de
+m´ınimo ou um ponto de sela. Generalizando o modelo de segunda ordem, para encontrar o
+ponto estacion´ario, em nota¸c˜ao matricial, temos:
+
+ˆY = ˆβ0 + xtb + xtBx
+
+(14)
+
+em que
+
+x =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+x2
+...
+xk
+
+, b =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ˆβ1
+ˆβ2
+...
+ˆβk
+
+ˆβ11
+
+
+
+
+
+
+
+
+ˆβ12/2 . . .
+ˆβ22
+. . .
+. . .
+
+e B =
+
+
+
+
+
+
+
+
+,
+
+ˆβ1k/2
+ˆβ2k/2
+...
+ˆβkk
+
+em que b ´e um vetor (k × 1) dos coeﬁcientes de regress˜ao da primeira ordem e B ´e uma matriz
+sim´etrica (k × k) em que na diagonal tem-se os coeﬁcientes de regress˜ao de segunda ordem e
+fora da diagonal os coeﬁcientes de intera¸c˜ao.
+
+As derivadas parciais dos valores estimados da resposta ˆY em rela¸c˜ao aos elementos do
+
+vetor x igualadas a zero s˜ao dadas por:
+
+O ponto estacion´ario ´e solu¸c˜ao da equa¸c˜ao (15), ou seja,
+
+∂ ˆY
+∂x
+
+= b + 2Bx = 0.
+
+O valor estimado da vari´avel resposta no ponto estacion´ario ´e:
+
+xs = −
+
+1
+2
+
+B−1b.
+
+ˆYs = ˆβ0 +
+
+1
+2
+
+xt
+sb.
+
+(15)
+
+(16)
+
+(17)
+
+2.2.10 Caracterizando a superf´ıcie de resposta
+
+Segundo Montgomery (2013), uma vez encontrado o ponto estacion´ario, ´e necess´ario ca-
+racterizar a superf´ıcie de resposta, ou seja, determinar se o ponto estacion´ario ´e um ponto
+de m´aximo, de m´ınimo ou de sela.
+
+Para um modelo ajustado com poucas vari´aveis, pode-se examinar o gr´aﬁco de contorno,
+caso contr´ario, faz-se uma an´alise canˆonica. De acordo com Montgomery (2013), considera-se
+uma transla¸c˜ao da superf´ıcie de resposta da origem para o ponto estacion´ario xs e, ent˜ao,
+rotacionam-se os eixos desse sistema at´e que eles ﬁquem paralelos aos eixos principais da
+superf´ıcie de resposta ajustada, como mostra a Figura 1.
+
+12
+
+(18)
+
+Figura 1: Forma canˆonica para o modelo de segunda ordem.
+Fonte: Montgomery (2013)
+
+A forma canˆonica do modelo est´a representada pela equa¸c˜ao:
+
+ˆY = ˆYs + λ1w2
+
+1 + λ2w2
+
+2 + ... + λkw2
+k,
+
+onde λi s˜ao constantes (autovalores ou ra´ızes caracter´ısticas da matriz B) e wi s˜ao as vari´aveis
+independentes transformadas. Assim, pode-se concluir que:
+i. Se todos os valores de (λi) s˜ao positivos, ent˜ao xs ´e um ponto de resposta m´ınima;
+ii. Se todos os valores de (λi) s˜ao negativos, ent˜ao xs ´e um ponto de resposta m´axima;
+iii. Se os valores de (λi) tem sinais positivos e negativos, ent˜ao xs ´e um ponto de sela.
+
+3 Resultados
+
+Inicialmente foi feita uma an´alise para veriﬁcar a relevˆancia dos fatores, vari´aveis, utiliza-
+dos no experimento. O estudo da importˆancia desses fatores foi feito por meio da an´alise de
+variˆancia, que consiste em decompor os graus de liberdade e a variabilidade total de um expe-
+rimento em partes conhecidas e independentes e uma por¸c˜ao residual de origem desconhecida
+e de natureza aleat´oria (Kronca & Banzatto, 2006).
+
+Os resultados da an´alise de variˆancia para o experimento composto central s˜ao apresen-
+tados apresentado na Tabela 3. A vari´avel tempo de rea¸c˜ao ´e representada por X1, a vari´avel
+temperatura ´e representada por X2. Veriﬁca-se a signiﬁcˆancia de uma fonte de varia¸c˜ao,
+analisando-se o valor-p. Se o valor-p for < 0,05, considera-se a fonte de varia¸c˜ao relevante.
+Foram consideradas nesta an´alise as vari´aveis simples, seus termos quadr´aticos e a intera¸c˜ao
+entre os fatores, representados por X1 : X2.
+
+Considerando-se os resultados da Tabela 3, conclu´ı-se que todos os fatores foram signiﬁ-
+
+cantes, ou seja, valor-p < 0,05, exceto para a intera¸c˜ao entre os fatores.
+
+13
+
+Tabela 3: An´alise de variˆancia de dados referentes `a produ¸c˜ao no delineamento composto
+central
+
+Fonte de varia¸c˜ao Graus de liberdade
+X1
+X2
+X 2
+1
+X 2
+2
+X1 : X2
+Res´ıduo
+
+1
+1
+1
+1
+1
+7
+
+Soma de quadrados Quadrado m´edio
+7,9198
+2,1232
+10,9816
+6,9721
+0,2500
+0,4964
+
+7,9198
+2,1232
+10,9816
+6,9721
+0,2500
+0,0709
+
+F
+111,6873
+29,9413
+154,8663
+98,3225
+3,5256
+
+valor-p
+0,0000
+0,0000
+0,0000
+0,0000
+0,1025
+
+Na Tabela 4 s˜ao apresentados os coeﬁcientes do modelo de regress˜ao m´ultipla. Veriﬁca-se
+por meio do valor-p que exceto para a intera¸c˜ao entre os fatores, todos os demais fatores s˜ao
+signiﬁcativos. Sendo assim, veriﬁca-se que um modelo de segunda ordem ´e adequado, pois o
+termo quadr´atico ´e signiﬁcativo.
+
+Tabela 4: Estimativa dos parˆametros do modelo de segunda ordem
+
+FV
+Intercepto
+X1
+X2
+X 2
+1
+X 2
+2
+X1 : X2
+
+Estimativas Erro padr˜ao
+79,93995
+0,99505
+0,51520
+-1,37645
+-1,00134
+0,25000
+
+0,11909
+0,09415
+0,09415
+0,10098
+0,10098
+0,13315
+
+T
+671,264
+10,568
+5,472
+-13,630
+-9,916
+1,878
+
+valor-p
+0,00000
+0,00001
+0,00093
+0,00000
+0,00002
+0,102519
+
+Considerando-se os resultados da Tabela 4, tem-se o modelo de segunda ordem, represen-
+
+tado por meio da Equa¸c˜ao (19).
+
+ˆY = 79, 93995 + 0, 99505X1 − 1, 37645X 2
+
+1 − 0, 5152X2 − 1, 00134X 2
+2
+
+(19)
+
+As Figuras 2 e 3 representam a superf´ıcie de resposta e o gr´aﬁco de contorno, respecti-
+vamente, para a resposta (produ¸c˜ao) em fun¸c˜ao da temperatura e do tempo. Percebe-se por
+estas ﬁguras que a resposta (produ¸c˜ao) tem valor de m´aximo.
+
+Figura 2: Superf´ıcie de resposta do modelo de segunda ordem
+
+14
+
+Figura 3: Gr´aﬁco de contorno do modelo de segunda ordem
+
+Observa-se que o ponto ´otimo est´a pr´oximo de 0, 4 para o tempo e 0, 3 para a temperatura
+considerando as vari´aveis codiﬁcadas e que a resposta neste ponto ´e um ponto de m´aximo.
+Quando transformadas, as vari´aveis codiﬁcadas para vari´aveis originais, esses valores estar˜ao
+pr´oximos de 175◦F e 85 minutos. Utilizando a solu¸c˜ao geral apresentada, tem-se:
+
+Primeiramente, deﬁne-se o vetor b, formado pelos coeﬁcientes de x1 e x2
+
+xs = −
+
+1
+2
+
+B−1b.
+
+b =
+
+(cid:20) 0, 99505
+0, 5152
+
+(cid:21)
+
+.
+
+A matriz B ´e a matriz dos coeﬁcientes quadr´aticos na diagonal principal e na diagonal
+
+secund´aria o coeﬁciente da intera¸c˜ao dividido por 2.
+
+B =
+
+(cid:20) −1, 37645
+
+0, 12500
+0, 12500 −1, 00134
+
+(cid:21)
+
+O ponto estacion´ario ´e dado por:
+
+xs = −
+
+1
+2
+
+1
+2
+
+B−1b
+
+xs = −
+(cid:20) −0, 73972 −0, 09234
+−0, 09234 −1, 01018
+(cid:20) 0, 3892304
+0, 3058466
+
+xs =
+
+(cid:21) → X1,s
+→ X2,s
+
+(cid:21) (cid:20) 0, 99505
+0, 51520
+
+(cid:21)
+
+As an´alises foram feitas considerando-se as vari´aveis codiﬁcadas. Sendo assim, faz-se
+necess´ario transformar a vari´avel. As f´ormulas utilizadas para transformar as vari´aveis s˜ao
+representadas por x1,s e x2,s. O ponto estacion´ario em termos das vari´aveis naturais, ´e dado
+por:
+
+Logo:
+
+X1,s =
+
+ξ1 − 85
+5
+
+X2,s =
+
+ξ2 − 175
+5
+
+0, 3992304 =
+
+ξ1 − 85
+5
+
+ξ1
+
+∼= 87
+
+15
+
+0, 3058466 =
+
+ξ2 − 175
+5
+
+ξ2
+
+∼= 176, 5
+
+O valor estimado da produ¸c˜ao no ponto estacion´ario obtido por meio da seguinte solu¸c˜ao:
+
+ˆY = β0 +
+
+1
+2
+(cid:2) 0, 3892304 0, 3058466 (cid:3)
+
+xt
+sb
+
+(cid:21)
+
+(cid:20) 0, 99505
+0, 51520
+
+ˆY = 79, 93995 +
+
+1
+2
+
+ˆY ∼= 80, 21
+
+Com o objetivo de caracterizar a superf´ıcie resposta, ou seja, determinar se o ponto es-
+tacion´ario ´e um ponto de resposta m´axima, m´ınima ou de sela vamos expressar o modelo
+ajustado na forma canˆonica, considerando a equa¸c˜ao (19). Para tal transforma¸c˜ao ´e ne-
+cess´ario, em primeiro lugar, determinar os autovalores λ1 e λ2.
+
+Os autovalores λ1 e λ2 s˜ao as ra´ızes do determinante da equa¸c˜ao:
+
+|B − λI| = 0
+
+(cid:20) −1, 37645
+
+0, 12500
+0, 12500 −1, 00134
+
+(cid:21)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+− λ
+
+(cid:20) 1 0
+0 1
+
+(cid:21)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+= 0
+
+λ2 + 2, 37779λ + 1, 3626639 = 0
+
+Sendo assim, tem-se que
+
+λ1 = −0, 9635
+
+λ2 = −1, 4143
+
+A forma canˆonica do modelo ajustado ﬁca:
+
+ˆY = 80, 21 − 0, 9635w2
+
+1 − 1, 4143w2
+2
+
+Dado que as ra´ızes λ1 e λ2 s˜ao negativas, conclui-se ent˜ao que xs ´e um ponto de m´aximo.
+
+4 Conclus˜oes
+
+Como existem apenas duas vari´aveis que inﬂuenciam no processo, os gr´aﬁcos de superf´ıcie
+de resposta, ao serem visualizados e comparados, possibilitam facilmente uma an´alise quanto
+`a produ¸c˜ao m´axima e a regi˜ao que cont´em o ´otimo. No gr´aﬁco de contorno, cada curva
+corresponde a uma particular altura da superf´ıcie de resposta, levando a concluir que em
+cada contorno a resposta estimada ´e constante e sendo assim podemos localizar o ´otimo com
+precis˜ao razo´avel.
+
+Atrav´es de uma solu¸c˜ao matem´atica geral pˆode-se localizar os pontos cr´ıticos para o
+tempo de rea¸c˜ao em 87 minutos, para temperatura em 176,5◦F e encontrar o valor estimado
+da produ¸c˜ao no ponto estacion´ario de 80,21%. Uma vez determinado o ponto estacion´ario,
+caracterizou-se a superf´ıcie de resposta nas imedia¸c˜oes desse ponto, transformando o modelo
+
+16
+
+em um novo sistema de coordenadas cartesianas ˆY = 80, 21 − 0, 9635w2
+2 com
+∼= 176, 5 ; sendo -0,9635 e -1,4143 respectivamente
+∼= 87 e ξ2
+origem no ponto estacion´ario ξ1
+os autovalores de λ1 e λ2. A an´alise dos autovalores indicaram pontos cr´ıticos de m´aximo o
+que resulta numa produ¸c˜ao m´axima em 80,21%.
+
+1 − 1, 4143w2
+
+Referˆencias
+
+[1] BANZATTO, David A.; KRONKA, S´ergio N., Experimenta¸c˜ao Agr´ıcola, 4a ed, Editora
+
+Funep, S˜ao Paulo, 2006.
+
+[2] BOLDRINI, C., ´Algebra Linear, 3a ed., Editora Harbra, S˜ao Paulo, 1986.
+
+[3] FLEMING, Diva M.; GONC¸ ALVES, M´ırian B., C´alculo A: fun¸c˜oes, limite, deriva¸c˜ao,
+
+integra¸c˜ao. 5a ed., Editora UFSC, S˜ao Paulo, 1992.
+
+[4] LEITHOLD, Louis. The Calculus with Analitic Geometry, 6a ed O c´alculo com geometria
+anal´ıtica, vol. 2, Tradu¸c˜ao de Cyro de Carvalho Palarra, 3a ed.,Editora Harbra LTDA,
+S˜ao Paulo, 1994.
+
+[5] MONTGOMERY, Douglas C.,Design and Analysis of Experiments, Editora John Wiley
+
+& Sons, New York, 2013.
+
+[6] MONTGOMERY, Douglas C.; RUNGER, G. C,Estat´ıstica aplicada e probabilidade
+para engenheiros; tradu¸c˜ao Verˆonica Calado.2a ed.,Editora LTC, Rio de Janeiro, 2009.
+
+[7] MYERS, Raymond H.; MONTGOMERY, Douglas C., Response Surface Methodology:
+Process and Product Optimization Using Design of Experiments, 2a ed., Editora John
+Wiley & Sons, New York, 1995.
+
+[8] R DEVELOPMENT CORE TEAM The R Manuals: current version: 3.3.1. 2016.
+
+Dispon´ıvel em:¡http:www.R-project.org¿. Acesso em: 21/05/2016
+
+

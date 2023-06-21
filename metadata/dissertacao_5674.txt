@@ -1,0 +1,3605 @@
+Clayton Bacelar de Lima
+
+Fundamentação e aplicação de processos
+estocásticos
+
+Santo André, 2013
+
+Universidade Federal do ABC
+
+Centro de Matemática, Computação e Cognição
+
+Clayton Bacelar de Lima
+
+Fundamentação e aplicação de processos
+estocásticos
+
+Orientador: Prof. Dr. André Ricardo Oliveira Fonseca
+
+Dissertação de mestrado apresentada ao Centro de
+Matemática, Computação e Cognição para
+obtenção do título de Mestre em Matemática
+
+Este exemplar corresponde à versão final da dissertação
+
+defendida pelo aluno Clayton Bacelar de Lima,
+
+e orientada pelo Prof. Dr. André Ricardo Oliveira Fonseca.
+
+Santo André, 2013
+
+Folha de AprovaçãoSubstituir pelo pdf da folha de aprovação assinada pela banca.Dedico essa tese a todos que estiveram e estão ao meu lado durante essa caminhada,
+principalmente, a minha mãe que já se foi e minha família (meu pai, minha mulher e
+minhas ﬁlhas)
+
+iii
+
+Agradecimentos
+
+Agradeço ao meu orientador, Prof André Fonseca e os professores do Profmat Rafael
+Grisi, Daniel Miranda, Armando Caputti e João Carlos Ferreira.
+
+iv
+
+Procura ser feliz na eternidade,
+que o mundo são brevíssimos instantes.
+Alvarenga Peixoto
+
+v
+
+Resumo
+
+Palavras Chaves: Processos Estocásticos, Ensino Fundamental, Ensino Médio.
+
+Esta dissertação visa apresentar sequências de atividades didáticas explorando os
+métodos de analise de séries temporais utilizando os conhecimentos estudados na edu-
+cação básica. Uma das justiﬁcativas de estudar esse tema vem das orientações curric-
+ulares que aﬁrma: "Ao ﬁnal do ensino médio, espera-se que os alunos saibam usar a
+Matemática para resolver problemas práticos do quotidiano; para modelar fenômenos
+em outras áreas do conhecimento". Assim, o trabalho, sugere atividades que abrangem
+principalmente os conteúdos de estatística e probabilidade, discute as novas tecnolo-
+gias na formação do pensamento estocástico dos alunos e seus desdobramentos. Este
+trabalho é dividido em quatro partes: A primeira seção é constituída de uma revisão
+bibliográﬁca sobre séries temporais e processos estocásticos; na segunda parte apresen-
+tamos a introdução, objetivos e justiﬁcativa; na terceira seção apresentamos um plano
+de aula com sequências didáticas utilizando alguns softwares. Essas atividades abor-
+dam vários conceitos que servem de base para compreender métodos de identiﬁcação
+de séries temporais. Através do método de simulação e interação utilizaremos alguns
+softwares como o R, Gretl e a planilha eletrônica. Concluímos a quarta parte apresen-
+tando uma discussão ﬁnal sobre o ensino de processos estocásticos por meio da recursos
+tecnológicos.
+
+vi
+
+Abstract
+
+This dissertation aims to present a sequence of didactic activities exploring time series
+analysis methods using basic education knowledge. Thus, following curricular orienta-
+tions, those activities cover mainly statistical and probability contents. This paper is
+divided into four parts: The ﬁrst section is composed of a temporal stochastic processes
+bibliographic review and the second part presents the introduction, objectives and jus-
+tiﬁcation; in the third section we present a lesson plan with teaching sequences using
+some software. Those activities address several concepts related to the basic compre-
+hension of identifying time series. Through the simulation and interaction methods, we
+have used some software such as R, Gretl and electronic spreadsheet. We conclude the
+fourth part presenting a ﬁnal discussion about teaching stochastic processes through
+technological resources.
+
+vii
+
+Conteúdo
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+1.3 Séries temporais
+
+1
+1
+1.1
+introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.2 Deﬁnições . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.2.1 Variável Aleatória . . . . . . . . . . . . . . . . . . . . . . . . . .
+3
+1.2.2 Variância, Covariância e Correlação . . . . . . . . . . . . . . . . .
+5
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+. . . . . . . . . . . . . . . . . . . . . . . .
+1.3.1 Processos estocásticos
+6
+1.3.2 Especiﬁcação de um Processo Estocástico . . . . . . . . . . . . .
+8
+1.3.3 Propriedades da Função de Auto-covariância
+. . . . . . . . . . .
+1.3.4 Processos Lineares Estacionários
+9
+. . . . . . . . . . . . . . . . . .
+1.3.5 Processos Não Estacionários . . . . . . . . . . . . . . . . . . . . . 16
+1.3.6 Modelagem ARIMA . . . . . . . . . . . . . . . . . . . . . . . . . 17
+1.4 Resumo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+2 PRÁTICA
+
+30
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+2.1
+2.2 Considerações iniciais
+
+3 PLANO DE AULA
+
+32
+
+4 CONCLUSÃO
+
+39
+4.1 Discussão (outros trabalhos) . . . . . . . . . . . . . . . . . . . . . . . . . 39
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+4.2 Considerações ﬁnais
+
+Referência Bibliográﬁca
+
+43
+
+viii
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+1.1 introdução
+
+O tema de nosso estudo trabalha com observações de fenômenos físicos, químicos, da
+medicina e da economia. Serve como exemplo os índices da bolsa de valores de São
+Paulo, valores mensais de temperatura na cidade de Uberlândia, índice de custo de vida
+na cidade de salvador, etc. Esses são exemplos de séries temporais que (Morettin 2005)
+deﬁne como qualquer conjunto de observações ordenadas no tempo. Existem duas per-
+spectivas na analise de séries temporais e nas duas envolve a construção de modelos para
+séries com propósitos diferentes, no caso do primeiro a analise é realizada no campo
+do tempo sendo apresentados modelos paramétricos (número ﬁnito e parâmetros) já no
+segundo, o domino ﬁca no campo da frequência utilizando modelos não paramétricos.
+Dentro do campo de frequências existe a análise espectral que deve basear-se na decom-
+posição da série em componentes de frequência e a presença do espectro é o atributo
+essencial. No que se refere aos modelos paramétricos podemos colocar como exemplo
+os modelos ARIMA. Para facilitar algumas colocações adotaremos uma representação
+de uma observação de um fenômeno físico por exemplo como no caso da temperatura
+do mar durante certo período de horas do dia. Chamaremos de Z(t) a temperatura
+observada no instante t. Se considerarmos que a temperatura foi obtida em três dias
+diferentes terão trajetórias (curvas) que normalmente não são iguais. Este processo
+que chamaremos de processo estocástico é o conjunto de trajetórias que conseguimos
+observar e cada trajetória também é designada de série temporal ou função amostral.
+Denota-se por Z(1)(5) a temperatura no instante t=5, para a primeira trajetória e deste
+modo para cada trajetória j no instante t teremos um número real Z(j)(t). Para cada
+t ﬁxo, teremos os valores de uma variável aleatória Z(t), que terá certa distribuição de
+probabilidades. Vale resaltar que temos situações como no exemplo aqui citado que
+é possível obter várias trajetórias e outras situações que não há possibilidade de se
+fazer vários testes e assim só há uma trajetória. Apesar de normalmente t ser men-
+cionado como tempo a série Z(t) poderá ser função de outros parâmetros físicos, como
+por exemplo espaço e volume e quando isto ocorrer a série é considerada multivari-
+ada e multidimensional. Uma vez adquirido as variáveis aleatórias qual o interesse em
+analisar as séries temporais? Citaremos então os objetivos principais:
+
+• Fazer previsões de valores futuros da série, a curto prazo ou a longo prazo;
+
+• Investigar do mecanismo gerador da série, como o caso de uma série de altura de
+
+ondas quanto se pretende investigar como estas foram geradas;
+
+• Descrever o comportamento da série, através de construção de gráﬁcos para, por
+
+exemplo, veriﬁcar os ciclos.
+
+De maneira geral é comum supor uma série temporal estacionaria, ou seja, ela se desen-
+volve em torno de uma média constante, representando alguma forma de estabilidade.
+
+1
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+Porém na pratica a maioria das séries reﬂetem uma forma de não-estacionariedade o
+que nas áreas econômicas e ﬁnanceiras são chamadas de tendências, o caso mais simples
+é a tendência linear, onde a série ﬂutua ao redor de uma reta, com inclinação ou não.
+A classe de modelos ARIMA, já mencionada, tem condição de representar de maneira
+adequada séries estacionárias e séries não estacionárias que não apresentam compor-
+tamento explosivo (homogêneo). Uma transformação muita utilizada quando a série é
+não estacionária é tomar diferenças sucessivas da série original, até que se consiga uma
+série estacionária. Assim
+
+∆Z(t) = Z(t) − Z(t − 1)
+
+, é primeira diferença de Z(t) e
+
+∆2Z(t) = ∆[∆Z(t)] = ∆[Z(t) − z(t − 1)].
+
+Deste modo, a n-ésima diferença de Z(t) é
+
+∆nZ(t) = ∆[∆n−1Z(t)]
+
+Na pratica, toma-se uma ou duas vezes diferenças para que a série se torne estacionária.
+Como já foi citado um dos principais objetivos da analise de séries temporais e realizar
+previsões e isto conduz a obtenção de um método ou procedimento. Alguns autores
+como Priestley (1979) sugerem que quase todos os procedimentos estão virtualmente
+fundamentado na previsão dos mínimos quadrados, os quais são obtidos através de
+diferentes procedimentos computacionais a partir de combinações lineares de valores
+passados. Então é necessário obter uma função-perda além do modelo para se chegar
+a um procedimento. A função-perda mais utilizada é o erro quadrático médio, apesar
+em algumas situações, outras metodologias possam ser mais adequadas. Para ﬁcar
+mais claro suponha que obtemos observações de uma série temporal até o instante t e
+desejamos prever o valor da série no instante t+h. Considerando ˆZt(h) é a previsão de
+Z(t+h), de origem t e horizonte h. O erro quadrático médio da previsão é
+
+E[z(t + h)] − ˆzt(h)]2.
+
+Então dado o modelo que retrata a série temporal no instante t e dado que dese-
+jamos minimizar o erro quadrático médio, obtemos uma fórmula para ˆZt(h). Normal-
+mente os procedimentos de previsão variam muito, podendo ser simples e intuitivo, no
+qual existe nenhuma análise de dados envolvida, ou mais quantitativos e complexos,
+chegando a uma analise signiﬁcativa. Em economia existem dois métodos mais utiliza-
+dos: econométrico e de séries temporais. No primeiro, a previsão é feita com base nas
+teorias econômicas para construir um modelo, incluindo muitas variáveis, e no segundo
+o modelo é construído pelos dados estatísticos sem relação com teorias econômicas.
+Para Ashley e Granger (1979) a abordagem tem ser hibrida, porém para outros autores
+os modelos econométricos se ajustam melhor aos dados, enquanto que outros modelos
+como os ARIMA fornecem melhor previsões. Nosso principal objetivo aqui é apresentar
+a modelagem ARIMA, método de analise e previsão de séries temporais que se destaca
+pela sua ampla divulgação e utilização, classiﬁcado como não automático, o qual exige a
+intervenção de pessoal especializado para serem aplicados e também pela sua aparente
+superioridade em várias situações.
+
+2
+
+1.2 Deﬁnições
+
+1.2 Deﬁnições
+
+O objetivo desta seção é apresentar alguns conceitos introdutórios sobre séries tempo-
+rais apresentando quando possíveis alguns exemplos. Começamos apresentando então:
+
+1.2.1 Variável Aleatória
+
+Suponhamos que a cada ponto de um espaço amostral se atribua um número.Teremos
+uma função deﬁnida no espaço amostral. Esta função é chamada variável aleatória (ou
+variável estocástica) ou ainda função aleatória (ou função estocástica). Isso corresponde
+a representar os resultados de um experimento aleatório por meio de números melho-
+rando a tratamento matemático. Denota-se em geral por uma letra maiúscula X, Y,... .
+EXEMPLO: Jogando-se uma moeda duas vezes, o espaço amostral é τ = {cc, ck, kc, kk}
+onde c=cara e K=coroa e X é o número de "caras"que aparecem. A cada ponto amostral
+associamos um número para X, tal como se vê na Tábua 1. Assim, por exemplo, no
+caso "cc"(2 caras), X=2, enquanto que para "kc"(1 cara) X=1.
+
+Tabela 1.1: Tábua 1
+
+Ponto Amostral
+X
+
+cc
+2
+
+ck
+1
+
+kc
+1
+
+kk
+0
+
+Neste espaço amostral, poderíamos deﬁnir muitas outras variáveis aleatórias como
+,por exemplo, o números de "caras"menos o número de "coroas"ou ainda o quadrado
+de número de "caras". Uma variável aleatória que adota um número inﬁnito ou um
+número ﬁnito enumerável de valores, é chamada variável discreta, ao passo que uma
+variável aleatória que adota um número inﬁnito (não enumerável) de valores é uma
+variável aleatória continua.
+
+1.2.2 Variância, Covariância e Correlação
+
+Antes de apresentarmos algumas deﬁnições é importante deﬁnirmos o que é média ou
+esperança. Para uma série de dados X1, X2, X3, . . . , Xn onde n é o número de observações
+segue que:
+
+Média = E(x) = µx =
+
+(cid:80)
+
+n
+i=1 Xi
+n
+
+Covariância vem de variância conjunta. A variância que é uma medida de dispersão
+mede em geral a distância dos seus valores em relação à média, ou o quanto seus
+valores se afastaram de sua média. A variância é calculado primeiro pela soma dos
+desvios quadrados da média, e dividindo-a pelo número de observações (se os dados
+representam a população toda) ou por este número, reduzido por um (se os dados
+representam uma amostra).
+
+Variância = E[(X − µ)2] = σ2
+
+x =
+
+(cid:80)
+
+n
+i=1(Xi − µ)2
+n
+
+Quando existirem duas séries de dados e se pretende tomar como as duas variáveis
+se movem juntas a medida mais utilizada é a covariância. Covariância ou variân-
+cia conjunta é uma medida do grau de inter-relação numérica entre duas variáveis
+
+3
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+aleatórias. Pode também ser chamada de medida de dependência linear entre duas var-
+iáveis aleatórias o que segue se as variáveis forem independentes a covariância é zero.
+A covariância fornece uma medida não padronizada do grau no qual elas se movem
+juntas, e é calculada tomando o produto dos desvios da média para cada variável em
+cada período.
+
+Covariância = Cov(X, Y) = E[(X − µx)(Y − µy)] = σxy =
+
+(cid:80)
+
+n
+i=1(Xi − µx)(Yi − µy)
+n
+
+Como sinal da covariância indica o tipo de relação entre as duas variáveis então o sinal
+positivo indica que elas se movem juntas e o sinal negativo indica que elas se movem
+em direções opostas.
+
+Assim, mesmo que a covariância cresce à medida que o relacionamento aumenta
+ainda não se pode fazer uma avaliação sobre o poder do relacionamento entre as duas
+variáveis por ela não ser padronizada. Desse modo utiliza-se a correlação que é uma
+medida padronizada entre relações de variáveis. A correlação é calculada da covariância:
+
+Correlação = ρxy =
+
+Cov(X, Y)
+Dp(X).Dp(Y)
+
+=
+
+E[(X − µx)(Y − µy)]
+(cid:112)(E[(X − µx)2](cid:112)(E[(Y − µy)2]
+
+=
+
+(cid:112)(cid:80)
+
+(cid:80)
+
+n
+i=1(Xi − µx)(Yi − µy)
+
+n
+
+i=1(Xi − µx)2(cid:112)(cid:80)
+
+n
+i=1(Yi − µy)2
+
+A correlação são valores que varia de -1 a +1. Uma correlação próxima a zero indica
+que as duas variáveis não estão relacionadas. Uma correlação positiva indica que as
+duas variáveis movem juntas, e a relação é forte quanto mais a correlação se aproxima
+de um. Uma correlação negativa indica que as duas variáveis movem-se em direções
+opostas, e que a relação também ﬁca mais forte quanto mais próxima de menos 1 a
+correlação ﬁcar. A autocovariância é a covariância de dois grupos de dados de uma
+mesma sequência de dados. Supondo o 1o grupo X(t) e o 2o grupo X(t + τ) .Para
+ilustrar veja o exemplo abaixo:
+
+Tabela 1.2:
+
+Dados
+3
+2
+4
+5
+6
+
+t1
+t2
+t3
+t4
+t5
+
+Xt Xt+1
+3
+2
+4
+5
+
+2
+4
+5
+6
+
+Para calcular a γ(1) = cov{X(t), X(t + 1)} da sequência da tabela 1.2 utiliza-se a
+1o grupo que são dados de X(t1) a X(t4) e a 2o grupo que são dados de X(t2) a
+X(t5). Para facilitar a leitura utilizaremos a seguinte notação: dt = X(t) − µt e
+dt+1 = X(t + 1) − µ(t + 1) onde µ é a média conforme citamos acima.
+
+4
+
+1.3 Séries temporais
+
+Tabela 1.3:
+
+X(t) X(t+1)
+
+3
+2
+4
+5
+
+2
+4
+5
+6
+
+dt
+-0,5
+-1,5
+0,5
+1,5
+
+µ
+3,5
+σ2
+1,25
+Dp 1,118
+
+4,25
+2,188
+1,479
+
+dt+1
+-2,25
+-0,25
+0,75
+1,75
+
+dt.dt+1
+1,125
+0,375
+0,375
+2,625
+
+(cid:80)
+
+dtdt+1 → 1,125
+
+Deste modo então a autocovariância da sequência é:
+
+Cov{XtXt+1} =
+
+(−0, 5).(−2, 25) + (−1, 5).(−0, 25) + (0, 5).(0, 75) + (1, 5).(1, 75)
+4
+
+Cov{XtXt+1} =
+
+1, 125 + 0, 375 + 0, 375 + 2, 625
+4
+
+= 1, 125
+
+e para calcular a autocorrelação desta sequência fazemos
+
+ρ1 =
+
+Cov(Xt, Xt+1)
+Dp(Xt).Dp(Xt+1)
+
+=
+
+1, 125
+(1, 118)(1, 479)
+
+=
+
+1, 125
+1, 65359
+
+= 0, 680336
+
+1.3 Séries temporais
+
+Segundo (Morettin,Toloi-81) uma serie temporal é qualquer conjunto de observações
+ordenadas no tempo. As series temporais podem ser discretas citamos com exemplos
+os valores mensais de vendas televisores no Brasil, valores diários da temperatura da
+cidade do Rio de Janeiro e a quantidade diária de chuva na cidade de Bauru e ,além
+disso, as séries temporais podem ser continuas. Aqui utilizamos como exemplo os
+registros de marés no porto de Paranaguá e convém lembrar que neste caso podemos
+convertê-la em uma serie temporal discreta coletando amostras em intervalo de tempos
+iguais. Apesar de haver duas maneiras de abordar a analise de séries temporais que
+conforme (Morettin,Toloi-81) nos dois casos o objetivo é construir modelos para as
+séries com determinados propósitos. Na primeira abordagem a analise é realizada em
+função do tempo e os modelos apresentados são os modelos com número ﬁnitos de
+parâmetros (paramétricos). Na segunda abordagem a analise ocorre em função de
+frequências e os modelos apresentados são os modelos não paramétricos. Dentre os
+modelos paramétricos existem os modelos de arima que é o nosso principal objeto de
+estudo. No que se relaciona a analise do domínio de frequências o estudo baseia-se
+na decomposição de componentes de frequência no qual o espectro é essencialmente
+importante, ocorrendo uma analise espectral. Esse tipo de analise não será estudado
+aqui.
+
+5
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+1.3.1 Processos estocásticos
+
+Processos Estacionários
+
+Em séries temporais uma das suposições mais elementares é que o processo estocás-
+tico gerador da mesma seja estacionário, isto é, que o processo move-se em torno de
+uma média constante e também de variância constante. Os processos estocásticos
+estacionários podem ser estritamente (forte) ou fracamente estacionários. Mas antes,
+deﬁnimos formalmente processos estocásticos segundo (Morettin-2006).
+
+Deﬁnição: Seja T um conjunto arbitrário. Um processo estocástico é uma família
+X(t),t ∈ τ, tal que, para cada; X(t) é uma variável aleatória. Como para cada t
+pertencente a T existe uma variável aleatória X(t) determinada sobre o espaço de
+probabilidade Ω, isto é, X(t) é uma função de dois argumentos, X(t,w), t ∈ τ e
+w ∈ Ω.Assim que para cada t ∈ τ, temos uma v.a X(t,w), com uma função densidade
+de probabilidades ft(x) de outro modo, para cada w ∈ ∆, ﬁxado, adquirimos uma
+função de t.
+
+Conforme (Morettin-2006) uma maneira de visualizar a distribuição de probabili-
+dades de X(t,w), para t ﬁxo é considerar a proporção de trajetórias que passam por
+uma ”janela” de amplitude ∆. Tal proporção será ft(x)∆.Esta é a mesma ideia para
+construir um histograma para distribuição de valores de uma v.a..Os valores de X(t)
+são chamados de estados e o conjunto de valores X(t) é chamado é chamado de espaço
+dos estados. Dizemos que se τ = Z o processo é com parâmetro discreto e se τ estiver
+num intervalo R é com parâmetro contínuo.
+
+1.3.2 Especiﬁcação de um Processo Estocástico
+Sejam F(x1, . . . , xn; t1, . . . , tn) elementos quaisquer de τ e consideremos
+
+F(x1, . . . , xn) = P{X(t1) (cid:54) x1, . . . , X(tn) (cid:54) xn}
+
+.
+
+Então, o processo estocástico X(t), t ∈ τ estará especiﬁcado se conhecermos as
+distribuições ﬁnito-dimensionais (2.1), para todo n (cid:62) 1. As funções de distribuição
+devem satisfazer às duas condições seguintes:
+
+(i)(Condição de simetria): para qualquer permutação j1, . . . , jn, dos índices 1,2,...,n,
+
+temos
+
+F(xj1, . . . , xjn; tj1, . . . , tjn) = F(x1, . . . , xn; t1, . . . , tn)
+
+(1.1)
+
+(ii)(Condição de compatibilidade): para m < n ,
+
+F(x1, . . . , xm, ∞, . . . , ∞; t1, . . . , tm, . . . , tn) = F(X(t1), . . . , Xm; t1, . . . , tm).
+
+O lado esquerdo desse da equação acima deve ser entendido como
+
+lim
+xm+1,...,xn→∞
+
+F (x1, . . . , xm, xx+1, . . . , xn; t1, . . . , tn) .
+
+Pode-se demonstrar que qualquer conjunto de funções distribuição ﬁnito-dimensionais
+satisfazendo as condições de simetria e compatibilidade deﬁne um processo estocástico
+X(t)sobre τ. Este resultado é conhecido como o teorema de extensão de Kolmogorov.
+Na prática o conhecimento de todas as distribuições ﬁnito-dimensionais é muito difícil
+
+6
+
+1.3 Séries temporais
+
+às vezes até impossível então o que pode ser feito é trabalhar com certas características
+associadas a essas distribuições e que sejam simples de calcular e interpretar. Assim
+o que normalmente é feito e trabalhar com momentos de ordem bem pequena. Então
+nos concentraremos nos chamados processos estacionários de momentos de primeira e
+segunda ordem. A função média ou simplesmente média de X(t) é dada por
+
+µ(1; t) = µ(t) = E {X(t)} =
+
+(cid:90) ∞
+
+−∞
+
+xdF(x; t),
+
+enquanto a função auto-covariância de X(t) é deﬁnida como
+
+µ(1, 1; t1, t2) − µ(1; t1)µ(1; t2) = γ(t1, t2)
+
+= E {X(t1)X(t2)} − E {X(t1)} E {X(t2)} ,
+
+t1, t2 ∈ τ
+
+Observamos que µ(t) é uma função de t ∈ τ e que γ(t1, t2) depende de dois argumentos
+t1
+
+t2. Note que se t1 = t2 = t, temos
+
+e
+
+γ(t, t) = Var {X(t)} = E
+
+(cid:9)
+
+(cid:8)
+X2(t)
+
+− E2 {X(t)} ,
+
+isto é, a função variância do processo X(t) que indicaremos por σ2(t). A função de auto-
+covariância γ(t1, t2) dá a covariância entre duas variáveis aleatórias X(t1) eX(t2) , para
+quaisquer t1, t2 ∈ τ. A função µ(t)é obtida variando-se t em τ. Imagine um processo
+estocástico como uma família de variáveis aleatórias que para cada t, temos um conjunto
+de valores Z(1)(t), Z(2)(t), . . . correspondentes às várias realizações. Calculando, para
+cada t, a média dos valores de Z(n)(t), média calculada em relação a j, obtemos a
+função µ(t). Percebe-se que nos processos os parâmetros mais importantes são a média
+e a função autocovariância. Utiliza-se como convenção no momento que se fala de um
+gráﬁco de X(t) estará falando de um gráﬁco com todas as trajetórias de X(t), então se
+utiliza uma trajetória do processo.
+
+Deﬁnição: Um processo estocástico {X(t), t ∈ τ} diz-se estritamente estacionário se
+todas as distribuições ﬁnito dimensionais permanecem as mesmas sob translações do
+tempo, ou seja,
+
+F(x1, . . . , xn; t1 + τ, . . . , tn + τ) = F(x1, . . . , xn; t1, . . . , tn),
+
+para quaisquer t1, . . . , , tn, τ de τ.
+
+Em outras palavras as distribuições uni-dimensionais são invariantes sob translações
+
+do tempo, isto é a média µ(t) e a variância σ2 são constantes, desse modo
+
+E {X(t)} = µ(t) = µ,
+
+para todo
+
+t ∈ ø
+
+O mesmo ocorre com todas as distribuições bi-dimensionais que dependem de difer-
+enças de tempos. Para t1, t2 ∈ τ, γ(t1, t2) = γ(t1 + t, t2 + t).Substitindo t por −t2,
+teremos que
+
+γ(t1, t2) = γ(t1 − t2, 0) = Cov {X(t1 − t2), X(0)} .
+Na pratica a covariância é uma função de |t1 − t2|. Então a função auto-covariância de
+um processo estacionário forte ou estrito é da seguinte forma
+
+γ(τ) = Cov {X(t), X(t ± τ)} = Cov {X(0), X(τ)}
+
+7
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+Deﬁnição: Um processo estocástico {X(t), t ∈ τ} diz-se fracamente estacionário (ou
+
+estacionário de segunda ordem) se e somente se
+
+(i) E {X(T )} = µ(t) = µ,
+(cid:9)
+
+(cid:8)
+
+(ii) E
+
+X2(T )
+
+< ∞,
+
+para todo t ∈ τ;
+
+constante,para todo t ∈ τ;
+
+(iii) γ(τ) = Cov {X(t1), X(t2)} é uma função apenas de |t1 − T2|.
+
+Convém salientar que para X(t) ser estritamente estacionário não é necessário que seja
+fracamente estacionário pois pode não satisfazer a condição (ii) da deﬁnição.
+
+Deﬁnição: Um processo estocástico real {X(t), t ∈ τ} diz-se Gaussiano se, para qual-
+quer conjunto t1, . . . , tn de τ, v.a. X(t1), X(t2), . . . , X(tn) têm uma distribuição nor-
+mal n-variada. Veja que um processo Gaussiano com variância ﬁnita deve ser calculado
+pelas médias e covariância, então se ele for estacionário de segunda ordem, será também
+estritamente estacionário.
+
+1.3.3 Propriedades da Função de Auto-covariância
+
+Seja {X(t), t ∈ Z} um processo estacionário real discreto, de média zero e f.a.c.v. γ =
+E {XtXt+τ}.
+
+Proposição: A f.a.c.v. γ satisfaz as seguintes propriedades:
+
+(i) γ0 > 0,
+
+(ii) γ−τ = γτ,
+
+(iii) |γτ| (cid:54) γ0,
+
+(iv) γ−τ é não negativa deﬁnida, no sentido que
+
+n(cid:88)
+
+n(cid:88)
+
+j=1
+
+k=1
+
+ajakγτj−τk
+
+(cid:62) 0,
+
+para quaisquer números reais a1, . . . , an, e τ1, . . . , τn de Z. Prova. As propriedades
+(i) e (ii) decorrem imediatamente da deﬁnição de γτ. A propriedade (iii) segue do fato
+que
+
+(cid:8)
+t+τ ± 2Xt+τxt + X2
+X2
+t
+
+(cid:9)
+
+(cid:62) 0
+
+E {Xt+τ ± Xt}2 = E
+
+Mas o segundo membro é igual a
+
+ou seja ,
+
+σ2 ± 2γτ ± σ2 (cid:62) 0
+
+2γ0 ± 2γ(cid:62)0
+
+e (iii) ﬁca demonstrada. Quanto a (iv) temos que
+
+n(cid:88)
+
+n(cid:88)
+
+ajakγτj−τk =
+
+n(cid:88)
+
+n(cid:88)
+
+ajakE
+
+(cid:8)
+XτjXτK
+
+(cid:9)
+
+j=1
+
+k=1
+
+j=1
+
+k=1
+
+8
+
+1.3 Séries temporais
+
+
+
+
+
+
+E
+
+n(cid:88)
+
+j=1
+
+
+
+
+2
+
+ajXτj
+
+
+
+(cid:62) 0.
+
+Deﬁnição: A função de auto-correlação (f.a.c.) do processo é deﬁnida por
+
+ρr =
+
+γr
+γ0
+
+,
+
+τ ∈ Z,
+
+e tem as propriedades de γτ, exceto que agora ρ0 = 1.
+
+1.3.4 Processos Lineares Estacionários
+
+Apresentaremos aqui alguns exemplos de processos estocásticos estacionários principal-
+mente os processos auto-regressivos (AR), de médias Móveis (MA) e combinação dos
+dois os processos ARMA que são muito utilizados.
+
+Exemplo 1 Sequência Aleatória
+Consideremos {Xn, n = 1, 2, . . . } uma sequência de v.a. deﬁnidas no mesmo espaço
+amostral ω. Supomos um processo com parâmetro discreto, ou uma sequência aleatória.
+Para todo n (cid:62) 1, podemos escrever
+
+P {X1 = a1, . . . , Xn = an} = P {X1 = a1} × P {X2 = a2|X1 = a1}
+
+× . . . × P {Xn = an|X1 = a1, . . . , Xn−1 = an−1} .
+
+Se tiver um caso com uma sequência {Xn, n (cid:62) 1} de v.a. mutuamente independente
+
+então escrevemos
+
+P {X1 = a1, . . . , Xn = an} = P {X1 = a1} . . . P {Xn = an} .
+
+E ainda o caso em que as v.a. todas tem a mesma distribuição conﬁgura-se uma
+sequência de v.a. independes e identicamente distribuídas(i.i.d) e para o processo Xn
+ser estacionário será necessário E {Xn} = µ, Var {Xn} = σ2, para todo n (cid:62) 1, desse
+modo
+
+γτ = Cov {Xn, Xn+τ} =
+
+(cid:12)
+
+σ2,
+0,
+
+se τ = 0
+se τ (cid:54)= 0.
+
+Segue-se que στ = 1, para τ = 0 e στ = 0, caso contrário.
+Deﬁnição: Dizemos que {εt, t ∈ Z} é ruido branco discreto se as v.a. εt são não
+i.i.d., como
+
+correlacionadas, isto é, Cov{εt, εs} = 0, t (cid:54)= s. Uma sequência de v.a.
+deﬁnida acima, é chamada um processo puramente aleatório e escreveremos
+
+εt ∼ i.i.d.(0, σ2).
+
+Para representar um ruído branco discreto escreveremos
+
+εt ∼ RB(0, σ2).
+
+Exemplo 2 Passeio Aleatória
+
+9
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+Suponha uma sequência aleatória {εt, t (cid:62) 1}, de v.a.
+
+i.d.d.
+
+{µε, σ2
+ε
+
+}. Deﬁna a
+
+sequência
+
+Xt = ε1 + . . . + εt.
+
+Então E(Xt) = tµε e Var(Xt) = tσ2
+é
+
+ε. Podemos veriﬁcar que a função autocovariância
+
+cov(Xt, Xt − k) = Cov(ε1 + . . . + εt − k + . . . + εt, ε1 + . . . + εt − k) = (t − k)σ2
+ε
+
+e segue função de autocorrelação
+
+ρt(k) =
+
+t − k
+t
+
+onde ﬁca claro que tanto a média, a variância e as autocovariâncias dependem de t,
+portanto não é estacionário. Processos como estes são chamados de passeio aleatório
+ou casual.
+
+Processos Auto-regressivos
+
+Segundo Morettin-2006,dizemos que {Xt, t ∈ Z} é um processo auto-regressivo de ordem
+p, e escrevemos Xt ∼ AR(p), se satisfazer à equação de diferenças
+
+Xt − µ = φ1(Xt−1 − µ) + φ2(Xt−2 − µ) + . . . + φp(Xt−p − µ) + εt,
+
+onde µ, φ1, . . . , φp são parâmetros reais e εt ∼ RB(0, σ2). Segue-se que E(Xt) = µ e se
+escrevermos o processo na forma
+
+então
+
+Xt = φ0 + φ1Xt−1 + . . . + φpXt − p + εt,
+
+µ = E(Xt) =
+
+φ0
+1 − φ1 − . . . − φp
+
+Deﬁnamos o operador retroativo B através de BsXt = Xt − s, S (cid:62) 1. Então a equação
+de um processo AR pode ser escrita
+
+φ(B) ˜Xt = εt
+
+, onde φ(B) = 1 − φ1B − φ2B2 − . . . − φpBp é o operador auto-regressivo de ordem
+p e ˜Xt = Xt − µ. Suponha µ = 0 no que segue. Um caso particular importante é o
+processo AR(1),
+
+Xt = φ1Xt−1 + εt
+
+.
+
+Aqui, φ = 1 − φB. Através de substituições sucessivas obtemos
+
+Xt =
+
+r(cid:88)
+
+j=0
+
+φjεt−j + φr+1Xt−r−1.
+
+Se Xt for estacionário,com variância ﬁnita ρ2
+
+x, então
+
+10
+
+1.3 Séries temporais
+
+E[Xt −
+
+r(cid:88)
+
+j=0
+
+φjεt−j]2 = φ2r+2E[X2
+
+t−r−1] = φ2r+2σ2
+x.
+
+Se |φ| < 1, φ2(r+1) → 0, quando r → ∞, portanto sob suposição, podemos escrever
+
+Xt =
+
+∞(cid:88)
+
+j=0
+
+φjεt−j,
+
+Onde a convergência é em média quadrática. Logo, a condição |φ| < 1 é suﬁciente para
+Xt ser estacionário. Multiplicando ambos os membros do processo AR(1) acima por
+Xt−r tomando a esperança, obtemos
+
+lembrando que γ0 = σ2
+
+x e que Xt =
+
+(cid:80)∞
+
+j=0 φjεt−j, e substituindo x por Xt então
+
+γτ = γτ−1 = . . . = φτγ0
+
+σ2
+
+∞(cid:88)
+
+j=0
+
+φ2j =
+
+σ2
+
+1 − φ2 ⇒ γτ =
+
+σ2
+1 − φ2 φτ, τ (cid:62) 0
+
+Como γτ é simétrica,considerando τ ∈ Z, a função autocovariância (f.a.c.v.) e a função
+autocorrelação (f.a.c.) de um processo AR(1) é
+
+γτ =
+
+σ2
+1 − φ2 φ|τ| ⇒ ρτ =
+
+γτ
+γ0
+
+= φ|τ|
+
+Podemos ter uma solução de outra forma,
+
+∞(cid:88)
+
+Xt =
+
+ψjεt−j
+
+j=0
+
+Como vimos ,utilizando o operador retroativo podemos deﬁnir processo (AR) φ(B) ˜Xt =
+
+εt e desse modo
+
+Xt = φ(B)−1εt = ψ(B)εt,
+
+(cid:80)
+
+j ψ2 < ∞
+Considerando ψ(B) = 1+ψ1B+ψ2B2+. . .. Assim como em AR(1), teremos
+para que a solução acima seja estacionária.Podemos obter os coeﬁcientes ψj através da
+relação φ(B)ψ(B) = 1.
+
+Supondo que todas as raízes de φ(B) = 0 estejam fora do círculo unitário para que
+Xt seja estacionário, assim para p=1, φ(B) = 1 − φB = 0.Segue que B = φ−1 o que
+implica |φ| < 0. Supondo o processo estacionário, multiplicando os dois membros da
+equação
+
+Xt = φ0 + φ1Xt−1 + . . . + φpXt − p + εt,
+
+por Xt−τ e tomando os valores esperados , para τ (cid:62) 0,
+
+σ2
+
+x =
+
+σ2
+1 − φ1ρ1 + . . . + φpρp
+
+,
+
+para τ = 0,
+
+γτ = φ1γτ−1 + φ2γτ−2 + . . . + φpγτ−p,
+
+para τ > 0.
+
+11
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+Note que essas equações pode ser utilizada para obter ρτ, bastando dividir esses
+
+resultados acima por γ0. A solução desta equação é dada por (Miller,1969)
+
+γτ = A1Gτ
+
+1 + A2Gτ
+
+2 + . . . + ApGτ
+p
+
+Onde os Gi’s satisfazem
+
+p(cid:89)
+
+φ(B) =
+
+(1 − GiB).
+
+i=1
+
+Devemos ter |Gi| < 1 para todo i = 1, . . . , p considerando que as raízes de φ(B) = 0
+estão fora do círculo unitário. Para obter estimadores dos parâmetros φjŽs, substi-
+tuindo as f.a.c.v.’s por suas estimativas. Assim faremos τ = 1, 2, . . . , p na equação
+γτ = φ1γτ−1 + φ2γτ−2 + . . . + φpγτ−p obtendo assim
+
+Γpφp = γp,
+
+onde Γp = [γij], com γij = γ|i−j|, i, j = 1, . . . , p, φp = (φ1, . . . , φp) (cid:48) e γp =
+
+(γ1, . . . , γp) (cid:48)
+
+Assim a representação dessa matriz
+
+Γp =
+
+
+
+
+
+
+
+
+1
+ρ1
+...
+
+ρ1
+1
+. . .
+ρp−1 ρp−2
+
+. . . ρp−1
+. . . ρp−2
+...
+. . .
+
+1
+
+
+
+
+
+
+
+
+φp =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+φ1
+φ2
+...
+φp
+
+γp =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+γ1
+γ2
+...
+γp
+
+Esses estimadores são chamados de estimadores de Yule-Walker.
+
+Processos de Médias Móveis
+
+Dizemos que {Xt, t ∈ Z} é um processo de médias móveis de ordem q, se satisfazer à
+equação de diferenças
+
+Xt = µ + εt − θ1εt−1 − . . . − θqεt−q,
+
+onde µ, θ1, . . . θq são constantes reais e εt ˜RB(0, σ2). Denotaremos por MA(q).
+
+Obtemos a variância do processo, considerando Xt estacionário de média µ e εt são
+
+não correlacionados,
+
+x = σ2(1 + θ2
+σ2
+
+1 + . . . + θ2
+
+q).
+
+Quanto à f.a.c.v., temos
+
+γτ = E{XtXt−τ} = γε(τ) −
+
+q(cid:88)
+
+k=1
+
+θkγε(k − τ)
+
+q(cid:88)
+
+q(cid:88)
+
+q(cid:88)
+
+−
+
+θlγε(τ + l) +
+
+θkθlγε(τ + l − k),
+
+l=1
+
+k=1
+
+l=1
+
+Denota-se γε(τ) como a f.a.c.v de εt. Desse modo temos
+
+12
+
+1.3 Séries temporais
+
+
+
+
+
+
+γτ =
+
+σ2(−θτ + θ1θτ+1 + . . . + θqθq−τ),
+0,
+γ−τ,
+
+se τ = 1, . . . , q
+se τ > q
+se τ < 0.
+
+Da variância e do resultado acima temos que a f.a.c. do processo MA(q):
+
+
+
+
+
+
+ρτ =
+
+−θτ+θ1θτ+1+...+θqθq−τ
+
+1+θ2
+
+1+...+θ2
+q
+
+,
+
+se τ = 1, . . . , q
+
+0,
+ρ−τ,
+
+se τ > q
+se τ < 0.
+
+Para um processo MA(1),
+
+segue que
+
+Xt = εt − θεt−1,
+
+Var(xt) = σ2
+
+x = σ2(1 + θ2),
+
+(cid:12)
+
+ρτ =
+
+−θ
+1+θ2 ,
+0,
+
+se τ = ±1
+|τ| > 1.
+se
+
+O operador de médias móveis de ordem q deﬁniremos por
+
+θ(B) = 1 − θ1B − θ2B2 − . . . − θqBq
+
+Então a equação de diferenças do processo MA(q) podemos escrever assim
+
+Deste modo para um processo MA(1) devemos ter θ(B) = 1 − θB, logo
+
+Xt = θ(B)εt.
+
+assim escrevemos formalmente,
+
+Xt = (1 − θB)εt
+
+εt = (1 − θB)−1Xt = (1 + θB + θ2B2 + . . .)Xt,
+
+o que segue
+
+Xt = −θXt−1 − θ2Xt−2 − . . . + εt,
+Observe que é necessário que |θ| < 1 para que a o lado direito da igualdade convirja e
+esta equação é escrita como processo auto-regressivo de ordem inﬁnita, isto é, |θ| < 1 é
+condição de invertibilidade para o processo de M.A.(1). De um modo geral, o processo
+de M.A. de (q) poderá ser escrito
+
+∞(cid:88)
+
+Xt =
+
+πjXt−j + εt,
+
+j=1
+
+Satisfeita a condição de invertibilidade então todas as raízes de θ(B) = 0 devem estar
+
+fora do círculo unitário, desse modo a equação acima pode ser estrita
+
+13
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+onde π(B) = 1 − π1B − π2B2 − . . . , e π(B) = θ(B)−1. Assim, podemos obter os
+
+coeﬁcientes πj através da identidade θ(B)π(B) = 1.
+
+π(B)Xt = εt,
+
+Processos Auto-regressivos e de Médias Móveis
+
+Um processo auto-regressivo e de médias móveis, de ordem (p,q), denotado por ARMA(p,q),
+é deﬁnido por
+
+Xt − µ = φ1(Xt−1 − µ) + φ2(Xt−2 − µ) + . . . + φp(Xt−p − µ) + εt − θ1εt−1 − . . . − θqεt−q
+
+,
+
+onde εt ˜RB(0, σ2). Considerando que a média do processo é µ e usando os operadores
+
+auto-regressivo e de médias móveis, então
+
+onde ˜Xt = Xt − µ. Considerando µ = 0, usaremos o ARMA(1,1), isto é,
+
+φ(B) ˜Xt = θ(B)εt,
+
+Fazendo substituições sucessivas
+
+Xt = φXt−1 + εt − θεt−1.
+
+Xt = ψ(B)εt,
+
+onde ψt = φj−1(φ − θ),
+As condições de estacionariedade e invertibilidade são as mesmas que para os pro-
+cessos AR(1) e MA(1), isto é, |φ| < 0 e |θ| < 1 o que nos leva a escrever o processo,
+πj = θj−1(φ − θ), j (cid:62) 1.
+
+j (cid:62) 1.
+
+Para a condição de estacionariedade de um processo ARMA(p,q) genérico devemos
+ter as raízes de φ(B) = 0 fora do círculo unitário, de modo semelhante para condição
+de invertibilidade devemos ter as raízes de θ(B) = 0 também fora do círculo unitário.
+Para obtermos as auto-covariância ,utilizamos a equação de diferenças deﬁnida para
+o processo ARMA(p,q), assim consideramos µ = 0 depois multiplicamos por Xt−τ e
+tomamos a esperança
+
+γτ = φ1γτ − 1 + . . . + φqγτ − p + γXε(τ)
+
+−θ1γXε(τ − 1) − . . . − θqγXε(τ − q),
+
+onde γXε(τ) é a covariância cruzada entre Xt e εt, deﬁnida por
+
+onde esta covariância só é diferente de zero para τ (cid:54) 0 logo
+
+γXε(τ) = E(εXt−τ.
+
+γτ = φ1γτ − 1 + . . . + φqγτ − p,
+
+τ > q.
+
+14
+
+1.3 Séries temporais
+
+Note que as auto-covariâncias de "lags"de 1 a q dependem dos parâmetros de mé-
+dias móveis, e para "lags"superiores a q (τ > q) as mesmas são inﬂuenciadas pelos
+parâmetros dos modelos AR.
+
+Vejo como exemplo o caso ARMA(1,1) onde temos
+
+e no caso de τ > 1,
+
+Processo Linear Geral
+
+A expressão
+
+ρ1 =
+
+γ1
+γ0
+
+=
+
+(1 − φθ)(φ − θ)
+1 + θ2 − 2φθ
+
+ρτ = φρτ−1.
+
+∞(cid:88)
+
+Xt =
+
+ψjεt−j,
+
+j=0
+
+representa o chamado processo linear geral(PLG), onde εt ∼ RB(0, σ2) e ψj são
+constantes. Note que os processos AR, MA e ARMA são casos particulares do (PLG).
+j=0 ψ2 < ∞ é necessária para que a variância seja ﬁnita, então
+A condição em que
+
+(cid:80)∞
+
+x = σ2
+σ2
+
+∞(cid:88)
+
+j=0
+
+ψ2.
+
+além disso como E{Xt} = 0 temos
+
+στ = σ2
+
+∞(cid:88)
+
+j=0
+
+ψjψj+τ,
+
+considerando que a série do lado direito da igualdade convirja para um valor ﬁnito.
+
+Do fato que
+
+e que σ2 < ∞, segue que γτ < ∞ se
+
+|E{XtXt−τ} (cid:54) [E{X2
+}E{X2
+t
+(cid:80)∞
+j=0 ψ2 < ∞ onde estabelecemos a condição
+
+}]1/2 < ∞,
+
+t−τ
+
+de estacionariedade para o PLG. Sendo assim a f.a.c. de um PLG é
+
+∞(cid:88)
+
+ρ = frac
+
+ψjψj+τ
+
+j=0
+
+∞(cid:88)
+
+j=0
+
+ψ2
+j .
+
+Teorema de Wold
+
+Conforme Morettin-2006) segue o teorema abaixo:
+
+Teorema:(Wold) Todo processo estacionário de segunda ordem, puramente não-
+
+determinístico, pode ser escrito como
+
+∞(cid:88)
+
+Xt = µ +
+
+ψjεt−j, ψ0 = 1,
+
+j=0
+
+15
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+com εt ∼ RB(0, σ2). Um processo diz-se puramente não-determinístico se ele não
+
+puder ser previsto exatamente a partir de seu passado.
+
+1.3.5 Processos Não Estacionários
+
+Há duas maneiras de gerar processos não estacionários e que sejam não explosivos
+
+(a) Acrescentar na fórmula de Wold uma tendência determinística
+
+Xt = β0 + β1t + ψ(B)εt
+
+neste caso é um processo "Trend-stationary".
+
+(b) Supor um PLG com raiz unitária
+
+(1 − B)Xt = δ + ψ(B)εt,
+
+Este modelo, com ψ(1) (cid:54)= 0 descreve variações de Xt e como ψ(1) =
+o processo é não-estacionário.
+
+(cid:80)∞
+
+j=0 ψj (cid:54)= 0,
+
+Assim se tivermos um processo como o do item (a) com erro ARMA(p,q) e tendência
+
+µt um polinômio determinístico de grau d, podemos escrever assim
+
+Xt =
+
+d(cid:88)
+
+j=0
+
+βjtj + [φ(B)]−1θ(B)at,
+
+onde at é um ruído branco. Assim segue
+
+∆dXt = (1 − B)dXt = θ0 + (1 − B)dψ(B)at,
+na qual ψ(B) = [φ(B)]−1θ(B) e θ0 = d!βd, um processo estacionário, mas não
+
+invertível.
+
+Deﬁnição:
+Se ∆dXt for estacionário, dizemos que Xt é integrado de ordem d e escrevemos
+
+Xt ∼ I(d) E assim
+Deﬁnição:
+Se ∆d ∼ Xt ARMA(p,q) dizemos que Xt segue um modelo ARIMA(p,d,q) isto é
+
+auto-regressivo integrado e de médias móveis de ordem (p,d,q), ou seja,
+
+ou, de modo equivalente,
+
+φ(B)∆dXt = θ0 + θ(B)at
+
+φ(B)W(t) = θ0 + θ(B)at,
+
+com W(t) = ∆dXt.
+
+Observemos que
+
+W(t) = ∆dXt ↔ Xt = SdW(T ),
+
+onde S é o operador soma ou integral
+
+16
+
+1.3 Séries temporais
+
+S = (1 − B)−1 = ∆−1.
+
+ou seja, Xt pode ser obtido somando-se ou integrando-se o processo estacionário W(t)
+
+d vezes, donde o nome processo integrado para Xt.
+
+1.3.6 Modelagem ARIMA
+
+Como vimos até agora um modelo ARMA (p,q) é dado pela equação de diferenças
+
+Xt − µ = φ1(Xt−1 − µ) + . . . + φp(Xt−p − µ) + θt − σ1εt−1 − . . . − θqεt−q
+
+onde εt ∼ RB(0, σ2
+anteriormente, segue
+
+ε). Com os operadores auto-regressivos e de média móveis deﬁnidos
+
+com ˜Xt = Xt − µ. Supondo µ (cid:54)= 0, o modelo pode ser escrito
+
+φ(B) ˜Xt = θ(B)εt
+
+Xt = θ0 + φ1Xt−1 + . . . + φpXt−p + εt − θ1εt−1 − . . . − θqεt−q,
+onde θ0 = µ(1 − φ1 − . . . − φp). Assim dizemos que um processo {Xt, t ∈ Z} é um
+
+modelo ARIMA (p,d,q) se ∆dXt seguir um modelo ARMA (p,q), isto é
+
+Na determinação de um modelo ARIMA para uma série temporal devemos examinar
+
+φ(B)∆dXt = θ(B)εt
+
+três estágios:
+
+(i) Identiﬁcação
+
+(ii) Estimação
+
+(iii) Diagnóstico
+
+Vale lembrar que os estágio (i)-(ii) devem ser repetidos se o (iii) não atender o que se
+deseja. Haverá momentos da necessidade de vários modelos para que um determinado
+critério decida o modelo mais apropriado.
+
+Identiﬁcação
+
+Considerada a fase mais crítica do processo iterativo que descrevemos acima, esta es-
+colha deve ser feita utilizando principalmente as auto-correlações e auto-correlações
+parciais estimadas. Como já foi citado a f.a.c ρj é estimada por
+
+rj =
+
+cj
+c0
+
+,
+
+j = 0, 1, . . . , T − 1,
+
+onde cj é a estimativa da f.a.c.v γj,
+
+cj =
+
+1
+T
+
+T −j(cid:88)
+
+[(Xt − X)(Xt+j − X)],
+
+j = 0, 1, . . . , T − 1,
+
+t=1
+
+17
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+sendo X = 1
+T
+
+(cid:80)
+
+T
+t=1 Xt a média amostral. Como as auto-correlações verdadeiras são
+
+funções pares, colocamos c−j = cj e r−j = rj .
+
+Uma expressão aproximada para variância de rj, para um processo estacionário nor-
+
+mal, é dada por
+
+Var(rj) (cid:39)
+
+1
+T
+
+∞(cid:88)
+
+[ρ2
+
+v + ρv + jρv−j − 4ρjρv−j + 2ρ2
+
+vρ2
+j ]
+
+v=−∞
+
+Em um processo em que as auto-correlações são nulas para v > q, todos os termos
+
+do lado direito da expressão acima se anulam para j > q, exceto o primeiro ,
+
+Var(rj) (cid:39)
+
+(cid:34)
+
+1 + 2
+
+1
+T
+
+(cid:35)
+
+ρ2
+v
+
+q(cid:88)
+
+v=1
+
+,
+
+j > q.
+
+Por não conhecermos as auto-correlações ρv, substituímos as mesmas por rv, chegando
+
+a uma estimativa da expressão acima,
+
+(cid:99)σ2(rj) (cid:39)
+
+1
+T
+
+(cid:34)
+
+1 + 2
+
+q(cid:88)
+
+(cid:35)
+
+ρ2
+v
+
+,
+
+j > q.
+
+v=1
+Para T suﬁcientemente grande e considerando que ρj = 0,para j>q, a distribuição de
+rj é aproximadamente normal,com média igual a zero e variância dada pela a expressão
+acima. Assim temos um intervalo de conﬁança aproximado para auto-correlações,
+
+rj ± tγ.ˆσ(rj),
+
+onde tγ é o valor da estatística t de Student com T-1 graus de liberdade, tal que
+P(−tγ < t < tγ) = γ. Na prática usa-se tγ = 2, correspondendo a γ = 0, 95,
+aproximadamente, de modo que podemos considerar σj como sendo signiﬁcativamente
+diferente de zero se
+
+|rj| > 2ˆσ(rj),
+
+j > q.
+
+Como foi apresentado até aqui, os processos lineares estacionários apresentam f.a.c
+
+com características especiais. Assim:
+
+(i) um processo AR(p) tem f.a.c que decai de acordo com exponenciais e/ou senóides
+
+amortecidas, inﬁnita em extensão;
+
+(ii) um processo MA(q) tem f.a.c ﬁnita, no sentido que ela apresenta um corte após
+
+o "lag"q;
+
+(iii) um processo ARMA(p,q) tem f.a.c inﬁnita em extensão, que decai de acordo com
+
+exponenciais e/ou senóides amortecidas após o "lag"q-p.
+
+Estas considerações serão importantes no mecanismo de identiﬁcação do modelo a
+ajustar aos dados observados; calculando-se as estimativas das f.a.c., comparando seu
+comportamento com o descrito acima, para cada modelo, procuramos estabelecer um
+modelo (ou modelos) que descreva a série analisada. Apesar da f.a.c. ser útil para
+identiﬁcar modelos MA, conforme característica (ii), não é útil para identiﬁcar mod-
+elos ARMA, visto que f.a.c complexa. Uma outra ferramenta para simpliﬁcar esse
+
+18
+
+1.3 Séries temporais
+
+mecanismos de identiﬁcação Box, Jenkins e Reinsel (1994) recomenda: a função de
+auto-correlação parcial (f.a.c.p.). Iremos representar por φkj o j-ésimo coeﬁciente de
+um modelo AR(k), de tal modo que φkk seja o último coeﬁciente. Sabemos que
+
+ρj = φk1ρj − 1 + φk2ρj − 2 + · · · + φkkρj − k,
+
+j = 1, . . . , k,
+
+a partir das quais obtemos as equações de Yule-walker
+
+
+
+
+
+
+
+
+1
+ρ1
+...
+
+ρ1
+1
+...
+ρk−1 ρk−2 ρk−3
+
+ρ2
+ρ2
+...
+
+· · · ρk−1
+· · · ρk−2
+...
+· · ·
+
+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+φk1
+φk2
+...
+φkk
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ρ1
+ρ2
+...
+ρk
+
+Resolvendo estas equações sucessivamente para K = 1, 2, 3, . . . obtemos
+
+φ22 =
+
+φ11 = ρ1
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+φ33 =
+
+=
+
+(cid:12)
+ρ1
+1
+(cid:12)
+(cid:12)
+ρ1 ρ2
+(cid:12)
+(cid:12)
+ρ1
+1
+(cid:12)
+(cid:12)
+ρ1
+1
+(cid:12)
+ρ1 ρ1
+1
+ρ1
+ρ2
+1
+ρ2 ρ1 ρ3
+ρ1 ρ2
+1
+ρ1
+ρ1
+1
+ρ2 ρ1
+1
+
+ρ2 − ρ2
+1
+1 − ρ2
+1
+
+,
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+e, em geral,
+
+φkk =
+
+|P∗
+|
+k
+|Pk| ,
+
+onde Pk é a matriz de auto-correlações e P∗
+K é matriz Pk com a ultima coluna substituída
+pelo vetor de auto-correlações. Assim a quantidade φkk, encarada como função de K,é
+chamada função de auto-correlação parcial. Veja que φkk mede a correlação que sobrou
+entre Xt e Xt−k depois de eliminada a inﬂuência de Xt−1, . . . , Xt−k+1 pois é possível
+provar que φkk é igual à correlação parcial entre as variáveis Xt e Xt−k ajustadas às
+variáveis intermediárias Xt−1, . . . , Xt−k+1. Decorrerá indispensável estimar a f.a.c.p.
+de um processo AR, MA ou ARMA. Um modo baseia-se em estimar, sucessivamente,
+modelos auto-regressivos de ordens p = 1, 2, 3, . . . por mínimos quadrados e tomar as
+estimativas do último coeﬁciente de cada ordem. Um outro caminho fundamenta-se
+em substituir nas equações de Yule-Walker as f.a.c. ρj por estimativas, ou seja, supor
+
+rj = ˆφk1rj−1 + . . . + ˆφkkrj−k,
+
+j = 1, . . . , k,
+
+e resolver as equações de Yule-Walker com ρj substituída por rj e φkj substituída
+pro φkj. Quenouille (1949) mostra que, sob a suposição que o processo se AR(p) , as
+
+19
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+f.a.c.p. estimadas de ordem p + 1, p + 2, . . . são, aproximadamente, independentemente
+distribuídos, com
+
+Var( ˆφkk) ≈
+
+1
+T
+
+, K (cid:62) p + 1.
+
+Se o número de observações, T, for suﬁcientemente grande , ˆφkk tem distribuição
+aproximada normal, o que permite a construção de intervalos de conﬁança para ˆφkk.
+
+Podemos resolver as equações de Yule-Walker pelo algoritmo de Durbin-Levinson.Mais
+
+detalhes em Morettin (1984).
+
+É possível provar (Box, Jenkins e Reinsel, 1994) que, para os processos já explorados,
+
+temos:
+
+(i) um processo AR(p) tem f.a.c.p. φkk (cid:54)= 0, para K (cid:54) p e φkk = 0, para K > p;
+
+(ii) um processo MA(q) tem f.a.c.p. que se comporta de maneira similar à f.a.c. de
+um processo AR(p): é dominada por exponenciais e/ou senóides amortecidas;
+
+(iii) um processo ARMA(p,q) tem f.a.c.p. que se comporta como a f.a.c.p. de um
+
+processo MA puro.
+
+Observe que a f.a.c.p. é útil para identiﬁcar modelos AR puros, o que não ocorre para
+identiﬁcar modelos MA e ARMA.
+
+Vimos acima que sob a hipótese que o processo seja AR(p),
+
+de modo que
+
+Var( ˆφjj) (cid:39)
+
+1
+T
+
+,
+
+j > p,
+
+1
+T
+Além disso , para T grande e sob a hipótese que o processo seja AR(p), ˆφjj téra
+distribuição aproximadamente normal, com média zero e variância conforme acima, de
+modo que consideraremos φjj signiﬁcativamente diferente de zero se
+
+ˆσ( ˆφjj) (cid:39)
+
+j > p.
+
+,
+
+| ˆφjj| >
+
+2
+√
+T
+
+,
+
+j > P.
+
+Procedimento de Identiﬁcação A ﬁnalidade da identiﬁcação é deﬁnir os valores de
+p,d e q do modelo ARIMA(p,d,q). Esse procedimento de identiﬁcação possui três fases:
+
+(a) averiguar se há necessidade de uma transformação na série original, com objetivo
+
+de estabilizar sua variância;
+
+(b) tomar diferenças da série, obtida no item (a), tantas vezes quantas necessárias
+para se obter uma série estacionária, de modo que o processo ∆dXt seja reduzido
+a um ARMA(p,q). O número de diferenças, d, necessárias para que o processo se
+torne estacionário, é alcançado quando a f.a.c. amostral de Wt = ∆dXt decresce
+rapidamente para zero. Neste estágio, a utilização de um teste para veriﬁcar a
+existência de raízes unitárias no polinômio auto-regressivo, pode ser de grande
+valia;
+
+20
+
+1.3 Séries temporais
+
+(c) determinar o processo ARMA(p,q) resultante por meio da análise das auto-
+correlações e auto-correlações parciais estimadas, cujos comportamentos podem
+reproduzir a ação das respectivas quantidades teóricas, isto é, modelos AR, MA
+e ARMA.
+
+Para explicar o item(b), do procedimento de identiﬁcação seguimos o seguinte raciocínio.
+Conforme apresentamos para um modelo ARMA estacionário, as f.a.c. são dadas
+
+por
+
+ρj = A1Gj
+
+1 + A2Gj
+
+2 + . . . + ApGj
+p,
+
+j > q − p,
+
+(cid:81)
+
+considerando raízes distintas. Como φ(B) =
+
+p
+i=1(1 − GiB) e as raízes de φ(B) = 0
+devem estar fora do círculo unitário, devemos ter |Gi| < 1. Segue-se da equação acima
+que, se nenhuma raiz estiver muito próxima do círculo unitário, as auto-correlações
+ρj declinarão para zero, para valores moderados de j. Por isso,considere que uma
+raiz real, G1, esteja próxima de um, ou seja, G1 = 1 − ε,
+ε > 0 pequeno. Como
+Gj
+1 = (1 − ε)j (cid:39) 1 − jε, vem que ρj (cid:39) A1(1 − jε), o que mostra que a f.a.c. baixará
+lentamente para zero e de forma aproximadamente linear. A maior diﬁculdade, neste
+estágio desse mecanismo é fugir de um exagero de diferenças, por isso usa-se d=0,1
+ou 2 e é suﬁciente inspecionar as primeiras 15 ou 20 auto-correlações da série e de
+suas diferenças. É importante testar se E(Wt) = µw é zero, comparando W com seu
+desvio padrão estimado. A tabela 2 apresenta as variâncias de W para alguns modelos
+usuais. Conforme já foi citado, a f.a.c. e f.a.c.p. são úteis para determinar modelos MA
+e AR puros. Para identiﬁcar modelos ARMA devemos supor modelos simples, como
+ARMA(1,1), ARMA(1,2), ARMA(2,1) ou ARMA(2,2) e depois da estimação, escolher
+aquele que melhor atende a alguns critérios.
+
+Formas alternativas de identiﬁcação A partir de 1970 foram propostos várias maneiras
+para identiﬁcação de modelos ARMA. O objetivo é escolher as ordens K e l que dimin-
+uam a quantidade
+
+P(k, l) = lnˆσ2
+
+k,l + (k + l)
+
+C(T )
+T
+
+,
+
+em que ˆσ2
+k,l é uma estimativa da variância residual obtida ajustando um modelo
+ARMA(k,l) às T observações da série e C(T) é uma função do tamanho da série. A
+quantidade (k+l)C(T)/T, denominada termo penalizador, aumenta quando o número
+de parâmetros aumenta, enquanto que a variância residual ˆσ2
+k,l diminui. Deste modo,
+ao diminuir a quantidade da expressão acima esta relacionado a identiﬁcar as ordens
+k e k que equilibrem esse comportamento. É possível notar que as ordens escolhidas
+crescem quando T cresce também. Por isso, Hannan(1982) sugere limites superiores
+0 < α < ∞. Veja agora alguns procedimentos de identiﬁcação que
+dados por (lnT )α,
+diminuem as funções penalizadoras particulares.
+
+A-Critério de informação AIC Akaike (1973,1974) recomenda escolher o modelo cujas
+ordens k e l diminuem o critério
+
+AIC(k, l) = lnˆσ2
+
+k,l +
+
+2(k + l)
+T
+
+,
+
+21
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+Tabela 1.4: Comportamento das f.a.c. e f.a.c.p. de um processo ARIMA(p,d,q)
+
+Ordem
+comportamento de ρk
+comportamento de φkk
+
+(1,d,0)
+decai exponencialmente
+somente φ11 (cid:54)= 0
+
+φ = ρ1
+
+estimativas iniciais
+região de admissibilidade −1 < φ < 1
+Ordem
+comportamento de ρk
+
+(2,d,0)
+mistura exponenci-
+ais ou ondas senóides
+amortecidas
+somente φ11 (cid:54)= 0 e φ11 (cid:54)= 0
+
+comportamento de φkk
+
+estimativas iniciais
+
+região de admissibilidade
+
+
+
+
+
+
+
+
+
+
+φ1 = ρ1(1−ρ2)
+1−ρ2
+1
+φ2 = ρ2−ρ2
+1
+1−ρ2
+1
+
+,
+
+−1 < φ2 < 1
+φ2 − φ1 < −1
+φ2 + φ1 < 1
+
+(0,d,1)
+somente ρ1 (cid:54)= 0
+decaimento exponencial
+dominante
+ρ1 = − θ
+1+θ2
+−1 < θ < 1
+(0,d,2)
+somente ρ1 (cid:54)= 0e ρ2 (cid:54)= 0
+
+dominada por mistura
+de exponenciais ou senóides
+amortecidas
+(cid:14)
+
+ρ1 = θ1(1−θ2)
+1+θ2
+1+θ2
+2
+ρ2 = −θ2
+1+θ2
+
+1+θ2
+2
+
+,
+
+
+
+
+
+
+−1 < θ2 < 1
+θ2 − θ1 < 1
+θ2 + θ1 < 1
+
+Ordem
+comportamento de ρk
+comportamento de φkk
+estimativas iniciais
+região de admissibilidade −1 < φ < 1, −1 < θ < 1
+
+decai exponencialmente após o "lag"1
+dominada por decaimento exponencial após o "lag"1
+ρ1 = (1−φθ)(φ−θ)
+ρ2 = ρ1φ
+1+θ2−2φθ ,
+
+(1,d,1)
+
+Tabela 1.5: Variâncias aproximadas para W, onde Wt = ∆dXt, n = T − d
+
+AR(1)
+C0(1+r1)
+n(1−r1)
+
+MA(1)
+C0(1+2r1)
+n
+
+AR(2)
+
+C0(1+r1)(1−2r2
+
+1+r2)
+
+n(1−r1)(1−r2)
+
+(cid:105)
+
+C0
+n
+
+ARMA(1,1)
+(cid:104)
+1 + 2r2
+1
+r1−r2
+MA(2)
+C0(1+2r1+2r2)
+n
+
+22
+
+1.3 Séries temporais
+
+onde ˆσ2
+
+k,l é o estimador de máxima verossimilhança de σ2 para um modelo ARMA(k,l).
+Assim estipula-se valores limites superiores K e L para k e l e calcula-se o resultado de
+AIC(k,l) para todas as possíveis combinações (k,l) com 0 (cid:54) k (cid:54) K e 0 (cid:54) l (cid:54) L. Em
+geral, K e L são funções de T, por exemplo, K=L=lnT. Para o caso de modelos AR(p),
+o critério AIC limita-se a
+
+AIC(k) = lnˆσ2
+
+k +
+
+2k
+T
+
+,
+
+k (cid:54) K.
+
+Shibata (1976) prova que a minimização do AIC produz estimativas incoerentes com a
+verdadeira ordem do processo AR.Por isso, Hurvich e Tsai (1989) sugere uma correção
+para o AIC, com o objetivo de diminuir a probabilidade de selecionar uma ordem maior
+do que a verdadeira, que no caso é
+
+AICc(k) = AIC(k) +
+
+2(k + l)(k + 2)
+T − k + 2
+
+,
+
+k (cid:54) K
+
+na prática nota-se que esta correção é adequada quando T é pequeno ou quando K
+
+é uma função "moderadamente grande"de T.
+
+B-Critério de informação Bayesiano BIC Akaike(1977), Rissanem (1978) recomen-
+dam diminuir o critério de informação Bayesiano, dado por
+
+BIC = −2ln(FV) + (número de parâmetros)lnT ,
+
+na qual FV é a função de verossimilhança. Para o processo ARMA, essa quantidade
+
+é
+
+BIC(k, l) = lnˆσ2
+
+k,l + (k + l)
+
+lnT
+T
+
+.
+
+Hannan(1980) comprova que,sob determinadas condições, as estimativas k e l que
+
+diminuem a expressão acima são fortemente coerentes.
+
+Estimação
+
+Depois de identiﬁcado o modelo temporário para a série temporal, a próxima etapa é
+estimar os parâmetros.Citamos os métodos dos momentos, mínimos quadrados (MQ)
+e máxima verossimilhança (MV).Os estimadores do método dos momentos quando
+confrontado com os demais não são muito bons, desse modo são utilizados como valores
+iniciais para procedimentos mais complexos, como MV.
+
+I-Modelos Auto-regressivos: Consideremos o modelo AR(p)
+
+Xt = φ0 + φ1Xt−1 + . . . + φpXt−p + εt,
+onde εt ∼ RB(0, σ2). Considere φ = (φ0, φ1, . . . , φp) (cid:48) o vetor contendo os coeﬁcientes
+e seja ξ = (φ, σ2) (cid:48). A intenção é estabelecer φ e σ2. Para exempliﬁcar, suponha o caso
+p=1, ou seja,
+
+Xt = φ0 + φ1xt−1 + εt.
+
+23
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+considere que tenhamos os dados X = (X1, . . . , XT ) (cid:48). Então, considerando εt com
+distribuição normal e condicional ao valor X0 = x0, a função de verossimilhança é dada
+por
+
+L(ξ|X, x0) = (2πσ2)−T/2exp{ −1
+2σ2
+
+T(cid:88)
+
+(Xt − φ0 − φ1Xt−1)2}
+
+t=1
+
+e supondo a log-verossimilhança temos
+
+L(ξ|X, x0) ≈ (−T/2)logσ2 −
+
+−1
+2σ2
+
+T(cid:88)
+
+(Xt − φ0 − φ1Xt−1)2
+
+t=1
+
+= (−T/2)logσ2 −
+
+−1
+2σ2 S(φ|X, x0).
+
+onde S(·|·) é a soma de quadrados condicional. Segue-se que maximizar l, com σ2
+ﬁxo, é equivalente a minimizar S e estimadores de MV de φ serão equivalentes a esti-
+madores de MQ.
+Os ε são obtidos recursivamente:
+
+ε1 = X1 − φ0 − φ1X0 = X1 − φ0 − φ1x0,
+
+ε2 = X2 − φ0 − φ1X1, etc
+Um outro caminho é considerar que apenas os dados verdadeiramente observados e
+
+iniciar a regressão de Xt sobre 1 e Xt−1 a partir de t = 1, 2, . . . , T .
+
+Em geral, conseguimos adquirir os estimadores dos coeﬁcientes do modelo pela re-
+gressão pela equação do modelo AR(p), para t = p + 1, . . . , T . Os resíduos serão dados
+por ˆεt = Xt − ˆXt, com
+
+ˆXt = ˆφ0 + ˆφ1Xt−1 + . . . + ˆφpXt−p.
+
+Um estimador de σ2 é obtido de
+
+(cid:80)
+
+T
+t=p+1 ˆε2
+t
+T − 2p − 1
+
+.
+
+ˆσ2 =
+
+Além dos estimadores de MQ, podemos utilizar também os estimadores de Yule-
+Walker, obtidos das equações de Yule-Walker amostrais, que possui boas propriedades
+e são fáceis de calcular pelo algoritmo de Durbin-Levinson.
+
+II-Modelos de Médias Moveis Para o modelo MA(q)
+
+Xt = θ0 + εt − θ1εt − 1 − . . . − θqεt−q,
+onde novamente εt ∼ N(0, σ2), podemos considerar também estimadores de MV
+
+condicionais. Aqui, supomos que ε0 = ε−1 = · · · = 0 e obtemos recursivamente
+
+ε1 = X1 − θ0,
+
+ε2 = X2 − θ0 + ε1θ1,
+
+etc
+
+24
+
+1.3 Séries temporais
+
+e a partir desses valores formamos a função de verossimilhança.
+Observe esse exemplo. Consideremos um processo ARIMA(0,1,1),
+
+∆Xt = (1 − θB)εt,
+
+e suponha que θ = 0, 8. Então, podemos escrever, com Wt = ∆Xt,
+
+Suponha que utilizemos os dados (hipotéticos) da Tabela 3. Como
+
+εt = Wt + 0, 8εt−1.
+
+iniciamos εt especiﬁcando ε0 = 0 e X0 = 150. Então,
+
+ε1 = W1 + 0, 8ε0,
+
+ε2 = W2 + 0, 8ε1 = −4 + (0, 8)(−3) = −6, 4,
+
+etc.
+
+ε1 = −3 + (0, 8)x0 = −3,
+
+Tabela 1.6: Cálculo recursivo de εt, θ = 0, 8
+
+t
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+
+Xt Wt = ∆Xt
+150
+147
+143
+148
+153
+149
+155
+162
+170
+172
+
+-3
+-4
+5
+5
+-4
+6
+7
+8
+2
+
+εt = Wt + 0, 8εt−1
+0
+-3,0
+-6,4
+-0,12
+4,9
+-0,08
+5,9
+11,7
+17,4
+15,9
+
+Segue-se que a SQ condicional ﬁca
+
+S(0, 8|a0 = 0) =
+
+9(cid:88)
+
+t=1
+
+ε2
+t(0, 8|a0 = 0) = 801, 26.
+
+Calculando-se S para uma grade suﬁcientemente ﬁna de valores de θ no intervalo (-1,1),
+já que −1 < θ < 1, podemos obter o mínimo aproximado dessa função. Veja que é
+possível obter estimadores de MV incondicionais (Morettin e Toloi,2004) e também cal-
+culamos os estimadores de MV exatos tratando ε0, ε−1, . . . como parâmetros adicionais
+a serem estimados. Utilizando T suﬁcientemente grande esses métodos permitem re-
+sultados próximos.
+
+III-Modelos de Mistos Estimadores condicionais para modelos ARMA(ou ARIMA)
+são obtidos como no modelo anterior. Veja como neste caso o modelo ARMA(1,1)
+
+Xt − φXt−1 = εt − θεt−1,
+
+25
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+supondo ε0 = 0 e X0 = x0 obtemos, recursivamente,
+
+ε1 = X1 − θx0,
+
+ε2 = X2 − φX1 − θε1 = X2 − (φ − θ)X1 − φθx0,
+
+etc
+
+Da mesma forma, estimadores de MV incondicionais e exatos são possíveis de al-
+
+cançar para modelos ARIMA genéricos.
+
+IV-Variâncias dos estimadores Pela precisão dos estimadores existe a necessidade
+do intervalo de conﬁança para os parâmetros. Seja n = (φ, θ), de ordem Kx1, onde
+k=p+q. Para n grande, onde n=T-d ( d é a ordem d diferenças) os EMV tem uma
+distribuição assintótica normal, de modo que
+
+ˆη D−→ Nk(η, V),
+
+V = 2σ2
+
+
+
+
+
+
+
+
+∂2S(η)
+∂η2
+1
+
+...
+
+· · ·
+
+∂2S(η)
+∂η1∂ηk
+
+...
+
+∂2S(η)
+∂ηk∂η1
+
+· · ·
+
+∂2S(η)
+∂η2
+k
+
+
+
+
+
+
+
+
+,
+
+onde S(η) é a soma de quadrados que aparece na log-verossimilhança, por exemplo.
+
+É possível demonstrar que o EMV de σ2 é
+
+2
+ˆsigma
+
+=
+
+s(ˆη)
+n
+
+e que, para n grande, ˆσ2 e ˆeta são não-correlacionados. Substituindo σ2 na equação
+de V acima por ˆσ2 e calculando as derivadas ∂2S(η)
+numericamente, obtemos esti-
+∂ηi∂ηj
+mativas das variâncias dos estimadores e estimativas das covariâncias entre os esti-
+madores.Então com as estimativas das variâncias teremos os intervalos de conﬁança
+para os parâmetros ηi,
+
+i = 1, . . . , k.
+
+A tabela abaixo mostra as variâncias aproximadas dos estimadores dos modelos mais
+
+usados.
+
+Diagnóstico
+
+Depois d estimar o modelo devemos veriﬁcar se reﬂete satisfatoriamente os dados. Se
+houver alguma deﬁciência pode ser recomendado um modelo alternativo como sendo o
+mais apropriado. Uma técnica muito comum, se presumirmos que um modelo com mais
+parâmetros é necessário, é o superajustamento. Estimamos um modelo com parâmetros
+extras e examinamos se sua inclusão diminui signiﬁcativamente a variância residual. A
+veriﬁcação pode ser feita observando os resíduos. Considere o modelo
+
+com
+
+φ(B)Wt = θ(B)εt,
+
+Wt = ∆dXt
+
+Caso este modelo seja o melhor ,logo esses erros εt formarão um ruído branco.
+
+26
+
+1.3 Séries temporais
+
+Tabela 1.7: Variâncias aproximadas para os estimadores dos parâmetros dos modelos
+
+mais comuns;n = T − d.
+
+Modelo
+AR(1)
+
+AR(2)
+
+MA(1)
+
+MA(2)
+
+Variância
+Var( ˆφ) = 1−φ2
+
+n
+
+Var( ˆφ1) = Var( ˆφ2) (cid:39) 1−φ2
+
+2
+
+n
+
+Var(ˆθ) (cid:39) 1−θ2
+n
+
+Var( ˆθ1) = Var( ˆθ2) (cid:39) 1−θ2
+
+2
+
+n
+
+ARMA(1,1)
+
+Var( ˆφ) (cid:39) (1−φ2)
+
+n
+
+(1−φθ)2
+(φ−θ)2
+
+Var(ˆθ) (cid:39) (1−θ2)
+
+n
+
+(1−φθ)2
+(φ−θ)2
+
+Teste de auto-correlação residual Estimamos φ e θ, as quantidades
+
+ˆεt = ˆθ−1(B) ˆφ(B)Wt
+
+são chamadas resíduos estimados ou simplesmente resíduos. Se o modelo for apropri-
+ado, os ˆεt deverão estar próximo dos εt e, portanto, deverão ser aproximadamente
+não-correlacionados. Se indicarmos por ˆrk as auto-correlações dos resíduos ˆεt, então
+deveríamos ter ˆrk (cid:39) 0. Assim, deveríamos ter, aproximadamente,
+
+ˆrk ∼ N(0,
+
+1
+n
+
+),
+
+onde n=T-d é o número efetivo de observações e sempre sob a suposição que o modelo
+ajustado seja apropriado. As auto-correlações ˆrk são calculadas por
+
+(cid:80)
+
+n
+t=k+1 ˆεtˆεt−k
+(cid:80)
+n
+t=k+1 ˆε2
+t
+
+ˆrk =
+
+Contudo, o desvio padrão de ˆrk pode ser bem menor que
+
+n , especialmente para
+pequenos valores k, como mostrou Durbin(1970). Ele demonstrou que para AR(1),
+Var(ˆrk) (cid:39) φ2
+n , que pode ser consideravelmente menor que 1/n. Box, Jenkins e Reinsel
+(1994) demonstraram que, para o modelo AR(1), escrevemos
+
+1√
+
+Var(ˆrk) (cid:39)
+
+Cov(ˆri, ˆrj) (cid:39)
+
+1
+n
+1
+n
+
+[1 − φ2(k−1)(1 − φ2)]
+
+{∂ij − φi+j−2(1 − φ2)},
+
+onde ∂ij é o delta de Kronecker. Assim, quando K é de moderada para grande a
+variância de ˆrk é aproximadamente, 1/n, e as auto-correlações são não-correlacionadas.
+A assim a comparação de ˆrk com os limites ± 2√
+n nos aponta de modo geral uma quebra
+
+27
+
+1 FUNDAMENTAÇÃO TEÓRICA
+
+do procedimento de ruído branco em εt, deste modo vale lembrar que para valores
+pequenos de k, este limites desprezará a relevância de qualquer divergência.
+
+V-Teste de Box-Pierce-Ljung Conforme Box e Pierce(1970) existe um teste para as
+auto-correlações dos resíduos estimados, que, apesar de não detectar quebras especíﬁcas
+no comportamento de ruído branco, pode mostrar se esses valores são muito altos.
+Ljung e Box (1978) sugere uma modiﬁcação neste teste que é
+
+Q(K) = n(n + 2)
+
+k(cid:88)
+
+k=1
+
+ˆr2
+k
+(n − k)
+
+terá uma distribuição X2 com k − p − q graus de liberdade. Em geral não se utiliza
+
+para valores grande de Q(·), isto é, para as 15 ou 20 primeiras ˆrk.
+
+V-Teste de Box-Pierce-Ljung Desejamos prever XT +h, obtendo-se observações até o
+instante T, usando um modelo ARIMA. Seja
+
+ϕ(B) = φ(B)∆d = (1 − ϕ1B − ϕ2B2 − . . . − ϕp+dBp+d)
+Chamemos de ˆXT (h) a previsão de XT +h de origem T e horizonte h. É possível
+provar que a previsão de EQMM (erro quadrático médio mínimo) é dada pela esperança
+condicional de XT +h dado o passado XT , Xt−1, . . . , ou seja,
+
+ˆXT (h) =E(ϕ1XT +h−1 + . . . + ϕp+dXT +h−p−d
+
++ θ0 + aT +h − θ1aT +h−1 − . . . − θqaT +h−q|XT , XT −1, . . .)
+
+Para calcular a previsões usamos os fatos:
+
+(a)E(XT +j|XT , XT −1, . . .) =
+
+(b)E(εT +j|XT , XT −1, . . .) =
+
+(cid:14)
+
+XT +j,
+ˆXT (j),
+
+(cid:14)
+
+se
+se
+
+j (cid:54) 0
+j > 0
+
+εT +j,
+0,
+
+se
+se
+
+j (cid:54) 0
+j > 0
+
+Logo, para calcular previsões temos que:
+
+(a) substituir esperanças passadas (j (cid:54) 0) por valores conhecidos, XT +j e εT +j;
+
+(b) substituir esperanças futuras (j > 0) por previsões ˆXT (j) e 0.
+
+1.4 Resumo
+
+Este trabalho de conclusão de curso visa apresentar uma sequências de atividades explo-
+rando os métodos de analise de séries temporais utilizando os conhecimento estudados
+na educação básica. Desse modo, sugere atividades que abrangem principalmente os
+conteúdos de estatística e probabilidade discute as novas tecnologias na formação do
+pensamento estocástico dos alunos e seus desdobramentos. Este trabalho é dividido em
+
+28
+
+1.4 Resumo
+
+três partes: As primeiras seções é constituída de uma revisão bibliográﬁca sobre series
+temporais e processos estocásticos e a segunda apresenta um plano de aula com sequên-
+cias didáticas utilizando alguns software. Essas atividades abordam vários conceitos
+que servem de base para compreender métodos de identiﬁcação de séries temporais.
+Através do método de simulação e interação utilizaremos alguns softwares como o R,
+Gretl e a planilha eletrônica . A terceira parte apresenta uma discussão sobre o ensino
+de estocástica por meio da tecnologia.
+
+29
+
+2 PRÁTICA
+
+2.1 Introdução
+
+Há muito tempo temos vivenciado a abordagem do ensino de probabilidade e estatís-
+tica e percebemos que nos últimos anos é cada vez mais evidente a importância dada
+a essas disciplinas. Até meados dos anos 90 os livros de matemática apresentavam
+os assuntos probabilidade e estatísticas não dando o devido destaque. Principalmente
+estatística era deixado como último assunto a ser estudado. O estudo desse tema é
+fundamental na sociedade atual em que informação é muito utilizada numa analise
+antes das decisões tomadas. Não é por acaso que o tema tem sido alvo de pesquisa
+em algumas partes do mundo, havendo muitas publicações procurando justiﬁcar a sua
+importância. Vale destacar a implantação da educação estocástica na escola básica.O
+termo "estocástica"refere-se à interligação entre as áreas de probabilidade e estatística.
+Termo muito utilizado por vários pesquisadores de ensino, aprendizagem e avaliação de
+probabilidade e estatística. No Brasil destacamos as pesquisas de Lopes (1998,2003)
+além dos grupos de trabalho PME-stochastic WorkingGroup e do CERME-Developing
+Stochastic Thinking que tratam do assunto.Nesta perspectiva, a estocástica "desem-
+penha um papel fundamental na formação para a cidadania"(Ponte e Fonseca, 2000,
+p.179). Como o exercício de uma cidadania crítica, reﬂexiva e participativa deve ser
+desenvolvido desde cedo, pois as crianças também convivem com da dos estocásticos,
+"desenvolver o pensamento estatístico e probabilístico ao longo da escolaridade con-
+stitui um aspecto importante da formação que a escola deve proporcionar"(Abrantes,
+Serrazina e Oliveira, 1999, p.94). Temos que considerar a ótica da educação estocás-
+tica no ensino fundamental pois o pensamento estocástico é uma linha de raciocínio
+matemático o que faz parte de nosso currículo, bem como a probabilidade e estatística
+são conceitos fundamentais da estocástica.O ensino da matemática tem como herança
+a exatidão e o determinismo e o cálculo, sendo contrário à exploração de situações
+que envolvam aproximação, aleatoriedade e estimação, as quais podem limitar a visão
+matemática que o aluno poderá desenvolver. Diﬁcultando suas possibilidades de es-
+tabelecimento de estratégias para a resolução de problemas que podem aparecer ao
+longo de sua vida. Atividades com estatística e probabilidade torna-se interessante ao
+possibilitar ao estudante desenvolver a capacidade de coletar, organizar, interpretar
+e comparar dados para obter e fundamentar conclusões, muito importante no desem-
+penho de uma atitude cientíﬁca. Temas importantes na educação para a cidadania, uma
+vez que possibilitam o desenvolvimento de uma análise crítica sob diferentes aspectos
+cientíﬁcos, tecnológicos e/ou sociais. Ainda hoje percebemos a carência de pesquisa em
+torno do tema estocástica. Talvez, por não ser, por razões históricas, um assunto muito
+abordado nas salas de aula de escola básica, como parte do currículo da matemática:ou
+talvez, por não ter atenção merecida dentro dos cursos de licenciatura. Pode ser apon-
+tado quatro aspectos que tem retardado o ensino efetivo de estocástica:"(a) O papel da
+probabilidade e da estatística no currículo; (b) relações entre pesquisa e instrução; (c)
+
+30
+
+2.2 Considerações iniciais
+
+a preparação do professores de matemática; (d) a maneira pela qual a aprendizagem
+está sendo conduzida"(SHAUGHNESSY, 1992, p. 466).
+
+Objetivo e justiﬁcativa do trabalho
+
+O objetivo de trabalho é apresentar uma proposta de ensino que aborda os conteúdos
+de probabilidade e estatística estudando os métodos ou modelos de ARIMA através
+de softwares estatísticos. Para justiﬁcar os objetivos de nosso trabalho partimos da
+seguinte pergunta: Pode-se obter informação de fenômenos aleatórios? Considerando
+que um fenômeno ou experimento aleatório é aquele que repetido varias vezes não pro-
+duz o mesmo resultado, mesmo que as condições sejam as mesmas.Ou ainda é aquele
+fenômeno que não sabemos, com certeza, a priori qual será o resultado.Citamos alguns
+exemplos como a quantidade de chuva que ira cair em determinado local ou quem será
+o próximo campeão mundial? Tais fenômenos precisam de um modelo matemático
+diferente para seu estudo. São o que chamaremos de modelos não-determinísticos ou
+probabilísticos. E como os modelos probabilísticos ou estocásticos são objetos de estudo
+da analise de séries temporais é importante conhecermos este assunto tão importante
+para varias áreas como ciências física, engenharia, ciências biológicas e humanas . O es-
+tudo de analise de fenômenos probabilísticos tem vários objetivos deste a descrição dos
+comportamento até as projeções de valores futuros. Este trabalho também encontra
+justiﬁcativas nas orientações curriculares do ensino médio- (Ministério da Educação,
+Secretaria de Educação Básica, 2006-Orientações curriculares para o ensino médio ;
+volume 2), quando aﬁrmam: Ao ﬁnal do ensino médio, espera-se que os alunos saibam
+usar a Matemática para resolver problemas práticos do quotidiano; para modelar
+fenômenos em outras áreas do conhecimento; compreendam que a Matemática
+é uma ciência com características próprias, que se organiza via teoremas e demon-
+strações; percebam a Matemática como um conhecimento social e historicamente con-
+struído; saibam apreciar a importância da Matemática no desenvolvimento cientíﬁco e
+tecnológico.( p. 25, grifo nosso).
+
+2.2 Considerações iniciais
+
+Nosso objetivo é desenvolver um plano de aula que seja possível aplicar a teoria citada
+no capítulo 1 através dos conhecimentos de probabilidade e estatística estudados no
+Ensino Médio.
+
+31
+
+3 PLANO DE AULA
+
+Preparamos uma aula com algumas atividades em que exploramos alguns conceitos
+de probabilidade e estatística que são utilizados como ferramenta na analise de séries
+temporais. Vale lembrar que são sugestões e podem ser modiﬁcadas conforme o interesse
+do professor. Para cada situação utilizaremos um software especíﬁco.
+
+• Objetivos
+
+Objetivos gerais:
+O principal objetivo é apresentar noções de identiﬁcação dos modelos para séries
+temporais(ARIMA) aplicando conceitos estudados nas aulas de probabilidade e
+estatística.
+objetivos especíﬁcos:
+
+– Compreender o calculo de covariância , autocovariância e autocorrelação ;
+
+– Conhecer e identiﬁcar alguns fenômenos aleatórios realizando simulações
+como o lançamento de moeda comparando o conceito de frequência com o
+conceito clássico através da observação da quantidade de resultados possíveis
+para cada possibilidade;
+
+– Compreender como os gráﬁcos de função autocorrelação são utilizados para
+
+identiﬁcar modelos de processos AR, MA e ARMA.
+
+• metodologia
+
+– A aula será realizada na sala de informática onde uma parte da aula ex-
+pomos alguns conceitos sobre o assunto, porém o resto da aula os alunos
+desenvolvem atividades cada um sua máquina utilizando aplicativos onde
+realizam simulações. Desse modo estamos utilizando a metodologia da in-
+teração e simulação.
+
+• Ação didática ou roteiro de aula
+
+1o momento
+
+Apresentar conceitos sobre fenômenos aleatórios. Ao simular alguns fenômenos orienta-
+mos a manipulação de alguns comandos na planilha eletrônica relativos a aleatoriedade.
+Utilizando o comando ALEATÓRIO() junto com a função lógica SE(teste lógico;
+valor se verdadeiro;valor se falso). Observando uma atividade que conforme a
+planilha abaixo realiza-se o comando SE(ALEATÓRIO() > 0,5;"Cara"; "Coroa")
+ou, para facilitar, então colocar Cara = 1 e Coroa = 0 . Deste modo podemos
+apresentar o conceito de frequência de probabilidade e simular o lançamento de uma
+moeda, por exemplo, 500 vezes e então calcular as frequências relativas e comparar o
+
+32
+
+resultado com a probabilidade obtida pelo conceito clássico. Observe a ﬁgura abaixo
+que mostra o experimento. Um conceito que pode acarretar dúvidas, pois envolve pas-
+sagem ao limite e desta forma não permite visualização e também não é totalmente
+intuitivo.Solicitar que faça experimentos com roletas ou cartas de baralho e propor re-
+lato das conclusões sobre as observações.
+
+Tabela 3.1: Conceito de frequência e probabilidade
+
+Lançamentos Cara/Coroa Freq. acumulada Freq. relativa Porcentagem
+
+1
+2
+3
+4
+5
+6
+7
+8
+
+0
+1
+1
+0
+1
+1
+0
+1
+
+0
+1
+2
+2
+3
+4
+4
+5
+
+0
+0,50
+0,67
+0,50
+0,60
+0,67
+0,57
+0,63
+
+0%
+50%
+67%
+50%
+60%
+67%
+57%
+63%
+
+Figura 3.1: Figura 5
+
+2o momento
+
+Apresentar deﬁnição e o modo de calcular a covariância, autocovariância e autocor-
+relação. Solicitar realização de cálculos de variância,autocovariância e autocorrelação
+na planilha. Os calculo devem ser feitos de duas formas: primeiro de forma que to-
+das as operações são escritas nas células da planilha eletrônica e no segundo caso
+utilizando os comandos de funções. Assim como na tabela abaixo o calculo da difer-
+ença entre o elemento da sequência é a média da sequência sendo assim Xn − X,
+onde X é a média.Consideramos
+(Dif 1).(Dif 2) a soma do produto da diferença
+1 e diferença 2.O calculo do produto dos desvios padrões fazemos (Dp1).(Dp 2). Para
+o calculo da autocovariância por exemplo a covariância defasagem 1 fazemos γ(1) =
+
+(cid:80)
+
+33
+
+0%50%1152943577185991131271411551691831972112252392532672812953093233373513653793934074214354494634774913 PLANO DE AULA
+
+(cid:80)
+
+(Dif1).(Dif2)
+
+cov{Xt, Xt+1} =
+7 = 1, 91. Para calcular o autocorrelação faze-
+mos σ(1) = γ(1)
+2,68 = 0, 71. Depois os cálculos são realizados
+utilizando as funções COVAR(Sequência 1;Sequência 2) e CORREL(Sequência 1;Se-
+quência 2).
+
+γ(0) = Autocovarincia
+
+(Dp1).(Dp2) = 1,91
+
+= 13,40
+
+n
+
+Tabela 3.2:
+
+Sequência 2 Dif 1
+2,89
+-0,31
+0,39
+0,59
+0,39
+-1,01
+-2,91
+
+38,8
+39,5
+39,7
+39,5
+38,1
+36,2
+35,2
+
+Xn
+42
+38,8
+39,5
+39,7
+39,5
+38,1
+36,2
+35,2
+
+Sequência 1
+
+42
+38,8
+39,5
+39,7
+39,5
+38,1
+36,2
+
+Média 1
+39,11
+
+Média 2
+38,14
+
+Desvio padrão 1 Desvio padrão 2
+
+1,63
+
+1,65
+
+(Dp 1).(Dp 2)
+2,68
+
+3o momento
+
+Dif 2
+
+0,66
+1,36
+1,56
+1,36
+-0,04
+-1,94
+-2,94
+
+(Dif 1).(Dif 2)
+1,90
+-0,43
+0,60
+0,79
+-0,02
+1,97
+8,58
+
+(cid:80)
+
+(Dif 1).(Dif 2)
+Autocovariância
+AutoCorrelação
+
+13,40
+1,91
+0,71
+
+Tabela 3.3: Indíce de custo de vida no Município de São Paulo
+
+Ano JAN FEV MAR ABR MAI JUN JUL AGO SET OUT NOV DEZ
+
+1970 71,6
+1971 84,7
+1972 102
+1973 119
+1974 135
+1975 183
+1976 238
+1977 329
+1978 456
+1979 653
+1980 1096
+
+72,5
+86,3
+104
+120
+140
+188
+251
+343
+474
+667
+1133
+
+73,5
+88,8
+105
+122
+146
+190
+256
+359
+486
+707
+1182
+
+74,5
+90,9
+106
+124
+153
+194
+263
+375
+495
+731
+1237
+
+75,2
+91,5
+107
+125
+156
+198
+270
+383
+510
+746
+1309
+
+76,3
+93,4
+108
+126
+158
+204
+275
+393
+535
+778
+1374
+
+76,9
+94,6
+110
+128
+162
+208
+280
+400
+558
+812
+
+78,1
+95,9
+112
+129
+165
+215
+290
+407
+572
+840
+
+80
+96,7
+114
+131
+167
+219
+298
+415
+586
+849
+
+80,9
+97,8
+116
+132
+170
+223
+305
+424
+602
+936
+
+81,7
+99,1
+117
+133
+174
+227
+310
+436
+617
+980
+
+82,9
+100
+118
+134
+178
+230
+318
+449
+628
+1049
+
+34
+
+Neste momento o objetivo é apresentar conceitos e noções de séries temporais e pro-
+cessos estocásticos estacionários.Através de dados coletados de fenômenos aleatórios
+podemos apresentar alguns exemplos de processos estocásticos não-estacionários e esta-
+cionários. Na tabela acima apresentamos as observações do custo de vida no município
+de São Paulo(ICV-SP).Com estes dados geramos o gráﬁco abaixo de um processo es-
+tocástico no qual ﬁca bem claro que tanto média quanto variância não são constantes.
+
+(a) Gráﬁco do indice de custo de vida de São
+Paulo - 1970 a 1980
+
+(b) Gráﬁco de um passeio aleatório
+
+Figura 3.2: Gráﬁco de processos não-estacionários (a) e (b)
+
+Um outro exemplo muito importante e muito usado de série não estacionária é o
+passeio aleatório ou passeio de bêbado. Aqui é importante salientar que {εt, t ∈ Z}
+é ruido branco discreto se as v.a. εt são não correlacionadas. Deﬁne-se um passeio
+aleatório a partir do ruído branco gerando a sequência Xt = ε1 +. . .+εt. Assim E(Xt) =
+tµε e Var(Xt) = tσ2
+ε ,ou seja, a média, a variância e as autocovariâncias dependem de
+t, portanto o processo não é estacionário conforme observamos no gráﬁco anterior.Mas
+se observarmos o gráﬁco da diferença do passeio aleatório podemos perceber que a
+média e a variância são constantes e assim o processo é estacionário. Observe o gráﬁco
+abaixo:
+
+35
+
+ 0 200 400 600 800 1000 1200 1400 1970 1972 1974 1976 1978 1980ICVtempoobservações0204060801000.00.51.03 PLANO DE AULA
+
+Figura 3.3: Gráﬁco de exemplo de processo estacionário
+
+4o momento
+
+Apresentar a função autocorrelação como ferramenta para identiﬁcar os processos es-
+tocásticos. Uma característica importante nos processos estocásticos não estacionários
+é o decaimento das autocorrelações de maneira muito lenta. Veja abaixo a função
+autocorrelação de um passeio aleatório(Correlograma):
+
+Figura 3.4: Gráﬁco de processo estacionário
+
+36
+
+Timedx020406080100−0.2−0.10.00.10.205101520−0.20.00.20.40.60.81.0LagACFSeries  xPretende-se mostrar que num processos AR(p) tem f.a.c. que decai de acordo com
+exponenciais e/ou senóides amortecidas, inﬁnita em extensão. E um processo MA(q)
+tem f.a.c. ﬁnita, no sentido que apresenta um corte após o "laq"q. Esses características
+são apresentadas nos correlogramas dos processos MA(1):
+
+(a) Gráﬁco do processo MA(1,1)
+
+(b) F.a.c. do processo MA(1,1)
+
+Figura 3.5: Gráﬁco e correlograma de processos MA (a) e (b)
+
+No processo ARMA (p,q) devemos mostrar que a f.a.c é inﬁnita em extensão, que
+
+decai de acordo com exponenciais e/ou senóides amortecidas após "lag"q-p.
+
+Figura 3.6: Gráﬁco do processo ARMA(1,1)
+
+37
+
+Timets.sim050100150200−3−2−10123051015200.00.20.40.60.81.0LagACFSeries  ts.simTimets.sim050100150200−6−4−20243 PLANO DE AULA
+
+Figura 3.7: Função autocorrelação do processo ARMA(1,1)
+
+38
+
+05101520−0.20.00.20.40.60.81.0LagACFSeries  ts.sim4 CONCLUSÃO
+
+4.1 Discussão (outros trabalhos)
+
+A presente discussão pretende responder a seguinte questão: É possível estudar pro-
+cessos estocásticos na Educação Básica?
+Primeiro vamos tentar entender o que são os processos estocásticos. Segundo Moret-
+tin(2006) os modelos utilizados para descrever séries temporais são processos estocás-
+ticos, isto é, processos controlados por leis probabilísticas. E série temporal é qualquer
+conjunto de observações ordenadas no tempo. São exemplos de séries temporais:
+
+• registro de marés no porto de santos
+
+• valores mensais de temperatura na cidade de São Paulo
+
+• índice diário da Bolsa de valores de São Paulo
+
+Hoje os educadores e pesquisadores na área da educação tem usado o termo "Estocás-
+tica"fazendo referência à interface entre a estatística e a probabilidade entendendo que
+tais assuntos quando estudados na Educação básica possibilitam o desenvolvimento de
+formas particulares de pensamento e raciocínio, compreendendo fenômenos aleatórios,
+interpretação de amostras e elaboração de inferências.
+Sendo assim, a estocástica é um meio importantíssimo para o desenvolvimento das
+capacidades de análise e resolução de situações problemáticas reais, de raciocínio e
+comunicação, bem como da autoconﬁança na aplicação de conhecimentos adquiri-
+dos.(NUNES, 2008) Além disso, através das novas tecnologias, é possível com o uso
+do computador a construção e simulação de modelos que permite avaliar o compor-
+tamento de problemas dinâmicos - aqueles que sofrem alterações ao longo do tempo.
+Será que é possível simular alguns processos estocásticos através de alguns aplicativos
+especíﬁcos e criar situações de aprendizado para alunos da Educação Básica?
+Recorremos ao artigo "Ensino de estocástica por meio de Simulação virtual"de Leandro
+de Oliveira Souza e Celi Spasadin Lopes(2011). O artigo é parte de uma pesquisa de
+mestrado de natureza qualitativa com analise interpretativa segundo categorias emer-
+gente: simulação, interação e resolução de problemas que investigou as contribuições
+da inserção da tecnologia para a educação estocástica. O processo de análise caminhou
+para elaboração de estudo de caso sobre grupo formado por quatro alunas com as quais
+se desenvolveram as atividades e se investigou o seguinte problema: com os recurso
+tecnológicos podem contribuir para a construção de novos conhecimentos da Estocás-
+tica no Ensino Fundamental? Para responder essa questão, utilizou-se a perspectiva
+Vygotskiana, considerando que, através de atividades de ensino, se possa promover a
+aprendizagem por meio da internalização. Comprovou-se que tais recursos geram con-
+hecimento mais amplo e precisos, destacando a importância da simulação e do processo
+de interação na educação. Segundo os autores foram desenvolvidos quatro atividades:
+duas de estatística, aplicadas a duas turmas de aproximadamente 40 alunos, em uma
+
+39
+
+4 CONCLUSÃO
+
+escola Municipal de São José dos Campos; e mais duas de Probabilidade, aplicadas a
+um grupo de quatro alunas voluntárias dessas turmas. Neste artigo será descrito as
+atividades que focalizam a Probabilidade. Os autores aplicaram a um grupo reduzido
+de alunos devido a possuírem apenas uma licença do software Fathom, no qual eles
+reconheceram um grande potencial para o ensino de Estatística e Probabilidade, o que
+nos levou a utiliza-lo como simulador de eventos aleatórios na pesquisa.
+Os autores optaram por fazer gravações da discussão em áudio e trabalhar com um
+número pequeno de alunos, para que pudessem levantar dados, participando do pro-
+cesso de ensino aprendizagem e intermediando-os, dar condições para analisara esses
+dados com maior precisão. Segundo os autores embora o objetivo central fosse investigar
+as contribuições dos recursos tecnológicos à aquisição de conhecimentos probabilísticos,
+também puderam ressaltar considerações relacionadas à pratica docente e ao processo
+de interação dos aluno durante a construção do conhecimento.
+O uso de simulações no ensino da estocástica
+Em consonância com as diretrizes postuladas por Chance e Rossman (2006), neste
+estudo, os autores buscaram evidenciar que o processo de ensino e aprendizagem da
+Estocástica no Ensino Fundamental pode ser ampliado e tornar-se mais signiﬁcativo
+com o uso dos computadores: estes podem auxiliar os estudantes a adquirir conheci-
+mento sobre coleta de dados e sobre organização, descrição, análise e interpretação; e
+a utilizá-los para tomada de decisões.
+Era esperado que as quatro alunas acima mencionadas ﬁzessem comparações do jogo
+da roleta com um outro jogo, anteriormente desenvolvido em Souza (2009), que levava
+os alunos a estimar a probabilidade da soma dos resultados obtidos pelo lançamento
+indicado nas faces superiores de dois dados. Pretendiam, através da comparação dos
+jogos, que as estudantes descobrissem que existiam injustiças na organização dos jogos
+e que elas podem ser resolvidas, conhecendo as chances reais de cada jogador.
+Considerações ﬁnais
+Os autores relatam que no decorrer de toda essa atividade, ﬁcou nítido que a ferra-
+menta computacional foi uma grande aliada para a aquisição e a construção dos novos
+conhecimentos. Porém é fundamental que as atividades estejam interligadas com a
+prática e com simulações reais e que sejam feitas constantes intervenções pelos profes-
+sores. Sem estas e sem um bom planejamento de aula, seria impossível para o aluno
+autoestimular-se a utilizar jogos como esses e buscar neles informações pertinentes ao
+estudo da Probabilidade.
+É notável durante todo o desenvolvimento das atividades, as alunas enfrentaram o
+dilema: Seriam os jogos justos ou não?; ganhar seria pura sorte? Isso causou desconﬁ-
+ança, o que estimulou o aprendizado.
+É importante destacar aqui que J. Bordier (apud COUTINHO,1994) elaborou um ques-
+tionário seguindo algumas recomendações que julgamos importantes para o desenvolvi-
+mento de atividades que permitem a aquisição das noções de probabilidade; são elas:
+
+• As questões devem ser direcionadas para as representações espontâneas da prob-
+abilidade e não sobre problemas qu exigem habilidades lógicas ou matemáticas
+particulares. Elas devem propor ao aluno situações que o levem a fazer uma
+escolha entre diversas possibilidades.
+
+• Deve-se pedir que o aluno comente suas respostas indicando o que levou a fazer
+determinadas escolha, sem necessidade de justiﬁcações matemáticas para tal.
+
+40
+
+4.2 Considerações ﬁnais
+
+(COUTINHO,1994, p. 34).
+
+Os dois softwares utilizados ajudaram muito: com eles foi feito as simulações de várias
+amostras, o que economizou um tempo precioso de aula e auxiliou as alunas a praticar
+na máquina aquilo que seria impossível fazer sem auxilio desta.
+Na pesquisa aqui referida, durante todo o projeto, as aulas apresentaram signiﬁcativas
+habilidades relativas à resolução de problemas. Destacaram-se em relação às categorias
+emergentes consideradas para a analise: simulação; interação; interação e resolução de
+problemas; capacidade para criar métodos de coleta de dados, aplica-los, tabula-los e
+interpreta-los, usando recursos tecnológicos. O autor destaca que provavelmente tais
+atividades pudessem ter sido desenvolvidas sem o uso desses recursos, de forma que
+as alunas construíssem os gráﬁcos e simulassem as atividades manualmente, porém
+perder-se-ia a oportunidade da construção dos diferentes tipos de gráﬁcos e o processo
+de iteração.
+Fica claro que através de quatro atividades desenvolvidas foi possível levar os alunos a
+construção e à simulação de dados, e também desenvolver o trabalho com estatística e
+probabilidade, em que prevaleceu análise crítica.
+Para Batanero et e al. (2005) as simulações são ferramentas fundamentais no inicio do
+ensino fundamental, pois permitem que os alunos construam modelos e experimentem
+com fenômenos aleatórios e previsões a longo prazo, dando a real interpretação para
+a frequência dos fenômenos probabilísticos, o que seria praticamente impossível sem a
+rapidez dos simuladores tecnológicos. Respondendo a questão do primeiro parágrafo
+podemos através dos resultados do estudo de campo do trabalho de Souza e Lopes
+concluímos que através de um bom planejamento utilizando simuladores ou softwares
+adequados podemos simular vários processos de modo que o alunos possam obter in-
+formações pertinentes, analisar, obter suas conclusões levando a melhora de suas habil-
+idades probabilísticas e estatísticas e o desenvolvendo de seu pensamento estocástico.
+Atualmente, o uso das tecnologias de informação e comunicação, através de software
+especíﬁco de Estatístico ou recorrendo à internet, no ensino e na aprendizagem da
+Estatística é amplamente preconizado por educadores e investigadores, mais frequente-
+mente no tema de Estatística do que em qualquer outro tema de Matemática. Segundo
+Branco e Martins (2002) o uso das tecnologias “é, hoje em dia, um aspecto fundamental
+da prática da Estatística” (p. 13) e Jolliﬀe (2007) advoga que as maiores alterações do
+ensino da Estatística são consequência da revolução tecnológica. A matemática escolar
+deve propiciar cada vez mais a investigação,a reﬂexão e a criatividade, rompendo com
+o determinismo que geralmente inibe a ideia de movimento e transformação, tão im-
+portante na elaboração do conhecimento.Isso, quando o enfoque do processo educativo
+não é a aquisição de informações, mas sim a percepção das relações contidas nos temas
+investigados(LIPMAN, 1995). Como diz Agostinho da Silva "O importante é educar
+as pessoas para perguntar, não para responder.
+
+4.2 Considerações ﬁnais
+
+Iniciamos nossos estudo sobre processos estocásticos nos questionando sob a possibil-
+idade de desenvolver uma situação de ensino aprendizagem envolvendo esse assunto
+na educação básica. Tópico muito estudado nas áreas de engenharia, ciências físicas,
+
+41
+
+4 CONCLUSÃO
+
+ciências biológicas e humanas. Ao iniciar este trabalho tínhamos um determinado con-
+hecimento sob importância da probabilidade e estatística dentro da Matemática. Hoje
+passado alguns meses vejo o estudo dessas disciplinas de modo bem diferente. Nosso
+objetivo era desenvolver uma sequência didática para trabalhar processos estocásticos
+na escola Básica e através de estudo de vários trabalhos e da fundamentação teórica con-
+cluímos nosso objetivo desenvolvendo uma sequência didática para trabalhar o tema.
+Esperamos contribuir para formação dos nossos jovens e na prática de ensino ajudando
+os colegas a conhecer outros caminhos entre tantos que a matemática nos oferece.
+
+42
+
+Bibliograﬁa
+
+[1] MORETTIN,P.A.; Econometria Financeira:Um Curso de Séries Temporais Fi-
+
+nanceiras, São Paulo, 2006.
+
+[2] COUTINHO, S. Q. S.A.; Introdução ao Conceito de Probabilidade por uma visão
+Frequentista. Estudo Epistemológico de Didático, São Paulo, 1994. Dissertação
+de Mestrado em Educação Matemática. PUC/SP. São Paulo.
+
+[3] Chance, B.; and Rossman, A. ; Investigating Statistical Concepts, Applications,
+
+and Methods,Belmont, CA: Duxbury, 2006.
+
+[4] NUNES,A. R.S. ; Ensino da estocástica no 6.o ano de escolaridade: opções
+metodológicas e diﬁculdades sentidas pelos professores, Especialização em Ensino
+e Aprendizagem da Matemática, Universidade do Minho, 2008.
+
+[5] SOUZA, L. O. ; LOPES, C. E; O Ensino de Estocástica por meio de Sim-
+ulação Virtual, In:CONFERÊNCIA INTERAMERICANA DE EDUCAÇÃO
+MATEMÁTICA, XIII, 2011, Recife.
+
+[6] BATANERO, C; GODINO; CAÑIZARES, m.j.; Using simulation to bridge
+teacher’s content and pedagogical Knowledge in probability. Proccedings of the
+ﬁfteenth International Comission on Matemathics Instruction Study (pp. 1-6).
+Águas de Lindóia, Brazil: ICMI, 2005.
+
+[7] LIPMAN, Matthew; O pensar na Educação. Petrópolis:Vozes,1995
+
+[8] SILVA, I. A.; Probabilidade: a visão laplaciana ou visão frequentista, PUC/SP
+
+- 2002 - Dissertação( Mestrado em educação proﬁssional) - São Paulo
+
+[9] BRANCO, J. & Martins, M. E. G.; Literacia estatística.Educação e Matemática,
+
+69, 9-13 2002.
+
+[10] JOLLIFE, F.; The changing brave new world of statistics assessment; The Pro-
+ceedings of the ISI/IASE Satellite on Assessing Student Learning in Statistics,
+Voorburg: International Statistical Institute (2007).
+
+[11] PONTE, J. P. e FONSECA, H.; A estatística no currículo do ensino básico e
+
+secundário, Lisboa - Sociedade Portuguesa de estatística (2000).
+
+[12] ABRANTES, P., SERRANI e OLIVEIRA, I; A matemática na educação básica
+
+Lisboa, 1999.
+
+[13] VYGOTSKY, L.S.; A formação social da mente., 4a ed . São Paulo: Martins
+
+Fontes, 1991.
+
+43
+
+Bibliograﬁa
+
+[14] SHAUGHNESSY, J. M.: Research in probability and statistics: reﬂections and
+directions.In: GROUWS, D. A. (Ed.). Handbook of Research on Mathematics
+Teaching and Learning. USA: NCTM, 1992. p. 465-494.
+
+44
+
+

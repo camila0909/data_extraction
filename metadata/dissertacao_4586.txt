@@ -1,0 +1,3946 @@
+2015: Trabalho de Conclus˜ao de Curso do Mestrado Proﬁssional em Matem´atica em Rede Nacional
+PROFMAT
+Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ / Campus Alto Paraopeba - CAP
+Sociedade Brasileira de Matem´atica - SBM
+
+Polinˆomios: Ra´ızes e utilidade para m´etodos num´ericos
+
+Fernanda Diniz Pessoa 1
+Gilc´elia Regiane de Souza2
+
+Resumo:
+
+Encontrar as ra´ızes de um polinˆomio sempre foi um dos objetos de estudo da ´Algebra. As
+ra´ızes s˜ao necess´arias para an´alise e interpreta¸c˜ao de determinadas situa¸c˜oes e h´a s´eculos s˜ao
+estudados m´etodos para facilitar esses c´alculos. Duas linhas distintas foram desenvolvidas,
+numa a procura das ra´ızes exatas e na outra a busca das ra´ızes aproximadas.
+
+O objetivo desse trabalho ´e estudar alguns m´etodos utilizados para encontrar ra´ızes de
+polinˆomios de v´arios graus. Al´em disso, estudamos tamb´em, de forma geral, aproxima¸c˜ao de
+fun¸c˜oes utilizando polinˆomios, pois essas s˜ao muito ´uteis e usadas em larga escala em v´arias
+´areas do conhecimento, como engenharia, f´ısica, biologia, etc .
+
+O trabalho ´e ﬁnalizado com duas propostas de atividades a serem aplicadas no Ensino
+
+M´edio.
+
+Palavras-chave: Aproxima¸c˜ao de fun¸c˜ao, Raiz de polinˆomio, C´ırculos de Gersgorin, Po-
+linˆomios de Chebyshev, M´etodo de Cardan, M´etodo de Ferrari, Rela¸c˜oes de Girard, M´etodo
+de Newton.
+
+1
+
+Introdu¸c˜ao
+
+Um grande problema enfrentado pelos matem´aticos entre 1400 e 1700 ´e o de encontrar as
+ra´ızes de equa¸c˜oes polinomiais em fun¸c˜ao apenas dos seus coeﬁcientes. Para a equa¸c˜ao de
+segundo grau o m´etodo era conhecido desde o in´ıcio do s´eculo II. Para as equa¸c˜oes de terceiro
+grau o problema era um pouco mais s´erio e at´e motivou disputas entre alguns matem´aticos.
+Acredita-se que Scipio Del Ferro (1465-1526) sabia resolver equa¸c˜oes c´ubicas por m´etodos
+alg´ebricos e que nos seus ´ultimos dias ele conﬁou sua solu¸c˜ao a um estudante, Antˆonio Fior.
+Fior desaﬁou N´ıcolo Fontana (1499-1557), conhecido por Tartaglia, para uma competi¸c˜ao
+p´ublica: as regras consistiam em que, cada um daria ao outro 30 problemas com 40 ou 50
+dias para resolver e o vencedor seria aquele que resolvesse a maioria. Tartaglia resolveu todos
+os problemas de Fior. Acontece que Tartaglia, um pouco antes de receber os problemas,
+tinha achado um m´etodo geral para todos os tipos de equa¸c˜oes c´ubicas. Entretanto foi outro
+
+1Aluna de Mestrado Proﬁssional em Matem´atica, Turma 2012
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ / Campus Alto Paraopeba - CAP
+E-mail:nandadp@ig.com.br
+
+2Orientadora do Trabalho de Conclus˜ao de Curso
+
+Departamento de F´ısica e Matem´atica - Deﬁm, UFSJ/CAP
+E-mail: gilcelia@ufsj.edu.br
+
+2
+
+matem´atico, chamado Jerˆonimo Cardan (1501-1576), quem publicou em 1945 a f´ormula para
+as equa¸c˜oes c´ubicas em Ars Magna.
+
+Por volta de 1830, um grande matem´atico chamado Evarist Galois (1811-1832) mostrou
+que para polinˆomios completos de grau maior ou igual a cinco ´e imposs´ıvel encontrar uma
+f´ormula que forne¸ca as suas ra´ızes.
+
+Desde muito tempo, os matem´aticos desenvolvem v´arios m´etodos para que todas as
+
+equa¸c˜oes possam ser resolvidas mas muito pouco desse estudo chega at´e a sala de aula.
+
+O objetivo desse trabalho ´e fazer uma reﬂex˜ao acess´ıvel a todos os professores do Ensino
+Fundamental e M´edio, primeiramente sobre os n´umeros complexos, pois com o estudo das
+fun¸c˜oes de vari´avel complexa pioneiramente realizado por Abel, Jacobi, Cauchy, Riemann
+e Weierstrass, os n´umeros complexos impuseram in´umeras aplica¸c˜oes em quase todos os
+ramos da matem´atica e da tecnologia. Revisamos algumas propriedades desses n´umeros e
+mostramos os C´ırculos de Gersgorin que nos possibilitam encontrar a regi˜ao onde temos ra´ızes
+do polinˆomio caracter´ıstico obtido de uma dada matriz.
+
+Desenvolvemos detalhadamente todas as etapas dos M´etodos de Cardan e Ferrari, que
+s˜ao ´uteis para calcular as ra´ızes de equa¸c˜oes do terceiro e quarto grau, respectivamente.
+Citamos as Rela¸c˜oes de Girard, que s˜ao importantes rela¸c˜oes entre os coeﬁcientes e as ra´ızes
+de qualquer equa¸c˜ao. Por ﬁm, para as equa¸c˜oes de grau maior que 4, escolhemos o M´etodo
+de Newton, por acreditarmos ser mais simples sua explica¸c˜ao e seus c´alculos para alunos do
+Ensino M´edio.
+
+Estudamos tamb´em os polinˆomios, e as aproxima¸c˜oes de fun¸c˜oes por polinˆomios, em
+especial os polinˆomios de Chebyshev, que nos d˜ao uma aproxima¸c˜ao bem otimizada dado um
+conjunto de pontos.
+
+Terminamos cientes que muito mais temos para aprender sobre processos e m´etodos para
+se encontrar ra´ızes de polinˆomios mas deixamos aqui alguns caminhos que podem ser explo-
+rados, lembrando que devemos estimular nossos alunos a compreender a importˆancia desses
+c´alculos.
+
+2 N´umeros Complexos
+
+√
+
+−3 e
+Se pensarmos em dois n´umeros cuja soma ´e 4 e o produto ´e 7, encontraremos 2 +
+2 −
+−3. Mas, por volta de 1500, s´o se conheciam os n´umeros reais, logo, esses resultados
+geravam espanto e d´uvida pois, as ra´ızes quadradas de n´umeros negativos eram consideradas
+inexistentes.
+
+√
+
+O matem´atico renascentista Rafael Bombelli (It´alia, 1726 - 1772), foi o que primeiro
+−1, onde a e b s˜ao n´umeros reais e
+
+tratou esses novos n´umeros que s˜ao da forma a + b
+√
+(
+
+−1)2 = −1.
+−1
+Em meados do ano de 1777, Leonhard Euler (Sui¸ca, 1707-1783), denotou o n´umero
+por i e determinou v´arias propriedades desses novos n´umeros, chamados de n´umeros com-
+plexos, por Carl Fiedrich Gauss (Alemanha, 1777-1855) em 1831.
+
+√
+
+√
+
+Dado o n´umero complexo z = a + bi, denotamos a como parte real e b como parte
+imagin´aria. Temos tamb´em o conjugado deste n´umero, que ser´a denotado por z = a − bi.
+Al´em disso, o conjunto dos n´umeros complexos ´e representado por C, com as opera¸c˜oes de
+adi¸c˜ao e multiplica¸c˜ao deﬁnidas em R, com a regra : i2 = −1.
+
+Lembrando que o conjunto dos n´umeros complexos C ´e um corpo, isto ´e, existe o elemento
+neutro da adi¸c˜ao (a saber o 0) e da multiplica¸c˜ao (a saber 1), o conjunto ´e fechado em rela¸c˜ao a
+adi¸c˜ao e a multiplica¸c˜ao, al´em de existir o sim´etrico aditivo e o inverso multiplicativo e serem
+v´alidas as propriedades comutativa, associativa e distributiva da adi¸c˜ao e multiplica¸c˜ao.
+
+3
+
+2.1 Forma Polar dos N´umeros Complexos
+
+Essa representa¸c˜ao, devida a Euler, pode ser chamada tamb´em de forma trigonom´etrica e ela
+facilita as opera¸c˜oes de potencia¸c˜ao e radicia¸c˜ao de n´umeros complexos.
+
+Seja z = a + bi um n´umero complexo n˜ao nulo. Considere um ponto P = (a, b) do plano,
+
+diferente da origem O = (0, 0). Logo, o segmento de reta OP , de comprimento
+
+√
+
+r =| z |=
+
+a2 + b2 (cid:54)= 0,
+
+determina no eixo x um ˆangulo θ cuja medida em radianos est´a no intervalo [0, 2π). O n´umero
+real θ ´e chamado argumento de z e denotado por
+
+arg(z) = θ.
+
+No plano cartesiano, observe que podemos rescrever a = r cos θ e b = r sen θ, logo, temos
+que: (Veja Figura 1.)
+
+z = r(cos θ + i sen θ).
+
+Figura 1: Representa¸c˜ao do n´umero complexo no plano cartesiano
+
+F´ormula de De Moivre: Dado um n´umero complexo n˜ao nulo na forma polar
+z = r(cos θ + i sen θ), ent˜ao, para cada n´umero inteiro n, tem-se que:
+
+A demonstra¸c˜ao ´e feita por indu¸c˜ao e pode ser encontra em [3].
+
+zn = rn(cos nθ + i sen nθ).
+
+Ra´ızes complexas n-´esimas
+
+Todo n´umero complexo z (cid:54)= 0 tem exatamente n ra´ızes complexas, para cada n´umero
+
+natural n ≥ 1, calculadas da seguinte forma:
+
+√
+zk = n
+r
+
+(cid:16) θ + 2kπ
+n
+onde r =| z |> 0 e θ = arg(z).
+
+cos
+
+(cid:104)
+
+(cid:17)
+
++ i sen
+
+(cid:16)θ + 2kπ
+n
+
+(cid:17)(cid:105)
+
+,
+
+k = 0, 1, 2, · · · , n − 1.
+
+4
+
+Os c´alculos para se chegar a essa igualdade utilizam a F´ormula de De Moivre e podem
+
+ser encontrados em [3].
+
+Ra´ızes da Unidade
+
+As ra´ızes n-´esimas da unidade s˜ao as ra´ızes complexas n-´esimas de 1.
+Para z = 1 temos r =| z |= 1 e θ = arg(1) = 0, logo,
+
+√
+zk = n
+
+(cid:16)
+1
+
+cos
+
+(cid:17)
+
+0 + 2kπ
+n
+
++ i sen
+
+(cid:16) 0 + 2kπ
+n
+
+(cid:17)
+
+,
+
+k = 0, 1, 2, · · · , n − 1.
+
+ou seja,
+
+zk = cos
+
+2kπ
+n
+
++ i sen
+
+2kπ
+n
+
+, k = 0, 1, 2, · · · , n − 1.
+
+Ent˜ao as ra´ızes da unidade dividem o c´ırculo trigonom´etrico em n partes iguais. A Figura
+
+2, apresentamos o caso n = 4.
+
+Figura 2: Caso n = 4.
+
+Abaixo apresentamos os c´alculos das ra´ızes c´ubicas da unidade, pois elas ser˜ao necess´arias `a
+frente.
+
+Exemplo 2.1 Ra´ızes c´ubicas da unidade:
+3 + i sen 2.0.π
+3 + i sen 2.1.π
+3 + i sen 2.2.π
+
+z0 = cos 2.0.π
+z1 = cos 2.1.π
+z2 = cos 2.2.π
+
+3 = cos(0) + isen(0) = 1 + 0 = 1
+3i
+3 ) + isen( 2π
+3 = cos( 2π
+3 ) + isen( 2π
+3 = cos( 4π
+
+3 ) = −1+
+3 ) = −1−
+
+2
+√
+
+3i
+
+√
+
+2
+
+Um belo exemplo de como os n´umeros complexos est˜ao presentes em quase todos os ramos
+
+da matem´atica ´e o C´ırculo de Gersgorin que ser´a apresentado na se¸c˜ao 6.
+
+3 Polinˆomios
+
+Um polinˆomio p(x) com coeﬁcientes em R ´e uma express˜ao do tipo:
+
+p(x) = a0 + a1x + a2x2 + · · · + anxn
+
+(1)
+
+5
+
+ou seja,
+
+p(x) =
+
+n
+(cid:88)
+
+j=0
+
+ajxj,
+
+onde n ∈ N, aj ∈ R, para 0 ≤ j ≤ n.
+
+Os elementos aj s˜ao chamados coeﬁcientes do polinˆomio p(x), para 0 ≤ j ≤ n e cada
+parcela ajxj ´e chamada monˆomio de grau j. O termo a0 ´e chamado termo constante ou
+independente. Com soma deﬁnida pelas propriedades comutativa e associativa da adi¸c˜ao
+e redu¸c˜ao dos termos semelhantes. E o produto deﬁnido pela propriedade distributiva da
+multiplica¸c˜ao relativa `a adi¸c˜ao e soma dos termos semelhantes.
+
+Quando p(x) = a0 temos um polinˆomio chamado constante e se p(x) = 0, chamamos de
+
+polinˆomio nulo.
+
+O grau de um polinˆomio p(x) ´e denotado por gr(p(x)) e ser´a dado pelo maior valor de
+n tal que an (cid:54)= 0. Neste caso, chamamos an de coeﬁciente l´ıder de p(x). O grau para o
+polinˆomio nulo n˜ao ´e deﬁnido.
+
+Os polinˆomios de grau n com coeﬁciente l´ıder an = 1 s˜ao chamados de polinˆomios mˆonicos.
+Sejam
+
+e
+
+p(x) = a0 + a1x + a2x2 + · · · + anxn =
+
+˜p(x) = b0 + b1x + b2x2 + · · · + bnxn =
+
+n
+(cid:88)
+
+j=0
+
+n
+(cid:88)
+
+j=0
+
+ajxj,
+
+bjxj,
+
+temos que p(x) = ˜p(x) se, somente se, aj = bj , para 0 ≤ j ≤ n.
+
+4 Resolu¸c˜oes de equa¸c˜oes polinomiais
+
+Resolver uma equa¸c˜ao j´a era um desaﬁo desde o in´ıcio do conhecimento matem´atico como
+podemos ver nos papiros de Moscou(1890 a.C.), de Rhind (1650 a.C.) entre outros. A palavra
+equa¸c˜ao j´a era usada por escritores medievais. Ramus (1515 - 1572) usou a palavra Aequatio
+em sua Aritm´etica (1567). A equa¸c˜ao apareceu em inglˆes em 1570 em uma tradu¸c˜ao da obra
+Os Elementos de Euclides feita por Henry Billingsley.
+
+Teorema Fundamental da ´Algebra O Teorema Fundamental da ´Algebra garante
+que toda equa¸c˜ao polinomial de grau n admite n ra´ızes complexas, publicado em 1799 (em
+Helmst¨adt) na tese de doutorado de Gauss. Embora seja um dos maiores teoremas da ´Algebra
+a demonstra¸c˜ao apresentada em sua tese baseia-se em parte em conceitos de An´alise (como
+a no¸c˜ao de continuidade). Posteriormente, Gauss dedicou-se na busca de uma prova intei-
+ramente alg´ebrica (tal empenho gerou mais trˆes vers˜oes de provas publicadas). Atualmente
+existem mais de 100 provas a respeito do importante teorema.
+
+Desde ent˜ao contamos com o seguinte resultado:
+
+O polinˆomio p(x) = anxn + . . . + a0 pode ser fatorado, no corpo dos complexos, como
+
+an(x − x1)(x − x2) . . . (x − xn),
+
+6
+
+sendo que x1, . . . , xn s˜ao suas ra´ızes complexas, n˜ao necessariamente distintas, ou ent˜ao na
+forma
+
+an(x − x1)m1(x − x2)m2 . . . (x − xk)mk,
+
+sendo que x1, . . . , xk s˜ao k ra´ızes distintas, com multiplicidades, respectivamente, m1, m2 . . . , mk.
+Sendo assim, o objetivo, ´e encontrar as ra´ızes da equa¸c˜ao polinomial. Por anos/s´eculos
+as aten¸c˜oes estavam voltadas na busca de uma express˜ao/f´ormula para obter tais ra´ızes por
+meio de radicais.
+
+A resolu¸c˜ao por radicais de uma equa¸c˜ao polinomial p(x) = 0, trata da procura das ra´ızes
+de um polinˆomio p(x) de grau n de forma que as mesmas possam ser expressas em fun¸c˜ao de
+seus coeﬁcientes, envolvendo somente as opera¸c˜oes alg´ebricas fundamentais e mais a extra¸c˜ao
+de ra´ızes quadradas, c´ubicas, etc.
+
+Na primeira metade do s´eculo XVI na It´alia foram encontrados os procedimentos gerais,
+
+ou seja, as f´ormulas, para a resolu¸c˜ao das equa¸c˜oes do 3o e do 4o grau.
+
+Ap´os grande contribui¸c˜ao dos italianos no s´eculo XVI, houve um enorme entusiasmo
+(expectativa) no sentido que seria poss´ıvel obter o mesmo para qualquer grau, mas dois
+s´eculos se passaram sem que tal objetivo fosse alcan¸cado. No decorrer dos anos, na busca
+incessante por atingir tal objetivo v´arias teorias foram desenvolvidas, por exemplo, a Teoria
+dos Grupos. No entanto, s´o em 1799 Ruﬃni aﬁrmou ter demonstrado que era imposs´ıvel
+resolver a equa¸c˜ao geral do quinto grau atrav´es de radicais, tal aﬁrma¸c˜ao s´o veio a ter
+credibilidade 25 anos mais tarde.
+
+Diante de tal fato, dois caminhos distintos foram seguidos. Por um lado, Galois resol-
+veu completamente a quest˜ao, descobrindo condi¸c˜oes necess´arias e suﬁcientes para que uma
+equa¸c˜ao possa ser resolvida por meio de radicais, e assim provou que n˜ao pode existir uma
+f´ormula para equa¸c˜oes de grau superior ao quarto. Tal caminho levou `a t˜ao importante teoria
+dos grupos, an´eis e corpos, exibindo resultados que ultrapassaram em muito o ˆambito das
+equa¸c˜oes polinomiais, e resolvendo muitos problemas em outras ´areas da Matem´atica.
+
+Em uma outra abordagem – bem diferente da primeira – v´arios matem´aticos, uma vez
+que a procura da f´ormula mostrou-se em v˜ao, passaram a dedicar-se aos chamados m´etodos
+num´ericos para a resolu¸c˜ao de equa¸c˜oes polinomiais. Em geral, o processo ´e obter uma
+sequˆencia de valores aproximados, da´ı ir melhorando cada vez mais os resultados, de modo
+que seja poss´ıvel obter as ra´ızes com qualquer grau de aproxima¸c˜ao desejada.
+
+4.1 Equa¸c˜ao do segundo grau:
+
+Se pensarmos na seguinte situa¸c˜ao: “Uma ﬁssura num reservat´orio de gasolina de uma re-
+ﬁnaria de petr´oleo provocou um grande vazamento. Os t´ecnicos respons´aveis pelo conserto
+estimaram que, a partir do instante em que o dano ocorreu, o volume V de gasolina restante
+no reservat´orio (em quilolitro) em fun¸c˜ao do tempo t (em hora) podia ser calculado pela lei:
+V (t) = −2t2 − 8t + 120. Qual ´e o tempo t para que o reservat´orio ﬁque vazio?”( Matem´atica
+Paiva, volume 1, editora Moderna)
+
+Para responder a pergunda acima, e outras tantas que envolvem fun¸c˜oes do segundo grau,
+
+precisamos saber resolver tais equa¸c˜oes.
+
+A resolu¸c˜ao da equa¸c˜ao do segundo grau ´e estudada no nono ano do Ensino Fundamental
+e ´e conhecida como F´ormula de Bh´askara, pois Bh´askara a demonstrou algebricamente, mas
+ela j´a era conhecida centenas de anos antes.
+
+Considere a equa¸c˜ao ax2 + bx + c = 0 com coeﬁcientes em R e a (cid:54)= 0. Passando o termo
+
+(cid:114)
+
+(cid:114)
+
+constante para o segundo membro, teremos:
+
+x2 +
+
+b
+a
+
+x = −
+
+c
+a
+
+.
+
+Prosseguindo, faremos com que o lado esquerdo da equa¸c˜ao seja um quadrado perfeito e para
+isto somaremos o quadrado de b
+
+2a a ambos os membros da equa¸c˜ao para obter:
+
+7
+
+x2 +
+
+b
+a
+
+x +
+
+(cid:17)2
+
+(cid:16) b
+2a
+
+= −
+
+c
+a
+
++
+
+(cid:17)2
+
+.
+
+(cid:16) b
+2a
+
+Simpliﬁcando ambos os lados da equa¸c˜ao, obteremos:
+
+(cid:104)
+
+x +
+
+(cid:105)2
+
+b
+2a
+
+=
+
+b2 − 4ac
+4a2
+
+Extraindo a raiz quadrada de cada membro da equa¸c˜ao e lembrando que a raiz quadrada
+de todo n´umero real n˜ao negativo ´e tamb´em n˜ao negativa, obteremos duas respostas para a
+nossa equa¸c˜ao:
+
+x +
+
+b
+2a
+
+= +
+
+b2 − 4ac
+4a2
+
+e
+
+x +
+
+b
+2a
+
+(cid:114)
+
+= −
+
+b2 − 4ac
+4a2
+
+.
+
+Como estamos procurando duas ra´ızes para a equa¸c˜ao do segundo grau, devemos sempre
+escrever:
+
+x(cid:48) = −
+
+b
+2a
+
++
+
+b2 − 4ac
+2a
+
+e
+
+x(cid:48)(cid:48) = −
+
+b
+2a
+
+−
+
+b2 − 4ac
+2a
+
+,
+
+(cid:114)
+
+onde b2 − 4ac ´e simbolizado por ∆ (delta) e ´e chamado de discriminante da equa¸c˜ao do
+segundo grau, ou seja, o ∆ nos diz se a equa¸c˜ao possui uma ou duas ra´ızes distintas em C.
+
+Se os coeﬁcientes a, b e c da equa¸c˜ao forem n´umeros reais, teremos:
+1) Se ∆ > 0 , a equa¸c˜ao possui 2 ra´ızes reais distintas.
+2) Se ∆ = 0, a equa¸c˜ao possui somente uma raiz real.
+3) Se ∆ < 0 , a equa¸c˜ao possui duas ra´ızes complexas conjugadas.
+
+Voltando a situa¸c˜ao do reservat´orio, devemos resolver a seguinte equa¸c˜ao:
+
+−2t2 − 8t + 120 = 0
+
+para respondermos a pergunta. Assim, t1 = −2 +
+
+√
+
+√
+
+34 e t2 = −2 −
+
+√
+
+34.
+
+Como −2 −
+
+√
+
+34 ´e negativo e estamos pensando no tempo decorrido, ent˜ao nossa resposta
+34 − 2 horas, o reservat´orio ﬁcar´a vazio (cerca
+
+34. Ent˜ao temos que, depois de
+
+√
+
+´e t = −2 +
+de 3 horas e 50 minutos).
+
+4.2 Equa¸c˜ao do terceiro grau:
+
+Jerˆonimo Cardan foi um dos matem´aticos de maior renome na ´epoca do Renascimento,
+desenvolveu v´arios c´alculos para se chegar a f´ormula resolutiva da equa¸c˜ao do terceiro grau
+(2). Sem perda de generalidade, consideramos:
+
+x3 + a2x2 + a1x + a0 = 0,
+
+(2)
+
+8
+
+pois caso exista um termo a3 (cid:54)= 1 podemos dividir todos os coeﬁcientes por a3. Para facilitar
+a resolu¸c˜ao desta equa¸c˜ao a ideia ´e fazer uma mudan¸ca de vari´avel do tipo x = y + d, onde
+y ´e a nova inc´ognita, e d uma constante a ser determinada de modo a simpliﬁcar a equa¸c˜ao.
+Deve-se anular o termo em x2, e esta substitui¸c˜ao transforma o lado esquerdo da equa¸c˜ao
+em:
+
+(y +d)3 +a2(y +d)2 +a1(y +d)+a0 = y3 +(3d+a2)x2 +(3d2 +2a2d+a1)x+d3 +a2d2 +a1d+a0.
+
+Para eliminar o coeﬁciente de x2, basta tomar d = −a2/3. Portanto, a mudan¸ca de vari´avel
+indicada ´e x = y − a2/3. A equa¸c˜ao resultante ter´a a forma:
+
+y3 + αy + β = 0
+
+(3)
+
+sendo que α = a1 − a2
+
+2
+
+3 e β = 2a3
+
+2
+
+27 − a1a2
+
+3 + a0.
+
+Se conseguirmos encontrar uma raiz y desta equa¸c˜ao, ent˜ao y − a2/3 ser´a uma solu¸c˜ao da
+
+equa¸c˜ao (2).
+
+Para resolver a equa¸c˜ao (3), podemos usar o processo proposto por Cardan (1545) cujo
+
+detalhamento pode ser visto no Apˆendice A.
+
+As ra´ızes de (2) s˜ao obtidas fazendo o seguinte
+
+(cid:114)
+
+−
+
+x1 =
+
+(cid:115)
+3
+
+−β
+2
+
++
+
+x2 = ξ
+
+(cid:115)
+3
+
+−β
+2
+
++
+
+(cid:115)
+x3 = ξ2 3
+
+−β
+2
+
++
+
+(cid:114)
+
+β2
+4
+(cid:114)
+
+β2
+4
+(cid:114)
+
+(cid:115)
+3
+
+−β
+2
+(cid:115)
++ ξ2 3
+
++
+
+α3
+27
+
++
+
++
+
+α3
+27
+
+(cid:115)
+3
+
++
+
+α3
+27
+
++ ξ
+
+β2
+4
+
+−β
+2
+
+−β
+2
+
+β2
+4
+(cid:114)
+
+−
+
+−
+
+(cid:114)
+
++
+
+α3
+27
+
++ d
+
+β2
+4
+
+β2
+4
+
++
+
++
+
+α3
+27
+
+α3
+27
+
++ d
+
++ d
+
+onde ξ e ξ2 s˜ao as ra´ızes da unidade. Vejamos um exemplo ilustrativo.
+
+Exemplo 4.1 : Vamos resolver a seguinte equa¸c˜ao de indeterminada x:
+
+Dividindo a equa¸c˜ao acima por 2, obtemos a equa¸c˜ao polinomial:
+
+2x3 + x2 + 6x + 3 = 0
+
+x3 +
+
+1
+2
+
+x2 + 3x +
+
+3
+2
+
+= 0.
+
+Os coeﬁcientes s˜ao a2 = 1/2, a1 = 3 e a0 = 3/2. E d = −a2
+
+3 = −1
+6 .
+
+Substituindo o x por y + d = y − 1/6 na equa¸c˜ao teremos:
+
+(cid:18)
+
+y −
+
+(cid:19)3
+
+(cid:18)
+
+y −
+
++
+
+1
+2
+
+1
+6
+
+1
+6
+
+(cid:19)2
+
+(cid:18)
+
++3
+
+y −
+
+(cid:19)
+
++
+
+3
+2
+
+1
+6
+
+= 0,
+
+ou seja,
+
+35
+12
+Temos que α = 35/12 e β = 109/108. Logo,
+
+y3 +
+
+y +
+
+109
+108
+
+= 0.
+
+α3
+27
+
+β2
+4
+Portanto, os valores de x ser˜ao:
+
+42875
+46656
+
+=
+
+e
+
+=
+
+11881
+46656
+
+donde temos que
+
+β2
+4
+
++
+
+α3
+27
+
+=
+
+54756
+46656
+
+.
+
+(cid:114)
+y1 = 3
+
+(cid:113) 54756
+
+(cid:114)
+46656 + 3
+
+−109
+216 −
+
+−109
+216 +
+
+(cid:113) 54756
+
+46656 = −1
+
+3
+
+y2 = −1+i
+2
+
+y3 = −1−i
+2
+
+√
+
+3
+
+√
+
+3
+
+.( 5
+
+6) + −1−i
+
+2
+
+.( 5
+
+6) + −1+i
+
+2
+
+√
+
+3
+
+.( −7
+
+6 ) = −5+5i
+
+√
+
+√
+
+3
+
+3+7+7i
+12
+
+√
+
+3
+
+.( −7
+
+6 ) = 1
+
+6 − i
+
+√
+3
+
+√
+
+= 1
+
+6 + i
+
+9
+
+3
+
+Como x = y + d = y − 1
+ra´ızes da equa¸c˜ao:
+
+6 vamos substituir os valores de y encontrados para calcularmos as
+
+x1 = y1 − 1
+
+6 = − 1
+
+2
+
+x2 = y2 − 1
+
+6 = 1
+
+6 + i
+
+√
+
+3 − 1
+
+6 = +i
+
+x3 = y3 − 1
+
+6 = 1
+
+6 − i
+
+3 − 1
+
+6 = −i
+
+√
+
+√
+3
+√
+
+3
+
+que s˜ao ra´ızes da equa¸c˜ao 2x3 + x2 + 6x + 3 = 0.
+
+4.3 Equa¸c˜ao do quarto grau:
+
+Para resolver equa¸c˜oes do quarto grau usaremos o m´etodo de Ferrari.
+
+Ludovico Ferrari (It´alia, 1522- 1565) nasceu em Mil˜ao, estabeleceu-se em Bolonha e iniciou
+sua carreira como auxiliar de Jerˆonimo Cardan. Devido a sua grande facilidade no apren-
+dizado, Cardan ensinou-lhe muito da matem´atica. Ferrari e Cardan trabalharam juntos nas
+solu¸c˜oes das equa¸c˜oes quadr´aticas e c´ubicas.
+
+Consideremos uma equa¸c˜ao do quarto grau:
+
+x4 + a3x3 + a2x2 + a1x + a0 = 0,
+
+(4)
+
+Para encontrar suas ra´ızes distribu´ımos os membros adequadamente e completamos os termos
+de forma a encontrar quadrados em ambos membros da igualdade, ou seja, ﬁcamos com
+
+ou seja,
+
+x4 + a3x3 +
+
+1
+4
+
+3x2 = −a2x2 − a1x + a0 +
+a2
+
+1
+4
+
+3x2
+a2
+
+(x2 +
+
+1
+2
+
+a3x)2 = (
+
+1
+4
+
+3 − a2)x2 − a1x + a0.
+a2
+
+Agora, somando a parcela y2 + 2y(x2 + 1
+um quadrado. Mais precisamente, na primeira etapa, ﬁcamos com
+
+2a3x) nos dois lados da igualdade, com isso teremos
+
+(cid:16)
+
+y + (x2 +
+
+1
+2
+
+(cid:17)2
+
+a3x)
+
+= (
+
+1
+4
+
+3 − a2 + 2y)x2 + (a3y − a1)x + (y2 − a0),
+a2
+
+(5)
+
+para transformar o lado direito em um quadrado, ser´a necess´ario encontrar uma raiz da
+equa¸c˜ao abaixo
+
+8y3 − 4a2y2 + (2a1a3 − 8a0)y + (4a0a2 − a2
+
+1 − a0a2
+
+3) = 0,
+
+(6)
+
+tal equa¸c˜ao foi obtida ao calcular o discrimante da equa¸c˜ao de segundo grau em x (equa¸c˜ao
+(5) lado direito). E assim, com o aux´ılio da equa¸c˜ao (6) reescrevemos o lado direito na forma
+de quadrados, veja detalhes no Apˆendice B. Considere y0 uma das ra´ızes de 6, encontrada.
+
+10
+
+Sabendo o valor de y0, temos um quadrado no segundo membro da equa¸c˜ao (5), logo, podemos
+escrever:
+
+(y + (x2 +
+
+a3x))2 = (ax + b)2, onde a e b ∈ C
+
+1
+2
+
+Portanto,
+
+e
+
+x2 +
+
+1
+2
+
+a3x + y0 = ax + b
+
+x2 +
+
+1
+2
+
+a3x + y0 = −(ax + b),
+
+da´ı teremos para cada igualdade 2 ra´ızes, assim encontramos as 4 ra´ızes da equa¸c˜ao do quarto
+grau, sem contar as multiplicidades.
+
+A resolu¸c˜ao da equa¸c˜ao (4), pelo processo proposto por Ferrari est´a detalhado em Apˆendice
+
+B. A seguir, um exemplo.
+
+Exemplo 4.2 Considere a seguinte equa¸c˜ao de grau 4 de indeterminada x:
+
+x4 − 2x3 − x2 − 2x − 2 = 0
+
+Observe que os coeﬁcientes da equa¸c˜ao acima s˜ao a3 = −2 , a2 = −1 , a1 = −2 e a0 = −2.
+
+Queremos determinar o valor de y que satisfa¸ca a equa¸c˜ao:
+
+8y3 − 4a2y2 + (2a1a3 − 8a0)y + (4a0a2 − a2
+
+1 − a0a2
+
+3) = 0.
+
+Substituindo os coeﬁcientes ai’s em (7) temos,
+
+8y3 − 4.(−1)y2 + [2.(−2).(−2) − 8.(−2)]y + [4.(−2).(−1) − (−2)2 − (−2).(−2)2] = 0
+
+e resolvendo ﬁcamos com,
+
+2y3 + y2 + 6y + 3 = 0.
+
+e i
+
+Essa equa¸c˜ao j´a foi resolvida no exemplo anterior e encontramos como ra´ızes − 1
+√
+3. Como necessitamos somente de um valor para y, escolhemos y = − 1
+Utilizando y = − 1
+
+2 .
+
+2, −i
+
+2 substituiremos na equa¸c˜ao:
+(cid:18) 1
+4
+
+a2
+3 − a2 + 2y
+
+(cid:17)(cid:19)2
+
+a3x
+
+1
+2
+
+=
+
+x2 +
+
+(cid:18)
+
+y +
+
+(cid:16)
+
+Logo teremos:
+
+(cid:19)
+
+x2 + (a3y − a1)x + (y2 − a0).
+
+(7)
+
+√
+3
+
+(8)
+
+(cid:18) −1
+2
+
++ x2 +
+
+1
+2
+
+(cid:19)2
+
+.(−2)x
+
+=
+
+(cid:20) 1
+4
+
+.(−2)2 − (−1) + 2.
+
+(cid:17)(cid:21)
+
+x2 +
+
+(cid:20)
+
+(cid:17)
+
+−2.
+
+(cid:16) −1
+2
+
+(cid:21)
+
+− (−2)
+
+x +
+
+(cid:17)2
+
+(cid:20)(cid:16) −1
+2
+
+(cid:21)
+
+− (−2)
+
+(cid:18)
+
+x2 − x −
+
+(cid:19)2
+
+1
+2
+
+= x2 + 3x +
+
+(cid:18)
+
+=
+
+x +
+
+9
+4
+
+3
+2
+
+(cid:16) −1
+2
+(cid:19)2
+
+.
+
+Ent˜ao temos duas equa¸c˜oes quadr´aticas para serem resolvidas:
+
+1. x2 − x − 1
+
+2 = x + 3
+
+2
+
+Que resulta em x2 − 2x − 2 = 0, donde temos x1 = 1 +
+E a outra equa¸c˜ao ser´a:
+
+√
+
+3 e x2 = 1 −
+
+√
+
+3.
+
+2. x2 − x − 1
+
+2 = −(x + 3
+
+2).
+
+Que resulta na equa¸c˜ao x2 = −1, donde temos x3 = i e x4 = −i.
+
+Ent˜ao as ra´ızes da equa¸c˜ao x4 − 2x3 − x2 − 2x − 2 = 0 s˜ao x1 = 1 +
+e x4 = −i.
+
+11
+
+√
+
+3 , x2 = 1 −
+
+√
+
+3, x3 = i
+
+Vemos que para resolver uma equa¸c˜ao do quarto grau pelo m´etodo de Ferrari precisamos
+saber o m´etodo de Cardan ou outro que resolva uma equa¸c˜ao do grau trˆes pois, essa faz parte
+da solu¸c˜ao.
+
+4.4 Rela¸c˜oes de Girard
+
+Com o prop´osito de encontrar as ra´ızes de qualquer equa¸c˜ao alg´ebrica, Albert Girard
+(Fran¸ca, 1595-1632) estudou as rela¸c˜oes existentes entre os coeﬁcientes e suas ra´ızes.
+
+Se o polinˆomio
+
+p(x) = a0 + a1x + · · · + an−1xn−1 + anxn
+
+tem n ra´ızes x1, x2, . . . , xn, sabemos que p(x) pode ser reescrito como
+
+p(x) = an(x − x1)(x − x2) · · · (x − xn).
+
+Antes de apresentar o caso geral, vejamos a rela¸c˜ao dos coeﬁcientes e as ra´ızes, para n = 2,
+
+ax2 + bx + c = a(x − x1)(x − x2) = a
+
+(cid:16)
+
+x2 − (x1 + x2)x + x1x2
+
+(cid:17)
+
+.
+
+Logo b = −a(x1 + x2), isto implica que
+
+E c = ax1x2, isto implica que
+
+x1 + x2 = −
+
+b
+a
+
+.
+
+x1x2 =
+
+c
+a
+
+.
+
+Para uma equa¸c˜ao do 3o grau, da forma
+
+ax3 + bx2 + cx + d = 0,
+
+sendo x1, x2 e x3 as ra´ızes, podemos reescrever ax3 + bx2 + cx + d = a(x − x1)(x − x2)(x − x3),
+assim
+
+ax3 + bx2 + cx + d = a
+
+(cid:16)
+
+x3 − (x1 + x2 + x3)x2 + (x1x2 + x2x3 + x1x3)x − x1x2x3
+
+(cid:17)
+
+,
+
+e temos as seguintes rela¸c˜oes de Girard:
+x1 + x2 + x3 = − b
+a
+x1.x2 + x1.x3 + x2.x3 = c
+a
+x1.x2.x3 = − d
+a
+
+Para uma equa¸c˜ao do 4o grau, da forma
+
+ax4 + bx3 + cx2 + dx + e = 0,
+
+sendo as ra´ızes iguais a x1 , x2 , x3 e x4, obtemos as seguintes rela¸c˜oes de Girard:
+
+x1 + x2 + x3 + x4 = − b
+a
+x1.x2 + x1.x3 + x1.x4 + x2.x3 + x2.x4 + x3.x4 = c
+a
+
+x1.x2x3 + x1.x2.x4 + x1.x3.x4 + x2.x3.x4 = − d
+a
+x1.x2.x3.x4 = e
+a .
+
+De modo geral, temos o seguinte,
+
+12
+
+)xn−1
+an(x − x1)(x − x2) . . . (x − xn) = anxn − an(x1 + x2 + . . . + xn
+(cid:125)
+
+(cid:124)
+
+(cid:123)(cid:122)
+s1
+)xn−2
++ an(x1x2 + x1x3 + . . . + xn−1xn
+(cid:125)
+
+(cid:123)(cid:122)
+s2
+)xn−3 . . .
+− an(x1x2x3 + x1x2x4 + . . . + xn−2xn−1xn
+(cid:125)
+
+(cid:124)
+
+(cid:124)
+
+(cid:123)(cid:122)
+s3
+
+)xn−k . . .
++ (−1)kan(x1x2 . . . xn−1 + . . . + x2x3 . . . xn
+(cid:125)
+
+(cid:124)
+(cid:123)(cid:122)
+sk
++ (−1)nan(x1x2x3 . . . xn
+)xn
+(cid:124)
+(cid:125)
+
+(cid:123)(cid:122)
+sn
+
+e por identidade de polinˆomios vem
+
+prosseguindo temos
+
+s1 = −
+
+an−1
+an
+
+s2 =
+
+an−2
+an
+
+sk = (−1)k an−k
+an
+
+at´e
+
+sn = (−1)n a0
+an
+
+.
+
+A demonstra¸c˜ao de tal processo pode ser vista no Apˆendice C. Usamos as rela¸c˜oes de Girard
+nos dois exemplos abaixo.
+
+Exemplo 4.3 Utilizando as Rela¸c˜oes de Girard, podemos encontrar as ra´ızes da equa¸c˜ao:
+
+x3 + x2 + 3 = 0.
+
+Observe que os coeﬁcientes da equa¸c˜ao s˜ao :
+
+a3 = 1,
+
+a2 = 1,
+
+a1 = 0,
+
+a0 = 3.
+
+Considerando x1, x2 e x3 como as ra´ızes da equa¸c˜ao acima e calculando
+
+s1 = x1 + x2 + x3 = (−1)1 a2
+a3
+s2 = x1.x2 + x1.x3 + x2.x3 = (−1)2 a1
+a3
+s3 = x1.x2.x3 = (−1)3 a0
+a3
+
+= −3
+
+= −1
+
+obtemos,
+
+= 0
+
+x1 + x2 + x3 = −1
+
+x1.x2 + x1.x3 + x2.x3 = 0
+
+x1.x2.x3 = −3
+
+(9)
+(10)
+(11)
+
+Multiplicando (10) por x3 teremos:
+
+x1.x2.x3 + x1.x2
+
+3 + x2.x2
+
+3 = 0
+
+Substituindo (11) na equa¸c˜ao acima, ﬁcamos com:
+
+13
+
+−3 + x1.x2
+
+3 + x2.x2
+
+3 = 0.
+
+Assim x2
+
+3.(x1 + x2) = 3. E isolando x1 + x2 em (9) temos, x1 + x2 = −1 − x3. Da´ı vem que
+
+3.(x1 + x2) = 3, ou seja, x2
+x2
+
+3.(−1 − x3) = 3, o que implica que − x3
+
+3 − x2
+
+3 − 3 = 0.
+
+Mas encontramos uma equa¸c˜ao c´ubica de indeterminada x3 e esta ´e equivalente a equa¸c˜ao
+proposta, logo n˜ao conseguimos encontrar as ra´ızes. Isto sempre ocorre para equa¸c˜oes de grau
+maior ou igual a 3, n˜ao conseguimos resolver essas equa¸c˜oes somente utilizando as Rela¸c˜oes
+de Girard.
+
+Podemos perceber nesse exemplo que, para resolvermos uma equa¸c˜ao utilizando as Rela¸c˜oes
+
+de Girard, precisamos de mais algumas informa¸c˜oes sobre suas ra´ızes.
+
+Exemplo 4.4 Vamos encontrar as ra´ızes da equa¸c˜ao x3 + 9x2 + 6x − 56 = 0, usando a
+condi¸c˜ao adicional x2 = −2x1, atrav´es das Rela¸c˜oes de Girard:
+
+Temos que os coeﬁcientes da equa¸c˜ao s˜ao:
+
+a3 = 1, a2 = 9, a1 = 6, a0 = −56
+
+Considerando x1, x2 e x3 as ra´ızes e calculando as somas temos:
+s1 = x1 + x2 + x3 = (−1)1 a2
+= −9
+a3
+s2 = x1.x2 + x1.x3 + x2.x3 = (−1)2 a1
+a3
+s3 = x1.x2.x3 = (−1)3 a0
+a3
+
+= 56
+
+= 6
+
+Ent˜ao temos as equa¸c˜oes:
+
+x1 + x2 + x3 = −9
+
+x1.x2 + x1.x3 + x2.x3 = 6
+x1.x2.x3 = 56
+
+(12)
+(13)
+(14)
+
+Como x2 = −2x1, substituindo na equa¸c˜ao (12):
+
+E agora em (13) temos;
+
+x1 − 2x1 + x3 = −9
+
+−x1 + x3 = −9
+
+x3 = −9 + x1
+
+x1.(−2x1) + x1.x3 + (−2x1).x3 = 6
+
+−2x2
+
+1 + x1.x3 − 2x1.x3 = 6
+−2x2
+1 − x1.x3 = 6.
+
+E sabendo que x3 = −9 + x1 temos:
+1 − x1.(−9 + x1) = 6
+1 + 9x1 − x2
+
+−2x2
+−2x2
+
+1 = 6
+
+−3x2
+
+1 + 9x1 − 6 = 0
+
+14
+
+Resolvendo essa equa¸c˜ao do segundo grau, encontramos x(cid:48)
+
+1 = 2. Substi-
+1 = 1 na equa¸c˜ao x3 + 9x2 + 6x − 56 = 0, percebemos que 1 n˜ao ´e raiz, pois,
+
+1 = 1 e x(cid:48)(cid:48)
+
+tuindo x(cid:48)
+13 + 9.1 + 6.1 − 56 = −40 (cid:54)= 0. Substituindo x(cid:48)(cid:48)
+
+1 = 2, temos
+
+23 + 9.22 + 6.2 − 56 = 8 + 36 + 12 − 56 = 0,
+
+logo 2 ´e raiz da equa¸c˜ao.
+
+Como x1 = 2, temos que x2 = −2x1 = −2.2 = −4. Substituindo esses valores em (12)
+
+temos:
+
+x1 + x2 + x3 = −9
+2 − 4 + x3 = −9 logo, x3 = −7.
+Ent˜ao as ra´ızes da equa¸c˜ao s˜ao 2, −4 e −7.
+
+5 Como encontrar ra´ızes das equa¸c˜oes de grau maior
+
+que 4
+
+Para as equa¸c˜oes de grau maior ou igual a 5 ´e quase imposs´ıvel encontrar ra´ızes exatas. Mas,
+existem m´etodos que nos d˜ao aproxima¸c˜oes para esses zeros. Alguns desses m´etodos s˜ao:
+Bissec¸c˜ao; Cordas; Newton; Secante; Falsa Posi¸c˜ao; Steﬀensen; Brent; Crit´erio de Hurwitz
+dentre outros. Hoje em dia os m´etodos num´ericos s˜ao muito valiosos, aﬁnal n˜ao se pode alegar
+que d˜ao muito trabalho, devido a grande expans˜ao do uso dos computadores e calculadoras.
+Al´em disso, podemos observar o seguinte, considerando uma raiz de uma equa¸c˜ao de grau
+trˆes, obtida pelo m´etodo de Cardan, (por exemplo, 3(cid:112)
+5) geralmente na pr´atica, utiliza-
+se valores aproximados para as ra´ızes quadradas e c´ubicas. Ou seja, ao trabalhar com a raiz
+“exata” muitas vezes, utiliza-se um valor aproximado.
+
+3 +
+
+√
+
+A ideia central de grande parte dos m´etodos citados acima, ´e partir de uma aproxima¸c˜ao
+inicial para uma raiz e ir reﬁnando essa aproxima¸c˜ao por processos iterativos. Processos
+iterativos utilizam repeti¸c˜oes de um procedimento para uma aproxima¸c˜ao sucessiva. S˜ao
+duas etapas para se chegar a uma aproxima¸c˜ao de uma raiz:
+
+Primeira etapa : Consiste em encontrar um intervalo fechado que contenha uma raiz.
+
+Para isso, temos o seguinte teorema:
+
+Teorema 5.1 Seja f (x) uma fun¸c˜ao cont´ınua num intervalo [a, b]. Seja f (a).f (b) < 0, ent˜ao
+existe pelo menos um ponto x = ξ entre a e b que ´e zero de f (x).
+
+Demonstra¸c˜ao: : Seja f (x) uma fun¸c˜ao cont´ınua num intervalo [a, b]. Considere ξ ∈ [a, b].
+Se f (a).f (b) < 0 ent˜ao existem duas possibilidades:
+
+1. Podemos ter f (a) > 0 e f (b) < 0. Ao passar de f (a) > 0 para f (b) < 0, o gr´aﬁco
+de f (x) que ´e uma fun¸c˜ao cont´ınua, cruza o eixo x (Figura 3), logo, existe ξ tal que
+f (ξ) = 0.
+
+2. Podemos ter f (a) < 0 e f (b) > 0. Ao passar de f (a) < 0 para f (b) > 0, o gr´aﬁco
+de f (x) que ´e uma fun¸c˜ao cont´ınua, cruza o eixo x (Figura 4), logo, existe ξ tal que
+f (ξ) = 0.
+
+Ent˜ao existe um zero da fun¸c˜ao f (x) no intervalo [a, b].
+
+15
+
+(cid:3)
+
+Figura 3: f (a) > 0 e f (b) < 0
+
+Figura 4: f (a) < 0 e f (b) > 0
+
+Segunda etapa: ´E a do reﬁnamento, ou seja, diminuir o intervalo de forma que aproxi-
+
+memos cada vez mais do valor exato da raiz.
+
+Essa fase ´e a que diferencia os m´etodos iterativos. A forma com que se efetua os c´alculos
+nessa fase muda de m´etodo para m´etodo. Veremos a seguir um desses m´etodos iterativos
+para encontrar ra´ızes.
+
+5.1 M´etodo de Newton:
+´E usado para resolver numericamente uma equa¸c˜ao f (x) = 0, onde f (x) ´e uma fun¸c˜ao
+diferenci´avel. Neste m´etodo fazemos a constru¸c˜ao de uma sequˆencia de n´umeros que converge
+para um n´umero ξ que satisfaz f (ξ) = 0.
+
+O m´etodo consiste em come¸carmos com um n´umero real x0, denominado condi¸c˜ao inicial.
+Devemos escolher x0 dentro de um intervalo que tenha uma raiz, de acordo com o Teorema
+5.1. Como f (cid:48)(x0) (cid:54)= 0, pois estamos trabalhando com fun¸c˜oes polinomiais, ent˜ao a reta
+tangente ao gr´aﬁco de f em (x0, f (x0)) ´e uma reta n˜ao horizontal, portanto, intercepta o eixo
+x num ´unico ponto, que chamaremos de x1.
+
+Tomamos ent˜ao x1 no eixo horizontal, obtemos f (x1). Ent˜ao repetimos o processo e
+obtemos uma nova itera¸c˜ao x2. Isto ´e, x2 ´e dado pela itera¸c˜ao da reta tangente ao gr´aﬁco de
+f em (x1, f (x1)) com o eixo x.
+
+Assim, repetimos sucessivamente esse procedimento e constru´ımos uma sequˆencia (xn)n≥1
+
+de n´umeros reais. Se para n ≥ 1 obtivermos f (xn) = 0, teremos encontrado a raiz.
+
+16
+
+Figura 5: Encontrando x1
+
+Figura 6: Encontrando x2
+
+A partir dessa explica¸c˜ao geom´etrica do M´etodo de Newton, vamos obter uma f´ormula,
+
+por recorrˆencia, abaixo:
+
+Escolhendo x0 apropriadamente, vejamos como encontrar x1. Primeiro achamos a reta
+
+tangente ao gr´aﬁco de f (x) em x0.
+
+Sabemos que seu coeﬁciente angular ´e dado por f (cid:48)(x0), logo a equa¸c˜ao ´e dada por:
+
+y = f (cid:48)(x0).x + b,
+
+onde b ∈ R.
+
+Para determinarmos b, usamos o fato de que a reta tangente passa por (x0, f (x0)) e,
+
+portanto, y = f (x0) e x = x0 satisfazem a equa¸c˜ao acima, logo:
+
+Donde temos b = f (x0) − f (cid:48)(x0).x0. Ent˜ao a equa¸c˜ao procurada ´e:
+
+f (x0) = f (cid:48)(x0).x0 + b.
+
+y = f (cid:48)(x0).x + f (x0) − f (cid:48)(x0).x0.
+
+Como x1 ´e deﬁnido geometricamente pela interse¸c˜ao dessa reta com o eixo x, temos que,
+
+x1 ´e solu¸c˜ao da equa¸c˜ao. Da´ı vem que:
+
+ou
+
+0 = f (cid:48)(x0).x1 + f (x0) − f (cid:48)(x0).x0
+
+f (cid:48)(x0).x1 = f (cid:48)(x0).x0 − f (x0)
+
+x1 = x0 −
+
+f (x0)
+f (cid:48)(x0)
+
+.
+
+Como x2 ´e obtido pelo mesmo processo, substituindo x0 por x1 como condi¸c˜ao inicial,
+
+podemos perceber que:
+
+E generalizando, temos:
+
+x2 = x1 −
+
+f (x1)
+f (cid:48)(x1)
+
+.
+
+xn = xn−1 −
+
+f (xn−1)
+f (cid:48)(xn−1)
+
+,
+
+17
+
+que ´e a f´ormula de recorrˆencia utilizada no m´etodo de Newton.
+
+Exemplo 5.1 Vamos encontrar a aproxima¸c˜ao para uma das ra´ızes de
+
+f (x) = x5 + x2 + 2.
+
+Devemos obter um intervalo onde exista uma raiz, observe que f (−2) = −26 e f (−1) = 2.
+Pelo Teorema 5.1, sabemos que existe pelo menos uma raiz no intervalo [−2, −1]. Tomando
+a condi¸c˜ao inicial x0 = −2 e sabendo que f (cid:48)(x) = 5x4 + 2x, temos f (cid:48)(−2) = 76. Assim x1
+ser´a dado por:
+
+f (x0)
+f (cid:48)(x0)
+No passo seguinte, tomando x1 = −1, 66, temos f (−1, 66) = −7, 85 e f (cid:48)(−1, 66) = 34, 65,
+que nos leva a
+
+x1 = x0 −
+
+= −1, 66.
+
+f (x1)
+f (cid:48)(x1)
+Novamente, com o valor calculado x2 = −1, 43, temos f (−1, 43) = −1, 93 e f (cid:48)(−1, 43) =
+18, 05, consequentemente
+
+x2 = x1 −
+
+= −1, 43.
+
+Agora com x3 = −1, 32, temos f (−1, 32) = −0, 27 e f (cid:48)(−1, 32) = 12, 54, ent˜ao
+
+x3 = x2 −
+
+f (x2)
+f (cid:48)(x2)
+
+= −1, 32.
+
+x4 = x3 −
+
+f (x3)
+f (cid:48)(x3)
+
+= −1, 30.
+
+Considerando x4 = −1, 30, temos f (−1, 30) = −0, 02 e f (cid:48)(−1, 30) = 11, 69, assim
+
+x5 = x4 −
+
+f (x4)
+f (cid:48)(x4)
+
+= −1, 298.
+
+Finalmente calculando
+
+f (−1, 298) = (−1, 298)5 + (−1, 298)2 + 2 = 3, 48.10−4 ∼= 0.
+
+Ent˜ao uma aproxima¸c˜ao para uma raiz da equa¸c˜ao f (x) = x5 + x2 + 2 ´e −1, 298. Da
+mesma forma, podemos calcular as outras ra´ızes dessa equa¸c˜ao. Caso, seja necess´ario uma
+raiz mais precisa (erro cada vez menor), continuamos o processo iterativo at´e obter o erro
+desejado.
+
+Exemplo 5.2 Uma aproxima¸c˜ao para uma das ra´ızes do polinˆomio
+
+f (x) = 2x3 + x2 + 6x + 3.
+
+Pode ser obtida fazendo os seguintes passos:
+Calculando a derivada temos que f (cid:48)(x) = 6x2 + 2x + 6. Vamos procurar um intervalo onde
+tenhamos uma raiz, para isso calculamos:
+
+f (−1) = 2.(−1)3 + (−1)2 + 6.(−1) + 3 = −2 + 1 − 6 + 3 = −4
+
+e
+
+f (0) = 2.(0)3 + (0)2 + 6.0 + 3 = 0 + 0 + 0 + 3 = 3.
+
+18
+
+Tabela 1: Dados da itera¸c˜ao
+xi
+-1
+-0,600
+-0,503
+-0,500
+
+f (cid:48)(x) xi+1 gerado
+10
+6,960
+6,514
+6,500
+
+f (x)
+-4
+-0,672
+-0,022
+0,000
+
+-0,600
+-0,503
+-0,500
+-0,500
+
+i
+0
+1
+2
+3
+
+Pelo Teorema 5.1, sabemos que existe pelo menos uma raiz no intervalo [−1, 0]. Iniciando
+
+os c´alculos com a condi¸c˜ao inicial x0 = −1, temos
+
+Como vemos na Tabela 5.2
+
+f (−0, 5) = 2(−0, 5)3 + (−0, 5)2 + 6.(−0, 5) + 3 = 0.
+
+Logo, −0, 5 ´e uma raiz de f (x).
+
+6 C´ırculo de Gersgorin
+
+O c´ırculo de Gersgorin ´e um ´otimo exemplo de aplica¸c˜ao dos n´umeros complexos. Ele apre-
+senta a regi˜ao, ou o intervalo onde encontramos as ra´ızes do polinˆomio caracter´ıstico, ou
+seja, os autovalores. Muito interessante observar que atrav´es de c´alculos simples podemos
+encontrar esse intervalo.
+
+Seja A(aij ) uma matriz n × n e denote por Ri o c´ırculo no plano complexo com centro aii
+
+n
+(cid:88)
+
+e raio
+
+| aij |; ou seja,
+
+j=1
+j(cid:54)=i
+
+Ri = {z ∈ C; | z − aii |≤
+
+n
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+| aij |}.
+
+Os autovalores de A est˜ao contidos em R =
+
+n
+(cid:91)
+
+Ri. Al´em do mais, a uni˜ao de qualquer
+
+n´umero k ∈ N, desses c´ırculos que n˜ao intercepte os (n − k) restantes, cont´em precisamente k
+autovalores (contando as multiplicidades), ou seja, em k c´ırculos disjuntos temos exatamente
+k autovalores.
+
+i=1
+
+Demonstra¸c˜ao: Seja λ um autovalor de A(aij ) e v um autovetor associado, isto ´e, Av = λv.
+Seja i o ´ındice da componente de v tal que
+
+.
+
+Analisando a i-´esima componente da equa¸c˜ao vetorial Av = λv, temos que:
+
+|vi| = max
+1≤j≤n
+
+|vj|
+
+(λ − aii)vi =
+
+n
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+aijvj
+
+tomando o m´odulo de ambos os membros da igualdade acima, temos:
+
+|λ − aii| ≤
+
+n
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+|aij||vj|
+|vi|
+
+≤
+
+n
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+|aij| = Ri
+
+Desse modo, temos que o autovalor λ pertence ao i-´esimo c´ırculo de Gersgorin de A.
+
+19
+
+(cid:3)
+
+Exemplo 6.1 Para a matriz:
+
+Os C´ırculos de Gersgorin s˜ao:
+
+
+
+
+
+A =
+
+1 0 −1
+0 1 −2
+0 1 −1
+
+
+
+
+
+R1 = {z ∈ C; | z − a11 | ≤
+
+3
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+| a1j |}
+
+= {z ∈ C; | z − 1 | ≤ | a12 + a13 |}
+= {z ∈ C; | z − 1 | ≤ 1}
+
+R2 = {z ∈ C; | z − a22 | ≤
+
+3
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+| a2j |}
+
+= {z ∈ C; | z − 1 | ≤ | a21 + a23 |}
+= {z ∈ C; | z − 1 | ≤ 2}
+
+R3 = {z ∈ C; | z − a33 | ≤
+
+3
+(cid:88)
+
+j=1
+j(cid:54)=i
+
+| a3j |}
+
+= {z ∈ C; | z + 1 | ≤ | a31 + a32 |}
+= {z ∈ C; | z + 1 | ≤ 1}
+
+Observe a seguir a representa¸c˜ao para os C´ırculos de Gersgorin desse caso:
+
+Calculando os autovalores da matriz A, a saber, λ1 = 1, λ2 = −i e λ3 = i, vemos que as
+
+informa¸c˜oes obtidas a partir dos c´ırculos de Gersgorin s˜ao muito boas.
+
+Nesse trabalho, os c´alculos que desenvolveremos ser˜ao no corpo dos n´umeros complexos
+
+C.
+
+20
+
+7 Aproxima¸c˜ao de fun¸c˜oes por polinˆomios
+
+O Teorema de aproxima¸c˜ao de Weierstrass, provado em 1885 por Karl Theodor Wilhelm
+Weierstrass ´e um importante resultado da Matem´atica. Tal resultado aﬁrma que toda fun¸c˜ao
+cont´ınua deﬁnida em um intervalo fechado [a, b] pode ser uniformemente aproximada por
+polinˆomios.
+
+Teorema 7.1 (Weierstrass)Sejam −∞ < a < b < +∞, suponha que f ∈ C[a, b] (espa¸co
+das fun¸c˜oes cont´ınuas), isto ´e, f ´e uma fun¸c˜ao cont´ınua no intervalo [a, b]. Ent˜ao para cada
+(cid:15) > 0, existe um n ∈ N e um polinˆomio p ∈ Pn tal que (cid:107)f − p(cid:107)∞ < (cid:15).
+
+Veja demonstra¸c˜ao em [2].
+
+As fun¸c˜oes que aproximam fun¸c˜oes mais complexas ou um conjunto discreto de pontos,
+podem ser de tipos variados, tais como: polinomiais, trigonom´etricas, exponenciais e lo-
+gar´ıtmicas. Iremos considerar o estudo das fun¸c˜oes aproximadoras polinomiais, uma vez que
+s˜ao de ampla importˆancia e largamente utilizadas.
+
+As fun¸c˜oes aproximadoras s˜ao ´uteis pela maior facilidade na manipula¸c˜ao alg´ebrica e em
+especial nos processos computacionais para otimizar o tempo, diminuir a mem´oria utilizada,
+bem como a facilidade da implementa¸c˜ao computacional. S˜ao utilizadas tamb´em para obter
+valores intermedi´arios em tabelas, ou seja, dado um certo conjunto de pontos (x0, p(x0)),
+(x1, p(x1)), . . . , (xn, p(xn)), podemos encontrar valores para pontos fora da lista amostrada.
+Para aproximar fun¸c˜oes por polinˆomios temos alguns m´etodos como Aproxima¸c˜ao por
+Polinˆomios Trigonom´etricos, Interpola¸c˜ao Linear, Quadr´atica, de Lagrange, Parab´olica Pro-
+gressiva, de Newton com Diferen¸cas Divididas, de Gregory-Newton, M´etodo dos M´ınimos
+Quadrados, dentre outros.
+
+A ideia geral da interpola¸c˜ao ´e tomar um conjunto discreto de pontos como (x0, p(x0)),
+
+(x1, p(x1)), . . . , (xn, p(xn)) e substituir na express˜ao geral do polinˆomio:
+
+p(x) = a0 + a1x + a2x2 + · · · + anxn
+
+Ent˜ao teremos um sistema com n + 1 equa¸c˜oes para ser resolvido:
+
+p(x0) = a0 + a1x0 + a2x2
+p(x1) = a0 + a1x1 + a2x2
+
+0 + · · · + anxn
+0
+1 + · · · + anxn
+1
+
+...
+
+p(xn) = a0 + a1xn + a2x2
+
+n + · · · + anxn
+n
+
+Que pode ser reescrito, na forma matricial, como:
+
+
+
+
+
+
+
+
+1 x0 x2
+0
+1 x1 x2
+1
+...
+...
+...
+1 xn x2
+n
+
+· · · xn
+0
+· · · xn
+1
+...
+· · · xn
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a0
+a1
+...
+an
+
+
+
+
+
+
+
+
+=
+
+p(x0)
+p(x1)
+...
+p(xn)
+
+
+
+
+
+
+
+
+Desde que x0, x1, · · · , xn sejam pontos distintos, temos que o sistema linear tem solu¸c˜ao
+´unica e ao resolver o sistema, teremos os valores dos coeﬁcientes a0, a1, a2, · · · , an, assim,
+encontramos o polinˆomio interpolador. A partir da´ı, podemos obter valores aproximados
+para pontos n˜ao amostrados, manipular a express˜ao facilmente, entre outros.
+
+21
+
+Observe que para 2 pontos, o polinˆomio interpolador ter´a grau 1, logo, temos a Inter-
+pola¸c˜ao Linear. Quando temos 3 pontos, o grau do polinˆomio interpolador ´e 2, logo temos
+a Interpola¸c˜ao Quadr´atica. Ent˜ao, percebemos que, o grau do polinˆomio ser´a sempre uma
+unidade a menos que o n´umero de pontos interpolados, ou, n´os interpoladores como s˜ao cha-
+mados. Importante ressaltar que o que difere as Interpola¸c˜oes s˜ao os m´etodos utilizados para
+resolver o sistema.
+
+Logo o processo de interpola¸c˜ao ´e muito utilizado para aproxima¸c˜ao e amplamente apli-
+cado em v´arias ´areas das ciˆencias, incluindo situa¸c˜oes em que h´a coleta de dados e necessita-
+mos saber informa¸c˜oes de um determinado dado n˜ao coletado. Os m´etodos de aproxima¸c˜ao
+s˜ao extremamente ´uteis, o que ressalta a importˆancia do estudo dos polinˆomios. M´etodos de
+aproxima¸c˜ao s˜ao encontrados em [5].
+
+7.1 Polinˆomios de Chebyshev
+
+Os polinˆomios s˜ao muito utilizados para aproximar uma fun¸c˜ao mais elaborada ou um con-
+junto discreto de pontos do plano pois, esses apresentam relativa simplicidade, e tamb´em,
+porque permitem representar satisfatoriamente a generalidade das fun¸c˜oes. Nessa se¸c˜ao apre-
+sentamos uma classe especial de polinˆomios, mas antes precisamos da deﬁni¸c˜ao abaixo.
+
+Deﬁni¸c˜ao 7.1 Dizemos que {φ1, φ2, · · · , φn} ´e um conjunto de fun¸c˜oes ortogonais no inter-
+valo [a, b], com rela¸c˜ao `a fun¸c˜ao peso ω, se:
+
+(cid:90) b
+
+a
+
+ω(x)φj(x)φk(x)dx =
+
+(cid:26)
+
+0,
+αk > 0,
+
+quando
+quando
+
+j
+(cid:54)= k,
+j = k.
+
+A fun¸c˜ao peso tem como objetivo atribuir importˆancias diferentes em certas partes do inter-
+valo. Por exemplo, a fun¸c˜ao peso:
+
+ω(x) =
+
+√
+
+1
+1 − x2
+
+d´a menos importˆancia perto do centro do intervalo (−1, 1) e mais importˆancia quando | x |
+estiver pr´oximo de 1.
+
+Os polinˆomios ortogonais conseguem representar as fun¸c˜oes de maneira satisfat´oria, al´em
+
+de possu´ırem melhor manipula¸c˜ao alg´ebrica e computacional.
+
+Uma importante classe de polinˆomios ortogonais s˜ao os Polinˆomios de Chebyshev, (orto-
+gonais em (-1,1) com rela¸c˜ao a fun¸c˜ao peso apresentada acima) tais polinˆomios podem obter
+uma boa aproxima¸c˜ao para fun¸c˜oes com uma redu¸c˜ao do grau, comparado a polinˆomios
+obtidos por outros m´etodos.
+
+Pafnuty Lvovich Chebyshev (R´ussia, 1821 - 1894) realizou memor´aveis trabalhos em v´arias
+´areas, como, matem´atica aplicada, teoria dos n´umeros e probabilidade. Desenvolveu os Po-
+linˆomios de Chebyshev para estudar aproxima¸c˜ao e probabilidade.
+
+Os polinˆomios de Chebyshev s˜ao representados por Tn(x) e deﬁnido para x ∈ [−1, 1]
+
+como:
+
+para cada n ≥ 0.
+
+Tn(x) = cos[n arccos x],
+
+Vamos encontrar uma rela¸c˜ao de recorrˆencia gerada por esses polinˆomios. Para isso,
+
+iniciamos calculando:
+
+T0(x) = cos(0 arccos x) = cos 0 = 1
+
+22
+
+e
+
+Para n ≥ 1, considere a mudan¸ca de vari´avel θ = arccos x, ent˜ao:
+
+T1(x) = cos(arccos x) = x
+
+Tn(θ(x)) ≡ Tn(θ) = cos(nθ),
+
+em que θ ∈ [0, π].
+Da´ı vem que:
+
+Tn+1(θ) = cos[(n + 1)θ] = cos(nθ + θ) = cos(nθ). cos θ − sen (nθ) sen θ
+
+e
+
+Tn−1(θ) = cos[(n − 1)θ] = cos(nθ − θ) = cos(nθ). cos θ + sen (nθ) sen θ.
+
+Fazendo a soma Tn+1(θ) com Tn−1(θ) teremos:
+
+Tn+1(θ) + Tn−1(θ) = 2 cos(nθ). cos θ.
+
+Para retornarmos a vari´avel x lembre que θ = arccos x, logo:
+
+Tn+1(x) + Tn−1(x) = 2 cos(n arccos x). cos arccos x = 2x cos(n arccos x).
+
+Mas Tn(x) = cos(n arccos x), da´ı vem que:
+
+Tn+1(x) = 2xTn(x) − Tn−1(x),
+
+que ´e a rela¸c˜ao de recorrˆencia que nos permite gerar os polinˆomios de Chebyshev. Vejamos
+alguns polinˆomios:
+
+Temos T0(x) = 1 e T1(x) = x, logo
+
+T2(x) = 2xT1(x) − T0(x) = 2x.x − 1 = 2x2 − 1
+
+T3(x) = 2xT2(x) − T1(x) = 2x.(2x2 − 1) − x = 4x3 − 3x
+T4(x) = 2xT3(x) − T2(x) = 2x.(4x3 − 3x) − (2x2 − 1) = 8x3 − 8x2 + 1
+T5(x) = 2xT4(x) − T3(x) = 2x.(8x3 − 8x2 + 1) − (4x3 − 3x) = 16x4 − 20x3 + 5x
+
+e assim sucessivamente. Podemos perceber que s˜ao polinˆomios de vari´avel x, o que n˜ao parece
+evidente a partir da deﬁni¸c˜ao.
+
+Uma curiosidade, podemos encontrar os polinˆomios anteriores utilizando algumas rela¸c˜oes
+trigonom´etricas. Lembrando que cos(α + β) = cos α. cos β − sen α. sen β, sen (α + β) =
+cos α. sen β + sen α. cos β e que cos2 α + sen 2α = 1, onde α e β ∈ [0, 2π) temos:
+
+T2(θ) = cos(2θ) = cos2 θ − sen 2θ = cos2 θ − (1 − cos2 θ) = 2 cos2 θ − 1
+
+T3(θ) = cos(3θ) = cos(2θ). cos θ − sen (2θ). sen θ = (2 cos2 θ − 1). cos θ − 2 sen θ. cos θ. sen θ
+= 2 cos3 θ − cos θ − 2 sen 2θ. cos θ = 2 cos3 θ − cos θ − 2(1 − cos2 θ). cos θ
+= 2 cos3 θ − cos θ − 2 cos θ + 2 cos3 θ = 4 cos3 θ − 3 cos θ.
+
+seguindo esse racioc´ınio teremos:
+
+T4(θ) = cos(4θ) = 8 cos3 θ − 8 cos2 θ + 1.
+
+23
+
+T5(θ) = cos(5θ) = 16 cos4 θ − 20 cos3 θ + 5 cos θ.
+
+e assim sucessivamente.
+
+Os polinˆomios de Chebyshev s˜ao ´uteis para encontrar a melhor posi¸c˜ao para os pontos de
+interpola¸c˜ao de Lagrange, ou seja, os que produzem menor erro de aproxima¸c˜ao. Tamb´em
+auxiliam na constru¸c˜ao de polinˆomios aproximadores de menor grau, sem perda da qualidade
+[5]. Dado um polinˆomio aproximador de grau ((cid:96)), obtido por algum m´etodo, por exemplo
+o polinˆomio de Maclaurin, podemos encontrar um polinˆomio de grau menor que ((cid:96)), com o
+aux´ılio do polinˆomio de Chebyshev, mantendo a indica¸c˜ao de erro permitido.
+
+E as ra´ızes dos polinˆomios de Chebyshev, como s˜ao? O seguinte Teorema nos ajudar´a a
+
+responder a essa pergunta.
+
+Teorema 7.2 : O polinˆomio de Chebyshev Tn(x) de grau n ≥ 1, tem n ra´ızes simples em
+[−1, 1] nos pontos:
+
+para cada k = 1, 2, 3, · · · , n.
+
+xk = cos
+
+(cid:16)2k − 1
+2n
+
+(cid:17)
+
+,
+
+π
+
+Demonstra¸c˜ao: : Substituindo xk = cos
+Tn(x) = cos[n arccos x], para cada n ≥ 0. Temos que:
+
+2n π
+
+(cid:16) 2k−1
+
+(cid:17)
+
+na equa¸c˜ao do polinˆomio de Chebyshev
+
+Tn(xk) = cos[n arccos xk]
+
+= cos
+
+(cid:104)
+n arccos cos
+
+(cid:17)(cid:105)
+
+(cid:16) 2k − 1
+2n
+
+π
+
+(cid:17)
+
+(cid:105)
+
+π
+
+(cid:104)
+n
+
+(cid:16)2k − 1
+2n
+(cid:17)
+(cid:16)2k − 1
+2
+
+π
+
+= cos
+
+= cos
+
+= 0,
+
+para k = 1, 2, 3, · · · , n. Logo, xk ´e uma raiz de Tn(x). Como Tn(x) tem grau n, todos as
+(cid:3)
+ra´ızes s˜ao dessa forma.
+
+Logo, cada polinˆomio de Chebyshev possue n ra´ızes no intervalo [−1, 1] e nenhuma raiz
+
+fora dele.
+
+Enﬁm, o polinˆomio de Chebyshev ´e uma ferramenta muito ´util, pois ao trabalhar com
+aproxima¸c˜oes ´e de interesse obter erros pequenos com polinˆomios de grau o mais baixo
+poss´ıvel, para evitar que a curva descrita pelo polinˆomio aproximador apresente oscila¸c˜oes.
+Mais detalhes sobre polinˆomios de Chebyshev podem ser obtidos em [9].
+
+Um ´ultimo exemplo
+
+Agora que sabemos um pouco da utilidade dos polinˆomios e como calcular aproxima¸c˜oes para
+suas ra´ızes, podemos resolver problema abaixo.
+
+Exemplo 7.1 Foram anotados os seguintes pontos: (0, 10), (1, 5), (2, −3), (4, 2), (6, −1) e
+(7, 1). Desejamos o polinˆomio que melhor aproxima esses pontos e aproxima¸c˜oes para suas
+ra´ızes.
+
+Resolu¸c˜ao: Estamos procurando um polinˆomio do tipo:
+
+p(x) = a5x5 + a4x4 + a3x3 + a2x2 + a1x + a0.
+
+Com os 6 pares ordenados: (0, 10), (1, 5), (2, −3), (4, 2), (6, −1) e (7, 1) encontraremos os
+coeﬁcientes do polinˆomio interpolador resolvendo o sistema abaixo com em
+
+24
+
+
+
+
+
+
+
+
+
+
+
+0
+1
+8
+64
+
+0
+0
+1 0
+0
+1
+1
+1 1
+1
+16
+1 2
+4
+32
+1 4 16
+256
+1024
+7776
+1 6 36 216 1296
+1 7 49 343 2401 16807
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+a0
+a1
+a2
+a3
+a4
+a5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10
+5
+−3
+2
+−1
+1
+
+=
+
+Ent˜ao os coeﬁcientes ser˜ao: a0 = 10, a1 = 5, 8476, a2 = −17, 8968, a3 = 8, 4028,
+a4 = −1, 4365 e a5 = 0, 0829, donde vem o polinˆomio interpolador ´e
+
+p(x) = 0, 0829x5 − 1, 4365x4 + 8, 4028x3 − 17, 8968x2 + 5, 8476x + 10.
+
+E as ra´ızes de p(x) s˜ao: 6, 97; 5, 78; 3, 60; 1, 53 e −0, 55, observe o gr´aﬁco de p(x).
+
+8 Conclus˜ao
+
+Estudamos os m´etodos para encontrar ra´ızes com entusiasmo por acreditarmos serem ´uteis
+para professores da Educa¸c˜ao B´asica. Em especial, percebemos que o M´etodo de Cardan
+e Ferrari s˜ao poss´ıveis de serem utilizados em sala de aula, se forem dadas as orienta¸c˜oes
+adequadas. Mas mesmo que esse n˜ao seja o objetivo atual ´e muito importante o profes-
+sor conhecer tais t´ecnicas e incentivar seus alunos a procur´a-las, ou simplesmente falar da
+existˆencia da teoria. O M´etodo de Newton tamb´em se apresenta como uma boa ferramenta
+a ser desenvolvida pois sua ideia ´e relativamente acess´ıvel aos estudantes.
+
+25
+
+Compreendemos tamb´em como ´e importante a aproxima¸c˜ao de fun¸c˜oes por polinˆomios,
+pois essas facilitam e muito a an´alise do comportamento e o estudo de um conjunto de
+dados ou de uma fun¸c˜ao mais complexa. Al´em disso, aprendemos os princ´ıpios gerais da
+Interpola¸c˜ao e dos polinˆomios de Chebyshev, que s˜ao muito utilizados em v´arias ´areas.
+
+N˜ao podemos deixar de falar dos exemplos detalhados que foram citados no decorrer desse
+
+texto, esses nos ajudam a entender cada ideia ou conceito trabalhado.
+
+Finalmente, este trabalho foi uma ´otima oportunidade de relacionar assuntos abordados
+nas salas de aula do Ensino Fundamental e M´edio a conhecimentos te´oricos mais elabora-
+dos. Conhecimentos que devem estar nas m˜aos de todos os professores de Matem´atica, para
+enriquecer suas aulas.
+
+9 Propostas de atividades para aplica¸c˜ao
+
+Ap´os nosso estudo, formulamos as seguinte atividades a serem aplicadas:
+
+9.1 Atividade 1:
+
+UMA REFLEX ˜AO SOBRE RESOLUC¸ ˜OES DE EQUAC¸ ˜OES
+Prof(a):Fernanda Diniz Pessoa
+P´ublico alvo: alunos do Ensino M´edio
+
+Orienta¸c˜ao: atividade a ser desenvolvida com o uso da calculadora.
+
+Resolver equa¸c˜oes ´e uma parte importante do estudo da ´Algebra. H´a milhares de anos
+matem´aticos dedicam-se a resolver todos os tipos de equa¸c˜oes. Mas o que ´e resolver uma
+equa¸c˜ao?
+
+Desde o s´etimo ano do Ensino Fundamental vocˆe aprendeu que resolver equa¸c˜ao ´e encon-
+trar sua(s) raiz ou ra´ızes (nos casos das equa¸c˜oes de grau maior que 1) e continuar´a estudando
+como encontr´a-las...
+
+A f´ormula resolutiva da equa¸c˜ao do segundo grau ´e bem conhecida, n˜ao ´e? Mas para as
+equa¸c˜oes do terceiro e quarto grau tamb´em temos f´ormulas para se chegar as ra´ızes, vocˆe
+sabia?
+
+Mas a pergunta chave ´e a seguinte: para que servem as ra´ızes das equa¸c˜oes? Vamos
+
+resolver alguns problemas e pensar nessa resposta...
+
+1) Na queda livre de corpos (F´ısica), isto ´e, sujeita apenas a a¸c˜ao da gravidade (sabemos
+que a acelera¸c˜ao da gravidade g ´e 9, 81m/seg2), se um objeto ´e simplesmente deixado cair de
+uma certa altura, sem ser empurrado, ent˜ao esse objeto obedecer´a a rela¸c˜ao x = x0 + v0.t +
+1
+2g.t2, onde t ´e o tempo de queda em segundos, x0 ´e a distˆancia inicial ( nesse caso ´e 0), v0 ´e
+a velocidade inicial ( nesse caso ´e 0) e x ´e a distˆancia percorrida em metros.
+
+a) Se uma pedra cai de uma altura de 76, 00 metros. Qual ser´a o tempo que ela levar´a
+
+para chegar ao ch˜ao?
+
+b) Vocˆe resolveu uma equa¸c˜ao de inc´ognita t, quantas ra´ızes vocˆe encontrou? Todas s˜ao
+
+respostas poss´ıveis?
+
+2) Num empr´estimo (Matem´atica Financeira), algu´em que disp˜oe de um capital (C),
+empresta-o a outrem por um certo per´ıodo de tempo(t) a uma taxa de juros (i, onde i ser´a
+
+respresentado na forma decimal). Como a cada mˆes o capital ´e acrescido dos juros formando
+uma progress˜ao geom´etrica, podemos concluir que:
+
+Se o empr´estimo for por um mˆes, o montante (M) a ser pago ser´a calculado fazendo:
+
+26
+
+M = C.(1 + i)
+
+Se o empr´estimo for por dois meses, o montante ser´a dado por:
+
+M = C.(1 + i)2
+
+Se o empr´estimo for por trˆes meses, ent˜ao teremos que fazer:
+
+M = C.(1 + i)3
+
+E assim sucessivamente.
+
+a)Se uma pessoa fez um empr´estimo de R$100, 00 por 2 meses e pagou pelo mesmo
+
+R$125, 44. Qual foi a taxa de juros cobrada?
+
+b)Vocˆe resolveu uma equa¸c˜ao de inc´ognita i, quantas ra´ızes vocˆe encontrou? Todas s˜ao
+
+respostas poss´ıveis?
+
+c)Uma outra pessoa fez um empr´estimo de R$200, 00 durante 3 meses. Ela pagou ap´os
+
+esse per´ıodo R$266, 20. Qual a taxa de juros cobrada nesse empr´estimo?
+
+3)Sabendo-se que a altura de uma bola de vˆolei ´e dada aproximadamente por x = 2 +
+22t − 5t2, onde x ´e a altura em metros e t o tempo em segundos desde que ´e lan¸cada. Com
+base nesse problema, responda:
+
+a)Qual o grau dessa equa¸c˜ao?
+
+b)Depois de quanto tempo a bola estar´a no ch˜ao ( altura 0)?
+
+c)Qual o signiﬁcado das ra´ızes da equa¸c˜ao do ´ıtem anterior, ou seja, elas representam um
+
+determinado tempo ou altura?
+
+Agora, responda a pergunta: Para que servem as ra´ızes das equa¸c˜oes?
+
+9.2 Atividade 2:
+
+C ´ALCULOS DAS RA´IZES DE UMA EQUAC¸ ˜AO DO TERCEIRO GRAU
+Prof(a):Fernanda Diniz Pessoa
+P´ublico alvo: professores do Ensino Fundamental e M´edio.
+
+Orienta¸c˜ao: atividade a ser desenvolvida com o uso da calculadora.
+
+Essa atividade ser´a desenvolvida em duas etapas, acompanhe o problema descrito a seguir
+
+e efetue os c´alculos indicados. Bom aprendizado!
+
+Primeira etapa
+“Um engenheiro projetou duas caixas-d’´agua de mesma altura: uma em forma de cubo e
+a outra em forma de paralelep´ıpedo reto-retˆangulo com 6m2 de ´area da base. O volume da
+caixa c´ubica deve ter 4m3 a menos que o volume da outra caixa. Qual deve ser a medida,
+em metro, da aresta da caixa c´ubica?”
+
+27
+
+Indicando por x a medida da aresta da caixa c´ubica, temos a seguinte igualdade:
+
+x3 = 6x − 4
+
+que ´e uma equa¸c˜ao de terceiro grau que pode ser resolvida por alguns m´etodos, dentre eles
+utilizaremos dois: F´ormula de Cardan e M´etodo de Newton. Acompanhe as etapas de cada
+m´etodo e encontre uma raiz dessa equa¸c˜ao:
+
+1) M´etodo de Cardan:
+Considere a f´ormula geral da equa¸c˜ao do terceiro grau:
+
+x3 + a2x2 + a1x + a0 = 0
+
+Seja d = −a2
+
+3 e q = 2a3
+Ent˜ao, uma das ra´ızes ser´a calculada pela seguinte rela¸c˜ao:
+
+3 , p = a1 − a2
+
+27 − a1a2
+
+3 + a0
+
+2
+
+2
+
+(cid:114)
+x1 = 3
+
+(cid:113) q2
+
+(cid:114)
+27 + 3
+
+4 + p3
+
+−q
+2 −
+
+(cid:113) q2
+
+4 + p3
+
+27
+
+−q
+2 +
+
+Fa¸ca os c´alculos:
+
+2) M´etodo de Newton:
+Considere f (x) = x3 − 6x + 4 e f (cid:48)(x) = 3x2 − 6. Ent˜ao temos que:
+
+xn = xn−1 −
+
+f (xn−1)
+f (cid:48)(xn−1)
+
+Seja x0 = 0, calcule x1, x2, ..., xn onde f (xn) = 0.
+
+Segunda etapa
+A) Qual dos dois m´etodos vocˆe considera mais simples? E se fosse usar um computador?
+
+B) As ra´ızes obtidas nos dois processos s˜ao iguais?
+
+C) O que essa raiz representa para a situa¸c˜ao descrita anteriormente?
+
+D) No esbo¸co do gr´aﬁco dessa fun¸c˜ao do terceiro grau, o que representam as ra´ızes?
+
+Coment´ario e agradecimento ﬁnal
+
+Desejamos que esse estudo possa auxiliar professores e alunos do Ensino M´edio a com-
+preenderem e utilizarem os M´etodos para se encontrar ra´ızes de polinˆomios e com isso, sejam
+incentivados a utiliz´a los em sala de aula. Importante ressaltar que as atividades propostas
+devem ser desenvolvidas com calculadora.
+
+S˜ao tantos agradecimentos, mas primeiramente gostaria de agradecer a Deus e a M˜ae
+Divina que me possibilitaram essa caminhada. Aos meus pais, irm˜aos e familiares pelo apoio
+nos momentos dif´ıceis e carinho em todos os momentos. Aos meus mestres pela dedica¸c˜ao e
+interesse, em especial a Mariana Garabini Cornelissen pelas suas excelentes aulas. A minha
+orientadora Gilc´elia Regiane de Souza pela paciˆencia, boa vontade e inteligˆencia para ajudar.
+Aos meus animados colegas de curso que enfrentaram as viagens e diﬁculdades comigo, com
+
+bom humor e solidariedade, n˜ao deixando que nenhum de n´os desanimasse. Aos meus cole-
+gas da Escola Municipal Antˆonio D’Assis Martins pelo incentivo e compreens˜ao nas minhas
+ausˆencias. `A CAPES pelo apoio ﬁnanceiro. Termino lembrando desse trecho de uma m´usica:
+“nunca deixe que lhe digam que n˜ao vale a pena acreditar no sonho que se tem”.
+
+28
+
+29
+
+Apˆendice
+
+A Demostra¸c˜ao Cardan
+
+Jerˆonimo Cardan (It´alia, 1501-1576), desenvolveu os seguintes c´alculos para se chegar a
+f´ormula resolutiva da equa¸c˜ao do terceiro grau (2),
+
+x3 + a2x2 + a1x + a0 = 0.
+
+Fazendo uma mudan¸ca de vari´avel, onde x = y + d e substituindo em (2) teremos:
+
+(y + d)3 + a2(y + d)2 + a1(y + d) + a0 = 0
+y3 + 3dy2 + 3d2y + d3 + a2y2 + 2a2dy + a2d2 + a1y + a1d + a0 = 0
+y3 + (3d + a2)y2 + (3d2 + 2a2d + a1)y + (d3 + a2d2 + a1d + a0) = 0
+
+Fazendo o termo do segundo grau na equa¸c˜ao acima ser 0, para que tenhamos uma equa¸c˜ao
+incompleta e possamos atrav´es de uma nova mudan¸ca de vari´avel, chegarmos a um sistema
+de resolu¸c˜ao conhecida, teremos:
+
+−a2
+3
+3 em y3 + (3d + a2)y2 + (3d2 + 2a2d + a1)y + (d3 + a2d2 + a1d + a0) = 0
+
+3d + a2 = 0 → d =
+
+Substituindo d = −a2
+
+temos:
+
+(cid:16)
+
+y3 +
+
+3( −a2
+
+3 )+a2
+
+(cid:17)
+
+y2 +
+
+(cid:16)
+
+y3 + (−a2 + a2)y2 +
+3 )y + ( 2a3
+y3 + (a1 − a2
+
+2
+
+(cid:16) a2
+
+2
+
+3( −a2
+3 − 2( a2
+
+3 )2 +2a2( −a2
+3 )+a1
+(cid:16)
+3 ) + a1
+y +
+3 + a0) = 0
+
+(cid:17)
+
+2
+
+2
+
+27 − a1a2
+
+(cid:17)
+
+(cid:16)
+
+y +
+27 + a3
+
+( −a2
+
+3 )3 +a2( −a2
+3 )2 +a1( −a2
+(cid:17)
+3 + a0
+
+9 − a1a2
+
+= 0
+
+2
+
+− a3
+
+2
+
+3 )+a0
+
+(cid:17)
+
+= 0
+
+Chamando a1 − a2
+
+2
+
+3 = α e 2a3
+
+27 − a1a2
+
+2
+
+3 + a0 = β teremos:
+
+y3 + αy + β = 0(3)
+
+Agora, vamos resolver a equa¸c˜ao (3), para isso, faremos uma nova mudan¸ca de vari´avel
+
+y = u + v, logo teremos:
+
+(u + v)3 + α(u + v) + β = 0
+u3 + 3uv2 + 3u2v + v3 + α(u + v) + β = 0
+(cid:17)
+
+(cid:16)
+
+(u3 + v3 + β) +
+
+3uv2 + 3u2v + α(u + v)
+(cid:17)
+
+= 0
+
+(u3 + v3 + β) + (cid:0)3uv(v + u) + α(u + v
+(u3 + v3 + β) + (u + v)(3uv + α) = 0
+
+= 0
+
+Para a igualdade acima, temos as seguintes solu¸c˜oes poss´ıveis:
+i)(u3 + v3 + β) = −(u + v)(3uv + α)
+ou
+ii)(u3 + v3 + β) = 0 e (u + v)(3uv + α) = 0
+
+30
+
+Tentando resolver a i), chegamos numa equa¸c˜ao do terceiro grau e duas indeterminadas,
+
+logo, essa n˜ao nos atende.
+
+Resolvendo a ii), temos que os valores de u e v ser˜ao calculados atrav´es do sistema:
+(cid:26) u3 + v3 = − β
+
+u.v = −α
+3
+
+Elevando ao cubo a segunda equa¸c˜ao do sistema, teremos:
+(cid:26) u3 + v3 = − β
+
+u3.v3 = −α3
+27
+
+Logo, temos que a soma de u3 e v3 ´e −β e o produto ´e −α3
+
+27 , ent˜ao podemos escrever uma
+equa¸c˜ao do segundo grau onde u3 e v3 ser˜ao as ra´ızes, ou seja, temos uma equa¸c˜ao da forma:
+
+z2 + βz −
+
+α3
+27
+
+= 0
+
+Resolvendo essa equa¸c˜ao do segundo grau de indeterminada z, temos:
+∆ = β2 − 4( −α3
+(cid:113)
+β2+ 4α3
+27
+2
+
+27 ) = β2 + 4( α3
+27 )
+
+z =
+
+−β±
+
+27 = 0 s˜ao u3 e v3, fazendo a substitui¸c˜ao, teremos:
+
+Como as ra´ızes da equa¸c˜ao z2 + βz − α3
+β2+ 4α3
+27
+2
+
+−β+
+
+(cid:113)
+
+z1 = u3 =
+(cid:114)
+3
+
+−β+
+
+u =
+
+z2 = v3 =
+(cid:114)
+3
+
+−β−
+
+v =
+
+(cid:114)
+= 3
+
+(cid:113)
+
+β2+ 4α3
+27
+2
+
+(cid:113)
+
+−β−
+
+β2+ 4α3
+27
+2
+
+(cid:113)
+
+β2+ 4α3
+27
+2
+
+(cid:114)
+= 3
+
+−β
+2 +
+
+−β
+2 −
+
+(cid:113) β2
+
+4 + α3
+
+27
+
+(cid:113) β2
+
+4 + α3
+
+27
+
+Como y = u + v , precisamos encontrar as ra´ızes c´ubicas da unidade que satisfazem o
+
+sistema anterior. Ra´ızes c´ubicas da unidade:
+
+√
+θ = 0 e | Z |= 1 ⇒ 3
+
+√
+Z = 3
+
+1 (cid:0)cos θ+2kπ
+
+3 + isen θ+2kπ
+
+3
+
+(cid:1) , k = 0, 1, 2.
+
+3
+
+3 + isen 2π
+3 + isen 4π
+
+k = 0 : 1. (1 + i.0) = 1
+k = 1 : 1. (cid:0)cos 2π
+k = 2 : 1. (cid:0)cos 4π
+Observe que:
+(cid:16) −1+i
+2
+
+= −3−2i
+4
+
+(cid:17)2
+
+3+1
+
+√
+
+√
+
+3
+
+3
+
+(cid:16)
+
+(cid:16)
+
+(cid:1) =
+(cid:1) =
+
+− 1
+
+− 1
+
+2 + i
+2 − i
+
+(cid:17)
+
+(cid:17)
+
+√
+
+3
+2
+√
+
+3
+2
+
+= −1+i
+2
+= −1−i
+2
+
+√
+
+3
+
+(ξ)
+
+√
+
+3
+
+(ξ2)
+
+= −2−2i
+4
+
+√
+
+3
+
+= −1−i
+2
+
+√
+
+3
+
+.
+
+Portanto, 1, ξ e ξ2 s˜ao ra´ızes da unidade.
+
+Logo, as solu¸c˜oes do sistema s˜ao da forma:
+
+√
+u1 = 3
+
+Z1
+
+e
+
+√
+v1 = 3
+
+Z2 (i)
+
+√
+v2 = ξ2 3
+√
+v3 = ξ 3
+
+Z2 (ii)
+
+Z2 (iii)
+
+e
+
+e
+
+31
+
+√
+u2 = ξ 3
+
+Z1
+√
+u3 = ξ2 3
+
+Z1
+
+Pois essas satisfazem as equa¸c˜oes:
+u3 + v3 = −β e u.v = − α
+3
+
+Veriﬁcando se satisfazem:
+√
+(i) : u3 + v3 = (cid:0) 3
+
+√
+(cid:1)3 + (cid:0) 3
+
+Z1
+
+Z2
+
+(cid:1)3 = Z1 + Z2 = − β
+
+2 +
+
+(cid:113) β2
+
+4 + α3
+
+27 − β
+
+2 −
+
+(cid:113) β2
+
+4 + α3
+
+27 = −β
+
+√
+u.v = 3
+
+√
+Z1. 3
+
+√
+Z2 = 3
+
+Z1Z2 = 3
+
+(cid:115)(cid:18)
+
+− β
+
+2 +
+
+(cid:113) β2
+
+4 + α3
+
+27
+
+(cid:19) (cid:18)
+
+− β
+
+2 −
+
+(cid:113) β2
+
+4 + α3
+
+27
+
+(cid:19)
+
+=
+
+(cid:114)
+3
+
+β2
+4 −
+
+(cid:16) β2
+
+4 + α3
+
+27
+
+(cid:17)
+
+(cid:113)
+= 3
+
+− α3
+
+27 = −α
+
+3
+
+√
+(ii) : u.v = ξ 3
+
+√
+Z1.ξ2 3
+
+√
+Z2 = ξ3 3
+
+Z1Z2 =
+
+√
+
+3
+
+(cid:17)3
+
+(cid:113)
+3
+
+(cid:16) −1+i
+2
+
+− α3
+
+27 =
+
+(cid:17)3
+
+√
+
+(cid:16) i
+
+3−1
+2
+
+(cid:113)
+3
+
+− α3
+
+27 = −i3
+
+√
+
+3
+3
+
+−3i2.3+3.i
+8
+
+√
+
+3−1
+
+. (cid:0)− α
+
+3
+
+√
+
+(cid:1) = −3
+
+√
+
+3i+9+3
+8
+
+3i−1
+
+(cid:0)− α
+
+3
+
+(cid:1) = (cid:0)− α
+
+3
+
+(cid:1)
+
+√
+√
+(cid:1)3 + (cid:0)ξ2 3
+u3 + v3 = (cid:0)ξ 3
+Z1
+(cid:18)
+(cid:19)
+(cid:18)
+4 + α3
+
+(cid:113) β2
+
+2 +
+
+2 −
+
+− β
+
+− β
+
++
+
+27
+
+Z2
+(cid:113) β2
+
+(cid:1)3 = ξ3.Z1 + ξ6.Z2 = ξ3.Z1 + (ξ3)2 Z2 = 1.Z1 + 1.Z2 =
+4 + α3
+
+2 = −β
+
+= − 2β
+
+(cid:19)
+
+27
+
+Para (iii) ser´a an´alogo.
+
+Ent˜ao as solu¸c˜oes da equa¸c˜ao y3 + αy + β = 0 ser˜ao:
+(cid:114)
+27 + 3
+
+√
+y1 = u1 + v1 = 3
+
+(cid:114)
+Z2 = 3
+
+√
+Z1 + 3
+
+(cid:113) β2
+
+−β
+2 +
+(cid:114)
+Z2 = ξ 3
+
+4 + α3
+(cid:113) β2
+
+−β
+2 +
+
+4 + α3
+
+√
+y2 = u2 + v2 = ξ 3
+
+√
+Z1 + ξ2 3
+
+√
+y3 = u3 + v3 = ξ2 3
+
+√
+Z1 + ξ 3
+
+(cid:114)
+Z2 = ξ2 3
+
+−β
+2 +
+
+(cid:113) β2
+
+4 + α3
+
+−β
+2 −
+(cid:114)
+27 + ξ2 3
+(cid:114)
+27 + ξ 3
+
+(cid:113) β2
+
+4 + α3
+27
+(cid:113) β2
+
+−β
+2 −
+
+4 + α3
+
+27
+
+−β
+2 −
+
+(cid:113) β2
+
+4 + α3
+
+27
+
+E como queremos a solu¸c˜ao da equa¸c˜ao x3 + a2x2 + a1x + a0 = 0 e sabemos que x = y + d,
+
+logo, os valores de x s˜ao:
+
+(cid:114)
+x1 = y1 + d = 3
+
+−β
+2 +
+
+(cid:113) β2
+
+4 + α3
+
+(cid:114)
+x2 = y2 + d = ξ 3
+
+−β
+2 +
+
+(cid:114)
+x3 = y3 + d = ξ2 3
+
+−β
+2 +
+
+(cid:113) β2
+
+4 + α3
+
+(cid:113) β2
+
+4 + α3
+
+(cid:114)
+27 + 3
+
+−β
+2 −
+(cid:114)
+27 + ξ2 3
+(cid:114)
+27 + ξ 3
+
+(cid:113) β2
+
+27 + d
+
+4 + α3
+(cid:113) β2
+
+−β
+2 −
+
+4 + α3
+
+27 + d
+
+−β
+2 −
+
+(cid:113) β2
+
+4 + α3
+
+27 + d
+
+32
+
+B Demonstra¸c˜ao Ferrari
+
+Vamos acompanhar o desenvolvimento do m´etodo de Ferrari para a equa¸c˜ao (4)
+
+x4 + a3x3 + a2x2 + a1x + a0 = 0.
+
+Iniciamos isolando os membros de forma a encontrar um quadrado no primeiro membro
+
+da igualdade:
+
+x4 + a3x3 = −a2x2 − a1x + a0
+
+x4 + a3x3 +
+
+1
+4
+3x2 em ambos os membros da igualdade, teremos:
+
+3x2 = −a2x2 − a1x + a0 +
+a2
+
+1
+4
+
+3x2
+a2
+
+Somando 1
+
+4a2
+
+(x2 +
+
+1
+2
+
+a3x)2 = (
+
+1
+4
+
+3 − a2)x2 − a1x + a0
+a2
+
+J´a temos um quadrado no primeiro membro da igualdade, agora, precisamos fazer apa-
+recer um quadrado no segundo membro, sem destruir o quadrado do primeiro. Para isso,
+somaremos nos dois membros da igualdade a express˜ao y2 + 2y(x2 + 1
+2a3x), ent˜ao teremos:
+
+2a3x)2 + y2 + 2y(x2 + 1
+2a3x) + (x2 + 1
+
+(x2 + 1
+y2 + 2y(x2 + 1
+(cid:16)
+
+(cid:17)2
+
+y + (x2 + 1
+
+2a3x)
+
+= ( 1
+
+4a2
+
+2a3x) = ( 1
+2a3x)2 = ( 1
+
+4a2
+4a2
+
+3 − a2)x2 − a1x + a0 + y2 + 2y(x2 + 1
+3 − a2 + 2y)x2 + (a3y − a1)x + (y2 − a0)
+
+2a3x)
+
+3 − a2 + 2y)x2 + (a3y − a1)x + (y2 − a0) (1)
+
+Para o segundo membro da igualdade ser um quadrado perfeito precisamos que a equa¸c˜ao
+
+de segundo grau com a indeterminada x:
+
+3 − a2 + 2y)x2 + (a3y − a1)x + (y2 − a0) tenha ∆ = 0
+
+( 1
+4a2
+Vamos ent˜ao calcular o ∆ da equa¸c˜ao anterior:
+∆ = (a3y − a1)2 − 4.( 1
+4a2
+3 − a2 + 2y).(y2 − a0) = 0
+∆ = a2
+3y2 − 2a1a3y + a2
+1 + (−a2
+3y2 − 2a1a3y + a2
+1 − a2
+
+3 + 4a2 − 8y).(y2 − a0) = 0
+
+∆ = a2
+3y2 + a0a2
+−8y3 + 4a2y2 + (8a0 − 2a1a3)y + (a2
+
+3 + 4a2y2 − 4a0a2 − 8y3 + 8a0y = 0
+1 − 4a0a2 + a0a2
+3) = 0
+Resolvendo a equa¸c˜ao acima de indeterminada y, teremos 3 valores poss´ıveis, logo, esco-
+lhemos somente um desses para utilizar na solu¸c˜ao. Sabendo o valor de y, temos um quadrado
+no segundo membro da equa¸c˜ao (1), logo, podemos escrever:
+
+(y + (x2 + 1
+
+2a3x))2 = (ax + b)2 , onde a e b ∈ C.
+
+Da´ı vem que as solu¸c˜oes da equa¸c˜ao do quarto grau ser˜ao as solu¸c˜oes das duas equa¸c˜oes
+
+do segundo grau a seguir:
+
+e
+
+x2 +
+
+1
+2
+
+a3x + y = ax + b
+
+x2 +
+
+1
+2
+
+a3x + y = −(ax + b)
+
+33
+
+Ent˜ao teremos 4 ra´ızes, contando as multiplicidades.
+
+C Rela¸c˜ao de Girard
+
+Acompanhe abaixo os resultados obtidos por Girard e suas demonstra¸c˜oes:
+
+Considere K um corpo de indeterminadas x, x1, x2, · · · , xn. Seja o polinˆomio:
+n
+(cid:89)
+
+(x − xi) = (x − x1).(x − x2) · · · (x − xn) ∈ K[x,x1,x2,··· ,xn]
+
+i=1
+Considere as seguintes somas e produtos das indeterminadas em K[x1,x2,··· ,xn]:
+s1(x1,x2,··· ,xn) =
+
+xi = x1 + x2 + · · · + xn
+
+(cid:88)
+
+s2(x1,x2,··· ,xn) =
+
+i
+(cid:88)
+
+xi1xi2 = x1x2 + x1x3 + · · · + xn−1xn
+
+s3(x1,x2,··· ,xn) =
+
+i1<i2
+(cid:88)
+
+i1<i2<i3
+
+xi1xi2xi3 = x1x2x3 + x1x2x4 + · · · + xn−2xn−1xn
+
+...
+
+sn−1(x1,x2,··· ,xn) =
+
+(cid:88)
+
+i1<i2<···<in−1
+
+xi1xi2 · · · xin−1 = x1x2 · · · xn−1 + · · · + x2x3 · · · xn
+
+sn(x1,x2,··· ,xn) = x1x2 · · · xn
+Precisamos dessas somas polinomiais para demonstrar o seguinte Lema:
+
+Lema: Temos a seguinte rela¸c˜ao:
+n
+(cid:89)
+
+(x − xi) = xn − s1(x1,x2,··· ,xn)xn−1 + · · · + (−1)nsn(x1,x2,··· ,xn)
+
+i=1
+Demonstra¸c˜ao: Faremos a demonstra¸c˜ao por indu¸c˜ao sobre n ≥ 2.
+1) Mostrando que vale para n = 2:
+(x − x1)(x − x2) = x2 − x2x − x1x + x1x2 = x2 − (x1 + x2)x + x1x2 = x2 − s1(x1,x2)x + s2(x1,x2)
+Pois s1(x1,x2) = x1 + x2 e s2(x1,x2) = x1.x2.
+2) Supor que vale para n, ou seja,
+(x − x1).(x − x2) · · · (x − xn) = xn − s1(x1,x2,··· ,xn)xn−1 + · · · + (−1)nsn(x1,x2,··· ,xn)
+3) Mostraremos que vale para n+1:
+(x − x1).(x − x2) · · · (x − xn)(x − xn+1) =
+(cid:105)
+(x − xn+1)
+
+(cid:104)
+xn − s1(x1,x2,··· ,xn)xn−1 + s2(x1,x2,··· ,xn).xn−2 −
+
+· · · + (−1)nsn(x1,x2,··· ,xn)
+
+= xn.x − s1(x1,x2,··· ,xn)xn−1.x + s2(x1,x2,··· ,xn).xn−2.x − · · · + (−1)nsn(x1,x2,··· ,xn)x − xn+1xn +
+
+xn+1s1(x1,x2,··· ,xn)xn−1 + s2(x1,x2,··· ,xn).xn−2.xn+1 − · · · + xn+1(−1)nsn(x1,x2,··· ,xn)
+
+Reescrevendo resolvendo as multiplica¸c˜oes e associando os termos de mesmo grau, tere-
+
+mos:
+
+= xn+1 −
+
+(cid:16)
+
+s1(x1,x2,··· ,xn) + xn+1
+
+(cid:17)
+
+xn +
+
+(cid:16)
+
+s2(x1,x2,··· ,xn) + xn+1.s1(x1,x2,··· ,xn)
+
+(cid:17)
+
+.xn−1 − · · · +
+
+(−1)nsn(x1,x2,··· ,xn).xn+1
+
+Mas, podemos perceber as seguintes rela¸c˜oes entre as somas e a indeterminada xn+1:
+
+1)s1(x1,x2,··· ,xn) + xn+1 = x1 + x2 + · · · + xn + xn+1 = s1(x1,x2,··· ,xn+1)
+
+34
+
+2)s2(x1,x2,··· ,xn) + xn+1s1(x1,x2,··· ,xn) = x1x2 + x1x3 + · · · + xn−1xn + xn+1x1 + xn+1x2 + · · · +
+
+xn+1xn = s2(x1,x2,··· ,xn+1)
+
+3)s3(x1,x2,··· ,xn) + xn+1s2(x1,x2,··· ,xn) = x1x2x3 + x1x2x4 + · · · + xn−2xn−1xn + xn+1x1x2 +
+
+xn+1x1x3 + · · · + xn+1xn−1xn = s3(x1,x2,··· ,xn+1)
+
+...
+n−1)sn(x1,x2,··· ,xn)+xn+1sn−1(x1,x2,··· ,xn) = x1x2 · · · xn−1+· · ·+x2x3 · · · xn+xn+1x1x2 · · · xn−1+
+
+V + xn+1x2x3 · · · xn = sn(x1,x2,··· ,xn+1)
+
+n)xn+1sn(x1,x2,··· ,xn) = xn+1x1x2 · · · xn = sn+1(x1,x2,··· ,xn)
+
+Da´ı vem que:
+(cid:16)
+xn+1−
+
+s1(x1,x2,··· ,xn)+xn+1
+
+(cid:17)
+
+(cid:16)
+
+xn+
+
+s2(x1,x2,··· ,xn)+xn+1.s1(x1,x2,··· ,xn)
+
+(cid:17)
+
+.xn−1−· · ·+(−1)nsn(x1,x2,··· ,xn).xn+1 =
+
+xn+1 − s1(x1,x2,··· ,xn+1)xn + · · · + (−1)n+1sn+1(x1,x2,··· ,xn+1)
+
+Logo, a rela¸c˜ao
+
+(x − x1).(x − x2) · · · (x − xn) = xn − s1(x1,x2,··· ,xn)xn−1 + · · · + (−1)nsn(x1,x2,··· ,xn)
+
+vale para todo n ∈ Z.
+
+Proposi¸c˜ao: Considere p(x) = a0 + a1x + · · · + anxn, se x1, x2, · · · , xn s˜ao ra´ızes de p(x),
+
+ent˜ao
+
+si(x1,x2,··· ,xn) = (−1)i an−i
+an
+
+, i = 1, 2, · · · , n.
+
+Demonstra¸c˜ao: Considere o polinˆomio
+
+p(x) = anxn + · · · + a1x + a0
+
+(cid:104)
+
+Colocando em evidˆencia o termo an temos:
+xn + an−1
+p(x) = an
+an
+E sabemos do Lema anterior que
+
+xn−1 + an−2
+an
+
+xn−2 + · · · + a0
+an
+
+(cid:105)
+
+p(x) = xn − s1(x1,x2,··· ,xn)xn−1 + · · · + (−1)nsn(x1,x2,··· ,xn)
+Igualando os coeﬁcientes dos termos de mesmo grau das equa¸c˜oes anteriores teremos:
+−s1 = an−1
+an
++s2 = an−2
+an
+...
+(−1)nsn = a0
+an
+Ent˜ao temos que :
+
+=⇒ s1 = − an−1
+an
+=⇒ s2 = an−2
+an
+
+=⇒ sn = (−1)n a0
+an
+
+Essas igualdades anteriores nos d˜ao as rela¸c˜oes entre os coeﬁcientes e as ra´ızes das
+
+equa¸c˜oes.
+
+si = (−1)i.
+
+an−i
+an
+
+35
+
+Referˆencias
+
+[1] C. Augusto Morgado & C. Paulo Pinto Carvalho; Matem´atica Discreta., SBM, Rio de
+
+Janeiro, 2012.
+
+[2] G. Hammerlin and K. H. Hoffamann, Numerical Mathematics. Spring-Verlag, New
+
+York, 1991.
+
+[3] H. Abramo & T. Maria L´ucia Vilela; Polinˆomios e Equa¸c˜oes Alg´ebricas, SBM, Rio de
+
+Janeiro, 2012.
+
+[4] P. Manoel ; Matem´atica Paiva volumes 2 e 3, Moderna, S˜ao Paulo, 2013.
+
+[5] R. L. Burden & J. D. Faires, An´alise Num´erica, Cengage Learning, S˜ao Paulo,
+
+2008.
+
+[6] R. M´arcia A. Gomes & L. Vera L´ucia da Rocha; C´alculo Num´erico, Pearson Education,
+
+S˜ao Paulo, 1997.
+
+[7] S. D´ecio & M. Jo˜ao Teixeira; C´alculo Num´erico, Pearson, S˜ao Paulo, 2006.
+
+[8] V. Paulo Evandro; M´etodo de Newton, ( monograﬁa de Especializa¸c˜ao), UFMG, Minas
+
+Gerais, 2006.
+
+[9] S. Raquel Tavares; Polinˆomios de Chebyshev e Curvas Maximais,( disserta¸c˜ao de Mes-
+
+trado), UFRJ, Rio de Janeiro, 2007.
+
+

@@ -1,0 +1,6093 @@
+Universidade Federal de São Paulo
+
+Instituto de Ciência e Tecnologia
+
+Mestrado Proﬁssional em Matemática
+em Rede Nacional - PROFMAT
+
+Raízes Primitivas e Aplicações em
+Criptograﬁa
+
+Helen Alessandra Ribeiro
+
+Orientadora: Profa. Dra. Grasiele Cristiane Jorge
+
+São José dos Campos
+Outubro, 2018
+
+Título: Raízes Primitivas e Aplicações em Criptograﬁa
+
+Dissertação apresentada ao Instituto de Ciência e Tecnologia da UNIFESP, campus São
+José dos Campos/SP, como parte dos requisitos exigidos para a obtenção do título de
+Mestre pelo Programa de Mestrado Proﬁssional em Matemática em Rede Nacional –
+PROFMAT.
+
+São José dos Campos
+Outubro, 2018
+
+Ribeiro, Helen Alessandra
+
+Raízes Primitivas e Aplicações em Criptograﬁa, Helen Ales-
+
+sandra Ribeiro – São José dos Campos, 2018.
+
+viii, 94f.
+
+Dissertação (Mestrado) – Universidade Federal de São Paulo. Insti-
+
+tuto de Ciência e Tecnologia. Programa de Pós-Graduação em Matemática
+
+em Rede Nacional (PROFMAT).
+
+Primitive Roots and Cryptographic Applications
+
+1. Teoria dos Números.
+
+2. Aritmética Modular.
+
+3. Raízes
+
+Primitivas. 4. Criptograﬁa. 5. Diﬃe-Hellman.
+
+UNIVERSIDADE FEDERAL DE SÃO PAULO
+
+INSTITUTO DE CIÊNCIA E TECNOLOGIA
+
+Mestrado Proﬁssional em Matemática em Rede Nacional
+PROFMAT
+
+Chefe de Departamento:
+
+Prof. Dr. Eduardo Antonelli
+
+Coordenador do Programa de Pós-Graduação:
+
+Prof. Dr. Angelo Calil Bianchi
+
+iv
+
+helen alessandra ribeiro
+
+R A Í Z E S P R I M I T I VA S E A P L I C A Ç Õ E S E M C R I P T O G R A F I A
+
+Presidente da Banca: Profa. Dra. Grasiele Cristiane Jorge
+
+Banca Examinadora:
+
+Profa. Dra. Carina Alves Severo
+
+Profa. Dra. Cintya Wink de Oliveira Benedito
+
+Prof. Dr. Robson da Silva
+
+Data da defesa: 03 de outubro de 2018
+
+v
+
+Aos meus avós, que infelizmente partiram antes de me verem concluindo essa jornada,
+mas que estiveram comigo em pensamento durante todos os momentos.
+
+vi
+
+A G R A D E C I M E N T O S
+
+Agradeço os meus amigos e familiares pelo apoio, em especial à minha mãe, ao Pedro e
+às minhas amigas Karen e Shirley, que foram as minhas fortalezas durante todo o período
+em que estive estudando.
+
+À minha orientadora, professora doutora Grasiele Cristiane Jorge, por toda dispo-
+nibilidade, atenção, paciência, apoio e por me conduzir no desenvolvimento de toda a
+dissertação.
+
+A todos os professores do programa PROFMAT, por compartilharem conosco os seus
+
+conhecimentos.
+
+Aos colegas do PROFMAT, por estarem comigo nessa trajetória, compartilhando
+
+ideias, inseguranças, alegrias e conhecimento ao longo do curso.
+
+E, por ﬁm, agradeço ao ICT-Unifesp, por nos proporcionar toda a estrutura necessária
+
+para os nossos estudos.
+
+vii
+
+R E S U M O
+
+Neste trabalho estudamos alguns tópicos relacionados à Teoria dos Números, com
+destaque para as raízes primitivas e algumas de suas aplicações na Criptograﬁa: o método
+de troca de chaves de Diﬃe-Hellman e o algoritmo de criptograﬁa ElGamal.
+
+Como proposta didática, apresentamos uma sequência didática que tem como público
+alvo alunos do Ensino Médio. Tal sequência propõe atividades que objetivam ampliar
+a visão dos alunos sobre a Matemática, apresentando aplicações de resultados comuns à
+Educação Básica na Criptograﬁa.
+Palavras-chave: 1. Teoria dos Números. 2. Aritmética Modular. 3. Raízes Primitivas.
+4. Criptograﬁa. 5. Diﬃe-Hellman. 6. ElGamal.
+
+A B S T R A C T
+
+In this work we study a few topics related to Number Theory, with emphasis on
+primitive roots and some of its applications in Cryptography: the Diﬃe-Hellman key
+exchange method and the ElGamal’s cryptography algorithm.
+
+We present a didactic sequence with focus on High School students as the target au-
+dience. This sequence suggests activities that aim to broaden students’ perception of
+Mathematics, presenting applications of results common to Middle Education in Crypto-
+graphy.
+Keywords: 1. Number Theory.
+Cryptography. 5. Diﬃe-Hellman. 6. ElGamal.
+
+2. Modular arithmetic.
+
+3. Primitive roots.
+
+4.
+
+viii
+
+S U M Á R I O
+
+1 introdução
+
+3
+
+INTRODUÇÃO
+
+3
+
+2 conceitos preliminares
+2.1 Princípio da Boa Ordem
+2.2 Princípio da Indução Finita
+2.3 Divisibilidade
+2.4 O Algoritmo de Euclides
+2.5 Máximo divisor comum
+2.6 Números primos
+18
+2.7 Mínimo múltiplo comum
+
+10
+
+6
+
+6
+
+7
+
+13
+
+15
+
+21
+
+3 aritmética modular e grupos
+
+26
+
+30
+
+3.1 Congruência
+26
+3.2 Congruência linear
+3.3 Pequeno Teorema de Fermat e Teorema de Wilson
+3.4 Função φ de Euler e Teorema de Euler
+3.5 Teorema Chinês dos Restos
+3.6 Teorema de Lagrange
+40
+3.7 Classes de congruência
+3.8 Grupos e subgrupos
+
+35
+
+38
+
+41
+
+42
+
+34
+
+4 raízes primitivas
+
+49
+
+49
+
+4.1 Ordem de um inteiro a módulo m
+4.2 Raízes primitivas módulo m
+51
+4.3 Raízes primitivas módulo p, p primo
+4.4 Raízes primitivas módulo pt, p primo ímpar, t > 1 inteiro
+4.5 Raízes primitivas módulo 2pt, p primo ímpar
+4.6 Números que possuem raízes primitivas
+
+52
+
+57
+
+57
+
+53
+
+5 aplicações na criptografia
+
+60
+
+5.1 Logaritmos discretos
+
+60
+
+5.1.1 O Problema do Logaritmo Discreto
+63
+
+5.2 O algoritmo criptográﬁco ElGamal
+
+62
+
+5.2.1 O método de troca de chaves de Diﬃe-Hellman
+5.2.2 Envio de mensagens
+
+65
+
+63
+
+1
+
+SUMÁRIO
+
+2
+
+70
+70
+
+6 proposta didática
+6.1 Sequência didática
+6.2 Público alvo
+70
+6.3 Número de aulas previstas
+6.4 Objetivos de aprendizagem
+6.5 Competência e habilidade previstas pela BNCC
+
+70
+70
+
+71
+
+6.5.1 Competência especíﬁca 3
+6.5.2 Habilidade
+6.6 Desenvolvimento
+
+71
+
+71
+
+71
+
+6.6.1 Aula 1: Aritmética modular e criação da calculadora de módulo
+6.6.2 Aula 2: Função φ de Euler, raízes primitivas e logaritmos discre-
+
+71
+
+tos
+
+74
+
+6.6.3 Aula 3: O algoritmo criptográﬁco ElGamal
+6.6.4 Aula 4: Troca de mensagens criptografadas
+
+76
+83
+
+6.7 Avaliação
+
+7 conclusões
+
+84
+
+85
+
+referências bibliográficas
+
+86
+
+1
+
+I N T R O D U Ç Ã O
+
+A Teoria dos Números é o ramo da Matemática que estuda as propriedades dos nú-
+meros inteiros e tem sua origem na Grécia Antiga. É possível encontrar problemas rela-
+tivos a essa área no livro Os Elementos, escrito pelo matemático Euclides de Alexandria
+(325?a.C. – 285?a.C.).
+
+Vários outros matemáticos gregos se dedicaram ao estudo de problemas relativos à
+Teoria dos Números, dentre eles podemos destacar Diofanto de Alexandria (200?a.C. – 284?a.C.),
+autor da obra Aritmética, que, segundo [4], é uma abordagem analítica da Teoria Algébrica
+dos Números que eleva o autor à condição de gênio em seu campo.
+
+Apesar de estar presente nessas grandes obras dos gregos, a Teoria dos Números se
+desenvolveu muito pouco até o Século XVII, quando foi redescoberta por grandes mate-
+máticos, como Fermat, Euler e Gauss.
+
+O advogado francês Pierre de Fermat (1601 – 1665) se dedicava à Matemática em suas
+horas vagas. Sua atenção pela Teoria do Números foi despertada pelo contato com uma
+tradução da Aritmética de Diofanto. O interesse por essa área levou Fermat a umas das
+suas principais contribuições à Matemática: a fundação da moderna Teoria dos Números.
+Muitas de suas contribuições se deram por anotações no exemplar da obra de Diofanto e
+muitos teoremas apenas enunciados por Fermat mostraram-se verdadeiros posteriormente.
+Leonhard Paul Euler (1707 – 1783) foi um matemático e físico suíço com numerosas
+contribuições em diversos campos da Matemática. Na Teoria dos Números, Euler apre-
+sentou importantes resultados, como o Teorema de Euler e a Função φ de Euler, os quais
+serão apresentados no Capítulo 2.
+
+O matemático alemão, Johann Carl Friedrich Gauss (1777 – 1855), conhecido como o
+príncipe dos matemáticos, foi o maior matemático do Século XIX. Sua obra Disquisitio-
+nes arithmeticae trouxe importantes contribuições para a moderna Teoria dos Números,
+incluindo a notação para congruência utilizada nesse trabalho.
+
+A maior parte das ideias apresentadas nessa dissertação são originárias ou da Grécia
+Antiga, ou de um dos três matemáticos citados. Para eles, o estudo das propriedades dos
+números inteiros era de interesse teórico apenas. As aplicações da Teoria dos Números
+foram surgindo posteriormente. Uma das principais áreas de aplicação da Teoria dos
+Números é a Criptograﬁa.
+
+A Criptograﬁa é a ciência que estuda métodos para codiﬁcar mensagens de modo que
+apenas o seu destinatário as consiga ler. A utilização de tais métodos apresenta uma
+grande importância histórica quando se trata de guerras, pois, nesses períodos, conse-
+guir transmitir mensagens a aliados sem que fossem interceptadas pelos inimigos era de
+extrema importância.
+
+3
+
+introdução
+
+4
+
+A necessidade de decifrar códigos impulsionou importantes avanços cientíﬁcos, dentre
+eles a criação dos computadores. Um exemplo disso foi o Colossus, um computador
+primitivo criado pelo matemático e cientista da computação britânico Alan Turing (1912 –
+1954) e utilizado para decodiﬁcar a máquina criptográﬁca Lorenz, utilizada pelos alemães
+durante a 2a Guerra Mundial.
+
+O desenvolvimento dos computadores e a utilização da internet vêm criando novos
+desaﬁos para a Criptograﬁa. A necessidade de aumentar a segurança da rede, devido a
+popularização de e-commerces e transações bancárias digitais, impulsiona a criação de
+métodos criptográﬁcos cada vez mais seguros. Diante desses desaﬁos, desenvolveu-se a
+criptograﬁa de chave pública.
+
+Enquanto os sistemas criptográﬁcos antigos eram baseados em ferramentas elementares
+de substituição e permutação, os algoritmos de chave pública são baseados em funções
+matemáticas. Além disso, a criptograﬁa de chave pública é assimétrica, ou seja, utiliza
+duas chaves distintas, diferente da criptograﬁa simétrica que faz uso de uma única chave.
+Introduzida pelos matemáticos estadunidenses Bailey Whitﬁeld Diﬃe (1944 – ) e Mar-
+tin Edward Hellman (1945 – ), a ideia dos códigos de chave pública apresenta uma im-
+portante mudança em relação aos códigos antigos, pois saber codiﬁcar uma mensagem
+utilizando um código de chave pública não necessariamente implica em saber decodiﬁcá-
+la. Isto se dá porque na criptograﬁa assimétrica, uma das chaves é pública, ou seja, é
+conhecida por todos, enquanto a outra é mantida em sigilo. A chave pública é utilizada
+para criptografar a mensagem, enquanto a secreta é utilizada para descriptografar. Neste
+tipo de criptograﬁa, conhecer a chave pública não é suﬁciente para descobrir a chave se-
+creta. Esta ideia ﬁcará clara no Capítulo 4, quando apresentamos o algoritmo criptográﬁco
+ElGamal, desenvolvido pelo criptógrafo egípcio Taher ElGamal(1955-).
+
+O intuito desse trabalho é apresentar ao leitor um conceito bastante interessante da
+Teoria dos Números: as raízes primitivas, bem como a sua aplicação na deﬁnição dos
+logaritmos discretos e algumas ideias no campo da Criptograﬁa, apresentadas no Capítulo
+4. Além disso, elaboramos uma sequência didática, cujo público alvo são alunos do Ensino
+Médio. O objetivo dessa sequência é levar os alunos a descobrirem como o conceito de
+logaritmos pode ser interpretado dentro da aritmética modular e apresentar como essa
+ideia pode ser aplicada em um algoritmo criptográﬁco. Pretendemos com isso ampliar a
+visão dos alunos em relação à Matemática, mostrando a eles como as propriedades dos
+números inteiros são importantes para o desenvolvimento de algumas áreas da tecnologia.
+
+Mais especiﬁcamente, este trabalho está detalhado como segue:
+No Capítulo 1, são apresentados os conceitos preliminares de Teoria dos Números,
+como as ideias do Princípio da Boa Ordem e do Princípio da Indução Finita, que são
+importantes ferramentas para o trabalho com números inteiros. Além dos conceitos de
+Divisibilidade, Máximo Divisor Comum, Mínimo Múltiplo Comum e as deﬁnições de
+números primos e compostos e algumas propriedades.
+
+introdução
+
+5
+
+No Capítulo 2, são introduzidas algumas ideias da Aritmética Modular, como os con-
+ceitos de congruência, congruência linear, classes de congruência. Além de alguns impor-
+tantes resultados como o Pequeno Teorema de Fermat, o Teorema de Wilson, o Teorema
+de Euler e o Teorema Chinês dos Restos. No ﬁnal deste capítulo são apresentadas algumas
+ideias relativas aos conceitos de grupos e subgrupos, pois esses conceitos são citados no
+Capítulo 4.
+
+A intenção desses dois primeiros capítulos foi fazer um passeio pelas principais ideias
+
+dentro da Teoria dos Números.
+
+No Capítulo 3, trazemos o conceito de raízes primitivas e algumas de suas propriedades.
+Essas raízes são importantes para a deﬁnição dos logaritmos discretos e a aplicação dos
+mesmos em um algoritmo criptográﬁco, denominado ELGamal, que apresentamos no
+Capítulo 4.
+
+Por ﬁm, no Capítulo 5, deixamos a proposta de uma sequência didática que trabalha
+
+algumas das ideias presentes nesse trabalho adaptadas para alunos do Ensino Médio.
+
+2
+
+C O N C E I T O S P R E L I M I N A R E S
+
+Neste capítulo trataremos de alguns conceitos preliminares da Teoria dos Números,
+dentre eles o Princípio da Boa Ordem, o Princípio da Indução Finita, a divisibilidade no
+conjunto dos números inteiros, o máximo divisor comum, os números primos e compos-
+tos e o Teorema Fundamental da Aritmética. Para tanto, admitimos que o leitor esteja
+familiarizado com o conjunto dos números inteiros
+
+Z = {. . . , −3, −2, −1, 0, 1, 2, 3, . . .}
+
+e com as operações de adição e multiplicação e suas respectivas propriedades, além do
+conceito de módulo de um número inteiro.
+
+As principais referências utilizadas neste capítulo foram [7], [9] e [11].
+
+2.1 princípio da boa ordem
+
+Para falar do Princípio da Boa Ordem, precisamos antes introduzir os conceitos de
+
+elemento mínimo e máximo de um conjunto.
+
+Deﬁnição 2.1. Seja A um subconjunto de Z. Dizemos que A é limitado inferiormente
+se existe algum inteiro k tal que, para todo a ∈ A, a ≥ k. Além disso, se k ∈ A, dizemos
+que k é elemento mínimo de A e denotamos por min(A). Analogamente, dizemos que A
+é limitado superiormente se existe algum inteiro k tal que, para todo a ∈ A, a ≤ k. Além
+disso, se k ∈ A, dizemos que k é elemento máximo de A e denotamos por max(A).
+
+Note que se existe k = min(A), então k é único. De fato, considere que existam k
+e k0 elementos mínimos de A, então, para todo a ∈ A, a ≥ k e a ≥ k0. Como k ∈ A,
+temos que k ≥ k0 e como k0 ∈ A, temos que k0 ≥ k. De onde, k = k0. Portanto, se existe
+k = min(A), então k é único. De forma análoga, se existe k00 = max(A), então k00 é
+único.
+
+De posse das deﬁnições de elemento mínimo e máximo de um conjunto, temos as
+
+ferramentas necessárias para demonstrar o Princípio da Boa Ordem.
+
+Teorema 2.2. (Princípio da Boa Ordem). Todo conjunto não vazio de inteiros não-
+negativos contém um elemento mínimo.
+
+Demonstração: Considere S = {0, 1, 2, 3, . . .} o conjunto dos inteiros não-negativos e
+considere um conjunto A, não vazio, tal que A ⊂ S. Note que se 0 ∈ A, então 0 = min(A),
+pois 0 = min(S). Suponhamos que 0 /∈ A. Considere o conjunto In = {0, 1, 2, 3, . . . , n} e
+
+6
+
+2.2 princípio da indução finita
+
+7
+
+X = {n ∈ Z ; In ⊂ S − A}. Note que existe um inteiro n, tal que n ∈ X e n + 1 /∈ X.
+Além disso, note que se para algum p ∈ A, temos p ≤ n + 1, então p = n + 1, pois não
+existe um inteiro p tal que n ≤ p ≤ n + 1. Então, podemos concluir que n + 1 é o menor
+elemento de A, ou seja, n + 1 = min(A).
+
+O Princípio da Boa Ordem tem um importante papel em muitas demonstrações. Para
+ilustrar esse fato, provaremos a seguir uma importante propriedade dos números inteiros,
+a Propriedade Arquimediana.
+
+Proposição 2.3. (Propriedade Arquimediana) Sejam a e b inteiros positivos, então existe
+um inteiro positivo n tal que na > b.
+
+Demonstração: Suponha que, para todo inteiro positivo n, tem-se que b ≥ na. Então,
+se tomarmos o conjunto
+
+S = {b − na ; n ∈ Z, n > 0},
+
+temos que esse conjunto S é formado por inteiros não-negativos. Pelo Princípio da Boa
+Ordem, S apresenta elemento mínimo, ou seja, existe m ∈ S tal que m = min(S). Como
+m ∈ S, m é da forma m = b − ra, para algum r ∈ Z.
+
+Consideremos, agora, o elemento m0 = b − (r + 1)a, que também pertence ao conjunto
+
+S. Então, temos:
+
+m0 = b − (r + 1)a = (b − ra) − a = m − a < m,
+
+pois a > 0. Então m0 < m = min(S), uma contradição.
+
+Exemplo 2.4. Consideremos a = 2 e b = 7. Pela Propriedade Aquimediana, Proposição
+2.3, temos que existe um inteiro positivo n tal que na > b. De fato, para n = 4, temos
+que 2 · 4 = 8 > 7.
+
+2.2 princípio da indução finita
+
+Apresentaremos, agora, as duas formas do Princípio da Indução Finita, uma importante
+ferramenta para demostrações em diversas áreas, em especial na Teoria dos Números.
+
+Teorema 2.5. (Princípio da Indução Finita - 1a forma) Seja A um conjunto não-vazio
+de inteiros positivos maiores ou iguais a t, com as seguintes propriedades:
+
+(i) t ∈ A,
+
+(ii) Se k ∈ A, então k + 1 ∈ A.
+
+Então, A contém todos os inteiros positivos maiores ou iguais a t.
+
+Demonstração: Suponha que A não contenha todos os inteiros positivos maiores ou
+iguais a t. Então, podemos tomar o conjunto
+
+2.2 princípio da indução finita
+
+8
+
+B = {n ∈ Z ; n ≥ t, n /∈ A}.
+
+Pelo Princípio da Boa Ordem, B possui menor elemento b, pois B 6= ∅. Note que b 6= t,
+pois t ∈ A. Então, b − 1 ∈ A e como A satisfaz (ii), o sucessor de b − 1, que é b, também
+pertence a A. Por conta dessa contradição, podemos concluir que o conjunto B é vazio e,
+portanto, A contém todos os inteiros positivos maiores ou iguais a t.
+
+Exemplo 2.6. Utilizaremos a primeira forma do Princípio da Indução ﬁnita para provar
+a validade da fórmula
+
+1 + 2 + · · · + n =
+
+n(n + 1)
+2
+
+,
+
+para todo inteiro n, n ≥ 1. Perceba que a fórmula é válida para n = 1, pois 1(1+1)
+2 =
+1·2
+2 = 1. De acordo com essa primeira forma do Princípio da Indução Finita, devemos
+mostrar que se a fórmula for verdadeira para n = k, k ∈ Z, k ≥ 1, então ela também será
+verdadeira para n = k + 1. Desta forma, suponhamos que seja válida a fórmula
+
+1 + 2 + · · · + k =
+
+k(k + 1)
+2
+
+.
+
+Como se trata de uma igualdade, podemos adicionar k + 1 a ambos os membros, mantendo
+a relação de igualdade.
+
+1 + 2 + · · · + k + (k + 1) =
+
+k(k + 1)
+2
+
++ (k + 1).
+
+Efetuando a adição no segundo membro, temos
+
+De onde,
+
+1 + 2 + · · · + k + (k + 1) =
+
+k(k + 1) + 2(k + 1)
+2
+
+.
+
+1 + 2 + · · · + k + (k + 1) =
+
+(k + 1)((k + 1) + 1)
+2
+
+.
+
+Essa última igualdade corresponde à fórmula inicial com n = k + 1 e nos mostra que a
+validade da fórmula para n = k implica na validade dessa mesma fórmula pra n = k + 1.
+Note que se tomarmos k = 1, cuja validade da fórmula já veriﬁcamos, isso implicaria a
+validade para k + 1 = 2. Então, podemos tomar k = 2, o que implicaria a validade da
+fórmula para k + 1 = 3 e assim sucessivamente, passando por todos os inteiros maiores
+ou iguais a 1. Portanto, pela primeira forma do Princípio da Indução Finita, a fórmula
+
+1 + 2 + · · · + n =
+
+n(n + 1)
+2
+
+é válida para todo n ∈ Z, n ≥ 1.
+
+Há uma outra versão para o Princípio da Indução Finita, enunciada a seguir.
+
+2.2 princípio da indução finita
+
+9
+
+Teorema 2.7. (Princípio da Indução Finita - 2a forma). Seja A um conjunto não-vazio
+de inteiros positivos maiores ou iguais a t, com as seguintes propriedades:
+
+(i) t ∈ A
+
+(ii) Se t, t + 1, t + 2, . . . , t + k ∈ A, então (t + k) + 1 ∈ A.
+
+Então, A contém todos os inteiros positivos maiores ou iguais a t.
+
+Demonstração: O argumento para a demonstração dessa segunda forma do Princípio
+da Indução Finita é similar ao utilizado para a demonstração da primeira forma.
+
+Suponha que A não contenha todos os inteiros positivos maiores ou iguais a t. Então,
+
+podemos tomar o conjunto B,
+
+B = {n ∈ Z ; n ≥ t e n /∈ A}.
+
+Pelo Princípio da Boa Ordem, B possui menor elemento t + b, pois B 6= ∅. Note que
+t + b 6= t, pois t ∈ A. Como b = min(B), temos que t, . . . , t + (b − 1) ∈ A e como A
+satisfaz (ii), o sucessor de t + (b − 1) que é t + b também pertence a A. Por conta dessa
+contradição, podemos concluir que o conjunto B é vazio e, portanto, A contém todos os
+inteiros positivos maiores ou iguais a t.
+
+Exemplo 2.8. Considere a sequência S na qual a1 = 1, a2 = 3 e an = an−1 + an−2.
+Então, S = 1, 3, 4, 7, 11, 18, . . .. Vamos utilizar a segunda forma do Princípio da Indução
+Finita para provar que a propriedade
+
+an <
+
+(cid:19)n
+
+(cid:18) 7
+4
+
+é válida para todo inteiro n, n ≥ 1.
+n
+n ∈ Z, n ≥ 1 ; an <
+Considere o conjunto A =
+
+(cid:17)n
+
+(cid:16) 7
+4
+
+, an ∈ S
+
+o
+
+. Note que 1 ∈ A,
+
+(cid:17)1
+
+(cid:16) 7
+4
+
+4 =
+
+pois a1 = 1 < 7
+. E, pela segunda forma do Princípio da Indução Finita, se
+1, 2, . . . , k ∈ A implicar que k + 1 ∈ A, temos que a propriedade será válida para todo
+inteiro n, n ≥ 1. Suponhamos, então, que 1, 2, . . . , k ∈ A. Em particular, k − 1 e k ∈ A,
+ou seja, ak−1 <
+. Além disso, pela lei de recorrência da sequência S,
+temos
+
+e ak <
+
+(cid:16) 7
+4
+
+(cid:16) 7
+4
+
+(cid:17)k−1
+
+(cid:17)k
+
+De onde,
+
+ak+1 = ak + ak−1.
+
+ak+1 =
+
+=
+
+=
+
+(cid:18) 7
+4
+(cid:18) 7
+4
+(cid:18) 7
+4
+
+(cid:19)k
+
++
+
+(cid:18) 7
+4
+(cid:19)k−1 (cid:18) 7
+4
+(cid:19)k−1 (cid:18) 11
+4
+
+(cid:19)k−1
+
+(cid:19)
+
++ 1
+
+(cid:19)
+
+.
+
+2.3 divisibilidade
+
+10
+
+Como 11
+
+4 < 49
+
+16 =
+
+(cid:17)2
+
+(cid:16) 7
+4
+
+, temos
+
+ak+1 <
+
+(cid:18) 7
+4
+
+(cid:19)k−1 (cid:18) 7
+4
+
+(cid:19)2
+
+=
+
+(cid:18) 7
+4
+
+(cid:19)k+1
+
+.
+
+Com isso mostramos que k + 1 ∈ A e, pela segunda forma do Princípio da Indução Finita,
+temos que a propriedade an <
+
+é válida para todo n inteiro positivo.
+
+(cid:17)n
+
+(cid:16) 7
+4
+
+2.3 divisibilidade
+
+Apresentaremos, agora, a deﬁnição de divisibilidade entre dois números inteiros e suas
+propriedades.
+
+Deﬁnição 2.9. Dados a e b números inteiros, diz-se que a divide b, denotado por a | b, se
+existe um inteiro c tal que ac = b. Caso contrário, dizemos que a não divide b e denotamos
+por a6 | b.
+
+Observação 2.10.
+
+(i) Dizer que a divide b é o mesmo que dizer que a é um divisor de b, ou que b é um
+
+múltiplo de a.
+
+(ii) Note que, para o caso a 6= 0 o inteiro c, nas condições da deﬁnição é único. De fato,
+se existisse c0 tal que ac0 = b, teríamos ac = ac0, de onde c = c0, pois a 6= 0. A
+esse inteiro c, chamaremos quociente de b por a e o indicaremos por: c = b/a = b
+a.
+A unicidade não acontece quando b = 0 e a = 0, pois nesse caso teríamos 0c = 0,
+para todo c inteiro.
+
+Exemplo 2.11. Como 3 · 7 = 21, dizemos que 3 | 21. Como não existe um número
+inteiro c, tal que 4c = 21, dizemos que 46 | 21.
+
+As proposições que seguem tratam de algumas propriedades importantes da divisibili-
+
+dade.
+
+Proposição 2.12. (Reﬂexividade) Seja a um número inteiro, então a | a.
+
+Demonstração: Como 1a = a, ∀a ∈ Z, temos, pela deﬁnição de divisibilidade, que
+a | a.
+
+Proposição 2.13. (Transitividade) Dados a, b e c números inteiros. Se a | b e b | c,
+então a | c.
+
+Demonstração: Como a | b, temos que existe k ∈ Z tal que ak = b. Do mesmo modo,
+temos que existe k0 ∈ Z tal que bk0 = c. Substituindo b por ak na segunda igualdade,
+temos: c = (ak)k0 = a(kk0), ou seja, a | c.
+
+Proposição 2.14. Sejam a, b, c, m e n ∈ Z. Se c | a e c | b, então c | (ma + nb).
+
+2.3 divisibilidade
+
+11
+
+Demonstração: Se c | a, então a = ck, para algum k ∈ Z. Se c | b, então b = ck0, para
+algum k0 ∈ Z. Multiplicando as duas igualdades por m e n, respectivamente, temos:
+
+ma = mck e nb = nck0.
+
+Somando membro a membro as duas igualdades, temos:
+
+De onde,
+
+ou seja,
+
+ma + nb = mck + nck0.
+
+ma + nb = (mk + nk0)c,
+
+c | (ma + nb).
+
+Proposição 2.15. Dados os números inteiros 0, 1, a, b e c, valem as seguintes proprieda-
+des para a divisão:
+
+(i) Se a | b, então ac | bc, ou;
+
+(ii) Se ab | ac e a 6= 0, então b | c, ou;
+
+(iii) 1 | a, ou;
+
+(iv) a | 0, ou;
+
+(v) Se a | b e b 6= 0, então |a| ≤ |b|, ou;
+
+(vi) Se a | b e b | a, então |a| = |b|, ou;
+
+(vii) a |c| | ac.
+
+Demonstração:
+
+(i) Se a | b, temos que existe k ∈ Z tal que ak = b. Multiplicando os dois lados dessa
+
+igualdade por c, temos:
+
+De onde,
+
+(ak)c = bc.
+
+(ac)k = bc.
+
+Assim, podemos concluir que ac | bc.
+
+(ii) Se ab | ac, temos que existe k ∈ Z tal que:
+
+2.3 divisibilidade
+
+12
+
+(ab)k = ac.
+
+De onde, a(bk − c) = 0. Como a 6= 0, temos:
+
+bk = c.
+
+De onde, podemos concluir que b | c.
+
+(iii) Como 1a = a, ∀a ∈ Z, temos, pela deﬁnição de divisibilidade, que 1 | a.
+
+(iv) Como 0a = 0, ∀a ∈ Z, temos, pela deﬁnição de divisibilidade, que a | 0.
+
+(v) Se a | b, temos que existe k ∈ Z, tal que ak = b. Então,
+
+De onde,
+
+|ak| = |b|.
+
+|a| · |k| = |b|.
+
+Como b 6= 0, temos que |b| > 0 e |k| > 0. Então, podemos concluir que:
+
+|a| ≤ |b|.
+
+(vi) Se a | b, então existe k ∈ Z, tal que ak = b. Por (v), temos |a| ≤ |b|. Do mesmo
+
+modo, se b | a, temos |b| ≤ |a|.
+Das duas desigualdades anteriores, podemos concluir que:
+
+|a| = |b|.
+
+(vii) Se c ≥ 0, temos que a |c| = ac, então, pela Proposição 2.12, a |c| | ac. Se c < 0,
+
+a |c| = −ac, ou seja, −(a |c|) = ac, então, a |c| | ac.
+
+Observação 2.16. Note que a relação de divisibilidade não é uma relação de ordem em
+Z, pois apesar de ser reﬂexiva, Proposição 2.12, e transitiva, Proposição 2.13, ela não
+é antissimétrica. De fato, se a | b e b | a, a não necessariamente é igual a b. Exemplo,
+3 | −3 e −3 | 3, mas 3 6= −3.
+
+Vejamos mais algumas propriedades da divisibilidade:
+
+Proposição 2.17. Sejam a, b, c e d ∈ Z. Se a | b e c | d então ac | bd.
+
+Demonstração: Se a | b, então existe k ∈ Z, tal que ak = b. Do mesmo modo, se c | d,
+então existe k0 ∈ Z, tal que ck0 = d. Multiplicando os membros das igualdades anteriores,
+temos:
+
+2.4 o algoritmo de euclides
+
+13
+
+de onde,
+
+(ak) · (ck0) = bd.
+
+(ac) · (kk0) = bd.
+
+Portanto, podemos concluir que ac | bd.
+
+Exemplo 2.18. Considere a = 2, b = −8, c = −3 e d = 6. Note que a | b, pois
+2 · (−4) = −8. Além disso, c | d, pois −3 · 2 = 6. De fato, ac | bd, pois ac = 2 · (−3) = −6,
+bd = −8 · 6 = −48 e −6 | −48.
+
+Proposição 2.19. Sejam a, b, c ∈ Z, tais que a | (b ± c). Então,
+
+a | b ⇔ a | c.
+
+Demonstração: Se a | (b + c), então existe k ∈ Z tal que ak = b + c. Além disso, se
+a | b, então existe k0 ∈ Z tal que ak0 = b. Substituindo b por ak0 na primeira igualdade,
+temos:
+
+ou seja,
+
+ak0 + c = ak,
+
+c = ak − ak0 = a(k − k0),
+
+de onde podemos concluir que a | c. A demonstração é análoga para o caso a | (b − c).
+
+2.4 o algoritmo de euclides
+
+Apresentaremos, agora, um importante resultado, conhecido como Algoritmo Euclidiano
+da Divisão.
+
+Lema 2.20. Sejam a, b ∈ Z, com a ≥ 0 e b > 0. Então, existem inteiros q e r, tais que
+a = bq + r e 0 ≤ r < b.
+
+Demonstração: Considere o seguinte conjunto:
+
+S = {a − bx ; x ∈ Z, a − bx ≥ 0}.
+
+Note que, quando x = 0, a − bx ∈ S, pois a − bx = a ≥ 0. Assim, podemos concluir
+que S 6= ∅. Pelo Princípio da Boa Ordem, Teorema 2.2, S possui elemento mínimo.
+Chamaremos esse elemento de r. Como r ∈ S, r = a − bq para algum q ∈ Z. Resta
+mostrar que r < b. Suponha r ≥ b, então
+
+Como r = a − bq, temos
+
+r − b ≥ 0.
+
+a − bq − b ≥ 0,
+
+2.4 o algoritmo de euclides
+
+14
+
+de onde, a − b(q + 1) ≥ 0. Ou seja, a − b(q + 1) ∈ S. Mas, a − b(q + 1) < a − bq = r, o
+que é uma contradição, pois r = min S.
+
+Teorema 2.21. (Algoritmo Euclidiano da Divisão) Sejam a, b ∈ Z, com b 6= 0. Então,
+existem inteiros q e r, únicos, tais que a = bq + r e 0 ≤ r < |b|.
+
+Demonstração: Vamos demonstrar inicialmente a existência de q e r, dividindo a de-
+monstração em alguns casos:
+
+(i) b > 0 e a ≥ 0: Esse resultado pode ser constatado pelo Lema 2.20.
+
+(ii) b > 0 e a < 0: Pelo Lema 2.20, temos que existem q0, r0 ∈ Z, tais que |a| =
+bq0 + r0 e 0 ≤ r0 < b. Para r = 0, temos a = −|a| = b(−q0) + 0. Portanto, as
+condições do teorema são satisfeitas para q = −q0 e r = 0. Para r > 0, temos
+a = −|a| = −(bq0 + r0) = b(−q0) − r0. Somando e subtraindo b ao segundo membro
+dessa igualdade, temos:
+
+Logo,
+
+a = b(−q0) − b + b − r0.
+
+a = b(−q0 − 1) + (b − r0).
+
+Como 0 < b − r0 < b, temos que as condições do teorema são satisfeitas para
+q = −q0 − 1 e r = b − r0.
+
+(iii) b < 0: Novamente, pelo Lema 2.20, temos que existem q0, r0 ∈ Z, tais que a =
+
+|b|q0 + r0 e 0 ≤ r0 < |b|. Como b < 0, então |b| = −b. Assim,
+
+a = −bq0 + r0 = b(−q0) + r0,
+
+o que veriﬁca as condições do teorema para q = −q0 e r = r0.
+
+Por ﬁm, vamos veriﬁcar a unicidade de q e r. Suponha que existam inteiros q0 e r0,
+satisfazendo as condições do enunciado e vamos mostrar que q = q0 e r = r0. Temos que
+bq + r = a = bq0 + r0. Suponha, sem perda de generalidade, que r0 ≥ r. Então:
+
+b(q − q0) = r0 − r.
+
+Como |b| > r0, então |b| > r0 − r, de onde:
+
+Como b(q − q0) ≥ 0, podemos tomar os módulos:
+
+b(q − q0) < |b|.
+
+0 ≤ |b||q − q0| < |b|.
+
+E, como |b| > 0, temos 0 ≤ |q − q0| < 1. De onde, podemos concluir que |q − q0| = 0, ou
+seja, q = q0. E, da igualdade bq + r = bq0 + r0, temos r = r0.
+
+Deﬁnição 2.22. O número a do Teorema 2.21 é chamado de dividendo, o número b
+divisor e os números q e r são chamados, respectivamente, quociente e resto da divisão
+de b por a.
+
+2.5 máximo divisor comum
+
+15
+
+2.5 máximo divisor comum
+
+Nesta seção, apresentaremos a deﬁnição de máximo divisor comum e algumas propriedades
+relativas a esse conceito.
+
+Deﬁnição 2.23. Dados a e b inteiros, com a 6= 0 ou b 6= 0, o máximo divisor comum de
+a e b, denotado por (a, b), é o maior inteiro d, tal que d | a e d | b. Quando (a, b) = 1
+dizemos que a e b são primos entre si.
+
+Teorema 2.24. (Teorema de Bézout) Sejam a, b ∈ Z e d = (a, b). Então existem
+m, n ∈ Z, tais que d = ma + nb.
+
+Demonstração: Seja B = {na + mb ; m, n ∈ Z}. Tomemos c = n0a + m0b o menor
+inteiro positivo pertencente ao conjunto B. Vamos provar que c | a e c | b.
+
+Suponha que c não divide a. Neste caso, existem q, r ∈ Z tais que a = qc + r, com
+0 < r < c. Portanto, r = a − qc = a − q(n0a + m0b) = (1 − qn0)a + (−qm0)b. Isso
+mostra que r ∈ B, o que é uma contradição, pois r < c e c é o menor elemento de B.
+Portanto, c | a. E, de forma análoga, mostramos que c | b.
+
+Como d | a e d | b, temos, pela Proposição 2.14, que d | c. Pela Proposição 2.15, item
+(v), temos que d ≤ c, pois ambos são positivos. Como d é o máximo divisor comum,
+temos que a única possibilidade é d = c, ou seja, d = n0a + m0b.
+
+Proposição 2.25. Sejam a, b ∈ Z e seja d um inteiro positivo. Dizemos que d = (a, b)
+se, e somente se, veriﬁca:
+
+(i) d | a e d | b,
+
+(ii) Se d0 | a e d0 | b, então d0 | d.
+
+Demonstração: Seja d = (a, b). Pela Deﬁnição 2.23, temos que d é um divisor comum
+de a e de b, portanto, vale (i). Além disso, pelo Teorema 2.24, existem m, n ∈ Z, tais que
+d = ma + nb. Seja d0 um divisor comum de a e b. Então, d0 | a e d0 | b, de onde temos que
+existem m0, n0 ∈ Z, tais que a = m0d0 e b = n0d0. Portanto, d = m(m0d0) + n(n0d0) =
+d0(mm0 + nn0), o que mostra que d0 | d. Agora, seja d um inteiro positivo de modo que
+valem (i) e (ii). Por (i), temos que d é um divisor comum de a e b. Por (ii), temos que
+qualquer d0, divisor comum de a e b, divide d. Portanto, d é o maior dos divisores comuns
+de a e b. Ou seja, d = (a, b).
+
+Exemplo 2.26. Considere os números 12 e 18. Temos que os divisores de 12 são
+{1, 2, 3, 4, 6, 12} e que os divisores de 18 são {1, 2, 3, 6, 9, 18}. Portanto, o maior divi-
+sor comum de 12 e 18 é o número 6. Note que 3 também é divisor comum de 12 e 18,
+pois 3 | 12 e 3 | 18. Portanto, 3 | 6.
+
+Proposição 2.27. Dados a, b ∈ Z, se existem m, n ∈ Z, tais que am + bn = 1, então
+(a, b) = 1.
+
+2.5 máximo divisor comum
+
+16
+
+Demonstração: Se (a, b) = d, então d | a e d | b. Logo, d | (am + bn), pela Proposição
+2.14. Portanto, d = 1.
+
+Proposição 2.28. Sejam a, b inteiros, d = (a, b) e c um inteiro não-nulo. Então:
+
+(i) (ac, bc) = d |c|.
+
+(ii) Se c | a e c | b, então
+
+(cid:17)
+
+(cid:16) a
+c , b
+c
+
+= d
+|c|.
+
+Demonstração:
+
+(i) Como d = (a, b), temos que d | a e então d |c| | a |c|. Como a |c| divide ac, então
+d |c| | ac. Do mesmo modo, temos que d |c| | bc. Pelo Teorema 2.24, existem inteiros
+r e s, tais que d = ra + sb. Logo,
+
+d |c| = r(a |c|) + s(b |c|).
+
+Agora, se d0 é um inteiro tal que d0 | ac e d0 | bc, então d0 | a |c| e d0 | b |c|. Da
+igualdade anterior, temos que d0 | d|c|. Portanto, d|c| = (ac, bc).
+
+(ii) Seja x =
+
+(cid:17)
+
+(cid:16) a
+c , b
+c
+
+. Por (i), temos:
+
+(a, b) =
+
+(cid:16) a
+c · c, b
+
+c · c
+
+(cid:17)
+
+=
+
+(cid:17)
+
+(cid:16) a
+c , b
+c
+
+· |c|.
+
+Assim, d = x|c| e, portanto, como c 6= 0, x = d
+|c|.
+
+Corolário 2.29. Se (a, b) = d, temos que
+
+(cid:17)
+
+(cid:16) a
+d , b
+d
+
+= 1.
+
+Demonstração: Do item (ii) da Proposição 2.28, se tomarmos c o máximo divisor comum
+de a e b, teremos:
+
+(cid:17)
+
+(cid:16) a
+d , b
+d
+
+= d
+
+|d| = 1.
+
+Exemplo 2.30. Como (18, 24) = 6, temos que
+
+(cid:16) 18
+
+6 , 24
+6
+
+(cid:17)
+
+= (3, 4) = 1.
+
+Proposição 2.31. Dados a, b, c ∈ Z, temos que (a, b) = (a, b + ac).
+
+Demonstração: Sejam d = (a, b) e d0 = (a, b + ac). Pelo Teorema 2.24, existem inteiros
+n0 e m0 tais que d = n0a + m0b, de onde:
+
+d = n0a + m0b = n0a + acm0 − acm0 + m0b = a(n0 − cm0) + (b + ac)m0,
+
+ou seja, d0 | d.
+
+Agora, vamos provar que d | d0. Pela Proposição 2.14, d | (b + ac). Então, d é divisor
+comum de a e b + ac. Logo pelo Teorema 2.25, temos que d | d0. De onde, podemos
+concluir que d = d0, pois ambos são positivos.
+
+2.5 máximo divisor comum
+
+17
+
+Exemplo 2.32. Temos que (5, 15) = 5.
+(5, 15 + 2 · 5) = (5, 25) = 5 e assim por diante.
+
+Logo, (5, 15 + 1 · 5) = (5, 20) = 5;
+
+Teorema 2.33. (Teorema de Euclides) Sejam a, b, c ∈ Z, tais que a | bc. Se (a, b) = 1,
+então a | c.
+
+Demonstração: Como (a, b) = 1, pelo Teorema 2.24 existem inteiros n e m tais que
+na + mb = 1. Multiplicando-se os dois lados desta igualdade por c, temos:
+
+(na)c + (mb)c = n(ac) + m(bc) = c.
+
+Como a | ac e a | bc, temos que, pela Proposição 2.14, a | c.
+
+Exemplo 2.34. Temos que 7 | 84 e 84 = 14 · 6. Como (7, 6) = 1, temos que 7 | 14.
+
+Proposição 2.35. Sejam a, b, c ∈ Z, com (a, b) = 1, a | c e b | c. Então, ab | c.
+
+Demonstração: Se a | c, podemos escrever c = aq, para algum q ∈ Z. Como b | c,
+temos b | aq e, como (a, b) = 1, temos b | q. Ou seja, podemos escrever q = br para
+algum r ∈ Z. Substituindo na primeira igualdade, temos que c = a(br) = (ab)r, o que
+nos mostra que ab | c.
+
+A partir da relação apresentada pelo Algoritmo Euclidiano da Divisão, podemos en-
+
+contrar o importante resultado, apresentado a seguir.
+
+Proposição 2.36. Sejam a, b ∈ Z, com b 6= 0 e sejam q, r o quociente e o resto da
+divisão de a por b, respectivamente. Então, (a, b) = (b, r).
+
+Demonstração: Temos que a = bq + r. Seja x ∈ Z, tal que x | a e x | b. Podemos
+reescrever a igualdade anterior como r = a − bq e, portanto, x | r. Com isso mostramos
+que o conjunto dos divisores de a e b está contido no conjunto do divisores de b e r. Agora,
+considere y ∈ Z tal que y | b e y | r. Da igualdade a = bq + r, temos que y | a. Assim,
+mostramos a inclusão contrária e podemos concluir que o conjunto dos divisores de a e b
+é igual ao conjunto dos divisores de b e r. Portanto, (a, b) = (b, r).
+
+Da proposição anterior, podemos concluir que o problema de encontrar (a, b) pode ser
+resumido em encontrar (b, r). Podemos repetir esse processo fazendo divisões sucessivas
+entre o divisor e o resto da divisão anterior, conforme descrito a seguir e obtendo em cada
+uma delas um quociente e um resto. Como o resto diminui a cada novo passo, em alguma
+
+2.6 números primos
+
+18
+
+das divisões, obteremos resto nulo. Este método é conhecido como Algoritmo de Euclides
+e funciona da seguinte forma:
+
+a = bq1 + r1, 0 ≤ r1 < |b|
+
+b = r1q2 + r2, 0 ≤ r2 < r1
+
+r1 = r2q3 + r3, 0 ≤ r3 < r2
+...
+rn−2 = rn−1qn + rn, 0 ≤ rn < rn−1
+
+rn−1 = rnqn+1.
+
+Como, rn | rn−1, temos que (rn−1, rn) = rn, O que nos leva a concluir que:
+
+(a, b) = (b, r1) = (r1, r2) = . . . = (rn−1, rn) = rn.
+
+Portanto, o máximo divisor comum de a e b é o último resto diferente de zero obtido a
+partir desse processo.
+
+Exemplo 2.37. Vamos utilizar o processo apresentado para obter (1207, 300). Temos
+que
+
+1207 = 300 · 4 + 7
+
+300 = 7 · 42 + 6
+
+7 = 6 · 1 + 1
+
+6 = 1 · 6.
+
+Note que o último resto não nulo que obtivemos nesse processo é 1, portanto
+(1207, 300) = 1.
+
+2.6 números primos
+
+Nesta seção, apresentaremos a deﬁnição de números primos e alguns resultados que en-
+volvem esses números.
+
+Deﬁnição 2.38. Um número primo é um número inteiro n, n > 1, que possui somente
+dois divisores positivos, n e 1. Se n não é primo, dizemos que n é composto.
+
+Proposição 2.39. Se um número primo p não divide um inteiro a, então (a, p) = 1.
+
+Demonstração: Seja d = (a, p). Então d | a e d | p. Da relação d | p, temos, pela
+Deﬁnição 2.38, que d = 1 ou d = p. Como d = p é impossível, pois p6 | a, então, d = 1,
+isto é, (a, p) = 1.
+
+Proposição 2.40. Se p é um número primo e p | ab, então p | a ou p | b.
+
+2.6 números primos
+
+19
+
+Demonstração: Se p não divide a, pela Proposição 2.39, (a, p) = 1. Então, pelo Teorema
+2.33, p | b. Analogamente, p6 | b implica que p | a.
+
+Corolário 2.41. Se um número primo p divide um produto a1a2 . . . an, então p | ak, para
+algum k, 1 ≤ k ≤ n.
+
+Demonstração: Demonstraremos esse resultado por indução sobre n, para todo n ≥ 2.
+Se n = 2, o resultado segue da Proposição 2.40. Suponha que o resultado seja válido
+
+para n = j.
+
+Se p | a1 · a2 · · · ajaj+1 = (a1 · a2 · · · aj)aj+1, então pela Proposição 2.40 p | (a1a2 · · · aj)
+ou p | aj+1. Se p | aj+1, o resultado é válido. Caso contrário, p | (a1a2 · · · aj) e, por hipó-
+tese de indução, ∃ k, 1 ≤ k ≤ j, tal que p | ak. Logo, o resultado é válido para n = j + 1.
+Portanto, esse resultado é válido para todo n ≥ 2.
+
+Teorema 2.42. (Teorema Fundamental da Aritmética) Todo inteiro maior do que 1 pode
+ser representado de maneira única (a menos da ordem) como um produto de fatores pri-
+mos.
+
+Demonstração: Se n é primo não há nada a ser demonstrado. Suponhamos, então, n
+composto. Seja p1, p1 > 1, o menor dos divisores positivos de n diferente de 1. Podemos
+aﬁrmar que p1 é primo, caso contrário existiria p, 1 < p < p1, com p | p1 e então p | n,
+o que seria uma contradição, pois p1 é o menor divisor positivo de n. Logo, podemos
+escrever n = p1n1, com p1 primo.
+
+Se n1 for primo a prova está completa. Caso contrário, tomamos p2, p2 > 1, como o
+menor divisor positivo de n1. Pelo argumento anterior, p2 é primo e podemos escrever
+n = p1p2n2, com p1, p2 primos.
+
+Repetindo esse raciocínio, obtemos uma sequência decrescente de inteiros positivos
+n1, n2, . . .. Como todos estes inteiros são maiores do que 1, este processo deve termi-
+nar e então n = p1p2 · · · pk para algum k ≥ 2. Como os primos p1, p2, . . . , pk não são,
+necessariamente, distintos, n terá a forma:
+
+n = pα1
+
+1 pα2
+
+2 · · · pαt
+t .
+
+Para mostrarmos a unicidade da fatoração usamos indução em n. Para n = 2 a aﬁrmação
+é verdadeira. Assumimos, então, que ela se veriﬁca para todos os inteiros maiores do
+que 1 e menores do que n. Vamos provar que ela também é verdadeira para n. Se n é
+primo, não há nada a provar. Vamos supor, então, que n seja composto e que tenha duas
+fatorações, isto é,
+
+n = p1p2 · · · ps = q1q2 · · · qr.
+
+Vamos provar que s = r e que cada pi é igual a algum qj. Como p1 é primo e divide
+o produto q1q2 · · · qr, pelo Corolário 2.41 ele divide pelo menos um dos fatores qj. Sem
+perda de generalidade podemos supor que p1 | q1. Como são ambos primos, isto implica
+p1 = q1. Logo n
+< n, pela hipótese de indução
+p1
+
+= p2 · · · ps = q2 · · · qr. Como 1 < n
+p1
+
+2.6 números primos
+
+temos que as duas fatorações de n
+p1
+e q1q2 · · · qr são iguais.
+
+são idênticas, isto é, s = r e as fatorações p1p2 · · · ps
+
+20
+
+Observação 2.43. Se n = pa1
+n é o conjunto de todos os números da forma pc1
+
+3 · · · pan
+
+1 pa2
+
+2 pa3
+
+n , o conjunto de todos os divisores positivos de
+n , 0 ≤ ci ≤ ai, i = 1, 2, . . . , n.
+
+3 · · · pcn
+
+1 pc2
+
+2 pc3
+
+Proposição 2.44. Se dois inteiros positivos a e b possuem as fatorações
+
+a =
+
+∞
+Y
+
+i=1
+
+pai
+i e b =
+
+∞
+Y
+
+i=1
+
+pbi
+i ,
+
+então o máximo divisor comum de a e b é igual a:
+
+(a, b) =
+
+∞
+Y
+
+i=1
+
+pci
+i
+
+onde ci = min{ai, bi}.
+
+Demonstração: Para que o produto
+
+∞
+Y
+
+i=1
+ter ci ≤ ai e ci ≤ bi, então se tomarmos ci = min{ai, bi}, garantimos essa condição.
+
+pci
+i seja um divisor comum de a e b, devemos
+
+Teorema 2.45. (Euclides) A sequência dos números primos é inﬁnita.
+
+Demonstração: Suponhamos que a sequência dos números primos seja ﬁnita. Seja
+p1, p2, . . . , pn a lista de todos os primos. Consideremos o número R = p1p2 · · · pn + 1. É
+claro que R não é divisível por nenhum dos pi, 1 ≤ i ≤ n de nossa lista pois se fosse
+divisível por alguns deles, o número 1 também seria, o que não acontece. Além disso, R
+é maior do que qualquer pi, 1 ≤ i ≤ n. Agora, pelo Teorema Fundamental da Aritmética,
+ou R é primo ou possui algum fator primo e isto implica na existência de um primo que
+não pertence à nossa lista. Portanto a sequência dos números primos não é ﬁnita.
+
+Proposição 2.46. Para qualquer inteiro positivo k, existem k inteiros consecutivos todos
+compostos.
+
+Demonstração: Para demonstrarmos este resultado observamos que como (k + 1)! é
+divisível por todos os k números entre 2 e k + 1, então a sequência
+
+(k + 1)! + 2, (k + 1)! + 3, . . . , (k + 1)! + k, (k + 1)! + (k + 1)
+
+é composta por k números consecutivos compostos.
+
+Exemplo 2.47. Pela Proposição 2.46, para k = 5, podemos encontrar 5 inteiros con-
+secutivos, todos compostos. De fato, os números (5 + 1)! + 2, (5 + 1)! + 3, (5 + 1)! + 4,
+(5 + 1)! + 5, (5 + 1)! + 6 = 722, 723, 724, 725, 726 são todos compostos, pois 722 = 2 · 192,
+723 = 3 · 241, 724 = 22 · 181, 725 = 52 · 29 e 726 = 2 · 3 · 112.
+
+Proposição 2.48. Se n não é primo, então n possui, necessariamente, um fator primo
+menor do que ou igual a
+
+n.
+
+√
+
+2.7 mínimo múltiplo comum
+
+21
+
+Demonstração: Se n é um número composto, então podemos escrever n = n1n2, com
+1 < n1 < n e 1 < n2 < n. Podemos supor, sem perda de generalidade, que n1 ≤ n2.
+n, pois, caso contrário, n1 >
+Note que n1 ≤
+n, o que implicaria em
+√
+n = n, o que é absurdo. Tomando p um fator primo de n1, temos que
+n = n1n2 >
+n
+√
+p ≤ n1 ≤
+
+n e, além disso, p é também um fator primo de n.
+
+n e n2 >
+
+√
+√
+
+√
+
+√
+
+2.7 mínimo múltiplo comum
+
+Apresentaremos, agora, a deﬁnição de mínimo múltiplo comum e algumas propriedades
+referentes a esse conceito.
+
+Deﬁnição 2.49. O mínimo múltiplo comum de dois inteiros positivos a e b, denotado
+por [a, b], é o menor inteiro positivo divisível por a e por b.
+
+Exemplo 2.50. Considere os números 12 e 15. Temos que os múltiplos de 12 são
+{0, 12, 24, 36, 48, 60, . . .} e que os múltiplos de 15 são {0, 15, 30, 60, . . .}. Temos que o
+menor inteiro positivo que é múltiplo de 12 e de 15 e, portanto, divisível por 12 e por 15
+é o número 60. Então, [12, 15] = 60.
+
+Proposição 2.51. Se dois inteiros positivos a e b possuem as fatorações
+
+a =
+
+∞
+Y
+
+i=1
+
+pai
+i e b =
+
+∞
+Y
+
+i=1
+
+pbi
+i ,
+
+então o mínimo múltiplo comum de a e b é igual a:
+
+[a, b] =
+
+∞
+Y
+
+i=1
+
+pci
+i ,
+
+onde ci = max{ai, bi}.
+
+Demonstração: Para que o produto
+
+∞
+Y
+
+i=1
+
+pci
+i seja um múltiplo comum de a e b, devemos
+
+ter ci ≥ ai e ci ≥ bi, então se tomarmos ci = max{ai, bi}, garantimos essa condição. Além
+disso, tomando ci = max{ai, bi}, teremos, não apenas um múltiplo comum, mas o menor
+possível entre todos eles.
+
+Lema 2.52. Sejam a e b inteiros. Então, [a, b] divide todo múltiplo comum de a e b.
+
+Demonstração: Seja d = [a, b] e d0 um múltiplo comum de a e b, diferente de d. Sejam,
+
+a = pa1
+
+1 pa2
+
+2 · · · pan
+
+n e b = pb1
+
+1 pb2
+
+2 · · · pbn
+
+n ; ai ≥ 0, bi ≥ 0.
+
+Como d0 é múltiplo de a e de b, temos que para algum k ∈ Z, d0 = kps1
+si ≥ max{ai, bi}. Como,
+
+1 ps2
+
+2 · · · psn
+
+n , onde
+
+d = pmax{a1,b1}
+1
+
+pmax{a2,b2}
+2
+
+· · · pmax{an,bn}
+
+n
+
+,
+
+2.7 mínimo múltiplo comum
+
+22
+
+temos que,
+
+d0 = k
+
+n
+Y
+
+i=1
+
+psi−max{ai,bi}
+i
+
+n
+Y
+
+i=1
+
+pmax{ai,bi}
+i
+
+.
+
+Ou seja, d0 é um múltiplo de d e, portanto, d | d0.
+
+Proposição 2.53. Para a e b inteiros positivos temos, [a, b] · (a, b) = a · b.
+
+Demonstração: Sejam a e b dados pelas seguintes fatorações:
+
+a =
+
+∞
+Y
+
+i=1
+
+pai
+i e b =
+
+∞
+Y
+
+i=1
+
+pbi
+i .
+
+Temos, pelo Proposição 2.44 e pela Proposição 2.51 que:
+
+(a, b) =
+
+∞
+Y
+
+i=1
+
+pmin{ai,bi}
+i
+
+e [a, b] =
+
+∞
+Y
+
+i=1
+
+pmax{ai,bi}
+i
+
+.
+
+Note que, se x e y são números inteiros positivos e se x < y, temos que max{x, y} = y e
+min{x, y} = x, então max{x, y} + min{x, y} = x + y. Usando esse fato, temos:
+
+(a, b) · [a, b] =
+
+∞
+Y
+
+i=1
+
+pmin{ai,bi}
+i
+
+·
+
+∞
+Y
+
+i=1
+
+pmax{ai,bi}
+i
+
+=
+
+∞
+Y
+
+i=1
+
+pai
+i
+
+· pbi
+
+i = a · b.
+
+Proposição 2.54. Sejam a e b inteiros positivos, tais que (a, b) = 1. Então, se d é
+divisor positivo de ab, existe um único par de divisores positivos d1 de a e d2 de b tais que
+d = d1d2. Reciprocamente, se d1 e d2 são divisores positivos de a e b, respectivamente,
+então d = d1d2 é um divisor positivo de ab.
+
+Demonstração: Consideremos as fatorações de a e b dadas por
+
+a = pa1
+
+1 pa2
+
+2 · · · pan
+
+n e b = qb1
+
+1 qb2
+
+2 · · · qbm
+m .
+
+Como (a, b) = 1, os conjuntos {p1, p2, . . . , pn} e {q1, q2, . . . , qm} são disjuntos. Portanto,
+a fatoração de ab é dada por
+
+ab = pa1
+
+1 pa2
+
+2 · · · pan
+
+n qb1
+
+1 qb2
+
+2 · · · qbm
+m .
+
+Se d é um divisor positivo de ab, então
+
+d = pα1
+
+1 pα2
+
+2 · · · pαn
+
+n qβ1
+
+1 qβ2
+
+2 · · · qβm
+m ,
+
+para 0 ≤ αi ≤ ai, i = 1, 2, . . . , n e 0 ≤ βj ≤ bj, j = 1, 2, . . . , m. Se deﬁnirmos
+
+d1 = pα1
+
+1 pα2
+
+2 · · · pαn
+
+n e d2 = qβ1
+
+1 qβ2
+
+2 · · · qβm
+m ,
+
+teremos (d1, d2) = 1 e d1d2 = d, o que mostra a primeira parte da proposição. Para
+demonstrar a recíproca, considere d1 e d2 divisores positivos de a e b, respectivamente.
+Logo,
+
+d1 = pα1
+
+1 pα2
+
+2 · · · pαn
+
+n , 0 ≤ αi ≤ ai, i = 1, 2, . . . , n
+
+2.7 mínimo múltiplo comum
+
+23
+
+e
+
+Tomando
+
+d2 = qβ1
+
+1 qβ2
+
+2 · · · qβm
+
+m , 0 ≤ βj ≤ bj, j = 1, 2, . . . , m.
+
+d = d1d2 = pα1
+
+1 pα2
+
+2 · · · pαn
+
+n qβ1
+
+1 qβ2
+
+2 · · · qβm
+m ,
+
+temos que d é um divisor de ab.
+
+Seja b > 1 inteiro, o Teorema a seguir mostra que podemos escrever qualquer número
+inteiro positivo n em qualquer base b, ou seja, n pode ser escrito como uma adição de
+parcelas que são múltiplas de potências de b.
+
+Exemplo 2.55. Considere os números 18 e 25. As fatorações desses números são
+18 = 2 · 32 e 25 = 52. Como (18, 25) = 1, temos que esses números não apresentam
+números primos em comum em suas fatorações. Portanto, a fatoração de 18 · 25 = 450 é
+dada por 450 = 2 · 32 · 52. Se 15 é um divisor positivo de 450, temos que existe 3, tal que
+3 | 12 e que existe 5 tal que 5 | 25, de modo que 3 · 5 = 15.
+
+Teorema 2.56. Seja b um inteiro maior do que 1. Então todo inteiro positivo n pode ser
+representado de maneira única da seguinte forma:
+
+n = akbk + ak−1bk−1 + · · · + a1b1 + a0,
+
+onde k ≥ 0, ai ∈ Z, i = 0, 1, . . . , k, ak 6= 0 e 0 ≤ ai < b.
+
+Demonstração: Para provar a existência, começamos pela divisão de n por b, obtendo o
+quociente q0 e o resto a0. Em seguida, dividimos q0 por b, obtendo o quociente q1 e o resto
+r1. Repetimos esse processo até obter um quociente qk = 0, como mostra a sequência a
+seguir:
+
+n = bq0 + a0
+
+q0 = bq1 + a1
+
+q1 = bq2 + a2
+
+q2 = bq3 + a3
+...
+qk−2 = bqk−1 + ak−1
+
+qk−1 = b · 0 + ak,
+
+onde 0 ≤ aj < b, j = 0, 1, 2, . . . , k.
+
+2.7 mínimo múltiplo comum
+
+24
+
+Agora, substituímos na primeira equação a expressão para q0 obtida na segunda equa-
+ção. Em seguida, substituímos na equação obtida a expressão de q1 obtida na terceira
+equação, e assim sucessivamente, obtendo:
+
+n = bq0 + a0
+
+= b(bq1 + a1) + a0
+= b2q1 + a1b + a0
+= b2(bq2 + a2) + a1b + a0
+= b3q2 + a2b2 + a1b + a0
+= b3(bq3 + a3) + a2b2 + a1b + a0
+= b4q3 + a3b3 + a2b2 + a1b + a0
+...
+
+= bkqk−1 + ak−1bk−1 + · · · + a2b2 + a1b + a0
+= akbk + ak−1bk−1 + · · · + a1b + a0.
+
+Agora, nos resta mostrar a unicidade dessa representação. Considere db(n) o número de
+representações de n na base b. Queremos, portanto, mostrar que db(n) é sempre igual a 1.
+Como alguns dos coeﬁcientes aj podem ser nulos podemos supor, excluindo tais termos,
+que n possa ser representado na forma
+
+n = akbk + ak−1bk−1 + · · · + asbs,
+
+onde ak e as são não nulos. Logo
+
+n − 1 = akbk + ak−1bk−1 + · · · + asbs − 1
+
+= akbk + ak−1bk−1 + · · · + (as − 1)bs + bs − 1.
+
+Como (b − 1)
+
+s−1
+X
+
+j=0
+
+bj = bs + bs−1 + · · · + b − bs−1 − · · · − b − 1 = bs − 1, podemos escrever:
+
+n − 1 = akbk + ak−1bk−1 + · · · + (as − 1)bs + (b − 1)
+
+s−1
+X
+
+bj,
+
+j=0
+
+o que nos mostra que é possível encontrar, para cada representação de n na base b, uma
+representação para n − 1 na base b. Logo db(n) ≤ db(n − 1). Dado m ∈ Z com m ≥ n,
+ou seja, n = m − k para algum k ∈ Z, k ≥ 0, essa desigualdade nos diz que,
+
+db(m) ≤ db(m − 1) ≤ db(m − 2) ≤ · · · ≤ db(m − k) = db(n).
+
+Logo, como n > 1 e db(n) ≥ 1, obtemos 1 ≤ db(n) ≤ db(1) = 1. Esta última série de
+desigualdades nos garante que db(n) = 1, o que conclui a demonstração.
+
+2.7 mínimo múltiplo comum
+
+25
+
+Exemplo 2.57. Vamos escrever o número 470 na base 3. Temos que
+
+470 = 3 · 156 + 2
+
+156 = 3 · 52 + 0
+
+52 = 3 · 17 + 1
+
+17 = 3 · 5 + 2
+
+5 = 3 · 1 + 2
+
+1 = 3 · 0 + 1.
+
+Fazendo as substituições, temos:
+
+470 = 3 · 156 + 2
+
+= 3 · (3 · 52 + 0) + 2
+
+= 3 · (3 · (3 · 17 + 1) + 0) + 2
+
+= 3 · (3 · (3 · (3 · 5 + 2) + 1) + 0) + 2
+
+= 3 · (3 · (3 · (3 · (3 · 1 + 2) + 2) + 1) + 0) + 2
+
+= 3 · (3 · (3 · (3 · (3 · (3 · 0 + 1) + 2) + 2) + 1) + 0) + 2
+= 1 · 35 + 2 · 34 + 2 · 33 + 1 · 32 + 0 · 31 + 2 · 30.
+
+Deﬁnição 2.58. Denotamos a representação de um número n na base b por (ak · · · a1a0)b,
+onde a0, a1, . . . , ak são obtidos de acordo com o Teorema 2.56.
+
+Exemplo 2.59. A partir do resultado do Exemplo 2.57, podemos escrever 470 = (122102)3.
+
+3
+
+A R I T M É T I C A M O D U L A R E G R U P O S
+
+De posse dos conceitos preliminares apresentados no Capítulo 1, podemos apresentar
+algumas das deﬁnições e propriedades relativas à aritmética modular, como as deﬁnições
+de congruência, congruência linear, equações diofantinas e os importantes Teoremas de
+Fermat, Wilson e Euler. Além disso, ao ﬁnal deste capítulo, apresentamos as deﬁnições
+de grupos e subgrupos e algumas propriedades, pois tais conceitos aparecem no algoritmo
+criptográﬁco ElGamal, apresentado no Capítulo 4.
+
+As principais referências utilizadas neste capítulo foram [6], [7], [9] e [11].
+
+3.1 congruência
+
+Deﬁnição 3.1. Dado um número inteiro m maior do que 1, dizemos que dois números
+inteiros a e b são congruentes módulo m se a e b possuírem mesmo resto quando divididos
+por m e simbolizaremos por:
+
+a ≡ b (mod m).
+
+Quando a e b não forem congruentes módulo m, ou seja, forem incongruentes módulo m,
+simbolizaremos por:
+
+a 6≡ b (mod m).
+
+Exemplo 3.2. Seja m = 6. Temos que a divisão de 10 por 6 resulta em um resto 4, pois
+10 = 1 · 6 + 4. Além disso, a divisão de 16 por 6 resulta em resto 4, pois 16 = 2 · 6 + 4.
+Então, 10 e 16 são congruentes módulo 6, ou seja, 10 ≡ 16 (mod 6). Já 15 6≡ 10 (mod 6),
+pois 15 = 2 · 6 + 3.
+
+No que segue, consideraremos m um número inteiro maior do que 1, a menos que se
+
+diga o contrário.
+
+Para mostrar que a ≡ b (mod m), basta mostrar que m divide a − b, como provamos
+
+na Proposição 3.3.
+
+Proposição 3.3. Sejam a e b dois números inteiros. Temos que a ≡ b (mod m) se, e
+somente se, m divide a − b.
+
+Demonstração: De fato, pelo Algoritmo Euclidiano da Divisão, podemos escrever
+
+a = mq1 + r1 e b = mq2 + r2,
+
+onde 0 ≤ r1 < m e 0 ≤ r2 < m. Sem perda de generalidade, podemos supor r2 ≤ r1 (caso
+contrário, basta considerar b − a ao invés de a − b na equação a seguir). Assim, temos
+
+26
+
+3.1 congruência
+
+27
+
+a − b = m(q1 − q2) + r1 − r2.
+
+Note que se r1 = r2, temos que a − b é um múltiplo de m, ou seja, m | a − b. Do
+mesmo modo, se a − b é múltiplo de m, isto é, a − b = km para algum k ∈ Z, então
+km = m(q1 − q2) + r1 − r2. Logo m(k − q1 + q2) = r1 − r2. Como m > r1 − r2 ≥ 0,
+temos que r1 = r2.
+
+Exemplo 3.4. Vamos veriﬁcar se 15 é congruente a 39 módulo 8. Pela Proposição 3.3,
+isso ocorre se, e somente se, 8 | (39 − 15). Como 39 − 15 = 24 e 8 | 24, podemos aﬁrmar
+que 15 ≡ 39 (mod 8). De fato, 15 = 1 · 8 + 7 e 39 = 4 · 8 + 7.
+
+Apresentaremos a seguir algumas propriedades dessa relação de congruência.
+
+Proposição 3.5. Se a e b são inteiros, temos que a ≡ b (mod m) se, e somente se, existir
+um inteiro k tal que a = b + km.
+
+Demonstração: Se a ≡ b (mod m), então m | (a − b) o que implica na existência de um
+inteiro k tal que a − b = km, isto é, a = b + km. Por outro lado, se existe k satisfazendo
+a = b + km, temos km = a − b, ou seja, m | (a − b) isto é, a ≡ b (mod m).
+
+Proposição 3.6. Para todo a, b e c inteiros, temos que:
+
+(i) a ≡ a (mod m) (propriedade reﬂexiva).
+
+(ii) se a ≡ b (mod m), então b ≡ a (mod m) (propriedade simétrica).
+
+(iii) se a ≡ b (mod m) e b ≡ c (mod m), então a ≡ c (mod m) (propriedade transitiva).
+
+Demonstração:
+
+(i) Como m | 0, então m | (a − a), o que implica a ≡ a (mod m).
+
+(ii) Se a ≡ b (mod m), então a = b + km para algum inteiro k. Logo b = a + (−km), o
+
+que implica, pela Proposição 3.5, b ≡ a (mod m).
+
+(iii) Se a ≡ b (mod m) e b ≡ c (mod m), então existem inteiros k1 e k2 tais que
+a − b = k1m e b − c = k2m. Somando, membro a membro, estas últimas equa-
+ções, obtemos a − c = (k1 + k2)m, de onde, a = c + (k1 + k2)m o que implica pela
+Proposição 3.5 que a ≡ c (mod m).
+
+Proposição 3.7. Se a, b, c e m são inteiros tais que a ≡ b (mod m), então:
+
+(i) a + c ≡ b + c (mod m).
+
+(ii) a − c ≡ b − c (mod m).
+
+(iii) ac ≡ bc (mod m).
+
+Demonstração: Como a ≡ b (mod m), temos que a − b = km, para algum k ∈ Z.
+
+3.1 congruência
+
+28
+
+(i) Como a − b = (a + c) − (b + c), temos a + c ≡ b + c (mod m).
+
+(ii) Como (a − c) − (b − c) = a − b = km, temos que a − c ≡ b − c (mod m).
+
+(iii) Como a − b = km então ac − bc = ckm o que implica m | (ac − bc) e, portanto,
+
+ac ≡ bc (mod m).
+
+Proposição 3.8. Se a, b, c, d e m são inteiros tais que a ≡ b (mod m) e c ≡ d (mod m),
+então:
+
+(i) a + c ≡ b + d (mod m).
+
+(ii) a − c ≡ b − d (mod m).
+
+(iii) ac ≡ bd (mod m).
+
+Demonstração: Como a ≡ b (mod m) e c ≡ d (mod m), temos que existem k, k1 ∈ Z
+tais que a − b = km e c − d = k1m.
+
+(i) Somando-se membro a membro as igualdades anteriores, obtemos (a + c)−
+
+(b + d) = (k + k1)m e isto implica a + c ≡ b + d (mod m).
+
+(ii) Basta subtrair membro a membro a − b = km e c − a = k1m, obtendo
+
+(a − c) − (b − d) = (k − k1)m o que implica a − c ≡ b − d (mod m).
+
+(iii) Multiplicamos ambos os lados de a − b = km por c e ambos os lados de c − d = k1m
+por b, obtendo ac − bc = ckm e bc − bd = bk1m. Basta, agora, somarmos membro a
+membro estas últimas igualdades obtendo ac − bc + bc − bd = ac − bd = (ck + ck1)m,
+o que implica ac ≡ bd (mod m).
+
+Proposição 3.9. Se a, b, c e m são inteiros e ac ≡ bc (mod m), então a ≡ b (mod m
+onde d = (c, m).
+
+d ),
+
+Demonstração: De ac ≡ bc (mod m),
+ac − bc = c(a − b) = km.
+(cid:16) m
+(cid:16) c
+d
+d
+então
+
+(cid:16) c
+d
+| (a − b), o que implica a ≡ b
+
+(a − b) = k
+(cid:17)
+
+. Logo
+
+(cid:16) m
+d
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:16) m
+d
+
+(a − b) e, como
+(cid:17)
+(cid:16)
+mod m
+d
+
+.
+
+Se dividirmos os dois membros por d,
+|
+
+temos que existe k ∈ Z tal que
+teremos
+= 1, Corolário 2.29,
+
+(cid:17)
+
+(cid:17)
+
+(cid:16) m
+d , c
+d
+
+Proposição 3.10. Se a, b, k e m são inteiros com k > 0 e a ≡ b (mod m), então
+ak ≡ bk (mod m).
+
+Demonstração: A partir da igualdade:
+
+ak − bk = (a − b)(ak−1 + ak−2b + ak−3b2 + . . . + abk−2 + bk−1)
+
+e do fato de a ≡ b (mod m), podemos concluir que:
+
+ak − bk = mk(ak−1 + ak−2b + ak−3b2 + . . . + abk−2 + bk−1), para algum k ∈ Z.
+
+3.1 congruência
+
+Logo, ak ≡ bk (mod m).
+
+29
+
+Proposição 3.11. Se a ≡ b (mod m1), a ≡ b (mod m2), . . ., a ≡ b (mod mk) onde a, b,
+m1, m2, . . . , mk são inteiros e mi > 0, i = 1, 2, . . . , k, então:
+
+a ≡ b (mod [m1, m2, . . . , mk])
+
+onde [m1, m2, . . . , mk] é o mínimo múltiplo comum de m1, m2, . . . , mk.
+
+Demonstração: Seja pn o maior primo que aparece nas fatorações de m1, m2, . . . , mk.
+Cada mi, i = 1, 2, . . . , k pode, então, ser expresso como
+
+mi = pα1i
+
+1 pα2i
+2
+
+· · · pαni
+n ,
+
+onde αji ≥ 0 para j = 1, . . . , n e i = 1, . . . , k.
+
+Como mi
+
+| (a − b), i = 1, 2, . . . , k temos que p
+
+αji
+j
+
+| (a − b), i = 1, 2, . . . , k, j =
+
+1, 2, . . . , n. Logo, se tomarmos αj = max
+1≤i<k
+
+{αji} teremos que
+
+1 pα2
+pα1
+
+2 · · · pαn
+
+n | (a − b)
+
+mas
+
+1 pα2
+pα1
+
+2 · · · pαn
+
+n = [m1, m2, . . . , mk],
+
+o que implica a ≡ b (mod [m1, m2, . . . mk]).
+
+Exemplo 3.12. Como 16 ≡ 4 (mod 2), 16 ≡ 4 (mod 3) e 16 ≡ 4 (mod 4), temos, pela Pro-
+posição 3.11 que 16 ≡ 4 (mod [2, 3, 4]), ou seja, 16 ≡ 4 (mod 12).
+De fato,
+12 | (16 − 4).
+
+Como vimos, dois números inteiros a e b são congruentes módulo um inteiro m se
+apresentam os mesmos restos na divisão por m. Apresentaremos, agora as deﬁnições de
+resíduo e sistema completo de resíduos.
+
+Deﬁnição 3.13. Se h e k são dois inteiros com h ≡ k (mod m), dizemos que h é um
+resíduo de k módulo m.
+
+Deﬁnição 3.14. O conjunto de inteiros {r1, · · · , rs} é chamado um sistema completo de
+resíduos módulo m se:
+
+(i) ri 6≡ rj (mod m) para i 6= j;
+
+(ii) para todo inteiro n existe um ri tal que n ≡ ri (mod m).
+
+Exemplo 3.15. O conjunto {0,1,2,3,4} é um sistema completo de resíduos módulo 5,
+pois apresenta todos os possíveis restos de uma divisão por 5.
+
+Proposição 3.16. Se k inteiros r1, r2, . . . , rk formam um sistema completo de resíduos
+módulo m, então k = m.
+
+3.2 congruência linear
+
+30
+
+Demonstração: Primeiramente demonstramos que os inteiros t0, t1, . . . , tm−1, com ti = i
+formam, de fato, um sistema completo de resíduos módulo m. Pelo Teorema 2.21 sabemos
+que, para cada n, existe um único par de inteiros q e s, tal que n = mq + s, 0 ≤ s < m.
+Logo n ≡ s (mod m), sendo s um dos ti. Como |ti − tj| ≤ m − 1, temos que ti 6≡ tj (mod m)
+para i 6= j. Portanto, o conjunto t0, t1, . . . tm − 1 é um sistema completo de resíduos
+módulo m. Disto concluímos que cada ri é congruente a exatamente um dos ti, o que nos
+garante k ≤ m. Como o conjunto r1, r2, . . . , rk forma, por hipótese, um sistema completo
+de resíduos módulo m, cada ti é congruente a exatamente um dos ri e portanto m ≤ k.
+Desta forma k = m.
+
+Observação 3.17. O conjunto {0, 1, ..., m − 1} é um sistema completo de resíduos módulo
+m.
+
+Proposição 3.18. Se r1, r2, . . . , rm é um sistema completo de resíduos módulo m e a e
+b são inteiros com (a, m) = 1, então
+
+também é um sistema completo de resíduos módulo m.
+
+ar1 + b, ar2 + b, . . . , arm + b
+
+Demonstração: Considerando-se o resultado do teorema anterior, será suﬁciente mostrar
+que quaisquer dois inteiros do conjunto ar1 + b, ar2 + b, . . . , arm + b, são incongruentes
+módulo m. Para isso vamos supor que ari + b ≡ arj + b (mod m). Logo, pela Proposição
+3.7, temos ari ≡ arj (mod m). Mas, como (a, m) = 1, a Proposição 3.9 nos diz que
+ri ≡ rj (mod m). O fato de ri ≡ rj (mod m) implica i = j, uma vez que, r1, r2, . . . , rm
+formam um sistema completo de resíduos módulo m, o que completa a demonstração.
+
+3.2 congruência linear
+
+Nesta seção, apresentaremos a deﬁnição de congruência linear e investigaremos em quais
+condições esse tipo de congruência possui solução.
+
+Deﬁnição 3.19. Uma congruência linear em uma variável é uma congruência da forma
+ax ≡ b (mod m) onde x é uma incógnita.
+
+Exemplo 3.20. Dada a congruência 3x ≡ 2 (mod 8), temos que as suas soluções são os
+valores de x tais que 8 | (3x − 2). Note que x = 6 e x = 14 são exemplos de soluções para
+essa congruência linear.
+
+Observação 3.21. Note que se x0 é solução para uma congruência do tipo ax ≡ b (mod m)
+e x1 ≡ x0 (mod m), então x1 também é solução para ax ≡ b (mod m). De fato, se
+x1 ≡ x0 (mod m), temos que ax1 ≡ ax0 ≡ b (mod m).
+
+Acabamos de mostrar que, caso exista uma solução x0 para uma dada congruência
+linear, todos os inteiros congruentes a x0 módulo m também serão solução dessa con-
+gruência linear.
+
+3.2 congruência linear
+
+31
+
+Vamos, então, investigar quando uma congruência linear possui solução e, caso possua
+solução, quantas são as soluções incongruentes dessa congruência linear. Para tanto,
+vamos antes deﬁnir equação diofantina e provar os teoremas a respeito das soluções desse
+tipo de equação.
+
+Deﬁnição 3.22. Denomina-se equação diofantina a toda equação da forma ax + by = c,
+em que a, b e c são números inteiros, e a e b não são ambos nulos e x e y assumem valores
+inteiros.
+
+Resolver uma equação desse tipo, é encontrar um par de inteiros x e y, de modo que
+a igualdade ax + by = c seja satisfeita. O nome “diofantina” remete a Diophanto de
+Alexandria, que foi o primeiro a buscar soluções para esse tipo de equação.
+
+Observação 3.23. Algumas equações diofantinas não apresentam solução como, por
+exemplo, a equação 2x + 8y = 11. Nesta equação, para qualquer par de inteiros x e y
+temos que o primeiro membro resultará sempre em um número par, enquanto o segundo
+membro apresenta um número ímpar, o que nos mostra que não existe uma solução inteira
+que satisfaça a igualdade.
+
+No teorema a seguir, vamos veriﬁcar uma condição para a existência de soluções para
+
+esse tipo de equação.
+
+Teorema 3.24. Sejam a, b e c inteiros e d = (a, b). A equação diofantina ax + by = c
+tem soluções se, e somente se, d | c.
+
+Demonstração: Se d6 | c, então a equação ax + by = c não possui solução, pois d | a e
+d | b. Então, vamos supor que d | c. Pelo Teorema 2.24, temos que existem m, n ∈ Z,
+tais que d = ma + nb. Como d | c, existe k ∈ Z tal que c = kd. Assim, podemos escrever
+c = kd = kma + knb, o que nos mostra que o par x = km e y = kn é uma solução para
+a equação ax + by = c.
+
+Exemplo 3.25. Dada a equação diofantina 15x + 18y = 36. Note que (15, 18) = 3 e
+3 | 36. Portanto, essa equação possui solução. De fato, uma solução desta equação é
+x = 0 e y = 2.
+
+Agora, vamos investigar quantas são as soluções para esse tipo de equação.
+
+Teorema 3.26. Sejam a, b e c inteiros e d = (a, b), tal que d | c.
+
+(i) Escrevendo d na forma d = ma + nb, com m, n ∈ Z, temos que o par (x0, y0), no
+d é uma solução da equação
+
+d e y0 = n · c
+
+qual x0 = m · c
+
+ax + by = c.
+
+(ii) Se (x0, y0) é uma solução particular de ax + by = c, então todas as outras soluções
+
+são da forma (x, y), na qual:
+
+3.2 congruência linear
+
+32
+
+x = x0 + b
+
+d · t e y = y0 − a
+
+d · t, com t ∈ Z.
+
+Demonstração:
+
+(i) Vamos veriﬁcar que (xo = m · c
+= (am + bn) c
+d = c.
+
+d = d · c
+
+n · c
+d
+
+b
+
+(cid:16)
+
+(cid:17)
+
+d , y0 = n · c
+
+d ) é solução. De fato a
+
+(cid:17)
+
+(cid:16)
+
+m · c
+d
+
++
+
+(ii) Vamos veriﬁcar que se (x0, y0) é uma solução particular, os pares da forma (x, y)
+
+com
+
+x = x0 +
+
+y = y0 −
+
+b
+d
+a
+d
+
+· t e
+
+· t
+
+são soluções. Temos que:
+
+ax + by = a
+
+(cid:16)
+
+x0 +
+
+(cid:16) b
+d
+
+(cid:17)
+
+(cid:17)
+t
+
+(cid:16)
+
++ b
+
+y0 −
+
+(cid:16) a
+d
+
+(cid:17)
+
+(cid:17)
+t
+
+= ax0 + ab
+
+d t + by0 − ab
+
+d t = ax0 + by0 = c.
+
+Falta mostrar que toda solução (x, t) da equação ax + by = c é da forma
+t, para algum t ∈ Z. Suponha que (x, y) seja
+x = x0 +
+uma solução para a equação, então ax + by = c. Mas, como ax0 + by0 = c, temos:
+
+t, y = y0 −
+
+(cid:16) a
+d
+
+(cid:16) b
+d
+
+(cid:17)
+
+(cid:17)
+
+ax + by − (ax0 + by0) = ax + by − ax0 − by0 = a(x − x0) + b(y − y0) = 0.
+
+De onde, temos que a(x − x0) = b(y0 − y). Como d = (a, b), segue, pela Proposição
+2.28, que
+
+(cid:17)
+
+(cid:16) a
+d , b
+d
+
+= 1.
+
+Dividindo-se os membros da última igualdade por d, temos:
+
+d (x − x0) = b
+a
+
+d (y0 − y).
+
+Portanto, pelo Teorema 2.33,
+satisfazendo x − x0 = t
+x na equação acima, obtemos y = y0 −
+
+(cid:16) b
+d
+
+(cid:17)
+
+(cid:16) b
+d
+
+(cid:17)
+
+(cid:16) a
+d
+
+t.
+
+(cid:17)
+, ou seja, x = x0 +
+
+| (x − x0). E, portanto, existe um inteiro t
+t. Substituindo-se este valor de
+
+(cid:17)
+
+(cid:16) b
+d
+
+Observação 3.27. A partir do Teorema 3.26, temos que toda solução (x, y) de uma
+equação do tipo ax + by = c pode ser escrita como:
+
+(x, y) =
+
+(cid:16)
+
+m · c
+
+d + b
+
+d t, n · c
+
+(cid:17)
+d − a
+d t
+
+, com t ∈ Z,
+
+onde d, m e n podem ser obtidos a partir da relação d = ma + nb.
+
+Utilizando os teoremas referentes às equações diofantinas, podemos avaliar quando
+uma congruência linear ax ≡ b (mod m) possui solução e, caso possua, quantas são as
+soluções incongruentes, como veremos a seguir.
+
+3.2 congruência linear
+
+33
+
+Teorema 3.28. Sejam a, b e m inteiros e (a, m) = d. No caso em que d6 | b a congruência
+ax ≡ b (mod m) não possui nenhuma solução e quando d | b, possui exatamente d soluções
+incongruentes módulo m.
+
+Demonstração: Pela Proposição 3.5, x inteiro é solução de ax ≡ b (mod m) se, e somente
+se, existe um inteiro y tal que ax = b + my, ou seja, ax − my = b. Pelo Teorema 3.26,
+sabemos que se d não divide b, esta equação não possui solução, e se d | b, ela possui
+inﬁnitas soluções dadas por
+
+x = x0 −
+
+(cid:17)
+
+(cid:16) m
+d
+
+k e y = y0 −
+
+(cid:17)
+
+(cid:16) a
+d
+
+k,
+
+onde (x0, y0) é uma solução particular de ax − my = b.
+
+Para determinar as soluções incongruentes, vamos tentar descobrir as condições para
+k2 sejam congruentes módulo m. Se x1 e x2 são
+
+k1 e x2 = x0 −
+
+(cid:17)
+
+(cid:17)
+
+(cid:16) m
+d
+
+(cid:16) m
+que x1 = x0 −
+d
+congruentes então
+
+Isto implica
+
+x0 −
+
+(cid:19)
+
+(cid:18) m
+d
+
+(cid:19)
+
+(cid:18) m
+d
+
+k1 ≡ x0 −
+
+(cid:19)
+
+(cid:18) m
+d
+
+k2 (mod m).
+
+k1 ≡
+
+(cid:19)
+
+(cid:18) m
+d
+
+k2 (mod m),
+
+e como
+
+(cid:17)
+
+(cid:16) m
+d
+
+| m, temos
+
+(cid:16) m
+
+(cid:17)
+d , m
+
+Observe que m foi substituído por d = m
+m
+d
+(cid:17)
+k, onde k percorre um sistema completo de
+
+d . Assim, pela Proposição 3.9, temos k1 ≡ k2 (mod d).
+. Isto nos mostra que soluções incongruentes
+
+= m
+
+serão obtidas ao tomarmos x = x0 −
+resíduos módulo d, o que conclui a demonstração.
+
+(cid:16) m
+d
+
+Deﬁnição 3.29. Dizemos que uma solução x0 de ax ≡ b (mod m) é única módulo m
+quando qualquer outra solução x1 for congruente a x0 módulo m.
+
+Corolário 3.30. A congruência linear ax ≡ 1 (mod m) tem solução se, e somente se,
+(a, m) = 1. E quando (a, m) = 1, a solução é única.
+
+Demonstração: Segue direto do Teorema 3.28.
+
+Deﬁnição 3.31. Uma solução a0 de ax ≡ 1 (mod m) é chamada de um inverso de a
+módulo m.
+
+Proposição 3.32. Seja p um número primo. O inteiro positivo a é o seu próprio inverso
+módulo p se, e somente se, a ≡ 1 (mod p) ou a ≡ −1 (mod p).
+
+Demonstração: Se a é o seu próprio inverso, então a2 ≡ 1 (mod p), de onde, p | (a2 − 1).
+Mas se p | (a − 1)(a + 1), sendo p primo, p | (a − 1) ou p | (a + 1), o que implica
+a ≡ 1 (mod p) ou a ≡ −1 (mod p).
+
+Reciprocamente, se a ≡ 1 (mod p) ou a ≡ −1 (mod p), temos que p | (a − 1)(a + 1), o
+
+que signiﬁca que p | (a2 − 1), ou seja, a2 ≡ 1 (mod p).
+
+Exemplo 3.33. Considere p = 7 e a = 6. Temos que a ≡ −1 (mod 7) e 62 = 36 ≡
+1 (mod 7).
+
+3.3 pequeno teorema de fermat e teorema de wilson
+
+34
+
+3.3 pequeno teorema de fermat e teorema de wilson
+
+Nesta seção, apresentaremos dois importantes resultados envolvendo números primos, co-
+nhecidos como Teorema de Wilson e Pequeno Teorema de Fermat.
+
+Teorema 3.34. (Teorema de Wilson) Se p é primo, então (p − 1)! ≡ −1 (mod p).
+
+Demonstração: Como (2 − 1)! = 1 e 1 ≡ −1 (mod 2), pois 2 | (1 − (−1)), o resultado
+é válido para p = 2.
+
+Pelo Corolário 3.30, a congruência ax ≡ 1 (mod p) apresenta uma única solução para
+todo a ∈ {1, 2, 3, . . . , p − 1}. No conjunto {1, 2, 3, . . . , p − 1} somente 1 e p − 1 são seus
+próprios inversos módulo p. Então, podemos agrupar os números 2, 3, 4, . . . , p − 2 em
+pares cujo produto seja congruente a 1 módulo p. Se multiplicarmos estas congruências,
+membro a membro, teremos,
+
+2 · 3 · 4 · 5 · · · (p − 2) ≡ 1 (mod p).
+
+Multiplicando-se ambos os lados desta congruência por p − 1 teremos
+
+2 · 3 · 4 · · · (p − 2)(p − 1) ≡ (p − 1) (mod p),
+
+isto é, (p − 1)! ≡ p − 1 (mod p), ou seja, (p − 1)! ≡ −1 (mod p).
+
+Exemplo 3.35. Tomemos p = 5, então, pelo Teorema 3.34, 4! ≡ −1 (mod 5). De fato,
+4! = 24 e 24 ≡ −1 (mod 5), pois 5 | (24 − (−1)).
+
+O teorema que segue nos mostra que, quando um número satisfaz a relação do Teorema
+
+de Wilson, esse número é primo.
+
+Teorema 3.36. Se n é um inteiro tal que (n − 1)! ≡ −1 (mod n), então n é primo.
+
+Demonstração: Suponhamos que (n − 1)! ≡ −1 (mod n), isto é, n | ((n − 1)! + 1) e
+que n não seja primo, ou seja, n = rs, 1 < r < n e 1 < s < n. Note que r | (n − 1)!, pois
+r < n e (n − 1)! é o produto de todos os inteiros positivos menores do que n. Além disso,
+como r | n, temos que r | ((n − 1)! + 1). Portanto, r | ((n − 1)! + 1 − (n − 1)!) = 1,
+porém r > 1, o que é uma contradição. Assim, podemos concluir que n é um número
+primo.
+
+Teorema 3.37. (Pequeno Teorema de Fermat) Seja p primo. Se p não divide a, então
+ap−1 ≡ 1 (mod p).
+
+Demonstração: Vimos que o conjunto formado pelos p números 0, 1, 2, . . . , p − 1 consti-
+tui um sistema completo de resíduos módulo p (Observação 3.17). Pela Proposição 3.18,
+como (a, p) = 1 e considerando b = 0, temos que o conjunto {0, a, 2a, 3a, . . . , (p − 1)a} é
+também um sistema completo de resíduos módulo p.
+Tomando o conjunto
+{a, 2a, 3a, . . . , (p − 1)a} temos que nenhum destes números ia, 1 ≤ i ≤ p − 1 é congruente
+
+3.4 função φ de euler e teorema de euler
+
+35
+
+a zero módulo p. Temos, portanto, um conjunto de p − 1 elementos dois a dois incongru-
+entes módulo p e não-divisíveis por p. Logo, cada um deles é congruente a exatamente um
+elemento do conjunto {1, 2, 3, . . . , p − 1}. Se multiplicarmos estas congruências, membro
+a membro, teremos:
+
+a(2a)(3a) · · · (p − 1)a ≡ 1 · 2 · 3 · · · (p − 1) (mod p)
+
+ou seja, ap−1(p − 1)! ≡ (p − 1)! (mod p). Mas, como ((p − 1)!, p) = 1, podemos cancelar
+o fator (p − 1)! em ambos os lados, obtendo
+
+o que conclui a demonstração.
+
+ap−1 ≡ 1 (mod p),
+
+Exemplo 3.38. Tomemos p = 3 e a = 4. Então, pelo Pequeno Teorema de Fermat,
+43−1 ≡ 1 (mod 3). De fato, 42 = 16 e 16 = 5 · 3 + 1, o que implica que 16 ≡ 1 (mod 3).
+
+Corolário 3.39. Se p é um primo e a é um inteiro positivo, então ap ≡ a (mod p).
+
+Demonstração: Se p | a, então p | (a(ap−1 − 1)) e, portanto, ap ≡ a (mod p). Se p6 | a,
+pelo Teorema 3.37 p | (ap−1 − 1) e, portanto, p | (ap − a). Logo, em ambos os casos,
+ap ≡ a (mod p).
+
+3.4 função φ de euler e teorema de euler
+
+Apresentaremos nesta seção a função aritmética conhecida como função φ de Euler e um
+importante resultado que envolve essa função, conhecido como Teorema de Euler.
+
+Deﬁnição 3.40. Se n é um inteiro positivo, a função φ de Euler, denotada por φ(n),
+é deﬁnida como o número de inteiros positivos menores do que ou iguais a n que são
+relativamente primos com n.
+
+Exemplo 3.41. Considerando n = 12, então os números inteiros positivos menores
+do que ou iguais a 12 que são relativamente primos com 12 são: 1, 5, 7 e 11. Então,
+φ(12) = 4.
+
+As proposições a seguir apresentam duas propriedades da função φ de Euler.
+
+Proposição 3.42. Para p primo e a um inteiro positivo temos
+
+φ(pa) = pa − pa−1
+
+Demonstração: Por deﬁnição, sabemos que φ(pa) é o número de inteiros positivos não-
+superiores a pa e relativamente primos com pa.
+
+Os números não relativamente primos com pa e menores do que ou iguais a pa são os
+múltiplos de p menores ou iguais a pa. Note que esses múltiplos são {p · 1, p · 2, . . . , p · pa−1},
+ou seja, a quantidade de múltiplos de p menores ou iguais a pa corresponde a pa−1. Assim,
+φ(p) = pa − pa−1.
+
+3.4 função φ de euler e teorema de euler
+
+36
+
+Exemplo 3.43. Temos que φ(27) = φ(33). No conjunto {1, 2, 3, . . . , 27}, os números
+que não são relativamente primos com 27 são os múltiplos de 3 menores ou iguais a 27,
+ou seja, {3, 6, 9, 12, 15, 18, 21, 24, 27}. Note que temos 9 múltiplos de 3 menores ou iguais
+a 27, quantidade que corresponde a 32. Assim, φ(33) = 33 − 33−1 = 27 − 9 = 18.
+
+Proposição 3.44. Para qualquer inteiro positivo n temos X
+d|n
+
+φ(d) = n.
+
+Demonstração: Considere o conjunto A = {1, 2, 3, . . . , n}. Podemos separar A em
+subconjuntos Ad para cada divisor positivo d de n da seguinte forma:
+
+Ad = {m ∈ A ; (m, n) = d}.
+
+Note que os subconjuntos Ad são dois a dois disjuntos e que [
+d|n
+
+Ad = A. Seja m ∈ Ad.
+
+Pelo Corolário 2.29, temos:
+
+(m, n) = d ⇔
+
+(cid:17)
+
+(cid:16) m
+d , n
+d
+
+= 1.
+
+Então, m ∈ Ad se, e somente se,
+(cid:17)
+Ad possui φ
+
+elementos.
+
+(cid:16) n
+d
+
+(cid:17)
+
+(cid:16) m
+d , n
+d
+
+= 1. Como m ≤ n, temos que m
+
+d ≤ n
+
+d . Portanto,
+
+Como os subconjuntos Ad são disjuntos e a união desses subconjuntos resulta no
+
+conjunto A, temos:
+
+(cid:19)
+
+(cid:18) n
+d
+
+X
+
+φ
+
+d|n
+
+= n.
+
+Como para cada divisor d de n, temos que n
+que, X
+d|n
+
+φ(d), ou seja, X
+d|n
+
+= X
+d|n
+
+(cid:18) n
+d
+
+φ
+
+(cid:19)
+
+φ(d) = n.
+
+d também é divisor de n, pois n = n
+
+d · d, temos
+
+Exemplo 3.45. Seja n = 24. Os divisores positivos de n são 1, 2, 3, 4, 6, 8, 12 e 24. Temos
+que,
+
+A1 = {1, 5, 7, 11, 13, 17, 19, 23}
+
+A2 = {2, 10, 14, 22}
+
+A3 = {3, 9, 15, 21}
+
+A4 = {4, 20}
+
+A6 = {6, 18}
+
+A8 = {8, 16}
+
+A12 = {12}
+
+A24 = {24}.
+
+Então, denotando por #Ai a cardinalidade (número de elementos) do subconjunto Ai,
+temos:
+
+3.4 função φ de euler e teorema de euler
+
+37
+
+#A1 = φ
+
+#A2 = φ
+
+#A3 = φ
+
+#A4 = φ
+
+#A6 = φ
+
+#A8 = φ
+
+#A12 = φ
+
+#A24 = φ
+
+(cid:19)
+
+(cid:19)
+
+(cid:19)
+
+(cid:19)
+
+(cid:19)
+
+(cid:19)
+
+(cid:19)
+
+(cid:19)
+
+(cid:18) 24
+1
+(cid:18) 24
+2
+(cid:18) 24
+3
+(cid:18) 24
+4
+(cid:18) 24
+6
+(cid:18) 24
+8
+(cid:18) 24
+12
+(cid:18) 24
+24
+
+= φ(24) = 8
+
+= φ(12) = 4
+
+= φ(8) = 4
+
+= φ(6) = 2
+
+= φ(4) = 2
+
+= φ(3) = 2
+
+= φ(2) = 1
+
+= φ(1) = 1.
+
+n n
+
+o
+d ; d | n
+
+n 24
+
+=
+
+6 , 24
+φ(d) = 8 + 4 + 4 + 2 + 2 + 2 + 1 + 1 = 24 = n.
+
+12, 24
+24
+
+3 , 24
+
+1 , 24
+
+2 , 24
+
+4 , 24
+
+8 , 24
+
+o
+
+= {24, 12, 8, 6, 4, 3, 2, 1} = {d ; d | n}.
+
+Note que
+Além disso, X
+d|n
+
+Deﬁnição 3.46. Um sistema reduzido de resíduos módulo m é um conjunto de φ(m)
+inteiros r1, r2, . . . , rφ(m), tais que cada elemento do conjunto é relativamente primo com
+m, e se i 6= j, então ri 6≡ rj (mod m).
+
+Exemplo 3.47. O conjunto {0, 1, 2, 3, 4, 5, 6, 7, 8, 9} é um sistema completo de resíduos
+módulo 10 e {1, 3, 7, 9} é um sistema reduzido de resíduos módulo 10.
+
+Note que, para obter o sistema reduzido de resíduos módulo m, basta excluir de um
+sistema completo de resíduos módulo m os elementos que não são relativamente primos
+com m.
+
+Observação 3.48. Para p primo, φ(p) = p − 1. Considerando o sistema completo de
+resíduos {0, 1, 2, . . . , p − 1}, o único elemento desse conjunto que não é relativamente
+primo com p é o 0, então o conjunto {1, 2, 3, . . . , p − 1} é um sistema reduzido de resíduos
+módulo p.
+
+Proposição 3.49. Seja a um inteiro positivo tal que (a, m) = 1. Se r1, r2, . . . , rφ(m)
+é um sistema reduzido de resíduos módulo m, então ar1, ar2, . . . , arφ(m) é também, um
+sistema reduzido de resíduos módulo m.
+
+Demonstração: Como (a, m) = 1 e (ri, m) = 1, temos (ari, m) = 1. De fato, ari e
+m não possuem fatores primos em comum, pois m não possui fatores primos em comum
+com a, nem com ri. Logo, (ari, m) = 1 pela Proposição 2.27. Logo, temos que todos os
+elementos do conjunto {ar1, ar2, . . . , arφ(m)} são relativamente primos com m. Portanto,
+resta mostrar que os elementos desse conjunto são, dois a dois, incongruentes módulo m.
+
+3.5 teorema chinês dos restos
+
+38
+
+Como (a, m) = 1, temos que ari ≡ arj (mod m) implica ri ≡ rj (mod m), ou seja, i = j,
+pois o conjunto {r1, r2, . . . , rφ(m)} é um sistema reduzido de resíduos módulo m. Portanto,
+o conjunto {ar1, ar2, . . . , arφ(m)} é um sistema reduzido de resíduos módulo m.
+
+Teorema 3.50. (Euler) Se m é um inteiro positivo e a um inteiro com (a, m) = 1, então
+
+aφ(m) ≡ 1 (mod m).
+
+Demonstração: Na Proposição 3.49 mostramos que se (a, m) = 1 e o conjunto
+{r1, r2, . . . , rφ(m)} for um sistema reduzido de resíduos módulo m, o conjunto
+{ar1, ar2, . . . , arφ(m)} constitui, também, um sistema reduzido de resíduos módulo m.
+Então, esses conjuntos possuem os mesmos elementos e, portanto, o produto dos ari deve
+ser congruente ao produto dos rj módulo m, isto é,
+
+ar1ar2 · · · arφ(m) ≡ r1 · · · rφ(m) (mod m)
+
+ou seja,
+
+aφ(m)r1r2 · · · rφ(m) ≡ r1r2 · · · rφ(m) (mod m).
+Se ri pertence a um sistema reduzido de resíduos módulo m, então (ri, m) = 1. Ou seja,
+
+ri e m não possuem fatores primos em comum. Portanto,
+
+φ(m)
+Y
+
+ri não possui fatores primos
+
+em comum com m. Ou seja,
+
+φ(m)
+Y
+
+
+
+
+
+i=1
+
+
+ = 1. Então, podemos cancelar
+
+ri, m
+
+i=1
+
+φ(m)
+Y
+
+i=1
+
+ri em ambos
+
+os lados. Assim, aφ(m) ≡ 1 (mod m).
+
+Exemplo 3.51. Considere a = 16 e m = 3. Como (16, 3) = 1, temos, pelo Teorema de
+Euler, que 16φ(3) ≡ 1 (mod 3). De fato, φ(3) = 2 e 162 = 256 ≡ 1 (mod 3).
+
+Como vimos, para p primo, φ(p) = p − 1. Então, o teorema anterior é uma generali-
+
+zação do Pequeno Teorema de Fermat.
+
+3.5 teorema chinês dos restos
+
+Neste ponto veremos o Teorema do Resto Chinês, que recebe esse nome pelo fato de seu
+resultado já ser conhecido na antiguidade, pelos matemáticos chineses.
+
+Teorema 3.52. (O Teorema Chinês dos Restos) Sejam ai, mi, ci inteiros para i =
+1, . . . , r, com mi ≥ 1 para todo i. Se (ai, mi) = 1 e (mi, mj) = 1 para i 6= j, então o
+sistema
+
+a1x ≡ c1 (mod m1)
+
+a2x ≡ c2 (mod m2)
+
+a3x ≡ c3 (mod m3)
+...
+arx ≡ cr (mod mr)
+
+3.5 teorema chinês dos restos
+
+39
+
+possui solução e a solução é única módulo M , onde M = m1m2 · · · mr.
+
+Demonstração: Do fato de (ai, mi) = 1, o Teorema 3.28 nos diz que aix ≡ ci (mod mi)
+onde,
+possui uma única solução que denotamos por bi.
+M = m1m2 · · · mr, teremos (yi, mi) = 1, uma vez que (mi, mj) = 1 para i 6= j. No-
+vamente, o Teorema 3.28 nos garante que cada uma das congruências yix ≡ 1 (mod mi)
+possui uma única solução que denotamos por y∗
+i ≡ 1 (mod mi), i = 1, 2, . . . , r.
+Aﬁrmamos que o número x dado por
+
+Se deﬁnirmos yi = M
+mi
+
+i . Logo, yiy∗
+
+x = b1y1y∗
+
+1 + b2y2y∗
+
+2 + · · · + bryry∗
+r ,
+
+é uma solução simultânea para o nosso sistema de congruências. De fato,
+
+aix = aib1y1y∗
+≡ aibiyiy∗
+
+2 + · · · + aibiyiy∗
+
+1 + aib2y2y∗
+i ≡ aibi ≡ ci (mod mi),
+
+i + · · · + aibryry∗
+r
+
+uma vez que yj é divisível por mi para i 6= j, yiy∗
+i ≡ 1 (mod mi) e bi é solução de
+aix ≡ ci (mod mi). Provamos, a seguir, que esta solução é única módulo M . Se x∗ é uma
+outra solução para o nosso sistema, então aix∗ ≡ ci ≡ aix (mod mi) e, sendo (ai, mi) = 1
+obtemos x∗ ≡ x (mod mi), i = 1, 2, . . . , r. Mas, como (mi, mj) = 1 para i 6= j temos que
+
+[m1, m2, . . . , mr] = m1m2 · · · mr.
+
+Portanto, pela Proposição 3.11, x∗ ≡ x (mod M ), o que conclui a demonstração.
+
+Corolário 3.53. Uma solução x de um sistema de congruências do tipo:
+
+a1x ≡ c1 (mod m1)
+
+a2x ≡ c2 (mod m2)
+
+a3x ≡ c3 (mod m3)
+...
+arx ≡ cr (mod mr),
+
+pode ser obtida da seguinte forma: x = y∗
+yi = M
+i é solução de yiy∗
+mi
+
+e y∗
+
+i ≡ 1 (mod mi), i = 1, . . . , r.
+
+1y1a−1
+
+2 c1 + y∗
+
+2y2a−1
+
+2 c2 + · · · + y∗
+
+r yra−1
+
+r cr, onde
+
+Demonstração: Se x = y∗
+
+1y1a−1
+
+1 c1 + y∗
+
+2y2a−1
+
+2 c2 + · · · + y∗
+
+r yra−1
+
+r cr, então
+
+a1x = a1(y∗
+
+1y1a−1
+
+1 c1 + y∗
+
+2y2a−1
+
+2 c2 + · · · + y∗
+
+r yra−1
+
+r cr) ≡ a1y∗
+
+1y1a−1
+
+1 c1 (mod m1),
+
+pois y2, y3, . . . , yr são múltiplos de m1. Então, a1x ≡ a1y∗
+1y1c1 =
+1y1c1 (mod m1). E como y∗
+y∗
+1y1 ≡ 1 (mod m1), podemos concluir que a1x ≡ c1 (mod m1).
+Fazendo o mesmo para as demais congruências, podemos veriﬁcar que aix ≡ ci (mod mi),
+para i = 1, . . . , r.
+
+1 c1 ≡ a1a−1
+
+1y1a−1
+
+1 y∗
+
+3.6 teorema de lagrange
+
+40
+
+Exemplo 3.54. Considere o seguinte sistema:
+
+x ≡ 0 (mod 7)
+
+x ≡ 1 (mod 12)
+
+x ≡ 15 (mod 17).
+
+Pelo Teorema 3.52, esse sistema possui uma única solução módulo M = 7 · 12 · 17 = 1428.
+sistema calculando
+Pela Proposição 3.53,
+1y1a−1
+e y∗
+x = y∗
+i é solução de
+yiy∗
+
+podemos obter uma solução desse
+r cr, onde y1 = M
+m1
+
+1 c1 + y∗
+i ≡ 1 (mod mi), i = 1, . . . , r.
+Como, y1 = 204, y2 = 119 e y3 = 84, podemos calcular:
+
+2 c2 + · · · + y∗
+
+2y2a−1
+
+r yra−1
+
+204y∗
+119y∗
+84y∗
+
+1 ≡ 1 (mod 7) ⇒ y∗
+2 ≡ 1 (mod 12) ⇒ y∗
+3 ≡ 1 (mod 17) ⇒ y∗
+
+1 = 1
+2 = 11
+3 = 16.
+
+Note que a1 = a2 = a3 = 1, então a−1
+
+1 = a−1
+
+2 = a−1
+
+3 = 1. Assim,
+
+x = 1 · 204 · 1 · 0 + 11 · 119 · 1 · 1 + · · · + 16 · 84 · 1 · 15 = 21469.
+
+Pelo Teorema 3.52, 21469 ≡ 49 (mod 1428) é a única solução módulo M = 1428.
+
+3.6 teorema de lagrange
+
+Apresentaremos, agora, o Teorema de Lagrange, que trata do número de soluções de
+uma relação de congruência do tipo f (x) ≡ 0 (mod p), onde f (x) é um polinômio com
+coeﬁcientes inteiros.
+
+Teorema 3.55. (Lagrange) Seja f (x) = cnxn + cn−1xn−1 + · · · + c2x2 + c1x + c0 um
+polinômio com coeﬁcientes inteiros tal que (cn, p) = 1, onde p é primo. Nestas condições
+a congruência
+
+f (x) ≡ 0 (mod p),
+
+tem no máximo n soluções incongruentes módulo p. É claro que quando n > p a con-
+gruência acima não tem mais do que p soluções distintas módulo p.
+
+Demonstração: Faremos a demonstração por indução em n, sendo n o grau do polinômio
+f (x).
+
+Para n = 1, temos a congruência linear
+
+f (x) = c1x + c0 ≡ 0 (mod p).
+
+Por hipótese, (c1, p) = 1. Pelo Teorema 3.28, temos que c1x ≡ −c0 (mod p) tem exata-
+mente uma solução. Com isso temos que a propriedade é válida para n = 1.
+
+3.7 classes de congruência
+
+41
+
+Suponhamos que a propriedade seja válida para todo polinômio de grau n − 1. Faremos
+uma prova por contradição. Suponhamos que a congruência f (x) ≡ 0 (mod p), onde
+f (x) é um polinômio de grau n, tenha n + 1 soluções incongruentes módulo p. Sejam
+x0, x1, x2, . . . , xn estas n + 1 soluções. Como (xi − xi
+0) é divisível por x − x0 para todo
+inteiro i, i = 1, 2, . . . , n, temos:
+
+f (x) − f (x0) = cn(xn − xn
+
+0 ) + cn−1(xn−1 − xn−1
+
+0
+
+) + · · · + c1(x − x0)
+
+= (x − x0)h(x),
+
+onde h(x) é um polinômio de grau n − 1 tendo cn como coeﬁciente de xn−1. Como
+f (xk) ≡ f (x0) (mod p), temos
+
+f (xk) − f (x0) = (xk − x0)h(xk) ≡ 0 (mod p),
+
+ou seja, p | (xk − x0)h(x). Como p é primo, p | (xk − x0) ou p | h(x). Como
+xk 6≡ x0 (mod p), para k 6= 0, h(xk) ≡ 0 (mod p).
+Isso nos mostra que a congruência
+h(x) ≡ 0 (mod p) possui n soluções incongruentes módulo p, o que é uma contradição,
+pois h(x) tem grau n − 1, (cn, p) = 1 e, pela hipótese de indução, todo polinômio nessas
+condições possui no máximo n − 1 soluções. Portanto, f (x) não pode ter mais do que n
+soluções incongruentes módulo p.
+
+Exemplo 3.56. Sejam p = 13 e n = 6. Seja f (x) = 2x6 + x3 + x + 1. A congruência
+f (x) ≡ 0 (mod 13) tem como soluções incongruentes módulo 13: 6 e 9.
+
+Exemplo 3.57. Sejam p = 5 e n = 4. Seja f (x) = 10x4 + 5x2 + 5. A congruência
+f (x) ≡ 0 (mod 5) tem como soluções incongruentes módulo 5: 0, 1, 2, 3, e 4.
+
+3.7 classes de congruência
+
+Nesta seção, apresentaremos o conceito de classe de congruência e algumas de suas pro-
+priedades.
+
+Deﬁnição 3.58. Seja a um inteiro. Chama-se classe de congruência de a módulo m o
+conjunto formado por todos os inteiros que são congruentes a a módulo m. Denotamos
+esse conjunto por a, ou seja:
+
+a = {x ∈ Z ; x ≡ a (mod m)}.
+
+Observação 3.59. Como vimos, se x ≡ a (mod m), então x − a = mk, para algum
+k ∈ Z. Ou seja, podemos escrever x = a + mk e, portanto: a = {a + mk ; k ∈ Z}.
+
+Exemplo 3.60. O cojunto 1 = {1 + 0 · 2, 1 + 2 · 2, 1 + 3 · 2, . . .} = {1, 3, 5, 7, . . .} corres-
+ponde à classe de congruência de 1 módulo 2. Esse conjunto contém todos os números
+que apresentam resto 1 na divisão por 2.
+
+3.8 grupos e subgrupos
+
+42
+
+A proposição a seguir demonstra o fato de que dois números inteiros congruentes
+
+módulo um inteiro m geram a mesma classe de congruência.
+
+Proposição 3.61. Sejam a e b inteiros e a ≡ b (mod m). Então, a = b.
+
+Demonstração: Dado um inteiro x tal que x ∈ a, pela Deﬁnição 3.58, temos que
+x ≡ a (mod m). Da Proposição 3.6, item (iii), temos que x ≡ b (mod m). Portanto, x ∈ b.
+De forma análoga, tomando um inteiro y, y ∈ b, temos que y ∈ a. Assim, podemos
+aﬁrmar que a ⊂ b e b ⊂ a, de onde a = b.
+
+O corolário a seguir mostra que as diferentes classes de congruência módulo um inteiro
+
+m são disjuntas.
+
+Corolário 3.62. Sejam a e b inteiros. Se a 6= b, então a ∩ b = ∅.
+
+Demonstração: Suponha que existe um inteiro c tal que c ∈ a e c ∈ b. Então,
+c ≡ a (mod m) e c ≡ b (mod m). Pela Proposição 3.6 (ii) e (iii), temos que a ≡ b (mod m).
+O que, pela Proposição 3.61, contradiz a hipótese de que a 6= b.
+
+Observação 3.63. Cada inteiro a pertencente a uma classe de congruência módulo m
+será chamado de representante da classe. Note que, dado um sistema completo de resíduos
+módulo m, temos que cada elemento desse conjunto é um representante de uma classe de
+congruência distinta módulo m.
+
+Exemplo 3.64. O conjunto {0, 1, 2, 3, 4} é um sistema completo de resíduos módulo 5.
+Então o conjunto {0, 1, 2, 3, 4} é o conjunto de todas as classes de congruência distintas
+módulo 5.
+
+Deﬁnição 3.65. O conjunto de todas as classes de congruência módulo m pode ser re-
+presentado por {0, 1, . . . , m − 1} e denominado por Zm.
+
+3.8 grupos e subgrupos
+
+Nesta seção apresentaremos as deﬁnições de grupos e subgrupos que serão necessárias
+para compreender a ideia do algoritmo criptográﬁco ElGamal, apresentado no Capítulo
+4.
+
+Deﬁnição 3.66. Um conjunto G com uma operação
+
+G × G −→ G
+
+(a, b) 7−→ a · b
+
+é um grupo se as condições seguintes são satisfeitas:
+
+(i) A operação é associativa, isto é,
+
+a · (b · c) = (a · b) · c, ∀ a, b, c ∈ G.
+
+3.8 grupos e subgrupos
+
+43
+
+(ii) Existe um elemento neutro, isto é,
+
+∃ e ∈ G tal que e · a = a · e = a, ∀ a ∈ G.
+
+(iii) Todo elemento possui um elemento inverso, isto é,
+
+∀ a ∈ G, ∃ b ∈ G tal que a · b = b · a = e.
+
+Observação 3.67.
+
+(i) Usamos a notação (G, ·) para representar um grupo G com a operação ·.
+
+(ii) Dado um grupo (G, ·), o elemento neutro é único. De fato, se existirem e1 e e2 ∈ G
+tais que e1 e e2 são elementos neutros de G, poderíamos escrever e1 = e1 · e2 = e2,
+de onde, e1 = e2.
+
+(iii) Dado um grupo (G, ·), o elemento inverso é único. De fato, dado a ∈ G, suponha
+que existam b1 e b2 ∈ G, tais que a · b1 = b1 · a = e e a · b2 = b2 · a = e. Então,
+podemos escrever b1 · a · b1 = b1 · a · b2, ou seja, b1 = b2.
+
+(iv) Devido à unicidade do inverso, denotamos o inverso de a por a−1.
+
+Deﬁnição 3.68. Um grupo G é dito abeliano ou comutativo se a sua operação é comuta-
+tiva, isto é,
+
+a · b = b · a, ∀ a, b ∈ G.
+
+Exemplo 3.69. O conjunto Zn = {0, 1, 2, . . . , n − 1} com a operação
+
+x + y = x + y
+
+é um grupo abeliano. De fato, segue da Proposição 3.8 item (i) que a operação está bem
+deﬁnida. Além disso,
+
+(i) para todo x, y, z ∈ Zn, temos:
+
+x + (y + z) = x + (y + z) = x + (y + z)
+
+= (x + y) + z = (x + y) + z
+
+= (x + y) + z.
+
+(ii) Para todo x, y ∈ Zn,
+
+x + y = x + y = y + x = y + x.
+
+(iii) Para todo x ∈ Zn tal que:
+
+x + 0 = x + 0 = x.
+
+3.8 grupos e subgrupos
+
+44
+
+(iv) Para todo x ∈ Zn existe n − x ∈ Zn tal que:
+
+x + n − x = x + (n − x) = n = 0.
+
+Portanto, (Zn, +) é um grupo abeliano.
+
+Exemplo 3.70. O conjunto Z∗
+
+n = {a ; (a, n) = 1} com a operação
+
+a · b = a · b, a, b ∈ Z∗
+n
+
+é um grupo abeliano. De fato, segue da Proposição 3.8 item (iii) que a operação está bem
+deﬁnida. Então,
+
+(i) dados a, b, c, 1 ∈ Z∗
+
+n, temos: a · (b · c) = a · (b · c) = a · (b · c) = (a · b) · c = (a · b) ·
+c = (a · b) · c. Logo, a operação é associativa em Z∗
+n.
+
+(ii) a · b = a · b = b · a. Logo, a operação é comutativa em Z∗
+n.
+
+(iii) 1 ∈ Z∗
+
+n e 1 · a = 1 · a = a, ∀ a ∈ Z∗
+
+n. Logo, 1 é elemento neutro em Z∗
+n.
+
+(iv) Se a ∈ Z∗
+
+n, então (a, n) = 1. Pelo Teorema de Bézout, Teorema 2.24, existem
+
+r, s ∈ Z tais que ar + ns = 1. De onde, ar + ns = 1 se, e somente se,
+
+ar + ns = 1 ⇔
+
+ar = 1 ⇔
+
+a · r = 1.
+
+É claro que r ∈ Z∗
+
+n, pois de ar + ns = 1, segue que (r, n) = 1.
+
+Observação 3.71. Para p primo, o conjunto Z∗
+a · b = a · b, a, b ∈ Z∗
+Z∗
+
+p = {1, 2, 3, . . . , p − 1}, com a operação
+p é um grupo abeliano. Esse resultado se dá pelo fato de o conjunto
+p = {a ; (a, p) = 1} da proposição anterior ser igual ao conjunto {1, 2, 3, . . . , p − 1}
+
+quando p é primo.
+
+Exemplo 3.72. Considere o conjunto Z∗
+
+7 = {1, 2, . . . , 6} e a operação
+
+a · b = a · b, a, b ∈ Z∗
+7.
+
+A Tabela 1 apresenta todos os resultados da operação · entre os elementos de Z∗
+7:
+
+7, pois 1 · a = a para todo a ∈ Z∗
+
+Note que, pelos resultados da tabela, dados a, b ∈ Z∗
+
+7, a · b = b · a, pois a tabela é
+simétrica. Podemos, também, veriﬁcar que o elemento 1 de fato é o elemento neutro
+de Z∗
+7. E, como cada linha apresenta o resultado 1,
+temos que para todo a ∈ Z∗
+7 tal que a · b = 1. Além disso, podemos
+constatar que a · (b · c) = (a · b) · c. Por exemplo, 2 · (5 · 4) = 2 · (5 · 4) = 2 · 6 = 5 e
+(2 · 5) · 4 = (2 · 5) · 4 = 3 · 4 = 5.
+
+7 existe b ∈ Z∗
+
+3.8 grupos e subgrupos
+
+45
+
+·
+1
+2
+3
+4
+5
+6
+
+1
+1
+2
+3
+4
+5
+6
+
+2
+2
+4
+6
+1
+3
+5
+
+3
+3
+6
+2
+5
+1
+4
+
+4
+4
+1
+5
+2
+6
+3
+
+5
+5
+3
+1
+6
+4
+2
+
+6
+6
+5
+4
+3
+2
+1
+
+Tabela 1: Operação · entre os elementos de Z∗
+7
+
+Deﬁnição 3.73. Seja (G, ·) um grupo. Um subconjunto não vazio H de G é um subgrupo
+de G (H < G) quando, com a operação de G, o conjunto H é um grupo, isto é, quando
+as condições seguintes são satisfeitas:
+
+(i) H é fechado para a operação ·, ou seja, h1 · h2 ∈ H, ∀ h1, h2 ∈ H.
+
+(ii) A operação · é associativa em H, ou seja,
+
+h1 · (h2 · h3) = (h1 · h2) · h3, ∀ h1, h2, h3 ∈ H.
+
+(iii) H possui um elemento neutro, ou seja,
+
+∃ eH ∈ H tal que eH · h = h · eH = h, ∀ h ∈ H.
+
+(iv) Todo elemento de H possui inverso, ou seja,
+
+∀h ∈ H, ∃k ∈ H tal que h · k = k · h = eH .
+
+Observação 3.74.
+
+1) A condição (i) é sempre satisfeita para todo subconjunto não vazio H de G, pois a
+
+propriedade associativa vale para todos os elementos de G.
+
+Caso H seja subgrupo de G:
+
+(i) O elemento neutro eH é necessariamente igual ao elemento neutro e de G. De
+fato, se tomarmos a ∈ H, temos que a ∈ G. Como eH · a = a, multiplicando
+os dois lados pelo inverso de a em G, ou seja, a−1, obtemos eH = e.
+
+(ii) Dado h ∈ H, o inverso de h em H é igual ao inverso de h em G. De fato, se
+k é o inverso de h em H, então h · k = k · h = eH , logo h · k = k · h = e, pois
+eH = e, e portanto k é o inverso de h em G.
+
+A proposição a seguir mostra que precisamos testar apenas duas condições para mos-
+
+trar que um subconjunto não-vazio H de G é um subgrupo de G.
+
+Proposição 3.75. Seja H um subconjunto não-vazio do grupo G. Então H é um subgrupo
+de G se, e somente se, as duas condições seguintes são satisfeitas:
+
+3.8 grupos e subgrupos
+
+(i) h1 · h2 ∈ H, ∀ h1, h2 ∈ H.
+
+(ii) h−1 ∈ H, ∀ h ∈ H.
+
+46
+
+Demonstração: Suponhamos que H seja um subgrupo de G, então a condição (i) é
+satisfeita. E, considerando h ∈ H, temos que o inverso de h em H também pertence a H.
+Como o inverso de h em H é igual ao inverso de h em G, temos que h−1 ∈ H. Logo, a
+condição (ii) também é satisfeita.
+
+Reciprocamente, suponhamos que (i) e (ii) sejam satisfeitas. Então, H é fechado para
+a operação ·. Como por (ii) h, h−1 ∈ H, temos por (i) que h · h−1 = e ∈ H, portanto
+H possui elemento neutro. Além disso, por (ii) temos que os elementos de H possuem
+inverso. Como já observamos, os elementos de H são também elementos de G e, portanto,
+a operação entre eles é associativa. Assim, temos que H é subgrupo de G.
+
+Deﬁnição 3.76. Sejam (G, ·) um grupo e a ∈ G. Deﬁnimos as potências de a da seguinte
+forma:
+
+a0 = e;
+a1 = a;
+an = an−1 · a, com n ∈ N;
+a−n = (an)−1, com n ∈ N.
+
+Denotamos por hai o conjunto de todas as potências de a, ou seja:
+
+hai = {an ; n ∈ Z}.
+
+Proposição 3.77. Dado (G, ·) um grupo, a ∈ G e m, n ∈ Z, vale que:
+
+(i) aman = am+n e
+
+(ii) (am)n = am·n.
+
+Demonstração:
+
+(i) Demonstraremos, primeiro o seguinte caso particular: n ≥ 0 e m + n ≥ 0. O
+
+raciocínio será por indução sobre n.
+
+Para n = 0, temos aman = ama0 = ame = am = am+0 = am+n. Portanto, a
+propriedade é válida quando n = 0.
+
+Seja n = r, r ≥ 0 e suponhamos que, para qualquer inteiro m tal que m + r ≥ 0, se
+tenha am+r = amar. Então, como r + 1 ≥ 1, pela Deﬁnição 3.76, temos
+
+amar+1 = am(ara1) = (amar)a1.
+
+Pela hipótese de indução, temos (amar)a1 = am+ra1. E, como m + r + 1 ≥ 1,
+podemos utilizar a Deﬁnição 3.76 novamente para escrever am+ra1 = am+r+1.
+
+3.8 grupos e subgrupos
+
+47
+
+Das igualdades anteriores, temos amar+1 = am+r+1. O que mostra que quando
+a propriedade é válida para n = r, então ela também é válida para n = r + 1.
+Portanto, a propriedade é válida para todo n ≥ 0.
+
+Para o caso geral, sejam m e n inteiros qualquer. Tomemos um inteiro p > 0 tal
+que p + n > 0 e p + m + n > 0, o que obviamente sempre é possível. Note que, pela
+Deﬁnição 3.76, apa−p = ap (ap)−1 = e. Então:
+
+am+n = am+n (cid:16)
+
+apa−p(cid:17)
+
+=
+
+am+nap(cid:17)
+(cid:16)
+
+a−p.
+
+Utilizando a conclusão do nosso caso particular na primeira, na terceira e na quarta
+igualdade a seguir, temos:
+
+(cid:16)
+
+am+nap(cid:17)
+
+a−p = a(m+n)+pa−p
+
+(cid:16)
+
+=
+
+= am+(n+p)a−p
+aman+p(cid:17)
+a−p
+= [am (anap)]a−p
+= [(aman) ap]a−p
+apa−p(cid:17)
+= (aman)
+
+(cid:16)
+
+= (aman) e
+= aman.
+
+(ii) Provaremos o caso n ≥ 0 por indução sobre n.
+
+Para n = 0, temos que (am)n = (am)0 = e = a0 = am·0 = am·n. Portanto, a
+propriedade é válida para n = 0.
+
+Seja n = r, r ≥ 0 e suponhamos que, para qualquer inteiro m tal que m · r ≥ 0, se
+tenha am·r = (am)r. Então, como r + 1 ≥ 1, pela Deﬁnição 3.76, temos (am)r+1 =
+(am)r am. Pela hipótese de indução, temos (am)r am = amram. E, por (i), temos
+amram = amr+m = am(r+1).
+Das igualdades anteriores, temos (am)r+1 = am(r+1). O que mostra que quando
+a propriedade é válida para n = r, então ela também é válida para n = r + 1.
+Portanto, a propriedade é válida para todo n ≥ 0.
+
+Agora, suponhamos n < 0. Então, pela Deﬁnição 3.76,
+
+(am)n = [(am)−n]−1 =
+
+(cid:16)
+
+a−mn(cid:17)−1
+
+= amn.
+
+Proposição 3.78. hai é subgrupo de G.
+
+Demonstração: Vamos veriﬁcar se as condições da Proposição 3.75 são satisfeitas:
+
+3.8 grupos e subgrupos
+
+48
+
+(i) Dados am e an ∈ hai, temos, pela Proposição 3.77, que am · an = am+n. Como
+
+m + n ∈ Z, temos que am+n ∈ hai.
+
+(ii) Pela própria deﬁnição de hai, temos que a−1 ∈ hai.
+
+Portanto, hai é subgrupo de G.
+
+Deﬁnição 3.79. hai é o subgrupo de G gerado por a. O elemento a é dito o gerador de
+hai
+
+Deﬁnição 3.80. Um grupo G é dito cíclico quando ele pode ser gerado por um elemento,
+isto é, quando G = hgi, para algum g ∈ G.
+
+Exemplo 3.81. Dado o grupo Z∗
+19 = {1, 2, . . . , 18}, temos que 13 é um gerador de Z∗
+19,
+pois todos os elementos desse grupo podem são gerados por potências de 13, como é possível
+ver na tabela 2.
+
+131 ≡ 18 (mod 19)
+132 ≡ 11 (mod 19)
+133 ≡ 17 (mod 19)
+134 ≡ 4 (mod 19)
+135 ≡ 14 (mod 19)
+136 ≡ 10 (mod 19)
+137 ≡ 12 (mod 19)
+138 ≡ 15 (mod 19)
+139 ≡ 16 (mod 19)
+
+1310 ≡ 7 (mod 19)
+1311 ≡ 6 (mod 19)
+1312 ≡ 3 (mod 19)
+1313 ≡ 1 (mod 19)
+1314 ≡ 5 (mod 19)
+1315 ≡ 13 (mod 19)
+1316 ≡ 8 (mod 19)
+1317 ≡ 2 (mod 19)
+1318 ≡ 9 (mod 19)
+
+Tabela 2: Potências de 13 módulo 19
+
+Assim, podemos aﬁrmar que Z∗
+
+19 é um grupo cíclico e que 13 é um gerador desse grupo,
+
+ou seja, Z∗
+
+19 = h13i.
+
+Deﬁnição 3.82. A ordem de um grupo G é o número de elementos de G. Ela será
+denotada por |G|.
+
+Exemplo 3.83. A ordem de (Z∗
+(cid:16)Z∗
+
+é p − 1. De fato, o grupo abeliano Z∗
+
+n, ·) é φ(n). Em particular, para p primo a ordem de
+p = {1, 2, . . . , p − 1} possui p − 1 elementos.
+
+(cid:17)
+p, ·
+
+4
+
+R A Í Z E S P R I M I T I VA S
+
+Neste capítulo, apresentaremos o conceito de raiz primitiva e algumas propriedades relati-
+vas a essas raízes. Para tanto, começaremos deﬁnindo o conceito de ordem de um inteiro
+a módulo m.
+
+As principais referências utilizadas neste capítulo foram [8], [10] e [11].
+
+4.1 ordem de um inteiro a módulo m
+
+Deﬁnição 4.1. Seja a ∈ Z, tal que (a, m) = 1. O menor inteiro positivo k para o qual
+ak ≡ 1 (mod m) é chamado ordem de a módulo m e é denotado por ordma.
+
+Exemplo 4.2. Considerando as potências de 4 módulo 7, temos:
+
+41 = 4 ≡ 4 (mod 7),
+42 = 16 ≡ 2 (mod 7) e
+43 = 64 ≡ 1 (mod 7).
+
+Note que 3 é o menor expoente inteiro positivo pelo qual elevamos 4 e obtemos um número
+congruente a 1 módulo 7. Então, 3 é a ordem de 4 módulo 7, isto é, ord74 = 3.
+
+Observação 4.3. Na Deﬁnição 4.1 tomamos (a, m) = 1, pois, caso contrário, não existe
+k inteiro positivo tal que ak ≡ 1 (mod m). De fato, se (a, m) = d > 1, então a = ds, para
+algum s ∈ Z com 1 ≤ s < a. Agora, se existe k inteiro positivo, tal que ak ≡ 1 (mod m),
+temos que aak−1 = dsak−1 ≡ 1 (mod m). Como m = dt, para algum t ∈ Z, com
+1 ≤ t < m, então, tdsak−1 ≡ t (mod m). De onde, 0 ≡ msak−1 ≡ t (mod m), o que é
+absurdo, pois 1 ≤ t < m.
+
+Note que se (a, m) = 1, a existência de k tal que ak ≡ 1 (mod m) está garantida, pois,
+
+pelo Teorema de Euler, Teorema 3.50, aφ(m) ≡ 1 (mod m).
+
+No restante do capítulo, vamos considerar a ∈ Z e (a, m) = 1.
+A proposição a seguir nos mostra que a ordem de um inteiro a módulo m divide
+
+qualquer outro inteiro h para o qual ah ≡ 1 (mod m).
+
+Proposição 4.4. Se k = ordma e ah ≡ 1 (mod m), então k | h.
+
+Demonstração: Pelo Algoritmo Euclidiano da Divisão, Teorema 2.21, existem inteiros
+q e r, com 0 ≤ r < k, tais que h = qk + r. Desta forma, temos
+
+ah = aqk+r = (akq)ar ≡ ar (mod m), pois
+
+49
+
+4.1 ordem de um inteiro a módulo m
+
+50
+
+como k = ordma, temos que ak ≡ 1 (mod m). Então, pela relação que acabamos de
+mostrar, temos que ar ≡ 1 (mod m). Como r < k, r só pode ser igual a zero, pois k é o
+menor inteiro positivo para o qual ak ≡ 1 (mod m). Portanto, r = 0 e h = qk, ou seja,
+k | h.
+
+Corolário 4.5. Temos que ordma | φ(m).
+
+Demonstração: Pelo Teorema de Euler, Teorema 3.50, temos que aφ(m) ≡ 1 (mod m)
+para (a, m) = 1. Logo, a Proposição 4.4 nos garante que ordma | φ(m).
+
+A proposição a seguir apresenta uma importante propriedade da ordem de um inteiro
+
+a módulo m.
+
+Proposição 4.6. Seja k = ordma, então at ≡ ah (mod m) se, e somente se,
+t ≡ h (mod k).
+
+Demonstração: Supondo, sem perda de generalidade, t ≥ h. Como at = ahat−h e,
+supondo, at ≡ ah (mod m), temos que ahat−h ≡ ah (mod m). Como (a, m) = 1, então
+(ah, m) = 1. Portanto, podemos cancelar ah, nesta última congruência, obtendo
+
+at−h ≡ 1 (mod m).
+
+Pela Proposição 4.4, k | (t − h) o que equivale a dizer que t ≡ h (mod k).
+
+Reciprocamente, se t ≡ h (mod k), existe um inteiro n tal que t = h + nk. Logo,
+
+at = ah+nk = ah(ank) ≡ ah (mod m)
+
+pois k é a ordem de a módulo m.
+
+O corolário a seguir mostra que o conjunto formado por todas as potências de a com
+expoentes inteiros não negativos e menores do que a ordem de a módulo m contém apenas
+elementos incongruentes entre si módulo m.
+
+Corolário 4.7. Se k = ordma, então os números 1, a, a2, . . . , ak−1 são incongruentes
+módulo m.
+
+Demonstração: Suponhamos que at ≡ ah (mod m), 0 ≤ t, h ≤ k − 1. Pela Proposição
+4.6, t ≡ h (mod k), ou seja, k | t − h. Como t e h são maiores ou iguais a zero e menores
+do que k, podemos concluir que t = h. Portanto, os números 1, a, a2, . . . , ak−1 são todos
+incongruentes módulo m.
+
+A proposição e o corolário a seguir apresentam algumas propriedades da ordem de um
+
+inteiro a módulo m.
+
+Proposição 4.8. Para k = ordma e t um inteiro positivo temos,
+
+ordma = (k, t) · ordm(at).
+
+4.2 raízes primitivas módulo m
+
+51
+
+Demonstração: Considerando que ordm(at) = h, temos (at)h = ath ≡ 1 (mod m).
+Como k = ordma, temos que k | th. Portanto, th ≡ 0 (mod k), o que é equivalente a
+d ), com d = (k, t). A menor solução positiva da congruência h ≡ 0 (mod k
+h ≡ 0 (mod k
+d )
+é k
+d . Assim, d · ordm(at) = ordma e (k, t) ·
+ordm(at) = ordma.
+
+d , o que nos leva a concluir que ordm(at) = k
+
+Corolário 4.9. ordm(at) = ordma se, e somente se, (k, t) = 1, onde k = ordma.
+
+Demonstração: Pela Proposição 4.8, (k, t) · ordm(at) = ordma. Logo (k, t) = 1 se, e
+somente se, ordm(at) = ordma.
+
+4.2 raízes primitivas módulo m
+
+De posse da deﬁnição de ordem de um inteiro a módulo m e das propriedades apresentadas,
+podemos deﬁnir o que é uma raiz primitiva módulo m.
+
+Deﬁnição 4.10. Se ordma = φ(m) dizemos que a é uma raiz primitiva módulo m.
+
+Exemplo 4.11. O número 2 é uma raiz primitiva módulo 5. De fato, temos que:
+
+21 = 2 ≡ 2 (mod 5),
+22 = 4 ≡ 4 (mod 5),
+23 = 8 ≡ 3 (mod 5) e
+24 = 16 ≡ 1 (mod 5).
+
+Portanto, a ordem de 2 módulo 5 é 4, que corresponde a φ(5) = 5 − 1 = 4.
+
+Proposição 4.12. Seja a uma raiz primitiva módulo m. Então, at é uma raiz primitiva
+módulo m se, e somente se, (t, φ(m)) = 1.
+
+Demonstração: Se a é uma raiz primitiva módulo m, então ordma = φ(m).
+
+Se at é raiz primitiva módulo m, então ordm(at) = ordma e, do Corolário 4.9, temos
+que (t, φ(m)) = 1. Por outro lado, se (t, φ(m)) = 1, então ordm(at) = ordma e, portanto,
+at é raiz primitiva módulo m.
+
+Proposição 4.13. Um inteiro positivo m que possui uma raiz primitiva, possui exata-
+mente φ(φ(m)) raízes primitivas incongruentes.
+
+Demonstração: Seja a uma raiz primitiva módulo m. Note que a, a2, a . . . , aφ(m) forma
+um sistema reduzido de resíduos módulo m. Pela Proposição 4.12, at é raiz primitiva se,
+e somente se, (t, φ(m)) = 1. A quantidade de t0s tal que (t, φ(m)) = 1, 1 ≤ t ≤ φ(m), é
+φ(φ(m)).
+
+Exemplo 4.14. Temos que 5 possui uma raiz primitiva: 2. Logo, 5 possui φ(φ(5)) =
+φ(4) = 2 raízes primitivas, a saber 2 e 3.
+
+4.3 raízes primitivas módulo p, p primo
+
+52
+
+4.3 raízes primitivas módulo p, p primo
+
+Proposição 4.15. Sejam p um primo ímpar e d um divisor positivo de p − 1. Então o
+número de inteiros incongruentes módulo p tendo ordem igual a d é φ(d).
+
+Demonstração: Da Proposição 3.44, temos:
+
+Tomando n = p − 1, temos:
+
+φ(d) = n.
+
+X
+
+d|n
+
+X
+
+d|(p−1)
+
+φ(d) = p − 1.
+
+Agora, vamos tomar o conjunto B = {1, 2, . . . , p − 1} e dividi-lo em subconjuntos Bd para
+cada divisor d de p − 1, de modo que Bd = {a ; ordpa = d}. Note que esses subconjuntos
+são disjuntos e a sua união resulta em B, pois pelo Corolário 4.5, a ordem de qualquer
+inteiro positivo a tal que (a, p) = 1 divide φ(p) = p − 1.
+Considere g(d) o número de elementos de Bd. Então,
+
+De onde, podemos concluir:
+
+X
+
+d|(p−1)
+
+g(d) = p − 1.
+
+X
+
+d|(p−1)
+
+(φ(d) − g(d)) = 0
+
+Precisamos mostrar que φ(d) = g(d) para todo d tal que d | (p − 1).
+
+Suponha g(d) 6= 0, isto é, Bd 6= φ. Considere a ∈ Bd, então ordpa = d, ou seja,
+
+ad ≡ 1 (mod p).
+
+Como a, a2, . . . , ad são todos incongruentes módulo p, Corolário 4.7, todas essas po-
+
+tências são soluções de xd ≡ 1 (mod p).
+
+Pelo Teorema 3.55 de Lagrange, sendo p primo xd − 1 ≡ 0 (mod p) tem no máximo
+d soluções incongruentes módulo p. Portanto, estes d números a, a2, . . . , ad são todas as
+soluções incongruentes módulo p de xd − 1 ≡ 0 (mod p). Logo, todo elemento de Bd é da
+forma at para algum t ∈ {1, 2, . . . , d}. Mas, pelo Corolário 4.7, ordp(at) = ordpa = d se,
+e somente se, (t, d) = 1. Portanto, dentre os números a, a2, . . . , ad existem exatamente
+φ(d) com ordem igual a d. Isto nos garante que g(d) = φ(d). Agora, se g(d) = 0, então
+φ(d) deveria ser zero, o que não ocorre. Portanto, g(d) = φ(d), para todo d que divide n.
+
+4.4 raízes primitivas módulo pt, p primo ímpar, t > 1 inteiro
+
+53
+
+Exemplo 4.16. Consideremos p = 7 e {1, 2, 3, 6} o conjunto dos divisores de p − 1 = 6.
+Vamos separar o conjunto B = {1, 2, 3, 4, 5, 6} em subconjuntos para cada divisor de 6:
+
+B1 = {1},
+
+B2 = {6},
+
+B3 = {2, 4} e
+
+B6 = {3, 5}.
+
+Note que φ(1) = 1, φ(2) = 1, φ(3) = 2 e φ(6) = 2, que correspondem a exatamente a
+quantidade de elementos dos conjuntos B1, B2, B3 e B6, respectivamente.
+
+Proposição 4.17. Todo número primo ímpar possui uma raiz primitiva
+
+Demonstração: Essa propriedade é consequência imediata da Proposição 4.15. Como
+φ(p) = p − 1 é um divisor de p − 1, existem φ(φ(p)) = φ(p − 1) raízes primitivas módulo
+p.
+
+Exemplo 4.18. Considerando o número primo ímpar 7, temos:
+
+31 = 3 (mod 7)
+32 = 9 = 2 (mod 7)
+33 = 27 = 6 (mod 7)
+34 = 81 = 4 (mod 7)
+35 = 243 = 5 (mod 7)
+36 = 729 = 1 (mod 7)
+
+Portanto, 3 é raiz primitiva módulo 7.
+
+4.4 raízes primitivas módulo pt, p primo ímpar, t > 1 inteiro
+
+Proposição 4.19. Se a é uma raiz primitiva módulo p, então a + p também é.
+
+Demonstração: Note que queremos mostrar que ordp(a + p) = φ(p).
+Suponha
+(a + p)n ≡ 1 (mod p), para n < φ(p). Como (a + p)n ≡ an (mod p), temos um ab-
+surdo, pois a é raiz primitiva. Logo, a + p tem ordem φ(p) e também é raiz primitiva
+módulo p.
+
+Proposição 4.20. Existe r, raiz primitiva módulo p, p primo ímpar, para a qual a seguinte
+relação se veriﬁca:
+
+rp−1 6≡ 1(mod p2)
+
+Demonstração: Pelo Teorema 4.17 existe r uma raiz primitiva módulo p. Se r ve-
+riﬁca a propriedade rp−1 6≡ 1 (mod p2), não há o que demonstrar. Caso contrário, se
+
+4.4 raízes primitivas módulo pt, p primo ímpar, t > 1 inteiro
+
+54
+
+rp−1 ≡ 1 (mod p2), vamos mostrar que b = r + p é uma raiz primitiva módulo p que
+satisfaz a propriedade desejada.
+
+Temos que
+
+bp−1 = (r + p)p−1
+!
+ p − 1
+p−1
+X
+i
+
+=
+
+i=0
+
+rp−1−ipi
+
+= rp−1 + (p − 1)rp−2p +
+
+p−1
+X
+
+i=2
+
+!
+
+ p − 1
+i
+
+rp−1−ipi.
+
+Note que todo termo da última soma acima possui o fator p2. Logo, módulo p2, temos:
+
+bp−1 ≡ 1 + rp−2(p2 − p) ≡ 1 − prp−2 (mod p2).
+
+Como estamos supondo que rp−1 ≡ 1 (mod p2), temos que bp−1 6≡ 1 (mod p2), pois a
+congruência prp−2 ≡ 0 (mod p2) não pode ser verdadeira, uma vez que ela implicaria
+rp−2 ≡ 0 (mod p), o que não pode ocorrer sendo r uma raiz primitiva e (r, p) = 1. Isto
+mostra que b satisfaz a propriedade desejada.
+
+Proposição 4.21. Se a for uma raiz primitiva módulo p, p primo ímpar, com
+ap−1 6≡ 1 (mod p2), então
+
+aφ(pt−1) 6≡ 1 (mod pt)
+
+para todo t ≥ 2.
+
+Demonstração: Vamos demonstrar essa propriedade por indução em t.
+
+Para t = 2, temos:
+
+aφ(p2−1) = aφ(p) = ap−1 6≡ 1 (mod p2).
+
+Portanto, a propriedade é válida para t = 2.
+
+Suponha que a propriedade seja válida para t, vamos veriﬁcar se, nessas condições, ela
+
+permanece válida para t + 1.
+
+Como (a, p) = 1, pois a é uma raiz primitiva, temos que (a, pt−1) = 1 e, portanto,
+
+pelo Teorema de Euler, Teorema 3.50,
+
+aφ(pt−1) ≡ 1 (mod pt−1).
+
+Então, existe um inteiro n tal que
+
+aφ(pt−1) = 1 + npt−1.
+
+Este inteiro n não é divisível por p, pois se tivéssemos n = kp, teríamos:
+
+aφ(pt−1) = 1 + kpt,
+
+(1)
+
+4.4 raízes primitivas módulo pt, p primo ímpar, t > 1 inteiro
+
+55
+
+o que contradiz a hipótese de indução. Sabendo que p6 | n, elevamos ambos os membros
+de (1) à potência p.
+
+[aφ(pt−1)]p = apφ(pt−1)
+
+= (1 + npt−1)p
+ p
+i
+
+p
+X
+
+=
+
+!
+
+(npt−1)i
+
+!
+
+i=0
+ p
+0
+
+=
+
++
+
+ p
+1
+
+!
+
+npt−1 +
+
+ p
+2
+
+!
+
+n2p2(t−1) +
+
+!
+
+p
+X
+
+i=3
+
+ p
+i
+
+(npt−1)i
+
+= 1 + npt +
+
+p(p − 1)
+2
+
+n2p2t−2 +
+
+p
+X
+
+!
+
+ p
+i
+
+(npt−1)i
+
+= 1 + npt +
+
+p − 1
+2
+
+n2p2t−1 +
+
+p
+X
+
+!
+
+i=3
+ p
+i
+
+i=3
+
+(npt−1)i.
+
+Mas, sendo 3t − 3 = t + (2t − 3) ≥ t + 1 para t ≥ 2, todo termo da soma
+
+!
+
+p
+X
+
+i=3
+
+ p
+i
+
+(npt−1)i
+
+possui uma potência de p que é maior do que ou igual a pt+1.
+
+Como 2t − 1 ≥ t + 1, para t ≥ 2, as igualdades acima nos garantem que
+
+De onde,
+
+apφ(pt−1) ≡ 1 + npt (mod pt+1).
+
+aφ(pt) 6≡ 1 (mod pt+1),
+
+uma vez que p6 | n. Mas isto é a propriedade desejada com t + 1 no lugar de t.
+
+Proposição 4.22. Se p é um primo ímpar, então uma raiz primitiva módulo p é também
+uma raiz primitiva módulo pt, para t > 1 se, e somente se, ap−1 6≡ 1 (mod p2).
+
+Demonstração: Seja a uma raiz primitiva módulo p e suponhamos que a também seja
+uma raiz primitiva módulo pt, para t > 1. Ou seja, aφ(pt) ≡ 1 (mod pt), o que, pela
+Proposição 3.42, equivale a
+
+apt−pt−1
+
+= 1 + kpt ⇔
+apt−2(p2−p) = 1 + kpt ⇔
+apt−2(p2−p) ≡ 1 (mod p2) ⇔
+ap2−p ≡ 1 (mod p2).
+
+Neste caso, a é raiz primitiva módulo p2 o que implica em
+
+ap−1 6≡ 1 (mod p2),
+
+4.4 raízes primitivas módulo pt, p primo ímpar, t > 1 inteiro
+
+56
+
+caso contrário, teríamos uma contradição, pois p − 1 < p(p − 1) = φ(p2).
+
+Para provar a recíproca, suponha que a seja uma raiz primitiva módulo p e
+ap−1 6≡ 1 (mod p2). Vamos mostrar que a também é uma raiz primitiva módulo pt, para
+todo t ≥ 2.
+
+Precisamos mostrar que
+
+k = ordpta = φ(pt).
+
+Como ak ≡ 1 (mod pt) temos que ak ≡ 1 (mod p). Pela Proposição 4.8, φ(p) | k. Logo,
+k = nφ(p). Mas sendo k = ordpta, temos que k | φ(pt) e, portanto, nφ(p) | φ(pt). Como
+φ(pt) = pt−1(p − 1) temos que,
+
+n(p − 1) | pt−1(p − 1) implica n | pt−1.
+
+Como p é primo, n = ph, h ≤ t − 1. Portanto, k = phφ(p) = ph(p − 1).
+
+Precisamos mostrar que h = t − 1. Vamos supor que h < t − 1, isto é, h ≤ t − 2.
+
+Neste caso, teríamos
+
+k = ph(p − 1) | pt−2(p − 1) = φ(pt−1)
+
+Isto nos diz que φ(pt−1) é um múltiplo de k e, portanto,
+
+aφ(pt−1) ≡ 1(mod pt)
+
+o que contradiz a Proposição 4.21. Logo, h = t − 1 implica n = pt−1, que implica em
+k = pt−1φ(p) = pt−1(p − 1) = φ(pt).
+
+Exemplo 4.23. Considerando p = 5, temos que 2 é raiz primitiva módulo 5. Note que
+25−1 = 24 = 16 6≡ 1 (mod 52). Então, pela Proposição 4.22, 2 é raiz primitiva módulo 5t
+para todo t > 1.
+
+Teorema 4.24. Se p é primo ímpar, então pt possui raiz primitiva para t > 1.
+
+Demonstração: Pela Proposição 4.20, existe a, raiz primitiva módulo p, tal que
+ap−1 6≡ 1 (mod p2). Pela Proposição 4.22, a é raiz primitiva módulo pt para t > 1.
+
+Exemplo 4.25. Seja p = 29. Temos que 14 é raiz primitiva módulo 29. Porém,
+14p−1 = 1428 ≡ 1 (mod 292). Então, 14 não é raiz primitiva módulo 292. Por outro
+lado, 2 é raiz primitiva módulo 29 e 228 ≡ 30 (mod 292). Então, 2 é raiz primitiva módulo
+292.
+
+Com os resultados anteriores, provamos a existência de raízes primitivas módulo pt
+para p um primo ímpar. Com o argumento que utilizamos na demonstração da Proposição
+4.19, concluímos que se a é uma raiz primitiva módulo pt, então a + pt também será. Como
+ou a ou a + pt é um número ímpar, temos que pt possui sempre uma raiz primitiva ímpar.
+
+4.5 raízes primitivas módulo 2pt, p primo ímpar
+
+57
+
+4.5 raízes primitivas módulo 2pt, p primo ímpar
+
+Teorema 4.26. Para p um primo ímpar, 2pt possui raiz primitiva.
+
+Demonstração: Como vimos, pt possui raiz primitiva ímpar. Considere a uma raiz
+primitiva ímpar módulo pt. Vamos provar que a é, também, raiz primitiva módulo 2pt.
+Temos que, (a, 2pt) = 1, pois a é ímpar e 1 < a < p. Seja k = ord2pta. Precisamos
+mostrar que k = φ(2pt). Sabemos que k | φ(2pt). Sendo φ(2pt) = φ(pt), k | φ(pt). Mas
+como ak ≡ 1 (mod 2pt) temos ak ≡ 1 (mod pt). Logo, sendo a uma raiz primitiva módulo
+pt, podemos concluir que φ(pt) | k. Portanto, k = φ(2pt), isto é, a é uma raiz primitiva
+módulo 2pt.
+
+4.6 números que possuem raízes primitivas
+
+Nesta seção iremos mostrar quais números possuem raízes primitivas. Antes, porém,
+iremos apresentar dois resultados que nos mostram quais potências de 2 não possuem raiz
+primitiva.
+
+Proposição 4.27. Para k inteiro, k ≥ 3 e a um inteiro ímpar, temos
+
+φ(2k )
+
+2 ≡ 1 (mod 2k).
+
+a
+
+Demonstração: A demonstração será feita por indução em k.
+2 = a2.
+
+Para k = 3, temos φ(23) = φ(8) = 4, logo, a
+Como a é ímpar, podemos representar a = 2n + 1, para algum n inteiro. Logo:
+
+2 = a
+
+φ(23)
+
+4
+
+a2 = (2n + 1)2 = 4n2 + 4n + 1 = 4n(n + 1) + 1.
+
+Como n(n + 1) é par, temos que 4n(n + 1) é múltiplo de 8. Então, a2 ≡ 1 (mod 8) e,
+portanto, a2 ≡ 1 (mod 23).
+
+φ(2k )
+
+a
+
+Agora, suponha que essa propriedade seja válida para algum k inteiro, k ≥ 3, ou seja,
+2 ≡ 1 (mod 2k). Vamos veriﬁcar se essa propriedade vale para k + 1.
+Podemos escrever, pela Proposição 3.42:
+φ(2k )
+
+a
+
+2 = a
+
+2k−2k−1
+2
+
+2k−1(2−1)
+2
+
+= a
+
+= a
+
+2k−1
+2 = a2k−2
+
+.
+
+Então,
+
+Assim, a2k−2
+
+= 1 + m · 2k, para algum m ∈ Z. De onde,
+
+φ(2k )
+
+2 = 2k−2 ≡ 1 (mod 2k)
+
+a
+
+(cid:18)
+
+a2k−2 (cid:19)2
+a2k−1
+a2k−1
+a2k−1
+
+(cid:16)
+
+1 + m · 2k(cid:17)2
+
+=
+
+⇔
+
+= 1 + 2k+1 · m + m2 · 22k ⇔
+m + m2 · 2k−1(cid:17)
+= 1 + 2k+1 (cid:16)
+(cid:16)
+
+mod 2k+1(cid:17)
+
+.
+
+≡ 1
+
+⇔
+
+4.6 números que possuem raízes primitivas
+
+58
+
+que
+
+= a
+
+essa
+2k+1−2k
+2
+
+última
+= a2k−1
+
+relação
+
+de
+
+congruência
+
+corresponde
+
+à
+
+relação
+
+≡ 1 (mod 2k+1). Portanto, a propriedade é válida para
+
+Perceba
+φ(2k+1)
+2
+
+a
+k + 1.
+
+Como essa propriedade é válida para k = 3 e, supondo ela válida para algum k inteiro,
+mostramos que ela também é válida para k + 1, podemos concluir que essa propriedade é
+válida para todo k ≥ 3.
+
+Teorema 4.28. 2k não possui raiz primitiva se, e somente se, k ≥ 3.
+
+Demonstração:
+
+Se k ≥ 3, vimos na Proposição 4.27 que se a é ímpar,
+φ(2k )
+2 ≡ 1 (mod 2k). Portanto, ord2ka < φ(2k). Logo, a não é raiz primitiva módulo
+
+a
+2k. Para k = 1, temos que ord21 = 1 = φ(2). Para k = 2, temos ord43 = 2 = φ(4).
+
+Agora vamos analisar outros valores de m.
+
+Exemplo 4.29. Seja m = 15. Temos que m não possui raiz primitiva. De fato, tomando
+o conjunto {a ; (a, 15) = 1} = {1, 2, 4, 7, 8, 11, 13, 14}, podemos perceber que ele possui 8
+elementos. Logo, φ(15) = 8. Então uma raiz primitiva módulo 15 deve ser um número
+inteiro k, com (k, 15) = 1, tal que k8 ≡ 1 (mod 15) e kj 6≡ 1 (mod 15) para todo 0 < j < 8.
+Temos que:
+
+• 2 não é raiz primitiva módulo 15, pois 24 = 16 ≡ 1 (mod 15);
+
+• 4 não é raiz primitiva módulo 15, pois 42 = 16 ≡ 1 (mod 15);
+
+• 7 não é raiz primitiva módulo 15, pois 74 = 2401 ≡ 1 (mod 15);
+
+• 8 não é raiz primitiva módulo 15, pois 84 = 4096 ≡ 1 (mod 15);
+
+• 11 não é raiz primitiva módulo 15, pois 112 = 121 ≡ 1 (mod 15);
+
+• 13 não é raiz primitiva módulo 15, pois 134 = 28561 ≡ 1 (mod 15) e
+
+• 14 não é raiz primitiva módulo 15, pois 142 = 196 ≡ 1 (mod 15).
+
+Portanto, 15 não possui raiz primitiva.
+
+Com o teorema a seguir mostraremos que nenhum número m, que não seja de uma
+
+das seguintes formas: 1, 2, 4, pt e 2pt, com p primo ímpar, possui raiz primitiva.
+
+Teorema 4.30. Se m ≥ 1 não é da forma 1, 2, 4, pt e 2pt (p primo ímpar), então m não
+possui raiz primitiva.
+
+Demonstração: Seja
+
+m = pt1
+
+1 pt2
+
+2 . . . pts
+s .
+
+Vamos supor que m possua uma raiz primitiva. Seja a uma raiz primitiva módulo m.
+Logo, (a, m) = 1 e ordma = φ(m). Como (a, m) = 1, então, (a, pti
+i ) = 1, ∀i = 1, 2, . . . , s
+e ti ≥ 1. Assim, pelo Teorema de Euler, Teorema 3.50, temos
+
+4.6 números que possuem raízes primitivas
+
+59
+
+aφ(p
+
+ti
+i ) ≡ 1(mod pti
+
+i ).
+
+Como
+
+podemos considerar
+
+Então
+
+φ(m) = φ(pt1
+
+1 )φ(pt2
+
+2 ) . . . φ(pts
+
+s ),
+
+B = [φ(pt1
+
+1 ), φ(pt2
+
+2 ), . . . , φ(pts
+
+s )].
+
+aB ≡ 1 (mod pti
+
+i ), ∀i = 1, 2, . . . , s
+
+e, portanto, φ(m) ≤ B. Logo,
+1 )φ(pt2
+
+φ(pt1
+
+2 ) . . . φ(pts
+
+s ) ≤ [φ(pt1
+Mas, para que um produto de números seja menor do que ou igual ao mínimo múltiplo
+comum destes números, estes números, necessariamente, deverão ser relativamente primos
+dois a dois.
+
+2 ), . . . , φ(pts
+
+1 ), φ(pt2
+
+s )].
+
+Como φ(pt) = pt−1(p − 1) sabemos que este número é par para p ímpar ou se p =
+
+2, t ≥ 2. Disto concluímos que os números
+
+φ(pt1
+
+1 ), φ(pt2
+
+2 ), . . . , φ(pts
+s )
+
+serão primos, dois a dois, somente se s = 1 ou s = 2 e m = 2pt. Isso mostra que m, caso
+tenha raiz primitiva, deverá ser de forma pt ou 2pt (p primo ímpar). Como já provamos
+que números desta forma possuem raízes primitivas então, ser da forma 1, 2, 4, pt, 2pt é
+uma condição necessária e suﬁciente para que possua raiz primitiva.
+
+Saber quais números possuem raiz primitiva é uma informação interessante para en-
+
+contrar alguns grupos cíclicos, como mostra a deﬁnição a seguir.
+
+Deﬁnição 4.31. Se a é uma raiz primitiva módulo n, então a é um gerador de
+Z∗
+
+n = Zn − {0}. Portanto, (Z∗
+
+n, ·) é um grupo cíclico.
+
+Exemplo 4.32. Seja (Z∗
+
+5, ·). Temos que 3 é raiz primitiva módulo 5, pois
+
+31 ≡ 3 (mod 5)
+32 ≡ 4 (mod 5)
+33 ≡ 2 (mod 5)
+34 ≡ 1 (mod 5)
+
+Note que dado b ∈ Z∗
+3 é um gerador de Z∗
+
+5, temos que existe j ∈ Z, 0 < j < 5 tal que 3j ≡ b (mod 5). Portanto,
+5 e (Z∗
+
+5, ·) é um grupo cíclico.
+
+Proposição 4.33. (Z∗
+ímpar, t ≥ 1.
+
+n, ·) é um grupo cíclico se, e somente se, n = 2, 4, pt, 2pt; p primo
+
+Demonstração: Temos que, pela Deﬁnição 4.31, (Z∗
+n, ·) é um grupo cíclico se, e somente
+se, n possui uma raiz primitiva. Pelo Teorema 4.30, apenas números da forma 1, 2, 4, pt, 2pt
+possuem raiz primitiva.
+
+5
+
+A P L I C A Ç Õ E S N A C R I P T O G R A F I A
+
+Neste capítulo apresentaremos os logaritmos discretos, que apresentam forte ligação com
+as raízes primitivas. Além da aplicação desse tipo de logaritmo em um algoritmo cripto-
+gráﬁco de chave pública, conhecido como ElGamal.
+
+As principais referências utilizadas neste capítulo foram [2], [3], [5], [12] [13].
+
+5.1 logaritmos discretos
+
+Sejam p um inteiro primo e a uma raiz primitiva módulo p. Para todo inteiro b, tal que
+p6 | b, existe um único inteiro j, 0 ≤ j < p − 1, tal que:
+
+b ≡ aj (mod p).
+
+Deﬁnição 5.1. Denotamos j por dloga,p(b) e o chamamos índice do inteiro b na base a
+módulo p. Portanto, dloga,p(b) é o menor inteiro maior ou igual a zero, tal que:
+
+adloga,p(b) ≡ b (mod p)
+
+Exemplo 5.2. As potências de 2 módulo 5 são:
+
+20 ≡ 1 (mod 5),
+21 ≡ 2 (mod 5),
+22 ≡ 4 (mod 5),
+23 ≡ 3 (mod 5),
+24 ≡ 1 (mod 5),
+
+o que mostra que 2 é raiz primitiva módulo 5, pois 4 = φ(5) é o menor inteiro positivo
+m, tal que 2m ≡ 1 (mod 5).
+
+Com isso, podemos determinar o índice de um inteiro x na base 2 módulo 5, ou seja,
+
+dlog2,5(x).
+
+Note que dlog2,5(1) = 0, pois x = 0 é o menor expoente maior ou igual a zero tal que
+
+2x ≡ 1 (mod 5). Do mesmo modo, podemos obter a Tabela 3:
+
+x
+dlog2,5(x)
+
+1
+0
+
+2
+1
+
+4
+2
+
+3
+3
+
+Tabela 3: Índice de x na base 2 módulo 5
+
+60
+
+5.1 logaritmos discretos
+
+61
+
+Como vimos na Deﬁnição 4.31, se a é uma raiz primitiva módulo p, então a é um
+p. Portanto, se tomarmos o conjunto S = {aj ; 0 ≤ j < p − 1}, teremos
+p. Com isso, podemos interpretar dloga,p(x) como uma função com domínio no
+p = {1, 2, 3, . . . , p − 1} e imagem no conjunto {0, 1, 2, . . . , p − 2}. Essa função
+
+gerador de Z∗
+S = Z∗
+conjunto Z∗
+possui propriedades semelhantes às do logaritmo de números reais, veriﬁcadas a seguir.
+
+Proposição 5.3. Dados a uma raiz primitiva módulo p e x, y ∈ Z, tais que p6 | x e p6 | y,
+valem as seguintes propriedades:
+
+(i) dloga,p(1) = 0
+
+(ii) dloga,p(a) = 1
+
+(iii) dloga,p(xy) ≡ dloga,p(x) + dloga,p(y) (mod (p − 1))
+
+(iv) dloga,p(xr) ≡ r · dloga,p(x) (mod (p − 1)).
+
+Demonstração:
+
+(i) Como a0 = 1 ≡ 1 (mod p), temos que dloga,p(1) = 0 para todo a inteiro e p inteiro
+
+primo.
+
+(ii) Como a1 = a ≡ a (mod p), temos que dloga,p(a) = 1 para todo a inteiro e p inteiro
+
+primo.
+
+(iii) Note que adloga,p(x) ≡ x (mod p) e adloga,p(y) ≡ y (mod p). Multiplicando essas con-
+
+gruências, temos:
+
+adloga,p(x) · adloga,p(y) = adloga,p(x)+dloga,p(y) ≡ xy ≡ adloga,p(xy) (mod p).
+
+De onde,
+
+adloga,p(x)+dloga,p(y)−dloga,p(xy) ≡ 1 (mod p).
+
+Como a é raiz primitiva módulo p, ordpa = p − 1. Então,
+
+(p − 1) | dloga,p(x) + dloga,p(y) − dloga,p(xy)
+
+e,
+
+dloga,p(xy) ≡ dloga,p(x) + dloga,p(y) (mod (p − 1)).
+
+(iv) Como vale a propriedade (iii), podemos tomar y = x de modo a obter:
+
+dloga,p(x2) ≡ dloga,p(x) + dloga,p(x) = 2 · dloga,p(x) (mod (p − 1)).
+
+Note que podemos aplicar essa propriedade r − 1 vezes para obter
+
+5.1 logaritmos discretos
+
+62
+
+dloga,p(xr) = r · dloga,p(x) (mod (p − 1)).
+
+Exemplo 5.4. No Exemplo 5.2, vimos que, para x = 4, dlog2,5(4) = 2, e para x = 3,
+dlog2,5(3) = 3. Então:
+
+dlog2,5(12) = dlog2,5(4 · 3) = dlog2,5(4) + dlog2,5(3) = 2 + 3 ≡ 1 (mod 5),
+
+de acordo com a terceira propriedade. Do mesmo modo,
+
+dlog2,5(27) = dlog2,5(33) = 3 · dlog2,5(3) = 3 · 3 = 9 ≡ 1 (mod 4),
+
+de acordo com a quarta propriedade.
+
+Considere a função
+
+dloga,p(x) : Z∗
+
+p −→ {0, 1, . . . , p − 2}
+b 7−→ dloga,pb
+
+Como esta função apresenta as mesmas propriedades do logaritmo usual, temos a seguinte
+deﬁnição:
+
+Deﬁnição 5.5. A função dloga,p(x) : Z∗
+discreto de base a módulo p.
+
+p −→ {0, 1, . . . , p − 2} é chamada logaritmo
+
+Observação 5.6. De forma similiar, podemos generalizar o conceito de logaritmo discreto
+para qualquer grupo cíclico ﬁnito (G, ·). No entanto, para este trabalho consideramos
+apenas G = Z∗
+p.
+
+A ideia de logaritmos discretos apresenta importantes aplicações no campo da cripto-
+
+graﬁa, algumas das quais apresentaremos mais adiante.
+
+Vamos, agora, discutir o porquê dos logaritmos discretos serem interessantes para criar
+
+algoritmos criptográﬁcos.
+
+5.1.1 O Problema do Logaritmo Discreto
+
+Fixada a uma raiz primitiva módulo p e dado b ∈ Z∗
+p, o problema do logaritmo discreto
+consiste em encontrar x, 0 ≤ x ≤ (p − 2), tal que b ≡ ax (mod p). Em geral, dados b, a e
+p, é muito difícil calcular o logaritmo discreto quando p é um número primo formado por
+muitos algarismos.
+
+Exemplo 5.7. Determine dlog13,19(12).
+
+Como vimos no Exemplo 3.81, o número 13 é um gerador de Z∗
+
+19. Na tabela 2, podemos
+
+observar que 137 ≡ 12 (mod 19). Portanto, dlog13,19(12) = 7.
+
+5.2 o algoritmo criptográfico elgamal
+
+63
+
+Neste exemplo, utilizamos valores baixos, o que torna o problema de fácil resolução
+com o uso de um computador. No entanto, quando escolhemos o primo p e o gerador a de
+Z∗
+p convenientemente grandes, a resolução torna-se difícil até mesmo para um computador.
+Segundo [13], para impedir ataques, p deveria ter, pelo menos, 300 dígitos e p − 1 deveria
+ter, pelo menos, um fator primo grande.
+
+Essa diﬁculdade inspirou os matemáticos Bailey Whitﬁeld Diﬃe e Martin Edward
+Hellman a criarem um algoritmo de chave pública, conhecido como método de troca de
+chaves de Diﬃe-Hellman, que permite aos usuários uma troca de chaves em um meio
+inseguro. E, inspirado nesse método de troca de chaves, o matemático Taher Elgamal
+criou o algoritmo criptográﬁco de chave pública ElGamal, o qual apresentaremos a seguir.
+
+5.2 o algoritmo criptográfico elgamal
+
+O algoritmo ElGamal se inicia com a escolha de um grupo cíclico G, de ordem n e de um
+gerador g de G. Neste trabalho, vamos optar por G = Z∗
+p, o grupo das classes inversíveis
+módulo p, sendo p um número primo. O gerador de G será qualquer raiz primitiva módulo
+p e a ordem de G será p − 1.
+
+O algoritmo de criptograﬁa ElGamal foi inspirado no método de troca de chaves de
+
+Diﬃe-Hellman, o qual apresentamos a seguir.
+
+5.2.1 O método de troca de chaves de Diﬃe-Hellman
+
+A ideia dessa troca de chaves é baseada no princípio da troca de uma caixa com cadeados:
+Imagine que Maria deseja enviar uma caixa para João por um meio inseguro e deseja
+garantir que somente João será capaz de abrir essa caixa. O processo para realizar essa
+troca pode ser feito da seguinte forma:
+
+(i) Maria envia a caixa com um cadeado que só ela consegue abrir para o João.
+
+(ii) João recebe a caixa, coloca um cadeado que só ele consegue abrir nela e envia de
+
+volta para Maria.
+
+(iii) Maria recebe a caixa de volta, retira o seu cadeado e envia novamente para João,
+
+com o cadeado dele.
+
+(iv) Ao receber a caixa, João retira o seu cadeado e consegue abri-la.
+
+Perceba que para fazer esse processo, nem Maria e nem João precisam ter as chaves
+um do outro. Além disso, uma pessoa que intercepte essa troca de caixas não será capaz
+de abrir a caixa, pois não terá a chave de nenhum dos dois.
+
+O método de troca de chaves de Diﬃe-Hellman segue esse princípio e funciona da
+
+seguinte forma:
+
+5.2 o algoritmo criptográfico elgamal
+
+64
+
+(i) Maria e João combinam de utilizar um número inteiro primo p e uma raiz primitiva
+
+α módulo p.
+
+(ii) Maria escolhe um inteiro aleatório xm e envia para João ym, onde ym ≡ αxm (mod p).
+
+(iii) João escolhe um inteiro aleatório xj e envia para Maria yj, onde yj ≡ αxj (mod p).
+
+(iv) Ao receber yj, Maria calcula kmj, onde kmj ≡ yxm
+
+j
+
+(mod p).
+
+(v) João calcula kmj, onde kmj ≡ y
+
+xj
+m (mod p).
+
+Dessa forma, Maria e João conhecerão o valor de kmj, pois
+
+j ≡ (αxj )xm ≡ (αxm)xj ≡ y
+yxm
+
+xj
+m (mod p).
+
+Elementos públicos globais
+p e α
+
+Maria
+
+Escolhe:
+xm
+Calcula:
+ym ≡ αxm (mod p)
+
+Calcula:
+yxm
+j ≡ kmj (mod p)
+
+ym
+
+yj
+
+João
+
+Escolhe:
+xj
+Calcula:
+yj ≡ αxj (mod p)
+
+Calcula:
+xj
+m ≡ kmj (mod p)
+
+y
+
+Note que qualquer pessoa que tentar interceptar essa comunicação entre os dois terá
+acesso somente a α, p, ym e yj e, para calcular kmj, seria necessário conhecer o valor de xm
+ou de xj. Para determinar esses valores, seria necessário calcular o logaritmo discreto de
+ym módulo p ou de yj módulo p. Note que para valores de p, xm e xj grandes o suﬁciente,
+temos um problema computacionalmente complexo.
+
+Observação 5.8. O algoritmo pode ser implementado da mesma forma para qualquer
+grupo cíclico G de ordem n com gerador g.
+
+Exemplo 5.9. Imagine que Maria e João desejam trocar mensagens e vão utilizar o
+esquema de troca de chaves de Diﬃe-Hellman. Então, eles escolhem o primo p = 31 e o
+inteiro α = 3 raiz primitiva módulo 31. Maria escolhe o inteiro m = 10 e João escolhe o
+inteiro j = 17. A troca de chaves entre Maria e João está descrita no diagrama a seguir:
+
+(cid:47)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:38)
+(cid:38)
+(cid:120)
+(cid:120)
+(cid:15)
+(cid:15)
+(cid:111)
+(cid:111)
+5.2 o algoritmo criptográfico elgamal
+
+65
+
+Elementos públicos globais
+p = 31 e α = 3
+
+Maria
+
+Escolhe:
+xm = 10
+Calcula:
+ym ≡ 310 (mod 31)
+
+ym = 25
+
+João
+
+Escolhe:
+xj = 17
+Calcula:
+yj ≡ 317 (mod 31)
+
+Calcula:
+2210 ≡ 5 (mod 31)
+
+yj = 22
+
+Calcula:
+2517 ≡ 5 (mod 31)
+
+Perceba que ao ﬁnal desse processo, tanto Maria, quanto João conseguem obter o
+
+número 5 sem que esse valor seja trocado entre eles.
+
+Note que esse sistema não é totalmente seguro, pois é possível que um atacante, alguém
+desejando interceptar as mensagens, se passe por Maria e João e combine chaves secretas
+distintas com os dois. Nesse caso, esse atacante poderia interceptar toda as comunicações
+entre Maria e João. Portanto, para utilizar o esquema de troca de chaves de Diﬃe-Hellman,
+é necessário fazer uso de um esquema para garantir a autenticação. Neste trabalho não
+trataremos de autenticação, porém é possível encontrar esse conteúdo nas referências [3],
+[12] e [13].
+
+Apresentaremos, agora, o método para o envio de mensagens utilizando o algoritmo
+criptográﬁco ElGamal. Nesse método, o envio de mensagens será feito simultaneamente
+com a troca de chaves e a cada nova mensagem as chaves serão trocadas.
+
+5.2.2 Envio de mensagens
+
+Suponha que Maria deseja enviar uma mensagem para João. Para iniciar o processo, João
+deve criar uma chave pública, seguindo os passos a seguir.
+
+(i) João escolhe um grupo cíclico Z∗
+
+p e um gerador α de Z∗
+p.
+
+(ii) João escolhe uma chave particular xj, 1 < xj < p − 1 e calcula yj, onde
+
+yj = αxj (mod p).
+
+(iii) A chave pública de João será (p, α, yj).
+
+Para cifrar a mensagem M , Maria utiliza a chave pública de João (p, α, yj) e realiza
+
+os passos a seguir.
+
+(cid:47)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:38)
+(cid:38)
+(cid:120)
+(cid:120)
+(cid:15)
+(cid:15)
+(cid:111)
+(cid:111)
+5.2 o algoritmo criptográfico elgamal
+
+66
+
+(iv) Maria escolhe um número inteiro xm, 0 < xm < p − 1 e calcula:
+
+e
+
+c1 ≡ αxm (mod p)
+
+c2 ≡ M yxm
+
+j
+
+(mod p).
+
+(v) Maria envia para João a mensagem encriptada (c1, c2). Note que o tamanho da
+mensagem criptografada é maior do que o da mensagem que se deseja enviar.
+
+Para decifrar a mensagem, João utiliza (c1, c2) e aplica os passos a seguir:
+
+(vi) João calcula (yxm
+
+j
+
+)−1, da seguinte forma:
+
+(yxm
+j
+
+)−1 ≡ c
+
+p−1−xj
+1
+
+(mod p).
+
+De fato, c
+
+p−1−xj
+1
+
+≡ cp−1
+1
+
+−xj
+1 ≡ 1 · (αxm)−xj ≡ (αxj )−xm ≡ (yxm
+
+j
+
+c
+
+)−1 (mod p).
+
+(vii) João obtém M , da relação M ≡ c2(yxm
+
+j
+
+)−1 (mod p).
+
+O diagrama a seguir ilustra o funcionamento do algoritmo Elgamal para o envio de
+
+uma mensagem M .
+
+Elementos públicos globais
+p e α
+
+João
+Escolhe: xj
+Calcula: yj ≡ αxj (mod p)
+
+(p, α, yj)
+
+Maria
+Mensagem: M
+Escolhe: ym
+Calcula:
+
+c1 ≡ αxm (mod p) e c2 ≡ M · yxm
+
+(mod p)
+
+j
+
+(c1, c2)
+
+João
+Calcula: (yj)−1 ≡ c
+
+p−1−xj
+1
+
+(mod p)
+
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+5.2 o algoritmo criptográfico elgamal
+
+67
+
+Observação 5.10. Não é recomendado utilizar o mesmo valor de yj para encriptar mais
+de uma mensagem. Caso isso ocorra, um atacante que conhecer a mensagem e o par
+(c1,1, c2,1) de uma primeira troca de mensagens e (c1,2, c2,2) de uma segunda troca de
+mensagens, ele poderá encontrar m2 fazendo o seguinte cálculo: Sejam,
+
+c2,1 ≡ m1(yxm
+c2,2 ≡ m2(yxm
+
+j
+
+j
+
+)−1 (mod p),
+)−1 (mod p),
+
+então, m1
+m2
+calcular m2.
+
+≡ c2,1
+c2,2
+
+(mod p). Então, caso o atacante conheça m1, ele poderá facilmente
+
+Perceba que quebrar esse sistema é equivalente a quebrar o esquema de troca de chaves
+de Diﬃe-Hellman. Sempre que M é conhecido, calcular xj ou xm a partir de p, α, c1, c2 e
+yj é equivalente a calcular logaritmos discretos, pois tanto xj, quanto xm aparecem como
+expoentes.
+
+Para enviar uma mensagem, utilizando o algoritmo ElGamal, precisamos converter
+o texto em um valor numérico. Para tanto, geralmente se utiliza uma tabela ASCII
+(Figura 1), que estabelece valores numéricos para cada um dos caracteres que possam ser
+utilizados. Simpliﬁcamos essa ideia codiﬁcando algumas palavras por números de dois
+algarismos, apresentados na Tabela 4.
+
+ARITMÉTICA
+11
+CRIPTOGRAFIA 13
+17
+ELGAMAL
+19
+LOGARITMOS
+24
+MATEMÁTICA
+26
+PRIMOS
+28
+PROFMAT
+30
+RAÍZES
+
+Tabela 4: Tabela de códigos e palavras
+
+Utilizando os códigos da Tabela 4, podemos aplicar o algoritmo criptográﬁco ElGamal,
+
+como mostram os exemplos a seguir.
+
+Exemplo 5.11. Vamos enviar como mensagem a palavra PROFMAT, utilizando p = 31
+e α = 3, para facilitar os cálculos.
+
+Para criar uma chave pública, nosso destinatário deve escolher um número inteiro
+
+xj, 0 ≤ xj ≤ 30, por exemplo, xj = 20 e calcular:
+
+yj ≡ 320 (mod 31).
+
+Temos, yj = 5. Então, a chave pública do nosso destinatário será (31, 3, 5).
+
+5.2 o algoritmo criptográfico elgamal
+
+68
+
+Figura 1: Tabela ASCII. Disponível em:<https://ascii.cl/>. Acesso em 13 set. 2018
+
+Para enviar a mensagem PROFMAT, utilizamos o código M = 28 e escolhemos uma
+
+chave xm, 0 ≤ xm ≤ 30, por exemplo, xm = 17 e calculamos
+
+c1 ≡ 317 (mod 31).
+
+Portanto, c1 = 22. Calculando
+
+c2 ≡ 28 · 517 (mod 31),
+
+obtemos, portanto, c2 = 18, e a nossa mensagem m cifrada será o par (22, 18).
+Para decifrar a mensagem, nosso destinatário calcula (yxm
+
+)−1 ≡ 2231−1−20 ≡ 5 (mod 31)
+
+j
+)−1 ≡ 18 · 5 ≡ 28 (mod 31), obtendo 28 que é o código da
+
+e, depois, calcula M ≡ c2(yxm
+nossa mensagem.
+
+j
+
+5.2 o algoritmo criptográfico elgamal
+
+69
+
+Elementos públicos globais
+p = 31 e α = 3
+
+João
+Escolhe: xj = 20
+Calcula: yj = 5 ≡ 320 (mod 31)
+
+(31, 3, 5)
+
+Maria
+Mensagem: M = 28
+Escolhe: xm = 17
+Calcula:
+c1 = 22 ≡ 317 (mod 31) e c2 = 18 ≡ 28 · 517 (mod 31)
+
+(22, 18)
+
+João
+Calcula: (yj)−1 = 5 ≡ 2231−1−20 (mod 31)
+e calcula:M ≡ 18 · 5 (mod 31)
+M = 28
+
+Exemplo 5.12. Suponha que criamos uma chave pública (19, 13, 8) e a chave secreta
+xj = 5.
+
+Recebemos, então, a mensagem (17, 5) e desejamos desencriptá-la. Para tanto, calcu-
+
+lamos:
+
+E, em seguida, calculamos:
+
+(yxm
+j
+
+)−1 ≡ 1719−1−5 ≡ 11 (mod 19)
+
+M ≡ c2(yxm
+
+j
+
+)−1 ≡ 5 · 11 ≡ 17 (mod 19)
+
+Portanto, recebemos a mensagem ELGAMAL, de acordo com a Tabela 4.
+
+De posse do algoritmo de criptograﬁa ElGamal, elaboramos uma proposta didática
+que consiste em uma sequência didática para ser trabalhada com alunos do Ensino Médio,
+a qual apresentamos no próximo capítulo.
+
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+(cid:15)
+6
+
+P R O P O S TA D I D ÁT I C A
+
+Neste capítulo, apresentaremos uma sequência didática para aplicar os assuntos tratados
+ao longo dos demais capítulos. Esse tipo de sequência consiste em uma série de atividades
+devidamente organizadas para alcançar alguns objetivos de aprendizagem pré-deﬁnidos.
+
+6.1 sequência didática
+
+A presente sequência didática tem por objetivo propor uma sequência de atividades nas
+quais os alunos terão contato com conceitos básicos de Teoria dos Números e com uma
+aplicação prática desses conceitos em um algoritmo criptográﬁco. Com essas atividades,
+pretendemos que os alunos reconheçam a importância dos números inteiros e suas pro-
+priedades.
+
+6.2 público alvo
+
+Alunos de qualquer série do Ensino Médio, desde que já tenham sido apresentados ao
+conceito de logaritmo e suas propriedades.
+
+6.3 número de aulas previstas
+
+4 aulas
+
+6.4 objetivos de aprendizagem
+
+1. Reconhecer a importância dos números inteiros e suas propriedades para o desen-
+
+volvimento de sistemas de criptograﬁa.
+
+2. Compreender os conceitos de congruência modular e raízes primitivas.
+
+3. Relacionar o conceito de logaritmo discreto com o conceito de logaritmo de números
+
+reais e reconhecer as semelhanças de suas propriedades.
+
+4. Compreender o funcionamento do algoritmo criptográﬁco ElGamal e criptografar e
+
+descriptografar mensagens, utilizando esse algoritmo.
+
+70
+
+6.5 competência e habilidade previstas pela bncc
+
+71
+
+6.5 competência e habilidade previstas pela bncc
+
+A competência e a habilidade indicadas abaixo foram retiradas da Base Nacional Comum
+Curricular BNCC Ensino Médio [1].
+
+6.5.1 Competência especíﬁca 3
+
+Utilizar estratégias, conceitos e procedimentos matemáticos, em seus campos -
+Aritmética, Álgebra, Grandezas e Medidas, Geometria, Probabilidade e Esta-
+tística -, para interpretar, construir modelos e resolver problemas em diversos
+contextos, analisando a plausibilidade dos resultados e a adequação das solu-
+ções propostas, de modo a construir argumentação consistente.
+
+6.5.2 Habilidade
+
+(EM13MAT305) Resolver e elaborar problemas com funções logarítmicas nos
+quais é necessário compreender e interpretar a variação das grandezas envolvi-
+das, em contextos como os de abalos sísmicos, pH, radioatividade, Matemática
+Financeira, entre outros.
+
+6.6 desenvolvimento
+
+Nesta seção apresentaremos propostas para o desenvolvimento de cada uma das aulas.
+Pela necessidade de oferecer recursos para que os alunos compreendam o processo do
+algoritmo criptográﬁco ElGamal, algumas aulas apresentam uma característica mais ex-
+positiva.
+
+6.6.1 Aula 1: Aritmética modular e criação da calculadora de módulo
+
+Duração: 45 minutos.
+
+Local de desenvolvimento da atividade: sala de informática.
+
+Recursos necessários: lousa, giz, computadores com um software de planilhas eletrônicas
+
+instalado e projetor.
+
+Professor, inicie a aula explicando aos alunos que nas primeiras aulas eles irão trabalhar
+alguns conceitos que servirão de base para as atividades das aulas 3 e 4. Apresente a eles
+a deﬁnição de congruência, Deﬁnição 3.1. Para garantir a compreensão dessa relação de
+congruência, faça alguns exemplos com eles, como os apresentados a seguir.
+
+Exemplo 6.1. Veriﬁque se 19 e 36 são congruentes módulo 17.
+
+Solução: Como 19 = 1 · 17 + 2 e 36 = 2 · 17 + 2, temos que ambos os números
+apresentam resto 2 na divisão por 17. Assim, podemos aﬁrmar que 36 ≡ 19 ≡ 2 (mod 17).
+
+6.6 desenvolvimento
+
+72
+
+Exemplo 6.2. Veriﬁque se 23 e 46 são congruentes módulo 11.
+
+Solução: Como 23 = 2 · 11 + 1 e 45 = 4 · 11 + 2, temos que esses números não apre-
+sentam o mesmo resto na divisão por 11. Assim, podemos aﬁrmar que 46 6≡ 23 (mod 17).
+
+Aproveite esses exemplos para deixar os alunos mais familiarizados com as notações
+
+utilizadas.
+
+Explique aos alunos que, a partir desse momento, eles irão criar uma calculadora de
+
+módulo, utilizando um software de planilhas eletrônicas.
+
+A escolha por utilizar planilhas eletrônicas se deu porque esses softwares são de fácil
+acesso e muitos estudantes são minimamente familiarizados com as suas ferramentas. Para
+as imagens, utilizamos o software Excel, mas é possível utilizar qualquer outro software
+de planilha eletrônica, existem, inclusive, opções gratuitas.
+
+Ao abrir o software de planilhas eletrônicas, vocês encontrarão um ambiente com várias
+
+células para inserir informações, como mostra a Figura 2.
+
+Figura 2: Ambiente de um software de planilhas eletrônicas
+
+A calculadora que iremos criar funcionará da seguinte forma: ao escolhermos inteiros
+a e b, ela retornará o resultado de a módulo b, ou seja, o resto da divisão de a por b. Para
+tanto, precisamos selecionar as células que receberão essas informações e a célula que irá
+retornar o resultado. Podemos destacar as células utilizando as ferramentas de borda e
+cor. Na Figura 3, apresentamos uma sugestão, na qual optamos por inserir o valor de a
+na célula B1 e o valor de b na célula B2. Optamos, também, por retornar o resultado de
+a mod b na célula E1.
+
+Precisamos, agora, deﬁnir a a fórmula que retornará o resto da divisão de a por b. Va-
+mos observar o seguinte: se dividirmos um número a por b na calculadora, encontraremos
+um número inteiro ou um número decimal. Esse resultado será um número inteiro quando
+essa divisão apresentar resto zero. E, esse resultado será um número decimal quando essa
+divisão apresentar resto diferente de zero. Podemos obter o resto dessa divisão a partir
+da parte decimal do resultado, como mostramos no exemplo a seguir.
+
+6.6 desenvolvimento
+
+73
+
+Figura 3: Células que receberão os valores de a e b e célula que retornará a módulo b
+
+Exemplo 6.3. Ao dividir 19 por 4, obtemos 4, 75. A parte inteira desse número, re-
+presenta o quociente dessa divisão. O resto dessa divisão pode ser obtido a partir da
+multiplicação da parte decimal por 4. Ou seja, 0, 75 · 4 = 3 é o resto dessa divisão. De
+fato, 19 = 4 · 4 + 3.
+
+Assim, nós precisaremos tomar o resultado da divisão de a por b, obtido por B1/B2, e
+retirar dele a parte inteira desse número. Para isso, temos uma fórmula INT que retorna
+esse resultado. Então, se usarmos IN T (B1/B2) obteremos a parte inteira da divisão de
+a por b. Para obter apenas a parte decimal, fazemos: (B1/B2) − IN T (B1/B2). Como
+vimos no exemplo, devemos multiplicar a parte decimal por b, então fazemos ((B1/B2) −
+IN T (B1/B2)) ∗ B2. Para que o Excel entenda que é uma fórmula, inserimos o sinal “=”
+antes da fórmula, ou seja,
+
+= ((B1/B2) − IN T (B1/B2)) ∗ B2
+
+Essa será a fórmula que deverá ser inserida na célula E1, como mostra a Figura 4.
+Com essa fórmula o valor na célula retornará o resto da divisão de a por b. Então,
+podemos inserir alguns valores nas células B1 e B2, correspondentes a a e b, para testar a
+nossa calculadora. Escolhemos a = 29 e b = 3. Note que 29 = 3 · 9 + 2, então o resultado
+que a calculadora deverá retornar será 2, como mostra a Figura 5.
+
+Por ﬁm, basta salvar o arquivo para utilizar a calculadora de módulo nas atividades
+
+propostas, sempre que for necessário.
+
+Para ﬁnalizar a aula, apresente algumas propriedades da relação de congruência, pre-
+sentes nas Proposições 3.6, 3.7, 3.8 e 3.9. Para esse trabalho, não é necessário demonstrar
+essas propriedades para os alunos, apenas peça a eles que, em duplas, escolham exemplos e
+veriﬁquem a validade das propriedades apresentadas, utilizando a calculadora construída.
+
+6.6 desenvolvimento
+
+74
+
+Figura 4: Fórmula completa da calculadora de módulo.
+
+Figura 5: Teste da calculadora de módulo.
+
+6.6.2 Aula 2: Função φ de Euler, raízes primitivas e logaritmos discretos
+
+Duração: 45 minutos.
+
+Local de desenvolvimento da atividade: sala de aula.
+
+Recursos necessários: lousa e giz.
+
+Inicie a aula apresentando a deﬁnição da função φ de Euler, Deﬁnição 3.40 e trabalhe
+
+os seguintes exemplos.
+
+Exemplo 6.4. Encontre φ(4).
+
+Solução: O conjunto {0, 1, 2, 3, 4} é um sistema completo de resíduos módulo 4. Dentro
+desse conjunto, os elementos que são relativamente primos com 4 são apenas dois, {1, 3}.
+Então, φ(4) = 2.
+
+Exemplo 6.5. Encontre φ(7).
+
+6.6 desenvolvimento
+
+75
+
+Solução: O conjunto {0, 1, 2, 3, 4, 5, 6} é um sistema completo de resíduos módulo 7.
+Dentro desse conjunto, os elementos que são relativamente primos com 7 são apenas seis,
+{1, 2, 3, 4, 5, 6}. Então, φ(7) = 6.
+
+Exemplo 6.6. Encontre φ(3).
+
+Solução: O conjunto {0, 1, 2} é um sistema completo de resíduos módulo 3. Dentro
+desse conjunto, os elementos que são relativamente primos com 3 são apenas dois, {1, 2}.
+Então, φ(3) = 2.
+
+Exemplo 6.7. Encontre φ(11).
+
+Solução: O conjunto {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10} é um sistema completo de resíduos
+módulo 11. Dentro desse conjunto, os elementos que são relativamente primos com 11
+são apenas dez, {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}. Então, φ(11) = 10.
+
+Peça aos alunos que comparem os resultados dos exemplos. Destaque que nos três
+últimos exemplos estamos calculando a função φ de números primos e peça a eles que
+veriﬁquem se há alguma regularidade nos resultados. É esperado que os alunos consigam
+veriﬁcar que para p primo, φ(p) = p − 1.
+
+Em seguida, apresente a eles a deﬁnição de ordem de um inteiro a módulo m, Deﬁnição
+
+4.1 e o exemplo a seguir.
+
+Exemplo 6.8. Encontre a ordem de 3 módulo 5.
+
+Solução: Considerando as potências de 3 módulo 5, temos:
+
+31 = 3 ≡ 3 (mod 5)
+32 = 9 ≡ 4 (mod 5)
+33 = 27 ≡ 2 (mod 5)
+34 = 81 ≡ 1 (mod 5).
+
+Note que 4 é o menor expoente inteiro positivo pelo qual elevamos 3 e obtemos um número
+congruente a 1 módulo 5. Então, 4 é a ordem de 3 módulo 5.
+
+A partir da deﬁnição de ordem, apresente a deﬁnição de raiz primitiva módulo m,
+
+Deﬁnição 4.10 e o exemplo a seguir.
+
+Exemplo 6.9. Veriﬁque se 2 é raiz primitiva módulo 3.
+
+Solução: Considerando as potências de 2 módulo 3, temos:
+
+21 = 2 ≡ 2 (mod 3)
+22 = 4 ≡ 1 (mod 3).
+
+Note que 2 é o menor expoente inteiro positivo pelo qual elevamos 2 e obtemos um número
+congruente a 1 módulo 3. Além disso, φ(3) = 3 − 1 = 2. Então, ord32 = φ(3) = 2.
+Portanto, 2 é raiz primitiva módulo 3.
+
+6.6 desenvolvimento
+
+76
+
+Peça aos alunos que, em duplas, encontrem as raízes primitivas de 7, 10 e 13, utilizando
+
+a calculadora de restos para fazer os cálculos.
+
+Explique aos alunos que a deﬁnição e raízes primitivas será essencial para que eles com-
+preendam o conceito de logaritmo discreto, que será trabalhado a partir desse momento.
+
+Relembre com os alunos as propriedades dos logaritmos de números reais.
+
+1. logb 1 = 0
+
+2. logb b = 1
+
+3. logb (a · c) = logb a + logb c
+
+4. logb an = n · logb a
+
+Apresente a deﬁnição de logaritmo discreto, Deﬁnição 5.1 e Deﬁnição 5.5. Para que
+
+eles compreendam a deﬁnição, apresente o exemplo a seguir.
+
+Exemplo 6.10. Sabendo que 3 é raiz primitiva módulo 7, determine:
+
+(a) dlog3,7(3)
+
+(b) dlog3,7(4)
+
+(c) dlog3,7(6)
+
+Solução:
+
+(a) O dlog3,7(3) é o expoente ao qual elevamos 3 para obter um número equivalente a 3
+
+módulo 7. Como 31 = 3 ≡ 3 (mod 7), temos que dlog3,7(3) = 1.
+
+(b) O dlog3,7(4) é o expoente ao qual elevamos 3 para obter um número equivalente a 4
+
+módulo 7. Como 34 = 81 ≡ 4 (mod 7), temos que dlog3,7(4) = 4.
+
+(c) O dlog3,7(6) é o expoente ao qual elevamos 3 para obter um número equivalente a 6
+
+módulo 7. Como 33 = 27 ≡ 6 (mod 7), temos que dlog3,7(6) = 3
+
+Explique aos alunos que se estivéssemos trabalhando com um número primo muito
+grande, encontrar o logaritmo discreto de um número também muito grande seria muito
+trabalhoso. Essa diﬁculdade também se estende para computadores e, por esse motivo,
+esse problema é conhecido como o Problema do Logaritmo Discreto e é base para o algo-
+ritmo criptográﬁco ElGamal, que será trabalhado na aula seguinte.
+
+6.6.3 Aula 3: O algoritmo criptográﬁco ElGamal
+
+Duração: 45 minutos.
+
+Local de desenvolvimento da atividade: sala de informática.
+
+Recursos necessários: lousa, giz, computadores com um software de planilhas eletrônicas
+
+instalado e projetor.
+
+6.6 desenvolvimento
+
+77
+
+Inicie a aula apresentando aos alunos o funcionamento da troca de mensagens do
+algoritmo criptográﬁco ElGamal, Subseção 5.2.2. Faça o passo a passo dos Exemplos 5.11
+e 5.12 com os alunos, utilizando a calculadora de módulo para realizar os cálculos.
+
+Explique aos alunos que na aula seguinte eles irão trocar mensagens utilizando esse
+algoritmo. Para tanto, vamos fazer algumas adaptações na calculadora de módulo produ-
+zida na aula 1 para calcular os elementos do algoritmo ElGamal.
+
+Para adaptar a calculadora para calcular yj, seguimos os seguintes passos:
+
+• Em outra planilha escolhemos as células para inserir as informações de p, α e xj,
+
+além da célula que retornará o valor de yj, como mostra a Figura 6.
+
+Figura 6: Adaptação da calculadora de módulo para calcular a chave pública yj
+
+• Na célula que retornará o valor de yj, inserimos uma fórmula semelhante à utilizada
+na primeira planilha. Porém, o que estamos considerando como a aqui será αxj . Se
+inserirmos o valor de p na célula B1, o valor de α na célula B2 e o valor de xj na
+célula B3, a fórmula que deverá ser inserida na célula que retornará o valor de yj
+será:
+
+= (((B2ˆB3)/B1) − IN T ((B2ˆB3)/B1)) ∗ B1,
+
+como mostra a Figura 7.
+
+Feito isso, podemos testar a calculadora. Para tanto, vamos utilizar os valores presen-
+
+tes no Exemplo 5.11, como mostra a Figura 8.
+
+Podemos fazer o mesmo para adaptar a calculadora para calcular c1 e c2, seguindo os
+
+seguintes passos:
+
+• Em outra planilha escolhemos as células para inserir as informações de p, α, yj, xm
+e M , além das células que retornarão os valores de c1 e c2, como mostra a Figura 9.
+
+• Na célula que retornará o valor de c1, inserimos uma fórmula semelhante à utilizada
+nas outras planilhas. Porém, o que queremos calcular aqui é o resto da divisão de
+
+6.6 desenvolvimento
+
+78
+
+Figura 7: Fórmula da calculadora da chave pública yj
+
+Figura 8: Teste da calculadora da chave pública yj
+
+αxm por p. Se inserirmos o valor de α na célula B2, o valor de xm na célula B4 e o
+valor de p na célula B1, a fórmula que deverá ser inserida na célula que retornará o
+valor de c1 será: = (((B2ˆB4)/B1) − IN T ((B2ˆB4)/B1)) ∗ B1), como mostra a
+Figura 10.
+
+• Na célula que retornará o valor de c2, inserimos uma fórmula semelhante à utilizada
+nas outras planilhas. Porém, o que queremos calcular aqui é o resto da divisão de
+M · yxm
+por p. Se inserirmos o valor de M na célula B5, o valor de yj na célula B3,
+o valor de xm na célula B4 e o valor de p na célula B1, a fórmula que deverá ser
+inserida na célula que retornará o valor de c2 será:
+
+j
+
+= (((B5 ∗ (B3ˆB4))/B1) − IN T ((B5 ∗ (B3ˆB4))/B1)) ∗ B1,
+
+como mostra a Figura 11.
+
+6.6 desenvolvimento
+
+79
+
+Figura 9: Adaptação da calculadora de módulo para calcular a mensagem criptografada
+(c1, c2)
+
+Figura 10: Fórmula da calculadora de c1
+
+Figura 11: Fórmula da calculadora de c2
+
+6.6 desenvolvimento
+
+80
+
+Feito isso, podemos testar a calculadora. Para tanto, vamos, novamente, utilizar os
+
+valores presentes no Exemplo 5.11, como mostra a Figura 12.
+
+Figura 12: Teste da calculadora da mensagem criptografada (c1, c2)
+
+Para adaptar a calculadora para descriptografar a mensagem M , seguimos os seguintes
+
+passos:
+
+• Em outra planilha escolhemos as células para inserir as informações de p, xj, c1 e c2.
+)−1 e M , pois criaremos
+)−1 para facilitar a
+
+Além das células que retornarão os valores de c
+fórmulas para calcular os resultados auxiliares c
+escrita da fórmula para calcular M . A planilha ﬁcará como mostra a Figura 13.
+
+, (yxm
+j
+e (yxm
+j
+
+p−1−xj
+1
+
+p−1−xj
+1
+
+Figura 13: Adaptação da calculadora de módulo para descriptografar a mensagem M
+
+• Se inserirmos o valor de c1 na célula B3, o valor de xj na célula B2 e o valor de p
+
+na célula B1, a fórmula que retornará o valor de c
+
+(p−1−xj )
+1
+
+será:
+
+= B3ˆ(B1 − 1 − B2),
+
+6.6 desenvolvimento
+
+como mostra a Figura 14.
+
+81
+
+Figura 14: Calculadora de c
+
+(p−1−xj )
+1
+
+• Na célula que retornará o valor de (yxm
+
+j
+
+)−1, inserimos uma fórmula que irá calcular
+
+(p−1−xj )
+1
+
+o resto da divisão de c
+for retornado na célula
+por p. Se o valor de c
+E1 e o valor de p for inserido na célula B1, a fórmula que retornará o valor de
+(yxm
+j
+
+)−1 será:
+
+(p−1−xj )
+1
+
+= ((E1/B1) − IN T (E1/B1)) ∗ B1,
+
+como mostra a Figura 15.
+
+Figura 15: Calculadora de (yxm
+
+j
+
+)−1
+
+• Na célula que retornará o valor de M , inserimos a fórmula que irá calcular o resto
+)−1 por p. Se o valor de c2 for retornado na célula B4, o valor
+)−1 for retornado na célula E2 e o valor de p for inserido na célula B1, a
+
+da divisão de c2 · (yxm
+de (yxm
+fórmula que retornará o valor de M será:
+
+j
+
+j
+
+= (((B4 ∗ E2)/B1) − IN T ((B4 ∗ E2)/B1)) ∗ B1,
+
+6.6 desenvolvimento
+
+como mostra a Figura 16.
+
+82
+
+Figura 16: Calculadora de M
+
+Feito isso, podemos testar a calculadora. Para tanto, vamos, novamente, utilizar os
+valores presentes no Exemplo 5.11, como mostra a Figura 17.
+
+Figura 17: Teste da calculadora da mensagem M
+
+Para ﬁnalizar, peça aos alunos que salvem os arquivos, pois na aula seguinte eles farão
+
+uso dos mesmos para criptografar e descriptografar mensagens.
+
+6.6 desenvolvimento
+
+83
+
+6.6.4 Aula 4: Troca de mensagens criptografadas
+
+Duração: 45 minutos.
+
+Local de desenvolvimento da atividade: sala de informática.
+
+Recursos necessários: lousa, giz, computadores com software de planilhas eletrônicas ins-
+
+talado e projetor.
+
+Inicie a aula organizando os alunos em quatro grupos. Numere os grupos como 1, 2, 3
+
+e 4.
+
+Explique aos grupos que eles irão trocar mensagens entre eles, utilizando o algoritmo
+criptográﬁco ElGamal. Para tanto, eles irão criar uma tabela que relaciona algumas frases
+escolhidas com os números indicados na tabela da Figura 18.
+
+Figura 18: Tabela para codiﬁcar mensagens.
+
+Feito isso, explique aos alunos que eles trabalharão com o número primo 23 e com 7,
+que é uma raiz primitiva módulo 23. Peça a cada grupo i que crie a sua chave pública
+(23, 7, yi), escolhendo uma chave secreta xi, 0 < xi < 23 e calculando yi ≡ αxi (mod 23),
+utilizando a calculadora feita na aula anterior.
+
+Exponha as chaves públicas de todos os grupos, anotando-as na lousa.
+Peça aos grupos que escolham um grupo destinatário e envie a mensagem escolhida
+dentre as frases que eles criaram na tabela da Figura 18. A partir do código dessa frase
+e da chave pública do grupo destinatário, eles devem calcular a mensagem criptografada
+(c1, c2), utilizando a calculadora que eles produziram na aula anterior. Feito isso, eles
+devem enviar a mensagem criptografada para o grupo destinatário. Cuide para organizar
+o envio das mensagens de modo que todos os grupos enviem e recebam mensagens.
+
+Exemplo 6.11. Vamos supor que um grupo tenha codiﬁcado uma frase utilizando a 4a
+linha da tabela. Então, a frase ﬁcou codiﬁcada pelo número 11. Suponha, ainda, que este
+grupo tenha recebido a chave pública (23, 7, 5) do seu destinatário e escolhido a chave
+
+6.7 avaliação
+
+84
+
+secreta 12. Com essas informações, o grupo poderá utilizar as calculadoras construídas e
+obter a mensagem criptografada (16, 14) e envia essa mensagem para o grupo destinatário.
+
+Recebidas as mensagens, os grupos deverão descriptografá-las, utilizando a calculadora
+
+produzida na aula anterior.
+
+Exemplo 6.12. Ao receber a mensagem (16, 14), o grupo destinatário coloca essas infor-
+mações na calculadora de módulo e obtém o número 11 e descobre a frase que corresponde
+à mensagem.
+
+Durante os processos de criptografar e descriptografar as mensagens, caminhe pelos
+grupos, sanando dúvidas, e fazendo anotações a respeito da compreensão que os alunos
+apresentam sobre as etapas do algoritmo.
+
+6.7 avaliação
+
+Durante todas as etapas, procure observar a participação dos alunos e avaliar os conhe-
+cimentos adquiridos. Avalie a capacidade que os alunos apresentam de interpretar os
+conceitos novos e relacioná-los com conhecimentos prévios. Procure registrar os diálogos
+estabelecidos e recolher os registros de estratégias produzidos por eles.
+
+7
+
+C O N C L U S Õ E S
+
+Este trabalho teve por objetivo apresentar o conceito de raízes primitivas e sua im-
+portância para a deﬁnição de logaritmos discretos, que por sua vez apresenta grande
+relevância no desenvolvimento de algoritmos criptográﬁcos, como o ElGamal. Com isso,
+procuramos ressaltar a importância do conjunto dos números inteiros e suas propriedades
+para o desenvolvimento da Criptograﬁa, que é uma ciência cuja importância se faz cada
+vez maior diante do desenvolvimento da tecnologia relacionada à troca de mensagens.
+
+Propomos uma sequência didática, cujo público alvo são alunos do Ensino Médio, a
+qual tem por objetivo apresentar aos alunos conceitos básicos de Teoria dos Números, o
+conceito de raízes primitivas, a deﬁnição de logaritmos discretos e a aplicação destes na
+Criptograﬁa. A sequência proposta é uma sugestão para que o professor possa relacionar
+os logaritmos de números reais com os logaritmos discretos, levando o aluno a expandir a
+ideia de logaritmo e a compreender melhor suas propriedades. Além disso, essa sequência
+tem por objetivo estimular o raciocínio lógico; trabalhar com planilhas eletrônicas de uma
+forma diferente da forma como os alunos costumam trabalhar (apenas produzindo tabelas
+e gerando gráﬁcos); levar os alunos a perceberem como a Matemática está presente nas
+tecnologias e sobretudo mostrar aos alunos a importância dos números inteiros e suas
+propriedades.
+
+85
+
+R E F E R Ê N C I A S B I B L I O G R Á F I C A S
+
+[1] BRASIL. Ministério da Educação. Base Nacional Comum Curricular Ensino Médio
+
+– BNCC. Brasília, 2018.
+
+http://basenacionalcomum.mec.gov.br/wp-content/uploads/2018/06/
+
+BNCC_EnsinoMedio_embaixa_site_110518.pdf
+
+[2] COUTINHO, S. C. Números Inteiros e Criptograﬁa RSA. 2a Edição. Coleção Mate-
+
+mática e Aplicações. Rio de Janeiro: IMPA, 2014.
+
+[3] ELGAMAL, T. , A public key cryptosystem and a signature scheme based on discrete
+
+logarithms. IEEE Transactions on information theory, 1984, 473-481.
+
+[4] EVES, H. Introdução à história da matemática. Campinas: Editora da Unicamp,
+
+2004.
+
+[5] FIGUEIREDO, L. M. Introdução à Criptograﬁa v.2. Fundação CECIERJ. Rio de
+
+Janeiro: UFF/CEP-EB, 2010.
+
+[6] GARCIA, A. LEQUAIN, Y. Elementos de álgebra. 6a Edição. Projeto euclides. Rio
+
+de Janeiro: IMPA, 2013.
+
+[7] HEFEZ, A. Aritmética. Coleção PROFMAT. Rio de Janeiro: SBM, 2014.
+
+[8] MARTINEZ, F. B., MOREIRA, C. G., SALDANHA, N., TENGAN, E. Teoria dos
+números: um passeio com primos e outros números familiares pelo mundo inteiro. 4a
+Edição. Projeto Euclides. Rio de Janeiro: IMPA, 2015.
+
+[9] MILIES, C. P., COELHO, S. P. Números: uma introdução à matemática. 3a Edição.
+
+São Paulo: Edusp, 2003.
+
+[10] RIBENBOIM, P. Números Primos: Velhos Mistérios e Novos Records. Coleção Ma-
+
+temática Universitária. Rio de Janeiro: IMPA, 2014.
+
+[11] SANTOS, J. P. O. Introdução à Teoria dos Números. 3a Edição. Coleção Matemática
+
+Universitária. Rio de Janeiro: IMPA, 2015.
+
+[12] STALLINGS, W. Criptograﬁa e segurança de redes. 4a Edição. São Paulo: Pearson
+
+Prentice Hall, 2008.
+
+[13] STINSON, D. R. Cryptography theory and practice. 3a Edtion. Canada: Chapman &
+
+Hall/CRC - Taylor & Francis Group, 2006.
+
+86
+
+

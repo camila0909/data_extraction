@@ -1,0 +1,874 @@
+Grafos Eulerianos e Aplica(cid:231)ıes em Sala de Aula
+
+CØlio da Silva Cardoso
+
+1
+
+2
+FÆbio Alexandre de Matos
+
+Resumo: Apresentaremos neste trabalho um pequeno estudo sobre Grafos com o objetivo de desenvolver
+atividades para aplica(cid:231)ªo em sala de aula para alunos do 3o Ciclo do Ensino Fundamental.
+
+Palavras-chave: Grafo. Grafo Euleriano. Grafo Semi-euleriano. Algoritmo de Dijkstra. Homomor(cid:28)smo.
+Caminho. Matrizes. Graph. YEd GRadph Editor. Geogebra.
+
+1Aluno de Mestrado Pro(cid:28)ssional em MatemÆtica, turma 2012
+
+Institui(cid:231)ªo: Universidade Federal de Sªo Joªo del-Rei - UFSJ
+e-mail: tannuscardoso@yahoo.com.br
+
+2Professor Orientador do Trabalho de Conclusªo de Curso
+Departamento de MatemÆtica e Estat(cid:237)stica - DEMAT, UFSJ
+e-mail: fabio.ufsj@gmail.com
+
+1
+
+Introdu(cid:231)ªo
+
+O primeiro contato com Grafo aconteceu na gradua(cid:231)ªo da disciplina de matemÆtica discreta, matØria
+optativa que envolvia o estudo de algoritmos de computa(cid:231)ªo. A turma era composta em sua maioria por
+alunos da computa(cid:231)ªo e na Øpoca nªo foi dada a devida import(cid:226)ncia pois, dedicava vÆrias horas a estudo
+de CÆlculo III e F(cid:237)sica II.
+
+Depois de 14 anos de formado, o contato com grafos se deu a partir de um desa(cid:28)o proposto por um
+aluno do 9o ano do Ensino Fundamental na Escola da Rede de Contagem onde trabalhava como regente
+de aula de matemÆtica.
+
+Figura 1: Exemplo Passa tempo Grafo Euliano
+
+O desa(cid:28)o foi o seguinte: "Professor o senhor consegue passar o lÆpis por todos os pontos da (cid:28)gura
+
+sem levantar o lÆpis do papel e sem passar duas vezes pelo mesmo caminho? "
+
+Olhando para a (cid:28)gura, percebemos era necessÆrio passar por 5 pontos. Entªo, sem dar a devida
+aten(cid:231)ªo, come(cid:231)amos pelo primeiro ponto. Apontamos o lÆpis para o ponto 5, e para a minha surpresa
+nªo conseguimos. A cada tentativa que fracassavamos, o aluno ria e falava que conseguiu elaborar um
+problema em que eu nªo conseguiria resolver. Fui testando por todos os pontos da (cid:28)gura, atØ que pela
+quarta tentativa a solu(cid:231)ªo foi encontrada.
+
+O aluno trazia consigo vÆrias outras atividades em uma revista de passa tempo e em todas as
+(cid:28)guras expostas, era necessÆrio encontar uma maneira de contornar a (cid:28)gura sem levantar o lÆpis do papel
+passando pelo caminho uma œnica vez.
+
+Fiquei surpreso com o desa(cid:28)o que o aluno prop(cid:244)s, na qual as atividades usavam grafos e todas
+as respostas podiam ser encontradas na œltima folha da revista. Buscamos a resposta e vimos que a
+solu(cid:231)ªo come(cid:231)ava por um ponto espec(cid:237)(cid:28)co. Caso a pessoa come(cid:231)asse em outro ponto nªo encontraria a
+solu(cid:231)ªo. Na (cid:28)gura acima os pontos eram 1 e 2. Se partisse por outro ponto nªo conseguir(cid:237)amos resolver o
+problema. Todas as (cid:28)guras possu(cid:237)am apenas um par de pontos (serÆ chamado de vØrtices) do qual saiam
+uma quantidade (cid:237)mpar de linhas (que serÆ chamado de arestas). Em todos os desa(cid:28)os propostos pela
+revista, existia uma problemÆtica que consiste basicamente em come(cid:231)ar por vØrtices com arestas pares.
+Caso isto aconte(cid:231)a o desa(cid:28)o nªo serÆ vencido.
+
+Um problema clÆssico envolvendo um dos matemÆticos mais famosos, Euler. Em 1856, Euler foi
+visitar um amigo na cidade de K(cid:246)nigsberg, na Prœssia, hoje, com o nome de Kaliningrado. Na Øpoca a
+cidade possu(cid:237)a uma ilha rodeada pelo rio Prega com 7 pontes. Os habitantes da cidade perguntavam-se
+se existia um modo de atravessar as 7 pontes uma œnica vez sem passar duas vezes pela mesma ponte,
+
+2
+
+Figura 2: As pontes de K(cid:246)nigsberg
+
+Figura 3: Representa(cid:231)ªo em Grafo
+
+retornando sempre ao ponto de partida. Esse problema antigo possui as mesmas descri(cid:231)ıes do desa(cid:28)o do
+meu aluno.
+
+Euler, para tentar encontrar a solu(cid:231)ªo, usou um modelo simpli(cid:28)cado das liga(cid:231)ıes das regiıes, como
+mostra a (cid:28)gura 3 e estabeleceu uma teoria que se aplica a vÆrios problemas deste tipo. Este foi o primeiro
+problema envolvendo Grafo.
+
+Para podermos entender melhor Ø necessÆrio conhecer os conceitos bÆsicos de grafos como: vØrti-
+ces, arestas, caminhos, grau de cada vØrtice, la(cid:231)o, vØrtices adjacentes, etc. Veremos que a aplicabilidade
+de grafos hoje em dia Ø bastante divulgada nos vÆrios ramos da engenharia. Na engenharia de transportes
+em estudos de rotas de transporte, avia(cid:231)ªo e linhas de transmissªo de energia. Na engenharia elØtrica
+usado em constru(cid:231)ıes de placas de circuitos e circuitos elØtricos.
+
+Em redes sociais, as pessoas se interligam entre si atravØs da amizade. Se A Ø amigo de B e B Ø
+amigo de C, indiretamente, A estÆ "conectado"a C. O "Facebook "Ø um exemplo de rede de amigos que,
+no (cid:28)m das contas, Ø um grafo. As pessoas possuem amigos e estÆ "conectado"a eles. Estes, eventualmente
+estªo conectados a outras pessoas. podemos notar que quando se entra no per(cid:28)l de alguØm que nªo Ø
+conhecido (diretamente), o "Facebook"mostra um "caminho"de pessoas, que te liga a outra pessoa. Isto Ø
+um clÆssico problema de grafos. Devemos partir de uma pessoa (vocŒ) e, percorrendo seus relacionamen-
+tos, encontrar um "caminho"atØ outra pessoa.
+
+Num sistema de distribui(cid:231)ªo de Ægua, as casas estªo relacionadas entre si e entre as centrais de
+distribui(cid:231)ªo atravØs de tubula(cid:231)ıes de Ægua. Neste exemplo, consideramos as casas como vØrtices e as
+tubula(cid:231)ıes como arestas.
+
+Um outro exemplo Ø um mapa, onde as cidades sªo interligadas por rodovias. Para sair de uma
+cidade, com o aux(cid:237)lio de um "GPS", (cid:28)ca muito mais fÆcil, pois ele mostra todos os caminhos poss(cid:237)veis que
+ligam a cidade ao seu destino. Podemos enxergar o mapa como um grafo, onde as cidades sªo vØrtices e
+as rodovias de arestas.
+
+Daqui para frente explicaremos cada conceito e a sua visualiza(cid:231)ªo, em seguida esclareceremos
+alguns problemas que envolvem Grafos e por œltimo, uma aplica(cid:231)ªo em sala de aula para alunos com
+idade de 11 a 13 anos.
+
+3
+
+Figura 4: Grafo com 6 vØrtices, 8 arestas, simples, conexo, planar e semi-euleriano
+
+2 Grafos
+
+Grafo Ø conjunto de pontos e linhas. A estes pontos n(cid:243)s chamamos de vØrtice e as linhas denomi-
+
+namos de arestas.
+
+Pra nªo haver confusªo, indicaremos um grafo pela letra G. Representaremos por V (G) o conjunto
+dos vØrtices do grafo G, e por A(G) o conjunto das arestas de G. O que realmente interessa Ø quem sªo
+esses vØrtices (ou seja quem representarÆ o conjunto dos vØrtices), quem sªo as arestas e como esses dois
+conjuntos estªo ligados. No problema das pontes K(cid:246)nigsberg, os vØrtices sªo as margens do rio, e as pontes
+representam as arestas.
+
+VØrtice - Como foi dito anteriormente, sªo os pontos do grafo. TambØm, devemos considerar
+
+os chamados vØrtices adjacentes, aqueles vØrtices os quais estªo ligados por uma aresta.
+
+Na (cid:28)gura 4 por exemplo temos:
+
+VØrtices - V (G) = { 1 ,2 ,3 ,4 ,5 ,6 }
+
+Arestas - A(G) = { (1,3) (1,5) (2,4) (2,5) (2,6) (3,4) (4,5) (4,6) }
+
+VØrtice VØrtice adjacentes
+
+1
+2
+3
+4
+5
+6
+
+5, 3
+4, 5, 6
+1, 4
+2, 3, 5, 6
+1, 2, 4
+2, 4
+
+Tabela 1: VØrtices Adjacentes
+
+4
+
+Grau do vØrtice - (cid:201) o nœmero de vezes em que as arestas incidem sobre um determinado
+
+vØrtice. Podemos nomear de arestas incidentes no vØrtice. Na (cid:28)gura 4, por exemplo, temos:
+
+VØrtice Grau do VØrtice
+
+1
+2
+3
+4
+5
+6
+
+2
+3
+2
+4
+3
+2
+
+Tabela 2: Grau de cada vØrtice
+
+VØrtice isolado -
+
+Ø um vØrtice que nªo estÆ conectado a nenhum outro vØrtice do grafo.
+
+Nªo existe aresta incidente neste vØrtice. No grafo da Figura 5 o vØrtice 3 Ø um vØrtice isolado.
+
+Figura 5: Grafo com vØrtice isolado
+
+La(cid:231)o - Quando uma aresta pode ligar um vØrtice a ele mesmo, chamamos de la(cid:231)o. Neste caso,
+para determinar o grau do cada vØrtice, contamos o la(cid:231)o duas vezes, uma para cada extremidade. Isto Ø
+necessÆrio para haver uma coerŒncia.
+
+Figura 6: Grafo com la(cid:231)o e exemplo de multigrafo
+
+O grafo acima possui la(cid:231)os nos vØrtices 1,3, e 4.
+
+5
+
+Multigrafos - Quando dois vØrtices estªo ligados por mais de uma aresta. Veja (cid:28)gura acima
+os vØrtices 1 e 2 ; 1 e 4 ; 4 e 3 estªo ligados por mais de uma aresta. Todos os vØrtices possuem duas ou
+mais liga(cid:231)ıes entre vØrtices.
+
+Grafos em que nªo existem la(cid:231)os e nem arestas mœltiplas sªo considerados grafos simples, ou
+seja, cada vØrtice Ø conectado apenas uma œnica vez a outro vØrtice e o grafo nªo possue vØrtices isolados.
+
+Figura 7: Grafo desconexo
+
+Grafo Desconexo - Quando um grafo sofre um retalhamento (um corte). Os grafos sªo sepa-
+rados por um corte nas arestas, do qual o nœmero de vØrtices Ø o mesmo, mas o nœmero de arestas diminui.
+
+Grafo bipartido - (cid:201) o grafo cujos vØrtices podem ser divididos em dois subconjuntos, nos
+quais nªo hÆ arestas entre vØrtices de um mesmo conjunto. Para um grafo ser bipartido ele nªo pode con-
+ter circuitos de comprimento (cid:237)mpar. Se um grafo G Ø bipartido, todo o circuito de G possui comprimento
+par. Sejam V 1 e V 2 os dois conjuntos em que, de acordo com a de(cid:28)ni(cid:231)ªo de grafo bipartido, se particiona
+V (G). Toda a aresta de G conecta um vØrtice em V 1 com outro em V 2. Assim sendo, se X for um vØrtice
+de V 1, para ’voltar’ a esse vØrtice terÆ de se ir a V 2 e voltar a V 1 um nœmero indeterminado de vezes,
+e de cada vez serªo percorridas duas arestas, uma de um vØrtice em V 1 para um vØrtice em V 2 e outra
+de um vØrtice em V 2 para um vØrtice em V 1. Logo, o nœmero de arestas a percorrer serÆ par, ou seja,
+o comprimento do circuito Ø par. Conclui-se que todo o circuito de um grafo G possui comprimento par,
+entªo o grafo Ø bipartido.
+
+Para demonstrar, considere um grafo G em que todo o circuito tem comprimento par, e seja X
+um vØrtice de G. Denotemos por V 1 o conjunto formado por X e por todos os vØrtices cuja dist(cid:226)ncia
+a X Ø par. Seja V 2 = V (G) \ V 1 (isto Ø, o conjunto formado pelos vØrtices de G que nªo pertencem a
+V 1). Pretendemos mostrar que nªo existe qualquer aresta que conecte vØrtices de V 1 ou vØrtices de V 2.
+Suponhamos por absurdo a existŒncia de tal aresta, isto Ø, suponhamos a existŒncia de dois vØrtices em
+V 1 (ou V 2), digamos Xi e Xj, conectados por uma aresta. Como existe um caminho de comprimento
+par entre Xi e Xj, jÆ que existem caminhos, ambos de comprimento par (ou (cid:237)mpar, no caso de Xi e
+Xj pertencerem a V 2), entre Xi e X e entre X e Xj. Se a esse caminho juntarmos a aresta {Xi; Xj}
+teremos um circuito de comprimento (cid:237)mpar o que contraria a hip(cid:243)tese de apenas existirem circuitos de
+comprimento par.
+
+Grafo Completo - (cid:201) o grafo em que para cada vØrtice do grafo, existe uma aresta conectando
+este vØrtice a cada um dos demais. Ou seja, todos os vØrtices do grafo possuem mesmo grau. O grafo
+completo de n vØrtices Ø frequentemente denotado por Kn. Ele tem n(n−1)
+arestas (correspondendo a
+todas as poss(cid:237)veis escolhas de pares de vØrtices).
+
+2
+
+6
+
+Caminho - (cid:201) uma sequŒncia de vØrtices {v1, v2, ....., vn} tal que de cada um dos vØrtices existe
+uma aresta para o vØrtice seguinte. Um caminho Ø chamado simples se nenhum dos vØrtices no caminho
+se repete. O comprimento do caminho Ø o nœmero de arestas que o caminho usa, contando-se arestas
+mœltiplas vezes. Em rela(cid:231)ªo ao grafo proposto pelo aluno os vØrtices {1, 2, 4, 3, 5} representa um caminho
+simples. O custo de um caminho num grafo balanceado Ø a soma dos custos das arestas atravessadas.
+Dois caminhos sªo independentes se nªo tiverem nenhum vØrtice em comum, exceto o primeiro e o œltimo,
+sendo o custo o tamanho da aresta.
+
+Ciclo (ou circuito) - (cid:201) um caminho que come(cid:231)a e acaba com o mesmo vØrtice. Ciclos de
+comprimento 1 sªo la(cid:231)os. Em rela(cid:231)ªo ao grafo da introdu(cid:231)ªo, (cid:28)gura 1, se todas as arestas valem 1 entªo
+(1, 2, 3, 5, 4, 1) Ø um ciclo de comprimento 5. Um ciclo simples Ø um ciclo que tem um comprimento pelo
+menos de 3 e no qual o vØrtice inicial s(cid:243) aparece mais uma vez, como vØrtice (cid:28)nal, e os outros vØrtices
+aparecem s(cid:243) uma vez. Em rela(cid:231)ªo ao grafo da (cid:28)gura 1, {1, 2, 3, 1} Ø um ciclo simples. Um grafo chama-
+se ac(cid:237)clico se nªo contØm ciclos simples. Ciclo (ou circuito) Ø um caminho que come(cid:231)a e acaba com o
+mesmo vØrtice. Ciclos de comprimento 1 sªo la(cid:231)os. No grafo de exemplo, {1, 2, 3, 4, 5, 2, 1} Ø um ciclo de
+comprimento 6.
+
+2.1
+
+Isomor(cid:28)smo entre grafos
+
+Observe os grafos G e H da (cid:28)gura abaixo.
+
+Figura 8: Grafos Isomorfos
+
+A (cid:28)gura apresenta dois grafos diferentes mas que representam a mesma situa(cid:231)ªo. Os dois grafos
+apresentam 6 vØrtices e 10 arestas. Os dois tŒm as mesmas quantidades de vØrtices e de arestas que
+preservam as correspondŒncias.
+
+Ao estabelecer uma rela(cid:231)ªo entre os conjuntos dos vØrtices dos grafos G e H por uma fun(cid:231)ªo,
+temos uma rela(cid:231)ªo de correspondŒncia 1 − a − 1. Ou seja, ao tomarmos o vØrtice 1 do grafo G, a fun(cid:231)ªo
+farÆ uma correspondŒncia com o vØrtice A do grafo H. Assim como os vØrtices nªo adjacentes 1, 2, 5, e 4
+do vØrtice 1, a fun(cid:231)ªo levarÆ aos vØrtices nªo adjacentes B, D, E, F. do vØrtice A.
+
+Em teoria dos grafos, um isomor(cid:28)smo dos grafos G e H Ø uma bije(cid:231)ªo entre os conjuntos de vØrtices
+
+de G e H, ou seja,
+
+f : V (G) → V (H)
+
+7
+
+de tal forma que quaisquer dois vØrtices u e v de G sªo adjacentes em G se, e somente se f (u) e f (v) sªo
+adjacentes em H. Este tipo de bije(cid:231)ªo Ø comumente chamado de "bije(cid:231)ªo com preserva(cid:231)ªo de arestas". De
+acordo com a no(cid:231)ªo geral de isomor(cid:28)smo, uma bije(cid:231)ªo de preserva(cid:231)ªo-de-estrutura. Na de(cid:28)ni(cid:231)ªo acima,
+os grafos sªo entendidos como grafos nªo dirigidos, nªo-rotulados e nªo ponderados. No entanto, a no(cid:231)ªo
+de isomor(cid:28)smo pode ser aplicada a todas as outras variantes da no(cid:231)ªo de grafo, somando os requisitos
+necessÆrios para preservar os elementos adicionais correspondentes da estrutura: as dire(cid:231)ıes do arco, os
+pesos das arestas, etc, com a seguinte exce(cid:231)ªo: quando se fala em r(cid:243)tulo com r(cid:243)tulos exclusivos, geralmente
+tirados do intervalo inteiro 1, ..., n, onde n Ø o nœmero dos vØrtices do grafo, dois grafos rotulados sªo ditos
+isom(cid:243)r(cid:28)cos se os grafos subjacentes correspondentes nªo rotulados sªo isom(cid:243)r(cid:28)cos. Se um isomor(cid:28)smo
+existe entre dois grafos, entªo, esses grafos sªo chamados de isomorfos e n(cid:243)s denotamos por G (cid:39) H. No
+caso, quando a bije(cid:231)ªo Ø um mapeamento de um grafo em si mesmo, ou seja, quando G e H sªo um e
+o mesmo grafo, a bije(cid:231)ªo Ø chamada de automor(cid:28)smo de G. O isomor(cid:28)smo de grafos Ø uma rela(cid:231)ªo de
+equivalŒncia em grafos e, como tal, particiona as classes de todos os grafos em classes de equivalŒncia. Um
+conjunto de grafos isomorfos entre si Ø chamado de classe de isomor(cid:28)smo de grafos.
+
+2.2 Matriz associada a um grafo
+
+Podemos representar o Grafo por meio de matrizes, as quais possuem dois tipos diferentes: a matriz
+
+de adjacŒncia, e matriz de incidŒncia.
+
+A matriz de adjacŒncia Ø de(cid:28)nida por :
+
+xij =
+
+(cid:26) 1
+0
+
+se
+se
+
+ij ∈ A(G)
+(cid:54)∈ A(G)
+ij
+
+,
+
+onde A(G) representa o conjunto de arestas do Grafo G. Podemos perceber que se houver uma aresta
+que liga os vØrtices i a j, entªo xij = 1, caso contrÆrio xij = 0. como os elementos da linha e coluna sªo
+representados pelos seus vØrtices, Ø fÆcil perceber que a matriz de adjacŒnicia Ø uma matriz s(cid:237)mØtrica.
+
+A matriz de incidŒncia mostra como os vØrtices e seus respectivos vØrtices adjacentes estªo
+
+relacionados. Caso o vØrtice nªo seja adjacente valerÆ 0 e se for valerÆ 1.
+A matriz de incidŒncia, Ø uma matriz do tipo m x n de(cid:28)nido por :
+
+xij =
+
+(cid:26) 1
+0
+
+se a aresta ej
+se a aresta
+
+Ø incidente em
+
+vi
+ej nªo Ø incidente em vi
+
+Por exemplo, no grafo abaixo, os vØrtices A , C e D sªo vØrtices adjacentes do vØrtice B. Entªo, na
+matriz de adjacŒncia a segunda linha que corresponde ao vØrtice B possui valores 1 para vØrtices A , C e
+D, e 0 para o vØrtice B.
+
+Enquanto que, na matriz de incidŒncia, ao listarmos todas as arestas poss(cid:237)veis AB , AC , AD , BC , BD
+
+as arestas que possuem B como vØrtice atribuimos valor 1 como : AB , BC , BD e as outras valor 0 como
+AC e AD. Indicado na linha segunda linha dessa matriz.
+
+8
+
+A B C D
+
+AB AC AD BC BD
+
+A 0
+
+B 1
+
+C 1
+
+D 1
+
+1
+
+0
+
+1
+
+1
+
+1
+
+1
+
+0
+
+0
+
+1
+
+1
+
+0
+
+0
+
+A
+
+B
+
+C
+
+1
+
+1
+
+0
+
+D 0
+
+1
+
+0
+
+1
+
+0
+
+1
+
+0
+
+0
+
+1
+
+0
+
+1
+
+1
+
+0
+
+0
+
+1
+
+0
+
+1
+
+Matriz de adjacŒncia
+
+Matriz de incidŒncia
+
+Figura 9: Grafo
+
+Figura 10: Matriz Adjac.
+
+Figura 11: Matriz incidŒncia
+
+2.3 Grafo e Alguns Teoremas
+
+Seja o grafo G com n vØrtices, m arestas e d(vi) representa o grau do vØrtice vi, entªo:
+
+Teorema 2.1. A soma dos graus de um grafo G Ø sempre igual ao dobro do nœmero de arestas.
+
+Demonstra(cid:231)ªo:
+
+n
+(cid:88)
+
+i=1
+
+d(vi) = 2 · m
+
+Figura 12: aresta do grafo G
+
+Como o grau de um vØrtice Ø o nœmero de arestas que incidem sobre o mesmo, e cada aresta incide
+sobre dois vØrtices, ao contarmos os graus dos vØrtices, contamos as extremidades das arestas que saem
+de um vØrtice e aquelas que chegam a outro vØrtice, deste modo, estamos contando a aresta duas vezes,
+pois ela apresenta duas extremidades.
+
+Proposi(cid:231)ªo 2.1. Todo grafo G possui um nœmero par de vØrtices de grau (cid:237)mpar.
+
+Demonstra(cid:231)ªo:
+
+Considere um grafo G. Se ele possui um nœmero (cid:237)mpar de vØrtices de grau (cid:237)mpar, a soma dos graus
+tambØm seria impar. Mas, pelo teorema anterior, a soma dos graus de um grafo Ø o dobro do nœmero de
+arestas e portanto Ø um nœmero par. Logo, qualquer grafo, deve possuir um nœmero par de vØrtices de
+grau (cid:237)mpar.
+
+Lema 2.2. Se todo vØrtice de um grafo G (nªo necessariamente simples) tem grau maior ou igual a 2,
+entªo G contØm um ciclo.
+
+9
+
+Demonstra(cid:231)ªo:
+
+Se o grafo possui arestas mœltiplas ou um la(cid:231)o o teorema estÆ demonstrado. Vamos considerar
+entªo que G Ø um grafo simples no qual, escolhemos um vØrtice v0 para come(cid:231)armos a nossa trilha.
+Ao visitarmos o vØrtice vi estamos visitando-o pela primeira vez e podemos continuar ou chegaremos a
+um vØrtice jÆ visitado, produzindo um ciclo. Como o nœmero de vØrtices Ø (cid:28)nito, em algum momento
+iremos visitar um vØrtice pela segunda vez (passar por ele pela segunda vez) produzindo assim um ciclo,
+demonstrando o lema.
+
+Este lema Ø importante e necessÆrio para demonstrar o Teorema de Euler sobre grafos.
+
+3 Grafos Eulerianos
+
+Voltando ao problema do grafo da introdu(cid:231)ªo, dizemos que um grafo G com n vØrtices e m arestas
+Ø Euleriano se ele possui uma trilha fechada de mesmo comprimento m, come(cid:231)ando e terminado no
+mesmo vØrtice. Ou seja, percorrer o grafo formando um ciclo fechado que utiliza cada aresta uma œnica
+vez. Com isso, o grafo da introdu(cid:231)ªo, e os grafos de passa-tempo deixados pelo aluno, nªo sªo eulianos,
+pois conseguimos atØ um caminho mas, formando uma trilha aberta de comprimento m no grafo G, e
+sempre terminaremos em outro vØrtice daquele ao qual come(cid:231)amos. Euler considerou esses casos, e os
+chamou de grafos semi-eulerianos, por possu(cid:237)rem tal propriedade.
+
+A diferen(cid:231)a entre grafo euleriano e semi - euleriano, consistem em que no primeiro todos os
+vØrtices possuem graus pares e existe uma trilha fechada de mesmo comprimento m do grafo dado. No
+segundo caso, temos um par de vØrtices de grau (cid:237)mpar e possui uma trilha aberta de comprimento m do
+grafo.
+
+Teorema 3.1. Um grafo conexo G (nªo necessariamente simples) Ø euleriano, se, e somente se, possuir
+vØrtices com graus pares.
+
+Demonstra(cid:231)ªo:
+
+Consideremos um grafo com trilha fechada de comprimento m. Ao passarmos por cada vØrtice,
+
+utilizamos duas arestas, uma para chegar outra para sair, e deste modo o grau do vØrtice Ø par.
+
+Vamos demonstrar a rec(cid:237)proca do teorema utilizando indu(cid:231)ªo sobre o nœmero de arestas m com o
+aux(cid:237)lio do lema acima. O teorema Ø vÆlido para um grafo G com nœmero de arestas m = 0, por ser tratar
+de apenas um vØrtice.
+
+Suponhamos agora que o teorema Ø vÆlido para todo grafo com nœmero de arestas menor do que
+m. Sendo G conexo, os vØrtices possuem graus maiores do que 2. Devemos considerar que um grafo com
+o nœmero de graus maior do que 2 Ø um grafo com ciclo, pois temos duas possibilidades: ou ele apresenta
+la(cid:231)os ou arestas mœltiplas que obrigatoriamente possui um ciclo, ou ele Ø um grafo simples. Caso seja
+um grafo simples, pelo lema 1, o grafo possui um ciclo. De todas a trilhas poss(cid:237)veis ( T1, T2, T3, · · · , Tn )
+escolheremos a trilha mÆxima TM de G; caso a trilha possua comprimento m o teorema entªo estÆ de-
+monstrado. Caso contrÆrio, considere o grafo H(Tm) resultante da retirada das arestas de T . Devemos
+perceber que ao retiramos uma quantidade par de arestas do grafo G, e pela hip(cid:243)tese os vØrtices possuem
+graus pares, entªo pelo menos uma das componentes do grafo H(Tm) possui um vØrtice em comum com
+a trilha TM e todos os vØrtices de grau par. Pela hip(cid:243)tese de indu(cid:231)ªo o grafo H(Tm) possui uma trilha
+fechada que passa por todos os vØrtices de H(Tm) e podemos formar uma triha maior fechada agrupando
+a trilha TM com o grafo H(Tm), contrariando a maximalidade na escolha da trilha H(Tm).
+
+Proposi(cid:231)ªo 3.1. Um grafo conexo Ø semi-euleriano se, e somente se, possui no mÆximo um par de vØr-
+tices de grau (cid:237)mpar.
+
+Demonstra(cid:231)ªo:
+
+10
+
+Considere um grafo G de comprimento m semi-euleriano, ou seja G apresenta uma trilha mÆxima
+aberta de comprimento m que come(cid:231)a em vk e termina em vp. Como a trilha Ø aberta, temos que vk(cid:54) =vp.
+Logo tanto vk e vp possuem graus (cid:237)mpares, pois a trilha nªo volta por onde come(cid:231)ou.
+
+Demonstrando a rec(cid:237)proca, seja o grafo G conexo com um par de vØrtices de grau (cid:237)mpar, digamos
+vk e vp. Pelo Teorema de Euler, acrescentando uma aresta vk a vp , os graus de todos os vØrtices se tornam
+pares, e existe uma trilha fechada de comprimento m + 1 que come(cid:231)a e termina em vk, e uma trilha aberta
+de comprimento m que come(cid:231)a em vk e termina em vp ao qual descreve um caminho semi-euleriano.
+
+3.1 Problema do Menor Caminho
+
+Vamos considerar um grafo valorizado positivamente, ou seja, as arestas possuem valores bem peculi-
+ares do qual descrevem situa(cid:231)ıes problemas como dist(cid:226)ncias, custo, tempo de percurso, etc. Este tipo de
+problema Ø muito comum no ramo de engenharia, em economia, para especialistas de tr(cid:226)nsito, tendo como
+objetivo minimizar o percurso de ir de um ponto a outro. Em grafos, o problema Ø equivalente descrever
+um caminho que sai de uma aresta espec(cid:237)(cid:28)ca a outra. Usaremos uma ferramenta desenvolvida por um
+especialista em computa(cid:231)ªo "O Algoritmo de Dijkstra (1959) ", um algoritmo computacional.
+
+Seja o grafo G, com seus vØrtices { v1, v2, ..., vn } e considere (vivj) o comprimento da aresta vi
+a vj. Come(cid:231)amos destacando o vØrtice inicial v1, por 0 e os outros vØrtices por ∞. Usaremos a nota(cid:231)ªo
+L(v1) = 0 e L(vi) = ∞(vi) i(cid:54) =1, para representar estes destaques. Obs: SerÆ usado a nota(cid:231)ªo ∞ referente
+a vØrtices nªo alcan(cid:231)ados e nªo existentes.
+
+SerÆ constru(cid:237)do o conjunto T , que representa todas as fam(cid:237)lias de vØrtices que apresentam o menor
+caminho, ou seja, a partir de n intera(cid:231)ıes, irÆ existir um conjunto T = { v1 v2 v3 v4... vn } que formarÆ o
+menor caminho de v1 a vn. A fam(cid:237)lia de vØrtices Tk, forma-se a partir do Tk−1, acrescentado o vØrtice w
+com a menor etiqueta entre todos aqueles vØrtices que nªo pertencem a Tk, de modo que o destaque Lk
+(o destaque do vØrtice do k-Øsimo passo) seja o comprimento mais curto de v1 a v que contØm somente
+vØrtices de Tk.
+
+1. Passo 1. Fa(cid:231)amos:
+
+(vivj) =
+
+(cid:26) (vivj)
+
+comprimento da aresta
+∞ caso nªo exista este comprimento
+
+vi a vj
+vi a vj
+
+2. Passo 2. De(cid:28)niremos:
+
+3. Passo 3. Enquanto que vn(cid:54) ∈ T , realizaremos:
+
+L(v1) := 0;
+
+L(vi) := ∞,
+
+i(cid:54) =1
+
+vØrtice em V (G) \ T com m(cid:237)nimo.
+
+(a) w := vk,
+(b) T := T ∪ {w}
+(c) Para vØrtices em V (G) \ T, se L(w) + (wv) < L(v) fa(cid:231)a L(v) := L(w) + (wv)
+
+4. Passo 4. Concluiremos:
+
+Comprimento mais curto entre v1 a vn Ø dado por L(vn).
+
+Exemplo:
+
+Carlos Ø entregador de pizza e ele deve entregar a pizza na rua Buganville no 450, ponto de
+referŒncia, em frente a Escola Municipal JosØ Ovidio Guerra. Para maximizar a entrega ele deve entregar
+no menor tempo poss(cid:237)vel. Como gosta de matemÆtica ele fez um mapa com as principais ruas e suas
+referŒncias e determinou o tempo de percurso, veja o mapa abaixo.
+
+11
+
+Figura 13: Grafos Menor Caminho
+
+Descrevendo o algoritmo .
+
+Come(cid:231)aremos pela pizzaria. Entªo:
+
+1. Destaque o vØrtice A. A dist(cid:226)ncia de A atØ A Ø 0 (zero) e todas as dist(cid:226)ncias nªo alcan(cid:231)adas de ∞,
+AA = 0. Calculando as dist(cid:226)ncias AB = 5, AC = 6, AD = 10, e todas as outras nªo alcan(cid:231)adas de
+∞, AB = 5 Ø o menor caminho.
+
+2. Destaque o vØrtice B. Saindo de B, podemos ir a E. Calcule ABE = 5 + 13. Como 5 + 13 = 18 < ∞
+
+a menor dist(cid:226)ncia Ø ABE = 18.
+
+3. Destaque agora C. Calcule ACE = 6 + 11 = 17, ACD = 6 + 3 = 9, ACF = 6 + 6 = 12. Como
+AD = 10 < ACD = 9, ACE = 17 < ABE = 18. Os menores caminhos sªo ACE = 17 e ACD = 9.
+
+12
+
+4. Destaque D. Assim, ACDE = 9 + 6 = 15 < ACE = 16 e ACDF = 9 + 4 = 13 > ACF . Os menores
+
+caminhos sªo ACDE = 15 e ACF = 12.
+
+5. Destaque F , logo ACF G = 20, os menores caminhos sªo ACF G = 20 e ACDE = 15.
+
+6. Destaque E e calcule ACDEG = 15 + 3 = 18. Como ACDEG = 18 < ACF G = 20, o melhor
+
+caminho Ø ACDEG = 18.
+
+7. Destaque G. Como G Ø o œltimo vØrtice entªo a melhor trilha Ø ACDEG = 18.
+
+Em geral estamos construindo uma trilha aberta. Testando todos os menores caminhos poss(cid:237)veis,
+cada vØrtice Ø destacado e calcula-se a dist(cid:226)ncia a todos os outros vØrtices. Caso exista um caminho,
+o valor Ø calculado, caso nªo exista, ou caso nªo seja alcan(cid:231)ado o valor Ø atribuido a ∞. Os menores
+caminhos sªo marcados e podem ser substitu(cid:237)dos desde que consigamos encontrar um caminho melhor. O
+processo se repete atØ chegar no vØrtice em questªo.
+
+3.2 Problema do Carteiro
+
+Este problema foi eleborado pela primeira vez em 1962 por Mei-Ku Kwan, um matemÆtico chinŒs.
+Ele aborda os grafos eulerianos com arestas valorizadas, ou seja, as arestas possuem valores que podem
+ser dist(cid:226)ncia, tempo de percurso, custo, etc.
+
+Suponhamos que temos um bairro em que o carteiro deverÆ entregar as cartas por todas as ruas
+que come(cid:231)a e termina no ponto de distribui(cid:231)ªo. Caso a descri(cid:231)ªo das ruas apresentar um grafo euleriano,
+Ø (cid:243)bvio que o carteiro deverÆ percorrer as ruas passando pela trilha euleriana, caso o grafo nªo seja
+euleriano, poderemos acrescentar ruas (arestas ao problema de modo a minimizar o esfor(cid:231)o do carteiro),
+ou atØ repetir ruas sempre descrevendo uma trilha euleriana. Como podemos encontrar vÆrias trilhas
+eulerianas , usamos entªo o algoritmo de Dijkstra para descrever o melhor caminho.
+
+Um dilema que devemos considerar Ø: qual aresta devemos incluir se o grafo nªo Ø euleriano? Qual
+
+de todas as arestas poss(cid:237)veis representa a melhor solu(cid:231)ªo?
+
+A resposta vai depender de quantos vØrtices (cid:237)mpares temos no grafo. Caso o grafo G com m
+arestas apresentar apenas um par de vØrtices de grau (cid:237)mpar, a aresta acrescentada serÆ aquela que une
+estes dois vØrtices espec(cid:237)(cid:28)cos. Com recursos computacionais e com o auxilio do "Algoritmo de Dijkstra
+(1959)"podemos calcular o menor valor para esta aresta. Depois de acrescentar a aresta, o nosso novo
+grafo G terÆ m + 1 arestas, tornando-se assim um grafo euleriano. Caso o grafo possua mais de um par
+de vØrtices (cid:237)mpares, devemos sempre unir cada vØrtice (cid:237)mpar a outro (cid:237)mpar, sempre minimizando o valor
+da aresta pelo algoritmo.
+
+Exempli(cid:28)cando, observe o grafo da (cid:28)gura 1. Podemos perceber que ele Ø semi-euleriano, as arestas
+serªo valorizadas e queremos saber qual a melhor trajet(cid:243)ria que o carteiro terÆ que fazer saindo e voltado
+ao ponto A de origem.
+
+Acrescentamos uma nova aresta e calculamos o menor valor para ela. Utilizando "O Algoritmo de
+Dijkstra (1959)", percebemos que AB = 25 e ACEB = 15, a nova aresta valerÆ 15. Com isso, o nosso
+grafo passa a ser euleriano. Ver (cid:28)gura 14 a seguir.
+
+13
+
+Figura 14: Exemplo Passa tempo Grafo Euleriano
+
+4 Grafos Hamiltonianos e o Problema do Carteiro Viajante
+
+Figura 15: Grafo Carteiro Viajante
+
+Paralelamente (cid:224) idØia dos grafos eulerianos, de passar por cada aresta uma œnica vez, os grafos
+hamiltonianos consistem em passar por cada vØrtice uma œnica vez. Caminho hamiltoniano em um grafo
+Ø o caminho que visita cada vØrtice exatamente uma vez.
+
+Um ciclo hamiltoniano Ø um ciclo que visita cada vØrtice uma s(cid:243) vez (uma trilha fechada que
+come(cid:231)a e termina no mesmo vØrtice). O grafo da (cid:28)gura 15 contØm um caminho hamiltoniano. Enquanto
+determinar se um dado grafo contØm um caminho ou ciclo euleriano Ø trivial, o mesmo problema para
+caminhos e ciclos hamiltonianos Ø extremamente Ærduo.
+
+Recursos computacionais sªo necessÆrios para testar todas as poss(cid:237)veis solu(cid:231)ıes. Caso o problema
+apresentar 20 vØrtices, o nœmero de solu(cid:231)ıes poss(cid:237)veis Ø 20!. Caso tenhamos 300 vØrtices teremos 300!
+solu(cid:231)ıes para testar, ou seja, quanto maior o nœmero de vØrtices maior serÆ o tempo de veri(cid:28)car qual das
+trajet(cid:243)rias hamiltonianas Ø a melhor. AtØ hoje, nªo existe um algoritmo hamiltoniano capaz de minimizar
+a solu(cid:231)ªo. Todos os esfor(cid:231)os de estudiosos comprovam que isto nªo Ø poss(cid:237)vel. Ver referŒncias 1 e 2.
+
+O problema do carteiro viajante representa um problema Hamiltoniano, no qual um carteiro,
+viajando por vÆrias cidades uma œnica vez e retornando (cid:224) sua cidade de origem, percorrerÆ a menor
+dist(cid:226)ncia poss(cid:237)vel.
+
+14
+
+Por exemplo, na Figura 15 existem 5 cidades poss(cid:237)veis A, B, C, D, E, e o caminho que forma o
+
+trajeto mais curto Ø: A → C → B → E → D → A e mede 29.
+
+5 Atividades Aplica(cid:231)ıes de Grafos em sala de aula
+
+Todas as atividades serªo aplicadas em grupos de 4 alunos.
+
+Observe o grafo com bastante aten(cid:231)ªo e responda as questıes abaixo:
+
+Passa Tempo: 1o. Atividade
+
+Figura 16: Atividades Grafos Eulerianos
+
+1. VocŒs conseguem passar o lÆpis por toda a (cid:28)gura sem levantar o lÆpis do papel e passar uma œnica
+
+vez por cada aresta?
+
+2. VocŒs come(cid:231)aram por qual vØrtice?
+
+3. Agora, determine o grau de cada vØrtice.
+
+4. SerÆ que conseguem realizar a mesma atividade come(cid:231)ando por outro vØrtice?
+
+5. Podemos fazer a atividade partindo de qualquer vØrtice?
+
+6. Por quŒ?
+
+7. Discuta com o grupo todas as poss(cid:237)veis solu(cid:231)ıes.
+
+8. Registre as conclusıes do grupo.
+
+15
+
+Considerando a (cid:28)gura 15, fa(cid:231)a o que se pede em cada item:
+
+Passa Tempo 2o. Atividade
+
+Figura 17: Grafos Desa(cid:28)os
+
+1. Agora, da (cid:28)gura escolha um grafo e reproduza a (cid:28)gura. Determine o grau de cada vØrtice e tente
+refazer as questıes da atividade anterior. Serªo distribu(cid:237)dos um grafo distinto a cada grupo. O
+grupo que conseguir resolver escolhe um outro grafo.
+
+2. Qual(is) grafos vocŒs conseguiram resolver ?
+
+3. Existe alguma caracter(cid:237)stica nestes grafos, como o nœmero de graus ou de vØrtice ? Observa(cid:231)ªo:
+
+todos os grafos que apresentam solu(cid:231)ªo possuem uma caracter(cid:237)sca apenas deles.
+
+16
+
+Passa Tempo 3o. Atividade
+
+Joªo Ø entregador de pizza. Com sua moto ele calculou o tempo gasto (em minutos) para deslocar
+nos pontos principais do bairro, como mostra a Figura 16. Seu ganho Ø por entrega, ele tem que entregar
+uma pizza na Buganville no 32, referŒncia em frente a Escola Ovidio.
+
+1. Qual o melhor caminho que Joªo terÆ que tomar? Ou seja, qual o trajeto que gasta menos tempo?
+
+Figura 18: Mapa dos pontos principais
+
+17
+
+Passa Tempo 4o. Atividade
+
+1. Esta atividade foi proposta por Hamilton em 1856. Este jogo tem o nome de "Icosain Game", que
+consiste em descobrir uma maneira de sair de Londres e viajar para as outras cidades do mundo uma
+œnica vez, diferente das atividades Eulerianas, que consiste em passar por cada aresta uma œnica
+vez, vocŒ deverÆ passar por cada vØrtice uma œnica vez, sempre retornando ao ponto de partida. Os
+vØrtices sªo representa(cid:231)ıes das cidades e as arestas sªo como elas estam conectadas
+
+Figura 19: Icosain game
+
+2. Partindo do mesmo princ(cid:237)pio, encontre as respostas para as atividades abaixo.
+
+Figura 20: Grafos Games: Poliedros de Hamilton
+
+18
+
+6 Conclusªo
+
+Este projeto partiu de um desa(cid:28)o de um estudante de 9o ano da escola onde realizo meu trabalho como
+docente na Rede Municipal de Contagem. A partir do desa(cid:28)o de um jovem que nªo havia tido contato
+com o assunto fui instigado a pesquisÆ-lo e acrescentÆ-lo como conteœdo para o ensino fundamental II (5o
+ao 9a ano). Assim, foram elaboradas vÆrias atividades envolvendo grafos eulerianos, grafos semi-eulerianos
+e grafos hamiltonianos, dedicando cerca de duas semanas para desenvolver o tema.
+
+Por serem prØ-adolescentes e para estimulÆ-los, trouxe pequenos incentivos, como balas e bombons.
+Seriam vencedores dos desa(cid:28)os os primeiros a resolver grafos semi-eulerianos de poder contornar toda a
+(cid:28)gura passando pelas arestas uma œnica vez sem tirar o lÆpis do papel.
+
+Ap(cid:243)s vÆrios estudantes vencerem os desa(cid:28)os, passamos a construir conceitos que poderiam ser
+
+utilizados na matemÆtica para a resolu(cid:231)ªo de problemas.
+
+Alguns conceitos foram formados pelos estudantes, usando uma linguagem simples, porØm consis-
+tente. Para desa(cid:28)Æ-los e instigÆ-los, acrescentei ao conteœdo graus de di(cid:28)culdades crescentes como maior
+nœmero de vØrtices e arestas. Na solu(cid:231)ªo deveriam apresentar a trilha aberta ou fechada, descrever to-
+das as solu(cid:231)ıes poss(cid:237)veis, e outras. Cada vez que eles constru(cid:237)am um desa(cid:28)o, constru(cid:237)mos o conceito
+matemÆtico, as regras, passos para solucionÆ-lo e part(cid:237)amos para um novo desa(cid:28)o.
+
+Um ponto importante foi o uso da linguagem matemÆtica e sua adequa(cid:231)ªo para prØ-adolescentes,
+ainda muito infantis (idades de 11 a 13 anos). AlØm da rela(cid:231)ªo professor - aluno, estabeleceu-se uma nova
+situa(cid:231)ªo de amizade tornado a aprendizagem mais interessante para todos.
+
+Considero que este trabalho pode trazer para o universo escolar, basicamente na Ærea das ciŒncias
+exatas uma porta a ser aberta por professores, pois Grafo Euleriano e Grafo Hamiltonianos nªo sªo
+trabalhado no ensino regular.
+
+Matematicamente falando, corro o risco de ser criticado por colegas da Ærea por inverter a forma de
+ensinar, pois espera-se fazer a parte formal como de(cid:28)ni(cid:231)ıes e propriedades dos grafos para depois passar
+pelos desa(cid:28)os e solucionÆ-los. Mas, por ser tratar de prØ-adolescentes de 11 a 13 anos, o resultado da
+experiŒncia foi (cid:243)timo.
+
+Tal experiŒncia aqui relatada vem mostrar que a constru(cid:231)ªo de conceitos atravØs de desa(cid:28)os con-
+cretos leva os estudantes a criar seus pr(cid:243)prios conceitos que unidos ao colega tornam-se uma regra geral.
+A memoriza(cid:231)ªo e (cid:28)xa(cid:231)ªo por parte deles Ø mais marcante, podendo ajudÆ-los futuramente para passar
+nos vestibulares e engressar nas melhores faculdades.
+
+Ao (cid:28)nal do per(cid:237)odo de experimenta(cid:231)ªo, professor e estudantes partiram para a formaliza(cid:231)ªo do
+conceito e a(cid:237) entªo foi apresentado aos estudantes a linguagem matemÆtica formal a ser utilizada como:
+pontos passaram a ser vØrtices, linhas passaram a ser arestas. Nas descri(cid:231)ıes de suas solu(cid:231)ıes, escreviam
+trilha aberta, trilha fechada , ciclo fechado (come(cid:231)ava e terminava no mesmo vØrtice).
+
+Devo considerar que em nenhum momento das atividades falei sobre o teorema de grafos eulerianos
+e semi-eulerianos, mas sempre enfatizava que existia uma rela(cid:231)ªo nas solu(cid:231)ıes encontradas por eles. Um
+dos grupos dos alunos conseguiu chegar perto de determinar a solu(cid:231)ªo geral e eles perceberam que para
+haver solu(cid:231)ªo, o grafo deveria possuir um par de vØrtices (cid:237)mpares, pelo qual come(cid:231)ariam. E todos os grafos
+com vØrtices pares tŒm solu(cid:231)ªo.
+
+Percebe-se que Grafo Ø usado para resolver problemas simples ou complicados numa linguagem
+natural mas que leva uma so(cid:28)sticada estrutura matemÆtica. Um conteœdo explorado por matemÆticos,
+f(cid:237)sicos, engenheiros e especialistas em computa(cid:231)ªo. Administrar um tema desconhecido e inexplorado para
+alunos com idades de 11 a 13 anos foi uma experiŒncia prazerosa. Isto fez com que os alunos interagissem
+uns com os outros e fez tambØm da aprendizagem um processo interessante e divertido.
+
+19
+
+ReferŒncias
+
+[1] Jurkiewicz, SamuelBosch Grafos Uma introdu(cid:231)ªo. . OBMEP ,2009.
+
+[2] Carvalho, P.C.P. Contagem . Apostila 2 de treinamento dos alunos premiados na OBMEP, , 2006 .
+
+[3] http://www.worldcommunitygrid.org/help/viewTopic.do?shortName=acah
+
+Acesso em 26 de jan. de 2014.
+
+[4] www.ime.usp.br/ pf/teoriadosgrafos.html
+
+Acesso em 26 de jan. de 2014.
+
+[5] http://www.obmep.org.br/docs/Apostila5-Grafos.pdf
+
+Acesso em: 16 jan. 2014.
+
+[6] http://www2.dcc.ufmg.br/livros/algoritmos-edicao2/cap7/transp/completo4/cap7.pdf
+
+Acesso em: 16 jan. 2014.
+
+[7] http://www.mat.uc.pt/ picado/ediscretas/apontamentos/cap2.pdf
+
+Acesso em: 12 jan. 2014.
+
+20
+
+

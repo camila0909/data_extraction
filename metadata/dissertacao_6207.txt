@@ -1,0 +1,3830 @@
+UNIVERSIDADE FEDERAL DO ESTADO DO RIO DE JANEIRO 
+
+UNIRIO 
+
+UMA DERIVAÇÃO INGÊNUA DO MÉTODO SIMPLEX 
+
+NILTON MIGUEL DA SILVA 
+
+RIO DE JANEIRO 
+
+2013 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+NILTON MIGUEL DA SILVA 
+
+UMA DERIVAÇÃO INGÊNUA DO MÉTODO SIMPLEX 
+
+Trabalho  de  Conclusão  de  Curso  apresentado  à 
+
+Universidade  Federal  do  Estado  do  Rio  de 
+
+Janeiro,  como  parte  dos  requisitos  parciais  para 
+
+obtenção do grau de mestre. 
+
+Orientador: Prof. José Teixeira Cal Neto 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Aprovada em 01 de abril de 2013. 
+
+BANCA EXAMINADORA 
+
+________________________________________________________________________ 
+
+Prof. Dr. José Teixeira Cal Neto  
+
+Universidade Federal do Estado do Rio de Janeiro-UNIRIO 
+
+_________________________________________________________________________ 
+
+Prof. Dr. Humberto José Bortolossi 
+
+Universidade Federal Fluminense 
+
+________________________________________________________________________ 
+
+Prof. Adriano Maurício de Almeida Côrtes 
+
+Universidade Federal do Estado do Rio de Janeiro-UNIRIO 
+
+Rio de Janeiro 
+
+2013 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+À  memória  de  meu  pai,  pelos  ensinamentos  e 
+
+pelo  exemplo  de  homem  íntegro  e  dedicado 
+
+que deixou e que norteiam a minha caminhada. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+AGRADECIMENTOS 
+
+Nada acontece por acaso. “Quando a lógica, a ciência e a matemática desistem, as 
+
+mãos de Deus explicam”. Obrigado Senhor. 
+
+Ao  meu  admirável  orientador,  Professor  José  Teixeira  Cal  Neto,  seguem  meus 
+
+agradecimentos mais efusivos. Com orientação clara, objetiva e segura me inspirou a tentar 
+
+fazer  sempre  o  melhor.  Edwin  Markham  escreveu  “há  um  destino  comum  que  nos  faz 
+
+irmãos.  Ninguém  segue  seu  caminho  absolutamente  sozinho,  recebemos  em  troca  tudo  o 
+
+que damos aos outros.” Se isso for realmente verdade, estarei com uma dívida eterna com 
+
+o professor Cal Neto. 
+
+Aos membros da banca examinadora, pela leitura deste trabalho e valiosa sugestões 
+
+que contribuíram para o engrandecimento deste trabalho. 
+
+Aos  meus  pais,  iniciadores  desse  processo  todo,  por  contribuírem  com  minha  formação 
+
+moral. 
+
+Aos queridos amigos e companheiros do mestrado, e em especial a Manuel Simão 
+
+Pilar  Santamarinha  pela  paciência,  ajuda,  conversas  e  profundas  discussões  e  Jorge  Silva 
+
+Garcia,  que  sempre  se  disponibilizou  a  ajudar,  aconselhar  e  estimular  com  a  maior 
+
+dedicação e presteza. 
+
+A  todos  meus  professores  do  curso,  que  se  mostraram  incansáveis  e  dispostos  a 
+
+ajudar com paciência, dedicação e amizade.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+RESUMO 
+
+D’Ambrósio  (1996,  p.29)  aponta  que  os  programas  de  Matemática  consistem  em 
+
+coisas  acabadas,  mortas  e  absolutamente  fora  do  contexto  e  com  isso,  torna-se  casa  vez 
+
+mais difícil motivar alunos para uma ciência tão cristalizada. 
+
+No presente trabalho, buscamos apresentar um determinado assunto da Matemática, 
+
+que seja capaz de agregar conhecimentos no nível do ensino médio junto com aplicações 
+
+do mundo real e para atingir tal meta, acreditamos que a Programação Linear contenha os 
+
+elementos para dar consecução àquela tarefa. 
+
+Ao  abordarmos  um  problema  de  programação  linear,  surgirá  naturalmente  o 
+
+método  simplex  como  consequência  da  resolução  gráfica,  por  intermédio  da  qual  serão 
+
+discutidas  as  soluções,  selecionando  procedimentos  e  verificando  sua  adequação  a 
+
+problemas plausíveis e que sempre possuam solução. 
+
+Palavras–chave: Programação Linear. Otimização. Resolução de Problemas.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                  
+Sumário 
+
+1.  Breve História Da Programação Linear ................................................................... 09 
+
+1.1 Motivação Para O Estudo ....................................................................................... 11  
+
+2.  Relacionando Solução Gráfica Com Solução Algébrica ......................................... 17 
+
+3.  Otimização No ℝ(cid:2) ....................................................................................................... 31 
+
+4.  Aplicativo Para Resolver Problemas De Programação Linear .............................. 40 
+
+5.  Considerações Finais .................................................................................................. 42 
+
+6.  Referências Bibliográficas .......................................................................................... 43 
+
+7.  Apêndice ...................................................................................................................... 44 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Lista de Imagens 
+
+Figura 1- Restrições do Problema ........................................................................................ 13 
+
+Figura 2-Interseção das Restrições ...................................................................................... 14 
+
+Figura 3-Região Viável com Alguns Valores da Função Objetivo ........................................ 15 
+
+Figura 4- Direção de Crescimento ........................................................................................ 16 
+
+Figura 5-Pesquisa das Colunas Básicas ............................................................................... 18 
+
+Figura 6-Ponto Fora da Região Viável ................................................................................. 19 
+
+Figura 7-Variável de Entrada e Saída da Base..................................................................... 22 
+
+Figura 8-Introduzindo uma Única Variável de Folga ........................................................... 25 
+
+Figura 9- Escolha de Caminhos ............................................................................................ 26 
+
+Figura 10-Solução Usando Quadros (Tableau) .................................................................... 29 
+
+Figura 11-Tableau Passo2 ................................................................................................... 29 
+
+Figura 12-Tableau Passo3 ................................................................................................... 30 
+
+Figura 13-Tableau Passo4 ................................................................................................... 30 
+
+Figura 14-Solução Inicial ...................................................................................................... 35 
+
+Figura 15-Nova Face Básica................................................................................................. 35 
+
+Figura 16-Não há Caminho ao Longo da Aresta ................................................................. 36 
+
+Figura 17-Mesmo Vértice Gerado por Outras Faces ........................................................... 36 
+
+Figura 18-Nova Face Básica................................................................................................. 37 
+
+Figura 19-Determinação de Novo Vértice ........................................................................... 37 
+
+Figura 20-Possibilidade de Caminho a Percorrer................................................................. 38 
+
+Figura 21-Mesmo Vértice Gerado por Outras Faces ........................................................... 38 
+
+Figura 22-Nova Face Básica e o Caminho Percorrido .......................................................... 38 
+
+Figura 23-Vértice Ótimo ...................................................................................................... 39 
+
+Figura 24-Problema Modelado ............................................................................................ 40 
+
+Figura 25-Resolução do Problema ....................................................................................... 41
+
+ 
+ 
+ 
+ 
+ 
+1.  Breve História Da Programação Linear1 
+
+9 
+
+O desenvolvimento de técnicas para resolver sistemas de inequações lineares 
+é  uma  prática  muito  antiga.  Durante  a  segunda  grande  guerra,  equipes 
+interdisciplinares  de  cientistas  promoveram  um  grande  crescimento  das 
+pesquisas  relacionadas  a  essas  técnicas,  para  se  conseguir  o  uso  eficiente  de 
+radares,  canhões  antiaéreos,  escoltas  navais,  alocação  de  material  bélico,  etc. 
+Essas  pesquisas,  voltadas  para  diferentes  áreas  do  setor  bélico,  visavam 
+principalmente  dois  resultados  fundamentais:  reduzir  custos  militares  e 
+maximizar as baixas inimigas. É nesse período que se considera o surgimento da 
+Pesquisa  Operacional,  que  é  um  método  científico  de  tomada  de  decisões,  da 
+qual  a  Programação  Linear  é  uma  das  subáreas  com  amplo  espectro  de 
+aplicações. 
+
+Uma das técnicas mais utilizadas na abordagem de problemas em Pesquisa 
+Operacional  é  a  Programação  Linear  (BAZARAA;  JARVIS;  SHERALI,  2009; 
+SILVA  et  al,  2010),  que  é  um  modelo  matemático  constituído  de  uma  função 
+linear  (denominada  função  objetivo),  de  restrições 
+técnicas  e  de  não 
+negatividade,  representadas  por  um  grupo  de  inequações  ou  equações  lineares, 
+que advém das restrições de recursos do problema estudado. 
+Denominamos  por  Problema  de  Programação  Linear  (PPL),  o  problema  de  se 
+otimizar, ou seja, maximizar ou minimizar, uma função linear de n variáveis, que 
+devem  satisfazer  m  restrições  técnicas,  todas  elas  lineares.  As  variáveis  são 
+assumidas  não  negativas.  A  função  a  ser  otimizada  é  usualmente  chamada  de 
+função  objetivo  e  o  conjunto  de  soluções  (incluindo  as  de  não  negatividade)  é 
+chamado  de  conjunto  (ou  região)  viável.  A  não  negatividade  das  variáveis  se 
+explica  devido  a  via  de  regra  estas  representarem  quantidades  produzidas.  As 
+restrições  podem  estar  na  forma  de  igualdades  ou  desigualdades,  mas  como  a 
+igualdade  x = b  equivale  às  desigualdades  x ≤ b,  −x ≤ −b  podemos  assumir 
+que todas restrições estão na forma de desigualdades.  
+
+Um  problema  de  Programação  Linear,  digamos  de  maximização,  consiste  em  maximizar 
+
+uma função (cid:9): ℝ(cid:11) → ℝ,  (cid:9)((cid:14)(cid:15), (cid:14)(cid:17), … , (cid:14)(cid:11)) dada por: 
+
+  (cid:9) = (cid:20)(cid:15)(cid:14)(cid:15) + (cid:20)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:20)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:20)(cid:11)(cid:14)(cid:11) 
+
+1 Disponível em: < www.ead.fea.usp.br/semead/>. Acesso em: 2 jan. 2013. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+ 
+Sujeito às restrições: 
+
+10 
+
+(cid:24)(cid:15)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:15)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:24)(cid:15)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:24)(cid:15)(cid:11)(cid:14)(cid:11) ≤ (cid:25)(cid:15)
+(cid:24)(cid:17)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:17)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:24)(cid:17)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:24)(cid:17)(cid:11)(cid:14)(cid:11) ≤ (cid:25)(cid:17)
+			⋮													⋮																						⋮																										⋮											⋮	
+		(cid:24)(cid:28)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:28)(cid:17)(cid:14)(cid:17) 	 + ⋯ + (cid:24)(cid:28)(cid:23)(cid:14)(cid:23) + ⋯	+ (cid:24)(cid:28)(cid:11)(cid:14)(cid:11) ≤ (cid:25)(cid:28)		
+			⋮													⋮																						⋮																										⋮											⋮	
+(cid:24)(cid:29)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:29)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:24)(cid:29)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:24)(cid:29)(cid:11)(cid:14)(cid:11) ≤ (cid:25)(cid:29)
+(cid:14)(cid:15), … , (cid:14)(cid:11) ≥ 0 
+Onde  (cid:20)(cid:15), … , (cid:20)(cid:11)	, (cid:24)(cid:15)(cid:15), … , (cid:24)(cid:29)(cid:11) ∈ ℝ são constantes obtidas no problema. Também é possível 
+de  matrizes:  maximizar 
+expressar 
+
+somatórios 
+
+forma 
+
+ou 
+
+de 
+
+na 
+
+(cid:11)
+ (cid:9) = ∑
+(cid:23)"(cid:15)
+
+(cid:11)
+(cid:20)(cid:23)(cid:14)(cid:23) sujeito a  ∑
+(cid:23)"(cid:15)
+
+(cid:24)(cid:28)(cid:23)(cid:14)(cid:23) ≤ (cid:25)(cid:28), para todo # = 1, … , %; e (cid:14)(cid:23) ≥ 0 para & = 1, … , '. Na 
+
+forma matricial fica: 
+
+Maximizar ((cid:20)(cid:15)
+
+,-
+()))))))*)))))))+
+(cid:20)(cid:17) ⋯ (cid:20)(cid:28) ⋯ (cid:20)(cid:11))
+
+(cid:14)(cid:15)
+(cid:14)(cid:17)
+⋮
+(cid:14)(cid:28)
+⋮
+(cid:14)(cid:11)1
+
+3
+22
+
+0
+//
+
+.
+
+0
+/
+/
+
+(cid:24)(cid:15)(cid:15)
+(cid:24)(cid:17)(cid:15)
+⋮
+(cid:24)(cid:28)(cid:15)
+⋮
+
+(cid:24)(cid:15)(cid:17) ⋯ (cid:24)(cid:15)(cid:23) ⋯ (cid:24)(cid:15)(cid:11)
+(cid:24)(cid:17)(cid:17) ⋯ (cid:24)(cid:17)(cid:23) ⋯ (cid:24)(cid:17)(cid:11)
+⋮
+⋮
+⋱ ⋯ ⋯
+(cid:24)(cid:28)(cid:17) ⋯ (cid:24)(cid:28)(cid:23) ⋯ (cid:24)(cid:28)(cid:11)
+⋮
+⋮ ⋯ ⋯ ⋱
+(cid:24)(cid:29)(cid:15) (cid:24)(cid:29)(cid:17) ⋯ (cid:24)(cid:29)(cid:23) ⋯ (cid:24)(cid:29)(cid:11)1
+.
+56666666666766666666668
+9
+
+3
+2
+2
+
+0
+/
+/
+
+3
+2
+2
+
+(cid:14)(cid:15)
+(cid:14)(cid:17)
+⋮
+(cid:14)(cid:23)
+⋮
+(cid:14)(cid:11)1
+.
+578
+:
+
+≤
+
+3
+2
+2
+
+0
+/
+/
+
+(cid:25)(cid:15)
+(cid:25)(cid:17)
+⋮
+(cid:25)(cid:28)
+⋮
+.
+(cid:25)(cid:29)1
+578
+;
+
+ , 
+
+(cid:14)(cid:15)
+(cid:14)(cid:17)
+⋮
+(cid:14)(cid:28)
+⋮
+(cid:14)(cid:11)1
+
+3
+22
+
+0
+//
+
+.
+
+≥
+
+0
+0
+3
+⋮
+22
+0
+⋮
+01
+
+0
+//
+
+.
+
+Ou, de forma mais compacta, 
+
+Maximizar	,<:;  =: ≤ ;, : ≥ > 
+
+Nesta forma do problema, em que todas as restrições estão na forma de inequações, 
+
+é  chamada  forma  canônica.  De  modo  análogo  a  um  exemplo  anterior  em  que  uma  dada 
+
+igualdade 
+
+equivalia 
+
+a  duas  desigualdades,  podemos 
+
+converter  (cid:14) ≤ (cid:25) 
+
+em 
+
+(cid:14) + ? = (cid:25),  simplesmente  definindo  a  variável  não  negativa  ? = (cid:25) − (cid:14).  Desse  modo 
+podemos  converter  o  problema  acima,  em  outro  somente  com  restrições  de  igualdade  
+
+(o  número  de  variáveis  cresce,  porém).  Esta  outra  formulação  é  dita  na  forma  padrão 
+
+(ou “standard”). 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+11 
+
+1.1 Motivação Para O Estudo  
+
+Apresentaremos  um  problema  simples  para  ilustrar  uma  situação  onde  é  possível 
+
+inserir e motivar o uso da Programação Linear no ensino médio.   
+
+Para  se  preparar  um  lote  de  cerveja,  os  ingredientes  básicos  são  água,  cevada  e 
+
+lúpulo.  Uma  pequena  cervejaria  artesanal  produz  dois  tipos  de  cerveja  com  receitas 
+
+diferentes e deseja fazer uma análise para saber como maximizar seu lucro. Para produzir 
+
+cada hectolitro da cerveja do tipo A, são necessárias duas medidas de lúpulo e uma medida 
+
+de  cevada.  O  lucro  correspondente  por  hectolitro  é  de  R$  4,00.  Já  a  cerveja  do  tipo  B 
+
+demanda por hectolitro uma medida de lúpulo, duas de cevada e uma de suco de uma fruta 
+
+amazônica, um ingrediente somente para este tipo de cerveja. O lucro por hectolitro desta 
+
+cerveja  é  de  R$  5,00.  Além  disso,  a  cervejaria  por  motivos  de  estoque  só  pode  dispor 
+
+mensalmente  de  16  medidas  de  lúpulo,  14  de  cevada  e  6  de  suco  da  fruta  amazônica 
+
+(praticamente falando não há limite quanto à quantidade de água). Considerando que toda a 
+
+produção será vendida, o técnico deseja calcular as produções mensais em hectolitros das 
+
+cervejas Ae B de modo a maximizar o lucro.         
+
+Ao  modelarmos  o  problema  acima,  nos  deparamos  com  um  problema  de 
+
+programação  linear  com  2  variáveis  reais:  as  quantidades  em  hectolitros  produzidas  de 
+
+cada um dos dois tipos de cerveja. Neste caso, o conjunto solução será um subconjunto do 
+
+plano  e  o  ponto  ótimo  poderá  ser  encontrado  facilmente  por  uma  análise  geométrica. 
+
+O conjunto de pares (x,y) que satisfazem as restrições de nosso problema, a região viável, 
+
+formarão  uma  região  limitada  do  plano:  um  polígono  e  seu  interior.  Como  a  função  que 
+
+queremos maximizar (a função objetivo no jargão) é contínua, admitirá um máximo e um 
+
+mínimo na região em questão. 
+
+Para  que  essas  informações  fiquem  mais  claras,  vamos  efetuar  a  modelagem 
+
+matemática do problema proposto.  Chamaremos de x o volume, em hectolitros, da cerveja 
+
+do tipo A produzido e vendidos e de y o da cerveja do tipo B. A função objetivo, o lucro, 
+
+pode  ser  modelada  por:  (cid:9)((cid:14), @) = 4(cid:14) + 5@.  Se  para  produzir  um  hectolitro  da  cerveja  A 
+são  utilizadas  duas  medidas  de  lúpulo,  para  x  hectolitros,  o  número  necessário  será  x2 . 
+
+Com  o  mesmo  raciocínio,  o  número  necessário  de  medidas  para  a  produção  de  @ 
+hectolitros da cerveja B 1@. Lembrando que o produtor somente tem 16 medidas de lúpulo 
+
+ 
+ 
+ 
+ 
+12 
+
+disponíveis por período, a inequação que versa sobre o uso de lúpulo é 2(cid:14) + @ ≤ 16. Para 
+o  consumo  de  cevada,  o  raciocínio  utilizado  para  a  modelagem  é  o  mesmo,  e  portanto 
+
+(cid:14) + 2@ ≤ 14.  Como  a  quantidade  de  suco  é  limitada  a  seis  medidas,  e  apenas  a  cerveja 
+tipo B leva este ingrediente, temos ainda @ ≤ 6. Vale ainda observar que as variáveis (cid:14) e @ 
+são  quantidades  produzidas  e  portanto  não  negativas.  Ou  seja,  (cid:14) ≥ 0  e  @ ≥ 0.  Assim 
+sendo, o problema proposto pode ser expresso da seguinte forma: obter o valor máximo de 
+
+(cid:9) = 4(cid:14) + 5@ sujeito a 
+
+2(cid:14) + @ ≤ 16
+(cid:14) + 2@ ≤ 14
+@ ≤ 6
+(cid:14) ≥ 0
+@ ≥ 0
+
+H
+F
+
+G
+F
+E
+
+Vamos resolver o problema por intermédio de uma solução gráfica.  As inequações 
+
+acima  representam  a  interseção  de  cinco  semiplanos,  incluindo  a  fronteira,  podendo 
+
+facilmente  ser  esboçada  com  lápis  e  papel.  Existem  também  softwares  gratuitos,  que 
+
+representam  geometricamente  as  restrições  acima,  optamos  pelo  GeoGebra  por  sua 
+
+simplicidade e aspecto intuitivo. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figura 1- Restrições do Problema 
+
+2
+
+x
+
+≤+ y
+
+.16
+
+x
+
++ y
+
+2 ≤
+
+.14
+
+.6≤y
+
+13 
+
+0≥x
+
+0≥y
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A figura a seguir apresenta todas as regiões de restrições  sobrepostas.  
+
+14 
+
+Figura 2-Interseção das Restrições 
+
+ A figura a seguir representa a região que satisfaz todas as restrições do problema, o 
+
+polígono viável ABCDE, com algumas retas, que representam valores da função objetivo, 
+
+as  quais  denominamos  conjuntos  de  nível  (retas)  associados  aos  respectivos  valores  da 
+
+função objetivo. 
+
+ 
+ 
+ 
+ 
+ 
+15 
+
+ é  a 
+
+Figura 3-Região Viável com Alguns Valores da Função Objetivo 
+
+Um conjunto de nível para  a função  (cid:9)((cid:14)
+
+coleção dos pontos 
+
+, tais que 
+
+reta de coeficiente angular 
+
+(cid:13)(cid:14), @(cid:19)
+
+(cid:9)(cid:13)(cid:14), @(cid:19) (cid:5) (cid:9)I
+
+ e coeficiente linear 
+
+ associado  ao valor 
+
+, @(cid:19) (cid:5) 4(cid:14) (cid:21) 5@
+, para um valor fixo 
+
+, que no caso é uma 
+
+(cid:9)I
+
+(cid:9)I
+
+. Verificamos que conjuntos de 
+
+nível  distintos  correspondem  a  retas  paralelas,  que  podem  ser  parametrizadas  pelo 
+
+(cid:8)4/5
+
+(cid:9)I/5
+
+coeficiente linear (ou pelo próprio valor de 
+
+), ficando estabelecida uma correspondência 
+
+(cid:9)I
+
+(cid:9)I
+
+um-a-um entre os parâmetros 
+
+ e a família de retas que representam os níveis. Da figura, 
+
+também observamos que o coeficiente linear de um nível é uma função crescente de valor 
+
+  correspondente.  O  que  buscamos  ao  maximizar 
+
+  é,  portanto,  o  nível  de  maior 
+
+(cid:9)I
+coeficiente linear que ainda tem interseção não vazia com o polígono viável. 
+
+(cid:9)
+
+As  considerações  feitas  anteriormente  apontam  o  vértice 
+
+  como  o  ponto 
+
+que maximiza a função objetivo, que corresponde à produção de 6 hectolitros da cerveja A 
+
+K (cid:5) (cid:13)6,4(cid:19)
+
+e 4 hectolitros da cerveja B.  
+
+Para um caso geral, o ponto de máximo não pode estar situado no interior da região 
+
+viável,  conforme  ilustrado  na  figura  a  seguir.  De  fato,  suponha  que 
+
+,  ponto 
+
+interior à região viável, seja o ponto de máximo da função objetivo e que 
+
+ seja a reta de 
+
+nível passando por 
+
+L.
+
+ Como nosso suposto ótimo é interior, deve haver uma reta 
+
+L (cid:5) (cid:13)(cid:14)I, @I(cid:19)
+
+M
+
+ paralela 
+
+&
+
+ 
+ 
+ 
+ 
+ 
+ 
+e acima (segundo o eixo 
+
+) de 
+
+, que intersecta a região viável em algum ponto 
+
+absurdo  porque  o  valor  da  função  objetivo  em 
+
+  seria  maior  que  no  ponto  E  que  é,  por 
+
+@
+
+M
+
+hipótese, ponto de máximo. 
+
+O
+
+16 
+
+, o que é 
+
+O
+
+Portanto o ponto ótimo não pode estar no interior da região e como este ponto tem 
+
+que pertencer à região viável, só pode estar na fronteira, que será um vértice ou uma aresta. 
+
+O  exemplo  dado  é  típico,  mas  não  é  impossível  que  uma  das  arestas  fosse  paralela  aos 
+
+níveis da função objetivo. Neste caso, nossa análise gráfica nos levaria a concluir que toda 
+
+esta  aresta  seria  formada  de  pontos  ótimos.  Em  particular,  cada  um  de  seus  dois  vértices 
+
+seria ótimo. A conclusão é que sempre teremos um vértice ótimo, desde que  o problema 
+
+de otimização tenha solução. 
+
+Direção  de 
+
+crescimento 
+
+Figura 4- Direção de Crescimento 
+
+Essa última observação nos permite otimizar simplesmente comparando as imagens 
+
+de  todos  os  vértices  da  região  viável  pela  função  objetivo.  Observa-se  facilmente,  que  o 
+
+maior valor admitido pela função objetivo dentre os cinco vértices é 44 em  
+
+é o maior lucro possível.  
+
+, que 
+
+K (cid:5) (cid:13)6,4(cid:19)
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+17 
+
+2.  Relacionando Solução Gráfica Com Solução Algébrica 
+
+No  exercício  anterior,  resolvido  graficamente,  obtivemos  o  valor  máximo  de 
+
+sujeito a 
+
+(cid:9) (cid:5) 4(cid:14) (cid:21) 5@	
+
+2(cid:14) (cid:21) @ ≤ 16
+(cid:14) (cid:21) 2@ ≤ 14
+@ ≤ 6
+(cid:14) ≥ 0
+@ ≥ 0
+
+H
+F
+
+G
+F
+E
+
+O  valor  das  coordenadas  de  cada  vértice,  como  mostrado  nas  figuras  anteriores,  é:           
+
+; 
+
+; 
+
+; 
+
+; 
+
+. Vamos transformar o sistema de 
+
+= (cid:5) (cid:13)0,0(cid:19)
+inequações  em  um  sistema  de  equações  sujeito  à  restrição  de  não  negatividade  das 
+
+R (cid:5) (cid:13)2,6(cid:19)
+
+P (cid:5) (cid:13)8,0(cid:19)
+
+L (cid:5) (cid:13)0,6(cid:19)
+
+K (cid:5) (cid:13)6,4(cid:19)
+
+variáveis, mediante o acréscimo de variáveis, denominadas variáveis de folga, passando de 
+
+um sistema da forma canônica 
+
+ (I) a um outro 
+
+, 
+
+ (II), escrito 
+
+, 
+
+=(cid:14) ≤ (cid:25)
+
+(cid:14) ≥ 0
+< e 
+
+(cid:14)T (cid:5) (cid:13)(cid:14)		@		?(cid:15)		?(cid:17)		?(cid:2)(cid:19)
+
+=	S (cid:5) U=			VW
+
+=	S (cid:14)T (cid:5) (cid:25)
+. Em detalhes: 
+
+(cid:14)T ≥ 0
+
+na forma padrão, onde 
+
+(cid:9)	S (cid:13)(cid:14), @, ?(cid:15), ?(cid:17), ?(cid:2)(cid:19) (cid:5) 4(cid:14) (cid:21) 5@, X
+
+2(cid:14) (cid:21) @ (cid:21) ?(cid:15) (cid:5) 16
+(cid:14) (cid:21) 2@ (cid:21) ?(cid:17) (cid:5) 14
+@ (cid:21) ?(cid:2) (cid:5) 6												
+
+ ,  onde  
+
+. 
+?(cid:15), ?(cid:17), ?(cid:2) ≥ 0
+
+Observe que  apesar da função objetivo não ter  mudado de expressão, a  rigor, passa a 
+
+ser uma função de 5 variáveis. Uma pergunta natural é se existe alguma relação entre um 
+
+vértice  do  polígono 
+
+,  digamos 
+
+  e  alguma  solução  do  sistema  (II).  O 
+
+vértice 
+
+R
+partir  de 
+
+=PKRL
+ está na interseção de duas retas: 
+
+R (cid:5) (cid:13)2,6(cid:19)
+ e 
+
+  e 
+
+@ (cid:21) ?(cid:2) (cid:5) 6
+
+(cid:14) (cid:21) 2@ (cid:21) ?(cid:17) (cid:5) 14
+
+@ (cid:5) 6
+  simplesmente  fazendo 
+
+(cid:14) (cid:21) 2@ (cid:5) 14
+
+. Essa solução foi obtida a 
+
+  e 
+
+.  Uma 
+
+?(cid:17) (cid:5) 0
+
+?(cid:2) (cid:5) 0
+
+outra  forma  de  encarar  este  procedimento  é  observar  que  tínhamos  um  sistema 
+
+subdeterminado de matriz 
+
+, ao qual impusemos valor nulo a duas de suas variáveis. 
+
+Isso resultará em um sistema de matriz 
+
+3 × 3
+variáveis anuladas e colunas correspondentes: 
+
+3 × 5
+
+ equivalente, obtido mediante eliminação das 
+
+ 
+ 
+ 
+ 
+ 
+18 
+
+(cid:5) [
+
+16
+14
+6
+
+\ ∼ [
+
+2 1 1
+1 2 0
+0 1 0
+
+\ [
+
+(cid:14)
+@
+?(cid:15)
+
+\ (cid:5) [
+
+16
+14
+6
+
+\
+
+[
+
+2 1 1 0 0
+1 2 0 1 0
+0 1 0 0 1
+
+\
+
+3
+2
+
+(cid:14)
+@
+	?(cid:15)
+0
+0 1
+
+0
+/
+
+.
+
+A solução correspondente é 
+
+. Vimos, portanto, que o vértice 
+
+ pode ser obtido algebricamente a partir da solução deste sistema de matriz quadrada, 
+
+(cid:13)2,6(cid:19)
+selecionando as duas primeiras coordenadas. Este procedimento de escolher três das cinco 
+
+(cid:13)(cid:14), @, ?(cid:15), ?(cid:17), ?(cid:2)(cid:19) (cid:5) (cid:13)2,6,6,0,0(cid:19)
+
+=^
+
+colunas de 
+
+, zerando as variáveis correspondentes às outras duas, dará sempre origem a 
+
+um sistema solúvel, desde que as colunas escolhidas formem uma matriz não-singular (ou 
+
+seja, de determinante não nulo). Colunas com essa propriedade são ditas básicas (formam 
+
+uma  base  do 
+
+(cid:2)),  bem  como  as  variáveis  correspondentes.  Listamos  a  seguir  todas  estas 
+  escolhas  possíveis  e  as  respectivas  soluções.  Na  tabela  abaixo,  representaremos  o 
+
+ℝ
+
+K_,(cid:17)
+conjunto formado pelas colunas com a seguinte notação: se considerarmos, por exemplo, o 
+
+conjunto formado pelas colunas 
+
+ e 3, denotaremos isso por 
+
+1,2
+
+.  
+
+`1,2,3a
+
+Nº 
+
+Variáveis Não 
+Básicas 
+
+Base 
+Colunas 
+
+Solução Básica 
+
+Vértice Pol. 
+Viável 
+
+Viabilidade 
+
+?(cid:2) (cid:5) 0
+
+`1,2,3a
+
+(cid:13)2, 6, 6, 0, 0(cid:19)
+
+1 
+
+2 
+
+3 
+
+4 
+
+5 
+
+6 
+
+7 
+
+8 
+
+9 
+
+10 
+
+, 
+
+?(cid:17) (cid:5) 0
+, 
+?(cid:15) (cid:5) 0
+, 
+?(cid:15) (cid:5) 0
+, 
+@ (cid:5) 0
+, 
+@ (cid:5) 0
+
+?(cid:2) (cid:5) 0
+
+?(cid:17) (cid:5) 0
+
+?(cid:2) (cid:5) 0
+
+?(cid:15) (cid:5) 0
+
+?(cid:2) (cid:5) 0
+
+?(cid:17) (cid:5) 0
+, 
+@ (cid:5) 0
+, 
+(cid:14) (cid:5) 0
+, 
+(cid:14) (cid:5) 0
+
+?(cid:17) (cid:5) 0
+, 
+(cid:14) (cid:5) 0
+
+?(cid:15) (cid:5) 0
+, 
+(cid:14) (cid:5) 0
+
+@ (cid:5) 0
+
+(cid:13)5	,6, 0, (cid:8)3, 0(cid:19)
+
+(cid:13)6	,4	,0, 0, 2(cid:19)
+------ 
+
+(cid:13)14, 0, (cid:8)12,0,6
+
+) 
+
+(cid:13)8	,0, 0, 6, 6(cid:19)
+) 
+
+(cid:13)0, 6, 10, 2, 0
+
+(cid:13)0, 7, 9, 0, (cid:8)1
+
+) 
+
+0) 
+
+(cid:13)0,16,0, (cid:8)18, (cid:8)1
+
+`1,2,4a
+
+`1,2,5a
+
+`1,3,4a
+
+`1,3,5a
+
+`1,4,5a
+
+`2,3,4a
+
+`2,3,5a
+
+`2,4,5a
+
+`3,4,5a
+
+R (cid:5) (cid:13)2,6(cid:19)
+----- 
+
+K (cid:5) (cid:13)6,4(cid:19)
+----- 
+
+---- 
+
+P (cid:5) (cid:13)8,0(cid:19)
+
+L (cid:5) (cid:13)0,6(cid:19)
+---- 
+
+---- 
+
+Sim 
+
+Não 
+
+Sim 
+
+---- 
+
+Não 
+
+Sim 
+
+Sim 
+
+Não 
+
+Não 
+
+Sim 
+
+Figura 5-Pesquisa das Colunas Básicas 
+
+(cid:13)0	,0, 16, 14,6(cid:19)
+
+= (cid:5) (cid:13)0,0(cid:19)
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+19 
+
+Observamos que das dez escolhas possíveis, as colunas correspondentes a {1,3,4} 
+
+não  são  básicas,  já  que  a  matriz  3  x  3  correspondente  é  singular  (as  colunas  são  ditas 
+
+linearmente  dependentes  neste  caso)  e  o  sistema  não  admite  solução;  4  são  básicas  mas 
+
+inviáveis e as 5 restantes tem nas duas primeiras coordenadas as coordenadas dos vértices 
+
+do polígono viável. O fato de 
+
+ não ser uma solução  viável 
+
+é  fácil  de  se  visualizar:  o  ponto 
+
+  é    a  interseção  das  retas  dadas  pelas 
+
+(cid:13)(cid:14), @, ?(cid:15), ?(cid:17), ?(cid:2)(cid:19) (cid:5) (cid:13)5,6,0, (cid:8)3,0(cid:19)
+
+(cid:13)(cid:14), @(cid:19) (cid:5) (cid:13)5,6(cid:19)
+
+equações abaixo. 
+
+Sob  estas  retas  estão  duas  arestas  não  adjacentes  do  polígono,  representado  na  figura 
+
+2(cid:14) (cid:21) @ (cid:5) 16
+d
+@ (cid:5) 6
+
+abaixo pelo ponto H.  
+
+Figura 6-Ponto Fora da Região Viável 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Podemos  resumir  o  que  foi  visto  até  o  momento  da  seguinte  maneira:  dada  um 
+
+Problema de Programação Linear, na forma canônica, passamos para um sistema matricial 
+
+de  equações  equivalentes  na  forma  padrão,  mediante  o  acréscimo  das  variáveis  de  folga. 
+
+20 
+
+Observamos  que  anulando  duas  variáveis  de  cada  vez,  as  coordenadas 
+
+  e 
+
+  da  solução, 
+
+caso  ela  exista,  varrem  todos  vértices  de  nosso  polígono  viável  original.  Caso  uma  dada 
+
+(cid:14)
+
+@
+
+solução  básica  seja  viável,  será  um  dos  vértices  do  polígono  e  calculamos,  então  o  valor 
+
+correspondente da função objetivo. Ao final das 10 escolhas, teremos o ponto ótimo. 
+
+Um  primeiro  passo  de  um  algoritmo  algébrico  seria  procurar  uma  solução  básica 
+
+viável  inicial.  No  exemplo  em  questão  contamos  com  a  sorte,  pois  podemos  fazer 
+
+(cid:14) (cid:5) @ (cid:5) 0
+
+, de modo que o sistema 
+
+ é simplesmente 
+
+3 × 3
+
+[
+
+1 0 0
+0 1 0
+0 0 1
+
+\ [
+
+?(cid:15)
+?(cid:17)
+?(cid:2)
+
+\ (cid:5) [
+
+16
+14
+6
+
+\
+
+Note  que  só  obtivemos  viabilidade  porque 
+
+,  mas  não  vamos  nos  preocupar  com  o 
+
+problema  em  toda  sua  generalidade  agora.  Suponha  em  seguida  que  desejamos  não  uma 
+
+(cid:25) ≥ 0
+
+outra solução básica qualquer, mas uma em que somente uma variável básica seja diferente 
+
+da escolha inicial. Por exemplo, em que temos como variáveis básicas 
+
+. O sistema quadrado correspondente é 
+
+?(cid:15), ?(cid:17), ?(cid:2)
+
+ em vez de 
+
+(cid:14), ?(cid:17), ?(cid:2)
+
+2 0 0
+[
+\
+1 1 0
+5667668
+0 0 1
+P
+
+[
+
+(cid:14)
+?(cid:17)
+?(cid:2)
+#
+
+\
+
+(cid:5) (cid:25),
+#
+
+  é  a  matriz 
+
+onde 
+  obtida  pela  eliminação  das  colunas  com  variáveis  não  básicas. 
+Multiplicação pela inversa G de B nos daria a solução do sistema acima. Podemos também 
+
+3 × 3
+
+P
+
+pré-multiplicar  o  sistema 
+
+Fazendo 
+
+O=	S (cid:14)T (cid:5) O(cid:25)
+
+, temos  
+
+=	S (cid:14)T (cid:5) (cid:25)
+
+  por 
+
+O
+
+  e  buscar  a  solução  nas  entradas  resultantes. 
+
+[
+
+1 1/2
+1/2
+0 3/2 (cid:8)1/2
+0
+
+0
+
+1
+
+0
+1
+0
+
+0
+0
+1
+
+\ (cid:14)T (cid:5) [
+
+8
+6
+6
+
+\
+
+ 
+ 
+ 
+ 
+ 
+ 
+				
+			
+ 
+Lembrando  que  estamos  impondo 
+
+,  temos  que 
+
+esta  solução  corresponde  ao  vértice 
+
+@ (cid:5) ?(cid:15) (cid:5) 0
+.  Observamos  que  o  novo  lado  direito  contém 
+
+(cid:14) (cid:5) 8, ?(cid:17) (cid:5) 6, ?(cid:2) (cid:5) 6
+
+justamente os valores das variáveis básicas. Também, não é coincidência que as colunas 4 
+
+(cid:13)8,0(cid:19)
+
+21 
+
+  e 
+
+e 5 continuaram iguais. 
+
+	[
+
+2 1 1
+1 2 0
+0 1 0
+
+0
+1
+0
+
+0
+0
+1
+
+\
+
+(cid:13)e(cid:19)×
+fgh [
+
+1 ∗
+0 ∗
+0 ∗
+
+∗
+∗
+∗
+
+0
+1
+0
+
+0
+0
+1
+
+\
+
+Multiplicar  à  esquerda  por  uma  matriz 
+
+  corresponde  a  efetuar  operações 
+
+3 × 3
+
+j (cid:5) k=^	|		(cid:25)m
+
+elementares nas linhas da matriz estendida  
+
+. Com isso, vemos que para obter 
+
+a  nova  solução,  basta  usar  a  entrada  da  linha  1  e  coluna  1  como  pivô  de  um  passo  de 
+
+eliminação gaussiana. 
+
+Novamente cabe a pergunta “qual o significado geométrico desta troca de escolha 
+
+básica?” Note que ao dizermos que a variável y continua não-básica, nos atemos ao eixo x. 
+
+Ao  escolhermos  x  como  nova  variável  básica,  só  há  uma  opção:  incrementar  seu  valor. 
+
+Com  isso,  em  vez  de  termos  x=0,  será  x=t  para  t  positivo.  Estas  retas  verticais 
+
+parametrizadas  por  t  se  deslocam  para  direita  à  medida  que  t  cresce,  mas  somente  até  o 
+
+vértice B=(8,0), quando justamente a variável de folga associada à aresta BC se anula (ou 
+
+seja, passa de básica a não básica). O que ocorreu é que ao passarmos de uma base a outra 
+
+via  a  troca  de  uma  única  variável  básica,  caminhamos  por  uma  aresta.  Aos  poucos  a 
+
+geometria ajuda a desenhar o método algébrico. Se estivermos em um vértice genérico, a 
+
+situação típica é que duas variáveis de folga sejam não básicas (relativas às retas suportes 
+
+das  duas  arestas  incidentes  no  vértice).  Escolher  uma  dessas  para  continuar  não  básica  é 
+
+dizer que vamos nos mover ao longo da aresta correspondente. Caminharemos, em direção 
+
+ao próximo vértice, até a variável de folga da outra aresta se anular. No nosso exemplo, o 
+
+vértice C corresponde a 
+
+ e 
+
+ não básicas. Dizer que 
+
+caminharemos  na  aresta  associada  a  condição 
+
+?(cid:17)
+
+?(cid:15)
+
+ entrá na base signifca dizer que 
+
+?(cid:15)
+  Isso  será  possível  até  que  outra 
+
+variável  se  torne  não  básica,  no  caso, 
+
+.  Ou  seja,  escolhida  uma  variável  para  entrar  na 
+
+?(cid:17) (cid:5) 0.
+
+?(cid:2)
+
+base, a geometria do nosso conjunto viável diz quem deve sair. 
+
+ 
+ 
+ 
+ 
+				
+			
+				
+			
+ 
+  
+ 
+ 
+22 
+
+Figura 7-Variável de Entrada e Saída da Base 
+
+O  que  ainda  não  está  claro  é  como  observar  algebricamente  quem  é  esta  nova 
+
+variável de saída. Para isso voltamos à álgebra.  
+
+Pelo  que  já  vimos,  fica  a  suspeita  de  que  passar  de  uma  escolha  básica  a  outra, 
+
+mesmo  mudando  uma  única  coluna  pode  não  ser  possível.  De  fato,  vamos  tentar  ir  das 
+
+colunas  básicas 
+
+  para 
+
+.  Já  vimos  que  isso  pode  ser  feito  multiplicando  pela 
+
+inversa  de  uma  submatriz  da  matriz  original  e  que  isto  correspondia  a  efetuar  operações 
+
+`3,4,5a
+
+`2,3,5a
+
+elementares nas linhas da matriz estendida 
+
+. Vamos usar essa abordagem: as colunas que 
+
+permanecem  básicas  podem  ser  mantidas  inalteradas,  desde  que  a  nova  coluna  básica  se 
+
+=^
+
+torne o vetor faltante da base canônica; neste caso 
+
+: 
+
+n(cid:17)
+
+[
+
+2 1 1
+1 2 0
+0 1 0
+
+0
+1
+0
+
+0
+0
+1
+
+		o	
+
+16
+14
+6		
+
+\ → [
+
+3/2
+0 1
+1 0
+1/2
+(cid:8)1/2 0 0
+
+(cid:8)1/2
+1/2
+(cid:8)1/2
+
+0
+0
+1
+
+		o
+
+9
+7
+(cid:8)1		
+
+\
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+				
+			
+				
+			
+ 
+23 
+
+Apesar de não termos mais a matriz identidade na submatriz formada pelas colunas 
+
+básicas, bastaria trocar a ordem de cada equação para isso. Como estamos interessados nos 
+
+valores das variáveis básicas, isso não nos incomoda. Note que como as demais variáveis 
+
+são nulas, as três equações acima são simplesmente 
+
+H (cid:13)3
+q1
+q(cid:8) 1
+
+G
+E
+
+2p (cid:19)(cid:13)0(cid:19) (cid:21) (cid:13)0(cid:19)@ (cid:21) ?(cid:15) (cid:8) (cid:13)1
+2p r(cid:13)0(cid:19) (cid:21) 	@ (cid:21) (cid:13)0(cid:19)?(cid:15) (cid:21) (cid:13)1
+2p r(cid:13)0(cid:19) (cid:21) (cid:13)0(cid:19)@ (cid:21) (cid:13)0(cid:19)?(cid:15) (cid:8) q1
+?(cid:2) (cid:5) (cid:8)1
+
+  e 
+
+	?(cid:15) (cid:5) 9, @ (cid:5) 7,
+
+2p (cid:19)(cid:13)0(cid:19) (cid:21) (cid:13)0(cid:19)?(cid:2) 	 (cid:5) 9
+2p (cid:19)(cid:13)0(cid:19) (cid:21) (cid:13)0(cid:19)?(cid:2) 	 (cid:5) 7
+
+2p r(cid:13)0(cid:19) (cid:21) ?(cid:2) 	 (cid:5) (cid:8)1.
+
+.  Infelizmente  a  última  variável  de  folga  se 
+
+Ou  seja: 
+
+tornou  negativa  e  perdemos  viabilidade.  Mais  uma  vez,  isso  era  de  se  esperar 
+
+geometricamente, já que essa mudança corresponde a sair do vértice (0,0) e caminhar pela 
+
+aresta CD, claramente impossível. 
+
+Vamos  então  tentar  por  alguma  ordem  nesta  troca.  Escolhamos  primeiro  uma 
+
+variável  para  entrar  na  base,  digamos  x.  A  partir  daí,  pelo  que  já  comentamos,  a  ideia  é 
+
+usar um elemento da coluna 1 como pivô. Fica a dúvida de quem deve ser a variável a sair 
+
+da base. Geometricamente isto é claro, já que estaremos andando ao longo da aresta AB e 
+
+teremos  que  parar  no  vértice  B,  que  corresponde  a 
+
+se  anular.  A  ideia  geométrica 
+
+?(cid:15)	
+
+discutida era avançar aumentando a nova variável básica até não ser mais possível (devido 
+
+a outra se tornar não básica). 
+
+Analisando a matriz estendida 
+
+0
+1
+0
+vemos  que  existem  três  condições  limitantes  quanto  ao  valor  máximo  da  nossa  nova 
+
+2 1 1
+1 2 0
+0 1 0
+
+16
+14
+6		
+
+0
+0
+1
+
+		o	
+
+[
+
+\
+
+, 
+
+variável básica: 
+
+sx (cid:21) ?(cid:15) (cid:5) tu
+
+tx (cid:21) ?(cid:17) (cid:5) tv
+
+>x (cid:21) ?(cid:2) (cid:5) u
+
+O  importante  aqui  é  que  as  variáveis  devem  ser  todas  não  negativas.  Com  isso, 
+
+vemos  que  coeficientes  não  positivos  de  nossa  nova  variável  não  impõem  nenhuma 
+
+restrição  (note  que  a  última  coluna  da  matriz  estendida  será  sempre  não  negativa,  já  que 
+
+ 
+ 
+ 
+ 
+  
+ 
+				
+			
+ 
+ 
+ 
+ 
+contém os valores das variáveis básicas). Temos, portanto, duas restrições quanto ao valor 
+
+máximo de x: 
+
+24 
+
+Como  ambas  condições  devem  ser  satisfeitas,  isso  é  o  mesmo  que  pedir  que  a  mais 
+
+(cid:5) w
+
+tu
+s
+. 
+tv
+t (cid:5) tv
+
+x ≤
+
+x ≤
+
+restritiva o seja e como igualdade, já que queremos o maior valor possível para x: 
+
+x=8. 
+
+Mas isto significa que queremos que o valor de  x seja lido na primeira linha e, portanto, 
+
+que devemos fazer um passo de eliminação gaussiana usando a entrada (1, 2) como pivô. 
+
+Ou  seja,  entra  a  coluna  1  e  sai  a  coluna  3,  que  contém  o  vetor  canônico 
+
+ficamos com a matriz abaixo: 
+
+.  Com  isto 
+
+n(cid:15)
+
+1
+e notamos que a nova base corresponde, como de se esperar, ao vértice (8,0). 
+
+0
+
+[
+
+1 1/2
+1/2
+0 3/2 (cid:8)1/2
+0
+
+0
+1
+0
+
+0
+0
+1
+
+		o	
+
+\
+
+8
+6
+6	
+
+Vamos  fazer  mais  um  passo,  para  treinar  o  procedimento.  Com  a  ajuda  da 
+
+geometria,  vamos  querer  caminhar  ao  longo  da  aresta  BC.  No  momento  estamos  na 
+
+interseção de y = 0 e 
+
+ e para irmos na direção certa, faremos com que y (e portanto a 
+
+segunda coluna) entre na base. Para escolher a variável a sair, basta ver qual linha possui o 
+
+?(cid:15) (cid:5) 0
+
+mínimo de  M(i,6)/M(i,2), sendo que somente comparamos as linhas para quais a entrada 
+
+M(i,2) seja estritamente positiva. Neste caso todas são e o mínimo ocorre na linha dois. O 
+
+novo passo de eliminação gaussiana, usando (2,2) como pivô nos dá a nova matriz M: 
+
+[
+
+1 0
+2/3
+0 1 (cid:8)1/3
+1/3
+0 0
+
+(cid:8)1/3
+				2/3
+(cid:8)2/3
+
+0
+0
+1
+
+		o	
+
+6
+4
+	2	
+
+\
+
+Reconhecemos aqui o vértice C=(6,4) na solução básica. 
+
+Uma pergunta básica surge quase imediatamente. Falamos que na comparação para 
+
+escolher  a  linha  de  nosso  pivô,  só  se  consideram  as  entradas  positivas  da  nova  coluna 
+
+básica.  E  se  toda  a  coluna  for  não  positiva?  Nesse  caso  poderíamos  aumentar 
+
+arbitrariamente  a  variável  nova.  Isso  só  pode  ocorrer  no  caso  de  um  conjunto  viável  não 
+
+ 
+ 
+ 
+ 
+ 
+				
+			
+ 
+				
+			
+ 
+limitado.    Um  exemplo  simples  deste  fato  é  o  conjunto  viável  definido  por  não 
+
+negatividade e 
+
+(cid:8)x (cid:8) y ≤ (cid:8)1
+
+25 
+
+Figura 8-Introduzindo uma Única Variável de Folga 
+
+(cid:8)x (cid:8) y (cid:21) s (cid:5) (cid:8)1
+As contas são simétricas em x e y e há duas soluções básicas viáveis: x = s = 0, y = 1 e y = 
+
+s = 0, x = 1. A escolha básica x=s=0, y=1 corresponde a 
+
+, 
+
+e se s se tornar básica, temos a situação em que a única escolha possível é a linha com um 
+
+(cid:13)1 1 (cid:8)1	|	1	(cid:19)
+
+coeficiente negativo. Isto é consistente com o fato de que podemos nos deslocar pelo semi-
+
+eixo positivo y arbitrariamente. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+26 
+
+Figura 9- Escolha de Caminhos 
+
+Dependendo  da  função  objetivo,  problemas  com  conjunto  viável  ilimitado  não  possuem 
+
+ótimo. De qualquer modo, problemas de origem prática tendem a vir de conjuntos viáveis 
+
+limitados e não vamos nos aprofundar mais no tema. 
+
+Uma  outra  indagação  é  qual  o  significado    de  haver  mais  de  uma  linha  com  o 
+
+quociente mínimo. Pode-se mostrar que neste caso temos duas escolhas básicas possíveis 
+
+para a mesma solução básica. Por ora vamos adiar a análise deste caso, já que mais adiante 
+
+veremos um exemplo no espaço em que esta situação aparece de modo mais natural. 
+
+Vamos  agora  considerar  o  papel  da  função  que  queremos  maximizar  em  nosso 
+
+algoritmo. Já explicamos que, escolhida uma variável para entrar na base, procedemos de 
+
+modo  a  aumentar  seu  valor  até  que  uma  de  nossas  restrições  esteja  na  iminência  de  ser 
+
+ 
+ 
+ 
+ 
+ 
+ 
+27 
+
+violada.  A  função  objetivo  entra  justamente  ao  escolhermos  quem  deve  ser  esta  nova 
+
+variável básica. 
+
+Novamente, nosso objetivo é encontrar o valor máximo de 
+
+, sujeito a  
+
+(cid:9) (cid:5) 4(cid:14) (cid:21) 5@
+
+2(cid:14) (cid:21) @ ≤ 16
+(cid:14) (cid:21) 2@ ≤ 14
+@ ≤ 6
+(cid:14) ≥ 0
+@ ≥ 0,
+
+H
+F
+
+G
+F
+E
+
+que, após a inclusão das variáveis de folga, se converte em maximizar L sujeita a  
+
+X
+
+2(cid:14) (cid:21) @ (cid:21) ?(cid:15) (cid:5) 16
+(cid:14) (cid:21) 2@ (cid:21) ?(cid:17) (cid:5) 14
+@ (cid:21) ?(cid:2) (cid:5) 6
+
+,  onde   
+
+. 
+
+?(cid:15), ?(cid:17), ?(cid:2) ≥ 0
+
+Uma  solução  básica  viável 
+
+inicial  é  obtida  fazendo 
+
+,  de  modo  que 
+
+?(cid:15) (cid:5) 16, 	?(cid:17) (cid:5) 4, 	?(cid:2) (cid:5) 6
+estamos abusando a notação aqui. Devíamos renomear L para levar em conta que trata-se 
+
+(cid:9)(cid:13)0,0(cid:19) (cid:5) 0
+
+.  O  valor  de  L  para  esta  escolha  é 
+
+.  Observe  que 
+
+(cid:14) (cid:5) @ (cid:5) 0
+
+agora de uma função também das novas variáveis de folga. É fácil ver que essa não é uma 
+
+solução ótima e que podemos obter um ponto com valor maior atribuindo valor positivo a 
+
+uma  das  variáveis  não  básica.  A  pergunta  aqui  é  qual  variável  deve  se  tornar  básica.  Em 
+
+princípio,  poderíamos  escolher  uma  variável  não  básica  qualquer,  desde  que  as  novas 
+
+colunas correspondentes sejam linearmente independente. 
+
+Ingenuamente, vemos que se fosse possível aumentar somente a variável 
+
+ de uma 
+
+(cid:14)
+
+unidade, a função 
+
+ aumentaria de 4 unidades, enquanto se o acréscimo ocorresse em 
+
+, 
+
+(cid:9)	
+subiria de 5 unidades. Motivados por isso, escolhemos y como a nova variável básica, dita 
+
+@
+
+(cid:9)
+
+variável  de  entrada.  Precisamos  definir  qual  variável  deixará  de  ser  básica,  denominada 
+
+variável  de  saída.  Queremos  o  valor  de 
+
+impostas de 
+
+  máximo,  de  modo  que  obedeça  às  restrições 
+
+@
+
+X
+
+@ (cid:21) ?(cid:15) (cid:5) 16
+2@ (cid:21) ?(cid:17) (cid:5) 14
+@ (cid:21) ?(cid:2) (cid:5) 6
+
+ , com 
+
+. 
+
+?(cid:15), ?(cid:17), ?(cid:2) ≥ 0
+
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+Seguindo os passos que já descrevemos acima, comparamos os quocientes para ver em que 
+
+linha de nossa matriz estendida estará o pivô (a coluna é a segunda, já que y é variável de 
+
+entrada) 
+
+28 
+
+0
+1
+0
+O  quociente  mínimo  é  6,  obtido  na  terceira  linha.  Ou  seja,  o  pivô  está  na  entrada  (3,2). 
+
+2 1 1
+1 2 0
+0 1 0
+
+16
+14
+		6		
+
+0
+0
+1
+
+		o		
+
+	[
+
+\
+
+Aplicando  a  sequência  de  operações  sobre  linhas 
+
+obtemos: 
+
+	(cid:9)(cid:15) ← (cid:9)(cid:15) (cid:8) (cid:9)(cid:2)
+
+  , 
+
+(cid:9)(cid:17) ← (cid:9)(cid:17) (cid:8) 2(cid:9)(cid:2)
+
+,  
+
+	 [
+
+2 0 1
+1 0 0
+0 1 0
+
+0
+1
+0
+
+(cid:8)1
+(cid:8)2
+			1
+
+		o		
+
+, 
+
+\
+
+10
+2
+		6		
+
+donde 
+
+, que corresponde ao vértice  
+
+, onde 
+
+ vale 30. 
+
+?(cid:15) (cid:5) 10, ?(cid:17) (cid:5) 2, @ (cid:5) 6
+Falta  verificar  se  30  é  o  valor  ótimo  de 
+
+(cid:9)
+.  Quando  escolhemos  a  variável  de 
+
+(cid:13)0,6(cid:19)
+
+(cid:9)
+
+entrada, o que nos ajudou a ter alguma intuição foi o fato de que L era função justamente 
+
+de duas variáveis não básicas e que só podiam se tornar positivas. O natural a fazer neste 
+
+momento  é  usar  as  restrições  do  problema  para  escrever  L  como  função  das  novas 
+
+variáveis não-básicas: x e 
+
+. Para isto, basta saber escrever a nova variável básica, y, em 
+
+?(cid:2)
+
+função  das  não  básicas.  Mas  isto  já  está  essencialmente  feito  na  terceira  linha  da  matriz 
+
+estendida: 
+
+.  Não  se  trata  de  coincidência,  já  que  como  usamos  a  entrada  (3,2) 
+
+@ (cid:21) ?(cid:2) (cid:5) 6
+
+como  pivô  de  nossa  eliminação  gaussiana,  as  entradas  na  terceira  linha  com  índices 
+
+correspondendo às novas  colunas básicas serão todas nulas, exceto a do pivô, que será 1. 
+
+Substituindo y por 6-
+
+, temos  
+
+	?(cid:2)
+
+(cid:9)(cid:13)x, ?(cid:2)(cid:19) (cid:5) 4(cid:14) (cid:21) 5(cid:13)6 (cid:8) ?(cid:2)(cid:19),
+
+ ou seja, 
+
+(cid:9)(cid:13)x, ?(cid:2)(cid:19) (cid:5) 4(cid:14) (cid:8) 5?(cid:2) (cid:21) 30
+A  partir  de  aqui  podemos  prosseguir  com  a  ideia  intuitiva  de  tornar  básica  a 
+
+. 
+
+variável  com  maior  coeficiente  positivo  na  função  objetivo.  Vale  comentar  que  podemos 
+
+fazer  esta  substituição  por  meio  de  uma  operação  nas  linhas,  não  da  matriz  estendida 
+
+apresentada  até agora, mas de uma  com uma nova linha correspondendo  aos coeficientes 
+
+ 
+ 
+ 
+ 
+				
+			
+ 
+				
+			
+ 
+da  função  objetivo.  Esta  nova  matriz  é  chamada  de  tableau  (quadro,  em  francês).  Desse 
+
+modo, nosso tableau inicial é 
+
+29 
+
+-w 
+
+?(cid:15)
+
+?(cid:17)
+
+?(cid:2)
+
+4 
+
+2 
+
+1 
+
+0 
+
+5 
+
+1 
+
+2 
+
+1 
+
+0 
+
+1 
+
+0 
+
+0 
+
+0 
+
+0 
+
+1 
+
+0 
+
+0 
+
+0 
+
+0 
+
+1 
+
+0 
+
+16 
+
+14 
+
+6 
+
+Figura 10-Solução Usando Quadros (Tableau) 
+
+A  entrada  no  canto  superior  direito  leva  o  valor  da  função  obejtivo  em  nossa 
+
+solução básica viável inicial. Uma forma de ler esta nova primeira linha é  
+
+4(cid:14) (cid:21) 5@ (cid:5) {,
+A variável w representa o valor da função objetivo. A princípio poderíamos incluir 
+
+ou seja, 
+
+. 
+(cid:8){ (cid:21) 4(cid:14) (cid:21) 5@ (cid:5) 0
+
+uma  nova  coluna  para  esta  variável  w,  mas  esta  coluna  teria  entradas  nulas  exceto  nesta 
+
+nova linha (as condições não dependem do valor da função objetivo). Esta nova primeira 
+
+linha receberá múltiplos das demais linhas sempre visando a zerar as colunas básicas. Com 
+
+isso,  sempre  teremos  a  função  objetivo  dependendo  somente  das  variáveis  não  básicas 
+
+(nulas). A entrada do canto direito superior terá por sua vez o simétrico do valor da função 
+
+objetivo na solução básica em que nos encontramos. 
+
+ Após  o  primeiro  passo,  o  tableau  se  torna,  já  incluindo  o  passo  de  eliminação 
+
+visando zerar a nova variável não básica, 
+
+-w 
+
+?(cid:15)
+
+?(cid:17)
+
+@
+
+4 
+
+2 
+
+1 
+
+0 
+
+0 
+
+0 
+
+0 
+
+1 
+
+0 
+
+1 
+
+0 
+
+0 
+
+0 
+
+0 
+
+1 
+
+0 
+
+-5 
+
+-1 
+
+-2 
+
+1 
+
+-30 
+
+10 
+
+2 
+
+6 
+
+Figura 11-Tableau Passo2 
+
+Lemos imediatamente que a função objetivo na solução básica atual vale 30. No 
+
+caso, L(0,6)=30. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+  
+ 
+ 
+ 
+ 
+30 
+
+O procedimento para escolha da nova variável básica nos diz que x deve entrar (4 é 
+
+o maior coeficiente; de fato é o único positivo). Para ver qual variável deve sair da base, 
+
+comparamos as razões 10/2=5 e 2/1=2, que nos dizem que o pivô deve ser a entrada (3,1) 
+
+(correspondente à razão mínima 2). Eliminando os demais elementos da coluna, incluindo 
+
+o da primeira linha, obtemos o tableau a seguir: 
+
+-w 
+
+?(cid:15)
+
+(cid:14)
+
+@
+
+0 
+
+0 
+
+1 
+
+0 
+
+0 
+
+0 
+
+0 
+
+1 
+
+0 
+
+1 
+
+0 
+
+0 
+
+-4 
+
+-2 
+
+1 
+
+0 
+
+3 
+
+3 
+
+-2 
+
+1 
+
+-38 
+
+6 
+
+2 
+
+6 
+
+Figura 12-Tableau Passo3 
+
+O  valor  da  função  objetivo  foi  incrementado  (L(2,6)=38)  e  ainda  há  espaço  para 
+
+melhora: a terceira variável de folga 
+
+ deve entrar (3 é o máximo da primeira linha) e 
+
+deve sair da base, pois 6/2 é menor que 6/1. Com isto, usando o pivô em (2,5), temos  
+
+?(cid:2)
+
+?(cid:15)
+
+-w 
+
+?(cid:2)
+
+(cid:14)
+
+@
+
+0 
+
+0 
+
+1 
+
+0 
+
+0 
+
+0 
+
+0 
+
+1 
+
+-1 
+
+-2 
+
+1/3 
+
+-2/3 
+
+2/3 
+
+-1/3 
+
+-1/3 
+
+2/3 
+
+0 
+
+1 
+
+0 
+
+0 
+
+-44 
+
+2 
+
+6 
+
+4 
+
+Figura 13-Tableau Passo4 
+
+A informação contida no tableau agora é que L(6,4)=
+
+ (6,4,0,0,2)=44 e que, como 
+
+função das duas primeiras variáveis de folga (abusando a notação), 
+
+	(cid:9)	S
+
+(cid:9)(cid:13)?(cid:15), ?(cid:17)(cid:19) (cid:5) 	 (cid:8)?(cid:15) (cid:8) ?(cid:17)
+Mas como as variáveis são não negativas, claramente atingimos um máximo para a 
+
+. 
+
+função objetivo. Novamente, não é uma coincidência: quando a primeira linha do tableau 
+
+(exceto a última coluna) for toda não positiva, o método chegou ao ótimo. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+31 
+
+3.  Otimização No 
+
+(cid:2) 
+
+ℝ
+
+Vamos considerar agora um problema com um conjunto viável no espaço, a saber um 
+
+icosaedro  regular.  O  icosaedro  pode  ser  descrito  como  a  interseção  de  20  semi-espaços, 
+
+definidos  pelos  planos  que  contêm  cada  uma  de  suas  20  faces.  Temos,  portanto  20 
+
+restrições  do  tipo 
+
+,  onde 
+
+.  Como  já  foi  explicado,  o 
+
+(cid:24)(cid:28)(cid:15)(cid:14) (cid:21) (cid:24)(cid:28)(cid:17)@ (cid:21) (cid:24)(cid:28)(cid:2)| ≤ (cid:25)(cid:28)
+
+# (cid:5) 1, … ,20
+
+sistema de desigualdades 
+
+, 
+
+ é transformado no sistema equivalente 
+
+ , 
+
+=(cid:14) ≤ (cid:25)
+
+(cid:14) ≥ 0
+=^ (cid:5) U= VW, (cid:14)T (cid:5) U(cid:14) @			|
+
+<mediante  a  introdução  de  20  variáveis  de 
+,  as  entradas  do  vetor  s.  Vimos  também  que  vértices  do  icosaedro 
+
+?W
+
+=^(cid:14)T (cid:5) (cid:25)
+
+,  onde 
+
+(cid:14)T ≥ 0
+folga 
+
+?(cid:15), … , ?(cid:17)I
+
+correspondem  a  soluções  básicas  deste  novo  sistema.  Note  que,  esquecendo  por  ora 
+
+viabilidade e colunas linearmente dependentes, há 
+
+}
+
+ formas de se escolher 20 
+
+~ (cid:5) 1771
+
+colunas/variáveis como básicas. É neste ponto que a força de método estudado no presente 
+
+23
+20
+
+trabalho se mostra mais evidente. A matriz 
+
+ 20 x 3 e o vetor 
+
+=
+
+ de 20 coordenadas a seguir 
+
+(cid:25)
+
+codificam a informação para este nosso exemplo concreto. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+0
+0
+
+(cid:13)1/6(cid:19)√5 	 (cid:21) 1/6
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+
+0
+(cid:13)(cid:8)1 6⁄ (cid:19)√5 (cid:8) 1 2⁄
+(cid:8)(cid:13)1 6⁄ (cid:19)√5 (cid:8) 1 6⁄
+0
+
+(cid:129)
+()))))))))))))))))))*)))))))))))))))))))+
+0
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:13)1 3⁄ (cid:19)√5 (cid:21) 2 3⁄
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+
+(cid:13)1/3(cid:19)√5 (cid:21) 2/3
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:13)1 6⁄ (cid:19)√5 (cid:21) 1 6⁄
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:13)1 3⁄ (cid:19)√5 (cid:21) 2 3⁄
+0
+(cid:8)(cid:13)1 6⁄ (cid:19)√5 (cid:8) 1 6⁄
+(cid:8)(cid:13)1 3⁄ (cid:19)√5 (cid:8) 2 3⁄
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2 (cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2 (cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+(cid:8)(cid:13)1 3⁄ (cid:19)√5 (cid:8) 2 3⁄
+(cid:8)(cid:13)1 6⁄ (cid:19)√5 (cid:8) 1 6⁄
+(cid:13)1 6⁄ (cid:19)√5 (cid:21) 1 6⁄
+(cid:8)(cid:13)1 3⁄ (cid:19)√5 (cid:8) 2 3⁄
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2 (cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:13)1 6⁄ (cid:19)√5 (cid:21) 1 6⁄
+(cid:8)(cid:13)1 3⁄ (cid:19)√5 (cid:8) 2 3⁄
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+(cid:8)(cid:13)1 6⁄ (cid:19)√5 (cid:8) 1 6⁄
+(cid:13)1/6(cid:19)√5 	 (cid:21) 1/6
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:13)1 3⁄ (cid:19)√5 (cid:21) 2 3⁄
+0
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+(cid:13)1 6⁄ (cid:19)√5 (cid:21) 1 6⁄
+(cid:8)(cid:13)1 3⁄ (cid:19)√5 (cid:8) 2 3⁄
+(cid:8)(cid:13)1 3⁄ (cid:19)√5 (cid:8) 2 3⁄
+(cid:8)(cid:13)1 6⁄ (cid:19)√5 (cid:8) 1 6⁄
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2 (cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+
+0
+0
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+(cid:8)(cid:13)1 6⁄ (cid:19)√5 (cid:8) 1 6⁄ 6
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+0
+
+0
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+(cid:13)1 3⁄ (cid:19)√5 (cid:21) 2 3⁄
+(cid:13)1 3⁄ (cid:19)√5 (cid:21) 2 3⁄
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2
+
+0
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+3
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+
+(cid:13)1/6(cid:19)√5 (cid:21) 1/2 1
+
+.
+
+0
+
+32 
+
+‚
+()))))*)))))+
+17/6 (cid:21) (cid:13)7/6(cid:19)√5
+19/6 (cid:21) (cid:13)3/2(cid:19)√5
+17/6 (cid:21) (cid:13)7/6(cid:19)√5
+11/6 (cid:21) (cid:13)5/6(cid:19)√5
+11/6 (cid:21) (cid:13)5/6(cid:19)√5
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+(cid:8)5/6 (cid:8) (cid:13)1/2(cid:19)√5
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+1/2 (cid:21) (cid:13)1/6(cid:19)√5
+1/2 (cid:21) (cid:13)1/6(cid:19)√5
+1/2 (cid:21) (cid:13)1/6(cid:19)√5
+11/6 (cid:21) (cid:13)5/6(cid:19)√5
+11/6 (cid:21) (cid:13)5/6(cid:19)√5
+17/6 (cid:21) (cid:13)7/6(cid:19)√5
+11/6 (cid:21) (cid:13)5/6(cid:19)√5
+11/6 (cid:21) (cid:13)5/6(cid:19)√5
+1/2 (cid:21) (cid:13)1/6(cid:19)√5
+1/2 (cid:21) (cid:13)1/6(cid:19)√5
+(cid:8)(cid:13)1/6(cid:19)√5 (cid:8) 1/2
+1/2 (cid:21) (cid:13)1/6(cid:19)√5 1
+
+3
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+
+0
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+.
+
+	,
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Que na forma decimal em ponto flutuante são: 
+
+33 
+
+= (cid:5)
+
+1.41202265900000
+0.872677996200000
+0.539344662900000
+0.872677996200000
+1.41202265900000
+
+0.000000000000000
+0.539344662900000
+0.872677996200000
+0.872677996200000
+1.41202265900000
+0.000000000000000
+0.872677996200000
+(cid:8)0.872677996200000
+0.000000000000000
+(cid:8)0.539344662900000
+0.000000000000000
+(cid:8)1.41202265900000 (cid:8)0.539344662900000
+(cid:8)0.872677996200000 (cid:8)0.872677996200000 (cid:8)0.872677996200000
+(cid:8)1.41202265900000
+0.000000000000000
+(cid:8)0.539344662900000
+0.539344662900000
+(cid:8)1.41202265900000
+0.000000000000000
+0.872677996200000 (cid:8)0.872677996200000 (cid:8)0.872677996200000
+0.539344662900000
+(cid:8)1.41202265900000
+0.000000000000000
+0.872677996200000
+0.872677996200000 (cid:8)0.872677996200000
+0.000000000000000
+(cid:8)0.539344662900000
+1.41202265900000
+0.000000000000000
+0.539344662900000
+1.41202265900000
+0.872677996200000 (cid:8)0.872677996200000
+0.872677996200000
+1.41202265900000
+0.000000000000000
+(cid:8)0.539344662900000
+0.872677996200000 (cid:8)0.872677996200000
+(cid:8)0.872677996200000
+0.000000000000000
+0.539344662900000
+(cid:8)1.41202265900000
+0.000000000000000
+(cid:8)1.41202265900000 (cid:8)0.539344662900000
+0.872677996200000 1
+(cid:8)0.872677996200000 (cid:8)0.872677996200000
+
+3
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+
+0
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+.
+
+(cid:25) (cid:5)
+
+5.44207930708309
+6.52076863291635
+5.44207930708309
+3.69672331458316
+3.69672331458316
+(cid:8)0.872677996249965
+(cid:8)1.95136732208323
+(cid:8)0.872677996249965
+0.872677996249965
+0.872677996249965
+0.872677996249965
+3.69672331458316
+3.69672331458316
+5.44207930708309
+3.69672331458316
+3.69672331458316
+0.872677996249965
+0.872677996249965
+(cid:8)0.872677996249965
+0.872677996249965 1
+
+3
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+2
+
+0
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+/
+
+.
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+34 
+
+O problema de otimização será maximizar a função objetivo 
+
+(cid:9)(cid:13)(cid:14), @, |(cid:19) (cid:5) 1/2q√5 (cid:21) 1r(cid:14) (cid:21) (cid:13)1/2(cid:19)@ (cid:21) |
+Já comentamos que a obtenção de uma solução básica viável inicial nem sempre é trivial. 
+
+. 
+
+Diferentemente  do  exemplo  no  plano,  não  basta  zerar  as  variáveis  x,  y  e  z,  posto  que  a 
+
+origem  não  é  um  dos  vértices  de  nosso  icosaedro.  Se  soubermos  as  coordenadas  de  ao 
+
+menos um dos vértices de nosso icosaedro, podemos encontrar uma solução básica inicial. 
+
+Dito isto, o ponto 
+
+ satisfaz a todas as restrições 
+
+e  é  na  verdade  um  dos  vértices.  Para  obter  as  demais  variáveis,  basta  resolver  para  as 
+
+K (cid:5) q0, 1/2 (cid:21) (cid:13)1/2(cid:19)√5, (cid:8)1/2 (cid:21) (cid:13)1/2(cid:19)√5r
+
+variáveis s o sistema 
+
+Em coordenadas: 
+
+U= VW ƒ
+
+K
+?
+
+„ (cid:5) (cid:25) ⇒ ? (cid:5) (cid:25) (cid:8) =K	
+
+? (cid:5) }(cid:8)√5 (cid:8)
+
+†
+(cid:2) , (cid:8)√5 (cid:8)
+(cid:17)
+(cid:2) √5 (cid:8)
+. 
+
+‡
+(cid:2) , (cid:8)
+
+(cid:17)
+(cid:2) √5 (cid:8)
+(cid:15)
+(cid:2) √5 (cid:8) 1~
+
+1,0,0,0, (cid:8)
+
+1, (cid:8)
+
+‡
+(cid:2) , (cid:8)
+
+†
+(cid:2) , (cid:8)
+‡
+(cid:2) , (cid:8)√5 (cid:8)
+
+(cid:17)
+(cid:2) √5 (cid:8)
+†
+(cid:2) , (cid:8)√5 (cid:8)
+
+(cid:15)
+(cid:2) √5 (cid:8) 1, (cid:8)
+†
+(cid:2) , (cid:8)√5 (cid:8)
+
+(cid:17)
+(cid:2) √5 (cid:8)
+†
+(cid:2) , (cid:8)
+
+‡
+(cid:2) , (cid:8)
+(cid:17)
+(cid:2) √5 (cid:8)
+
+(cid:15)
+(cid:2) √5 (cid:8) 1,0,0, (cid:8)
+(cid:15)
+(cid:2) √5 (cid:8)
+
+‡
+(cid:2) , (cid:8)
+
+(cid:15)
+(cid:2) √5 (cid:8)
+
+As  variáveis  não  básicas  devem  ser  todas  nulas.  No  caso  genérico,  haveria  apenas  
+
+23-20=3  entradas  não  nulas  no  vetor  s.  Aqui  temos  cinco: 
+
+.  Isso  ocorre 
+
+porque  em  cada  vértice  do  icosaedro  temos  cinco  faces  concorrentes,  quando  três 
+
+?†, ?ˆ, ?(cid:15)†, ?(cid:15)ˆ, ?(cid:15)‰
+
+bastariam  (a  interseção  de  três  planos  genéricos  é  um  único  ponto).  Este  fenômeno 
+
+(ter  mais  coordenadas  nulas  do  que  o  era  de  se  esperar)  se  chama  degenerescência. 
+
+Escolhamos, pois, 
+
+ como variáveis não básicas  e demos sequência ao método. 
+
+O próximo passo é decidir a variável de entrada. Escrevendo 
+
+?(cid:15)†, ?(cid:15)ˆ, ?(cid:15)‰
+
+ em função de 
+
+: 
+
+?(cid:15)†, ?(cid:15)ˆ, ?(cid:15)‰
+
+(cid:9)
+
+O  termo  de  maior  coeficiente  positivo  é  dado  por 
+
+,  que  nos  leva  a  escolher 
+
+(cid:9) (cid:5) 1.14590?(cid:15)† (cid:8) 1.17173?(cid:15)ˆ (cid:21) 1.60942?(cid:15)‰ (cid:21) 1.42705
+
+ como variável de entrada. 
+
+?(cid:15)‰
+Podemos proceder portanto como fizemos no caso planar.  O gráfico abaixo ilustra o nosso 
+
+(cid:21)1.60942?(cid:15)‰
+
+ponto inicial. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+35 
+
+Figura 14-Solução Inicial 
+
+As  3  faces  mais  escuras  são  nossa  escolha  de  variáveis  não  básicas  (abusamos  a 
+
+notação  aqui,  já  que  cada  face  corresponde  a  uma  variável  de  folga).  Note  que  as  faces 
+
+claras  são  básicas  mas  nulas  (ditas  em  nível  zero).  Nosso  método  indica  que  a  face  que 
+
+destacamos abaixo se tornará básica e portanto deslizaremos pela aresta marcada. 
+
+Figura 15-Nova Face Básica 
+
+A nova face não básica, marcada de cor escura nos traz um problema, indicado na 
+
+próxima figura:  
+
+ 
+ 
+ 
+ 
+ 
+ 
+36 
+
+Figura 16-Não há Caminho ao Longo da Aresta 
+
+Não há aresta comum entre a nova face não básica e as antigas, de modo que quando 
+
+uma das faces se tornar básica, não poderemos caminhar ao longo de nenhuma aresta. Isso 
+
+signifca que simplesmente trocaremos a forma de encarar o mesmo vértice. Ele agora passa 
+
+a ser pensado como a interseção das faces escuras a seguir: 
+
+Figura 17-Mesmo Vértice Gerado por Outras Faces 
+
+A situação agora é mais confortável e só haveria uma única possibilidade de voltarmos 
+
+a entrar em ciclo é voltar atrás o “passo” que terminamos de dar. A face destacada abaixo é 
+
+a próxima a se tornar básica, fazendo com que andemos pela nova aresta marcada. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+37 
+
+Figura 18-Nova Face Básica 
+
+Sempre  seguindo  mecanicamente  o  procedimento,  ficamos  no  vértice  acima  ao  todo 
+
+por três configurações básicas, conforme ilustram as figuras a seguir. 
+
+Figura 19-Determinação de Novo Vértice 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+38 
+
+Figura 20-Possibilidade de Caminho a Percorrer 
+
+Figura 21-Mesmo Vértice Gerado por Outras Faces 
+
+Agora finalmente se torna básica a face em destaque 
+
+Figura 22-Nova Face Básica e o Caminho Percorrido 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+e chegamos ao ponto ótimo como mostra a última figura da sequência: 
+
+39 
+
+Figura 23-Vértice Ótimo 
+
+Note que mesmo com o inconveniente dos ciclos, o método se mostra bem melhor que 
+
+testar cegamente todas possibilidades básicas. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+40 
+
+4.  Aplicativo Para Resolver Problemas De Programação Linear 
+
+Face  à  importância  da  Programação  Linear,  existe  uma  grande  oferta  de  programas 
+
+computacionais,  tanto  gratuitos  quanto  comerciais.  Por  sua  aparência  amigável,  pela 
+
+facilidade  de  uso  e  ainda  por  ser  um  software  livre,  sugerimos  a  utilização  do  pacote 
+
+produzido pela empresa LINDO Systems, que foi desenvolvido para resolver problemas de 
+
+Programação  linear  Inteira  e  Quadrática.  O  programa  pode  ser  obtido,  em  versão  para 
+
+estudante com capacidade de até cem variáveis e cem restrições diretamente da página na 
+
+Internet da empresa, www.lindo.com.  
+
+O  LINDO  (Linear,  Interactive,  and  Discrete  Optimizer)  pode  ser  usado  para  resolver 
+
+problemas  de  forma  interativa  diretamente  do  teclado.  A  entrada  de  um  modelo  de 
+
+otimização  é  feita  de  forma  bem  similar  ao  uso  de  um  editor  de  textos,  tal  como  o 
+
+MSWord.  O  LINDO  possui  um  ambiente  de  janelas  em  que  o  usuário  poderá  digitar  o 
+
+modelo a ser trabalhado. O problema a ser otimizado deve ser escrito de forma semelhante 
+
+ao descrito neste trabalho. Para ilustrar, o problema da produção de calçados abordado no 
+
+início  do  texto  pode  ser  resolvido  pelo  programa,  como  mostram  as  imagens  de  sua 
+
+interface abaixo. 
+
+Figura 24-Problema Modelado 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+41 
+
+Figura 25-Resolução do Problema 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+42 
+
+5.  Considerações Finais 
+
+No  Brasil,  o  ensino  da  programação  linear  fora  dos  círculos  especializados  é 
+
+apresentado ainda de maneira tímida, poucos são os livros do ensino médio que abordam a 
+
+programação linear, enquanto que em outros países ela é tida como obrigatória, como por 
+
+exemplo, em Portugal, onde o assunto faz parte do currículo do ensino médio. 
+
+Julgamos  ser  muito  importante  que  a  aprendizagem  seja  voltada  para  situações  do 
+
+cotidiano  e  enfatize  a  resolução  de  problemas.  Ao  abordarmos  o  tema,  optamos  por 
+
+apresentá-lo  com  apelo  gráfico,  evitando  ao  máximo  fazer  uso  de  assuntos  que  não  faça 
+
+parte  do  currículo  do  ensino  médio,  assumindo  apenas  o  conhecimento  de  álgebra  e 
+
+geometria  do  ensino  médio,  valorizando  as  potencialidades  das  novas  tecnologias, 
+
+agregando  elementos  de  motivação,  exploração,  discussão  e  investigação,  visando 
+
+consolidar os conceitos matemáticos envolvidos.  
+
+Através da resolução gráfica, da descoberta que o valor ótimo encontrava-se em um 
+
+vértice  do  polígono  e  ainda  com  a  interpretação  do  comportamento  do  valor  da  imagem 
+
+quando  mudamos  o  vértice,  obtemos  uma  forma  sistemática  de  encontrar  o  valor  ótimo 
+
+através dessas interações. 
+
+Nosso último exemplo, apesar de mais complexo, ainda pode ser compreendido por 
+
+um aluno aplicado do ensino médio que tenha domínio de geometria espacial. O exemplo 
+
+foi incluído para ilustrar de forma menos artificial o fenômeno de degenerescência. 
+
+Face a tudo que foi exposto, acreditamos firmemente que essa forma de abordar o 
+
+assunto está ao alcance do aluno de ensino médio. 
+
+ 
+ 
+ 
+ 
+ 
+    
+ 
+ 
+ 
+ 
+ 
+ 
+43 
+
+6.  Referências Bibliográficas 
+
+ANDRADE, E. L. Introdução à Pesquisa Operacional. Rio de Janeiro: LTC, 1998. 
+
+ANTON, H. Álgebra Linear com Aplicações. Porto Alegre: Bookman, 2001. 
+
+BAZARAA, M. S.; JARVIS, J. J. Linear programming and network flows 2 ed. New 
+York, NY, USA: John Wiley & Sons, Inc, 1990. 
+
+BOLDRINI, J. L.; FIGUEIREDO, V. L.; WETZLER, H. G. Álgebra Linear, 3 ed. São 
+Paulo: Harbra Ltda, 1980. 
+
+D’AMBROSIO,  Ubiratam.  Educação  Matemática:  da  teoria  à  prática.  Campinas, 
+Papirus, 1996. 
+
+Suely.  O 
+
+DRUCK, 
+em:<www1.folha.uol.com.br/folha/sinapse/ult1063u343.shtm>.  Acesso  em  12 
+2013. 
+
+da  Matemática.  Disponível 
+jan 
+
+ensino 
+
+drama 
+
+do 
+
+GAZIRE,  Eliane  Scheid.  Resolução  de  Problemas:  perspectivas  em  educação 
+matemática.  Dissertação  (Mestrado  em  Educação  Matemática),  Rio  Claro:  UNESP, 
+1988. 
+
+LANZER,  E.A.  Programação  Linear  :  conceitos  e  aplicações.  2  ed.  Rio  de  Janeiro: 
+IPEA  1988. 
+
+MARINS,  Fernando  Augusto  Silva.  Introdução  à  Pesquisa  Operacional.  São  Paulo: 
+UNESP, 2001. 
+
+PIZZOLATO  N.  D.;  GANDOLPHO  A.  A.  Técnicas  de  Otimização.  Rio  de  Janeiro: 
+LTC, 2009. 
+
+PUCCINI, A. L. Introdução a programação linear. Rio de Janeiro: LTC, 1972. 
+
+SÁ, Pedro Franco de. A Resolução de Problemas: concepções e sugestões para aulas de 
+em: 
+Matemática. 
+<http://www.unama.br/colunas/coluna.jsp?idColuna=142>. Acesso em: 12 dez. 2012. 
+
+Disponível 
+
+SEMEAD.  Desafios  da  Gestão:  Econômico,  Social  e  Ambiental.Disponível  em:  < 
+www.ead.fea.usp.br/semead/>. Acesso em: 2 jan. 2013.  
+
+SILVA,  E.  M.  et  al.  Pesquisa  Operacional  para  os  cursos  de  administração  e 
+engenharia: programação linear: simulação. 4. ed. São Paulo: Atlas, 2010.  
+
+STRANG, G. Álgebra Linear e Suas Aplicações. São Paulo: Cengage Learning, 2010. 
+
+ 
+ 
+ 
+ 
+44 
+
+7.  Apêndice 
+
+MÉTODO SIMPLEX COM DUAS FASES2 
+
+Nos  problemas  estudados  até  este  ponto,  após  colocar  o  PPL  na  forma  padrão, 
+
+imediatamente  ficava  evidente  uma  s.b.v.  (solução  básica  viável)  inicial,  necessária  para 
+
+aplicação do Método Simplex. Assim, o Método Simplex podia ser inicializado com uma 
+
+s.b.v.  onde  as  variáveis  básicas  eram  as  variáveis  de  folga  e  as  variáveis  livres  (não-
+
+básicas) eram as demais variáveis naturais do modelo. Frequentemente, isso não acontece e 
+
+desse modo, o Método Simplex não pode ser inicializado imediatamente, necessitando da 
+
+aplicação  de  uma  fase  preliminar.  O  exemplo  espacial,  apesar  de  não  possuir  a  origem 
+
+como ponto viável, tinha como pontos viáveis iniciais qualquer um dos vértices, que eram 
+
+todos conhecidos. 
+
+ O que se faz nestas situações, em que não há uma solução viável inicial evidente 
+
+para  um  dado  modelo  de  PL,  que  receberá  o  nome  de  Modelo  Original,  é  definir 
+
+convenientemente  um  PPL  auxiliar,  denominado  Modelo  Artificial,  cuja  resolução 
+
+fornecerá, ou uma s.b.v. inicial para esse Modelo Original, ou então, indicará a inexistência 
+
+de solução para esse Modelo Original (ou seja, ele é inviável). Um procedimento que pode 
+
+ser utilizado nestes casos é denominado Método das Duas Fases onde: 
+
+Fase  1  –  Criar  o  Modelo  Artificial  a  partir  das  restrições  do  Modelo  Original. 
+
+Resolver pelo Método Simplex o Modelo Artificial; 
+
+Fase  2  –  Aplicar  o  Método  Simplex  ao  PPL  Original,  a  partir  da  solução  básica 
+
+viável ótima obtida para o PPL Artificial na Fase 1.  
+
+Para  entender  como  este  método  funciona,  considere-se  um  PPL,  já  colocado  na 
+
+forma-padrão  –  PPLO,  mas  que  não  apresenta  uma  s.b.v.  evidente,  isto  é,  não  está  na 
+
+forma canônica, e não tem variável básica identificada para qualquer uma das equações do 
+
+PPLO: 
+
+2 MARINS, Fernando Augusto Silva.  Introdução à Pesquisa Operacional.  Cultura Acadêmica, UNESP. 
+
+São Paulo, 2001. Cap. 2, p. 74-76  
+
+ 
+ 
+ 
+ 
+                                                 
+ 
+45 
+
+Modelo Original – PPLO 
+
+Maximizar 
+
+(cid:9) (cid:5) (cid:20)(cid:15)(cid:14)(cid:15) (cid:21) (cid:20)(cid:17)(cid:14)(cid:17) (cid:21) ⋯ (cid:21) (cid:20)(cid:23)(cid:14)(cid:23) (cid:21) ⋯ (cid:21) (cid:20)(cid:11)(cid:14)(cid:11)
+
+ (função objetivo original) 
+
+Sujeito às restrições: 
+
+(cid:24)(cid:15)(cid:15)(cid:14)(cid:15) (cid:21) (cid:24)(cid:15)(cid:17)(cid:14)(cid:17) (cid:21) ⋯ (cid:21) (cid:24)(cid:15)(cid:23)(cid:14)(cid:23) (cid:21) ⋯ (cid:21) (cid:24)(cid:15)(cid:11)(cid:14)(cid:11) (cid:5) (cid:25)(cid:15)
+(cid:24)(cid:17)(cid:15)(cid:14)(cid:15) (cid:21) (cid:24)(cid:17)(cid:17)(cid:14)(cid:17) (cid:21) ⋯ (cid:21) (cid:24)(cid:17)(cid:23)(cid:14)(cid:23) (cid:21) ⋯ (cid:21) (cid:24)(cid:17)(cid:11)(cid:14)(cid:11) (cid:5) (cid:25)(cid:17)
+			⋮													⋮																						⋮																										⋮											⋮	
+		(cid:24)(cid:28)(cid:15)(cid:14)(cid:15) (cid:21) (cid:24)(cid:28)(cid:17)(cid:14)(cid:17) 	 (cid:21) ⋯ (cid:21) (cid:24)(cid:28)(cid:23)(cid:14)(cid:23) (cid:21) ⋯	(cid:21) (cid:24)(cid:28)(cid:11)(cid:14)(cid:11) (cid:5) (cid:25)(cid:28)		
+			⋮													⋮																						⋮																										⋮											⋮	
+(cid:24)(cid:29)(cid:15)(cid:14)(cid:15) (cid:21) (cid:24)(cid:29)(cid:17)(cid:14)(cid:17) (cid:21) ⋯ (cid:21) (cid:24)(cid:29)(cid:23)(cid:14)(cid:23) (cid:21) ⋯ (cid:21) (cid:24)(cid:29)(cid:11)(cid:14)(cid:11) (cid:5) (cid:25)(cid:29)
+
+Com: 
+
+; & = 1, … , ' e (cid:14)(cid:23) ≥ 0 e (cid:25)(cid:28) ≥ 0 (a condição de não negatividade do lado direito 
+
+# (cid:5) 1, … , %
+sempre pode ser obtida, multiplicando se necessário as equações correspondentes por -1). 
+
+Define-se  o  seguinte  problema  auxiliar  (Início  da  1ª  Fase),  utilizando-se  variáveis 
+
+artificiais @(cid:23) para cada uma das equação do PPLO: 
+
+Modelo Artificial – PPLA 
+
+Max Š = −@(cid:15) − @(cid:17) − ⋯ − @(cid:29) (função objetivo artificial) 
+
+Sujeito às restrições: 
+
+(cid:24)(cid:15)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:15)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:24)(cid:15)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:24)(cid:15)(cid:11)(cid:14)(cid:11) 				 + @(cid:15) 																										 = (cid:25)(cid:15)
+(cid:24)(cid:17)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:17)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:24)(cid:17)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:24)(cid:17)(cid:11)(cid:14)(cid:11) 											 + @(cid:17) 																		 = (cid:25)(cid:17)
+			⋮													⋮																						⋮																										⋮											⋮	
+		(cid:24)(cid:28)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:28)(cid:17)(cid:14)(cid:17) 	 + ⋯ + (cid:24)(cid:28)(cid:23)(cid:14)(cid:23) + ⋯	+ (cid:24)(cid:28)(cid:11)(cid:14)(cid:11)																			+@(cid:28)					 										 = (cid:25)(cid:28)		
+			⋮													⋮																						⋮																										⋮											⋮	
+(cid:24)(cid:29)(cid:15)(cid:14)(cid:15) + (cid:24)(cid:29)(cid:17)(cid:14)(cid:17) + ⋯ + (cid:24)(cid:29)(cid:23)(cid:14)(cid:23) + ⋯ + (cid:24)(cid:29)(cid:11)(cid:14)(cid:11) 																								 + @(cid:29) = (cid:25)(cid:29)
+
+Com, (cid:25)(cid:23) ≥ 0, (cid:14)(cid:28) ≥ 0, @(cid:23) ≥ 0  (vaiáveis artificiais), & = 1,2, … , %; # = 1,2, … , '. 
+
+Note que o PPLA está na forma-padrão, ou quase: o vetor de custo inicial é zero em toda 
+
+coluna original e -1 nas demais; basta somar mútliplos das linhas de modo a zerar o vetor 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+46 
+
+de  menos  uns  que  obteremos  a  forma  padrão.  Uma  s.b.v.  inicial  para  o  PPLA  é  obtida 
+
+zerando-se todas variáveis originais e fazendo 
+
+@(cid:15) = (cid:25)(cid:15), @(cid:17) = (cid:25)(cid:17), … , @(cid:29) = (cid:25)(cid:29)  e 	Š = −((cid:25)(cid:15) + (cid:25)(cid:17) + ⋯ +(cid:25)(cid:29)) < 0. 
+
+Note  que  a  simples  viabilidade  do  problema  original  garantiria  que  o  máximo  é  não 
+
+negativo e, pela não negatividade das variáveis artificiais, de fato nulo. 
+
+Uma aplicaão do Método Simplex para o PPLA resultará nas  seguintes situações: 
+
+Caso  1:  Se  o  valor  ótimo  da  função  objetivo  artificial  for  Š∗ < 0,  como  comentamos 
+acima, o Conjunto Viável do PPLO é vazio. (Fim da Fase 1 da Resolução do PPLO, não há 
+
+a Fase 2). 
+
+Caso 2: 
+
+ Se  Š∗ = 0,  isto  indicará  que  todas  as  variáveis  artificiais  são  nulas  e  assim  o  PPLO  é 
+Viável. 
+
+ Aqui, devem ser analisados dois subcasos: 
+
+a)  Se  todas  as  variáveis  artificiais  são  variáveis  não-básicas,  então  a  s.b.v.  inicial  para  o 
+
+PPLO  será  exatamente  a  s.b.v.  ótima  do  PPLA.  Após  eliminar  as  variáveis  artificiais  do 
+
+Quadro Ótimo da resolução do PPLA, e substituir a função objetivo artificial pela original, 
+
+aplica-se o Método Simplex.  
+
+b)  Quando  houver  @(cid:23) = 0,  sendo  @(cid:23)  variável  básica  da  s.b.v.  ótima  do  PPLA,  a  s.b.v  é 
+denominada degenerada, e requer o uso do procedimento descrito a seguir. 
+
+No  Quadro  Ótimo  da  resolução  do  PPLA,  para  cada  variável  @(cid:23)  que  é  variável 
+básica  associada  à  equação    #  do  conjunto  de  restrições,  deve-se  procurar  uma  variável 
+original, (cid:14)(cid:141), com coeficiente (cid:24)Ž(cid:28)(cid:141)	não nulo na equação #. Podem ocorrer duas situações: 
+
+ 
+ 
+ 
+ 
+ 
+47 
+
+– Se esse  coeficiente existir, basta fazer o pivoteamento a partir desse	(cid:24)Ž(cid:28)(cid:141), substituindo a 
+variável @(cid:23) por (cid:14)(cid:141). Após eliminar as variáveis artificiais não-básicas do Quadro Ótimo da 
+resolução do PPLA, por meio desses pivoteamentos, substituir a função objetivo artificial 
+
+pela original, e aplicar o Método Simplex ao PPLO. 
+
+–  Se  na  equação  #  não  houver  nenhuma  variável  original  (cid:14)(cid:141),  com  (cid:24)Ž(cid:28)(cid:141) ≠ 0  ,  isto  indicará 
+que  esta  equação  #  é  combinação  linear  das  demais  equações,  podendo,  portanto,  ser 
+eliminada,  bem  como  a  variável  básica  artificial  correspondente.  Após  a  eliminação  de 
+
+todas  as  variáveis  artificiais  e  equações  redundantes  do  Quadro  Ótimo  da  resolução  do 
+
+PPLA,  substituir  a  função  objetivo  artificial  pela original  e  aplicar  o  Método  Simplex  do 
+
+PPLO. 
+
+ 
+ 
+ 
+ 
+
