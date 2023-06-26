@@ -1,0 +1,5570 @@
+2019: Trabalho de Conclus˜ao de Curso do Mestrado Proﬁssional em Matem´atica em Rede Nacional
+Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+Identiﬁca¸c˜ao e Classiﬁca¸c˜ao de Acordes Musicais aplicando a
+Transformada de Fourier
+
+Willsander de Jesus1
+Gilc´elia Regiane de Souza2
+
+Resumo: Os acordes musicais s˜ao elementos da m´usica que formam a base de todos os ar-
+ranjos e composi¸c˜oes musicais. Em uma orquestra, por exemplo, alguns instrumentos (como
+ﬂauta, violino solo, trompete) reproduzem frases compostas por uma sequˆencia de notas mu-
+sicais, enquanto que outros (piano, conjunto de instrumentos de cordas) reproduzem notas
+simultˆaneas que se combinam entre si, formando assim a base harmˆonica da m´usica. O papel
+desta base ´e preencher os espa¸cos de tempo e fazer uma conex˜ao com os instrumentos solos,
+ou o vocal. O objetivo deste trabalho ´e converter estes elementos musicais em elementos ma-
+tem´aticos, para que possamos enxerg´a-los em uma outra perspectiva, e atrav´es de ferramentas
+computacionais estudar a forma¸c˜ao, a identiﬁca¸c˜ao e a classiﬁca¸c˜ao destes acordes. Com base
+neste objetivo, foi desenvolvido um algoritmo com esta ﬁnalidade. Em poucas palavras, este
+algoritmo (i) calcula a transformada de Fourier do acorde para identiﬁcar suas componentes
+em frequˆencia; (ii) aplica a equa¸c˜ao da escala temperada para estabelecer a rela¸c˜ao entre
+estas frequˆencias e (iii) classiﬁca o acorde a partir dos conceitos da Teoria Musical.
+Palavras chave: M´usica, acordes musicais, ondas sonoras, escala temperada, Transformada
+de Fourier.
+
+Abstract: Musical chords are elements of music that form the basis of all musical arrange-
+ments and compositions. In an orchestra, for example, some instruments (such as ﬂute, solo
+violin, trumpet) play phrases composed of a sequence of musical notes, while others (piano,
+stringed instrument set) play simultaneous notes that combine, thus forming the base for the
+music. The role of this base is to ﬁll the spaces of time and make a connection with the solo
+instruments or the vocal. The objective of this work is to convert these musical elements
+into mathematical elements, so that we can see them from another perspective and, through
+computational tools, study the formation, the identiﬁcation and classiﬁcation of these chords.
+Based on this objective, an algorithm was developed for this purpose. In summary, this algo-
+rithm (i) calculates the chord Fourier transform to identify yours frequency components; (ii)
+applies the tempered scale equation to establish the relationship between these frequencies
+and (iii) classify the chord based on the concepts of the musical theory.
+Keywords: Music, musical chords, sound waves, temperated scale, Fourier Transform.
+
+1Aluno de Mestrado Proﬁssional em Matem´atica em Rede Nacional, Turma 2018
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao del-Rei
+E-mail: willsander.dxg530@gmail.com
+
+2Orientadora do Trabalho de Conclus˜ao de Curso
+
+Departamento de Estat´ıstica, F´ısica e Matem´atica - Deﬁm, CAP-UFSJ
+E-mail: gilcelia@ufsj.edu.br
+
+Sum´ario
+
+1 Introdu¸c˜ao
+
+2 A F´ısica do Som
+
+2.1 Ondas Sonoras
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.2 Modelagem de Uma Onda Sonora . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . .
+
+2.2.1 Fun¸c˜oes Peri´odicas
+2.2.2 Representa¸c˜ao de uma Onda Sonora
+
+2
+
+4
+
+6
+6
+8
+8
+9
+
+3 S´eries de Fourier
+
+11
+Introdu¸c˜ao sobre S´eries . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+3.1
+3.2 Representa¸c˜ao de Fun¸c˜oes Peri´odicas em S´eries de Fourier
+. . . . . . . . . . . 12
+3.3 S´eries de Fourier de Fun¸c˜oes Pares e ´Impares . . . . . . . . . . . . . . . . . . . 13
+3.3.1 Fun¸c˜oes Pares e ´Impares . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+3.4 S´erie de Fourier Complexa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+4 Transformada de Fourier no Tempo Cont´ınuo
+
+4.1 Representa¸c˜ao de Sinais Aperi´odicos
+4.2 Transformada de Fourier para Sinais Peri´odicos
+
+18
+. . . . . . . . . . . . . . . . . . . . . . . 19
+. . . . . . . . . . . . . . . . . 24
+
+5 T´opicos B´asicos da Teoria Musical
+
+27
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+5.1 As Notas Musicais
+5.2 Os Intervalos Musicais
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+5.3 Os Acordes Musicais . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+5.3.1 Tr´ıades . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+5.3.2 T´etrades . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+5.4 Classiﬁca¸c˜ao de Acordes Musicais . . . . . . . . . . . . . . . . . . . . . . . . . 34
+
+6 A Escala Temperada
+
+34
+6.1 Resumo Hist´orico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+6.2 A Equa¸c˜ao da Escala Temperada . . . . . . . . . . . . . . . . . . . . . . . . . 36
+6.3 Rela¸c˜ao entre as Frequˆencias Musicais . . . . . . . . . . . . . . . . . . . . . . . 37
+6.4 Classiﬁcando um Acorde a partir de suas Frequˆencias . . . . . . . . . . . . . . 37
+
+7 Aplicando a Transformada de Fourier no Estudo dos Acordes Musicais
+
+38
+7.1 C´alculo Computacional da Transformada de Fourier . . . . . . . . . . . . . . . 40
+
+8 Desenvolvimento
+
+43
+8.1 Estrutura da Implementa¸c˜ao Pr´atica . . . . . . . . . . . . . . . . . . . . . . . 43
+Implementa¸c˜ao Pr´atica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+8.2
+8.2.1 Coleta de dados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+8.2.2
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+8.2.3 Processamento dos dados . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+8.2.4 Classiﬁca¸c˜ao dos acordes . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+8.3 Diﬁculdades Encontradas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+Importa¸c˜ao dos dados
+
+9 Classiﬁca¸c˜ao Visual dos Acordes
+
+50
+9.1 Classiﬁca¸c˜ao Visual dos Acordes Tr´ıades atrav´es dos Gr´aﬁcos da TF . . . . . . 50
+
+10 Resultados
+
+52
+10.1 ´Indice de Conﬁan¸ca do Algoritmo Desenvolvido . . . . . . . . . . . . . . . . . 52
+10.2 An´alise dos Limiares de Corte . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+10.3 Resultados do algoritmo Chord Test in Frequency . . . . . . . . . . . . . . . . 56
+
+3
+
+11 Aplica¸c˜ao no Ensino M´edio
+
+57
+11.1 Utiliza¸c˜ao do Geogebra no Estudo das Fun¸c˜oes . . . . . . . . . . . . . . . . . . 58
+. . . . 58
+11.2 Aplica¸c˜ao das Fun¸c˜oes Trigonom´etricas no Estudo da M´usica . . . . . . . . . . 61
+
+11.1.1 Utiliza¸c˜ao do Geogebra no Estudo das Fun¸c˜oes Trigonom´etricas
+
+12 Conclus˜ao
+
+63
+
+A Apˆendice
+
+65
+A.1 Algoritmo Chord Test in Frequency v2.1 . . . . . . . . . . . . . . . . . . . . . 65
+A.2 C´odigo auxiliar 001 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+A.3 C´odigo auxiliar 002 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+A.4 C´odigo auxiliar 003 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71
+A.5 C´odigo auxiliar 004 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+A.6 Frequˆencias das notas musicais do piano . . . . . . . . . . . . . . . . . . . . . 72
+A.7 Quadro Resumo das deﬁni¸c˜oes musicais utilizadas no trabalho . . . . . . . . . 73
+A.8 Gr´aﬁcos de barras dos limiares de corte . . . . . . . . . . . . . . . . . . . . . . 74
+A.9 Teorema de Convergˆencia da S´erie de Fourier . . . . . . . . . . . . . . . . . . . 74
+A.10 Demonstra¸c˜ao da S´erie de Fourier Complexa . . . . . . . . . . . . . . . . . . . 76
+
+4
+
+1
+
+Introdu¸c˜ao
+
+A m´usica ´e dividida em trˆes partes principais: a melodia, a harmonia e o ritmo [1]. A
+melodia ´e a combina¸c˜ao de sons sucessivos (dados uns ap´os os outros), a harmonia ´e a com-
+bina¸c˜ao de sons simultˆaneos (dados de uma s´o vez) e o ritmo ´e o que deﬁne o andamento da
+m´usica. Os intrumentos musicais tamb´em podem ser separados em trˆes categorias: mel´odicos
+(saxofone, ﬂauta, trompete, etc.), harmˆonicos (viol˜ao, piano) e r´ıtmicos (bateria, percuss˜ao).
+Neste trabalho abordaremos os intrumentos harmˆonicos, pois s˜ao eles que formam a estrutura
+base da m´usica, constitu´ıda pelos acordes musicais.
+
+Um acorde musical ´e um sinal sonoro constitu´ıdo por pelo menos 3 notas musicais si-
+multˆaneas. Os acordes mais utilizados na m´usica s˜ao divididos em dois grupos fundamentais:
+os acordes tr´ıades (com 3 notas) e os acordes t´etrades (com 4 notas), ver Figura 1. Tamb´em
+existem acordes com mais de 4 notas, mas a aplica¸c˜ao destes ´e mais rara nas m´usicas conven-
+cionais. Para cada tipo de acorde, existe uma estrutura e uma representa¸c˜ao diferente. Estas
+estruturas seguem conceitos e deﬁni¸c˜oes da Teoria Musical. Na pr´atica, os acordes formam
+a base de qualquer harmonia musical: onde existe m´usica, existem acordes.
+
+Figura 1: Exemplos de acordes executados em um teclado (acorde tr´ıade `a esquerda / acorde
+t´etrade `a direita).
+
+Para compreendermos uma aplica¸c˜ao pr´atica do acorde, podemos dar o exemplo de um
+m´usico tocando viol˜ao ou um piano. As posi¸c˜oes e montagens que o m´usico faz no bra¸co do
+viol˜ao formam os acordes e seu som ´e caracterizado por produzir uma sensa¸c˜ao de preen-
+chimento na m´usica. O mesmo ocorre no caso de um m´usico tocando o piano, as varia¸c˜oes
+dos dedos nas teclas produzem acordes diferentes, conforme ilustra a Figura 1. Os acordes
+tr´ıades s˜ao mais b´asicos e mais f´aceis de serem executados na pr´atica, sendo amplamente
+utilizados por m´usicos proﬁssionais e iniciantes. J´a os t´etrades exigem um maior dom´ınio
+do instrumento musical e eles s˜ao aplicados com maior frequˆencia em estilos musicais mais
+soﬁsticados como o Jazz e a Bossa Nova. Cada acorde possui um som bem caracter´ıstico,
+uns transmitem uma sensa¸c˜ao de alegria, outros de tristeza e melancolia, outros de suspense;
+uns s˜ao mais brilhantes, enquanto outros s˜ao mais fechados.
+
+Este trabalho tem como objetivo principal coletar os sinais sonoros de v´arios acordes
+musicais executados em um piano (ou teclado), por exemplo, enviar estes sinais para o com-
+putador e, atrav´es de t´ecnicas matem´aticas e algoritmos, identiﬁc´a-los e classiﬁc´a-los. A
+Figura 2 ilustra o esquema do processo.
+
+Por se tratar de sinais sonoros, abordaremos alguns conceitos da f´ısica do som como, por
+exemplo, amplitude (A) e frequˆencia (F ). Estes parˆametros deﬁnem uma nota musical, onde
+a amplitude est´a associada `a intensidade do som (ou volume) e a frequˆencia est´a associada `a
+altura do som, ou seja, notas mais graves (baixa vibra¸c˜ao / baixa frequˆencia) ou mais agudas
+(alta vibra¸c˜ao / alta frequˆencia).
+
+5
+
+Figura 2: Diagrama esquem´atico do processo.
+
+Abordaremos tamb´em conceitos que permitir˜ao enxergar a m´usica de forma matem´atica.
+Falaremos sobre a modelagem de uma onda sonora e da representa¸c˜ao matem´atica de um
+acorde musical. Resumidamente, cada nota musical pode ser modelada por uma fun¸c˜ao
+peri´odica do tipo
+
+f (t) = A sen (2πF · t)
+
+onde F ´e a frequˆencia da nota musical e A sua amplitude. Com base nestas deﬁni¸c˜oes,
+podemos entender um acorde musical (acm) como uma combina¸c˜ao de ondas sonoras, ou
+seja,
+
+n
+(cid:88)
+
+acm(t) =
+
+Ai sen (2πFi · t)
+
+i=1
+onde Fi e Ai s˜ao, respectivamente, a frequˆencia e a amplitude de cada onda sonora i.
+
+Estudaremos tamb´em uma pequena introdu¸c˜ao `a Teoria Musical e apresentaremos a es-
+tutura dos principais acordes utilizados por m´usicos e compositores. Utilizaremos o piano
+como base e a partir dele mostraremos de forma pr´atica como aplicar os principais conceitos
+musicais na classiﬁca¸c˜ao dos acordes.
+
+Ap´os estes estudos te´oricos e matem´aticos ser´a implementado um algoritmo, utilizando
+um software gratuito, que realizar´a o processo computacional do trabalho. Neste algoritmo
+usaremos uma ferramenta matem´atica, a saber, a Transformada de Fourier, que nos per-
+mitir´a extrair as frequˆencias das notas musicais presentes no acorde gravado. Em seguida,
+calcularemos a rela¸c˜ao musical entre estas notas atrav´es da Equa¸c˜ao da Escala Temperada
+(que deﬁniremos ao longo do trabalho) e, ﬁnalmente, classiﬁcaremos o acorde coletado com
+base nos conceitos da Teoria Musical. Em termos pr´aticos, o algoritmo receber´a como en-
+trada o a´udio de um acorde gravado e, como resultado, ele mostrar´a na tela qual acorde se
+trata.
+
+Na parte ﬁnal deste trabalho faremos uma pequena an´alise gr´aﬁca dos acordes, onde
+identiﬁcaremos padr˜oes visuais que nos auxiliar˜ao a classiﬁc´a-los. Apresentaremos tamb´em
+uma aplica¸c˜ao do trabalho no Ensino M´edio.
+
+Todas as ﬁguras apresentadas ao longo do trabalho s˜ao de autoria pr´opria. Elas foram
+
+constru´ıdas utilizando o Geogebra (https://www.geogebra.org) e o PowerPoint.
+
+O software utilizado na implementa¸c˜ao pr´atica deste trabalho foi o Octave (dispon´ıvel
+
+para download em: https://www.gnu.org/software/octave/).
+
+6
+
+2 A F´ısica do Som
+
+Na f´ısica, existem dois tipos de ondas, a mecˆanica e a eletromagn´etica, onde a primeira
+depende de um meio para se propagar, e a segunda, n˜ao [6, 12]. Uma onda mecˆanica pode
+ser deﬁnida como uma perturba¸c˜ao que ocorre em um meio. Uma ilustra¸c˜ao bem cl´assica
+que nos auxilia a entender esta deﬁni¸c˜ao ´e o lan¸camento de uma pedra em um lago. Quando
+a pedra atinge a superf´ıcie da ´agua, ela gera uma perturba¸c˜ao na ´agua (meio), provocando
+o surgimento de ondas que se propagam na superf´ıcie do lago [7, 6]. O som ´e uma onda
+mecˆanica, pois ele necessita de um meio para se propagar (o ar, a ´agua, etc.).
+
+2.1 Ondas Sonoras
+
+Em termos gerais, o som ´e classiﬁcado como onda sonora, e esta ´e obtida, por exemplo,
+pela vibra¸c˜ao de cordas, palhetas ou pelo atrito entre objetos e corpos. Estas vibra¸c˜oes
+podem ser regulares (produzindo notas musicais) ou irregulares (produzindo ru´ıdos) [1]. Neste
+trabalho estudaremos a rela¸c˜ao entre as vibra¸c˜oes regulares produzidas por instrumentos
+musicais. Especiﬁcamente, utilizaremos o piano, que ´e um instrumento baseado na vibra¸c˜ao
+de cordas, acionadas por martelos acoplados `as suas teclas.
+
+No estudo das ondas, utilizamos alguns parˆametros para caracteriz´a-las, como frequˆencia
+(F ), amplitude (A), comprimento (λ), velocidade (v), entre outros. A Figura 3 ilustra uma
+onda sonora elementar. A combina¸c˜ao de ondas sonoras tamb´em ´e uma onda sonora.
+
+Figura 3: Onda Sonora.
+
+1. Amplitude (A): altura da onda, ou seja, distˆancia do eixo da onda at´e o pico [5]. A
+
+amplitude da onda deﬁne a intensidade (volume) do som reproduzido;
+
+2. Frequˆencia (F ): representa numericamente o n´umero de ciclos por unidade de tempo
+[6]. A unidade que utilizamos para este parˆametro ´e o Hertz (Hz) e ela ´e dada em
+n´umero de ciclos por segundo (Ex: uma onda de 100Hz produz 100 ciclos a cada
+segundo);
+
+3. Per´ıodo (T ): tempo necess´ario (em segundos) para a onda completar um ciclo, ou
+seja, o inverso da frequˆencia (Ex: para uma onda de 100Hz, cada ciclo ´e completado
+em 10 milisegundos, ou 0, 01 segundo)
+
+T =
+
+1
+F
+
+;
+
+(1)
+
+7
+
+4. Frequˆencia angular (ω): expressa a velocidade angular (velocidade de giro) e ´e dada
+em radianos por segundo (rad/s) [5]. (Ex: uma onda de 1Hz possui uma frequˆencia
+angular de 2π rad/s, em graus isso equivale a um giro de 360 graus por segundo)
+
+ω = 2πF =
+
+2π
+T
+
+;
+
+(2)
+
+5. Comprimento (λ): ´e o tamanho de um per´ıodo de onda, ou comprimento de “um
+
+ciclo de onda”;
+
+6. Velocidade (v): raz˜ao da distˆancia percorrida pela unidade de tempo
+
+v =
+
+λ
+T
+
+.
+
+(3)
+
+Com base nas deﬁni¸c˜oes acima, podemos expressar a rela¸c˜ao entre as grandezas f´ısicas citadas:
+
+v =
+
+λ
+T
+
+= λ · F =
+
+λ · ω
+2π
+
+.
+
+(4)
+
+O parˆametro principal que ser´a analisado neste trabalho ´e a frequˆencia, pois ela deter-
+mina uma caracter´ıstica muito importante da onda sonora, a altura do som. A altura est´a
+relacionada com os sons graves e agudos. Sons graves s˜ao aqueles de baixa frequˆencia (menor
+n´umero de vibra¸c˜oes por unidade de tempo) e sons agudos s˜ao aqueles de alta frequˆencia
+(maior n´umero de vibra¸c˜oes por unidade de tempo) (Figura 4). Podemos exempliﬁcar este
+parˆametro utilizando a voz humana: homens possuem uma voz mais grave enquanto que as
+mulheres possuem uma voz mais aguda.
+
+Figura 4: Frequˆencia baixa (som grave) × Frequˆencia alta (som agudo).
+
+O leitor menos familiarizado com estes termos t´ecnicos pode at´e achar que o volume do
+som tenha alguma rela¸c˜ao com som grave e agudo, mas ´e a amplitude da onda que reﬂete no
+volume do som (Figura 5).
+
+Figura 5: Alta amplitude (volume alto) × baixa amplitude (volume baixo).
+
+8
+
+2.2 Modelagem de Uma Onda Sonora
+
+Para compreendermos a modelagem matem´atica de uma onda sonora, precisamos primeiro
+
+deﬁnir fun¸c˜ao peri´odica.
+
+2.2.1 Fun¸c˜oes Peri´odicas
+
+Deﬁni¸c˜ao 1 Uma fun¸c˜ao f ´e dita peri´odica se
+
+f (t) = f (t + T )
+
+∀ t ∈ R
+
+onde T ´e o seu per´ıodo fundamental (menor valor de T que satisfaz a condi¸c˜ao de perio-
+dicidade da fun¸c˜ao) e F = 1/T sua frequˆencia fundamental.
+
+Figura 6: Fun¸c˜ao Peri´odica.
+
+Na Figura 6 vemos ent˜ao que dado um valor de t temos que f (t) = f (t + T ). Mas podemos
+generalizar, ou seja, tomando agora o ponto t + T como a referˆencia e aplicando a deﬁni¸c˜ao
+temos
+
+f (t + T ) = f ((t + T ) + T ) = f (t + 2T )
+
+e realizando esse procedimento sucessivas vezes obtemos
+
+f (t) = f (t + T ) = · · · = f (t + kT ) ∀ k ∈ Z.
+
+(5)
+
+As fun¸c˜oes peri´odicas mais conhecidas s˜ao as fun¸c˜oes trigonom´etricas. Em especial, podemos
+destacar as fun¸c˜oes seno ( sen ) e cosseno (cos) (Figura 7):
+
+f (t) = sen t
+
+e
+
+g(t) = cos t.
+
+Estas fun¸c˜oes possuem per´ıodos iguais a 2π e amplitudes iguais a 1. Se quisermos, por
+exemplo, uma fun¸c˜ao seno com per´ıodo igual a π, devemos multiplicar o argumento t por
+2π/π = 2, ou seja, f (t) = sen (2t). Semelhantemente, se quisermos uma fun¸c˜ao seno com
+per´ıodo igual a 1, devemos multiplicar t por 2π/1 = 2π, ou seja, f (t) = sen (2πt). Sendo T
+o per´ıodo da fun¸c˜ao trigonom´etrica seno e A a sua amplitude, sua equa¸c˜ao pode ser escrita
+como
+
+e sabendo que ω = 2π/T podemos escrever
+
+f (t) = A sen
+
+(cid:18) 2π
+T
+
+(cid:19)
+
+· t
+
+,
+
+f (t) = A sen (ω · t).
+
+(6)
+
+9
+
+Figura 7: Fun¸c˜oes Trigonom´etricas.
+
+2.2.2 Representa¸c˜ao de uma Onda Sonora
+
+Como foi apresentado no in´ıcio deste cap´ıtulo, uma onda sonora possui caracter´ısticas
+(frequˆencia, per´ıodo, amplitude) que podem ser modeladas por uma fun¸c˜ao peri´odica. As
+fun¸c˜oes trigonom´etricas s˜ao ideais para a modelagem de fenˆomenos repetitivos como, por
+exemplo, mar´es, cordas vibrantes e ondas sonoras [8]. Neste trabalho utilizaremos a fun¸c˜ao
+seno:
+
+f (t) = A sen (ω · t) = A sen (2πF · t) = A sen
+
+· t
+
+(7)
+
+(cid:19)
+
+(cid:18) 2π
+T
+
+onde ω ´e a sua frequˆencia angular, dada por ω = 2πF , A sua amplitude e t o tempo dado
+em segundos.
+
+A Figura 8 ilustra duas ondas sonoras de mesma frequˆencia angular (ω = π rad/s) e
+
+amplitudes diferentes, onde a amplitude de uma ´e o dobro da outra, ou seja,
+
+f1(t) = 1 sen (π · t)
+
+e
+
+f2(t) = 2 sen (π · t).
+
+O per´ıodo destas fun¸c˜oes ´e dado por:
+
+T =
+
+2π
+ω
+
+=
+
+2π
+π
+
+= 2 s.
+
+Figura 8: Gr´aﬁcos de f1(t) e f2(t).
+
+J´a a Figura 9 ilustra duas ondas sonoras de frequˆencias diferentes (uma de 220π rad/s e
+
+outra de 110π rad/s) e amplitudes diferentes (Af (t) = 2 e Ag(t) = 1):
+
+f (t) = 2 sen (220π · t)
+
+e
+
+g(t) = 1 sen (110π · t).
+
+10
+
+Figura 9: Gr´aﬁcos de f (t) e g(t).
+
+Os per´ıodos de f e g s˜ao, respectivamente, 9, 09 ms e 18, 18 ms, ou seja, em um ciclo de g,
+f completa dois ciclos. Realizando, por exemplo, a soma destas duas ondas sonoras obtemos:
+
+h(t) = f (t) + g(t) = 2 sen (220π · t) + sen (110π · t)
+
+mostrada na Figura 10.
+
+Figura 10: Gr´aﬁco de h(t).
+
+A composi¸c˜ao de trˆes ou mais ondas sonoras constitui um acorde musical (acm). Co-
+nhecendo a frequˆencia das notas musicais associadas a essas ondas sonoras podemos obter a
+representa¸c˜ao matem´atica deste acorde, ou seja,
+
+n
+(cid:88)
+
+acm(t) =
+
+Ai sen (2πFi · t)
+
+(8)
+
+i=1
+onde Fi e Ai s˜ao respectivamente, a frequˆencia e a amplitude de cada onda sonora i.
+
+No Cap´ıtulo 6 apresentaremos a rela¸c˜ao entre as frequˆencias das notas musicais e a estru-
+tura¸c˜ao dos acordes. Tamb´em apresentaremos uma introdu¸c˜ao `a Teoria Musical no Cap´ıtulo
+5 para facilitar a compreens˜ao da etapa ﬁnal do trabalho.
+
+11
+
+3 S´eries de Fourier
+
+3.1 Introdu¸c˜ao sobre S´eries
+
+No estudo da matem´atica lidamos diariamente com equa¸c˜oes e express˜oes que nos auxiliam
+a modelar determinado problema pr´atico. No Ensino M´edio, os alunos tˆem seu primeiro
+contato com as fun¸c˜oes elementares:
+fun¸c˜oes de primeiro grau, fun¸c˜oes de segundo grau,
+fun¸c˜oes polinomiais, fun¸c˜oes logar´ıtmicas e exponenciais, fun¸c˜oes trigonom´etricas, etc.. Estas
+fun¸c˜oes possuem caracter´ısticas distintas e cada uma se aplica em determinada ´area. Na f´ısica,
+por exemplo, as fun¸c˜oes de segundo grau s˜ao utilizadas para estudar lan¸camentos obl´ıquos,
+as fun¸c˜oes trigonom´etricas s˜ao aplicadas no estudo de fenˆomenos oscilat´orios; na biologia, as
+fun¸c˜oes exponenciais s˜ao utilizadas para estudar o crescimento da popula¸c˜ao de bact´erias;
+entre outras aplica¸c˜oes.
+
+Na vida pr´atica, existem muitos problemas que n˜ao podem ser modelados pelas fun¸c˜oes
+elementares. Existe ent˜ao a necessidade de combin´a-las entre si para obter um modelo mais
+preciso. ´E aqui que entra a necessidade do conceito de S´eries. De modo resumido, podemos
+pensar em S´erie como uma combina¸c˜ao de fun¸c˜oes elementares que conseguem representar
+uma fun¸c˜ao mais complicada. As S´eries de Potˆencia s˜ao as mais conhecidas e seu objetivo
+´e representar fun¸c˜oes complicadas a partir da combina¸c˜ao de polinˆomios. N˜ao iremos entrar
+em detalhes nos c´alculos destas s´eries, mas vamos ilustrar um exemplo.
+
+Uma s´erie de potˆencia possui o seguinte formato:
+
+f (t) =
+
+∞
+(cid:88)
+
+n=0
+
+cn(t − a)n = c0 + c1(t − a) + c2(t − a)2 + c3(t − a)3 + . . .
+
+(9)
+
+onde cn s˜ao os coeﬁcientes das potˆencias de t, e a ´e o centro da s´erie.
+
+Um caso especial das s´eries de potˆencia ´e a S´erie de Taylor, equa¸c˜ao (10), e aplicando sua
+deﬁni¸c˜ao podemos representar as fun¸c˜oes exponenciais, trigonom´etricas, logar´ıtmicas, etc.
+como uma soma de potˆencias:
+
+f (t) =
+
+∞
+(cid:88)
+
+n=0
+
+f (n)(a)(t − a)n
+n!
+
+,
+
+(10)
+
+onde f (n)(a) representa as n-´esimas derivadas da fun¸c˜ao f (t) aplicadas no ponto t = a.
+
+A equa¸c˜ao (11) ilustra um exemplo cl´assico da s´erie de Taylor, onde expressamos a fun¸c˜ao
+
+et como uma soma de polinˆomios:
+
+et =
+
+∞
+(cid:88)
+
+n=0
+
+tn
+n!
+
+= 1 + t +
+
+t2
+2!
+
++
+
+t3
+3!
+
++
+
+t4
+4!
+
++ . . .
+
+(11)
+
+Uma aplica¸c˜ao interessante ´e, por exemplo, se quisermos calcular uma aproxima¸c˜ao para
+o valor de e1, neste caso, basta aplicarmos t = 1 na equa¸c˜ao (11). Estas s´eries s˜ao am-
+plamente utilizadas por computadores e calculadoras gr´aﬁcas, pois permitem transformar
+c´alculos complexos em opera¸c˜oes b´asicas de soma, subtra¸c˜ao, multiplica¸c˜ao e divis˜ao.
+
+Acima apresentamos as s´eries formadas pela combina¸c˜ao de fun¸c˜oes polinomiais, mas
+existem casos em que ´e interessante realizar a combina¸c˜ao de fun¸c˜oes trigonom´etricas har-
+monicamente relacionadas (somas trigonom´etricas ou s´eries trigonom´etricas), ou seja, cujas
+frequˆencias s˜ao m´ultiplas de uma frequˆencia fundamental ω0. Exemplos:
+
+f (t) = sen (t) + 2 sen (2t) − cos (t) + 4 cos (3t) +
+
+2
+3
+
+cos (4t),
+
+12
+
+g(t) =
+
+∞
+(cid:88)
+
+n=0
+
+[an cos (nω0t) + bn sen (nω0t)] .
+
+Este estudo vem sendo realizado desde a ´epoca dos babilˆonicos, e durante anos ma-
+tem´aticos como L. Euler, J. L. Lagrange e J. B. J. Fourier discutiram e debateram sobre
+este assunto, at´e que ﬁnalmente Fourier conseguiu publicar seus resultados [2]. Os estudos
+de Fourier contribu´ıram signiﬁcativamente nas ´areas de engenharia, principalmente nas enge-
+nharias el´etrica e de telecomunica¸c˜oes, que trabalham com modelos baseados em combina¸c˜oes
+de fun¸c˜oes peri´odicas.
+
+3.2 Representa¸c˜ao de Fun¸c˜oes Peri´odicas em S´eries de Fourier
+
+Nos seus estudos, Fourier demonstrou que ´e poss´ıvel representar fun¸c˜oes peri´odicas a
+partir de s´eries trigonom´etricas [2]. Em homenagem `as contribui¸c˜oes de Fourier temos ent˜ao
+as S´eries de Fourier, cuja deﬁni¸c˜ao ´e resumidamente apresentada abaixo.
+
+Deﬁni¸c˜ao 2 Seja f (t) uma fun¸c˜ao peri´odica, de per´ıodo fundamental T e de frequˆencia
+angular fundamental ω0 = 2π/T . Sua S´erie de Fourier, denotada por SF [f (t)], ´e dada por:
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+[an cos (nω0t) + bn sen (nω0t)]
+
+(12)
+
+onde nω0 s˜ao os harmˆonicos {ω0, 2ω0, 3ω0, . . .} da frequˆencia fundamental.
+
+No Apˆencide A.9 apresentamos o Teorema de Convergˆencia de Fourier, que nos mostra as
+condi¸c˜oes necess´arias para que a S´erie de Fourier de uma fun¸c˜ao convirja para essa fun¸c˜ao
+em todos os pontos. As fun¸c˜oes apresentadas neste trabalho atendem as condi¸c˜oes deste
+teorema, portanto, escreveremos f (t) = SF [f (t)].
+
+Para encontrarmos a representa¸c˜ao em S´eries de Fourier de uma fun¸c˜ao peri´odica f (t),
+
+basta calcularmos os coeﬁcientes da s´erie, dados por
+
+a0 =
+
+2
+T
+(cid:90) τ +T
+
+an =
+
+bn =
+
+2
+T
+
+2
+T
+
+τ
+(cid:90) τ +T
+
+τ
+
+(cid:90) τ +T
+
+τ
+
+f (t) dt,
+
+f (t) · cos (nω0t) dt,
+
+f (t) · sen (nω0t) dt
+
+(13)
+
+(14)
+
+(15)
+
+onde o intervalo [τ, τ + T ] representa um per´ıodo de f , sendo τ ∈ R.
+
+A maioria dos livros apresenta estas equa¸c˜oes para τ = −T /2 (ponto de partida). Como
+a fun¸c˜ao f ´e peri´odica, basta tomarmos um intervalo que contemple um per´ıodo completo
+(Figura 11). Desta forma, temos meio per´ıodo `a esquerda do eixo vertical e meio per´ıodo `a
+direita do eixo vertical. Aplicando τ = −T /2 no intervalo [τ, τ + T ] obtemos [−T /2, T /2], ou
+[−L, L], com L = T /2. Substituindo este intervalo nas integrais acima temos:
+
+a0 =
+
+1
+L
+
+(cid:90) L
+
+−L
+
+f (t) dt,
+
+an =
+
+bn =
+
+1
+L
+
+1
+L
+
+(cid:90) L
+
+−L
+(cid:90) L
+
+−L
+
+f (t) · cos (nω0t) dt,
+
+f (t) · sen (nω0t) dt.
+
+(16)
+
+(17)
+
+(18)
+
+13
+
+Figura 11: Escolha do intervalo.
+
+3.3 S´eries de Fourier de Fun¸c˜oes Pares e ´Impares
+
+Algumas fun¸c˜oes tˆem propriedades importantes que podem auxiliar no c´alculo dos coeﬁ-
+cientes da s´erie de Fourier, uma vez que temos trˆes integrais bem trabalhosas. Dependendo
+das caracter´ısticas da fun¸c˜ao f (t) podemos eliminar algumas destas integrais.
+
+3.3.1 Fun¸c˜oes Pares e ´Impares
+
+Deﬁni¸c˜ao 3 Uma fun¸c˜ao h(t) ´e par se
+
+h(t) = h(−t), ∀ t no dom´ınio de h
+
+ou seja, h(t) ´e sim´etrica em rela¸c˜ao ao eixo y.
+
+Exemplo 1 A fun¸c˜ao f (t) = 2 − t4 ´e par, pois
+
+f (−t) = 2 − (−t)4 = 2 − (−1)4 · t4 = 2 − t4 = f (t).
+
+Deﬁni¸c˜ao 4 Uma fun¸c˜ao h(t) ´e ´ımpar se
+
+−h(t) = h(−t), ∀ t no dom´ınio de h
+
+ou seja, h(t) ´e sim´etrica em rela¸c˜ao `a origem.
+
+Exemplo 2 A fun¸c˜ao g(t) = t5 − t ´e ´ımpar, pois
+
+g(−t) = (−t)5 − (−t) = (−1)5 · t5 + t = −t5 + t = −(t5 − t) = −g(t).
+
+Com base nestas deﬁni¸c˜oes, observamos que a fun¸c˜ao seno ´e ´ımpar e a fun¸c˜ao cosseno ´e
+
+par, pois
+
+− sen t = sen (−t)
+
+e
+
+cos t = cos (−t).
+
+Muitas fun¸c˜oes s˜ao geradas por combina¸c˜oes de fun¸c˜oes pares e ´ımpares. Abaixo temos
+
+algumas propriedades que expressam essas rela¸c˜oes.
+
+14
+
+Figura 12: Fun¸c˜oes pares e ´ımpares.
+
+1. A soma (ou subtra¸c˜ao) de duas fun¸c˜oes ´ımpares resulta em uma fun¸c˜ao ´ımpar;
+
+2. A soma (ou subtra¸c˜ao) de duas fun¸c˜oes pares resulta em uma fun¸c˜ao par;
+
+3. O produto (ou quociente) de duas fun¸c˜oes ´ımpares resulta em uma fun¸c˜ao par;
+
+4. O produto (ou quociente) de duas fun¸c˜oes pares resulta em uma fun¸c˜ao par;
+
+5. O produto (ou quociente) entre uma fun¸c˜ao par e uma fun¸c˜ao ´ımpar resulta em uma
+
+fun¸c˜ao ´ımpar;
+
+6. Sejam g(t) uma fun¸c˜ao ´ımpar e h(t) uma fun¸c˜ao par, ent˜ao temos as seguintes propri-
+
+edades:
+
+(a)
+
+(b)
+
+(cid:90) L
+
+−L
+
+g(t) dt = 0;
+
+(cid:90) L
+
+−L
+
+h(t) dt = 2
+
+(cid:90) L
+
+0
+
+h(t) dt;
+
+(c) pela Propriedade (5), temos que g(t) · h(t) ´e uma fun¸c˜ao ´ımpar, logo
+
+(cid:90) L
+
+−L
+
+g(t) · h(t) dt = 0.
+
+(19)
+
+(20)
+
+(21)
+
+Podemos aplicar estas propriedades nos c´alculos dos coeﬁcientes da S´erie de Fourier.
+
+1. Se f (t) for uma fun¸c˜ao ´ımpar, ent˜ao a0 = an = 0, pois pelas Propriedades (5) e (6)
+
+temos que
+
+(cid:90) L
+
+−L
+
+f (t) dt = 0
+
+e
+
+(cid:90) L
+
+−L
+
+f (t) · cos (nω0t)
+(cid:125)
+(cid:123)(cid:122)
+(cid:124)
+´ımpar
+
+dt = 0.
+
+Este caso ´e conhecido como S´eries de Fourier dos Senos, ou seja,
+
+f (t) =
+
+∞
+(cid:88)
+
+n=1
+
+bn sen (nω0t).
+
+(22)
+
+15
+
+2. Se f (t) for uma fun¸c˜ao par, ent˜ao bn = 0, pois pelas Propriedades (5) e (6) temos que
+
+(cid:90) L
+
+−L
+
+f (t) · sen (nω0t)
+(cid:125)
+(cid:123)(cid:122)
+(cid:124)
+´ımpar
+
+dt = 0.
+
+Este caso ´e conhecido como S´eries de Fourier dos Cossenos, ou seja,
+
+f (t) =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+an cos (nω0t).
+
+(23)
+
+Exemplo 3 Seja f (t) a fun¸c˜ao dada pela Figura 13 (fun¸c˜ao dente de serra) e t em segundos.
+Vamos obter a sua representa¸c˜ao em s´erie de Fourier e esbo¸car os gr´aﬁcos desta aproxima¸c˜ao
+para n = 1, . . . , 4.
+
+Figura 13: Fun¸c˜ao dente de serra.
+
+Temos que o per´ıodo fundamental desta fun¸c˜ao ´e 1 segundo e em um per´ıodo ela ´e deﬁnida
+por uma semi-reta. A frequˆencia angular desta fun¸c˜ao ´e ω0 = 2π/T = 2π rad/s, ou seja, em
+1s a fun¸c˜ao completa um ciclo de 360 graus. Encontrando a equa¸c˜ao desta semireta a partir
+dos pontos do gr´aﬁco obtemos:
+
+f (t) = 2t,
+
+para −1/2 ≤ t ≤ 1/2.
+
+(24)
+
+A partir da express˜ao de f (t), podemos aplic´a-las nas Equa¸c˜oes (16), (17) e (18) para deter-
+minar os coeﬁcientes da s´erie (L = T /2 = 1/2). Mas, pelo gr´aﬁco de f (t), observamos que
+esta fun¸c˜ao ´e ´ımpar, logo, podemos aﬁrmar que a0 = an = 0.
+
+Para o c´alculo de bn temos:
+
+bn =
+
+1
+L
+
+(cid:90) 1/2
+
+−1/2
+
+f (t) · sen (nω0t) dt =
+
+(cid:34)(cid:90) 1/2
+
+−1/2
+
+1
+L
+
+(cid:35)
+
+2t · sen (nω0t) dt
+
+.
+
+Resolvendo esta integral e aplicando os limites de integra¸c˜ao obtemos
+
+bn =
+
+(cid:20)
+
+−
+
+2
+L
+
+cos (πn)
+4πn
+
+−
+
+(cos (−πn))
+4πn
+
++
+
+sen (πn)
+(2πn)2 −
+
+sen (−πn)
+(2πn)2
+
+(cid:21)
+
+=
+
+(cid:20)
+
+2
+L
+
+−
+
+cos (πn)
+4πn
+
+−
+
+cos (πn)
+4πn
+
+(cid:21)
+
+=
+
+16
+
+=
+
+(cid:20)
+
+−
+
+2
+L
+
+2 cos πn
+4πn
+
+(cid:21)
+
+=
+
+(cid:21)
+
+(cid:20)
+
+−
+
+(−1)n
+2πn
+
+2
+L
+
+=
+
+2
+1/2
+
+(cid:20)(−1)n+1
+2πn
+
+(cid:21)
+
+= 4
+
+(cid:21)
+
+(cid:20) (−1)n+1
+2πn
+
+=
+
+2(−1)n+1
+πn
+
+.
+
+bn =
+
+2(−1)n+1
+πn
+
+.
+
+Para simpliﬁcarmos estes resultados, aplicamos no desenvolvimento as seguintes equivalˆencias:
+cos (0) = cos(2πn) = 1, cos(πn) = (−1)n, sen (πn) = 0, sen (−πn) = 0 e cos(−πn) =
+cos(πn).
+
+Substituindo estes resultados na equa¸c˜ao (12) obtemos ﬁnalmente que
+
+SF [f (t)] =
+
+2
+π
+
+∞
+(cid:88)
+
+n=1
+
+(−1)n+1
+n
+
+sen (2πnt).
+
+(25)
+
+Abrindo este somat´orio at´e n = 4 temos as seguintes aproxima¸c˜oes, gn(t), para SF [f (t)]:
+
+SF [f (t)] ≈ g1(t) =
+
+2
+π
+
+sen (2πt)
+
+SF [f (t)] ≈ g2(t) =
+
+2
+π
+
+sen (2πt) −
+
+1
+π
+
+sen (4πt)
+
+(n = 1)
+
+(n = 2)
+
+SF [f (t)] ≈ g3(t) =
+
+2
+π
+
+sen (2πt) −
+
+1
+π
+
+sen (4πt) +
+
+2
+3π
+
+sen (6πt)
+
+(n = 3)
+
+SF [f (t)] ≈ g4(t) =
+
+2
+π
+
+sen (2πt) −
+
+1
+π
+
+sen (4πt) +
+
+2
+3π
+
+sen (6πt) −
+
+1
+2π
+
+sen (8πt)
+
+(n = 4)
+
+conforme ilustram as Figura 14 e 15.
+
+Figura 14: Aproxima¸c˜oes pela S´erie de Fourier.
+
+`A medida que n cresce obtemos uma aproxima¸c˜ao mais ﬁel para SF [f (t)]. Se n → ∞
+
+ent˜ao pelo Teorema de Convergˆencia da S´erie de Fourier (Apˆendice A.9) obtemos
+
+lim
+n→∞
+
+gn(t) = SF [f (t)] = f (t).
+
+17
+
+Figura 15: Dente de serra e a aproxima¸c˜ao da s´erie de Fourier com n = 4 (os tra¸cos verticais
+no gr´aﬁco de f (t) s˜ao apenas ilustrativos).
+
+3.4 S´erie de Fourier Complexa
+
+Como vimos anteriormente, uma fun¸c˜ao f peri´odica pode ser representada pela S´erie de
+Fourier. Mas em algumas an´alises, ´e mais interessante reescrever esta deﬁni¸c˜ao em termos de
+exponenciais complexas. Para isso, aplicamos a rela¸c˜ao de Euler, equa¸c˜ao (26), nas equa¸c˜oes
+que deﬁnem a S´erie de Fourier:
+
+ejθ = cos (θ) + j sen (θ),
+
+(26)
+
+√
+
+onde j =
+
+−1 (n´umero imagin´ario3).
+
+Partindo das equa¸c˜oes que deﬁnem a S´erie de Fourier e realizando algumas manipula¸c˜oes
+
+e simpliﬁca¸c˜oes matem´aticas (Ver Apˆendice A.10) chegamos ao seguinte resultado:
+
+onde
+
+f (t) =
+
+∞
+(cid:88)
+
+n=−∞
+
+cnejnω0t,
+
+cn =
+
+1
+T
+
+(cid:90) τ +T
+
+τ
+
+f (t)e−jnω0t dt.
+
+(27)
+
+(28)
+
+A equa¸c˜ao (27) ´e conhecida como S´erie de Fourier Complexa, sendo esta utilizada
+
+na demonstra¸c˜ao da Transformada de Fourier.
+
+3Usualmente, utiliza-se a letra i para representar o n´umero imagin´ario
+
+−1, mas neste trabalho utiliza-
+remos a letra j, pois os livros que abordam as aplica¸c˜oes pr´aticas das S´eries e Transformadas de Fourier (por
+exemplo, na f´ısica e na engenharia) utilizam esta representa¸c˜ao, uma vez que a letra i ´e utilizada nestes livros
+para representar a corrente el´etrica.
+
+√
+
+18
+
+4 Transformada de Fourier no Tempo Cont´ınuo
+
+“A Transformada de Fourier pode ser entendida como uma generaliza¸c˜ao da S´erie de
+Fourier ”4. Mostraremos que ela pode ser utilizada para representar sinais peri´odicos e
+aperi´odicos. A utiliza¸c˜ao desta ferramenta matem´atica neste trabalho se d´a pelo fato das
+frequˆencias das notas musicais n˜ao serem harmonicamente relacionadas e, portanto, suas
+combina¸c˜oes n˜ao podem ser representadas pela S´erie de Fourier.
+
+No cap´ıtulo anterior apresentamos as S´eries de Fourier, que s˜ao aplicadas nos casos em
+que as fun¸c˜oes s˜ao peri´odicas. Neste contexto, as frequˆencias obtidas na decomposi¸c˜ao da
+fun¸c˜ao est˜ao harmonicamente relacionadas, ou seja, as frequˆencias s˜ao m´ultiplos inteiros da
+frequˆencia fundamental (ω0, 2ω0, 3ω0, . . .). Nos casos de fun¸c˜oes aperi´odicas, as frequˆencias
+est˜ao inﬁnitesimalmente pr´oximas e a representa¸c˜ao realizada por combina¸c˜oes lineares se
+torna uma integral [2]. Nos seus estudos, Fourier observou que um sinal aperi´odico pode ser
+representado por um sinal peri´odico de per´ıodo inﬁnito (T → ∞). Na Se¸c˜ao 4.1 apresenta-
+remos a constru¸c˜ao deste resultado.
+
+Antes de entrarmos na demonstra¸c˜ao, faremos uma pequena an´alise do efeito provocado
+pelo aumento do per´ıodo T . Sendo ω0 = 2π
+T a frequˆencia fundamental de uma fun¸c˜ao peri´odica
+˜x(t) com representa¸c˜ao em S´erie de Fourier e nω0 = 2πn
+T os m´ultiplos inteiros desta frequˆencia,
+observamos que estes valores se tornam muito pr´oximos `a medida que aumentamos o per´ıodo,
+ou seja, esta distribui¸c˜ao toma a forma de um conjunto cont´ınuo [2]. Para entendermos melhor
+esta aﬁrma¸c˜ao, vamos considerar inicialmente a sequˆencia dada por {xn}k
+n=0 =
+{0, 2π
+. . . , }, com k → ∞. Aumentando o valor de T , podemos observar que
+o espa¸camento entre os elementos desta sequˆencia (∆x = 2π/T ) ir´a se reduzir cada vez
+mais. Fazendo T → ∞, este espa¸camento tender´a a 0 (∆x → 0), isto ´e, os elementos desta
+sequˆencia formar˜ao um conjunto cont´ınuo no intervalo [0, ∞):
+
+n=0 = { 2πn
+
+T , . . . , 2πk
+
+T , 4π
+
+T , 6π
+
+T }k
+
+T
+
+lim
+T →∞
+
+∆x = lim
+T →∞
+
+(xn − xn−1) = lim
+T →∞
+
+(cid:20) 2πn
+T
+
+−
+
+2π(n − 1)
+T
+
+(cid:21)
+
+= lim
+T →∞
+
+2π
+T
+
+= 0.
+
+A Figura 16 ilustra este resultado. Aumentando T signiﬁcativamente, a distribui¸c˜ao dos
+elementos desta sequˆencia converge para uma distribui¸c˜ao cont´ınua de valores reais.
+
+Figura 16: Ilustra¸c˜ao simb´olica para representar o espa¸camento entre as frequˆencias quando
+T → ∞.
+
+4Deﬁni¸c˜ao simpliﬁcada dada pelo autor.
+
+19
+
+n=−k = { 2πn
+
+Semelhantemente, considerando a sequˆencia {xn}k
+
+n=−k, com k → ∞, e
+fazendo T → ∞, obtemos um conjunto cont´ınuo no intervalo (−∞, ∞), pois como demons-
+tramos, o espa¸camento entre os elementos desta sequˆencia tende a 0. Matematicamente, a
+soma de Fourier, equa¸c˜ao (29), transforma-se em uma integral, equa¸c˜ao (30), ou seja, a soma
+das exponenciais complexas harmonicamente relacionadas torna-se uma soma inﬁnitesimal
+(integral). Em outras palavras, podemos dizer que ao inv´es de representarmos a fun¸c˜ao x(t)
+atrav´es da combina¸c˜ao de componentes discretas (m´ultiplas de ω0), agora podemos repre-
+sent´a-la por uma combina¸c˜ao formada por todas as frequˆencias (ω ∈ R):
+
+T }k
+
+x(t) =
+
+∞
+(cid:88)
+
+n=−∞
+
+cnejnω0t;
+
+x(t) =
+
+1
+2π
+
+(cid:90) ∞
+
+−∞
+
+X(jω)ejωt dω,
+
+(29)
+
+(30)
+
+onde X(jω) ´e a Transformada de Fourier no Tempo Cont´ınuo.
+
+4.1 Representa¸c˜ao de Sinais Aperi´odicos
+
+Para demonstrar o resultado obtido por Fourier, vamos tomar ˜x(t) uma fun¸c˜ao peri´odica,
+de per´ıodo fundamental T e frequˆencia fundamental ω0 = 2π/T , e utiliz´a-la para representar
+um sinal aperi´odico, x(t). A Figura 17 ilustra este processo. Para obtermos x(t), basta
+calcularmos a s´erie de Fourier de ˜x(t) e fazermos T → ∞.
+
+Figura 17: Sinal aperi´odico x(t) e sinal peri´odico ˜x(t) constru´ıdo para ser igual a x(t) no
+intervalo [−L1, L1].
+
+˜x(t) =
+
+∞
+(cid:88)
+
+n=−∞
+
+cnejnω0t
+
+Os coeﬁcientes da s´erie de Fourier para esta fun¸c˜ao s˜ao dados por
+
+cn =
+
+1
+T
+
+(cid:90) τ +T
+
+τ
+
+˜x(t)e−jnω0t dt =
+
+1
+T
+
+(cid:90) L1
+
+−L1
+
+˜x(t)e−jnω0t dt.
+
+(31)
+
+(32)
+
+20
+
+No intervalo −L1 ≤ t ≤ L1 temos que ˜x(t) = x(t), fora deste intervalo x(t) = 0. Desta forma
+a equa¸c˜ao (32) pode ser escrita como
+
+cn =
+
+1
+T
+
+(cid:90) L1
+
+−L1
+
+x(t)e−jnω0t dt =
+
+1
+T
+
+(cid:90) ∞
+
+−∞
+
+x(t)e−jnω0t dt.
+
+Escrevendo
+
+temos que
+
+X(jnω0) =
+
+(cid:90) ∞
+
+−∞
+
+x(t)e−jnω0t dt,
+
+cn =
+
+1
+T
+
+X(jnω0).
+
+Substituindo (35) em (31), podemos expressar ˜x(t) em fun¸c˜ao de X(jnω0):
+
+˜x(t) =
+
+∞
+(cid:88)
+
+n=−∞
+
+1
+T
+
+X(jnω0)ejnω0t.
+
+(33)
+
+(34)
+
+(35)
+
+(36)
+
+Usando T = 2π
+ω0
+
+escrevemos
+
+˜x(t) =
+
+∞
+(cid:88)
+
+n=−∞
+
+ω0
+2π
+
+X(jnω0)ejnω0t =
+
+1
+2π
+
+∞
+(cid:88)
+
+n=−∞
+
+X(jnω0)ejnω0tω0.
+
+(37)
+
+Fazendo T → ∞, vemos que graﬁcamente ˜x(t) = x(t), e no limite, este resultado pode ser
+utilizado para representar x(t). Como discutimos anteriormente, quanto T → ∞, o somat´orio
+das exponenciais complexas harmonicamente relacionadas (nω0) converge para uma soma
+inﬁnitesimal com contribui¸c˜ao de todas as frequˆencias (ω). Fazendo uma analogia com o
+espa¸camento ∆x da Figura 16, podemos determinar o espa¸camento entre as componentes em
+frequˆencia da s´erie de Fourier de ˜x(t) (∆ω):
+
+∆ω = ωn − ωn−1 =
+
+2πn
+T
+
+−
+
+2π(n − 1)
+T
+
+=
+
+2π
+T
+
+= ω0.
+
+Voltando `a equa¸c˜ao (37) e usando o resultado da equa¸c˜ao (38) obtemos
+
+˜x(t) =
+
+1
+2π
+
+∞
+(cid:88)
+
+n=−∞
+
+X(jnω0)ejnω0t∆ω.
+
+(38)
+
+(39)
+
+O limite do somat´orio do produto X(jnω0)ejnω0t∆ω, representa a deﬁni¸c˜ao da integral. Mos-
+tramos tamb´em que ∆ω → 0 quando T → 0, ou seja, ∆ω → dω. A partir destes resultados,
+as equa¸c˜oes (39) e (34) tornam-se respectivamente,
+
+e
+
+x(t) =
+
+1
+2π
+
+X(jω) =
+
+(cid:90) ∞
+
+−∞
+
+(cid:90) ∞
+
+−∞
+
+X(jω)ejωtdω,
+
+x(t)e−jωt dt.
+
+(40)
+
+(41)
+
+A equa¸c˜ao (41) ´e chamada de Transformada de Fourier (TF ) e a equa¸c˜ao (40) ´e chamada
+de Transformada Inversa de Fourier (TIF ).
+
+21
+
+Resumidamente, para sinais peri´odicos, os coeﬁcientes da s´erie de Fourier (cn) formam um
+conjunto discreto. Estes valores est˜ao associados `as amplitudes das exponenciais complexas
+e estas est˜ao harmonicamente relacionadas (ω0, 2ω0, . . .). J´a para os sinais aperi´odicos, estas
+exponenciais tendem a formar uma curva cont´ınua na escala de frequˆencia. Neste caso, as
+amplitudes das exponenciais s˜ao dadas por X(jω)(dω/2π) (equa¸c˜ao (40)). A fun¸c˜ao X(jω)
+´e tamb´em conhecida como espectro da fun¸c˜ao x(t) e, a partir deste espectro, podemos
+recuperar o sinal x(t) aplicando uma combina¸c˜ao linear de senos e cossenos associados `as
+frequˆencias que comp˜oem o gr´aﬁco de X(jω) [2, 3].
+
+Antes de prosseguirmos com a an´alise, iremos deﬁnir o pulso de curta dura¸c˜ao e o impulso
+
+unit´ario, que ser´a amplamente utilizado na an´alise ﬁnal deste trabalho.
+
+Deﬁni¸c˜ao 5 Seja δ∆(t) um pulso de curta dura¸c˜ao de ´area igual a 1, mostrada na Figura
+18 e expressada pela equa¸c˜ao (42).
+
+Figura 18: Pulso de curta dura¸c˜ao, δ∆(t).
+
+δ∆(t) =
+
+(cid:26) 1
+
+∆ , 0 < t < ∆
+0,
+
+t ≤ 0 ou t ≥ ∆.
+
+(42)
+
+Deﬁnindo a ´area de δ∆(t) como uma fun¸c˜ao de ∆, A(∆), observamos que A(∆) = 1, inde-
+pendentemente do valor de ∆, desde que ∆ (cid:54)= 0, ou seja,
+
+A(∆) =
+
+(cid:90) ∞
+
+−∞
+
+δ∆(t)dt = 1.
+
+Deﬁni¸c˜ao 6 A fun¸c˜ao impulso unit´ario, denotada por δ(t), ´e um pulso de curta dura¸c˜ao
+com ∆ → 0, isto ´e,
+
+δ(t) = lim
+∆→0
+Para simpliﬁcar este resultado, podemos expressar a fun¸c˜ao impulso unit´ario por duas pro-
+priedades:
+
+δ∆(t).
+
+(43)
+
+e
+
+δ(t) = 0, t (cid:54)= 0;
+
+(cid:90) ∞
+
+−∞
+
+δ(t)dt = 1.
+
+(44)
+
+(45)
+
+`A medida que ∆ → 0 (Figura 18), a largura do pulso δ∆(t) se estreita cada vez mais, sua
+altura aumenta proporcionalmente ao inverso da largura, portanto, a ´area destacada continua
+sendo unit´aria, ou seja, a integral no intervalo (−∞, ∞) continua sendo igual a 1.
+
+A fun¸c˜ao δ(t) ´e conhecida como fun¸c˜ao Delta de Dirac5. Graﬁcamente ela pode ser
+vista como um impulso em t = 0 e para t (cid:54)= 0 ela assume valor 0 [4]. Para facilitar a
+representa¸c˜ao do impulso unit´ario, iremos represent´a-lo por uma “seta” centrada em t = 0,
+e o n´umero 1 indicado pr´oximo a esta seta representa a ´area deste impulso, Figura 19, que
+pela equa¸c˜ao (45) ´e igual a 1 [2, 3].
+
+22
+
+Figura 19: Fun¸c˜ao impulso unit´ario, δ(t).
+
+A partir destes resultados, podemos obter a fun¸c˜ao impulso unit´ario em um ponto ar-
+bitr´ario t = t0. Graﬁcamente temos um deslocamento do impulso ao longo do eixo t, Figura
+20, e as propriedades que o descrevem s˜ao dadas por:
+
+e
+
+δ(t − t0) = 0, t (cid:54)= t0;
+
+(cid:90) ∞
+
+−∞
+
+δ(t − t0)dt = 1.
+
+Figura 20: Fun¸c˜ao impulso unit´ario arbitr´aria, δ(t − t0).
+
+Aplicando as propriedades de integra¸c˜ao temos que
+
+(cid:90) ∞
+
+−∞
+
+k · δ(t − t0)dt = k,
+
+(46)
+
+(47)
+
+(48)
+
+onde k ´e uma constante qualquer. Outra propriedade importante da fun¸c˜ao impulso unit´ario
+que ser´a utilizada neste trabalho ´e mostrada na equa¸c˜ao (49):
+
+(cid:90) ∞
+
+−∞
+
+δ(t − t0) · f (t)dt = f (t0).
+
+(49)
+
+5Paul A. M. Dirac (1902-1984), f´ısico e matem´atico inglˆes [4].
+
+23
+
+Exemplo 4 Seja x(t) = δ(t) (fun¸c˜ao impulso unit´ario). Vamos determinar sua transfor-
+mada de Fourier e esbo¸car o gr´aﬁco de X(jω).
+
+Aplicando a transformada de Fourier obtemos:
+
+X(jω) =
+
+(cid:90) ∞
+
+−∞
+
+δ(t)e−jωt dt = e0 = 1,
+
+ou seja, a fun¸c˜ao δ(t) possui contribui¸c˜oes iguais de todas as frequˆencias.
+
+Figura 21: Espectro da fun¸c˜ao δ(t).
+
+Exemplo 5 Seja x(t) = e−a|t|. Vamos determinar sua transformada de Fourier e esbo¸car o
+gr´aﬁco de X(jω).
+
+Figura 22: x(t) = e−a|t|.
+
+Aplicando a deﬁni¸c˜ao da fun¸c˜ao |t| e a transformada de Fourier obtemos:
+
+X(jω) =
+
+(cid:90) ∞
+
+−∞
+
+e−a|t|e−jωt dt =
+
+(cid:90) 0
+
+−∞
+
+e−a(−t)e−jωt dt +
+
+(cid:90) ∞
+
+0
+
+e−ate−jωt dt =
+
+(cid:90) 0
+
+=
+
+−∞
+
+e(a−jω)t dt +
+
+(cid:90) ∞
+
+0
+
+e−(a+jω)t dt =
+
+(cid:18) 1
+
+a − jω
+
+(cid:19)
+
+(cid:18)
+
+− 0
+
++
+
+0 +
+
+(cid:19)
+
+1
+a + jω
+
+=
+
+1
+a − jω
+
++
+
+1
+a + jω
+
+=
+
+=
+
+a − jω + a + jω
+(a − jω)(a + jω)
+
+=
+
+2a
+a2 − j2ω2 =
+
+2a
+a2 + ω2 .
+
+Graﬁcamante temos:
+
+24
+
+Figura 23: Espectro da fun¸c˜ao x(t) = e−a|t|.
+
+Interpretando este gr´aﬁco, podemos dizer que a fun¸c˜ao x(t) = e−a|t| possui componen-
+tes espectrais em todas as frequˆencias, e as amplitudes das exponenciais complexas que a
+comp˜oem s˜ao proporcionais a X(jω). Por exemplo, essa fun¸c˜ao possui uma componente
+constante (frequˆencia zero, ω = 0 rad/s) de valor proporcional a 2/a; possui uma compo-
+nente de frequˆencia ω = a rad/s de amplitude proporcional a 1/a; possui uma componente de
+frequˆencia ω = 2a rad/s de amplitude proporcional a 2/(5a), etc.
+
+4.2 Transformada de Fourier para Sinais Peri´odicos
+
+Anteriormente, estudamos a representa¸c˜ao das fun¸c˜oes aperi´odicas atrav´es da transfor-
+mada de Fourier. No entanto, esta an´alise tamb´em pode ser estendida `as fun¸c˜oes peri´odicas
+e desta forma, podemos tratar ambos os casos a partir de uma ´unica formula¸c˜ao matem´atica.
+A transformada de Fourier de uma fun¸c˜ao peri´odica est´a diretamente ligada com a sua
+representa¸c˜ao em s´erie de Fourier [2]. Para observarmos esta rela¸c˜ao, vamos considerar X(jω)
+como um impulso no dom´ınio da frequˆencia de ´area 2π, dado por:
+
+conforme ilustra a Figura 24.
+
+X(jω) = 2πδ(ω − ω0),
+
+Figura 24: X(jω) = 2πδ(ω − ω0).
+
+25
+
+Aplicando a TIF, podemos obter o sinal x(t) que possui X(jω) como transformada.
+
+x(t) =
+
+1
+2π
+
+(cid:90) ∞
+
+−∞
+
+2πδ(ω − ω0) · ejωt dω =
+
+1
+2π
+
+· 2π · ejω0t = ejω0t.
+
+Considerando agora X(jω) como um trem de impulsos igualmente espa¸cados em frequˆencia
+
+e com ´areas proporcionais a 2πcn, ou seja,
+∞
+(cid:88)
+
+X(jω) =
+
+n=−∞
+
+2πcnδ(ω − nω0),
+
+(50)
+
+e aplicando a TIF e as propriedades das equa¸c˜oes (48) e (49) obtemos:
+
+x(t) =
+
+1
+2π
+
+(cid:90) ∞
+
+∞
+(cid:88)
+
+−∞
+
+n=−∞
+
+2πcnδ(ω − nω0) · ejωt dω =
+
+∞
+(cid:88)
+
+n=−∞
+
+cnejnω0t.
+
+(51)
+
+Figura 25: Trem de impulsos.
+
+Esta ´ultima equa¸c˜ao ´e a pr´opria deﬁni¸c˜ao da s´erie de Fourier complexa, que nos diz que
+uma fun¸c˜ao peri´odica, de per´ıodo fundamental T , pode ser escrita como a combina¸c˜ao de
+exponenciais complexas harmonicamente relacionadas ou, em outras palavras, a combina¸c˜ao
+de senos e cossenos. De modo geral, temos que a transformada de Fourier de uma fun¸c˜ao
+peri´odica, com representa¸c˜ao em s´erie de Fourier, pode ser vista como um trem de impulsos no
+dom´ınio da frequˆencia e cujas ´areas dos n-´esimos impulsos s˜ao proporcionais aos coeﬁcientes
+da s´erie de Fourier (cn), ou seja, a ´area de um impulso k de frequˆencia kω0 ´e igual a 2πck, ∀ k ∈
+Z [2].
+
+Exemplo 6 Obter a transformada de Fourier da fun¸c˜ao x(t) = sen (ω0t).
+
+Pela rela¸c˜ao de Euler podemos escrever
+
+sen (ω0t) =
+
+ejω0t − e−jω0t
+2j
+
+= c1ejω0t + c(−1)e−jω0t
+
+onde as constantes c1 e c(−1) s˜ao justamente os coeﬁcientes da s´erie de Fourier complexa
+desta fun¸c˜ao:
+
+c1 =
+
+1
+2j
+
+e
+
+c(−1) = −
+
+1
+2j
+
+.
+
+Desta forma, a TF da fun¸c˜ao seno ´e dada por dois impulsos no dom´ınio da frequˆencia:
+
+X(jω) = 2πc1δ(ω − ω0) + 2πc(−1)δ(ω + ω0) = 2π ·
+
+X(jω) =
+
+π
+j
+
+· δ(ω − ω0) −
+
+· δ(ω − ω0) + 2π ·
+
+−
+
+(cid:18)
+
+(cid:19)
+
+1
+2j
+
+· δ(ω + ω0),
+
+· δ(ω + ω0).
+
+(52)
+
+1
+2j
+π
+j
+
+26
+
+Figura 26: Transformada de Fourier da fun¸c˜ao x(t) = sen (ω0t).
+
+Exemplo 7 Obter a TF da fun¸c˜ao x(t) = cos(ω0t).
+
+Para a fun¸c˜ao cosseno o processo ´e an´alogo e obtemos:
+
+com
+
+cos(ω0t) =
+
+ejω0t + e−jω0t
+2
+
+= c1ejω0t + c(−1)e−jω0t
+
+c1 =
+
+1
+2
+
+e
+
+c(−1) =
+
+1
+2
+
+.
+
+Assim, a TF da fun¸c˜ao cosseno ´e dada por:
+
+X(jω) = 2πc1δ(ω − ω0) + 2πc(−1)δ(ω + ω0) = 2π ·
+
+1
+2
+
+· δ(ω − ω0) + 2π ·
+
+(cid:19)
+
+(cid:18) 1
+2
+
+· δ(ω + ω0),
+
+X(jω) = π · δ(ω − ω0) + π · δ(ω + ω0).
+
+(53)
+
+Figura 27: Transformada de Fourier da fun¸c˜ao x(t) = cos(ω0t).
+
+Exemplo 8 Aproveitando os exemplos acima, vamos calcular a TIF da fun¸c˜ao
+
+X(jω) =
+
+π
+j
+
+· δ(ω − ω0) −
+
+π
+j
+
+· δ(ω + ω0)
+
+e mostrar que x(t) = sen (ω0t).
+
+Aplicando a equa¸c˜ao da TIF e as propriedades da fun¸c˜ao δ temos:
+
+x(t) =
+
+1
+2π
+
+(cid:90) ∞
+
+−∞
+
+(cid:18) π
+j
+
+· δ(ω − ω0) −
+
+π
+j
+
+· δ(ω + ω0)
+
+(cid:19)
+
+· ejωt dω =
+
+1
+2j
+
+(cid:0)ejω0t − e−jω0t(cid:1) .
+
+27
+
+Aplicando a rela¸c˜ao de Euler, equa¸c˜ao (26), obtemos:
+
+x(t) =
+
+1
+2j
+
+[(cos (ω0t) + j sen (ω0t)) − (cos (ω0t) − j sen (ω0t))] =
+
+1
+2j
+
+· 2j sen (ω0t) = sen (ω0t).
+
+No pr´oximo cap´ıtulo apresentaremos uma introdu¸c˜ao `a Teoria Tusical e na sequˆencia
+
+voltaremos `a an´alise da transformada de Fourier aplicada no estudo dos acordes musicais.
+
+5 T´opicos B´asicos da Teoria Musical
+
+O estudo da m´usica engloba uma grande quantidade de conceitos e deﬁni¸c˜oes que auxiliam
+na compreens˜ao pr´atica da mesma. Neste cap´ıtulo apresentaremos os conte´udos que est˜ao
+associados `a proposta do trabalho.
+
+5.1 As Notas Musicais
+
+A m´usica ´e constitu´ıda por sete notas musicais fundamentais: D´o, R´e, Mi, F´a, Sol, L´a
+e Si. Estas notas s˜ao chamadas de naturais e uma sequˆencia ordenada destas sete notas com
+a repeti¸c˜ao da primeira ´e conhecida como Escala Diatˆonica, ou escala de oito sons (Ex: D´o,
+R´e, Mi, F´a, Sol, L´a, Si e D´o). A extens˜ao de uma escala diatˆonica ´e chamada de oitava [1].
+Geralmente, estas notas s˜ao representadas por cifras (letras de A a G). A Tabela (1) mostra
+a rela¸c˜ao entre as notas musicais e suas cifras.
+
+A B C D E
+F G
+L´a Si D´o R´e Mi F´a Sol
+
+Tabela 1: As 7 notas musicais naturais.
+
+Neste trabalho utilizaremos o piano para compreendermos a rela¸c˜ao entre as notas fun-
+damentais e suas varia¸c˜oes, pois este ´e o instrumento que possui a maior extens˜ao musical
+(88 notas). A Figura 28 ilustra a distribui¸c˜ao destas notas ao longo de uma oitava do piano.
+
+Figura 28: As notas naturais e o piano (uma oitava – escala diatˆonica).
+
+Na extens˜ao do piano existem 7 1
+
+3 oitavas e o que difere uma oitava da outra ´e a carac-
+ter´ıstica sonora, ou seja, `a medida que deslocamos para a esquerda do piano obtemos notas
+mais graves e `a medida que caminhamos para a direita obtemos notas mais agudas (Figura
+29). A primeira nota de um piano ´e o L´a, denotada por A0, o segundo L´a do piano, por A1;
+e assim sucessivamente. Entre A0 e A1 temos uma oitava, o mesmo ocorre entre C0 e C1,
+entre D3 e D4, etc. Algumas literaturas come¸cam essa enumera¸c˜ao a partir do A1, mas neste
+trabalho utilizaremos a contagem a partir do A0.
+
+28
+
+Figura 29: Extens˜ao musical do piano.
+
+Al´em das notas naturais (teclas brancas), existem outras 5 notas (teclas pretas) no inter-
+valo de 1 oitava. Antes de vermos suas nomenclaturas, precisamos apresentar alguns conceitos
+musicais. Vejamos:
+
+• Semitom: ´E a menor distˆancia entre dois sons (ST).
+
+• Tom: ´E a soma de dois semitons (T).
+
+Podemos dizer ent˜ao que 1 ST equivale a 1/2 T.
+
+• Acidentes: S˜ao altera¸c˜oes que modiﬁcam a altura das notas [1]. Os acidentes musicais
+s˜ao: o sustenido ((cid:93)), o bemol ((cid:91)), o dobrado sustenido (×), o dobrado bemol ((cid:91)(cid:91)) e o
+bequadro ((cid:92)).
+
+– Sustenido: Eleva a nota 1 semitom ((cid:93)).
+
+– Bemol: Abaixa a nota 1 semitom ((cid:91));
+
+– Dobrado sustenido: Eleva a nota 1 tom (×);
+
+– Dobrado bemol: Abaixa a nota 1 tom ((cid:91)(cid:91));
+
+– Bequadro: Anula o efeito do sustenido ou do bemol ((cid:92)).
+
+Figura 30: Distribui¸c˜ao de tons e semitons no piano.
+
+O intervalo entre duas teclas consecutivas do piano ´e dada por 1 ST (1/2 T) (Figura 31).
+Percebemos ent˜ao que entre as notas D´o (C) e R´e (D) existe um intervalo de 2 ST, ou 1 T.
+A partir das deﬁni¸c˜oes do sustenido e do bemol, esta tecla preta que est´a entre as notas C e
+D pode receber dois nomes: C(cid:93) (pois elevamos a nota C em 1/2 tom) ou D(cid:91) (pois abaixamos
+a nota D em 1/2 tom).
+
+29
+
+Figura 31: Identiﬁca¸c˜ao dos nomes das demais notas musicais.
+
+Figura 32: As 12 notas musicais que formam uma oitava.
+
+O mesmo ocorre para as demais teclas pretas que se localizam entre duas notas naturais.
+
+Desta forma, temos todas as notas musicais que constituem 1 oitava (Tabela (2)).
+
+C C(cid:93) / D(cid:91) D D(cid:93) / E(cid:91) E F F(cid:93) / G(cid:91) G G(cid:93) / A(cid:91) A A(cid:93) / B(cid:91) B
+
+Tabela 2: Notas compreendidas em uma oitava.
+
+Nas ﬁguras acima, observamos que entre as notas E e F a distˆancia ´e de 1/2 tom. Isso
+ocorre, pois n˜ao existe uma tecla preta entre essas duas notas. Assim, E(cid:93) ´e a mesma nota
+que F, e F(cid:91) ´e a mesma nota que E. O mesmo ocorre entre B e C (C(cid:91) = B e B(cid:93) = C).
+Observamos ent˜ao que as notas musicais possuem duas representa¸c˜oes, este efeito ´e conhecido
+como enarmonia, mesmo som, nomes diferentes [1].
+
+5.2 Os Intervalos Musicais
+
+A partir das deﬁni¸c˜oes de tons e semitons apresentadas na se¸c˜ao anterior, podemos com-
+preender os 5 intervalos musicais. S˜ao eles: M - maior; m - menor; J - justa, A - aumentada e
+D - diminuta. O que difere um intervalo do outro ´e a quantidade de tons e semitons contidos
+entre as notas [1]. As combina¸c˜oes destes intervalos formam a base das escalas musicais e dos
+
+acordes que veremos na pr´oxima se¸c˜ao. Suas varia¸c˜oes s˜ao apresentadas na Tabela (3) e na
+sequˆencia de forma mais detalhada. Todos estes intervalos s˜ao contados a partir da tˆonica
+(T ), nota de referˆencia (n˜ao confundir T de tˆonica com T de tom).
+
+30
+
+Intervalo
+Valor
+Intervalo
+Valor
+
+4aA
+2am 2aM 3am 3aM 4aJ
+6 ST
+1 ST 2 ST 3 ST 4 ST 5 ST
+5aJ
+5aA 6am 6aM 7am 7aM
+7 ST 8 ST 8 ST 9 ST 10 ST 11 ST 12 ST
+
+5aD
+6ST
+8a
+
+Tabela 3: Tipos de intervalos.
+
+• Segunda Menor (2am): 1 semitom – 1/2 tom;
+
+• Segunda Maior (2aM ): 2 semitons – 1 tom;
+
+• Ter¸ca Menor (3am): 3 semitons – 1 tom e 1 semitom;
+
+• Ter¸ca Maior (3aM ): 4 semitons – 2 tons;
+
+• Quarta Justa (4aJ): 5 semitons – 2 tons e 1 semitom;
+
+• Quarta Aumentada (4aA): 6 semitons – 3 tons;
+
+• Quinta Diminuta (5aD): 6 semitons – 3 tons;
+
+• Quinta Justa (5aJ): 7 semitons – 3 tons e 1 semitom;
+
+• Quinta Aumentada (5aA): 8 semitons – 4 tons;
+
+• Sexta Menor (6am): 8 semitons – 4 tons;
+
+• Sexta Maior (6aM ): 9 semitons – 4 tons e 1 semitom;
+
+• S´etima Menor (7am): 10 semitons – 5 tons;
+
+• S´etima Maior (7aM ): 11 semitons – 5 tons e 1 semitom;
+
+• Oitava (8a): 12 semitons – 6 tons.
+
+Al´em destes, existem outros intervalos (por exemplo, nona maior (9aM ), etc.), mas estes
+
+casos n˜ao ser˜ao abordados neste trabalho.
+
+Exemplo 9 Dadas as tˆonicas C, D e A(cid:91), vamos determinar os intervalos correspondentes.
+
+Tˆonica
+C
+D
+A(cid:91)
+
+5D 5J
+
+3M 3m 4J
+E(cid:91)
+E
+F G A(cid:91) A A(cid:93)
+F(cid:93)
+C(cid:91) D(cid:91) E(cid:91)(cid:91) E(cid:91) E
+C
+
+F G(cid:91) G G(cid:93) A
+B
+F
+
+5A 6M 7M
+B
+C(cid:93)
+G
+
+Tabela 4: Identiﬁca¸c˜ao dos intervalos a partir da tˆonica.
+
+31
+
+Se C ´e a tˆonica, e desejamos obter sua 3aM , devemos pegar a nota que est´a 2 tons acima
+dela, ou seja, a nota E. Se j´a temos a 3aM e desejamos obter a 3am, basta descermos 1/2 tom,
+isto equivale a acrescentar um bemol na nota da 3aM , e portanto, temos E(cid:91). Para obtermos
+a 4aJ pegamos a nota que est´a a 2 tons e 1/2 acima da tˆonica, F. Para obtermos a 5aJ
+pegamos a nota que est´a a 3 tons e 1/2 acima da tˆonica, G. A partir da 5aJ obtemos a 5aD
+(acrescentando um (cid:91)) e a 5aA (acrescentando um (cid:93)). O racioc´ıcio ´e an´alogo para os demais
+intervalos e para as outras tˆonicas do exemplo. Vale ressaltar que na m´usica existem crit´erios
+para determinar os intervalos de maneira mais sistem´atica. Anteriormente, vimos que uma
+nota pode possuir mais de uma nomenclatura. Para obtermos a representa¸c˜ao correta das
+notas que formam os intervalos, devemos seguir a estrutura da Escala Maior. Mas, para n˜ao
+estender muito, n˜ao iremos entrar nesses detalhes.
+
+5.3 Os Acordes Musicais
+
+Os acordes musicais s˜ao formados pela combina¸c˜ao simultˆanea de 3 ou mais notas mu-
+sicais. O que difere um tipo para o outro ´e a estrutura de intervalos utilizados. A seguir,
+apresentaremos a estrutura das tr´ıades e t´etrades utilizadas no desenvolvimento deste traba-
+lho. Assim como as notas musicais, os acordes tamb´em s˜ao representados por cifras. Neste
+caso as cifras especiﬁcam a tˆonica do acorde e a elas s˜ao acrescentados caracteres ou s´ımbolos
+que permitem distinguir um acorde do outro.
+
+Para n˜ao gerar confus˜ao ao leitor, visto que podemos representar as notas musicais e os
+
+acordes por cifras, adotaremos as seguintes representa¸c˜oes que far˜ao essa distin¸c˜ao:
+
+1. Utilizaremos letras mai´usculas para representar uma nota musical (ex: C – refere-se `a
+
+nota de D´o);
+
+2. Utilizaremos letras mai´usculas em negrito para representar uma acorde musical
+
+(ex: C – refere-se ao acorde de D´o maior).
+
+5.3.1 Tr´ıades
+
+Conforme apresentamos na introdu¸c˜ao do trabalho, os acordes tr´ıades s˜ao aqueles que
+possuem estruturas mais simples e que s˜ao de f´acil entendimento para os alunos iniciantes
+da m´usica. Suas montagens e forma¸c˜oes no viol˜ao (ou no piano) n˜ao exigem tanta t´ecnica e
+habilidade com o instrumento. No entanto, eles s˜ao muito importantes, pois observando as
+cifras das m´usicas e as composi¸c˜oes de modo geral, notamos que eles est˜ao sempre presen-
+tes em maior quantidade. Conhecendo os acordes tr´ıades ´e poss´ıvel que um m´usico fa¸ca o
+acompanhamento de qualquer m´usica de maneira simples e objetiva. Os mais utilizados s˜ao
+os acordes maiores e menores. Em termos sonoros, um acorde maior produz uma sensa¸c˜ao
+de alegria, enquanto que o menor desperta tristeza e melancolia. A seguir apresentaremos a
+estrutura dos acordes tr´ıades mais comuns.
+
+Deﬁni¸c˜ao 7 Acorde Maior: ´E formado pela seguinte estrutura:
+
+X = T + 3M + 5J.
+
+Obs.: Os acordes maiores s˜ao representados por letras mai´usculas e quem deﬁne o seu nome
+´e a tˆonica. Ex: C – acorde de D´o Maior.
+
+32
+
+Deﬁni¸c˜ao 8 Acorde Menor: ´E formado pela seguinte estrutura:
+
+X = T + 3m + 5J.
+
+Obs.: Os acordes menores s˜ao representados por letras mai´usculas acrescidas de “m”, e quem
+deﬁne o seu nome ´e a tˆonica. Ex: Cm – acorde de D´o Menor.
+
+Deﬁni¸c˜ao 9 Acorde diminuto: ´E formado pela seguinte estrutura:
+
+X = T + 3m + 5D.
+
+Obs.: Os acordes diminutos s˜ao representados por letras mai´usculas acrescidas de “dim” ou
+“o” e quem deﬁne o seu nome ´e a tˆonica. Ex: Cdim ou Co – acorde de D´o Diminuto.
+
+Deﬁni¸c˜ao 10 Acorde Suspenso (ou com quarta): ´E formado pela seguinte estrutura:
+
+X = T + 4J + 5J.
+
+Obs.: Os acordes suspensos s˜ao representados por letras mai´usculas acrescidas de “4” ou
+“sus4” e quem deﬁne o seu nome ´e a tˆonica. Ex: C4 – acorde de D´o Suspenso.
+
+Deﬁni¸c˜ao 11 Acorde Aumentado: ´E formado pela seguinte estrutura:
+
+X = T + 3M + 5A.
+
+Obs.: Os acordes aumentados s˜ao representados por letras mai´usculas acrescidas de “5(cid:93)” e
+quem deﬁne o seu nome ´e a tˆonica. Ex: C5(cid:93) – acorde de D´o Aumentado.
+
+5.3.2 T´etrades
+
+Os acordes t´etrades s˜ao aqueles mais encorpados e brilhantes. S˜ao aplicados em grande
+escala na cria¸c˜ao de arranjos musicais e em estilos mais soﬁsticados, como o Jazz. A presen¸ca
+de acordes t´etrades melhora a qualidade de uma m´usica e aumenta o prazer em ouvi-la.
+Exempliﬁcar este comportamento em termos liter´arios parece ser abstrato, por isso reco-
+mendamos que o leitor procure algum m´usico experiente para ilustrar estas diferen¸cas que
+estamos apresentando neste trabalho.
+
+A execu¸c˜ao destes acordes exigem uma habilidade maior com o intrumento musical. Os
+acordes tr´ıades formam a base para os acordes t´etrades, ou seja, acrescentando uma quarta
+nota nos acordes tr´ıades obtemos os t´etrades. Variando esta quarta nota e combinando-a
+com as estruturas tr´ıades formamos as estruturas t´etrades. A seguir apresentaremos as mais
+usuais.
+
+Deﬁni¸c˜ao 12 Acorde Maior com S´etima Maior: ´E formado pela seguinte estrutura:
+
+X = T + 3M + 5J + 7M.
+
+Obs.: (Representa¸c˜ao) Ex: C7M – acorde de D´o Maior com S´etima Maior.
+
+Deﬁni¸c˜ao 13 Acorde Maior com S´etima Menor: ´E formado pela seguinte estrutura:
+
+Obs.: (Representa¸c˜ao) Ex: C7 – acorde de D´o Maior com S´etima Menor.
+
+X = T + 3M + 5J + 7m.
+
+33
+
+Deﬁni¸c˜ao 14 Acorde Menor com S´etima Menor: ´E formado pela seguinte estrutura:
+
+X = T + 3m + 5J + 7m.
+
+Obs.: (Representa¸c˜ao) Ex: Cm7 – acorde de D´o Menor com S´etima Menor.
+
+Deﬁni¸c˜ao 15 Acorde Meio Diminuto: ´E formado pela seguinte estrutura:
+
+X = T + 3m + 5D + 7m.
+
+Obs.: (Representa¸c˜ao) Ex: Cm7(cid:91)5 – acorde de D´o Meio Diminuto.
+
+Deﬁni¸c˜ao 16 Acorde Suspenso com S´etima Menor: ´E formado pela seguinte estru-
+tura:
+
+X = T + 4J + 5J + 7m.
+
+Obs.: (Representa¸c˜ao) Ex: C7sus4 – acorde de D´o Suspenso com S´etima Menor.
+
+Deﬁni¸c˜ao 17 Acorde Maior com Sexta Maior: ´E formado pela seguinte estrutura:
+
+X = T + 3M + 5J + 6M.
+
+Obs.: (Representa¸c˜ao) Ex: C6 – acorde de D´o Maior com Sexta Maior.
+
+Deﬁni¸c˜ao 18 Acorde Menor com Sexta Maior: ´E formado pela seguinte estrutura:
+
+X = T + 3m + 5J + 6M.
+
+Obs.: (Representa¸c˜ao) Ex: Cm6 – acorde de D´o Menor com Sexta Maior.
+
+Deﬁni¸c˜ao 19 Acorde Aumentado T´etrade: ´E formado pela seguinte estrutura:
+
+Obs.: (Representa¸c˜ao) Ex: C7M5(cid:93) – acorde de D´o aumentado com S´etima Maior.
+
+X = T + 3M + 5A + 7M.
+
+Figura 33: Exemplos de Acordes (Tˆonica = C).
+
+A Figura 33 ilustra 4 tipos de acordes executados em um teclado. A forma¸c˜ao destes foi
+
+baseada nos tipos de intervalos e nas estruturas apresentadas.
+
+Vale ressaltar que existem outras formas de representar a escrita dos acordes, mas neste
+
+trabalho utilizamos as representa¸c˜oes mais populares e utilizadas no mundo musical.
+
+5.4 Classiﬁca¸c˜ao de Acordes Musicais
+
+Com base nas deﬁni¸c˜oes apresentadas nas se¸c˜oes anteriores, podemos classiﬁcar os prin-
+cipais acordes utilizados na m´usica. Na Figura 34 temos um exemplo. Para classiﬁcar um
+acorde, precisamos basicamente de duas informa¸c˜oes: a tˆonica; e a rela¸c˜ao da tˆonica com as
+demais notas (intervalo entre elas).
+
+34
+
+Figura 34: Exemplo da classiﬁca¸c˜ao de um acorde.
+
+No exemplo ilustrado, a tˆonica corresponde `a nota A (L´a). Os n´umeros representam a
+quantidade de semitons contados a partir da tˆonica. Desta forma, temos que: entre a tˆonica
+e a segunda nota do acorde existem 4ST (2T); entre a tˆonica e a terceira nota do acorde
+existem 7ST (3T e 1ST); e entre a tˆonica e a quarta nota do acorde existem 10ST (5T).
+Estes intervalos correspondem respectivamente `a 3aM , 5aJ e 7am. A estrutura que est´a
+associada a estes intervalos ´e a do Acorde Maior com S´etima Menor, logo, o acorde ilustrado
+na ﬁgura ´e A7 (L´a Maior com S´etima Menor).
+
+6 A Escala Temperada
+
+6.1 Resumo Hist´orico
+
+Antes de Cristo (a.c.), matem´aticos e ﬁl´osofos, como Pit´agoras, j´a estudavam modelos
+matem´aticos que permitiam compreender a disposi¸c˜ao das notas musicais ao longo da vi-
+bra¸c˜ao de uma corda [12]. Foram estabebelecidas rela¸c˜oes fracion´arias da vibra¸c˜ao de uma
+corda que permitiam gerar estas notas, construindo assim a Escala Pitag´orica. Por exemplo,
+dada uma corda ﬁxa de comprimento c, sua vibra¸c˜ao livre produz uma nota musical Xi de
+frequˆencia F0. Vibrando esta mesma corda, por´em pressionando-a na fra¸c˜ao c/2, obtemos a
+nota equivalente a Xi uma oitava acima (denotada por Xi+1), que em termos pr´aticos possui
+o dobro da frequˆencia F0 (ver Figura 35). O estudo de Pit´agoras contribuiu para a descoberta
+das 12 notas musicais e para cada uma delas existe uma fra¸c˜ao da corda que a produz.
+
+Ap´os o Renascentismo, descobriu-se que o modelo da escala Pitag´orica n˜ao era t˜ao eﬁ-
+ciente, pois ela n˜ao favorecia certos procedimentos como, por exemplo, a transposi¸c˜ao das
+tonalidades das m´usicas, pois os intervalos entre as notas variavam de acordo com o tom esco-
+lhido, produzindo um efeito de desaﬁna¸c˜ao [12]. Na ´epoca de Pit´agoras e seus seguidores, eles
+pensavam que poderiam modelar o mundo apenas com n´umeros inteiros e fra¸c˜oes de inteiros,
+
+35
+
+Figura 35: Notas geradas a partir da vibra¸c˜ao de uma corda.
+
+da´ı um dos motivos para o problema. Mas com o avan¸co do conhecimento matem´atico e com
+o estudo dos n´umeros irracionais, estes modelos foram aperfei¸coados at´e chegar na Escala
+Musical Temperada. O objetivo da Escala Temperada foi corrigir o temperamento da escala,
+de modo a produzir intervalos com a mesma distˆancia, o que era um problema no modelo de
+Pit´agoras [11, 12]. Este novo conceito foi difundido na Europa ap´os J. S. Bach6 lan¸car sua
+obra intitulada “O cravo bem temperado”, que utiliza a escala temperada [11].
+
+Portanto, podemos deﬁnir a Escala Temperada como um modelo matem´atico onde o
+intervalo entre duas notas consecutivas s˜ao sempre iguais. Ent˜ao a partir das 12 notas
+musicais apresentadas, devemos estabelecer uma rela¸c˜ao entre as frequˆencias destas notas
+de modo que elas estejam igualmente espa¸cadas. Sejam {F0, F1, . . . , F11} as frequˆencias das
+12 notas musicais e F12 a frequˆencia da nota que est´a uma oitava acima da primeira. Com
+base no experimento da Figura 35, temos que F12 = 2F0. Para exempliﬁcar, tomaremos a
+sequˆencia de 13 notas que vai do D´o1 (C1) at´e o D´o2 (C2) (Tabela (5)). Vale ressaltar que
+de C1 at´e C2 temos 13 notas musicais distintas e entre elas existem exatamente 12 intervalos
+musicais.
+
+C1 C(cid:93)1 D1 D(cid:93)1 E1 F1 F(cid:93)1 G1 G(cid:93)1 A2 A(cid:93)2 B2 C2
+F9 F10 F11 F12
+F0
+
+F4 F5 F6
+
+F3
+
+F1
+
+F2
+
+F7
+
+F8
+
+Tabela 5: Distribui¸c˜ao das frequˆencias de C1 at´e C2.
+
+Matematicamente, o espa¸camento entre estas notas pode ser modelado de duas formas,
+aplicando uma (i) Progress˜ao Aritm´etica (P.A.) ou aplicando uma (ii) Progress˜ao Geom´etrica
+(P.G.):
+
+Fn = F0 + n · r
+Fn = F0 · qn
+
+(P.A.)
+
+(P.G.)
+
+onde r e q s˜ao respectivamente as raz˜oes destas progress˜oes, F0 o valor inicial e n um inteiro.
+Graﬁcamente, uma P.A. tem um comportamento linear enquanto que a P.G. tem um com-
+portamento exponencial. O modelo que mais se encaixou na solu¸c˜ao do problema da escala
+temperada foi o modelo exponencial, j´a que as frequˆencias sempre dobram de uma oitava
+
+6Johann Sebastian Bach (1685-1750), m´usico e compositor alem˜ao.
+
+36
+
+para a outra. Aplicando ent˜ao a deﬁni¸c˜ao da P.G., temos que a raz˜ao entre as frequˆencias
+de duas notas consecutivas ´e sempre constante:
+
+F1
+F0
+
+=
+
+F2
+F1
+
+= . . . =
+
+F12
+F11
+
+= . . . =
+
+Fn
+Fn−1
+
+=
+
+F0 · qn
+F0 · qn−1 = q.
+
+6.2 A Equa¸c˜ao da Escala Temperada
+
+Aﬁrma¸c˜ao 6.1 (Escala Temperada) Dada a frequˆencia (F0) de uma nota musical X,
+obtemos a frequˆencia (Fn) de qualquer nota Y por
+(cid:17)n
+2
+
+√
+(cid:16) 12
+
+(54)
+
+Fn =
+
+· F0
+
+onde n ´e a quantidade de semitons que separam estas notas.
+Demonstra¸c˜ao: Seja F0 a frequˆencia da nota de referˆencia. A cada 12 intervalos musicais
+(1 oitava), a frequˆencia dobra de valor, ou seja, a frequˆencia do C2 ´e o dobro da frequˆencia
+de C1; a frequˆencia do C3 ´e o dobro da frequˆencia de C2, e isto vale para qualquer nota de
+referˆencia. A fun¸c˜ao que descreve este comportamento ´e a fun¸c˜ao exponencial, Fn = F0 · qn.
+Como F12 = 2F0 podemos determinar o valor da constante q:
+
+√
+F12 = F0 · q12 ⇐⇒ 2F0 = F0 · q12 ⇐⇒ 2 = q12 ⇐⇒ q = 12
+
+logo,
+
+√
+(cid:16) 12
+
+(cid:17)n
+2
+
+· F0.
+
+Fn =
+
+2 ≈ 1, 059463
+
+(cid:3)
+
+A partir da frequˆencia do L´a central do piano (A3), podemos determinar a frequˆencia das
+88 notas que constituem a extens˜ao do piano. Estas frequˆencias s˜ao padronizadas (em torno
+do L´a central) e s˜ao utilizadas na aﬁna¸c˜ao e na constru¸c˜ao dos instrumentos musicais. A
+frequˆencia padr˜ao do A3 ´e FA3 = 440Hz [12]. Se quisermos saber a frequˆencia do D´o central
+(C3) basta aplicar n = 3 na equa¸c˜ao (54), pois do A3 ao C3 deslocamos 3 semitons `a direita:
+
+√
+(cid:17)3
+(cid:16) 12
+2
+
+FC3 =
+
+· 440Hz ≈ 523, 25Hz.
+
+Semelhantemente, a partir do D´o central, podemos obter a frequˆencia de todas as notas da
+oitava central do piano (C3 ao C4). Aplicando n = 0, 1, . . . , 12 na equa¸c˜ao (54), obtemos a
+Tabela (6). Como o piano come¸ca no A0, ap´os o G(cid:93)0, o ´ındice ´e acrescido de 1. Nesta tabela
+tamb´em podemos observar a raz˜ao entre as frequˆencias das notas e a nota de referˆencia. No
+Apˆendice A.6 apresentamos uma tabela completa com as 88 notas do piano.
+
+Para conhecermos as frequˆencias das notas correspondentes associadas `as demais oitavas,
+basta multiplicarmos ou dividirmos estes valores por 2 `a medida que deslocarmos de uma
+oitava para outra: multiplicamos por 2 ao deslocarmos para direita e dividimos por 2 ao
+deslocarmos para a esquerda. Este processo ´e mais pr´atico, mas tamb´em podemos aplicar
+a equa¸c˜ao da escala temperada para determinar estes valores, basta tomarmos n > 0 ao
+deslocarmos para direita e n < 0 ao deslocarmos para a esquerda, pois esta equa¸c˜ao ´e v´alida
+para n ∈ Z. Ent˜ao, para encontrarmos, por exemplo, a frequˆencia do A2, basta dividirmos
+a frequˆencia do A3 por 2, ou equivalentemente aplicar n = −12 (1 oitava abaixo ou 12ST `a
+esquerda) na equa¸c˜ao apresentada, isto ´e,
+√
+(cid:16) 12
+
+√
+(cid:16) 12
+
+FA2 =
+
+(cid:17)−12
+2
+
+· FA3 =
+
+(cid:17)−12
+2
+
+· 440Hz =
+
+· 440Hz = 220Hz.
+
+1
+2
+
+37
+
+Nota
+C3
+C(cid:93)3
+D3
+D(cid:93)3
+E3
+F3
+F(cid:93)3
+G3
+G(cid:93)3
+A4
+A(cid:93)4
+B4
+C4
+
+n
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+
+√
+12
+
+n
+2
+1, 0000
+1, 0594
+1, 1224
+1, 1892
+1, 2599
+1, 3348
+1, 4142
+1, 4983
+1, 5874
+1, 6817
+1, 7817
+1, 8877
+2, 0000
+
+Frequˆencia (Hz)
+523, 25
+554, 37
+587, 33
+622, 25
+659, 26
+698, 46
+739, 99
+783, 99
+830, 31
+880, 00
+932, 33
+987, 77
+1046, 5
+
+Tabela 6: Frequˆencia das notas centrais do piano.
+
+6.3 Rela¸c˜ao entre as Frequˆencias Musicais
+
+Conhecendo a frequˆencia de duas notas musicais, podemos estabelecer a rela¸c˜ao musical
+das mesmas, ou seja, determinar quantos semitons existem entre elas. A partir da equa¸c˜ao
+(54) obtemos:
+
+√
+(cid:16) 12
+
+(cid:17)n
+2
+
+.
+
+Fn
+F0
+
+=
+
+Aplicando a fun¸c˜ao logaritmo natural em ambos os lados e usando suas propriedades temos
+
+ln
+
+(cid:19)
+
+(cid:18) Fn
+F0
+
+√
+(cid:104)(cid:16) 12
+
+(cid:17)n(cid:105)
+2
+
+= ln
+
+⇐⇒ ln Fn − ln F0 =
+
+n
+12
+
+ln 2
+
+isto ´e,
+
+n =
+
+12
+ln 2
+
+(ln Fn − ln F0).
+
+(55)
+
+Sendo F0 a frequˆencia da nota de referˆencia (no nosso caso, a tˆonica do acorde a ser analisado),
+podemos determinar o intervalo musical correspondente `a frequˆencia da nota (Fn) de acordo
+com as deﬁni¸c˜oes apresentadas.
+
+6.4 Classiﬁcando um Acorde a partir de suas Frequˆencias
+
+Anteriormente, apresentamos uma metodologia para classiﬁcar um acorde com base na
+sua representa¸c˜ao esquem´atica em um piano, por exemplo. Nesta primeira situa¸c˜ao bastava
+identiﬁcar a tˆonica do acorde e suas rela¸c˜oes com as demais notas. Nesta se¸c˜ao apresentaremos
+os procedimentos necess´arios para classiﬁcar um acorde baseado nas frequˆencias das notas
+que o comp˜oem.
+
+Exemplo 10 Seja um acorde musical constitu´ıdo das seguintes frequˆencias:
+
+440, 00Hz; 554, 37Hz; 659, 26Hz e 783, 99Hz.
+
+O objetivo ´e determinar qual estrutura estas notas obedecem.
+
+1. Identiﬁcar a menor frequˆencia (F0) (tˆonica);
+
+2. Calcular a quantidade de semitons (n) entre a tˆonica e as demais frequˆencias.
+
+Neste exemplo, temos que F0 = 440Hz, e esta frequˆencia corresponde `a nota L´a (ver quadro
+do Apˆendice A.6). Agora devemos calcular n1, n2 e n3, para isso aplicamos a equa¸c˜ao (55):
+
+n1 =
+
+12
+ln 2
+
+(ln F1 − ln F0) =
+
+12
+ln 2
+
+(ln 554, 37 − ln 440) = 4, 000147 ≈ 4
+
+38
+
+n2 =
+
+n3 =
+
+12
+ln 2
+12
+ln 2
+
+12
+ln 2
+12
+ln 2
+
+(ln F2 − ln F0) =
+
+(ln 659, 26 − ln 440) = 7, 000128 ≈ 7
+
+(ln F3 − ln F0) =
+
+(ln 783, 99 − ln 440) = 9, 999981 ≈ 10
+
+Assim temos n1 = 4ST = 2T , n2 = 7ST = 3T 1ST e n3 = 10ST = 5T . Concluindo,
+observamos que esta estrutura corresponde ao Acorde Maior com S´etima Menor, logo, o
+acorde que possui as frequˆencias 440, 00Hz; 554, 37Hz; 659, 26Hz e 783, 99Hz ´e o acorde de
+L´a Maior com S´etima Menor (A7).
+
+Neste trabalho, consideraremos a menor frequˆencia sempre como a tˆonica do acorde em-
+bora nem sempre isso seja verdade, pois existem acordes invertidos, ou seja, uma determinada
+nota pode ser substitu´ıda por uma equivalente da oitava anterior ou posterior sem alterar
+a rela¸c˜ao absoluta entre elas. Exempliﬁcando, podemos ter o acorde de L´a Maior (A), for-
+mado pelas frequˆencias 440, 00Hz (A3), 554, 37Hz (C(cid:93)3) e 659, 26Hz (E3), mas substituindo
+659, 26Hz por 329, 63Hz (nota E2), temos o acorde de L´a Maior invertido, onde a nota Mi
+corresponde `a nota mais grave (frequˆencia mais baixa), e neste caso a representa¸c˜ao do acorde
+seria A/E (L´a com baixo em Mi).
+
+7 Aplicando a Transformada de Fourier no Estudo dos
+
+Acordes Musicais
+
+Para iniciarmos a parte ﬁnal deste trabalho, realizaremos o c´alculo da TF de um acorde
+musical formado pela combina¸c˜ao das frequˆencias: 261, 63Hz, 329, 26Hz e 392, 00Hz, que
+correspondem ao acorde de C (D´o maior). As amplitudes destas componentes foram ﬁxadas
+em 1. Matematicamente podemos expressar este acorde pela equa¸c˜ao (56):
+
+acm(t) = A1 sen (ω1t) + A2 sen (ω2t) + A3 sen (ω3t).
+
+(56)
+
+Substituindo os valores das frequˆencias e amplitudes (A1 = A2 = A3 = 1) obtemos:
+
+acm(t) = sen (2π · 261, 63t) + sen (2π · 329, 26t) + sen (2π · 392, 00t).
+
+Aplicando a equa¸c˜ao (41) temos que
+
+X(jω) =
+
+(cid:90) ∞
+
+−∞
+
+acm(t)e−jωt dt =
+
+(cid:90) ∞
+
+−∞
+
+[A1 sen (ω1t) + A2 sen (ω2t) + A3 sen (ω3t)] e−jωt dt.
+
+Usando as propriedades de integrais temos
+
+X(jω) =
+
+(cid:90) ∞
+
+−∞
+
+sen (ω1t)e−jωt dt +
+
+(cid:90) ∞
+
+−∞
+
+sen (ω2t)e−jωt dt +
+
+(cid:90) ∞
+
+−∞
+
+sen (ω3t)e−jωt dt.
+
+(57)
+
+39
+
+Figura 36: Acorde de C.
+
+Como demonstramos nos cap´ıtulos anteriores, a TF da fun¸c˜ao sen (ω0t) ´e dada por
+
+(cid:90) ∞
+
+−∞
+
+sen (ω0t)e−jωt dt =
+
+π
+j
+
+· δ(ω − ω0) −
+
+π
+j
+
+· δ(ω + ω0).
+
+Substituindo este resultado na equa¸c˜ao (57) obtemos:
+
+X(jω) =
+
+X(jω) =
+
+π
+j
+
+π
+j
+
+·δ(ω −ω1)−
+
+π
+j
+
+·δ(ω +ω1)+
+
+π
+j
+
+·δ(ω −ω2)−
+
+· [δ(ω − ω1) + δ(ω − ω2) + δ(ω − ω3)] −
+
+·δ(ω +ω2)+
+
+π
+j
+
+·δ(ω −ω3)−
+
+π
+j
+
+·δ(ω +ω3);
+
+· [δ(ω + ω1) + δ(ω + ω2) + δ(ω + ω3)] .
+
+π
+j
+
+π
+j
+
+A partir desta ´ultima equa¸c˜ao podemos observar que a TF do acorde ilustrado ´e formada
+por 3 impulsos no dom´ınio da frequˆencia (considerando ω > 0), e estes ocorrem justamente
+nas frequˆencias de suas componentes (Figura 37). Como estamos interessados em avaliar
+amplitude e frequˆencia destes impulsos, calcularemos o m´odulo da TF.
+
+Figura 37: TF do acorde C.
+
+Suponhamos agora que n˜ao conhe¸camos as componentes em frequˆencia de um acorde
+musical a ser analisado e que temos como informa¸c˜ao apenas uma grava¸c˜ao sonora desta
+composi¸c˜ao. Como faremos para identiﬁcar estas frequˆencias e estudarmos a rela¸c˜ao musical
+
+40
+
+entre elas? Este problema pode ser resolvido calculando a TF do sinal de ´audio gravado.
+Atrav´es destes resultados, poderemos obter os impulsos correspondentes `as componentes
+deste acorde e, com base neles, identiﬁc´a-lo e classiﬁc´a-lo.
+
+Apresentaremos a seguir os detalhes matem´aticos e computacionais empregados.
+
+7.1 C´alculo Computacional da Transformada de Fourier
+
+No algoritmo que ser´a desenvolvido na parte computacional deste trabalho, utilizaremos
+a fun¸c˜ao FFT (Fast Fourier Transform – desenvolvida por Tukey e Cooley em 1965) [3] dis-
+pon´ıvel no Octave. Esta fun¸c˜ao ´e uma vers˜ao discreta da transformada de Fourier que reduz
+o n´umero de opera¸c˜oes de N 2
+0 para N0 log N0, onde N0 ´e a dimens˜ao da matriz de trans-
+forma¸c˜ao [3]. Para saber um pouco mais a respeito do c´alculo de n´umero de opera¸c˜oes veja
+[9]. Como os computadores trabalham com c´alculos discretos sua aplica¸c˜ao ´e indispens´avel.
+A demonstra¸c˜ao da Transformada de Fourier no Tempo Discreto ´e semelhante ao processo
+apresentado no tempo cont´ınuo. Neste caso, aproximamos uma fun¸c˜ao discreta aperi´odica
+x[n] por uma fun¸c˜ao peri´odica ˜x[n], equa¸c˜ao (58) [2]. Apresentaremos as equa¸c˜oes mais
+importantes e faremos algumas considera¸c˜oes que ser˜ao utilizadas neste trabalho.
+
+Seja x[n] uma fun¸c˜ao discreta qualquer de dura¸c˜ao ﬁnita no intervalo −N1 ≤ n ≤ N2; fora
+deste intervalo x[n] = 0. A partir desta fun¸c˜ao, podemos construir uma fun¸c˜ao per´ı´odica ˜x[n]
+de tal modo que aumentando seu per´ıodo, podemos obter uma aproxima¸c˜ao para x[n]. Rea-
+lizando um processo an´alogo ao apresentado no caso cont´ınuo, obtemos a seguinte equa¸c˜ao:
+
+x[n] ≈ ˜x[n] =
+
+N2(cid:88)
+
+akejkω0n =
+
+N2(cid:88)
+
+k=−N1
+
+k=−N1
+
+1
+N
+
+X(ejkω0)ejkω0n,
+
+(58)
+
+onde N ´e o per´ıodo do sinal ˜x[n] e ω0 = 2π/N . O termo ak = 1
+N X(ejkω0) nos permite calcular
+as amplitudes associadas `as exponenciais complexas que constituem o sinal. Quando N → ∞
+esta equa¸c˜ao se torna uma integral e ˜x[n] → x[n], e obtemos
+
+x[n] =
+
+1
+2π
+
+X(ejω) =
+
+(cid:90) ∞
+
+X(ejω)ejωndω,
+
+−∞
+
+∞
+(cid:88)
+
+n=−∞
+
+x[n]e−jωn.
+
+(59)
+
+(60)
+
+A equa¸c˜ao (60) ´e chamada de Transformada de Fourier no Tempo Discreto (TFD) e
+a equa¸c˜ao (59) ´e chamada de Transformada Inversa de Fourier no Tempo Discreto
+(TIFD).
+
+Uma onda sonora x(t) ´e cont´ınua no tempo, mas ao gravarmos este sinal com dispositivos
+eletrˆonicos, ele ´e transformado em um sinal discreto (x[n]), ou seja, ele ´e discretizado a
+partir de uma frequˆencia de amostragem (Fs) [Hz ou amostras/s]. O tempo de amostragem
+(ou intervalo entre as amostras) ´e dado por ts = 1/Fs. A Figura 38 ilustra o processo de
+amostragem (ou discretiza¸c˜ao) de um sinal cont´ınuo. Este processo ´e dado ao multiplicarmos
+a fun¸c˜ao x(t) por um trem de impulsos de per´ıodo igual a ts [3]:
+
+x[n] = x(t) ·
+
+∞
+(cid:88)
+
+n=−∞
+
+δ(t − nts).
+
+(61)
+
+Por exemplo, seja x(t) = sen (2πt). Temos que o per´ıodo desta fun¸c˜ao ´e T = 1s. Supo-
+nhamos que queremos discretizar esta fun¸c˜ao com uma frequˆencia de amostragem de 16Hz.
+
+Neste caso, o tempo de amostragem ´e igual a 1/16s, ou seja, em um invervalo de 1s s˜ao
+coletadas 16 amostras (x0, x1, . . . , x15). O per´ıodo da fun¸c˜ao discreta, N , ´e igual a 16. Estas
+amostras constituem a representa¸c˜ao discreta, x[n], do sinal original x(t).
+
+41
+
+Figura 38: Processo de amostragem de um sinal x(t).
+
+A frequˆencia de amostragem utilizada na representa¸c˜ao de um sinal x(t) deve obedecer ao
+Teorema de Nyquist. Este teorema diz que a frequˆencia de amostragem (Fs) deve ser maior
+que duas vezes a m´axima frequˆencia do sinal a ser amostrado (FM ) [3, 14], ou seja
+
+Fs > 2FM .
+
+(62)
+
+Por exemplo, se desejarmos amostrar um sinal de frequˆencia 60Hz, a frequˆencia de amostra-
+gem utilizada dever ser superior a 120Hz.
+
+Um arquivo de ´audio com a qualidade de um CD possui frequˆencia m´axima de 20kHz
+(20000Hz), pois o ouvido humano ´e capaz de perceber frequˆencias na faixa de 20Hz a 20kHz
+[10, 13]. Pelo teorema de Nyquist a frequˆencia de amostragem deve ser maior que 40kHz. O
+valor padr˜ao utilizado nestes casos ´e de 44, 1kHz.
+
+Como esta frequˆencia ´e relativamente alta, isto pode exigir uma grande capacidade de
+armazenamento em mem´oria e processamento dos dados. Para reduzir o custo computacional
+do algoritmo a ser desenvolvido, analisaremos o intervalo de 1s do arquivo de ´audio gravado.
+Desta forma, criaremos o intervalo no tempo discreto de 0 at´e 1 − ts. Neste intervalo teremos
+exatamente 44100 amostras do sinal sonoro a ser estudado, o acorde musical.
+
+A partir do sinal discretizado do acorde musical (armazenado na mem´oria do computa-
+dor), realizaremos o c´alculo da transformada de Fourier (aplicando a fun¸c˜ao FFT dispon´ıvel
+
+42
+
+no sofware utilizado). Como apresentamos anteriormente, o resultado da TF nos permite
+identiﬁcar os impulsos associados `as frequˆencias que constituem o sinal estudado. Como uti-
+lizaremos uma frequˆencia de amostragem de 44, 1kHz e a janela de an´alise ser´a de 1 segundo,
+temos que N = 44100. Como N < ∞ aplicaremos a equa¸c˜ao (58) para obter a amplitude
+das componentes em frequˆencia do acorde.
+
+Sabendo que um acorde ´e dado pela combina¸c˜ao de sinais peri´odicos, o resultado gr´aﬁco
+do m´odulo da TF ser´a composto por diversos impulsos em frequˆencia, cujas ´areas s˜ao pro-
+porcionais `as amplitudes de suas componentes no dom´ınio do tempo. Como o processo de
+amostragem realiza a coleta de 44100 amostras/s, podemos considerar que o sinal discreto
+x[n] obtido ´e muito pr´oximo do sinal cont´ınuo x(t). Desta forma, o resultado da TFD ser´a
+muito pr´oximo da TF cont´ınua e graﬁcamente teremos uma representa¸c˜ao bem pr´oxima dos
+impulsos no dom´ınio da frequˆencia associados ao sinal estudado.
+
+Como estamos interessados em avaliar a amplitude dos impulsos determinados, efetuamos
+o c´alculo do m´odudo da TFD, pois os resultados num´ericos do processo s˜ao n´umeros com-
+plexos. Pela deﬁni¸c˜ao do impulso unit´ario, podemos aﬁrmar que graﬁcamente ele possui um
+pico muito elevado, j´a que ele est´a concentrado em um ponto espec´ıﬁco do eixo horizontal
+(ω = ωk). Desta forma, os resultados da TFD (X(ejkω0)) ser˜ao bem expressivos numeri-
+camente. Mas observando a equa¸c˜ao (58), temos que as amplitudes (ak) das exponenciais
+complexas que constituem o sinal x[n] s˜ao dadas por 1
+N X(ejkω0). Assim, para obtermos a
+amplitude destas componentes basta multiplicarmos o resultado do m´odulo da TFD por 1/N ,
+ou seja,
+
+1
+N
+Em termos de linha de comando teremos a seguinte estrutura:
+
+|X(ejk2πF0)|.
+
+|X(ejkω0)| =
+
+ak =
+
+1
+N
+
+(63)
+
+X = fftshift(fft(x_n)); % TFD do acorde amostrado;
+a_k = abs(X)/N; % amplitude das componentes em frequ^encia deste acorde.
+
+Estas fun¸c˜oes ser˜ao mais detalhadas na implementa¸c˜ao pr´atica do trabalho.
+A Figura 39 ilustra o resultado da TFD para o acorde de D´o Maior da Figura 36.
+
+Figura 39: TFD do acorde C.
+
+43
+
+8 Desenvolvimento
+
+Com base nos estudos apresentados sobre a (i) f´ısica do som, (ii) s´eries e transformadas de
+Fourier, (iii) introdu¸c˜ao `a teoria musical e da (iv) escala temperada, iremos agora relacionar
+estes t´opicos com a parte computacional do trabalho.
+
+Conforme foi deﬁnido anteriormente, um acorde musical ´e um sinal sonoro formado pela
+composi¸c˜ao de pelo menos trˆes ondas sonoras, cujas frequˆencias obedecem `a equa¸c˜ao da escala
+temperada. A rela¸c˜ao existente entre estas frequˆencias est˜ao associadas diretamente com a
+estrutura do acorde, permitindo assim classiﬁc´a-lo com base nos tipos apresentados na Se¸c˜ao
+5.3.
+
+As ondas sonoras presentes nos acordes musicais estudados n˜ao s˜ao harmonicamente rela-
+cionadas, pois suas frequˆencias n˜ao s˜ao m´ultiplas inteiras da frequˆencia fundamental (tˆonica
+do acorde). Observamos que entre duas notas harmˆonicas (F0 e 2F0) existem 12 subdivis˜oes
+iguais a um semitom. Deﬁnimos tamb´em os intervalos musicais que est˜ao compreendidos
+nesta faixa e mostramos como combin´a-los para formar os acordes. A partir destes argumen-
+tos conclu´ımos que n˜ao ´e poss´ıvel representar um acorde musical atrav´es da s´erie de Fourier,
+pois as frequˆencias que o constituem n˜ao s˜ao harmˆonicas. Neste caso, utilizaremos ent˜ao a
+transformada de Fourier, que nos permite estudar fun¸c˜oes aperi´odicas, e sinais cujas compo-
+nentes em frequˆencia n˜ao s˜ao harmonicamente relacionadas. E por se tratar da an´alise de
+um sinal amostrado x[n], utilizaremos uma vers˜ao discreta da TF (TFD).
+
+Como apresentamos no Cap´ıtulo 7, existem softwares computacionais que possuem fun¸c˜oes
+que calculam a transformada de Fourier de um sinal (FFT - Fast Fourier Transform) e, neste
+trabalho, utilizamos o Octave. Todos os algoritmos e c´odigos desenvolvidos foram implemen-
+tados nesta plataforma.
+
+8.1 Estrutura da Implementa¸c˜ao Pr´atica
+
+A implementa¸c˜ao pr´atica deste trabalho possui quatro etapas, conforme descri¸c˜oes a se-
+guir. O algoritmo desenvolvido a partir destas etapas foi intitulado Chord Test in Fre-
+quency (Teste do Acorde em Frequˆencia), apresentado no Apˆendice (A.1).
+
+• Coleta de dados: Realiza¸c˜ao da grava¸c˜ao dos acordes musicais (executados em um
+
+teclado musical);
+
+• Importa¸c˜ao dos dados: Transferˆencia e importa¸c˜ao dos ´audios gravados no Octave;
+
+• Processamento dos dados: C´alculo da Transformada de Fourier dos acordes coleta-
+dos e aplica¸c˜ao da Equa¸c˜ao da Escala Temperada para obter a rela¸c˜ao musical entre as
+frequˆencias presentes no sinal;
+
+• Classiﬁca¸c˜ao dos acordes: Classiﬁcar os acordes com base nos resultados anteriores.
+
+8.2 Implementa¸c˜ao Pr´atica
+
+8.2.1 Coleta de dados
+
+Inicialmente, criou-se um banco de dados com v´arios acordes tr´ıades e t´etrades. Eles
+foram executados em um piano digital (Yamaha DGX 530) e gravados atrav´es do microfone
+de um celular.
+
+44
+
+8.2.2
+
+Importa¸c˜ao dos dados
+
+Os arquivos de ´audio coletados foram transferidos para o computador e convertidos para
+o formato .wav, pois a fun¸c˜ao utilizada para importar estes dados no Octave faz a leitura
+deste formato de arquivo.
+
+[y,Fs] = audioread(‘acorde1.wav’);
+
+Esta fun¸c˜ao faz a importa¸c˜ao de um arquivo de ´audio e armazena os dados em um vetor
+y a uma frequˆencia de amostragem (Fs) de 44, 1kHz (frequˆencia padr˜ao para arquivos de
+m´usica), ou seja, em um per´ıodo de 1 segundo, ´e realizada a coleta de 44100 amostras.
+
+O Octave tamb´em possui uma fun¸c˜ao que nos permite reproduzir o arquivo importado.
+
+sound(y,Fs);
+
+8.2.3 Processamento dos dados
+
+Ap´os a coleta e a importa¸c˜ao do acorde, calculamos os parˆametros e as vari´aveis que
+ser˜ao utilizados para an´alise e esbo¸co das informa¸c˜oes. Com base na frequˆencia de amostra-
+gem, podemos calcular o tempo de amostragem (ts = 1/Fs), ou seja, a fra¸c˜ao de segundo
+correspondente ao intervalo entre cada amostra coletada. Para reduzirmos o tempo de pro-
+cessamento computacional, realizamos a an´alise para apenas 1 segundo do acorde (de t = 0
+at´e t = 1 − ts). Neste intervalo temos exatamente 44100 valores de amostras do sinal.
+
+%% Parametros para a FFT e para o esbo¸co dos gr´aficos
+Ts = 1/Fs; % tempo de amostragem
+n = 0:Ts:1-Ts;
+N = length(n); % per´ıodo do sinal discreto
+w = -Fs/2:1:Fs/2-1; % c´alculo das frequencias para usar a fun¸c~ao "fftshift"
+t=(0:length(y)-1)/Fs; % c´alculo para obter 1 segundo de amostragem
+
+A fun¸c˜ao
+
+fft
+
+do Octave calcula a transformada de Fourier do vetor de entrada Y e retorna o resultado em
+um outro vetor de mesma dimens˜ao. J´a a fun¸c˜ao
+
+fftshift
+
+desloca a frequˆencia zero para o centro do vetor calculado, pois a fun¸c˜ao anterior ´e descen-
+tralizada. Os resultados da TFD s˜ao n´umeros complexos e, como estamos interessados em
+relacionar amplitude × frequˆencia, calculamos o m´odulo destes valores (fun¸c˜ao abs). Con-
+forme discuss˜ao realizada no cap´ıtulo anterior, este resultado deve ser dividido pelo per´ıodo
+do sinal amostrado (N ), pois |ak| = 1
+N |X(ejkω0)|. Finalmente, multiplicamos estes resultados
+por 40 para obtermos uma visualiza¸c˜ao mais clara das amplitudes calculadas:
+
+a_k = 40*abs(fftshift(fft(y)))/(N);
+
+45
+
+Figura 40: Gr´aﬁcos do acorde coletado.
+
+Utilizando os valores calculados, podemos esbo¸car os gr´aﬁcos no dom´ınio do tempo e da
+
+frequˆencia do acorde coletado. A Figura 40 ilustra um exemplo.
+
+Analisando o gr´aﬁco no dom´ınio da frequˆencia, observamos trˆes picos mais signiﬁcativos,
+que no caso s˜ao as frequˆencias do acorde tr´ıade ilustrado. Observamos tamb´em o surgimento
+das frequˆencias harmˆonicas, provocadas pela vibra¸c˜ao das partes fracion´arias da corda (1/2,
+1/3, 1/4, etc.), e `a medida que a frequˆencia aumenta, elas se reduzem at´e se tornarem
+inaud´ıveis [1].
+
+Como estamos interessado em classiﬁcar o acorde, ´e suﬁciente analisarmos apenas o in-
+tervalo (0, 2F0), j´a que as demais frequˆencias s˜ao apenas varia¸c˜oes harmˆonicas das notas fun-
+damentais do acorde. Podemos ent˜ao realizar um truncamento deste gr´aﬁco na frequˆencia
+F = 2F0, conforme Figura 41. Este procedimento vale para os acordes tr´ıades e t´etrades,
+pois na sua formula¸c˜ao b´asica n˜ao existem notas em oitavas superiores ou inferiores.
+
+Figura 41: Truncamento das frequˆencias em F = 2F0.
+
+46
+
+Na sequˆencia da an´alise, devemos extrair as frequˆencias correspondentes a estes picos. Na
+extra¸c˜ao destes picos, deﬁniu-se um limiar, ou seja, um valor de amplitude de corte; abaixo
+deste limiar os picos s˜ao desconsiderados. Experimentalmente, observamos que este limiar se
+encontra entre 0, 03 e 0, 9. Em m´edia, o limiar que atendeu o maior n´umero de experimentos
+foi 0, 2748; e, portanto, ele foi deﬁnido como o limiar padr˜ao do algoritmo (Lp = 0, 2748).
+Este valor pode variar de acorde para acorde, dependendo da forma que ele foi executado.
+Falaremos destas varia¸c˜oes mais `a frente.
+
+Ap´os este processo, iniciamos ent˜ao a identiﬁca¸c˜ao e a classiﬁca¸c˜ao do acorde.
+
+8.2.4 Classiﬁca¸c˜ao dos acordes
+
+Ap´os realizarmos a elimina¸c˜ao das frequˆencias harmˆonicas e a extra¸c˜ao das frequˆencias
+desejadas (F0, F1, F2 e F3), calculamos as rela¸c˜oes musicais que existem entre elas e a tˆonica
+do acorde (F0) atrav´es da fun¸c˜ao
+
+function [N] = num_intervalo(F0, Fk)
+
+que recebe como parˆametro de entrada o par de frequˆencias (F0, Fk) e retorna a quantidade
+de semitons (Nk) que existe entre elas aplicando a equa¸c˜ao da escala temperada (algoritmo
+do Apˆendice A.3). Executando esta fun¸c˜ao para k = 1, 2 e 3 obtemos N1, N2 e N3. Em
+seguida aplicamos a fun¸c˜ao
+
+function [ton] = tonica(F0)
+
+na frequˆencia F0. Esta fun¸c˜ao faz a associa¸c˜ao desta frequˆencia com sua respectiva nota
+musical (algoritmo do Apˆendice A.4).
+
+res = tonica(F0);
+
+Conhecendo a tˆonica (T ) do acorde (armazenada na vari´avel res) e a quantidade de
+semitons que existe entre ela e as demais notas (vari´aveis N1, N2 e N3), basta determinarmos
+a qual estrutura esta sequˆencia corresponde. Para isto utilizamos o c´odigo abaixo, que faz
+a associa¸c˜ao destes resultados com as estruturas dos acordes apresentadas na Se¸c˜ao 5.3. No
+caso dos acordes tr´ıades, o algoritmo deﬁne N3 = 0.
+
+if N3 ~= 0 % acordes t´etrades
+if (N1 == 4) && (N2 == 7) && (N3 == 11)
+sprintf(‘Acorde: %s7M\n’,res) % acorde maior com s´etima maior
+elseif (N1 == 4) && (N2 == 7) && (N3 == 10)
+sprintf(‘Acorde: %s7\n’,res) % acorde maior com s´etima menor
+elseif (N1 == 3) && (N2 == 7) && (N3 == 10)
+sprintf(‘Acorde: %sm7\n’,res) % acorde menor com s´etima
+elseif (N1 == 3) && (N2 == 7) && (N3 == 11)
+sprintf(‘Acorde: %sm7M\n’,res) % acorde menor com s´etima maior
+elseif (N1 == 5) && (N2 == 7) && (N3 == 10)
+sprintf(‘Acorde: %s7sus4\n’,res) % acorde suspenso com s´etima
+elseif (N1 == 3) && (N2 == 6) && (N3 == 10)
+sprintf(‘Acorde: %sm7b5\n’,res) % acorde meio diminuto
+elseif (N1 == 4) && (N2 == 7) && (N3 == 9)
+sprintf(‘Acorde: %s6\n’,res) % acorde maior com sexta maior
+elseif (N1 == 3) && (N2 == 7) && (N3 == 9)
+
+47
+
+sprintf(‘Acorde: %sm6\n’,res) % acorde menor com sexta maior
+elseif (N1 == 4) && (N2 == 8) && (N3 == 11)
+sprintf(‘Acorde: %s7M5#\n’,res) % acorde aumentado t´etrade
+else
+fprintf(‘\nAcorde nao reconhecido!!!\n\n’);
+end
+else % acordes tr´ıades
+if (N1 == 4) && (N2 == 7)
+sprintf(‘Acorde: %s\n’,res) % acorde maior
+elseif (N1 == 3) && (N2 == 7)
+sprintf(‘Acorde: %sm\n’,res) % acorde menor
+elseif (N1 == 3) && (N2 == 6)
+sprintf(‘Acorde: %sdim\n’,res) % acorde diminuto
+elseif (N1 == 5) && (N2 == 7)
+sprintf(‘Acorde: %ssus4\n’,res) % acorde suspenso
+elseif (N1 == 4) && (N2 == 8)
+sprintf(‘Acorde: %s5#\n’,res) % acorde aumentado
+else
+fprintf(‘\nAcorde nao reconhecido!!!\n\n’);
+end
+end
+
+O algoritmo acima retorna na Janela de Comandos do Octave o resultado da apura¸c˜ao.
+Executando este algoritmo para o sinal de entrada da Figura 40 obtemos o resultado apre-
+sentado na Figura 42.
+
+Figura 42: Identiﬁca¸c˜ao e Classiﬁca¸c˜ao do acorde coletado (Octave).
+
+Os resultados num´ericos obtidos para o acorde gravado da Figura 40 s˜ao:
+
+F0 = 164Hz,
+
+N1 = 4, N2 = 7 e N3 = 0
+
+onde 164Hz correponde `a tˆonica Mi (ver Quadro do Apˆendice A.6); 4 semitons corresponde `a
+Ter¸ca Maior; 7 semitons corresponde `a Quinta Justa; e este acorde ´e tr´ıade, pois N3 = 0. A
+estrutura T + 3aM + 5aJ corresponde ao Acorde Maior, portanto, a classiﬁca¸c˜ao ´e E (Acorde
+de Mi Maior), reaﬁrmando o resultado do algoritmo.
+
+Vamos apresentar agora os resultados da compila¸c˜ao do algoritmo para um outro acorde,
+
+conforme Figuras 43, 44 e 45.
+
+48
+
+Figura 43: Gr´aﬁcos do acorde coletado.
+
+Figura 44: Truncamento das frequˆencias.
+
+Figura 45: Resultado da apura¸c˜ao (Octave).
+
+49
+
+Os resultados num´ericos desta compila¸c˜ao foram: F0 = 261Hz, N1 = 3, N2 = 7 e N3 = 10;
+onde 261Hz correponde `a tˆonica D´o; 3 semitons corresponde `a Ter¸ca Menor; 7 semitons
+corresponde `a Quinta Justa; 10 semitons corresponde `a S´etima Menor. A estrutura T +
+3am + 5aJ + 7am corresponde ao Acorde Menor com S´etima Menor, portanto, a classiﬁca¸c˜ao
+ﬁnal ´e Cm7 (Acorde de D´o Menor com S´etima Menor).
+
+8.3 Diﬁculdades Encontradas
+
+Durante os experimentos realizados, observou-se alguns fatores que podem diﬁcultar a
+classiﬁca¸c˜ao do acorde. Abaixo listamos estas situa¸c˜oes e apresentamos as solu¸c˜oes aplicadas
+para minimizar os efeitos indesejados.
+
+• A intensidade empregada nas teclas do teclado inﬂuencia diretamente na amplitude das
+notas musicais envolvidas. Dependendo do acorde, sua montagem pr´atica pode exigir
+uma postura da m˜ao que reduz a press˜ao exercida por alguns dedos, gerando assim
+uma pondera¸c˜ao em algumas notas. A oitava do piano escolhida para a execu¸c˜ao do
+acorde tamb´em inﬂuencia neste fenˆomeno, pois `a medida que executamos o acorde em
+regi˜oes mais `a direita obtemos frequˆencias mais agudas e, quanto maior a frequˆencia de
+uma nota, menor ´e a amplitude do som gerada pela vibra¸c˜ao desta corda. Em alguns
+casos, o algoritmo n˜ao conseguia identiﬁcar as frequˆencias do acorde, pois as amplitudes
+associadas a algumas destas frequˆencias estavam abaixo do limiar de corte estabelecido
+(L1). Para solucionar este problema, o algoritmo solicita que o limiar de corte seja
+reduzido at´e o processo convergir para algum resultado (L2), e isto foi v´alido em muitos
+acordes testados. Por´em, estas redu¸c˜oes possuem um limite, e abaixo deste valor (L3),
+o algoritmo come¸ca a fazer o reconhecimento de ru´ıdos e componentes muito pequenas,
+gerando divergˆencia nos valores calculados. Caso isso ocorra, o algoritmo encerra o
+processo e informa que o limiar atingiu seu valor cr´ıtico;
+
+Figura 46: Visualiza¸c˜ao dos limiares de corte.
+
+• A grava¸c˜ao de sinais sonoros em condi¸c˜oes ambientes ´e pasSivel de muitos ru´ıdos e
+interferˆencias, isto pode provocar distor¸c˜oes nas frequˆencias dos acordes, gerando um
+efeito de desaﬁna¸c˜ao, ora 1 semitom abaixo, ora 1 semitom acima. Na execu¸c˜ao do algo-
+ritmo, alguns acordes n˜ao recebiam classiﬁca¸c˜ao, pois os intervalos musicais calculados
+n˜ao se encaixavam em nenhuma estrutura. Mas observamos nestes casos, que alguns
+
+50
+
+dos valores calculados estavam deslocados 1 semitom acima da estrutura mais pr´oxima.
+Para solucionar este problema, o algoritmo desloca estes intervalos 1 semitom abaixo,
+permitindo que os valores se encaixem na estrutura equivalente mais pr´oxima. Por
+exemplo, ao avaliar determinado acorde tr´ıade, o algoritmo obteve N1 = 3 e N2 = 8.
+N˜ao existe nenhuma estrutura com essa forma¸c˜ao, mas deslocando N2 um semitom
+abaixo obtemos N1 = 3 e N (cid:48)
+2 = 7, e estes valores obedecem a estrutura de um dos acor-
+des musicais estudados. Nos casos duvidosos, aplicamos os procedimentos apresentados
+abaixo para comprovarmos o resultado ﬁnal.
+
+Para tratarmos os casos em que a classiﬁca¸c˜ao n˜ao teve sucesso (ou em caso de d´uvidas),
+regravamos o acorde e o submetemos a outra apura¸c˜ao. Se no primeiro teste o executamos em
+uma oitava mais `a direita do piano, no segundo teste o executamos uma oitava `a esquerda.
+Semelhantemente, se no primeiro teste o executamos em uma oitava mais `a esquerda e o
+processo divergiu, ent˜ao no segundo teste o executamos uma oitava `a direita. Em outros
+casos, simplesmente aumentamos a intensidade empregada nas teclas (aumentando conse-
+quentemente a amplitude das componentes em frequˆencia), permitindo ent˜ao a identiﬁca¸c˜ao
+e classiﬁca¸c˜ao do acorde. Se ap´os a realiza¸c˜ao destes procedimentos o acorde n˜ao receber
+nenhuma classiﬁca¸c˜ao, ent˜ao o inclu´ımos na lista de erros.
+
+Ap´os o tratamento destes efeitos e das considera¸c˜oes apresentadas, obtemos a vers˜ao ﬁnal
+
+do algoritmo, que foi utilizada na compila¸c˜ao dos resultados ﬁnais.
+
+9 Classiﬁca¸c˜ao Visual dos Acordes
+
+Mostraremos neste cap´ıtulo como classiﬁcar um acorde a partir do gr´aﬁco da sua trans-
+formada de Fourier, ou seja, observando a simetria e o espa¸camento entre as frequˆencias
+podemos de forma visual prever o tipo de acorde representado. Para ilustrar este comporta-
+mento, faremos essa an´alise para os 5 acordes tr´ıades apresentados. Pode-se tamb´em expandir
+essa an´alise para os acordes t´etrades.
+
+9.1 Classiﬁca¸c˜ao Visual dos Acordes Tr´ıades atrav´es dos Gr´aﬁcos
+
+da TF
+
+Reunindo a parte te´orica e pr´atica da m´usica com os resultados gr´aﬁcos da TF, pode-
+mos estabelecer uma rela¸c˜ao visual interessante. A partir da estrutura dos acordes tr´ıades,
+observamos que as distˆancias entre as notas possuem um comportamento de simetria e
+espa¸camento. Por exemplo, um acorde maior ´e formado pela T , 3aM e 5aJ. Entre a tˆonica
+e a 3aM existem 4 semitons e entre a tˆonica e a 5aJ existem 7 semitons. Por outro lado,
+podemos dizer que entre a 3aM e a 5aJ existem 3 semitons. Essa distˆancia sonora deﬁnida
+pelo semitom pode ser vista na pr´atica (ao tocar o teclado, por exemplo) e graﬁcamente (pela
+TF).
+
+Ao executar um acorde maior no piano, a tecla correspondente `a nota central est´a mais
+pr´oxima da 5aJ (3 ST) do que da tˆonica (4 ST). Em termos de simetria podemos dizer que
+o arranjo produzido por essa conﬁgura¸c˜ao ´e suavemente concentrado `a direita. No acorde
+menor ocorre o inverso, a conﬁgura¸c˜ao ´e mais concentrada `a esquerda, pois a nota central
+est´a mais pr´oxima da tˆonica do acorde. Esta mesma rela¸c˜ao pode ser observada nos gr´aﬁcos
+da TF de um acorde maior e menor. No maior, os impulsos est˜ao suavemente concentrados
+`a direita, enquanto que no menor percebemos uma not´avel proximidade do impulso central
+da tˆonica (concentra¸c˜ao `a esquerda).
+
+51
+
+Nos acordes diminutos e aumentados, os intervalos entre as notas s˜ao iguais; 3 semitons no
+primeiro caso e 4 no segundo caso. Ao tocar um acorde diminuto no teclado, os dedos ﬁcam
+igualmente espa¸cados com uma conﬁgura¸c˜ao mais fechada. No acorde aumentado temos um
+espa¸camento igual, por´em mais aberto. Olhando para a TF, vemos impulsos bem distribu´ıdos
+e pr´oximos no acorde diminuto e, impulsos bem distribu´ıdos e afastados no aumentado.
+
+No acorde suspenso a conﬁgura¸c˜ao tamb´em ´e concentrada `a direita, por´em, essa concen-
+tra¸c˜ao ´e mais acentuada, pois entre a 4aJ e a 5aJ existem apenas 2 ST. Comparando estes
+casos podemos identiﬁcar os padr˜oes gr´aﬁcos dos acordes tr´ıades e, a partir dessas an´alises,
+obter uma classiﬁca¸c˜ao pr´evia de um acorde.
+
+As ﬁguras abaixo ilustram a constru¸c˜ao pr´atica dos acordes C, Cm, Csus4 e Co (Figura
+47) e os gr´aﬁcos da TF correspondentes a estes acordes (Figura 48). Comparando estas
+ﬁguras podemos visualmente fazer uma associa¸c˜ao direta entre uma e outra.
+
+Figura 47: Constru¸c˜ao pr´atica dos acordes.
+
+Figura 48: Transformada de Fourier dos acordes ilustrados.
+
+52
+
+10 Resultados
+
+O algoritmo principal, intitulado Chord Test in Frequency (Teste do Acorde em Frequˆencia),
+
+desenvolvido na parte computacional deste trabalho foi submetido a v´arios testes. Foram
+avaliados 58 acordes (28 tr´ıades e 30 t´etrades), executados em oitavas aleat´orias, conforme
+tabelas abaixo. Estes acordes foram apurados pelo algoritmo e observamos se o resultado
+correspondia ao acorde selecionado. Os acordes com sub-´ındices apresentam uma varia¸c˜ao
+na posi¸c˜ao ou na intensidade sonora (Ex: os acordes B(cid:91)(1) e B(cid:91)(2) s˜ao os mesmos, por´em,
+executados em posi¸c˜oes distintas do piano).
+
+C
+
+Cm Co Dm
+
+G
+G(cid:91)m Am B(cid:91)(1) B(cid:91)(2) A5(cid:93)(1) A5(cid:93)(2) E5(cid:93)
+E(cid:91)o
+G(cid:91)
+
+C4 Bm Em Fm
+
+Do
+
+Eo
+
+E
+
+A(cid:91)o A(cid:91)4 D
+F4(1) F4(2) D4
+–
+–
+
+(2)
+
+(1) E(cid:91)o
+
+Tabela 7: Acordes Tr´ıades avaliados.
+
+C7M Cm7
+Am7(cid:91)5 B7sus4
+G(cid:91)m6 Dm7(1) Dm7(2) Cm7(cid:91)5(1) Cm7(cid:91)5(2) Cm7(cid:91)5(3)
+E7sus4(1) E7sus4(2) E7sus4(3)
+D7M(2)
+
+D(cid:91)7sus4
+Bm7(cid:91)5
+
+E(cid:91)7M
+G7M5(cid:93)
+
+E(cid:91)m7
+Gm7
+
+D(cid:91)7
+D6
+
+B6
+
+F6
+
+F7
+
+Gm6
+F7M(1) F7M(2)
+D7M(1)
+–
+
+G7
+–
+
+Tabela 8: Acordes T´etrades avaliados.
+
+10.1 ´Indice de Conﬁan¸ca do Algoritmo Desenvolvido
+
+Em 6 dos 58 acordes testados, o processo apresentou problema de identiﬁca¸c˜ao devido ao
+n˜ao reconhecimento de algumas componentes do mesmo, pois o limiar de corte atingiu seu
+limite cr´ıtico. A Tabela (9) apresenta estes casos.
+
+(1)
+
+E(cid:91)o
+F7M(2)
+A5(cid:93)(1)
+D7M(1) E7sus4(1) E7sus4(2)
+
+Tabela 9: Acordes que apresentaram problemas de identiﬁca¸c˜ao.
+
+Conforme foi explicado nos cap´ıtulos anteriores, realizando uma nova grava¸c˜ao destes
+acordes (variando as condi¸c˜oes de execu¸c˜ao), ´e poss´ıvel que o algoritmo consiga identiﬁc´a-
+los e dar sequˆencia ao processo. Os acordes da Tabela (9) foram executados e gravados
+novamente, por´em em oitavas diferentes das utilizadas inicialmente e em alguns casos com
+um acr´escimo no volume (intensidade empregada nas teclas). Ap´os a regrava¸c˜ao todos eles
+foram reconhecidos e classiﬁcados corretamente.
+
+As Tabelas (10) e (11) ilustram os erros e acertos do algoritmo antes e depois da regrava¸c˜ao
+
+dos acordes que apresentaram problemas na identiﬁca¸c˜ao.
+
+Com base nestes resultados podemos deﬁnir o ´ındice de conﬁan¸ca do algoritmo, IC, dado
+
+por:
+
+IC =
+
+Na
+NT
+
+(64)
+
+onde Na ´e o n´umero total de acertos e NT o total de testes realizados.
+
+53
+
+Acordes Acertos Erros Total
+Tr´ıades
+Tr´etrades
+Total
+
+28
+30
+58
+
+26
+26
+52
+
+2
+4
+6
+
+Tabela 10: Resultados do algoritmo Chord Test in Frequency antes da regrava¸c˜ao dos acordes
+que apresentaram problemas.
+
+Acordes Acertos Erros Total
+Tr´ıades
+Tr´etrades
+Total
+
+28
+30
+58
+
+28
+30
+58
+
+0
+0
+0
+
+Tabela 11: Resultados do algoritmo Chord Test in Frequency ap´os a regrava¸c˜ao dos acordes
+que apresentaram problemas.
+
+• ´Indice de conﬁan¸ca antes da regrava¸c˜ao dos acordes:
+
+ICantes =
+
+52
+58
+
+≈ 89, 7%;
+
+• ´Indice de conﬁan¸ca ap´os a regrava¸c˜ao dos acordes:
+
+ICdepois =
+
+58
+58
+
+= 100%.
+
+A partir destes ´ındices podemos ver que o algoritmo tem um aproveitamento de 100%
+quando os acordes gravados possuem uma boa rela¸c˜ao entre intensidade sonora e faixa de
+frequˆencia utilizada. Quando os acordes s˜ao mais centralizados no piano, essa rela¸c˜ao ´e mais
+forte e, `a medida que deslocamos para `a direita, esta rela¸c˜ao ´e reduzida pelo aspecto f´ısico
+da vibra¸c˜ao das cordas.
+
+10.2 An´alise dos Limiares de Corte
+
+Outros resultados importantes a serem considerados s˜ao os limiares de cortes (Lc) obtidos
+em cada experimento. A partir deles podemos veriﬁcar as interferˆencias provocadas pelas
+condi¸c˜oes de execu¸c˜ao do acorde.
+
+Lc
+
+0, 30
+
+0, 30
+
+0, 30
+
+Acorde C / Cm Co Dm E
+
+A(cid:91)o
+0, 50
+Acorde G(cid:91)m Am B(cid:91)(1) B(cid:91)(2) D4 A5(cid:93)(1) A5(cid:93)(2)
+0, 25
+Do
+0, 07
+
+0, 07
+0, 50
+C4 Bm Em
+0, 50
+0, 50
+0, 25
+
+Lc
+Acorde
+Lc
+
+0, 50
+F4(2)
+0, 17
+
+0, 07
+G(cid:91)
+0, 50
+
+0, 40 divergiu
+
+Eo
+0, 30
+
+Fm
+0, 15
+
+G
+0, 25
+
+0, 30
+
+A(cid:91)4
+0, 05
+E5(cid:93)
+0, 10
+E(cid:91)o
+(1)
+divergiu
+
+D
+0, 15
+F4(1)
+0, 15
+E(cid:91)o
+(2)
+0, 10
+
+Tabela 12: Limiares de corte obtidos para os acordes tr´ıades testados.
+
+Os acordes B(cid:91)(1) e B(cid:91)(2) convergiram corretamente mas observa-se que o limiar de corte
+´e muito diferente; 0, 07 e 0, 5 respectivamente. Como j´a apresentamos, isto ocorre devido `a
+oitava escolhida para reproduzir cada um: B(cid:91)(1) foi executado em uma oitava mais `a direita
+
+do piano (notas mais agudas), e B(cid:91)(2) em uma oitava mais `a esquerda (notas mais graves).
+Com este fato, comprovamos a interferˆencia que a varia¸c˜ao na posi¸c˜ao do acorde (ao longo do
+piano) pode provocar ao executarmos o algoritmo, pois este limiar de corte pode se reduzir
+ao ponto de comprometer a identiﬁca¸c˜ao das componentes do acorde. A Figura 49 ilustra
+este fato.
+
+54
+
+Figura 49: Limiares de corte para B(cid:91)(1) e B(cid:91)(2).
+
+No gr´aﬁco superior (B(cid:91)(1)) podemos observar que o terceiro pico que constitui este acorde
+(destacado com um retˆangulo) possui uma amplitude muito baixa, e com isso o limiar de
+corte chegou em um n´ıvel muito baixo (L(cid:48) = 0, 07). Nestas condi¸c˜oes, o algoritmo conseguiu
+identiﬁcar as trˆes componentes do acorde, mas corremos o risco de que uma componente
+indesejada (destacada com um c´ırculo) interferisse nos c´alculos. Como essa componente
+indesejada est´a muito pr´oxima em frequˆencia da tˆonica do acorde, ela n˜ao interferiu na con-
+vergˆencia do processo. Mas, dependendo desta distˆancia, o algoritmo pode divergir, pois a
+estrutura identiﬁcada pode n˜ao se enquadrar em nenhum acorde apresentado. J´a no gr´aﬁco
+inferior (B(cid:91)(2)), podemos observar que alterando a oitava de execu¸c˜ao do acorde, as compo-
+nentes foram facilmente identiﬁcadas, com um limiar de corte pr´oximo de 0, 5.
+
+A intensidade empregada nas teclas tamb´em produz esse mesmo efeito. No experimento
+realizado com A5(cid:93)(1) e A5(cid:93)(2) este fato foi comprovado, pois A5(cid:93)(1) foi tocado com menos
+intensidade e o algoritmo n˜ao conseguiu identiﬁcar corretamente as suas componentes (di-
+vergiu). J´a o acorde A5(cid:93)(2) foi executado com maior intensidade e facilmente foi analisado
+pelo algoritmo (Figura 50).
+
+55
+
+Figura 50: Limiares de corte para A5(cid:93)(1) e A5(cid:93)(2).
+
+A partir dos dados da Tabela (12), podemos determinar o limiar de corte m´edio para os
+
+acordes tr´ıades (L3) que convergiram:
+
+L3 =
+
+1
+26
+
+26
+(cid:88)
+
+i=1
+
+Li = 0, 2704.
+
+Agora apresentaremos os limiares de corte obtidos para os acordes t´etrades e o valor m´edio
+
+destes experimentos.
+
+Acorde
+Lc
+
+C7M Cm7
+0, 25
+0, 10
+Acorde Am7(cid:91)5 B7sus4
+0, 10
+
+0, 20
+
+Lc
+
+D(cid:91)7
+0, 25
+D6
+0, 05
+
+D(cid:91)7sus4
+0, 30
+Bm7(cid:91)5
+0, 05
+
+E(cid:91)7M
+0, 35
+G7M5(cid:93)
+0, 05
+
+E(cid:91)m7
+0, 9
+Gm7
+0, 05
+
+Acorde G(cid:91)m6 Dm7(1) Dm7(2) Cm7(cid:91)5(1) Cm7(cid:91)5(2) Cm7(cid:91)5(3)
+
+Lc
+
+0, 50
+
+0, 26
+Acordes D7M(1) D7M(2)
+divergiu
+F7
+0, 15
+
+Lc
+Acordes
+Lc
+
+0, 15
+Gm6
+0, 20
+
+0, 60
+F6
+0, 03
+F7M(1)
+0, 10
+
+0, 10
+
+0, 30
+
+0, 70
+E7sus4(1) E7sus4(2) E7sus4(3)
+divergiu
+divergiu
+G7
+F7M(2)
+0, 90
+divergiu
+
+0, 12
+B6
+0, 50
+
+Tabela 13: Limiares de corte obtidos para os acordes t´etrades testados.
+
+Os acordes que divergiram s˜ao justamente aqueles que apresentaram problemas na iden-
+tiﬁca¸c˜ao devido `a baixa amplitude das componentes. Mas realizando uma nova grava¸c˜ao
+(alterando as condi¸c˜oes de execu¸c˜ao) os resultados convergiram corretamente.
+
+Finalmente, obtemos o limiar de corte m´edio para os acordes t´etrades (L4) que convergi-
+
+ram:
+
+56
+
+L4 =
+
+1
+26
+
+26
+(cid:88)
+
+i=1
+
+Li = 0, 2792.
+
+Comparando os limiares m´edios calculados para os acordes tr´ıades (L3) e t´etrades (L4),
+observamos que eles s˜ao bem pr´oximos. Assim, podemos dizer que o n´umero de componentes
+do acorde n˜ao inﬂuencia tanto o limiar obtido ao ﬁm da execu¸c˜ao. Calculando uma m´edia
+ponderada podemos estabelecer o limiar de corte m´edio para ambos os casos:
+
+Lmedio =
+
+26 · 0, 2704 + 26 · 0, 2792
+26 + 26
+
+= 0, 2748.
+
+No Apˆencide A.8 apresentamos os limiares de corte obtidos em forma de gr´aﬁco de barras.
+
+Com a realiza¸c˜ao dos 58 experimentos, observamos que o limiar de corte atingido pelo
+algoritmo ao ﬁm do processo de compila¸c˜ao est´a diretamente ligado `a intensidade do acorde
+gravado e `a oitava escolhida para execu¸c˜ao do mesmo. Nas Tabelas (12) e (13), os limiares
+mais baixos correspondem na sua grande maioria aos acordes que foram gravados ou com o
+volume mais baixo, ou em oitavas mais `a direita do piano. J´a os limiares mais expressivos
+correspondem aos acordes que foram executados com um ganho no volume ou em uma posi¸c˜ao
+mais centralizada do piano. Estes resultados j´a foram previamente discutidos, mas agora
+podemos reaﬁrm´a-los a partir dos resultados calculados.
+
+10.3 Resultados do algoritmo Chord Test in Frequency
+
+Para ﬁnalizar a apresenta¸c˜ao dos resultados deste trabalho, ilustraremos os gr´aﬁcos e a
+classiﬁca¸c˜ao ﬁnal obtida ao ﬁm da execu¸c˜ao do algoritmo Chord Test in Frequency para um
+outro acorde.
+
+Figura 51: Acorde de entrada no dom´ınio do tempo e da frequˆencia.
+
+57
+
+Figura 52: Identiﬁca¸c˜ao das componentes do acorde.
+
+A partir do resultado do algoritmo (Figura 53) conclu´ımos ent˜ao que o sinal gravado se
+trada do acorde Mi Suspenso com S´etima Menor (E7sus4). Com base na estrutura deste
+acorde, dizemos que ele ´e formado pelas notas musicais E, A, B e D, ou seja, tˆonica, quarta
+justa, quinta justa e s´etima menor respectivamente. Tamb´em podemos aﬁrmar que os picos
+da transformada de Fourier deste acorde correspondem `as frequˆencias destas notas musicais.
+
+Figura 53: Classiﬁca¸c˜ao ﬁnal do acorde.
+
+11 Aplica¸c˜ao no Ensino M´edio
+
+No ensino base, a m´usica ´e uma boa motiva¸c˜ao para introduzir o estudo das fun¸c˜oes
+trigonom´etricas, como por exemplo, a fun¸c˜ao seno, que pode ser utilizada para descrever
+uma nota (i) ou um acorde musical (ii):
+
+f (t) = Ai sen (2πFi · t)
+
+g(t) = A1 sen (2πF1 · t) + A2 sen (2πF2 · t) + . . . + Ak sen (2πFk · t).
+
+(i)
+
+(ii)
+
+58
+
+onde Ai (com i = 1, . . . , k) s˜ao as amplitudes das notas musicais que comp˜oem este acorde e
+Fi as frequˆencias associadas a estas notas.
+
+Vinculada a esta motiva¸c˜ao, podemos inserir tamb´em recursos digitais para auxiliar os
+
+alunos na compreens˜ao das fun¸c˜oes trigonom´etricas.
+
+11.1 Utiliza¸c˜ao do Geogebra no Estudo das Fun¸c˜oes
+
+Com a inclus˜ao digital presente nos dias de hoje, grande parte dos alunos possuem acesso
+a algum computador ou smartphone. Estes ve´ıculos tecnol´ogicos podem ser incorporados
+no aprendizado da matem´atica, permitindo que os alunos utilizem aplicativos gr´aﬁcos para
+solidiﬁcar os conte´udos te´oricos apresentados em sala. Destacamos o Geogebra, que ´e um soft-
+ware gratuito que pode ser empregado no ensino da matem´atica b´asica e avan¸cada. No link
+https://www.geogebra.org/download encontramos vers˜oes dispon´ıveis para iOS, Android,
+Windows, Mac e Linux. Por ser de f´acil acesso, esta ferramenta pode ser usada para ampliar
+o conhecimento, pois atrav´es das fun¸c˜oes gr´aﬁcas dispon´ıveis os alunos podem esbo¸car diver-
+sas fun¸c˜oes e interagir com o aplicativo para observar as varia¸c˜oes provocadas pela altera¸c˜ao
+de parˆametros e vari´aveis.
+
+11.1.1 Utiliza¸c˜ao do Geogebra no Estudo das Fun¸c˜oes Trigonom´etricas
+
+O estudo das fun¸c˜oes trigonom´etricas pode ser muito mais interesssante mediante a uti-
+liza¸c˜ao destes recursos digitais, uma vez que grande maioria dos alunos apresenta diﬁculdades
+em esbo¸c´a-las. Utilizando o aplicativo do Geogebra conseguimos transformar fun¸c˜oes em ﬁ-
+guras ilustrativas de ´otima qualidade, al´em de podermos criar pequenas anima¸c˜oes, sendo
+assim um processo divertido.
+
+Para ilustrar a utiliza¸c˜ao deste aplicativo, criaremos primeiramente o gr´aﬁco da fun¸c˜ao
+trigonom´etrica seno e atribuiremos a uma constante k um valor vari´avel, atrav´es do “con-
+trole deslizante” dispon´ıvel no aplicativo (com k variando de 0 a 5). Desta forma, podemos
+perceber o efeito que a constante k produz na amplitude da fun¸c˜ao estudada:
+
+f (x) = k sen (x).
+
+(65)
+
+Ap´os inserirmos esta equa¸c˜ao no aplicativo, deﬁnimos a vari´avel k como um controle des-
+lizante. Automaticamente surge na janela de visualiza¸c˜ao um controle deslizante que nos
+permite alterar o valor de k deslizando o dedo na tela do celular. A utiliza¸c˜ao deste recurso
+pode ser uma ´otima alternativa para apresentar as fun¸c˜oes trigonom´etricas aos alunos do
+ensino m´edio. Abaixo temos as Figuras 54, 55 e 56 obtidas para k = 1, k = 3 e k = 5,
+respectivamente, utilizando o aplicativo no celular.
+
+Semelhantemente, podemos observar o efeito produzido quando multiplicamos o argu-
+
+mento da fun¸c˜ao seno por uma constante ω:
+
+g(x) = sen (ωx).
+
+(66)
+
+Nas ilustra¸c˜oes apresentadas nas Figuras 57, 58 e 59, utilizamos o controle deslizante deﬁnido
+por 0 ≤ ω ≤ 5 e obtemos os resultados para ω = 1, ω = 3 e ω = 5, respectivamente. A partir
+da observa¸c˜ao dos resultados obtidos com a varia¸c˜ao do parˆametro ω, podemos introduzir
+aos alunos o conceito de frequˆencia angular de forma bem simples.
+
+59
+
+Figura 54: f (x) = sen (x) (Geogebra).
+
+Figura 55: f (x) = 3 sen (x) (Geogebra).
+
+Figura 56: f (x) = 5 sen (x) (Geogebra).
+
+60
+
+Figura 57: g(x) = sen (x) (Geogebra).
+
+Figura 58: g(x) = sen (3x) (Geogebra).
+
+Figura 59: g(x) = sen (5x) (Geogebra).
+
+61
+
+Ao utilizarem o Geogebra para criar as fun¸c˜oes trigonom´etricas, eles poder˜ao enxergar
+graﬁcamente as mudan¸cas provocadas por ω e as implica¸c˜oes que este fator gera. Sabendo
+que a fun¸c˜ao g(x) = sen (x) possui um per´ıodo de 2π ≈ 6, 28, ou seja, o ciclo se repete a
+cada intervalo de amplitude 2π, os alunos poder˜ao comparar esta fun¸c˜ao elementar com as
+outras e observarem o que acontece quando multiplicamos o argumento x por um n´umero real
+positivo. Para facilitar, podemos sugerir que utilizem inicialmente apenas n´umeros inteiros.
+Na ﬁgura abaixo ilustramos uma compara¸c˜ao que pode ser feita no aplicativo. Neste exemplo
+esbo¸camos as fun¸c˜oes g1(x) = sen (x) (linha cont´ınua) e g2(x) = sen (3x) (linha tracejada).
+
+Figura 60: Compara¸c˜ao entre g1(x) = sen (x) e g2(x) = sen (3x) (Geogebra).
+
+Observando a Figura 60, os alunos poder˜ao perceber que enquanto a fun¸c˜ao sen (x)
+completa “um” ciclo no intervalo [0, 2π], a fun¸c˜ao sen (3x) completa “trˆes” ciclos. Desta
+forma, eles poder˜ao induzir naturalmente que a fun¸c˜ao sen (5x) completa “cinco” ciclos neste
+mesmo intervalo, se comparada com a fun¸c˜ao sen (x). Aumentando ω, eles observar˜ao que a
+quantidade de ciclos aumenta proporcionalmente ao valor escolhido. De forma simpliﬁcada,
+podemos ent˜ao dizer que o fator ω representa a frequˆencia angular na fun¸c˜ao seno – velocidade
+de giro – e que quanto maior for este n´umero, maior ser´a o n´umero de oscila¸c˜oes em um
+intervalo de observa¸c˜ao ﬁxo.
+
+11.2 Aplica¸c˜ao das Fun¸c˜oes Trigonom´etricas no Estudo da M´usica
+
+Com base nas ilustra¸c˜oes geradas pelo Geogebra, os alunos podem ter uma vis˜ao mais
+ampla a respeito das fun¸c˜oes trigonom´etricas, permitindo que eles consigam compreender o
+motivo pelo qual elas s˜ao utilizadas para representar alguns fenˆomenos f´ısicos oscilat´orios,
+como por exemplo, as ondas mecˆanicas (´e aqui que a m´usica pode entrar como aplica¸c˜ao
+pr´atica).
+
+Voltando ao tema deste trabalho, a m´usica ´e com certeza um fator motivacional de grande
+peso pelo fato dos alunos dessa faixa et´aria estarem fortemente ligados `a inﬂuˆencia musical.
+A m´usica abrange o mundo inteiro, ultrapassando fronteiras f´ısicas, sociais e culturais. Onde
+existem pessoas, existem instrumentos ou dispositivos reproduzindo algum tipo de m´usica.
+“Sabendo que a proposta deste trabalho ´e estudar e entender os acordes musicais em um
+ponto de vista matem´atico, como poder´ıamos apresentar este tema aos alunos do ensino
+m´edio?”
+
+Para responder a pergunta do par´agrafo anterior, inicialmente podemos apresentar aos
+alunos algumas considera¸c˜oes b´asicas que devem ser utilizadas no estudo da m´usica: (i) as
+notas musicais podem ser entendidas como objetos elementares que formam a m´usica, (ii)
+
+62
+
+j´a os acordes s˜ao combina¸c˜oes destes objetos. Reunindo estas deﬁni¸c˜oes com o estudo das
+fun¸c˜oes trigonom´etricas, os alunos podem enxergar graﬁcamente a diferen¸ca entre notas e
+acordes, ou seja, uma nota ´e representada pela fun¸c˜ao seno e um acorde ´e representado pela
+soma de v´arios senos, onde os argumentos obedecem `a equa¸c˜ao da escala temperada7. Para
+n˜ao gerar confus˜ao nos alunos ao apresentarmos a aplica¸c˜ao das fun¸c˜oes trigonom´etricas com
+a m´usica, podemos deﬁnir a equa¸c˜ao da escala temperada como “uma equa¸c˜ao que descreve
+a distribui¸c˜ao das notas musicais ao longo de um eixo real W, onde cada ωi representa o
+fator que multiplica o x no argumento da fun¸c˜ao seno”8 (Figura 61).
+
+Figura 61: Interpreta¸c˜ao simpliﬁcada da equa¸c˜ao da escala temperada.
+
+Desta forma podemos apresentar aos alunos uma fun¸c˜ao que descreve matematicamente
+
+um acorde musical composto por trˆes notas musicais:
+
+f (x) = A0 sen (ω0 · x) + A1 sen (ω1 · x) + A2 sen (ω2 · x).
+
+(67)
+
+Esta equa¸c˜ao ´e f´acil de ser trabalhada em sala de aula, pois utiliza apenas elementos b´asicos
+para descrever a fun¸c˜ao seno, e estes parˆametros podem ser investigados atrav´es da utiliza¸c˜ao
+do Geogebra, por exemplo. A Figura 62 ilustra um exemplo que pode ser apresentado aos
+alunos, sugerindo que eles fa¸cam o esbo¸co pelo Geogebra.
+
+f (x) = sen (x) + sen (1, 25 · x) + sen (1, 4 · x)
+
+(68)
+
+Figura 62: f (x) = sen (x) + sen (1, 25 · x) + sen (1, 4 · x) (Geogebra).
+
+Sem entrarmos em temas espec´ıﬁcos da f´ısica e da m´usica, podemos levar os alunos a
+
+enxergarem a m´usica atrav´es de elementos matem´aticos.
+
+7A apresenta¸c˜ao do signiﬁcado f´ısico da escala temperada talvez n˜ao seja compreendida pelos alunos
+neste momento dependendo da sequˆencia dos conte´udos adotados pela escola, pois este tema depende das
+progress˜oes geom´etricas, que geralmente s˜ao introduzidas nos anos ﬁnais do ensino m´edio.
+
+8Deﬁni¸c˜ao simpliﬁcada atribu´ıda pelo autor.
+
+63
+
+12 Conclus˜ao
+
+A m´usica e a matem´atica s˜ao ´areas diretamente relacionadas e podemos compreender e
+estudar uma a partir da outra. Neste trabalho apresentamos e observamos esta rela¸c˜ao no
+desenvolvimento do estudo dos acordes, que s˜ao elementos musicais que formam a base de
+qualquer m´usica. Reunindo no¸c˜oes de f´ısica e matem´atica podemos representar elementos
+musicais de forma anal´ıtica e gr´aﬁca, nos dando suporte para uma an´alise precisa da teoria
+musical. O objeto de interesse deste trabalho – identiﬁcar e classiﬁcar um acorde musical –
+se tornou poss´ıvel mediante o v´ınculo destas ´areas do conhecimento humano.
+
+As ferramentas matem´aticas aplicadas no estudo de fenˆomenos f´ısicos fazem a conex˜ao
+entre a teoria e o mundo real. Neste trabalho, apresentamos o processo f´ısico-te´orico-
+matem´atico que nos permite estudar e modelar conceitos da teoria musical e enxerg´a-los
+em uma perspectiva pouco conhecida pela grande maioria das pessoas da nossa sociedade.
+
+Um grande desaﬁo da educa¸c˜ao moderna ´e incentivar os alunos a se aprofundarem no
+conhecimento, principalmente no conhecimento matem´atico. Em todos os n´ıveis de escola-
+ridade observamos e nos deparamos com indaga¸c˜oes do tipo: “Onde aplicaremos isto?” ou
+“Por que temos que estudar isto?”. ´E poss´ıvel fazer uma liga¸c˜ao entre a matem´atica e a
+vida cotidiana e, a aplica¸c˜ao da matem´atica no estudo da m´usica comprova um ramo desta
+liga¸c˜ao.
+
+Baseando-se nos questionamentos apresentados no par´agrafo anterior, este trabalho teve
+a ﬁnalidade de mostrar uma aplica¸c˜ao pr´atica para a transformada de Fourier, onde apresen-
+tamos um processo de decomposi¸c˜ao de sinais sonoros. A partir destes resultados podemos
+desenvolver aplica¸c˜oes interessantes na ´area da m´usica e da matem´atica. Estudamos especiﬁ-
+camente os acordes musicais, mas estas an´alises podem ser aplicadas, por exemplo, no estudo
+de trechos musicais, ou seja, desenvolver algoritmos que recebam como entrada o arquivo de
+´audio de uma m´usica e que retornem na sa´ıda os acordes presentes nesta composi¸c˜ao musical.
+A abordagem deste trabalho tamb´em pode ser empregada para motivar e despertar o
+interesse dos alunos no estudo das fun¸c˜oes trigonom´etricas, fenˆomenos oscilat´orios, m´usica e
+tamb´em t´ecnicas de programa¸c˜ao. A utiliza¸c˜ao de recursos tecnol´ogicos pode, neste sentido,
+realizar a conex˜ao entre os conte´udos did´aticos e `as aplica¸c˜oes pr´aticas do mundo moderno.
+Conforme apresentamos no desenvolvimento deste trabalho, foi implementado um algo-
+ritmo (Chord Test in Frequency) capaz de classiﬁcar um acorde musical a partir de sua
+grava¸c˜ao sonora. Internamente este algoritmo calcula a transformada de Fourier do sinal de
+entrada para obter seu espectro, possibilitando a identiﬁca¸c˜ao das componentes em frequˆencia
+que constituem este acorde. Em seguida, aplica-se a equa¸c˜ao da escala temperada para esta-
+belecer a rela¸c˜ao entre estas frequˆencias e por ﬁm, ocorre a classiﬁca¸c˜ao do acorde com base
+nas rela¸c˜oes musicais calculadas na etapa anterior.
+
+O algoritmo desenvolvido neste trabalho serve de suporte te´orico e pr´atico para aqueles
+
+que desejam estudar a m´usica com uma vis˜ao mais ampla.
+
+64
+
+Referˆencias
+
+[1] ALVES, Luciano. Teoria Musical: li¸c˜oes essenciais: sessenta e trˆes li¸c˜oes com
+question´arios, exerc´ıcios e pequenos solfejos. S˜ao Paulo: Irm˜aos Vitale, 2005.
+
+[2] OPPENHEIM, Alan V. Sinais e Sistemas. S˜ao Paulo: Pearson Prentice Hall, 2010.
+
+[3] LATHI, B. P., DING, Z. Sistemas de comunica¸c˜oes anal´ogicos e digitais moder-
+
+nos. Rio de Janeiro: LTC, 2012.
+
+[4] BOYCE, William E., DiPRIMA, Richard C. Equa¸c˜oes Diferenciais Elementares e
+
+Problemas de Valores de Contorno. 9 ed. Rio de Janeiro, LTC 2010.
+
+[5] HALLIDAY, David; RESNICK, Robert; WALKER, Jearl. Fundamentals of physics
+
+I. 9th ed John Wiley & Sons, 2011.
+
+[6] SERWAY, Raymond A., JEWETT, John W. Physics for Scientists and Engineers.
+
+6th Edition. Thomson Brooks/Cole, 2004.
+
+[7] CALC¸ ADA, C. S. F´ısica Cl´assica, Editora Atual, 2010.
+
+[8] STEWART, James. C´alculo. vol. I, S˜ao Paulo: Cengage Learning, 2010.
+
+[9] GOLUB, Gene H., VAN Loan, Charles F. Matrix Computations . The Johns Hopkins
+
+University Press, 1996.
+
+[10] RUI, Laura Rita. A f´ısica na audi¸c˜ao humana. Porto Alegre: UFRGS, Instituto de
+
+F´ısica, Programa de P´os-Gradua¸c˜ao em Ensino de F´ısica, 2007.
+
+[11] SANDRONI, F. A. R. M´usica e harmonia: origens da escala diatˆonica. Revista de
+Ciˆencias Humanas, Florian´opolis, Volume 46, N´umero 2, p. 347-370, Outubro de 2012.
+
+[12] PEREIRA, Marcos. Matem´atica e M´usica de Pit´agoras aos dias de hoje. Dis-
+serta¸c˜ao de Mestrado, UniRio – Universidade Federal do Estado do Rio de Janeiro; RJ,
+2013.
+
+[13] ´Audio Digital. Dispon´ıvel em: http://www2.eca.usp.br/prof/iazzetta/tutor/
+
+audio/a_digital/a_digital.html. Acesso em: 16 out. 2019.
+
+[14] Amostragem. Dispon´ıvel em: https://www.feis.unesp.br/Home/departamentos/
+
+engenhariaeletrica/ele1095_3_amostragem.pdf Acesso em: 16 out. 2019.
+
+65
+
+A Apˆendice
+
+A.1 Algoritmo Chord Test in Frequency v2.1
+
+% Autor: Willsander de Jesus
+% Data: 28/10/2019 (v2.1 - vers~ao final implementada)
+% Descri¸c~ao: Este algoritmo realiza a identifica¸c~ao e a classifica¸c~ao de
+% um acorde musical.
+
+clear; clc; close all;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Importando o aquivo de ´audio gravado
+% y - dados da m´usica, Fs - frequ^encia de amostragem (44.1 kHz)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% DIGITE O NOME DO ARQUIVO (EX: audio1.wav)
+[y,Fs] = audioread(‘G7.wav’);
+d = size(y);
+y = y(1+40000:44100+40000); % selecionando uma parte do vetor de ´audio
+
+% Reprodu¸c~ao do acorde
+sound(y,Fs);
+
+%% Par^ametros para a FFT e para o esbo¸co dos gr´aficos
+Ts = 1/Fs; % tempo de amostragem
+n = 0:Ts:1-Ts;
+N = length(n); % n´umero de amostras coletadas do sinal
+w = -Fs/2:1:Fs/2-1; % c´alculo das frequencias para usar a fun¸c~ao ‘‘fftshift’’
+t=(0:length(y)-1)/Fs; % c´alculo para obter 1 segundo de amostragem
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% C´alculo da transformada de Fourier do sinal coletado
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+FT = 40*abs(fftshift(fft(y)))/N;
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Identifica¸c~ao e Classifica¸c~ao do Acorde
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Extraindo a parte positiva da FFT
+B1 = FT(22051:44100-1); F1 = w(22051:44100-1); A = [B1; F1];
+
+% Extraindo as frequ^encias dos impulsos com maiores amplitudes
+fi = zeros(1,22051);
+fprintf(‘\nChord Test in Frequency - v2.1 (28/10/2019)’);
+fprintf(‘\nAutor: Willsander\n’);
+fprintf(‘\n(Limiar padrao = 0.27)\n’); %limiar = 0.27 (limiar padr~ao m´edio)
+limiar = input(‘Insira o limiar de corte entre 0.01 e 0.9: ’);
+e1 = 0; e2 = 0;
+
+66
+
+while (e1 == 0) || (e2 == 0)
+j = 1;
+clc;
+for i = 1:22049
+
+if A(1, i) >= limiar
+
+fi(1, j) = A(2, j);
+
+else
+
+fi(1, j) = 0;
+
+end
+j = j+1;
+
+end
+
+V = nonzeros(fi); % lista com as frequ^encias do sinal coletado
+e1 = length(V);
+
+if e1 == 0
+
+fprintf(‘\nChord Test in Frequency - v2.1 (28/10/2019)’);
+fprintf(‘\nAutor: Willsander\n’);
+fprintf(‘\nCHORD TEST RESULT: Limiar (%d) insuficiente.\n’, limiar);
+limiar = input(‘Insira novo limiar de corte entre 0.01 e 0.9: ’);
+
+else
+
+f0 = V(1); % frequ^encia da t^onica
+f12 = 2*f0; % frequ^encia de truncamento
+freq = zeros(1,length(V));
+
+% Eliminando as frequ^encias harm^onicas
+for i = 1:length(V)
+
+if V(i) < f12
+
+freq(1,i) = V(i);
+
+else
+
+freq(1, i) = 0;
+
+end
+
+end
+
+freq = nonzeros(freq);
+
+% Calculando a rela¸c~ao musical das frequ^encias compreendidas entre f0 e 2f0
+int = zeros(1,length(freq));
+for i = 1:length(freq)
+
+int(i) = num_intervalo(freq(1),freq(i));
+
+end
+
+% Eliminando os intervalos extremos do vetor, e pegando os elementos centrais,
+% ou seja, que possuem maior precis~ao
+int(1) = 0;
+int = nonzeros(int);
+
+67
+
+e2 = length(int);
+
+if e2 == 0
+
+clc;
+fprintf(‘\nChord Test in Frequency - v2.1 (28/10/2019)’);
+fprintf(‘\nAutor: Willsander\n’);
+fprintf(‘\nCHORD TEST RESULT: Limiar (%d) insuficiente.\n’, limiar);
+limiar = input(‘Insira novo limiar de corte entre 0.01 e 0.9: ’);
+
+else
+
+a = min(int); % menor intervalo considerado
+b = int(length(int)); % maior intervalo considerado
+for i = 1:length(int-1)
+
+if int(i) == a || int(i) == b || int(i)-1 == a || int(i)-1 == b
+|| int(i)+1 == a || int(i)+1 == b;
+
+int(i) = 0;
+
+end
+
+end
+int2 = max(int);
+
+% Ordenando os intervalos calculados
+if int2 == 0
+
+Num = [a,b,0];
+
+elseif int2 > b
+
+Num = [a,b,int2];
+
+else
+
+Num = [a,int2,b];
+
+end
+
+% Intervalos musicais calculados
+N1 = Num(1); N2 = Num(2); N3 = Num(3);
+
+% Chamando a fun¸c~ao que identifica a t^onica do acorde
+res = tonica(f0);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Classifica¸c~ao Final
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fprintf(‘\nChord Test in Frequency - v2.1 (28/10/2019)’);
+fprintf(‘\nAutor: Willsander\n’);
+fprintf(‘\nCHORD TEST RESULT:\n’);
+
+if N3 ~= 0 % acordes t´etrades
+
+if (N1 == 4) && (N2 == 7) && (N3 == 11)
+
+sprintf(‘Acorde: %s7M\n’,res) % acorde maior com s´etima maior
+
+elseif (N1 == 4) && (N2 == 7) && (N3 == 10)
+
+sprintf(‘Acorde: %s7\n’,res) % acorde maior com s´etima menor
+
+elseif (N1 == 3) && (N2 == 7) && (N3 == 10)
+
+68
+
+sprintf(‘Acorde: %sm7\n’,res) % acorde menor com s´etima
+
+elseif (N1 == 3) && (N2 == 7) && (N3 == 11)
+
+sprintf(‘Acorde: %sm7M\n’,res) % acorde menor com s´etima maior
+
+elseif (N1 == 5) && (N2 == 7) && (N3 == 10)
+
+sprintf(‘Acorde: %s7sus4\n’,res) % acorde suspenso com s´etima
+
+elseif (N1 == 3) && (N2 == 6) && (N3 == 10)
+|| (N1 == 3) && (N2 == 6) && (N3 == 11)
+
+sprintf(‘Acorde: %sm7b5\n’,res) % acorde meio diminuto
+
+elseif (N1 == 4) && (N2 == 7) && (N3 == 9)
+
+sprintf(‘Acorde: %s6\n’,res) % acorde maior com sexta maior
+
+elseif (N1 == 3) && (N2 == 7) && (N3 == 9)
+
+sprintf(‘Acorde: %sm6\n’,res) % acorde menor com sexta maior
+
+elseif (N1 == 4) && (N2 == 8) && (N3 == 11)
+
+sprintf(‘Acorde: %s7M5#\n’,res) % acorde aumentado t´etrade
+
+else
+
+fprintf(‘\nAcorde nao reconhecido!!!’);
+fprintf(‘\nReduza o limiar de corte e execute o programa
+novamente!!!\n\n’);
+Num
+
+end
+
+else % acordes tr´ıades
+
+if (N1 == 4) && (N2 == 7) || (N1 == 5) && (N2 == 8)
+sprintf(‘Acorde: %s\n’,res) % acorde maior
+
+elseif (N1 == 3) && (N2 == 7) || (N1 == 3) && (N2 == 8)
+sprintf(‘Acorde: %sm\n’,res) % acorde menor
+
+elseif (N1 == 3) && (N2 == 6)
+
+sprintf(‘Acorde: %sdim\n’,res) % acorde diminuto
+
+elseif (N1 == 5) && (N2 == 7) || (N1 == 6) && (N2 == 8)
+
+sprintf(‘Acorde: %ssus4\n’,res) % acorde suspenso
+
+elseif (N1 == 4) && (N2 == 8)
+
+sprintf(‘Acorde: %s5#\n’,res) % acorde aumentado
+
+else
+
+fprintf(‘\nAcorde nao reconhecido!!!’);
+fprintf(‘\nReduza o limiar de corte e execute o programa
+novamente!!!\n\n’);
+Num
+
+end
+
+end
+
+%% Esbo¸co dos gr´aficos
+figure; subplot(2,1,1); plot(t,y); title(‘Sinal de entrada’);
+xlabel(‘t [s]’); ylabel(‘x(t)’);
+subplot(2,1,2); plot(w,FT); xlabel(’frequ^encia [Hz]’);
+title(‘Espectro do Sinal de entrada’); ylabel(‘|X(f)|’); xlim([-4*f0 4*f0]);
+figure;
+plot(w,FT); xlabel(‘frequ^encia [Hz]’);
+title(‘Espectro do Sinal de entrada’); ylabel(‘|X(f)|’); xlim([0 2*f0]);
+
+69
+
+th = clock;
+fprintf(‘Limiar de corte final: %d\n\n’,limiar);
+fprintf(‘____________END____________ \n’);
+fprintf(‘%s - %dh %dmin \n\n’,date,th(4),th(5));
+end
+end
+end
+
+A.2 C´odigo auxiliar 001
+
+% Autor: Willsander de Jesus
+% Data: 06/10/2019
+% Descri¸c~ao:
+% (i) Este c´odigo cria os gr´aficos de um acorde no dom´ınio do tempo e da
+% frequ^encia;
+% (ii) Reproduz um som sint´etico do acorde usando a fun¸c~ao "soundsc".
+
+close all; clear; clc
+
+% Par^ametros de amostragem
+fs = 44100; % frequ^encia de amostragem padr~ao para arquivos de m´usica
+Ts = 1/fs;
+t = 0:Ts:1-Ts;
+N = 0:Ts:1-Ts;
+n = length(N);
+w = -fs/2:fs/2-1;
+
+% frequ^encias do acorde d´o maior
+f1 = 261.63; f2 = 329.63; f3 = 392.00;
+
+y1 = sin(2*pi*f1*t);
+y2 = sin(2*pi*f2*t);
+y3 = sin(2*pi*f3*t);
+
+plot(t,2*y1,‘b’,t,1.5*y2,‘r’,t,y3,‘g’);
+xlabel(‘t [s]’); ylabel(‘Amplitude’);
+title(‘Frequ^encias do acorde D´o maior’); axis([0 0.01 -2 2]);
+legend(‘F1 = 261.63Hz’,‘F2 = 329.63Hz’,‘F3 = 392.00Hz’);
+
+Y = y1 + y2 + y3;
+
+figure; plot(t,Y); xlabel(‘t [s]’); ylabel(‘Amplitude’);
+title(‘Acorde de D´o maior (C)’); axis([0 0.10 -3 3]);
+figure; plot(w,2*abs(fftshift(fft(Y)))/n); axis([-500 500 0 1.1]);
+xlabel(‘frequencia [Hz]’); ylabel(‘Amplitude’);
+title(‘TF do acorde D´o maior (C)’);
+
+soundsc(Y,fs);
+
+A.3 C´odigo auxiliar 002
+
+% Autor: Willsander de Jesus
+% Data: 06/10/2019
+% Descri¸c~ao: Esta fun¸c~ao calcula a quantidade de semitons que existem
+% entre duas notas musicais.
+
+70
+
+function [N] = num_intervalo(f0,f1)
+
+% f0 - frequ^encia da t^onica
+% f1 - frequ^encia desejada
+% n - n´umero de intervalos musicais entre f0 e f1
+
+n = (12/log(2))*(log(f1)-log(f0));
+
+if (n-floor(n))>=0.5
+
+N = ceil(n); % arredonda pra cima
+
+else
+
+N = floor(n); % arredonda pra baixo
+
+end
+
+% Desconsiderar intervalos muito pr´oximos da t^onica, pois as frequ^encias
+% s~ao muito pr´oximas.
+if N == 1
+N = 0;
+
+end
+
+fprintf(‘\nEntre as frequencias %dHz e %dHz existem %d ST.\n’,f0,f1,N);
+
+end
+
+71
+
+A.4 C´odigo auxiliar 003
+
+% Autor: Willsander de Jesus
+% Data: 06/10/2019
+% Descri¸c~ao: Essa fun¸c~ao identifica a t^onica de um acorde.
+% Faixa de opera¸c~ao: 130.81Hz (C1) at´e 4185,60Hz (C6).
+
+function [ton] = tonica(f0)
+
+% f0 - frequ^encia da t^onica do acorde
+
+f = 130.81; % frequ^encia do C1 (nota de refer^encia)
+% utilizamos a nota C1 neste c´odigo, pois a maioria dos teclados musicais
+% possuem
+
+5 oitavas, e portanto, come¸cam nesta nota.
+
+T = num_intervalo(f,f0);
+clc;
+
+% OBS.: Ao deslocarmos 12 semitons, obtemos a mesma nota (1 oitava acima)
+
+if T == 0 || T == 12 || T == 24 || T == 36 || T == 48 || T == 60
+
+ton = ‘C’;
+
+elseif T == 1 || T == 13 || T == 25 || T == 37 || T == 49
+
+ton = ‘Db’;
+
+elseif T == 2 || T == 14 || T == 26 || T == 38 || T == 50
+
+ton = ‘D’;
+
+elseif T == 3 || T == 15 || T == 27 || T == 39 || T == 51
+
+ton = ‘Eb’;
+
+elseif T == 4 || T == 16 || T == 28 || T == 40 || T == 52
+
+ton = ‘E’;
+
+elseif T == 5 || T == 17 || T == 29 || T == 41 || T == 53
+
+ton = ‘F’;
+
+elseif T == 6 || T == 18 || T == 30 || T == 42 || T == 54
+
+ton = ‘Gb’;
+
+elseif T == 7 || T == 19 || T == 31 || T == 43 || T == 55
+
+ton = ‘G’;
+
+elseif T == 8 || T == 20 || T == 32 || T == 44 || T == 56
+
+ton = ‘Ab’;
+
+elseif T == 9 || T == 21 || T == 33 || T == 45 || T == 57
+
+ton = ‘A’;
+
+elseif T == 10 || T == 22 || T == 34 || T == 46 || T == 58
+
+ton = ‘Bb’;
+
+elseif T == 11 || T == 23 || T == 35 || T == 47 || T == 59
+
+ton = ‘B’;
+
+else
+
+ton = ‘X’; % caso n~ao reconhe¸ca a t^onica
+
+end
+
+end
+
+A.5 C´odigo auxiliar 004
+
+% Autor: Willsander de Jesus
+% Data: 06/10/2019
+% Descri¸c~ao: Esta fun¸c~ao calcula a frequ^encia das 88 notas do piano.
+
+72
+
+clear; clc; close all;
+
+f = 55; % frequencia padrao do primeiro L´a (A0)
+F = zeros(88,1);
+
+% Equa¸c~ao da escala temperada
+for i=0:87
+
+F(i+1) = f*(2^(i/12));
+
+end
+
+A.6 Frequˆencias das notas musicais do piano
+
+Nota Freq. Nota Freq. Nota
+A2
+55, 00
+A(cid:93)2
+58, 27
+B2
+61, 74
+C2
+65, 40
+C(cid:93)2
+69, 29
+D2
+73, 42
+D(cid:93)2
+77, 78
+E2
+82, 41
+F2
+87, 31
+F (cid:93)2
+92, 50
+98, 00
+G2
+103, 83 G(cid:93)2
+110, 00
+A3
+116, 54 A(cid:93)3
+123, 47
+B3
+C3
+130, 81
+138, 59
+C(cid:93)5
+146, 83 D3
+155, 56 D(cid:93)3
+E3
+164, 81
+F3
+174, 61
+F (cid:93)3
+185, 00
+196, 00
+G3
+207, 65 G(cid:93)3
+
+A4
+220, 00
+A(cid:93)4
+233, 08
+B4
+246, 96
+C4
+261, 60
+C(cid:93)4
+277, 16
+293, 68
+D4
+311, 12 D(cid:93)4
+E4
+329, 24
+F4
+349, 24
+F (cid:93)4
+370, 00
+G4
+392, 00
+G(cid:93)4
+415, 32
+A5
+440, 00
+A(cid:93)5
+466, 16
+493, 88
+B5
+C5
+523, 24
+C(cid:93)7
+554, 36
+587, 33
+D5
+622, 26 D(cid:93)5
+E5
+659, 26
+F5
+698, 46
+F (cid:93)5
+740, 00
+G5
+784, 00
+G(cid:93)5
+830, 60
+
+A0
+A(cid:93)0
+B0
+C0
+C(cid:93)0
+D0
+D(cid:93)0
+E0
+F0
+F (cid:93)0
+G0
+G(cid:93)0
+A1
+A(cid:93)1
+B1
+C1
+C(cid:93)1
+D1
+D(cid:93)1
+E1
+F1
+F (cid:93)1
+G1
+G(cid:93)1
+
+Freq. Nota
+A6
+880, 00
+A(cid:93)6
+932, 32
+B6
+987, 84
+C6
+1046, 40
+C(cid:93)6
+1108, 64
+1174, 72 D6
+1244, 48 D(cid:93)6
+E6
+1318, 56
+F6
+1396, 96
+F (cid:93)6
+1480, 00
+1568, 00
+G6
+1661, 28 G(cid:93)6
+1760, 00
+A7
+1864, 64 A(cid:93)7
+1975, 52
+B7
+C7
+2092, 96
+–
+2217, 44
+–
+2349, 30
+–
+2489, 00
+–
+2637, 00
+–
+2793, 80
+–
+2960, 00
+–
+3136, 00
+–
+3322, 4
+
+Freq.
+3520, 00
+3729, 28
+3951, 36
+4185, 60
+4434, 56
+4698, 88
+4977, 92
+5274, 24
+5587, 84
+5920, 00
+6272, 00
+6645, 12
+7040, 00
+7458, 56
+7902, 08
+8371, 84
+–
+–
+–
+–
+–
+–
+–
+–
+
+Tabela 14: Frequˆencia (em Hz) das 88 notas do piano.
+
+A.7 Quadro Resumo das deﬁni¸c˜oes musicais utilizadas no trabalho
+
+73
+
+Semitom
+Tom
+Notas naturais
+Acidentes
+Sustenido ((cid:93))
+Bemol ((cid:91))
+Escala diatˆonica
+Oitava1
+Oitava2
+Oitava3
+
+menor distˆancia entre dois sons na m´usica ocidental
+distˆancia dada por dois semitons
+notas que n˜ao sofrem varia¸c˜oes na altura
+altera¸c˜oes que modiﬁcam a altura das notas
+eleva a nota 1 semitom
+abaixa a nota 1 semitom
+sucess˜ao de 8 notas naturais
+extens˜ao de uma escala diatˆonica
+intervalo formado por 12 semitons
+trecho do piano que cont´em 12 teclas distintas
+
+1 oitava acima Nota musical situada na oitava seguinte (Ex: C1 → C2)
+1 oitava abaixo Nota musical situada na oitava anterior (Ex: C1 → C0)
+
+Enarmonia
+Escala
+Acorde
+Acorde tr´ıade
+Acorde t´etrade
+Tˆonica
+
+notas com mesmo som, por´em nomes diferentes
+combina¸c˜ao sucessiva de notas musicais
+combina¸c˜ao simultˆanea de 3 ou mais notas musicais
+combina¸c˜ao simultˆanea de 3 notas musicais
+combina¸c˜ao simultˆanea de 4 notas musicais
+primeira nota de um acorde na sua forma padr˜ao
+
+Tabela 15: Quadro Resumo.
+
+A.8 Gr´aﬁcos de barras dos limiares de corte
+
+74
+
+Figura 63: Gr´aﬁco de barras 1 (dados da Tabela (12)).
+
+Figura 64: Gr´aﬁco de barras 2 (dados da Tabela (13)).
+
+A.9 Teorema de Convergˆencia da S´erie de Fourier
+
+Antes de enunciarmos o teorema de convergˆencia de Fourier precisamos deﬁnir fun¸c˜ao
+
+seccionalmente cont´ınua (apresentada por [4]).
+
+Deﬁni¸c˜ao 20 Uma fun¸c˜ao ´e dita seccionalmente cont´ınua em um intervalo a ≤ t ≤ b se
+este intervalo pode ser dividido por um n´umero ﬁnito de intervalos a = t0 < t1 < . . . < tn = b
+de modo que:
+
+1. f ´e cont´ınua em cada subintervalo aberto ti−1 < t < ti;
+
+2. f tende a um limite ﬁnito nas extremidades de cada subintervalo.
+
+A Figura 65 mostra o gr´aﬁco de uma fun¸c˜ao seccionalmente cont´ınua.
+
+75
+
+Figura 65: Uma fun¸c˜ao seccionalmente cont´ınua.
+
+Teorema 1 (Teorema de Convergˆencia da S´erie de Fourier) Suponha que f e f (cid:48) s˜ao
+seccionalmente cont´ınuas no intervalo −L ≤ t ≤ L e que f est´a deﬁnida fora do intervalo
+−L ≤ t ≤ L de modo a ser peri´odica com per´ıodo T = 2L. Ent˜ao f tem uma s´erie de Fourier
+
+f (t) =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+[an cos (nω0t) + bn sen (nω0t)]
+
+cujos coeﬁcientes s˜ao dados por
+
+e
+
+an =
+
+1
+L
+
+(cid:90) L
+
+−L
+
+f (t) · cos (nω0t) dt,
+
+n = 0, 1, 2, . . . ;
+
+bn =
+
+1
+L
+
+(cid:90) L
+
+−L
+
+f (t) · sen (nω0t) dt,
+
+n = 1, 2, . . .
+
+onde ω0 = 2π/T = π/L. A s´erie de Fourier converge para f (t) em todos os pontos onde f ´e
+cont´ınua e converge para [f (t+) + f (t−)]/2 onde f ´e descont´ınua.
+
+As nota¸c˜oes f (c+) e f (c−) s˜ao utilizadas para denotar, respectivamente, os limites laterais `a
+direita e `a esquerda de um valor c:
+
+f (c+) = lim
+t→c+
+
+f (t);
+
+f (c−) = lim
+t→c−
+
+f (t).
+
+A.10 Demonstra¸c˜ao da S´erie de Fourier Complexa
+
+Podemos expressar a S´erie de Fourier de uma fun¸c˜ao f (t) por:
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+[an cos (nω0t) + bn sen (nω0t)]
+
+onde
+
+a0 =
+
+2
+T
+(cid:90) τ +T
+
+an =
+
+bn =
+
+2
+T
+
+2
+T
+
+τ
+(cid:90) τ +T
+
+τ
+
+(cid:90) τ +T
+
+τ
+
+f (t) dt,
+
+f (t) · cos (nω0t) dt,
+
+f (t) · sen (nω0t) dt.
+
+76
+
+(69)
+
+(70)
+
+(71)
+
+(72)
+
+Aplicando a rela¸c˜ao de Euler, equa¸c˜ao (73), podemos reescrever a S´erie de Fourier em
+
+termos de exponenciais complexas:
+
+Desta forma temos,
+
+ejθ = cos (θ) + j sen (θ),
+
+onde j =
+
+√
+
+−1.
+
+ejnω0t = cos (nω0t) + j sen (nω0t),
+e−jnω0t = cos (nω0t) − j sen (nω0t).
+
+Fazendo (a) + (b) e (a) − (b), obtemos respectivamente
+
+cos (nω0t) =
+
+ejnω0t + e−jnω0t
+2
+
+e
+
+sen (nω0t) =
+
+ejnω0t − e−jnω0t
+2j
+
+.
+
+Substituindo estes resultados na S´erie de Fourier obtemos:
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+(cid:20)
+
+n=1
+
+(cid:18) ejnω0t + e−jnω0t
+2
+
+(cid:19)
+
+an
+
++ bn
+
+(cid:18) ejnω0t − e−jnω0t
+2j
+
+(cid:19)(cid:21)
+
+SF [f (t)] =
+
+a0
+2
+
+∞
+(cid:88)
+
+(cid:20)
+ejnω0t
+
++
+
+(cid:19)
+
+(cid:18) an
+2
+
++
+
+bn
+2j
+
++ e−jnω0t
+
+(cid:19)(cid:21)
+
+(cid:18) an
+2
+
+−
+
+bn
+2j
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+Deﬁnindo
+
+n=1
+
+∞
+(cid:88)
+
+n=1
+
+(cid:20)1
+2
+
+(an − jbn) ejnω0t +
+
+(an + jbn) e−jnω0t
+
+(cid:21)
+
+.
+
+1
+2
+
+cn =
+
+1
+2
+
+(an − jbn)
+
+(73)
+
+(a)
+
+(b)
+
+(74)
+
+observamos que o conjugado de cn ´e dado por
+
+c∗
+n =
+
+1
+2
+
+(an + jbn)
+
+e podemos escrever
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+[an cos (nω0t) + bn sen (nω0t)] =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+(cid:2)cnejnω0t + c∗
+
+ne−jnω0t(cid:3) .
+
+77
+
+Aplicando as f´ormulas dos coeﬁcientes da s´erie, tamb´em podemos observar que
+
+an =
+
+2
+T
+
+(cid:90) τ +T
+
+τ
+
+f (t) · cos (nω0t) dt =
+
+2
+T
+
+bn =
+
+2
+T
+
+(cid:90) τ +T
+
+τ
+
+f (t) · sen (nω0t) dt = −
+
+(cid:20) 2
+T
+
+(cid:90) τ +T
+
+τ
+
+(cid:90) τ +T
+
+τ
+
+f (t) · cos (−nω0t) dt = a−n
+
+(cid:21)
+f (t) · sen (−nω0t) dt
+
+= −b−n
+
+e assim,
+
+logo,
+
+c∗
+n =
+
+1
+2
+
+(an + jbn) =
+
+1
+2
+
+(a−n − jb−n) = c−n
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+∞
+(cid:88)
+
+n=1
+
+(cid:2)cnejnω0t + c−ne−jnω0t(cid:3) .
+
+Este somat´orio pode ser simpliﬁcado tomando n ∈ Z∗, ou seja,
+
+SF [f (t)] =
+
+a0
+2
+
++
+
+(cid:88)
+
+n∈Z∗
+
+cnejnω0t.
+
+Deﬁnindo c0 = a0
+
+2 temos
+
+c0 =
+
+a0
+2
+
+=
+
+1
+2
+
+·
+
+2
+T
+
+(cid:90) τ +T
+
+τ
+
+f (t) dt =
+
+1
+T
+
+(cid:90) τ +T
+
+f (t) dt.
+
+Sendo cn = 1
+
+2 (an − jbn) tamb´em temos
+
+cn =
+
+1
+2
+
+(an − jbn) =
+
+(cid:18) 2
+T
+
+1
+2
+
+(cid:90) τ +T
+
+τ
+
+f (t) · cos (nω0t) dt − j
+
+=
+
+1
+T
+
+(cid:20)(cid:90) τ +T
+
+(cid:21)
+f (t) (cos (nω0t) − j sen (nω0t)) dt
+
+=
+
+τ
+
+τ
+
+2
+T
+
+1
+T
+
+(cid:90) τ +T
+
+τ
+
+f (t) · sen (nω0t) dt
+
+=
+
+(cid:19)
+
+(cid:20)(cid:90) τ +T
+
+(cid:21)
+f (t)e−jnω0t dt
+
+.
+
+τ
+
+Aplicando estes resultados e o teorema de convergˆencia de Fourier, ﬁnalmente podemos
+
+escrever
+
+f (t) = SF [f (t)] = c0 +
+
+cnejnω0t,
+
+(cid:88)
+
+n∈Z∗
+
+e como c0 = c0 · e0 podemos incluir este termo no somat´orio e escrever
+
+f (t) =
+
+(cid:88)
+
+n∈Z
+
+cnejnω0t =
+
+∞
+(cid:88)
+
+n=−∞
+
+cnejnω0t.
+
+(75)
+
+O c´alculo do coeﬁciente c0 tamb´em pode ser obtido aplicando n = 0 na equa¸c˜ao que deﬁne
+cn, portanto, temos uma f´ormula geral para os coeﬁcientes:
+
+cn =
+
+1
+T
+
+(cid:90) τ +T
+
+τ
+
+f (t)e−jnω0t dt.
+
+(76)
+
+A equa¸c˜ao (75) ´e conhecida como S´erie de Fourier Complexa.
+
+

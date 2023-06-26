@@ -1,0 +1,7726 @@
+Universidade Federal de Mato Grosso
+Instituto de Ciências Exatas e da Terra
+Compus Universitário do Araguaia
+
+Aspectos teóricos e computacionais em polinômios
+
+Evaldir Barbosa de Oliveira Junior
+
+Mestrado Proﬁssional em Matemática: PROFMAT/SBM
+
+Orientador: Prof. Dr. Tibério Bittencourt de Oliveira Martins
+
+Trabalho ﬁnanciado pela Capes e
+
+Secretaria de Educação do Estado do Mato Grosso (SEDUC - MT)
+
+Cuiabá - MT
+
+Março de 2019
+
+Aspectos teóricos e computacionais em polinômios
+
+Este exemplar corresponde à redação ﬁnal da dis-
+sertação, devidamente corrigida e defendida por
+Evaldir Barbosa de Oliveira Junior e aprovada pela
+comissão julgadora.
+
+Barra do Garças, 19 de junho de 2019.
+
+Prof. Dr. Tibério Bittencourt de Oliveira Martins
+Orientador
+
+Banca examinadora:
+
+Prof. Dr. Tibério Bittencourt de Oliveira Martins
+Prof. Dr. Adilson Antônio Berlatto
+Prof. Dr. Manoel Rodrigo Moreira
+
+Dissertação apresentada ao curso de Mestrado
+Proﬁssional em Matemática – PROFMAT, da Uni-
+versidade Federal de Mato Grosso, como requisito
+parcial para obtenção do título de Mestre em
+Matemática.
+
+ii
+
+Dados Internacionais de Catalogação na Fonte.  Ficha catalográfica elaborada automaticamente de acordo com os dados fornecidos pelo(a)autor(a). Permitida a reprodução parcial ou total, desde que citada a fonte.O48a    Oliveira Junior, Evaldir Barbosa de.Aspectos teóricos e computacionais em polinômios / EvaldirBarbosa de Oliveira Junior. -- 2019x, 88 f. ; 30 cm.Orientador: Tibério Bittencourt de Oliveira Martins.Dissertação (mestrado profissional) – Universidade Federal deMato Grosso, Instituto de Ciências Exatas e da Terra, Programa dePós-Graduação Profissional em Matemática, Pontal do Araguaia,2019.Inclui bibliografia.1. Polinômios. 2. Método de Newton-Raphson. 3. PolinômiosSimétricos. I. Título.ii
+
+Dedico este trabalho aos meus queridos
+
+pais, a minha esposa e as minhas ﬁlhas
+
+Karolinna e Giovanna.
+
+iii
+
+Agradecimentos
+
+• A Deus, por ter me dado forças e sabedoria para poder realizar meus estudos e
+
+concluir este trabalho;
+
+• A minha família que me ajuda em tudo;
+
+• Ao professor Tibério Bittencourt de Oliveira Martins pela paciência e dedicação
+
+oferecidas durante a construção deste trabalho;
+
+• A todos os professores do Mestrado Proﬁssional em Matemática em Rede nacional
+
+(PROFMAT - UFMT) que contribuíram com a minha formação acadêmica;
+
+• A todos os meus companheiros de estudos da turma PROFMAT-UFMT 2017, em
+
+especial ao Quarteto Fantástico.
+
+iv
+
+"Aqueles que são incapazes de compre-
+
+ender o que há de grande nas pequenas
+
+coisas, terminarão sem enxergar o que
+
+há de pequeno nas grandes coisas."
+
+Paulo Coelho.
+
+v
+
+Resumo
+
+Neste trabalho, estudamos meios para encontrar raízes de polinômios computacional-
+
+mente e suas propriedades algébricas. Utilizamos, para isso, duas excelentes ferramentas:
+
+o Método de Newton-Raphson e a teoria dos Polinômios Simétricos. Na primeira parte,
+
+demonstramos a convergência local do Método de Newton-Raphson para funções reais.
+
+Também fazemos um estudo para veriﬁcar a existência e localização das raízes de um
+
+polinômio através da Regra dos Sinais de Descartes e das Sequências de Sturm. Em par-
+
+ticular, fazemos um estudo detalhado do Método de Newton-Raphson para encontrar a
+
+raiz n-ésima de um número positivo. Em seguida, passa-se para estudo dos polinômios
+
+simétricos: uma ferramenta bastante útil na resolução de problemas algébricos de fatora-
+
+ção, de sistemas de equações não lineares, de equações de recorrência lineares e de algumas
+
+equações algébricas. No ﬁnal, é apresentada uma lista de exercícios resolvidos, visando a
+
+ﬁxação desses assuntos.
+
+Palavras chave: Polinômios, Método de Newton-Raphson, Polinômios Simétricos.
+
+vi
+
+Abstract
+
+In this work we study ways to ﬁnd polynomial roots computationally and their algebraic
+
+properties. We use two excellent tools for that: the Newton-Raphson Method and the
+
+Symmetric Polynomials theory. In the ﬁrst part, we demonstrate the local convergence
+
+of the Newton-Raphson Method for real functions. We also perform a study to verify
+
+the existence and location of the roots of a polynomial through the Descartes’ Rule of
+
+Signs and Sturm Sequences.
+
+In particular, we make a detailed study of the Newton-
+
+Raphson Method to ﬁnd the nth root of a positive number. Next, we study symmetric
+
+polynomials: a very useful tool for solving algebraic problems of factorization, non-linear
+
+equation systems, linear recurrence equations and some algebraic equations. At the end,
+
+a list of solved exercises is presented, aiming at ﬁxing these subjects.
+
+Keywords: Polynomials, Newton-Raphson Method, Symmetric Polynomials.
+
+vii
+
+Sumário
+
+Agradecimentos
+
+Resumo
+
+Abstract
+
+Lista de ﬁguras
+
+Introdução
+
+1 Método de Newton-Raphson
+
+1.1 Desenvolvimento . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.1.1 Método Iterativo de Newton-Raphson . . . . . . . . . . . . . . . . .
+
+1.1.2 Fórmula de recorrência do Método de Newton-Raphson . . . . . . .
+
+1.1.3 Convergência e velocidade . . . . . . . . . . . . . . . . . . . . . . .
+
+iv
+
+vi
+
+vii
+
+1
+
+1
+
+5
+
+5
+
+5
+
+6
+
+7
+
+1.2 Aplicação do Método de Newton para calcular a raiz n-ésima de um número
+
+positivo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+2 Estudo da existência e localização de raízes polinomiais
+
+18
+
+2.1 Localização de raízes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+2.1.1 A Regra dos Sinais de Descartes . . . . . . . . . . . . . . . . . . . . 19
+
+2.1.2
+
+Sequências de Sturm . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+2.1.3 Uma cota superior para as raízes positivas . . . . . . . . . . . . . . 37
+
+2.2 Determinação das Raízes Reais
+
+. . . . . . . . . . . . . . . . . . . . . . . . 48
+
+2.2.1 Método para se calcular o valor numérico de um polinômio . . . . . 48
+
+2.2.2 Método de Newton-Raphson para raízes de polinômios
+
+. . . . . . . 51
+
+2.2.3 Algoritmo geral para encontrar raiz de polinômio . . . . . . . . . . 55
+
+viii
+
+3 Polinômios Simétricos
+
+57
+
+3.1 Polinômios Simétricos Elementares
+
+. . . . . . . . . . . . . . . . . . . . . . 58
+
+3.2 Teorema Fundamental dos Polinômios Simétricos
+
+. . . . . . . . . . . . . . 63
+
+3.3 Somas de Newton . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 69
+
+4 Atividades complementares e os gabaritos
+
+Considerações ﬁnais
+
+Referências Bibliográﬁcas
+
+75
+
+87
+
+88
+
+ix
+
+Lista de Figuras
+
+1
+
+Área e Volume do segundo exemplo da introdução.
+
+. . . . . . . . . . . . .
+
+1.1 As três primeiras iterações do Método de Newton-Raphson. . . . . . . . . .
+
+1
+
+6
+
+2.1 Gráﬁco da função p(x) = 2x5 − 3x4 − 4x3 + x + 1. . . . . . . . . . . . . . . 21
+
+2.2 Gráﬁco da função p(x) = 4x5 − x3 + 4x2 − x − 1.
+
+. . . . . . . . . . . . . . 22
+
+2.3 Gráﬁco da função p(x) = x7 − 5. . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+2.4 Gráﬁco da função p(x) = x5 − 5x4 − 10x3 + 50x2 + 9x − 45.
+
+. . . . . . . . 25
+
+2.5 Gráﬁco da função p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3 exibindo suas
+
+três raízes reais distintas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+2.6 Gráﬁco dos polinômios p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2 e q(x) = −p(x). 41
+
+2.7 Gráﬁco da função p(x) = x6 −2x5 −x4 +4x3 −5x2 +6x−3 exibindo suas três
+
+raízes reais distintas. Observe que a sequência de Sturm não contabiliza a
+
+raiz múltipla.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+
+2.8 Círculo de raio 2 cm.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+2.9 Raízes de p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2 e um Círculo de raio 3 cm
+
+no plano complexo.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+2.10 Gráﬁcos de p(x) = x5 − 3.7x4 + 7.4x3 − 10.8x2 + 10.8x − 6.8. . . . . . . . . 53
+
+2.11 Gráﬁcos de p(x) = 2x6 − 10.25x5 + 6.875x4 + 14.5x3 + x2 − 2.625x − 3.625. 54
+
+2.12 Gráﬁco da função p(x) = x3 − 3x + 3. . . . . . . . . . . . . . . . . . . . . . 55
+
+x
+
+Introdução
+
+Cálculo computacional das raízes de um polinômio
+
+A primeira parte desse texto se dedica à seguinte questão numérica:
+
+Dado um polinômio real p, resolva p(x) = 0.
+
+É parte do problema geral de encontrar uma raiz de uma função dada. Frequen-
+
+temente o professor do ensino médio se depara com situações que envolve a resoluções de
+
+equações do tipo p(x) = 0. De um modo geral, isso ocorre nas mais diversas áreas das
+
+ciências exatas. O problema de encontrar numericamente a raiz n-ésima de um número
+
+real positivo a dado, por exemplo, é equivalente a encontrar uma raiz para o polinômio
+
+p(x) = xn − a.
+
+Consideremos, como um segundo exemplo retirado do Machado (2013), a seguinte
+
+situação de conteúdo do ensino médio envolvendo volume de um sólido geométrico:
+
+"Considere uma chapa metálica de 30cm por 30cm. Se recortamos um quadrado
+
+de lado x em dada um dos cantos desta chapa e vincarmos as abas que sobraram obte-
+
+mos uma caixa sem a tampa de volume aproximadamente 15 cm3. Determine o valor,
+
+aproximado, da área dos quadrados retirados da chapa metálica."
+
+Figura 1: Área e Volume do segundo exemplo da introdução.
+
+1
+
+Observe que se efetuarmos o produto das três dimensões da caixa (30 − 2x)(30 − 2x)x,
+
+obtemos o volume, ou seja:
+
+isto é,
+
+4x3 − 120x2 + 900x = 15,
+
+4x3 − 120x2 + 900x − 15 = 0,
+
+com isso, veriﬁcamos que um problema de resolver uma equação, pode ser transformado
+
+facilmente em um problema de busca de raiz de uma função. De modo que, nesse sen-
+
+tido, os polinômios aparecerem frequentemente no cotidiano do aluno. Devido a essa
+
+frequência, isso faz com que dediquemos especial atenção ao conteúdo envolvendo equa-
+
+ções polinomiais.
+
+Mas como obter raízes reais de uma equação qualquer? Sabemos que, para al-
+
+gumas equações, como por exemplo, as equações polinomiais do segundo grau, existem
+
+fórmulas explícitas que dão as raízes em função dos coeﬁcientes, no caso, a fórmula de
+
+Bhaskara. Para polinômios de grau 3 e 4, existem, respectivamente, as fórmulas de
+
+Cardano-Tartaglia, de 1545, e as de Ferrari, do mesmo século. Embora tivessem sido
+
+uma resposta muito importante para este, que era um problema milenar, na prática, são
+
+fórmulas de difícil manipulação, pois envolvem mudanças de variáveis, cálculo de discri-
+
+minantes e muitas raízes. É difícil aproximar a raiz do polinômio mesmo tendo seu valor
+
+exato em mãos. No século XIX, Abel (1826) e Evariste Galois (Gonçalves, 1979, ver),
+
+provaram que, em geral, para polinômios de grau igual ou maior que 5, não existem fór-
+
+mulas algébricas para encontrar raízes. Por isso, temos que nos contentar em encontrar
+
+apenas aproximações para esses zeros (soluções numéricas); mas isto não é uma limitação
+
+muito séria, pois, com o método que apresentaremos, conseguimos encontrar os zeros de
+
+uma função com qualquer precisão preﬁxada.
+
+A ideia central destes métodos numéricos é partir de uma aproximação inicial
+
+para a raiz (um intervalo onde imaginamos a raiz estar contida) e em seguida reﬁnar essa
+
+aproximação através de um processo iterativo.
+
+Para isso, faremos nosso estudo dividido em duas etapas:
+
+Primeira etapa: A localização de raízes ou isolamento das raízes, é o conteúdo do
+
+Capítulo 2, que consiste em obter intervalos que contém cada raiz. Nesta etapa é
+
+feita uma análise teórica e gráﬁca do polinômio p(x). É importante destacar que
+
+2
+
+o sucesso da localização das raízes de p(x) depende fortemente da precisão desta
+
+análise. Para isto, destacamos três importantes teoremas:
+
+i) A Regra dos Sinais de Descartes permite fazer uma prévia das quantidades
+
+de raízes reais positivas e negativas de um polinômio. Em que um polinômio
+
+com coeﬁcientes reais não pode ter mais raízes positivas (contando as multi-
+
+plicidades) que o número de variações de sinal dos seus coeﬁcientes. De um
+
+modo geral, o teorema se resume na seguinte deﬁnição: a diferença entre o
+
+número de variações de sinal e o número de raízes positivas de um polinômio
+
+com coeﬁcientes reais é um inteiro positivo par.
+
+ii) O Teorema de Sturm nos permite encontrar, de uma maneira menos direta,
+
+a quantidade exata de raízes reais distintas de um polinômio com coeﬁcientes
+
+reais em um intervalo dado.
+
+iii) O Teorema de Lagrange nos permite encontrar uma cota superior das raízes
+
+reais positivas de um polinômio e, também, permite encontrarmos um intervalo
+
+onde estão contidas todas as raízes negativas e outro intervalo com todas as
+
+raízes positivas.
+
+Segunda etapa: Determinação das raízes reais, ou reﬁnamento, que consiste em
+
+aprimorar as aproximações iniciais para as raízes dentro do intervalo encontrado
+
+na primeira fase, ou seja, dado o "chute inicial" para a aproximação, precisamos
+
+melhorá-las sucessivamente até se obter uma aproximação para a raiz dentro de uma
+
+precisão preﬁxada.
+
+Para essa aproximação utilizaremos o Método de Newton-Raphson, que pode ser
+
+encontrada em Stewart (2009), o qual é um processo iterativo cujo o objetivo consiste
+
+em construir uma sequência numérica que converge para a raiz de uma função dada. A
+
+análise do método é tema do Capítulo 1. É um método muito eﬁciente e um dos mais
+
+rápidos. Vários problemas que consistem em resolver equações podem ser transformados
+
+facilmente em problemas de busca de raiz de uma função, daí sua importância.
+
+Ao invés de fornecer uma fórmula exata, o Método de Newton-Raphson tem
+
+outra abordagem, ele constrói uma sequência de números que se aproximam cada vez
+
+mais da raiz da função, em particular, das raízes de um polinômio. Seu nome é uma
+
+homenagem a Isaac Newton (1642-1727) e Joseph Raphson (1648-1715). Tanto Newton
+
+3
+
+como Raphson, em seus livros, apresentaram métodos muito semelhantes para encontrar
+
+solução de polinômio de grau maior que 2. De modo que Newton, em 1671, no livro
+
+"Método de Fluxões" Newton (1736), descreve o método que ele utilizou para encontrar
+
+a solução da equação x3 −2x−5 = 0. Porém este livro só foi publicado em 1736. Enquanto
+
+que Raphson, em 1690, no seu livro "Analysis aequationum universalis" Raphson (2011),
+
+apresenta a mesma técnica, porém de forma mais simples e semelhante a que se utiliza
+
+hoje nos livros. Observa-se que a publicação do livro de Joseph Raphson ocorreu 46 anos
+
+antes da publicação do livro de Isaac Newton.
+
+Propriedades algébricas das raízes de um polinômio de uma variável
+
+A segunda parte desse texto se dedica a estudar algumas propriedades algébricas
+
+das raízes de um polinômio e suas relações com os polinômios simétricos. Esse é o conteúdo
+
+do Capítulo 3.
+
+O Teorema Fundamental da Álgebra, de Gauss, garante que um polinômio de
+
+grau n possui exatamente n raízes complexas, contadas as suas multiplicidades, e que,
+
+portanto, pode ser fatorado como produto de polinômios de 1º grau. Surge dessa ideia as
+
+relações de Girard, que relacionam os coeﬁcientes do polinômio aos polinômios simétricos
+
+elementares (cujas variáveis são as raízes). Uma importante questão é levantada: dado um
+
+polinômio de várias variáveis e simétrico, é possível escrevê-lo em função dos elementares?
+
+Apresentamos uma demonstração para o Teorema Fundamental dos polinômios simétri-
+
+cos, de Isaac Newton, que dá uma resposta positiva sobre o assunto. Os polinômios
+
+simétricos são uma excelente ferramenta para encontrar soluções de problemas algébricos
+
+de fatoração, de sistemas de equações não lineares e de algumas equações algébricas. Ape-
+
+sar deste conteúdo ser frequentemente abordado em Olimpíadas de Matemática, ainda é
+
+muito pouco explorado no ensino médio.
+
+Para ﬁnalizar, fazemos um estudo sobre as chamadas Somas de Newton, que
+
+são polinômios simétricos dados pela soma das n-ésimas potências das raízes de um polinô-
+
+mio unidimensional. Mostramos que essas somas são, na verdade, a solução de equações
+
+de recorrência lineares cujos coeﬁcientes são dados pelo polinômio.
+
+4
+
+Capítulo 1
+
+Método de Newton-Raphson
+
+Segundo Stewart (2009), o Método de Newton-Raphson é um processo iterativo,
+
+cujo o objetivo consiste em construir uma sequência numérica que converge para a raiz de
+
+uma função dada. É um método muito eﬁciente e um dos mais rápidos. Vários problemas
+
+que consistem em resolver equações podem ser transformados facilmente em problemas
+
+de busca de raiz de uma função, daí sua importância.
+
+Assim a ideia central deste método é partir de uma aproximação inicial para
+
+a raiz (um intervalo onde imaginamos a raiz estar contida) e em seguida reﬁnar essa
+
+aproximação através do processo iterativo de Newton-Raphson.
+
+1.1 Desenvolvimento
+
+O tema principal desse capítulo é descrever uma estratégia de solução para o
+
+problema geral: Dada uma função f : I → R, onde I é um intervalo da reta, resolver
+
+f (x) = 0. Os métodos iterativos para obter raízes (ou zeros) de funções fornecem uma
+
+aproximações para a solução exata. Geralmente tais aproximações são tão boas quanto
+
+se deseja (no sentido de números de dígitos corretos). Assim, vejamos como funciona o
+
+Método de Newton-Raphson.
+
+1.1.1 Método Iterativo de Newton-Raphson
+
+Geometricamente, o método tem a seguinte forma: dada uma função f : I →
+R, escolhemos um valor inicial x0 ∈ R como primeira aproximação da raiz de f . Então
+vamos ao ponto (x0, f (x0)) no gráﬁco e descemos pela reta tangente até atingirmos o eixo
+
+5
+
+x, a este número nós chamaremos de x1. É nossa segunda aproximação da raiz de f .
+
+Figura 1.1: As três primeiras iterações do Método de Newton-Raphson.
+
+O algoritmo continua da mesma forma: de x1, vamos ao ponto (x1, f (x1)) no
+gráﬁco e descemos pela reta tangente até atingirmos o eixo x, a este número chamaremos
+de x2, e assim por diante. A sequência gerada x0, x1, x2, x3, ... tende a se aproximar da
+raiz da função. Ao longo de todo texto, uma sequência é sempre uma função x : N → R
+e representamos x(i) por xi, para i = 0, 1, 2, 3, ....
+
+1.1.2 Fórmula de recorrência do Método de Newton-Raphson
+
+Agora, vamos obter o x1, Analiticamente, a partir do número x0, isso irá sugerir
+a equação de recorrência do método. Uma vez atribuído o valor inicial x0, calculamos
+f (x0) e f (cid:48)(x0) facilmente (já que a função é dada). A reta tangente ao gráﬁco no ponto
+(x0, f (x0)) é dada pela equação:
+
+y − f (x0) = f (cid:48) (x0) (x − x0) ,
+
+ou seja,
+
+y = f (x0) + f (cid:48) (x0) (x − x0) .
+
+(1.1)
+
+6
+
+Assim para encontrar sua raiz, x = x1, fazemos:
+
+y = 0 ⇐⇒ 0 = f (x0) + f (cid:48) (x0) (x − x0) ,
+
+⇐⇒ x = x0 −
+
+f (x0)
+f (cid:48) (x0)
+
+,
+
+agora, denominamos x = x1:
+
+⇐⇒ x1 = x0 −
+
+f (x0)
+f (cid:48) (x0)
+
+.
+
+Fazemos este mesmo processo sucessivas vezes, seguindo a forma iterativa, ou
+
+simplesmente, O Método de Newton-Raphson:
+
+xk+1 = xk −
+
+f (xk)
+f (cid:48) (xk)
+
+,
+
+k ∈ N.
+
+(1.2)
+
+1.1.3 Convergência e velocidade
+
+Para o bom funcionamento do método e da convergência, observe que a derivada
+
+aplicada nos termos da sequência nunca pode ser nula. Além disso, a escolha inicial, x0,
+deve ser controlada de alguma forma, não podendo ﬁcar muito longe da raiz. Existem vá-
+
+rias formas de se controlar esses parâmetros, a depender do problema especíﬁco estudado.
+
+Daremos um conjunto básico de hipóteses que garantem sua convergência quadrática.
+
+O método de Newton-Raphson é um caso particular dos chamados Métodos de
+
+Ponto Fixo, (Ruggiero, 1996, p. 53). Para entender, transformamos nossa equação inicial
+
+f (x) = 0 em uma equivalente ϕ(x) = x. Partindo de um valor inicial x0, construímos a
+sequência xk+1 = ϕ(xk). Se a sequência gerada converge para um número ξ, então este
+limite é dito um ponto ﬁxo de ϕ, já que satisfaz ϕ(ξ) = ξ e uma raiz de f . A função ϕ é
+
+dita uma função de iteração para a equação f (x) = 0.
+
+Exemplo 1. O método de Newton-Raphson se propõe a resolver uma equação do tipo
+
+f (x) = 0, onde f : I → R e I ⊂ R é um intervalo. Mas observe que uma solução
+
+x = ξ desse problema é também solução da equação ϕ(x) = x, onde a função de iteração
+
+ϕ : I → R é dada por ϕ(x) = x −
+
+f (x)
+f (cid:48)(x)
+
+.
+
+Teorema 1 (Convergência do Método de Ponto Fixo). Seja ξ uma raiz real da equação
+
+f (x) = 0, isolada num intervalo I centrado em ξ. Seja ϕ uma função de iteração para a
+
+7
+
+equação f (x) = 0. Se
+
+i) ϕ e ϕ(cid:48) são contínuas em I;
+
+ii) |ϕ(cid:48)(x)| ≤ M < 1
+(cid:125)
+
+(cid:123)(cid:122)
+Baixa inclinacão!
+
+(cid:124)
+
+, ∀ x ∈ I e
+
+iii) x0 ∈ I,
+
+então a sequência {xk}k∈N gerada pelo processo iterativo xk+1 = ϕ(xk) converge para ξ.
+
+Demonstração. É feita em duas partes:
+
+1ª parte: Prova-se que se x0 ∈ I, então xk ∈ I, ∀ k ∈ N.
+
+Seja ξ uma raiz exata da equação f (x) = 0. Assim, f (ξ) = 0 se, e somente se,
+
+ξ = ϕ(ξ)
+
+e, para qualquer k ∈ N , temos: xk+1 = ϕ(xk), então de 1.3, obtemos
+
+xk+1 − ξ = ϕ(xk) − ϕ(ξ)
+
+(1.3)
+
+(1.4)
+
+Agora, a função ϕ(cid:48) é contínua e diferenciável em I, então, pelo Teorema do Valor Médio,
+se xk ∈ I, existe ck entre xk e ξ tal que
+
+ϕ(cid:48)(ck)(xk − ξ) = ϕ(xk) − ϕ(ξ)
+
+Portanto, substituindo 1.4 em 1.5, obtemos
+
+xk+1 − ξ = ϕ(cid:48)(ck)(xk − ξ).
+
+Então, ∀ k ∈ N, temos
+
+|xk+1 − ξ| = |ϕ(cid:48)(ck)|
+(cid:124) (cid:123)(cid:122) (cid:125)
+<1
+
+|xk − ξ| < |xk − ξ| ,
+
+(1.5)
+
+(1.6)
+
+(1.7)
+
+ou seja, a distância entre xk+1 e ξ é estritamente menor que a distância entre xk e ξ e,
+como I está centrado em ξ, temos que se xk ∈ I, então xx+1 ∈ I. Por hipótese, x0 ∈ I,
+então xk ∈ I, ∀ k ∈ N.
+2ª parte: Prova-se que lim
+k→∞
+
+xk = ξ.
+
+8
+
+Assim, da 1ª Parte, segue que:
+
+|x1 − ξ| = |ϕ(cid:48)(c0)|
+(cid:124) (cid:123)(cid:122) (cid:125)
+≤M
+
+|x0 − ξ| ≤ M |x0 − ξ|
+
+(como c0 está entre x0 e ξ)
+
+|x2 − ξ| = |ϕ(cid:48)(c1)|
+(cid:124) (cid:123)(cid:122) (cid:125)
+≤M
+
+|x1 − ξ| ≤ M |x1 − ξ| ≤ M · M |x0 − ξ| = M 2 |x0 − ξ|
+
+(como c1 está entre x1 e ξ)
+
+...
+
+|xk − ξ| = |ϕ(cid:48)(ck−1)|
+(cid:125)
+
+(cid:124)
+
+(cid:123)(cid:122)
+≤M
+
+|xk−1 − ξ| ≤ M |xk−1 − ξ| ≤ M · M k−1 |x0 − ξ| = M k |x0 − ξ|
+
+(como ck−1 está entre xk−1 e ξ)
+
+De onde segue, que
+
+pois 0 < M < 1.
+
+0 ≤ lim
+k→∞
+
+|xk − ξ| ≤ lim
+k→∞
+
+M k |x0 − ξ| = 0,
+
+Portanto,
+
+lim
+k→∞
+
+|xk − ξ| = 0, logo lim
+k→∞
+
+xk = ξ.
+
+Teorema 2 (Convergência do Método de Newton-Raphson). Sejam f , f (cid:48) e f (cid:48)(cid:48) funções
+
+contínuas num intervalo I que contém a raiz x = ξ de f (x) = 0. Suponha que f (cid:48)(ξ) (cid:54)= 0.
+Então, existe um intervalo ¯I ⊂ I, contendo a raiz ξ, tal que se x0 ∈ ¯I, a sequência {xk}
+gerada pela fórmula recursiva xk+1 = xk −
+
+convergirá para a raiz.
+
+f (xk)
+f (cid:48)(xk)
+
+Demonstração. Tem-se que o método de Newton-Raphson é um MPF (Método do Ponto
+
+Fixo) com função de iteração ϕ dada por ϕ(x) = x −
+
+. Portanto, para provar
+
+a convergência do método, basta veriﬁcar que, sob as hipóteses acima, as hipóteses do
+
+f (x)
+f (cid:48)(x)
+
+Teorema 1 estão satisfeita para ϕ.
+
+Ou seja, é preciso provar que existe ¯I ⊂ I centrado em ξ, tal que:
+
+i) As funções ϕ e ϕ(cid:48) são contínuas em ¯I;
+
+ii) |ϕ(cid:48)(x)| ≤ M < 1, ∀ x ∈ ¯I.
+
+Temos que
+
+ϕ(x) = x −
+
+f (x)
+f (cid:48)(x)
+
+,
+
+então ϕ(cid:48)(x) =
+
+f (x)f (cid:48)(cid:48)(x)
+[f (cid:48)(x)]2
+
+9
+
+Por hipótese, f (cid:48)(ξ) (cid:54)= 0 e, como f (cid:48) é contínua em I, é possível obter I1 ⊂ I tal
+que f (cid:48)(x) (cid:54)= 0, ∀ x ∈ I1. Assim, no intervalo I1 ⊂ I, tem-se que as funções f , f (cid:48) e f (cid:48)(cid:48) são
+contínuas e f (cid:48)(x) (cid:54)= 0. Portanto, ϕ e ϕ(cid:48) são contínuas em I1.
+f (x)f (cid:48)(cid:48)(x)
+[f (cid:48)(x)]2
+
+. Como ϕ(cid:48) é contínua em I1 e ϕ(cid:48)(ξ) = 0, é possível
+
+Agora, ϕ(cid:48)(x) =
+
+escolher I2 ⊂ I1 tal que |ϕ(cid:48)(x)| < 1, ∀x ∈ I2. Ainda mais, I2 pode ser escolhido de forma
+que ξ seja seu centro. Concluindo, conseguimos obter um intervalo I2 ⊂ I, centrado em
+ξ, tal que ϕ e ϕ(cid:48) sejam contínuas em I2 e |ϕ(cid:48)(x)| < 1, ∀x ∈ I2. Assim, tomamos ¯I = I2.
+
+Portanto, pelo Teorema 1, se x0 ∈ ¯I, a sequência {xk} gerada pelo processo
+
+iterativo
+
+converge para a raiz ξ.
+
+xk+1 = xk −
+
+f (xk)
+f (cid:48)(xk)
+
+Em geral, aﬁrma-se que o método de Newton-Raphson converge desde que x0 seja
+escolhido "suﬁcientemente próximo" de ξ. A razão desta aﬁrmação está na demonstração
+
+acima, onde se veriﬁcou que, para pontos suﬁcientemente próximos de ξ, as hipóteses do
+
+teorema da convergência dos Métodos de Ponto Fixo estão satisfeitas.
+
+Os teoremas 1 e 2 exigem, como hipótese, a existência a priori de uma raiz no
+
+intervalo dado para garantir o funcionamento do método. Neste contexto, o Teorema de
+
+Bolzano nos fornece condições suﬁcientes para a garantia de tal existência, (Ruggiero,
+
+1996, ver).
+
+Teorema 3 (Bolzano). Considere f uma função contínua num intervalo real [a, b]. Se
+
+f (a) f (b) < 0 então existe pelo menos um ponto x = ξ entre a e b que é raiz de f .
+
+Corolário 4. Dado um polinômio p(x) = anxn + · · · + a0, se ana0 < 0, então p tem pelo
+menos uma raiz positiva.
+
+Já a velocidade de convergência de um algoritmo numérico tem a ver com a
+
+comparação da quantidade de dígitos corretos entre duas iterações consecutivas:
+
+Deﬁnição 1 (Ordem de Convergência). Se uma sequência {xk} converge para ξ, com
+{xk} (cid:54)= ξ, e se existem números positivos λ e α tais que:
+
+lim
+k→∞
+
+|xk+1 − ξ|
+|xk − ξ|α = λ
+
+10
+
+então dizemos que {xk} converge para ξ com ordem α. Para α=2, dizemos que a conver-
+gência é quadrática.
+
+A ordem quadrática é uma das mais rápidas obtidas nos algoritmos práticos, ela
+
+nos diz, grosso modo, que o número de dígitos corretos nos termos da sequência dobra
+
+a cada iteração. O Método de Newton-Raphson é, nesse sentido, muito rápido, pois nas
+
+melhores condições, tem ordem quadrática. O resultado a seguir segue Ruggiero (1996).
+
+Teorema 5 (Ordem de convergência do Método de Newton-Raphson). Sejam f (x), f (cid:48) (x)
+
+e f (cid:48)(cid:48) (x) contínuas num intervalo I = [a, b] que contém uma raiz x = ξ de f . Suponha
+f (cid:48) (ξ) (cid:54)= 0. Então existe um intervalo I ⊂ I, contendo a raiz ξ, tal que se x0 ∈ I, a
+sequência {xk} gerada pela fórmula recursiva 1.2 satisfaz
+
+|xk+1 − ξ| ≤ M |xk − ξ|2,
+
+para
+
+M >
+
+|f (cid:48)(cid:48)(ξ)|
+2|f (cid:48)(ξ)|
+
+,
+
+(1.8)
+
+ou seja, xk converge para a raiz ξ quadraticamente.
+
+Demonstração. Pelo o Teorema de Taylor, temos:
+
+f (x + h) = f (x) + f (cid:48)(x) · h +
+
+f (cid:48)(cid:48)(˜x)h2
+2!
+
+onde ˜x está entre x e x + h. Seja
+
+ek := xk − ξ =⇒ xk − ek = ξ.
+
+Fazendo x = xk e x + h = ξ e em seguida substituindo em 1.9, obtemos
+
+f (ξ) = f (xk) + f (cid:48)(xk) · (ξ − xk) + f (cid:48)(cid:48)(ck)
+
+(ξ − xk)2
+2
+
+de modo que ck está entre xk e ξ.
+
+Por outro lado, temos que f (ξ) = 0, logo
+
+0 = f (xk) − (xk − ξ) · f (cid:48)(xk) + f (cid:48)(cid:48)(ck)
+
+(ek)2
+2
+
+.
+
+Como por hipótese f (cid:48)(x) (cid:54)= 0, podemos dividir 1.12 por f (cid:48)(xk) obtendo:
+
+0 =
+
+f (xk)
+f (cid:48)(xk)
+
+− (xk − ξ) + e2
+k
+
+f (cid:48)(cid:48)(ck)
+2f (cid:48)(xk)
+
+,
+
+11
+
+(1.9)
+
+(1.10)
+
+(1.11)
+
+(1.12)
+
+(1.13)
+
+ou seja,
+
+(cid:18)
+
+0 = ξ −
+
+xk −
+
+(cid:19)
+
+f (xk)
+f (cid:48)(xk)
+
++ e2
+k
+
+f (cid:48)(cid:48)(ck)
+2f (cid:48)(xk)
+
+,
+
+logo, pela recorrência 1.2 , temos
+
+agora, pela 1.10, obtemos:
+
+ou seja,
+
+0 = ξ − xk+1 + (xk − ξ)2 f (cid:48)(cid:48)(ck)
+2f (cid:48)(xk)
+
+,
+
+0 = −ek+1 + e2
+k
+
+f (cid:48)(cid:48)(ck)
+2f (cid:48)(xk)
+
+,
+
+ek+1 = e2
+k
+
+f (cid:48)(cid:48)(ck)
+2f (cid:48)(xk)
+
+.
+
+Assim, pela continuidade, f (cid:48)(cid:48)(ck) −→ f (cid:48)(cid:48)(ξ) e f (cid:48)(xk) −→ f (cid:48)(ξ), logo
+
+f (cid:48)(cid:48)(ck)
+2f (cid:48)(xk)
+
+−→
+
+f (cid:48)(cid:48)(ξ)
+2f (cid:48)(ξ)
+
+.
+
+limk→∞
+
+ek+1
+e2
+k
+
+=
+
+f (cid:48)(cid:48)(ξ)
+2f (cid:48)(ξ)
+
+, tem-se de 1.17 que
+
+com isso, de 1.16, temos
+
+Portanto, tomando M >
+
+|f (cid:48)(cid:48)(ξ)|
+2|f (cid:48)(ξ)|
+
+ek+1 < M e2
+
+k, ou, equivalentemente, |xk+1 − ξ| < M |xk − ξ|2.
+
+(1.14)
+
+(1.15)
+
+(1.16)
+
+(1.17)
+
+1.2 Aplicação do Método de Newton para calcular a
+
+raiz n-ésima de um número positivo
+
+Como já dissemos, quando é aplicado o Método de Newton-Raphson numa função
+
+f para resolver f (x) = 0, um fato crucial que devemos preocupar é quando pode-se ter
+
+certeza que a sequência obtida através deste método converge para uma raiz.
+
+Inicialmente, para responder esta pergunta, começaremos apresentando algumas
+
+deﬁnições preliminares da análise real Lima (1981).
+
+12
+
+Deﬁnição 2. Uma sequência {xk} é denominada crescente se xk ≤ xk+1 para todo
+k ∈ N, isto é, x0 ≤ x1 ≤ x2 . . . . É chamada decrescente se xk ≥ xk+1 para todo k ∈ N.
+É dita monotônica se for crescente ou decrescente. E é dita estritamente monotônica
+
+se não valem as igualdades.
+
+Deﬁnição 3. Uma sequência {xk} é limitada superiormente se existir um número M
+tal que
+
+xk ≤ M, para todo k ∈ N.
+
+E é limitada inferiormente se existir um número m de forma que
+
+m ≤ xk,
+
+para todo k ∈ N.
+
+Se ela for limitada superior e inferiormente, então xk é uma sequência limitada.
+
+Deﬁnição 4. Dizemos que uma sequência {xk} converge para um real L, ou tem limite L
+quando, ﬁxado arbitrariamente um erro (cid:15) > 0 para o valor de L, existir um índice k0 ∈ N
+tal que |xk − L| < (cid:15), para todo k > k0.
+
+O teorema a seguir, conhecido como desigualdade das médias aritmética e geomé-
+
+trica, é um resultado clássico da literatura e importante na nossa análise. Sua demons-
+
+tração pode ser encontrada em Morgado (2015).
+
+Teorema 6 (Desigualdade das médias aritmética e geométrica). A média aritmética de n
+
+números positivos é maior que ou igual a sua média geométrica e só é igual se os números
+
+forem todos iguais. Isto é, se x1, x2, · · · , xn são números positivos, então
+
+x1 + x2 + · · · + xn
+n
+
+√
+≥ n
+
+x1x2 · · · xn.
+
+Além disso, vale a igualdade se, e somente se, x1 = x2 = · · · = xn.
+
+Em Stewart (2009), podemos encontrar a demonstração de dois resultados básicos
+
+no estudo das sequências enunciados a seguir.
+
+Teorema 7 (Leis do Limite para Sequências ). Se {xk} e {yk} forem sequências conver-
+gentes e c for uma constante, então:
+
+i) lim
+n→∞
+
+(xk + yk) = lim
+n→∞
+
+xk + lim
+n→∞
+
+yk
+
+13
+
+ii) lim
+n→∞
+
+(xk − yk) = lim
+n→∞
+
+xk − lim
+n→∞
+
+yk
+
+iii) lim
+n→∞
+
+cxk = c lim
+n→∞
+
+xk
+
+iv) lim
+n→∞
+
+c = c
+
+v) lim
+n→∞
+
+(xk · yk) = lim
+n→∞
+
+xk · lim
+n→∞
+
+yk
+
+vi) lim
+n→∞
+
+xk
+yk
+
+=
+
+lim
+n→∞
+lim
+n→∞
+
+xk
+
+yk
+
+, desde que lim
+n→∞
+
+yk (cid:54)= 0.
+
+Teorema 8. Toda sequência monotônica, limitada, é convergente.
+
+Vejamos a aplicação do Método de Newton para encontrar uma sequência {xk}
+que converge para a raiz n-ésima de um número positivo a dado, equivalentemente, en-
+
+√
+contrar um valor x tal que x = n
+
+a, ou seja, xn = a, isto é, xn − a = 0. Caso n seja ímpar,
+
+o valor a pode ser tomado negativo.
+
+Podemos então deﬁnir
+
+f (x) = xn − a.
+
+(1.18)
+
+Dessa forma queremos encontrar a raiz de f. Vamos mostrar que a sequência {xk} gerada
+pelo Método de Newton-Raphson para esse tipo de função é monotônica, decrescente e
+
+√
+que converge para n
+
+a quadraticamente. Vejamos:
+
+√
+1) Vamos mostrar que todos os termos de x1 em diante são maiores que n
+sequência é limitada inferiormente pela raiz a partir do segundo termo:
+
+a e então a
+
+Aplicando a lei de recorrência 1.2 do método em f :
+
+xk+1 =
+
+1
+n
+
+(cid:19)
+
+k + a
+
+(cid:18) (n − 1)xn
+xn−1
+k
+(cid:18) (n − 1)xn
+
+(cid:19)
+
+k + a
+
+=
+
+=
+
+1
+xn−1
+k
+
+1
+xn−1
+k
+
+n
+
+(cid:122)
+k + xn
+xn
+
+n−1
+(cid:123)
+(cid:125)(cid:124)
+k + · · · + xn
+k +a
+n
+
+
+
+
+
+
+
+
+
+
+
+
+
+Observando o lado esquerdo da equação, podemos aplicar o teorema 6 (da desigual-
+
+dades das médias), de modo que
+
+14
+
+xk+1 ≥
+
+1
+xn−1
+k
+
+(cid:115)
+
+n
+
+k · · · xn
+k · xn
+xn
+k
+(cid:125)
+(cid:123)(cid:122)
+(cid:124)
+n−1
+
+·a
+
+n−1
+(cid:125)(cid:124)
+(cid:122)
+(cid:123)
+xk · xk · · · xk
+xn−1
+k
+
+√
+n
+
+a
+
+=
+
+√
+= n
+
+a
+
+√
+Primeiramente observe que não interessa se x0 < n
+a ou o contrário: o termo
+posterior x1 é maior que a raiz, isso também é verdade para x2, x3, x4, .... Além
+√
+disso, provavelmente, x0 (cid:54)= n
+
+a, para todo k = 0, 1, 2, 3, 4, ....
+
+√
+a, então xk (cid:54)= n
+
+2) Vamos mostrar que {xk} é decrescente a partir do segundo termo:
+
+Para isto, vamos comparar xk+1 e xk. Pela forma iterativa do Método de Newton-
+Raphson, obtemos:
+
+xk+1 = xk −
+
+xn
+k − a
+nxn−1
+k
+
+,
+
+que neste caso pode ser transformada para
+
+xk+1 =
+
+1
+n
+
+(cid:18) (n − 1)xn
+xn−1
+k
+
+k + a
+
+(cid:19)
+
+.
+
+√
+Pelo item 1, xk > n
+equação (1.19), temos:
+
+a, para k = 1, 2, 3, 4, ..., então temos que a < xn
+k
+
+(1.19)
+
+. Assim da
+
+xk+1 =
+
+k + a
+
+(n − 1)xn
+nxn−1
+k
+
+<
+
+k + xn
+k
+
+(n − 1)xn
+nxn−1
+k
+
+=
+
+nxn
+k
+nxn−1
+k
+
+= xk
+
+√
+Donde segue que xk+1 < xk. Logo se tomarmos x0 > n
+√
+o início, de modo que a deﬁnição 2 nos garante que {xk} é monotônica. Se x0 < n
+então a sequência decresce a partir de x1.
+
+a, então {xk} decresce desde
+a,
+
+√
+3) Pelo item 1, tem-se que n
+
+a é uma cota inferior para {xk}. Assim, pelas deﬁnições 2
+e 3 , temos que {xk} é então uma sequência decrescente e limitada inferiormente, e
+√
+a > 0. Logo se tomarmos
+portanto converge (teorema 8) para algum número L ≥ n
+
+xk = L, então:
+
+lim
+k→∞
+
+lim
+k→∞
+
+xk+1 = lim
+k→∞
+
+1
+n
+
+(cid:18) (n − 1)xn
+xn−1
+k
+
+k + a
+
+(cid:19)
+
+,
+
+15
+
+pelo item (iii) do teorema 7, temos que
+
+lim
+k→∞
+
+xk+1 =
+
+n − 1
+n
+
+lim
+k→∞
+
+(cid:18) xn
+
+k + a
+xn−1
+k
+
+(cid:19)
+
+,
+
+e pelos item (i) e (vi) do teorema 7, tem-se que
+
+lim
+k→∞
+
+xk+1 =
+
+
+
+
+
+n − 1
+n
+
+( lim
+k→∞
+
+xk)n + lim
+k→∞
+
+a
+
+( lim
+k→∞
+
+xk)n−1
+
+
+
+
+
+(1.20)
+
+como por hipótese,
+
+lim
+k→∞
+
+xk = L, então da equação 1.20, temos que
+
+ou seja,
+
+isto é,
+
+ou melhor,
+
+n
+n − 1
+
+L =
+
+Ln + a
+Ln−1 ,
+
+n
+n − 1
+
+Ln − Ln = a,
+
+Ln = a,
+
+√
+L = n
+
+a.
+
+√
+4) A sequência {xk} converge quadraticamente e satisfaz |xk+1 − n
+
+√
+a| ≤ M |xk − n
+
+a|2,
+
+onde M >
+
+n − 1
+√
+a
+2 n
+
+: basta aplicar o teorema 5 para f dada por 1.18.
+
+Exemplo 2. Em particular, tomando n = 2 e a = 7 na equação 1.18 como exemplo para
+
+√
+
+7. Com isto,
+
+veriﬁcação da aplicação do Método de Newton-Raphason para encontrar
+
+tem-se que f (x) = x2 − 7 o que implica que f (cid:48)(x) = 2x.
+
+Usando a fórmula do Método de Newton, obtemos
+
+xk+1 =
+
+1
+2
+
+(cid:18) x2
+
+k + 7
+xk
+
+(cid:19)
+
+.
+
+Inicialmente, escolhemos um valor para x0 de modo que pertença a uma vizi-
+
+nhança de
+
+√
+
+7. Assim, como
+
+16
+
+
+
+
+
+
+f (2) = 22 − 7 = −3 < 0
+
+f (3) = 32 − 7 = +2 > 0
+
+,
+
+pelo Teorema 3, existe pelo menos uma raiz ξ de f , tal que f (2) < f (ξ) < f (3). Veriﬁque-
+mos, sem perda de generalidade, o comportamento da sequência {xk} quando tomemos
+x0 = 3, assim:
+
+(cid:19)
+
+(cid:18) 32 + 7
+3
+
+x1 =
+
+x2 =
+
+x3 =
+
+x4 =
+
+1
+2
+1
+2
+
+1
+2
+
+1
+2
+
+(cid:32)
+
+(cid:32)
+
+(cid:32)
+
+(2.666666666666667)2 + 7
+2.666666666666667
+(2.645833333333333)2 + 7
+2.645833333333333
+(2.645751312335958)2 + 7
+2.645751312335958
+
+(cid:33)
+
+(cid:33)
+
+(cid:33)
+
+= 2.666666666666667
+
+= 2.645833333333333
+
+= 2.645751312335958
+
+= 2.645751311064591
+
+Em destaque sublinhado são os dígitos que já estão corretos, exibindo a velocidade
+√
+
+com a qual a sequência se aproxima da raiz ξ =
+
+7.
+
+17
+
+Capítulo 2
+
+Estudo da existência e localização de
+
+raízes polinomiais
+
+Embora possamos usar o Método de Newton-Raphsom para encontrar as raízes de
+
+um polinômio, o fato de os polinômios aparecerem com tantas frequências em aplicações
+
+fazem com que lhes dediquemos especial atenção.
+
+Normalmente, um polinômio de grau n é escrita da forma
+
+p(x) = anxn + an−1xn−1 + · · · + a1x + a0, an (cid:54)= 0.
+
+(2.1)
+
+Se n = 2, sabemos da álgebra elementar como achar os zeros de p. De acordo
+
+com Hefez (2012), existem fórmulas fechadas, mas bem mais complicadas, para raízes de
+
+grau 3 e 4. Para n ≥ 5, em geral, como vimos no primeiro capítulo, não existem fórmulas
+
+explícitas. De qualquer forma, somos forçados a usar métodos iterativos para encontrar
+
+zeros de polinômios.
+
+Vários teorema da álgebra são úteis na localização e classiﬁcação de zeros de
+
+um polinômio. Isso é essencial para aplicar o método de Newton-Raphson num intervalo
+
+adequado. Faremos nosso estudo dividido em duas partes:
+
+1. Localização de raízes,
+
+2. Determinação das raízes reais.
+
+18
+
+2.1 Localização de raízes
+
+Nesta seção é feita uma análise teórica e gráﬁca do polinômio p(x). É importante
+
+destacar que o sucesso da localização das raízes de p(x) depende fortemente da precisão
+
+desta análise. Assim, apresentamos alguns teoremas úteis ao nosso estudo.
+
+Teorema 9 (Teorema Fundamental da Álgebra Ruggiero (1996)). "Se p(x) é um polinô-
+mio de grau n ≥ 1, ou seja, p(x) = anxn+an−1xn−1+· · ·+a1x+a0, onde a0, a1, · · · , an−1, an
+são reais ou complexos, com an (cid:54)= 0, então p(x) tem pelo menos um zero, ou seja, existe
+um número complexo ξ tal que p(ξ) = 0."
+
+Este Teorema implica, por um argumento de indução, que p possui exatamente
+
+n raízes. A seguir, o resultado mais conhecido dos livros de ensino médio, também deno-
+
+minado Teorema Fundamental da Álgebra.
+
+Corolário 10. "Se p é um polinômio de grau n ≥ 1, ou seja, p(x) = anxn + an−1xn−1 +
+· · · + a1x + a0, onde a0, a1, · · · , an−1, an são reais ou complexos, com an (cid:54)= 0, então p tem
+exatamente n raízes contadas as suas multiplicidades.
+
+Algebricamente, o resultado anterior garante que dado um polinômio de grau n
+
+p(x) = anxn + an−1xn−1 + · · · + a1x + a0,
+
+existem números complexos r1, r2, · · · , rk e inteiros positivos m1, m2, · · · , mk tais que p
+pode ser fatorado como
+
+p(x) = an(x − r1)m1(x − r2)m2 · · · (x − rk)mk
+
+onde m1 + m2 + · · · + mk = n. Para cada i = 1, ..., k, dizemos que ri é uma raiz de p de
+multiplicidade mi, ou que ri é raiz de p mi vezes.
+
+Corolário 11. Polinômio com coeﬁcientes reais apresentam raízes complexas aos pares.
+
+Polinômio de coeﬁcientes reais e grau ímpar tem ao menos uma raiz real.
+
+2.1.1 A Regra dos Sinais de Descartes
+
+Na tentativa de determinar a quantidade de raízes reais positivas de um polinô-
+
+mio, Descartes enunciou, sem demonstração, em Descartes (2012), uma regra que limita
+
+19
+
+superiormente essa quantidade relacionando-a às variações de sinal dos coeﬁcientes. O
+
+teste pode ser facilmente adaptado de modo a investigar a quantidade de raízes negativas
+
+também. A primeira demonstração da regra aparece no século 18 e depois disso foi gene-
+
+ralizada de forma independente por Budan, Fourier, Sturm e A. Vincent, (Santos, 2013,
+
+ver).
+
+A princípio vamos deﬁnir o que é uma variação em uma sequência ﬁnita de nú-
+
+meros reais.
+
+Deﬁnição 5. Seja p(x) = anxkn + an−1xkn−1 + · · · + a1xk1 + a0xk0 um polinômio não
+constante de coeﬁcientes reais, com kn > kn−1 > · · · > k1 > k0 ≥ 0 e ai (cid:54)= 0 para todo i.
+Deﬁna a palavra αp = (αnαn−1 · · · α1α0) fazendo, para cada inteiro 0 ≤ j ≤ n,
+
+αj =
+
+
+
+
++,
+
+
+
+−,
+
+se aj > 0
+se aj < 0.
+
+A variação de p, denotada V(p), é o número de pares de sinais consecutivos distintos
+em αp.
+
+Teorema 12 (Regra dos Sinais de Descartes). Seja p um polinômio com coeﬁcientes
+reais, o número de raízes positivas, R+(p), desse polinômio não excede o número V(p) de
+variações de sinal dos coeﬁcientes. Ainda mais, V(p)−R+(p) é inteiro, par, não negativo.
+
+A Regra dos Sinais de Descartes não indica necessariamente o número exato de
+
+raízes de um polinômio. Nos exemplos a seguir, veriﬁca-se que a Regra ﬁltra um pequeno
+
+número de possibilidades para as quantidades R+(p) e R–(p).
+
+Exemplo 3. Dado p(x) = 2x5 − 3x4 − 4x3 + x + 1. Vamos deterninar o número de raízes
+
+positivas e negativas de p(x).
+
+Observe as variações dos sinais do p(x)
+
+p(x) = 2x5
+
+(cid:73)−3x4 −4x3
+
+(cid:73)+x +1 ,
+
++1
+
++1
+
+veja que V(p) = 2, logo temos
+
+20
+
+(cid:73)
+(cid:73)
+
+
+
+
+
+se V(p) − R+(p) = 0, então R+(p) = 2
+
+ou
+
+se V(p) − R+(p) = 2, então R+(p) = 0
+
+Para determinar o número de raízes reais negativas, R–(p), de um polinômio p, conside-
+remos o polinômio auxiliar p1(x) = p(−x), cujas raízes são exatamente opostas das raízes
+de p e seus coeﬁcientes alteram o sinal caso sejam de grau ímpar. Construímos então
+p1(x) = p(−x) e usamos a regra pra raízes positivas: Assim, observe que
+
+p1(x) = p(−x) = −2x5 −3x4
+
+(cid:72)+4x3
+
+(cid:73)−x
+
+(cid:74)+1 ,
+
++1
+
++1
+
++1
+
+então para V(p1) = 3, temos
+
+
+
+
+
+
+se V(p1) − R+(p1) = 2, então R+(p1) = 1 ⇐⇒ R–(p) = 1
+
+ou
+
+se V(p1) − R+(p1) = 0, então R+(p1) = 3 ⇐⇒ R–(p) = 3
+
+Construindo o gráﬁco do polinômio p(x) = 2x5 − 3x4 − 4x3 + x + 1, veriﬁcamos que este
+
+possui um raiz real negativa e duas raízes reais positivas.
+
+Figura 2.1: Gráﬁco da função p(x) = 2x5 − 3x4 − 4x3 + x + 1.
+
+Exemplo 4. Utilizando a Regra dos Sinais de Descartes, para calcular a quantidades de
+
+21
+
+(cid:72)
+(cid:73)
+(cid:74)
+raízes positivas e negativas de p(x) = 4x5 − x3 + 4x2 − x − 1.
+
+Observe que
+
+assim V(p) = 3, temos
+
+p(x) = 4x5
+
+(cid:74)−x3
+
+(cid:73)+4x2
+
+(cid:73)−x −1 ,
+
++1
+
++1
+
++1
+
+
+
+
+
+
+se V(p) − R+(p) = 0, então R+(p) = 3
+
+ou
+
+se V(p) − R+(p) = 2, então R+(p) = 1
+
+Agora, para encontrar as raízes negativa do exemplo 4, basta tomar p1(x) = p(−x), ou
+seja:
+
+p1(x) = p(−x) = −4x5
+
+(cid:73)+x3 +4x2 +x
+
+(cid:74)−1
+
++1
+
++1
+
+assim para V(p1) = 2, temos
+
+
+
+
+
+
+se V(p1) − R+(p1) = 2, então R+(p1) = 0 ⇐⇒ R–(p) = 0
+
+ou
+
+se V(p1) − R+(p1) = 0, então R+(p1) = 2 ⇐⇒ R–(p) = 2
+
+Vamos construir o gráﬁco do polinômio p(x) para analisar geometricamente as suas raízes.
+
+Figura 2.2: Gráﬁco da função p(x) = 4x5 − x3 + 4x2 − x − 1.
+
+22
+
+(cid:74)
+(cid:73)
+(cid:73)
+(cid:73)
+(cid:74)
+Exemplo 5. Utilize a Regra dos Sinais de Descartes para calcular as possíveis raízes
+
+positivas ou negativas de p(x) = x7−5. (Observe que encontrar a solução de p é equivalente
+
+√
+a encontrar a 7
+
+5).
+
+Veja que
+
+p(x) = x7
+
+(cid:75)−5 .
+
++1
+
+Segue que V(p) = 1, assim como V(p) − R+(p) ≥ 0, temos R+(p) = 1, ou seja, p(x) = 0,
+tem uma raiz real positiva.
+
+Agora vamos veriﬁcar de p possui raízes negativas.
+
+p1(x) = p(x) = −x7 −5 ,
+
+donde segue, que V(p1) = 0 e como V(p1) − R+(p1) ≥ 0, então R+(p1) = R–(p) = 0, com
+isso, p(x) = 0, não tem raiz real negativa. Portanto, p(x) tem apenas uma raiz real e é
+
+positiva.
+
+Construindo o gráﬁco do polinômio de sétimo grau p(x) = x7 − 5 , veriﬁcamos
+
+que este possui apenas uma raiz real simples.
+
+Figura 2.3: Gráﬁco da função p(x) = x7 − 5.
+
+23
+
+(cid:75)
+Exemplo 6. Seja o polinômio p(x) = x5 − 5x4 − 10x3 + 50x2 + 9x − 45. Vamos aplicar
+
+o Teorema de Descartes para calcular a quantidade de raízes positivas e negativas de p.
+
+Veja as variações dos sinais de p
+
+p(x) = x5
+
+(cid:74)−5x4 −10x3
+
+(cid:71)+50x2 +9x
+
+(cid:73)−45
+
++1
+
++1
+
++1
+
+com isto, tem-se V(p) = 3, logo
+
+
+
+
+se V(p) − R+(p) = 0, então R+(p) = 3
+
+se V(p) − R+(p) = 2, então R+(p) = 1
+
+ou
+
+(2.2)
+
+Agora, para encontrar as raízes negativa do exemplo 6, basta tomar p1(x) =
+
+p(−x), isto é:
+
+p(x) = −x5 −5x4
+
+(cid:71)+10x3 +50x2
+
+(cid:72)−9x −45 ,
+
++1
+
++1
+
+assim para V(p1) = 2, temos
+
+
+
+
+
+
+se V(p1) − R+(p1) = 2, então R+(p1) = 0 ⇐⇒ R–(p) = 0
+
+ou
+
+(2.3)
+
+se V(p1) − R+(p1) = 0, então R+(p1) = 2 ⇐⇒ R–(p) = 2.
+
+Conclui-se, pelo Teorema 12, que p possui R+(p) = 3 e R–(p) = 0 ou R+(p) = 3
+
+e R–(p) = 2 ou R+(p) = 1 e R–(p) = 0 ou R+(p) = 1 e R–(p) = 2.
+
+Agora, analisando o Gráﬁco 2.4 a seguir, veriﬁcamos que este possui cinco raízes
+
+reais simples, sendo duas negativas e três positivas.
+
+24
+
+(cid:74)
+(cid:71)
+(cid:73)
+(cid:71)
+(cid:72)
+Figura 2.4: Gráﬁco da função p(x) = x5 − 5x4 − 10x3 + 50x2 + 9x − 45.
+
+Para uma demonstração da Regra de sinais de Descartes de acordo com Mu-
+
+niz Neto (2012), vamos analisar as palavras que usam os símbolos + e −. Queremos saber
+
+das palavras do tipo ++, − + +, − − + + −+, ... qual a relação entre o número de troca
+
+de sinais e os símbolos inicial e ﬁnal de cada palavra.
+
+Lema 13. Em relação ao alfabeto {+, −}, sejam Ω o conjunto das palavras ﬁnitas de
+
+letras inicial e ﬁnal distintas e Ψ o conjunto das palavras ﬁnitas de letras inicial e ﬁnal
+
+iguais. Para cada palavra ﬁnita α, seja V(α) o número de pares de letras consecutivas e
+
+distintas em α. Então
+
+i) α ∈ Ω =⇒ V(α) ≡ 1(mod2).
+
+ii) α ∈ Ψ =⇒ V(α) ≡ 0(mod2)
+
+Demonstração. A demonstração é trivial e segue do princípio de indução ﬁnita.
+
+Para nossos propósitos, o resultado a seguir é crucial na demonstração da Regra
+
+de Sinal de Descartes.
+
+Lema 14. Seja q um polinômio não constante de coeﬁciente reais e c > 0 um real dado.
+
+Se p(x) = (x − c)q(x), então V(p) − V(q) é um inteiro positivo ímpar.
+
+Demonstração. Seja ∂(q) o grau do polinômio q. Sem perda de generalidade, podemos
+
+supor que q seja mônico, ou seja, o coeﬁciente de maior grau igual a 1. Façamos indução
+
+sobre ∂(q).
+
+25
+
+q(x) = x
+
+
+
+
+
+
+1. ∂(q) = 1:
+
+q(x) = x − d, com d > 0
+
+q(x) = x + d, com d > 0
+
+Se q(x) = x, então V(q) = 0 e p(x) = (x − c)x = x2 − cx, de modo que V(p) −
+
+V(q) = 1 − 0 = 1. Suponha agora q(x) = x − d, onde d > 0. Então, V(q) = 1 e
+
+p(x) = (x−c)(x−d) = x2−(c+d)x+cd, de modo que V(p)−V(q) = 2−1 = 1. O caso
+
+q(x) = x + d, onde d > 0, é semelhante: V (q) = 0 e p(x) = x2 + (d − c)x − cd e, como
+
+−cd < 0, segue do Lema 13 que V(p) é ímpar. Portanto, V(p) − V(q) = V(p) − 0,
+
+um inteiro positivo ímpar.
+
+2. Suponha o resultado válido para todo polinômio de grau menor que n, onde n > 1
+
+é inteiro, e tome um polinômio q de grau n. Dado um polinômio qualquer h,
+denotaremos, sempre que necessário, por αh e βh, respectivamente, o coeﬁciente
+líder de h e o coeﬁciente (não nulo) do termo de h de menor grau. Assim,
+
+h(x) = αhxr + · · · + βhxs,
+
+com r ≥ s. Há três casos a considerar: O primeiro caso supõe que todos os coeﬁci-
+
+entes não nulos de q sejam positivos. Se isso não ocorre, então existe ao menos um
+
+coeﬁciente negativo (lembrando que o coeﬁciente líder de q é 1). Separamos este
+
+nos dois casos seguintes: o Caso 2 supõe que algum termo intermediário de q tem
+
+coeﬁciente nulo, ou seja, entre o coeﬁciente líder e o coeﬁciente não nulo de menor
+
+grau, existe um termo de q cujo coeﬁciente é nulo. O Caso 3 supõe que nenhum
+
+termo intermediário de q tem coeﬁciente nulo.
+
+1º caso: Todos os coeﬁcientes de q são positivos: seja q(x) = xn + · · · + βqxl, com
+
+l < n. Então V(q) = 0 e
+
+p(x) = (x − c)q(x) = xn+1 + · · · − cβqxl.
+
+Novamente pelo Lema 13, concluímos que V (p) é ímpar e, daí, que V (p) −
+
+V (q) = V (p) é positivo e ímpar.
+
+2º caso: Nem todos os coeﬁcientes não nulos de q são positivos e existe um termo
+
+26
+
+intermediário cujo coeﬁciente é nulo, ou seja, existem polinômios u e v tais que
+
+q = u + v, com
+
+u(x) = xn + · · · + βuxm,
+
+v(x) = αvxr + · · · + βvxs
+
+com n ≥ m, r ≥ s e r + 1 < m. Então
+
+(x − c)q(x) = (x − c)u(x) + (x − c)v(x)
+
+= (cid:0)xn+1 + · · · − cβuxm(cid:1) +
+
++ (cid:0)αvxr+1 + · · · − cβvxs(cid:1) ,
+
+(2.4)
+
+uma vez que r+1 < m. Distingamos agora dois subcasos: αvβu > 0 e αvβu < 0.
+No primeiro deles, temos V(q) = V(u) + V(v). Porém, (−cβu)αv < 0, de modo
+que, pela Equação 2.4,
+
+V(p) = V((x − c)q(x)) = V((x − c)u(x)) + V((x − c)v(x)) + 1.
+
+Pela hipótese de indução (em princípio u tem grau n, mas m ≥ 1 então u(x) =
+xm(αuxn−m + · · · + βu) e V(u) = V(xm(αuxn−m + · · · + βu)) = V(αuxn−m +
+· · · + βu)); segue que existem números ímpares iu e iv tais que
+
+V((x − c)u(x)) = V((x − c)xm(αuxn−m + · · · + βu))
+
+= V((x − c)(αuxn−m + · · · + βu))
+= V(αuxn−m + · · · + βu) + iu
+
+= V(u(x)) + iu
+
+e V((x − c)v(x)) = V(v(x)) + iv, logo
+
+V(p) = (V(u) + iu) + (V(v) + iv) + 1
+
+= V (q) + iu + iv + 1,
+
+ou seja, V(p) − V(q) = ímpar positivo.
+
+No segundo subcaso, αvβu < 0, temos, pela Equação 2.4, que
+
+V(q) = V(u) + V(v) + 1
+
+27
+
+e
+
+V(p) = V((x − c)q(x)) = V((x − c)u(x)) + V((x − c)v(x)).
+
+Usando novamente a hipótese de indução, obtemos
+
+V(p) = (V(u) + iu) + (V(v) + iv)
+
+= V(u) + V(v) + 1 − 1 + iu + iv
+
+= V(q) + iu + iv − 1,
+
+ou seja, V(p) − V(q) = ímpar positivo.
+
+3º caso: Nem todos os coeﬁcientes não nulos de q são positivos e nenhum termo
+intermediário tem coeﬁciente nulo, ou seja, q(x) = xn + an−1xn−1 + · · · +
+ak+1xk+1 + akxk, com an−1, · · · , ak+1, ak (cid:54)= 0 e nem todos positivos: escreva
+
+q(x) = q0(x) − q1(x) + · · · + (−1)tqt(x),
+
+onde cada qi(x) = αixki + · · · + βixli (ki ≥ li) tem todos os coeﬁcientes positivos
+e, para i < t, li = ki+1 + 1. Então V(q) = t e
+
+(x − c)q(x) = (x − c)q0(x) − (x − c)q1(x) + · · · + (−1)t(x − c)qt(x)
+
+= (x − c)(α0xk0 + · · · + β0xl0)
+
+−(x − c)(α1xk1 + · · · + β1xl1) + · · · +
++(−1)t(x − c)(αtxkt + · · · + βtxlt)
+
+= α0xk0+1 + · · · − (α1 + cβ0)xl0 + · · · + (α2 + cβ1)xl1+
++ · · · − (α3 + cβ2)xl2 + · · · + (−1)t(αt + cβt−1)xlt−1+
++ · · · + (−1)t+1cβtxlt
+
+Assim, há um número ímpar (e, daí, pelo menos um) de pares dos coeﬁcientes
+
+consecutivos de sinais contrários em cada um dos t+1 intervalos com reticências
+
+acima, donde
+
+V(p) = V ((x − c)q(x)) ≥ t + 1 = V (g) + 1 = positivo
+
+28
+
+e, em módulo 2,
+
+V(p) = V((x − c)q(x)) ≡ t + 1 = V (q) + 1.
+
+A seguir daremos uma demonstração da regra dos Sinais de Descartes para po-
+
+linômios de coeﬁcientes reais.
+
+Demonstração. Sem perda de generalidade, trataremos o caso em que o polinômio é mô-
+
+nico. Façamos indução sobre o grau de p.
+
+Para ∂(p) = 1, se p(x) = x ou p(x) = x + d, com d > 0, então V(p) − R+(p) =
+
+0 − 0 = 0. Se p(x) = x − d, então V(p) − R+(p) = 1 − 1 = 0.
+
+Suponhamos agora o teorema seja válido para todo polinômio de grau menor que
+
+n, onde n > 1 é inteiro, e seja
+
+p(x) = xn + an−1xn−1 + · · · + a1x + a0
+
+(2.5)
+
+um polinômio de grau n. Há dois casos:
+
+• R+(p) = 0: nesse caso, basta mostrar que V(p) é par. Como R+(p) = 0, segue, do
+teorema Bolzano que, ana0 = 1a0 > 0 e, daí, o lema 13 garante que V(p) é par.
+
+• R+(p) > 0: tomando uma raiz positiva c de p, existe um polinômio não constante
+de q tal que p(x) = (x − c)q(x). O lema 14 garante a existência de um número ímpar
+
+positivo i tal que
+
+V(p) − R+(p) = (V(q) + i) − (R+(q) + 1)
+
+= (V(q) − R+(q)) + (i − 1).
+
+como, pela hipótese de indução, V(q) − R+(q) é par e não negativa, segue que
+V(p) − R+(p) é também par e não negativo.
+
+Corolário 15. Se p é um polinômio não constante de coeﬁcientes reais e R–(p) é o
+número de raízes negativas de p, então V(p(−x)) − R–(p) é par e não negativa.
+
+29
+
+Demonstração. Imediata, basta aplicar a Regra de Sinais de Descartes para o polinômio
+
+p1(x) = p(−x).
+
+Teorema 16 (Taylor, Muniz Neto (2012), ver). Dado o polinômio p(x) de grau n, se o
+
+desenvolvermos por Taylor em torno do ponto x = a, temos
+
+p(x) = p(a) + p(cid:48)(a)(x − a) +
+
+p(cid:48)(cid:48)(a)
+2!
+
+(x − a)2 + · · · +
+
+p(n)(a)
+n!
+
+(x − a)n.
+
+Se chamarmos x − a = y, ao acharmos o número de raízes reais de p(y) = 0 que
+
+são maiores que zero, estaremos encontrando o número de raízes de p(x) = 0 que são
+
+maiores que a.
+
+Podemos usar este resultado juntamente com a Regra de Sinal de Descartes para
+
+analisar as raízes de um determinado polinômio.
+
+2.1.2 Sequências de Sturm
+
+Umas das generalizações da Regra de Sinal de Descartes, dada em 1829 por C.
+
+Sturm, é um teorema muito eﬁciente que consegue determinar a quantidade exata de
+
+raízes reais distintas de um polinômio de coeﬁcientes reais dentro de qualquer intervalo
+
+investigado [a, b], em particular em R. A sequência de Sturm é uma lista de polinômios
+
+auxiliares cujos valores são avaliados em a e em b e têm a variação de sinal avaliada e
+
+relacionada à quantidade de raízes.
+
+Vamos mostrar como são construídas as sequências de Sturm:
+
+Dado o polinômio p(x) e um número real a, vamos deﬁnir ˜V(a) com sendo o
+
+número de variações de sinal em gi(a) onde construímos a sequência
+
+ignorando os zeros, assim:
+
+g0(a), g1(a), · · · gn(a),
+
+
+
+
+g0(x) = p(x)
+
+
+
+g1(x) = p(cid:48)(x)
+
+e, para k ≥ 2, gk(x) é o resto da divisão de gk−2 por gk−1 com sinal trocado.
+
+Vejamos um exemplo de como é construída a sequência de Sturm:
+
+(2.6)
+
+30
+
+Exemplo 7. Dado p(x) = x3 + x2 − x + 1. Vamos determinar a sequência de Sturm
+
+gerada por p(x).
+
+Assim, de 2.6, temos
+
+
+
+
+
+
+g0(x) = p(x) = x3 + x2 − x + 1
+
+g1(x) = p(cid:48)(x) = 3x2 + 2x − 1
+
+como n = 3, temos que g2(x) é o resto da divisão de g0(x) por g1(x), assim:
+
+x3 + x2 − x + 1
+
+3x2 + 2x − 1
+
+−x3 −
+
+2
+3
+
+x2 + 1
+3
+
+x
+
+1
+3
+
+x
+
+=
+
+=
+
+1
+3
+
+1
+3
+
+−
+
+x2 −
+
+x + 1
+
+2
+3
+
+x2 −
+
+2
+9
+
+x + 1
+9
+
++ 1
+9
+
+−
+
+8
+9
+
+x + 10
+9
+
+com isto, temos que g2(x) =
+
+x −
+
+8
+9
+
+.
+
+10
+9
+
+E, em seguida para encontrar g3(x) basta efetua a divisão de g1(x) por g2(x), isto
+
+é:
+
+3x2 + 2x −
+
+1
+
+8
+9
+
+x −
+
+10
+9
+
+−3x2 + 15
+4
+
+x
+
+27
+8
+
+x
+
+23
+4
+
+x −
+
+1
+
+−
+
+23
+4
+
+x + 115
+16
+
++ 207
+32
+
+99
+16
+
+31
+
+=
+
+=
+
+de onde seque, que g3(x) = −
+Portanto, tem-se que sequência de Sturm do polinômio p(x) = x3 + x2 − x + 1 é
+
+.
+
+99
+16
+
+
+
+
+
+
+g0(x) = x3 + x2 − x + 1
+
+g1(x) = 3x2 + 2x − 1
+8
+9
+g3(x) = −
+
+g2(x) =
+
+10
+9
+
+x −
+
+99
+16
+
+(2.7)
+
+O teorema a seguir nos garante a quantidade exata de raízes reais distintas de
+
+um polinômio com coeﬁcientes reais num determinado intervalo. Para uma demonstração,
+
+(Uspensky, 1948, ver).
+
+Teorema 17 (de Sturm). Seja p um polinômio de coeﬁcientes reais. Se p(a) (cid:54)= 0 e
+
+p(b) (cid:54)= 0, então o número de raízes distintas de p(x) = 0 no intervalo [a, b] é exatamente
+˜V(a) − ˜V(b).
+
+Corolário 18. Se p(0) (cid:54)= 0, então R+(p) (o número de raízes positivas de p) e R–(p) (o
+número de raízes negativas de p) são
+
+R+ = ˜V(0) − ˜V(+∞)
+R– = ˜V(−∞) − ˜V(0)
+
+Para calcular ˜V(−∞) ou ˜V(+∞), basta analisar a variação do sinal do termo
+líder de cada polinômio da sequência, levando em consideração que (+∞)n é positivo e
+
+(−∞)n é positivo se n é par e negativo se n é ímpar.
+
+A ﬁm de veriﬁcar a eﬁcácia do teorema de Sturm, utilizaremos a sequência de
+
+Sturm 2.7 do exemplo anterior. Assim, tomando a = 2, obtemos
+
+
+
+
+
+
+g0(2) = 23 + 22 − 2 + 1 = 11 =⇒ +
+
+g1(2) = 3 · 22 + 2 · 2 − 1 = 15 =⇒ +
+
+g2(2) =
+
+8
+9
+g3(2) = −
+
+10
+9
+
+· 2 −
+
+99
+16
+
+=
+
+2
+3
+
+=⇒ +
+
+=⇒ −
+
+(2.8)
+
+Logo, de 2.8, há somente uma variação de g2(2) para g3(2), então ˜V(a) = ˜V(2) = 1
+
+32
+
+Agora, tomando b = 3 na sequência 2.7, temos:
+
+
+
+
+
+
+g0(3) = 33 + 32 − 3 + 1 = 34 =⇒ +
+
+g1(3) = 3 · 32 + 2 · 3 − 1 = 32 =⇒ +
+
+g2(3) =
+
+8
+9
+g3(3) = −
+
+10
+9
+
+· 3 −
+
+99
+16
+
+=
+
+14
+9
+
+=⇒ +
+
+=⇒ −
+
+(2.9)
+
+Veja, que em 2.9, houve, também, apenas uma variação de g2(2) para g3(2), então ˜V(b) =
+˜V(3) = 1.
+
+Portanto, o Teorema 17 garante que p(x) = x3 + x2 − x + 1 não possui raízes reais
+
+no intervalo [2, 3], pois
+
+˜V(2) − ˜V(3) = 1 − 1 = 0
+
+Exemplo 8. Dado p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3. Vamos encontrar o número
+
+de raízes reais distintas no intervalo [−2, 2].
+
+Inicialmente vamos encontrar a sequência de Sturm. Assim, de 2.6, temos
+
+
+
+
+
+
+g0(x) = p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3
+
+g1(x) = p(cid:48)(x) = 6x5 − 10x4 − 4x3 + 12x2 − 10x + 6
+
+como n = 6, temos que g2(x) é o resto da divisão de g0(x) por g1(x), assim:
+
+x6 −2x5 − x4 + 4x3 − 5x2 + 6x
+
+− 3
+
+6x5 − 10x4 − 4x3 + 12x2 − 10x + 6
+
+− x6 +
+
+=
+
+−
+
++
+
+−
+
+=
+
+5
+3
+
+1
+3
+
+1
+3
+
+8
+9
+
+x5 +
+
+x5 −
+
+x5 −
+
+2
+3
+
+1
+3
+
+5
+9
+
+x4 − 2x3 +
+
+x2
+
+5
+3
+
+1
+6
+
+x
+
+x4 + 2x3 −
+
+10
+3
+
+x2 + 5x − 3
+
+x4 −
+
+x3 +
+
+2
+9
+
+x2 −
+
+2
+3
+
+5
+9
+
+x +
+
+1
+3
+
+−
+
+1
+8
+
+x4 +
+
+16
+9
+
+x3 −
+
+x2 +
+
+8
+3
+
+40
+9
+
+x −
+
+8
+3
+
+33
+
+com isto, temos que g2(x) =
+E, em seguida para encontrar g3(x) basta efetua a divisão de g1(x) por g2(x), isto é:
+
+x2 −
+
+x4 −
+
+x3 +
+
+x +
+
+.
+
+8
+9
+
+16
+9
+
+8
+3
+
+40
+9
+
+8
+3
+
+6x5 −10x4 − 4x3 + 12x2 − 10x + 6
+
+8
+9
+
+x4 −
+
+16
+9
+
+x3 +
+
+8
+3
+
+x2 −
+
+40
+9
+
+x +
+
+8
+3
+
+− 6x5 +12x4 − 18x3 + 30x2 − 18x
+
+27
+4
+
+x
+
+=
+
++2x4 − 22x3 + 42x2 − 28x + 6
+
+−2x4 + 4x3 − 6x2 + 10x
+
+− 6
+
+9
+4
+
+=
+
+−18x3 + 36x2 − 18x
+
+de onde segue que g3(x) = 18x3 − 36x2 + 18x.
+Para encontrar g4(x) basta efetua a divisão de g2(x) por g3(x), ou seja:
+
+8
+9
+
+x4 −
+
+−
+
+8
+9
+
+x4 +
+
+16
+9
+
+16
+9
+
+x3 +
+
+8
+3
+
+x2 −
+
+40
+9
+
+x +
+
+8
+3
+
+18x3 −36x2 + 18x
+
+x3 −
+
+8
+9
+
+x2
+
+4
+81
+
+x
+
+=
+
+16
+9
+
+x2 −
+
+40
+9
+
+x +
+
+8
+3
+
+assim, temos que g4(x) = −
+x2 +
+De modo que g5(x) é o resto da divisão de g3(x) por g4(x), isto é:
+
+x −
+
+.
+
+40
+9
+
+8
+3
+
+16
+9
+
+34
+
+18x3 −36x2 +18x
+
+−
+
+16
+9
+
+x2 +
+
+40
+9
+
+x −
+
+8
+3
+
+− 18x3 +45x2 −27x
+
+−
+
+81
+8
+
+x
+
+=
+
++9x2 −9x
+
+−9x2 +
+
+45
+2
+
+−
+
+27
+2
+
+−
+
+81
+16
+
+=
+
+27
+2
+
+x −
+
+27
+2
+
+27
+assim, temos que g5(x) = −
+2
+E, ﬁnalmente para encontrar g6(x) dividimos g4(x) por g5(x), ou seja:
+
+27
+2
+
+x +
+
+.
+
+−
+
+16
+9
+
+x2 +
+
+40
+9
+
+x −
+
+8
+3
+
+−
+
+27
+2
+
+x +
+
+27
+2
+
++
+
+16
+9
+
+x2 −
+
+16
+9
+
+x
+
+32
+243
+
+x
+
+=
+
+=
+
+−
+
+8
+3
+
+x +
+
+−
+
+8
+3
+
+x +
+
+8
+3
+
+8
+3
+
+0
+
+−
+
+16
+81
+
+logo tem-s que g6(x) = 0.
+
+Assim, a sequência de Sturm do polinômio
+
+p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3
+
+35
+
+é:
+
+
+
+
+
+
+g0(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3
+
+g1(x) = 6x5 − 10x4 − 4x3 + 12x2 − 10x + 6
+
+g2(x) =
+
+8
+9
+
+x4 −
+
+16
+9
+
+x3 +
+
+8
+3
+
+x2 −
+
+40
+9
+
+x +
+
+8
+3
+
+(2.10)
+
+g4(x) = −
+
+g3(x) = 18x3 − 36x2 + 18x
+8
+16
+9
+3
+27
+2
+
+40
+9
+27
+2
+
+g5(x) = −
+
+x2 +
+
+x −
+
+x +
+
+Com isto, pelo Teorema 17 podemos tomar a = −2 e b = 2 e substitui na
+
+sequência 2.10 para podermos veriﬁcar quantas raízes exatamente existe no [a, b]. Assim:
+
+Para x = a = −2, temos
+
+
+
+
+
+
+g0(−2) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3 = +45 =⇒ +
+
+g1(−2) = 6x5 − 10x4 − 4x3 + 12x2 − 10x + 6 = −246 =⇒ −
+40
+9
+
+g2(−2) =
+
+152
+3
+
+=⇒ +
+
+= +
+
+16
+9
+
+x4 −
+
+x2 −
+
+x3 +
+
+x +
+
+8
+9
+
+8
+3
+
+8
+3
+
+g4(−2) = −
+
+g3(−2) = 18x3 − 36x2 + 18x
+8
+16
+9
+3
+27
+2
+
+g5(−2) = −
+
+40
+9
+27
+2
+
+x2 +
+
+x −
+
+x +
+
+= −324 =⇒ −
+
+= −
+
+= +
+
+56
+3
+81
+2
+
+=⇒ −
+
+=⇒ +
+
+de modo que, de 2.11, tem-se que houve 5 variações, então ˜V(a) = ˜V(−2) = 4.
+E, agora, para x = b = 2, obtemos:
+
+
+
+
+
+
+g0(2) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3 = +5 =⇒ +
+
+g1(2) = 6x5 − 10x4 − 4x3 + 12x2 − 10x + 6 = +34 =⇒ +
+40
+9
+
+g2(2) =
+
+=⇒ +
+
+= +
+
+16
+9
+
+40
+9
+
+x4 −
+
+x2 −
+
+x3 +
+
+x +
+
+8
+9
+
+8
+3
+
+8
+3
+
+g4(2) = −
+
+g3(2) = 18x3 − 36x2 + 18x
+16
+8
+9
+9
+27
+2
+
+40
+9
+27
+2
+
+g5(2) = −
+
+x2 +
+
+x −
+
+x +
+
+= +36 =⇒ +
+
+= −
+
+8
+3
+27
+2
+
+=⇒ −
+
+=⇒ −
+
+= −
+
+36
+
+(2.11)
+
+(2.12)
+
+Veja, que em 2.12, houve apenas uma variação, então ˜V(b) = ˜V(3) = 1.
+
+Como p(a) = P (−2) = 45 (cid:54)= 0 e p(b) = p(2) = 5 (cid:54)= 0, pelo Teorema 17, tem-se
+que p6(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3 possui exatamente 3 raízes reais distintas
+no intervalo (−2, 2), pois
+
+˜V(−2) − ˜V(2) = 4 − 1 = 3.
+
+Construindo o gráﬁco do p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3, veriﬁcamos pela sua
+
+análise que este realmente possui três raízes reais positivas, sendo uma múltipla, uma raiz
+
+real negativa e duas raízes complexas não reais conjugadas.
+
+Figura 2.5: Gráﬁco da função p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3
+exibindo suas três raízes reais distintas.
+
+2.1.3 Uma cota superior para as raízes positivas
+
+Os teoremas de Descartes e Sturm, em geral, fornecem a quantidade de raízes de
+
+um dado polinômio, mas não indicam um intervalo (ou região no plano complexo) onde
+
+procurá-las. Vamos estabelecer alguns resultados nesse sentido.
+
+Teorema 19 (Teorema de Lagrange). Suponha an > 0 e an−k o primeiro coeﬁciente
+negativo. Então
+
+R = 1 + k
+
+(cid:114) B
+an
+
+(2.13)
+
+B:= maior valor absoluto dos coeﬁcientes negativos.
+
+Demonstração. Como queremos um limitante superior R, podemos tomá-lo maior que 1.
+
+37
+
+Então para x > 1:
+
++ an−kxn−k
+p(x) = anxn + an−1xn−1 + · · · + an−k+1xn−k+1
+(cid:125)
+(cid:123)(cid:122)
+(cid:125)
+primeiro coeﬁciente negativo
+
+(cid:124)
+
+(cid:124)
+
+(cid:123)(cid:122)
+coeﬁcientes positivos
++an−k−1xn−k−1 + · · · + a1x + a0
+
++
+
+≥ anxn + an−kxn−k + an−k−1xn−k−1 + · · · + a1x + a0
+≥ anxn − Bxn−k − Bxn−k−1 + · · · − Bx − B
+≥ anxn − B(xn−k + xn−k−1 + · · · + x + 1)
+
+= anxn − B
+
+= anxn − B
+
+=
+
+≥ anxn − B
+xn−k+1
+x − 1
+xn−k+1
+x − 1
+xn−k+1
+x − 1
+
+>
+
+=
+
+xn−k+1 − 1
+x − 1
+
+xn−k+1
+x − 1
+xn−k+1
+x − 1
+
++
+
+B
+x − 1
+
+(cid:2)anxk−1(x − 1) − B(cid:3)
+
+(cid:2)an(x − 1)k−1(x − 1) − B(cid:3)
+
+(cid:2)an(x − 1)k − B(cid:3) .
+
+Queremos garantir p(x) > 0. Esta última inequação é maior que 0 se, e somente se,
+
+an(x − 1)k − B ≥ 0 ⇐⇒ an(x − 1)k ≥ B
+
+⇐⇒ x ≥ 1 + k
+
+(cid:114) B
+an
+
+O corolário a seguir explica porque é suﬁciente estudarmos um limitante positivo
+
+para as raízes positivas de um polinômio e daí tirarmos informação sobre o limitante
+
+inferior positivo, o inferior negativo e o superior negativo das raízes.
+
+Corolário 20. A cota inferior das raízes positivas de p, é o inverso da cota superior
+R1 das raízes positivas do polinômio auxiliar p1(x) = xnp
+
+. Com os polinômios
+
+(cid:19)
+
+(cid:18) 1
+x
+
+auxiliares p2(x) = p(−x) e p3(x) = xnp
+e R3, temos as cotas para as raízes negativas de p. Resumindo, 1
+R1
+
+−
+
+e suas respectivas cotas superiores R2
+
+≤ R+(p) ≤ R e
+
+(cid:18)
+
+(cid:19)
+
+1
+x
+
+−R2 ≤ R–(p) ≤ −
+
+.
+
+1
+R3
+
+Exemplo 9. Vamos determinar as cotas superior e inferior das raízes positivas do po-
+
+linômio p(x) = x5 − 3.7x4 + 7.4x3 − 10.8x − 6.8.
+
+38
+
+Pelo Teorema 19, temos a5 = 1, B = | − 10.8| e 5 − k = 4 =⇒ k = 1, logo
+
+R = 1 + 1
+
+(cid:114) 10.8
+1
+
+= 11.8.
+
+(2.14)
+
+E pelo Corolário 20, temos
+
+p1(x) = x5p
+
+(cid:19)
+
+(cid:18) 1
+x
+(cid:18) 1
+x5 −
+
+= x5
+
+3.7
+x4 +
+
+7.4
+x3 −
+
+10.8
+x
+
+(cid:19)
+
+− 6.8
+
+= −6.8x5 − 10.8x4 + 7.4x2 − 3.7x + 1.
+
+como a5 < 0 de p1(x), estudamos o polinômio q(x) = −p1(x) = 6.8x5 + 10.8x4 − 7.4x2 +
+3.7x − 1 que possui as mesmas raízes de p1(x) e tem coeﬁciente líder positivo, de onde
+segue que q(x) tem a5 = 6.8, B = | − 7.4| = 7.4 e 5 − k = 2 =⇒ k = 3, logo
+
+R1 = 1 + 3
+
+(cid:114) 7.4
+6.8
+
+=⇒
+
+1
+R1
+
+=
+
+1
+(cid:113) 7.4
+6.8
+
+1 + 3
+
+≈ 0.5
+
+(2.15)
+
+Portanto, de 2.14 e 2.15, tem-se que 0.5 < R+(p) ≤ 11.8.
+
+Exemplo 10. Seja p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2. Vamos utilizar o Teorema de
+
+Lagrange para determinar os limitantes superior e inferior das raízes positivas e negativas
+
+de p.
+
+Como para calcular o limitante positivo de p, utilizando o Teorema de Lagrange,
+
+devemos ter an > 0, sendo assim encontrar as raízes da
+
+−x5 + 2x4 − x3 + 2x2 − x − 2 = 0
+
+é equivalente encontrar as raízes da
+
+x5 − 2x4 + x3 − 2x2 + x + 2 = 0,
+
+com isto, considere q(x) = x5 − 2x4 + x3 − 2x2 + x + 2 um polinômio com raízes iguais a
+de p, de onde segue que a5 = 1, B = | − 2| = 2 e 5 − k = 4 =⇒ k = 1. Assim, temos:
+
+R = 1 + 1
+
+(cid:114) 2
+1
+
+= 3.
+
+39
+
+(2.16)
+
+De modo, que R = 3 é o limitante superior das raízes positivas de p.
+
+Agora, para encontrar o limitante inferior das raízes positivas de p, aplicaremos o Corolário
+
+20, assim temos que:
+
+p1(x) = x5q
+
+(cid:19)
+
+(cid:18) 1
+x
+(cid:18) 1
+x5 −
+
+= x5
+
+2
+x4 +
+= 2x5 + x4 − 2x3 + x2 − 2x + 1.
+
+1
+x3 −
+
+2
+x2 +
+
+1
+x
+
+(cid:19)
+
++ 2
+
+de onde segue, a5 = 2, B = | − 2| = 2 e 5 − k = 3 =⇒ k = 2. Sendo assim, obtemos
+
+R1 = 1 + 2
+
+(cid:114) 2
+2
+
+= 2.
+
+(2.17)
+
+Portanto, tem-se de 2.16 e 2.17, que 1
+2
+
+≤ R+(p) ≤ 3.
+
+Por outro lado, para para encontrar os limitantes das raízes negativas de p, basta
+
+aplicar novamente o Corolário 20, de modo que
+
+p2(x) = p(−x)
+
+= x5 + 2x4 + x3 + 2x2 + x − 2
+
+logo, a5 = 1, B = | − 2| = 2 e 5 − k = 0 =⇒ k = 5, de onde segue
+
+R2 = 1 + 5
+
+(cid:114) 2
+1
+
+≈ 2.15,
+
+assim, temos que −R2 ≈ −2.15 é o limitante inferior das raízes negativas de p.
+
+E por último vamos encontrar o limitante superior das raízes negativas, assim
+
+pelo Corolário 20, temos
+
+p3(x) = x5q
+
+(cid:18)
+
+(cid:19)
+
+1
+−
+x
+(cid:18) 1
+(−x)5 −
+
+= x5
+
+2
+(−x)4 +
+
+1
+(−x)3 −
+
+2
+(−x)2 +
+
+1
+−x
+
+(cid:19)
+
++ 2
+
+= 2x5 − x4 − 2x3 − x2 − 2x − x
+
+assim, obtemos que a5 = 2, B = | − 2| = 2 e 5 − k = 4 =⇒ k = 1, logo
+
+R3 = 1 + 1
+
+(cid:114) 2
+2
+
+= 2.
+
+40
+
+de modo que −
+
+1
+R3
+
+= −
+
+1
+2
+
+Portanto, tem-se que −2.15 ≤ R–(p) ≤ −
+
+.
+
+1
+2
+
+é limitante superior das raízes negativas de p.
+
+Figura 2.6: Gráﬁco dos polinômios p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2 e q(x) = −p(x).
+
+Exemplo 11. Seja p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3. Vamos determinar o
+
+número de raízes reais através da Regra dos Sinais de Descartes e também pela sequência
+
+de Sturm. Calcule os limitantes positivos e negativos através do Teorema de Lagrange.
+
+i) inicialmente, pelo Teorema de Descartes, vamos descobrir a quantidade de raízes
+
+positivas e negativas de p.
+
+Veja as variações dos sinais de p
+
+p(x) = x6
+
+(cid:74)−2x5 −x4
+
+(cid:73)+4x3
+
+(cid:72)−5x2
+
+(cid:73)+6x
+
+(cid:74)−3 ,
+
++1
+
++1
+
++1
+
++1
+
++1
+
+com isto, tem-se V(p) = 5, logo
+
+41
+
+(cid:74)
+(cid:73)
+(cid:72)
+(cid:73)
+(cid:74)
+
+
+
+
+
+se V(p) − R+(p) = 0, então R+(p) = 5
+
+ou
+
+se V(p) − R+(p) = 2, então R+(p) = 3
+
+(2.18)
+
+ou
+
+se V(p) − R+(p) = 4, então R+(p) = 1
+
+Agora, para encontrar as raízes negativa, basta tomar p1(x) = p(−x), isto é:
+
+p1(x) = p(−x) = x6 +2x5
+
+(cid:73)−x4 −4x3 −5x2 −6x −3 ,
+
+assim para V(p1) = 1, temos
+
++1
+
+V(p1) − R+(p1) = 0, então R+(p1) = 1 ⇐⇒ R–(p) = 1.
+
+Com, isto, temos que p(x) possui R–(p) = 1 e R+(p) = 1 ou R–(p) = 1 e R+(p) = 3
+ou R–(p) = 1 e R+(p) = 5.
+
+ii) Utilizando o Teorema de Sturm, temos do Exemplo 8, equações 2.10, calculados os
+
+seguintes polinômios da sequência de Sturm para p:
+
+
+
+
+
+
+g0(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3
+
+g1(x) = 6x5 − 10x4 − 4x3 + 12x2 − 10x + 6
+
+g2(x) =
+
+8
+9
+
+x4 −
+
+16
+9
+
+x3 +
+
+8
+3
+
+x2 −
+
+40
+9
+
+x +
+
+8
+3
+
+(2.19)
+
+g4(x) = −
+
+g3(x) = 18x3 − 36x2 + 18x
+8
+16
+9
+3
+27
+2
+
+40
+9
+27
+2
+
+g5(x) = −
+
+x2 +
+
+x −
+
+x +
+
+Com isto, pelo Teorema 17 podemos calcular ˜V(−∞), ˜V(0) e ˜V(+∞) e assim cal-
+cularmos o número exato de raízes negativas e positivas distintas de p. Assim:
+
+42
+
+(cid:73)
+˜V(−∞) = 4
+
+˜V(0) = 3
+
+˜V(+∞) = 1
+
+
+
+
+
+
+g0(−∞) = +
+
+g1(−∞) = −
+
+g2(−∞) = +
+
+g3(−∞) = −
+
+g4(−∞) = −
+
+g5(−∞) = +
+
+
+
+
+
+
+g0(0) = −
+
+g1(0) = +
+
+g2(0) = +
+
+g3(0) = +
+
+g4(0) = −
+
+g5(0) = +
+
+
+
+
+
+
+g0(+∞) = +
+
+g1(+∞) = +
+
+g2(+∞) = +
+
+g3(+∞) = +
+
+g4(+∞) = −
+
+g5(+∞) = −
+
+de onde segue que ˜V(−∞) = 4, ˜V(0) = 3 e ˜V(+∞) = 1. Portanto, pelo Corolário
+18, temos
+
+R+(p) = ˜V(0) − ˜V(+∞) = 3 − 1 = 2
+R–(p) = ˜V(−∞) − ˜V(0) = 4 − 3 = 1
+
+iii) Agora, vamos determinar os limitantes das raízes positivas e negativas de p. Para
+
+isso, utilizaremos o teorema de Lagrange e o corolário 20.
+
+Assim, de p(x) = x6 −2x5 −x4 +4x3 −5x2 +6x−3, tem-se que a6 = 1, B = |−5| = 5
+e 6 − k = 5 =⇒ k = 1, então temos que limitante superior das raízes positivas de p
+
+é
+
+Pelo corolário 20, temos que
+
+R = 1 + 1
+
+(cid:114)5
+1
+
+= 6.
+
+p1(x) = x6p
+
+(cid:19)
+
+(cid:18) 1
+x
+(cid:18) 1
+x6 −
+
+= x6
+
+1
+x4 +
+= −3x6 + 6x5 − 5x4 + 4x3 − x2 − 2x + 1.
+
+4
+x3 −
+
+2
+x5 −
+
+5
+x2 +
+
+− 3
+
+6
+x
+
+(cid:19)
+
+como a6 < 0 de p1(x), estudamos o polinômio
+
+q1(x) = −p1(x) = 3x6 − 6x5 + 5x4 − 4x3 + x2 + 2x + 1
+
+que possuem as mesmas raízes de p1, de onde segue que q1 tem a6 = 3, B = |−6| = 6
+
+43
+
+e 6 − k = 5 =⇒ k = 1, logo
+
+R1 = 1 + 1
+
+(cid:114) 6
+3
+
+= 3,
+
+como, pelo corolário 20, temos 1
+R1
+
+pertence ao intervalo 1
+3
+
+< R+(p) ≤ 6.
+
+≤ R+(p) ≤ R, segue que as raízes positivas de p
+
+Por outro lado, vamos determinar os limitantes das raízes negativas de p. Assim,
+
+pelo corolário 20, temos:
+
+p2(x) = p(−x)
+
+= x6 + 2x5 − x4 − 4x3 − 5x2 − 6x − 3
+
+logo a6 = 1, B = | − 6| = 6 e 6 − k = 4 =⇒ k = 2, de onde segue que o limitante
+inferior das raízes negativas é
+
+R2 = 1 + 2
+
+(cid:114) 6
+1
+
+≈ 3.45 =⇒ −R2 = −3.45.
+
+E por último vamos encontrar o limitante superior das raízes negativas, assim pelo
+
+corolário 20, temos
+
+p3(x) = x6p
+
+(cid:19)
+
+(cid:18)
+
+1
+−
+x
+(cid:18) 1
+x6 +
+
+= x6
+
+1
+x4 −
+= −3x6 − 6x5 − 5x4 − 4x3 − 5x2 + 2x + 1.
+
+4
+x3 −
+
+5
+x2 −
+
+2
+x5 −
+
+− 3
+
+6
+x
+
+(cid:19)
+
+Novamente, como a6 < 0 de p3(x), passamos a estudar o polinômio q3(x) = −p3(x) =
+3x6 + 6x5 + 5x4 + 4x3 + x2 − 2x − 1 que possuem as mesmas raízes de p3, de onde
+segue que q3 tem a6 = 3, B = | − 2| = 2 e 6 − k = 1 =⇒ k = 5, logo o limitante
+superior das raízes negativa é
+
+R3 = 1 + 5
+
+(cid:114) 2
+3
+
+=⇒ −
+
+1
+R3
+
+= −
+
+1
+(cid:113) 2
+3
+
+1 + 5
+
+= −0.52.
+
+Portanto, tem-se que as raízes negativas de p(x) estão limitadas ao intervalo −3.45 <
+R–(p) < −0.52.
+
+Com as informações acima, vamos ver como se comporta o gráﬁco de p.
+
+44
+
+Figura 2.7: Gráﬁco da função p(x) = x6 − 2x5 − x4 + 4x3 − 5x2 + 6x − 3
+exibindo suas três raízes reais distintas. Observe que a
+sequência de Sturm não contabiliza a raiz múltipla.
+
+O teorema seguinte é uma alternativa mais simples de se implementar porém me-
+
+nos precisa que o de Lagrange para calcular um limitante para as raízes de um polinômio.
+
+Teorema 21. Se p(x) = anxn + an−1xn−1 + · · · + a1x + a0 é o polinômio de grau n e se
+
+r = 1 + max
+
+0≤k≤n−1
+
+|ak|
+|an|
+
+então cada zero de p se encontra na região circular deﬁnida por |x| ≤ r.
+
+Demonstração. Sem perda de generalidade, suponha an > 0 e seja A = max
+
+{|ak|}.
+
+0≤k≤n−1
+
+45
+
+Para x > 1, temos
+
+p(x) = anxn + an−1xn−1 + · · · + a1x + a0
+
+≥ anxn − Axn−1 − · · · − Ax − A
+
+= anxn − A(xn−1 + · · · + x + 1)
+
+= anxn − A
+
+xn − 1
+x − 1
+
+= anxn −
+
+Axn
+x − 1
+
++
+
+A
+x − 1
+
+> anxn −
+
+Axn
+x − 1
+
+= xn an(x − 1) − A
+
+x − 1
+
+Para que o último termo da cadeia de inequações acima seja positivo, é necessário e
+
+suﬁciente que an(x − 1) − A > 0, ou seja, x > 1 +
+
+, que é o resultado esperado.
+
+A
+an
+
+Exemplo 12. Vamos utilizar o Teorema 21 para determinar o raio em que as raízes do
+
+p(x) = x3 − x2 + x − 1 estão contidas.
+
+Assim, de p(x), temos n = 3, a0 = −1, a1 = +1, a2 = −1, a3 = 1, logo
+
+|a0|
+|a3|
+
+=
+
+1
+1
+
+= 1,
+
+|a1|
+|a3|
+
+=
+
+1
+1
+
+= 1 e
+
+|a2|
+|a3|
+
+=
+
+1
+1
+
+= 1,
+
+com isso, pelo Teorema 21, temos
+
+r = 1 + max
+0≤k≤2
+
+|ak|
+|a3|
+
+= 1 + max {1, 1, 1} = 1 + 1 = 2.
+
+Daí, tem-se que r = 2. Então, todas as raízes de p(x) se encontram num disco centrado
+
+na origem e com raio 2.
+
+Vamos construir o domínio do polinômio p(x) = x3 − x2 + x − 1 para analisar geometri-
+
+camente as suas raízes no plano complexo.
+
+46
+
+Figura 2.8: Círculo de raio 2 cm.
+
+De fato, os zeros de p(x) são: x1 = 1, x2 = −i e x3 = i.
+
+Exemplo 13. Dado p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2. Vamos calcular o limitantes
+
+das raízes de p(x) utilizando o Teorema 21.
+
+Temos, de p(x), que n = 5, a0 = −2, a1 = −1, a2 = 2, a3 = −1, a4 = 2, a5 = −1,
+
+logo
+
+|a0|
+|a5|
+
+=
+
+2
+1
+
+= 2,
+
+|a1|
+|a5|
+
+=
+
+1
+1
+
+= 1,
+
+|a2|
+|a5|
+
+=
+
+2
+1
+
+= 2,
+
+|a3|
+|a5|
+
+=
+
+1
+1
+
+= 1 e
+
+|a4|
+|a5|
+
+=
+
+2
+1
+
+= 2,
+
+assim, pelo Teorema 21 , temos
+
+r = 1 + max
+0≤k≤4
+
+|ak|
+|a5|
+
+= 1 + max {2, 1, 2, 1, 2} = 1 + 2 = 3.
+
+De onde segue, que r = 3.
+
+Então, todos as raízes de p(x) se encontram num disco centrado na origem e com
+
+raio 3.
+
+A ﬁm de veriﬁcar graﬁcamente a situação das raízes, vamos construir o gráﬁco
+
+do polinômio p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2 para analisar graﬁcamente as suas
+
+respectivas raízes reais.
+
+47
+
+Figura 2.9: Raízes de p(x) = −x5 + 2x4 − x3 + 2x2 − x − 2 e um Círculo de
+raio 3 cm no plano complexo.
+
+2.2 Determinação das Raízes Reais
+
+Para se obter raízes reais de equações polinomiais, pode-se aplicar o Método de
+
+Newton-Raphson estudado anteriormente. Contudo, estas equações surgem tão frequen-
+
+temente que merecem um estudo especial, conforme comentamos no início desta seção.
+
+Estudaremos um processo para se calcular o valor numérico de um polinômio, isto porque,
+
+em qualquer dos métodos, este cálculo deve ser feito uma ou mais vezes por iteração. Por
+
+exemplo, no Método de Newton-Raphson, a cada iteração deve-se fazer uma avaliação do
+
+polinômio e uma de sua derivada.
+
+2.2.1 Método para se calcular o valor numérico de um polinômio
+
+O esforço computacional é medido através do número de operações efetuadas
+
+a cada iteração, da complexidade destas operações, do número de decisões lógicas, do
+
+número de avaliações de função a cada iteração e do número total de iterações.
+
+Para simpliﬁcar, estudaremos o processo analisando um polinômio de grau 6:
+
+p6(x) = a6x6 + a5x5 + a4x4 + a3x3 + a2x2 + a1x + a0.
+
+(2.20)
+
+48
+
+Este polinômio pode ser escrito na forma:
+
+p(x) = (((((a6x + a5) x + a4) x + a3) x + a2) x + a1) x + a0,
+
+(2.21)
+
+conhecida como forma dos parênteses encaixados ou método de Horner.
+
+Deve-se observar que, se o valor numérico de p for calculado pelo processo 2.21, o
+
+número de operações é menor do que pelo processo 2.20. Para um polinomial genérico de
+
+grau n, vemos que, pelo processo 2.21, teremos de efetuar n multiplicações e n adições.
+
+No entanto, pelo processo 2.20, o número de adições é também n mas o número de
+
+multiplicações é
+
+n + (n − 1) + · · · + 2 + 1 =
+
+(1 + n) n
+2
+
+desde que xk seja calculado por
+
+k vezes
+(cid:125)(cid:124)
+
+(cid:122)
+x · x · x · · · x, pois a potenciação calculada desta forma
+
+(cid:123)
+
+introduz erros menores de arredondamento.
+
+Veja que
+
+n + n2
+2
+
+=
+
+n
+2
+
++
+
+n2
+2
+
+> n
+
+se, e somente se, n ≥ 2, isto é, o processo 2.21 efetua realmente um número menor de
+
+operações que o processo 2.20.
+
+Temos então, no caso de n = 6, que
+
+p6(x) = ((((( a6
+(cid:124)(cid:123)(cid:122)(cid:125)
+b6:=
+(cid:124)
+(cid:124)
+(cid:124)
+(cid:124)
+(cid:124)
+(cid:124)
+
+x + a5)
+
+x + a4)
+
+x + a3
+
+)x + a2
+
+)x + a1
+
+)x + a0
+
+(cid:123)(cid:122)
+b5:=
+
+(cid:125)
+
+(cid:123)(cid:122)
+b4:=
+
+(cid:123)(cid:122)
+b3:=
+
+(cid:125)
+
+(cid:125)
+
+(cid:123)(cid:122)
+b2:=
+
+(cid:123)(cid:122)
+b1:=
+
+(cid:123)(cid:122)
+b0:=
+
+(cid:125)
+
+(cid:125)
+
+(cid:125)
+
+Para se calcular o valor numérico de p(x) em x = w, basta fazer sucessivamente:
+
+49
+
+
+
+
+
+
+b6 := a6
+
+b5 := a5 + b6w
+
+b4 := a4 + b5w
+
+b3 := a3 + b4w
+
+b2 := a2 + b3w
+
+b1 := a1 + b2w
+
+b0 := a0 + b1w
+
+logo, p(w) = b0.
+
+Portanto, para p(x) de grau n qualquer, calculamos p(w) calculando as constantes
+
+bk, com k = n, n − 1, n − 2, · · · 2, 1, 0 sucessivamente, sendo:
+
+Algoritmo 1.
+
+
+
+
+
+
+bn = an
+
+bk = ak + bk+1 · w, para k = n − 1, n − 2, · · · , 2, 1, 0
+
+e b0 será o valor de p(x) para x = w.
+
+Como calcular o valor de p(cid:48)(x) em x = w usando os coeﬁcientes bk obtidos ante-
+
+riormente? Tomando como exemplo o polinômio 2.20, temos
+
+p(x) = a6x6 + a5x5 + a4x4 + a3x3 + a2x2 + a1x + a0
+
+então,
+
+p(cid:48)(x) = 6a6x5 + 5a5x4 + 4a4x3 + 3a3x2 + 2a2x + a1.
+
+Para x = w, temos que
+
+b6 = a6
+
+=⇒ a6 = b6
+
+b5 = a5 + b6w
+
+=⇒ a5 = b5 − b4w
+
+b4 = a4 + b5w
+
+=⇒ a4 = b4 − b3w
+
+b3 = a3 + b4w
+
+=⇒ a3 = b3 − b4w
+
+50
+
+b2 = a2 + b3w
+
+=⇒ a2 = b2 − b3w
+
+b1 = a1 + b2w
+
+=⇒ a1 = b1 − b2w
+
+b0 = a0 + b1w
+
+=⇒ a0 = b0 − b1w
+
+Dado que já conhecemos b0, b1, b2, b3, b4, b5, b6, logo:
+
+p(cid:48)(w) = 6a6w5 + 5a5w4 + 4a4w3 + 3a3w2 + 2a2w + a1
+
+= 6b6w5 + 5(b5 − b6w)w4 + 4(b4 − b5w)w3 + 3(b3 − b4w)w2 + 2(b2 − b3w)w+
+
++b1 − b2w
+
+= 6b6w5 − 5b6w5 + 5b5w4 − 4b5w4 + 4b4w3 − 3b4w3 + 3b3w2 − 2b3w2 + 2b2w−
+
+−b2w + b1
+
+daí, temos que p(cid:48)(w) = b6w5 + b5w4 + b4w3 + b3w2 + b2w + b1.
+Aplicando o mesmo esquema anterior, temos
+
+
+
+
+
+
+c6 = b6
+
+c5 = b5 + c6w
+
+c4 = b4 + c5w
+
+c3 = b3 + c4w
+
+c2 = b2 + c3w
+
+c1 = b1 + c2w
+
+Calculamos, pois, os coeﬁcientes ck, com k = n, n − 1, · · · , 1 da seguinte forma:
+
+Algoritmo 2.
+
+
+
+
+
+
+cn = bn
+
+ck = bk + ck+1 · w, para k = n − 1, n − 2, · · · , 2, 1
+
+Donde, teremos p(cid:48)(w) = c1.
+
+2.2.2 Método de Newton-Raphson para raízes de polinômios
+
+Seja p(x) = anxn + an−1xn−1 + · · · + a2x2 + +a1x + a0 e x0 uma aproximação
+inicial para a raiz procurada ξ. Conforme vimos, o Método de Newton-Raphson consiste
+
+51
+
+p(xk)
+em desenvolver aproximações sucessivas para ξ a partir da iteração: xk+1 = xk −
+p(cid:48)(xk)
+Usando as observações anteriores sobre o cálculo de p(xk) e p(cid:48)(xk), construímos o seguinte:
+
+.
+
+Algoritmo 3. Dados a0, a1, · · · , an, coeﬁcientes de p(x), x0 a aproximação inicial, ε1 e
+ε2 precisões desejadas e ﬁxado itmax, o número máximo de iterações que serão permitidas,
+(Ruggiero, 1996, ver).
+
+1) deltax=x0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2)
+
+Para k = 1, 2, · · · , itmax, faca:
+
+b = an
+
+Para i = (n − 1), · · · , 1, faca:
+
+c = b
+
+
+
+
+
+
+
+b = ai + bx
+
+c = b + cx
+
+b = a0 + bx
+Se |b| ≤ ε1 vá para o passo
+deltax = b/c
+
+4
+
+x = x − deltax
+Se |deltax| ≤ ε2 vá para o passo
+
+4
+
+3) Imprimir mensagem de que não houve convergência com
+
+"itmax" iterações.
+
+4) FIM.
+
+Exemplo 14. Dada a equação polinomial x5 − 3.7x4 + 7.4x3 − 10.8x2 + 10.8x − 6.8 = 0,
+
+vamos encontrar uma das raízes aplicando o Método de Newton-Raphson para polinômios.
+
+Temos que
+
+
+
+
+
+
+p5(1) = −2.1
+
+p5(2) =
+
+3.6
+
+Então, pelo Teorema 3, existe pelo menos uma raiz no intervalo (1, 2).
+
+Partindo de x0 = 1.5 e considerando ε1 = ε2 = 10−6, o método de Newton para
+
+52
+
+polinômio fornece:
+
+xk+1 = xk −
+
+p(x)
+p(cid:48)(x)
+
+x1 = 1.50000 −
+
+p(1.5)
+p(cid:48)(1.5)
+
+x2 = 1.7861952862 −
+
+x3 = 1.7107894233 −
+
+x4 = 1.7001874737 −
+
+p(1.7861952862)
+p(cid:48)(1.7861952862)
+p(1.7107894233)
+p(cid:48)(1.7107894233)
+p(1.7001874737)
+p(cid:48)(1.7001874737)
+
+x5 = 1.7000000574 −
+
+p(1.7000000574)
+p(cid:48)(1.7000000574)
+
+= |xk+1 − xk|
+
+= 0.286195286
+
+= 0.075405863
+
+= 0, 001060195
+
+= 0.000187416
+
+10−6
+(cid:122) (cid:125)(cid:124) (cid:123)
+000000 574
+
+= 0.
+
+De modo que xk = x5 = 1.7, f (xk) = 0 e |x5 − x4| = 5.74 · 10−7.
+
+Vamos construir o gráﬁco do polinômio p(x) para analisar geometricamente a
+
+localização desta raiz.
+
+Figura 2.10: Gráﬁcos de p(x) = x5 − 3.7x4 + 7.4x3 − 10.8x2 + 10.8x − 6.8.
+
+Exemplo 15. Dado p(x) = 2x6 − 10.25x5 + 6.875x4 + 14.5x3 + x2 − 2.625x − 3.625. Vamos
+
+utilizar o Método de Newton-Raphsom para determinar uma raiz do p(x).
+
+Solução. Veja que
+
+
+
+
+
+
+p(3) = −286.875
+
+p(4) =
+
+385.875
+
+Então, pelo Teorema 3, existe uma raiz no intervalo (3, 4).
+
+53
+
+Partindo de x0 = 4 e considerando ε1 = ε2 = 10−6, o Método de Newton para
+
+polinômio fornece:
+
+xk+1 = xk −
+
+x1 = 4 −
+
+p(x)
+p(cid:48)(x)
+p(4)
+p(cid:48)(4)
+
+x2 = 3.7631760644 −
+
+x3 = 3.6514291780 −
+
+x4 = 3.6261999698 −
+
+x5 = 3.6250026165 −
+
+x6 = 3.625 −
+
+p(3.625)
+p(cid:48)(3.625)
+
+p(3.7631760644)
+p(cid:48)(3.7631760644)
+p(3.651429178)
+p(cid:48)(3.651429178)
+p(3.6261999698)
+p(cid:48)(3.6261999698)
+p(3.6250026165)
+p(cid:48)(3.6250026165)
+
+= |xk+1 − xk|
+
+= 0.23682336
+
+= 0.111746886
+
+= 0.025229209
+
+= 0.001197533
+
+= 0.000002616
+
+= 0
+
+Assim, temos xk = x6 = 3.625, p(xk) = 0 e |x6 − x5| = 0. Vejamos a localização da raiz
+de p no gráﬁco 2.11 abaixo.
+
+Figura 2.11: Gráﬁcos de p(x) = 2x6 − 10.25x5 + 6.875x4 + 14.5x3 + x2 − 2.625x − 3.625.
+
+Exemplo 16. Consideremos agora p(x) = x3 − 3x + 3 = 0 e ε1 = ε2 = 10−6. A ﬁgura
+2.12 mostra o gráﬁco cartesiano de p.
+
+Vemos assim que x3 − 3x + 3 = 0 tem uma única raiz no intervalo (−3, 1.5).
+
+Executamos o Método de Newton para este polinômio duas vezes:
+
+54
+
+i) com x0 = −0.8, ε1 = ε2 = 10−6, itmax=30;
+
+ii) com x0 = −2, ε1 = ε2 = 10−6, itmax=10
+
+Veja o efeito de tomarmos x0 próximo a um zero da derivada e depois x0 próximo
+
+à raiz:
+
+No caso (i) foi encontrada xk = −2.103801 com |f (xk)| = 2.4 · 10−7 em 17
+
+iterações.
+
+No caso (ii) foi obtida exatamente o mesmo resultado em 3 iterações.
+
+Figura 2.12: Gráﬁco da função p(x) = x3 − 3x + 3.
+
+2.2.3 Algoritmo geral para encontrar raiz de polinômio
+
+Resumindo todos os resultados obtidos nos capítulos 1 e 2, os teoremas de Des-
+
+cartes e Sturm testam a existência e a quantidade de raízes reais de um polinômio com
+
+coeﬁcientes reais. O teorema de Lagrange e seu corolário estabelecem os intervalos no
+
+semi-eixo dos reais negativos e no semi-eixo dos reais positivos onde se encontram essas
+
+raízes. Aplicando o Teorema de Sturm seguidas vezes, é possível isolarmos cada raiz em
+
+seu intervalo. Nessa altura, já é possível aplicarmos o Método de Newton-Raphson para
+
+determinarmos todas as raízes.
+
+Algoritmo 4. Dado p(x) = anxn + · · · + a0 com coeﬁcientes reais:
+
+1) Calcular a sequência de Sturm g0, g1, · · · , gr referente ao polinômio p.
+2) Use a Regra de Descartes ou o Teorema de Sturm em R para garantir a existência de
+
+55
+
+raízes.
+
+3) Se existe raiz, use o Teorema de Lagrange para encontrar um intervalo em que elas
+
+estão contidas.
+
+4) Se existe mais de uma raiz, divida o intervalo em dois e use o teorema de Sturm em cada
+
+um para testar se elas estão isoladas. Repita esse passo a quantidade de vezes necessária
+
+para isolar cada raiz em seu intervalo.
+
+5) Use o Método de Newton-Raphson em cada intervalo que contenha uma raiz de p.
+
+56
+
+Capítulo 3
+
+Polinômios Simétricos
+
+Neste capítulo, exploramos algumas propriedades algébricas dos polinômios. Das
+
+relações de Girard, surgem os polinômios simétricos elementares. Então exploramos os
+
+polinômios simétricos do anel dos polinômios em várias variáveis reais simbolizado por
+
+R[x1, · · · , xn]. Uma demonstração do Teorema Fundamental dos Polinômios Simétricos
+de Isaac Newton é dada. Para isso, estabelecemos o importante conceito de ordem lexi-
+
+cográﬁca de modo a deﬁnir claramente um coeﬁciente líder dentro de um polinômio. A
+
+referência básica para este capítulo é Muniz Neto (2012).
+
+Deﬁnição 6. Um polinômio p ∈ R[x1, · · · xn] é simétrico quando
+
+p (x1, x2, · · · , xn) = p (xσ1, xσ2, · · · , xσn)
+
+para toda permutação σ de In = {1, 2, 3, ..., n}.
+
+Para entender melhor a deﬁnição acima, considere os polinômios p, q ∈ R[x, y, z]
+
+dados por
+
+
+
+
+
+
+p (x, y, z) = x3 + y3 + z3 − 3x2yz − 3xy2z − 3xyz2 + xyz
+
+e
+
+q (x, y)
+
+= x3 + y3 − x.
+
+O primeiro polinômio é simétrico , uma vez que
+
+57
+
+p (x, y, z) = x3 + y3 + z3 − 3x2yz − 3xy2z − 3xyz2 + xyz = p(x, z, y)
+
+= p(y, x, z)
+
+= p(y, z, x)
+
+= p(z, x, y)
+
+= p(z, y, x)
+
+mas o segundo polinômio não é, pois
+
+q (x, y) = x3 + y3 − x (cid:54)= q (y, x) .
+
+3.1 Polinômios Simétricos Elementares
+
+Esse conjunto de polinômios simétricos, ditos elementares, merece especial aten-
+
+ção. Explicitamos tais polinômios na deﬁnição a seguir.
+
+Deﬁnição 7. Para 0 ≤ j ≤ n, o j-ésimo polinômio simétrico elementar nas variáveis
+x1, · · · xn, denotado sj = sj (x1, · · · xn), é deﬁnido como
+
+sj (x1, · · · xn) =
+
+
+
+
+
+1,
+
+n
+(cid:88)
+
+1≤i1<···<ij
+
+se
+
+j = 0
+
+xi1xi2 · · · xij , se
+
+1 ≤ j ≤ n,
+
+ou seja,
+
+s0 = 1
+
+n
+(cid:88)
+
+xi = x1 + x2 + · · · + xn
+
+i=1
+n
+(cid:88)
+
+1≤i<j
+
+xixj = x1x2 + x1x3 + · · · + xn−1xn
+
+n
+(cid:88)
+
+1≤j1<j2···jk
+
+xj1xj2 · · · xjk
+
+s1 =
+
+s2 =
+...
+
+sk =
+...
+
+sn = x1x2 · · · xn.
+
+De modo particular, para polinômios de duas, três e quatro variáveis temos:
+
+58
+
+1. Para n = 2, temos:
+
+2. Para n = 3, temos:
+
+
+
+
+
+
+s0(x1, x2) = 1
+
+s1(x1, x2) = x1 + x2
+
+s2(x1, x2) = x1x2
+
+
+
+
+
+
+s0(x1, x2, x3) = 1
+
+s1(x1, x2, x3) = x1 + x2 + x3
+
+s2(x1, x2, x3) = x1x2 + x1x3 + x2x3
+
+s3(x1, x2, x3) = x1x2x3
+
+(3.1)
+
+(3.2)
+
+3. Para n = 4, temos:
+
+
+
+
+
+
+s0(x1, x2, x3, x4) = 1
+
+s1(x1, x2, x3, x4) = x1 + x2 + x3 + x4
+
+s2(x1, x2, x3, x4) = x1x2 + x1x3 + x1x4 + x2x3 + x2x4 + x3x4
+
+(3.3)
+
+s3(x1, x2, x3, x4) = x1x2x3 + x1x2x4 + x1x3x4 + x2x3x4
+
+s4(x1, x2, x3, x4) = x1x2x3x4
+
+De um modo geral, para n variáveis, existem n + 1 polinômios simétricos.
+
+Por outro lado, a importância dos polinômios simétricos elementares reside na
+
+proposição a seguir, sendo as relações do corolário 23 conhecidas como as Relações de
+
+Girard entre coeﬁcientes e raízes de um polinômio unidimensional.
+
+Exemplo 17. Observe a relação entre os polinômios simétricos elementares σj de três
+variáveis e os polinômios simétricos sj de quatro variáveis:
+
+i) para n = 3, temos
+
+
+
+
+
+
+σ1 = x1 + x2 + x3
+
+σ2 = x1x2 + x1x3 + x2x3
+
+σ3 = x1x2x3
+
+59
+
+(3.4)
+
+ii) para n = 4, temos
+
+
+
+
+
+
+s1 = x1 + x2 + x3 + x4
+
+s2 = x1x2 + x1x3 + x1x4 + x2x3 + x2x4 + x3x4
+
+(3.5)
+
+s3 = x1x2x3 + x1x2x4 + x1x3x4 + x2x3x4
+
+s4 = x1x2x3x4
+
+Assim obtemos
+
+
+
+
+
+
+s1 = σ1 + x4
+
+= x1 + x2 + x3 + x4
+
+s2 = σ2 + x4σ1 = x1x2 + x1x3 + x1x4 + x2x3 + x2x4 + x3x4
+
+s3 = σ3 + x4σ2 = x1x2x3 + x1x2x4 + x1x3x4 + x2x3x4
+
+s4 = x4σ3
+
+= x1x2x3x4
+
+A ﬁm de demonstrar o lema a seguir, considere sj = sj(x1, x2, · · · , xn) os polinô-
+mios simétricos em n variáveis e σj = σj(x1, x2, · · · , xn−1) os polinômios simétricos em
+n − 1 variáveis. Com isto, podemos escrever as seguintes relações:
+
+s1 = σ1 + xn
+
+s2 = σ2 + xnσ1,
+
+s3 = σ3 + xnσ2,
+
+...
+
+sj = σj + xnσj−1,
+
+...
+
+sn−1 = σn−1 + xnσn−2,
+
+sn = xnσn−1
+
+(3.6)
+
+Lema 22. Sejam x1, · · · , xn ∈ R raízes do polinômio
+
+p(x) = (x − x1)(x − x2) · · · (x − xn).
+
+(3.7)
+
+Então podemos escrever
+
+p(x) = xn − s1xn−1 + · · · + (−1)jsjxx−j + · · · + (−1)nsn
+
+(3.8)
+
+60
+
+onde sj(x1, · · · , xn) ∈ R[x1, · · · , xn], com j = 1, · · · , n.
+
+Demonstração. A prova será feita por indução sobre n. Para n = 1 é imediato e para
+
+n = 2, o lema é válido pois:
+
+(x − x1)(x − x2) = x2 − xx2 − xx1 + x1x2
+= x2 − (x1 + x2)x + x1x2
+= x2 − s1x + s2
+
+(3.9)
+
+Agora, suponhamos que o lema seja verdadeiro para um certo n = k, assim
+
+mostremos que pra n = k + 1 ela também é verdadeira. Com efeito, multiplicando f (x)
+por (x − xk+1), obtemos que
+
+p(x)(x − xk+1) = (x − x1)(x − x2) · · · (x − xk)(x − xk+1)
+
+= x(x − x1)(x − x2) · · · (x − xk) − xk+1(x − x1)(x − x2) · · · (x − xk).
+
+Além disso, considerando que 3.8 também seja verdadeira nas indeterminadas x1, x2, · · · , xk,
+temos
+
+p(x)(x − xk+1) = x
+
+(cid:16)
+
+xk − σ1xk−1 + · · · + (−1)kσk
+
+(cid:17)
+
+(cid:16)
+
+− xk+1
+
+xk − σ1xk−1 + · · · + (−1)kσk
+
+(cid:17)
+
+= xk+1 − σ1xk + · · · + (−1)kσkx
+
+−xk+1xk + σ1xk+1xk−1 + · · · + (−1)k+1σkxk+1
+
+= xk+1 − (σ1 + xk+1)xk + · · · + (−1)k(σk + σk−1xk+1)x + (−1)k+1σkxk+1
+
+pelas relações 3.6, tem-se que sj = σj + xnσj−1 para todo 1 ≤ j ≤ k e sk+1 = σkxk+1,
+de modo que podemos substitui, cada σj + xk+1σj−1, na última equação acima, por sj.
+Assim, obtemos
+
+p(x)(x − xk+1) = xk+1 − s1xk + s2xk−1 · · · + (−1)k+1sk+1.
+
+(3.10)
+
+Mostrando, assim que o Lema 22 é válido para n = k + 1, ou seja:
+
+(x − x1)(x − x2) · · · (x − xn)(x − xk+1) = xk+1 − s1xk + 2xk−1 · · · + (−1)k+1sk+1.
+
+Portanto, pelo principio de indução matemática, tem-se que o lema 22 e válido para todo
+
+61
+
+n natural.
+
+Corolário 23 (Relações de Girard). Se p(x) = anxn + · · · a1x + a0 ∈ R[x] \ R, an (cid:54)= 0,
+com raízes x1, · · · , xn, então, para 1 ≤ j ≤ n, temos
+
+sj (x1, · · · , xn) = (−1)n an−j
+an
+
+(3.11)
+
+Exemplo 18. A ﬁm de ilustrar o que a corolário acima o que diz, considere as raízes
+
+complexas α, β e γ do polinômio p(x) = x3 − 2x2 + 1.
+
+Pelas Relações de Girard, temos
+
+α + β + γ = 2
+
+αβ + αγ + βγ = 0
+
+αβγ = −1.
+
+(3.12)
+
+(3.13)
+
+(3.14)
+
+Porém, vale observar que tais relações não trazem informações suﬁciente para calcularmos
+
+α, β e γ. De fato, ao tentarmos resolver o sistema formado pelas igualdades anteriores,
+
+recaímos nas equações polinomiais p(α) = 0, p(β) = 0 e p(γ) = 0. Senão, vejamos
+
+multiplicando ambos os membros de 3.13 por α, obtemos
+
+ou seja,
+
+α2β + α2γ + αβγ = 0,
+
+α2(β + γ) + αβγ = 0
+
+de onde segue de 3.12 que β + γ = 2 − α e de 3.14 que αβγ = −1, logo substituindo na
+
+última equação, obtemos
+
+α2(2 − α) − 1 = 0,
+
+ou seja, a equação obtida em α é equivalente à expressão dada em x e em nada facilitou
+
+o cálculo das raízes. Porém, observando que uma raiz é α = 1, substituindo o valor de α
+
+em 3.12 e 3.14, obtemos as outras duas β =
+
+√
+
+1 +
+2
+
+5
+
+e γ =
+
+√
+5
+
+.
+
+1 −
+2
+
+62
+
+3.2 Teorema Fundamental dos Polinômios Simétricos
+
+Uma questão fundamental na teoria dos polinômios simétricos é saber se é possível
+
+gerá-los como funções dos polinômios simétricos elementares. O Teorema Fundamental
+
+dos Polinômios Simétricos, de Isaac Newton, assegura uma resposta positiva sobre essa
+
+questão. O algoritmo de van der Waerden estabelece um mecanismo para isso.
+
+Agora, vejamos alguns exemplos de como expressar polinômios simétricos não
+
+elementares em função de simétricos elementares.
+
+Exemplo 19. Seja o polinômio p(x, y) = x2 + y2 ∈ R[x, y]. Vamos escrever o polinômio
+
+p em termos dos Polinômios Simétricos Elementares.
+
+Tem-se que
+
+x2 + y2 = (x + y)2 − 2xy, (pela deﬁnição de polinômios simétricos, temos)
+
+= s2
+
+1 − 2s2.
+
+Com isto, temos que p(x, y) = f (s1, s2) = s2
+polinômio nas variáveis s1 e s2.
+
+1 − 2s2, onde s1 = x + y e s2 = xy, e f é um
+
+Exemplo 20. Dado p(x, y) = x4 + y4 + x2y + xy2 + 6xy ∈ R[x, y]. Vamos reescrever p
+
+em função dos termos dos Polinômios Simétricos Elementares.
+
+Fatorando a expressão,
+
+x4 + y4 + x2y + xy2 + 6xy = x4 + y4 + xy(x + y) + 6xy.
+
+(3.15)
+
+Por outro lado, pelo binômio de Newton, temos
+
+(x + y)4 = x4 + 4x3y + 6x2y2 + 4xy3 + y4
+
+= x4 + y4 + xy(4x2 + 4y2 + 6xy)
+
+de onde segue, que
+
+x4 + y4 = (x + y)4 − xy (cid:0)4(x2 + y2) + 6xy(cid:1) .
+
+(3.16)
+
+63
+
+Também do binômio de Newton,
+
+x2 + y2 = (x + y)2 − 2xy.
+
+(3.17)
+
+Portanto, substituindo 3.17 em 3.16 e, logo depois, substituindo o resultado em 3.15,
+
+obtemos a seguinte expressão em função dos polinômios simétricos elementares:
+
+x4 + y4 + x2y + xy2 + 6xy = (x + y)4 − xy (cid:0)4(x + y)2 − 2xy(cid:1) + xy(x + y) + 6xy
+
+= (x + y)4 − xy (cid:0)4(x + y)2 − (x + y) − 2xy(cid:1) + 6xy
+= s4
+
+(cid:1) + 6s2
+
+1 − s1 − 2s2
+
+1 − s2
+
+(cid:0)4s2
+
+que é um polinômio nas variáveis s1 e s2.
+
+Exemplo 21. Seja o polinômio p(x, y, z) = 3x2 + 3y2 + 3z2 + xyz ∈ R[x, y, z]. Vamos
+
+escrever p em termos dos Polinômios Simétricos Elementares.
+
+Tem-se que
+
+veja que
+
+de onde segue
+
+3x2 + 3y2 + 3z2 + xyz = 3(x2 + y2 + z2) + xyz
+
+(3.18)
+
+(x + y + z)2 = (x + y)2 + 2(x + y)z + z2
+
+= x2 + 2xy + y2 + 2xz + 2yz + z2
+
+= x2 + y2 + z2 + 2(xy + xz + yz)
+
+x2 + y2 + z2 = (x + y + z)2 − 2(xy + xz + yz)
+
+(3.19)
+
+Portanto, substituindo 3.19 em 3.18, obtemos a seguinte expressão em função dos polinô-
+
+mios simétricos elementares:
+
+3x2 + 3y2 + 3z2 + xyz = 3 (cid:0)(x + y + z)2 − 2(xy + xz + yz)(cid:1) + xyz
+
+= 3s2
+
+1 − 6s2 + s3.
+
+O Teorema dos Polinômios Simétricos de Isaac Newton garante que esse tipo de
+
+transformação sempre é possível. A ﬁm de demonstrá-lo, apresentaremos inicialmente
+
+algumas deﬁnições que servirão como base. A deﬁnição a seguir sugere uma forma de
+
+ordenarmos os monômios dentro de um polinômio de múltiplas variáveis.
+
+64
+
+Deﬁnição 8. Dados dois monômios a(i)xi1
+escrevemos
+
+1 xi2
+
+2 · · · xin
+
+n e b(j)xj1
+
+1 xj2
+
+2 · · · xjn
+
+n em R[x1, x2, · · · , xn],
+
+a(i)xi1
+
+1 xi2
+
+2 · · · xin
+
+n (cid:31) b(j)xj1
+
+1 xj2
+
+2 · · · xjn
+n
+
+se a lista dos expoentes (i1, i2, · · · , in) é lexicograﬁcamente maior que a lista (j1, j2 · · · , jn),
+ou seja, se existe v tal que i1 = j1, ..., iv−1 = jv−1 e iv > jv.
+
+Além disso, dentro de um mesmo polinômio, o monômio de maior ordem lexico-
+
+gráﬁca é denominado monômio ou termo líder.
+
+Proposição 24. Se a(i)xi1
+p ∈ R[x1, x2, · · · , xn], então i1 ≥ i2 ≥ · · · ≥ in.
+
+2 · · · xin
+n
+
+1 xi2
+
+corresponde ao termo líder do polinômio simétrico
+
+Demonstração. Suponhamos que i1 seja o maior expoente encontrado em p. Como p é um
+aparece em algum monômio. Dentre
+polinômio simétrico, temos certeza que a variável xi1
+1
+
+, escolha, dentre as outras variáveis, uma com expoente
+
+os monômios que contêm xi1
+1
+máximo, digamos i2. O argumento de que p é simétrico impõe que existe um monômio
+em p que contém xi1
+com i1 ≥ i2. Agora, temos que o termo líder de p contêm
+e devemos repetir este processo mais n − 2 vezes até chegarmos ao termo líder
+1 xi2
+xi1
+2
+a(i)xi1
+
+, com i1 ≥ i2 ≥ · · · ≥ in.
+
+1 xi2
+
+2 · · · xin
+n
+
+1 xi2
+
+2
+
+n ∈ R[x1, · · · , xn], a(i) (cid:54)= 0, o monômio líder de um
+Proposição 25. Seja a(i)xi1
+polinômio simétrico p ∈ R[x1, x2, · · · , xn]. O monômio em R[s1, s2, · · · , sn] deﬁnido por
+
+2 · · · xin
+
+1 xi2
+
+g(s1, s2, · · · , sn) = a(i)si1−i2
+
+1
+
+si2−i3
+2
+
+· · · sin−1−in
+n−1
+
+sin
+n ,
+
+(3.20)
+
+onde si, i = 1, 2, · · · , n, são os polinômios simétricos elementares, é um polinômio simé-
+trico nas variáveis x1, ..., xn e seu monômio líder é o mesmo que de p.
+
+Demonstração. Da proposição anterior, i1 ≥ i2 ≥ · · · ≥ in, portanto os expoentes de g são
+inteiros não nulos. É fácil ver que, fazendo a mudança de variáveis, o monômio g se torna
+um polinômio simétrico nas variáveis x1, · · · , xn já que é um monômio cujas variáveis são
+polinômios elementares.
+
+Vamos desenvolver 3.20 em função das indeterminadas x1, · · · , xn.
+
+g = a(i)
+
+(cid:32) n
+
+(cid:88)
+
+xi
+
+i
+
+(cid:33)i1−i2 (cid:32) n
+
+(cid:88)
+
+(cid:33)i2−i3
+
+xixj
+
+· · · (x1x2 · · · xn)in.
+
+(3.21)
+
+1≤i<j
+
+65
+
+Agora, para obtermos o termo líder de g, devemos destacar, no somatório 3.21, o produto
+
+a(i)xi1−i2
+1
+
+(x1x2)i2−i3 (x1x2x3)i3−i4 · · · (x1x2 · · · xn)in .
+
+(3.22)
+
+Assim, agrupando as indeterminadas x1, x2, · · · , xn em 3.22, obtemos
+
+a(i)xi1−i2+i2−i3+···+in
+
+1
+
+xi2−i3+i3−i4+···+in
+2
+
+· · · xin
+n
+
+(3.23)
+
+Logo, o termo líder de p é igual ao termo líder de g.
+
+Exemplo 22. Seja o polinômio simétrico p(x, y, z) = (x + y)(x + z)(y + z) ∈ R[x, y, z].
+
+Vamos escrever o polinômio p em função dos polinômios simétricos elementares, utilizando
+
+a Deﬁnição 8 e as proposições 25 e 24.
+
+Temos que
+
+p(x, y, z) = (x + y)(x + z)(y + z)
+
+= x2y + x2z + xy2 + 2xyz + y2z + xz2 + yz2,
+
+(3.24)
+
+logo, pela Deﬁnição 8, o termo líder do polinômio 3.24 é o monômio x2y, pois
+
+2,1,0
+(cid:122)(cid:125)(cid:124)(cid:123)
+x2y (cid:31)
+
+2,0,1
+(cid:122)(cid:125)(cid:124)(cid:123)
+x2z (cid:31)
+
+1,2,0
+(cid:122)(cid:125)(cid:124)(cid:123)
+xy2 (cid:31)
+
+1,1,1
+(cid:122)(cid:125)(cid:124)(cid:123)
+x1yz (cid:31)
+
+1,0,2
+(cid:122)(cid:125)(cid:124)(cid:123)
+xz2 (cid:31)
+
+0,2,1
+(cid:122)(cid:125)(cid:124)(cid:123)
+y2z (cid:31)
+
+0,1,2
+(cid:122)(cid:125)(cid:124)(cid:123)
+yz2 .
+
+Vamos construir o monômio g1(s1, s2, s3) ∈ R[s1, s2, s3] de tal modo que, ao fazermos
+mudança de variáveis, o seu termo líder seja igual ao termo líder de p. Como o termo
+
+líder de p é x2y1z0, pela Proposição 25, temos
+
+g1 = si1−i2
+= s2−1
+
+1
+
+si2−i3
+2
+s1−0
+2
+
+s0
+3
+
+1
+
+sin
+3
+
+(3.25)
+
+= s1s2
+
+= (x + y + z)(xy + xz + yz)
+
+assim, desenvolvendo 3.25, obtemos
+
+g1 = x2y + x2z + xy2 + 3xyz + xz2 + y2z + yz2
+
+(3.26)
+
+A ideia agora é construirmos o polinômio f1 = p − g1, que é simétrico e com coeﬁciente
+
+66
+
+líder lexicograﬁcamente menor que p:
+
+f1 = p − g1
+
+= x2y + x2z + xy2 + 2xyz + y2z + xz2 + yz2 − (x2y + x2z + xy2 + 3xyz + xz2+
+
++y2z + yz2)
+
+= −xyz.
+
+Como f1 (cid:54)= 0, então devemos repetir o processo acima. Assim, como −x1y1z1 é o termo
+líder de f1, logo, pela Proposição 25, temos
+
+(3.27)
+
+sin
+3
+
+g2 = −s(i1−i2)
+= −s(1−1)
+
+1
+
+s(i2−i3)
+2
+s(1−1)
+2
+
+s1
+3
+
+1
+= −s0
+1s0
+
+2s1
+3
+
+= −(x + y + z)0(xy + xz + yz)0(xyz)1
+
+= −xyz.
+
+Agora, calculamos f2 = f1 − g2, obtendo
+
+f2 = f1 − g2
+
+= −xyz + xyz
+
+= 0.
+
+Como f2 = 0, então isso encerra o algoritmo. Obtemos então o seguinte sistema:
+
+Somando as equações, obtemos
+
+
+
+
+
+
+f1 = p − g1
+
+f2 = f1 − g2.
+
+p = g1 + g2.
+
+(3.28)
+
+(3.29)
+
+(3.30)
+
+(3.31)
+
+Portanto, substituindo 3.25 e 3.28 em 3.31, obtemos p em função dos polinômios simétricos
+
+elementares, isto é:
+
+ou seja,
+
+p = s1s2 − s3,
+
+(3.32)
+
+p(x, y, z) = (x + y)(x + z)(y + z) = (x + y + z)(xy + xz + yz) − xyz.
+
+67
+
+Esse é o denominado algoritmo de Van der Waerden. A explicação para o funcio-
+
+namento é que sempre que calculamos o polinômio fi = fi−1 − gi, para fi−1 (cid:54)= 0, ele possui
+termo líder menor (lexigraﬁcamente) que fi−1 e, assim, para cada próximo passo, o termo
+líder diminui e, como existe uma quantidade ﬁnita de monômios lexigraﬁcamente menores
+
+que o termo líder p, garantimos que o algoritmo se encerra. Portanto, para algum r ≥ 0,
+temos no processo que fr = 0. Deste modo, organizando cada uma das etapas, obtemos
+o seguinte sistema:
+
+
+
+
+
+
+f1 = p − g1
+
+f2 = f1 − g2
+
+...
+
+fr = fr−1 − gr
+
+Adicionar membro a membro as etapas acima, obtemos
+
+(cid:0)(cid:0)f1 + (cid:0)(cid:0)f2 + (cid:0)(cid:0)f3 + · · · + (cid:8)(cid:8)(cid:8)fr−1 + fr = p + (cid:0)(cid:0)f1 + (cid:0)(cid:0)f2 + · · · + (cid:8)(cid:8)(cid:8)fr−1 − (g1 + g2 + · · · + gr),
+
+e como fr = 0, então obtemos o polinômio p em função dos polinômios g1, g2, · · · , gr.
+Logo,
+
+p = g1 + g2 + · · · + gr,
+
+onde cada gi(s1, s2, · · · , sn) ∈ R[s1, s2, · · · , sn] é um monômio cujas variáveis são po-
+linômios simétricos elementares. Resumidamente, conseguimos construir um polinômio
+
+f ∈ R[s1, · · · , sn], f = g1 + g2 + · · · gr tal que p(x1, · · · , xn) = f (s1, · · · , sn). Esta é
+basicamente a demonstração do seguinte teorema devido a Isaac Newton:
+
+Teorema 26 (Teorema Fundamental dos Polinômios Simétricos). Seja p ∈ R[x1, · · · , xn]
+um polinômio simétrico. Então, existe f ∈ R[s1, · · · , sn] tal que
+
+p(x1, x2, · · · , xn) = f (s1, s2, · · · , sn),
+
+onde sj é o j−ésimo polinômio simétrico elementar nas indeterminadas x1, · · · , xn.
+
+68
+
+3.3 Somas de Newton
+
+Uma ferramenta bastante útil na resolução de problemas algébricos de fatoração,
+
+na resolução de sistemas de equações não lineares, na resolução de algumas equações
+
+algébricas são as funções polinomiais simétricas, que apesar de seu grande poder algébrico
+
+são pouco divulgadas entre os nossos alunos. A ﬁnalidade deste seção é mostrar como
+
+estas ferramentas podem ser úteis na resolução de alguns problemas olímpicos.
+
+Teorema 27 (Somas de Newton). Seja p(x) = anxn + an−1xn−1 + · · · + a1x + a0 ∈ R[x],
+n, k ≥ n, a soma das
+an (cid:54)= 0, com raízes r1, r2, · · · , rn. Seja Sk = rk
+k−ésimas potências das raízes. Então,
+
+2 + · · · + rk
+
+1 + rk
+
+anSk + an−1Sk−1 + · · · + a1Sk−(n−1) + a0Sk−n = 0.
+
+(3.33)
+
+Em particular, se k = n, temos anSn + an−1Sn−1 + · · · + a1S1 + na0 = 0.
+
+Demonstração. Como r1, r2, · · · , rn são raízes da equação p(x) = 0, montamos o sistema
+
+
+
+
+
+
+anrn
+
+1 + an−1rn−1
+
+1 + · · · + a1r1 + a0 = 0,
+
+2 + an−1rn−1
+
+2 + · · · + a1r2 + a0 = 0,
+
+anrn
+...
+
+anrn
+
+n + an−1rn−1
+
+n + · · · + a1rn + a0 = 0.
+
+Multiplicando as equações acima, respectivamente, por rk−n
+
+1
+
+, rk−n
+2
+
+, · · · , rk−n
+
+n
+
+, ob-
+
+temos
+
+
+
+
+
+
+anrk
+
+1 + an−1rk−1
+
+1 + · · · + a1rk−(n−1)
+
+1
+
+2 + an−1rk−1
+
+2 + · · · + a1rk−(n−1)
+
+2
+
+anrk
+...
+
+anrk
+
+n + an−1rk−1
+
+n + · · · + a1rk−(n−1)
+
+n
+
++ a0rk−n
+
+1 = 0,
+
++ a0rk−n
+
+2 = 0,
+
++ a0rk−n
+
+n = 0.
+
+Somando todas equações acima encontramos
+
+an
+
+(cid:0)rk
+
+1 + · · · + rk
+n
+
+(cid:1) + an−1
+
+(cid:0)rk−1
+
+1 + · · · + rk−1
+
+n
+
+(cid:1) + · · · + a0
+
+(cid:0)rk−n
+
+1 + · · · + rk−n
+
+n
+
+(cid:1) = 0
+
+Como Sk = rk
+
+1 + rk
+
+2 + · · · + rk
+n
+
+, obtemos o resultado desejado.
+
+69
+
+Corolário 28. Nas condições do Teorema 27, vale a recorrência
+
+Sk − s1Sk−1 + · · · + (−1)jsjSk−(n−j) + · · · (−1)nsnSk−n = 0,
+
+onde k ≥ n e sj são os polinômios simétricos elementares nas variáveis r1, r2, · · · , rn.
+Em particular, quando k = n, temos
+
+Sn − s1Sn−1 + · · · + (−1)nsnS0 = 0
+
+e S0 = n.
+
+Demonstração. Como an (cid:54)= 0, então podemos dividir a equação 3.33 por an e usar as
+Relações de Girard: sj = (−1)j an−j
+an
+
+.
+
+Corolário 29. Seja p(x) = anxn + an−1xn−1 + · · · + a1x + a0 com ana0 (cid:54)= 0. Sejam
+r1, r2, · · · , rn suas raízes e considere
+
+Tk =
+
+1
+rk
+1
+
++
+
+1
+rk
+2
+
++ · · ·
+
+1
+rk
+n
+
+,
+
+com k ≥ n.
+
+Então:
+
+a0Tk + a1Tk−1 + · · · + an−1T k − (n − 1) + anTk−n.
+
+(3.34)
+
+(3.35)
+
+Demonstração. A hipótese a0 (cid:54)= 0 implica que todas as raízes são não nulas e, portanto,
+invertíveis. Observe que
+
+(cid:19)
+
+(cid:18) 1
+x
+
+p
+
+=
+
+an
+xn +
+
+an−1
+xn−1 + · · · +
+
+a1
+x
+
++ a0.
+
+(3.36)
+
+Multiplicando 3.36 por xn, obtemos
+
+xnp
+
+(cid:19)
+
+(cid:18) 1
+x
+
+= an + an−1x + · · · + a1xn−1 + a0xn,
+
+(3.37)
+
+ou seja, esse é um polinômio cujos coeﬁcientes estão na ordem reversa em relação aos
+
+coeﬁcientes de p. Vamos denota-lo de q(x). Observe que as raízes de q(x) são os inversos
+1
+r1
+
+, pois q(x) = xnp
+
+(cid:18) 1
+x
+
+, 1
+r2
+
+, · · · ,
+
+, logo
+
+1
+rn
+
+(cid:19)
+
+70
+
+(cid:19)
+
+(cid:18) 1
+ri
+
+q
+
+(cid:19)n
+
+(cid:32)
+
+p
+
+(cid:19)n
+
+(cid:33)
+
+1
+1
+ri
+
+p (ri)
+
+(cid:18) 1
+ri
+(cid:18) 1
+ri
+
+=
+
+=
+
+= 0.
+
+(3.38)
+
+Então aplicando o Teorema de 27 para o polinômio q temos o resultado.
+
+Exemplo 23. Seja p(x) = ax2 + bx + c com raízes r1 e r2. Vamos obter uma fórmula
+para Sk = rk
+
+.
+
+1 + rk
+2
+
+Como r1 e r2 são raízes da equação p(x) = 0, então podemos escrever
+
+
+
+
+ar2
+
+1 + br1 + c = 0
+
+
+
+ar2
+
+2 + br2 + c = 0.
+
+Somando a duas equações acima obtemos
+
+a (cid:0)r2
+
+1 + r2
+2
+
+(cid:1) + b (r1 + r2) + 2c = 0.
+
+Agora, pelo Teorema 27, temos que
+
+
+
+
+
+
+S0 = r0
+
+1 + r0
+
+2 = 2
+
+S1 = r1 + r2
+
+S2 = r2
+
+1 + r2
+2.
+
+(3.39)
+
+(3.40)
+
+(3.41)
+
+Assim, substituindo as equações do sistema 3.41 na equação 3.40, obtemos
+
+aS2 + bS1 + cS0 = 0
+
+Por outro lado, para encontrar Sk basta multiplicar por rk−2
+equações do sistema 3.39. Assim, obtemos o seguinte sistema
+
+1
+
+e rk−2
+2
+
+, respectivamente, as
+
+
+
+
+
+
+ark
+
+1 + brk−1
+
+1 + crk−2
+
+1 = 0
+
+(3.42)
+
+ark
+
+2 + brk−1
+
+2 + crk−2
+
+2 = 0.
+
+71
+
+Em seguida, somando a duas equações acima temos
+
+a (cid:0)rk
+
+1 + rk
+2
+
+(cid:1) + b (cid:0)rk−1
+
+1 + rk−1
+
+2
+
+(cid:1) + c (cid:0)rk−2
+
+1 + rk−2
+
+2
+
+(cid:1) = 0,
+
+ou seja,
+
+isto é,
+
+a
+
+aSk + bSk−1 + cSk−2 = 0,
+
+Sk = −
+
+b
+a
+
+Sk−1 −
+
+c
+a
+
+Sk−2.
+
+(3.43)
+
+Portanto, pelas Relações de Girard (Corolário 23), tem-se que 3.43 é equivalente
+
+Sk = s1Sk−1 − s2Sk−2,
+
+onde s1 = r1 + r2, s2 = r1r2, Sk−1 = rk−1
+
+1 + rk−1
+
+2
+
+e Sk−2 = rk−2
+
+1 + rk−2
+
+2
+
+.
+
+Exemplo 24. Seja o polinômio de grau 3 p(x) = ax3 + bx2 + cx + d tal que r1, r2 e r3
+são suas respectivas raízes. Vamos obter uma fórmula para Sk = rk
+
+1 + rk
+
+2 + rk
+3
+
+.
+
+Como r1, r2 e r3 são raízes de p(x) = 0, então
+
+
+
+
+
+
+ar3
+
+1 + br2
+
+1 + cr1 + d = 0
+
+ar3
+
+2 + br2
+
+2 + cr2 + d = 0
+
+ar3
+
+3 + br2
+
+3 + cr3 + d = 0.
+
+(3.44)
+
+Usando o mesmo procedimento do exemplo 23: multiplicando as equações do sistema
+
+3.44, respectivamente, por rk−3
+das equações do novo sistema formado, obtemos
+
+e rk−3
+3
+
+, rk−3
+2
+
+1
+
+e em seguida somando membro a membro
+
+(cid:16)
+
+a
+
+1 + rk
+rk
+
+2 + rk
+3
+
+(cid:16)
+
+(cid:17)
+
++b
+
+ou seja,
+
+isto é,
+
+1 + rk−1
+rk−1
+
+2 + rk−1
+
+3
+
+(cid:16)
+
+(cid:17)
+
++c
+
+1 + rk−2
+rk−2
+
+2 + rk−2
+
+3
+
+(cid:16)
+
+(cid:17)
+
++d
+
+1 + rk−3
+rk−3
+
+2 + rk−3
+
+3
+
+(cid:17)
+
+= 0,
+
+aSk + bSk−1 + cSk−2 + dSk−3 = 0,
+
+Sk = −
+
+b
+a
+
+Sk−1 −
+
+c
+a
+
+Sk−2 −
+
+d
+a
+
+Sk−3
+
+72
+
+Portanto, pelas Relações de Girard (Corolário 23), tem-se que
+
+Sk = s1Sk−1 − s2Sk−2 + s3Sk−3.
+
+Exemplo 25. Sejam r1, r2, · · · , r1000 as raízes de x1000 −10x+10 = 0. Vamos determinar
+o valor de r1000
+
+2 + · · · + r1000
+1000
+
+1 + r1000
+
+.
+
+Como a1000, a1 e a0 são os únicos coeﬁcientes diferentes de zero do p1000(x) = 0.
+
+Então, pelo Teorema 27, temos que
+
+S1000 − 10S1 + 10S0 = 0,
+
+(3.45)
+
+1 + r0
+
+2 + · · · + r0
+
+1000 = 1000 e, além disso, como o coeﬁciente de S999 é zero,
+onde S0 = r0
+logo s1 = 0 e como s1 = S1, pois s1 = r1 + r2 + · · · + r1000 = S1. Com isto, temos de 3.45
+que
+
+S1000 − 10 · 0 + 10 · 1000 = 0,
+
+de onde segue, que
+
+S1000 = r1000
+
+1 + r1000
+
+2 + · · · + r1000
+
+1000 = −10.000.
+
+Exemplo 26. Sejam x1 e x2 as raízes do polinômio p(x) = x2 − 6x + 1. Vamos provar
+é um inteiro não divisível por 5 para todo inteiro não negativo n.
+que xn
+
+1 + xn
+2
+
+1 + xn
+2
+
+Seja Sn = xn
+1 + x0
+
+a soma de Newton das raízes de p para n ≥ 0. Temos que
+2 = 1 + 1 = 2 e S1 = x1 + x2 = 6 pelas Relações de Girard. Aplicando o
+S0 = x0
+teorema 27 (ou a sua demonstração), concluímos que Sn − 6Sn−1 + Sn−2 = 0, para n ≥ 2,
+de modo que
+
+Sn = 6Sn−1 − Sn−2.
+
+(3.46)
+
+Como os dois primeiros termos dessa relação de recorrência são inteiros, é claro que os pró-
+
+ximos termos também serão, já que o conjunto dos inteiros é fechado para multiplicação,
+
+adição e subtração.
+
+Para mostrar que 5 (cid:45) Sn, n = 0, 1, 2, · · · , vamos usar a aritmética modular e o
+
+Princípio de Indução Forte:
+
+1. S0 = 2 e S1 = 6 não são divisíveis por 5.
+
+73
+
+2. Suponha, como hipótese de indução, que até um certo número n = k, seja verdadeiro
+
+que 5 (cid:45) Sn, ou seja, Sn (cid:54)≡ 0( mod 5) para n = 0, 1, · · · , k.
+
+Por contradição, suponha que 5 | Sk+1, ou seja, Sk+1 ≡ 0( mod 5). Usando 3.46,
+deduzimos que 6Sk − Sk−1 ≡ 0( mod 5), que é equivalente a dizer que
+
+6Sk ≡ Sk−1( mod 5).
+
+(3.47)
+
+Como 5 ≡ 0( mod 5) =⇒ 5Sk ≡ 0( mod 5), subtraímos essa última equação de
+3.47, obtendo assim Sk ≡ Sk−1( mod 5). Usando a recorrência 3.46 para n = k
+nessa última equação, obtemos 6Sk−1 − Sk−2 ≡ Sk−1( mod 5), que é equivalente a
+5Sk−1 ≡ Sk−2( mod 5). Mas 5Sk−1 ≡ 0( mod 5) e portanto 0 ≡ Sk−2( mod 5).
+Essa última equação nos diz que 5 | Sk−2, o que contradiz a hipótese de indução.
+Logo não pode ser verdade que Sk+1 ≡ 0( mod 5), provando assim que 5 (cid:45) Sn para
+todo n ∈ N.
+
+74
+
+Capítulo 4
+
+Atividades complementares e os
+
+gabaritos
+
+Atividade 1. Veriﬁque a famosa desigualdade das médias aritmética e geométrica. Se
+a, b, c ∈ R+, então a + b + c
+
+abc e a igualdade ocorre, se, e somente se, a = b = c.
+
+√
+≥ 3
+
+3
+
+Solução. Inicialmente, veja
+
+(x + y + z)3 = x3 + 3x2y + 3xy2 + y3 + 3x2z + 6xyz + 3y2z + 3xz2 + 3yz2 + z3
+
+= x3 + y3 + z3 + 3(x2y + xy2 + x2z + y2z + xz2 + yz2 + 3xyz) − 3xyz
+
+daí, temos que
+
+x3 + y3 + z3 − 3xyz = (x + y + z)3 − 3(x2y + xy2 + x2z + y2z + xz2 + yz2 + 3xyz) (4.1)
+
+Além disso, observe que
+
+(xy + xz + yz)(x + y + z) = x2y + xy2 + xyz + x2z + xyz + xz2 + xyz + xyz
+
++y2z + yz2
+
+= x2y + xy2 + x2z + y2z + xz2 + yz2 + 3xyz
+
+de onde segue que
+
+x2y + xy2 + x2z + y2z + xz2 + yz2 + 3xyz = (xy + xz + yz)(x + y + z),
+
+(4.2)
+
+75
+
+em seguida, substituindo 4.2 em 4.1, obtemos a seguinte igualdade:
+
+x3 + y3 + z3 − 3xyz = (x + y + z)3 − 3(xy + xz + yz)(x + y + z)
+
+(4.3)
+
+Agora, o próximo passo é mostrar que se x, y, z são números reais positivos, então observe
+
+x3 + y3 + z3 − 3xyz = (x + y + z)(x2 + y2 + z2 − xy − xz − yz)
+
+(4.4)
+
+Por outro lado, veja que
+
+(x2 + y2 + z2 − xy − xz − yz) =
+
+=
+
+=
+
+(2x2 + 2y2 + 2z2 − 2xy − 2xz − 2yz)
+
+(cid:0)(cid:0)x2 − 2xy + y2(cid:1) + (cid:0)x2 − 2xz + z2(cid:1) + (cid:0)y2 − 2yz + z2(cid:1)(cid:1)
+
+(cid:0)(x − y)2 + (x − z)2 + (y − z)2(cid:1)
+
+1
+2
+
+1
+2
+
+1
+2
+
+de modo que
+
+(x − y)2 + (x − z)2 + (y − z)2 ≥ 0,
+
+pois são soma de números quadrados, logo 1
+2
+
+(cid:0)(x − y)2 + (x − z)2 + (y − z)2(cid:1) ≥ 0.
+
+Ora, como estamos supondo x, y, z reais positivos, logo temos que x + y + z > 0
+
+e daí (x + y + z)(x2 + y2 + z2 − xy − xz − yz) ≥ 0, pois é o produto de fatores maiores
+
+ou igual a zero. Assim temos que:
+
+x3 + y3 + z3 − 3xyz = (x + y + z)(x2 + y2 + z2 − xy − xz − yz) ≥ 0
+
+e daí
+
+ou seja,
+
+√
+Agora, tomando x = 3
+
+√
+a, y = 3
+
+x3 + y3 + z3 ≥ 3xyz,
+
+x3 + y3 + z3
+3
+√
+b e z = 3
+
+≥ xyz
+
+(4.5)
+
+c e em seguida substituindo em 4.5, obtemos:
+
+√
+( 3
+
+a)3 +
+
+√
+(cid:16) 3
+
+(cid:17)3
+
+b
+
+√
++ ( 3
+
+a)3
+
+3
+
+76
+
+√
+≥ 3
+
+√
+a 3
+
+√
+b 3
+
+c,
+
+ou seja,
+
+a + b + c
+3
+
+√
+≥ 3
+
+abc.
+
+Com a igualdade ocorrendo se e somente se a = b = c, pois em
+
+(x + y + z)(x2 + y2 + z2 − xy − xz − yz) ≥ 0
+
+a igualdade ocorre apenas quando x = y = z, visto que x + y + z > 0, uma vez que x, y, z
+
+são números reais positivos e além disso,
+
+(x2 + y2 + z2 − xy − xz − yz) =
+
+1
+2
+
+(cid:0)(x − y)2 + (x − z)2 + (y − z)2(cid:1) ⇐⇒ x = y = z
+
+Atividade 2. Calcule o valor de
+
+(cid:32)
+
+Solução. Sejam u =
+
+√
+
+1 +
+2
+
+5
+
+e v =
+
+√
+
+5
+
+(cid:33)10
+
+(cid:32)
+
++
+
+√
+
+1 −
+2
+
+(cid:33)10
+
+5
+
+.
+
+. Com isso, temos
+
+1 +
+2
+√
+5
+
+1 −
+2
+
+s1 = u + v = 1
+
+s2 = uv = −1.
+
+(4.6)
+
+(4.7)
+
+Deste modo, u e v são raízes do polinômio f (x) = x2 − s1x + s2. Substituindo as equações
+4.6 e 4.7 em f , obtemos f (x) = x2 − x − 1. Mas, temos que u e v são raízes de f , então
+
+u2 − u − 1 = 0
+
+v2 − v − 1 = 0.
+
+(4.8)
+
+(4.9)
+
+Agora, ao multiplicar as equações 4.8 e 4.9, respectivamente por un e vn, com n ≥ 0,
+
+obtemos
+
+un+2 − un+1 − un = 0
+
+vn+2 − vn+1 − vn = 0.
+
+(4.10)
+
+(4.11)
+
+E, em seguida adicionando as equações 4.10 e 4.11, temos
+
+un+2 + vn+2 − (un+1 + vn+1) − (vn + un) = 0.
+
+(4.12)
+
+77
+
+Agora, denominamos Sn = un + vn. Com isto, a equação 4.12 se reduz à recorrência
+
+Sn+2 − Sn+1 − Sn = 0.
+
+(4.13)
+
+De modo, que
+
+assim, da equação 4.13, temos
+
+
+
+
+S0 = u0 + v0 = 2
+
+
+
+S1 = u1 + v1 = 1
+
+
+
+
+
+
+S2 = S1 + S0 = 1 + 2 = 3
+
+S3 = S2 + S1 = 3 + 1 = 4
+
+S4 = S3 + S2 = 4 + 3 = 7
+
+S5 = S4 + S3 = 7 + 4 = 11.
+
+Para facilitar os cálculos, efetuamos a seguinte operação
+
+5 = (cid:0)u5 + v5(cid:1)2
+S2
+5 = u10 + v10 + 2u5v5
+S2
+5 = S10 + 2u5v5
+S2
+S10 = S2
+5 − 2(uv)5
+S10 = 112 − 2(−1)5
+
+S10 = 123.
+
+Atividade 3. Sejam a,b,c reais não nulos tais que a + b + c = 0. Prove que
+
+a5 + b5 + c5
+5
+
+=
+
+(cid:18) a3 + b3 + c3
+3
+
+(cid:19) (cid:18)a2 + b2 + c2
+
+(cid:19)
+
+2
+
+Solução. Se
+
+f (x) = (x − a)(x − b)(x − c)
+
+= x3 − (a + b + c)x2 + (ab + ac + bc)x − abc,
+
+então a condição a + b + c = 0 garante que
+
+f (x) = x3 + s2x − s3,
+
+78
+
+(4.14)
+
+(4.15)
+
+onde s2 = ab + ac + bc e s3 = abc. Mas f (a) = f (b) = f (c) = 0. Com isso, de 4.15,
+obtemos as seguintes igualdades
+
+a3 = −s2a + s3
+
+b3 = −s2b + s3
+
+c3 = −s2c + s3.
+
+(4.16)
+
+(4.17)
+
+(4.18)
+
+Somando membro a membro as igualdade 4.16, 4.17 e 4.18 e utilizando, novamente, a
+
+condição a + b + c = 0, obtemos
+
+a3 + b3 + c3 = −s2(a + b + c) + 3s3 = 3s3
+
+daí, tem-se que
+
+e além disso, observe
+
+s3 =
+
+a3 + b3 + c3
+3
+
+(4.19)
+
+(4.20)
+
+a2 + b2 + c2 = (a + b + c)2 − 2(ab + ac + bc) = −2s2
+
+(4.21)
+
+de onde segue
+
+s2 = −
+
+a2 + b2 + c2
+2
+
+.
+
+(4.22)
+
+Por outro lado, aﬁm de encontrar a expressão a5 + b5 + c5, multiplicamos ambos
+
+os membros das igualdades 4.16, 4.17 e 4.18, respectivamente, por a2, b2 e c2, obtendo
+
+a5 = −s2a3 + s3a2
+
+b5 = −s2b3 + s3b2
+
+c5 = −s2c3 + s3c2.
+
+(4.23)
+
+(4.24)
+
+(4.25)
+
+Em seguida, somando membro a membro as igualdades 4.23,4.24 e 4.25,temos
+
+a5 + b5 + c5 = −s2(a3 + b3 + c3) + s3(a2 + b2 + c2)
+
+(4.26)
+
+79
+
+Portanto, substituindo 4.20 e 4.22 em 4.26, obtemos
+
+(cid:19)
+
+(cid:18) a2 + b2 + c2
+2
+
+(cid:0)a3 + b3 + c3(cid:1) +
+(cid:18) (a3 + b3 + c3) (a2 + b2 + c2)
+(cid:19)
+6
+
+.
+
+(cid:18) a3 + b3 + c3
+3
+
+(cid:19)
+
+(cid:0)a2 + b2 + c2(cid:1)
+
+a5 + b5 + c5 =
+
+= 5
+
+Daí, temos que
+
+a5 + b5 + c5
+5
+
+=
+
+(cid:18) a3 + b3 + c3
+3
+
+(cid:19) (cid:18)a2 + b2 + c2
+
+(cid:19)
+
+2
+
+.
+
+Atividade 4. As raízes do polinômios f (x) = x3 − 7x2 + 14x − 6 são os comprimentos
+
+dos lados de um triângulo. Calcule a área do mesmo.
+
+Solução. Sejam a, b, c as raízes de f e A a área do triângulo tendo tais raízes por lados.
+
+Aplicando a fórmula de Herão para calcular a área do triângulo
+
+A2 = p(p − a)(p − b)(p − c),
+
+onde p é o semi-perímetro do triângulo, então
+
+p =
+
+1
+2
+
+(a + b + c).
+
+Por outro lado, pelas Relações de Girard temos
+
+f (x) = (x − a)(x − b)(x − c)
+
+= x3 − (a + b + c)x2 + (ab + ac + bc)x − abc
+= x3 − s1x2 + s2x − s3, (de modo que f foi dada, logo)
+= x3 − 7x2 + 14x − 6.
+
+(4.27)
+
+(4.28)
+
+(4.29)
+
+Com isto, de 4.28 e 4.29, obtemos
+
+p =
+
+1
+2
+
+(a + b + c) =
+
+1
+2
+
+s1(a, b, c) =
+
+7
+2
+
+,
+
+assim, substituindo em 4.27, temos
+
+A2 =
+
+(cid:18) 7
+2
+
+7
+2
+
+− a
+
+(cid:19) (cid:18)7
+2
+
+− b
+
+(cid:19) (cid:18)7
+2
+
+(cid:19)
+
+− c
+
+.
+
+80
+
+Agora, observe de 4.29 que
+
+(cid:19)
+
+(cid:18) 7
+2
+
+f
+
+=
+
+(cid:18) 7
+2
+
+− a
+
+(cid:19) (cid:18)7
+2
+
+− b
+
+(cid:19) (cid:18)7
+2
+
+(cid:19)
+
+− c
+
+=
+
+(cid:19)3
+
+(cid:18) 7
+2
+
+− 7
+
+(cid:19)2
+
+(cid:18) 7
+2
+
++ 14
+
+(cid:19)
+
+(cid:18) 7
+2
+
+− 6 =
+
+1
+8
+
+.
+
+Portanto, de 4.27 tem-se que
+
+A2 = p(p − a)(p − b)(p − c)
+
+=
+
+= p · f (p)
+7
+7
+· f (
+2
+2
+7
+16
+
+=
+
+,
+
+)
+
+de onde segue que A = ±
+
+√
+
+7
+4
+
+, mas como a área é um valor positiva, logo A =
+
+√
+
+7
+4
+
+.
+
+Atividade 5 (Romênia). Sejam a, b, c, d números reais tais que
+
+a =
+
+b =
+
+c =
+
+d =
+
+(cid:113)
+
+(cid:113)
+
+(cid:113)
+
+(cid:113)
+
+4 −
+
+4 +
+
+4 −
+
+4 −
+
+√
+
+5 − a,
+
+√
+
+5 − b,
+
+√
+
+√
+
+5 + c,
+
+5 + d, .
+
+Calcule os possíveis valores do produto abcd.
+
+Solução. Temos que
+
+(cid:113)
+
+4 −
+
+√
+
+a =
+
+5 − a =⇒
+
+=⇒
+
+=⇒
+
+a2 = 4 −
+(a2 − 4)2 = (cid:0)−
+a4 − 8a2 + 16 = 5 − a
+
+√
+
+√
+
+5 − a
+5 − a(cid:1)2
+
+=⇒ a4 − 8a2 + a + 11 = 0.
+
+Analogamente, obtemos que b4 − 8b2 + b + 11 = 0. Com isto, tanto a com b são raízes do
+
+polinômio
+
+f (x) = x4 − 8x2 + x + 11.
+
+Aplicando o mesmo procedimento, conclui-se que c e d são raízes do polinômio
+
+p(x) = x4 − 8x2 − x + 11.
+
+81
+
+(4.30)
+
+(4.31)
+
+e segue, daí, que -c e -d também são raízes de f .
+
+Portanto, a,b,−c e −d são todos raízes de f e, se soubermos que tais raízes são
+
+duas a duas distintas, concluiremos que elas são todas as raízes do polinômios f ; daí, as
+
+Relações de Girard nos darão
+
+abcd = ab(−c)(−d) = 11.
+
+Para isto, basta veriﬁcar, se a = b, logo
+
+a = b ⇐⇒
+
+(cid:113)
+
+4 −
+
+⇐⇒ 4 −
+
+√
+
+√
+
+5 − a =
+
+5 − a = 4 +
+
+(cid:113)
+
+4 +
+√
+
+√
+
+5 − b
+
+5 − b
+
+Mas, como
+
+⇐⇒
+
+a = b = 5.
+
+(cid:113)
+
+4 −
+
+√
+
+5 (cid:54)=
+
+5 − 5 = a,
+
+então, temos a (cid:54)= b. Analogamente, tem-se que a (cid:54)= −c, a (cid:54)= −d e, além disso, temos que
+
+b, −c e −d são dois a dois distintos.
+
+Atividade 6 (Croácia). Se a, b, c são reais dois a dois distintos satisfazendo o sistema
+
+de equações
+
+
+
+
+
+
+a3 = 3b2 + 3c2 − 25
+
+b3 = 3c2 + 3a2 − 25
+
+c3 = 3a2 + 3b2 − 25
+
+calcule os possíveis valores do produto abc.
+
+Solução. Temos que
+
+a3 = 3b2 + 3c2 − 25,
+
+adicionando 3a2 em ambos os membros da equação 4.32, obtemos
+
+a3 + 3a2 = 3a2 + 3b2 + 3c2 − 25,
+
+em seguida tomando a2 + b2 + c2 = k. Assim, de 4.33, temos que
+
+a3 + 3a2 = 3k − 25,
+
+82
+
+(4.32)
+
+(4.33)
+
+ou seja,
+
+a3 + 3a2 + (25 − 3k) = 0,
+
+de modo que a é raiz do polinômio
+
+f (x) = x3 + 3x2 + (25 − 3k);
+
+(4.34)
+
+analogamente, b e c são raízes de tal polinômio.
+
+Agora, pelas Relações de Girard, temos
+
+f (x) = (x − a)(x − b)(x − c)
+
+= x3 − (a + b + c)x2 + (ab + ac + bc)x − abc
+
+então segue dos polinômios 4.34 e 4.35 que
+
+a + b + c = −3
+
+ab + ac + bc = 0
+
+abc = 3k − 25
+
+(4.35)
+
+(4.36)
+
+(4.37)
+
+(4.38)
+
+observe, da equação 4.36, que
+
+a + b + c = −3 =⇒ (a + b + c)2
+
+= (−3)2
+
+=⇒ a2 + b2 + c2 + 2(ab + ac + bc) =
+
+9
+
+e de 4.37, temos que a2 + b2 + c2 = 9 = k. Portanto, tem-se da equação 4.38 que
+
+abc = 3k − 25 = 2
+
+Atividade 7 (Bulgária). Sejam a e b números reais que satisfazem as equações
+
+
+
+
+
+
+a2 + b2 = 2
+
+√
+
+a3 + b3 = 2
+
+2.
+
+Ache o valor de a4 + b4.
+
+Solução. Para tratarmos o problema com a teoria das somas de Newton, precisamos de um
+
+83
+
+polinômio de 2º grau cujas raízes sejam a e b. Basta então tomar p(x) = (x − a)(x − b) =
+
+x2 − (a + b)x + ab. Logo, pelo Teorema 27, temos que
+
+Sk = s1Sk−1 − s2Sk−2,
+
+(4.39)
+
+(4.40)
+
+(4.41)
+
+(4.42)
+
+de modo que s1 = S1 e S0 = x0 + y0 = 2.
+Assim para n = 2, temos
+
+S2 = s1S1 − s2S0
+
+= s1s1 − 2s2
+
+= s2
+
+1 − 2s2.
+
+Da mesma forma, para n = 3, obtemos
+
+S3 = s1S2 − s2S1
+= s1(s2
+= s3
+
+1 − 3s1s2
+
+1 − 2s2) − s2s1
+
+e para n = 4, temos
+
+S4 = s1S3 − s2S2
+= s1(s3
+= s4
+
+1 − 4s2
+
+1 − 3s1s2) − s2(s2
+1s2 + 2s2
+2.
+√
+
+1 − 2s2)
+
+Como por hipótese, temos que S2 = 2 e S3 = 2
+situações
+
+2, assim de 4.40 e 4.41 temos as seguintes
+
+s2
+1 − 2s2 = 2 ⇐⇒
+
+(cid:0)s2
+
+1 − 2s2
+
+(cid:1)2 = 22
+
+⇐⇒ s4
+
+⇐⇒ s4
+(cid:124)
+
+1 − 4s1s2 + 4s2
+1 − 4s1s2 + 2s2
+2
+(cid:123)(cid:122)
+(cid:125)
+S4
+
+2 = 4
+
+= 4 − 2s2
+2
+
+(4.43)
+
+⇐⇒
+
+S4 = 4 − 2s2
+2
+
+e além disto, temos
+
+s3
+1 − 3s1s2 = 2
+
+√
+
+2 ⇐⇒
+
+(cid:0)s1(s2
+1 − 2s2 − 1s2
+
+1 − 3s2)(cid:1)2 = (2
+2) = 8
+
+⇐⇒ s2
+
+1(s2
+
+√
+
+2)2
+
+84
+
+de 4.40 temos s2
+
+1 − 2s2 = 2 e s2
+
+1 = 2 + 2s2, logo
+
+s3
+1 − 3s1s2 = 2
+
+√
+
+2 ⇐⇒
+
+⇐⇒
+
+⇐⇒
+
+⇐⇒ 4 − 4s2 + s2
+
+(4.44)
+
+(2 + 2s2)(2 + s2
+2(1 + s2)(4 − 4s2
+2 + s4
+2 + s4
+(1 + s2)(4 − 4s2
+2 + s3
+2 + 4s2 − 4s2
+2 − 3s2
+s3
+
+2)2 = 8
+2) = 8
+
+2) = 4
+
+2 = 4
+
+2 = 0
+
+s2
+2(s2 − 3) = 0
+
+s2 = 0 ou s2 = 3.
+
+⇐⇒
+
+⇐⇒
+
+⇐⇒
+
+Portanto, de 4.43, tem-se que S4 = 4 − 2 · 0 = 4 ou S4 = 4 − 2 · 3 = −2. Como a e b são
+reais, então temos que S4 ≥ 0, ou seja, S4 = 4.
+
+√
+Atividade 8. Determine todas as soluções reais da equação 4
+
+√
+1 − x + 4
+
+15 + x = 2.
+
+√
+Solução. Tomando 4
+
+√
+1 − x = a e 4
+
+15 + x = b, de onde segue a4 = 1 − x e b4 = 15 + x,
+
+com isto, temos que
+
+
+
+
+
+
+S4 = a4 + b4 = 16
+
+S1 = a + b = 2.
+
+E, além disto, pelo Polinômio Simétrico Elementar, temos
+
+
+
+
+
+
+s1 = a + b = 2
+
+s2 = ab.
+
+Agora, de 4.42, temos
+
+(4.45)
+
+(4.46)
+
+1 − 4s2
+
+S4 = s4
+16 = 24 − 4 · 22 · s2 + 2 · s2
+2
+
+1s2 + 2s2
+2
+
+0 = s2 (s2 − 8) .
+
+De onde segue que s2 = 0 ou s2 = 8. Sendo assim, temos duas situações:
+primeira situação: s2 = 0
+
+
+
+
+
+
+a + b = 2
+
+ab = 0.
+
+85
+
+Assim, a = 0 e b = 2 ou a = 2 e b = 0. Se a = 0 e b = 2, x = 1. Agora, se a = 2 e b =,
+
+x = −15.
+segunda situação: s2 = 8
+
+
+
+
+
+
+a + b = 2
+
+ab = 8.
+
+Nessa situação, a e b não são reais pois são raízes do polinômio p(x) = x2 − 2x + 8 cujo
+
+discriminante é ∆ = −28, logo x também não é real. Portanto, S = {−15, 1}
+
+86
+
+Considerações ﬁnais
+
+.
+
+Este trabalho teve como objetivo principal apresentar a eﬁcácia e aplicabilidade
+
+da combinação do método de Newton-Raphson, da regra de sinais de Descartes e das
+
+sequências de Sturm para encontrar as raízes de um polinômio real e, além disso, mostrar
+
+que os polinômios simétricos são uma excelente ferramenta para encontrar soluções de
+
+problemas algébricos de fatoração, de sistemas de equações não lineares e de algumas
+
+equações algébricas. Sendo assim, esperamos que esse trabalho possa contribuir na cons-
+
+trução de uma estratégia na busca de resolução de problemas. Pensando nesse sentido,
+
+(Polya, 1994, p. 5) comenta que:
+
+· · · Temos um plano quando conhecemos, pelo menos de um modo geral, quais
+as contas, os cálculos ou os desenhos que precisamos executar para obter a
+incógnita. O caminho que vai desde a compreensão do problema até o esta-
+belecimento de um plano, pode ser longo ou tortuoso. Realmente, o principal
+feito na resolução de um problema é a concepção da ideia de um plano.
+
+A abordagem do método de Newton-Raphson pode ser apresentada como uma
+
+proposta a ser utilizada nas aulas do ensino médio como um mecanismo que torna o
+
+estudo de polinômios mais interessante, uma vez que pode apresentar ao aluno outras
+
+possibilidades a serem exploradas de forma generalizada do conteúdo e não somente alguns
+
+casos particulares de resoluções de equações polinomiais. Nesse mesmo sentido, as relações
+
+de Girard juntamente com os polinômios simétricos, também, podem ser trabalhadas, pois
+
+são outras importantes ferramentas na busca de soluções de problemas polinomiais, de
+
+maneira que frequentemente são abordados em Olimpíadas de Matemática. Portanto,
+
+esperamos que esse trabalho possa contribuir para o ensino-aprendizagem de alunos e
+
+professores.
+
+87
+
+Referências Bibliográﬁcas
+
+Abel, N. H. (1826). Démonstration de l’impossibilité de la résolution algébrique des équa-
+
+tions générales qui passent le quatrième degré. J. reine angew. Math.
+
+Descartes, R. (2012). The geometry of René Descartes. Dover Publications.
+
+Gonçalves, A. (1979). Introdução à Álgebra. Projeto Euclides. IMPA.
+
+Hefez, A.; Villela, M. L. T. (2012). Polinômios e Equação Algébricas. SBM.
+
+Lima, E. (1981). Curso de análise, volume 1. IMPA.
+
+Machado, I.A.;Alves, R. (2013). Método de Newton, volume 4. SIPE.
+
+Morgado, A. C.; Carvalho, P. C. P. (2015). Matemática Discreta. SBM.
+
+Muniz Neto, A. (2012). Tópicos de Matemática Elemetar: Polinômios, volume 6. SBM.
+
+Newton, I. (1736). The Method of Fluxions and Inﬁnite Series: With Its Application to
+
+the Geometry of Curve-lines. Henry Woodfall; and sold by John Nourse.
+
+Polya, G. (1994). A arte de resolver problemas: um enfoque do método matemático.
+
+Interciência.
+
+Raphson, J. (2011). Analysis Aequationum Universalis. BiblioBazaar.
+
+Ruggiero, M.A.G.; Da Rocha Lopes, V. (1996). Cálculo numérico: aspectos teóricos e
+
+computacionais. Pearson Makron Books.
+
+Santos, E. (2013). A regra dos sinais de Descartes. Revista do Professor de Matemática,
+
+83.
+
+Stewart, J. (2009). Cálculo, volume 1. Cengage Learning.
+
+Uspensky, J. (1948). Theory of Equations. McGraw-Hill Book Company.
+
+88
+
+

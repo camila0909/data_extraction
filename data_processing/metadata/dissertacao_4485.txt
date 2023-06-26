@@ -1,0 +1,4750 @@
+UNIVERSIDADE FEDERAL DE SERGIPE
+PR ´O-REITORIA DE P ´OS-GRADUC¸ ˜AO E PESQUISA
+PROGRAMA DE P ´OS-GRADUAC¸ ˜AO EM MATEM ´ATICA
+MESTRADO PROFISSIONAL EM MATEM ´ATICA EM
+REDE NACIONAL - PROFMAT
+
+Sistemas de equa¸c˜oes polinomiais e
+base de Gr¨obner
+
+F´abio Fontes Vilanova
+
+Orientador: Dr. Zaqueu Alves Ramos
+
+S˜ao Crist´ov˜ao, 2015.
+
+F´abio Fontes Vilanova
+
+Sistemas de equa¸c˜oes polinomiais e
+base de Gr¨obner
+
+Disserta¸c˜ao apresentada ao Departa-
+
+mento de Matem´atica da Universidade
+
+Federal de Sergipe, como parte dos
+
+requisitos para obten¸c˜ao do t´ıtulo de
+
+Mestre em Matem´atica.
+
+Orientador: Dr. Zaqueu Alves Ramos
+
+S˜ao Crist´ov˜ao, 2015
+
+                                   FICHA CATALOGRÁFICA ELABORADA PELA BIBLIOTECA CENTRAL UNIVERSIDADE FEDERAL DE SERGIPE     V696  Vilanova, Fábio Fontes     Sistemas de equações polinomiais e base de Grobner / Fábio Fontes Vilanova ; orientador Zaqueu Alves Ramos. – São Cristóvão, 2015. 149 f. : il.    Dissertação (mestrado em Matemática)– Universidade Federal de Sergipe, 2015.   1. Matemática. 2. Equações polinomiais. 3. Algoritmos. I. Ramos, Zaqueu Alves, orient. II. Título.  CDU 517.583    Agradecimentos
+
+“Grandes coisas o Senhor tem feito por n´os e por isso estamos alegres”.
+
+Salmos 126:3
+
+Eu n˜ao poderia iniciar este texto de outra forma sen˜ao agradecendo primeiro
+`Aquele que diariamente me capacita, estimula, guia, proteje e me ama incondicional-
+mente. O Senhor me fortalece, me ajuda e me sustenta com Sua destra ﬁel. Obrigado
+Pai!
+
+`A minha querida m˜ae Gra¸ca, mulher guerreira, sofrida, que sacriﬁcou muito de
+sua vida em prol da minha educa¸c˜ao. Saiba que te amo muito e agrade¸co a Deus pela
+“gra¸ca”que me deu de tˆ-la como m˜ae.
+
+`A minha amada esposa Cain˜a, presente precioso que Deus me conﬁou, agrade¸co
+profundamente pela generosidade de me amar, algo que, certamente, n˜ao mere¸co mas
+me completa e me deixa muito feliz. Vocˆe com certeza foi a pessoa que mais sofreu
+comigo durante esses mais de dois anos de curso, por isso te pe¸co perd˜ao e te agrade¸co
+pelo apoio, paciˆencia e palavras de incentivo. “Te adoro em tudo, tudo, tudo; te quero
+mais que tudo, tudo, tudo; te amar sem limites, viver uma grande hist´oria”.
+
+A meu amigo, professor e orientador Zaqueu Alves Ramos, muito obrigado. Gre-
+atest of All Time ou simplesmente GOAT ´e a frase usada pelos americanos para se
+referir `aqueles que s˜ao os melhores naquilo que fazem, como, por exemplo, Pel´e no
+futebol, Michael Jordan no basquete, Tiger Woods no golfe e Roger Federer no tˆenis.
+Para mim essa frase se aplica perfeitamente a vocˆe. Agrade¸co o companheirismo e a
+conﬁan¸ca sempre depositada em mim. Foi uma honra ser orientado por vocˆe, GOAT.
+
+Aos professores Almir, Humberto, D´ebora, Kalasas, Naldisson, Dalino Felizardo,
+Allyson, Evilson, Danilo Dias, Leandro, Lucas, Anderson e Romero, que estiveram
+conosco durante todo o curso, obrigado pelos ensinamentos, pela troca de experiˆencias
+e pela oportunidade de conviver com proﬁssonais t˜ao qualiﬁcados. Cada um de vocˆes
+contribuiu de alguma forma para minha capacita¸c˜ao.
+
+3
+
+Aos professores F´abio dos Santos, Andr´e Vin´ıcius e Bruno Luis, que assumiram a
+fun¸c˜ao de coordenadores locais do PROFMAT, obrigado pelo tempo despendido na
+fun¸c˜ao.
+
+`A SBM, respons´avel direta pela cria¸c˜ao do PROFMAT, obrigado pela oportu-
+nidade dada. Saiba que hoje certamente sou um proﬁssonal melhor do que era h´a
+dois anos e que, por isso, me sinto muito mais preparado para ajudar a melhorar a
+qualidade do ensino b´asico no pa´ıs.
+
+`A CAPES, pelo apoio ﬁnanceiro que nos foi concedido durante o curso.
+Aos meus colegas de turma, que estiveram in loco comigo durante toda a jor-
+nada, agrade¸co pela oportunidade de conhecˆe-los. Certamente levarei comigo boas e
+preciosas li¸c˜oes que aprendi com cada um de vocˆes.
+
+4
+
+Resumo
+
+O objetivo principal deste trabalho ´e, usando bases de Gr¨obner, apresentar um
+m´etodo alg´ebrico capaz de determinar a solu¸c˜ao, quando existir, de sistemas de
+equa¸c˜oes polinomiais n˜ao lineares. Para tanto, necessitamos inicialmente apresentar
+alguns conceitos e teoremas ligados a an´eis de polinˆomios com v´arias indeterminadas
+e de ideais monomiais, dentre os quais destacamos o algoritmo extendido da divis˜ao, o
+teorema da Base de Hilbert e o algoritmo de Buchberger. Al´em disso, usando no¸c˜oes
+b´asicas da Teoria de elimina¸c˜ao e extens˜ao, apresentamos uma solu¸c˜ao alg´ebrica para
+o problema da colora¸c˜ao de mapas usando trˆes cores, bem como uma solu¸c˜ao geral
+para o puzzle Sudoku.
+
+Palavras chave: Sistemas de equa¸c˜oes polinomiais, Algoritmo extendido da divis˜ao,
+Ideais Monomiais, Bases de Hilbert, Algoritmo de Buchberger, Base de Gr¨obner,
+colora¸c˜ao de mapas, Sudoku.
+
+5
+
+Abstract
+
+The main objective of this dissertation is to present an algebraic method capa-
+ble of determining a solution, if any, of a non linear polynomial equation systems
+In order to accomplish that, we ﬁrst present some concepts
+using Gr¨obner basis.
+and theorems linked to polynomial rings with several undetermined and monomial
+ideals where we highlight the division extended algorithm, the Hilbert Basis and the
+Buchberger’s algorithm. Beyond that, using basics of Elimination and Extension
+Theorems, we present an algebraic solution to the map coloring that use 3 colors as
+well as a general solution to the Sudoku puzzle.
+
+Keywords: Polynomial equation systems, Division extended algorithm, monomial
+ideals, Hilbert Base, Buchberger’s algorithm, Gr¨obner basis, map coloring, Sudoku.
+
+6
+
+Introdu¸c˜ao
+
+“Uma vida sem desaﬁos n˜ao vale a pena ser vivida”
+
+S´ocrates
+
+Uma equa¸c˜ao ´e algo t˜ao comum em nossa vivˆencia matem´atica que muitas vezes
+n˜ao nos damos conta de qu˜ao fascinante ela ´e. Descobrir o “valor desconhecido”em
+uma determinada igualdade intriga o homem desde os tempos remotos. Entre os hin-
+dus, por exemplo, um passatempo muito popular e que rendia ao vencedor grande sta-
+tus eram as competi¸c˜oes p´ublicas de resolu¸c˜ao de problemas matem´aticos, nas quais
+um competidor propunha problemas para o outro resolver. A matem´atica naquela
+´epoca era bastante exclusivista. N˜ao havia sinais, nem vari´aveis, apenas algumas pou-
+cas “mentes privilegiadas”eram capazes de resolver problemas, muitas vezes usando
+complexos artif´ıcios e/ou trabalhosas constru¸c˜oes geom´etricas. O que fascinava esses
+homens era o desaﬁo.
+
+Para os eg´ıpcios, babilˆonicos e hindus, resolver uma simples equa¸c˜ao do tipo ax +
+b = c era um desaﬁo. J´a para gregos e, principalmente, ´arabes, esse era um problema
+de simples solu¸c˜ao.
+
+´E interessante ver como a busca por algoritmos capazes de resolver tipos espec´ıﬁcos
+de equa¸c˜oes sempre instigou o homem. Entre os gregos era um desaﬁo determinar a
+solu¸c˜ao de igualdades do tipo ax2 +bx+c = 0, eles resolviam algumas dessas equa¸c˜oes
+por meio de constru¸c˜oes geom´etricas com r´egua e compasso. J´a entre os ´arabes, um
+matem´atico que viveu no s´eculo IX chamado Al Khowarisma fez grandes avan¸cos que
+ajudaram o matem´atico Bhascara Akaria a desenvolver, no s´eculo XII, um algoritmo
+capaz de resolver qualquer equa¸c˜ao desse tipo, que conhecemos hoje como f´ormula de
+Bhaskara.
+
+O primeiro matem´atico a desenvolver um m´etodo para resolver equa¸c˜oes do ter-
+ceiro grau foi o francˆes Scipione del Ferro em meados do s´eculo XVI. Ele descobriu
+uma solu¸c˜ao alg´ebrica para equa¸c˜oes do tipo x3 + px = q. Mas foi Nicoli Fontana,
+
+7
+
+mais conhecido como Tartaglia, o primeiro a apresentar um m´etodo geral para re-
+solu¸c˜ao de uma c´ubica completa da forma ax3 + bx2 + cx + d = 0. Coube a Lodovico
+Ferrari, matem´atico bolonhˆes, apresentar uma solu¸c˜ao geral para equa¸c˜oes de quarto
+grau.
+
+Entretanto o desaﬁo de determinar um m´etodo para resolver equa¸c˜oes de grau
+maior que 4 ﬁcou em aberto at´e que ´Evariste Galois, um polˆemico por´em brilhante
+matem´atico francˆes, mostrou que, para o caso de equa¸c˜oes de grau maior ou igual a
+cinco, n˜ao ´e poss´ıvel apresentar uma f´ormula resolvente utilizando um n´umero ﬁnito
+de adi¸c˜oes, multiplica¸c˜oes e extra¸c˜ao de ra´ızes. Ao chegar a essa conclus˜ao, Galois
+n˜ao s´o resolveu um antigo desaﬁo, como acabou criando uma nova ramiﬁca¸c˜ao da
+´algebra abstrata: a teoria dos grupos.
+
+Aprender a resolver uma equa¸c˜ao ´e uma habilidade cujo desenvolvimento ´e incen-
+tivado desde as s´eries iniciais do ensino b´asico, quando um professor prop˜oe ao aluno
+o desaﬁo de descobrir o termo desconhecido em
+
+10 + = 15 ou 8 × = 40
+
+Durante o ensino b´asico, o processo de resolu¸c˜ao de sistemas de equa¸c˜oes polino-
+miais lineares ´e abordado por meio da regra de Cramer e do m´etodo de elimina¸c˜ao
+de Gauss, mais conhecido como escalonamento. Desse modo, uma pergunta natural
+seria: e se alguma dessas equa¸c˜oes fosse n˜ao linear? Como esse sistema poderia ser
+resolvido? ´E curioso perceber que em nenhum momento um m´etodo para resolu¸c˜ao de
+sistemas polinomiais desse tipo seja sequer citado, mesmo que estes surjam natural-
+mente quando se estuda a interse¸c˜ao de ﬁguras geom´etricas como elipses, hip´erboles,
+etc.
+
+Responder a pergunta acima ´e um desaﬁo que inspira muitos matem´aticos. Na
+segunda metade do s´eculo XX, dois matem´aticos em particular, Wolfgang Gr¨obner e
+Bruno Buchberger, professor e disc´ıpulo, usando um conjunto especial gerador de
+um ideal I, denominado base de Gr¨obner, em um anel de polinˆomios, desenvol-
+veram um algoritmo capaz de, entre outras coisas, determinar se um sistema de
+equa¸c˜oes polinomiais tem solu¸c˜ao, caso possua, como estima-las e se estas forem
+em n´umero ﬁnito, como obtˆe-las. A principio, a comunidade cient´ıﬁca n˜ao deu a
+devida importˆancia a esse trabalho mas, a partir dos anos 80, talvez por conta da
+massiﬁca¸c˜ao/populariza¸c˜ao dos microcomputadores, pesquisadores passaram a inves-
+tigar mais profundamente essa nova teoria, o que fez surgir uma ampla variedade de
+
+8
+
+aplica¸c˜oes desta. Neste trabalho pretendemos usar bases de Gr¨obner para, em um
+primeiro momento, deﬁnir se um polinˆomio f pertence ou n˜ao a um ideal polinomial
+I e, em um segundo momento, apresentar um m´etodo alg´ebrico para resolver um
+sistema de equa¸c˜oes polinomiais n˜ao necessariamente lineares.
+
+No cap´ıtulo 1 deste trabalho apresentaremos algumas propriedades alg´ebricas dos
+an´eis de polinˆomios ´uteis para o desenvolvimento do texto. Neste cap´ıtulo damos uma
+deﬁni¸c˜ao formal para an´eis de polinˆomios, apresentamos uma prova para o algoritmo
+da divis˜ao de polinˆomios em uma vari´avel e discutimos sobre as diferen¸cas entre
+polinˆomio e fun¸c˜ao polinomial, assim como sob que condi¸c˜oes estas coincidem.
+
+Iniciaremos o cap´ıtulo 2 dando uma deﬁni¸c˜ao formal para um sistema de equa¸c˜oes
+polinomiais em um dado anel de polinˆomios e, em seguida, apresentaremos algumas
+proposi¸c˜oes relacionadas ao conjunto solu¸c˜ao do sistema. Al´em disso, daremos uma
+abordagem hist´orica e mostraremos como modelar, usando um sistema de equa¸c˜oes
+polinomiais, dois conhecidos problemas: o da colora¸c˜ao de mapas usando apenas 3
+cores e o puzzle Sudoku.
+
+No cap´ıtulo 3, ponto central deste trabalho, discutiremos sobre as Bases de Gr¨obner
+e suas aplica¸c˜oes. Antes disso, por´em, apresentaremos o conceito de ordena¸c˜ao mono-
+mial, ideais monomiais, bem como alguns teoremas fundamentais para o desenvolvi-
+mento do texto, entre os quais destacamos: o algoritmo extendido da divis˜ao, o Lema
+de Dickson, o teorema da Base de Hilbert e o crit´erio de Buchberger. Finalizando o
+cap´ıtulo, usando base de Gr¨obner, apresentaremos uma solu¸c˜ao para o problema da
+colora¸c˜ao de mapas com apenas trˆes cores, assim como uma solu¸c˜ao para uma vers˜ao
+mais fraca do Sudoku, o Shidoku.
+
+9
+
+Sum´ario
+
+Introdu¸c˜ao
+
+1 Generalidades sobre an´eis de polinˆomios
+
+1.1 Sobre a deﬁni¸c˜ao de anel de polinˆomios . . . . . . . . . . . . . . . . .
+
+1.2 Divis˜ao Euclidiana em an´eis de polinˆomios . . . . . . . . . . . . . . .
+
+1.3 Distin¸c˜ao entre polinˆomios e fun¸c˜oes polinomiais.
+
+. . . . . . . . . . .
+
+1.4 Teorema da base de Hilbert
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+2 Sistemas de equa¸c˜oes polinomiais
+
+2.1 Terminologia
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Problemas modelados por sistemas de equa¸c˜oes polinomiais . . . . . .
+
+2.2.1 Conjunto de conﬁgura¸c˜oes de um bra¸co mecˆanico . . . . . . .
+
+2.2.2 O problema de colora¸c˜ao . . . . . . . . . . . . . . . . . . . . .
+
+2.2.3 O Puzzle Sudoku . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3 Base de Gr¨obner
+
+3.1 Ordem monomial
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1.1 Ordena¸c˜ao Lexicogr´aﬁca . . . . . . . . . . . . . . . . . . . . .
+
+3.1.2 Ordena¸c˜ao lexicogr´aﬁca graduada . . . . . . . . . . . . . . . .
+
+3.1.3 Ordena¸c˜ao Lexicogr´aﬁca Graduada Reversa . . . . . . . . . .
+3.2 Algoritmo da Divis˜ao em C[X1, . . . , Xn] . . . . . . . . . . . . . . . . .
+Ideais Monomiais . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3
+
+3.4 Base de Gr¨obner
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.5 Propriedades das Bases de Gr¨obner . . . . . . . . . . . . . . . . . . .
+
+3.6 Algoritmo de Buchberger . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.7 Teoria de elimina¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.8 Aplica¸c˜oes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+10
+
+7
+
+12
+
+12
+
+14
+
+20
+
+21
+
+24
+
+24
+
+27
+
+27
+
+28
+
+32
+
+37
+
+37
+
+39
+
+40
+
+41
+
+44
+
+49
+
+53
+
+55
+
+62
+
+65
+
+67
+
+3.8.1 A solu¸c˜ao do problema de colora¸c˜ao do mapa da regi˜ao nordeste 67
+71
+3.8.2 A solu¸c˜ao do Shidoku . . . . . . . . . . . . . . . . . . . . . . .
+
+Conclus˜ao
+
+Referˆencias Bibliogr´aﬁcas
+
+75
+
+77
+
+11
+
+Cap´ıtulo 1
+
+Generalidades sobre an´eis de
+polinˆomios
+
+O objetivo deste trabalho ´e estudar conjuntos solu¸c˜oes de sistemas de equa¸c˜oes
+polinomiais em v´arias vari´aveis. Assim, para uma melhor compreens˜ao do referido
+assunto, faz-se necess´ario o conhecimento de algumas particularidades dos an´eis de
+polinˆomios. Com isso em mente, elaboramos o presente cap´ıtulo, cujo o intuito ´e apre-
+sentar propriedades alg´ebricas dos an´eis de polinˆomios ´uteis para o desenvolvimento
+do texto. Observamos que as demonstra¸c˜oes de alguns resultados desse cap´ıtulo ser˜ao
+omitidas, pois este n˜ao ´e o foco principal do trabalho. Focaremos somente nas provas
+de proposi¸c˜oes que ser˜ao generalizadas mais adiante ou que sejam menos elementares.
+Assumiremos como conhecido no¸c˜oes b´asicas de teoria de an´eis comutativos como as
+deﬁni¸c˜oes de anel, subanel, dom´ınio, corpo, ideal, homomorﬁsmo de an´eis, etc.
+
+1.1 Sobre a deﬁni¸c˜ao de anel de polinˆomios
+
+Segundo alguns autores (ver por exemplo [1, Cap´ıtulo 3]), um polinˆomio com
+
+coeﬁcientes em um anel A ´e uma express˜ao da forma
+
+a0 + a1X + a2X 2 + . . . + anX n
+
+onde a0, a1, a2, . . . , an s˜ao elementos de A chamados coeﬁcientes do polinˆomio. Dessa
+forma, polinˆomios s˜ao completamente determinados por seus coeﬁcientes, ou seja,
+dois polinˆomios s˜ao iguais se seus coeﬁcientes correspondentes s˜ao iguais.
+
+Apesar da deﬁni¸c˜ao acima prestar-se ´util na pr´atica, entende-se que a frase “uma
+
+12
+
+express˜ao da forma”em uma deﬁni¸c˜ao matem´atica n˜ao atende aos padr˜oes modernos
+de rigor. De acordo com tais padr˜oes, sempre que poss´ıvel, devemos construir novos
+conceitos a partir de algum outro previamente conhecido. A deﬁni¸c˜ao abaixo d´a um
+tratamento mais formal aos polinˆomios.
+
+Deﬁni¸c˜ao 1.1.1. Seja A um anel. Um polinˆomio em uma vari´avel com coeﬁcientes
+sobre A ´e uma sequˆencia (a0, a1, . . . , an, . . .), onde ai ∈ A para todo i e ai (cid:54)= 0 apenas
+para um n´umero ﬁnito de ´ındices.
+
+Denotemos o conjunto de todos os polinˆomios com coeﬁcientes sobre A por A.
+
+Deﬁnimos uma adi¸c˜ao e uma multiplica¸c˜ao em A, respectivamente, por:
+
++ :
+
+· :
+
+A × A
+(a0, a1, . . .) , (b0, b1, . . .)
+A × A
+(a0, a1, . . .) , (b0, b1, . . .)
+
+onde ci =
+
+i
+(cid:80)
+k=0
+
+akbi−k.
+
+A
+
+−→
+(cid:55)−→ (a0 + b0, a1 + b1, . . .)
+−→
+(cid:55)−→
+
+A
+(c0, c1, . . .)
+
+´E de f´acil veriﬁca¸c˜ao que A com as opera¸c˜oes de adi¸c˜ao e multiplica¸c˜ao acima
+
+deﬁnidas ´e um anel onde:
+
+(i) o elemento neutro da adi¸c˜ao ´e (0, 0, 0, . . .).
+
+(ii) o elemento neutro da multiplica¸c˜ao ´e (1, 0, 0, . . .).
+
+(iii) o inverso de (a0, a1, . . . , an, . . .) com respeito a adi¸c˜ao ´e (−a0, −a1, . . . , −an, . . .).
+
+Se (a0, a1, . . .) ´e um elemento de A, ent˜ao (a0, a1, . . .)n representa o elemento
+
+(a0, a1, . . .) · (a0, a1, . . .) · . . . · (a0, a1, . . .)
+(cid:125)
+(cid:123)(cid:122)
+(cid:124)
+n vezes
+
+Note ainda que:
+
+• (0, . . . , 0,
+
+• (0, . . . , 0,
+
+, 0, 0, . . .) = (an, 0, 0, . . .) · (0, . . . , 0,
+
+an
+(cid:124)(cid:123)(cid:122)(cid:125)
+lugar n+1
+
+, 0, 0, . . .)
+
+1
+(cid:124)(cid:123)(cid:122)(cid:125)
+lugar n+1
+
+, 0, 0, . . .) = (0, 1, 0, 0, . . .)n
+
+1
+(cid:124)(cid:123)(cid:122)(cid:125)
+lugar n+1
+
+13
+
+Desse modo, um polinˆomio (a0, a1, . . . , an, 0, 0, . . .) pode ser escrito como a soma
+
+abaixo
+
+(a0, 0, 0, . . .) + (a1, 0, 0, . . .) · (0, 1, 0, 0, . . .) + . . . + (an, 0, 0, . . .) · (0, 1, 0, . . . , 0, . . .)n
+
+Se usarmos o s´ımbolo X para representar o elemento (0, 1, 0, . . .) e ai para repre-
+sentar (ai, 0, 0, . . .), conclu´ımos que o elemento (a0, a1, . . . , an, 0, 0, . . .) ´e igual a soma
+a0 + a1X + . . . + anX n, ou seja,
+
+A =
+
+(cid:40) n
+
+(cid:88)
+
+i=0
+
+aiX i; n ∈ N e ai ∈ A
+
+.
+
+(cid:41)
+
+Denotamos o anel (A, +, ·) por A[X] e o denominamos anel de polinˆomios em
+
+uma vari´avel com coeﬁcientes sobre A.
+
+Deﬁni¸c˜ao 1.1.2. Seja A um anel e seja f (X) = a0 + a1X + . . . + anX n ∈ A[X]
+com an (cid:54)= 0. Deﬁnimos o grau de f (X), ou simplesmente gr(f(X)), por esse n´umero
+natural n. Al´em disso, o coeﬁciente an ´e chamado coeﬁciente l´ıder de f (X). Observe
+ainda que n˜ao deﬁnimos a no¸c˜ao de grau para o polinˆomio nulo.
+
+Conv´em observar que:
+
+(i) Se A ´e um dom´ınio, ent˜ao grau(f (X) · g(X)) = grau f (X) + grau g(X), para
+
+todo f (X), g(X) ∈ A[X] \ 0.
+
+(ii) A[X] ´e um dom´ınio se, e somente se, A ´e um dom´ınio.
+
+Podemos ainda deﬁnir um anel de polinˆomios em n vari´aveis X1, . . . , Xn induti-
+
+vamente por
+
+A[X1, . . . , Xn] = (A[X1, . . . , Xn−1])[Xn].
+
+1.2 Divis˜ao Euclidiana em an´eis de polinˆomios
+
+No estudo da aritm´etica de Z aprendemos que uma ferramenta muito ´util ´e a
+divis˜ao euclidiana em Z (por exemplo, no c´alculo do m´aximo divisor comum de dois
+n´umeros inteiros fazemos uso da divis˜ao euclidiana de maneira sistem´atica). No
+contexto dos an´eis de polinˆomios temos a seguinte vers˜ao de divis˜ao euclidiana.
+
+14
+
+Teorema 1.2.1. Seja A[X] um anel de polinˆomios em uma vari´avel com coeﬁcientes
+sobre um anel A. Sejam f (X), g(X) ∈ A[X], com g(X) n˜ao nulo e tendo coeﬁciente
+l´ıder invert´ıvel em A. Ent˜ao,
+
+(i) Existem t(X), r(X) ∈ A[X] tais que f (X) = g(X)·t(X)+r(X) com gr(r(X)) <
+
+gr(g(X)) ou r(X) = 0.
+
+(ii) Tais polinˆomios t(X) e r(X) s˜ao unicamente determinados.
+
+Prova.
+(i) Provaremos inicialmente a existˆencia. Notemos que os casos em que
+grf (X) < gr(g(X)) s˜ao triviais pois, fazendo t(X) = 0 e r(X) = f (X) tem-se o
+desejado. Suponhamos ent˜ao f (X) (cid:54)= 0 e gr(f (X)) = n ≥ gr(g(X)) = m. Digamos
+que
+
+f (X) = anX n + an−1X n−1 + . . . + a1X + a0
+
+g(X) = bmX m + bm−1X m−1 + . . . + b1X + b0
+
+Deﬁnamos
+
+r1(X) = f (X) − anb−1
+
+m X n−m · g(X).
+
+Note que gr(f (X)) > gr(r1(X)). Se r1(X) = 0 ou gr(r1(X)) < gr(g(X)) ent˜ao a
+prova est´a encerrada. Caso contr´ario, deﬁna
+
+r2(X) = r1(X) − a1n1b−1
+
+m X n1−m · g(X),
+
+onde a1n1 ´e o coeﬁciente l´ıder de r1(X) e n1 = gr(r1(X)). Note que gr(f (X)) >
+gr(r1(X)) > gr(r2(X)). Se r2(X) = 0 ou gr(r2(X)) < gr(g(X)), ent˜ao
+
+f (X) = (anb−1
+
+m X n−m + a1nrb−1
+
+m X n1−n)g(X) + r2(X)
+
+e a prova est´a encerrada. Caso contr´ario, constru´ımos r3(X) de forma an´aloga a
+r2(X). Procedendo de maneira iterada construimos uma sequˆencia desses ri. Note
+que esse processo n˜ao pode continuar indeﬁnidamente, ou seja, em algum momento
+ri(X) = 0 ou gr(ri(X)) < gr(g(X)), pois, caso contr´ario, construir´ıamos uma sequˆencia
+inﬁnita decrescente
+
+gr(f (X)) > gr(r1(X)) > gr(r2(X)) . . .
+
+15
+
+de inteiros positivos. Digamos, ent˜ao que (cid:96) seja o ´ındice tal que r(cid:96)(X) = 0 ou
+gr(r(cid:96)(X)) < gr(g(X)). Somando as igualdades abaixo
+
+m X n−m · g(X)
+
+r1(X) = f (X) − anb−1
+r2(X) = r1(X) − a1n1b−1
+. . . . . .
+r(cid:96)(X) = r(cid:96)−1(X) − a(cid:96)−1n(cid:96)−1b−1
+
+. . .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+m X n1−m · g(X)
+
+m X n(cid:96)−1−m · g(X)
+
+obtemos
+
+com
+
+e
+
+f (X) = t(X) · g(X) + r(X)
+
+t(X) = anb−1
+
+m X n−m + a1nrb−1
+
+m X n1−n + . . . + a(cid:96)−1n(cid:96)−1b−1
+
+m X n(cid:96)−1−m
+
+satisfazendo as propriedades desejadas.
+
+r(X) = r(cid:96)(X)
+
+(ii) Suponha que t(X) e r(X) n˜ao sejam ´unicos. Assim, existem t1(X), r1(X) ∈
+
+A[X], com r1(X) = 0 ou gr(r1(X)) < gr(g(X)) tais que
+
+f (X) = g(X) · t(X) + r(X) = g(X) · t1(X) + r1(X).
+
+Assim,
+
+g(X) (t1(X) − t(X)) = r(X) − r1(X)
+
+g(X) (t1(X) − t(X)) (cid:54)= 0 pois r(X) − r1(X) (cid:54)= 0.
+
+Desse modo, conclu´ımos que
+
+gr (g(X)(t1(X) − t(X)) = gr(g(X)) + gr(t1(X) − t(X)) ≥ gr(g(X))
+
+Ou seja,
+
+o que ´e uma contradi¸c˜ao.
+
+gr (r(X) − r1(X)) ≥ gr(g(X))
+
+Os polinˆomios f (X), g(X), t(X) e r(X) do teorema acima s˜ao chamados respec-
+
+16
+
+tivamente de dividendo, divisor, quociente e resto da divis˜ao euclidiana.
+
+Observa¸c˜ao 1.2.2. A prova do Teorema 1.2.1 nos fornece um algoritmo para calcular
+de forma expl´ıcita o quociente e o resto. De fato, n˜ao ´e dif´ıcil perceber que esse
+algoritmo nada mais ´e que o algoritmo que utilizamos desde o ensino b´asico para
+efetuar a divis˜ao entre dois polinˆomios.
+
+A condi¸c˜ao na proposi¸c˜ao 1.2.1 do coeﬁciente l´ıder ´e autom´atica se supusermos
+
+que o anel A ´e um corpo. Assim, temos a seguinte proposi¸c˜ao.
+
+Proposi¸c˜ao 1.2.3. Seja A[X] um anel de polinˆomios em uma vari´avel com coeﬁci-
+entes sobre um corpo A. Sejam f (X), g(X) ∈ A[X] com g(X) n˜ao nulo. Ent˜ao,
+
+(i) Existem t(X), r(X) ∈ A[X] tais que f (X) = g(X)·t(X)+r(X) com gr(r(X)) <
+
+gr(g(X)) ou r(X) = 0.
+
+(ii) Tais polinˆomios t(X) e r(X) s˜ao unicamente determinados.
+
+Para entendermos um pouco mais sobre a utilidade da divis˜ao euclidiana, consi-
+
+deremos previamente algumas deﬁni¸c˜oes.
+
+Deﬁni¸c˜ao 1.2.4. Dado um polinˆomio f (X1, . . . , Xn) =
+
+(cid:88)
+
+avX v1
+
+1 · · · X vn
+
+n ∈ A[X1, . . . , Xn]
+
+e um elemento (α1, . . . , αn) ∈ An, deﬁnimos a avalia¸c˜ao de f (X1, . . . , Xn) em (α1, . . . , αn),
+denotada f (α1, . . . , αn), pela seguinte igualdade
+
+v∈Nn
+
+f (α1, . . . , αn) =
+
+(cid:88)
+
+v∈Nn
+
+avαv1
+
+1 · · · αvn
+n .
+
+´E de f´acil veriﬁca¸c˜ao que para cada f (X1, . . . , Xn), g(X1, . . . , Xn) ∈ A[X1, . . . , Xn]
+
+e (α1, . . . , αn) ∈ An tem-se
+
+(f + g)(α1, . . . , αn) = f (α1, . . . , αn) + g(α1, . . . , αn)
+
+e
+
+(f · g)(α1, . . . , αn) = f (α1, . . . , αn) · g(α1, . . . , αn),
+
+ou seja, em linguagem mais elaborada estas igualdades nos dizem que para cada
+(α1, . . . , αn) ∈ An a aplica¸c˜ao de A[X1, . . . , Xn] em A que envia f (X1, . . . , Xn) em
+f (α1, . . . , αn) ´e um homomorﬁsmo de an´eis.
+
+17
+
+Dizemos que (α1, . . . , αn) ∈ An ´e raiz (ou zero) de f (X1, . . . , Xn) se
+
+f (α1, . . . , αn) = 0.
+
+No caso de uma ´unica vari´avel, temos o seguinte crit´erio para decidir quando um
+
+elemento de A ´e raiz de um polinˆomio
+
+Proposi¸c˜ao 1.2.5. Seja A um anel e f (X) ∈ A[X] um polinˆomio n˜ao constante.
+Um elemento α ∈ A ´e raiz de f (X) se, e somente se, o resto da divis˜ao de f (X) por
+X − α ´e zero.
+
+Prova. (⇒) Se α ´e raiz de f (X) ent˜ao, por deﬁni¸c˜ao f (α) = 0. Al´em disso, pela
+divis˜ao euclidiana de f (X) por X − α, existem q(X), r(X) ∈ A[X] tais que
+
+f (X) = q(X)(X − α) + r(X)
+
+onde r(X) = 0 ou gr(r(X)) < gr(X − α) = 1. Assim, r(X) = β com β ∈ A. Desse
+modo,
+
+f (X) = q(X).(X − α) + β
+
+Avaliando f (X) em α, temos
+
+0 = f (α) = q(α).(α − α) + β = β
+
+ou seja, f (X) = q(X).(X − α) donde conclu´ımos que (X − α) divide f (X).
+
+(⇐) Se (X − α) divide f (X) ent˜ao existe q(X) ∈ A[X] tal que
+
+Portanto,
+
+f (X) = q(X)(X − α).
+
+f (α) = q(α)(α − α) = 0.
+
+A proposi¸c˜ao acima generaliza-se para n vari´aveis da seguinte maneira
+
+Corol´ario 1.2.6. Seja A um anel e f (X1, . . . , Xn) ∈ A[X1, . . . , Xn] um polinˆomio
+n˜ao constante. Um elemento (α1, . . . , αn) ∈ An ´e raiz de f (X1, . . . , Xn) se, e somente
+
+18
+
+se, existem g1, . . . , gn ∈ A[X1, . . . , Xn] tais que
+
+f (X1, . . . , Xn) = (X1 − α1)g1 + . . . + (Xn − αn)gn
+
+Prova. Se f (X1, . . . , Xn) = (X1 − α1)g1 + . . . + (Xn − αn)gn ent˜ao
+
+f (α1, . . . , αn) = (α1 − α1)g1(α1, . . . , αn) + . . . + (αn − αn)gn(α1, . . . , αn) = 0
+
+o que mostra que (α1, . . . , αn) ´e raiz de f (X1, . . . , Xn).
+
+Para provar a rec´ıproca aplicaremos indu¸c˜ao sobre o n´umero de vari´aveis. Para
+n = 1 o resultado segue da Proposi¸c˜ao 1.2.5. Agora suponhamos o resultado v´alido
+para n − 1 (n > 1). Fazendo a divis˜ao euclidiana de f (X1, . . . , Xn) por Xn − αn
+obtemos a igualdade
+
+f (X1, . . . , Xn) = (Xn − αn)gn + r
+
+onde r um polinˆomio constante na vari´avel Xn. Desse modo, r ∈ A[X1, . . . , Xn−1].
+Al´em disso,
+
+r(α1, . . . , αn−1) = f (α1, . . . , αn) − (αn − αn)g(α1, . . . , αn) = 0.
+
+Logo, por hip´otese de indu¸c˜ao, devemos ter
+
+r = (X1 − α1)g1 + . . . + (Xn−1 − αn−1)gn−1
+
+com g1, . . . , gn−1 ∈ A[X1, . . . , Xn−1] ⊂ A[X1, . . . , Xn]. Portanto, f (X1, . . . , Xn) =
+(X1 − α1)g1 + . . . + (Xn − αn)gn como desej´avamos.
+
+Uma consequˆencia da caracteriza¸c˜ao contida na Proposi¸c˜ao 1.2.5 acima ´e o se-
+
+guinte resultado:
+
+Proposi¸c˜ao 1.2.7. Seja A um dom´ınio e f (X) ∈ A[X] um polinˆomio n˜ao constante
+de grau n. Ent˜ao f (X) cont´em no m´aximo n ra´ızes.
+
+Prova. Seja f (X) = a0 + a1X + . . . + anX n ∈ A[X] um polinˆomio de grau n. Em
+particular an (cid:54)= 0. Provaremos essa proposi¸c˜ao por indu¸c˜ao sobre n = gr(f (X)).
+
+Se n = 0, ent˜ao f (X) = a0 (cid:54)= 0 para todo x ∈ A. logo f (X) n˜ao tem ra´ızes em A
+
+e, portanto, a proposi¸c˜ao ´e v´alida.
+
+19
+
+Suponhamos que a proposi¸c˜ao seja v´alida para todo polinˆomio q(X) ∈ A[X] tal
+
+que gr(q(X)) = n. Considere f (X) ∈ A[X] tal que gr(f (X)) = n + 1.
+
+Se f (X) n˜ao possui ra´ızes em A n˜ao h´a o que demonstrar. Suponhamos ent˜ao
+que f (X) tenha uma raiz α ∈ A, ou seja, f (α) = 0. Pela Proposi¸c˜ao 1.2.5 segue que
+(X − α) divide f (X) em A[X]; logo, existe q(X) ∈ A[X] tal que
+
+f (X) = q(X)(X − α).
+
+Note que gr(q(X)) = n assim, por hip´otese de indu¸c˜ao, q(X) tem no m´aximo n
+
+ra´ızes em A. Note ainda que
+
+β ´e raiz de f (X) ⇐⇒ 0 = f (β) = q(β)(β − α)
+
+⇐⇒ q(β) = 0 ou β − α = 0
+
+⇐⇒ β ´e raiz de q(X) ou β = α.
+
+Logo, f (X) tem no m´aximo n + 1 ra´ızes em A, o que conclui a demonstra¸c˜ao.
+
+Observa¸c˜ao 1.2.8. Notemos que os resultados contidos nas trˆes ´ultimas proposi¸c˜oes
+acima dizem respeito `a discuss˜ao das ra´ızes de um polinˆomio particular. Para deduzir
+todas essas aﬁrma¸c˜oes foi imprescind´ıvel a utiliza¸c˜ao do algor´ıtmo da divis˜ao. O que
+iremos discutir mais adiante ´e uma vers˜ao mais geral de algor´ıtmo da divis˜ao que
+permita realizar uma discuss˜ao mais ampla sobre ra´ızes de polinˆomios.
+
+1.3 Distin¸c˜ao entre polinˆomios e fun¸c˜oes polino-
+
+miais.
+
+Dado um polinˆomio f (X1, . . . , Xn) ∈ A[X1, . . . , Xn] deﬁnimos a seguinte fun¸c˜ao
+
+(cid:101)f com dom´ınio em An e contradom´ınio em A
+
+(cid:101)f :
+
+An
+(α1, . . . , αn)
+
+A
+
+→
+(cid:55)→ f (α1, . . . , αn)
+
+Esta fun¸c˜ao (cid:101)f ´e denominada de fun¸c˜ao polinomial (induzida pelo polinˆomio f ).
+
+Notemos que desde o ensino fundamental somos apresentados `as fun¸c˜oes polino-
+miais, sendo que neste contexto b´asico a ˆenfase ao estudo dessas fun¸c˜oes ´e dada para
+aquelas em que o n´umero de vari´aveis ´e 1 e o grau ´e pequeno, tipicamente 1 ou 2.
+
+20
+
+Outra particularidade do ensino das fun¸c˜oes polinomiais em n´ıvel elementar ´e o anel
+envolvido, que neste caso ´e R ou C.
+
+Como ´e claro pela deﬁni¸c˜ao, as fun¸c˜oes polinomiais surgem de polinˆomios e, por-
+tanto, s˜ao objetos formalmente distintos. Inclusive, a correspondˆencia f (cid:55)→ (cid:101)f n˜ao ´e
+necessariamente bijetora como nos mostra o seguinte exemplo
+
+Exemplo 1.3.1. Considere A = Zp, com p primo. Os polinˆomios p(X) = 0 e
+q(X) = X p − X s˜ao distintos. Contudo, como αp − α = 0 para cada α ∈ Zp, (vide
+pequeno teorema de Fermat em [6, cap´ıtulo 7]) temos que p e q induzem as mesmas
+fun¸c˜oes polinomiais.
+
+Apesar da distin¸c˜ao formal entre as no¸c˜oes de polinˆomio e fun¸c˜ao polinomial, na
+maioria dos livros de ensino m´edio tal distin¸c˜ao n˜ao ´e mencionada. De fato, o que
+veremos na proposi¸c˜ao a seguir ´e que tal postura adotada pelos livros did´aticos n˜ao
+´e absurda e, em um certo sentido, ´e correta.
+
+Proposi¸c˜ao 1.3.2. Seja A um dom´ınio inﬁnito e f (X) ∈ A[X]. Ent˜ao f (X) ´e o
+polinˆomio nulo se, e somente se, a fun¸c˜ao polinomial correspondente ´e identicamente
+nula. Em particular, dois polinˆomios em A[X] s˜ao iguais se, e somente se, as res-
+pectivas fun¸c˜oes polinomiais s˜ao iguais.
+
+Prova. (⇒) Se f (X) ´e o polinˆomio nulo, ent˜ao f (α) = 0 para todo α ∈ A, ou seja,
+a correspondente fun¸c˜ao polinomial ´e f (X) = 0.
+
+(⇐) Suponha que o polinˆomio f (X) seja n˜ao nulo. Pela Proposi¸c˜ao 1.2.7 esse
+polinˆomio possui uma quantidade ﬁnita de ra´ızes. Se a fun¸c˜ao polinomial correspon-
+dente ´e identicamente nula, ent˜ao f (α) = 0 para todo α ∈ A. Como A ´e inﬁnito,
+ent˜ao f (X) tem inﬁnitas ra´ızes, o que contraria a hip´otese. Logo f (X) ´e um polinˆomio
+nulo.
+
+Para a segunda parte da proposi¸c˜ao, sejam f (X) e g(X) dois polinˆomios em A[X]
+tais que f (α) = g(α) para todo α ∈ A. Considere o polinˆomio f (X)−g(X). Notemos
+que todo α ∈ A ´e raiz desse polinˆomio. Assim, pela primeira parte da proposi¸c˜ao, o
+polinˆomio f (X) − g(X) deve ser nulo. Logo, f (X) = g(X). A rec´ıproca ´e trivial.
+
+1.4 Teorema da base de Hilbert
+
+Seja A um anel. Um subconjunto I de A ´e chamado um ideal de A se satisfaz as
+
+seguintes condi¸c˜oes:
+
+21
+
+(i) 0 ∈ I.
+
+(ii) Se a, b ∈ I ent˜ao a − b ∈ I.
+
+(iii) Se a ∈ A e b ∈ I, ent˜ao a · b ∈ I.
+
+Exemplo 1.4.1. Em um anel A, temos que I = {0} e I = A s˜ao exemplos ´obvios
+de ideais. Tais ideais s˜ao chamados ideais triviais de A.
+
+Exemplo 1.4.2. Dado um anel A e um subconjunto S de A, consideremos o seguinte
+conjunto
+
+I = {a1x1 + . . . + anxn | ai ∈ A, xi ∈ S, n ∈ N}.
+
+´E de f´acil veriﬁca¸c˜ao que I assim deﬁnido ´e um ideal de A. Dizemos neste caso que
+I ´e um ideal gerado por S ou que S ´e um conjunto gerador de I. Tamb´em ´e comum
+dizermos que S ´e uma base para o ideal I. Doravante, utilizaremos a nota¸c˜ao I = (cid:104)S(cid:105)
+para denotar que I ´e gerado por S.
+
+Dentre todos os ideais, os mais manej´aveis s˜ao aqueles que possuem um conjunto
+
+ﬁnito de geradores. Tais ideais s˜ao chamados de ideais ﬁnitamente gerados.
+
+Deﬁni¸c˜ao 1.4.3. Um anel A ´e dito anel Noetheriano se todo ideal de A ´e ﬁnitamente
+gerado.
+
+Teorema 1.4.4. Seja A um anel. As seguintes aﬁrma¸c˜oes s˜ao equivalentes:
+
+(i) A ´e anel Noetheriano.
+
+(ii) Para toda cadeia ascendente de ideais de A, I1 ⊂ I2 ⊂ . . . ⊂ Ir ⊂ . . . existe
+
+n0 ∈ N tal que In0 = In para cada n ≥ n0.
+
+(iii) Toda fam´ılia F n˜ao vazia de ideais de A possui elemento m´aximo (com respeito
+
+a ordem de inclus˜ao).
+
+Teorema 1.4.5. (Teorema da base de Hilbert) Se A ´e anel Noetheriano ent˜ao A[X]
+tamb´em ´e anel Noetheriano.
+
+Prova. Mostraremos que se I ´e um ideal de A[X] ent˜ao ele ´e ﬁnitamente gerado.
+Note que se I = {0} ent˜ao n˜ao h´a o que provar. Assim, considere I (cid:54)= {0} e deﬁna
+f1 como sendo um polinˆomio de I que possua grau m´ınimo. Se I = (cid:104)f1(cid:105), ent˜ao a
+prova est´a encerrada. Caso contr´ario, escolhemos f2 ∈ I − (cid:104)f1(cid:105) com grau m´ınimo e
+
+22
+
+se I = (cid:104)f1, f2(cid:105) encerramos a prova. Continuando dessa maneira de forma indutiva,
+deﬁnamos para cada i,
+
+ai := coeﬁciente l´ıder de fi.
+
+Temos assim uma cadeia ascendente de ideais (cid:104)a1(cid:105) ⊂ (cid:104)a1, a2(cid:105) ⊂ . . . em A. Como A ´e
+Noetheriano, existe ´ındice m tal que esta cadeia estabiliza em (cid:104)a1, . . . , am(cid:105). Aﬁrmamos
+que I = (cid:104)f1, . . . , fm(cid:105). Caso contr´ario, o processo de escolha acima seleciona um ele-
+mento fm+1 ∈ I − (cid:104)f1, . . . , fm(cid:105). Note que podemos escrever am+1 = u1a1 + . . . + umam.
+Como o grau de fm+1 ´e pelo menos max{gr(fi) | 1 ≤ i ≤ m}, ent˜ao podemos deﬁnir
+o seguinte polinˆomio tendo o mesmo grau e coeﬁciente l´ıder de fm+1
+
+g =
+
+m
+(cid:88)
+
+j=1
+
+ujfjX gr(fm+1)−gr(fj ) ∈ (cid:104)f1, . . . , fm(cid:105)
+
+Note que fm+1 − g ∈ I − (cid:104)f1, . . . , fm(cid:105) e gr(fm+1 − g) < gr(fm+1), o que contraria a
+escolha de fm+1.
+
+Corol´ario 1.4.6. Se A ´e anel Noetheriano, ent˜ao A[X1, . . . , Xn] tamb´em ´e anel
+Noetheriano.
+
+Prova. Em virtude da igualdade A[X1, . . . , Xn] = (A[X1, . . . , Xn−1])[Xn], o resultado
+segue utilizando indu¸c˜ao e o Teorema da Base de Hilbert
+
+Corol´ario 1.4.7. Se k ´e um corpo, ent˜ao k[X1, . . . , Xn] ´e um anel Noetheriano.
+
+Prova. Ora, os ´unicos ideais de um corpo k s˜ao os triviais que s˜ao ﬁnitamente
+gerados (de fato, {0} = (cid:104)0(cid:105) e k = (cid:104)1(cid:105)). Assim, k ´e Noetheriano. Logo, pelo corol´ario
+acima temos o desejado.
+
+23
+
+Cap´ıtulo 2
+
+Sistemas de equa¸c˜oes polinomiais
+
+Neste cap´ıtulo apresentamos o principal objeto deste trabalho, ou seja, os sistemas
+de equa¸c˜oes polinomiais. Destacamos a rela¸c˜ao existente entre os conjuntos solu¸c˜oes
+de tais sistemas e os ideais de um anel de polinˆomios apropriado. Esta rela¸c˜ao ser´a a
+ponte para as bases de Grobner, como veremos no cap´ıtulo 3. Colocaremos tamb´em,
+em relevo, a importˆancia dos sistemas de equa¸c˜oes polinomiais para a matem´atica e
+para problemas do mundo real.
+
+2.1 Terminologia
+
+Seja k um corpo (que para ﬁxa¸c˜ao de ideias podemos pensar k = R ou k = C) e
+n um inteiro positivo. Diante desses dados, podemos pensar nos seguintes universos:
+k[X1, . . . , Xn] (de natureza alg´ebrica) e kn = k × . . . × k
+(cid:125)
+
+(de natureza geom´etrica).
+
+(cid:124)
+
+(cid:123)(cid:122)
+n vezes
+
+Primeiro estabelecemos uma correspondˆencia de k[X1, . . . , Xn] para kn atrav´es da
+
+seguinte deﬁni¸c˜ao.
+
+Deﬁni¸c˜ao 2.1.1. Seja S um subconjunto de k[X1, . . . , Xn]. O conjunto dos zeros de
+S, denotado Z(S), ´e
+
+Z(S) = {(α1, . . . , αn) ∈ kn | f (α1, . . . , αn) = 0 para cada f (X1, . . . , Xn) ∈ S} .
+
+Se S ´e ﬁnito, digamos S = {f1, . . . , fm}, ent˜ao Z(S) ´e o conjunto solu¸c˜ao do
+
+24
+
+sistema de equa¸c˜oes polinomiais
+
+
+
+
+
+
+f1(x1, . . . , xn) = 0
+f2(x1, . . . , xn) = 0
+...
+fm(x1, . . . , xn) = 0
+
+...
+
+(2.1)
+
+Exemplo 2.1.2. Para k = R, n = 2, os seguintes exemplos nos s˜ao familiares desde
+o ensino b´asico:
+
+(a) Para S = {2X + 3Y − 1}, Z(S) ´e a reta determinada pelos pontos (−1, 3) e
+
+(2, −1).
+
+(b) Para S = {X 2 + Y 2 − 1}, Z(S) ´e a circunferˆencia unit´aria centrada na origem.
+
+(c) Para S = {4X 2 + 9Y 2 − 36}, Z(S) ´e a elipse com focos nos pontos (−
+
+√
+(
+
+5, 0).
+
+√
+
+5, 0) e
+
+A seguir mostramos como os conjuntos de zeros comportam-se diante da rela¸c˜ao
+
+de inclus˜ao
+
+Proposi¸c˜ao 2.1.3. Sejam S1 e S2 subconjunto de k[X1, . . . , Xn] tais que S1 ⊂ S2.
+Ent˜ao, Z(S1) ⊃ Z(S2).
+
+Prova. Seja p um ponto de Z(S2). Como, S1 ⊂ S2 e p ´e anulado por todo polinˆomio
+de S2, ent˜ao, por mais forte raz˜ao p ´e anulado por todo polinˆomio de S1. Logo, p
+tamb´em pertence a Z(S1). Portanto, temos a inclus˜ao desejada.
+
+A proposi¸c˜ao a seguir nos mostra que para qualquer S ⊂ k[X1, . . . , Xn], o conjunto
+Z(S) pode ser visto como o conjunto solu¸c˜ao de um sistema de equa¸c˜oes polinomiais
+tal como em (2.1)
+
+Proposi¸c˜ao 2.1.4. Seja S ⊂ k[X1, . . . , Xn] e I = (S). Ent˜ao, Z(S) = Z(I). Em
+particular, existem f1, . . . , fn ∈ k[X1, . . . , Xn] tais que Z(S) = Z(f1, . . . , fr).
+
+Prova. Como S ⊂ I, ent˜ao pela Proposi¸c˜ao 2.1.3 temos Z(I) ⊂ Z(S). Agora,
+suponhamos (α1, . . . , αn) um ponto de Z(S). Um elemento arbitr´ario f (X1, . . . , Xn)
+de I se escreve na forma
+
+f (X1, . . . , Xn) = h1(X1, . . . , Xn)g1(X1, . . . , Xn)+. . .+hm(X1, . . . , Xn)gm(X1, . . . , Xn)
+
+25
+
+onde h1, . . . , hm ∈ k[X1, . . . , Xn] e g1(X1, . . . , Xn), . . . gm(X1, . . . , Xn) ∈ S. Assim,
+
+f (α1, . . . , αn) = h1(α1, . . . , αn)g1(α1, . . . , αn) + . . . + hm(α1, . . . , αn)gm(α1, . . . , αn)
+
+= h1(α1, . . . , αn) · 0 + . . . + hm(α1, . . . , αn) · 0 = 0.
+
+Portanto, (α1, . . . , αn) ´e zero de qualquer polinˆomio de Z(I). Logo, a igualdade
+Z(S) = Z(I) segue.
+
+Pelo teorema da base de Hilbert temos a existˆencia de f1, . . . , fr tais que I =
+(f1, . . . , fr). Usando a primeira parte da proposi¸c˜ao conluimos que Z(S) = Z(f1, . . . , fr).
+
+Diante desse resultado, podemos agora restringir a discuss˜ao a sistemas de equa¸c˜oes
+
+como em (2.1). A pergunta natural ´e:
+
+Quest˜ao 2.1.5. Como determinar o conjunto solu¸c˜ao de um sistema como em (2.1)?
+
+Esta quest˜ao, por sua vez, nos remete a um outro questionamento
+
+Quest˜ao 2.1.6. O que signiﬁca determinar o conjunto solu¸c˜ao de um sistema de
+equa¸c˜oes polinomiais?
+
+No caso em que o conjunto solu¸c˜ao ´e ﬁnito, o termo “determinar” ﬁca melhor
+comprendido. De fato, em tal caso determinar signiﬁca listar todas as solu¸c˜oes. En-
+tretanto, quando o conjunto solu¸c˜ao ´e inﬁnito o termo ﬁca meio vago. Nessa situa¸c˜ao,
+determinar pode signiﬁcar fornecer propriedades qualitativas que individualizem um
+dado conjunto solu¸c˜ao de sistema de equa¸c˜oes polinomiais, ou fornecer uma descri¸c˜ao
+param´etrica para o conjunto solu¸c˜ao. Neste trabalho, estamos mais interessados no
+segundo signiﬁcado.
+
+Notemos que quando os polinˆomios fi em (2.1) s˜ao de grau 1, sabemos por m´etodos
+da ´algebra linear como parametrizar as solu¸c˜oes. Nesse caso particular as parame-
+triza¸c˜oes s˜ao obtidas efetuando-se opera¸c˜oes sistem´aticas com as equa¸c˜oes e obtendo
+sistemas equivalentes cada vez mais simples. De fato, essa ´e uma ﬁlosoﬁa que de certa
+forma sobrevive ao caso geral como veremos no Cap´ıtulo 3.
+
+Agora apresentamos uma correspondˆencia que vai no sentido contr´ario da que
+
+deﬁnimos em 2.1.1.
+
+Deﬁni¸c˜ao 2.1.7. Seja X um subconjunto de kn. Deﬁnimos o conjunto I(X) por
+
+I(X) = {f (X1, . . . , Xn) ∈ k[X1, . . . , Xn] | f (α1, . . . , αn) = 0 para cada (α1, . . . , αn) ∈ X}.
+
+26
+
+´E de f´acil veriﬁca¸c˜ao que o conjunto I(X) ´e um ideal de k[X1, . . . , Xn].
+
+Exemplo 2.1.8. Para X = {(α1, . . . , αn)} ⊂ kn temos que o ideal I(X) ´e igual a
+(X1 − α1, . . . , Xn − αn). A inclus˜ao (X1 − α1, . . . , Xn − αn) ⊂ K[X1, . . . , Xn] ´e trivial.
+Esta aﬁrma¸c˜ao ´e consequˆencia imediata do Corol´ario 1.2.6.
+
+Temos, assim, as seguintes correspondˆencias
+
+{subconjunto de k[X]} Z→ {subconjunto de kn}
+
+{subconjunto de kn} I→ {subconjunto de k[X]} .
+
+Temos as seguintes propriedades
+
+Proposi¸c˜ao 2.1.9. Se V1, V2 s˜ao subconjuntos de kn tais que V1 ⊂ V2 ent˜ao I(V2) ⊂
+I(V1).
+
+Prova. Seja f um polinˆomio de I(V2). Ent˜ao, cada elemento de V2 ´e zero de f.
+Como V1 ⊂ V2, ent˜ao, por mais forte raz˜ao, cada elemento de V1 ´e zero de f. Logo,
+f ∈ I(V1). Portanto, temos a inclus˜ao desejada.
+
+2.2 Problemas modelados por sistemas de equa¸c˜oes
+
+polinomiais
+
+Estudar conjuntos solu¸c˜oes de sistemas de equa¸c˜oes polinomiais ´e algo interessante
+tanto do ponto de vista te´orico quanto de suas aplica¸c˜oes. Teoricamente eles s˜ao
+utilizados, por exemplo, para realizar estudos aproximados de objetos mais complexos.
+Por outro lado, tamb´em temos diversas situa¸c˜oes reais que s˜ao diretamente descritas
+por conjuntos solu¸c˜oes de equa¸c˜oes polinomiais. Nessa se¸c˜ao apresentaremos algumas
+destas situa¸c˜oes.
+
+2.2.1 Conjunto de conﬁgura¸c˜oes de um bra¸co mecˆanico
+
+Apresentamos um modelo simples de bra¸co mecˆanico composto por duas hastes
+
+de comprimentos 1 e 2 como nos mostra a Figura 2.1
+
+27
+
+Figura 2.1:
+
+A conﬁgura¸c˜ao do bra¸co ´e completamente determinada pelas coordenadas (x, y)
+e (z, w) como ilustrado na ﬁgura. Assim, se quisermos determinar todas as conﬁ-
+gura¸c˜oes poss´ıveis para esse bra¸co mecˆanico, devemos determinar o conjunto solu¸c˜ao
+do seguinte sistema de equa¸c˜oes polinomiais
+
+(cid:40)
+
+X 2 + Y 2
+
+= 4
+(X − Z)2 + (Y − W )2 = 1
+
+2.2.2 O problema de colora¸c˜ao
+
+A hist´oria envolvendo problemas sobre colora¸c˜ao de mapas come¸cou em meados
+do s´eculo XIX, quando Francis Guthrie tentava colorir os distritos do mapa da In-
+glaterra de modo que dois distritos vizinhos tivessem cores distintas. Ap´os analisar
+cuidadosamente o problema, Francis Guthrie conjecturou que qualquer mapa poderia
+ser colorido com apenas quatro cores, por´em n˜ao conseguiu desenvolver uma prova
+formal para o problema.
+
+Apesar de diversas tentativas terem sido feitas por renomados matem´aticos, a
+demonstra¸c˜ao para a conjectura proposta por Francis ﬁcou em aberto por cerca de 120
+anos, at´e que em 1976, com a ajuda de um IBM 360, Kenneth Appel e Wolfgang Haken
+apresentaram uma prova do que ´e conhecido hoje como teorema das quatro cores.
+Entretanto, o fato de Appel e Haken terem usado computadores de alta velocidade por
+
+28
+
+mais de mil horas para concluir a demonstra¸c˜ao do teorema n˜ao agradou a comunidade
+cient´ıﬁca, que julgava imposs´ıvel veriﬁcar os c´alculos apresentados.
+
+Desse modo, muitos matem´aticos continuaram a buscar uma prova mais simples
+para o teorema das quatro cores. Em 1994, Paul D. Seymour apresentou uma prova
+que reduzia a quantidade de c´alculos a n´ıveis bastante aceit´aveis, entretanto n˜ao
+conseguiu dispensar o uso do computador. Uma prova que n˜ao necessite do aux´ılio
+de computadores ´e uma quest˜ao que at´e hoje continua em aberto.
+
+Como j´a foi citado acima, ´e sempre poss´ıvel colorir um mapa com quatro cores.
+Em algumas situa¸c˜oes espec´ıﬁcas ´e poss´ıvel usar menos cores. Por exemplo, se o mapa
+n˜ao tiver regi˜oes de tr´ıplice frontera, ou seja, uma regi˜ao que tem fronteira com outras
+duas, podemos colori-lo com apenas duas cores. Entretanto, sob que circunstˆancias
+podemos colorir um mapa com apenas trˆes cores? Seria poss´ıvel, por exemplo, usar
+apenas trˆes cores para colorir o mapa da regi˜ao nordeste do Brasil? Nessa se¸c˜ao
+apresentamos como estas quest˜oes podem ser traduzidas por meio de um sistema de
+equa¸c˜oes polinomiais. No cap´ıtulo seguinte, depois de apresentada a ferramenta da
+base de Grobner, mostraremos a solu¸c˜ao ﬁnal do problema.
+
+Como queremos usar trˆes cores para colorir o mapa, com o intuito de “algebrizar”o
+problema, vamos representar cada cor por uma raiz c´ubica da unidade, ou seja, cada
+cor ser´a uma raiz do polinˆomio f = X 3 − 1 e cada regi˜ao por uma inc´ognita Xi
+que pode assumir apenas um desses trˆes valores/cores poss´ıveis. Ent˜ao temos que
+X 3
+i − 1 = 0 para todo i = 1, . . . , n, onde n representa o n´umero de regi˜oes do mapa.
+
+Como duas regi˜oes vizinhas Xi e Xj s˜ao ra´ızes da unidade, temos
+
+X 3
+
+i − 1 = 0
+
+e X 3
+
+j − 1 = 0,
+
+ou seja, X 3
+
+i = X 3
+
+j . Logo,
+
+X 3
+
+i − X 3
+
+j = 0 ⇒ (Xi − Xj)(X 2
+
+i + XiXj + X 2
+
+j ) = 0.
+
+Como Xi (cid:54)= Xj (pois s˜ao regi˜oes vizinhas), temos
+
+X 2
+
+i + XiXj + X 2
+
+j = 0.
+
+Desse modo, o problema da colora¸c˜ao de mapas usando trˆes cores se resume a
+
+obter as solu¸c˜oes do seguinte sistema de equa¸c˜oes polinomiais:
+
+29
+
+(cid:40)
+
+X 3
+X 2
+
+i − 1 = 0,
+i + XiXj + X 2
+
+j = 0,
+
+para 1 ≤ i ≤ n
+sempre que Xi e Xj forem regi˜oes vizinhas.
+
+(2.2)
+
+Observemos agora o mapa da regi˜ao nordeste do Brasil:
+
+Figura 2.2: Regi˜ao nordeste do Brasil
+
+A cada um dos nove estados que comp˜oem esta regi˜ao vamos atribuir uma vari´avel
+
+de C[X1, . . . , X9]. Deﬁnamos ent˜ao, sem perda de generalidade, que
+
+X1 = Sergipe
+X2 = Alagoas
+X3 = Pernambuco X6 = Cear´a
+
+X4 = Para´ıba
+X5 = Rio Grande do Norte X8 = Maranh˜ao
+
+X7 = Piau´ı
+
+X9 = Bahia
+
+Assim, temos a seguinte distribui¸c˜ao no mapa:
+
+30
+
+Figura 2.3: Estados do nordeste representados por vari´aveis Xi com i = 1, . . . , 9.
+
+Determinar se ´e poss´ıvel colorir o mapa acima com apenas trˆes cores ´e o mesmo
+que determinar as solu¸c˜oes, se existirem, do seguinte sistema de equa¸c˜oes polinomiais:
+
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+
+1 − 1 = 0
+2 − 1 = 0
+3 − 1 = 0
+4 − 1 = 0
+5 − 1 = 0
+6 − 1 = 0
+7 − 1 = 0
+8 − 1 = 0
+9 − 1 = 0
+
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+
+1 + X1X2 + X 2
+1 + X1X9 + X 2
+2 + X2X3 + X 2
+2 + X2X9 + X 2
+3 + X3X4 + X 2
+3 + X3X9 + X 2
+3 + X3X6 + X 2
+3 + X3X7 + X 2
+4 + X4X5 + X 2
+
+2 = 0
+9 = 0
+3 = 0
+9 = 0
+4 = 0
+9 = 0
+6 = 0
+7 = 0
+5 = 0
+
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+
+4 + X4X6 + X 2
+5 + X5X6 + X 2
+6 + X6X7 + X 2
+7 + X7X8 + X 2
+7 + X7X9 + X 2
+
+6 = 0
+6 = 0
+7 = 0
+8 = 0
+9 = 0
+
+(2.3)
+
+Na ´ultima se¸c˜ao do cap´ıtulo 3 mostraremos como esse sistema pode ser resolvido
+
+`a luz das bases de Grobner.
+
+31
+
+2.2.3 O Puzzle Sudoku
+
+O Sudoku ´e um puzzle (ou quebra cabe¸ca) que se tornou muito popular no Jap˜ao,
+pa´ıs onde jogos num´ericos s˜ao bem mais populares que jogos do tipo palavras cruzadas
+e ca¸ca palavras, no ano de 1986, quando a Nikoli, revista de racioc´ınio l´ogico oriental,
+que descobriu o jogo em 1984, resolveu lev´a-lo para aquele pa´ıs. Apesar de muitos
+acreditarem que o sudoku ´e de origem nipˆonica, ele foi projetado pelo arquiteto e
+designer norte-americano Howard Garns em 1979, que batizou o puzzle por Number
+Place, nome que ´e usado at´e hoje nos Estados Unidos.
+
+A partir de 2004, quando o jornal britˆanico The Times passou a publicar o Sudoku
+
+em suas edi¸c˜oes di´arias, o jogo ﬁnalmente se tornou mundialmente popular.
+
+O jogo ´e composto por uma grade 9 × 9 dividida em nove sub-grades 3 × 3 onde
+algumas c´edulas j´a cont´em n´umeros entre 1 e 9. O objetivo do jogo ´e preeencher as
+c´edulas vazias, com um n´umero em cada c´edula, de modo que em cada linha, coluna
+ou sub-grade, os n´umeros de 1 a 9 apare¸cam apenas uma vez. Segue abaixo um
+exemplo e sua respectiva solu¸c˜ao:
+
+Figura 2.4: Exemplo
+
+Figura 2.5: Solu¸c˜ao
+
+Embora o objetivo seja resolver o jogo usando basicamente o racioc´ınio l´ogico,
+´e perfeitamente poss´ıvel obter sua solu¸c˜ao associando-o a um sistema de equa¸c˜oes
+polinomiais. Para tanto, vamos transformar o problema de resolver um sudoku em
+um problema de colora¸c˜ao de mapas de modo que:
+
+(i) cada c´edula ser´a uma regi˜ao do mapa a ser pintada.
+
+(ii) duas regi˜oes ser˜ao consideradas vizinhas (ou adjacentes) se estiverem na mesma
+
+linha, coluna ou sub-grade.
+
+(iii) duas regi˜oes vizinhas n˜ao poder˜ao ser pintadas de uma mesma cor.
+
+Desse modo, a solu¸c˜ao desse problema se dar´a de maneira bastante semelhante ao
+problema de colora¸c˜ao do mapa da regi˜ao nordeste discutido anteriormente. Nesse
+
+32
+
+caso, queremos colorir o mapa (grade 9 × 9) usando 9 cores (n´umeros de 1 a 9) sem
+que regi˜oes vizinhas sejam pintadas com a mesma cor. Assim, associando cada cor
+a uma raiz nona da unidade, e cada regi˜ao a uma inc´ognita que s´o pode assumir
+um desses nove valores/cores poss´ıveis, temos 81 equa¸c˜oes do tipo X 9
+i − 1 = 0 com
+i ∈ {1, . . . , 81} compondo o sistema. Al´em disso, sendo Xi e Xj duas regi˜oes distintas
+do mapa, temos que:
+
+X 9
+
+i − X 9
+
+(cid:1)3 − (cid:0)X 3
+j = 0 ⇔ (cid:0)X 3
+j
+i
+j )(X 6
+i − X 3
+⇔ (X 3
+⇔ (Xi − Xj)(X 2
+⇔ Xi − Xj = 0 ou (X 2
+
+(cid:1)3 = 0
+j + X 6
+i X 3
+i + X 3
+i + XiXj + X 2
+
+j ) = 0
+j )(X 6
+
+i + XiXj + X 2
+
+i + X 3
+j )(X 6
+
+i X 3
+i + X 3
+
+j + X 6
+i X 3
+
+j ) = 0
+j + X 6
+
+j ) = 0
+
+Quando Xi e Xj s˜ao regi˜oes vizinhas, Xi − Xj (cid:54)= 0, ent˜ao
+
+(X 2
+
+i + XiXj + X 2
+
+j )(X 6
+
+i + X 3
+
+i X 3
+
+j + X 6
+
+j ) = 0
+
+(2.4)
+
+sempre que Xi e Xj tem fronteira em comum. Note que cada regi˜ao do mapa/tabuleiro
+faz fronteira com com 20 outras regi˜oes, como mostra a seguinte ﬁgura
+
+Figura 2.6: Regi˜oes de fronteira
+
+Como o mapa tem 81 regi˜oes e cada uma delas faz fronteira com outras 20, o
+2 = 810 equa¸c˜oes do tipo 2.4. Adicionando a esse n´umero as 81
+
+i − 1 = 0, temos um total de 810 + 81 = 891 equa¸c˜oes.
+
+sistema ter´a 81·20
+equa¸c˜oes do tipo X 9
+
+Embora o processo de resolu¸c˜ao do Sudoku usando bases de Gr¨obner seja perfei-
+tamente poss´ıvel por tudo que discutimos acima, o grande n´umero de equa¸c˜oes que
+
+33
+
+comp˜oem o sistema torna o processo demasiadamente longo, mesmo com o aux´ılio de
+softwares. Assim, decidimos descrever o processo de resolu¸c˜ao de uma vers˜ao mais
+fraca do Sudoku conhecida como Shidoku.
+
+O Shidoku consiste numa grade 4 × 4 dividida em 4 subgrades 2 × 2 onde algumas
+c´edulas j´a cont´em n´umeros entre 1 e 4. O objetivo do jogo ´e preeencher as c´edulas
+vazias, com um n´umero em cada c´edula, de modo que em cada linha, coluna ou
+sub-grade, os n´umeros de 1 a 4 apare¸cam apenas uma vez.
+
+Vamos ent˜ao determinar a solu¸c˜ao do Shidoku abaixo:
+
+Figura 2.7: Shidoku
+
+Note que esse ´e um problema de colora¸c˜ao de mapas usando 4 cores. Vamos ent˜ao,
+inicialmente, representar cada c´edula (regi˜ao) por Xi com i ∈ {1, . . . , 16} como mostra
+a seguinte ﬁgura:
+
+Figura 2.8: Cada regi˜ao ´e representada por Xi com i ∈ {1, . . . , 16}
+
+Como queremos colorir o mapa com 4 cores, vamos associar cada cor (1, 2, 3, 4) a
+
+uma raiz quarta da unidade (1, i, −1, −i) tal que
+
+1 ↔ 1,
+
+2 ↔ i
+
+3 ↔ −1,
+
+4 ↔ −i.
+
+Desse modo, temos 16 equa¸c˜oes do tipo X 4
+disso, dadas duas regi˜oes Xi e Xj quaisquer, temos
+
+i − 1 = 0 com i ∈ {1, . . . , 16}. Al´em
+
+34
+
+X 4
+
+i − X 4
+
+(cid:1)2 = 0
+i + X 2
+
+(cid:1)2 − (cid:0)X 2
+j = 0 ⇔ (cid:0)X 2
+i
+j
+⇔ (X 2
+j )(X 2
+i − X 2
+⇔ (Xi − Xj)(Xi + Xj)(X 2
+i + XiX 2
+⇔ (Xi − Xj)(X 3
+⇔ Xi − Xj = 0 ou (X 3
+
+j ) = 0
+
+i + X 2
+j + X 2
+i + XiX 2
+
+j ) = 0
+i Xj + X 3
+j + X 2
+
+j ) = 0
+i Xj + X 3
+
+j ) = 0
+
+Assim, sempre que Xi e Xj s˜ao regi˜oes vizinhas temos que
+
+X 3
+
+i + XiX 2
+
+j + X 2
+
+i Xj + X 3
+
+j = 0.
+
+(2.5)
+
+Como cada regi˜ao ´e vizinha de outras 7 regi˜oes, teremos um total de 7×16
+2 =
+56 equa¸c˜oes do tipo (2.5), ou seja, o sistema de equa¸c˜oes polinomiais associado ao
+problema ser´a formado por 16 + 56 = 72 equa¸c˜oes, a saber
+
+•X 4
+1 − 1 = 0
+•X 4
+2 − 1 = 0
+•X 4
+3 − 1 = 0
+•X4 + i = 0
+•X5 + i = 0
+•X 4
+6 − 1 = 0
+•X7 − i = 0
+•X 4
+8 − 1
+•X 4
+9 − 1 = 0
+•X10 + 1 = 0
+•X 4
+11 − 1 = 0
+•X12 − 1 = 0
+•X13 − 1 = 0
+•X 4
+14 − 1 = 0
+•X 4
+15 − 1 = 0
+•X 4
+16 − 1 = 0
+1 + X1X 2
+•X 3
+•X 3
+1 + X1X 2
+1 + X1X 2
+•X 3
+•X 3
+1 + X1X 2
+1 + X1X 2
+•X 3
+•X 3
+1 + X1X 2
+1 + X1X 2
+•X 3
+2 + X2X 2
+•X 3
+
+2 = 0
+3 = 0
+4 = 0
+5 = 0
+6 = 0
+9 = 0
+
+2 + X 2
+3 + X 2
+4 + X 2
+5 + X 2
+6 + X 2
+9 + X 2
+13 + X 2
+3 + X 2
+
+1 X2 + X 3
+1 X3 + X 3
+1 X4 + X 3
+1 X5 + X 3
+1 X6 + X 3
+1 X9 + X 3
+1 X13 + X 3
+2 X3 + X 3
+
+3 = 0
+
+13 = 0
+
+4 = 0
+5 = 0
+6 = 0
+
+10 = 0
+14 = 0
+
+4 = 0
+7 = 0
+8 = 0
+
+11 = 0
+15 = 0
+
+7 = 0
+8 = 0
+
+12 = 0
+16 = 0
+
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+
+2 + X2X 2
+2 + X2X 2
+2 + X2X 2
+2 + X2X 2
+2 + X2X 2
+3 + X3X 2
+3 + X3X 2
+3 + X3X 2
+3 + X3X 2
+3 + X3X 2
+4 + X4X 2
+4 + X4X 2
+4 + X4X 2
+4 + X4X 2
+5 + X5X 2
+5 + X5X 2
+5 + X5X 2
+5 + X5X 2
+5 + X5X 2
+6 + X6X 2
+6 + X6X 2
+6 + X6X 2
+6 + X6X 2
+7 + X7X 2
+
+4 + X 2
+5 + X 2
+6 + X 2
+10 + X 2
+14 + X 2
+4 + X 2
+7 + X 2
+8 + X 2
+11 + X 2
+15 + X 2
+7 + X 2
+8 + X 2
+12 + X 2
+16 + X 2
+6 + X 2
+7 + X 2
+8 + X 2
+9 + X 2
+13 + X 2
+7 + X 2
+8 + X 2
+10 + X 2
+14 + X 2
+8 + X 2
+
+2 X4 + X 3
+2 X5 + X 3
+2 X6 + X 3
+2 X10 + X 3
+2 X14 + X 3
+3 X4 + X 3
+3 X7 + X 3
+3 X8 + X 3
+3 X11 + X 3
+3 X15 + X 3
+4 X7 + X 3
+4 X8 + X 3
+4 X12 + X 3
+4 X16 + X 3
+5 X6 + X 3
+5 X7 + X 3
+5 X8 + X 3
+5 X9 + X 3
+5 X13 + X 3
+6 X7 + X 3
+6 X8 + X 3
+6 X10 + X 3
+6 X14 + X 3
+7 X8 + X 3
+
+6 = 0
+7 = 0
+8 = 0
+9 = 0
+
+7 = 0
+8 = 0
+
+10 = 0
+14 = 0
+
+8 = 0
+
+13 = 0
+
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+
+7 + X7X 2
+7 + X7X 2
+8 + X8X 2
+8 + X8X 2
+9 + X9X 2
+9 + X9X 2
+9 + X9X 2
+9 + X9X 2
+9 + X9X 2
+10 + X10X 2
+10 + X10X 2
+10 + X10X 2
+10 + X10X 2
+11 + X11X 2
+11 + X11X 2
+11 + X11X 2
+12 + X12X 2
+12 + X12X 2
+13 + X13X 2
+13 + X13X 2
+13 + X13X 2
+14 + X14X 2
+14 + X14X 2
+15 + X15X 2
+
+11 + X 2
+15 + X 2
+12 + X 2
+16 + X 2
+10 + X 2
+11 + X 2
+12 + X 2
+13 + X 2
+14 + X 2
+
+7 X11 + X 3
+7 X15 + X 3
+8 X12 + X 3
+8 X16 + X 3
+9 X10 + X 3
+9 X11 + X 3
+9 X12 + X 3
+9 X13 + X 3
+9 X14 + X 3
+
+11 = 0
+15 = 0
+12 = 0
+16 = 0
+10 = 0
+11 = 0
+12 = 0
+13 = 0
+14 = 0
+
+11 + X 2
+12 + X 2
+13 + X 2
+14 + X 2
+12 + X 2
+15 + X 2
+16 + X 2
+15 + X 2
+16 + X 2
+14 + X 2
+15 + X 2
+16 + X 2
+15 + X 2
+16 + X 2
+16 + X 2
+
+10X11 + X 3
+10X12 + X 3
+10X13 + X 3
+10X14 + X 3
+11X12 + X 3
+11X15 + X 3
+11X16 + X 3
+12X15 + X 3
+12X16 + X 3
+13X14 + X 3
+13X15 + X 3
+13X16 + X 3
+14X15 + X 3
+14X16 + X 3
+15X16 + X 3
+
+11 = 0
+12 = 0
+13 = 0
+14 = 0
+12 = 0
+15 = 0
+16 = 0
+15 = 0
+16 = 0
+14 = 0
+15 = 0
+16 = 0
+15 = 0
+16 = 0
+16 = 0
+
+Desse modo, para determinar a solu¸c˜ao do problema do shidoku devemos resolver
+
+(2.6)
+
+35
+
+esse sistema de equa¸c˜oes polinomiais. Assim como no caso do problema de colora¸c˜ao
+do mapa da regi˜ao nordeste, apresentaremos a solu¸c˜ao desse sistema de equa¸c˜oes
+polinomiais na ´ultima se¸c˜ao do cap´ıtulo 3 utilizando as bases de Grobner.
+
+36
+
+Cap´ıtulo 3
+
+Base de Gr¨obner
+
+Neste cap´ıtulo, estudaremos a teoria das bases de Gr¨obner para an´eis de po-
+linˆomios, desenvolvida por Bruno Buchberger em 1965, que foi assim batizada em
+homenagem a seu orientador Wolfgang Gr¨obner. Nosso objetivo ´e usar as bases de
+Gr¨obner para resolver sistemas de equa¸c˜oes polinomiais de qualquer grau e com qual-
+quer n´umero de vari´aveis no corpo dos Complexos.
+
+3.1 Ordem monomial
+
+Deﬁni¸c˜ao 3.1.1. Uma rela¸c˜ao R sobre um conjunto S ´e uma rela¸c˜ao de ordem se
+
+(i) (∀x)(x ∈ S ⇒ xRx) (R ´e reﬂexiva)
+
+(ii) (∀x, y ∈ S)(xRy e yRx ⇒ x = y) (R ´e anti-sim´etrica)
+
+(iii) (∀x, y, z ∈ S)(xRy e yRz ⇒ xRz) (R ´e transitiva)
+
+Vemos que a rela¸c˜ao dada por α ≤ β sobre N, Z, Q ou R, assim como a rela¸c˜ao
+α|β sobre N s˜ao rela¸c˜oes de ordem. Entretanto, a rela¸c˜ao α|β sobre Z, Q ou R n˜ao
+´e de ordem pois 1| − 1 e −1|1, por´em −1 (cid:54)= 1 o que mostra que a rela¸c˜ao n˜ao ´e
+anti-sim´etrica.
+
+Deﬁni¸c˜ao 3.1.2. Uma rela¸c˜ao de ordem R sobre um conjunto S ´e dita rela¸c˜ao de
+ordem total se para qualquer x, y ∈ S, xRy ou yRx.
+
+Note que a rela¸c˜ao de ordem α ≤ β ´e total sobre N, Z, Q ou R pois dados α, β
+quaisquer nesses conjuntos temos que α < β ou β < α ou α = β. J´a a rela¸c˜ao de
+ordem α|β n˜ao ´e total sobre N.
+
+37
+
+Deﬁni¸c˜ao 3.1.3. Polinˆomios em C[X1, . . . , Xn] da forma X α1
+1
+Zn
+
++, s˜ao chamados de monˆomios.
+
+· · · X αn
+
+n , com (α1, . . . , αn) ∈
+
+Nota¸c˜ao: Para cada α = (α1, . . . , αn) ∈ Zn
+monˆomio X α1
+1
+
+n por Xα.
+
+· · · X αn
+
++ representaremos simpliﬁcadamente o
+
+Quando trabalhamos com polinˆomios em uma vari´avel, existe uma rela¸c˜ao de
+ordem trivial para os monˆomios: a rela¸c˜ao que os organiza no polinˆomio em ordem
+decrescente (ou crescente) de grau. No caso de polinˆomios em v´arias vari´aveis n˜ao
+existe, `a princ´ıpio, uma ordena¸c˜ao trivial. Em geral ´e poss´ıvel ordenar os monˆomios
+de um polinˆomio em v´arias vari´aveis de diversos modos dependendo, entre outros
+fatores, de qual vari´avel ´e “mais signiﬁcativa”.
+
+A seguir deﬁniremos uma ordena¸c˜ao monomial e apresentaremos trˆes tipos de
+ordena¸c˜ao que podem ser usadas para ordenar monˆomios em um polinˆomio com
+v´arias vari´aveis.
+
+Deﬁni¸c˜ao 3.1.4. Uma ordena¸c˜ao monomial sobre C[X1, ..., Xn] ´e uma rela¸c˜ao >
+sobre Zn
++, ou equivalentemente, uma rela¸c˜ao > sobre o conjunto dos monˆomios Xα =
+X α1
+
++, satisfazendo as seguintes condi¸c˜oes:
+
+com α ∈ Zn
+
+1 ...X αn
+n
+
+(i) > ´e uma rela¸c˜ao de ordem total sobre Zn
++
+
+(ii) Se α > β e γ ∈ Zn
+
++, ent˜ao α + γ > β + γ.
+
+(iii) > ´e uma boa ordena¸c˜ao em Zn
+um elemento m´ınimo sobre >.
+
++, ou seja, todo subconjunto n˜ao-vazio de Zn
+
++ tem
+
+O lema abaixo ´e uma reformula¸c˜ao da condi¸c˜ao (iii) na deﬁni¸c˜ao acima.
+
+Lema 3.1.5. Uma rela¸c˜ao de ordem > sobre Zn
+se, toda sequˆencia estritamente decrescente em Zn
++
+
++ ´e uma boa ordena¸c˜ao se, e somente
+
+α(1) > α(2) > α(3) > ...
+
+´e ﬁnita.
+
+Prova. Usando a contrapositiva, queremos mostrar que existe uma sequˆencia inﬁnita
++ se, e somente se, > n˜ao ´e uma boa ordena¸c˜ao em Zn
+estritamente decrescente em Zn
++.
++, ent˜ao algum subconjunto n˜ao vazio
++ n˜ao tem um menor elemento. Considere α(1) ∈ S. Note que α(1) n˜ao ´e
+
+(⇐) Se > n˜ao ´e uma boa ordena¸c˜ao em Zn
+
+S ⊂ Zn
+
+38
+
+o menor elemento de S. Assim, existe α(2) ∈ S tal que α(1) > α(2) e α(2) n˜ao ´e o
+menor elemento de S. Continuando esse processo, conclu´ımos que
+
+α(1) > α(2) > α(3) > ...
+
+´e uma sequˆencia inﬁnita estritamente decrescente.
+(⇒) Se S = {α(1), α(2), α(3), ...} ⊂ Zn
+
++ ´e uma sequˆencia inﬁnita estritamente
+decrescente, ent˜ao S n˜ao tem um elemento m´ınimo, o que mostra que > n˜ao ´e uma
+boa ordena¸c˜ao.
+
+Observa¸c˜ao 3.1.6. Notemos que a ordem usual dos elementos de Z+,
+
+... > m + 1 > m > ... > 3 > 2 > 1 > 0
+
+satisfaz as trˆes condi¸c˜oes da Deﬁni¸c˜ao 3.1.4. Assim, o grau de ordena¸c˜ao de monˆomios
+em C[X] ´e uma ordena¸c˜ao monomial.
+
+Nas subse¸c˜oes a seguir apresentaremos trˆes tipos de ordena¸c˜ao monomial sobre
+
+n-uplas.
+
+3.1.1 Ordena¸c˜ao Lexicogr´aﬁca
+
+Deﬁni¸c˜ao 3.1.7. Sejam α = (α1, ..., αn) e β = (β1, ..., βn) ∈ Zn
++. Dizemos que α ´e
+uma ordena¸c˜ao lexicogr´aﬁca em β, ou simplesmente α >lex β , se no vetor diferen¸ca
+α − β ∈ Zn
+
++ a coordenada n˜ao-nula mais `a esquerda ´e positiva.
+
+Os exemplos a seguir ilustram bem a deﬁni¸c˜ao acima:
+
+(a) α = (3, 4, 2) >lex β = (1, 5, 2) pois α − β = (2, −1, 0).
+
+(b) α = (1, 2, 5) >lex β = (1, 2, 3) pois α − β = (0, 0, 2)
+
+Proposi¸c˜ao 3.1.8. A ordena¸c˜ao lexicogr´aﬁca sobre Zn
+
++ ´e uma ordena¸c˜ao monomial.
+
+Prova. (i) A justiﬁcativa para >lex ser uma ordena¸c˜ao total segue da deﬁni¸c˜ao e do
+fato de que a ordem num´erica sobre Z+ ser uma ordena¸c˜ao total.
+
+(ii) Se α >lex β, ent˜ao αk − βk > 0, onde k ´e a posi¸c˜ao da primeira coordenada
++, (α + γ) − (β + γ) = α − β. Assim, a
+
+n˜ao nula de α − β. Note que, dado γ ∈ Zn
+primeira coordenada n˜ao nula ´e novamente αk − βk > 0.
+
+39
+
+(iii) Suponha por absurdo que >lex n˜ao ´e uma boa ordena¸c˜ao. Assim, pelo Lema
+
+3.1.5, existe uma sequˆencia inﬁnita estritamente decrescente
+
+α(1) >lex α(2) >lex> α(3) >lex ...
+
+de elementos de Zn
++. Considere a primeira coordenada de cada um dos vetores
+α(i) ∈ Zn
++. Pela deﬁni¸c˜ao de ordem lexicogr´aﬁca, estas coordenadas formam uma
+sequˆencia n˜ao crescente de n´umeros inteiros n˜ao negativos, portanto devem se esta-
+bilizar. Assim, existe um k tal que a primeira coordenada de todos os α(i) com i ≥ k
+´e igual.
+
+A partir de α(k), as segundas coordenadas determinam a ordem lexicogr´aﬁca
+e, pelo mesmo motivo apresentado acima, formam uma sequˆencia n˜ao crescente de
+n´umeros inteiros n˜ao negativos e, portanto, devem tamb´em se estabilizar. Continu-
+ando esse processo vemos que para algum (cid:96), α((cid:96)), α((cid:96) + 1), ... s˜ao todos iguais, o que
+´e um absurdo pois α((cid:96)) >lex α((cid:96) + 1).
+
+Conv´em observar que uma ordena¸c˜ao lexicogr´aﬁca est´a associada ao modo como as
+vari´aveis est˜ao ordenadas. Assim, para evitar d´ubias interpreta¸c˜oes, quando usarmos
+a ordena¸c˜ao lexicogr´aﬁca, iremos considerar X1 > ... > Xn.
+
+Desse modo, numa ordena¸c˜ao lexicogr´aﬁca, uma vari´avel domina qualquer monˆomio
+
+que contem vari´aveis menores. Assim, se X > Y > Z ent˜ao X 2 >lex XY 5Z 3.
+
+Observa¸c˜ao 3.1.9. O termo ordem lexicogr´aﬁca ´e usado para determinar o modo
+como as palavras aparecem no dicion´ario. Observe que, de certo modo, ´e isso que esta-
+mos fazendo com os monˆomios. Se, por exemplo, escrevˆessemos os monˆomios X 2Y 3Z
+e X 2Y 2Z 3 como as “palavras”XXY Y Y Z e XXY Y ZZZ, ent˜ao a “palavra”XXY Y Y Z
+apareceria antes no dicion´ario, o que coincide com a ordem lexicogr´aﬁca dos monˆomios
+em quest˜ao.
+
+3.1.2 Ordena¸c˜ao lexicogr´aﬁca graduada
+
+Deﬁni¸c˜ao 3.1.10. Sejam α, β ∈ Zn
+
++. Diremos que α >glex β se
+
+|α| =
+
+n
+(cid:88)
+
+i=1
+
+α(i) > |β| =
+
+n
+(cid:88)
+
+i=1
+
+β(i) ou quando |α| = |β| e α >lex β.
+
+Assim, a ordem glex ordena primeiro pelo grau total e usa a ordem lex quando h´a
+
+40
+
+igualdade no grau total dos monˆomios. Abaixo seguem alguns exemplos para facilitar
+o entendimento:
+
+(a) α = (1, 3, 2) >glex β = (2, 1, 2) pois |α| = 6 > 5 = |β|
+
+(b) α = (1, 3, 4) >glex β = (1, 1, 6) pois |α| = 8 = |β| e (1, 3, 4) >lex (1, 1, 6)
+
+(c) X 2Y 3Z 2 >glex X 3Y Z 2
+
+3.1.3 Ordena¸c˜ao Lexicogr´aﬁca Graduada Reversa
+
+Deﬁni¸c˜ao 3.1.11. Sejam α, β ∈ Zn
+
++. Diremos que α >grevlex β se
+
+|α| =
+
+n
+(cid:88)
+
+i=1
+
+α(i) > |β| =
+
+n
+(cid:88)
+
+i−1
+
+β(i) ou quando |α| = |β|
+
+e em α − β, a coordenada n˜ao nula mais `a direita ´e negativa.
+
+Alguns exemplos:
+
+(a) α = (1, 3, 2) >grevlex β = (2, 1, 2) pois |α| = 6 > 5 = |β|
+
+(b) α = (3, 3, 4) >grevlex β = (1, 5, 4) pois |α| = 10 = |β| e α − β = (2, −2, 0)
+
+Agora vamos ver como aplicar uma ordena¸c˜ao monomial a polinˆomios em geral.
+aαXα em C[X1, ..., Xn]. Se selecionarmos uma ordena¸c˜ao
+
+Para isso, considere f = (cid:80)
+
+α
+
+monomial >, ent˜ao ´e poss´ıvel ordenar os monˆomios de f de modo n˜ao amb´ıguo com
+respeito a >. Por exemplo, seja f = XY 3Z + XY 3Z 2 + X 2Z 3 ∈ C[X, Y, Z]. Ent˜ao,
+colocando os termos de f em ordem decrescente,
+
+(i) Considerando a ordena¸c˜ao lex, temos:
+
+f = X 2Z 3 + XY 3Z 2 + XY 3Z
+
+(ii) Considerando a ordena¸c˜ao grlex, temos:
+
+f = XY 3Z 2 + X 2Z 3 + XY 3Z
+
+(iii) Considerando a ordena¸c˜ao grevlex, temos:
+
+f = XY 3Z 2 + XY 3Z + X 2Z 3
+
+41
+
+Deﬁni¸c˜ao 3.1.12. Seja f = (cid:80)
+
+aαXα um polinˆomio n˜ao nulo em C[X1, ..., Xn] e seja
+
+> uma ordena¸c˜ao monomial.
+
+α
+
+(i) O multigrau de f ´e:
+
+multigrau(f ) := max{α ∈ Zn
+
++; aα (cid:54)= 0}
+
+onde o m´aximo ´e escolhido com respeito a >.
+
+(ii) O coeﬁciente l´ıder de f ´e:
+
+(iii) O monˆomio l´ıder de f ´e:
+
+CL(f ) := amultigrau(f ) ∈ C
+
+M L(f ) := Xmultigrau(f )
+
+(iv) o termo l´ıder de f ´e:
+
+T L(f ) := CL(f ) · M L(f )
+
+Exemplo 3.1.13. Seja f = 2X 2Y 7Z−3X 5Y Z 4+XY Z 3−XY 4+4X 6Z 3 ∈ C[X, Y, Z].
+
+• Considerando a ordem >lex temos:
+
+multigrau(f ) = (6, 0, 3), CL(f ) = 4, M L(f ) = X 6Z3
+
+e T L(f ) = 4X 6Z3
+
+• Considerando a ordem >glex temos:
+
+multigrau(f ) = (5, 1, 4), CL(f ) = −3, M L(f ) = X 5Y Z4
+
+e T L(f ) = −3X 5Y Z4.
+
+• Considerando a ordem >grevlex temos:
+
+multigrau(f ) = (2, 7, 1) CL(f ) = 2 M L(f ) = X 2Y 7Z e T L(f ) = 2X 2Y 7Z.
+
+No lema a seguir listamos algumas propriedades b´asicas da fun¸c˜ao multigrau.
+
+Lema 3.1.14. Sejam f, g ∈ C[X1, . . . , Xn] polinˆomios n˜ao-nulos. Ent˜ao:
+
+42
+
+(i) multigrau(f · g) = multigrau(f ) + multigrau(g)
+
+(ii) Se f +g (cid:54)= 0, ent˜ao multigrau(f +g) ≤ max{multigrau(f ), multigrau(g)}. Al´em
+
+disso, se multigrau(f ) (cid:54)= multigrau(g), ent˜ao
+
+multigrau(f + g) = max{multigrau(f ), multigrau(g)}.
+
+Prova.
+
+(i) Sejam f =
+
+n
+(cid:80)
+i=1
+
+aiXα(i) e g =
+
+m
+(cid:80)
+j=1
+
+bjXβ(j) polinˆomios em C[X1, . . . , Xn].
+
+Suponha sem perda de generalidade que multigrau(f ) = α(1) e multigrau(g) = β(1).
+Assim,
+
+f · g =
+
+=
+
+=
+
+n
+(cid:88)
+
+i=1
+n
+(cid:88)
+
+i=1
+n
+(cid:88)
+
+i=1
+
+aiXα(i) ·
+
+m
+(cid:88)
+
+j=1
+
+bjXβ(j)
+
+m
+(cid:88)
+
+j=1
+
+aibjXα(i)+β(j)
+
+aib1Xα(i)+β(1) +
+
+n
+(cid:88)
+
+m
+(cid:88)
+
+i=1
+
+j=2
+
+aibjXα(i)+β(j)
+
+= a1b1Xα(1)+β(1) +
+
+n
+(cid:88)
+
+i=2
+
+aib1Xα(i)+β(1) +
+
+n
+(cid:88)
+
+m
+(cid:88)
+
+i=1
+
+j=2
+
+aibjXα(i)+β(j).
+
+Como α(1) + β(1) > α(i) + β(j) para todo 1 ≤ i ≤ n, 1 ≤ j ≤ m e a1 · b1 (cid:54)= 0
+
+(pois C ´e um corpo), ent˜ao
+
+multigrau(f · g) = α(1) + β(1) = multigrau(f ) + multigrau(g).
+
+(ii) Se f e g s˜ao polinˆomios tais que f + g (cid:54)= 0, ent˜ao o multigrau(f + g) est´a
+deﬁnido. Suponhamos a princ´ıpio que multigrau(f ) (cid:54)= multigrau(g). Nesse caso, ´e
+f´acil ver que
+
+multigrau(f + g) = max{multigrau(f ), multigrau(g)}.
+
+Entretanto, se multigrau(f ) = multigrau(g) temos que analisar duas possibilidades:
+
+(1) T L(f ) = −T L(g).
+
+43
+
+Neste caso os termos l´ıderes se anulam e, por isso,
+
+multigrau(f + g) < multigrau(f ) = multigrau(g),
+
+ou seja,
+
+multigrau(f + g) < max{multigrau(f ), multigrau(g)}.
+
+(2) T L(f ) (cid:54)= −T L(g).
+
+Neste caso, os termos l´ıderes n˜ao se anulam e, por isso,
+
+multigrau(f + g) = max{multigrau(f ), multigrau(g)}.
+
+3.2 Algoritmo da Divis˜ao em C[X1, . . . , Xn]
+
+Ap´os estabelecer crit´erios atrav´es dos quais conseguimos ordenar os monˆomios
+que comp˜oem um polinˆomio em C[X1, . . . , Xn], a pergunta que naturalmente surge
+´e: seria poss´ıvel estender o algoritmo da divis˜ao para polinˆomios de uma vari´avel de
+modo a utiliz´a-lo em problemas com polinˆomios de v´arias vari´aveis? Veremos em
+seguida que a resposta para essa pergunta ´e sim.
+
+Em geral, nosso objetivo ´e dividir f ∈ C[X1, . . . , Xn] por f1, . . . , fs ∈ C[X1, . . . , Xn],
+
+ou seja, queremos expressar f na forma
+
+f = a1f1 + . . . + anfs + r
+
+onde os “quocientes”a1, . . . , as e o “restos”r pertencem a C[X1, . . . , Xn].
+
+Basicamente vamos proceder com n do mesmo modo que com uma vari´avel: ten-
+taremos cancelar o termo l´ıder de f (ﬁxada uma ordem monomial) subtraindo-a pelo
+produto de alguma fi por um monˆomio convenientemente escolhido. Antes de forma-
+lizar o algoritmo vamos considerar alguns exemplos.
+
+Exemplo 3.2.1. Dividir f = XY 2 + 1 por f1 = XY + 1 e f2 = Y + 1, usando a
+ordena¸c˜ao lexicogr´aﬁca com X > Y . Colocando os divisores f1 e f2 na chave e os
+quocientes a1 e a2 abaixo dela, temos o seguinte esquema:
+
+44
+
+XY 2 + 1 XY + 1
+
+Y + 1
+
+a1 :
+a2 :
+
+Note que os termos l´ıderes T L(f1) = XY e T L(f2) = Y dividem o T L(f ) = XY 2.
+Vamos ent˜ao dividir primeiro f por f1. Assim, para iniciar o processo, inicialmente
+dividimos XY 2 por XY cujo resultado ´e Y , e subtra´ımos f do produto de Y por f1,
+obtendo:
+
+XY 2 + 1 XY + 1
+
+Y + 1
+
+−Y + 1 a1 : Y
+
+a2 :
+
+Em seguida repetiremos o mesmo processo para −Y + 1, por´em dessa vez dividi-
+
+remos por f2 pois T L(f1) = XY n˜ao divide o T L(−Y + 1) = −Y . Assim,
+
+XY 2 + 1 XY + 1
+
+Y + 1
+
+−Y + 1 a1 : Y
+
+2 a2 : −1
+
+Como os termos l´ıderes de f1 e f2 n˜ao dividem 2, o processo de divis˜ao acaba de
+
+modo que r = 2. Assim, temos
+
+f = XY 2 + 1 = Y (XY + 1) + (−1)(Y + 1) + 2.
+
+No pr´oximo exemplo veremos uma inesperada sutileza que pode ocorrer quando
+
+trabalhamos com polinˆomios com mais de uma vari´avel.
+
+Exemplo 3.2.2. Dividir f = X 2Y + XY 2 + Y por f1 = XY − 1 e f2 = Y 2 − 1
+considerando a ordena¸c˜ao lexicogr´aﬁca com X > Y .
+
+As etapas iniciais do processo de divis˜ao seguem do mesmo modo que no exemplo
+anterior, lembrando que quando os dois termos l´ıderes dividem f usamos o primeiro:
+
+X 2Y + XY 2 + Y 2 XY − 1
+Y 2 − 1
+
+XY 2 + X + Y 2
+X + Y 2 + Y
+
+a1 : X + Y
+a2 :
+
+45
+
+Observe que os termos l´ıderes de f1 e f2 n˜ao dividem o T L(X + Y 2 + Y ) = X.
+Por´em X + Y 2 + Y n˜ao ´e o resto pois T L(f2) divide Y 2. Desse modo, “movendo” X
+para o resto podemos continuar a divis˜ao.
+
+A ﬁm de deixar o algoritmo organizado, vamos criar uma coluna para o resto r, `a
+
+direita dos divisores, onde colocaremos os termos que o comp˜oem.
+
+Al´em disso, denominaremos cada polinˆomio abaixo do dividendo por dividendo
+
+intermedi´ario, e continuaremos o processo at´e que ele se anule.
+
+X 2Y + XY 2 + Y 2 XY − 1
+Y 2 − 1
+
+XY 2 + X + Y 2
+X + Y 2 + Y
+Y 2 + Y
+Y + 1
+0
+
+a1 : X + Y
+a2 : 1
+
+→
+
+→
+
+resto
+
+X
+
+Y + 1
+r = X + Y + 1
+
+Assim, o resto ´e X + Y + 1 e
+
+f = X 2Y + XY 2 + Y 2 = (X + Y )(XY − 1) + 1(Y 2 − 1) + X + Y + 1
+
+Conv´em observar que o resto dessa divis˜ao ´e uma soma de monˆomios n˜ao divis´ıveis
+
+pelos termos l´ıderes de f1 e f2.
+
+Finalmente, vamos enunciar o algoritmo da divis˜ao em C[X1, . . . , Xn].
+
+Teorema 3.2.3. (Algoritmo da divis˜ao em C[X1, . . . , Xn]) Fixe uma ordem mo-
+nomial sobre Zn
++ e seja F = (f1, . . . , fs) uma s-upla ordenada de polinˆomios em
+C[X1, . . . , Xn]. Ent˜ao todo f ∈ C[X1, . . . , Xn] pode ser escrito como
+
+f = a1f1 + . . . + asfs + r
+
+onde ai ∈ C[X1, . . . , Xn] e r = 0 ou r ´e uma combina¸c˜ao linear de monˆomios com
+coeﬁcientes em C, de modo que nenhum deles ´e divis´ıvel por algum termo l´ıder de
+f1, . . . , fs. Chamaremos r de um resto de f numa divis˜ao por F . Al´em disso, se
+fi (cid:54)= 0, ent˜ao
+
+multigrau(f ) ≥ multigrau(ai · fi)
+
+Prova. Podemos ter as seguintes situa¸c˜oes:
+
+46
+
+(A1) ou existe T L(fi1) que divide T L(f )
+
+(B1) ou n˜ao existe T L(fi1) que divida T L(f ).
+
+Deﬁnamos
+
+(cid:40)
+
+p1 =
+
+f − (T L(f )/T L(fi1))fi1
+f − T L(f )
+
+caso aconte¸ca (A1)
+caso aconte¸ca (B1)
+
+Em todo caso, podemos escrever
+
+(cid:88)
+
+f = (
+
+aifi) + p1 + r1
+
+onde r1 = 0 ou r1 = T L(f )
+
+Se T L(fi) n˜ao divide nenhum termo de p1 para qualquer 1 ≤ i ≤ s ou p1 = 0 ent˜ao
+o teorema ﬁca provado, basta fazer r = p1 + r1. Caso contr´ario, temos as seguintes
+situa¸c˜oes:
+
+(A2) ou existe T L(fi2) que divide T L(p1)
+
+(B2) ou n˜ao existe T L(fi2) que divida T L(p1).
+
+Deﬁnamos
+
+(cid:40)
+
+p2 =
+
+p1 − (T L(p1)/T L(fi2))fi2
+p1 − T L(p1)
+
+caso aconte¸ca (A2)
+caso aconte¸ca (B2)
+
+Em todo caso, podemos escrever
+
+(cid:88)
+
+f = (
+
+aifi) + p1 + r1 = (
+
+(cid:88)
+
+aifi) + p2 + r1 + r2
+
+onde r2 = 0 ou r2 = T L(p1).
+
+Se T L(fi) n˜ao divide nenhum termo de p2 para qualquer 1 ≤ i ≤ s ent˜ao o teorema
+ﬁca provado, basta fazer r = p2 + r1 + r2. Caso contr´ario, de maneira an´aloga cons-
+truimos um p3 e assim sucessivamente. Aﬁrmamos que esse processo de constru¸c˜ao
+dos pi n˜ao pode continuar ideﬁnidamente. Para verifcar esta aﬁrma¸c˜ao notemos que,
+em virtude do Lema 3.1.14 e da forma que os pi s˜ao deﬁnidos, temos
+
+multigrau(pi−1) > multigrau(pi)
+
+47
+
+caso pi (cid:54)= 0 Mas, pelo Lema 3.1.5, a sequˆencia
+
+multigrau(p1) > multigrau(p2) > . . .
+
+´e ﬁnita. Assim, devemos chegar a uma certa etapa j em que pj = 0. Consequente-
+mente, o processo de constru¸c˜ao dos pi deve encerrar nessa etapa e temos o teorema
+demonstrado.
+
+Notemos que o algoritmo da divis˜ao no caso do anel de polinˆomios em uma ´unica
+vari´avel C[X] decide completamente se um polinˆomio pertence ou n˜ao a um determi-
+nado ideal. De fato, neste caso temos que uma condi¸c˜ao necess´aria e suﬁciente para
+um polinˆomio f perten¸ca a um ideal I = (cid:104)g(cid:105) ´e que o resto r da divis˜ao de f por
+g seja zero. No caso de um anel de polinˆomios em v´arias vari´aveis C[X1, . . . , Xn],
+´e fato ´obvio que se o resto da divis˜ao de um polinˆomio f por polinˆomios f1, . . . , fs
+´e zero ent˜ao f ∈ (cid:104)f1, . . . , fs(cid:105), ou seja, o resto ser zero ´e condi¸c˜ao suﬁciente para f
+pertencer ao ideal (cid:104)f1, . . . , fs(cid:105). Todavia, o resto ser zero n˜ao ´e condi¸c˜ao necessaria
+para f pertencer ao ideal como nos revela o seguinte exemplo
+
+Exemplo 3.2.4. Sejam f1 = XY +1 e f2 = Y 2 −1 ∈ C[X, Y ]. Considere a ordena¸c˜ao
+lexicogr´aﬁca. Dividindo f = XY 2 − X por f1, f2 temos que
+
+XY 2 − X XY + 1
+Y 2 − 1
+
+−X − Y
+−X − Y
+
+a1 : Y
+a2 : 0
+
+ou seja,
+
+f = XY 2 − X = Y (XY + 1) + 0(Y 2 − 1) + (−X − Y )
+
+Note que este resultado, a princ´ıpio, n˜ao garante que f ∈ (cid:104)f1, f2(cid:105).
+
+Entretanto, dividindo f por f2, f1 temos:
+
+XY 2 − X Y 2 − 1
+XY + 1
+
+0
+0
+
+a1 : X
+a2 : 0
+
+donde obtemos
+
+f = XY 2 − X = X(Y 2 − 1) + 0(XY + 1) + 0
+
+48
+
+o que mostra que f ∈ (cid:104)f1, f2(cid:105)
+
+Assim, do ponto de vista do problema de pertinˆencia de um elemento em um ideal,
+podemos concluir que o algoritmo da divis˜ao em C[X1, . . . , Xn] ´e uma generaliza¸c˜ao
+imperfeita do algoritmo da divis˜ao em C[X]. Levando em considera¸c˜ao que quando
+lidamos com uma cole¸c˜ao de polinˆomios f1, . . . , fs em C[X1, . . . , Xn] ´e desej´avel de-
+terminarmos o ideal gerado por eles, uma pergunta que naturalmente surge ´e: qual
+seria um bom conjunto gerador de I? Para tal conjunto, queremos que o resto r seja
+unicamente determinado e que r = 0 seja condi¸c˜ao necess´aria e suﬁciente para que
+f perten¸ca ao ideal. Mais a frente veremos que as Bases de Gr¨obner s˜ao justamente
+esse bom conjunto gerador de I.
+
+3.3
+
+Ideais Monomiais
+
+Nesta se¸c˜ao estudaremos, de modo cuidadoso, as propriedades dos chamados ideais
+
+monomiais. Inicialmente, deﬁniremos ideais monomiais em C[X1, . . . , Xn].
+
+Deﬁni¸c˜ao 3.3.1. Um ideal I ⊂ C[X1, . . . , Xn] ´e um ideal monomial se existe um
+subconjunto A ⊂ Zn
++ de modo que I consiste de todos os polinˆomios que s˜ao somas
+(cid:88)
+hαXα, onde hα ∈ C[X1, . . . , Xn], α ∈ A. Nesse caso, vamos
+ﬁnitas da forma
+
+escrever I = (cid:104)Xα : α ∈ A(cid:105).
+
+α∈A
+
+O lema abaixo nos d´a uma caracteriza¸c˜ao alternativa para saber quando um dado
+
+monˆomio pertence a um ideal monomial
+
+Lema 3.3.2. Seja I = (cid:104)Xα : α ∈ A(cid:105) um ideal monomial. Um monˆomio Xβ pertence
+a I se, e somente se, Xβ ´e divis´ıvel por Xα para algum α ∈ A.
+
+Prova. Se Xβ ´e m´ultiplo de Xα, ent˜ao, pela deﬁni¸c˜ao de ideal, conclu´ımos que
+hiXαi, onde hi ∈ C[X1, . . . , Xn]
+Xβ ∈ I. Reciprocamente, se Xβ ∈ I, ent˜ao Xβ =
+
+s
+(cid:80)
+i=1
+
+e αi ∈ A. Escrevendo cada hi como uma combina¸c˜ao linear de monˆomios, distribuindo
+os produtos e agrupando os termos semelhantes, temos que
+
+onde aγk ∈ C.
+
+Xβ =
+
+t
+(cid:88)
+
+k=1
+
+aγkXγk
+
+49
+
+Note que cada parcela do lado direito dessa igualdade ´e divis´ıvel por algum Xαi
+com αi ∈ A. Al´em disso, se o lado esquerdo da igualdade ´e um monˆomio, ent˜ao o
+aγkXγk se, e somente se, t = 1 e aγ1 = 1, ou
+
+lado direito tamb´em ´e. Assim, Xβ =
+
+t
+(cid:80)
+k=1
+
+seja,
+
+Xβ = Xγ1.
+
+Como Xαi divide Xγ1 ent˜ao Xαi divide Xβ, o que conclui a demonstra¸c˜ao.
+
+Observe que Xβ ´e divis´ıvel por Xα quando Xβ = Xα · Xγ para algum γ ∈ Zn
++,
+
+ou seja, β = α + γ. Assim, o conjunto
+
+α + Zn
+
++ = {α + γ : γ ∈ Zn
++}
+
+´e formado pelos expoentes de todos os monˆomios divis´ıveis por Xα.
+
+Se, por exemplo, I = (cid:104)X 4Y 2, X 3Y 4, X 2Y 5(cid:105), ent˜ao os expoentes dos monˆomios em
+
+I formam o conjunto
+
+(cid:0)(4, 2) + Z2
+
++
+
+(cid:1) ∪ (cid:0)(3, 4) + Z2
+
++
+
+(cid:1) ∪ (cid:0)(2, 5) + Z2
+
++
+
+(cid:1) .
+
+O lema abaixo mostra se ´e poss´ıvel decidir se um polinˆomio f pertence ou n˜ao a
+
+um ideal monomial veriﬁcando os monˆomios de f .
+
+Lema 3.3.3. Seja I um ideal monomial e seja f ∈ C[X1, . . . , Xn]. Ent˜ao s˜ao equi-
+valentes:
+
+(i) f ∈ I.
+
+(ii) Todo termo de f pertence a I.
+
+(iii) f ´e uma combina¸c˜ao linear de monˆomios em I.
+
+Prova. As implica¸c˜oes (iii) ⇒ (ii) ⇒ (i) s˜ao triviais. Assim, basta mostrar que
+(i)⇒(iii). Se f ∈ I ent˜ao, por deﬁni¸c˜ao de ideal monomial,
+
+f =
+
+k
+(cid:88)
+
+i=1
+
+hkXαk
+
+onde hk ∈ C[X1, . . . , Xn] e αk ∈ A.
+
+Se expandirmos cada hk como combina¸c˜ao linear de monˆomios, efetuarmos os
+produtos e agruparmos os termos semelhantes, ´e f´acil ver que toda parcela do lado
+
+50
+
+direito da igualdade ´e divis´ıvel por algum Xαk. Assim, pelo Lema 3.3.2 , cada parcela
+de f pertence a I. Portanto f ´e uma combina¸c˜ao linear de monˆomios de I.
+
+Corol´ario 3.3.4. Dois ideais monomiais s˜ao iguais se, e somente se, contˆem os
+mesmos monˆomios.
+
+Finalmente podemos enunciar o importante lema abaixo.
+
+Lema 3.3.5. (Lema de Dickson). Um ideal monomial I = (cid:104)Xα : α ∈ A(cid:105) ⊂
+C[X1, . . . , Xn] pode ser escrito na forma
+
+I = (cid:104)Xα(1), . . . , Xα(s)(cid:105)
+
+onde α(1), . . . , α(s) ∈ A. Em particular, I tem uma base ﬁnita.
+
+Prova. Vamos provar esse lema por indu¸c˜ao sobre o n´umero n de vari´aveis.
+
+Se n = 1, ent˜ao I ´e um ideal em C[X1] gerado por monˆomios do tipo X αi
+1 , onde
+αi ∈ A ⊂ Z+. Seja β o menor elemento de A. Como β ≤ αi para todo i, temos que
+X β
+1 (cid:105), donde conclu´ımos que o
+Lema de Dickson vale para n = 1.
+
+1 divide todos os outros geradores X αi
+
+1 , ou seja, I = (cid:104)X β
+
+Suponhamos agora que n > 1 e que o lema seja v´alido para n−1. Representemos as
+vari´aveis como X1, . . . , Xn−1, Y . Assim, os monˆomios em C[X1, . . . , Xn−1, Y ] podem
+ser escritos como Xα · Y m, onde α = (α1, . . . , αn−1) ∈ Zn−1
+
+e m ∈ Z+.
+
++
+
+Suponhamos que I ⊂ C[X1, . . . , Xn−1, Y ] seja um ideal monomial. Seja J um
+ideal em C[X1, . . . , Xn−1] gerado por monˆomios Xα tais que Xα · Y m ∈ I para algum
+m ≥ 0. Como J, por constru¸c˜ao, ´e um ideal monomial temos, por hip´otese indutiva,
+que J possui um n´umero ﬁnito Xα de geradores, isto ´e
+
+J = (cid:104)Xα(1), . . . , Xα(s)(cid:105).
+
+Note que Xα(i) ·Y mi ∈ I para todo 1 ≤ i ≤ s e para algum mi ≥ 0. Seja m o maior
+dos mi. Assim, para cada k entre 0 e m−1, consideremos o ideal Jk ⊂ C[X1, . . . , Xn−1]
+gerado pelos monˆomios Xβ tais que Xβ(i) · Y k ∈ I. Por hip´otese indutiva Jk tem um
+n´umero ﬁnito de monˆomios geradores, digamos Jk = (cid:104)Xαk(1), . . . , Xαk(sk)(cid:105).
+
+51
+
+Podemos ent˜ao aﬁrmar que I ´e gerado pelos monˆomios da seguinte lista:
+
+de
+de
+de
+
+J
+J0
+J1
+
+de Jm−1
+
+: Xα(1) · Y m, . . . , Xα(s) · Y m
+: Xα0(1), . . . , Xα0(s0)
+: Xα1(1)Y, . . . , Xα1(s1)Y
+...
+: Xαm−1(1)Y m−1, . . . , Xαm−1(sm−1)Y m−1
+
+Note primeiramente que todo monˆomio em I ´e divis´ıvel por algum monˆomio da
+lista. Para justiﬁcar esse fato basta considerarmos um monˆomio XαY p ∈ I. Assim,
+
+(i) Se p ≥ m, ent˜ao XαY p ´e divis´ıvel por algum Xα(i)Y m pela constru¸c˜ao de J.
+
+(ii) Se p ≤ m − 1, ent˜ao XαY p ´e divis´ıvel por algum Xαp(j)Y p pela constru¸c˜ao de
+
+Jp
+
+Assim, pelo Lema 3.3.2, os monˆomios acima geram o ideal I. Pelo Corol´ario 3.3.4,
+
+isso implica que os ideais s˜ao iguais, o que prova nossa aﬁrma¸c˜ao.
+
+Para completar a demonstra¸c˜ao desse importante lema, precisamos ainda mostrar
+que um conjunto ﬁnito de geradores pode ser escolhido a partir de um dado conjunto
+de geradores (possivelmente inﬁnito) do ideal.
+
+Seja I = (cid:104)Xα : α ∈ A(cid:105) ⊂ C[X1, . . . , Xn] um ideal monomial. Queremos mostrar
+que I ´e gerado por um n´umero ﬁnito de monˆomios Xβ(i) ∈ I. Pelo que argumentamos
+anteriormente, sabemos que I tem um n´umero ﬁnito de geradores, ou seja,
+
+I = (cid:104)Xβ(1), . . . , Xβ(s)(cid:105)
+
+para certos monˆomios Xβ(i) ∈ I. Como Xβ(i) ∈ I = (cid:104)Xα : α ∈ A(cid:105), temos que, pelo
+Lema 3.3.2, cada Xβ(i) ´e divis´ıvel por Xα(i) para algum α(i) ∈ A e, portanto
+
+Xβ(i) = hiXα(i)
+
+onde hi ∈ C[X1, . . . , Xn] para i = 1, 2, . . . , s.
+Assim, dado f ∈ I, podemos escrever
+
+f =
+
+s
+(cid:88)
+
+i−1
+
+aiXβ(i) =
+
+s
+(cid:88)
+
+i=1
+
+(aihi)Xα(i)
+
+52
+
+onde aihi ∈ C[X1, . . . , Xn] e, portanto f ∈ (cid:104)Xα(1), . . . , Xα(s)(cid:105).
+
+Logo, I = (cid:104)Xα(1), . . . , Xα(s)(cid:105), o que completa a demonstra¸c˜ao.
+
+3.4 Base de Gr¨obner
+
+Nessa se¸c˜ao veremos como solucionar deﬁnitivamente o problema da descri¸c˜ao
+de um ideal, ou seja, seremos capazes de reconhecer quando um polinˆomios f de
+C[X1, . . . , Xn] pertence ou n˜ao a um ideal I desse mesmo anel. Nosso estudo nos
+guiar´a a bases ideais com “boas”propriedades relativas ao algoritmo da divis˜ao em
+C[X1, . . . , Xn]. A ideia chave ´e que, uma vez escolhida uma ordem monomial, todo
+polinˆomio f em C[X1, . . . , Xn] ter´a um ´unico termo l´ıder T L(f ). Assim, para qualquer
+ideal I, podemos associ´a-lo a um ideal de termos l´ıderes, como sugere a deﬁni¸c˜ao
+abaixo.
+
+Deﬁni¸c˜ao 3.4.1. Seja I ⊂ C[X1, . . . , Xn] um ideal n˜ao nulo.
+
+(i) Denotamos por T L(I) o conjunto formado pelos termos l´ıderes dos elementos
+
+de I, isto ´e
+
+T L(I) = {cXα| existe f ∈ I com T L(f ) = cXα} .
+
+(ii) Denotamos por (cid:104)T L(I)(cid:105) o ideal gerado pelos elementos de T L(I)
+
+Proposi¸c˜ao 3.4.2. Seja I ⊂ C[X1, . . . , Xn] um ideal.
+
+(i) (cid:104)T L(I)(cid:105) ´e um ideal monomial.
+
+(ii) Existem g1, . . . gs ∈ I tais que (cid:104)T L(I)(cid:105) = (cid:104)T L(g1), . . . , T L(gs)(cid:105).
+
+Prova. (i) Os monˆomios l´ıderes M L(g) de elementos de g ∈ I − {0} geram o ideal
+monomial (cid:104)M L(g) : g ∈ I − {0}(cid:105). Note que T L(g) e M L(g) se diferem apenas por
+uma constante n˜ao-nula, logo
+
+(cid:104)M L(g) : g ∈ I − {0}(cid:105) = (cid:104)T L(g) : g ∈ I − {0}(cid:105) = (cid:104)T L(I)(cid:105)
+
+ou seja, (cid:104)T L(I)(cid:105) ´e um ideal monomial.
+
+53
+
+(ii) Observe que (cid:104)T L(I)(cid:105) ´e gerado por monˆomios M L(g) com g ∈ I − {0}. Assim,
+
+pelo Lema de Dickson, temos
+
+(cid:104)T L(I)(cid:105) = (cid:104)M L(g1), . . . , M L(gs)(cid:105)
+
+para um n´umero ﬁnito de g1, . . . , gs ∈ I. Como M L(gi) e T L(gi) se diferem apenas
+por uma constante n˜ao-nula, conclu´ımos que
+
+(cid:104)T L(I)(cid:105) = (cid:104)T L(g1), . . . , T L(gs)(cid:105)
+
+o que completa a demonstra¸c˜ao.
+
+Como pudemos ver na se¸c˜ao 3.2 deste cap´ıtulo, os termos l´ıderes de um po-
+linˆomio tˆem grande importˆancia no algoritmo da divis˜ao. Isso nos mostra uma su-
+til, por´em importante, ponto a cerca do (cid:104)T L(I)(cid:105). Mostra que dado um conjunto
+gerador ﬁnito para I, por exemplo I = (cid:104)f1, . . . , fs(cid:105), ent˜ao (cid:104)T L(f1), . . . , T L(fs)(cid:105) e
+(cid:104)T L(I)(cid:105) podem ser ideais diferentes. Como T L(fi) ∈ T L(I) ⊂ (cid:104)T L(I)(cid:105) temos que
+(cid:104)T L(f1), . . . , T L(fs)(cid:105) ⊂ (cid:104)T L(I)(cid:105). Entretanto, (cid:104)T L(I)(cid:105) pode ser estritamente maior.
+Para observar esse fato, consideremos o exemplo a seguir.
+
+Exemplo 3.4.3. Seja I = (cid:104)f1, f2(cid:105), tal que f1 = X 3 − 2XY e f2 = X 2Y − 2Y 2 + X.
+Usando a ordena¸c˜ao lexicogr´aﬁca graduada em C[X, Y ] com X > Y temos
+
+X · (X 2Y − 2Y 2 + X) − Y · (X 3 − 2XY ) = X 2
+
+donde conclu´ımos que X 2 ∈ I. Assim, X 2 = T L(X 2) ∈ (cid:104)T L(I)(cid:105). Por´em X 2 n˜ao
+´e divis´ıvel por T L(f1) = X 3 nem por T L(f2) = X 2Y ; logo, pelo Lema 3.3.2, temos
+X 2 /∈ (cid:104)T L(f1), T L(f2)(cid:105).
+
+Finalmente, chegamos `a deﬁni¸c˜ao do que ´e uma base de Gr¨obner
+
+Deﬁni¸c˜ao 3.4.4. Seja I um ideal de C[X1, . . . , Xn]. Um conjunto {g1, . . . , gn} de ge-
+radores de I ´e chamado de base de Gr¨obner de I se a inclus˜ao (cid:104)T L(f1), . . . , T L(fs)(cid:105) ⊂
+(cid:104)T L(I)(cid:105) for uma igualdade.
+
+Teorema 3.4.5. Fixe uma ordem monomial. Ent˜ao todo ideal I ⊂ C[X1, . . . , Xn]
+n˜ao nulo tem uma base de Gr¨obner.
+
+Prova. Se I = {0} n˜ao h´a o que demonstrar. Suponhamos ent˜ao que I cont´em
+algum polinˆomio n˜ao nulo. Assim, pela Proposi¸c˜ao 3.4.2, existem g1, . . . , gs ∈ I tais
+
+54
+
+que
+
+(cid:104)T L(I)(cid:105) = (cid:104)T L(g1), . . . , T L(gs)(cid:105)
+
+Vamos provar que I = (cid:104)g1, . . . , gs(cid:105). Notemos inicialmente que (cid:104)g1, . . . , gs(cid:105) ⊂ I pois
+cada gi ∈ I. Reciprocamente, se f ´e um polinˆomio qualquer tal que f ∈ I ent˜ao, se
+dividirmos f por g1, . . . , gs chegaremos a uma express˜ao do tipo
+
+f = a1g1 + . . . + asgs + r
+
+onde r n˜ao ´e divis´ıvel por nenhum dos termos l´ıderes de g1, . . . , gs. Reescrevendo a
+express˜ao acima de modo conveniente temos
+
+r = f − a1g1 + . . . + asgs.
+
+Se r (cid:54)= 0, ent˜ao T L(r) ∈ (cid:104)T L(I)(cid:105) = (cid:104)T L(g1), . . . , T L(gs)(cid:105). Ent˜ao, pelo Lema
+3.3.2, temos que T L(r) ´e divis´ıvel por algum T L(gi), o que ´e uma contradi¸c˜ao. Logo
+r = 0 e, portanto
+
+f = a1g1 + . . . + asgs ∈ (cid:104)T L(I)(cid:105) = (cid:104)T L(g1), . . . , T L(gs)(cid:105)
+
+o que mostra a inclus˜ao I ⊂ (cid:104)g1, . . . , gs(cid:105).
+
+3.5 Propriedades das Bases de Gr¨obner
+
+Na se¸c˜ao anterior, vimos que todo ideal em C[X1, . . . , Xn] possui uma base de
+Gr¨obner. Veremos agora algumas propriedades das bases de Gr¨obner que nos permi-
+tem decidir se um polinˆomio pertence ou n˜ao a um ideal. Mais precisamente, veremos
+que o resto obtido no algoritmo da divis˜ao ´e ´unico quando dividimos por uma base
+de Gr¨obner.
+
+Proposi¸c˜ao 3.5.1. Seja G = {g1, . . . , gs} uma base de Gr¨obner para um ideal I ⊂
+C[X1, . . . , Xn] e seja f ∈ C[X1, . . . , Xn]. Ent˜ao, existe um ´unico r ∈ C[X1, . . . , Xn]
+com as seguintes propriedades:
+
+(i) Nenhum termo de r ´e divis´ıvel por algum dos T L(g1), . . . , T L(gs).
+
+(ii) Existe g ∈ I tal que f = g + r.
+
+55
+
+Em particular, r ´e o resto da divis˜ao de f por g, n˜ao importando como os elementos
+de G est˜ao ordenados quando usamos o algoritmo da divis˜ao.
+
+Prova. (Existˆencia) Sabemos, pelo algoritmo da divis˜ao que
+
+f = a1g1 + . . . + asgs + r
+
+tal que r, pela constru¸c˜ao do algoritmo da divis˜ao, satisfaz i). Como g1, . . . , gs ∈ I,
+ent˜ao a1g1 + . . . + asgs = g ∈ I. Assim, f = g + r com g ∈ I, o que prova a existˆencia
+de r.
+
+(Unicidade) Suponhamos que existam g1, g2, r1, r2 tais que f = g1 + r1 = g2 + r2
+que satisfa¸cam (i) e (ii). Assim, r2 − r1 = g1 − g2 ∈ I. Se r1 (cid:54)= r2, ent˜ao T L(r2 −
+r1) ∈ (cid:104)T L(I)(cid:105) = (cid:104)T L(g1), . . . , T L(gs)(cid:105). Desse modo, pelo Lema 3.3.2, conclu´ımos que
+T L(r2 − r1) ´e divis´ıvel por algum T L(gi) o que ´e uma contradi¸c˜ao pois nenhum termo
+l´ıder de r1 ou r2 ´e divis´ıvel por T L(g1), . . . , T L(gs). Logo, r1 − r2 = 0 e, portanto,
+r1 = r2.
+
+Note que a propriedade acima garante que quando dividimos um polinˆomio por
+uma base de Gr¨obner o resto ´e ´unico, independente da ordem dos geradores. Entre-
+tanto os quocientes ai produzidos pelo algoritmo da divis˜ao em f = a1g1+. . .+asgs+r
+provavelmente mudam se listarmos os geradores em uma ordem diferente.
+
+Nota¸c˜ao: Se G = {g1, . . . , gs} ´e uma base de Gr¨obner de um ideal I ent˜ao denotamos
+o resto da divis˜ao de um polinˆomio f por G pelo s´ımbolo f
+
+G
+
+.
+
+Segue abaixo um crit´erio para determinar se um polinˆomio pertence ou n˜ao a um
+
+ideal.
+
+Corol´ario 3.5.2. Seja G = {g1, . . . , gs} uma base de Gr¨obner para o ideal I ⊂
+C[X1, . . . , Xn] e seja f ∈ C[X1, . . . , Xn]. Ent˜ao f ∈ I se, e somente se, o resto da
+divis˜ao de f por G ´e zero.
+
+Prova. Se r = 0 ent˜ao f = a1g1 + . . . + asgs ∈ I pois g1, . . . , gs ∈ I. Reciprocamente,
+se f ∈ I ent˜ao a igualdade f = f +0 satisfaz as duas condi¸c˜oes da proposi¸c˜ao anterior,
+ou seja, zero ´e o resto da divis˜ao de f por G.
+
+Deﬁni¸c˜ao 3.5.3. Sejam f, g ∈ C[X1, . . . , Xn] polinˆomios n˜ao nulos.
+
+56
+
+i) Se multigrau(f ) = α e multigrau(g) = β, consideramos λ = (λ1, . . . , λn), onde
+λi = max(αi, βi) para todo i = 1, . . . , n. Chamamos Xλ o m´ınimo m´ultiplo
+comum de M L(f ) e M L(g) e escrevemos
+
+Xλ = MMC(M L(f ), M L(g)).
+
+ii) O S-polinˆomio de f e g ´e a combina¸c˜ao
+
+S(f, g) =
+
+Xλ
+T L(f )
+
+· f −
+
+Xλ
+T L(g)
+
+· g.
+
+Vejamos um exemplo para ajudar a ﬁxar esse conceito.
+
+Exemplo 3.5.4. Sejam f = X 2Y 2 + X 3 + XY 2 + 2X e g = X 4Y 2 + X 5 + 2XY
+polinˆomios em C[X, Y ]. Considere a ordena¸c˜ao lexicogr´aﬁca graduada com X > Y .
+Assim, pela deﬁni¸c˜ao acima, λ = (4, 2) e
+
+S(f, g) =
+
+X 4Y 2
+X 2Y 2 · (X 2Y 2 + X 3 + XY 2 + 2X) −
+
+X 4Y 2
+X 4Y 2 · (X 4Y 2 + X 5 + 2XY )
+
+= X 2 · (X 2Y 2 + X 3 + XY 2 + 2X) − (X 4Y 2 + X 5 + 2XY )
+
+= X 3Y 2 + 2X 3 − 2XY.
+
+Observe que um S-polinˆomio S(f, g) ´e constru´ıdo de modo que haja cancelamento
+de termos l´ıderes. O lema abaixo mostra que todo cancelamento de termos l´ıderes
+entre polinˆomios com mesmo multigrau resulta desse tipo de cancelamento.
+
+s
+(cid:80)
+i=1
+
+Lema 3.5.5. Considere a soma
+
+cifi, onde ci ∈ C e multigrau(fi) = δ ∈ Zn
++
+(cid:18) s
+(cid:80)
+i=1
+
+s
+(cid:80)
+i=1
+
+(cid:19)
+
+cifi ´e uma combina¸c˜ao
+cifi
+para todo i = 1, . . . , s. Se multigrau
+linear com coeﬁcientes em C dos S-polinˆomios S(fj, fk), para 1 ≤ j, k ≤ s. Al´em
+disso, multigrau (S(fj, fk)) < δ.
+
+< δ, ent˜ao
+
+Prova. Seja di = CL(fi),, de modo que cidi ´e o coeﬁciente l´ıder de cifi. Como cifi
+
+tem multigrau = δ e a soma tem multigrau estritamente menor, segue que
+
+57
+
+s
+(cid:80)
+i=1
+
+cidi = 0.
+
+Considere pi = fi
+di
+
+. Note que CL(pi) = 1. Considere ainda a soma
+
+s
+(cid:88)
+
+i=1
+
+cifi =
+
+s
+(cid:88)
+
+i=1
+
+cidipi
+
+= c1d1(p1 − p2) + (c1d1 + c2d2)(p2 − p3) + . . . +
+
+(c1d1 + . . . + cs−1ds−1)(ps−1 − ps) + (c1d1 + . . . + csds)ps.
+
+Por constru¸c˜ao, T L(fi) = diXδ. Logo, o MMC(M L(fi), M L(fk)) = Xδ e portanto
+
+S(fj, fk) =
+
+=
+
+fj −
+
+Xδ
+T L(fj)
+Xδ
+djXδ fj −
+
+Xδ
+T L(fk)
+Xδ
+dkXδ fk
+
+fk
+
+= pj − pk
+
+(3.1)
+
+Usando esta equa¸c˜ao e
+
+s
+(cid:80)
+i=1
+
+cidi = 0, a soma telesc´opica acima torna-se
+
+s
+(cid:88)
+
+i=1
+
+= c1d1S(f1, f2) + (c1d1 + c2d2)S(f2, f3) + . . . + (c1d1 + . . . + cs−1ds−1)S(fs−1, fs)
+
+que ´e a soma da forma desejada. Como pj e pk tˆem multigrau δ e coeﬁciente l´ıder 1,
+ent˜ao multigrau(pj − pk) < δ. Pela equa¸c˜ao (3.1), o mesmo vale para S(fj, fk) e isso
+conclui a demonstra¸c˜ao.
+
+Usando S-polinˆomios e o Lema 3.5.5, podemos ﬁnalmente provar o Crit´erio de
+
+Buchberger que determina quando uma base de um ideal ´e uma base de Gr¨obner.
+
+Teorema 3.5.6. (Crit´erio de Buchberger) Seja I um ideal polinomial. Ent˜ao a base
+G = {g1, . . . , gs} de I ´e uma base de Gr¨obner de I se, e somente se, para todo i (cid:54)= j,
+o resto da divis˜ao de S(gi, gj) por G (listados em qualquer ordem) ´e zero.
+
+(⇒) Se G ´e uma base de Gr¨obner ent˜ao, como S(g1, gj) ∈ I, o resto da
+
+Prova.
+divis˜ao por G ´e zero (vide Corol´ario 3.5.2).
+
+(⇐) Seja f ∈ I um polinˆomio n˜ao nulo. Nosso objetivo ´e mostrar que se todos os
+S-polinˆomios tˆem resto zero quando divididos por G, ent˜ao T L(f ) ∈ (cid:104)T L(g1), . . . , T L(gt)(cid:105).
+
+58
+
+Dado f ∈ I = (cid:104)g1, . . . , gt(cid:105), existem polinˆomios hi ∈ C[X1, . . . , Xn] tais que
+
+f =
+
+t
+(cid:88)
+
+i=1
+
+higi.
+
+(3.2)
+
+Pelo Lema 3.1.14, temos
+
+multigrau(f ) ≤ max(multigrau(higi)).
+
+(3.3)
+
+Se a igualdade n˜ao ocorrer, ent˜ao deve ocorrer o cancelamento dos termos l´ıderes
+de (3.2). Como, pelo Lema 3.5.5, todo cancelamento de termos l´ıderes se d´a por
+S-polinˆomios, ent˜ao podemos reescrever isto em termos deste. Desse modo, j´a que
+por hip´otese os S-polinˆomios tˆem resto zero, podemos substitui-los por express˜oes
+que envolvam menos cancelamentos. Assim, vamos obter uma express˜ao para f com
+menos cancelamentos dos termos l´ıderes. Continuando esse processo, obteremos em
+alguma etapa uma express˜ao para f tal que
+
+multigrau(f ) = max(multigrau(higi))
+
+para algum i, ou seja, T L(f ) ´e divis´ıvel por T L(gi). Da´ı concluiremos que T L(f ) ∈
+(cid:104)T L(g1), . . . , T L(gt)(cid:105) e isso completar´a nossa prova.
+
+Seja (3.2) uma express˜ao para f e m(i) = multigrau(higi). Seja ainda δ =
+
+max{m(1), . . . , m(t)}. Temos ent˜ao que
+
+multigrau(f ) ≤ δ.
+
+Considere agora todos os poss´ıveis modos de escrever f na forma (3.2). Para
+cada possibilidade, temos possivelmente um δ diferente. Por´em, como toda ordem
+monomial ´e uma boa ordena¸c˜ao, podemos escolher uma express˜ao para f tal que δ ´e
+m´ınimo.
+
+Devemos mostrar que para este δ m´ınimo escolhido, o multigrau(f ) = δ, pois
+
+assim, vale a igualdade (3.3) e, consequentemente, T L(f ) ∈ (cid:104)T L(g1), . . . , T L(gs)(cid:105).
+
+Suponhamos por contradi¸c˜ao que multigrau(f ) < δ e escrevamos f conveniente-
+
+59
+
+mente de modo a isolar os termos de multigrau δ
+
+f =
+
+(cid:88)
+
+higi +
+
+(cid:88)
+
+higi
+
+=
+
+=
+
+m(i)=δ
+(cid:88)
+
+m(i)=δ
+(cid:88)
+
+m(i)=δ
+
+m(i)<δ
+
+(T L(hi) + hi − T L(hi))gi +
+
+(cid:88)
+
+higi
+
+m(i)<δ
+
+T L(hi)gi +
+
+(cid:88)
+
+m(i)=δ
+
+(hi − T L(hi))gi +
+
+(cid:88)
+
+higi.
+
+m(i)<δ
+
+(3.4)
+
+Note que todos os polinˆomios que aparecem na segunda e terceira somas da terceira
+linha tˆem multigrau < δ. Desse modo, a hip´otese de que multigrau(f ) < δ implica
+que a primeira soma tem multigrau menor que δ, ou seja,
+
+multigrau
+
+
+
+
+
+(cid:88)
+
+m(i)=δ
+
+
+
+T L(hi)gi
+
+ < δ.
+
+Seja T L(hi) = ciXα(i). Ent˜ao
+
+(cid:88)
+
+m(i)=δ
+
+T L(hi)gi =
+
+(cid:88)
+
+m(i)=δ
+
+ciXα(i)gi
+
+satisfaz as hip´oteses do Lema 3.5.5 com fi = Xα(i)gi, e portanto este cancelamento
+pode ser escrito como uma combina¸c˜ao linear de S-polinˆomios S(Xα(j)gj, Xα(k)gk).
+Contudo,
+
+S(Xα(j)gj, Xα(k)gk) =
+
+Xδ
+Xα(j)T L(gj)
+
+Xα(j)gj −
+
+Xδ
+Xα(k)T L(gk)
+
+Xα(k)gk
+
+Xδ
+T L(gk)
+
+gk
+
+=
+
+gj −
+
+Xδ
+T L(gj)
+Xδ−γjk+γjk
+T L(gj)
+= Xδ−γjkS(gj, gk)
+
+gj −
+
+=
+
+Xδ−γjk+γjk
+T L(gk)
+
+gk
+
+onde Xγjk = M M C(M L(gj), M L(gk). Logo, existem constantes cjk ∈ C tais que
+
+(cid:88)
+
+m(i)=δ
+
+T L(hi)gi =
+
+(cid:88)
+
+jk
+
+60
+
+cjkXδ−γjkS(gj, gk).
+
+(3.5)
+
+O pr´oximo passo ´e usar nossa hip´otese de que o resto de S(gj, gk) na divis˜ao por
+g1, . . . , gt ´e zero. Usando o algoritmo da divis˜ao, isso signiﬁca que cada S-polinˆomio
+pode ser escrito na forma
+
+S(gj, gk) =
+
+t
+(cid:88)
+
+i=1
+
+aijkgi,
+
+(3.6)
+
+onde aijk ∈ C[X1, . . . , Xn].
+
+Sabemos ainda, pelo algoritmo da divis˜ao, que
+
+multigrau(aijkgi) ≤ multigrau(S(gj, gk))
+
+(3.7)
+
+para todo i, j, k.
+
+Intuitivamente, isso mostra que quando o resto ´e zero, podemos encontrar uma
+express˜ao para S(gj, gk) em termos de G onde nem todos os termos l´ıderes se cancelam.
+
+Para explorar isso, multipliquemos S(gj, gk) por Xδ−γjk para obter
+
+Xδ−γjkS(gj, gk) =
+
+s
+(cid:88)
+
+i=1
+
+bijkgi,
+
+onde bijk = Xδ−γjkaijk. Ent˜ao, pelo Lema 3.5.5, temos
+
+multigrau(bijkgi) ≤ multigrau(Xδ−γjkS(gj, gk)) < δ
+
+(3.8)
+
+Substituindo a express˜ao acima em (3.5) obtemos
+
+(cid:88)
+
+m(i)=δ
+
+T L(hi)gi =
+
+=
+
+=
+
+cjkXδ−γjkS(gj, gk)
+
+(cid:32)
+
+(cid:88)
+
+cjk
+
+bijkgi
+
+(cid:33)
+
+i
+
+(cid:101)higi
+
+(cid:88)
+
+jk
+
+(cid:88)
+
+jk
+(cid:88)
+
+i
+
+donde conclu´ımos que multigrau((cid:101)higi) < δ, para todo i.
+
+Finalmente, substituindo (cid:80)
+
+T L(hi)gi = (cid:80)
+
+(cid:101)higi em (3.4), obtemos uma ex-
+
+i
+press˜ao para f como combina¸c˜ao dos polinˆomios g(cid:48)
+is, onde todos tˆem multigrau menos
+que δ, o que contradiz a minimalidade de δ e conclui a prova do teorema.
+
+m(i)=δ
+
+61
+
+O teorema acima ´e conhecido como “crit´erio dos S-pares de Buchberger ”e ´e um
+dos resultados chave na teoria das Bases de Gr¨obner pois fornece um m´etodo simples
+para identiﬁcar quando uma base dada ´e uma base de Gr¨obner. Mais `a frente veremos
+que esse teorema nos levar´a a um algoritmo para encontrar as bases de Gr¨obner de
+um determinado ideal. Para ﬁxar melhor esse teorema, vejamos o exemplo abaixo.
+
+Exemplo 3.5.7. Seja o ideal I = (cid:104)−Y + X 2, −Z + X 3(cid:105). Vamos mostrar que G =
+{−Y + X 2, −Z + X 3} ´e uma base de Gr¨obner considerando a ordem lex com Y >
+Z > X. Considere f = −Y + X 2 e g = −Z + X 3. Note que multigrau(f ) = (1, 0, 0)
+e multigrau(g) = (0, 1, 0). Assim,
+
+Xλ = MMC(M L(f ), M L(g)) = Y Z.
+
+Logo, o S-polinˆomio S(f, g) ´e dado por
+
+S(f, g) =
+
+=
+
+Xλ
+T L(f )
+Y Z
+−Y
+
+f −
+
+Xλ
+T L(g)
+
+g
+
+(−Y + X 2) −
+
+Y Z
+−Z
+
+(−Z + X 3)
+
+= Y X 3 − XZ 2
+
+Dividindo S(f, g) por f e g, temos
+
+Y X 3 − XZ 2 = −X 3(−Y + X 2) + X 2(−Z + X 3).
+
+Ent˜ao, pelo Teorema 3.5.6, conclu´ımos que G ´e uma base de Gr¨obner para I.
+
+3.6 Algoritmo de Buchberger
+
+J´a sabemos, pelo Teorema 3.4.5, que todo ideal n˜ao nulo I ⊂ C[X1, . . . , Xn] tem
+uma base de Gr¨obner. Entretanto este teorema n˜ao nos mostrou como produzir
+a referida base. Nesta se¸c˜ao apresentaremos o Algoritmo de Buchberger, capaz de
+computar uma base de Gr¨obner de um ideal I ⊂ C[X1, . . . , Xn].
+
+A ideia chave desse algoritmo ´e tentar expandir o conjunto original de geradores
+a uma base de Gr¨obner, adicionando os restos n˜ao nulos de S(fi, fj) na divis˜ao por
+F , onde F ´e o conjunto de geradores em um determinado momento do processo.
+
+Por´em, como podemos garantir que o processo termina em algum momento?
+
+62
+
+F
+
+Observe que, em cada etapa do processo, se o resto de S(fi, fj) na divis˜ao por F
+´e diferente de zero, ou seja, se S(fi, fj)
+e o acrescen-
+taremos a F obtendo um novo conjunto F (cid:48) de geradores. Note ainda que, em cada
+etapa, o conjunto antigo de geradores (digamos, Fk) est´a contido no novo conjunto
+de geradores (Fk+1). Dessa inclus˜ao temos que (cid:104)TL(Fk)(cid:105) ⊂ (cid:104)TL(Fk+1)(cid:105). Assim, se o
+processo de constru¸c˜ao desses Fks fosse inﬁnito, ter´ıamos uma cadeia ascendente de
+ideais do tipo
+
+(cid:54)= 0, faremos fk = S(fi, fj)
+
+F
+
+(cid:104)TL(F1)(cid:105) ⊂ (cid:104)TL(F2)(cid:105) ⊂ . . . (cid:104)TL(Fk)(cid:105) ⊂ (cid:104)TL(Fk+1)(cid:105) ⊂ . . .
+
+que cresceria indeﬁnidamente, o que ´e um absurdo visto que C[X1, . . . , Xn] ´e um anel
+noetheriano.
+
+Para ﬁxar melhor essa ideia, vejamos o seguinte exemplo.
+
+Exemplo 3.6.1. Seja I = (cid:104)f1, f2(cid:105) = (cid:104)X 2Y − 1, XY 2 − X(cid:105) ∈ C[X, Y ] e considere
+a ordem lexicogr´aﬁca com X > Y . Temos multigrau(f1) = (2, 1) e multigrau(f2) =
+(1, 2). Assim,
+
+S(f1, f2) =
+
+X 2Y 2
+X 2Y
+
+(X 2Y − 1) −
+
+X 2Y 2
+XY 2 (XY 2 − X) = X 2 − Y.
+
+Notemos que, pelo Teorema 3.5.6, {f1, f2} n˜ao ´e uma base de Gr¨obner pois, consi-
+F
+= X 2 − Y (cid:54)= 0. Por´em se adicionarmos
+derando F = (f1, f2), temos que S(f1, f2)
+F
+f3 = X 2 − Y ao conjunto original de geradores, S(f1, f2)
+
+= 0. Entretanto,
+
+S(f1, f3) =
+
+X 2Y
+X 2Y
+
+(X 2Y − 1) −
+
+X 2Y
+X 2 (X 2 − Y ) = Y 2 − 1
+
+F
+
+ou seja, S(f1, f3)
+F
+de geradores de I, o que faz com que S(f1, f3)
+
+= Y 2 − 1 (cid:54)= 0. Ent˜ao, acrescentemos tamb´em f4 = Y 2 − 1 `a base
+
+= 0. Note ainda que
+
+S(f1, f4) =
+
+X 2Y 2
+X 2Y
+
+(X 2Y − 1) −
+
+X 2Y 2
+Y 2
+
+(Y 2 − 1) = X 2 − Y = f3,
+
+ou seja,
+
+Por´em,
+
+F
+S(f1, f4)
+
+= 0.
+
+S(f2, f3) =
+
+X 2Y 2
+XY 2 (XY 2 − X) −
+
+X 2Y 2
+X 2 (X 2 − Y ) = −X 2 + Y 3
+
+63
+
+F
+de modo que S(f2, f3)
+F
+`a base de geradores, o que faz com que S(f2, f3)
+
+= −X 2 + Y 3 (cid:54)= 0. Assim, devemos adicionar f5 = −X 2 + Y 3
+
+= 0. Temos ainda que,
+
+F
+S(f1, f5) = Y 4 − 1 = (Y 2 + 1)(Y 2 − 1) = (Y 2 + 1) · f4 ⇒ S(f1, f5)
+
+= 0,
+
+F
+S(f2, f4) = 0 ⇒ S(f2, f4)
+
+= 0,
+
+S(f2, f5) = −X 2 + Y 5 ⇒ S(f2, f5)
+
+F
+
+= 0,
+
+S(f3, f4) = X 2 − Y 3 = −f5 ⇒ S(f3, f4)
+
+F
+
+= 0,
+
+F
+S(f3, f5) = −Y 4 − Y 2 = Y 2(Y 2 − 1) = Y 2 · f4 ⇒ S(f3, f5)
+
+= 0,
+
+e
+
+S(f4, f5) = −X 2 + Y 5 ⇒ S(f4, f5)
+
+F
+
+= 0.
+
+Assim, pelo Teorema 3.5.6,
+
+{f1, f2, f3, f4, f5} = {X 2Y − 1, XY 2 − X, X 2 − Y, Y 2 − 1, −X 2 + Y 3}
+
+´e uma base de Gr¨obner.
+
+Em geral, bases de Gr¨obner constru´ıdas atrav´es do algoritmo de Buchberger s˜ao
+maiores que o necess´ario. O lema abaixo nos mostra como podemos, eventualmente,
+eliminar geradores “desnecess´arios”.
+
+Lema 3.6.2. Seja G uma base de Gr¨obner do ideal I. Seja P ∈ G um polinˆomio tal
+que T L(P ) ∈ (cid:104)T L(G − {P })(cid:105). Ent˜ao G − {P } tamb´em ´e uma base de Gr¨obner para
+I.
+
+Prova. J´a sabemos que (cid:104)T L(G)(cid:105) = (cid:104)T L(I)(cid:105). Se T L(P ) ∈ (cid:104)T L(G − {P })(cid:105), ent˜ao
+(cid:104)T L(G − {P })(cid:105) = (cid:104)T L(G)(cid:105). Logo, por deﬁni¸c˜ao, G − {P } tamb´em ´e uma base de
+Gr¨obner para I.
+
+Deﬁni¸c˜ao 3.6.3. Uma Base de Gr¨obner Minimal para um ideal polinomial I ´e uma
+base de Gr¨obner G de I tal que:
+
+(i) CL(P ) = 1 ∀P ∈ G.
+
+(ii) ∀P ∈ G, T L(P ) /∈ (cid:104)T L(G − {P })(cid:105).
+
+64
+
+Observe que, usando o algoritmo de Buchberger e o Lema 3.6.2, podemos construir
+uma base de Gr¨obner minimal para um determinado ideal n˜ao nulo. Consideremos,
+por exemplo, a base de Gr¨obner obtida no exemplo 3.6.1:
+
+f1 = X 2Y − 1
+f2 = XY 2 − X
+f3 = X 2 − Y
+f4 = Y 2 − 1
+f5 = −X 2 + Y 3
+
+Notemos que T L(f1) = X 2Y = Y · T L(f3). Ent˜ao, pelo Lema 3.6.2, podemos retirar
+f1. Do mesmo modo podemos retirar f2 e f5 pois T L(f2) = XY 2 = X · T L(f4) e
+T L(f5) = −X 2 = (−1) · T L(f3). Consequentemente,
+
+(cid:101)f3 = X 2 − Y,
+
+e
+
+(cid:101)f4 = Y 2 − 1
+
+formam uma base de Gr¨obner minimal de I
+
+Deﬁni¸c˜ao 3.6.4. Uma base de Gr¨obner reduzida para um ideal I ´e uma base de
+Gr¨obner G para I tal que:
+
+(i) CL(P ) = 1 para todo P ∈ G.
+
+(ii) Para todo P ∈ G, nenhum monˆomio de P pertence a (cid:104)T L(G − {P })(cid:105).
+
+3.7 Teoria de elimina¸c˜ao
+
+Na se¸c˜ao anterior apresentamos um algoritmo para encontrar uma base de Gr¨obner
+de um ideal polinomial I. Nessa se¸c˜ao vamos mostrar como podemos usar bases
+de Gr¨obner para resolver sistemas de equa¸c˜oes polinomiais em v´arias vari´aveis. A
+ideia b´asica dessa t´ecnica ´e transformar um dado sistema de equa¸c˜oes com v´arias
+vari´aveis em outro sistema equivalente (com as mesmas solu¸c˜oes) de modo que este
+seja composto por equa¸c˜oes com menos vari´aveis. Assim, podemos considerar essa
+t´ecnica como uma generaliza¸c˜ao do m´etodo de Gauss para resolu¸c˜ao de sistemas de
+equa¸c˜oes lineares.
+
+Para entender como o processo de elimina¸c˜ao funciona, consideremos o seguinte
+
+exemplo.
+
+65
+
+Exemplo 3.7.1. Resolver, em C2, o sistema de equa¸c˜oes
+
+(cid:40)
+
+X 2 + 2Y 2 = 3
+X 2 + XY + Y 2 = 3
+
+(3.9)
+
+Inicialmente consideremos o ideal
+
+I = (cid:104)X 2 + 2Y 2 − 3, X 2 + XY + Y 2 − 3(cid:105).
+
+Note que a solu¸c˜ao do sistema acima ´e simplesmente o conjunto de pontos de Z(I).
+Pela Proposi¸c˜ao 2.1.4, sabemos que podemos determinar Z(I) usando qualquer base
+de I (uma base de Gr¨obner por exemplo). Considerando F = {f1 = X 2 + 2Y 2 − 3,
+f2 = X 2 + XY + Y 2 − 3} e usando o algoritmo de Buchberger, vamos determinar uma
+base de Gr¨obner para I. Para isso, ﬁxemos a ordena¸c˜ao lexicogr´aﬁca com X > Y.
+Observe que o multigrau(f1) = multigrau(f2) = (2, 0). Ent˜ao
+
+S(f1, f2) =
+
+X 2
+X 2 (X 2 + 2Y 2 − 3) −
+
+X 2
+X 2 (X 2 + XY + Y 2 − 3) = −XY + Y 2
+
+F
+= −XY + Y 2 (cid:54)= 0. Adicionemos ent˜ao o po-
+e, consequentemente, S(f1, f2)
+linˆomiof3 = −XY + Y 2 a F . Continuando a usar o algoritmo de Buchberger, temos
+que
+
+S(f1, f3) =
+
+X 2Y
+X 2 (X 2 + 2Y 2 − 3) −
+
+X 2Y
+−XY
+
+(−XY + Y 2) = XY 2 + 2Y 3 − 3Y
+
+F
+
+portanto S(f1, f3)
+tamb´em. Efetuando os c´alculos necess´arios, obtemos
+
+= 3Y 3 − 3Y (cid:54)= 0, ou seja, devemos adicionar f4 = 3Y 3 − 3Y a F
+
+F
+S(f1, f4)
+
+= S(f2, f3)
+
+F
+
+F
+= S(f2, f4)
+
+= S(f3, f4)
+
+F
+
+= 0
+
+o que mostra que
+
+f1 = X 2 + 2Y 2 − 3
+f2 = X 2 + XY + Y 2 − 3
+f3 = −XY + Y 2
+f4 = 3Y 3 − 3Y
+
+66
+
+´e uma base de Gr¨obner para I.
+
+Desse modo, segue que o sistema (3.9) e
+
+
+
+
+
+
+f1 = 0
+f2 = 0
+f3 = 0
+f4 = 0
+
+s˜ao equivalentes, ou seja, tˆem o mesmo conjunto solu¸c˜ao. De f4 = 0 temos
+
+3Y 3 − 3Y = 0 ⇒ Y (Y 2 − 1) = 0
+
+donde conclu´ımos que os poss´ıveis valores de Y = −1 ou Y = 0 ou Y = 1. Substi-
+tuindo esses valores nas outras equa¸c˜oes do novo sistema obtemos facilmente todos
+os pares (x, y) que s˜ao solu¸c˜ao do mesmo, a saber
+
+√
+
+√
+
+(−
+
+3, 0), (
+
+3, 0), (1, 1), (−1, −1).
+
+Observe ent˜ao que a ideia b´asica da Teoria da Elimina¸c˜ao consiste de duas etapas:
+Etapa Elimina¸c˜ao: Nessa etapa buscamos encontrar um gerador fi onde ﬁgure
+
+apenas uma vari´avel (no exemplo anterior, f4 = 3Y 3 − 3Y ).
+
+Etapa Extens˜ao: Uma vez encontradas as ra´ızes da equa¸c˜ao mais simples fi = 0,
+
+extendemos estas solu¸c˜oes para a solu¸c˜ao do sistema original.
+
+Caso o leitor deseje ter uma vis˜ao mais aprofundada sobre o tema sugerimos ver
+
+por exemplo [2, Cap´ıtulo 3].
+
+3.8 Aplica¸c˜oes
+
+Nesta se¸c˜ao mostraremos como certos sistemas de equa¸c˜oes polinomiais apresen-
+
+tados no cap´titulo 2 podem ser resolvidos mediante o uso das bases de Grobner.
+
+3.8.1 A solu¸c˜ao do problema de colora¸c˜ao do mapa da regi˜ao
+
+nordeste
+
+Recordemos que para resolver o problema da colora¸c˜ao do mapa da regi˜ao nordeste
+
+devemos determinar a solu¸c˜ao do seguinte sistema de equa¸c˜oes polinomiais
+
+67
+
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+
+1 − 1 = 0
+2 − 1 = 0
+3 − 1 = 0
+4 − 1 = 0
+5 − 1 = 0
+6 − 1 = 0
+7 − 1 = 0
+8 − 1 = 0
+9 − 1 = 0
+
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+
+1 + X1X2 + X 2
+1 + X1X9 + X 2
+2 + X2X3 + X 2
+2 + X2X9 + X 2
+3 + X3X4 + X 2
+3 + X3X9 + X 2
+3 + X3X6 + X 2
+3 + X3X7 + X 2
+4 + X4X5 + X 2
+
+2 = 0
+9 = 0
+3 = 0
+9 = 0
+4 = 0
+9 = 0
+6 = 0
+7 = 0
+5 = 0
+
+•X 2
+•X 2
+•X 2
+•X 2
+•X 2
+
+4 + X4X6 + X 2
+5 + X5X6 + X 2
+6 + X6X7 + X 2
+7 + X7X8 + X 2
+7 + X7X9 + X 2
+
+6 = 0
+6 = 0
+7 = 0
+8 = 0
+9 = 0
+
+(3.10)
+
+Para isso, iremos determinar inicialmente uma base de Gr¨obner G para o ideal I cujos
+geradores s˜ao os polinˆomios que comp˜oem o sistema de equa¸c˜oes acima. Devido ao
+n´umero elevado de opera¸c˜oes, utilizaremos o software Macaulay 2 para determinar
+tal base, como mostra a ﬁgura abaixo.
+
+Assim, considerando a ordena¸c˜ao lexicogr´aﬁca com X1 > X2 > . . . > X9, uma
+
+base de Gr¨obner para o ideal I ´e
+
+G = {X6 − X9, X5 + X7 + X9, X4 − X7, X3 + X7 + X9, X2 − X7, X1 + X7 + X9,
+
+X7X8 + X 2
+
+8 − X7X9 − X 2
+
+9 , X 2
+
+7 + X7X9 + X 2
+
+9 , X 3
+
+9 − 1, X 3
+
+8 − 1}
+
+68
+
+Desse modo, o sistema (3.10) tem o mesmo conjunto solu¸c˜ao do seguinte sistema:
+
+
+
+
+
+
+X 3
+8 − 1 = 0
+X 3
+9 − 1 = 0
+X6 − X9 = 0
+X5 + X7 + X9 = 0
+X4 − X7 = 0
+X3 + X7 + X9 = 0
+X2 − X7 = 0
+X1 + X7 + X9 = 0
+X7X8 + X 2
+X 2
+
+7 + X7X9 + X 2
+
+8 − X7X9 − X 2
+9 = 0
+
+9 = 0
+
+(3.11)
+
+Denotando 1, ξ e ξ2 como as ra´ızes c´ubicas da unidade, ´e f´acil provar que as ´unicas
+solu¸c˜oes da equa¸c˜ao r1 + r2 + r3 = 0 com ri ∈ {1, ξ, ξ2} s˜ao aquelas onde r1, r2 e r3
+assumem valores distintos. Como cada vari´avel do sistema de equa¸c˜oes polinomiais
+(3.11) ´e uma raiz c´ubica da unidade e cada uma destas ra´ızes est´a associada a uma
+cor que ir´a colorir o mapa, vamos atribuir
+
+1 = verde
+
+ξ = Amarelo
+
+ξ2 = Azul
+
+Analisando agora as equa¸c˜oes que comp˜oem o sistema (3.11), observamos que:
+
+(i) Como na segunda equa¸c˜ao ﬁgura apenas a vari´avel X9, podemos atribuir a esta,
+sem perda de generalidade, qualquer raiz c´ubica da unidade. Consideremos
+ent˜ao X9 = 1.
+
+(ii) Da terceira equa¸c˜ao, conclu´ımos que X6 = X9, ou seja, X6 = 1.
+
+(iii) Na quarta equa¸c˜ao, temos que X5 +X7 +X9 = 0 apenas se cada vari´avel assumir
+valores distintos. Como X9 = 1, ent˜ao vamos considerar X5 = ξ e X7 = ξ2.
+
+(iv) Na quinta equa¸c˜ao temos X4 = X7. Logo, X4 = ξ2.
+
+(v) Na sexta equa¸c˜ao, o fato de X3 + X7 + X9 = 0 implica em dizer que X3, X7 e X9
+s˜ao ra´ızes c´ubicas distintas da unidade. Como X7 = ξ2 e X9 = 1, conclu´ımos
+que X3 = ξ.
+
+69
+
+(vi) Da s´etima equa¸c˜ao temos X2 = X7. Desse modo, X2 = ξ2.
+
+(vii) Da equa¸c˜ao n´umero 8, temos X1 + X7 + X9 = 0, ou seja, X1 = ξ.
+
+(ix) Da nona equa¸c˜ao, temos
+
+X7X8 + X 2
+
+8 − X7X9 − X 2
+
+9 = 0 ⇔ X7(X8 − X9) + (X8 + X9)(X8 − X9) = 0
+
+⇔ (X8 − X9)(X7 + X8 + X9) = 0
+
+⇔ X8 = X9
+
+ou X7 + X8 + X9 = 0
+
+⇔ X8 = 1 ou X8 = ξ
+
+Note que apesar de n˜ao termos feito nenhuma observa¸c˜ao com rela¸c˜ao `as equa¸c˜oes
+1 e 10, os resultados obtidos atrav´es das outras equa¸c˜oes do sistema satisfazem per-
+feitamente estas igualdades.
+
+Assim, temos duas poss´ıveis solu¸c˜oes para o problema proposto:
+
+
+
+
+
+
+X1 = X3 = X5 = ξ (Amarelo)
+X2 = X4 = X7 = ξ2 (Azul)
+X6 = X8 = X9 = 1 (Verde)
+
+ou
+
+
+
+
+
+
+X1 = X3 = X5 = X8 = ξ (Amarelo)
+X2 = X4 = X7 = ξ2 (Azul)
+X6 = X9 = 1 (Verde)
+
+Desse modo, o problema da colora¸c˜ao do mapa da regi˜ao nordeste do Brasil usando
+
+trˆes cores apresenta as seguintes solu¸c˜oes:
+
+Figura 3.1: op¸c˜ao 1 - quando X8 = X9
+
+Figura 3.2: op¸c˜ao 2 - quando X8 (cid:54)= X9
+
+70
+
+3.8.2 A solu¸c˜ao do Shidoku
+
+Pelo que discutimos na subse¸c˜ao 2.2.3, para resolvermos o problema do Shidoku
+
+devemos determinar a solu¸c˜ao do seguinte sistema de equa¸c˜oes polinomiais
+
+•X 4
+1 − 1 = 0
+•X 4
+2 − 1 = 0
+•X 4
+3 − 1 = 0
+•X4 + i = 0
+•X5 + i = 0
+•X 4
+6 − 1 = 0
+•X7 − i = 0
+•X 4
+8 − 1
+•X 4
+9 − 1 = 0
+•X10 + 1 = 0
+•X 4
+11 − 1 = 0
+•X12 − 1 = 0
+•X13 − 1 = 0
+•X 4
+14 − 1 = 0
+•X 4
+15 − 1 = 0
+•X 4
+16 − 1 = 0
+1 + X1X 2
+•X 3
+1 + X1X 2
+•X 3
+1 + X1X 2
+•X 3
+1 + X1X 2
+•X 3
+•X 3
+1 + X1X 2
+1 + X1X 2
+•X 3
+1 + X1X 2
+•X 3
+2 + X2X 2
+•X 3
+
+2 = 0
+3 = 0
+4 = 0
+5 = 0
+6 = 0
+9 = 0
+
+2 + X 2
+3 + X 2
+4 + X 2
+5 + X 2
+6 + X 2
+9 + X 2
+13 + X 2
+3 + X 2
+
+1 X2 + X 3
+1 X3 + X 3
+1 X4 + X 3
+1 X5 + X 3
+1 X6 + X 3
+1 X9 + X 3
+1 X13 + X 3
+2 X3 + X 3
+
+3 = 0
+
+13 = 0
+
+4 = 0
+5 = 0
+6 = 0
+
+10 = 0
+14 = 0
+
+4 = 0
+7 = 0
+8 = 0
+
+11 = 0
+15 = 0
+
+7 = 0
+8 = 0
+
+12 = 0
+16 = 0
+
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+
+2 + X2X 2
+2 + X2X 2
+2 + X2X 2
+2 + X2X 2
+2 + X2X 2
+3 + X3X 2
+3 + X3X 2
+3 + X3X 2
+3 + X3X 2
+3 + X3X 2
+4 + X4X 2
+4 + X4X 2
+4 + X4X 2
+4 + X4X 2
+5 + X5X 2
+5 + X5X 2
+5 + X5X 2
+5 + X5X 2
+5 + X5X 2
+6 + X6X 2
+6 + X6X 2
+6 + X6X 2
+6 + X6X 2
+7 + X7X 2
+
+4 + X 2
+5 + X 2
+6 + X 2
+10 + X 2
+14 + X 2
+4 + X 2
+7 + X 2
+8 + X 2
+11 + X 2
+15 + X 2
+7 + X 2
+8 + X 2
+12 + X 2
+16 + X 2
+6 + X 2
+7 + X 2
+8 + X 2
+9 + X 2
+13 + X 2
+7 + X 2
+8 + X 2
+10 + X 2
+14 + X 2
+8 + X 2
+
+2 X4 + X 3
+2 X5 + X 3
+2 X6 + X 3
+2 X10 + X 3
+2 X14 + X 3
+3 X4 + X 3
+3 X7 + X 3
+3 X8 + X 3
+3 X11 + X 3
+3 X15 + X 3
+4 X7 + X 3
+4 X8 + X 3
+4 X12 + X 3
+4 X16 + X 3
+5 X6 + X 3
+5 X7 + X 3
+5 X8 + X 3
+5 X9 + X 3
+5 X13 + X 3
+6 X7 + X 3
+6 X8 + X 3
+6 X10 + X 3
+6 X14 + X 3
+7 X8 + X 3
+
+6 = 0
+7 = 0
+8 = 0
+9 = 0
+
+7 = 0
+8 = 0
+
+10 = 0
+14 = 0
+
+8 = 0
+
+13 = 0
+
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+•X 3
+
+7 + X7X 2
+7 + X7X 2
+8 + X8X 2
+8 + X8X 2
+9 + X9X 2
+9 + X9X 2
+9 + X9X 2
+9 + X9X 2
+9 + X9X 2
+10 + X10X 2
+10 + X10X 2
+10 + X10X 2
+10 + X10X 2
+11 + X11X 2
+11 + X11X 2
+11 + X11X 2
+12 + X12X 2
+12 + X12X 2
+13 + X13X 2
+13 + X13X 2
+13 + X13X 2
+14 + X14X 2
+14 + X14X 2
+15 + X15X 2
+
+11 + X 2
+15 + X 2
+12 + X 2
+16 + X 2
+10 + X 2
+11 + X 2
+12 + X 2
+13 + X 2
+14 + X 2
+
+7 X11 + X 3
+7 X15 + X 3
+8 X12 + X 3
+8 X16 + X 3
+9 X10 + X 3
+9 X11 + X 3
+9 X12 + X 3
+9 X13 + X 3
+9 X14 + X 3
+
+11 = 0
+15 = 0
+12 = 0
+16 = 0
+10 = 0
+11 = 0
+12 = 0
+13 = 0
+14 = 0
+
+11 + X 2
+12 + X 2
+13 + X 2
+14 + X 2
+12 + X 2
+15 + X 2
+16 + X 2
+15 + X 2
+16 + X 2
+14 + X 2
+15 + X 2
+16 + X 2
+15 + X 2
+16 + X 2
+16 + X 2
+
+10X11 + X 3
+10X12 + X 3
+10X13 + X 3
+10X14 + X 3
+11X12 + X 3
+11X15 + X 3
+11X16 + X 3
+12X15 + X 3
+12X16 + X 3
+13X14 + X 3
+13X15 + X 3
+13X16 + X 3
+14X15 + X 3
+14X16 + X 3
+15X16 + X 3
+
+11 = 0
+12 = 0
+13 = 0
+14 = 0
+12 = 0
+15 = 0
+16 = 0
+15 = 0
+16 = 0
+14 = 0
+15 = 0
+16 = 0
+15 = 0
+16 = 0
+16 = 0
+
+Assim, vamos ent˜ao determinar uma base de Gr¨obner G para o ideal I cujos
+geradores s˜ao os polinˆomios que comp˜oem o sistema de equa¸c˜oes acima. Mais uma
+vez, devido ao n´umero elevado de opera¸c˜oes, utilizaremos o software Macaulay 2 para
+determinar tal base.
+
+(3.12)
+
+71
+
+Figura 3.3: C´alculo da base de Gr¨obner usando o Macaulay 2
+
+Desse modo, considerando a ordena¸c˜ao lexicogr´aﬁca com X1 > X2 > . . . > X16,
+
+uma base de Gr¨obner para o ideal I ´e
+
+G = {X1 + 1, X2 − 1, X3 − 1, X4 + i, X5 + i, X6 − 1, X7 − i, X8 + 1,
+
+X9 − i, X10 + 1, X11 + i, X12 − 1, X13 − 1, X14 + i, X15 + 1, X16 − i}
+
+ou seja, o sistema 2.6 tem o mesmo conjunto solu¸c˜ao do seguinte sistema:
+
+72
+
+
+
+
+
+
+X1 + 1 = 0
+X2 − i = 0
+X3 − 1 = 0
+X4 + i = 0
+X5 + i = 0
+X6 − 1 = 0
+X7 − i = 0
+X8 + 1 = 0
+X9 − i = 0
+X10 + 1 = 0
+X11 + i = 0
+X12 − 1 = 0
+X13 − 1 = 0
+X14 + i = 0
+X15 + 1 = 0
+X16 − i = 0
+
+(3.13)
+
+Logo, conclu´ımos que:
+
+X4 = −i (cor 4)
+X3 = 1 (cor 1)
+X1 = −1 (cor 3) X2 = i (cor 2)
+X8 = −1 (cor 3)
+X7 = i (cor 2)
+X5 = −i (cor 4) X6 = 1 (cor 1)
+X9 = i (cor 2)
+X10 = −1 (cor 3) X11 = −i (cor 4) X12 = 1 (cor 1)
+X13 = 1 (cor 1) X14 = −i (cor 4) X15 = −1 (cor 3) X16 = i (cor 2)
+
+(3.14)
+
+ou seja, a solu¸c˜ao do Shidoku representado na ﬁgura 2.7 ´e
+
+Figura 3.4: Solu¸c˜ao do puzzle Shidoku
+
+Note que, usando base de Gr¨obner, conseguimos transformar um sistema de 72
+equa¸c˜oes polinomiais, muitas delas n˜ao lineares e com mais de uma inc´ognita, em um
+
+73
+
+sistema equivalente (mesmo conjunto solu¸c˜ao) formado por apenas 16 equa¸c˜oes, todas
+elas lineares e com apenas uma inc´ognita. ´E claro que isso nem sempre ocorrer´a, mas
+´e fato que, em geral, o novo sistema ´e mais “simples”que o original.
+
+74
+
+Conclus˜ao
+
+Um elemento crucial no processo de constru¸c˜ao do conhecimento ´e sem d´uvida o
+questionamento. Sem este ingrediente nos tornamos meros receptores de informa¸c˜ao,
+incapazes de exercer a cr´ıtica e de fornecer nossa pr´opria contribui¸c˜ao ao desenvolvi-
+mento do conhecimento. No tocante ao papel do professor, acreditamos que o mesmo
+deve constantemente levantar indaga¸c˜oes e incitar seus alunos a fazˆe-las.
+
+Nessa perspectiva, nosso objetivo com este trabalho foi evidenciar como perguntas
+simples, que podem ocorrer de forma natural no ˆambito do ensino b´asico, podem levar
+a um universo de conhecimento fascinante tanto do ponto de vista te´orico quanto
+pr´atico.
+
+De fato, como se pode antever pelo pr´oprio t´ıtulo do trabalho, esta disserta¸c˜ao foi
+
+essencialmente norteada pela seguinte quest˜ao:
+
+(∗) Como resolver um sistema de equa¸c˜oes polinomiais em v´arias vari´aveis?
+
+Como ´e bem sabido, aprendemos a responder (∗) ainda no ensino b´asico em si-
+tua¸c˜oes bastante particulares, como por exemplo, para um sistema constitu´ıdo por
+uma ´unica equa¸c˜ao em uma ´unica vari´avel e com grau no m´aximo 2, ou para um
+sistema constitu´ıdo unicamente por equa¸c˜oes lineares. ´E no m´ınimo intrigante que,
+diante da amplitude de (∗), s´o consigamos respondˆe-la no ensino b´asico apenas para
+uma quantidade ´ınﬁma de situa¸c˜oes. Dessa maneira, uma outra pergunta que surge
+´e:
+
+(∗∗) O que impossibilita responder (∗) de maneira mais ampla no ensino b´asico?
+
+Para responder (∗∗) de forma honesta, faz-se necess´ario a pesquisa. O professor
+sem conhecimento de causa - e sem interesse de tˆe-lo - responderia de forma simplista
+e gen´erica, dizendo, por exemplo, que n˜ao se ensina porque ´e dif´ıcil. Todavia, o
+professor comprometido com seu of´ıcio e com a verdade deve procurar conhecer o real
+
+75
+
+motivo estudando e capacitando-se. Acreditamos que a importˆancia deste trabalho
+para o ensino b´asico esteja nesse sentido, pois ele revela, de maneira detalhada, quais
+s˜ao as diﬁculdades t´ecnicas de se responder (∗) de forma mais ampla.
+
+Como ﬁcou claro pelo que foi apresentado no trabalho, os m´etodos utilizados para
+resolver (∗) envolvem conhecimento e maturidade matem´atica que talvez inviabilize
+o uso do mesmo no ensino b´asico. Entretanto, em nossa opini˜ao, um bom professor
+de matem´atica deve ter trˆes caracter´ısticas fundamentais:
+
+1. ter paix˜ao pelo que faz - algo fundamental em qualquer proﬁss˜ao;
+
+2. enxergar matem´atica sob um ponto de vista mais amplo ao que ensina - qua-
+lidade que s´o pode ser obtida atrav´es de um processo cont´ınuo de capacita¸c˜ao;
+
+3. ser h´abil em instigar a curiosidade do aluno - fundamental para desenvolver o
+
+interesse deste pela matem´atica.
+
+´E interessante perceber que h´a uma rela¸c˜ao rec´ıproca entre professor capacitado e
+aluno curioso. Um professor capacitado gera alunos curiosos e alunos curiosos exigem
+professores capacitados.
+
+Entendemos que, para que o ensino da matem´atica a n´ıvel b´asico se torne mais
+eﬁciente, ´e necess´ario que o professor se sinta mais bem preparado para desempenhar
+sua fun¸c˜ao. ´E importante que ele se sinta seguro para enfrentar o desaﬁo de responder
+perguntas dif´ıceis que eventualmente surgem de alunos curiosos, como: “professor, e
+se o sistema tiver equa¸c˜oes n˜ao lineares?”. Por isso, ´e fundamental que haja um
+investimento constante no processo de capacita¸c˜ao do professor e que seja dada a ele
+a oportunidade de desenvolver o interesse pela pesquisa acadˆemica.
+
+Apesar do uso de base de Gr¨obner como ferramenta de resolu¸c˜ao de sistemas
+de equa¸c˜oes polinomiais n˜ao se encaixar de modo satisfat´orio na grade curricular
+do ensino b´asico, entendemos que, principalmente com o aux´ılio de softwares como
+Macaulay, Maple ou at´e mesmo o WolfranAlpha, esta ´e sim uma alternativa que pode
+ser usada pelo professor para mostrar que existem modos de se obter a solu¸c˜ao de
+determinados sistemas de equa¸c˜oes n˜ao lineares. Mostrar ao aluno que a matem´atica
+n˜ao se restringe ao conte´udo normalmente abordado em sala de aula pode, entre
+outras coisas, despertar o interesse dele pelo universo acadˆemico, al´em de lev´a-lo a
+perceber que a matem´atica ´e uma ciˆencia que est´a em constante desenvolvimento;
+cada vez que se resolve um problema, automaticamente outro ´e criado. Esse processo
+´e cont´ınuo e, por isso mesmo, fascinante.
+
+76
+
+Finalmente, mostrar como uma ferramenta abstrata como a base de Gr¨obner pode
+ajudar a resolver problemas reais, como o problema da colora¸c˜ao de mapas, que faz
+parte da rotina escolar desde as s´eries iniciais e o problema de um puzzle t˜ao conhecido
+como o Sudoku, nos ajuda a perceber a estreita rela¸c˜ao que existe entre o abstrato e
+real; nos ajuda a perceber que a ´algebra abstrata s´o existe por conta de desaﬁos reais
+que precisam ser vencidos, ou seja, ela s´o existe por causa do mundo real e o mundo
+real s´o se desenvolve por causa da ´algebra abstrata.
+
+Desse modo, conclu´ımos nosso trabalho agradecendo a Al Khowarisma, Bhas-
+cara Akaria, Scipione del Ferro, Nicoli Fontana, Girolamo Cardano, Lodovico Ferrari,
+´Evariste Galois, Niels Henrik Abel, Wolfgang Gr¨obner, Bruno Buchberger, entre tan-
+tos outros, por terem aceitado o desaﬁo de dedicar boa parte de suas vidas a desenvol-
+ver ferramentas e teorias que a princ´ıpio se mostravam t˜ao abstratas e sem aplica¸c˜ao,
+mas que hoje nos ajudam a resolver tantos problemas no mundo real.
+
+77
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] CLARK, A.; Elements of Abstract Algebra. Toronto: General Publishing Com-
+
+pany, 1984. 205 p.
+
+[2] COX, D.;LITTLE, J.;O’SHEA, D.; Ideals, Varieties, and Algorithms. New York:
+
+Springer, 2007. 3a edi¸c˜ao. 539 p.
+
+[3] DOMINGUES, H.H.;IEZZI, G.; ´Algebra Moderna. S˜ao Paulo: Atual, 1982. 3a
+
+edi¸c˜ao. 263 p.
+
+[4] GARCIA, A.;LEQUAIN, Y.; Elementos de ´Algebra. Rio de Janeiro: Associa¸c˜ao
+
+IMPA, 2003. 326 p.
+
+[5] GRAYSON, D. R.; STILLMAN, M.; Macaulay 2, a software system for research
+in algebraic geometry. Available at, http://www.math.uiuc.edu/Macaulay2/
+
+[6] HEFEZ, A., Aritm´etica. Rio de Janeiro: SBM, 2013. Cole¸c˜ao Profmat. 1a edi¸c˜ao.
+
+338 p.
+
+[7] Arnold, E.; Lucas, S.;Taalman, L. Gr¨obner Basis Representations of Sudoku.
+
+Virginia: Harrisonburg, 2009
+
+[8] Escudeiro, Marcelo. Colora¸c˜ao de mapas e Bases de Grobner. Dispon´ıvel em
+http://klein.sbm.org.br/wp-content/uploads/2012/11/coloracao-grobner1.pdf
+
+78
+
+

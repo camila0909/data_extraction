@@ -1,0 +1,7071 @@
+UNIVERSIDADE ESTADUAL DE MARINGÁ
+CENTRO DE CIÊNCIAS EXATAS
+DEPARTAMENTO DE MATEMÁTICA
+PROGRAMA DE MESTRADO PROFISSIONAL EM 
+MATEMÁTICA
+EM REDE NACIONAL – PROFMAT
+(Mestrado)
+
+DARCI DALA COSTA
+
+A MATEMÁTICA E OS CÓDIGOS SECRETOS:
+UMA INTRODUÇÃO À CRIPTOGRAFIA
+
+Maringá – PR
+2014
+
+DARCI DALA COSTA
+
+A MATEMÁTICA E OS CÓDIGOS SECRETOS:
+UMA INTRODUÇÃO À CRIPTOGRAFIA
+
+Trabalho   de   Conclusão   de   Curso   apresentado   ao 
+
+Programa de Mestrado profissional em Matemática 
+
+em Rede Nacional – PROFMAT do Departamento 
+
+de   Matemática,   Centro   de   Ciências   Exatas   da 
+
+Universidade Estadual de Maringá,  como requisito 
+
+parcial para obtenção do título de Mestre.
+
+Área de concentração: Matemática.
+
+Orientador: Prof. Dr. JOSINEY ALVES DE SOUZA
+
+Maringá – PR
+2014
+
+III
+
+Ficha Catalográfica
+
+D136m
+
+Dala Costa, Darci
+
+A Matemática e os códigos secretos: uma introdução à criptografia/
+
+Darci Dala Costa.- Maringá: UEM/PROFMAT,2014.
+
+xi, 67 p.: gráficos, tabelas.
+
+Inclui bibliografia
+
+Dissertação (mestrado) Universidade Estadual de Maringá, 2014
+
+Orientador: Prof. Dr. Josiney Alves de  Souza
+
+1. Criptografia. 2. Criptografia – História. 3. Criptografia aplicada à
+
+Matemática. 4. Criptografia – Método RSA. 5. Matemática. 6. Teoria dos números. 
+7. Linguagem codificada. I. Título
+
+CDD 20ª ed. 005.82
+
+512.7
+
+513
+
+Bibliotecária – Hebe Negrão de Jimenez -CRB 101/9
+
+IV
+
+Dedico   este   trabalho   à   minha 
+
+Família:   com  amor,   por   tudo  que 
+
+significam   pra   mim   e   com 
+
+gratidão,
+
+  por   suportarem   os 
+
+momentos   em   que   fui   mais 
+
+estudante do que pai ou marido.  
+
+V
+
+Agradecimentos
+
+Ao concluir este trabalho agradeço:
+
+A CAPES, pela oportunidade e pelo fundamental apoio financeiro.
+
+À minha esposa, Neiva, meus filhos Vitor e Thais pelo apoio e 
+
+compreensão.
+
+Ao professor Josiney Alves de Souza, pela orientação e disponibilidade.
+
+Aos meus colegas de Curso, especialmente a Graciele Muller, Reges 
+
+Gaieski, Maycon Pavei Boff e Vanderlei Veríssimo, o “Povo do Oeste” pelas 
+
+viagens divertidas.
+
+A todos os professores que se dispuseram a ministrar aulas para nossa 
+
+turma.
+
+VI
+
+Resumo
+
+Neste   trabalho   buscamos   mostrar,   de   forma   sintetizada,   a   evolução   da 
+
+criptografia desde a civilização grega até os dias atuais. Apresentamos as formas 
+
+de   criptografar   que   tiveram   algum   destaque   histórico,   bem   como   algumas 
+
+sugestões   de   exercícios   que   podem   ser   trabalhados   em   aulas   de   Matemática 
+
+fazendo uso delas. Incluímos, também, alguns elementos da Teoria dos Números, 
+
+com o objetivo de auxiliar o entendimento de uma das formas de criptografia aqui 
+
+apresentadas: o Método RSA.
+
+Palavras chave: Criptografia, Teoria dos Números, Criptografia RSA.
+
+VII
+
+Abstract
+
+In this work, we seek showing, in a synthetic form, the evolution of the 
+
+cryptography, from the  Greek civilization until the present days. We introduce the 
+
+ways   of   encrypting   that   had   some   historic   prominence,   as   well   as   some 
+
+suggestions of exercises which can be worked in the math classes doing the use of 
+
+them. We include, also, some elements of the Number Theory, with the purpose of 
+
+helping the understanding of one of the forms of encryption presented here: the 
+
+RSA method.
+
+Key words: Cryptography,  Number Theory, RSA Encryption.
+
+VIII
+
+“ A engenhosidade humana não pode arquitetar uma 
+
+escrita secreta que a própria engenhosidade humana 
+
+não possa resolver.”
+
+Edgar Allan Poe 
+
+IX
+
+Sumário
+
+Introdução .
+
+1
+
+Códigos Secretos Notáveis
+
+1.1 Um pouco de História. .  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Quadrado de Polybius. . . . . . . . . . . . . . . . . . . . . . . . .. . . . . . . . . .
+
+1.3
+
+Troca de César . . . . . . . . . . . . . . . . . . . . . . .. .. . . . . . . . . .  . . . . . 
+
+1.4 O Quadrado de Trithemius . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+1.5 A cifra de Vigenère . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.6
+
+Criptografia por Transposição. . . . . . . . . . . . . . . .  . .  . . . . . . . . .
+
+1.7 A cifra ADFGX. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+
+2
+
+Números Inteiros
+
+2.1
+
+Indução Matemática . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . .
+
+2.1.1
+
+2.1.2
+
+2.1.3
+
+Elemento mínimo de um conjunto de inteiros. . . . . . . .
+
+Princípio da Indução Finita . . . . . . . . . . . . . . . . . . . . . .
+
+Propriedade da Boa Ordem. . . .  . . . . . . . . . . . . . . . . . .
+
+2.2
+
+Fatores e Números Primos . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . .
+
+2.2.1
+
+2.2.2
+
+2.2.3
+
+2.2.4
+
+2.2.5
+
+2.2.6
+
+2.2.7
+
+2.2.8
+
+2.2.9
+
+Divisibilidade e propriedades . . . . . . . . .  . . . . . . . . . . .
+
+Algoritmo da Divisão ou Divisão Euclidiana . . . . . . . . 
+
+Máximo Divisor Comum e Mínimo Múltiplo Comum 
+
+Números Primos. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Como saber se um número é primo . . . . . . . . . . . . . . . .
+
+Método da Fatoração de Fermat . . . . . . . . . . .. . . . . . . .
+
+Formula de Fermat. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Fórmula de Euler. . . . . . . . . . . . . . . . .  . . . . . . . . . . . . .
+
+Fórmula de Mersenne:. . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3
+
+Congruências  . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3.1
+
+2.3.2
+
+Teorema de Fermat . . . . . . . . . . . . . . .  . . . . . . . . . . . . .
+
+Teorema de Euler . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Sistemas de Congruências Lineares . . . . . . . . . . . .  . . . . . . . . . . .
+
+Congruência e Criptografia  . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.4
+
+2.5
+
+1
+
+3
+
+3
+
+4
+
+5
+
+6
+
+8
+
+11
+
+12
+
+15
+
+15
+
+16
+
+16
+
+17
+
+18
+
+18
+
+19
+
+20
+
+21
+
+23
+
+24
+
+26
+
+26
+
+27
+
+28
+
+31
+
+33
+
+36
+
+39
+
+X
+
+2.5.1
+
+2.5.2
+
+2.5.3
+
+Cifra de César . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Cifra de Trithemius . . . . . . . . . . . . . . .  . . . . . . . . . . . . .
+
+Cifra de Vigenère . . . . . . . . . . . . . . .. . . . . . . . . . . . . . .
+
+3
+
+A Teoria dos Números e a Criptografia RSA
+
+3.1 O método de criptografia RSA. . . . . . . . . . . . . . . . .. . . . . . . . . . .
+
+3.1.1
+
+3.1.2
+
+Descrição do método RSA . . . . . . . . . . . .  . . . . . . . .. ..
+
+Um exemplo de mensagem criptografada de
+acordo com o método RSA . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+Sugestão de Atividade
+
+4.1
+
+Plano de Aula.  . . . . . . . . . . . . . . . . . . . . .  . . . . . . . . . . . . . . . . . .
+
+Conclusão
+
+Referências Bibliográficas
+
+39
+
+41
+
+42
+
+45
+
+45
+
+47
+
+49
+
+60
+
+61
+
+65
+
+67
+
+XI
+
+Introdu(cid:231)ªo
+
+Você é capaz de entender o significado da mensagem abaixo?
+
+Essa mensagem foi codi(cid:133)cada, ou seja, o texto original foi substitu(cid:237)do por
+s(cid:237)mbolos com o objetivo de di(cid:133)cultar a leitura, ocultando, assim, o signi(cid:133)-
+cado.
+
+A arte de usar s(cid:237)mbolos diferenciados para representar mensagens Ø quase
+tªo antiga quanto a pr(cid:243)pria escrita. Atualmente, esse procedimento recebe o
+nome de criptogra(cid:133)a, termo cuja origem vem do grego krypt(cid:243)s (escondido)
+e grÆphein (escrita). De modo geral, essa tØcnica pode ser entendida como
+o ato de aplicar um determinado c(cid:243)digo a (cid:133)m de manter secreto o conteœdo
+de certas informa(cid:231)ıes.
+
+Antes de existir os meios de comunica(cid:231)ªo atuais, os exØrcitos dependiam
+de mensageiros para transmitir ordens e informa(cid:231)ıes (cid:224)s tropas. Entretanto,
+se o arauto fosse capturado e a mensagem ca(cid:237)sse em mªos inimigas, dados
+sigilosos poderiam ser revelados. Diante disso, era prudente que o conteœdo
+estivesse codi(cid:133)cado. Desse modo, os adversÆrios permaneceriam alheios (cid:224)
+signi(cid:133)ca(cid:231)ªo.
+
+ConvØm ressaltar que cifrar o texto era apenas uma maneira de di(cid:133)cultar
+a leitura, nªo uma garantia absoluta de seguran(cid:231)a com rela(cid:231)ªo ao envio da
+mensagem. Os exØrcitos deveriam possuir uma rede e(cid:133)ciente de envio de
+informa(cid:231)ıes, pois, se estas nªo chegassem ao destinatÆrio, pouco importaria
+o fato de estarem codi(cid:133)cadas ou nªo.
+
+Com a inven(cid:231)ªo do telØgrafo, as mensagens poderiam percorrer grandes
+dist(cid:226)ncias rapidamente, sem a necessidade de um mensageiro. Contudo, emb-
+ora fosse muito mais prÆtico enviar um telegrama, nªo havia meios de garantir
+que a linha estivesse imune a poss(cid:237)veis intercepta(cid:231)ıes. Tal incerteza fez com
+que surgissem maneiras pr(cid:243)prias de comunica(cid:231)ªo (cid:150) por meio de c(cid:243)digos (cid:150),
+formadas por frases cifradas ou de sentido modi(cid:133)cado.
+
+Outra evolu(cid:231)ªo importante foi o surgimento do telefone, o qual permitia
+conversas a longas dist(cid:226)ncias. Todavia, assim como o telØgrafo, o telefone
+tambØm poderia ser grampeado, o que colocaria em risco conversas con(cid:133)den-
+ciais. Para contornar a situa(cid:231)ªo, novamente entra em cena a linguagem em
+c(cid:243)digo (cid:150)neste caso, evidentemente, no n(cid:237)vel da fala.
+
+Nos tempos atuais, mesmo com o advento de toda a tecnologia relacionada
+(cid:224) Internet, a necessidade de o homem constituir novos sistemas semi(cid:243)ticos
+nªo se extinguiu. A(cid:133)nal, os dados dos usuÆrios sªo transmitidos via cabo
+telef(cid:244)nico ou rÆdio, e as informa(cid:231)ıes que viajam atravØs desses meios estªo
+sujeitas aos mesmos perigos enfrentados em dispositivos como o telØgrafo e
+
+1
+
+o telefone. Entªo, o remØdio tambØm Ø o mesmo: a utiliza(cid:231)ªo de mensagens
+cifradas.
+
+Em face do exposto, o trabalho ora aduzido almeja explorar, ainda que
+nos limites de nossas possibilidades, o riqu(cid:237)ssimo campo da criptogra(cid:133)a.
+Com efeito, apresentar-se-ªo aqui alguns mØtodos semi(cid:243)ticos desenvolvidos
+no decorrer da Hist(cid:243)ria ocidental; mØtodos estes que se caracterizam pela uti-
+liza(cid:231)ªo, ora de letras do alfabeto latino, ora de nœmeros, como s(cid:237)mbolos para
+transmitir mensagens codi(cid:133)cadas. Conseguintemente, o objetivo aqui pro-
+posto Ø o de estabelecer uma base de pesquisa para professores que queiram
+abordar o tema da criptogra(cid:133)a em suas aulas.
+
+Neste trabalho, analisaremos tambØm a Teoria dos Nœmeros, ramo da
+MatemÆtica que contribuiu para o desenvolvimento do mecanismo criptogrÆ-
+(cid:133)co que tornou mais seguras as transa(cid:231)ıes comerciais via Internet: o mØtodo
+RSA.
+
+No Cap(cid:237)tulo 1, destacaremos alguns processos de codi(cid:133)car mensagens
+usados antes do surgimento do computador. Para cada mØtodo apresentado,
+elaboramos um exemplo de codi(cid:133)ca(cid:231)ªo, seguido da respectiva decodi(cid:133)ca(cid:231)ªo
+(cid:150)tudo isso, com modelos simples, de fÆcil entendimento.
+
+No Cap(cid:237)tulo 2, veremos alguns t(cid:243)picos da Teoria dos Nœmeros. Focamos
+a nossa aten(cid:231)ªo no estudo de nœmeros primos e congruŒncias, apresentando
+as principais proposi(cid:231)ıes e teoremas que envolvem tais t(cid:243)picos. Objetivamos,
+com esse cap(cid:237)tulo, formar uma base para o entendimento de um sistema de
+criptografar muito empregado nos tempos atuais: o RSA.
+
+No Cap(cid:237)tulo 3, trabalharemos o funcionamento do mØtodo RSA. Para
+tanto, destacaremos um exemplo de cifragem de palavra com o uso do mesmo.
+No Cap(cid:237)tulo 4, apresentaremos sugestıes de atividades (cid:150)desa(cid:133)os ou ex-
+erc(cid:237)cios de aplica(cid:231)ªo (cid:150) para serem trabalhadas em aulas de MatemÆtica.
+Isso envolverÆ conteœdos como fun(cid:231)ıes, matrizes, anÆlise de frequŒncia, pro-
+priedades das potŒncias e outros que, porventura, o leitor julgar exequ(cid:237)vel.
+
+2
+
+Cap(cid:237)tulo 1
+
+C(cid:243)digos Secretos NotÆveis
+
+Neste cap(cid:237)tulo, veremos as quatro maneiras mais comuns de criptografar (cid:150)
+segundo[7] (cid:150)da era prØ-computador.
+
+i) substitui(cid:231)ªo monoalfabØtica: cada letra do alfabeto Ø representada por
+um s(cid:237)mbolo diferente, que pode ser um nœmero, uma letra ou uma (cid:133)gura
+qualquer;
+
+ii) substitui(cid:231)ªo polialfabØtica: cada s(cid:237)mbolo representa uma letra difer-
+
+ente de acordo com sua posi(cid:231)ªo na mensagem;
+
+iii) transposi(cid:231)ªo: a mensagem Ø transformada em uma matriz e crip-
+
+tografada pela matriz transposta
+
+iv) combina(cid:231)ªo de substitui(cid:231)ªo e transposi(cid:231)ªo
+
+1.1 Um pouco de Hist(cid:243)ria
+
+No decorrer da Hist(cid:243)ria da humanidade, a criptogra(cid:133)a sempre esteve pre-
+sente. Tal prÆtica persiste atØ os tempos atuais, seja em situa(cid:231)ıes de carÆter
+pessoal (cid:150)como, por exemplo, nos diÆrios de adolescentes que nªo querem que
+seus segredos sejam revelados (cid:150), seja numa conjuntura mais ampla, como a
+que envolve informa(cid:231)ıes sobre pessoas, empresas, na(cid:231)ıes, tÆticas de guerra
+etc.
+
+Um dos primeiros povos ocidentais a registrar uma maneira de codi(cid:133)car
+mensagens em guerras foi os gregos (cid:150)mais precisamente, o exØrcito espartano,
+hÆ mais de 2500 anos (cid:150)(ver[5]).
+
+A troca de mensagens se dava da seguinte forma: o remetente escrevia
+a mensagem em uma faixa de pergaminho enrolada em espiral, ao longo de
+um cilindro, chamado c(cid:237)tala (cid:150)o texto deveria ser escrito no sentido do com-
+primento desse objeto. Consequentemente, a mensagem tornar-se-ia clara se
+o pergaminho fosse enrolado em outra c(cid:237)tala, de mesmo di(cid:226)metro.
+
+3
+
+No caso dos espartanos, a c(cid:237)tala era como a "chave"do c(cid:243)digo, pois servia
+tanto para ocultar a mensagem como para revelÆ-la. A chave, no caso citado,
+era um objeto. No entanto, com o passar do tempo, ela foi, aos poucos,
+substitu(cid:237)da por outros elementos, tais como nœmeros, mudan(cid:231)a de posi(cid:231)ªo
+de letras, s(cid:237)mbolos associados a letras, entre outros.
+
+Veremos agora algumas maneiras de codi(cid:133)ca(cid:231)ªo conhecidas na Hist(cid:243)ria
+
+ocidental.
+
+1.2 Quadrado de Polybius
+
+De origem grega, esta cifra consiste em um quadrado 5x5 onde sªo distribu(cid:237)-
+das as letras do alfabeto, estando as letras I e J na mesma posi(cid:231)ªo.
+
+Para criptografar por esse mØtodo associamos a cada letra um nœmero de
+dois d(cid:237)gitos formado pela linha e coluna, nessa ordem, onde estava a letra,
+conforme ilustra a Figura 1.1 abaixo.
+
+Figura 1.1
+
+Por exemplo a letra L Ø representada pelo nœmero 31. O L estÆ situado
+no encontro da terceira linha com a primeira coluna. Continuando dessa
+maneira ciframos a palavra
+
+L`PIS pelo nœmero 3111352443
+
+e
+
+L`PIS PRETO por 31113524433542154434:
+
+O quadrado de Polybius apresentava uma maneira de associar letras e
+nœmeros, mas nªo era (cid:133)xo, senªo nªo teria utilidade visto que todos que o
+usassem uma vez sempre saberiam como decifrar as mensagens. As letras
+
+4
+
+poderiam ser colocadas no interior do quadro de maneira aleat(cid:243)ria o que
+daria inœmeras possibilidades de varia(cid:231)ªo da cifra.
+
+1.3 Troca de CØsar
+
+Os romanos, naturalmente, tambØm (cid:133)zeram uso de mensagens secretas . O
+imperador romano Julio CØsar, utilizava um artif(cid:237)cio que consistia em se
+trocar a letra original pela letra que se encontra a algumas posi(cid:231)ıes a frente
+pela ordem do alfabeto.
+
+Por exemplo se ele deslocasse as letras da mensagem original duas unidades
+
+ter(cid:237)amos a cifra ilustrada na Figura 1.2.
+
+Figura 1.2
+
+Nessa con(cid:133)gura(cid:231)ªo a letra B seria representada por D, a palavra
+
+GUERRA (cid:133)caria IWGTTC
+
+e a frase
+
+VIM, VI, VENCI (cid:133)ca XKO XK XGPEK.
+
+Com algumas varia(cid:231)ıes, usando qualquer um desses sistemas podemos
+criar muitas maneiras de cifrar uma mensagem. Independente da escolha, s(cid:243)
+estamos mudando o s(cid:237)mbolo que representa a letra. Esse procedimento faz
+com que a frequŒncia do s(cid:237)mbolo associado a letra permane(cid:231)a a mesma. Na
+prÆtica, continuamos com um alfabeto de 26 s(cid:237)mbolos . Por exemplo, em
+um texto criptografado pelo quadrado de Polyibius, con(cid:133)gurado da maneira
+como dispusemos, sempre que aparecer o nœmero 31 ele vai representar a
+letra L.
+
+C(cid:243)digos como estes sªo chamados de C(cid:243)digos de Substitui(cid:231)ªo AlfabØtica e
+eram muito utilizados atØ o sØculo IX. Neste sØculo o cientista Ærabe Al-Kindi
+
+5
+
+descreveu uma maneira de decifrar mensagens de acordo com a frequŒncia em
+que os s(cid:237)mbolos apareciam nas mesmas, (ver[7]). Esse mØtodo Ø conhecido,
+hoje, como "anÆlise de frequŒncia". Ele realiza uma contagem de s(cid:237)mbolos
+da mensagem e associa a quantidade deles com a frequŒncia de cada letra
+nos textos escritos na l(cid:237)ngua em que a mensagem foi, supostamente, escrita.
+A Figura 1.3 mostra qual Ø a porcentagem de frequŒncia das letras num
+
+texto em portuguŒs.
+
+Figura 1.3
+
+Com o uso das informa(cid:231)ıes contidas nele, podemos concluir que o s(cid:237)mbolo
+com maior frequŒncia em um texto tem uma grande possibilidade de ser um
+A, se o texto estiver em portuguŒs.
+
+Como o objetivo da criptogra(cid:133)a Ø ocultar informa(cid:231)ıes, uma simples sub-
+stitui(cid:231)ªo alfabØtica, com o passar do tempo, deixou de ser segura tornando
+necessÆria a cria(cid:231)ªo de novas maneiras de ocultar mensagens.
+
+1.4 O Quadrado de Trithemius
+
+Os textos criptografados por substitui(cid:231)ªo monoalfabØticas se tornaram vul-
+nerÆveis ap(cid:243)s Al-Kindi. Mesmo assim, perduraram por algum tempo pois
+a troca de informa(cid:231)ıes era muito lenta nessa Øpoca. No sØculo XV, Leon
+Battista Alberti escreveu um manuscrito propondo uma nova forma de crip-
+togra(cid:133)a, a substitui(cid:231)ªo polialfabØtica, ou seja, um c(cid:243)digo que possui mais de
+
+6
+
+um alfabeto em sua estrutura de codi(cid:133)ca(cid:231)ªo. O mØtodo de criptogra(cid:133)a apre-
+sentado faz uso de um quadro formado por 26 linhas e 26 colunas contendo
+todas as letras do alfabeto. Cada linha do quadro representa uma troca de
+CØsar em rela(cid:231)ªo (cid:224) primeira linha.
+
+O primeiro livro impresso que continha a descri(cid:231)ªo dessa forma de crip-
+tografar foi: «Polygraphiae libri sex, Ioannis Trithemii abbatis Peapolitani,
+quondam Spanheimensis, ad Maximilianum Ceasarem» , traduzido, "Poligra(cid:133)a
+em seis livros por Joªo Trithemius, abade de W(cid:252)rzburg, anteriormente de
+Sponheim, dedicados ao Imperador Maximiliano". Devido a isso o quadro
+usado por Alberti (cid:133)cou conhecido como Qaudrado de Trithemius, (ver[7],[8]).
+
+A Figura1.4 representa o Quadrado de Trithemius.
+
+Figura 1.4
+
+Cifrar uma mensagem usando esse sistema Ø simples. Deslocamos e sub-
+stitu(cid:237)mos as letras de acordo com a posi(cid:231)ªo na mensagem. Sendo o desloca-
+mento igual a uma unidade a menos que a posi(cid:231)ªo. Consideramos o alfabeto
+um ciclo e a ordem alfabØtica das letras como o sentido positivo de desloca-
+mento.
+
+A Figura 1.5 mostra como codi(cid:133)car a palavra POLIGRAFIA.
+
+Figura 1.5
+
+7
+
+Assim: POLIGRAFIA torna-se PPNLKWGMQJ
+Note que, o primeiro I Ø cifrado por L e o segundo I por Q. Apenas a
+
+anÆlise de frequŒncia nªo Ø su(cid:133)ciente para quebrar esse tipo de c(cid:243)digo.
+
+Para decodi(cid:133)car, basta fazer o deslocamento oposto ao da codi(cid:133)ca(cid:231)ªo,
+
+como estÆ apresentado na Figura 1.6.
+
+Figura 1.6
+
+O Quadrado de Trithemius serviu de base para outros tipos de substitu-
+
+i(cid:231)ªo polialfabØtica, como veremos a seguir.
+
+1.5 A cifra de VigenŁre
+
+Ao estudar Trithemius e outros autores, no (cid:133)nal do sØculo XVI, Blaise de
+VigenŁre escreveu TraitØ des chi⁄res ou secrŁtes maniŁres d(cid:146)Øcrire: em que
+descreve os modos de encripta(cid:231)ªo usados na Øpoca. Um dos mØtodo descrito
+por VigenŁre, no qual se utiliza o Quadrado de Trithemius e uma palavra
+chave para cifrar mensagens, foi originalmente proposto por Giovan Batista
+Belaso em seu livro "La cifra del. Sig. Giovan Batista Belaso", (ver[7], [8]).
+Acompanhe, passo a passo, como codi(cid:133)car a palavra LEITURA, uti-
+
+lizando como chave a palavra: PRIMO.
+
+Conforme a Figura 1.7, escrevemos a palavra chave sobre o texto a ser
+cifrado, letra sobre letra e repetindo a mesma palavra atØ que este termine.
+
+Figura 1.7
+
+8
+
+Para cifrar, devemos ter nas mªos o Quadrado de Trithemius. Cada letra
+da cifra Ø obtida pela interse(cid:231)ªo da linha iniciada pela letra da palavra chave
+com a coluna iniciada pela letra do texto.
+
+Na mensagem que estamos codi(cid:133)cando a primeira letra Ø obtida pela
+interse(cid:231)ªo da linha que inicia com "P"com a coluna que inicia com "L"que Ø
+a letra "A". A segunda letra Ø obtida pela interce(cid:231)ªo da linha que come(cid:231)a com
+"R"com a coluna que come(cid:231)a com "E"que Ø "V".Seguindo esse procedimento
+obtemos a cifra ilustrada na (cid:133)gura 1.8.
+
+Figura 1.8
+
+Dessa maneira: LEITURA Ø cifrada como AVQFIGR.
+Para decifrar o receptor deve escrever o texto cifrado sob a chave, letra
+com letra e deve utilizar o Quadrado de Trithemius. A Figura 1.9 ilustra
+esse procedimento no caso da mensagem ser AVQFIGR.
+
+Figura 1.9
+
+Para obter a primeira letra da mensagem original, seguimos a linha que
+inicia com "P"atØ encontrarmos a letra "A". A primeira letra da coluna
+que contØm esse "A"que, no caso Ø "L", Ø a primeira letra da mensagem.
+Para a segunda letra, seguimos a linha que inicia em "R"atØ a coluna que
+contØm "V", a letra do topo dessa coluna, no caso "E"Ø a segunda letra da
+mensagem. Procedendo dessa maneira para cada par de letras Chave/Cifra
+encontramos o texto original.(Figura 1.10)
+
+Figura 1.10
+
+9
+
+Apesar de ter sido elaborada por Belaso essa cifra Ø chamada de Cifra de
+
+VigenŁre.
+
+AlØm desse sistema, Vigenere prop(cid:244)s um esquema chamado cifra de auto
+chave, onde a chave era a pr(cid:243)pria mensagem iniciada por uma letra, chamada
+letra primÆria, previamente combinada entre remetente e receptor. As Fig-
+uras 1.11 e 1.12 mostram como (cid:133)caria a nossa mensagem usando como letra
+primÆria o "S".
+
+Figura 1.11
+
+Como a maneira de codi(cid:133)car Ø a mesma:
+
+Figura 1.12
+
+A mensagem codi(cid:133)cada Ø : "DPMBNLR".
+Para decifrar a mensagem, visto que nªo temos uma palavra chave, pro-
+
+cedemos do seguinte modo:
+
+Tabelamos a mensagem e a letra primÆria como mostra a Figura 1.13.
+
+Figura 1.13
+
+Como a letra primÆria Ø "S"e a primeira letra da mensagem Ø "D", deve-
+mos determinar a primeira letra da coluna que cruza a linha que inicia com
+"S"em "D". Dessa forma encontraremos o "L". Entªo "L"Ø a primeira letra
+da mensagem e tambØm a segunda letra da chave.(Figura 1.14)
+
+Figura 1.14
+
+10
+
+Agora repetimos esse procedimento com o "L"e o "P"para encontrar o
+"E", que Ø a segunda letra da mensagem e a terceira letra da chave. Repeti-
+mos o processo atØ o tØrmino da mensagem ilustrado na Figura 1.15.
+
+Figura 1.15
+
+A cifra de VigenŁre foi uma campeª em seguran(cid:231)a. Foram precisos 300
+anos para que, em meados do sØculo XIX, Charles Babbage (na Inglaterra)
+e Friedrich Kasiski (na Alemanha) quebrassem a cifra, (ver[8]).
+
+1.6 Criptogra(cid:133)a por Transposi(cid:231)ªo
+
+A quebra da Cifra de VigenŁre mostrou a vulnerabilidade das cifras de sub-
+stitui(cid:231)ªo voltando a aten(cid:231)ªo dos criptoanalistas para outras formas de en-
+cripta(cid:231)ªo. Uma dessas formas Ø embaralhar o terxto, ao invØs de subtituir
+as letras. Uma das maneiras de fazer isso Ø criptografar a mensagem por
+transposi(cid:231)ªo. A mais simples Ø a transposi(cid:231)ªo geomØtrica, assim chamadas
+por usar como base uma matriz retangular. O texto original Ø escrito dentro
+da matriz no sentido das linhas, completando com X os espa(cid:231)os que sobram.
+Feito isso, Ø feita a transposi(cid:231)ªo da matriz. A mensagem criptografada Ø
+obtida pelo conjunto de blocos de letras formados pelas linhas.
+
+Observe como isto Ø feito com o comando:
+
+ATACAREMOS AO NASCER DO SOL
+
+Como a ordem Ø formada por 23 letras, vamos escrevŒ-la em uma matriz
+
+de 4 por 6, conforme a Figura 1.16.
+
+Figura 1.16
+
+A transposta desta matriz Ø dada na Figura 1.17.
+
+11
+
+Figura 1.17
+
+Assim:
+
+torna-se
+
+ATACAREMOS AO NASCER DO SOL
+
+AEND TMAO AOSS CSCO AAEL RORX
+
+Para decodi(cid:133)car a mensagem, os blocos sªo escritos em uma matriz de 6
+
+por 4, cuja transposta Ø a mensagem original.
+
+1.7 A cifra ADFGX
+
+Apesar de muito simples, criptogra(cid:133)a por transposi(cid:231)ªo serviu de base para
+outro algoritmo, que foi utilizado durante a Primeira Guerra Mundial
+
+No sØculo XIX, foi inventado o telØgrafo trazendo um grande avan(cid:231)o nas
+comunica(cid:231)ıes. Agora as mensagens viajariam grandes dist(cid:226)ncias sem a ne-
+cessidade de um mensageiro o que, teoricamente, era uma garantia maior de
+sigilo entre remetente e receptor da mensagem.
+
+A utiliza(cid:231)ªo do telØgrafo para envio de mensagens trazia tambØm alguns
+inconvenientes, tais como: eram necessÆrios operadores nos postos e estes
+teriam acesso a mensagem enviada, a linha telegrÆ(cid:133)ca poderia ser "gram-
+peada"por alguØm com o equipamento correto e assim a mensagem seria
+interceptada. Isso representaria um perigo em tempos de guerra
+
+Para contornar essa situa(cid:231)ªo os alemªes criaram uma nova cifra utilizando
+o tabuleiro de Polybius, substituindo os nœmeros 12345 pelas letras ADFGX,
+uma palavra chave e uma transposi(cid:231)ªo.
+
+Acompanhe como codi(cid:133)car uma mensagem usando este sistema:
+Inicialmente, criamos uma matriz parecida com o tabuleiro de Poly-
+
+bius.(Figura 1.18)
+
+12
+
+Figura 1.18
+
+A maneira de cifrar a mensagem segue, de in(cid:237)cio, da forma jÆ vista, apenas
+
+trocando o par de nœmeros pelo par de letras. Se a mensagem fosse
+
+CHEGAREI S`BADO,
+
+ter(cid:237)amos:
+
+C=AF,H=DF,E=AX,G=DD,A=AA,R=GD,E=AX,I=DG,
+S=GF,A=AA,B=AD,A=AA,D=AG,O=FG
+
+que, agrupado, (cid:133)ca
+
+AFDFAXDDAAGDAXDGGFAAADAAAGFG
+
+A pr(cid:243)xima etapa Ø escolher uma palavra-chave, que pode ter qualquer
+tamanho mas nªo ter letras repetidas. Neste caso vamos utilizar a palavra
+CIFRA.
+
+Montamos uma tabela com as letras da palavra-chave na primeira linha
+e completamos a tabela com a mensagem cifrada, uma letra para cada cØlula
+da tabela, conforme ilustra a Figura 1.19.
+
+Figura 1.19
+
+A tabela deve ser reorganizada de forma que as letras da palavra-chave
+(cid:133)quem em ordem alfabØtica, alterando nas colunas correspondentes as letras
+de forma apropriada:(Figura 1.20)
+
+13
+
+Figura 1.20
+
+A mensagem cifrada Ø formada pelos grupos de cada coluna, excetuando
+a linha da palavra-chave. Em nosso caso, a mensagem enviada pelo telØgrafo
+se torna:
+
+AADAA AXGGAG DDAFAG FDDGDF FAXAA.
+
+O c(cid:243)digo ADFGX, por sua vez, deu origem a outro, o ADFGVX, que
+inclu(cid:237)a os algarismos de 0 a 9 e foi utilizado pelo exØrcito alemªo no (cid:133)nal
+primeira guerra mundial.
+
+Embora o nœmero de grupamentos nos dªo a quantidade de letras da
+palavra chave, esse c(cid:243)digo foi dif(cid:237)cil de ser quebrado, feito realizado por
+Georges-Jean Painvin sem o aux(cid:237)lio de computadores. Estes sªo capazes de
+realizar vÆrias simula(cid:231)ıes por segundo, podendo "quebrar"a mensagem pelo
+que Ø chamado "for(cid:231)a bruta"que signi(cid:133)ca testar todos os casos.
+
+Mas se o mØtodo da "for(cid:231)a bruta"pode "quebrar c(cid:243)digos"e decodi(cid:133)car
+mensagens, surge a necessidade de criar uma maneira de codi(cid:133)ca(cid:231)ªo que
+mesmo os computadores nªo possam decifrar.
+
+Um mØtodo usado atualmente que vem conseguindo realizar essa proeza
+Ø o RSA. Para apresentÆ-lo vamos revisar alguns conceitos de Teoria dos
+Nœmeros que servem como base para o mesmo.
+
+14
+
+Cap(cid:237)tulo 2
+
+Nœmeros Inteiros
+
+Neste cap(cid:237)tulo trataremos de alguns pontos da Teoria dos Nœmeros sem os
+quais nªo poderemos entender o mØtodo RSA. Nossa aten(cid:231)ªo serÆ focada nas
+proposi(cid:231)ıes e teoremas necessÆrios para a compreensªo do mesmo. Ao (cid:133)nal
+do cap(cid:237)tulo utilizaremos um de seus t(cid:243)picos para cifrar e decifrar de maneira
+mais rÆpida alguns mØtodos de criptogra(cid:133)a vistos no Cap(cid:237)tulo 1. Pautamos
+este cap(cid:237)tulo nos trabalhos: [1], [3] e [4] .
+
+2.1 Indu(cid:231)ªo MatemÆtica
+
+As ciŒncias naturais baseiam suas conclusıes a respeito de determinados fen(cid:244)-
+menos por meio de um grande nœmero de observa(cid:231)ıes e posterior anÆlise de
+resultados semelhantes. Dessa maneira, se um fen(cid:244)meno, observado vÆrias
+vezes, produz o mesmo resultado, Ø poss(cid:237)vel fazer conclusıes sobre ele. Tal
+fen(cid:244)meno conduz a tal resultado.
+
+Fazendo uma analogia com a matemÆtica, os fen(cid:244)menos sªo as proposi(cid:231)ıes.
+Lembrando que proposi(cid:231)ıes sªo senten(cid:231)as declarativas a(cid:133)rmativas que po-
+dem ser verdadeiras ou falsas. O fato de uma proposi(cid:231)ªo ser verdadeira num
+grande nœmero de casos particulares nªo nos permitirÆ concluir que ela Ø vÆl-
+ida. Uma a(cid:133)rma(cid:231)ªo sobre nœmeros s(cid:243) Ø valida se for verdadeira para todos
+os nœmeros aos quais ela se refere. Como nªo podemos veri(cid:133)car a veracida
+de uma proposi(cid:231)ªo com todos os nœmeros, usamos testes que se baseiam
+nas caracter(cid:237)sticas dos conjuntos numØricos envolvidos. Um teste para a(cid:133)r-
+ma(cid:231)ıes sobre nœmeros inteiros, que veremos a seguir, Ø o chamado mØtodo
+de recorrŒncia ou indu(cid:231)ªo matemÆtica([3]).
+
+15
+
+2.1.1 Elemento m(cid:237)nimo de um conjunto de inteiros
+
+De(cid:133)ni(cid:231)ªo 2.1. Seja A um conjunto de inteiros. Chama-se elemento m(cid:237)n-
+imo de A um elemento de A tal que a
+
+x para todo x
+
+A.
+
+(cid:20)
+Nota(cid:231)ªo: minA; se lŒ: m(cid:237)nimo de A.
+
+2
+
+Teorema 2.2. Se a Ø elemento m(cid:237)nimo de A, entªo esse elemento Ø œnico.
+
+Demonstra(cid:231)ªo: Com efeito, se existisse um outro elemento m(cid:237)nimo b de A,
+a, porque b = minA o que implica
+ter(cid:237)amos: a
+em a = b.
+(cid:3)
+
+b, porque a = minA e b
+
+(cid:20)
+
+(cid:20)
+
+O elemento m(cid:237)nimo de A, se existe, denomina-se tambØm primeiro ele-
+
+mento de A ou menor elemento de A.
+
+2.1.2 Princ(cid:237)pio da Indu(cid:231)ªo Finita
+
+O Princ(cid:237)pio da Indu(cid:231)ªo Ø um importante instrumento para provar teoremas
+que envolvam nœmeros inteiros. Para demonstrÆ-lo, no entanto, precisamos
+do seguinte axioma.
+
+Axioma 1. Seja N o conjunto dos nœmeros inteiros positivos e S um subcon- 
+junto  de  N  tal  que
+
+S
+
+i) 0
+ii) S Ø fechado com respeito (cid:224) opera(cid:231)ªo de "somar 1"a seus elementos,
+
+2
+
+ou seja, para todo elemento n
+
+Entªo S = N:
+
+S implicar (n + 1)
+
+S:
+
+2
+
+2
+
+Se A
+
+N e a
+
+N; usaremo a seguinte nota(cid:231)ªo: a + A =
+
+2
+(cid:201) imediato veri(cid:133)car que: a + N =
+
+(cid:26)
+
+m
+
+N; m
+
+a
+
+2
+Teorema 2.3. ( Princ(cid:237)pio da Indu(cid:231)ªo ) Seja N o conjunto dos nœmeros
+inteiros positivos e P(n) uma proposi(cid:231)ªo associada a cada inteiro positivo n
+e que satisfaz (cid:224)s duas seguintes condi(cid:231)ıes:
+
+(cid:21)
+
+f
+
+g
+
+a + x; x
+
+f
+
+A
+
+.
+
+g
+
+2
+
+i) P(1) Ø verdadeira;
+ii) para todo inteiro positivo k, se P(k) Ø verdadeira, entªo P(k + 1)
+
+tambØm Ø verdadeira.
+
+Nestas condi(cid:231)ıes, a proposi(cid:231)ªo P(n) Ø verdadeira para todo inteiro positivo
+
+n.
+
+Demonstra(cid:231)ªo: Seja V o subconjunto dos elementos de N para os quais
+P (n) Ø verdade. Considere o conjunto
+
+S =
+
+m
+
+f
+
+2
+
+N; a + m
+
+V
+
+;
+
+g
+
+2
+
+16
+
+que veri(cid:133)ca trivialmente a + S
+a + 0 = a
+e por (ii), temos que a + m + 1
+2
+Indu(cid:231)ªo, temos S = N. Portanto,
+
+V , segue que 0
+
+2
+
+2
+
+V:Como, pela primeira condi(cid:231)ªo, temos que
+S; entªo a + m
+V;
+S: Assim, pelo Axioma de
+
+(cid:26)
+S.Por outro lado, se m
+V; logo m + 1
+
+2
+
+2
+
+2
+
+f
+o que prova o resultado.
+
+m
+
+N; m
+
+a
+g
+
+(cid:21)
+
+2
+
+= a + N
+
+V;
+
+(cid:26)
+
+(cid:3)
+
+2.1.3 Propriedade da Boa Ordem
+
+A Propriedade ou Princ(cid:237)pio da Boa Ordem Ø uma maneira de dispor os ele-
+mentos de um subconjunto, nªo vazio, de nœmeros inteiros como se estes for-
+massem uma (cid:133)la. Assim como o Princ(cid:237)pio da Indu(cid:231)ªo, Ø de grande relev(cid:226)ncia
+nas demonstra(cid:231)ıes de teoremas que envolvem Nœmeros Inteiros.
+
+Teorema 2.4. Sendo N o conjunto dos nœmeros inteiros positivos todo sub-
+conjunto nªo vazio de N possui um menor elemento.
+
+Demonstra(cid:231)ªo: Seja S um subconjunto nªo vazio de N e suponha, por
+absurdo, que S nªo possui um menor elemento. Queremos mostrar que S Ø
+vazio, conduzindo a uma contradi(cid:231)ªo. Considere o conjunto T , complementar
+de S em N:Queremos, portanto, mostrar que T = N. De(cid:133)na o conjunto
+
+e considere a senten(cid:231)a aberta
+
+In =
+
+k
+
+f
+
+2
+
+N; k
+
+n
+
+;
+
+g
+
+(cid:20)
+
+p(n) : In
+
+T:
+
+n para todo n;segue que 0
+
+(cid:26)
+T; pois, caso contrÆrio, 0 seria um
+Como 0
+menor elemento de S: Logo p(0) Ø verdade. Supomha agora que p(n) seja
+verdade. Se n + 1
+S; como nenhum elemento de In estÆ em S, ter(cid:237)amos
+que n + 1 Ø um menor elemento de S, o que nªo Ø permitido. Logo,
+
+(cid:20)
+
+2
+
+2
+
+In+1 = In
+
+o que prova que para todo n, In
+mente, T = N:
+
+(cid:26)
+
+n + 1
+
+T;
+
+g (cid:26)
+
+[ f
+T ; portanto N
+
+T
+
+(cid:26)
+
+(cid:26)
+
+N e, consequente-
+(cid:3)
+
+17
+
+2.2 Fatores e Nœmeros Primos
+
+Nesta se(cid:231)ªo apresentamos algumas propriedades relativas (cid:224) divisªo de nœmeros
+inteiros, os nœmeros primos e teoremas envolvendo nœmeros primos e divisibil-
+idade. Citamos, tambØm, algumas f(cid:243)rmulas de obten(cid:231)ªo de nœmeros primos
+e o MØtodo de Fatora(cid:231)ªo de Fermat.
+
+2.2.1 Divisibilidade e propriedades
+
+De(cid:133)ni(cid:231)ªo 2.5. : Sejam a e b nœmeros inteiros, com a diferente de zero.
+b, se existe um œnico inteiro c tal que
+Dizemos que a divide b, e notamos a
+j
+b = ac.
+
+Nos termos da de(cid:133)ni(cid:231)ªo2.5, podemos dizer que b Ø mœltiplo de a, que a
+Ø fator ou divisor de b e, ainda, se 1<a<b, a Ø um fator pr(cid:243)prio de b. O
+nœmero c na de(cid:133)ni(cid:231)ªo acima Ø chamado de cofator de a em b.
+
+Proposi(cid:231)ªo 2.6. Sejam a; b; c
+
+Z*:
+
+2
+
+0:
+j
+
+a e a
+c, a
+i) 1
+j
+j
+c.
+c; entªo a
+b e b
+ii) Se a
+j
+j
+j
+(b
+c; entªo a
+b e a
+iii) Se a
+j
+j
+j
+b; entªo a
+iv) Se a
+j
+b e a
+v) Se a
+j
+Demonstra(cid:231)ªo:
+
+bc:
+j
+c); entªo a
+
+(cid:6)
+
+(cid:6)
+
+c):
+
+(b
+c:
+j
+j
+i) Vem das igualdades c = 1
+
+0:
+b e b
+Z tais que
+j
+f: Subtituindo o valor de b da primeira equa(cid:231)ªo na outra
+
+(cid:1)
+c;entªo, por de(cid:133)ni(cid:231)ªo, existem d e f
+j
+
+a e 0 = a
+
+c; a = 1
+
+2
+
+(cid:1)
+
+(cid:1)
+
+ii) Como a
+d e c = b
+
+b = a
+(cid:1)
+temos:
+
+(cid:1)
+
+(cid:1)
+
+c.
+o que mostra que a
+j
+iii) Como a
+b e a
+j
+d e c = a
+
+b = a
+
+(cid:1)
+
+c = b
+
+f = (a
+
+f = a
+
+d)
+
+(cid:1)
+
+(cid:1)
+
+f );
+
+(d
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+c; entªo, por de(cid:133)ni(cid:231)ªo, existem d e f
+j
+f: De modo que:
+
+Z tais que
+
+2
+
+c = (a
+
+b
+
+(cid:6)
+
+d)
+
+(cid:1)
+
+(cid:6)
+
+(a
+
+(cid:1)
+
+f ) = a(d
+
+f )
+
+(cid:6)
+
+Logo a
+
+c):
+
+(b
+j
+iv) Sendo que a
+
+(cid:6)
+
+b;por de(cid:133)ni(cid:231)ªo existe d
+j
+
+bc = (a
+
+c = a
+
+d)
+
+(cid:1)
+
+(cid:1)
+
+(d
+
+(cid:1)
+
+(cid:1)
+
+Z tal que b = a
+
+2
+c):
+
+d , logo:
+
+(cid:1)
+
+Portanto, a
+
+bc:
+j
+
+18
+
+v) Vamos considerar o caso (b + c).
+Z tais que b = a
+
+por de(cid:133)ni(cid:231)ªo, existem d e f
+b na segunda igualdade, temos:
+
+2
+
+(cid:1)
+
+Como a
+d e (b+c) = a
+
+b e a
+j
+
+(b + c);entªo,
+j
+f: Substituindo
+
+(cid:1)
+
+Subtraindo a
+
+(cid:1)
+
+b + c = (a
+
+d) + c = a
+
+f:
+
+(cid:1)
+
+(cid:1)
+
+d de ambos os lados da igualdade temos:
+
+c = a
+
+f
+
+(cid:1)
+
+a
+
+(cid:1)
+
+(cid:0)
+
+d = a(f
+
+d);
+
+(cid:0)
+
+o que mostra que a
+
+c.
+j
+
+(cid:3)
+
+2.2.2 Algor(cid:237)tmo da Divisªo ou Divisªo Euclidiana
+
+Proposi(cid:231)ªo 2.7. ( Algor(cid:237)tmo da Divisªo) Dados a; b
+existem œnicos q; r
+
+Z tais que
+
+2
+
+Z; com b > 1,
+
+2
+
+onde q Ø o quociente e r Ø o resto da divisªo de a por b:
+
+a = bq + r e 0
+
+r < b
+
+(cid:20)
+
+Demonstra(cid:231)ªo: Seja b
+duas possibilidades:
+
+2
+
+Z; com b > 1: Dado um nœmero a
+
+Z, temos
+
+2
+
+i) a Ø mœltiplo de b, ou seja, existe q
+ii) a estÆ entre dois mœltiplos de b, ou seja, existe q
+
+Z tal que
+bq < a < b(q + 1): (Essas possibilidades sªo chamadas de Propriedades de
+Arquimedes).
+
+Z tal que a = bq.
+
+2
+
+2
+
+Subtraindo bq na igualdade (ii), esta torna-se:
+
+0 < a
+
+(cid:0)
+
+bq < b:
+
+Seja r
+
+2
+
+Z; tal que r = a
+
+bq e
+
+(cid:0)
+
+0 < r < b;
+
+Ø claro que se r = 0, entªo a = bq. Caso (i). Resta saber se r e q sªo
+œnicos. Para isso supomos que a = bq + r e a = bq1 + r1 com 0
+r; r1 < b:
+Consideremos r
+
+= r1 com r > r1: Assim
+
+(cid:20)
+
+bq + r = bq1 + r1 =
+
+)
+
+b(q1
+
+(cid:0)
+
+q) = r
+
+r1;
+
+(cid:0)
+
+q > 1,
+donde, conclu(cid:237)mos que q1 > q e r = r1 + b(q1
+temos, pela œltima igualdade, que r > b o que Ø um absurdo. Entªo r = r1
+e q1 = q:
+(cid:3)
+
+q): Como r1 > 0 e q1
+
+(cid:0)
+
+(cid:0)
+
+19
+
+6
+Exemplo 2.1. Na expressªo 17 = 3
+5 o quociente q = 3 e o resto r = 2:
+
+(cid:1)
+
+5 + 2 temos que na divisªo de 17 por
+
+2.2.3 MÆximo Divisor Comum e M(cid:237)nimo Mœltiplo Co-
+
+mum
+
+De(cid:133)ni(cid:231)ªo 2.8. Sejam os nœmeros a; b
+de MÆximo Divisor Comum de a e b (denota-se d = mdc(a; b)) se:
+
+Z:Um nœmero inteiro d Ø chamado
+
+2
+
+i) d
+b
+a e d
+j
+j
+ii) Se, para algum c
+
+Z; temos c
+
+a e c
+j
+
+b; entªo c
+j
+
+d:
+j
+
+2
+
+Por (i) temos que d Ø divisor tanto de a quanto de b e por (ii) temos que
+
+d Ø o maior divisor com a carater(cid:237)stica (i).
+
+De(cid:133)ni(cid:231)ªo 2.9. Sejam os nœmeros a; b
+de M(cid:237)nimo Mœltiplo Comum de a e b (denota-se m = mmc(a; b)) se:
+
+Z:Um nœmero inteiro m Ø chamado
+
+2
+
+i) a
+ii) Se, para algum c
+
+m e b
+j
+
+m
+j
+
+2
+En(cid:133)m m Ø o menor dos mœltiplos comuns de a e b.
+
+Z; temos a
+
+c e b
+j
+
+c; entªo m
+j
+
+c:
+j
+
+Teorema 2.10. (Teorema de Bachet-BØzout)Dados dois inteiros a e b,
+nªo conjuntamente nulos. Seja d = mdc(a; b), entªo existem x e y inteiros
+tais que: d = ax + by, ou seja, d Ø uma combina(cid:231)ªo linear de a e b.
+
+Demonstra(cid:231)ªo:
+Considere o conjunto L = { ax + by, todas as combi-
+na(cid:231)ıes lineares de a e b} e n = ax0 + by0 onde n Ø o menor elemento natural
+de L. Suponha, por absurdo, que n - a, entªo: a = nq + r
+(i), para q e r
+inteiros com 0 < r < n. Subtraindo nq de ambos os lados, a igualdade (i) se
+torna r = a
+
+nq: Substituindo o valor de n, temos:
+
+(cid:0)
+
+r = a
+
+(cid:0)
+
+(ax0 + by0)q = a
+
+(cid:0)
+
+ax0q + by0q = a(1
+
+x0q) + b(y0q).
+
+(cid:0)
+
+L; o que Ø um absurdo, pois r > 0 e r < n e n Ø o menor
+Isto implica em r
+elemento de L. Portanto n
+b: Assim n Ø divisor comum
+a: Analogamente n
+j
+j
+de a e b. Resta mostrar que n Ø o maior divisor comum de a e b, ou seja,
+n = d: Como d = mdc(a; b), entªo:
+
+2
+
+d
+a implica que existe q1
+j
+b implica que existe q2
+d
+j
+
+2
+2
+
+Z tal que a = dq1
+Z tal que b = dq2
+
+(ii)
+(iii)
+
+20
+
+Sendo n = ax0 + by0, de (ii) e (iii), n = dq1x0 + dq2y0: Isolamos d e temos
+n: Do fato n ser divisor comum
+n = d(q1x0 + q2y0); donde conclu(cid:237)mos que d
+j
+n, logo d = n;
+de a e b e d = mdc(a; b); vem n
+consequentemente d = ax0 + by0:
+(cid:3)
+
+n temos d
+d e de d
+j
+
+(cid:20)
+
+(cid:20)
+
+Uma consequŒncia direta do Teorema de Bachet-BØzout Ø que se mdc(a; b) =
+
+1 exitem inteiros s e r tais que:
+
+De(cid:133)ni(cid:231)ªo 2.11. Dados a; b
+os nœmeros a e b sªo coprimos ou primos entre si.
+
+(cid:0) f(cid:0)
+
+Z
+
+2
+
+se mdc(a; b) = 1 dizemos que
+
+r + b
+
+a
+
+(cid:1)
+
+s = 1.
+
+(cid:1)
+1; 0; 1
+g
+
+2.2.4 Nœmeros Primos
+
+De(cid:133)ni(cid:231)ªo 2.12. Um nœmero inteiro p
+divisores positivos sªo 1 e p, caso contrÆrio p Ø um nœmero composto.
+
+2 Ø dito primo se seus œnicos
+
+(cid:21)
+
+Exemplo 2.2. O nœmero 7 Ø primo, pois tem como divisores apenas o 1 e
+o 7 enquanto que o nœmero 6 Ø composto pois seus divisores sªo 1, 2, 3 e 6.
+
+Proposi(cid:231)ªo 2.13. Sejam a; b e p
+p
+
+2
+
+b:
+j
+Demonstra(cid:231)ªo: Supıe-se que p - a. Entªo os divisores comuns de p e a sªo
+apenas 1 e
+
+1.Da(cid:237) o mdc(a; p) = 1:Logo, existem x, y
+
+Z de maneira que
+
+ab entªo p
+j
+
+a ou
+j
+
+Z, com p primo. Se p
+
+(cid:0)
+
+2
+
+1 = ax + py
+
+Portanto, multiplicando ambos os membros da igualdade por b, temos b =
+(ab)x + p(by):Como p
+p,
+j
+entªo
+
+Z tal que ab = kp. Dado que p
+
+(ab) existe um k
+j
+
+2
+
+b = (kp)x + p(by) = p(kx + by):
+
+Logo, p
+
+b.
+j
+
+(cid:3)
+
+CorolÆrio 2.14. Se p Ø um primo tal que p
+i = 1; :::::; n:
+
+p1
+j
+
+(cid:1) (cid:1) (cid:1)
+
+pn, entªo p
+
+pi para algum
+j
+
+Demonstra(cid:231)ªo: Usando Indu(cid:231)ªo, a proposi(cid:231)ªo Ø verdadeira para n =
+1(imediato) e para n = 2 (pela Proposi(cid:231)ªo 2.13 ). Supondo, pois, n > 2
+e que, se p divide um produto com menos de n fatores, entªo p divide pelo
+
+21
+
+menos um dos fatores (hip(cid:243)tese de indu(cid:231)ªo). Pela proposi(cid:231)ªo..., se p
+entªo p
+ao invØs, p
+1 < k < n
+(cid:3)
+
+pn,
+pn, a proposi(cid:231)ªo estÆ demonstrada, e se,
+pn ou p
+j
+j
+p1
+pk, com
+1, entªo a hip(cid:243)tese de indu(cid:231)ªo assegura que p
+j
+j
+1. Em qualquer dos casos, p divide um dos inteiros p1; p2; :::; pn.
+(cid:0)
+
+p1
+j
+(cid:1) (cid:1) (cid:1)
+
+1. Se p
+
+(cid:1) (cid:1) (cid:1)
+(cid:0)
+
+p1
+j
+
+(cid:1) (cid:1) (cid:1)
+
+pn
+
+pn
+
+(cid:0)
+
+CorolÆrio 2.15. Se p; p1; :::; pn sªo nœmeros primos e se p
+p = pi para algum i = 1; :::::; n:
+
+p1
+j
+
+(cid:1) (cid:1) (cid:1)
+
+pn, entªo
+
+Demonstra(cid:231)ªo: De fato, pelo CorolÆrio 2.14, existe um (cid:237)ndice k, com
+1 < k < n , tal que p
+pk, como os œnicos divisores positivos de pk sªo 1
+j
+e pk, porque pk Ø primo, segue-se que p = 1 ou p = pk. Mas, p > 1, porque p
+Ø primo. Logo, p = pk.
+(cid:3)
+
+Teorema 2.16. (Teorema Fundamental da AritmØtica)Todo inteiro
+maior do que 1 Ø primo ou pode ser representado de maneira œnica (a menos
+da ordem dos fatores) como um produto de fatores primos.
+
+Demonstra(cid:231)ªo: Usaremos o Princ(cid:237)pio da Indu(cid:231)ªo. Se n = 2, o resultado
+Ø (cid:243)bvio pois 2 Ø primo. Suponhamos o resultado vÆlido para todo nœmero
+natural menor do que n e vamos provar que vale para n. Se o nœmero n Ø
+primo, nªo hÆ o que demonstrar. No caso de n ser composto, existem nœmeros
+inteiros positivos n1 e n2 tais que n = n1
+n2, com 1 < n1 < n e 1 < n2 < n.
+Pela hip(cid:243)tese de indu(cid:231)ªo, temos que existem primos p1; p2; :::; pr e q1; q2; :::; qs
+tais que n1 = p1; p2; :::; pr e n2 = q1; q2; :::; qs . Portanto,
+
+(cid:1)
+
+n = p1
+
+p2
+
+pr
+
+(cid:1) (cid:1) (cid:1)
+
+(cid:1)
+Suponha, agora, que n = p1
+p2
+qj sªo nœmeros primos. Como p1
+que p1 = qj para algum j
+podemos chamar de q1:Portanto,
+
+(cid:20)
+
+(cid:1)
+
+qs:
+
+(cid:1) (cid:1) (cid:1)
+q2
+
+q1
+
+q2
+
+(cid:1)
+(cid:1)
+pr = q1
+q2
+
+qs, onde os pi e os
+qs pelo corolÆrio 2.14, temos
+s; que, ao reordenarmos os fatores q1; q2; :::; qs
+
+(cid:1) (cid:1) (cid:1)
+q1
+j
+
+(cid:1) (cid:1) (cid:1)
+
+(cid:1) (cid:1) (cid:1)
+
+(cid:1)
+
+(cid:1)
+
+p2
+
+(cid:1) (cid:1) (cid:1)
+
+pr = q2
+
+qs
+
+(cid:1) (cid:1) (cid:1)
+
+Como p2
+
+sªo iguais aos pares. Isso mostra a unicidade da fatora(cid:231)ªo de n.
+
+pr < n; a hip(cid:243)tese de indu(cid:231)ªo implica em r = s e os pi e qj
+(cid:3)
+
+(cid:1) (cid:1) (cid:1)
+
+Teorema 2.17. Existem in(cid:133)nitos nœmeros primos.
+
+22
+
+f
+
+p2
+
+p1; p2; p3; ; pn
+
+Demonstra(cid:231)ªo: Consideremos que a quantidade de nœmeros primos seja
+o conjunto de todos os primos. Seja R =
+(cid:133)nita e P =
+p1
+P e nenhum el-
+p3
+emento de P Ø fator de R: Como, pelo Teorema Fundamental da AritmØtica,
+ou R Ø primo ou possui algum fator primo, isto implica na existŒncia de um
+primo que nªo pertence P . Portanto P nªo pode ser um conjunto (cid:133)nito. (cid:3)
+
+pn + 1; notemos que R Ø maior que qualquer pi
+
+(cid:1) (cid:1) (cid:1)
+
+2
+
+g
+
+(cid:1)
+
+(cid:1)
+
+2.2.5 Como saber se um nœmero Ø primo
+
+Como sabemos, um nœmero primo p nªo possui divisores positivos diferentes
+de 1 e ele mesmo. Quando precisamos veri(cid:133)car se um dado nœmero n Ø primo
+ou nªo devemos tentar encontrar divisores primos de n efetuando as divisıes
+atØ obtermos um resto zero. Caso isto nªo ocorra: n Ø primo. Por sorte, de
+acordo com a seguinte proposi(cid:231)ªo, nªo precisamos efetuar todas as divisıes.
+
+Proposi(cid:231)ªo 2.18. Se p Ø o menor fator primo de n entªo p
+
+pn:
+
+(cid:20)
+
+Demonstra(cid:231)ªo: Denotaremos por D(n) o conjunto dos divisores positivos
+de n diferentes de 1 ou n. Como n nªo Ø primo, temos que D(n)
+= ?. Pelo
+Princ(cid:237)pio da Boa Ordem, existe um elemento p
+D(n) tal que, para todo
+2
+q: Supondo que p > pn e que q seja cofator de p em
+q
+rela(cid:231)ªo a n temos q > p > pn: Disto n = (pn)2 < p
+q = n; isto Ø um
+pn:
+absurdo. Sendo assim p
+(cid:3)
+
+D(n) tem-se p
+
+(cid:20)
+
+2
+
+(cid:1)
+
+(cid:20)
+
+Exemplo 2.3. Para determinar se o nœmero 173 Ø primo basta tentarmos
+divid(cid:237)-lo pelos primos menores ou igual a 13 que Ø, aproximadamente, sua
+raiz quadrada:
+
+173 = 86
+173 = 57
+173 = 34
+173 = 24
+173 = 15
+173 = 13
+
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+
+2 + 1
+3 + 2
+5 + 3
+7 + 5
+11 + 8
+13 + 4
+
+resto
+resto
+resto
+resto
+resto
+resto
+
+1
+2
+3
+5
+8
+4
+
+Logo, 173 Ø primo.
+Esta proposi(cid:231)ªo diminui a quantidade de cÆlculos necessÆrio para deter-
+minar se um nœmero dado Ø primo. Mesmo assim o processo Ø pouco prÆtico
+e demorado. Por isso o mØtodo RSA baseia sua seguran(cid:231)a no processo de
+fatora(cid:231)ªo de nœmeros extremamente grandes. pois sua chave pœblica Ø for-
+mada por um nœmero composto n que Ø produto de primos p e q com mais
+
+23
+
+6
+de 60 algarismos cada. Fatorar um nœmero como esse, usando testes de di-
+visibilidade toma muito tempo, questªo de anos para os computadores mais
+avan(cid:231)ados.
+
+2.2.6 MØtodo da Fatora(cid:231)ªo de Fermat
+
+Pierre de Fermat (1601-1665) foi um dos poucos matemÆticos amadores
+famosos. Filho de um rico comerciante de couro, p(cid:244)de se dedicar comple-
+tamente aos estudos. Por in(cid:135)uŒncia de sua mªe, descendente de uma fam(cid:237)lia
+de juristas, estudou leis na Universidade de Orleans e formou-se em advoca-
+cia. Trabalhou durante toda sua vida na corte de justi(cid:231)a de Toulouse. Foi
+nomeado juiz e ocupava os seus momentos de folga em diversos lazeres, entre
+os quais a poesia e a MatemÆtica.
+
+Seu interesse na teoria dos nœmeros surgiu ap(cid:243)s ler o livro AritmØtica
+de Diofanto (matemÆtico grego, 200 A.C.) e alguns dos problemas propostos
+por Fermat, nesta Ærea, eram tªo dif(cid:237)ceis que somente muitos anos mais
+tarde foram provados. Seu resultado mais famoso resistiu por mais de 350
+anos e inspirou a publica(cid:231)ªo, em 1996, do bestseller O (cid:218)ltimo Teorema de
+Fermat. Este teorema diz que (cid:147)se n Ø um natural maior que 2, entªo nªo
+existem nœmeros inteiros x, y e z que satisfa(cid:231)am a equa(cid:231)ªo xn + yn = zn(cid:148).
+Isto foi provado de(cid:133)nitivamente, em 1994, pelo matemÆtico inglŒs Andrew
+Wiles (repare que no caso n = 2 o teorema Ø satisfeito por todos os ternos
+pitag(cid:243)ricos, isto Ø, por inteiros que satisfa(cid:231)am o Teorema de PitÆgoras)[8].
+
+Apresentamos, agora, uma idØia de reduzir a quantidade necessÆria de
+cÆlculos para a fatora(cid:231)ªo de um nœmero: o MØtodo da fatora(cid:231)ªo de Fermat.
+
+Proposi(cid:231)ªo 2.19. Seja n > 1 um inteiro (cid:237)mpar. HÆ uma correspondŒncia
+biun(cid:237)voca entre a fatora(cid:231)ªo de n e a representa(cid:231)ªo de n como diferen(cid:231)a de
+dois quadrados.
+
+Demonstra(cid:231)ªo: Se n = a
+b sªo pares, e a
+e a
+
+b
+
+(cid:1)
+2 e a+b
+
+(cid:0)
+
+2
+
+(cid:0)
+
+sªo inteiros.Entªo,
+
+b, e n (cid:237)mpar, entªo a e b sªo (cid:237)mpares. Logo a + b
+
+n =
+
+a + b
+2
+
+2
+
+a
+
+2
+
+b
+
+(cid:0)
+
+(cid:0)
+2
+
+(cid:18)
+
+(cid:18)
+
+(cid:19)
+expressa n como a diferen(cid:231)a de dois quadrados. Reciprocamente, suponha
+n escrito como a diferen(cid:231)a de dois quadrados: n = s2
+t2, entªo n =
+(s + t) Ø a forma fatorada de n. VocŒ pode ver que esses dois pro-
+(s
+cedimentos (cid:150)da fatora(cid:231)ªo para a diferen(cid:231)a e da diferen(cid:231)a para a fatora(cid:231)ªo (cid:150)
+determinam uma rela(cid:231)ªo biun(cid:237)voca.
+(cid:3)
+
+(cid:0)
+
+(cid:0)
+
+(cid:19)
+
+t)
+
+(cid:1)
+
+24
+
+Algor(cid:237)tmo de Fermat
+
+A proposi(cid:231)ªo 2.19 nos permite descrever um algor(cid:237)tmo, que Ø muito e(cid:133)ciente
+nos casos em que n tem um fator primo pr(cid:243)ximo de pn. A ideia Ø tentar
+achar nœmeros inteiros positivos x e y tais que n = x2
+y2. Caso estes
+nœmeros sejam encontrados, temos que:
+
+(cid:0)
+
+n = x2
+
+(cid:0)
+
+y2 = (x + y)
+
+(x
+
+(cid:1)
+
+(cid:0)
+
+y):
+
+y e x + y sªo fatores de n.
+
+Logo x
+
+(cid:0)
+
+O caso mais fÆcil ocorre quando n Ø um quadrado perfeito; isto Ø, quando
+existe algum inteiro r tal que n = r2. Neste caso temos que x = r e y = 0.
+Observe que se y > 0 entªo
+
+x =
+
+n + y2 > pn
+
+Tentamos encontrar x e y; onde (x
+
+p
+
+seguinte procedimento:
+
+Passo 1: Fazemos x =
+b
+fator de n e podemos parar.
+
+pn
+
+c
+
+y) e (x + y) sªo fatores de n; com o
+
+(cid:0)
+
+(parte inteira de pn); se n = x2 entªo x Ø
+
+Passo 2: Caso contrÆrio incrementamos x de uma unidade e calculamos
+
+y = px2
+
+n: Se y for inteiro, paramos.
+
+(cid:0)
+
+Passo 3: Repetimos o Passo 2 atØ encontrarmos y inteiro ou atØ que x
+
+seja igual a n+1
+
+2 ; neste caso n Ø primo.
+
+Exemplo 2.4. Vamos usar o Algor(cid:237)tmo de Fermat para encontrar dois fa-
+= 1139:
+tores do nœmero n = 1297603. Iniciamos fazendo x =
+Como 11392 = 1297321 < 1297603, passamos a incrementar x de um em um
+e calculamos y. Vamos dispor os cÆlculos em uma tabela.(Tabela 2.1)
+
+p1297603
+c
+
+b
+
+Tabela 2:1
+
+Obtivemos, assim um inteiro no terceiro la(cid:231)o. Portanto x = 1142 e y = 81
+sªo os valores desejados. Os fatores correspondentes sªo (x + y) = 1223 e
+(x
+
+y) = 1061:Logo, 1061 e 1223 sªo fatores de 1297603:
+
+(cid:0)
+
+25
+
+Essa maneira de encontrar fatores de um nœmero inteiro n Ø prÆtica
+quando, pelo menos um deles estiver pr(cid:243)ximo de pn:TambØm nªo Ø muito
+œtil para nœmeros inteiros muito grandes. Uma sa(cid:237)da para agilizar a fatora(cid:231)ªo
+de nœmeros, seria encontrar uma f(cid:243)rmula simples que fornecesse todos os
+nœmeros primos.
+
+Ainda nªo existe uma f(cid:243)rmula aritmØtica simples e e(cid:133)caz que forne(cid:231)a
+somente primos. As se(cid:231)ıes seguintes fornecem algumas f(cid:243)rmulas, elaboradas
+por grandes matemÆticos, que geram uma certa quantidade deles.
+
+2.2.7
+
+Formula de Fermat
+
+Fermat conjecturou que nœmeros da forma
+
+Fn = 22n
+
++ 1
+
+sªo primos.
+
+Para n = 0; 1; 2; 3; 4 os nœmeros:
+
+F0 = 220 + 1 = 3
+F1 = 22 + 1 = 5
+F2 = 222 + 1 = 17
+F3 = 223 + 1 = 257
+F4 = 224 + 1 = 65:537
+
+sªo todos primos. PorØm, Euler mostrou que:
+
+F5 = 225
+
++ 1 = 4:294:967:297 = 641
+
+6700417.
+
+(cid:1)
+
+Portanto F5 nªo Ø primo.
+
+AtØ o momento s(cid:243) sªo conhecidos estes cinco primos de Fermat, (ver[8]).
+
+2.2.8
+
+F(cid:243)rmula de Euler
+
+Leonhard Euler (1707 -1783) foi um matemÆtico e f(cid:237)sico de origem su(cid:237)(cid:231)a.
+Nasceu na BasilØia, (cid:133)lho do pastor calvinista Paul Euler que, desprezando
+seu prodigioso talento matemÆtico, determinou que ele estudasse Teologia e
+seguiria a carreira religiosa. Daniel e Nikolaus Bernoulli convenceram o pai
+de Euler a permitir que seu (cid:133)lho trocasse o hÆbito pelos nœmeros.
+
+Durante sua vida resolveu enorme quantidade de problemas, da naveg-
+a(cid:231)ªo (cid:224)s (cid:133)nan(cid:231)as, da acœstica (cid:224) irriga(cid:231)ªo. A solu(cid:231)ªo de tais problemas, que
+atendiam aos reclamos do mundo prÆtico, nªo o entediava, principalmente
+
+26
+
+porque cada novo trabalho inspirava-o para criar uma MatemÆtica nova e
+engenhosa. Era capaz de escrever vÆrios trabalhos em um œnico dia com os
+cÆlculos completos e prontos para serem publicados, (ver[3][8]).
+
+Em 1772 Euler descobriu um polin(cid:244)mio tendo uma longa sucessªo de
+
+valores primos, dado por
+
+F (n) = n2 + n + 41
+
+que fornece primos para n = 1, 2, ..., 39. Entretanto, para n = 40 o valor Ø
+composto. De fato:
+
+F (40) = 402 + 40 + 41 = 40:(40 + 1) + 41
+
+= 40:41 + 41 = 41:(40 + 1) = 41:41:
+
+2.2.9
+
+F(cid:243)rmula de Mersenne:
+
+Marin Mersenne (1588 - 1648) em 1644 fez a seguinte a(cid:133)rma(cid:231)ªo: (cid:147)Todo
+natural
+
+Ø primo para os primos p = 2, 3, 5, 7, 13, 17, 19, 31, 67, 127 e 257, e Ø
+composto para todos os outros primos menores que 257(cid:148):
+
+Mp = 2p
+
+1
+
+(cid:0)
+
+A formula de Mersene fornece uma sØrie de nœmeros primos e os nœmeros
+primos que sªo obtidos pela sua f(cid:243)rmula recebem o nome de primos de
+Mersene.
+
+Estudos posteriores mostraram que Mersene havia se equivocado ao fazer
+a sua lista: Incluiu M67 e M257 na sua lista de primos e excluiu dessa lista
+M61, M89, M107.. Nos meados do sØculo XX, 300 anos depois, a lista correta
+p = 2, 3, 5, 7, 13, 17, 19, 31, 61, 89, 107 e 127 onde p < 257, (cid:133)cou pronta,
+(ver[3]).
+
+Segundo o site http://www.mersenne.org/ prime.htm, atØ janeiro de 2014
+jÆ eram conhecidos, 48 primos de Mersene, para os primos p = 2, 3, 5, 7,
+13, 17, 19, 31, 61, 89, 107, 127, 521, 607, 1279, 2203, 2281, 3217, 4253, 4423,
+9689, 9941, 1213 ,19937, 21701, 23209, 44497, 86243, 110503, 132049, 216091,
+756839, 859433, 1257787, 1398269, 2976221, 3021377, 6972593, 13466917,
+20996011, 24036583, 30402457, 32582657, 37156667, 42643801, 43112609
+e 57885161. Esse œltimo primo foi descoberto em janeiro de 2013 e tem
+17.425.170 de d(cid:237)gitos, (ver[3] e [8]).
+
+27
+
+2.3 CongruŒncias
+
+A codi(cid:133)ca(cid:231)ªo e decodi(cid:133)ca(cid:231)ªo pelo mØtodo RSA Ø baseada em cÆlculos que en-
+volvem congruŒncias. Nessa parte de nosso estudo veremos algumas de(cid:133)ni(cid:231)ıes
+e proposi(cid:231)ıes a repeito da mesma.
+
+De(cid:133)ni(cid:231)ªo 2.20. Seja m um nœmero natural diferente de zero. Diremos
+que dois nœmeros a e b sªo congruentes m(cid:243)dulo m se os restos das divisıes
+euclidianas de a por m e de b por m forem iguais.
+
+A representa(cid:231)ªo de a e b sªo congruentes m(cid:243)dulo m Ø
+
+b(mod m):
+
+a
+
+(cid:17)
+
+Exemplo 2.5. 23
+(cid:17)
+por 4 sªo iguais a 3.
+
+31(mod 4); jÆ que os restos das divisıes de 23 e de 31
+
+Proposi(cid:231)ªo 2.21. Dados trŒs inteiros a, b e m; com m > 0, temos que
+a
+
+b(mod m) se, e somente se, m
+
+a).
+
+(b
+j
+
+(cid:0)
+
+(cid:17)
+
+Demonstra(cid:231)ªo: Sejam a = mq + r, com
+r
+j
+b
+(cid:0)
+e somente se, r0 = r; o que equivale a dizer que m
+
+, com
+0
+as divisıes euclidianas de a e b por m, respectivamente. Logo,
+b(mod m) se,
+(cid:3)
+
+: Portanto, a
+j
+
+<
+m
+j
+a = m(q0
+
+e b = mq
+
+q) + (r0
+
+r) onde
+
+m
+j
+
+m
+j
+
+0j
+(cid:0)
+
+r0
+j
+
++ r
+
+r
+j
+
+a.
+
+(cid:17)
+
+(cid:0)
+
+(cid:0)
+
+<
+
+<
+
+r
+
+j
+
+j
+
+j
+
+j
+
+0
+
+b
+j
+
+(cid:0)
+
+Proposi(cid:231)ªo 2.22. Sejam m
+que
+
+2
+
+Z com m > 1: Para todo a; b; c; d
+
+Z;tem-se
+
+2
+
+a(mod m)
+
+i) a
+(cid:17)
+ii) se a
+iii) se a
+iv) se a
+v) se a
+vi) se a
+Demonstra(cid:231)ªo: i) a
+
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+
+b(mod m);entªo b
+b(mod m) e b
+b(mod m) e c
+b(mod m) e c
+b(mod m);entªo an
+
+(cid:17)
+(cid:17)
+(cid:17)
+
+(cid:17)
+
+a(mod m);
+c(mod m), entªo a
+d(mod m), entªo a + c
+c
+d(mod m), entªo a
+
+(cid:17)
+
+bn(mod m):
+
+(cid:1)
+
+a) = 0.
+b(mod m), pela proposi(cid:231)ªo2.22 que m
+
+a(mod m) pois m
+
+(a
+j
+
+(cid:17)
+
+(cid:0)
+
+(cid:17)
+
+ii) Se a
+
+c(mod m)
+
+b + d(mod m)
+d(mod m)
+
+(cid:1)
+
+(cid:17)
+b
+(cid:17)
+
+(cid:17)
+existe um inteiro x tal que (b
+simØtrico de x; tal que
+m
+
+b), ou seja b
+
+(cid:0)
+xm =
+a(mod m):
+
+(cid:0)
+
+(a
+j
+iii) Se a
+
+(cid:0)
+
+(cid:17)
+b(mod m) e b
+(b
+j
+a + c):Portanto a
+
+proposi(cid:231)ªo2.6 (iii) m
+m
+
+(cid:17)
+
+(cid:17)
+a) + (c
+(cid:0)
+c(mod m):
+
+(cid:0)
+
+(b
+
+(
+(cid:0)
+j
+
+(cid:0)
+(cid:17)
+
+a) = xm; por outro lado, existe o inteiro
+
+(b
+j
+
+a) sendo assim,
+x,
+b): Donde conclu(cid:237)mos que
+
+(cid:0)
+
+(cid:0)
+
+a) = (a
+
+(cid:0)
+
+(cid:0)
+
+c(mod m);entªo m
+
+(cid:0)
+b) que equivale a m
+
+(b
+j
+
+a) e m
+(b
+j
+
+(cid:0)
+
+(c
+j
+(cid:0)
+a + c
+
+b): Pela
+b), ou
+
+(cid:0)
+
+28
+
+(cid:17)
+
+iv) Se a
+
+proposi(cid:231)ªo2.6 (iii) m
+(b+d
+a
+m
+j
+v) Se a
+
+(cid:0)
+
+(cid:0)
+(cid:17)
+ac = d(b
+
+(cid:0)
+
+(cid:17)
+a) + (d
+
+b(mod m) e c
+(b
+(cid:0)
+j
+c) ou, ainda, m
+((b+d)
+j
+b(mod m) e c
+a) + a(d
+c
+
+bd
+m
+
+d(mod m); entªo m
+
+a) e m
+c) que Ø o mesmo que m
+(b
+j
+(a+c)):Portanto a+c
+
+(b
+j
+
+(cid:0)
+
+c):Pela
+(d
+j
+(cid:0)
+a + d
+c), ou
+(cid:0)
+b+d(mod m):
+c):Fa(cid:231)a
+(cid:0)
+c) conclu(cid:237)mos que
+
+(cid:0)
+(cid:17)
+
+(d
+j
+
+a) e m
+
+(cid:0)
+
+d(mod m); logo m
+(cid:17)
+c):Como m
+d(b
+(cid:0)
+j
+d(mod m):
+b
+(cid:17)
+
+(cid:0)
+
+(b
+(cid:0)
+j
+a) + a(d
+
+(cid:0)
+
+(cid:0)
+ac; portanto a
+
+(cid:0)
+bd
+j
+vi) Usando o Princ(cid:237)pio da Indu(cid:231)ªo, temos que para n = 1 Ø verdadeira.
+bn(mod m) como verdadeira, temos, usando a propriedade
+an
+
+Supondo que an
+(v) a
+bn+1(mod m):O que mostra que a propriedade Ø verdadeira.
+
+bn(mod m), entªo a
+
+b(mod m) e an
+
+bn(mod m) =
+
+an+1
+
+)
+
+(cid:0)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+b
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:17)
+(cid:3)
+
+Proposi(cid:231)ªo 2.23. Sejam a; b; c; m
+
+Z, com c
+
+= 0 e m > 1. Temos que
+
+2
+b + c(mod m) se, e somente se, a
+
+a + c
+
+(cid:17)
+
+b(mod m)
+
+(cid:17)
+
+:
+
+Demonstra(cid:231)ªo: Suponhamos que a + c
+(i) nos garante que c
+0(mod m): Somando
+
+(cid:17)
+
+c(mod m) isto imp(cid:237)lica que (c
+
+c)
+
+(cid:17)
+(cid:17)
+c a ambos os lados da igualdade temos:
+(cid:0)
+b + c + (
+
+c)(mod m) que implica a + 0
+
+(cid:0)
+
+a + c + (
+
+c)
+
+(cid:0)
+
+(cid:17)
+
+(cid:0)
+
+b + c(mod m). A propriedade
+
+(c + (
+
+c))
+
+(cid:0)
+
+(cid:17)
+
+b + 0(mod m)
+
+(cid:17)
+
+logo
+
+a
+
+b(mod m).
+
+(cid:17)
+
+Partindo de a
+priedade (iv) temos a + c
+
+(cid:17)
+
+b(mod m): Temos, por (i); c
+
+b + c(mod m):
+
+(cid:17)
+
+(cid:17)
+
+c(mod m). Usando a pro-
+(cid:3)
+
+Proposi(cid:231)ªo 2.24. Sejam a; b; c; m
+
+2
+
+Z, com c
+
+= 0 e m > 1. Entªo
+
+ac
+
+(cid:17)
+
+bc(mod m) se, e somente se a
+
+b(mod
+
+(cid:17)
+
+m
+mdc(c; m)
+
+).
+
+Demonstra(cid:231)ªo: Note que
+que ac
+(cid:17)
+por mdc(c; m)
+
+bc(mod m) se, e somente se, m
+
+m
+mdc(c;m) e
+
+c
+
+mdc(c;m) sªo coprimos. Temos, entªo,
+a) , dividimos ambos os termos
+c(b
+j
+c
+mdc(c; m)
+
+a)
+
+(b
+
+(cid:0)
+
+(cid:0)
+
+m
+mdc(c; m)j
+
+que Ø equivalente a
+
+m
+mdc(c; m)j
+
+(b
+
+a)
+
+(cid:0)
+
+29
+
+6
+6
+ou seja
+
+b(mod
+
+a
+
+(cid:17)
+
+m
+mdc(c; m)
+
+).
+
+(cid:3)
+
+Da Proposi(cid:231)ªo 2.24 decorre que:
+Sejam a; b; c e m nœmeros inteiros, com c
+
+bc(mod m) se, e somente se, a
+
+= 0, m > 1 e mdc(c; m) = 1:
+b(mod m) e existe um
+(cid:17)
+1(mod m): Sendo c0 chamado de inverso de c
+
+Temos que: ac
+inteiro c0 tal que c
+m(cid:243)dulo m:
+
+(cid:17)
+
+c0
+
+(cid:1)
+
+(cid:17)
+
+Exemplo 2.6. a) 36
+escrever 12
+(cid:1)
+pois mdc(3; 5) = 1:Note, tambØm que 3
+3 m(cid:243)dulo 5.
+
+21(mod 5) como 36 e 21 sªo mœltiplos de 3, podemos
+7(mod 5)
+1(mod 5): Logo 2 Ø o inverso de
+
+3(mod 5) que, pela proposi(cid:231)ªo2.24 se torna 12
+2
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+7
+
+3
+
+(cid:1)
+
+(cid:1)
+
+Proposi(cid:231)ªo 2.25. Se existir um fator primo comum entre a e m, entªo a
+nªo admite inverso m(cid:243)dulo m.
+
+Demonstra(cid:231)ªo: Digamos que m e a sªo inteiros positivos tais que 1 <
+m:Suponha que existe
+a < m e existe um inteiro p; tal que 1 < p, p
+j
+um inteiro b tal que ab
+1(mod m): Assim teremos um q inteiro tal que
+1 = qm ou 1 = qm
+ab
+
+ab:Por hip(cid:243)tese
+
+a e p
+j
+
+(cid:0)
+
+(cid:17)
+(cid:0)
+
+ab
+a; logo p
+p
+j
+j
+qm
+m; entªo p
+j
+j
+
+p
+
+(cid:27)
+
+qm
+pela Proposi(cid:231)ªo 2.6 (iii) p
+j
+pois 1 < p. Logo, nestas condi(cid:231)ıes , nªo existe tal b.
+
+ab o que implica em p
+
+(cid:0)
+
+1 que Ø um absurdo
+j
+(cid:3)
+
+Exemplo 2.7. 16
+escrever 8
+Isto estÆ de acordo com a proposi(cid:231)ªo pois mdc(2; 6)
+
+10(mod 6) como 16 e 10 sªo mœltiplos de 2, podemos
+2(mod 6).
+
+2(mod 6) que nªo implica 8
+
+5(mod 6) pois 8
+
+= 1:
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+2
+
+5
+
+(cid:1)
+
+(cid:1)
+
+A Proposi(cid:231)ªo 2.25 pode ser visualizada nas Tabelas 2.2 e 2.3 nos casos de
+
+m = 7 e m = 6, respectivamente.
+
+30
+
+6
+6
+Tabela 2.2
+
+Tabela 2.3
+
+Em termos de congruŒncia, podemos dizer que sendo p primo e a e b
+com mdc(a; p) = 1 a congruŒncia
+1
+g
+
+0; 1; 2; :::p
+f
+
+pertencem ao conjunto
+ax
+
+b(mod p) tem solu(cid:231)ªo œnica.
+
+(cid:17)
+Os teoremas que serªo vistos a seguir con(cid:133)rmam essa a(cid:133)rma(cid:231)ªo.
+
+(cid:0)
+
+2.3.1 Teorema de Fermat
+
+Pequeno Teorema de Fermat
+
+Teorema 2.26. Se p Ø primo e se o mdc(p; a) = 1 entªo:
+
+1
+
+ap
+(cid:0)
+
+(cid:17)
+
+1(mod p):
+
+31
+
+g
+
+(cid:0)
+
+(cid:0)
+
+1)a
+
+a; 2a; 3a; 4a; :::(p
+f
+
+. Certamente, nenhum desses (p
+
+Demonstra(cid:231)ªo: Consideremos os (p
+1) primeiros positivos do conjunto
+S =
+1) inteiros Ø
+divis(cid:237)vel por p e, alØm disso, dois quaisquer deles sªo incongruentes m(cid:243)dulo p,
+pois, se fosse ter(cid:237)amos r e s tais que: ra
+(cid:0)
+1): Entªo, o fator comum a poderia ser cancelado, visto que o mdc(a; p) = 1.
+r) o que Ø imposs(cid:237)vel, porque 0 <
+Ter(cid:237)amos: r
+1)a
+1) inteiros a; 2a; 3a; :::; (p
+s
+divididos por p deixam restos distintos e, por conseguinte, cada um desses
+p
+1 inteiros Ø congruente m(cid:243)dulo p a um œnico dos inteiros 1; 2; 3; :::; p
+1.
+Naturalmente numa certa ordem. Multiplicando ordenadamente essas p
+1
+congruŒncias, teremos:
+
+r < p. Assim sendo, dois quaisquer dos (p
+
+s(mod p), isto Ø p
+
+sa(mod p); com 1
+
+(cid:0)
+(cid:0)
+
+(s
+j
+
+(p
+
+(cid:17)
+
+(cid:0)
+
+(cid:20)
+
+(cid:17)
+
+(cid:0)
+
+(cid:20)
+
+(cid:20)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+s
+
+r
+
+2a
+
+a
+
+(cid:1)
+
+(cid:1)
+
+3a
+
+(cid:1)
+
+:::
+
+(cid:1)
+
+(p
+
+(cid:0)
+
+1)a
+
+2
+
+1
+
+(cid:1)
+
+(cid:1)
+
+3
+
+(cid:1)
+
+:::
+
+(cid:1)
+
+(p
+
+(cid:0)
+
+(cid:17)
+
+1)(mod p);
+
+ou seja:
+
+1
+
+ap
+(cid:0)
+
+(1
+
+2
+
+3
+
+:::
+
+(p
+
+1)
+
+1
+
+2
+
+3
+
+:::
+
+(p
+
+1)(mod p);
+
+(cid:1)
+
+(cid:1)
+Como o mdc(p; (p
+podemos cancelar o fator (p
+
+(cid:1)
+(cid:1)
+1)!) = 1, porque p Ø primo e p nªo divide (p
+1)!, concluindo o argumento de Fermat:
+
+(cid:17)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:0)
+
+(cid:0)
+ap
+(cid:0)
+
+1(mod p):
+
+1
+
+(cid:17)
+
+1)!,
+
+(cid:3)
+
+Exemplo 2.8. Um exemplo para veri(cid:133)ca(cid:231)ªo numØrica deste teorema pode
+ser dado considerando p = 7, a = 5 e (p
+
+1) = 6: Ter(cid:237)amos, entªo:
+
+(cid:0)
+5; 10; 15; 20; 25; 30
+g
+
+S =
+
+f
+
+Todos os elementos de S sªo incongruentes m(cid:243)dulo 7, pois:
+
+5(mod 7); 10
+
+5
+
+(cid:17)
+
+20
+
+6(mod 7); 25
+
+(cid:17)
+
+Pela Proposi(cid:231)ªo 2.22 (v), temos:
+
+3(mod 7); 15
+
+4(mod 7)e30
+
+1(mod 7);
+
+2(mod 7);
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(5
+
+10
+
+15
+
+20
+
+25
+
+30)
+
+(5
+
+(cid:1)
+ordenando os fatores do primeiro termo
+
+(cid:17)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+10
+
+(5
+
+(cid:1)
+
+(cid:1)
+
+15
+
+(cid:1)
+
+20
+
+(cid:1)
+
+25
+
+(cid:1)
+
+30)
+
+(cid:17)
+
+(1
+
+32
+
+3
+
+2
+
+1
+
+3
+
+6
+
+4
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+4
+
+5
+
+(cid:1)
+
+(cid:1)
+
+2)(mod 7)
+
+6)(mod 7)
+
+isolando 5 nos fatores do primeiro termo
+
+((5
+
+1)
+
+(5
+
+2)
+
+(5
+
+3)
+
+(5
+
+4)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+(5
+
+(cid:1)
+
+5)
+
+(cid:1)
+
+(5
+
+(cid:1)
+
+6))
+
+(1
+
+2
+
+3
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+4
+
+(cid:1)
+
+5
+
+(cid:1)
+
+(cid:17)
+
+6)(mod 7)
+
+separando os fatores 5
+
+56(
+2
+(cid:1)
+
+3
+
+5
+
+4
+
+(cid:1)
+
+(cid:1)
+
+6)
+
+(cid:17)
+
+(1
+
+2
+
+3
+
+(cid:1)
+
+(cid:1)
+
+(cid:1)
+
+4
+
+(cid:1)
+
+5
+
+(cid:1)
+
+6)(mod 7)
+
+(cid:1)
+escrevendo como fatorial
+
+(cid:1)
+
+(cid:17)
+como mdc(6!; 7) = 1; pela proposi(cid:231)ªo2.24, podemos cancelar 6! e teremos
+
+(cid:1)
+
+56
+
+6!
+
+6!(mod 7):
+
+56
+
+(cid:17)
+
+1(mod 7):
+
+O Teorema de Fermat Ø utilizado para determinar restos de divisıes de
+
+potŒncias como as dos exemplos que segue:
+
+Exemplo 2.9. Determine o resto da divisªo de 5234 por 11.Como 11 Ø primo
+e mdc(11; 5) = 1, temos que 510
+1(mod 11) aplicando o Teorema de Fermat
+na questªo dada, temos:
+
+(cid:17)
+
+5234
+
+23+4
+
+510
+
+(cid:1)
+
+(510)23
+
+54
+
+123
+
+54
+
+54
+
+625(mod 11)
+
+9(mod 11)
+
+(cid:1)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:1)
+Exemplo 2.10. Determine o resto da divisªo de 33458 por 7. Inicialmente,
+(0 + 5)458
+temos:33458
+5458(mod 7). Como 7 Ø primo e
+7 + 5)458
+(cid:17)
+mdc(7; 5) = 1, temos que 56
+1(mod 7) aplicando o Teorema de Fermat na
+questªo dada, temos:
+
+(cid:17)
+(cid:17)
+
+(4
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:1)
+
+33458
+
+(cid:17)
+
+5458(mod 7)
+
+56
+
+76+2(mod 7)
+
+(cid:1)
+
+(56)76
+
+(cid:1)
+
+(cid:17)
+
+52(mod 7)
+
+(56)76
+
+52
+
+(cid:1)
+
+(cid:17)
+
+176
+
+(cid:1)
+
+52(mod 7)
+
+(cid:17)
+
+25(mod 7)
+
+4(mod 7)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+52(mod 7)
+
+2.3.2 Teorema de Euler
+
+Fun(cid:231)ªo Totiente (cid:30)(n)
+
+De(cid:133)ni(cid:231)ªo 2.27. Chama-se fun(cid:231)ªo aritmØtica toda fun(cid:231)ªo f de(cid:133)nida no con-
+junto N dos naturais e com valores no conjunto Z dos inteiros, i.e., toda
+fun(cid:231)ªo f de N em Z (f :N
+
+Z) .
+
+(cid:0)!
+
+De(cid:133)ni(cid:231)ªo 2.28. Chama-se Fun(cid:231)ªo Totiente a fun(cid:231)ªo aritmØtica (cid:30)(n) que
+denota a quantidade de inteiros k
+
+[1; 2; 3; ::::; n] ,tais que mdc(k; n) = 1:
+
+2
+
+33
+
+Exemplo 2.11.
+
+(cid:30)(1) = 1; pois mdc(1; 1) = 1
+(cid:30)(3) = 2; pois mdc(3; 1) = 1; mdc(3; 2) = 1
+(cid:30)(4) = 2; pois mdc(4; 1) = 1; mdc(4; 2) = 2; mdc(4; 3) = 1
+(cid:30)(5) = 4; pois mdc(5; 1) = 1; mdc(5; 2) = 1; mdc(5; 3) = 1; mdc(5; 4) = 1
+
+Proposi(cid:231)ªo 2.29. i) Se p Ø primo, entªo (cid:30)(p) = p
+
+1:
+
+(cid:0)
+
+ii) Sejam m e n inteiros positivos, ambos maiores que 1, e mdc(m; n) = 1
+
+entªo (cid:30)(m
+
+n) = (cid:30)(m)
+
+(cid:30)(n):
+
+(cid:1)
+
+(cid:1)
+
+2
+
+(cid:0)
+
+i) De fato, seja o conjunto Q =
+
+Demonstra(cid:231)ªo:
+dos
+nœmeros inteiros menores que p. Como p Ø primo nenhum elemento de Q
+Ø fator de p, Logo para todo k
+1 elementos
+Q o resultado segue.(cid:3)
+
+Q; mdc(k; p) = 1: Como hÆ p
+
+1; 2; 3; ::; p
+f
+
+1
+g
+
+(cid:30)(n) = mn
+
+(cid:0)
+n + 1 . O conjunto P =
+
+(cid:1)
+1 elementos k1; k2; :::; km
+
+ii) Se considerarmos que m e n sªo ambos primos para podermos fazer
+1 e o produto
+possui
+1 elementos
+1 tais que mdc(li; mn) = m e o pr(cid:243)prio mn. Para o restante dos
+P , temos: mdc(pi; mn) = 1 entªo a quantidade de elementos
+n + 1
+(cid:3)
+
+uso da propriedade (i), temos que (cid:30)(m) = m
+(cid:30)(m)
+m
+(cid:0)
+l1; l2; l3;
+; ln
+(cid:0)
+elementos pi
+2
+pi de P Ø dada por mn
+(cid:0)
+o que con(cid:133)rma a propriedade.
+
+1 tais que mdc(ki; mn) = n e n
+
+1 logo (cid:30)(mn) = mn
+
+1; 2; 3; m; ::n; ::; mn
+
+1 e (cid:30)(n) = n
+
+(m
+
+(n
+
+1)
+
+1)
+
+m
+
+m
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+f
+
+g
+
+(cid:0)
+
+A propriedade (ii) nos garante que se n Ø o produto de dois nœmeros
+
+primos p e q temos que (cid:30)(n) = (p
+
+1)(q
+
+1):
+
+(cid:0)
+
+(cid:0)
+
+Teorema de Euler
+
+Antes de enunciarmos o Teorema de Euler, vamos considerar o seguinte lema.
+
+Lema 2.30. Sejam a e n > 1 inteiros tais que o mdc(a; n) = 1. Se
+a1; a2; :::; an sªo inteiros positivos menores que n e cada um deles coprimo
+com n, entªo cada um dos inteiros a:a1; a:a2; :::; a:an Ø congruente m(cid:243)dulo
+n a um dos inteiros a1; a2; :::; an (nªo necessariamente nesta ordem em que
+aparecem).
+
+O argumento usado para a demonstra(cid:231)ªo deste lema Ø o mesmo utilizado
+
+na prova do Pequeno Teorema de Fermat.
+
+34
+
+Teorema 2.31. (Teorema de Euler) Se n Ø um inteiro positivo e se
+mdc(a; n) = 1, entªo:
+
+a(cid:30)(n)
+
+1(mod n):
+
+(cid:17)
+
+Demonstra(cid:231)ªo: A proposi(cid:231)ªo Ø verdadeira para n = 1, pois a(cid:30)(1)
+1(mod 1).
+Suponhamos, pois, n > 1, e sejam a1; a2; :::; a(cid:30)(n) os inteiros positivos menores
+que n e relativamente primos a n. Como o mdc(a; n) = 1, entªo, pelo Lema
+2.30, os inteiros a:a1; a:a2; :::; a:a(cid:30)(n) sªo congruentes m(cid:243)dulo n aos inteiros
+a1; a2; :::; a(cid:30)(n), em uma certa ordem:
+
+(cid:17)
+
+a:a1
+
+(cid:17)
+
+a10(mod n); a:a2
+
+(cid:17)
+
+a20(mod n); :::; a:a(cid:30)(n)
+
+a(cid:30)(n0)(mod n)
+
+(cid:17)
+
+onde a10; a20; :::; a(cid:30)(n0) denotam os inteiros a1; a2; :::; a(cid:30)(n) em uma certa ordem.
+Multiplicando ordenadamente todas essas (cid:30)(n) congruŒncias, obtemos:
+
+(a:a1)
+
+(cid:1)
+
+(a:a2):::::(a:a(cid:30)(n))
+
+a10 (cid:1)
+
+a20 (cid:1)
+
+:::
+
+(cid:1)
+
+(cid:17)
+
+a(cid:30)(n0)(mod n)
+
+ou seja,
+
+a(cid:30)(n)
+
+(a1; a2; :::; a(cid:30)(n))
+
+a1; a2; :::; a(cid:30)(n)(mod n).
+
+(cid:17)
+Cada um dos inteiros a1; a2; :::; a(cid:30)(n) Ø coprimo com n, de modo que podem
+ser sucessivamente cancelados, o que dÆ a congruŒncia de Euler:
+
+(cid:1)
+
+a(cid:30)(n)
+
+(cid:17)
+
+1(mod n).
+
+(cid:3)
+
+Nota: se p Ø um primo, (cid:30)(p) = p
+
+1, e se o mdc(a; p) = 1, entªo:
+
+(cid:0)
+1(mod p)
+
+a(cid:30)(p)
+
+ap
+(cid:0)
+
+(cid:17)
+
+1(mod p)
+
+(cid:17)
+
+que nada mais Ø que uma generaliza(cid:231)ªo do Teorema de Fermat.
+
+CorolÆrio 2.32. Se m > 1, k
+que, mdc(a; m) = 1 e k
+
+n(mod (cid:30)(m)) entªo, ak
+
+(cid:21)
+
+0 e a um inteiro qualquer sªo tais
+an(mod m).
+
+0, n
+
+(cid:21)
+
+(cid:17)
+
+(cid:17)
+
+Demonstra(cid:231)ªo: Consideremos o caso em que k > n. Como k
+existe q
+
+(cid:30)(m) e, portanto,
+
+1 tal que k
+
+n = q
+
+n(mod (cid:30)(m))
+
+(cid:17)
+
+(cid:21)
+
+ak = ak
+
+(cid:0)
+
+n
+
+(cid:1)
+
+(cid:0)
+an = aq
+
+(cid:1)
+
+(cid:1)
+(cid:30)(n)
+
+an = (a(cid:30)(n))q
+
+an
+
+(cid:1)
+
+(cid:17)
+
+an(mod m).
+
+(cid:1)
+
+(cid:3)
+
+Exemplo 2.12. Sejam a = 5, m = 6, k = 8 e n = 2. Temos (cid:30)(6) = 2;
+1(mod 6), entªo 58
+1(mod 6) e desta forma,
+e 8
+58
+
+2(mod 2). Como 52
+
+52(mod 6).
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+(cid:17)
+
+35
+
+O Teorema de Euler aplicado em resolu(cid:231)ıes de congruŒncias lin-
+eares A congruŒncia linear a
+b(mod m) no caso em que o mdc(a; m) =
+1, admite uma œnica solu(cid:231)ªo m(cid:243)dulo m, que se pode facilmente obter usando
+o Teorema de Euler. Com efeito, a partir da expressªo
+
+(cid:17)
+
+x
+
+(cid:1)
+
+x
+
+a
+
+(cid:1)
+
+(cid:17)
+
+b(mod m)
+
+obtemos
+
+a
+
+b
+
+a(cid:30)(m)(mod m).
+
+x
+
+(cid:1)
+
+(cid:17)
+
+(cid:1)
+
+Como mdc(a; m) = 1, podemos cancelar o fator comum a, que resulta em
+
+x
+
+b
+
+(cid:1)
+
+(cid:17)
+
+a(cid:30)(m)
+
+(cid:0)
+
+1(mod m):
+
+Nas congruŒncias abaixo encontramos a solu(cid:231)ªo com a aplica(cid:231)ªo do Teo-
+
+rema de Euler.
+
+Exemplo 2.13.
+(cid:1)
+mdc(5; 8) = 1; uma aplica(cid:231)ªo do argumento acima (cid:133)ca:
+
+Determinar x na congruŒncia 5
+
+x
+
+(cid:17)
+
+7(mod 8):Como
+
+x
+
+x
+
+(cid:17)
+
+(cid:17)
+7
+
+(cid:1)
+
+5(cid:30)(8)
+
+(cid:0)
+
+1
+
+7
+
+(cid:1)
+
+54
+
+(cid:0)
+
+7
+
+(cid:1)
+
+(cid:17)
+
+1
+
+(120 + 5)
+
+7
+
+(8
+
+7
+
+53
+
+7
+
+(cid:1)
+
+(cid:17)
+15 + 5)
+
+(cid:17)
+7
+
+125(mod 8)
+
+(cid:1)
+(0 + 5)(mod 8)
+
+(cid:17)
+7
+
+(cid:1)
+5
+
+x
+
+(cid:17)
+
+(cid:1)
+
+(cid:17)
+
+(cid:1)
+35
+
+(cid:17)
+(cid:1)
+3(mod 8)
+
+(cid:17)
+
+(cid:1)
+
+7(mod 8):
+
+(cid:17)
+
+Note que 3 Ø o valor procurado , pois 5
+
+3 = 15
+
+Em particular, a
+(cid:17)
+leva a concluir que a(cid:30)(n)
+(cid:0)
+
+x
+
+(cid:1)
+
+1(mod n) implica em x
+1 Ø o inverso multiplicativo de a m(cid:243)dulo n.
+
+(cid:17)
+
+(cid:0)
+
+a(cid:30)(n)
+
+1(mod n) o que nos
+
+Exemplo 2.14. Determine um inverso multiplicativo de 7 m(cid:243)dulo 11. Apli-
+cando o teorema de Euler e o fato de mdc(7; 11) = 1, temos x
+710
+(cid:17)
+multiplicativo de 7 m(cid:243)dulo 11:
+
+(cid:17)
+8(mod 11) assim, x = 8 Ø o menor inverso
+
+40:353:607
+
+7(cid:30)(11)
+(cid:0)
+
+79
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:0)
+
+1
+
+1
+
+2.4 Sistemas de CongruŒncias Lineares
+
+No livro (cid:147)Manual AritmØtico do Mestre Sol(cid:148)escrito por Sun Zi Suanjing (ou
+Sun Tzu Suan Ching), nos primeiros sØculos de nossa era, aparece o seguinte
+problema:
+
+(cid:147)Temos coisas, mas nªo sabemos quantas; se as contarmos de trŒs em trŒs,
+o resto Ø 2; se as contarmos de cinco em cinco, o resto Ø 3; se as contarmos
+de sete em sete, o resto Ø 2.
+
+36
+
+Quantas coisas temos?(cid:148)
+Utilizando congruŒncias para resumir o problema, sendo X a quantidade
+
+de coisas procuradas, temos:
+
+X
+X
+X
+
+(cid:17)
+(cid:17)
+(cid:17)
+
+8
+<
+
+2(mod 3)
+3(mod 5)
+2(mod 7)
+
+Uma maneira de resolu(cid:231)ªo para este sistema serÆ mostrada logo ap(cid:243)s o
+
+:
+
+seguinte teorema:
+
+Teorema 2.33. Teorema ChinŒs do Resto(TCR) . (Restrito a duas
+congruŒncias com m(cid:243)dulos primos entre si). Sejam m e n inteiros positivos
+primos entre si. Se a e b sªo inteiros quaisquer, entªo o sistema
+
+x
+x
+
+(cid:17)
+(cid:17)
+
+(cid:26)
+
+a(mod m)
+b(mod n)
+
+sempre tem solu(cid:231)ªo e qualquer uma de suas solu(cid:231)ıes pode ser escrita na
+forma a + m
+Ø o
+(cid:0)
+inverso de m m(cid:243)dulo n.
+
+t); onde t Ø um inteiro qualquer e m
+
+a) + n
+
+(m
+
+0 (cid:1)
+
+(b
+
+(cid:1)
+
+(cid:1)
+
+0
+
+Demonstra(cid:231)ªo: Considere o sistema
+
+x
+x
+
+(cid:17)
+(cid:17)
+
+(cid:26)
+
+a(mod m)
+b(mod n)
+
+onde m e n sªo inteiros positivos distintos e digamos que o nœmero inteiro
+x0 Ø uma solu(cid:231)ªo desta congruŒncia. Isto signi(cid:133)ca que x0 satisfaz a ambas as
+congruŒncias:
+
+x0
+x0
+
+(cid:17)
+(cid:17)
+
+(cid:26)
+
+a(mod m)
+b(mod n)
+
+Como os m(cid:243)dulos sªo diferentes, s(cid:243) podemos combinar as duas congruŒncias
+se convertermos uma delas em uma igualdade de inteiros.Fazendo isto com a
+primeira equa(cid:231)ªo, veri(cid:133)camos que
+
+onde k Ø um inteiro qualquer, de forma que podemos concluir que
+
+x0 = a + m
+
+k
+
+(cid:1)
+
+(i)
+
+ou ainda
+
+a + m
+
+k
+
+(cid:1)
+
+(cid:17)
+
+b(mod n)
+
+m
+
+k
+
+(cid:1)
+
+(cid:17)
+
+(b
+
+(cid:0)
+
+a)(mod n)
+
+(ii)
+
+37
+
+Supondo que m e n sejam primos entre si, temos pela Proposi(cid:231)ªo 2.1.2 que
+Ø o inverso de m m(cid:243)dulo n ou
+m Ø invers(cid:237)vel m(cid:243)dulo n . Digamos que m
+m
+, obtemos
+
+0
+1(mod n). Multiplicando (ii) por m
+
+m0
+
+(cid:1)
+
+(cid:17)
+
+0
+a)(mod n)
+
+k
+
+m0
+
+(b
+
+(cid:1)
+
+(cid:0)
+
+(cid:17)
+
+em outras palavras,
+
+k = m
+
+(b
+
+a) + n
+
+t
+
+0 (cid:1)
+
+(cid:0)
+
+(cid:1)
+
+para algum inteiro t. Substituindo esta expressªo para k em (i), vemos que
+
+x0 = a + m
+
+(m
+
+0 (cid:1)
+
+(cid:1)
+
+(b
+
+(cid:0)
+
+a) + n
+
+t):
+
+(cid:1)
+
+Resumindo, provamos que x0 Ø uma solu(cid:231)ªo do sistema.
+
+(cid:3)
+
+Exemplo 2.15. Determinar o menor nœmero inteiro que dividido por 3 tem
+resto 2 e dividido por 7 tem resto 3. Devemos determinar um valor x que
+satisfa(cid:231)a o sistema de congruŒncias:
+
+x
+x
+
+(cid:17)
+(cid:17)
+
+(cid:26)
+
+2(mod 3)
+3(mod 7)
+
+Chamando m0 o inverso de 3 m(cid:243)dulo 7, temos que m
+15
+
+1(mod 7):Pela f(cid:243)rmula do TCR, temos que x0 Ø uma solu(cid:231)ªo:
+
+= 5, visto que 3
+
+0
+
+(cid:17)
+
+5
+
+(cid:1)
+
+(cid:17)
+
+2) + 7t)
+
+x0 = 2 + 3(5(3
+(cid:0)
+x0 = 2 + 15 + 21t
+x0 = 17 + 21t
+
+Logo x=17 Ø a menor solu(cid:231)ªo positiva para o problema dado.
+
+Embora tenha sido usado uma parte restrita do TCR o procedimento us-
+ado para encontrarmos uma f(cid:243)rmula para x pode ser estendido para sistemas
+com mais de duas congruŒncias.
+
+No momento s(cid:243) nos interessa um caso particular de sistemas, vamos
+
+resolvŒ-los por substitui(cid:231)ªo e utilizando os Teoremas de Fermat e Euler.
+
+Estudaremos apenas sistemas do tipo:
+
+X
+X
+
+X
+
+(cid:17)
+(cid:17)
+
+(cid:17)
+
+a1(mod b1)
+a2(mod b2)
+
+:::
+
+an(mod bn)
+
+8
+>><
+
+>>:
+
+onde mdc(bi; bj) = 1, com i = 1; 2; :::n e j = 1; 2; :::n.
+
+38
+
+Exemplo 2.16. Resolveremos o problema proposto no (cid:147)Manual AritmØtico
+do Mestre Sol(cid:148)
+
+X
+X
+X
+
+(cid:17)
+(cid:17)
+(cid:17)
+
+8
+<
+
+2(mod 3)
+3(mod 5)
+2(mod 7)
+
+1
+
+(cid:17)
+
+:
+
+33
+
+3(mod 5); que implica em 3y
+
+pois mdc(3; 5) = 1; mdc(3; 7) = 1 e mdc(5; 7) = 1; temos da primeira equa(cid:231)ªo
+que existe um inteiro y tal que: X = 3y + 2: Substituindo na segunda
+congruŒncia, temos: 3y + 2
+1(mod 5);
+3(cid:30)(5)
+donde y
+2(mod 5); que signi(cid:133)ca que existe um
+(cid:0)
+K; inteiro, tal que y = 5K + 2:Agora temos: X = 3(5K + 2) + 2 onde
+X = 15K + 8:Substituindo na terceira congruŒncia, temos: 15K + 8
+(cid:17)
+2(mod 7); que implica em 15K
+1(mod 7)
+que signi(cid:133)ca que existe um U; inteiro, tal que K = 7U + 1: Finalmente:
+X = 105U + 23: Entªo X = 23 Ø a menor solu(cid:231)ªo
+X = 15(7U + 1) + 8 =
+positiva para este sistema de congruŒncias.
+
+6(mod 7); sendo K
+
+6
+(cid:17) (cid:0)
+
+(cid:17) (cid:0)
+
+(cid:17)
+27
+
+)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+2.5 CongruŒncia e Criptogra(cid:133)a
+
+Podemos usar congruŒncias, de maneira direta, para codi(cid:133)car e decodi(cid:133)car
+mensagens. Vamos usar como exemplo a Cifra de CØsar, a Cifra de Trithemius
+e a Cifra de Vigenere.
+
+Para todas elas iniciamos com uma troca de letra por nœmero de acordo
+
+com a Tabela 2.4.
+
+Tabela 2.4
+
+2.5.1 Cifra de CØsar
+
+Codi(cid:133)ca(cid:231)ªo
+
+Sendo i o (cid:237)ndice que indica a posi(cid:231)ªo da letra na mensagem, Li o valor da
+letra que queremos cifrar e Ci o valor da letra cifrada, temos:
+
+Ci
+
+(cid:17)
+
+Li + d(mod 26)
+
+39
+
+onde d Ø o deslocamento utilizado. Usamos mod 26 por ser este o nœmero de
+letras do alfabeto latino.
+
+A tabela 2.5 mostra como codi(cid:133)car a palavra CODIGO com d = 15.
+
+Tabela 2.5
+
+Assim:
+
+CODIGO por estÆ Cifra de CØsar Ø RDSXVD
+
+Decodi(cid:133)ca(cid:231)ªo
+
+Para decodi(cid:133)car, partimos da f(cid:243)rmula inicial Ci
+d de ambos os lados da congruŒncia e teremos:
+
+(cid:17)
+
+Li+d(mod 26), subtra(cid:237)mos
+
+Assim a decodi(cid:133)ca(cid:231)ªo de RDSXVD com d = 15, (cid:133)ca:
+
+Li = Ci
+
+(cid:0)
+
+d(mod 26):
+
+Tabela 2.6
+
+40
+
+Temos, entªo:
+
+RDSXVD decodi(cid:133)ca(cid:231)ªo CODIGO
+
+2.5.2 Cifra de Trithemius
+
+Codi(cid:133)ca(cid:231)ªo
+
+Na Cifra de CØsar usamos Ci
+Li + d(mod 26); com d (cid:133)xo. Na cifra de
+Trithemius, como visto no Cap(cid:237)tulo 1, o deslocamento nªo Ø (cid:133)xo e sim atre-
+lado a posi(cid:231)ªo da letra. Para a primeira letra o deslocamento Ø zero, para a
+segunda Ø um e assim por diante. Como o deslocamento vale uma unidade a
+menos que a posi(cid:231)ªo, temos d = i
+
+1:A f(cid:243)rmula para a cifragem se torna:
+
+(cid:17)
+
+(cid:0)
+Li + i
+
+Ci
+
+(cid:17)
+
+1(mod 26)
+
+(cid:0)
+
+Observe na Tabela 2.7 a codi(cid:133)ca(cid:231)ªo da expressªo: CEU AZUL
+
+Tabela 2.7
+
+Assim:
+
+Decodi(cid:133)ca(cid:231)ªo
+
+CEUAZUL por Trithemius CFWDDZR.
+
+Usando as propriedades das congruŒncias e somando i
+da expressªo temos a f(cid:243)rmula de decodi(cid:133)ca(cid:231)ªo:
+
+(cid:0)
+
+1 a ambos os termos
+
+Li = Ci
+
+(cid:0)
+
+i + 1(mod 26)
+
+41
+
+Caso a mensagem cifrada fosse CFWDDZR, ter(cid:237)amos:
+
+Tabela 2.8
+
+Assim, temos:
+
+CFWDDZR decodi(cid:133)ca(cid:231)ªo CEUAZUL.
+
+2.5.3 Cifra de VigenŁre
+
+Codi(cid:133)ca(cid:231)ªo
+
+Vamos codi(cid:133)car, usando a Cifra de VigenŁre, a palavra LEITURA, tendo
+como chave a palavra PRIMO. No Cap(cid:237)tulo 1 mostramos como fazŒ-lo usando
+o Quadrado de Trithemius. As letras do texto codi(cid:133)cado sªo obtidas pelo
+cruzamento da linha que inicia com a letra da palavra chave, com a coluna
+que inicia com a letra do texto. Este modelo pode ser entendido como uma
+Cifra de CØsar com deslocamento variado. Para a C(cid:237)fra de CØsar temos:
+Ci
+Li + d(mod 26); com d (cid:133)xo. Podemos a(cid:133)rmar que o deslocamento de
+cada letra da mensagem Ø dado pelo valor associado (cid:224) letra da palavra chave.
+Sendo Ki o valor da i
+Øsima letra do
+texto, temos que o valor Ci da letra codi(cid:133)cada Ø dado por:
+
+Øsima letra da chave e Li o valor da i
+
+(cid:0)
+
+(cid:0)
+
+(cid:17)
+
+Ci
+
+(cid:17)
+
+Li + Ki(mod 26):
+
+Este mØtodo requer uma prØ-codi(cid:133)ca(cid:231)ªo que consiste em substituir as le-
+tras, tanto da mensagem como da palavra chave, por seus respectivos valores
+de acordo com a Tabela 2.4.
+
+A Tabela 2.9 mostra a maneira como devemos dispor as letras da chave
+
+com a mensagem
+
+42
+
+Tabela 2.9
+
+enquanto a Tabela 2.10 mostra as letras jÆ substitu(cid:237)das pelos valores da
+Tabela 2.4
+
+Tabela 2.10
+
+Neste ponto, utilizamos a Tabela 2.11para codi(cid:133)car a mensagem
+
+Tabela 2.11
+
+obtendo
+LEITURA por VigenŁre AVQFIGR.
+
+Decodi(cid:133)ca(cid:231)ªo
+
+Neste mØtodo a decodi(cid:133)ca(cid:231)ªo tambØm necessita de uma fase preparat(cid:243)ria da
+mesmo forma que foi feita na codi(cid:133)ca(cid:231)ªo. Agora usamos Ci para i
+Øsima
+letra cifrada e Ki para a i
+Øsima letra da chave. Na Tabela 2.12, temos a
+prØ decodi(cid:133)ca(cid:231)ªo.
+
+(cid:0)
+
+(cid:0)
+
+43
+
+Tabela 2.12
+
+Para decodi(cid:133)carmos, devemos determinar o valor de Li a partir de Ci
+(cid:17)
+Li + Ki(mod 26) que foi a f(cid:243)rmula utilizada para codi(cid:133)car. Se subtrairmos Ki
+de ambos os membros da congruŒncia temos, como equa(cid:231)ªo de decodi(cid:133)ca(cid:231)ªo:
+Ci
+Ki(mod 26): Para evitarmos valores
+(cid:0)
+negativos para Li, incrementamos em 26 o segundo termo da congruŒncia.
+Note que esse incremento nªo altera em nada a expressªo visto que 26
+0(mod 26): Assim:
+
+Li(mod 26) ou Li
+
+Ki
+
+Ci
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:0)
+
+Li = 26 + Ci
+
+Ki(mod 26):
+
+(cid:0)
+
+Na Tabela 2.13, temos a decodi(cid:133)ca(cid:231)ªo de AVQFIGR
+
+Tabela 2.13
+
+Dessa forma
+
+AVQFIGR decodi(cid:133)ca(cid:231)ªo LEITURA.
+
+O cap(cid:237)tulo a seguir mostra como podemos utilizar congruŒncias para
+
+aplicar um mØtodo mais complexo de cifragem.
+
+44
+
+Cap(cid:237)tulo 3
+
+A Teoria dos Nœmeros e a
+Criptogra(cid:133)a RSA
+
+Neste cap(cid:237)tulo trataremos, exclusivamente, da criptogra(cid:133)a RSA, seu surgi-
+mento, a maneira como codi(cid:133)car e decodi(cid:133)car mensagens e um exemplo de
+cifragem simples utilizando o mØtodo, tendo como base[1]
+
+3.1 O mØtodo de criptogra(cid:133)a RSA
+
+A procura por uma forma de criptogra(cid:133)a que consiga sobrepujar a
+capacidade de cÆlculo do computador ocupou (cid:150) e ainda ocupa (cid:150) o tempo
+de muitos cientistas, que, mediante isso, anelam pela cria(cid:231)ªo de um sistema
+criptogrÆ(cid:133)co perfeito.
+
+Antes do surgimento dos computadores propriamente ditos, os alemªes,
+pouco tempo depois da Primeira Guerra Mundial, desenvolveram uma mÆquina
+de criptogra(cid:133)a que consideravam infal(cid:237)vel: a ENIGMA. De fato, ela possu(cid:237)a
+um sistema de encripta(cid:231)ªo di(cid:133)c(cid:237)limo de ser decifrado. Isso fez com que os
+governos francŒs, inglŒs e polonŒs reunissem esfor(cid:231)os para conseguir desven-
+dar o processo semi(cid:243)tico do referido aparelho. Tal feito foi alcan(cid:231)ado gra(cid:231)as,
+em parte, ao fato de os aliados terem acesso a algumas mÆquinas obtidas
+antes ou no decorrer da guerra. A equipe de cientistas envolvida no projeto
+de decodi(cid:133)ca(cid:231)ªo era che(cid:133)ada por Alan Turing, na Inglaterra. Na ocasiªo,
+esse cientista projetou o que hoje Ø chamado de (cid:147)MÆquina de Turing(cid:148), um
+dispositivo de tal so(cid:133)stica(cid:231)ªo que pode ser considerado um precursor dos
+computadores atuais.
+
+Os computadores trouxeram grande avan(cid:231)o (cid:224) ciŒncia, (cid:224) comunica(cid:231)ªo,
+ao comØrcio etc. PorØm, embora mais modernos, estavam vulnerÆveis aos
+mesmos perigos veri(cid:133)cados no uso do telØgrafo, ou seja, alguma pessoa mal-
+
+45
+
+intencionada, com o equipamento certo, poderia interceptar mensagens e,
+agora, com uma agravante: tinha a seu dispor uma poderosa mÆquina de
+calcular com o potencial de decifrar as mensagens criptografadas.
+
+Essa inseguran(cid:231)a perdurou atØ o (cid:133)nal do sØculo passado, quando Ronald
+Rivest, Adi Shamir e Leonard Adleman criaram a RSA, um dos mØtodos
+de criptogra(cid:133)a mais seguros de todos os tempos, utilizado por governos e
+empresas do mundo inteiro.
+
+Fazendo uma retrospectiva, Ø interessante observar que, desde as c(cid:237)talas,
+usadas pelos gregos, passando pelos demais sistemas criptogrÆ(cid:133)cos surgidos
+posteriormente, havia, entre todos esses mecanismos, como ponto em comum,
+uma chave secreta, na qual residiria a seguran(cid:231)a na troca de correspondŒncias.
+Entretanto, nos tempos atuais, com a Internet, processos semi(cid:243)ticos dessa
+natureza seriam inviÆveis. Por exemplo, no ato de efetuar uma compra via
+computador, o usuÆrio teria que receber, da empresa que organiza a pÆgina
+virtual, cartas con(cid:133)denciais que o orientassem acerca de como codi(cid:133)car os
+seus dados. Isto tornaria o comØrcio eletr(cid:244)nico inviÆvel ou muito restrito, pois
+como con(cid:133)ar na seguran(cid:231)a de uma opera(cid:231)ªo mediante a emissªo de cartas?
+A novidade trazida pelo mØtodo RSA Ø que ele con(cid:133)gura um sistema de
+chave pœblica, ou seja, opera como uma porta de duas chaves diferentes: a
+chave A tranca a porta, mas uma chave diferente (B) a destranca. Entªo, a
+chave A nªo precisa ser secreta, e a distribui(cid:231)ªo de c(cid:243)pias dela nªo comprom-
+ete a seguran(cid:231)a. Na hip(cid:243)tese de esta porta guardar a entrada da se(cid:231)ªo segura
+da pÆgina virtual de uma empresa, esta poderia distribuir livremente a chave
+A para qualquer visitante virtual que quisesse enviar uma mensagem segura,
+como, por exemplo, o nœmero do cartªo de crØdito. Embora todos possam
+codi(cid:133)car seus dados usando a mesma chave, ninguØm pode ler as mensagens
+codi(cid:133)cadas dos outros.
+
+A chave A Ø composta por um par de nœmeros (n; e), no qual (cid:147)n(cid:148) Ø o
+produto de dois nœmeros primos muito grandes, e (cid:147)e(cid:148)nªo tem fator comum
+com (cid:147)n(cid:148); a chave B Ø um nœmero (cid:147)d(cid:148), que aprenderemos a encontrar no
+decorrer do processo.
+
+A seguran(cid:231)a deste mØtodo tem suas bases na teoria dos nœmeros e Ø
+garantida pela di(cid:133)culdade de fatora(cid:231)ªo dos nœmeros inteiros quando estes
+sªo muito grandes. Lembremos que, de acordo com o que se estuda no
+Ensino Fundamental, fatorar um nœmero Ø escrevŒ-lo como um produto de
+nœmeros primos. Por exemplo: 10 = 2
+7. (cid:201) claro que fatorar
+(cid:1)
+nœmeros pequenos Ø fÆcil, mas, (cid:224) medida que eles aumentam, a fatora(cid:231)ªo vai-
+se tornando uma tarefa demorada, visto que nªo hÆ uma f(cid:243)rmula espec(cid:237)(cid:133)ca
+para fazŒ-la diretamente.
+
+5 e 42 = 2
+
+3
+
+(cid:1)
+
+(cid:1)
+
+O processo manual para fatorar um nœmero (cid:147)n(cid:148), dividindo o por nœmeros
+primos atØ encontrar um divisor, exige uma quantidade de tentativas que en-
+
+46
+
+(cid:20)
+
+volvem os primos (cid:147)p(cid:148) de 2 atØ (cid:147)p
+pn(cid:148). Os nœmeros utilizados pelo RSA
+sªo nœmeros com mais de 200 algarismos. Como o processo de fatora(cid:231)ªo com
+o uso de computador segue, praticamente, o mesmo princ(cid:237)pio do processo
+manual (cid:150)tentativas de divisªo (cid:150), e os nœmeros usados sªo muito grandes, se-
+riam necessÆrios alguns anos de cÆlculo para o melhor computador do mundo
+fatorar um desses nœmeros, o que torna o esfor(cid:231)o de fazŒ-lo uma tarefa im-
+praticÆvel.
+
+Obviamente, para trabalharmos um exemplo de como criptografar usando
+o RSA, nªo poderemos usar um nœmero absurdamente grande. Entªo, vamos
+utilizar nœmeros que podemos manusear com calculadora de bolso.
+
+3.1.1
+
+Descri(cid:231)ªo do mØtodo RSA
+
+Consideramos, para esta explana(cid:231)ªo, n; e; p e q nœmeros inteiros, sendo p e
+q primos, n = p
+
+q e mdc(n; e) = 1.
+
+(cid:1)
+
+PrØ-Codi(cid:133)ca(cid:231)ªo
+
+As mensagens enviadas, geralmente, sªo textos e o mØtodo trabalha com
+nœmeros. Assim, para podermos utilizÆ-lo cada letra do alfabeto Ø colocada
+em correspondŒncia biun(cid:237)voca com um nœmero de dois algarismos. Escol-
+hemos um nœmero, tambØm de dois algarismos, diferente dos demais para
+representar o espa(cid:231)o entre as palavras. Feito isso, a mensagem se transforma
+em um nœmero. Para tanto, podemos substituir as letras de acordo com a
+Tabela 3.1.
+
+Tabela 3.1
+
+Esse processo Ø chamado de prØ-codi(cid:133)ca(cid:231)ªo.
+Fazemos cada letra corresponder a um nœmero de, pelo menos, dois al-
+garismos para evitarmos confusıes. Veja que, se (cid:133)zØssemos A corresponder
+ao nœmero 1, B ao 2, e assim por diante, nªo ter(cid:237)amos como saber se 12
+representa AB ou L, jÆ que esta œltima Ø a dØcima segunda letra do alfabeto.
+
+47
+
+Codi(cid:133)ca(cid:231)ªo
+
+Feita a prØ-codi(cid:133)ca(cid:231)ªo, obtemos uma sequŒncia de nœmeros. Separamos este
+nœmero em uma sequŒncia em blocos menores, de forma que o nœmero for-
+mado por cada bloco seja menor que n. Denotamos esses blocos por bi, onde
+i = 1; 2; :::; k.
+
+O bloco codi(cid:133)cado, que chamaremos de C(bi); Ø o resto da divisªo be
+
+i por
+
+n, ou C(bi) Ø a menor solu(cid:231)ªo positiva da congruŒncia:
+
+be
+i (cid:17)
+
+C(bi)(mod n)
+
+(i)
+
+Doravante chamaremos os blocos codi(cid:133)cados de xi, ou seja xi = C(bi)
+
+para i = 1; 2; :::; k.
+
+Decodi(cid:133)ca(cid:231)ªo
+
+Para decodi(cid:133)car a mensagem precisamos encontrar uma rela(cid:231)ªo, ora chamada
+D(xi), tal que D(xi)
+bi(mod n). Para tanto, recordemos alguns conceitos
+jÆ estudados.
+
+(cid:17)
+
+Sendo bi um inteiro , relativamente primo com n, o Teorema de Euler nos
+
+diz que:
+
+b(cid:30)(n)
+i (cid:17)
+
+1(mod n)
+
+(ii)
+
+Como p e q sªo primos. Segue, das propriedades da fun(cid:231)ªo Totiente de
+
+Euler, que:
+
+e, ainda
+
+(cid:30)(p) = p
+
+(cid:0)
+
+1 e (cid:30)(q) = q
+
+1
+
+(cid:0)
+
+(cid:30)(n) = (cid:30)(p)(cid:30)(q) = (p
+
+1)(q
+
+1):
+
+(cid:0)
+
+(cid:0)
+
+Para decifrar a mensagem Ø necessÆrio encontrar um inteiro d tal que:
+
+o que implica em
+
+d
+
+e
+
+(cid:1)
+
+(cid:17)
+
+1(mod (cid:30)(n)) (iii)
+
+(cid:1)
+que, pelo teorema de Euler, tem como resultado
+
+(cid:0)
+
+(cid:0)
+
+(cid:17)
+
+e
+
+d
+
+1(mod(p
+
+1)(q
+
+1)) (iv)
+
+d
+
+e(cid:30)((p
+(cid:0)
+
+1)(q
+
+1))
+
+(cid:0)
+
+1(mod(p
+
+(cid:0)
+
+1)(q
+
+1)):
+
+(cid:17)
+1(mod (cid:30)(n)) conclu(cid:237)mos que existe um inteiro t tal que
+
+(cid:0)
+
+(cid:0)
+
+Assim, de e
+d
+
+t
+
+(cid:1)
+
+d
+
+(cid:17)
+
+e
+
+(cid:1)
+
+(cid:17)
+
+(cid:1)
+
+(cid:30)(n) + 1 de onde segue que:
+
+bi
+
+bi
+
+1
+
+(cid:1)
+
+(cid:17)
+
+(cid:17)
+
+bi(1)t
+
+(cid:17)
+
+bi(b(cid:30)(n)
+i
+
+)t
+
+(cid:17)
+
+(cid:30)(n)+1
+
+bt
+(cid:1)
+i
+
+(mod n)
+
+48
+
+e
+
+Portanto
+
+(cid:30)(n)+1
+
+bt
+(cid:1)
+i
+
+bed
+i (cid:17)
+
+(cid:17)
+
+(be
+
+i )d
+
+(cid:17)
+
+(C(bi))d
+
+(cid:17)
+
+(C(bi))d
+
+(cid:17)
+
+xd
+i (mod n).
+
+Observe que D(xi) Ø a rela(cid:231)ªo inversa de C(bi):
+
+D(xi)
+
+xd
+i (mod n)
+
+(cid:17)
+
+3.1.2
+
+Um exemplo de mensagem criptografada de
+
+acordo com o mØtodo RSA
+
+Vamos codi(cid:133)car e decodi(cid:133)car a mensagem SAIA J` de acordo com o RSA.
+Usaremos como chave pœblica o par (n; e) = (253; 3):
+
+PrØ Codi(cid:133)ca(cid:231)ªo
+
+Como dito anteriormente as mensagens, geralmente, sªo textos devemos,
+entªo, achar uma maneira de converter a mensagem em uma sequŒncia de
+nœmeros.
+
+Faremos isso, desconsiderando o acento agudo, de acordo com a Tabela
+
+3.1, segundo a qual:
+
+torna-se
+
+SAIA J`
+
+29111911552011.
+
+Agora quebramos o grande bloco, formado inicialmente, em blocos menores
+que n: Para escolher os blocos em que vamos dividir a mensagem devemos
+tomar alguns cuidados. Como jÆ foi dito: nenhum bloco deve ser maior que
+n e, tambØm, nªo devemos iniciar um bloco com zero. A explica(cid:231)ªo para
+essa condi(cid:231)ªo serÆ dada ap(cid:243)s a codi(cid:133)ca(cid:231)ªo e decodi(cid:133)ca(cid:231)ªo da mensagem na
+qual estamos trabalhando. A mensagem atual pode ser quebrada assim:
+
+29
+
+111
+
+91
+
+155
+
+201
+
+1.
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+Encerrada a fase de prØ-codi(cid:133)ca(cid:231)ªo podemos passar (cid:224) etapa de codi(cid:133)ca(cid:231)ªo
+
+propriamente dita.
+
+49
+
+Codi(cid:133)ca(cid:231)ªo A partir dos blocos
+
+Tabela 3.2
+
+vamos denotar o bloco codi(cid:133)cado por C(bi).
+
+Como e = 3 a receita que vamos utilizar para calcular C(bi) Ø a seguinte:
+
+C(bi) = resto da divisªo de b3
+
+i por 253
+
+ou
+
+C(bi)
+
+b3
+i (mod 253):
+
+(cid:17)
+
+Assim, o bloco 29 da mensagem anterior deve ser codi(cid:133)cado como o resto
+
+da divisªo de 293 por 253.
+
+C(29) = 101
+
+101(mod 253) =
+
+Fazendo as contas, temos:
+C(b1)
+C(b2)
+C(b3)
+C(b4)
+C(b5)
+C(b6)
+Reunindo os blocos temos a seguinte mensagem codi(cid:133)cada:
+
+24389
+(cid:17)
+1367631
+753571
+(cid:17)
+3723875
+8120601
+
+)
+221(mod 253) =
+60(mod 253) =
+
+(cid:17)
+(cid:17)
+1(mod 253) =
+
+C(155) = 221
+C(201) = 60
+
+293
+1113
+913
+1553
+2013
+13
+
+)
+)
+C(1) = 1
+
+(cid:17)
+137(mod 253) =
+
+)
+C(91) = 137
+
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+1
+
+166(mod 253) =
+
+C(111) = 166
+
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+(cid:17)
+
+)
+
+)
+
+(cid:17)
+
+(cid:17)
+
+(cid:0)
+e os blocos codi(cid:133)cados conforme a Tabela 3.3.
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+101
+
+166
+
+137
+
+221
+
+60
+
+1
+
+(cid:0)
+
+Tabela 3.3
+
+onde xi = C(bi):
+
+Uma observa(cid:231)ªo importante a ser feita Ø que nªo podemos agrupar nova-
+mente os nœmeros formando um s(cid:243) bloco, pois a decodi(cid:133)ca(cid:231)ªo da mensagem
+estÆ vinculada a cada resto, se eles forem agrupados haveria confusªo. Por
+25; agrupados, for-
+exemplo trŒs blocos que originalmente seriam 12
+mariam o nœmero 123225 que poderia ser interpretado pelos blocos 132
+225
+que tambØm sªo restos poss(cid:237)veis para n = 253:
+
+32
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+50
+
+Decodi(cid:133)ca(cid:231)ªo Agora vamos decodi(cid:133)car um bloco da mensagem cod-
+i(cid:133)cada. Veremos de que forma, possuindo a mensagem codi(cid:133)cada e a chave
+secreta, podemos reconstruir a mensagem original.
+
+A informa(cid:231)ªo necessÆria para decodi(cid:133)car consiste de dois nœmeros: n e o
+1), onde q e p sªo os œnicos fatores
+
+inverso d > 0 de 3 m(cid:243)dulo (p
+primos de n. Neste caso: p = 11 e q = 23, visto que 11
+
+1)(q
+
+(cid:0)
+
+(cid:0)
+
+23 = 253:
+
+(cid:1)
+
+Isto signi(cid:133)ca que devemos ter;
+
+d
+d
+d
+
+3
+3
+3
+
+(cid:1)
+(cid:1)
+(cid:1)
+
+(cid:17)
+(cid:17)
+(cid:17)
+
+aplicando o resultado
+
+1(mod(p
+(cid:0)
+1(mod(11
+(cid:0)
+1(mod 220)
+
+1)(q
+1)
+
+(cid:1)
+
+1))
+
+(cid:0)
+(23
+
+1))
+
+(cid:0)
+
+e(cid:30)((p
+(cid:0)
+
+1)(q
+
+1))
+
+1(mod(p
+
+(cid:0)
+
+(cid:0)
+
+d
+
+(cid:17)
+
+1)(q
+
+1))
+
+(cid:0)
+
+(cid:0)
+
+temos
+
+Como (cid:30)(220) = (cid:30)(10)
+
+d
+
+3(cid:30)(220)
+
+1(mod 220).
+
+(cid:0)
+
+(cid:17)
+(cid:30)(22) = 4
+
+10 = 40, segue que.
+
+(cid:1)
+
+340
+
+(cid:0)
+
+1
+
+339
+
+147(mod 220)
+
+(cid:1)
+d
+
+(cid:17)
+Temos, entªo, que d = 147 Ø o menor inteiro positivo que Ø solu(cid:231)ªo da
+
+(cid:17)
+
+(cid:17)
+
+congruŒncia dada.
+
+Chamaremos o par (n; d) de chave de decodi(cid:133)ca(cid:231)ªo. O segredo para
+a decodi(cid:133)ca(cid:231)ªo da mensagem se encontra nestes dois nœmeros, portanto,
+apenas quem tem a fun(cid:231)ªo de receber a mensagem deve possu(cid:237)-los.
+
+De posse do par (n; d), calculamos D(xi), onde:
+
+D(xi) = resto da divisªo de xd
+
+i por n
+
+em cada bloco para retornarmos ao bloco original.
+
+Aplicando esta f(cid:243)rmula no primeiro bloco da mensagem codi(cid:133)cada, temos
+que D(x1) = D(101) Ø igual ao resto da divisªo de 101147 por n = 253.
+Efetuamos este cÆlculo com a ajuda dos Teorema de Fermat e da resolu(cid:231)ªo
+de sistemas de congruŒncias.
+
+Calculamos 101147 m(cid:243)dulo 11 e 101147 m(cid:243)dulo 23 que sªo os primos em
+
+que n se fatora. Inicialmente, temos:
+
+De (i), temos:
+
+101
+101
+
+(cid:17)
+(cid:17)
+
+(i)
+2(mod 11)
+9(mod 23) (ii).
+
+101147
+
+(cid:17)
+
+2147(mod 11).
+
+51
+
+Pelo teorema de Fermat
+
+Como
+
+segue que
+
+210
+
+(cid:17)
+
+1(mod 11):
+
+147 = 10
+
+14 + 7
+
+(cid:1)
+
+101147
+
+14+7
+
+210
+
+(cid:1)
+
+(210)14
+
+27
+
+(cid:1)
+
+(cid:17)
+
+114
+
+27
+
+(cid:1)
+
+(cid:17)
+
+27
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+7(mod 11) (1)
+
+Da equa(cid:231)ªo (ii), resulta
+
+ou, sendo 9147 = 3294 ,
+
+Pelo teorema de Fermat
+
+Como
+
+segue que
+
+101147
+
+(cid:17)
+
+9147(mod 23)
+
+101147
+
+322
+
+(cid:17)
+
+(cid:17)
+
+3294(mod 23).
+
+1(mod 23).
+
+294 = 22
+
+13 + 8
+
+(cid:1)
+
+101147
+
+13+8
+
+322
+
+(cid:1)
+
+(322)13
+
+38
+
+113
+
+(cid:1)
+Chamando 101147 de X; temos, por(1) e (2):
+
+(cid:17)
+
+(cid:17)
+
+(cid:17)
+
+(cid:1)
+
+38
+
+38
+
+(cid:17)
+
+(cid:17)
+
+6(mod 23) (2)
+
+7(mod 11)
+6(mod 23).
+
+X
+X
+
+(cid:17)
+(cid:17)
+
+Resolvemos este sistema de equa(cid:231)ıes utilizando o algoritmo ChinŒs dos
+
+Restos, da primeira equa(cid:231)ªo temos que, existe Y
+
+Z, tal que:
+
+2
+
+Substituindo X na segunda equa(cid:231)ªo, temos:
+
+X = 11Y + 7.
+
+11Y + 7
+
+(cid:17)
+
+6(mod 23) que resulta em Y
+
+2(mod 23).
+
+(cid:17)
+
+Logo, existe K
+
+Z, tal que:
+
+2
+
+Y = 23K + 2.
+
+52
+
+Voltamos (cid:224) primeira equa(cid:231)ªo e substitu(cid:237)mos o valor de Y
+
+X = 11(23K + 2) + 7 =
+
+)
+
+X = 253K + 29
+
+onde 29 Ø a menor solu(cid:231)ªo positiva para o sistema e tambØm o bloco inicial
+procurado.
+
+Procedendo da mesma maneira podemos decifrar os blocos restantes,
+
+reagrupÆ-los novamente e assim obter a mensagem inicial.
+
+D(x2) = D(166)
+Calculamos 166147 m(cid:243)dulo 11 e 166147 m(cid:243)dulo 23 que sªo os primos em
+
+que n se fatora. Inicialmente, temos:
+
+166
+166
+
+(cid:17)
+(cid:17)
+
+(i)
+1(mod 11)
+5(mod 23) (ii).
+
+166147
+
+1147
+
+(cid:17)
+
+(cid:17)
+
+1(mod 11)
+
+(1)
+
+De (i), temos:
+
+Da equa(cid:231)ªo (ii):
+
+Pelo teorema de Fermat
+
+Como
+
+segue que
+
+166147
+
+522
+
+(cid:17)
+
+(cid:17)
+
+5147(mod 23).
+
+1(mod 23)
+
+147 = 22
+
+6 + 15
+
+(cid:1)
+
+166147
+
+6+15
+
+522
+
+(cid:1)
+
+(522)6
+
+515
+
+58
+
+57
+
+(cid:17)
+(cid:17)
+Chamando 166147 de X; temos, por(1) e (2):
+
+(cid:17)
+
+(cid:17)
+
+(cid:1)
+
+(cid:1)
+
+17
+
+16
+
+(cid:1)
+
+(cid:17)
+
+19(mod 23) (2)
+
+1(mod 11)
+19(mod 23)
+
+X
+X
+
+(cid:17)
+(cid:17)
+
+Resolvemos este sistema de equa(cid:231)ıes utilizando o algoritmo ChinŒs dos
+
+Restos: Da primeira equa(cid:231)ªo temos que, existe Y
+
+Z, tal que:
+
+2
+
+substituindo X na segunda equa(cid:231)ªo, temos:
+
+X = 11Y + 1
+
+11Y + 1
+
+(cid:17)
+
+19(mod 23) que resulta em Y
+
+10(mod 23)
+
+(cid:17)
+
+53
+
+logo, existe K
+
+Z, tal que:
+
+2
+
+Y = 23K + 10
+
+voltamos (cid:224) primeira equa(cid:231)ªo e substitu(cid:237)mos o valor de Y
+
+X = 11(23K + 10) + 1 =
+
+)
+
+X = 253K + 111
+
+onde 111 Ø a menor solu(cid:231)ªo positiva para o sistema e tambØm o bloco inicial
+procurado.
+
+D(x3) = D(137)
+Calculamos 137147 m(cid:243)dulo 11 e 137147 m(cid:243)dulo 23 que sªo os primos em
+
+que n se fatora. Inicialmente, temos:
+
+137
+137
+
+(cid:17)
+(cid:17) (cid:0)
+
+(i)
+5(mod 11)
+1(mod 23) (ii).
+
+137147
+
+510
+
+(cid:17)
+
+(cid:17)
+
+5147(mod 11).
+
+1(mod 11).
+
+147 = 10
+
+14 + 7
+
+(cid:1)
+
+De (i), temos:
+
+Pelo teorema de Fermat
+
+Como
+
+segue que
+
+137147
+
+(cid:17)
+Da equa(cid:231)ªo (ii):
+
+segue que
+
+14+7
+
+510
+
+(cid:1)
+
+(510)14
+
+57
+
+(cid:1)
+
+(cid:17)
+
+114
+
+57
+
+(cid:1)
+
+(cid:17)
+
+57
+
+(cid:17)
+
+(cid:17)
+
+3(mod 11) (1)
+
+137147
+
+1147(mod 23)
+
+(cid:17) (cid:0)
+
+Disto, chamando 137147 de X; temos, por(1) e (2):
+
+137147
+
+1(mod 23) (2)
+
+(cid:17) (cid:0)
+
+X
+X
+
+(cid:17)
+(cid:17) (cid:0)
+
+3(mod 11)
+1(mod 23)
+
+54
+
+Resolvemos este sistema de equa(cid:231)ıes utilizando o algoritmo ChinŒs dos
+
+Restos: Da primeira equa(cid:231)ªo temos que, existe Y
+
+Z, tal que:
+
+2
+
+Substituindo X na segunda equa(cid:231)ªo, temos:
+
+X = 11Y + 3.
+
+11Y + 7
+
+1(mod 23) que resulta em Y
+
+Logo, existe K
+
+2
+
+(cid:17) (cid:0)
+Z, tal que:
+
+8(mod 23)
+
+(cid:17)
+
+Y = 23K + 8
+
+voltamos (cid:224) primeira equa(cid:231)ªo e substitu(cid:237)mos o valor de Y
+
+X = 11(23K + 8) + 3 =
+
+)
+
+X = 253K + 91
+
+onde 91 Ø a menor solu(cid:231)ªo positiva para o sistema e tambØm o bloco inicial
+procurado.
+
+D(x4) = D(221)
+Calculamos 221147 m(cid:243)dulo 11 e 221147 m(cid:243)dulo 23 que sªo os primos em
+
+que n se fatora. Inicialmente, temos:
+
+221
+221
+
+(cid:17)
+(cid:17)
+
+(i)
+1(mod 11)
+14(mod 23) (ii)
+
+221147
+
+1147
+
+(cid:17)
+
+(cid:17)
+
+1(mod 11)
+
+(1)
+
+De (i), temos:
+
+Da equa(cid:231)ªo (ii):
+
+ou, sendo 14
+
+9(mod 23) e
+
+(cid:17) (cid:0)
+
+221147
+
+14147(mod 23)
+
+(cid:17)
+9147 =
+
+3294
+
+(cid:0)
+
+3294(mod 23).
+
+(cid:17) (cid:0)
+
+(cid:0)
+221147
+
+Pelo teorema de Fermat
+
+Como
+
+segue que
+
+322
+
+(cid:17)
+
+1(mod 23):
+
+294 = 22
+
+13 + 8
+
+(cid:1)
+
+221147
+
+322
+
+(cid:17) (cid:0)
+
+13+8
+
+(cid:1)
+
+(322
+
+(cid:17) (cid:0)
+
+38)
+
+13
+
+(cid:1)
+
+(cid:1)
+
+(113
+
+38)
+
+(cid:1)
+
+38
+
+(cid:17) (cid:0)
+
+6(mod 23) (2)
+
+(cid:17) (cid:0)
+
+(cid:0)
+
+55
+
+Disto, chamando 221147 de X; temos, por(1) e (2):
+
+X
+X
+
+(cid:17)
+(cid:17) (cid:0)
+
+1(mod 11)
+6(mod 23)
+
+Resolvemos este sistema de equa(cid:231)ıes utilizando o algoritmo ChinŒs dos
+
+Restos: Da primeira equa(cid:231)ªo temos que, existe Y
+
+Z, tal que:
+
+2
+
+Substituindo X na segunda equa(cid:231)ªo, temos:
+
+X = 11Y + 1.
+
+11Y + 1
+
+6(mod 23) que resulta em Y
+
+Logo, existe K
+
+2
+
+(cid:17) (cid:0)
+Z, tal que:
+
+14(mod 23):
+
+(cid:17)
+
+Y = 23K + 14
+
+voltamos (cid:224) primeira equa(cid:231)ªo e substitu(cid:237)mos o valor de Y
+
+X = 11(23K + 14) + 1 =
+
+)
+
+X = 253K + 155
+
+onde 155 Ø a menor solu(cid:231)ªo positiva para o sistema e tambØm o bloco inicial
+procurado.
+
+D(x5) = D(60)
+Calculamos 60147 m(cid:243)dulo 11 e 60147 m(cid:243)dulo 23 que sªo os primos em que
+
+n se fatora. Inicialmente, temos:
+
+De (i), temos:
+
+60
+60
+
+(cid:17)
+(cid:17)
+
+60147
+
+Pelo teorema de Fermat
+
+510
+
+(i)
+5(mod 11)
+14(mod 23) (ii).
+
+5147(mod 11).
+
+1(mod 11).
+
+(cid:17)
+
+(cid:17)
+
+147 = 10
+
+14 + 7
+
+(cid:1)
+
+Como
+
+segue que
+
+60147
+
+14+7
+
+510
+
+(cid:1)
+
+(510)14
+
+57
+
+(cid:1)
+
+(cid:17)
+
+(cid:17)
+
+114
+
+57
+
+(cid:1)
+
+(cid:17)
+
+57
+
+(cid:17)
+
+3(mod 11) (1)
+
+(cid:17)
+
+56
+
+Da equa(cid:231)ªo (ii), resulta:
+
+sendo 14
+
+9(mod 23) e
+
+(cid:17) (cid:0)
+
+Pelo teorema de Fermat
+
+Como
+
+segue que
+
+14147(mod 23)
+
+60147
+
+(cid:17)
+9147 =
+
+(cid:0)
+60147
+
+(cid:17) (cid:0)
+
+3294
+
+(cid:0)
+
+3294(mod 23).
+
+322
+
+(cid:17)
+
+1(mod 23).
+
+294 = 22
+
+13 + 8
+
+(cid:1)
+
+60147
+
+13+8
+
+322
+
+(cid:1)
+
+(113
+
+38)
+
+38
+
+(cid:17) (cid:0)
+Disto, chamando 101147 de X; temos, por(1) e (2):
+
+(cid:17) (cid:0)
+
+(cid:17) (cid:0)
+
+(cid:17) (cid:0)
+
+(cid:1)
+
+6(mod 23) (2)
+
+X
+X
+
+(cid:17)
+(cid:17) (cid:0)
+
+3(mod 11)
+6(mod 23)
+
+Resolvemos este sistema de equa(cid:231)ıes utilizando o algoritmo ChinŒs dos
+
+Restos: Da primeira equa(cid:231)ªo temos que, existe Y
+
+Substituindo X na segunda equa(cid:231)ªo, temos:
+
+X = 11Y + 3.
+
+Z, tal que:
+
+2
+
+11Y + 3
+
+6(mod 23) que resulta em Y
+
+18(mod 23)
+
+(cid:17)
+
+Logo, existe K
+
+2
+
+(cid:17) (cid:0)
+Z, tal que:
+
+Y = 23K + 18
+
+voltamos (cid:224) primeira equa(cid:231)ªo e substitu(cid:237)mos o valor de Y
+
+X = 11(23K + 18) + 3 =
+
+X = 253K + 201
+
+)
+
+onde 201 Ø a menor solu(cid:231)ªo positiva para o sistema e tambØm o bloco inicial
+procurado.
+
+D(x6) = D(1)
+Calculamos:
+
+1147 = 1
+
+1(mod 253)
+
+(cid:17)
+
+onde 1 Ø a menor solu(cid:231)ªo positiva para o sistema e tambØm o bloco inicial
+procurado.
+
+A Tabela 3.4 resume os resultados da decodi(cid:133)ca(cid:231)ªo
+
+57
+
+Tabela 3.4
+
+Agrupando os blocos, formamos novamente o nœmero 29111911552011,
+
+que, de acordo com a conven(cid:231)ªo da Tabela 3.1, signi(cid:133)ca SAIA J`.
+
+A(cid:133)rmamos, antes de codi(cid:133)carmos a mensagem, que um bloco nªo poderia
+
+iniciar com zero, vamos ver o porquŒ.
+
+Supondo que "...MAU USO..."seja parte de uma mensagem, codi(cid:133)cada
+
+segundo as normas da Tabela 3.5.
+
+Tabela 3.5
+
+A prØ-codi(cid:133)ca(cid:231)ªo seria:
+
+:::221030553028245:::
+
+sendo n = 2173, pode ser separada nos seguintes blocos:
+
+:::
+
+221
+
+030
+
+553
+
+028
+
+245
+
+:::
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+codi(cid:133)cada com e = 3;
+
+567
+
+:::
+
+(cid:0)
+
+(cid:0)
+
+924
+
+(cid:0)
+
+825
+
+(cid:0)
+
+222
+
+(cid:0)
+
+1434
+
+:::
+
+(cid:0)
+
+ao ser decodi(cid:133)cada, (cid:133)caria
+
+:::
+
+221
+
+30
+
+553
+
+28
+
+245
+
+:::
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+(cid:0)
+
+58
+
+quando agrupamos novamente, temos:
+
+:::2213055328245:::
+
+que, convertido em texto se torna
+
+MD? W?O...
+
+que, Ø claro, nªo corresponde (cid:224) mensagem original.
+
+Assim encerramos nosso cap(cid:237)tulo sobre RSA.
+
+59
+
+Cap(cid:237)tulo 4
+
+Sugestªo de Atividade
+
+Os mØtodos de criptogra(cid:133)a apresentados neste trabalho possibilitam uma
+sØrie de aplica(cid:231)ıes em aulas de matemÆtica.
+
+A Cifra de CØsar, ou qualquer outro mØtodo de substitui(cid:231)ªo monoal-
+fabØtica, pode ser usada como base para estudo de anÆlise de frequŒncia com
+uso de grÆ(cid:133)cos em Estat(cid:237)stica, bem como em exerc(cid:237)cios de probabilidade.
+
+A criptogra(cid:133)a por transposi(cid:231)ªo, como o pr(cid:243)prio nome sugere, pode ser
+
+trabalhado como modelo no estudo de transposi(cid:231)ªo de matrizes.
+
+A criptogra(cid:133)a RSA, pela (cid:133)loso(cid:133)a utilizada, fornece um bom exemplo de
+
+aplica(cid:231)ªo de rela(cid:231)ªo inversa.
+
+Este cap(cid:237)tulo apresenta uma sugestªo de atividade, apresentado aqui
+como Plano de Aula, a ser desenvolvida no estudo de fun(cid:231)ıes, particular-
+mente, no estudo de fun(cid:231)ªo inversa. Sugerimos, num primeiro momento, a
+revisªo do conceito de fun(cid:231)ªo inversa., e tambØm das condi(cid:231)ıes necessÆrias
+para que uma fun(cid:231)ªo possa ser inversivel.
+
+O Plano de Aula aqui apresentado segue um roteiro semelhante ao mØtodo
+
+de criptogra(cid:133)a RSA, apresentado no Cap(cid:237)tulo 3 deste trabalho.
+
+Num primeiro momento, criamos uma tabela, Tabela 4.1, de conversªo
+onde damos valores numØricos (cid:224)s letras do alfabeto e ao espa(cid:231)o entre palavras.
+Utilizamos essa tabela para uma transforma(cid:231)ªo da mensagem escrita em uma
+mensagem numØrica. A maneira de realizar essa etapa Ø semelhante (cid:224) prØ
+codi(cid:133)ca(cid:231)ªo feita em RSA, com a diferen(cid:231)a que devemos separar cada nœmero
+com um espa(cid:231)o. Na prÆtica a prØ codi(cid:133)ca(cid:231)ªo jÆ Ø uma forma simples de
+cifragem.
+
+Realizada a primeira etapa, escolhemos uma fun(cid:231)ªo para codi(cid:133)car a men-
+sagem. No RSA utilizamos congruŒncia para realizar o processo. Como con-
+gruŒncia nªo Ø t(cid:243)pico de estudo do Ensino MØdio, devemos utilizar fun(cid:231)ıes
+conhecidas dos estudantes. Sugerimos fun(cid:231)ıes de primeiro grau pela facili-
+dade do manuseio. A codi(cid:133)ca(cid:231)ªo Ø feita calculando a imagem da fun(cid:231)ªo em
+
+60
+
+cada valor da mensagem. Podemos fazer isso com o aux(cid:237)lio de uma tabela,
+Tabela 4.2.
+
+Para decodi(cid:133)car, encontramos a fun(cid:231)ªo inversa da fun(cid:231)ªo usada para
+codi(cid:133)car e calculamos o valor da mesma em cada valor da cifra (Tabela 4.3).
+A sequŒncia dos valores da imagem relativos aos valores do c(cid:243)digo deve ser
+a sequŒncia numØrica da mensagem original. Isto feito trocamos os nœmeros
+pelas letras correspondentes da Tabela 4.1.
+
+4.1 Plano de Aula
+
+Dados de Identi(cid:133)ca(cid:231)ªo:
+
+Escola:
+Professor:
+Disciplina:  MatemÆtica
+SØrie:  1(cid:14)
+Turma:
+Per(cid:237)odo:
+
+  Ano do Ensino MØdio 
+
+Tema:
+
+Criptogra(cid:133)a e uso de Rela(cid:231)ªo Inversa
+
+Objetivo geral:
+
+Aplicar o conceito de fun(cid:231)ªo inversa.
+
+Objetivos espec(cid:237)(cid:133)cos:
+
+- Calcular o valor de uma fun(cid:231)ªo em um ponto dado;
+- De(cid:133)nir a fun(cid:231)ªo inversa de uma fun(cid:231)ªo dada;
+- Utilizar uma fun(cid:231)ªo e sua inversa como recurso para troca de mensagens 
+criptografadas.
+
+Conteœdo:
+
+- Fun(cid:231)ªo inversa;
+- Criptogra(cid:133)a.
+
+61
+
+Desenvolvimento do tema:Criptogra(cid:133)a e uso da fun(cid:231)ªo inversa
+
+A arte de usar s(cid:237)mbolos diferenciados para representar mensagens Ø quase
+tªo antiga quanto a pr(cid:243)pria escrita. Atualmente, esse procedimento recebe o
+nome de criptogra(cid:133)a, termo cuja origem vem do grego krypt(cid:243)s (escondido)
+e grÆphein (escrita). De modo geral, essa tØcnica pode ser entendida como
+o ato de aplicar um determinado c(cid:243)digo a (cid:133)m de manter secreto o conteœdo
+de certas informa(cid:231)ıes.
+
+O processo de codi(cid:133)car e decifrar uma mensagem pode ser entendido como
+uma transforma(cid:231)ªo. E Ø justamente a palavra transforma(cid:231)ªo, de um ponto
+de vista intuitivo, que caracteriza o estudo das fun(cid:231)ıes.
+
+Do ponto de vista matemÆtico, veremos a aplica(cid:231)ªo de uma fun(cid:231)ªo (cid:150)para
+cifrar uma mensagem (cid:150) e sua inversa (cid:150) para decifrar a mensagem cifrada.
+Para tanto Ø necessÆrio que a fun(cid:231)ªo escolhida, seja uma fun(cid:231)ªo bijetora,
+uma vez que somente estas possibilitam a constru(cid:231)ªo de fun(cid:231)ıes inversas.
+
+Utilizando nœmeros e deslocamento podemos criar uma maneira pr(cid:243)pria
+
+de codi(cid:133)ca(cid:231)ªo e decodi(cid:133)ca(cid:231)ªo de mensagens.
+
+Inicialmente faremos algo chamado prØ-codi(cid:133)ca(cid:231)ªo, que consiste em asso-
+ciar a cada letra do alfabeto um nœmero, de preferŒncia de dois algarismos,
+como mostra a Tabela 4.1.
+
+Tabela 4.1
+
+Por exemplo: PrØ codi(cid:133)camos o texto
+
+O LAPIS
+
+que (cid:133)ca
+
+25 55 22 11 26 19 29
+
+A partir desta tabela criamos uma rela(cid:231)ªo de substitui(cid:231)ªo que associe a
+cada nœmero x, da palavra prØ-codi(cid:133)cada um outro nœmero y, por exemplo
+
+62
+
+esta rela(cid:231)ªo Ø a chave de codi(cid:133)ca(cid:231)ªo pois com ela codi(cid:133)camos a mensagem.
+Com essa chave a mensagem O LAPIS Ø codi(cid:133)cada da seguinte forma:
+
+y = 2x
+
+3;
+
+(cid:0)
+
+Tabela 4.2
+
+Letra valor(x)
+
+O
+]
+[
+
+L
+A
+P
+I
+S
+
+25
+55
+22
+11
+26
+19
+29
+
+cifragem(2x-3)
+25
+55
+22
+11
+26
+19
+29
+
+3
+3
+3
+3
+3
+3
+3
+
+2
+2
+2
+2
+2
+2
+2
+
+(cid:0)
+(cid:0)
+(cid:0)
+(cid:0)
+(cid:0)
+(cid:0)
+(cid:0)
+
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+(cid:1)
+
+cifra(y)
+47
+107
+41
+19
+49
+35
+55
+
+O LAPIS
+
+47 107 41 19 49 35 55:
+
+agora
+
+se escreve como
+
+Conhecendo a maneira de cifrar podemos entªo decifrar ou retornar as
+letras para a posi(cid:231)ªo original. Para isso usamos uma rela(cid:231)ªo inversa (cid:224) usada
+inicialmente, ou seja, trocamos x e y de posi(cid:231)ªo, assim teremos
+
+(cid:0)
+Agora o x passa a ser o valor da cifra e o y o valor da letra. Isolando o y
+
+x = 2y
+
+3:
+
+teremos o cÆlculo que decifra que Ø
+
+e Ø chamado de chave de decodi(cid:133)ca(cid:231)ªo.
+
+y =
+
+(x + 3)
+2
+
+Tabela 4.3
+cifra(x) decodi(cid:133)ca(cid:231)ªo( (x+3)
+
+) valor(y) Letra
+
+47
+107
+41
+19
+49
+35
+55
+
+(47 + 3)
+(107 + 3)
+(41 + 3)
+(19 + 3)
+(49 + 3)
+(35 + 3)
+(55 + 3)
+
+2
+
+2
+(cid:4)
+2
+(cid:4)
+2
+(cid:4)
+2
+(cid:4)
+2
+(cid:4)
+2
+(cid:4)
+2
+(cid:4)
+
+63
+
+25
+55
+22
+11
+26
+19
+29
+
+O
+]
+[
+
+L
+A
+P
+I
+S
+
+Exerc(cid:237)cios
+
+1) Considerando que cada uma das senten(cid:231)as a seguir Ø a lei de associa(cid:231)ªo de
+uma fun(cid:231)ªo bijetora, obtenha a lei de associa(cid:231)ªo da inversa de cada fun(cid:231)ªo.
+
+5
+
+a) y = 3x
+(cid:0)
+b) y = 3x
+2
+(cid:0)
+4
+c) y = 3x
+2
+(cid:0)
+x+1
+2)Combine com um colega uma mensagem a ser codi(cid:133)cada, a expressªo
+
+de codi(cid:133)ca(cid:231)ªo e, a partir dela, determinem a chave de decodi(cid:133)ca(cid:231)ªo.
+
+3)Interceptem, de maneira pac(cid:237)(cid:133)ca, a mensagem de outra dupla e vejam
+
+se Ø fÆcil decodi(cid:133)car.
+
+4)Fa(cid:231)a alguma observa(cid:231)ªo sobre esse tipo de cifragem.
+
+Recursos didÆticos:
+
+- Quadro;
+- Giz;
+- Projetor Multim(cid:237)dia.
+
+Avalia(cid:231)ªo:
+
+A avalia(cid:231)ªo serÆ feita mediante relat(cid:243)rio de aula, participa(cid:231)ªo nas atividades
+e apresenta(cid:231)ªo da resolu(cid:231)ªo dos exerc(cid:237)cios.
+
+64
+
+Conclusªo
+
+No desenvolvimento deste estudo tivemos a certeza de que os c(cid:243)digos secre-
+tos tem prazo de validade, pois sua cria(cid:231)ªo sempre dÆ origem a uma for(cid:231)a
+contrÆria que visa quebrÆ-los.
+
+Geralmente essa for(cid:231)a Ø formada por cientistas a servi(cid:231)o de pa(cid:237)ses que
+estªo, de alguma forma, sendo "atacados"pela complexidade do c(cid:243)digo. Essa
+batalha mental entre criptoanalistas, como sªo chamados os cientistas que
+estudam as diferentes formas de criptogra(cid:133)a, faz com que os mØtodos devam
+ser melhorados a cada instante.
+
+Infelizmente, ou felizmente, a criptologia Ø uma ciŒncia que desconhece
+a paz, visto que nªo hÆ como garantir por quanto tempo um mØtodo crip-
+togrÆ(cid:133)co serÆ seguro, pois sªo constantemente atacados, mesmo em tempos
+de paz. Governos buscam vigiar pessoas, empresas e tambØm na(cid:231)ıes por mo-
+tivo de seguran(cid:231)a e o ataque pode vir de onde menos se espera, prova disso
+Ø o recente esc(cid:226)ndalo da espionagem dos Estados Unidos sobre as na(cid:231)ıes
+amigas.
+
+No texto, citamos que o RSA Ø um modelo de criptogra(cid:133)a usado para
+manter a seguran(cid:231)a das pessoas que realizam transa(cid:231)ıes comerciais pela in-
+ternet e falamos tambØm sobre sua seguran(cid:231)a. ConvØm ressaltar, porØm que,
+embora o mØtodo seja seguro, s(cid:243) a criptogra(cid:133)a dos dados nªo garante que
+uma pessoa nªo possa ter seus dados expostos na rede, nªo por falha na
+cifragem dos mesmos e sim por descuido pr(cid:243)prio. Atualmente nªo hÆ neces-
+sidade de se subir em postes, com aparelhos de escuta, para interceptar uma
+mensagem e interceptÆ-la criptografada tambØm nªo Ø um bom neg(cid:243)cio para
+a espionagem. Hoje os ataques sªo mais sutis, os usuÆrios de internet sªo at-
+acados em suas pr(cid:243)prias casas, mais especi(cid:133)camente em seus computadores,
+por programas que roubam senhas, embutidos em mensagens, enviadas por
+e-mails chamativos, que fazem com que suas senhas sejam lidas antes mesmo
+de serem criptografadas. Podemos analisar a criptogra(cid:133)a como uma chave
+para a seguran(cid:231)a de nossos dados pessoais, mas nªo adianta termos a chave 
+se deixamos a porta aberta.
+
+65
+
+ConvØm ressaltar que o mØtodo RSA tem uma import(cid:226)ncia signi(cid:133)cativa
+para a matemÆtica, pois deu uma nova dimensªo (cid:224) Teoria dos Nœmeros, que
+possu(cid:237)a, antes dele , pouca aplica(cid:231)ªo prÆtica, mostrando que em matemÆtica,
+em alguns casos, podemos ter a solu(cid:231)ªo antes mesmo do problema.
+
+Embora apresente uma sØrie de possibilidades, a criptogra(cid:133)a Ø pouco
+explorada em atividades escolares, geralmente aparece como desa(cid:133)os. Isso
+Ø justi(cid:133)cÆvel pela sua natureza instigadora que desperta a curiosidade do
+aluno. Entªo por que nªo explorÆ-la mais?
+
+Mostramos neste trabalho que isto Ø poss(cid:237)vel, sem que seja necessÆrio o
+uso de cÆlculos mirabolantes que desestimulam nosso educando. O exemplo
+sugerido pode ser aplicado sem que seja necessÆrio abrir um espa(cid:231)o no cur-
+r(cid:237)culo s(cid:243) para tratar de criptogra(cid:133)a, podemos utilizÆ-la no estudo de fun(cid:231)ıes,
+como sugerido, alØm de matrizes, probabilidade, estat(cid:237)stica, propriedade das
+potŒncias entre outros.
+
+Devido ao tempo em que foi elaborado, fØrias escolares, nªo temos resul-
+tado de aplica(cid:231)ªo em sala de aula. Distribu(cid:237)mos e discutimos as questıes
+com alguns professores que se mostraram otimistas em rela(cid:231)ªo aos resulta-
+dos que podem ser obtidos, tais como: um interesse maior pela disciplina e
+esclarecimentos sobre a aplica(cid:231)ªo da mesma
+
+Como a criptogra(cid:133)a estÆ atrelada (cid:224) tecnologia e Ø cada vez maior o nœmero
+de estudantes que tem acesso a ela, boa parte de nossos alunos jÆ possuem,
+celulares, smartphones ou tablets, Ø justi(cid:133)cÆvel que devam tambØm ter acesso
+ao modo como suas mensagens sªo protegidas.
+
+66
+
+ReferŒncias BibliogrÆ(cid:133)cas
+
+[1] Coutinho, S. C., Nœmeros Inteiros e Criptogra(cid:133)a RSA, SØrie de
+
+Computa(cid:231)ªo e MatemÆtica, IMPA, Segunda Edi(cid:231)ªo, 2003.
+
+[2] Fabossi,
+teiros
+http://www.dm.ufscar.br/dm/attachments/article/5/359335_B.pdf.
+Acesso em:07/12/2013
+
+Nœmeros
+RSA.Dispon(cid:237)vel
+
+Edson
+Criptogra(cid:133)a
+
+Tomas
+e
+
+Barros,
+
+In-
+em:
+
+[3] Fonseca, Rubens Vilhena: Teoria dos Nœmeros - Dispon(cid:237)vel em:
+http://pt.scribd.com/doc/71606082/Introducao-a-Teoria-dos-Numeros-
+UEPA. Acesso: 05/12/2013.
+
+[4] Hefez, Abramo, Elementos de AritmØtica, 2.ed. Rio de Janeiro: SBM,
+
+2011.
+
+[5] Sautoy, Marcus Du, A mœsica dos nœmeros primos: a hist(cid:243)ria de
+um problema nªo resolvido da matemÆtica; tradu(cid:231)ªo, Diego Alfaro.
+Rio de Janeiro: Zahar, 2007.
+
+Elen
+(cid:224)
+
+[6] Silva,
+
+Viviani
+
+du(cid:231)ªo
+http://www.impa.br/opencms/pt/eventos/downloads/jornadas_2006/trabalhos/.
+Acesso em:07/12/2013
+
+Criptogra(cid:133)a
+
+Dispon(cid:237)vel
+
+Pereira
+RSA.
+
+da,
+
+Intro-
+em:
+
+[7] Tkotz, Viktoria. Iintrodu(cid:231)ao (cid:224) criptogra(cid:133)a numaboa.Dispon(cid:237)vel em
+http://www.numaboa.com.br/criptogra(cid:133)a/gerais/153-introducao, aces-
+sado em 20/11/2013
+
+[8] WIKIP(cid:201)DIA. Wikipedia, the free encyclopedia. Wikimedia Foun-
+dation, Inc. Dispon(cid:237)vel em: http://es.wikipedia.org/. Acesso: dez. 2013.
+
+[9] Paiva, Manoel Rodrigues.MatemÆtica: Paiva/ Manoel Rodrigues
+
+Paiva - 2. ed.- Sªo Paulo: Moderna, 2010.
+
+67
+
+

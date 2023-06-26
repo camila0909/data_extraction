@@ -1,0 +1,4110 @@
+CENTRO DE CIÊNCIAS EXATAS
+
+DEPARTAMENTO DE MATEMÁTICA
+
+PROGRAMA DE MESTRADO PROFISSIONAL EM MATEMÁTICA
+
+EM REDE NACIONAL - PROFMAT
+
+Ana Carolina Sakurai Ferreira
+
+CRIPTOGRAFIA DE CHAVE PÚBLICA-PRIVADA: RSA
+
+E CURVAS ELÍPTICAS
+
+Maringá
+
+2019
+
+Ana Carolina Sakurai Ferreira
+
+CRIPTOGRAFIA DE CHAVE PÚBLICA-PRIVADA: RSA
+
+E CURVAS ELÍPTICA
+
+Trabalho de Conclusão de Curso apresentado ao
+Programa de Mestrado Proﬁssional em Matemá-
+tica em Rede Nacional - PROFMAT do Departa-
+mento de Matemática, Centro de Ciências Exatas
+da Universidade Estadual de Maringá, como requi-
+sito parcial para obtenção do título de Mestre em
+Matemática.
+Área de concentração: Matemática.
+
+Orientadora: Profa. Dra. Claudete Matilde We-
+bler Martins.
+Coorientador: Prof. Dr. Rodrigo Martins.
+
+Maringá
+
+2019
+
+ii
+
+Dados Internacionais de Catalogação-na-Publicação (CIP)(Biblioteca Central - UEM, Maringá - PR, Brasil)Ferreira, Ana Carolina Sakurai    Criptografia de chave pública-privada  : RSA e curvas elípticas  / Ana Carolina SakuraiFerreira. -- Maringá, PR, 2019.     xi, 73 f.: il.     Orientadora: Profa. Dra. Claudete Matilde Webler Martins.     Coorientador: Prof. Dr. Rodrigo Martins.     Dissertação (Mestrado Profissional) - Universidade Estadual de Maringá, Centro deCiências Exatas, Departamento de Matemática, Programa de Pós-Graduação emMatemática (PROFMAT) - Mestrado Profissional, 2019.     1. Criptografia RSA. 2. RSA (Sistema criptográfico). 3. Curvas elípticas. I. Martins,Claudete Matilde Webler, orient. II. Martins, Rodrigo, coorient. III. Universidade Estadual deMaringá. Centro de Ciências Exatas. Departamento de Matemática. Programa de Pós-Graduação em Matemática (PROFMAT) - Mestrado Profissional. IV. Título.CDD 23.ed. 512.7F383cMárcia Regina Paiva de Brito - CRB-9/1267Resumo
+
+Neste trabalho estudamos dois criptossistemas de chave pública, o RSA e cur-
+
+vas elípticas a partir de uma adaptação do Problema do Logaritmo Discreto. São
+
+apresentados alguns embasamentos teóricos de aritmética, como estudo dos números
+
+primos e congruências. No ﬁnal de cada criptossistema apresentamos um exemplo
+
+de uma mensagem/palavra criptografada utilizando o método estudado.
+
+Palavras-chave: Criptograﬁa, RSA, Curvas Elípticas.
+
+v
+
+Abstract
+
+In this work we study two public key cryptosystems, the RSA and elliptic curves
+
+from an adaptation of the Discrete Logarithm Problem. Some theorical basis of
+
+arithmetic are presented, such as study of prime numbers and congruences. At the
+
+end of each cryptosystem we present an example of an encrypted message using the
+
+method studied.
+
+Key-words: Cryptography, RSA, Elliptic Curves.
+
+vi
+
+SUMÁRIO
+
+Sumário
+
+Lista de Figuras
+
+Agradecimentos
+
+Introdução
+
+1 Números Inteiros e Divisão dos inteiros
+
+1.1 Divisão de Números Inteiros e Números primos
+
+. . . . . . . . . . . .
+
+1.1.1 Divisão Euclidiana . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Máximo Divisor Comum e Mínimo Múltiplo Comum . . . . . . . . .
+
+vii
+
+x
+
+xi
+
+1
+
+4
+
+4
+
+6
+
+8
+
+1.3 Números Primos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+1.4 Descobrindo se o número é primo . . . . . . . . . . . . . . . . . . . . 14
+
+1.5 Congruências
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+
+1.5.1 Teorema de Fermat . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+1.5.2 Teorema de Euler . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+vii
+
+SUMÁRIO
+
+SUMÁRIO
+
+1.5.3
+
+Sistemas de Congruências Lineares
+
+. . . . . . . . . . . . . . . 25
+
+2 Problema do Logaritmo Discreto
+
+29
+
+2.0.1 Protocolo Diﬃe-Hellman . . . . . . . . . . . . . . . . . . . . . 31
+
+2.0.2 Criptossistema de Chave Pública ElGamal
+
+. . . . . . . . . . . 33
+
+3 Criptograﬁa
+
+37
+
+3.1 Criptograﬁa RSA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+3.1.1 Exposição do método RSA . . . . . . . . . . . . . . . . . . . . 39
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA . . . . . . . 42
+
+3.2.1 Pré - Codiﬁcação . . . . . . . . . . . . . . . . . . . . . . . . . 42
+
+3.2.2 Codiﬁcação . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+3.2.3 Decodiﬁcação . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+
+3.2.4
+
+Segurança . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+4 Criptograﬁa com o uso de Curvas Elípticas
+
+53
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+. . . . . . . . . . . . . . . . . . . . 54
+
+4.2 Curvas elípticas sobre o corpo Zp
+
+. . . . . . . . . . . . . . . . . . . . 62
+
+4.3 Logaritmo discreto elíptico . . . . . . . . . . . . . . . . . . . . . . . . 64
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+. . . . . . . . . . . . . . . . . . . 65
+
+4.4.1 Protocolo Diﬃe-Hellman aplicado a curvas elípticas sobre Zp . 66
+
+4.4.2 Criptossistema ElGamal
+
+. . . . . . . . . . . . . . . . . . . . . 68
+
+4.4.3 Vantagens e Desvantagens . . . . . . . . . . . . . . . . . . . . 70
+
+5 Considerações Finais
+
+72
+
+viii
+
+Referências Bibliográﬁcas
+
+73
+
+ix
+
+LISTA DE FIGURAS
+
+2.1 Tabela ASCII . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+
+4.1 Gráﬁco da curva y2 = x3 − 2x + 4
+
+. . . . . . . . . . . . . . . . . . . 54
+
+4.2 Gráﬁco da curva y2 = x3 − 4x + 2
+
+. . . . . . . . . . . . . . . . . . . 55
+
+4.3 Soma de dois pontos em uma curva E(R) : R = P + Q . . . . . . . . 56
+
+4.4 R = P + P ou R = 2P . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+
+x
+
+AGRADECIMENTOS
+
+Agradeço, primeiramente, à Deus por me permitir vivenciar esta experiência e
+
+por ter me dado força para concluir este trabalho.
+
+Agradeço ao meu esposo, Fernando, pela compreensão e paciência pelos momen-
+
+tos que tive que me ausentar para a elaboração deste trabalho.
+
+Agradeço a minha família, minha mãe Alice, meu pai Adriano, e meus irmãos
+
+Jonas e João, que sempre acreditaram em mim e me apoiaram incondicionalmente.
+
+Aos meus orientadores, Profa. Dra. Claudete Matilde Webler Martins e Prof. Dr.
+
+Rodrigo Martins, que foram fundamentais na realização e conclusão deste trabalho
+
+pela orientação, disponibilidade e pelos sábios conselhos.
+
+A todos os professores que se dispuseram a ministrar aulas para nossa turma.
+
+Agradeço aos meus colegas de mestrado Meibi Regina Oliveira da Silva, Priscila
+
+Cristina Andujar Moraes, Ana Paula e Fernando por todos os momentos de união,
+
+colaboração, pelas brincadeiras e conhecimentos compartilhados.
+
+xi
+
+INTRODUÇÃO
+
+Desde a antiguidade o envio e recebimento de informações sigilosas tem ocupado
+
+um papel de destaque na humanidade com um único objetivo: transmitir, com
+
+segurança, a mensagem de modo que somente o emissor e o receptor estejam a par
+
+da mesma. Tal procedimento de "modiﬁcar"a mensagem é denominado criptograﬁa,
+
+procedente do grego cryptos que signiﬁca "secreto , oculto". Podemos perceber que
+
+a criptograﬁa faz parte do nosso dia-a-dia, os códigos são usados naturalmente hoje
+
+por meio de celulares, bancos, internet, alarmes, barras de códigos e dentre outros.
+
+Diante das múltiplas possibilidades de uso das criptograﬁa e de sua fama atual
+
+este pode então, ser um tema de caráter motivador para se estudar matemática.
+
+Assim queríamos estudar alguma utilização disso que pudesse ser traduzida a uma
+
+linguagem mais palatável a todos os níveis de ensino para que isso servisse de ﬁo
+
+condutor para despertar interesse em matemática. Desta forma nos debruçamos
+
+a entender o funcionamento da criptograﬁa por tras do Bitcoin. Descobrimos que
+
+ele possui dois métodos de proteção: um protocolo de criptograﬁa para diﬁcultar a
+
+interceptação dos dados baseados em chaves públicas e privada e um protocolo de
+
+veriﬁcação de integridade de dados baseado em assinatura. Por um lado temos a
+
+1
+
+LISTA DE FIGURAS
+
+LISTA DE FIGURAS
+
+criptograﬁa que serve para ocultar os dados transferidos e outro, a assinatura, que
+
+serve para veriﬁcar se os dados recebidos na transmissão não foram adulterados.
+
+Entretanto, nenhum material que descreva os procedimentos, de forma completa,
+
+foi encontrado, muitos são os programas disponíveis para se repetir o processo usado
+
+no Bitcoin, chamado blockchain, mas quase nada aparece para descrever a teoria por
+
+tras da criptograﬁa de blocos usada. Diante disso, percebemos que, por conta dos
+
+prazos, deveríamos restringir nosso objetivo inicial e aprender melhor a criptograﬁa
+
+em chaves publicas e privadas, começando pela já bem estudada RSA e aplicando
+
+um pouco para a Criptograﬁa em Curvas Elípticas utilizada no Bitcoin. Diante
+
+disso, nos limitamos assim ao estudo destes métodos sem adentrar na possibilidade
+
+de traduzir isso a um contexto escolar, que poderia ser um passo seguinte nesta
+
+pesquisa.
+
+Diante disso, neste trabalho estudaremos dois tipos de criptograﬁa, o método
+
+RSA e a criptograﬁa envolvendo Curvas Elípticas (ECC).
+
+No capítulo 1, abordaremos conceitos essenciais sobre números inteiros focando
+
+a atenção em números primos e congruências, destacando as principais proposições
+
+e teoremas que envolvem tais temas. O objetivo deste capítulo é dar o embasamento
+
+teórico para compreensão dos métodos RSA e Curvas Elípticas.
+
+No capítulo 2, apresentaremos o problema do logaritmo discreto. Falaremos
+
+sobre como a diﬁculdade de resolução do logaritmo discreto auxilia na segurança do
+
+método de criptograﬁa e apresentaremos dois algoritmos criptográﬁcos: protocolo
+
+Diﬃe-Hellman e criptossistema ElGamal.
+
+No capítulo 3, estudaremos e deﬁniremos o funcionamento do método RSA e
+
+apresentaremos um exemplo de cifragem de mensagem com o uso do mesmo.
+
+No capítulo 4, deﬁniremos curvas elípticas a partir de uma modiﬁcação na equa-
+
+ção de Weierstrass e a operação de soma sobre dois pontos de uma curva adaptando-a
+
+posteriormente para uma estrutura sobre um corpo Zp seguido de um exemplo de
+
+2
+
+LISTA DE FIGURAS
+
+LISTA DE FIGURAS
+
+criptograﬁa usando o criptossistema ElGamal.
+
+3
+
+CAPÍTULO 1
+
+NÚMEROS INTEIROS E DIVISÃO DOS INTEIROS
+
+Neste capítulo estudaremos as propriedades dos números inteiros. Para tal é
+
+indispensável que o leitor tenha bem estabelecido a deﬁnição de números inteiros
+
+e o princípio da indução ﬁnita. Apresentaremos algumas proposições, teoremas e
+
+deﬁnições essenciais para estudos posteriores. O referencial teórico empregado neste
+
+capítulo é averiguado nas obras de [1], [2] e [3].
+
+1.1 Divisão de Números Inteiros e Números primos
+
+Nesta seção estudaremos propriedades relacionadas à números primos, divisão
+
+de números primos, divisibilidade e o método de fatoração de Fermat.
+
+Observação: para não sobrecarregar o texto, não usaremos o ponto para indicar
+
+a multiplicação de dois números, a menos que isso possa causar confusão.
+
+Deﬁnição 1.1. Sejam a, b ∈ Z com b (cid:54)= 0. Diz-se que b divide a ou b é divisor
+
+de a ou que a é múltiplo de b, se existe c ∈ Z tal que a = bc. Simbolicamente,
+
+podemos representar b divide a por b|a. Caso contrário, diz-se que b não divide a, e
+
+representa-se por b (cid:45) a.
+
+4
+
+1.1 Divisão de Números Inteiros e Números primos
+
+Proposição 1.2. Sejam a,b e c ∈ Z∗. Temos:
+
+(I) 1|a, a|a e a|0.
+
+(II) 0|a se, e somente se, a = 0.
+
+(III) Se a|b e b|c, então a|c.
+
+(IV) Se a|b e a|c, então a|(b ± c).
+
+(V) Se a|b, então a|bc.
+
+(VI) Se a|b e a|(b ± c), então a|c.
+
+Demonstração:
+
+(I) Decorre das igualdades a = a.1, a = 1.a e 0 = 0.a.
+
+(II) Vamos supor que 0|a; logo existe c ∈ Z tal que a = c.0 e concluímos que a = 0.
+
+Para a recíproca, basta observar que 0|0, o que foi provado no item anterior.
+
+(III) Temos, por hipótese, que a|b e b|c, então existem d, e ∈ Z tais que
+
+b = da
+
+c = eb.
+
+(1.1.1)
+
+(1.1.2)
+
+Substituindo (1.1.1) em (1.1.2) temos que c = eb = (ed)a, o que mostra que
+
+a|c.
+
+(IV) Como a|b e a|c, então, por deﬁnição, existem f, g ∈ Z tais que b = af e c = ag.
+
+De modo que b ± c = (af ) ± (ag) = a(f ± g). Logo a|(b ± c).
+
+(V) Como a|b, por deﬁnição, existe d ∈ Z tal que b = ad, logo bc = (ad)c = a(dc).
+
+Portanto a|bc.
+
+5
+
+1.1 Divisão de Números Inteiros e Números primos
+
+(VI) Consideremos o caso (b±c). Como a|b e a|(b±c), então, por deﬁnição, existem
+
+d, f ∈ Z tais que b = da e (b ± c) = af . Substituindo b na segunda igualdade
+
+temos: b ± c = (ad) ± c = af . Subtraindo ad de ambos os lados da igualdade
+
+temos: c = af − ad = a(f − d), o que mostra que a|c.
+
+(cid:3)
+
+1.1.1 Divisão Euclidiana
+
+Teorema 1.3. Sejam a, b ∈ Z com b > 0. Então, existem únicos q e r ∈ Z tais que
+
+a = qb + r com 0 ≤ r < b
+
+onde q é o quociente e r é o resto da divisão de a por b.
+
+Demonstração: Prova da existência. Suponha, sem perda de generalidade, que
+
+a ≥ 0 (pois no caso a < 0, multiplicamos por (−1)). Quando a = 0, temos que
+
+q = r = 0, quando a = b, temos que q = 1 e r = 0, quando a ≤ b, temos que q = 0
+
+e r = a. Logo vamos supor que a > b e a ≥ 1. Seja
+
+X ={n ∈ N; n = bq + r, onde 0 ≤ r < b, q ∈ N}.
+
+Assim,
+
+(I) 1 ∈ X, pois 1 = b.0 + 1;
+
+(II) Vamos supor por hipótese de indução que o resultado é válido para todo k,
+
+1 ≤ k ≤ a − 1, ou seja, {1, 2, 3, ..., a − 1} ⊆ X. Como a > b > 0, temos que
+
+0 < a − b < a. Pela hipótese de indução, existem q1, r ∈ Z, tais que
+
+a − b = q1b + r, onde 0 ≤ r < b.
+
+Fazendo q = q1 + 1, obtém-se que
+
+6
+
+1.1 Divisão de Números Inteiros e Números primos
+
+a = qb + r, onde 0 ≤ r < b.
+
+Unicidade. Vamos supor que existem q1, q2, r1, r2 ∈ Z tais que
+
+a = q1b + r1, onde 0 ≤ r1 < b
+
+a = q2b + r2, onde 0 ≤ r2 < b.
+
+e
+
+Assim,
+
+q1b + r1 = a = q2b + r2 ⇔ (q1 − q2)b = r2 − r1.
+
+Temos também que
+
+0 ≤ r2 < b e −b < −r1 ≤ 0 ⇒ 0 ≤ |r2 − r1| < b.
+
+Logo,
+
+|q1 − q2|b = |r2 − r1| < b ⇒ 0 (cid:54) |q1 − q2| < 1.
+
+Portanto, temos que |q1 − q2| = 0 e consequentemente |r2 − r1| = 0. Disto segue que
+
+q1 = q2 e r1 = r2
+
+(cid:3)
+
+Exemplo 1.4. Sejam a = −75 e b = 9. Determine a divisão de a por b.
+
+Solução:
+
+−75 = (−9)9 + 6 onde q = −9 e r = 6.
+
+7
+
+1.2 Máximo Divisor Comum e Mínimo Múltiplo Comum
+
+1.2 Máximo Divisor Comum e Mínimo Múltiplo Co-
+
+mum
+
+Deﬁnição 1.5. Dados dois inteiros a e b, com a (cid:54)= 0 ou b (cid:54)= 0. Um número inteiro
+
+d será dito máximo divisor comum(mdc) de a e b se:
+
+(I) d|a e d|b;
+
+(II) Se c é divisor comum de a e b, então c|d.
+
+Por (I) temos que d é divisor de a e b, e por (II) temos que d é o maior.
+
+Exemplo 1.6. O mdc(12, 18) = 6. Pois 6|12 e 6|18. Além disso, note que os
+
+divisores de 12 são: 1, 2, 3, 4, 6 e 12 e os divisores de 18 são: 1, 2, 3, 6, 9 e 18. Observe
+
+que 6 é divisível por todo divisor comum de 12 e 18.
+
+Teorema 1.7. Dados dois inteiros a e b ∈ Z, com a (cid:54)= 0 ou b (cid:54)= 0. Então d =
+
+mdc(a,b) existe. Além disso, existem x, y ∈ Z tais que d = ax + by.
+
+Demonstração: Seja X = {ar + bs; r, s ∈ Z e ar + bs > 0}.
+
+Então X (cid:54)= ∅ pois se a (cid:54)= 0, então |a| = a.1 + b.0 ou |a| = a(−1) + b.0. Assim,
+
+|a| ∈ X e X ⊆ N. Logo, X contém um menor elemento d > 0, ou seja, existem
+
+x, y ∈ Z tais que d = ax + by. Agora vamos mostrar que d = mdc(a,b). Tomemos
+
+q, r ∈ Z tais que a = qd + r, onde 0 ≤ r < d. Então,
+
+r = a − qd = a(1 − qx) + b(−qy) ⇒ r = 0,
+
+pois se r > 0, então r ∈ X, o que é uma contradição. Logo, a = qd, ou seja, d|a.
+
+Analogamente, mostra-se que d|b. Assim, se c|a e c|b então c|(ax + by), ou seja, c|d.
+
+(cid:3)
+
+Dados a, b ∈ Z∗, dizemos que a e b são relativamente primos, quando mdc(a,b) =
+
+1.
+
+8
+
+1.2 Máximo Divisor Comum e Mínimo Múltiplo Comum
+
+Teorema 1.8. Sejam a, b ∈ Z∗. Então a e b são relativamente primos se, e somente
+
+se, existem x, y ∈ Z tais que
+
+ax + by = 1
+
+Demonstração: Suponha que existam x, y ∈ Z tais que ax+by = 1 e d = mdc(a,b),
+
+então d | 1 e logo d = 1. A recíproca é imediata pelo Teorema 1.7.
+
+Lema 1.9. Sejam a, b, c ∈ Z∗. Então mdc(ac,bc) =| c | mdc(a,b).
+
+A ocorrência c | ab não garante que c | a ou c | b. Veja:
+
+4 | 2.10 mas 4 (cid:45) 2 e 4 (cid:45) 10
+
+Demonstração: Sejam a, b, c ∈ Z∗. Se c|ab e mdc(a,c) = 1, então c|b.
+
+Se mdc(a,c) = 1, então existem x, y ∈ Z tais que ax + cy = 1. Assim,
+
+abx + bcy = b
+
+Como c|ab e c|c, tem-se que c|(abx + bcy), isto é c|b.
+
+(cid:3)
+
+(cid:3)
+
+Lema 1.10. Sejam a, b, r ∈ Z∗. Se a = qb + r, onde 0 ≤ r < b, então mdc(a,b) =
+
+mdc(b,r).
+
+Para determinar o máximo divisor comum entre dois inteiros a e b, é utilizado o
+
+Algoritmo de Euclides (Veja Tabela 1.1).
+
+q1
+b
+r2
+
+q2
+r1
+r3
+
+q3
+r2
+...
+
+...
+...
+rn
+
+qn
+rn−1
+0
+
+a
+r1
+
+qn+1
+rn
+
+Tabela 1.1: Algoritmo de Euclides
+
+9
+
+1.2 Máximo Divisor Comum e Mínimo Múltiplo Comum
+
+Supondo que a ≥ b > 0, pois mdc(a,b) =mdc(| a |, | b |).
+
+Então existem q1, r1 ∈ Z tais que a = q1b + r1, onde 0 ≤ r1 < b.
+
+Se r1 = 0, então b|a e mdc(a,b) = b. Se r1 (cid:54)= 0, então existem q2, r2 ∈ Z tais que
+
+b = q2r1 + r2 onde 0 ≤ r2 < r1.
+
+Se r2 = 0, então r1|b e mdc(a,b) = mdc(b,r1) = r1. Se r2 (cid:54)= 0, então existem
+
+q3, r3 ∈ Z tais que r1 = q3r2 + r3, onde 0 ≤ r3 < r2 e assim sucessivamente até que
+
+algum resto seja nulo, isto é, rn+1 = 0. Obtendo assim as seguintes relações:
+
+=
+=
+=
+. . .
+
+q1b + r1
+q2r1 + r2
+q3r2 + r3
+. . .
+
+a
+b
+r1
+. . .
+rn−3 = qn−1rn−2 + rn−1
+rn−2 =
+rn−1 =
+
+qnrn−1 + rn
+qn+1rn+1.
+
+onde
+onde
+onde
+. . .
+onde
+onde
+
+0 ≤ r1 < b;
+0 ≤ r2 < r1;
+0 ≤ r3 < r2;
+. . .
+0 ≤ rn−1 < rn−2;
+0 ≤ rn < rn−1;
+
+Portanto, mdc(a,c) = mdc(b,r1) = mdc(r1,r2) = · · · = mdc(rn−1,rn)= rn.
+
+Exemplo 1.11. Determine o máximo divisor comum entre 372 e 162.
+
+Considere o Algoritmo de Euclides,
+
+2
+
+372
+
+162
+
+48
+
+18
+
+3
+
+48
+
+12
+
+2
+
+18
+
+6
+
+1
+
+12
+
+0
+
+2
+
+6
+
+Assim, mdc(372,162) = 6.
+
+Observação 1.12. O Algoritmo de Euclides também é utilizado para representar
+
+o mdc(a,b) na forma ax + by. Observe que da penúltima e antepenúltima equações
+
+tem-se
+
+rn = rn−2 + (−qn)rn−1;
+
+(1.2.1)
+
+10
+
+1.3 Números Primos
+
+rn−1 = rn−3 + (−qn−1)rn−2.
+
+(1.2.2)
+
+Substituindo o resto rn−1 de (1.2.1) em (1.2.2), obtém-se
+
+rn = (−qn)rn−3 + (1 + qnqn−1)rn−2
+
+Com esse procedimento são eliminados sucessivamente os restos
+
+rn−1, rn−2, . . . , r2, r1
+
+e rn é determinado em termos de a e b, isto é, encontra-se x, y ∈ Z tais que
+
+mdc(a,b) = ax + by.
+
+Deﬁnição 1.13. Diremos que um número inteiro m ≥ 0 é um mínimo múltiplo
+
+comum (mmc) dos números inteiros a e b, se possuir as seguintes propriedades:
+
+(I) m é um múltiplo comum de a e b;
+
+(II) se c é um múltiplo comum de a e b, então m|c.
+
+Exemplo 1.14. Temos que mmc(2, 3) = 6, pois 6 é múltiplo comum de 2 e 3 e
+
+além disso 12 é um múltiplo comum de 2 e 3 e 6|12.
+
+1.3 Números Primos
+
+Deﬁnição 1.15. Um número inteiro p > 2 é dito primo se seus únicos divisores
+
+positivos são 1 e p,caso contrário p é considerado número composto.
+
+Exemplo 1.16. O número 5 é primo, pois tem como divisores apenas o 1 e o 5
+
+enquanto que o número 4 é composto pois seus divisores são 1, 2 e 4.
+
+Proposição 1.17. Sejam a,b e p ∈ Z com p primo. Se p|ab então p|a ou p|b.
+
+11
+
+1.3 Números Primos
+
+Demonstração: Vamos supor que p (cid:45) a. Então os divisores comuns de p e a são
+
+apenas 1 e −1. Logo, o mdc(a, p) = 1. Assim existem x e y ∈ Z tais que
+
+1 = ax + py.
+
+Multiplicando ambos os membros da igualdade por b, temos b = (ab)x+p(by). Como
+
+p|(ab) existe um k ∈ Z tal que ab = kp. Sabemos que p|p, então
+
+b = (kp)x + p(by) = p(kx + by)
+
+Logo, p|b.
+
+(cid:3)
+
+Corolário 1.18. Se p é um primo tal que p|p1 · · · pn, então p|pi para algum i =
+
+1, · · · , n.
+
+Demonstração: Vamos utilizar o processo da indução ﬁnita. A aﬁrmação é verda-
+
+deira para n = 1 e para n = 2(consequência da Proposição 1.17). Supondo, então
+
+n > 2 e que, se p divide um produto com n − 1 fatores, então p divide pelo menos
+
+um dos fatores. Note que, se p|p1 · · · pn, então p|pn ou p|p1 · · · pn−1, logo a hipótese
+
+de indução garante que p|pk, com 1 < k < n−1 . Ambos os casos, p divide um dos
+
+inteiros p1, p2, · · · , pn.
+
+(cid:3)
+
+Corolário 1.19. Se p, p1 · · · pn são números primos e se p|p1 · · · pn, então p = pi
+
+para algum i = 1, · · · , n.
+
+Demonstração: Note que existe um índice k, onde 1 < k < n, tal que p|pk, como
+
+os únicos divisores positivos de pk são 1 e pk, pois pk é primo, segue-se que p = 1 ou
+
+p = pk. Mas, p > 1, pois p é primo. Logo, p = pk.
+
+(cid:3)
+
+Teorema 1.20. (Teorema Fundamental da Aritmética) Todo inteiro maior do que 1
+
+12
+
+1.3 Números Primos
+
+é primo ou pode ser representado de maneira única (a menos da ordem dos fatores)
+
+como um produto de fatores primos.
+
+Demonstração: Vamos utilizar o processo da indução ﬁnita. Se n = 2, o resultado
+
+é óbvio pois 2 é primo. Suponhamos o resultado válido para todo número natural
+
+menor do que n e vamos provar que vale para n. Se o número n é primo, não há o
+
+que demonstrar. Se n for composto, existem números inteiros positivos n1 e n2 tais
+
+que n = n1.n2, com 1 < n1 < n e 1 < n2 < n. Pela hipótese de indução, temos que
+
+existem primos p1, p2, · · · , pr e p1p2 · · · ps, tais que n1 = p1p2 · · · pr e n2 = p1p2 · · · ps.
+
+Logo,
+
+n = p1p2 · · · prp1p2 · · · ps.
+
+Vamos provar a unicidade da representação. Suponha, agora, que n = p1p2 · · · pr =
+
+q1q2 · · · qs, onde os pi e os qj são números primos. Como p1|q1q2 · · · qs, temos que
+
+p1 = qj para algum j ≤ s, que, ao reordenarmos os fatores q1, q2, · · · , qs podemos
+
+chamar de q1. Logo,
+
+p2 · · · pr = q2 · · · qs
+
+Como p2 · · · pr < n, a hipótese de indução implica em r = s e os pi e qj são iguais
+
+aos pares, o que mostra a unicidade da fatoração de n.
+
+(cid:3)
+
+Teorema 1.21. Existem inﬁnitos números primos.
+
+Demonstração: Suponhamos, por contradição, que a quantidade de números pri-
+
+mos seja ﬁnita e seja p = {p1, p2, · · · , pn} o conjunto de todos os primos. Seja
+
+R = p1p2p3 · · · pn + 1; note que R é maior que qualquer pi ∈ P e nenhum elemento
+
+de P é fator de R. Pelo Teorema Fundamental da Aritmética, ou R é primo ou
+
+possui algum fator primo, isto implica na existência de um primo que não pertence
+
+a P . Portanto P não pode ser um conjunto ﬁnito.
+
+(cid:3)
+
+13
+
+1.4 Descobrindo se o número é primo
+
+1.4 Descobrindo se o número é primo
+
+Sabemos que um número primo p possui apenas dois divisores: 1 e ele mesmo.
+
+Para veriﬁcar se um dado número n é primo ou não devemos encontrar divisores
+
+primos de n efetuando as divisões até n. A proposição seguinte nos garante que não
+
+precisamos efetuar todas as divisões, vejamos:
+
+Proposição 1.22. Se p é o menor fator primo de n então p ≤
+
+√
+
+n.
+
+Demonstração: Denotaremos por D(n) o conjunto dos divisores positivos de n
+
+diferentes de 1 ou n. Como n não é primo, temos que D(n) (cid:54)= ∅. Seja p ∈ D(n) tal
+
+que, para todo q ∈ D(n) tem-se p ≤ q. Supondo que p >
+
+√
+
+n e que n = p.q. Temos
+
+√
+
+q ≥ p >
+
+n . Assim n = (
+
+n)2 < p.q = n, o que é um absurdo. Logo, p ≤
+
+√
+
+√
+
+n. (cid:3)
+
+Exemplo 1.23. Para determinar se o número 179 é primo basta tentarmos dividi-lo
+
+pelos primos menores ou igual a 13 que é, aproximadamente, sua raiz quadrada:
+
+179 = 89.2 + 1
+
+179 = 59.3 + 2
+
+179 = 35.5 + 4
+
+179 = 25.7 + 4
+
+179 = 16.11 + 3
+
+179 = 13.13 + 10
+
+Logo, 179 é primo.
+
+1.5 Congruências
+
+Nesta seção, estudaremos a Aritmética dos Restos da Divisão Euclidiana por um
+
+número ﬁxo. Alguns métodos de criptograﬁa, principalmente o RSA são baseados
+
+em cálculos que envolvem congruências. Sendo assim, veremos algumas deﬁnições e
+
+proposições sobre o mesmo.
+
+14
+
+1.5 Congruências
+
+Deﬁnição 1.24. Seja m um número natural. Dizemos que dois números a e b são
+
+congruentes módulo m se os restos de sua divisão euclidiana por m forem iguais.
+
+Escreve-se:
+
+a ≡ b mod m
+
+Exemplo 1.25. 41 ≡ 14 mod 3 , pois os restos da divisão de 41 e 14 por 3 são
+
+iguais a 2.
+
+Proposição 1.26. Sejam a, b, m ∈ Z, com m > 1. Temos que a ≡ b mod m se, e
+
+somente se, m|b − a.
+
+Demonstração: Podemos escrever as divisões euclidianas de a e b por m como:
+
+a = m.q + r, com 0 ≤ r < m e b = m.q(cid:48) + r(cid:48), com 0 ≤ r(cid:48) < m, respectivamente.
+
+Logo,
+
+b − a = m(q(cid:48) − q) + (r(cid:48) − r).
+
+Assim, a ≡ b mod m se, e somente se, r = r(cid:48), e pela igualdade acima, é equiva-
+
+lente a dizer que m|b − a, já que r − r(cid:48) = 0.
+
+(cid:3)
+
+Proposição 1.27. Seja m ∈ N . Para quaisquer a, b, c ∈ Z, temos que:
+
+(I) a ≡ a mod m,
+
+(II) Se a ≡ b mod m, então b ≡ a mod m,
+
+(III) Se a ≡ b mod m e b ≡ c mod m, então a ≡ c mod m.
+
+Demonstração:
+
+(I) a ≡ a mod m pois m|(a − a) = 0;
+
+(II) Se a ≡ b mod m, então temos que m|(b − a) logo, existe um inteiro x tal que
+
+b − a = x.m, então −xm = −(b − a) = (a − b). Assim podemos deduzir que
+
+m|(a − b), ou seja, b ≡ a mod m.
+
+15
+
+1.5 Congruências
+
+(III) Se a ≡ b mod m e b ≡ c mod m, então m|(b − a) e m|(c − b), então
+
+m|[(b − a) + (c − b)],
+
+assim m|(−a + c) . Portanto a ≡ c mod m.
+
+(cid:3)
+
+Proposição 1.28. Sejam a, b, c, d, m ∈ Z, com m > 1.
+
+(I) Se a ≡ b mod m e c ≡ d mod m, então a + c ≡ b + d mod m;
+
+(II) Se a ≡ b mod m e c ≡ d mod m, então ac ≡ bd mod m.
+
+Demonstração:
+
+(I) Se a ≡ b mod m e c ≡ d mod m, então m|(b − a) e m|(d − c) logo, m|[(b −
+
+a) + (d − c)] o que equivale a m|(b − a + d − c), ou seja, m|(b + d − a − c), ou
+
+m|[(b + d) − (a + c)]. Logo a + c ≡ b + d mod m.
+
+(II) Se a ≡ b mod m e c ≡ d mod m, então m|(b − a) e m|(d − c). Fazendo
+
+bd − ac = d(b − a) + a(d − c), como m|[d(b − a) + a(d − c)], concluímos que
+
+m|(bd − ac), portanto ac ≡ bd mod m.
+
+(cid:3)
+
+Corolário 1.29. Para todo n ∈ N, a, b ∈ Z, se a ≡ b mod m, então tem-se que
+
+an ≡ bn mod m.
+
+Demonstração: Vamos utilizar o princípio da indução ﬁnita. Para n = 1 a sen-
+
+tença é verdadeira. Suponhamos que an ≡ bn mod m como verdadeira, então pela
+
+Proposição 1.28 temos que a.an ≡ b.bn mod m ⇒ an+1 ≡ bn+1 mod m, o que mostra
+
+que a propriedade é verdadeira.
+
+(cid:3)
+
+16
+
+1.5 Congruências
+
+Exemplo 1.30. Mostre que 45|(133n + 173n), para todo número natural ímpar n.
+
+Note que, usando a Proposição 1.28 e o Corolário 1.29,
+
+133 = 132.13 ≡ 34.13 = 442 ≡ 37 ≡ −8 mod 45, (Aqui, como o resto é 37,
+
+sabemos que faltam 8 unidades para chegarmos em 45, por isso representamos por
+
+−8).
+
+Logo,
+
+133 ≡ −8 mod 45.
+
+Como n é ímpar, temos que
+
+133n ≡ −8n mod 45.
+
+(1.5.1)
+
+Por outro lado, temos que
+
+173 = 172.17 ≡ 19.17 = 323 ≡ 8 mod 45.
+
+Logo,
+
+Por (1.5.1) e (1.5.2) temos que
+
+173n ≡ 8n mod 45.
+
+(1.5.2)
+
+133n + 173n ≡ −8n + 8n ≡ 0 mod 45.
+
+Portanto 45|133n + 173n.
+
+Proposição 1.31. Sejam a, b, c, m ∈ Z, com m > 1. Tem-se que
+
+a + c ≡ b + c mod m ⇔ a ≡ b mod m
+
+Demonstração: Se a ≡ b mod m, então temos que a + c ≡ b + c mod m, pois
+
+c ≡ c mod m. Agora, se a + c ≡ b + c mod m, então m|[b + c − (a + c)], o que implica
+
+que m|(b − a), logo a ≡ b mod m.
+
+(cid:3)
+
+17
+
+1.5 Congruências
+
+Proposição 1.32. Sejam a, b, c, m ∈ Z, com c (cid:54)= 0 e m > 1. Temos que ac ≡
+
+bc mod m ⇔ a ≡ b mod
+
+m
+mdc(c, m)
+
+.
+
+Demonstração: Como
+
+m
+mdc(c, m)
+
+e
+
+c
+mdc(c, m)
+
+são coprimos, temos que
+
+ac ≡ bc mod m ⇔ m|(b − a)c
+
+dividindo ambos os termos por mdc(c, m) temos:
+
+que é equivalente a
+
+ou seja
+
+m
+mdc(c, m)
+
+| (b − a)
+
+c
+mdc(c, m)
+
+m
+mdc(c, m)
+
+| (b − a)
+
+a ≡ b mod
+
+m
+mdc(c, m)
+
+.
+
+(cid:3)
+
+Da proposição acima temos que:
+
+Dados a, b, c, m ∈ Z com c (cid:54)= 0, m > 1 e mdc(c, m) = 1, então ac ≡ bc mod m
+
+se, e somente se, a ≡ b mod m pela Proposição 1.32. Sendo k denominado o inverso
+
+de c módulo m.
+
+Proposição 1.33. Se existir um fator primo comum entre a e m, então a não
+
+admite inverso módulo m.
+
+Demonstração: Digamos que m e a são inteiros positivos tais que 1 < a < m.
+
+Existe um inteiro p tal que 1 < p, p|a e p|m. Vamos supor que existe um b ∈ Z tal
+
+que ab ≡ 1 mod m. Logo existe um q inteiro tal que ab − 1 = qm ou 1 = ab − qm.
+
+Por hipótese temos que p|a, então p|ab e p|m, então p|qm. Assim p|(qm − ab), mas
+
+isso implicaria em p|1, o que é um absurdo pois 1 < p, portanto, não existe tal b.
+
+(cid:3)
+
+18
+
+1.5 Congruências
+
+1.5.1 Teorema de Fermat
+
+Este teorema é um resultado de grande valia para a divisibilidade na Teoria dos
+
+Números. Muito utilizado para determinar restos de divisões de potências elevadas.
+
+No ﬁnal desta sessão apresentaremos alguns exemplos clássicos desta aplicação.
+
+Teorema 1.34. Se p é primo então:
+
+ap ≡ a mod p,
+
+para todo a ∈ N.
+
+Para a demonstração do teorema acima utilizaremos o seguinte lema.
+
+Lema 1.35. Seja p um número primo. Os números (cid:0)p
+
+i
+
+(cid:1), onde 0 < i < p, são todos
+
+divisíveis por p.
+
+A demonstração deste lema pode ser encontrada em [4].
+
+Agora vamos voltar a demonstração do Teorema 1.34, também conhecido como
+
+Pequeno Teorema de Fermat (P.T.F).
+
+Demonstração: Para p = 2 temos que o resultado é imediato pois a2 −a = a(a−1),
+
+se a for par temos que 2|a(a − 1). Agora se a for ímpar , a − 1 será par e 2|a(a − 1).
+
+Seja p primo, p > 2. Faremos a prova usando o processo de Indução Finita sobre a.
+
+Para a = 0 temos
+
+0p − 0 = 0 e p|0.
+
+Vamos supor que vale para a e vamos mostrar que implica em p|a + 1, ou seja,
+
+p|[(a + 1)p − (a + 1)].
+
+Note que
+
+(a + 1)p − (a + 1) =
+
+(cid:19)
+
+(cid:18)p
+0
+
+.ap.10 +
+
+(cid:18)p
+1
+
+(cid:19)
+
+ap−1.11 + · · · +
+
+19
+
+(cid:18) p
+
+(cid:19)
+
+p − 1
+
+.a1 + 1 − a − 1
+
+1.5 Congruências
+
+= ap +
+
+(cid:18)p
+1
+
+(cid:19)
+
+.ap−1 + · · · +
+
+= ap − a +
+
+(cid:18)p
+1
+
+(cid:19)
+
+ap−1 + · · · +
+
+(cid:18) p
+
+(cid:19)
+
+p − 1
+(cid:18) p
+
+.a − a
+
+(cid:19)
+
+.a.
+
+p − 1
+
+Pelo lema anterior temos que (cid:0)p
+
+1
+
+(cid:1).ap−1 + · · · + (cid:0) p
+
+hipótese ap − a é divisível por p, logo ap − a + (cid:0)p
+
+1
+
+p.
+
+(cid:1).a é divisível por p e por
+(cid:1).a é divisível por
+
+(cid:1)ap−1 + · · · + (cid:0) p
+
+p−1
+
+p−1
+
+(cid:3)
+
+Teorema 1.36. Se p é um número primo e se a é um número natural não divisível
+
+por p, então p divide ap−1 − 1, ou seja, ap−1 mod p.
+
+Demonstração: Observe que a(ap−1 − 1) = ap − a, assim, pelo Pequeno Teorema
+
+de Fermat, temos que p|a(ap−1 − 1) e por hipótese p não divide a, e mdc(p, a) = 1.
+
+Portanto p|ap−1 − 1.
+
+(cid:3)
+
+O Teorema 1.36 é um caso particular do Pequeno Teorema de Fermat.
+
+Exemplo 1.37. Determine o resto da divisão de 5234 por 11.
+
+Note que 11 é primo e mdc(11, 5) = 1, observe que 510 ≡ 1 mod 11 pelo Pequeno
+
+Teorema de Fermat, temos:
+
+5234 ≡ 510.23+4 ≡ (510)23.54 ≡ 123.54 ≡ 54 ≡ 625 ≡ 9 mod 11.
+
+Exemplo 1.38. Encontre o resto da divisão de 21000000 por 17.
+
+Note que 17 é primo e não divide 2, então pelo Pequeno Teorema de Fermat
+
+216 ≡ 1 mod 17 mas 1000000 = (62500).(16).
+
+Logo,
+
+21000000 = (216)62500 ≡ 162500 ≡ 1 mod 17
+
+20
+
+1.5 Congruências
+
+Assim, temos que o resto da divisão de 21000000 por 17 é 1.
+
+Exemplo 1.39. Mostre que 42|(a7 − a) para todo número natural a.
+
+Temos que 42 = 2.3.7, todos números primos, vamos provar que cada um deles
+
+divide (a7 − a).
+
+(I) Temos que a7 ≡ a mod 7, pela aplicação do Pequeno Teorema de Fermat (caso
+
+a (cid:54)= 7). Para a = 7 temos que a7 − a = 7(76 − 1) que é múltiplo de 7 também.
+
+Logo, 7|(a7 − a), para todo a natural.
+
+(II) Temos que 3|(a7 − a) pois,
+
+a7 −a = a(a6 −1) = a[(a2)3 −1] = a[(a2 −1)(1+a2 +a4)] = (a3 −a)(1+a2 +a4)
+
+Pelo Pequeno Teorema de Fermat temos que a3 ≡ a mod 3 então 3|(a3 − a)
+
+logo, 3|(a7 − a).
+
+(III) Temos que 2|(a7 − a) pois,
+
+a7 − a = a(a6 − 1) = a[(a2 − 1)(1 + a2 + a4)] = a[(a − 1)(a + 1)(1 + a2 + a4)]
+
+= (a2 − a)(a + 1)(1 + a2 + a4)
+
+Pelo Pequeno Teorema de Fermat temos que a2 ≡ a mod 2 logo, 2|(a7 − a)
+
+Dos itens acima concluímos que 42|(a7 − a).
+
+1.5.2 Teorema de Euler
+
+Antes de mencionar o Teorema de Euler, veremos algumas deﬁnições, proposições
+
+e lemas que contribuirão na demonstração do mesmo.
+
+21
+
+1.5 Congruências
+
+Deﬁnição 1.40. Chama-se função aritmética, toda função f deﬁnida no conjunto
+
+N dos naturais e com valores no conjunto Z dos inteiros, isto é, toda função f de N
+
+em Z (f : N −→ Z).
+
+Deﬁnição 1.41. Chama-se Função Totiente a função aritmética φ(n) que denota a
+
+quantidade de inteiros k ∈ {1, 2, 3, · · · , n}, tais que mdc(k, n) = 1.
+
+Proposição 1.42. Seja φ a Função Totiente.
+
+(I) Se p é primo, então φ(p) = p − 1.
+
+(II) Sejam m e n inteiros positivos, ambos maiores que 1, e mdc(m, n) = 1 então
+
+φ(m.n) = φ(m).φ(n).
+
+Demonstração:
+
+(I) Tome o conjunto Q = {1, 2, 3, · · · , p − 1} dos números inteiros menores que p.
+
+Como p é primo nenhum elemento de Q é fator de p, assim para todo k ∈ Q,
+
+mdc(k, p) = 1. Como há p - 1 elementos Q, temos o desejado.
+
+(II) Vamos supor que m e n são ambos primos para utilizarmos a propriedade
+
+(I). Temos que φ(m) = m − 1 e φ(n) = n − 1 e o produto φ(m).φ(n) =
+
+mn−m−n+1. O conjunto P = {1, 2, 3, m, n, · · · , mn} possui m−1 elementos
+
+k1, k2, · · · , km−1 tais que mdc(ki, mn) = n e n−1 elementos l1, l2, · · · , lm−1 tais
+
+que mdc(li, mn) = m e o próprio mn. Para os demais elementos dos pi ∈ P ,
+
+temos: mdc(pi, mn) = 1 então a quantidade de elementos pi de P é dada por
+
+mn − (m − 1) − (n − 1) − 1 logo φ(mn) = mn − m − n + 1 o que conﬁrma a
+
+propriedade.
+
+(cid:3)
+
+A propriedade (II) nos garante que se n é o produto de dois números primos p e
+
+q temos que φ(n) = (p − 1)(q − 1).
+
+22
+
+1.5 Congruências
+
+Lema 1.43. Sejam a e n > 1 inteiros tais que o mdc(a, n) = 1. Se a1, a2, · · · , ak são
+
+inteiros positivos menores que n e cada um deles coprimo com n, então cada um dos
+
+inteiros a.a1, a.a2, · · · , a.ak é congruente módulo n a um dos inteiros a1, a2, · · · , ak
+
+(não necessariamente nesta ordem em que aparecem).
+
+A base teórica utilizada para a demonstração deste lema é o mesmo utilizado na
+
+prova do Pequeno Teorema de Fermat.
+
+Teorema 1.44. (Teorema de Euler) Se n é um inteiro positivo e se mdc(a, n) = 1,
+
+então:
+
+aφ(n) ≡ 1 mod n.
+
+Demonstração: Para n = 1 a proposição é verdadeira, pois aφ(1) ≡ 1 mod 1.
+
+Suponhamos, n > 1, e sejam a1, a2, · · · , aφ(n) os inteiros positivos menores que n e
+
+relativamente primos a n. Como o mdc(a, n) = 1, então, pelo Lema 1.43 os inteiros
+
+a.a1, a.a2, · · · , .a.aφ(n) são congruentes módulo n aos inteiros a1, a2, · · · , aφ(n) em
+
+uma certa ordem:
+
+a.a1 ≡ a1(cid:48) mod n, a.a2 ≡ a2(cid:48) mod n, · · · , a.aφ(n) ≡ φ(n)(cid:48) mod n,
+
+onde a1(cid:48), a2(cid:48), · · · , aφ(n)(cid:48) denotam os inteiros a1, a2, · · · , aφ(n) em uma certa ordem.
+
+Multiplicando ordenadamente todas essas φ(n) congruências, obtemos:
+
+(a.a1).(a.a2) · · · (a.aφ(n)) ≡ a1(cid:48).a2(cid:48) · · · aφ(n)(cid:48) mod n,
+
+ou seja,
+
+aφ(n).(a1.a2 · · · aφ(n)) ≡ a1.a2 · · · aφ(n) mod n.
+
+Sendo cada um dos inteiros a1, a2 · · · aφ(n) coprimo com n, de modo que podem
+
+ser sucessivamente cancelados, o que dá a congruência de Euler:
+
+23
+
+1.5 Congruências
+
+aφ(n) ≡ 1 mod n.
+
+(cid:3)
+
+Observação: Se p é um número primo, φ(p) = p − 1, e se mdc(a, p) = 1, então
+
+aφ(p) ≡ ap−1 mod p ≡ 1 mod p, que é uma generalização do Teorema de Fermat.
+
+Corolário 1.45. Se m > 1, k (cid:62) 0, n (cid:62) 0, e a um inteiro qualquer são tais que,
+
+mdc(a, m) = 1 e k ≡ n mod (φ(m)) então, ak ≡ an mod m.
+
+Demonstração: Consideremos o caso em que k > n. Como k ≡ n mod (φ(m))
+
+existe q (cid:62) 1 tal que k − n = q.φ(m) e, portanto,
+
+ak = ak−n.an = aq.φ(m).an = (aφ(m))q.an ≡ an mod m.
+
+(cid:3)
+
+O Teorema de Euler tem uma participação fundamental na resoluções de con-
+
+gruências lineares. Dado mdc(a, m) = 1, a congruência linear a.x ≡ b mod m,
+
+admite uma única solução módulo m. Com efeito, da expressão temos
+
+obtemos
+
+a.x ≡ b mod m
+
+a.x ≡ b.aφ(m) mod m.
+
+Como mdc(a, m) = 1, podemos cancelar o fator comum a, que resulta em
+
+x ≡ b.aφ(m)−1 mod m.
+
+Exemplo 1.46. Determine x na congruência 2x ≡ 9 mod 25.
+
+Como mdc(2, 25) = 1, temos que
+
+x ≡ 9.2φ(25)−1 ≡ 9.220−1 ≡ 9.219 ≡ 9.524288 ≡ 4718592 ≡ 17 mod 25
+
+24
+
+1.5 Congruências
+
+Note que 17 é o valor procurado, pois 2.17 = 34 ≡ 9 mod 25.
+
+Podemos perceber que, a.x ≡ 1 mod n implica em x ≡ aφ(n)−1 mod n o que nos
+
+leva a concluir que aφ(n)−1 é o inverso multiplicativo de a módulo n se mdc(a, n) = 1.
+
+Exemplo 1.47. Determine o inverso multiplicativo de 5 módulo 11.
+
+Note que mdc(5, 11) = 1, então, pelo Teorema de Euler temos x = 5φ(11)−1 ≡
+
+510−1 ≡ 59 ≡ 1953125 ≡ 9 mod 11, assim, x = 9 é o menor inverso multiplicativo
+
+de 5 módulo 11.
+
+1.5.3 Sistemas de Congruências Lineares
+
+"Qual é o numero que deixa restos 2, 3 e 2 quando dividido, respectivamente,
+
+por 3, 5 e 7 ? "
+
+Esse problema foi proposto pelo matemático Sun-Tsu e a resposta dada por ele
+
+para este problema foi 23.
+
+A resolução desse problema é baseada em procurar as soluções do seguinte sis-
+
+tema de congruências:
+
+X ≡ 2 mod 3
+
+X ≡ 3 mod 5
+
+X ≡ 2 mod 7.
+
+Uma maneira de resolução para este sistema será mostrada logo após o seguinte
+
+teorema:
+
+Teorema 1.48. Teorema Chinês do Resto (restrito a duas congruências com mó-
+
+dulos primos entre si). Sejam m e n inteiros positivos primos entre si. Se a e b são
+
+inteiros quaisquer, então o sistema
+
+(cid:40)
+
+x ≡ a mod m
+x ≡ b mod n
+
+25
+
+1.5 Congruências
+
+sempre tem solução e qualquer uma de suas soluções pode ser escrita na forma
+
+a + m.(m(cid:48).(b − a) + n.t); onde t é um inteiro qualquer e m(cid:48) é o inverso de m módulo
+
+n.
+
+Demonstração: Considere o sistema:
+
+(cid:40)
+
+x ≡ a mod m
+x ≡ b mod n
+
+onde m e n são inteiros
+
+positivos distintos e digamos que o número inteiro x0 é uma solução desta congruên-
+
+cia. Isto signiﬁca que x0 satisfaz a ambas as congruências:
+
+(cid:40)
+
+x0 ≡ a mod m
+x0 ≡ b mod n.
+
+Como os módulos são diferentes, só podemos combinar as duas congruências se
+
+convertermos uma delas em uma igualdade de inteiros. Fazendo isto com a primeira
+
+equação, veriﬁcamos que
+
+x0 = a + m.k
+
+onde k é um inteiro qualquer, de forma que podemos concluir que
+
+ou ainda,
+
+a + mk ≡ b mod n,
+
+mk ≡ (b − a) mod n.
+
+Supondo que m e n sejam primos entre si, temos que m é inversível módulo n.
+
+Digamos que m(cid:48) é o inverso de m módulo n ou m.m(cid:48) ≡ 1 mod n. Multiplicando
+
+m.k ≡ (b − a) mod n por m(cid:48), obtemos
+
+ou seja,
+
+k ≡ m(cid:48)(b − a) mod n
+
+k ≡ m(cid:48)(b − a) + nt
+
+26
+
+1.5 Congruências
+
+para algum inteiro t. Substituindo esta expressão para k em x0 = a + m.k, vemos
+
+que
+
+x0 = a + m(m(cid:48)(b − a) + nt)
+
+Logo, x0 é uma solução do sistema.
+
+(cid:3)
+
+Exemplo 1.49. Determinar o menor número inteiro que dividido por 3 tem resto
+
+1 e dividido por 5 tem resto 2.
+
+Devemos determinar um valor x que satisfaça o sistema de congruências:
+
+(cid:40)
+
+x ≡ 1 mod 3
+x ≡ 2 mod 5.
+
+Chamando m(cid:48) o inverso de 3 mod 5, temos que m(cid:48) = 2, visto que 3.2 = 6 ≡
+
+1 mod 5. Pela fórmula do Teorema Chines dos Restos, temos que x0 é uma solução:
+
+x0 = 1 + 3(2.(2 − 1) + 5t) = 1 + 6 + 15t = 7 + 15t
+
+Logo x = 7 é a menor solução positiva para o problema dado.
+
+Esse tipo de problema não ﬁca restrito somente a sistemas de duas congruências.
+
+Estudaremos um caso particular de sistema por substituição utilizando os Teoremas
+
+de Fermat e Euler.
+
+Exemplo 1.50. Encontre o menor inteiro positivo x que satisfaz o seguinte sistema
+
+de congruências:
+
+
+
+
+
+
+x ≡ 1 mod 3
+x ≡ 2 mod 5
+x ≡ 3 mod 7
+
+note que mdc(3.5) = 1, mdc(3.7) = 1 e mdc(5.7) = 1, da primeira equação temos
+
+que existe um inteiro y tal que: X = 3y + 1. Substituindo na segunda congruência,
+
+temos: 3y + 1 ≡ 2 mod 5, que implica em 3y ≡ 1 mod 5, onde y = 3φ(5)−1 ≡
+
+33 ≡ 27 ≡ 2 mod 5, que signiﬁca que existe um k, inteiro, tal que y = 5k + 2.
+
+27
+
+1.5 Congruências
+
+Agora temos X = 3(5k + 2) + 1 onde X = 15k + 7. Substituindo na terceira
+
+congruência, temos: 15k + 7 ≡ 3 mod 7, que implica em 15k ≡ −4 mod 7, sendo
+
+k ≡ −4 ≡ 3 mod 7 que signiﬁca que existe um U , inteiro tal que k = 7U + 3.
+
+Finalmente X = 15.(7U + 3) + 7 implica que X = 105U + 52. Então X = 52 é a
+
+menor solução positiva para este sistema de congruências.
+
+28
+
+CAPÍTULO 2
+
+PROBLEMA DO LOGARITMO DISCRETO
+
+Neste capítulo falaremos sobre o Problema do Logaritmo Discreto. O referencial
+
+teórico empregado neste capítulo é averiguado nas obras de [5], [6],[7] e [8].
+
+A diﬁculdade de resolver o Problema do Logaritmo Discreto é a base de alguns
+
+sistemas de criptograﬁa de chave pública, entre eles a criptograﬁa com curvas elíp-
+
+ticas.
+
+Seja (G, x) um grupo multiplicativo e α, β ∈ G. O Problema do Logaritmo
+
+Discreto consiste em encontrar o valor de x ∈ Z tal que
+
+αx = β,
+
+onde o inteiro x indicado por logα β é chamado de logaritmo discreto de β.
+
+Encontrar o logaritmo discreto em Zp (onde Zp é o conjunto formado pelos
+
+inteiros não negativos menores que p, sendo p um número primo) é considerado um
+
+problema inacessível quando p possui no mínimo 150 algarismos, assim procederemos
+
+o logaritmo discreto limitado a Zp.
+
+Seja p primo e a ∈ Z com a não congruente a zero módulo p. Suponhamos que
+
+para cada inteiro b com b não congruente a zero módulo p, exista um inteiro x tal
+
+29
+
+que
+
+ax ≡ b mod p
+
+O Problema do Logaritmo Discreto equivale a encontrar o inteiro x para cada b.
+
+Proposição 2.1. Se existir x ∈ Z tal que ax ≡ b mod p, então esta congruência
+
+possui inﬁnitas soluções em Z.
+
+Demonstração: Seja x uma solução para a congruência. Pelo Pequeno Teorema
+
+de Fermat (P.T.F.), temos que
+
+ap−1 ≡ 1 mod p.
+
+Assim, temos que:
+
+ax.ap−1 ≡ b.1 mod p ⇒ ax+(p−1) ≡ b mod p,
+
+ou seja, x + (p − 1) é uma solução da congruência. De modo geral, temos que
+
+x + k(p − 1) é solução da congruência, ∀k ∈ Z. De fato:
+
+ax+k(p−1) ≡ ax.ak(p−1) ≡ ax.(ap−1)k ≡ b.1k ≡ b mod p.
+
+Logo, a congruência possui inﬁnitas soluções inteiras.
+
+(cid:3)
+
+Proposição 2.2. Dado um inteiro ﬁxo a (cid:54)= 0, o Problema do Logaritmo Discreto
+
+ax ≡ b mod p possui solução em Zp, com b não congruente a a módulo p, se, e
+
+somente se, a é um gerador do grupo multiplicativo Z∗
+
+p. 1
+
+Demonstração:
+
+1Seja p um número primo. Chamamos de grupo multiplicativo Z∗
+
+{n ∈ Z; 0 < n < p munido da operação de multiplicação}.
+
+p ao conjunto Z∗
+
+p =
+
+30
+
+Vamos supor que ax ≡ b mod p possui solução em Zp para todo inteiro b. Isto
+
+signiﬁca que, qualquer que seja b ∈ Zp existe um x ∈ Zp tal que ax ≡ b mod p, logo
+
+a é um gerador de Z∗
+
+p.
+
+Agora vamos supor que a é um gerador de Z∗
+
+p. Cada elemento de Zp é congruente
+
+a alguma potência de a, portanto, ∀b ∈ Zp existe x ∈ Zp tal que ax ≡ b mod p, logo,
+
+o Problema do Logaritmo Discreto possui solução.
+
+(cid:3)
+
+2.0.1 Protocolo Diﬃe-Hellman
+
+Podemos perceber que quanto maior for p a resolução do Problema do Logaritmo
+
+Discreto torna-se difícil até mesmo para um computador. Foi essa diﬁculdade que
+
+conduziu Diﬃe e Hellman a criarem um protocolo de encriptação baseado no Pro-
+
+blema do Logaritmo Discreto. Em 1946 Diﬃe e Hellman propõem um modelo que
+
+combina criptograﬁa simétrica ao Problema do Logaritmo Discreto para efetuar a
+
+troca de chaves. O processo consiste em efetuar a troca de chave para criptograﬁa
+
+simétrica por um canal inseguro de tal forma que, mesmo que um terceiro intercepte
+
+a chave compartilhada, seja inviável determinar as chaves secretas e, consequente-
+
+mente, decifrar a mensagem.
+
+Abaixo, estão descritos os passos para a criação e compartilhamento da chave.
+
+Para melhor exempliﬁcação denominaremos o emissor de Maria e o receptor de João.
+
+1. Inicialmente, Maria e João escolhem um primo p suﬁcientemente grande e um
+
+inteiro g tal que 0 < g < p e g seja um gerador de Z∗
+
+p. Estes valores p e g são
+
+públicos.
+
+2. Maria escolhe um inteiro a, tal que 1 ≤ a ≤ p − 2, que é secreto.
+
+3. João escolhe um inteiro b, tal que 1 ≤ b ≤ p − 2, que, também,é secreto.
+
+4. Maria escolhe um inteiro A ≡ ga mod p e o envia para João.
+
+31
+
+5. João escolhe um inteiro B ≡ gb mod p e o envia para Maria.
+
+6. Maria, então, escolhe uma chave KA ≡ Ba mod p.
+
+KA ≡ (gb)a ≡ gab mod p.
+
+7. João, por sua vez, escolhe uma chave KB ≡ Ab mod p.
+
+KB ≡ (gb)a ≡ gab mod p.
+
+8. A chave secreta compartilhada é um inteiro KAB ≡ KA ≡ KB mod p.
+
+Reparem que Maria e João possuem a mesma chave para codiﬁcação e decodiﬁca-
+
+ção, mas em nenhum momento esta chave KAB foi transmitida de fato. Após efetuar
+
+este procedimento, a comunicação pode ser realizada utilizando um criptossistema
+
+(sistema de criptograﬁa, utilizado na encriptação da mensagem, onde o emissor e
+
+o receptor já determinam como a mensagem será cifrada e decodiﬁcada) de chave
+
+secreta qualquer.
+
+Para codiﬁcar a mensagem M ∈ P deve-se aplicar a função de codiﬁcação
+
+EKAB : P −→C,
+
+x (cid:55)−→ KAB.x mod p
+
+onde:
+
+P é um conjunto ﬁnito de possíveis textos legíveis e;
+
+C é um conjunto ﬁnito de possíveis textos cifrados
+
+à mensagem M , gerando a mensagem cifrada M (cid:48):
+
+M (cid:48) = EKAB (M ) ≡ KAB.M mod p.
+
+Agora, para decodiﬁcar a mensagem M (cid:48) ∈ C, aplicamos a função de decodiﬁca-
+
+ção a M (cid:48), ou seja, DKAB (M (cid:48)), que utiliza o inverso de KAB módulo p, KAB
+
+−1.
+
+32
+
+DKAB (M (cid:48)) ≡ K −1
+
+AB.M (cid:48) mod p
+
+DKAB (M (cid:48)) ≡ K −1
+
+AB.KAB.M mod p
+
+DKAB (M (cid:48)) ≡ 1.M mod p
+
+DKAB (M (cid:48)) ≡ M mod p.
+
+Vamos supor que um terceiro consiga interceptar a chave que Maria envia a João,
+
+neste caso a única informação sobre a chave de que ele tem conhecimento é
+
+A ≡ ga mod p.
+
+Assim, ele consegue os inteiros p e g mas não consegue a, e para determinar esse
+
+valor, precisa calcular o logaritmo discreto a = logg A mod p o que é inexecutável.
+
+De modo análogo, se esse terceiro receptasse a transmissão de João a Maria, teria
+
+a seguinte informação:
+
+B ≡ gb mod p
+
+onde ele deve calcular o logaritmo discreto b = logg B mod p,o que também é ine-
+
+xecutável, pois ele não conhece o inteiro b e p é um primo com grande quantidade
+
+de algarismos.
+
+2.0.2 Criptossistema de Chave Pública ElGamal
+
+Taher ElGamal em 1985, publicou no artigo A public key cryptosystem and a
+
+signature scheme based on discrete logarithms, um criptossistema de chave pública
+
+baseado no Problema do Logaritmo Discreto, onde ElGamal utiliza chaves assimé-
+
+tricas.
+
+Deﬁnição 2.3. Seja p um primo, g ∈ Zp um gerador de Z∗
+
+p e a ∈ Zp. Seja P = Zp
+
+e C = Zp × Zp e
+
+33
+
+K = (p, g, a, A) : A ≡ ga mod p
+
+(K é um conjunto ﬁnito com todas as possíveis chaves de codiﬁcação)
+
+Para cada K = (p, g, a, A) e para cada número aleatório k, com 0 < k < p − 1,
+
+deﬁna, para cada x ∈ P
+
+com
+
+EK(x) = (y1, y2),
+
+y1 ≡ gk mod p
+
+y2 ≡ xAk mod p
+
+e para y1, y2 ∈ Zp:
+
+DK(y1, y2) = y2(ya
+
+1)−1 mod p.
+
+Chamamos Criptossistema de Chave Pública ElGamal em Zp à quíntupla
+
+(P, C, K, EK(x), DK(y1, y2)).
+
+Abaixo, está exempliﬁcado o envio da mensagem M de João para Maria. Para
+
+isto, Maria e João estabelecem um primo p convenientemente longo e um inteiro g,
+
+gerador de Z∗
+
+p, sendo que estes valores são públicos. Assim, a comunicação decorre
+
+da seguinte forma:
+
+1. Maria escolhe uma chave secreta a, com 1 ≤ a ≤ p − 2 e escolhe um inteiro A
+
+tal que
+
+A ≡ ga mod p.
+
+2. Maria envia A para João, que escolhe um inteiro aleatório k e escolhe dois
+
+inteiros y1 e y2 tais que
+
+34
+
+y1 ≡ gk mod p e y2 ≡ M.Ak mod p.
+
+3. João envia o par (y1, y2), esta é a mensagem cifrada.
+
+Observe que no passo 1, o valor a escolhido por Maria precisa ser diferente de
+
+p − 1 pois, gφ(p) ≡ 1 mod p e como φ(p) = p − 1, teríamos A ≡ gp−1 ≡ 1 mod p,
+
+logo, y2 seria a própria mensagem M e não faria sentido cifrar esta mensagem. Pelo
+
+mesmo motivo, deve-se ter k < p − 1.
+
+Caso um terceiro consiga o valor de A, considerando que p e g são conhecidos,
+
+precisa solucionar logg A mod p para obter a chave secreta a o que é inviável. Além
+
+disso se ele interceptar a mensagem (y1, y2), deverá determinar k = logg y1 mod p,
+
+o que também é inviável.
+
+Para decodiﬁcar a mensagem (y1, y2) recebida, Maria deve realizar os seguintes
+
+passos:
+
+1. Determinar x ≡ ya
+
+1 mod p e seu inverso x−1 mod p.
+
+2. Calcular y2.x−1 para encontrar a mensagem original:
+
+y2x−1 ≡ (M.Ak)x−1 ≡ M (ga)kx−1 ≡ M (gk)ax−1
+
+≡ M (y1)ax−1 ≡ M.x.x−1 ≡ M mod p.
+
+Assim, depois de realizar estas operações Maria consegue ler a mensagem original.
+
+Para a codiﬁcação de um texto, normalmente utiliza-se a Tabela ASCII (Dispo-
+
+nível em: <https://www.oﬁcinadanet.com.br> acessado: 21/04/2019.) para modi-
+
+ﬁcar a mensagem em um valor numérico, para efetuar as operações necessárias para
+
+codiﬁcação e decodiﬁcação, veja ﬁgura 2.1.
+
+35
+
+Figura 2.1: Tabela ASCII
+
+36
+
+CAPÍTULO 3
+
+CRIPTOGRAFIA
+
+A criptograﬁa é um método matemático que tem como objetivo codiﬁcar uma
+
+mensagem de modo que somente o destinatário legítimo consiga decifrá-la. Como foi
+
+dito na introdução deste trabalho, a palavra criptograﬁa procede do grego cryptos
+
+que signiﬁca "secreto , oculto" e é utilizada em várias situações do nosso dia-a-dia.
+
+Os indícios são de que a criptograﬁa começou a ser usada desde a antiguidade.
+
+César foi o primeiro a utilizar a criptograﬁa como meio de esconder informações
+
+secretas com uma técnica simples, porém eﬁciente para época, que consiste em
+
+substituir uma letra pela outra transladando o alfabeto um número ﬁxo de vezes.
+
+Essa técnica passou a ser chamada de Cifra de César, em homenagem ao criador.
+
+Exemplo 3.1. Transladando o alfabeto duas posições temos que a palavra CESAR
+
+ﬁcaria: EGUCT.
+
+É claro que esse código de Cesar é muito fácil de se decifrar, assim como qualquer
+
+outro código que envolve substituição de letras, pois a frequência média em que cada
+
+letra é utilizada em sua língua é constante.
+
+No decorrer dos anos a criptograﬁa foi se adaptando de modo a se tornar mais
+
+difícil de decifrar. Porém juntamente com os anos, a humanidade foi se aperfeiço-
+
+37
+
+3.1 Criptograﬁa RSA
+
+ando em tecnologias tendo um grande aliado para decifrar os códigos secretos: o
+
+computador. Contudo, tornou-se essencial criar novos códigos, que fossem difíceis
+
+de decifrar mesmo com a ajuda de um computador.
+
+Neste capítulo estudaremos o RSA que é o método de criptograﬁa de chave
+
+pública mais conhecido universalmente. Pautamos este capítulo nos trabalhos [1],[2]
+
+e [3]
+
+3.1 Criptograﬁa RSA
+
+O mais conhecido dos métodos de criptograﬁa de chave pública é o RSA, que foi
+
+inventado por dois cientistas da computação que trabalhavam no MIT(Instituto de
+
+Tecnologia de Massachusetts) Ronald Rivest e Adi Shamir, que estavam empenhados
+
+em criar um método de criptograﬁa de chave assimétrica eﬁciente. Foi ajudado pelo
+
+matemático Leonard Adleman. O método foi patenteado em 1978 pelos três, onde
+
+o nome RSA procede das iniciais dos três inventores.
+
+Todo processo deste método é composto em duas etapas básicas: a codiﬁcação de
+
+mensagem e a decodiﬁcação da mensagem codiﬁcada. Decodiﬁcar é o processo que
+
+um destinatário legítimo do código faz para ler a mensagem. Já decifrar signiﬁca
+
+ler uma mensagem codiﬁcada podendo ser um terceiro destinatário (não ser um
+
+destinatário legítimo). A execução desse método de criptograﬁa depende de dois
+
+primos distintos grandes que chamaremos de p e q. Para codiﬁcar uma mensagem
+
+usando o método RSA devemos conhecer a chave de decodiﬁcação (que é pública) que
+
+é o produto n = pq. O processo de decodiﬁcação só é possível quando conhecemos
+
+os números p e q.
+
+Neste capítulo estudaremos o método RSA e citaremos alguns exemplos de como
+
+criptografar usando o método, para isso não iremos utilizar números grandes e sim
+
+números que são possíveis de manusear com calculadora cientíﬁca.
+
+38
+
+3.1 Criptograﬁa RSA
+
+3.1.1 Exposição do método RSA
+
+Antes de entrarmos na fase da codiﬁcação devemos realizar a pré-codiﬁcação, que
+
+consiste em transformar a mensagem em uma sequência de números. Para tal, cada
+
+letra do alfabeto será representada por um número de dois algarismos para evitar
+
+dubiedades. Por exemplo, se ﬁzéssemos A equivaler ao número 1, B ao número 2,
+
+e assim sucessivamente, não teríamos como saber se 12 representa AB ou L (que é
+
+a décima segunda letra do alfabeto). Para realizar a pré-codiﬁcação, transforma-se
+
+letras em números usando a seguinte tabela:
+
+A B C D E
+
+Tabela 3.1: Tabela de conversão RSA
+F G H
+
+I
+
+J K L M
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+N O P Q R S T U V W X Y Z
+
+23
+
+24
+
+25
+
+26
+
+Exemplo 3.2. A palavra:
+
+27
+
+28
+
+29
+Fonte: A autora.
+
+30
+
+31
+
+32
+
+33
+
+34
+
+35
+
+Matemática
+
+convertida em números ﬁcaria 22102914221029181210.
+
+Em caso de frases, o espaçamento entre palavras será substituído pelo número
+
+99.
+
+Exemplo 3.3. A frase:
+
+Amo Matemática
+
+convertida em números ﬁcaria 1022249922102914221029181210.
+
+Após a conversão da mensagem em números, deve-se "quebrar"esse número em
+
+blocos menores que o número n = pq. Para isso devemos escolher dois números
+
+primos distintos p e q.
+
+39
+
+3.1 Criptograﬁa RSA
+
+Exemplo 3.4. Se escolhermos p = 11 e q = 13, então n = 143. Logo, cada
+
+bloco da mensagem deve ser menor que 143. Quebrando em blocos a mensagem
+
+MATEMÁTICA temos:
+
+22 − 10 − 29 − 14 − 22 − 10 − 29 − 18 − 12 − 10
+
+Não há regras para escolhermos os blocos em que vamos dividir a mensagem,
+
+porem devemos tomar alguns cuidados. Como mencionado anteriormente, nenhum
+
+bloco deve ser maior que o número n. Assim a mensagem MATEMÁTICA também
+
+pode ser quebrada da seguinte forma:
+
+22 − 102 − 91 − 4 − 22 − 10 − 29 − 18 − 12 − 10
+
+Também não podemos começar o bloco com o número zero porque isto traria
+
+problemas na hora de decodiﬁcar. É por isso que não escolhemos os blocos:
+
+221 − 02 − 91 − 42 − 21 − 029 − 18 − 12 − 10
+
+Aqui, encerramos a etapa da pré-codiﬁcação.
+
+Codiﬁcação
+
+Para esta etapa, precisamos de n, que é o produto dos primos p e q e de um
+
+número inteiro positivo e que seja inversível módulo φ(n), ou seja, mdc(e, φ(n)) = 1.
+
+Como p e q são primos, sabemos que:
+
+φ(n) = (p − 1)(q − 1).
+
+Assim, o par (n, e) é a chave de codiﬁcação do sistema RSA. Na etapa da pré-
+
+codiﬁcação a mensagem numérica foi separada em vários blocos, codiﬁcaremos cada
+
+bloco isoladamente, e a mensagem codiﬁcada será a sequência dos blocos codiﬁcados.
+
+40
+
+3.1 Criptograﬁa RSA
+
+Aqui, os blocos codiﬁcados não poderão ser agrupados de modo a formar longos
+
+números. Chamaremos de C(b), o bloco codiﬁcado. Para calcular C(b) devemos
+
+obter o resto da divisão de be por n, em outras palavras:
+
+be ≡ C(b) mod n.
+
+Decodiﬁcação
+
+Para decodiﬁcar um bloco precisamos de dois números: n e o inverso de e em
+
+φ(n), que chamaremos de d. Assim, o par (n, d) será a chave de decodiﬁcação. Seja
+
+D(C(b)) o processo de decodiﬁcação. Para obter D(C(b)) devemos calcular o resto
+
+da divisão de (C(b))d por n, em outras palavras, devemos obter:
+
+D(C(b)) ≡ b mod n.
+
+Para tanto, recordemos alguns resultados já estudados. Sendo b um inteiro,
+
+relativamente primo com n, o Teorema de Euler nos diz que:
+
+bφ(n) ≡ 1 mod n.
+
+Como p e q são primos, pelas propriedades da função Totiente de Euler, temos
+
+que
+
+então
+
+φ(p) = p − 1 e φ(q) = q − 1,
+
+φ(n) = φ(p)φ(q) = (p − 1)(q − 1).
+
+Para decifrar a mensagem é fundamental encontrar um inteiro d tal que ed ≡
+
+1 mod(φ(n)) o que implica em ed ≡ 1 mod((p − 1)(q − 1)) e isto, pelo Teorema de
+
+41
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+Euler, implica em:
+
+d ≡ eφ((p−1)(q−1))−1 mod((p-1)(q-1)).
+
+Portanto de ed ≡ 1 mod(φ(n)) concluímos que existe um inteiro k tal que ed ≡
+
+kφ(n) + 1 de onde segue que:
+
+b ≡ b.1 ≡ b(1)k ≡ b(bφ(n))k ≡ bkφ(n)+1 mod n
+
+bkφ(n)+1 ≡ bed ≡ (be)d ≡ (C(b))d mod n.
+
+e
+
+Por tanto
+
+D(C(b)) ≡ (C(b))d mod n.
+
+Observe que D(C(b)) é a relação inversa de C(b).
+
+3.2 Exemplo de uma mensagem criptografada usando
+
+o RSA
+
+Vamos codiﬁcar e decodiﬁcar a mensagem AMO MATEMÁTICA de acordo com
+
+o sistema RSA. Usaremos para a chave pública o par (n, e) = (143, 7).
+
+3.2.1 Pré - Codiﬁcação
+
+Vamos transformar cada letra da mensagem AMO MATEMÁTICA em números
+
+de dois algarismo, de acordo com a tabela de conversão RSA (desconsiderando o
+
+acento agudo). Logo a frase codiﬁcada ﬁcaria:
+
+1022249922102914221029181210.
+
+Agora quebramos o bloco inteiro em blocos menores. Para isso devemos tomar
+
+42
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+alguns cuidados. Como já foi dito não podemos escolher blocos maiores que o número
+
+n, e não devemos iniciar o bloco com o número zero. A mensagem atual pode ser
+
+quebrada assim:
+
+102 − 22 − 49 − 92 − 2 − 10 − 29 − 14 − 22 − 102 − 91 − 81 − 2 − 10.
+
+Encerrada a etapa da pré-codiﬁcação passaremos a etapa da codiﬁcação.
+
+3.2.2 Codiﬁcação
+
+Como e = 7 e chamando cada bloco codiﬁcado de C(b), a regra para a codiﬁcação
+
+é a seguinte:
+
+ou seja,
+
+C(b) = resto da divisão de b7 por 143
+
+b7 ≡ C(b) mod 143.
+
+Realizando as contas temos:
+
+• 1027 ≡ (1023)2.102 ≡ (5)2.102 ≡ 25.102 ≡ 2550 ≡ 119 mod 143;
+
+• 227 ≡ (222)3.22 ≡ (55)3.22 ≡ (55)2.55.22 ≡ 22.55.22 ≡ (22)2.55 ≡ (55)2 ≡
+
+22 mod 143;
+
+• 497 ≡ (493)2.49 ≡ (103)2.49 ≡ 27.49 ≡ 1323 ≡ 36 mod 143;
+
+• 927 ≡ (922)3.92 ≡ (27)3.92 ≡ 92.92 ≡ (92)2 ≡ 27 mod 143;
+
+• 27 ≡ 128 mod 143;
+
+• 107 ≡ (102)3.10 ≡ (−43)3.10 ≡ (−43)2.(−43).10 ≡ 133.(−430) ≡ (−10).(−430) ≡
+
+(10).(430) ≡ 10.1 ≡ 10 mod 143;
+
+• 297 ≡ (293)2.29 ≡ (79)2.29 ≡ 6241.29 ≡ 92.29 ≡ 2668 ≡ 94 mod 143;
+
+• 147 ≡ (143)2.14 ≡ (27)2.14 ≡ 729.14 ≡ (14)2 ≡ 53 mod 143;
+
+43
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+• 227 ≡ (222)3.22 ≡ (55)3.22 ≡ (55)2.55.22 ≡ 22.55.22 ≡ (22)2.55 ≡ (55)2 ≡
+
+22 mod 143;
+
+• 1027 ≡ (1023)2.102 ≡ (5)2.102 ≡ 25.102 ≡ 2550 ≡ 119 mod 143;
+
+• 917 ≡ (913)2.91 ≡ (104)2.91 ≡ 91.91 ≡ (91)2 ≡ 130 mod 143;
+
+• 817 ≡ (813)2.81 ≡ (53)2.81 ≡ 92.81 ≡ 7452 ≡ 16 mod 143;
+
+• 27 ≡ 128 mod 143;
+
+• 107 ≡ (102)3.10 ≡ (−43)3.10 ≡ (−43)2.(−43).10 ≡ 133.(−430) ≡ (−10).(−430) ≡
+
+(10).(430) ≡ 10.1 ≡ 10 mod 143.
+
+Reunindo os blocos temos a seguinte mensagem codiﬁcada:
+
+119 − 22 − 36 − 27 − 128 − 10 − 94 − 53 − 22 − 119 − 130 − 16 − 128 − 10.
+
+Lembrando que após a codiﬁcação dos blocos não podemos agrupar novamente os
+
+números formados em um só bloco, pois a decodiﬁcação da mensagem está relacio-
+
+nado a cada resto. Por exemplo, três blocos que originalmente seriam 11 − 21 − 33,
+
+agrupados, formariam o número 221533 que poderia ser interpretado pelos blocos
+
+112 − 133 que também são restos possíveis para p = 143. Encerrada a etapa da
+
+codiﬁcação passaremos a decodiﬁcação.
+
+3.2.3 Decodiﬁcação
+
+Para decodiﬁcar uma mensagem codiﬁcada precisamos de dois números: n e o
+
+inverso de d maior que zero de 7 módulo (p − 1)(q − 1), onde p e q sã os únicos
+
+fatores primos de n. Como p = 11 e q = 13 (pois 143 = 11.13), para calcular d
+
+devemos calcular:
+
+7.d ≡ 1 mod ((p − 1)(q − 1))
+
+44
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+7.d ≡ 1 mod ((11 − 1)(13 − 1))
+
+7.d ≡ 1 mod 120.
+
+Aplicando o resultado
+
+d ≡ eφ((p−1)(q−1))−1 mod ((p − 1)(q − 1)),
+
+temos
+
+q ≡ 3φ(120)−1 mod 120.
+
+Como φ(120) = φ(8).φ(3).φ(5) = 4.2.4 = 32, segue que:
+
+d ≡ 732−1 ≡ 731 ≡ 103 mod 120.
+
+Temos, então, que d = 103 é o menor inteiro positivo que é solução da congruência
+
+dada. Assim, o par (n, d) = (143, 103) é a chave de decodiﬁcação, tal chave só pode
+
+ser obtida por quem tem a função de receber a mensagem. Agora que conhecemos
+
+o par (nd, ), a regra para a decodiﬁcação será:
+
+D(a) = resto da divisão de ad por n
+
+Em outras palavras:
+
+ad ≡ D(a) mod n
+
+Lembrando que a é o bloco codiﬁcado e D(a) será o resultado do processo de deco-
+
+diﬁcação. Realizando as contas temos:
+
+• 119103 ≡ (1192)51.(119) ≡ (4)51.(119) ≡ (410)5.(4).(119) ≡ (100)5.(476) ≡
+
+(1002)2.(100).(47) ≡ (133)2.(4700) ≡ (100).(124) ≡ 12400 ≡ 102 mod 143;
+
+• 22103 ≡ (222)51.(22) ≡ (55)51.(22) ≡ (552)25.(55).(22) ≡ (22)25.(1210) ≡
+
+(222)12.(22).(66) ≡ (55)12.(1452) ≡ (552)6.(22) ≡ 226(22) ≡ (222)3.(22) ≡
+
+(55)2.(55).(22) ≡ (22).(22).(55) ≡ 222.(55) ≡ 552 ≡ 22 mod 143;
+
+45
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+• 36103 ≡ (362)51.(36) ≡ (93)17.(36) ≡ 72917.(36) ≡ (14)17.(36) ≡ (142)8.(14).(36) ≡
+
+(53)8.(504) ≡ (532)4.(75) ≡ 924.(75) ≡ (922)2.(75) ≡ (27)2.(75) ≡ (14).(75) ≡
+
+1050 ≡ 49 mod 143;
+
+• 27103 ≡ (272)51.(27) ≡ (14)51.(27) ≡ (142)25.(14).(27) ≡ (53)25.(378) ≡ (532)12.(53).(92) ≡
+
+(92)12.(4876) ≡ (922)6.(14) ≡ 276.(14) ≡ (272)3.(14) ≡ (14)3.(14) ≡ (142).(142) ≡
+
+(53).(53) ≡ 532 ≡ 92 mod 143;
+
+• 128103 ≡ (1282)51.(128) ≡ (82)51.(128) ≡ (822)25.(82).(128) ≡ (3)25.(10496) ≡
+
+(35)5.(57) ≡ (243)5.(57) ≡ (1002)2.(100).(57) ≡ 1332.(5700) ≡ (100).(123) ≡
+
+12300 ≡ 2 mod 143;
+
+• 10103 ≡ (103)34.(10) ≡ (142)34.(10) ≡ (1422)17.(10) ≡ (1)17.10 ≡ 10 mod 143;
+
+• 94103 ≡ (942)51.(94) ≡ (113)51.(94) ≡ (1132)25.(113).(94) ≡ (42)25.(10622) ≡
+
+(422)12.(42).(40) ≡ (48)12.(1680) ≡ (482)6.(107) ≡ 166.(107) ≡ (162)3.(107) ≡
+
+(113)2.(113).(107) ≡ (42).(12091) ≡ (42).(79) ≡ 3318 ≡ 29 mod 143;
+
+• 53103 ≡ (532)51.(53) ≡ (92)51.(53) ≡ (922)25.(92).(53) ≡ (27)25.(4876) ≡
+
+(272)12.(27).(14) ≡ (14)12.(378) ≡ (142)6.(92) ≡ 536.(92) ≡ (532)3.(92) ≡
+
+(92)3.(92) ≡ (922).(922) ≡ (27).(27) ≡ 272 ≡ 14 mod 143;
+
+• 119103 ≡ (1192)51.(119) ≡ (4)51.(119) ≡ (410)5.(4).(119) ≡ (100)5.(476) ≡
+
+(1002)2.(100).(47) ≡ (133)2.(4700) ≡ (100).(124) ≡ 12400 ≡ 102 mod 143;
+
+• 130103 ≡ (1302)51.(130) ≡ (26)51.(130) ≡ (262)25.(26).(130) ≡ (104)25.(3380) ≡
+
+(1042)12.(104).(91) ≡ (91)12.(9464) ≡ (912)6.(26) ≡ 1306(26) ≡ (1302)3.(26) ≡
+
+(26)3.(26) ≡ 262.262 ≡ (104).(104) ≡ 10816 ≡ 91 mod 143;
+
+• 16103 ≡ (162)51.(16) ≡ (113)51.(16) ≡ (1132)25.(113).(16) ≡ (42)25.(1808) ≡
+
+(422)12.(42).(92) ≡ (48)12.(3864) ≡ (482)6.(3) ≡ 166(3) ≡ (162)3.(3) ≡ (113)2.(113).(3) ≡
+
+(42).(339) ≡ (42).(53) ≡ 2226 ≡ 81 mod 143.
+
+46
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+Agrupando os blocos decodiﬁcados, formamos novamente o número 1022249922102914221029181,
+
+que, de acordo com a convenção da Tabela de conversão RSA, signiﬁca AMO MA-
+
+TEMÁTICA.
+
+Decodiﬁcar um bloco da mensagem codiﬁcada é encontrar o bloco correspondente
+
+da mensagem original, ou seja, D(C(b)) = b, sem isto não teríamos código algum.
+
+Outra maneira de decodiﬁcar o bloco codiﬁcado é realizar os cálculos com a
+
+ajuda dos Teoremas de Fermat e da resolução de sistemas de congruências. Sabe-
+
+mos que devemos calcular o resto da divisão de 119103 por n = 143. Calculamos
+
+119103 modulo 11 e 119103 modulo 13 que são primos em que n se fatora. Inicial-
+
+(3.2.1)
+
+(3.2.2)
+
+mente, temos :
+
+e
+
+Assim, de (3.2.1) temos:
+
+119 ≡ 9 mod 11
+
+119 ≡ 2 mod 13.
+
+119103 ≡ 9103 mod 11.
+
+Pelo Teorema de Fermat sabemos que :
+
+910 ≡ 1 mod 11.
+
+103 = 10.10 + 3,
+
+Como
+
+segue que
+
+119103 ≡ 910.10+3 ≡ (910)10.93 ≡ 110.93 ≡ 93 ≡ 3 mod 11
+
+. Da equação (3.2.2), temos que :
+
+119103 ≡ 2103 mod 13.
+
+47
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+Pelo Teorema de Fermat temos:
+
+212 ≡ 1 mod 13.
+
+103 = 12.8 + 7,
+
+Como
+
+segue que
+
+119103 ≡ 212.8+7 ≡ (212)8.27 ≡ 18.27 ≡ 27 ≡ 11 mod 13.
+
+Assim chamando 119103 de X, temos que
+
+X ≡ 3 mod 11
+
+X ≡ 11 mod 13.
+
+Resolvemos este sistema de equações utilizando o Algarismo Chinês dos Restos,
+
+da primeira equação temos que, existe Y ∈ Z, tal que:
+
+X ≡ 11Y + 3.
+
+Substituindo X na segunda equação, temos:
+
+11y + 3 ≡ 11 mod 13 que resulta em Y = 9 mod 13.
+
+Logo, existe K ∈ Z, tal que:
+
+Y = 13K + 9
+
+Voltando, a equação X ≡ 11Y + 3 e substituindo o valor de Y temos:
+
+X = 11(13K + 9) + 3 ⇒ X ≡ 143K + 102.
+
+Onde 102 é a menor solução positiva para o sistema e também o bloco inicial pro-
+
+curado. Procedendo da mesma maneira com os blocos restantes, podemos obter a
+
+48
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+mensagem inicial.
+
+Aﬁrmamos anteriormente, antes de codiﬁcarmos a mensagem, que não podería-
+
+mos "quebrar"o número por blocos que começam com o número zero, vamos veriﬁcar
+
+o porquê.
+
+Vamos codiﬁcar e decodiﬁcar a palavra ALUNO. Aqui utilizaremos a chave pú-
+
+blica (n, e) = (253, 3). Realizando a pré-codiﬁcação temos:
+
+1021302324.
+
+Vamos quebrar o bloco inteiro em blocos menores, colocando o número zero no início
+
+de um bloco para analisá-lo. Podemos quebrá-lo da seguinte forma:
+
+1 − 021 − 30 − 232 − 4
+
+Como e = 3, e cada bloco codiﬁcado é representado por C(b), a regra para a codiﬁ-
+
+cação é a seguinte:
+
+ou seja,
+
+C(b) = resto da divisão de b3 por 253,
+
+b3 ≡ C(b) mod 253.
+
+Realizando as contas temos:
+
+• 13 ≡ 1 mod 253;
+
+• 213 ≡ (212).21 ≡ 188.91 ≡ 3948 ≡ 153 mod 253;
+
+• 303 ≡ (302).30 ≡ 141.30 ≡ 4230 ≡ 182 mod 253;
+
+• 2323 ≡ (2322).232 ≡ 188.232 ≡ 43616 ≡ 100 mod 253;
+
+• 43 ≡ 64 mod 253.
+
+49
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+Reunindo os blocos temos a seguinte mensagem codiﬁcada:
+
+1 − 153 − 182 − 100 − 64.
+
+Agora para decodiﬁcar a mensagem obtida, primeiro devemos calcular o inverso
+
+de d maior que zero de 3 módulo (p − 1)(q − 1). Como p = 11 e q = 23 pois
+
+(11.23 = 253), para calcular d temos:
+
+d ≡ 3φ(220)−1 mod 220.
+
+Como φ(220) = φ(10).φ(23) = 4.10 = 40, segue que
+
+d ≡ 340−1 ≡ 339 ≡ 147 mod 220
+
+Logo, devemos calcular o resto da divisão de a147 por 253, realizando as contas
+
+temos:
+
+• 1147 ≡ 1 mod 253;
+
+• 153147 ≡ (1532)73.(153) ≡ (1332)36.(133).(153) ≡ (2322)18.(20349) ≡ (1882)9.(109) ≡
+
+(1772)4.(177).(109) ≡ (210)4.(19293) ≡ (78).(78).(65) ≡ (782).65 ≡ 12.65 ≡
+
+780 ≡ 21 mod 253;
+
+• 182147 ≡ (1822)73.(182) ≡ (2342)36.(234).(182) ≡ (1082)18.(42588) ≡ (1082)18.(84) ≡
+
+(262)9.(84) ≡ (1702)4.(170).(84) ≡ (582).(582).14280 ≡ 75.75.112 ≡ 59.112 ≡
+
+6608 ≡ mod 253;
+
+• 100147 ≡ (1002)73.(100) ≡ (1332)36.(133).(100) ≡ (23236).(13300) ≡ (2322)18.(144) ≡
+
+(1882)9.(144) ≡ (1772)4.(177).(144) ≡ (2104).25488 ≡ (2102).(2102).188 ≡
+
+(78).(78).(188) ≡ (6084).(188) ≡ (12).(188) ≡ 2256 ≡ 232 mod 253;
+
+• 64147 ≡ (642)73.(64) ≡ (482)36.(48).(64) ≡ (272)18.(3072) ≡ (22318).(36) ≡
+
+(2232)9.(36) ≡ (1412)4.(141).(36) ≡ (1474).5076 ≡ (1472).(1472).16 ≡ (104).(104).(16) ≡
+
+50
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+173056 ≡ 4 mod 253.
+
+Agrupando os blocos temos:
+
+que convertida em texto, se torna
+
+121302324,
+
+CD?NO
+
+Que não corresponde à mensagem original.
+
+Assim encerramos nossa seção de exempliﬁcação do método RSA.
+
+3.2.4 Segurança
+
+Sabemos que o RSA é um método de chave pública. Dados dois números inteiros
+
+primos, os parâmetros do sistema que estamos utilizando e n = p.q. A chave de
+
+codiﬁcação coincide com a chave pública do sistema. Assim, o par (n, e) é disponível
+
+a qualquer usuário. O que torna o RSA seguro está na complexidade de calcular
+
+d quando apenas n e e são conhecidos, pois muitas operações são envolvidas no
+
+processo.
+
+Pelos estudos, só sabemos encontrar d utilizando o algoritmo euclidiano estendido
+
+a φ(n) e e. Por outro lado, só sabemos encontrar φ(n) se soubermos fatorar n para
+
+obter p e q. Assim, só conseguimos desvendar o código se fatorarmos n, o que é um
+
+problema muito difícil se n for grande, pois não conhecemos algoritmos rápidos de
+
+fatoração. Chamaremos a tentativa de desvendar uma chave privada de "ataque",
+
+os ataques comuns ao RSA são os Ataques Matemáticos e a Força Bruta.
+
+O ataque de Força Bruta equivale em tentar todas as combinações de chaves pos-
+
+síveis até conseguir decifrar a mensagem, tornando-a inviável pois a chave é muito
+
+grande e exige um nível de processamento altíssimo para utilizar todas as combina-
+
+ções em um tempo mais curto. Assim, o ataque a Força Bruta não é algo para se
+
+51
+
+3.2 Exemplo de uma mensagem criptografada usando o RSA
+
+preocupar. Quanto ao Ataque Matemático, vamos supor que, alguém inventou uma
+
+maneira de encontrar d sem ter que fatorar n. Por exemplo, o que aconteceria se
+
+criasse um algoritmo rápido para calcular φ(n) a partir de n e e? Assim, teríamos
+
+conquistado um algoritmo rápido de fatoração. O que estamos considerando é que
+
+n = pq e φ(n) = (p − 1)(q − 1) são ambos conhecidos. Queremos obter p e q a partir
+
+disso. Contudo,
+
+φ(n) ≡ (p − 1)(q − 1) = p.q − (p + q) + 1 = n − (p + q) + 1,
+
+de forma que p + q = n − φ(n) + 1 é conhecido. Entretanto
+
+(p + q)2 − 4n = (p2 + q2 + 2pq) − 4pq = (p − q)2
+
+Logo,
+
+p − q = (cid:112)(p + q)2 − 4n
+
+também é conhecido. Mas conhecendo p + q e p − q calculamos facilmente p e q, ou
+
+seja, fatoramos n.
+
+Acabamos de ver que não adianta alguém inventar uma máquina de encontrar
+
+φ(n) sem fatorar n, pois conhecendo os dois chegamos aos fatores de n. E caso
+
+alguém invente um algoritmo que ache d a partir de n e e, como e.d ≡ 1 mod φ(n),
+
+isto implica que conhecemos um múltiplo de φ(n), o que é suﬁciente para fatorar n,
+
+mas a demonstração está fora de cogitação.
+
+Resta idealizar que é possível encontrar b a partir da forma reduzida de be módulo
+
+n sem tentar encontrar d. Além de uma técnica de acessível tentativa-impraticável
+
+quando n é grande, ninguém até agora conseguiu tal método. Diante do pressuposto,
+
+quebrar o RSA e fatorar n são problemas similares, ainda que isto não tenha sido
+
+demonstrado.
+
+52
+
+CAPÍTULO 4
+
+CRIPTOGRAFIA COM O USO DE CURVAS ELÍPTICAS
+
+Neste capítulo falaremos sobre a criptograﬁa com uso de curvas elípticas. Essa
+
+técnica foi, inicialmente, introduzida em 1985 por Victor Miller e Neal Koblitz e foi
+
+abordada no uso de curvas elípticas como uma nova forma de implementação a um
+
+sistema de chave pública em algumas das aplicações já existentes.
+
+Esse método criptográﬁco tem tido uma relevância nas últimas décadas pois está
+
+associado a crescente necessidade de segurança nos modernos meios de comunicação,
+
+fundamentado em computadores onde a eﬁciência de processamento tem evoluído a
+
+cada instante.
+
+Neste capítulo serão apresentados os conceitos matemáticos usados no sistema de
+
+criptograﬁa desenvolvido a partir das curvas elípticas deﬁnidas sobre corpos ﬁnitos.
+
+Para tal assumiremos que o leitor tenha conhecimento de alguns conceitos apresen-
+
+tados em disciplinas do curso de graduação em matemática tais como grupos, anéis,
+
+corpos, etc. O referencial teórico empregado neste capítulo pode ser averiguado nas
+
+obras de [6], [5], [7] e [8].
+
+53
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+Curvas elípticas são deﬁnidas a partir da Equação de Weierstrass sobre um corpo
+
+K:
+
+y2 + axy + by = x3 + cx2 + dx + e
+
+com a, b, c, d, e ∈ K mais, um ponto chamado de ponto no inﬁnito (representaremos
+
+esse ponto por ∞). Neste trabalho, trabalharemos com curvas elípticas simétricas
+
+em relação ao eixo das abcissas e sem singularidades. Assim, trabalharemos com
+
+uma versão simpliﬁcada da Equação de Weierstrass.
+
+Deﬁnição 4.1. Seja K um corpo. Uma curva elíptica E sobre K, denotada por
+
+E(K), é o lugar geométrico dos pontos (x, y) ∈ K × K tais que x e y são soluções
+
+da equação
+
+y2 = x3 + ax + b
+
+com a, b ∈ K e 4a3 + 27b2 (cid:54)= 0.
+
+Esta curva não possui raízes múltiplas, ou seja, deve ser uma curva não-singular,
+
+por isso devemos ter (cid:77)= 4a3 + 27b2 (cid:54)= 0.
+
+Alguns gráﬁcos de curvas elípticas são ilustrados nas Figuras 4.1 e 4.2.
+
+Figura 4.1: Gráﬁco da curva y2 = x3 − 2x + 4
+
+54
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+Figura 4.2: Gráﬁco da curva y2 = x3 − 4x + 2
+
+Esses gráﬁcos são de curvas deﬁnidas para os reais, ou seja, os valores das variá-
+
+veis x e y na equação são reais e os valores dos parâmetros a e b são números reais.
+
+Porém uma curva elíptica pode ser deﬁnida em qualquer corpo. Neste capítulo,
+
+estamos interessados no caso onde estão deﬁnidas sobre corpos ﬁnitos.
+
+Queremos deﬁnir uma estrutura de grupo no conjunto das curvas elípticas, para
+
+isso vamos deﬁnir a "soma"entre dois pontos. Essa soma pode ser tratada tanto de
+
+forma geométrica ou algébrica, iremos, inicialmente, analisar a forma geométrica.
+
+O ponto inﬁnito, ∞, que mencionamos anteriormente será o nosso elemento neutro
+
+da operação. Assim, se Ω é uma curva elíptica sobre um corpo K, e temos P ∈ Ω,
+
+então:
+
+P + ∞ = P = ∞ + P.
+
+Consideremos o simétrico de um ponto P = (x, y) sendo o ponto −P = (x, −y), se
+
+somarmos um ponto P ∈ Ω com o ponto simétrico −P , obtemos o ponto inﬁnito,
+
+logo:
+
+P + (−P ) = ∞ = (−P ) + P.
+
+Tome dois pontos P e Q distintos de uma curva elíptica sobre o corpo R dos
+
+números reais, seja P Q o segmento de reta que interceptará a curva em um terceiro
+
+55
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+ponto que chamaremos de R(cid:48) (estamos considerando o caso em que a reta não seja
+
+vertical). Assim, o reﬂexo do ponto R(cid:48) em relação ao eixo horizontal, que é dado
+
+por R, será a soma de P e Q. Logo:
+
+R = P + Q.
+
+A ﬁgura 4.3, representa graﬁcamente a soma entre dois pontos distintos P, Q ∈ Ω
+
+em uma curva elíptica sobre o corpo R.
+
+Figura 4.3: Soma de dois pontos em uma curva E(R) : R = P + Q
+
+Agora vamos deﬁnir a soma P + P , para isso tracemos a reta tangente ao ponto
+
+P , de tal modo que a reta tangente em P intersecta a curva em um segundo ponto R(cid:48)
+
+e obtemos a reﬂexão R em relação ao eixo horizontal, ou seja P + P = R. Podemos
+
+representar a soma de P + P por 2P . Esse caso é ilustrado na Figura 4.4.
+
+56
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+Figura 4.4: R = P + P ou R = 2P
+
+Um caso particular é disposto se tivermos P = (x, 0), pois, neste caso, a reta
+
+tangente à curva no ponto P será vertical e não interceptará a curva em um outro
+
+ponto. Neste caso teremos:
+
+P + P = 2P = ∞.
+
+Veremos agora a soma de dois pontos utilizando a soma algébrica. Para tal
+
+iremos trabalhar com as coordenadas dos pontos em uma curva elíptica.
+
+Seja P = (xp, yp) e Q = (xq, yq) dois pontos em uma curva elíptica Ω de equação
+
+y2 = x3 + ax + b, com 4a3 + 27b2 (cid:54)= 0 e P (cid:54)= ∞ e Q (cid:54)= ∞, vamos analisar o caso
+
+P (cid:54)= Q. Seja r a reta que passa pelos pontos P e Q, que intersecta a curva Ω em um
+
+terceiro ponto que chamaremos de R(cid:48) = (x(cid:48)
+
+r) e agora chamaremos de R a reﬂexão
+de R(cid:48) com respeito ao eixo horizontal. Assim, pela fórmula da inclinação da reta,
+
+r, y(cid:48)
+
+conclui-se que a inclinação da reta r é:
+
+57
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+com xp (cid:54)= xq.
+
+Logo a equação da reta r é:
+
+m = yq−yp
+xq−xp
+
+,
+
+y = m(x − xp) + yp
+
+pois r passa pelo ponto P . Para obter as interseções entre a reta r e a curva Ω
+
+iremos substituir a equação da reta na equação da curva, veja:
+
+(m(x − xp) + yp)2 = x3 + ax + b
+
+=⇒ m2x2 − 2m2xpx + m2x2
+
+p + 2mypx − 2mxpyp + y2
+
+p = x3 + ax + b
+
+x3 − m2x2 + (a + 2m2xp − 2myp)x + (b − m2x2
+
+p + 2mxpyp − y2
+
+p) = 0.
+
+Tomando a = −m2, b = a + 2m2xp − 2myp e c = b − m2x2
+
+p + 2mxpyp − y2
+p
+
+teremos:
+
+x3 + ax2 + bx + c = 0.
+
+Sabemos que P , Q e R(cid:48) são as interseções da reta r com a curva Ω, então xp, xq e x(cid:48)
+r
+
+são as raízes da equação. Aplicando as Relações de Girard, temos que a soma das
+
+raízes é:
+
+Como a = −m2 temos que :
+
+−a = xp + xq + x(cid:48)
+r
+
+m2 = xp + xq + x(cid:48)
+r;
+
+x(cid:48)
+r = m2 − xp − xq.
+
+(4.1.1)
+
+Como R(cid:48) ∈ r podemos substituir suas coordenadas na equação da reta r, assim:
+
+y(cid:48) = m(x(cid:48)
+
+r − xp) + yp.
+
+(4.1.2)
+
+58
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+Como R = P + Q, R = (xr, yr) é a reﬂexão de R(cid:48) em relação ao eixo horizontal,
+
+assim xr = x(cid:48)
+
+r e yr = −y(cid:48)
+
+r substituindo nas equações (4.1.1) e (4.1.2) temos :
+
+e
+
+xr = m2 − xp − xq
+
+yr = m(xp − xr) − yp.
+
+Vamos analisar o caso que P = Q, nesse caso temos que a reta r é tangente
+
+à curva no ponto P . Assim, a inclinação da reta será a derivada no ponto P em
+
+relação a x. Usando derivação implícita, podemos concluir que:
+
+m =
+
+3x2
+
+p + a
+2yp
+
+,
+
+com yp (cid:54)= 0, pois caso contrário a reta seria vertical e teríamos P + P = ∞. Logo,
+
+a reta r que passa por P com inclinação m tem a mesma forma da equação y =
+
+m(x − xp) + yp. Observe que se realizarmos a interseção desta reta com a curva Ω,
+
+obteremos a equação x3 + ax2 + bx + c = 0, porém agora as raízes não são todas
+
+distintas, pois xp é uma raiz dupla. Assim, aplicando as Relações de Girard, temos
+
+que:
+
+m2 = xp + xp + x(cid:48)
+r;
+
+xr = x(cid:48)
+
+r = m2 − 2xp.
+
+Agora, para determinar yr seguimos o mesmo procedimento para o caso P (cid:54)= Q e
+
+temos
+
+yr = m(xp − xr) − yp.
+
+O caso em que P = ∞, teremos xr = xp e yr = yp e no caso Q = ∞, teremos
+
+xr = xq e yr = yq, pois ∞ é o elemento neutro da operação.
+
+Podemos, agora, padronizar a deﬁnição de soma entre dois pontos de uma curva
+
+elíptica em termos algébricos.
+
+59
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+Deﬁnição 4.2. (Soma de dois pontos de uma curva elíptica em termos algébricos)
+
+Seja Ω uma curva elíptica de equação y2 = x3 + ax + b, com 4a3 + 27b2 (cid:54)= 0 e sejam
+
+P = (xp, yp), Q = (xq, yq) e R = (xr, yr) pontos da curva Ω tais que R = P + Q.
+
+• Se P = ∞, então R = Q;
+
+• Se Q = ∞, então R = P ;
+
+• Se xp = xq e yp = −yq então R = ∞
+
+caso contrário, deﬁna
+
+Então:
+
+e
+
+m =
+
+
+
+
+
+
+yq − yp
+xq − xp
+
+,
+
+se P (cid:54)= Q;
+
+3x2
+
+p + a
+2yp
+
+,
+
+se P = Q.
+
+xr =
+
+
+
+
+
+
+m2 − xp − xq,
+
+se P (cid:54)= Q;
+
+m2 − 2xp,
+
+se P = Q.
+
+yr = m(xp − xr) − yp
+
+Deﬁnição 4.3. Um grupo (G, ∗) é um conjunto G com uma operação binária ∗
+
+deﬁnida sobre G, de tal forma que as seguintes propriedades sejam válidas:
+
+• A operação * é associativa, isto é, ∀a, b, c ∈ G temos a ∗ (b ∗ c) = (a ∗ b) ∗ c
+
+• Existe um elemento e ∈ G, chamado elemento neutro, tal que ∀a ∈ G temos
+
+a ∗ e = e ∗ a = a.
+
+• Para cada elemento a ∈ G existe um elemento a−1 ∈ G, chamado elemento
+
+inverso, tal que a ∗ a−1 = a−1 ∗ a = e.
+
+60
+
+4.1 Deﬁnição de uma Curva Elíptica
+
+Se a operação ∗ for comutativa, o grupo é chamado grupo comutativo ou grupo
+
+abeliano.
+
+Proposição 4.4. (E(K), +), onde + é a operação de soma entre dois pontos de K
+
+é um grupo abeliano.
+
+Demonstração: Vejamos se E(K) com a operação de soma entre dois pontos goza
+
+das propriedades de grupo abeliano:
+
+P1: Associatividade
+
+A demonstração pode ser encontrada em [9].
+
+P2: Existência do Elemento Neutro
+
+Sabemos que o ponto ∞ é o elemento neutro da soma entre dois pontos de uma
+
+curva elíptica e para qualquer P ∈ E(K) , temos P + ∞ = ∞ + P = P , logo existe
+
+elemento neutro.
+
+P3: Existência do Elemento Inverso
+
+Seja P um ponto qualquer da curva e o ponto −P a reﬂexão do ponto P em
+
+relação ao eixo horizontal. Como a reta que passa por P e −P é vertical, P +(−P ) =
+
+(−P ) + P = ∞.
+
+P4: Comutatividade
+
+A comutatividade segue do fato de que dados dois pontos P e Q da curva, a reta
+
+que passa por P e Q é a mesma que passa por Q e P , portanto, a interseção de
+
+ambas as retas com a curva é o mesmo ponto, logo, P + Q = Q + P .
+
+Portanto (E(K), +) é um grupo abeliano.
+
+(cid:3)
+
+A operação de soma é válida para qualquer corpo K, assim podemos trabalhar
+
+com curvas sobre corpos ﬁnitos. Trabalharemos com curvas sobre o corpo Zp.
+
+61
+
+4.2 Curvas elípticas sobre o corpo Zp
+
+4.2 Curvas elípticas sobre o corpo Zp
+
+Deﬁnição 4.5. Uma curva elíptica sobre o corpo Zp, é o conjunto de pontos (x, y)
+
+com x, y ∈ Zp, tais que y2 = x3 + ax + b, com a, b ∈ Zp e 4a3 + 27b2 (cid:54)≡ 0 mod p
+
+incluindo o ponto no inﬁnito ∞.
+
+A curva Zp possui um número ﬁnito de pontos, pois existem p possibilidades
+
+para a coordenada x e, para cada valor de x, existem dois valores possíveis para y.
+
+Assim, acrescentando o ponto inﬁnito, uma curva no ponto Zp, terá, no máximo,
+
+2p + 1 pontos.
+
+A curva E(K) é um conjunto ﬁnito de pontos. No exemplo abaixo iremos deter-
+
+minar todos os pontos de uma equação cúbica.
+
+Exemplo 4.6. Determine todos os pontos da curva E(Z11) de equação y2 = x3 −
+
+x + 3.
+
+Para descobrirmos se um ponto pertence à curva, tomamos cada valor de x,
+
+substituímos em (x3 − x + 3) mod 11 e averiguamos se este resultado é o quadrado
+
+módulo 11 de algum y. A tabela abaixo apresenta todos os valores possíveis de x e
+
+y.
+
+y
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+y2 mod 11
+0
+
+1
+
+4
+
+9
+
+5
+
+3
+
+3
+
+5
+
+9
+
+4
+
+1
+
+x
+
+0
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+62
+
+x3 − x + 3 mod 11
+3
+
+3
+
+9
+
+5
+
+8
+
+2
+
+4
+
+9
+
+1
+
+8
+
+3
+
+4.2 Curvas elípticas sobre o corpo Zp
+
+Na tabela podemos observar, por exemplo, que para x = 3, temos x3 − x + 3 ≡
+
+5 mod 11, que por sua vez é quadrado módulo 11 de y = 4 e y = 7. Assim, os pontos
+
+(3, 4) e (3, 7) pertencem à curva. Note que para x = 5 temos x3 − x + 3 ≡ 2 mod 11,
+
+mas não há nenhum valor de y cujo quadrado seja congruente a 2 módulo 11, ou
+
+seja, nenhum ponto da curva tem coordenada x = 5. Logo, os pontos da curva são:
+
+(0, 5), (0, 6), (1, 5), (1, 6), (2, 3), (2, 8), (3, 3), (3, 7), (6, 2), (6, 9), (7, 3), (7, 8), (8, 1), (8, 10),
+
+(10, 5) e (10, 6).
+
+Podemos observar que quanto maior o número primo p, mais inacessível se torna
+
+determinar todos os pontos de E(Zp).
+
+Na curva E(Zp), queremos realizar a soma entre dois pontos na forma algébrica.
+
+Vejamos o exemplo abaixo:
+
+Exemplo 4.7. Seja a curva E(Z11) de equação y2 = x3−x+3 e os pontos P = (1, 5)
+
+e Q = (2, 8) pertencentes à curva. Calcule as coordenadas do ponto R = P + Q.
+
+Solução:
+
+Como P (cid:54)= Q e xp (cid:54)= xq,
+
+m =
+
+yq − yp
+xq − xp
+
+= 3.
+
+Estamos trabalhando em Z11, isto signiﬁca que m é o inteiro tal que 1m ≡
+
+3 mod 11, logo, m = 3, pois 1.3 = 3 ≡ 3 mod 11.
+
+Calculando a coordenada xr:
+
+xr = m2 − xp − xq
+
+xr = (3)2 − 1 − 2
+
+xr = 6 mod 11.
+
+63
+
+Para yr:
+
+4.3 Logaritmo discreto elíptico
+
+yr = m(xp − xr) − yp
+
+yr = 3(1 − 6) − 5
+
+yr = −20 ≡ −9 ≡ 2 mod 11.
+
+Logo, R = (6, 2) e, pelo exemplo anterior, R ∈ Z11.
+
+4.3 Logaritmo discreto elíptico
+
+Já vimos que se realizarmos a soma P + P temos como resultado 2P , que é
+
+múltiplo de P . Realizando o mesmo procedimento e somando P novamente, teremos
+
+2P + P e o seu resultado será 3P , fazendo esse procedimento n vezes, com n ∈ N,
+
+temos:
+
+P + P + P + · · · + P = nP
+
+Assim, dado um ponto P ∈ E(Zp), podemos determinar os múltiplos 2P, 3P, · · · , nP
+
+deste ponto P .
+
+Exemplo 4.8. Considere a curva E(Z13) de equação y2 = x3 + 2x − 1. Veriﬁque se
+
+o ponto P = (5, 2) pertence à curva e, em caso positivo, determine seus múltiplos.
+
+Solução: Encontrando os pontos da curva, que são: (0, 5), (0, 8), (5, 2), (5, 11), (11, 0),
+
+(12, 3) e (12, 10). Temos que P ∈ E(Z13).
+
+Iremos, agora, determinar os múltiplos de P pela deﬁnição da soma algébrica.
+
+2P = P + P = (5, 2) + (5, 2) = (12, 3);
+
+3P = 2P + P = (12, 3) + (5, 2) = (0, 8);
+
+4P = 3P + P = (0, 8) + (5, 2) = (11, 0);
+
+64
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+5P = 4P + P = (11, 0) + (5, 2) = (0, 5);
+
+6P = 5P + P = (0, 5) + (5, 2) = (12, 10);
+
+7P = 6P + P = (12, 10) + (5, 2) = (5, 11);
+
+8P = 7P + P = (5, 11) + (5, 2) = ∞.
+
+Observe que estes são os únicos múltiplos de P , pois como 8P = ∞, a partir de
+
+9P os resultados seriam repetidos.
+
+Observe que, no exemplo anterior, todos os pontos da curva são múltiplos de
+
+P = (5, 2), como E(Z13) com a operação de adição entre dois pontos é um grupo
+
+abeliano, dizemos que P é um gerador do grupo.
+
+Podemos reescrever o Problema do Logaritmo Discreto à operação de soma entre
+
+dois pontos de uma curva sobre Zp. Considere um ponto P ∈ E(Zp) tal que P seja
+
+um gerador de E(Zp). Assim, para cada Q ∈ E(Zp), existe n ∈ (Zp) tal que
+
+Q = nP
+
+Onde n é o Logaritmo Discreto Elíptico de Q em relação a P , representado por
+
+n = logP (Q). O Problema do Logaritmo Discreto Elíptico baseia-se em determinar
+
+n para cada ponto Q.
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+O referencial teórico empregado nesta seção pode ser averiguado nas obras de
+
+[8], [10] e [11].
+
+65
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+4.4.1 Protocolo Diﬃe-Hellman aplicado a curvas elípticas so-
+
+bre Zp
+
+Vamos supor que duas pessoas, Maria e João desejam criar e compartilhar uma
+
+chave de codiﬁcação segura. Neste protocolo, além do número primo p e do gerador
+
+P , a equação da curva E(Zp) é pública, pois Maria e João precisam calcular os
+
+pontos usando a mesma curva. Abaixo está descrito a metodologia do Protocolo
+
+Diﬃe-Hellman :
+
+• Maria e João escolhem um primo p, uma curva E(Zp) de equação y2 = x3 +
+
+Ax + B com (cid:77)= 4A3 + 27B2 (cid:54)= 0, e um ponto P ∈ E(Zp) gerador do grupo.
+
+• Maria escolhe um inteiro nA ∈ Zp, mantém secreto, e calcula QA = nAP e
+
+envia QA para João.
+
+• João escolhe um inteiro nB, mantém secreto, calcula QB = nBP e envia QB
+
+para Maria.
+
+• Maria calcula RA = nAQB, que equivale a
+
+RA = nA(nBP ) = (nAnB)P.
+
+• João calcula RB = nBQA, que equivale a
+
+RB = nB(nAP ) = (nAnB)P.
+
+• Logo a chave secreta é RAB = RA = RB.
+
+Podemos observar que o método para criar e compartilhar a chave secreta é o
+
+mesmo. Logo, a comunicação pode ser realizada por um criptossistema qualquer.
+
+Caso um terceiro consiga capturar a comunicação, deverá calcular o logaritmo dis-
+
+creto elíptico de QA e QB para alcançar os dados iniciais.
+
+Vejamos um exemplo:
+
+66
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+Exemplo 4.9. Considere a curva E(Z11) de equação y2 = x3 − x + 3 e o ponto
+
+P = (1, 5) gerador de E(Z11).
+
+1. Suponhamos que Maria escolha nA = 3, e calcule QA = nAP , ou seja,
+
+P = (1, 5)
+
+2P = (2, 8)
+
+3P = (6, 2) = QA
+
+e envia QA para João.
+
+2. Suponhamos que João escolha nB = 2, e calcule QB = nBP , ou seja,
+
+P = (1, 5)
+
+2P = (2, 8)
+
+e envia QB para Maria.
+
+3. Maria então calcula RA = nAQB, ou seja,
+
+RA = 3.(2, 8) = (3, 4)
+
+4. João calcula RB = nBQA.
+
+Temos:
+
+RB = 2.(6, 2) = (3, 4)
+
+Logo a chave secreta é RAB = RA = RB = (3, 4).
+
+67
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+4.4.2 Criptossistema ElGamal
+
+Iremos exempliﬁcar o criptossistema de chave pública ElGamal utilizando, no-
+
+vamente, o caso Maria e João.
+
+Mais uma vez, o primo p, a curva E(Zp) da equação y2 = x3 + ax + b, com
+
+4a3 + 27b2 (cid:54)= 0, e o ponto p ∈ E(Zp), gerador do grupo, são abertos para o público.
+
+Para iniciar o processo de encriptação João, que irá enviar uma mensagem a Maria,
+
+deve transformar a mensagem, que chamaremos de M , em um ponto PM ∈ E(Zp).
+
+Essa transformação pode ser realizada de várias maneiras, por exemplo, converter
+
+a mensagem por um inteiro utilizando a Tabela 4.1, onde cada letra do alfabeto, a
+
+partir de A, recebe um valor numérico iniciado em 1.
+
+Tabela 4.1: Tabela de conversão ElGamal
+Letra Valor Letra Valor Letra Valor
+
+A
+
+B
+
+C
+
+D
+
+E
+
+F
+
+G
+
+H
+
+I
+
+01
+
+02
+
+03
+
+04
+
+05
+
+06
+
+07
+
+08
+
+09
+
+J
+
+K
+
+L
+
+M
+
+N
+
+O
+
+P
+
+Q
+
+R
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+Fonte: A autora.
+
+S
+
+T
+
+U
+
+V
+
+W
+
+X
+
+Y
+
+Z
+
+19
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+Feito isso, separamos esse inteiro em duas coordenadas de um ponto, de maneira
+
+que este ponto pertença à curva E(Zp). Caso o ponto gerado não pertença à curva,
+
+habitualmente acrescenta-se zero, ou outro algarismo ajustado entre as partes, no
+
+caso João e Maria, até que as coordenadas encontradas formem um ponto de E(Zp).
+
+Realizada esta transformação podemos iniciar a codiﬁcação.
+
+Abaixo está descrito a metodologia do Criptossistema ElGamal:
+
+68
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+1. Maria escolhe um inteiro secreto nA ∈ Zp, calcula QA = nAP e envia QA para
+
+João.
+
+2. João escolhe um inteiro aleatório k e calcula
+
+R = kP e S = PM + kQA
+
+3. João envia para Maria o par de pontos (R, S).
+
+Para Maria decifrar a mensagem, basta calcular S − nAR:
+
+S − nAR = PM + kQA − nA.kP = PM + k.nAP − k.nAP = PM .
+
+Vejamos um exemplo:
+
+Exemplo 4.10. Considere a curva E(Z11) de equação y2 = x3 − x + 3 e o ponto
+
+P = (1, 5) gerador de E(Z11) com a operação de soma entre dois pontos. Transforme
+
+a mensagem M em um ponto PM da curva.
+
+Utilizando a Tabela 4.1 temos que a mensagem M = FI, em termos numéricos,
+
+corresponde ao inteiro 0609, pois F=06 e I=09. Desmembrando este inteiro em duas
+
+coordenadas, encontramos o ponto (06, 09) = (6, 9), vamos veriﬁcar se este ponto
+
+pertence a curva:
+
+y2 = 92 = 81 ≡ 4 mod 11
+
+x3 − x + 3 = (6)3 − 6 + 3 ≡ 216 − 6 + 3 = 213 ≡ 4 mod 11
+
+Logo, a mensagem M é transformada no ponto PM = (6, 9).
+
+Exemplo 4.11. Agora, vamos supor, que João deseja enviar a mensagem M para
+
+Maria empregando o primo, a curva e o ponto gerador do exemplo anterior. Faça a
+
+codiﬁcação e decodiﬁcação da mensagem M utilizando o criptossistema ElGamal.
+
+69
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+Solução:
+
+Usando os dados do exemplo anterior temos que PM = (6, 9), Vejamos os passos
+
+do ElGamal:
+
+1. Suponhamos que Maria escolha nA = 3. Temos:
+
+P = (1, 5)
+
+2P = (2, 8)
+
+3P = (6, 2) = QA
+
+e envia para João.
+
+2. Suponhamos que João escolha k = 2, temos:
+
+R = kP = 2(1, 5) = (2, 8)
+
+e
+
+S = PM = (6, 9) + KQA = (6, 9) + 2(6, 2) = (6, 9) + (3, 4) = (6, 2).
+
+3. João envia para Maria p par de pontos (R, S)
+
+Para decodiﬁcar a mensagem, basta Maria calcular
+
+S−nAR = (6, 2)−3(2, 8) = (6, 2)−(3, 4) = (6, 2)+(3, 4 = (6, 2)+(3, 7) = (6, 9) = PM .
+
+Assim, Maria consegue ler a mensagem.
+
+4.4.3 Vantagens e Desvantagens
+
+O referencial teórico empregado nesta seção é averiguado na obra de [10], [11] e
+
+[8].
+
+70
+
+4.4 Criptograﬁa com Curvas Elípticas
+
+A Criptograﬁa de Curvas Elípticas está grandemente reconhecida como o al-
+
+goritmo mais forte para um dado comprimento de chaves, ela utiliza um período
+
+parcialmente curto de criptograﬁa chave (valor mantido no algoritmo de criptogra-
+
+ﬁa para decodiﬁcar uma mensagem criptografada). Esta chave de curto período,
+
+além de carecer menos poder computacional é mais rápida do que os outros de crip-
+
+tograﬁa de primeira geração com algoritmos de chave pública. As vantagens da
+
+Criptograﬁa de Curvas Elípticas são essencialmente signiﬁcativas em dispositivos
+
+sem ﬁo, onde o poder de computação, memória e vida útil da bateria é limitada.
+
+Uma das desvantagens da Criptograﬁa de Curvas Elípticas é que sua execução
+
+é mais complexa e difícil, o que aumenta a probabilidade de erros de implementa-
+
+ção. Além disso, o tamanho da mensagem criptografada é signiﬁcativamente maior
+
+comparado ao RSA, por exemplo.
+
+71
+
+CAPÍTULO 5
+
+CONSIDERAÇÕES FINAIS
+
+No desenvolvimento deste estudo vimos o método RSA e a criptograﬁa com
+
+curvas elípticas que vem se destacando ultimamente, haja visto sua utilização em
+
+criptomoedas. Porém, temos a certeza que os dois métodos padecem de um pro-
+
+blema: ambos tem um prazo de validade. Pois assim como os métodos criptográﬁcos
+
+se desenvolvem, o desenvolvimento para a criação de computadores melhores, por
+
+exemplo a computação quântica, para quebrá-los também aumenta.
+
+Infelizmente, não conseguimos atingir o objetivo de desvendar a criptograﬁa que
+
+está por trás do Bitcoin, por falta de materiais adequados. Porém, pretende-se,
+
+com este trabalho, contribuir para o enriquecimento de bibliograﬁa sobre o tema,
+
+que ainda é limitada, sistematizando e compilando em um único texto muitas infor-
+
+mações e exibir o algoritmo que está por trás dos processos. Assim, continuações
+
+naturais deste trabalho podem aparecer, seja para seguir desvendando os algoritmos
+
+das criptomoedas, seja para traduzir temas complexos relacionados a criptograﬁa
+
+para linguagem cotidiana com o intuito de motivar os alunos a estudar matemática.
+
+72
+
+REFERÊNCIAS BIBLIOGRÁFICAS
+
+[1] D. D. Costa, A matemática e os códigos secretos : uma introdução à criptograﬁa
+
+/ Claudio Saldan. Maringá, PR, 2014.
+
+[2] S. Coutinho, Números Inteiros e Criptograﬁa RSA. Rio de Janeiro, RJ : IMPA,
+
+2009.
+
+[3] K. A. B. C. Carvalho, A Criptograﬁa
+
+no Ensino da Matemática: aplicações para a Educação básica, Dissertação Mes-
+
+trado Proﬁssional em Matemática - PROFMAT/UEMA. Rio de Janeiro, 2018.
+
+[4] A. HEFEZ, Aritmética. Rio de Janeiro, 2014.
+
+[5] E. G. Andrade, Criptograﬁa com curvas elipticas. 2016. 78f. Dissertação (Mes-
+
+trado Proﬁssional em Matemática - PROFMAT)-Universidade Federal do Pará
+
+Instituto de Ciências Exatas e Naturais. Belém, 2016.
+
+[6] J. G. Oliveira, Curvas Elípticas sobre Corpos Finitos e Criptograﬁa de Chave
+
+Pública. 2009. 12f. Universidade Federal do Mato Grosso do Sul. Campo Grande
+
+- MS, novembro 2009.
+
+73
+
+[7] S. S. J. Correia, Criptograﬁa via curvas elípticas. 2013. 87f. Dissertação (Mes-
+
+trado Proﬁssional em Matemática - PROFMAT)- Universidade Federal do Es-
+
+tado do Rio de Janeiro - UNIRIO. Rio de Janeiro, 2013.
+
+[8] F. B. Lara, P. C. S; Oliveira, Curvas Elípticas: Aplicação em Criptograﬁa As-
+
+simétrica.10f. 1Laboratório Nacional de Computação Cientíﬁca – LNCC. Pe-
+
+trópolis, RJ.
+
+[9] L. C. WASHINGTON, Elliptic Curves: number theory and criptography,. Boca
+
+Raton: Chapman and Hall, 2nd edition ed., 2008.
+
+[10] Quais
+
+são
+
+as
+
+vantagens
+
+e
+
+desvantagens
+
+de
+
+Elliptic
+
+Curve
+
+Cryptography
+
+para
+
+segurança
+
+sem
+
+ﬁo.
+
+Disponível
+
+em:
+
+<http://ptcomputador.com/Networking/wireless-networking/81737.html>,
+
+Acesso em: 17 maio. 2019.
+
+[11] Segurança
+
+Lógica
+
+de
+
+Software.
+
+Disponível
+
+em:
+
+<http://segurancalogica01.blogspot.com/2008/04/criptograﬁa-com-o-uso-
+
+de-curvas.html>, Acesso em: 17 maio. 2019.
+
+[12] G. Domingues, H. H; Iezzi, Álgebra moderna. São Paulo, SP : Atual, 4. ed.
+
+reform. 5. tir ed., 2011.
+
+[13] E. L. e. a. Lima, A matemática do ensino médio. Rio de Janeiro, RJ : Sociedade
+
+Brasileira de Matemática, 10. ed. redigitada e rev ed., 2012.
+
+[14] A. C. M. Neto, Tópicos de matemática elementar. Rio de Janeiro, RJ : SBM,
+
+2. ed. ed., 2013.
+
+[15] I. N. Herstein, Tópicos de álgebra / Israel Nathan Herstein ; tradução de Adal-
+
+berto P. Bergamasco e L. H. Jacy Monteiro. São Paulo, SP : Polígono„ 1970.
+
+[16] E. L. e. a. Lima, Temas e problemas. Rio de Janeiro, RJ : SBM, 3. ed. ed.,
+
+2003.
+
+

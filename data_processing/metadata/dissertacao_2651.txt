@@ -1,0 +1,4933 @@
+JOSÉ LUIS COSTA
+
+MODELAGEM E CONTROLE FUZZY
+
+Santo André, 2017
+
+UNIVERSIDADE FEDERAL DO ABC
+
+CENTRO DE MATEMÁTICA, COMPUTAÇÃO E COGNIÇÃO
+
+JOSÉ LUIS COSTA
+
+MODELAGEM E CONTROLE FUZZY
+
+Orientador: Prof. Dr. Daniel Miranda Machado
+
+Dissertação de mestrado apresentada ao Centro de
+Matemática, Computação e Cognição para
+obtenção do título de Mestre
+
+ESTE EXEMPLAR CORRESPONDE A VERSÃO FINAL DA DISSERTAÇÃO
+
+DEFENDIDA PELO ALUNO JOSÉ LUIS COSTA,
+
+E ORIENTADA PELO PROF. DR. DANIEL MIRANDA MACHADO.
+
+SANTO ANDRÉ, 2017
+
+Sistema de Bibliotecas da Universidade Federal do ABCElaborada pelo Sistema de Geração de Ficha Catalográfica da UFABCcom os dados fornecidos pelo(a) autor(a).Costa, José Luis     Modelagem e controle fuzzy / José Luis Costa. — 2017.     71 fls.     Orientador: Daniel Miranda Machado     Dissertação (Mestrado) — Universidade Federal do ABC, Mestrado Profissional emMatemática em Rede Nacional - PROFMAT, Santo André, 2017.     1. Lógica Fuzzy. 2. Controle. 3. Modelagem. I. Machado, Daniel Miranda. II.Mestrado Profissional em Matemática em Rede Nacional - PROFMAT, 2017. III.Título.R E S U M O
+
+Este trabalho têm como objetivo demonstrar a utilização da modelagem em lógica
+fuzzy na tomada de decisões, em particular na escolha da taxa SELIC de modo an-
+tecipado, utilizando alguns dos parâmetros que servem para a decisão pelo COPOM
+(Comitê de política monetária), ao ﬁnal poderemos veriﬁcar que o resultado real é
+compatível com o resultado fuzzy, podendo portanto este tipo de modelagem ser utili-
+zada em outras situações. Também veremos a utilização da lógica fuzzy para controle
+de proximidades, quando temos uma incerteza de quanto um objeto estará perto de
+um obstáculo, como resultado veremos através de algumas execuções do programa
+que será mais adequado utilizar a lógica fuzzy do que a lógica clássica. Para essas
+aplicações utilizaremos as linguagens de programação R e Kturtle, sendo um diferen-
+cial pois são gratuitas e possibilitam a criação de outras aplicações. Teremos antes a
+demostração da teoria da lógica fuzzy necessária para as aplicações propostas.
+
+Palavras-chave: modelagem, fuzzy, controle
+
+vii
+
+A B S T R A C T
+
+The purpose of this dissertation is to demonstrate the use of fuzzy logic modeling
+in decision making, particularly in the selection of the SELIC rate in advance, using
+some of the parameters that serve for the decision by the COPOM (Monetary Policy
+Committee). We verify that the actual result is compatible with the fuzzy result, so
+that this type of modeling can be used in other situations. We will also see the use of
+fuzzy logic for neighborhood control when we have an uncertainty about how much
+an object will be close to an obstacle, as a result we will see through some program
+executions that it will be more appropriate to use fuzzy logic than classical logic. For
+these applications we will use the programming languages R and Kturtle, being an
+advantage because they are free and allow the creation of other applications. We will
+ﬁrst develop of the fuzzy logic theory required for the proposed applications.
+
+Keywords: fuzzy, modeling, control
+
+ix
+
+C O N T E Ú D O
+
+Lista de Figuras
+
+Lista de Tabelas
+
+I N T R O D U Ç Ã O
+
+xiii
+
+xv
+
+1
+
+1 C O N J U N T O S F U Z Z Y
+
+5
+5
+1.1 Incerteza . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6
+1.2 Pertinência . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7
+1.3 Subconjuntos Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+8
+1.4 Operações com Conjuntos Fuzzy . . . . . . . . . . . . . . . . . . . . . .
+1.5 Alpha-nível
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1.6 O Princípio de Extensão de Zadeh . . . . . . . . . . . . . . . . . . . . . . 15
+1.7 Números Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+1.7.1 Operações aritméticas com números fuzzy . . . . . . . . . . . . . 20
+
+2 L Ó G I C A F U Z Z Y
+
+25
+2.1 Conectivos básicos da Lógica Classica . . . . . . . . . . . . . . . . . . . . 25
+2.2 Conectivos básicos da Lógica Fuzzy . . . . . . . . . . . . . . . . . . . . . 28
+2.2.1 Operações t-norma e t-conorma . . . . . . . . . . . . . . . . . . . 28
+2.3 Raciocínio Aproximado e Variáveis Linguísticas
+. . . . . . . . . . . . . . 32
+2.4 Modus Ponens e Modus Ponens Generalizado . . . . . . . . . . . . . . . 33
+2.5 Controle Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+2.6 Base de Regras Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+2.7 Controlador Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+. . . . . . . . . . . . . . . . . . . . 41
+2.8 O Método de Inferência de Mamdani
+2.9 O Método de Inferência de Takagi-Sugeno-Kang . . . . . . . . . . . . . . 44
+2.10 Métodos de Defuzziﬁcação . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+2.10.1 Centro de gravidade, Centroide ou Centro de Área . . . . . . . . 47
+2.10.2 Centro dos Máximos . . . . . . . . . . . . . . . . . . . . . . . . . 48
+. . . . . . . . . . . . . . . . . . . . . . . . . 49
+2.10.3 Média dos Máximos
+
+3 A P L I C A Ç Õ E S
+
+51
+3.1 Taxa Selic . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+xi
+
+xii
+
+Conteúdo
+
+3.1.1 Programa para modelagem Fuzzy . . . . . . . . . . . . . . . . . . 52
+3.1.2 Variáveis de entrada e saída . . . . . . . . . . . . . . . . . . . . . 56
+3.1.3 Funções de Pertinência . . . . . . . . . . . . . . . . . . . . . . . . 57
+3.1.4 Regras . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+3.1.5 Inferência e defuzziﬁcação . . . . . . . . . . . . . . . . . . . . . . 58
+3.1.6 Conclusão . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+3.2 Uso da Lógica Fuzzy em proximidades . . . . . . . . . . . . . . . . . . . 60
+3.2.1 Programa para simulação de robô . . . . . . . . . . . . . . . . . . 60
+3.2.2 Comentários
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+3.2.3 Uso da aplicação . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+3.2.4 Conclusão . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 67
+
+Bibliograﬁa
+
+71
+
+L I S TA D E F I G U R A S
+
+Figura 1
+
+Figura 2
+
+Figura 3
+
+Figura 4
+
+Figura 5
+
+Figura 6
+
+Figura 7
+
+Figura 8
+
+Figura 9
+
+Lâmpada apagada e lâmpada acesa . . . . . . . . . . . . . . . .
+
+Copos cheios, meio-cheios ou meio-vazios?
+
+. . . . . . . . . . .
+
+Exemplo função de pertinência f (x) = e(−(x−3)2)
+
+. . . . . . . . .
+
+Conjuntos Fuzzy
+
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+
+União Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Intersecção Fuzzy . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+6
+
+7
+
+8
+
+9
+
+9
+
+Operações com subconjuntos fuzzy: (a) união; (b) intersecção;
+(c) complemento. [7]
+
+. . . . . . . . . . . . . . . . . . . . . . . 10
+
+Altura baixa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+Peso gordo
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+Figura 10
+
+Tabela exemplo operações fuzzy
+
+. . . . . . . . . . . . . . . . . 11
+
+Figura 11
+
+Imagem de um subconjunto fuzzy a partir do princípio de ex-
+tensão para uma função f [7] . . . . . . . . . . . . . . . . . . . 16
+
+Figura 12
+
+Número Fuzzy Triangular
+
+. . . . . . . . . . . . . . . . . . . . . 18
+
+Figura 13
+
+Número Fuzzy Trapezoidal
+
+. . . . . . . . . . . . . . . . . . . . 19
+
+Figura 14
+
+Número fuzzy em forma de sino [7]
+
+. . . . . . . . . . . . . . . 19
+
+Figura 15
+
+Esquema geral de um controlador fuzzy. [7] . . . . . . . . . . . 40
+
+Figura 16
+
+Saídas parciais no método de Mamdani. [7]
+
+. . . . . . . . . . . 43
+
+Figura 17
+
+Saída ﬁnal do controlador fuzzy de Mamdani. [7] . . . . . . . . 44
+
+Figura 18
+
+Saída do controlador fuzzy TSK para o exemplo [7] . . . . . . . 46
+
+Figura 19
+
+Exemplo defuzziﬁcação centroide . . . . . . . . . . . . . . . . . 48
+
+Figura 20
+
+Defuzziﬁcador centro de máximo. [7]
+
+. . . . . . . . . . . . . . 49
+
+Figura 21
+
+Entrada variável IPCA . . . . . . . . . . . . . . . . . . . . . . . 56
+
+Figura 22
+
+Entrada variável Dólar
+
+. . . . . . . . . . . . . . . . . . . . . . . 56
+
+Figura 23
+
+Entrada variável Desemprego . . . . . . . . . . . . . . . . . . . 57
+
+xiii
+
+xiv
+
+LISTA DE FIGURAS
+
+Figura 24
+
+Saída variável SELIC . . . . . . . . . . . . . . . . . . . . . . . . 57
+
+Figura 25
+
+Funções de pertinência . . . . . . . . . . . . . . . . . . . . . . . 58
+
+Figura 26
+
+Saída sistema fuzzy com valores de janeiro 2013
+
+. . . . . . . . 59
+
+Figura 27
+
+Comparação SELIC real e fuzzy . . . . . . . . . . . . . . . . . . 59
+
+Figura 28
+
+Função de aproximação . . . . . . . . . . . . . . . . . . . . . . 62
+
+Figura 29
+
+Percurso da tartaruga com desvio e calor ﬁnal
+
+. . . . . . . . . . 63
+
+L I S TA D E TA B E L A S
+
+Tabela 1
+
+Tabela 2
+
+Tabela 3
+
+Tabela 4
+
+Tabela 5
+
+Tabela 6
+
+Tabela 7
+
+Tabela 8
+
+Tabela 9
+
+Conectivo e . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+Conectivo ou . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+Conectivo negação . . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+Conectivo implicação . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+Forma Geral de uma base de regras fuzzy. . . . . . . . . . . . . . 38
+
+Ilustração da obtenção da relação R.
+
+. . . . . . . . . . . . . . . 41
+
+Base de regras controlador fuzzy com duas entradas e uma saída. 42
+
+Base de regras do método TSK.
+
+. . . . . . . . . . . . . . . . . . 44
+
+Base de duas regras do método TSK.
+
+. . . . . . . . . . . . . . . 45
+
+Tabela 10
+
+Base de regras para o exemplo.
+
+. . . . . . . . . . . . . . . . . . 45
+
+Tabela 11
+
+Tabela de valores das entradas fuzzy.
+
+. . . . . . . . . . . . . . . 68
+
+Tabela 12
+
+Regras de Inferência . . . . . . . . . . . . . . . . . . . . . . . . 69
+
+xv
+
+A G R A D E C I M E N T O S
+
+Agradeço
+
+A Deus em primeiro lugar, por ter me dado força para terminar esse curso.
+
+A Minha família, pelo incentivo e apoio que me deram.
+
+Aos professores da UFABC, pela dedicação e empenho, em especial ao meu orienta-
+
+dor pela paciência e incentivo na realização deste trabalho.
+
+Aos meus companheiros de curso, pelo companheirismo e apoio nos estudos fora
+da sala de aula, em especial agradeço a professora Marilene e engenheira Bete pela
+companhia nas viagens.
+
+Ao PROFMAT, por ter dado oportunidade à realização deste sonho.
+
+xvii
+
+I N T R O D U Ç Ã O
+
+Este trabalho tem como objetivo utilizar a lógica fuzzy através da modelagem para
+tomada de decisões em que temos situações onde as informações são incertas e tam-
+bém para controle de um robô evitando obstáculos. Mas antes o que é lógica?
+
+Lógica vem do termo grego logiké que está relacionado com razão ou ciência do ra-
+ciocínio, segundo o ﬁlósofo grego Aristóteles a lógica objetiva o estudo do pensamento
+e as regras e leis que o controlam. Podemos considerar que a lógica é o estudo de
+processos de inferência que a partir de antecessoras válidas seguindo regras levam a
+consequências verdadeiras, exemplo: na frase "Se ﬁzer Sol vou para a praia", signiﬁca
+que se for verdade que o dia está com Sol com certeza eu irei para a praia.
+
+Euler com círculos representando conjuntos e Venn com seus diagramas tornaram
+mais simples a lógica com sua representação geométrica. As propriedades dos con-
+juntos tem semelhanças com proposições lógicas, de forma a constituir a álgebra dos
+conjuntos, uma em particular, utilizando os princípios de Aristóteles é representada
+por apenas dois números, foi desenvolvida pelo matemático inglês Boole, que estudou
+e empregou ideias algébricas no domínio da lógica, sendo denominada de álgebra bo-
+oleana ou lógica binária ou lógica a dois estados, exemplos: "sim"e "não", "ligado"e
+"desligado", este tipo de lógica é utilizada neste trabalho como "lógica clássica".
+
+A lógica binária é largamente utilizada em computadores, pois é muito mais simples
+reconhecer apenas dois estados associados aos números 0 e 1, do que reconhecer
+10 estados diferentes para representar números decimais, para realizar as operações
+matemáticos existem os operadores e, ou e negação que podem ser implementados
+em circuitos lógicos.
+
+Na implementação de certos tipos de problemas o uso da lógica clássica pode ser
+suﬁciente, mas temos situações com valores verdade imprecisos, como por exemplo o
+que pode signiﬁcar "calor", para alguns acima de 25oC é quente, para outros pode ser
+acima de 30oC, poderíamos utilizar valores analógicos, que resultariam em equações
+matemáticas complexas que nem sempre teriam o resultado esperado. As situações
+incertas precisam de uma modelagem diferenciada, podemos aﬁrmar com 100% que
+50oC é quente, podendo atribuir 70% para 25oC, este tipo situação é considerado um
+modelo de lógica fuzzy. A lógica fuzzy é utilizada em situações em que temos um grau
+de certeza entre 0 e 1.
+
+1
+
+2
+
+I N T R O D U Ç Ã O
+
+O conceito de lógica fuzzy foi introduzido, em 1965, por Lotﬁ A. Zadeh, reconhecido
+como grande colaborador da lógica, do controle moderno e da inteligência artiﬁcial.
+Zadeh observou que os recursos disponíveis não eram capazes de automatizar ativida-
+des humanas relacionadas a problemas de natureza industrial, química ou biológica,
+que compreendessem situações ambíguas. Publicou um artigo resumindo os concei-
+tos dos conjuntos fuzzy, revolucionando com a criação de sistemas fuzzy. Esta teoria
+propôs a extensão da lógica clássica através de uma função que operasse sobre o inter-
+valo dos números reais [0, 1].
+
+Uma das principais aplicações da lógica fuzzy é em sistemas de controle, onde os ter-
+mos linguísticos são transformados em implicações lógicas, como regras "Se ... então
+...", que são utilizadas em controladores fuzzy, sendo que as informações e as regras
+são fornecidas por especialistas ou extraídas de dados numéricos, temos como exem-
+plo de controladores: os controles fuzzy de plantas industriais, reﬁnarias, processos
+biológicos e químicos, trocador de calor, máquina diesel, tratamento de água e sistema
+de operação automática de trens.
+
+Na atualidade a lógica fuzzy é aplicada em sistemas de controle e de suporte à
+decisão, onde a descrição do problema não pode ser feita de forma precisa. Esta me-
+todologia tem sido aplicada em análise de dados, construção de sistemas especialistas,
+controle e otimização, reconhecimento de padrões; portanto, desde controle de aero-
+naves a máquinas de lavar roupa, de análise de estoques de venda a modelos genéticos,
+de reconhecimento de escrita a ajuste de foco de câmeras de vídeo [12].
+
+A tese está organizada do seguinte modo:
+
+No capitulo 1 apresentamos a deﬁnição de lógica fuzzy, a comparação com a lógica
+clássica, operações com os subconjuntos fuzzy e deﬁnição de α-nível, veremos como
+transformar números reais em subconjuntos fuzzy e construção de funções de perti-
+nência e seus diferentes formatos.
+
+No capítulo 2 será dada a noção da lógica fuzzy, seus conectivos e tabelas verdades
+e transformações de uma sentença em lógica fuzzy através do Modus Ponens, com esta
+teoria poderemos construir um modelador que transforme entradas reais em valores
+fuzzy que serão manipulados segundo regras estabelecidas inferindo resultados na
+saída que poderão voltar a serem reais através do processo chamado defuzziﬁcação.
+
+Finalmente no capítulo 3 utilizaremos o método do capítulo 2 para desenvolver um
+sistema de modelagem fuzzy para a determinação da taxa SELIC e uma aplicação para
+uso didático com os alunos do percurso de um robô evitando obstáculos utilizando a
+lógica fuzzy.
+
+I N T R O D U Ç Ã O
+
+3
+
+Para melhor compreensão do assunto abordado tenho como sugestão a leitura dos
+manuais dos programas R e Kturtle, que podem ser acessados nos próprios programas,
+a leitura da bibliograﬁa ao ﬁnal da tese, assim como um conhecimento básico da lógica
+clássica.
+
+1
+
+C O N J U N T O S F U Z Z Y
+
+Veremos neste capítulo o que são os conjuntos fuzzy, suas operações e o que é um
+número fuzzy, os conceitos servirão de base para efetuarmos as operações necessárias a
+serem utilizadas em um controlador fuzzy, a teoria desse capítulo têm como referência
+o livro [7].
+
+1.1 I N C E R T E Z A
+
+O que é incerteza? Segundo alguns dicionários é falta de certeza, estado do que é
+incerto, hesitação, dúvida. Na nossa vida temos algumas certezas como uma lâmpada
+está acesa ou apagada 1, um objeto está dentro de uma caixa ou fora dela, numa
+partida de tênis ou você vence ou perde, podemos associar em matemática esses dois
+estados aos algarismos 0 e 1, esta associação facilita em muito o uso nos computadores,
+pois os mesmos têm mais facilidade de distinguir melhor apenas esses dois estados,
+sendo que para o controle dos computadores é largamente utilizada a lógica clássica.
+
+Mas e para os casos em que existem dúvidas? Como altura de uma pessoa, pois
+se uma pessoa de 1,70 metros vivendo numa aldeia de pigmeus pode ser considerada
+alta, mas vivendo na Holanda pode ser considerada baixa; o que pode ser considerado
+quente? 20o, 25o, 30o, 35o, 40o; uma pessoa pode ser rica morando em uma favela ou
+pobre morando em um bairro de empresários, na ﬁgura 2 quando podemos dizer que
+o copo está cheio?. Para esses casos a lógica clássica é difícil de ser usada, para essa
+situação foi introduzida a teoria da lógica fuzzy em 1965 pelo matemático Lotﬁ Asker
+Zadeh.
+
+5
+
+6
+
+C O N J U N T O S F U Z Z Y
+
+Figura 1: Lâmpada apagada e lâmpada acesa
+
+Figura 2: Copos cheios, meio-cheios ou meio-vazios?
+
+1.2 P E R T I N Ê N C I A
+
+Na lógica clássica (também chamada lógica crisp) um elemento pertence ou não per-
+tence a um conjunto, não podendo estar contido parcialmente, geralmente associamos
+o 0 para "não pertence"e o 1 para "pertence".
+
+Na lógica clássica um elemento pertence ou não pertence a um conjunto, em termos
+matemático podemos representar com o algarismo 1 que um elemento está (pertence
+a um conjunto) e o algarismo 0 para um elemento que não está em um conjunto. A
+relação de pertinência temos associado a noção de função característica.
+
+Deﬁnição 1.1. Seja U um conjunto e A um subconjunto de U. A função característica
+de A é dada por
+
+(cid:40)
+
+χA(x) =
+
+1 se x ∈ A
+0 se x /∈ A
+
+1.3 S U B C O N J U N T O S F U Z Z Y
+
+7
+
+Temos que χA é uma função cujo domínio é U e a imagem está contida no conjunto
+{0,1}, sendo χA = 1 indica que x está em A, e χA = 0 indica que x não está em A.
+Assim a função característica descreve completamente o conjunto A já que tal função
+indica quais elementos de U são também elementos de A. Porém, existem casos em
+que a pertinência entre elementos e conjuntos não é precisa, isto é, não sabemos dizer
+se um elemento pertence efetivamente a um conjunto ou não.
+
+1.3 S U B C O N J U N T O S F U Z Z Y
+
+Existem situações em que um elemento não está totalmente em um conjunto, por
+exemplo, a cor verde está no conjunto amarelo? está em parte, pois a cor verde é a
+combinação da cor azul com a cor amarelo, portanto podemos dizer que a cor verde
+pertence parcialmente ao conjunto amarelo ou têm um grau de pertinência ao conjunto
+amarelo.
+
+Começaremos por um exemplo:
+
+Exemplo 1.1. (Números próximos de 3) Imagine um aluno do PROFMAT que faça o
+curso em Santo André e que more em Santos, sendo que o curso começa às 3:00hs da
+tarde, ele irá de carro para não atrasar, mas ele nunca chegará exatamente às 3:00hs
+da tarde, devido a uma particularidade do tempo. Supondo dar tudo certo, ele poderá
+chegar mais próximo do horário previsto, mas a vida é cheia de imprevistos, poderá
+chover e o transito ﬁcar lento (lento quanto?), a concessionária poderá fechar uma
+das vias para manutenção, consequentemente terá acumulo de carros que atrapalhará
+o transito (em quanto?), portanto neste caso temos informações incertas que podem
+auxiliar a uma tomada de decisão para sair antes e não atrasar, a lógica fuzzy auxi-
+lia em situações como essa, onde temos informações incertas. Podemos ver em 3 o
+conjunto F dos números reais próximos de 3:
+
+F = {x ∈ R : x é próximo de 3}.
+
+1.
+
+0.5
+
+f
+
+0
+
+0.5
+
+1.
+
+1.5
+
+2.
+
+2.5
+
+3.
+
+3.5
+
+4.
+
+4.5
+
+Figura 3: Exemplo função de pertinência f (x) = e(−(x−3)2)
+
+8
+
+C O N J U N T O S F U Z Z Y
+
+Se deﬁnirmos a função ϕF : R −→ [0, 1], que associa cada x real ao valor de proxi-
+
+midade ao ponto 3 pela expressão
+
+(cid:40)
+
+ϕF(x) =
+
+(1 − |x − 3|)
+0
+
+se 2 ≤ x ≤ 4
+se x /∈ [2, 4]
+
+então o subconjunto fuzzy F dos pontos próximos de 3, caracterizado por ϕF, é tal que
+ϕF(3, 01) = 0, 99 e ϕF(5) = 0. Neste caso, dizemos que x = 3, 01 é um ponto próximo
+de 3 com grau de proximidade 0,99, e x = 5 não é próximo de 3. Poderíamos também
+deﬁnir outra função de proximidade a 3. Conforme descrito abaixo:
+
+νF(x) = exp[−(x − 3)2],
+com x ∈ R, então os elementos do conjunto fuzzy F, caracterizado pela função νF,
+teriam outros graus de pertinência: νF(3, 01) = 0, 9999 e νF(5) = 0, 018315. Vemos que
+a caracterização de proximidade é subjetiva e depende da função de pertinência que
+pode ser dada por uma inﬁnidade de maneiras diferentes, dependendo de como se
+quer avaliar o termo "próximo".
+
+Isso motiva a seguinte deﬁnição:
+
+Deﬁnição 1.2. Seja U um conjunto (clássico); um subconjunto fuzzy F de U é caracte-
+rizado por uma função
+
+ϕF : U −→ [0, 1],
+
+pré-ﬁxada, chamada função de pertinência do subconjunto fuzzy F. O índice F na
+função de pertinência é usado em analogia à função característica de subconjunto
+clássico, conforme deﬁnição 1.1.
+
+1.4 O P E R A Ç Õ E S C O M C O N J U N T O S F U Z Z Y
+
+Considere para exempliﬁcação a ﬁgura 4.
+
+Figura 4: Conjuntos Fuzzy
+
+Considerando que na lógica clássica a união de dois conjuntos tem como resultado
+um conjunto com todos os elementos desses conjuntos, e valores maiores(máximos)
+
+1.4 O P E R A Ç Õ E S C O M C O N J U N T O S F U Z Z Y
+
+9
+
+englobam os valores menores e o conjunto resultado somente será vazio se não houver
+nenhum elemento nesses conjuntos, ver ﬁgura 5, podemos dizer que a operação união
+fuzzy é uma extensão da lógica clássica.
+
+Figura 5: União Fuzzy
+
+Deﬁnição 1.3. (União) A união entre A e B é o subconjunto fuzzy de U cuja função
+de pertinência é dada por
+
+ϕ(A∪B)(x) = max{ϕA(x), ϕB(x)}, x ∈ U.
+
+Observamos que esta deﬁnição é uma extensão do caso clássico. De fato, quando A e
+B são subconjuntos clássicos de U temos:
+
+max{χA(x), χB(x)} =
+
+(cid:40)
+
+1 se x ∈ A ou x ∈ B
+x /∈ B
+0 se x /∈ A e
+
+(cid:40)
+
+=
+
+1 se x ∈ A ∪ B
+0 se x /∈ A ∪ B
+
+= χA∪B(x), x ∈ U.
+
+Considerando que na lógica clássica a intersecção de dois conjuntos tem como resul-
+tado um conjunto com todos os elementos em comum desses conjuntos, e os valores
+menores(mínimos) estão contidos em valores maiores e o conjunto resultado somente
+será máximo se os elementos desses conjuntos forem também máximos, ver ﬁgura 6,
+podemos dizer que a operação intersecção fuzzy é uma extensão da lógica clássica.
+
+Figura 6: Intersecção Fuzzy
+
+10
+
+C O N J U N T O S F U Z Z Y
+
+Deﬁnição 1.4. (Intersecção) A Intersecção entre A e B é o subconjunto fuzzy de U cuja
+função de pertinência é dada por
+
+ϕ(A∪B)(x) = min{ϕA(x), ϕB(x)}, x ∈ U.
+
+Considerando que na lógica clássica a união de um conjunto com seu complementar
+produz o conjunto universo, o mesmo acontece com a operação complementar fuzzy,
+portanto pode ser considerada também uma extensão da lógica clássica.
+
+Deﬁnição 1.5. (Complementar de subconjuntos fuzzy) O Complementar de A é o sub-
+conjunto fuzzy A(cid:48) de U cuja função de pertinência é dada por
+
+ϕ(A(cid:48))(x) = 1 − ϕA(x), x ∈ U.
+
+Podemos veriﬁcar graﬁcamente as operações na ﬁgura 7.
+
+Figura 7: Operações com subconjuntos fuzzy: (a) união; (b) intersecção; (c) complemento. [7]
+
+Exemplo 1.2. Vamos fazer uma comparação do IMC (Índice de Massa Corpórea), cal-
+culado usando a fórmula I MC = peso
+(altura)2 , utilizando as operações fuzzy com os conjun-
+tos altura(ser baixo) e peso(ser gordo) utilizando as funções de pertinência das ﬁguras
+8 e 9.
+
+Veriﬁcamos na tabela 10 que o uso de operações dos subconjuntos fuzzy pode ser
+um método alternativo, no exemplo, a pessoa 1 diverge do IMC devido a estar nos
+extremos, observamos também que a operação A ∩ A(cid:48) é diferente da lógica clássica,
+onde A ∩ A(cid:48) = ∅.
+
+1.4 O P E R A Ç Õ E S C O M C O N J U N T O S F U Z Z Y
+
+11
+
+0
+
+0.2
+
+0.4
+
+0.6
+
+0.8
+
+1.
+
+1.2
+
+1.4
+
+1.6
+
+1.8
+
+2.
+
+Figura 8: Altura baixa
+
+1.
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+
+1.
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+
+0
+
+20.
+
+40.
+
+60.
+
+80.
+
+100.
+
+Figura 9: Peso gordo
+
+Pessoa
+
+Peso Altura
+
+IMC
+
+Grau Peso (A) Grau Altura (B) A ∪ B A(cid:48) A ∩ A(cid:48) A ∩ B
+
+1
+2
+3
+4
+
+120
+90
+75
+80
+
+1.93
+1.80
+1.75
+1.68
+
+32.21
+27.77
+24.49
+28.34
+
+1
+0.6
+0.3
+0.4
+
+0
+0.33
+0.5
+0.73
+
+1
+0.6
+0.5
+0.73
+
+0
+0.4
+0.7
+0.6
+
+0
+0.4
+0.3
+0.4
+
+0
+0.33
+0.3
+0.4
+
+Figura 10: Tabela exemplo operações fuzzy
+
+Deﬁnição 1.6. Os subconjuntos A e B de U são iguais se suas funções de pertinência
+coincidem, isto é, se ϕA(x) = ϕB(x) para todo x ∈ U.
+
+Proposição 1.7. As operações entre subconjuntos fuzzy satisfazem as seguintes proprie-
+dades:
+
+12
+
+C O N J U N T O S F U Z Z Y
+
+• A ∪ B = B ∪ A
+
+• A ∩ B = B ∩ A
+
+• A ∪ (B ∪ C) = (A ∪ B) ∪ C
+
+• A ∩ (B ∩ C) = (A ∩ B) ∩ C
+
+• A ∪ A = A
+
+• A ∩ A = A
+
+• A ∪ (B ∩ C) = (A ∪ B) ∩ (A ∪ C)
+
+• A ∩ (B ∪ C) = (A ∩ B) ∪ (A ∩ C)
+
+• A ∩ ∅ = ∅ e A ∪ ∅ = A
+
+• A ∩ U = A e A ∪ U = U
+
+• (A ∪ B)(cid:48) = A(cid:48) ∩ B(cid:48) e (A ∩ B)(cid:48) = A(cid:48) ∪ B(cid:48) (leis de DeMorgan).
+
+Demonstração. A demonstração de cada propriedade é uma aplicação imediata das
+propriedades de máximo e mínimo entre funções, isto é,
+
+max[ϕ(x), ψ(x)] =
+
+1
+2
+
+[ϕ(x) + ψ(x) + |ϕ(x) − ψ(x)|]
+
+min[ϕ(x), ψ(x)] =
+
+1
+2
+
+[ϕ(x) + ψ(x) − |ϕ(x) − ψ(x)|]
+
+onde, ϕ e ψ são funções com imagens em R. Demonstraremos apenas as duas
+
+primeiras operações, as outras podem ser feitas de modo análogo.
+
+A ∪ B = max[ϕA(x), ϕB(x)] =
+
+1
+2
+
+[ϕA(x) + ϕB(x) + |ϕA(x) − ϕB(x)|],
+
+1
+2
+
+[ϕB(x) + ϕA(x) + |ϕB(x) − ϕA(x)|] = max[ϕB(x), ϕA(x)] = B ∪ A
+
+A ∩ B = min ϕA(x), ϕB(x)] =
+
+1
+2
+
+[ϕA(x) + ϕB(x) − |ϕA(x) − ϕB(x)|],
+
+1
+2
+
+[ϕB(x) + ϕA(x) − |ϕB(x) − ϕA(x)|] = min ϕB(x), ϕA(x)] = B ∩ A
+
+1.5 A L P H A - N Í V E L
+
+Os elementos de um subconjunto fuzzy A de U possuem uma certa ordem que podemos
+classiﬁcar por graus. Um elemento x de U está em uma classe se seu grau de pertinência
+
+1.5 A L P H A - N Í V E L
+
+13
+
+é maior que um determinado valor limiar ou nível α ∈ [0, 1] que deﬁne aquela classe. O
+conjunto clássico de tais elementos é um α-nível de A, denotado por [A]α.
+
+Deﬁnição 1.8. (α-nível). Seja A um subconjunto fuzzy de U e α ∈ [0, 1].
+
+O α-nível de A é o subconjunto clássico de U deﬁnido por
+
+[A]α ={x ∈ U : ϕA(X) ≥ α} para 0 < α ≤ 1 .
+
+O nível 0 de um subconjunto fuzzy A é deﬁnido como sendo o menor subconjunto
+(clássico) fechado de U que contém o conjunto suporte de A. Numa linguagem mate-
+mática, [A]0 é o fecho do suporte de A e é indicado por suppA.
+
+Teorema 1.9. Sejam A e B subconjuntos fuzzy de U. Uma condição necessária e suﬁciente
+para que A = B é que [A]α = [B]α, para todo α ∈ [0, 1].
+
+Demonstração. É claro que A = B ⇒ [A]α = [B]α para todo α ∈ [0, 1]. Suponhamos
+agora que [A]α = [B]α para todo α ∈ [0, 1]. Se A (cid:54)= B então existe x ∈ U tal que
+ϕA(x) (cid:54)= ϕB(x). Logo, temos ϕA(x) < ϕB(x) ou ϕA(x) > ϕB(x). Supondo ϕA(x) >
+ϕB(x), podemos concluir que x ∈ [A]ϕA(x) e x /∈ [B]ϕA(x) e, portanto, [A]ϕA(x) (cid:54)= [B]ϕA(x),
+o que contradiz a hipótese [A]α = [B]α para todo α ∈ [0, 1]. De maneira análoga
+chegamos a uma contradição se admitirmos que ϕA(x) < ϕB(x).
+
+Uma consequência deste teorema é a relação existente entre a função de pertinência
+
+de um subconjunto fuzzy e as funções características de seus α-níveis.
+
+Corolário 1.10. A função de pertinência ϕA de um conjunto fuzzy A pode ser expressa
+em termos de funções características de seus α-níveis, isto é,
+
+ϕA(x) = sup
+α∈[0,1]
+
+min[α, χ[A]α(x)], onde χ[A]α(x) =
+
+
+
+
+1
+
+
+
+0
+
+se x ∈ [A]α
+
+se x /∈ [A]α
+
+O teorema a seguir é de extrema importância no estudo da teoria dos conjuntos
+fuzzy e indica uma condição suﬁciente para que uma família de subconjuntos clássicos
+de U seja formada por α-níveis de um subconjunto fuzzy de U.
+
+Teorema 1.11. (Teorema de Representação de Negoita e Ralescu) Seja Aα, α ∈ [0, 1],
+uma família de subconjuntos clássicos de U de modo que se veriﬁquem
+
+(i) ∪Aα ⊂ A0 com α ∈ [0, 1];
+
+(ii) Aα ⊂ Aβ se β ≤ α;
+(cid:92)
+
+(iii) Aα =
+
+Aαk se αk convergir para α com αk ≤ α.
+
+k≥0
+
+14
+
+C O N J U N T O S F U Z Z Y
+
+Nestas condições existe um único subconjunto fuzzy A de U cujos α-níveis são exatamente
+os subconjuntos clássicos Aα, isto é,
+
+[A]α = Aα.
+
+Demonstração. Para cada x ∈ U, o valor da função de pertinência de A como sendo
+
+ϕA(x) = sup{α ∈ [0, 1] : x ∈ Aα}.
+
+Usando a deﬁnição de α-nível podemos elencar as seguintes propriedades:
+
+[A ∪ B]α = [A]α ∪ [B]α,
+
+[A ∩ B]α = [A]α ∩ [B]α.
+
+Por outro lado, como em geral [A]α ∪ [A(cid:48)]α (cid:54)= U, então [A(cid:48)]α (cid:54)= ([A]α)(cid:48).
+
+Deﬁnição 1.12. Um subconjunto fuzzy é dito normal se todos seus α-níveis forem não
+vazios, ou seja, se [A]1 (cid:54)= ∅.
+
+Lembrando que o suporte do subconjunto fuzzy A é o conjunto clássico
+
+suppA = {x ∈ U : ϕA(x) > 0},
+
+é comum descrever A com a seguinte notação
+
+A = ϕA(x1)/x1 + ϕA(x2)/x2 + · · · =
+
+∞
+∑
+i=1
+
+ϕA(xi)/xi,
+
+quando o subconjunto fuzzy A tem suporte enumerável, e
+
+A = ϕA(x1)/x1 + ϕA(x2)/x2 + · · · + ϕA(xn)/xn =
+
+n
+∑
+i=1
+
+ϕA(xi)/xi,
+
+se A tem suporte ﬁnito, isto é, suppA = {x1, x2, . . . , xn}.
+
+Vale observar que a notação ϕA(xi)/xi não indica "divisão". É apenas uma forma de
+visualizar um elemento xi e seu respectivo grau de pertinência ϕA(xi). Também, aqui,
+o símbolo "+"na notação não signiﬁca "adição", bem como ∑ não signiﬁca somatório. É
+apenas uma forma de conectar os elementos de U que estão em A com seus respectivos
+graus.
+
+1.6 O P R I N C Í P I O D E E X T E N S Ã O D E Z A D E H
+
+15
+
+1.6 O P R I N C Í P I O D E E X T E N S Ã O D E Z A D E H
+
+Podemos estender a teoria de conjuntos clássica para a teoria fuzzy, utilizaremos
+para isso o método de extensão proposto por Zadeh, também conhecido como Princípio
+de Extensão.
+
+O Princípio da Extensão de Zadeh para uma função f : X −→ Z tem por objetivo
+indicar como deve ser a imagem de um subconjunto fuzzy A de X por meio de f . É de
+se esperar que esta imagem seja um subconjunto fuzzy de Z.
+
+Deﬁnição 1.13. (Princípio de Extensão de Zadeh) Sejam f uma função tal que f
+:
+X −→ Z e A um subconjunto fuzzy de X. A extensão de Zadeh de f é a função ˆf
+que, aplicada a A, fornece o subconjunto fuzzy ˆf (A) de Z, cuja função de pertinência
+é dada por
+
+ϕ ˆf (A)(z) =
+
+
+
+
+sup
+f −1(z)
+
+
+
+0
+
+ϕA(x)
+
+se f −1(z) (cid:54)= ∅
+
+se f −1(z) = ∅
+
+(1.1)
+
+onde f −1(z) = {x; f (x) = z} denomina-se a pré-imagem de z. Podemos observar que se
+f for uma função bijetora, então
+
+{x : f (x) = z} = { f −1(z)},
+
+em que f −1 é a função inversa de f.
+
+Observamos que se A é um subconjunto fuzzy de X, com função de pertinência ϕA,
+
+e se f é bijetora, então, a função de pertinência de ˆf (A) é dada por
+
+ϕ ˆf (A)(z) = sup
+
+{x: f (x)=z}
+
+ϕA(x) =
+
+sup
+{x∈ f −1(z)}
+
+ϕA(x) = ϕA( f −1(z)).
+
+(1.2)
+
+O processo gráﬁco para o obtenção de extensão ˆf de f está ilustrada na ﬁgura 11,
+
+no caso em que f for bijetora.
+
+Note que se f for injetora então z = f (x) pertence ao subconjunto fuzzy ˆf (A), com o
+
+mesmo grau α com que x pertence a A. Isto pode não ocorrer se f não for injetora.
+
+Seja f : X −→ Z uma função injetora e A um subconjunto fuzzy de X, enumerável
+
+(ou ﬁnito), e dado por
+
+A =
+
+∞
+∑
+i=1
+
+ϕA(xi)/xi.
+
+Então, o Princípio de Extensão garante que ˆf (A) é um subconjunto fuzzy de Z, dado
+por
+
+ˆf (A) = ˆf (
+
+ϕA(xi)/xi) =
+
+ϕA(xi)/ f (xi).
+
+∞
+∑
+i=1
+
+∞
+∑
+i=1
+
+16
+
+C O N J U N T O S F U Z Z Y
+
+Portanto, a imagem de A por f pode ser deduzida do conhecimento das imagens de xi
+por f . O grau de pertinência de zi = f (xi) em ˆf (A) é o mesmo de xi em A.
+
+Figura 11: Imagem de um subconjunto fuzzy a partir do princípio de extensão para uma função
+f [7]
+
+Teorema 1.14. Sejam f : X −→ Z uma função contínua e A um subconjunto fuzzy de X.
+Então, para todo α ∈ [0, 1] vale
+
+[ ˆf (A)]α = f ([A]α).
+
+(1.3)
+
+Este resultado implica que os α-níveis do conjunto fuzzy, obtidos pelo Princípio de
+
+Extensão de Zadeh, coincidem com as imagens dos α-níveis pela função crisp.
+
+Deﬁnição 1.15. Sejam f : X × Y −→ Z e, A e B subconjunto fuzzy de X e Y, respecti-
+vamente. A extensão ˆf de f , aplicada a A e B, é o subconjunto fuzzy ˆf (A, B) de Z, cuja
+função de pertinência é dada por:
+
+ϕ ˆf (A,B)(z) =
+
+
+
+
+sup
+f −1(z)
+
+
+
+0
+
+min[ϕA(x), ϕB(y)]
+
+se f −1(z) (cid:54)= ∅
+
+,
+
+(1.4)
+
+se f −1(z) = ∅
+
+onde f −1 = {(x, y) : f (x, y) = z}.
+
+1.7 N Ú M E R O S F U Z Z Y
+
+17
+
+1.7 N Ú M E R O S F U Z Z Y
+
+Na nossa vida, quando efetuamos alguns tipos de medições como por exemplo o
+nosso peso, conseguimos um valor que é impreciso, pois depende de muitos fatores
+como tipo de balança, ajustes, como é feita a medição, etc; na verdade o que temos
+é um valor "em torno de", e optamos por usar um valor preciso (um número real)
+p para o peso. Matematicamente podemos indicar a expressão em torno de p por
+um subconjunto fuzzy A cujo domínio da função de pertinência ϕA é o conjunto dos
+números reais, podemos esperar que ϕA(p) = 1, sendo que escolhemos os números
+reais como domínio pois os valores para peso são números reais.
+
+Deﬁnição 1.16. (Números Reais) Um subconjunto fuzzy A é chamado de número fuzzy
+quando o conjunto universo no qual ϕA está deﬁnida, é o conjunto dos números reais
+R e satisfaz às condições:
+
+(i) todos os α-níveis de A são não vazios, com 0 ≤ α ≤ 1;
+
+(ii) todos os α-níveis de A são intervalos fechados de R;
+
+(iii) suppA = {x ∈ R : ϕA(x) > 0} é limitado.
+
+Vamos denotar os α-níveis do número fuzzy A por
+
+[A]α = [aα
+
+1, aα
+2].
+
+Observamos que todo número real r é um número fuzzy particular cuja função de
+pertinência é a sua função característica:
+
+
+
+se x = r
+
+1
+
+χr(x) =
+
+
+
+0
+
+se x (cid:54)= r
+
+.
+
+Denotaremos χr(x) apenas por ˆr.
+
+A família dos números fuzzy será indicada por F(R) e, de acordo com o observado
+acima, o conjunto de números reais R é um subconjunto (clássico ou crisp) de F(R).
+
+Os números fuzzy mais comuns são os triangulares, trapezoidais e os em forma de
+
+sino.
+
+Deﬁnição 1.17. Um número fuzzy A é dito triangular se sua função de pertinência é
+da forma
+
+ϕA(x) =
+
+
+
+
+
+
+0
+x−a
+u−a
+x−b
+u−b
+
+0
+
+se x ≤ a
+
+se a < x ≤ u
+
+se u < x ≤ b
+
+.
+
+se x ≥ b
+
+(1.5)
+
+18
+
+C O N J U N T O S F U Z Z Y
+
+O gráﬁco da função de pertinência de um número fuzzy triangular tem a forma de um
+triângulo, tendo como base o intervalo [a, b] e, como único vértice fora desta base, o
+ponto (u, 1).
+
+Deste modo, os números reais a, u e b deﬁnem o número fuzzy triangular A que será
+
+denotado pela terna ordenada (a; u; b) ou por a/u/b.
+
+Os α-níveis desses números fuzzy têm a seguinte forma simpliﬁcada
+
+[aα
+
+1, aα
+
+2] = [(u − a)α + a, (u − b)α + b]
+
+(1.6)
+
+para todo α ∈ [0, 1].
+
+Note que o gráﬁco 12 de um número fuzzy triangular não é necessariamente simé-
+trico já que b − u pode ser diferente u − a, porém, ϕA(u) = 1. Podemos dizer que o
+número fuzzy A é um modelo matemático razoável para a expressão linguística "perto
+de u". Para a expressão "em torno de u"espera-se uma simetria. A imposição de sime-
+tria acarreta uma simpliﬁcação na deﬁnição de número fuzzy triangular. De fato, seja
+u simétrico em relação a a e b, isto é, u − a = b − u = δ. Neste caso,
+
+ϕA(x) =
+
+
+
+
+1 − |x−u|
+
+δ
+
+se u − δ ≤ x ≤ u + δ
+
+
+
+0
+
+caso contrário
+
+.
+
+1.
+
+0
+
+1.
+
+2.
+
+Figura 12: Número Fuzzy Triangular
+
+Deﬁnição 1.18. Um número fuzzy A é dito trapezoidal 13 se sua função de pertinência
+tem a forma de um trapézio e é dada por
+
+ϕA(x) =
+
+
+
+
+
+
+x−a
+b−a
+
+1
+d−x
+d−c
+
+0
+
+se a ≤ x < b
+
+se b ≤ x ≤ c
+
+se c < x ≤ d
+
+.
+
+caso contrário
+
+Os α-níveis de um conjunto fuzzy trapezoidal são os intervalos
+
+[aα
+
+1, aα
+
+2] = [(b − a)α + a, (c − d)α + d]
+
+(1.7)
+
+para todo α ∈ [0, 1].
+
+1.7 N Ú M E R O S F U Z Z Y
+
+19
+
+1.
+
+0
+
+1.
+
+2.
+
+3.
+
+Figura 13: Número Fuzzy Trapezoidal
+
+Deﬁnição 1.19. Um número fuzzy tem forma de sino se a função de pertinência for
+suave e simétrica em relação a um número real. A seguinte função de pertinência tem
+estas propriedades para u, a e δ dados (veja a ﬁgura 14).
+
+ϕA(x) =
+
+
+
+
+exp(−( x−u
+
+a )2)
+
+se u − δ ≤ x ≤ u + δ
+
+
+
+0
+
+caso contrário
+
+.
+
+Os α-níveis dos números fuzzy em forma de sino são os intervalos:
+
+Figura 14: Número fuzzy em forma de sino [7]
+
+
+
+
+[u −
+
+(cid:113)
+
+ln( 1
+
+αa2 ), u +
+
+(cid:113)
+
+ln( 1
+
+αa2 )]
+
+
+
+[u − δ, u + δ]
+
+se α ≥ ¯α = e−( δ
+a )2
+se α < ¯α = e−( δ
+a )2
+
+.
+
+(1.8)
+
+[aα
+
+1, aα
+
+2] =
+
+20
+
+C O N J U N T O S F U Z Z Y
+
+1.7.1 Operações aritméticas com números fuzzy
+
+As operações aritméticas envolvendo números fuzzy estão estreitamente ligadas às
+operações aritméticas intervalares. Abordaremos alguns intervalos fechados da reta
+real R.
+
+Operações aritméticas intervalares
+
+Considere λ um número real e, A e B dois intervalos fechados da reta dados por
+
+A = [a1, a2] e B = [b1, b2].
+
+Veremos a seguir as operações intervalares com números fuzzy, que podem servir na
+
+deﬁnição das operações aritméticas com numeros fuzzy.
+
+Deﬁnição 1.20. (Operações Intervalares) As operações aritméticas entre intervalos
+pode ser deﬁnidas como:
+
+(a) A soma entre A e B é o intervalo
+
+A + B = [a1 + b1, a2 + b2].
+
+(b) A diferença entre A e B é o intervalo
+
+A − B = [a1 − b2, a2 − b1].
+
+(c) A multiplicação de A por um escalar λ é o intervalo
+
+λA =
+
+
+
+
+[λa1, λa2]
+
+se λ ≥ 0
+
+
+
+[λa2, λa1]
+
+se λ < 0
+
+.
+
+(d) A multiplicação de A por B é o intervalo
+
+A.B = [min P, max P], onde P = {a1b1, a1b2, a2b1, a2b2}.
+
+(e) A divisão de A por B,se 0 /∈ B, é o intervalo
+
+A/B = [a1, a2].[
+
+1
+b2
+
+,
+
+1
+b1
+
+].
+
+Teorema 1.21. (Princípio de extensão para intervalos da reta). Sejam A e B dois inter-
+valos fechados de R, e ⊗ uma das operações aritméticas entre números reais. Então
+
+χA⊗B(x) =
+
+sup
+{(y,z):y⊗z=x}
+
+min[χA(y), χB(z)]
+
+1.7 N Ú M E R O S F U Z Z Y
+
+21
+
+Demonstração. É muito simples veriﬁcar que
+
+min(χA(y), χB(z)) =
+
+
+
+
+1 se y ∈ A e z ∈ B
+
+
+
+0 se y /∈ A ou z /∈ B
+
+.
+
+Assim, para o caso da soma (⊗ = +), temos
+
+sup
+{(y,z):y+z=x}
+
+min(χA(y), χB(z)) =
+
+
+
+
+1 se x ∈ A + B
+
+
+
+0 se x /∈ A + B
+
+.
+
+Os demais casos podem ser obtidos de maneira análoga.
+
+Uma consequência importante do Teorema 1.21, para as operações com números fuzzy,
+
+é o seguinte corolário:
+
+Corolário 1.22. Os α-níveis do conjunto crisp A + B, com função característica χ(A+B),
+são dados por
+
+[A + B]α = A + B
+
+para todo α ∈ [0, 1].
+
+Demonstração. Lembrando que os intervalos A e B são particulares subconjuntos fuzzy
+da reta real, o resultado é uma consequência imediata da deﬁnição de função caracte-
+rística de um conjunto clássico.
+
+As operações aritméticas para números fuzzy serão deﬁnidas a partir do Princípio de
+Extensão para conjuntos fuzzy. Na verdade, são casos particulares do Princípio de Ex-
+tensão em que as funções a serem estendidas são as operações tradicionais para números
+reais.
+
+Operações aritméticas com números fuzzy
+
+As deﬁnições que seguem podem ser vistas como casos particulares do princípio de ex-
+
+tensão, tanto para funções de uma como de duas variáveis.
+
+Deﬁnição 1.23. Sejam A e B dois números fuzzy e λ um número real.
+
+(a) A soma dos números fuzzy A e B é o número fuzzy, A + B,cuja função de perti-
+
+nência é
+
+ϕ(A+B)(z) =
+
+
+
+
+sup
+∅(z)
+
+
+
+0
+
+min[ϕA(x), ϕB(y)]
+
+se ∅(z) (cid:54)= 0
+
+,
+
+se ∅(z) = 0
+
+onde ∅(z) = {(x, y) : x + y = z}.
+
+22
+
+C O N J U N T O S F U Z Z Y
+
+(b) A multiplicação de λ por A é o número fuzzy λA, cuja função de pertinência é
+
+ϕλA(z) =
+
+
+
+
+
+
+sup
+{x:λx=z}
+
+χ{0}(z)
+
+[ϕA(x)]
+
+se λ (cid:54)= 0
+
+se λ = 0
+
+
+
+
+ϕA(λ−1z)
+
+se λ (cid:54)= 0
+
+
+
+χ{0}(z)
+
+se λ = 0
+
+,
+
+=
+
+onde χ{0} é a função característica de {0}.
+
+(c) A diferença A − B é o número cuja função de pertinência é dada por:
+
+ϕ(A−B)(z) =
+
+
+
+
+sup
+∅(z)
+
+
+
+0
+
+min(ϕA(x), ϕB(z))
+
+se ∅(z) (cid:54)= 0
+
+,
+
+se ∅(z) = 0
+
+onde ∅(z) = {(x, y) : x − y = z}.
+
+(d) A multiplicação de A por B é o número fuzzy A · B, cuja função de pertinência é
+
+dada por:
+
+ϕ(A·B)(z) =
+
+
+
+
+sup
+∅(z)
+
+
+
+0
+
+min(ϕA(x), ϕB(z))
+
+se ∅(z) (cid:54)= 0
+
+se ∅(z) = 0
+
+onde ∅(z) = {(x, y) : x · y = z}.
+
+(e) A divisão é o número fuzzy A/B cuja função de pertinência é
+
+ϕ(A/B)(z) =
+
+
+
+
+sup
+∅(z)
+
+
+
+0
+
+min(ϕA(x), ϕB(z))
+
+se ∅(z) (cid:54)= 0
+
+se ∅(z) = 0
+
+,
+
+,
+
+onde ∅(z) = {(x, y) : x/y = z}.
+
+1.7 N Ú M E R O S F U Z Z Y
+
+23
+
+O próximo teorema garante que o resultado das operações aritméticas entre nú-
+meros fuzzy é um número fuzzy. Mais ainda, generaliza o Corolário 1.22, relacio-
+nando,por meio dos α-níveis, as operações aritméticas para números fuzzy com as
+respectivas operações aritméticas para intervalos.
+
+Teorema 1.24. Os α-níveis do conjunto fuzzy A ⊗ B são dados por
+
+[A ⊗ B]α = [A]α ⊗ [B]α
+
+para todo α ∈ [0, 1],sendo ⊗ qualquer uma das operações aritméticas mencionadas ante-
+riormente.
+
+Podemos observar que os α-níveis de um número fuzzy é sempre um intervalo de R,
+
+dado por:
+
+[A]α = [aα
+
+1, aα
+
+2], com aα
+
+1 = min{ϕ−1
+
+A (α)} e aα
+
+2 = max{ϕ−1
+
+A (α)},
+
+sendo ϕ−1
+
+A (α) = {x ∈ R : ϕA(x) = α} a pré-imagem de α.
+
+Proposição 1.25. Sejam A e B números fuzzy com α-níveis dados, respectivamente, por
+[A]α = [aα
+
+2]. Então valem as seguintes propriedades:
+
+2] e [B]α = [bα
+
+1 , bα
+
+1, aα
+
+(a) A soma entre A e B é o número fuzzy A + B cujos α-níveis são
+
+[A + B]α = [A]α + [B]α = [aα
+
+1 + bα
+
+1 , aα
+
+2 + bα
+2].
+
+(b) A diferença entre A e B é o número fuzzy A − B cujos α-níveis são
+
+[A − B]α = [A]α − [B]α = [aα
+
+1 − bα
+
+2 , aα
+
+2 − bα
+1].
+
+(c) A multiplicação de λ por A é o número fuzzy λA cujos α-níveis são
+
+[λA]α = λ[A]α =
+
+
+
+
+
+
+[λaα
+
+[λaα
+
+1, λaα
+2]
+2, λaα
+1]
+
+se λ ≥ 0
+
+se λ < 0
+
+.
+
+(d) A multiplicação de A por B é o número fuzzy A · B cujos α-níveis são
+
+[A · B]α = [A]α[B]α = [min P, max P],
+
+onde P = {aα
+
+1bα
+
+1 , aα
+
+1bα
+
+2 , aα
+
+2bα
+
+1 , aα
+
+2bα
+
+2 }.
+
+(e) A divisão de A por B, se 0 /∈ suppB, é o número fuzzy cujos α-níveis são
+
+[
+
+A
+B
+
+]α =
+
+[A]α
+[B]α = [aα
+
+1, aα
+
+2][
+
+1
+bα
+2
+
+,
+
+1
+bα
+1
+
+].
+
+24
+
+C O N J U N T O S F U Z Z Y
+
+Deﬁnição 1.26. (Diferença de Hukuhara: A −H B).
+
+Sejam A e B dois números fuzzy. Se existir um número fuzzy C tal que A = B + C,
+
+então C é chamado de Diferença de Hukuhara de A e B e a denotamos por A −H B.
+
+Em α-níveis, isto equivale a dizer que
+
+[A −H B]α = [aα
+
+1 − bα
+
+1 , aα
+
+2 − bα
+
+2] ∀ α ∈ [0, 1].
+
+Como
+
+segue que
+
+ou seja,
+
+Note que
+
+em geral.
+
+[A − B]α = [aα
+
+1 − bα
+
+2 , aα
+
+2 − bα
+1],
+
+A − B = A −H B ⇔ bα
+
+1 = bα
+2 ,
+
+A − B = A −H B ⇔ B ∈ R.
+
+A − B = A + (−1)B (cid:54)= A −H B
+
+2
+
+L Ó G I C A F U Z Z Y
+
+Neste capítulo trataremos da teoria necessária para o desenvolvimento de um con-
+trolador fuzzy, a ser utilizado no capítulo de aplicações para a tomada de decisão da
+taxa selic. Foi utilizado como referência o livro [7], para outras aplicações temos [11].
+
+2.1 C O N E C T I V O S B Á S I C O S D A L Ó G I C A C L A S S I C A
+
+Os conectivos "e", "ou", "não"e "implicação"são os mais utilizados na modelagem
+
+matemática em sentenças como:
+
+Exemplo 2.1. "Se a está em A ou b está em B então c não está em C e d está em D"
+
+Os conectivos são dispostos em tabelas verdades onde obtém-se o valor lógico da
+sentença, considerando como conjuntos A, B, C e D, na sentença acima para que c não
+pertença à C e d pertença à D, terá que ser verdadeiro uma das proposições: que a
+pertença à A ou b pertença à B.
+
+Sentenças verdadeiras na lógica clássica tem valor lógico igual a 1, enquanto as
+falsas tem valor lógico igual a 0. Como extensão para a lógica fuzzy, utilizaremos os
+seguintes símbolos para os conectivos: ∧ (mínimo) para a conjunção e, ∨ (máximo)
+para ou, ∼ para negação e ⇒ para implicação. Sendo p e q proposições, as tabelas
+verdades para cada conectivo estão nas tabelas abaixo:
+
+p
+
+q
+
+0 0
+0 1
+1 0
+1 1
+
+p ∧ q
+0
+0
+0
+1
+
+p
+
+q
+
+0 0
+0 1
+1 0
+1 1
+
+p ∨ q
+0
+1
+1
+1
+
+Tabela 1: Conectivo e
+
+Tabela 2: Conectivo ou
+
+25
+
+26
+
+L Ó G I C A F U Z Z Y
+
+p ∼ p
+1
+0
+0
+1
+
+Tabela 3: Conectivo negação
+
+p
+
+q
+
+0 0
+0 1
+1 0
+1 1
+
+p ⇒ q
+1
+1
+0
+1
+
+Veriﬁcamos que os valores nas tabelas verdades são apenas o 0 e o 1, por isso a
+lógica clássica, as vezes é chamada "lógica a dois valores", temos também as seguintes
+operações binárias:
+
+Tabela 4: Conectivo implicação
+
+• Conectivo ∧:
+
+Então,
+
+• Conectivo ∨:
+
+Então,
+
+∧ : {0, 1}x{0, 1} −→ {0, 1}
+
+(p, q) (cid:55) −→ ∧(p, q) = p ∧ q = min{p, q}.
+
+∧(0, 0)
+
+∧(0, 1)
+
+∧(1, 0)
+
+∧(1, 1)
+
+=
+
+=
+
+=
+
+=
+
+0 ∧ 0 = 0;
+
+0 ∧ 1 = 0;
+
+1 ∧ 0 = 0;
+
+1 ∧ 1 = 1.
+
+∨ : {0, 1}x{0, 1} −→ {0, 1}
+
+(p, q) (cid:55) −→ ∨(p, q) = p ∨ q = max{p, q}.
+
+∨(0, 0)
+
+∨(0, 1)
+
+∨(1, 0)
+
+∨(1, 1)
+
+=
+
+=
+
+=
+
+=
+
+0 ∨ 0 = 0;
+
+0 ∨ 1 = 1;
+
+1 ∨ 0 = 1;
+
+1 ∨ 1 = 1.
+
+• A negação considerada operação unária:
+
+∼: {0, 1} −→ {0, 1}
+
+p (cid:55) −→∼ p,
+
+onde, ∼ 1 = 0 e ∼ 0 = 1. Veriﬁcamos que ∼ p = 1 − p
+
+2.1 C O N E C T I V O S B Á S I C O S D A L Ó G I C A C L A S S I C A
+
+27
+
+• Implicação:
+
+⇒: {0, 1}x{0, 1} −→ {0, 1}
+
+(p, q) (cid:55) −→⇒ (p, q) = (p ⇒ q).
+
+Através das operações anteriores conseguimos produzir a tabela verdade da impli-
+
+cação usando as fórmulas:
+
+(1) (p ⇒ q) = (∼ p) ∨ q;
+
+(2) (p ⇒ q) = (∼ p) ∨ (p ∧ q);
+
+(3) (p ⇒ q) = max{x ∈ {0, 1} : p ∧ x ≤ q}.
+
+Veriﬁcamos que "não p ou q"é a implicação "p implica q", isto é, (∼ p) ∨ q = (p ⇒ q)
+
+é de fato uma implicação:
+
+⇒ (0, 0) = (0 ⇒ 0) = (∼ 0) ∨ 0 = 1;
+⇒ (0, 1) = (0 ⇒ 1) = (∼ 0) ∨ 1 = 1;
+⇒ (1, 0) = (1 ⇒ 0) = (∼ 1) ∨ 0 = 0;
+⇒ (1, 1) = (1 ⇒ 1) = (∼ 1) ∨ 1 = 1.
+
+Usando a sentença 2.1 na página 25, temos que os conjuntos são clássicos, portanto
+podemos avaliar a sentença utilizando os operadores vistos anteriormente com os va-
+lores 0 e 1.
+
+P
+(cid:122)
+(cid:125)(cid:124)
+Se a está em A
+(cid:123)(cid:122)
+(cid:125)
+(cid:124)
+p
+
+"
+
+(cid:123)
+ou b está em B
+(cid:125)
+
+(cid:124)
+
+(cid:123)(cid:122)
+q
+
+então
+
+Q
+(cid:125)(cid:124)
+(cid:122)
+c não está em C
+(cid:123)(cid:122)
+(cid:125)
+(cid:124)
+r
+
+(cid:123)
+"
+e d está em D
+(cid:123)(cid:122)
+(cid:125)
+s
+
+(cid:124)
+
+Os valores das expressões p, q, r e s podem ser apenas 0 para não pertencer a um
+conjunto ou 1 para pertencer, exemplo: p = 1 se a ∈ A e p = 0 se a /∈ A, do mesmo
+modo para q, r e s.
+
+Avaliando a sentença 2.1 nas situações:
+
+a /∈ A(p = 0); b ∈ B(q = 1); c /∈ C(r = 1) e d /∈ D(s = 0),
+
+então o valor lógica da sentença 2.1 é:
+
+(0 ∨ 1) ⇒ (1 ∧ 0) = (1 ⇒ 0) = 0.
+
+Em termos de lógica fuzzy o valor lógico da sentença "a está em A", coincide com o
+obtido com a função característica do conjunto A em a, isto é, o valor de p é dado por
+χA(a), do mesmo modo, quando "a não está A", é dada por 1 − χA(a).
+
+28
+
+L Ó G I C A F U Z Z Y
+
+2.2 C O N E C T I V O S B Á S I C O S D A L Ó G I C A F U Z Z Y
+
+Avaliamos a sentença 2.1 apenas usando os valores 0 e 1, isto é valido para a lógica
+clássica; para analisarmos na lógica fuzzy devemos indicar quanto a proposição "a está
+em A" é verdadeira, sendo A fuzzy, sabendo que a pode pertencer a A com valores no
+intervalo [0, 1]. A avaliação lógica dos conectivos usando fuzzy é feita estendendo por
+meio de normas e conormas triangulares.
+
+2.2.1 Operações t-norma e t-conorma
+
+A operação t − norma estende o operador ∧ que modela o conectivo "e".
+
+Deﬁnição 2.1. (t-norma). O operador (cid:77): [0, 1] × [0, 1] −→ [0, 1], (cid:77) (x, y) = x (cid:77) y, é
+uma t − norma, se satisﬁzer as seguintes condições:
+
+t1) elemento neutro: (cid:77) (1, x) = 1 (cid:77) x = x;
+t2) comutativa: (cid:77) (x, y) = x (cid:77) y = y (cid:77) x =(cid:77) (y, x);
+t3) associativa: x (cid:77) (y (cid:77) z) = (x (cid:77) y) (cid:77) z;
+t4) monotonicidade: se x ≤ u e y ≤ v, então x (cid:77) y ≤ u (cid:77) v.
+
+Exemplo 2.2. Considerando o operador
+
+(cid:77)
+
+1 (x, y) = min{x, y} = x ∧ y.
+
+Somente resultará o valor 1 se x = 1 e y = 1, qualquer outro valor será o menor
+
+entre x e y (na lógica clássica o 0). Temos abaixo outros exemplos:
+
+(cid:77)2 (x, y)
+
+=
+
+xy;
+
+(cid:77)3 (x, y)
+
+(cid:77)
+
+4 (x, y)
+
+x
+
+se y = 1
+
+= max{0, x + y − 1};
+
+
+
+
+caso contrário
+
+se x = 1
+
+y
+
+0
+
+=
+
+.
+
+O operador t − conorma estende o operador ∨ do conectivo "ou".
+
+Deﬁnição 2.2. (t-conorma). O operador (cid:79)(x, y) = x(cid:79)y, é uma t − conorma, se satisﬁ-
+zer as seguintes condições:
+
+c1) elemento neutro: (cid:79)(0, x) = 0(cid:79)x = x;
+
+2.2 C O N E C T I V O S B Á S I C O S D A L Ó G I C A F U Z Z Y
+
+29
+
+c2) comutativa: (cid:79)(x, y) = x(cid:79)y = y(cid:79)x = (cid:79)(y, x);
+c3) associativa: x(cid:79)(y(cid:79)z) = (x(cid:79)y)(cid:79)z;
+c4) monotonicidade: se x ≤ u e y ≤ v, então x(cid:79)y ≤ u(cid:79)v.
+
+Exemplo 2.3. O operador
+
+(cid:79)
+
+1(x, y) = max{x, y} = x ∨ y.
+
+é uma t-conorma que reproduz a tabela verdade do conectivo ∨. Outros exemplos
+
+abaixo:
+
+(cid:79)2(x, y) = min{1, x + y};
+
+(cid:79)3(x, y) = x + y − xy.
+
+A operação abaixo estende a tabela verdade da negação:
+
+Deﬁnição 2.3. (negação). Uma aplicação η : [0, 1] −→ [0, 1] é uma negação se satisﬁ-
+zer as seguintes condições:
+
+n1) fronteiras: η(0) = 1 e η(1) = 0;
+
+n2) involução: η(η(x)) = x;
+
+n2) monotonicidade: η é decrescente.
+
+As aplicações
+
+η1(x) = 1 − x
+
+e η2 =
+
+1 − x
+1 + x
+
+reproduzem a tabela verdade da negação ∼.
+
+Observamos que as operações (cid:77)= ∧, (cid:79) = ∨ e η = 1 − x, satisfazem as leis de Morgan,
+
+isto é, para todo par (x,y) de [0, 1]×]0, 1] valem
+
+η(x ∧ y) = η(x) ∨ η(y)
+
+η(x ∨ y) = η(x) ∨ η(y)
+
+Dizemos que a t-norma (cid:77) e a t-conorma (cid:79) são duais em relação a uma negação η
+
+se satisfazem a uma das duas leis de Morgan.
+
+30
+
+L Ó G I C A F U Z Z Y
+
+Deﬁnição 2.4. (Implicação fuzzy). Um operador ⇒: [0, 1] −→ [0, 1] é uma implicação
+fuzzy se satisﬁzer as seguintes condições:
+
+1. reproduzir a tabela da implicação clássica;
+
+2. for decrescente na primeira variável, ou seja, para cada x ∈ [0, 1] tem-se
+
+(a ⇒ x) ≤ (b ⇒ x)
+
+se
+
+a ≥ b;
+
+3. for crescente na segunda variável, ou seja, para cada x ∈ [0, 1] tem-se
+
+(x ⇒ a) ≤ (x ⇒ b)
+
+se
+
+a ≥ b.
+
+Assim, a classe das implicações fuzzy consiste de todas as aplicações do quadrado
+[0, 1]×]0, 1] em [0, 1] cuja restrição aos vértices coincide com os valores da implicação
+clássica; que sejam decrescentes com relação às abscissas e crescentes em relação às
+ordenadas.
+
+As fórmulas das implicações clássicas não produzem as mesmas implicações fuzzy.
+
+Temos a seguir outras implicações:
+
+(4) uma S-implicação tem a forma (x ⇒ y) = η(x)(cid:79)y;
+
+(5) uma Q-implicação tem a forma (x ⇒ y) = η(x)(cid:79)(x (cid:77) y);
+
+(6) uma R-implicação tem a forma (x ⇒ y) = sup{z ∈ [0, 1] : x(cid:79)z ≤ y}.
+
+Exemplo 2.4. (Implicações fuzzy).
+
+Além dessas aplicações, para aprofundar nesse assunto temos o livro [4], as seguin-
+
+tes operações são implicações fuzzy:
+
+a) Implicação de Gödel:
+
+(x ⇒ y) = g(x, y) =
+
+
+
+
+1
+
+
+
+y
+
+se x ≤ y
+
+se x > y
+
+.
+
+b) Implicação de Goguen:
+
+(x ⇒ y) = gn(x, y) =
+
+
+
+
+
+
+1
+y
+x
+
+se x ≤ y
+
+se x > y
+
+.
+
+c) Implicação de Lukasiewicz:
+
+(x ⇒ y) = l(x, y) = min{(1 − x + y), 1}.
+
+2.2 C O N E C T I V O S B Á S I C O S D A L Ó G I C A F U Z Z Y
+
+31
+
+d) Implicação de Kleene-Dienes:
+
+(x ⇒ y) = kd(x, y) = max{(1 − x), y}.
+
+e) Implicação de Reichenbach:
+
+(x ⇒ y) = r(x, y) = (1 − x + xy).
+
+f) Implicação de Zadeh:
+
+(x ⇒ y) = z(x, y) = max{(1 − x), min(x, y)}.
+
+g) Implicação de Gaines-Rescher:
+
+(x ⇒ y) = gr(x, y) =
+
+
+
+
+1 se x ≤ y
+
+
+
+0 se x > y
+
+.
+
+h) Implicação de Wu:
+
+(x ⇒ y) = w(x, y) =
+
+
+
+
+1
+
+se x ≤ y
+
+
+
+min{1 − x, y} se x > y
+
+.
+
+Observe que a implicação de Zadeh é uma Q-implicação
+
+(x ⇒ y) = (1 − x) ∨ (x ∧ y) = η(x) ∨ (x ∧ y).
+
+Exemplo 2.5. Voltemos à expressão 2.1 para obter o valor lógico quando temos (cid:77)=
+∧, (cid:79) = ∨, η(x) = 1 − x e a implicação de Zadeh.
+
+Consideremos como exemplo o grau de pertinência de cada célula p, q, r e s ao
+ϕD(d) = 0, 8.
+
+conjunto relacionado como: ϕA(a) = 0, 3;
+ϕC(c) = 0, 4;
+Então, temos: Portanto, o valor lógico de 2.1 é o resultado da aplicação
+
+ϕB(b) = 0, 7;
+
+p(cid:79)q = max(0, 3; 0, 7) = 0,7;
+1 − ϕC(c)
+r
+
+=
+
+= 1 - 0,4 = 0,6;
+
+r (cid:77) s = min(0, 6; 0, 8) =
+
+0,6.
+
+(p(cid:79)q) ⇒ (r (cid:77) s).
+
+32
+
+L Ó G I C A F U Z Z Y
+
+Usando a implicação de Zadeh, temos:
+
+(p(cid:79)q) ⇒ (r (cid:77) s) = max{(1 − (p(cid:79)q)), min((p(cid:79)q), (r (cid:77) s))} = 0, 6.
+
+Então, para as pertinências acima, a expressão 2.1 é verdade com grau 0,6.
+
+2.3 R A C I O C Í N I O A P R O X I M A D O E VA R I Á V E I S L I N G U Í S T I C A S
+
+O raciocínio aproximado refere-se ao processo onde se pode obter conclusões a partir
+de premissas incertas. Quando esta incerteza é considerada fuzzy, é frequente o uso
+do termo raciocínio fuzzy.
+
+Como exemplo temos:
+
+Exemplo 2.6. "Se o aluno estudou, então ele irá bem na prova"
+
+De modo geral temos:
+
+Exemplo 2.7. "Se X é ♦ então Y é (cid:3)."
+
+Portanto, sabendo-se que X é ♦, concluímos que Y é (cid:3).
+
+Isto é uma generalização do método conhecido como modus ponens, a diferença
+está na subjetividade dos predicados envolvidos. Nas sentenças acima é utilizada a
+linguagem "natural" sem o formalismo da linguagem matemática.
+
+Na sentença 2.7 não hã qualquer conjunto envolvido, apenas qualiﬁcações a respeito
+das variáveis X e Y, para termos uma avaliação lógica de 2.7 representando na forma
+da sentença 2.1 veremos o conceito de variável linguística.
+
+Deﬁnição 2.5. (Variável linguística).) Uma variável linguística X no universo U é uma
+variável cujos valores assumidos são subconjuntos fuzzy de U.
+
+Intuitivamente, uma variável linguística é um substantivo, enquanto seus valores
+são adjetivos, representados por conjuntos fuzzy. Por exemplo, "gripe" é uma variável
+linguística que pode assumir os atributos "forte" ou "fraca".
+
+Sentenças em que aparecem variáveis linguísticas junto com seus atributos são ge-
+ralmente chamadas de proposições fuzzy, o que interessará serão as variáveis cujos
+valores são números fuzzy onde o universo de discurso é o conjunto dos números
+reais, dizemos que o suporte da variável é o conjunto dos números reais e X é uma
+variável linguística real.
+
+2.4 M O D U S P O N E N S E M O D U S P O N E N S G E N E R A L I Z A D O
+
+33
+
+Esclarecemos que X é A (ou X está em A) signiﬁca "X = x é A" (ou "X = x está em
+A"). O valor lógico de "X = x é A" é o número ϕA(x) que índica quanto X = x está em
+concordância com o termo linguístico modelado pelo conjunto fuzzy A, para facilitar
+a notação, usaremos "x é A" (ou "x está em A"), no lugar de "X=x é A" (ou "X=x está
+em A").
+
+2.4 M O D U S P O N E N S E M O D U S P O N E N S G E N E R A L I Z A D O
+
+Modelemos matematicamente o modus ponens fuzzy:
+
+p ⇒ q: "Se x é A então y é B"
+
+Fato: "x é A"
+
+Conclusão: "y é B"
+
+Note que (p ⇒ q) é uma proposição fuzzy condicional que é modelada por uma
+
+relação fuzzy R de U × V, cuja função de pertinência é
+
+ϕR(x, y) = [ϕA(x) ⇒ ϕB(y)],
+
+onde x e y são valores de variáveis linguísticas de U e V, respectivamente.
+
+Assim, o valor da sentença "Se x é A então y é B" depende da implicação a ser
+
+escolhida.
+
+A implicação clássica, isto é, ϕA(x) ∈ {0, 1} e ϕB(y) ∈ {0, 1}, produz a relação fuzzy
+
+cuja função de pertinência é dada por:
+
+ϕR(x, y) = χR(x, y) = (χA(x) ⇒ χB(y)) =
+
+
+
+
+1
+
+
+
+0
+
+=
+
+se (x /∈ A e y qualquer) ou (x ∈ A e y ∈ B)
+
+se x ∈ A e y /∈ B
+
+[χR(x, y) ∧ χA(x)] =
+
+sup
+x∈U
+
+
+
+
+1 se y ∈ B
+
+
+
+0 se y /∈ B
+
+= χB(y),
+
+De modo que
+
+ou seja, para o caso clássico, o modus ponens pode ser escrito matematicamente por
+
+meio da fórmula:
+
+34
+
+L Ó G I C A F U Z Z Y
+
+χB(y) = sup
+x∈U
+
+[χR(x, y) ∧ χA(x)].
+
+O modus ponens clássico pode ser dado pela regra de composição de inferência
+B = A ◦ R, em que a relação R é obtida por meio de uma implicação fuzzy que
+modela a sentença condicional
+
+"Se x ∈ A então y ∈ B”.
+
+Com o propósito de inferir conjuntos fuzzy, esta fórmula será estendida para situa-
+ções fuzzy mais gerais tais como o modus ponens fuzzy e o modus ponens fuzzy
+generalizado.
+
+O modus ponens fuzzy modela o seguinte silogismo:
+
+Regra: "Se a aluno estudou, então ele irá bem na prova"
+
+Fato: "O aluno estudou"
+
+Conclusão: "O aluno irá bem na prova"
+
+A lógica fuzzy revela seu grande potencial na modelagem de cada uma das senten-
+ças acima. Os substantivos e seus atributos são modelados por conjuntos fuzzy (por
+funções de pertinência) enquanto que os conectivos por operadores como t-normas e
+t-conormas, implicações e/ou negações. A conclusão, que deve ser um conjunto fuzzy,
+é obtida pela extensão da regra de composição de inferência
+
+χB(y) = sup
+x∈U
+
+[χR(x, y) ∧ χA(x)],
+
+(2.1)
+
+substituindo as funções características por funções de pertinência e o operador ∧ por
+alguma t-norma, ou seja,
+
+ϕB(y) = sup
+x∈U
+
+[ϕR(x, y)(cid:52)ϕA(x)].
+
+(2.2)
+
+Em resumo, a fórmula 2.2 é a regra de inferência que modela o modus ponens
+
+fuzzy
+
+O lado direito da Equação 2.2 exige que a t-norma e a implicação fuzzy lá adotadas
+sejam escolhidas de modo que a saída coincida com ϕB(y) para todo y. Esse é um pro-
+blema de equação relacional que pode trazer diﬁculdades, para facilitar estenderemos
+a Equação 2.2 admitindo uma entrada A∗ no lugar de A e a ﬂexibilizaremos deixando
+de exigir que a saída B∗ seja B, para a entrada A = A∗. Neste caso, denominaremos o
+silogismo por modus ponens generalizado, que tem a forma geral:
+
+2.4 M O D U S P O N E N S E M O D U S P O N E N S G E N E R A L I Z A D O
+
+35
+
+Regra: "Se x é A, então y é B"
+
+Fato: "x é A∗"
+
+Conclusão: "y é B∗"
+
+A saída do modus ponens generalizado é o conjunto fuzzy B∗, cuja função de
+
+pertinência é
+
+χB∗(y) = sup
+x∈U
+
+[ϕR(x, y)(cid:52)ϕA∗(x)],
+
+(2.3)
+
+que, por analogia à regra de composição de inferência, tem a forma
+
+R(A∗) = A∗ ⊗t R = B∗,
+
+onde ⊗t é uma operação análoga à "◦", trocando-se a t-norma do mínimo por (cid:52).
+
+Observação: no caso clássico sempre R(A) = B, porém, no caso fuzzy, dependendo
+
+da t-norma e da implicação, nem sempre teremos R(A) = B.
+
+É bastante comum se obter um funcional teórico, sem que esse funcional reproduza
+os dados que o originaram. Esse é o caso do famoso método dos mínimos quadrados,
+cuja principal propriedade é obter o funcional com menor erro quadrático possível
+para o conjunto de dados. Métodos para obter funcionais que reproduzam exatamente
+os dados que o originaram costumam ser chamados interpolação.
+
+Exemplo 2.8. Suponha a t-norma do produto, x(cid:52)y = xy, e a implicação
+
+(x ⇒ y) =
+
+
+
+
+
+
+1
+1 ∧ y
+x
+
+se x = 0
+
+se x (cid:54)= 0
+
+.
+
+Dados os números fuzzy A e B, temos
+
+(ϕA(x) ⇒ ϕB(y)).ϕA(x) = ϕA(x) ∧ ϕB(y).
+
+Assim,
+
+sup
+x∈U
+
+[ϕR(x, y)(cid:52)ϕA(x)] = sup
+x∈U
+= sup
+x∈U
+
+[ϕA(x) ⇒ ϕB(y)).ϕA(x)]
+
+[ϕA(x) ∧ ϕB(y)] = ϕB(y).
+
+ou seja, R(A) = B.
+
+36
+
+L Ó G I C A F U Z Z Y
+
+Exemplo 2.9. Consideramos os subconjuntos fuzzy:
+
+A = 0, 4/x1 + 1, 0/x2 + 0, 6/x3
+
+e B = 0, 8/y1 + 0, 4/y2,
+
+a implicação de Lukasiewicz:
+
+(x ⇒ y) = min{(1 − x + y), 1}
+
+e a t-norma (cid:52)1 = ∧.
+
+temos
+
+R = 1, 0/(x1, y1) + 1, 0/(x1, y2) + 0, 8/(x2, y1) + 0, 4/(x2, y2) + 1, 0(x3, y1) + 0, 8/(x3, y2).
+
+Desta forma, para a entrada
+
+A = 0, 4/x1 + 1, 0/x2 + 0, 6/x3,
+
+temos a saída ˜B com função de pertinência
+
+ϕ˜B
+
+ϕ˜B
+
+(y1) = max
+
+[ϕR(xi, y1) ∧ ϕA(xi)] =
+
+xi
+
+= max[min(1, 0; 0, 4); min(0, 8; 1, 0); min(1, 0; 0, 6)] = 0, 8;
+
+(y2) = max
+
+[ϕR(xi, y2) ∧ ϕA(xi)] =
+
+xi
+
+= max[min(1, 0; 0, 4); min(0, 4; 1, 0); min(0, 8; 0, 6)] = 0, 6.
+
+e, para a entrada
+
+A∗ = 0, 6/xi + 0, 9/x2 + 0, 7/x3,
+
+temos a saída B* com função de pertinência
+
+ϕ˜B
+
+ϕ˜B
+
+(y1) = max
+
+[ϕR(xi, y1) ∧ ϕA(xi)] =
+
+xi
+
+= max[min(1, 0; 0, 6); min(0, 8; 0, 9); min(1, 0; 0, 7)] = 0, 8;
+
+(y2) = max
+
+[ϕR(xi, y2) ∧ ϕA(xi)] =
+
+xi
+
+= max[min(1, 0; 0, 6); min(0, 4; 0, 9); min(0, 8; 0, 7)] = 0, 7.
+
+Desta forma, para este exemplo, as saídas obtidas pelo modus ponens fuzzy genera-
+
+lizado são
+
+2.5 C O N T R O L E F U Z Z Y
+
+37
+
+R(A) = ˜B = 0, 8/y1 + 0, 6/y2
+
+e R(A∗) = ˜B = 0, 8/y1 + 0, 7/y2.
+
+É interessante notar que B ⊂ ˜B. Este fato é de interesse em raciocínio aproximado,
+
+pois indica que B poderia ser uma saída ótima em algum sentido.
+
+Método Prático
+
+A partir da observação feita após a fórmula 2.3, temos
+
+B∗ = A∗ ⊗t R,
+
+em que, para o caso de domínios ﬁnitos, A∗ e B∗ são escritos em linha e
+
+[R] = [ϕR(xi, yj)]ixj
+
+onde "⊗t"é a composição sup-t. No exemplo anterior temos
+
+R = [ϕR(xi, yj)]3x2 =
+
+
+
+
+
+
+1, 0 1, 0
+0, 8 0, 4
+1, 0 0, 8
+
+
+
+
+
+
+,
+
+3x2
+
+(cid:104)
+
+A =
+
+0, 4 1, 0 0, 6
+
+(cid:105)
+
+e a composição é a max-min, uma vez que (cid:52) = ∧. Logo,
+
+˜B = A ◦ R =
+
+(cid:104)
+
+0, 4 1, 0 0, 6
+
+
+
+
+
+
+(cid:105)
+
+◦
+
+1, 0 1, 0
+0, 8 0, 4
+1, 0 0, 8
+
+
+
+(cid:104)
+
+
+ =
+
+0, 8 0, 6
+
+(cid:105)
+
+,
+
+ou seja,
+
+˜B =
+
+0, 8
+y1
+
++
+
+0, 6
+y2
+
+.
+
+2.5 C O N T R O L E F U Z Z Y
+
+Ao longo de sua vida, o ser humano recebe ordens que nem sempre são precisas, en-
+tão deve tomar uma decisão. Podemos considerar isso um processo em que a execução
+linguísticas, traduzidas por um
+das tarefas devem seguir uma sequência de "ordens"
+
+38
+
+L Ó G I C A F U Z Z Y
+
+conjunto de regras, capazes de serem decodiﬁcadas pelo controlador. Um Controlador
+Fuzzy pode ser considerado como uma maneira de reproduzir um controlador humano,
+sendo um caso típico de um Sistema Baseado em Regras Fuzzy (SBRF), isto é, um
+sistema que se utiliza da lógica fuzzy para produzir saídas para cada entrada fuzzy.
+
+Nas aplicações dos SBRF cada saída representa a "ação" correspondente à "condição"
+ou entrada do SBRF. Quando as entradas e saídas têm esta conotação os SRBF são
+denominados Controladores Fuzzy.
+
+Utilizando os métodos que vimos anteriormente podemos traduzir termos linguísti-
+cos, utilizados por especialistas para controlar suas tarefas, no formato matemático, de
+forma à automatizar essas tarefas.
+
+Em controladores fuzzy as tarefas são comandadas por meio de termos da lingua-
+gem usual, relacionando com uma variável de interesse. Estes termos, traduzidos por
+conjuntos fuzzy, são utilizados para transcrever a base de conhecimentos através de
+uma coleção de regras fuzzy, denominada base de regras fuzzy. A partir dessa base
+de regras obtém-se a relação fuzzy, a qual produzirá a saída (resposta, ação) para cada
+entrada (estado, condição).
+
+2.6 B A S E D E R E G R A S F U Z Z Y
+
+Uma base de regras fuzzy tem o seguinte formato
+
+R1:
+
+R2:
+
+ou
+
+ou
+
+"Proposição fuzzy 1"
+
+"Proposição fuzzy 2"
+...................
+
+Rr:
+
+"Proposição fuzzy r"
+
+Tabela 5: Forma Geral de uma base de regras fuzzy.
+
+Nos sistemas baseados em regras fuzzy cada proposição tem a forma
+
+Se "estado" Então "resposta"
+
+Tanto "estado" como "resposta" são valores assumidos por variáveis linguísticas que
+são modelados por conjuntos fuzzy. Os conjuntos fuzzy que compõem o "estado" são
+chamados antecedentes e os que compõem a "resposta"
+são chamados consequentes,
+tendo como particularidade cada regra a forma
+
+2.7 C O N T R O L A D O R F U Z Z Y
+
+39
+
+Se "condição" Então "ação"
+
+Cada uma das classiﬁcações das variáveis que constam na base de regras é modelada
+por um conjunto fuzzy. A lógica fuzzy é a outra parte utilizada na obtenção da relação
+fuzzy que sintetiza as informações matemáticas contidas na base de regras.
+
+A base de regras cumpre o papel de "traduzir" matematicamente as informações
+que formam a base de conhecimentos do sistema fuzzy. Num certo sentido, pode-se
+aﬁrmar que quanto mais precisas forem tais informações, menos fuzzy (mais crisp)
+será a relação fuzzy que representa a base de conhecimentos. Numa situação ideal, tal
+relação pode mesmo ser uma função no sentido clássico.
+
+2.7 C O N T R O L A D O R F U Z Z Y
+
+Em um sistema fuzzy a cada entrada corresponde uma saída fuzzy, um controlador
+fuzzy tem essa característica também, mas se a entrada for crisp espera-se uma saída
+crisp, neste caso um sistema fuzzy é uma função de Rn em Rm construída de alguma
+maneira especíﬁca. A seguir veremos módulos que indicam um roteiro para construção
+desta função.
+
+Módulo de fuzziﬁcação
+
+Neste estágio as entradas do sistema são modeladas por conjuntos fuzzy com seus
+domínios respectivos. É muito importante a atuação de especialistas na modelagem
+das funções de pertinência. Mesmo que os conjuntos sejam crisp, eles são transforma-
+dos em conjuntos fuzzy por meio de sua função característica.
+
+Módulo de base de regras
+
+Este módulo é composto por proposições fuzzy que são descritas na forma linguística
+
+Se x1 é A1 e x2 é A2 e ... e xn é An
+
+Então u1 é B1 e u2 é B2 e ... e um é Bm
+
+de acordo com as informações de um especialista. As variáveis e suas classiﬁca-
+ções linguísticas são catalogadas e, em seguida, modeladas por conjuntos fuzzy, isto é,
+funções de pertinência.
+
+Existem vários métodos para obter as funções de pertinência, tais como: apelos
+
+intuitivos, ajustes de curvas, interpolações e até mesmo redes neurais.
+
+Módulo de inferência fuzzy
+
+40
+
+L Ó G I C A F U Z Z Y
+
+Neste módulo as proposições são "traduzidas" matematicamente por meio das téc-
+nicas da lógica fuzzy, deﬁnindo-se quais t-normas, t-conormas e regras de inferência
+(podendo ser implicações fuzzy) serão utilizadas para se obter a relação fuzzy que
+modela a base de regras.
+
+O sucesso do controlador depende muito desse módulo, pois ele fornecerá a saída
+
+fuzzy a partir de cada entrada fuzzy.
+
+Módulo de defuzziﬁcação
+
+A defuzziﬁcação é um processo que permite representar um conjunto fuzzy por um
+valor crisp (número real). Na ﬁgura 15 vemos um esquema geral de um controlador
+fuzzy.
+
+Figura 15: Esquema geral de um controlador fuzzy. [7]
+
+A base de regras é modelada matematicamente por uma relação fuzzy R, a partir
+
+dos conjuntos fuzzy que a compõem e da lógica fuzzy adotada.
+
+A função de pertinência de R é dada por
+
+ϕR(x, u) = (cid:79)(ϕRi (x, u)), com 1 ≤ i ≤ r,
+
+(2.4)
+
+onde (cid:79) é uma t-conorma e Ri é uma relação fuzzy obtida da regra i, cuja função de
+pertinência ϕRi é obtida de alguma forma - por exemplo, por meio de um modus ponens
+generalizado. Os valores x e u representam o estado e o controle, respectivamente.
+
+A inferência, que representa o controle B para um estado A, é dada por uma regra
+
+de composição de inferência: B = R(A) cuja função de pertinência é dada por
+
+2.8 O M É T O D O D E I N F E R Ê N C I A D E M A M D A N I
+
+41
+
+ϕB(u) = sup
+
+(ϕR(x, u)(cid:52)ϕA(x)),
+
+x
+
+(2.5)
+
+onde (cid:52) é uma t-norma.
+
+Conforme a tabela 6 podemos ilustrar a obtenção da relação R de modo análogo a
+
+um modus ponens generalizado.
+
+R1:
+
+R2:
+
+ou
+
+ou
+.
+.
+.
+ou
+
+"Se x1 é A11 e ... e xn é A1n então u1 é B11 e ... e um é B1m"
+
+"Se x1 é A21 e ... e xn é A2n então u1 é B21 e ... e um é B2m"
+
+.
+.
+.
+
+Rr:
+
+"Se x1 é Ar1 e ... e xn é Arn então u1 é Br1 e ... e um é Brm"
+
+Fato:
+
+Conclusão:
+
+A = x1 é A1 e x2 é A2 e ... e xn é An.
+_________________________________________________________
+u é B = R(A).
+
+Tabela 6: Ilustração da obtenção da relação R.
+
+2.8 O M É T O D O D E I N F E R Ê N C I A D E M A M D A N I
+
+Mamdani propõe uma relação fuzzy binária M entre x e u para modelar matemati-
+
+camente a base de regras.
+
+O método de Mamdani é baseado na regra de composição de inferência max-min
+
+conforme o procedimento:
+
+• Em cada regra Rj, da base de regras fuzzy, a condicional "se x é Aj então u é Bj"
+é modelada pela aplicação ∧ (mínimo) que, erroneamente, costuma ser denominada
+por implicação de Mamdani (∧ não é uma implicação fuzzy pois não preserva a tabela
+de uma implicação clássica);
+
+• Adota-se a t-norma ∧ (mínimo) para o conectivo lógico "e";
+
+• Para o conectivo lógico "ou" adota-se a t-conorma ∨ (máximo) que conecta as
+
+regras fuzzy das bases de regras.
+
+42
+
+L Ó G I C A F U Z Z Y
+
+Formalmente, a relação fuzzy M é o subconjunto fuzzy de X × U cuja função de
+
+pertinência é dada por
+
+ϕM(x, u) = max
+1≤j≤r
+
+(ϕRj(x, u)) = max
+1≤j≤r
+
+[ϕAj(x) ∧ ϕBj(u)],
+
+(2.6)
+
+onde r é o número de regras que compõem a base de regras e, Aj e Bj são os
+subconjuntos fuzzy da regra j. Cada um dos valores ϕAj(x) e ϕBj(u) são interpretados
+como os graus com que x e u estão nos subconjuntos Aj e Bj, respectivamente, de
+maneira que M nada mais é que a união dos produtos cartesianos fuzzy entre os
+antecedentes e os consequentes de cada regra.
+
+Observação: Os subconjuntos fuzzy Aj e Bj que aparecem na fórmula (2.6), podem
+representar o produto cartesiano fuzzy de subconjuntos fuzzy Aji e Bjk. Por exemplo,
+pode ocorrer
+
+ϕAj(x) = ϕAj1(x1) ∧ ϕAj2(x2) e ϕBj(u) = ϕBj1(u1) ∧ ϕBj2(u2),
+
+Exemplo 2.10. Considere um controlador fuzzy com duas entradas e uma saída, cuja
+base de regras é dada pela tabela abaixo
+
+R1:
+
+"Se x1 é A11 e x2 é A12 então u é B1"
+
+ou
+
+R2:
+
+"Se x1 é A21 e x2 é A22 então u é B2"
+
+Tabela 7: Base de regras controlador fuzzy com duas entradas e uma saída.
+
+Assim, para cada terna t = (x1, x2, u) temos
+
+ϕM(t) = {ϕA11(x1) ∧ ϕA12(x2) ∧ ϕB1(u)} ∨ {ϕA21(x1) ∧ ϕA22(x2) ∧ ϕB2(u)}
+
+= max{ϕA11(x1) ∧ ϕA12(x2) ∧ ϕB1(u), ϕA21(x1) ∧ ϕA22(x2) ∧ ϕB2(u)}
+
+representando a relação fuzzy obtida da base de regras pelo método de Mamdani.
+
+Agora, para um dado conjunto fuzzy de entrada A = A1 × A2, com A1 e A2 dois
+números fuzzy, o conjunto de saída, que representa o controle a ser adotado para A
+pelo método de Mamdani, é dado por B = M ◦ A, cuja função de pertinência é
+
+ϕB(u) = (ϕM◦A)(u) = sup
+
+x
+
+{ϕM(x, u) ∧ ϕA(x)}.
+
+2.8 O M É T O D O D E I N F E R Ê N C I A D E M A M D A N I
+
+43
+
+Como A = A1 × A2, então ϕA(x1, x2) = ϕA1(x1) ∧ ϕA2(x2).
+
+Desta forma
+
+ϕB(u) = sup
+
+x
+
+{ϕM(x, u) ∧ ϕA(x)}
+
+{ϕM(x1, x2, u) ∧ [ϕA1(x1) ∧ ϕA2(x2)]}
+
+{[ϕA11(x1) ∧ ϕA12(x2) ∧ ϕB1(u)) ∨ (ϕA21(x1) ∧ ϕA22(x2) ∧ ϕB2(u))] ∧ [ϕA1(x1) ∧
+
+= sup
+(x1,x2)
+
+= sup
+(x1,x2)
+
+ϕA2(x2)]}
+
+= sup
+(x1,x2)
+
+{[ϕA1(x1) ∧ ϕA11(x1)] ∧ [ϕA2(x2) ∧ ϕA12(x2)] ∧ ϕB1(u)} ∨ sup
+(x1,x2)
+
+{[ϕA1(x1) ∧
+
+ϕA21(x1)] ∧ [ϕA2(x2) ∧ [ϕA22(x2)] ∧ ϕB2(u)}
+
+= ϕBR1
+
+(u) ∨ ϕBR2
+
+(u).
+
+onde BR1 e BR2 são as saídas parciais devido às regras R1 e R2, respectivamente.
+
+Da fórmula acima, podemos observar que a saída do método de Mamdani resulta da
+união entre as saídas parciais de cada regra. Para obter cada saída parcial, procede-se
+da seguinte forma: faz-se a intersecção das entradas com cada antecedente da regra
+e em seguida, faz-se o produto cartesiano (universos distintos) dessas interseções com
+os consequentes da regra. A projeção desse produto cartesiano no espaço U é a saída
+parcial para o conjunto fuzzy de entrada A. Vemos na ﬁgura 16.
+
+Figura 16: Saídas parciais no método de Mamdani. [7]
+
+e a saída geral é dada pela união das saídas parciais, conforme a ﬁgura 17
+
+Notemos que a ﬁgura 17 representa a função de pertinência ϕB do controle B que
+
+foi obtido pelo conectivo ∨, que é a t-conorma do máximo.
+
+44
+
+L Ó G I C A F U Z Z Y
+
+Figura 17: Saída ﬁnal do controlador fuzzy de Mamdani. [7]
+
+2.9 O M É T O D O D E I N F E R Ê N C I A D E TA K A G I - S U G E N O - K A N G
+
+As diferenças deste método(TSK) para o de Mamdani estão na forma de escrever o
+conseguente de cada regra e no procedimento de defuzziﬁcação para se obter a saída
+geral do sistema. O consequente de cada regra é dado explicitamente por uma função
+dos valores de entrada desta regra.
+
+Este método esta ilustrado na tabela 8, tendo uma base com r regras fuzzy, onde
+cada uma delas tem n entradas (x1, x2, . . . , xn) ∈ Rn, e uma saída u ∈ R, sendo Aij
+subconjuntos fuzzy de R.
+
+R1: Se x1 é A11 e x2 é A12 e ... e xn é A1n então u1 = g1(x1, x2, . . . , xn)
+
+R2: Se x1 é A21 e x2 é A22 e ... e xn é A2n então u2 = g2(x1, x2, . . . , xn)
+
+ou
+
+ou
+.
+.
+.
+ou
+
+Rr:
+
+Se x1 é Ar1 e x2 é Ar2 e ... e xn é Arn então ur = gr(x1, x2, . . . , xn)
+
+Tabela 8: Base de regras do método TSK.
+
+A saída geral do método é dada por
+
+u = fr(x1, x2, . . . , xn)
+
+r
+∑
+j=1
+
+=
+
+ωj.gj(x1, x2, . . . , xn)
+
+=
+
+r
+∑
+j=1
+
+ωj
+
+r
+∑
+j=1
+r
+∑
+j=1
+
+ωj.uj
+
+,
+
+ωj
+
+(2.7)
+
+2.9 O M É T O D O D E I N F E R Ê N C I A D E TA K A G I - S U G E N O - K A N G
+
+45
+
+onde os pesos ωj são dados por ωj = ϕAj1(x1)(cid:52)ϕAj2(x2) . . . (cid:52)ϕAjn(xn), e (cid:52) é uma
+t-norma. O peso ωj corresponde à contribuição da regra Rj para a saída geral. Os
+casos mais comuns de t-normas são o produto e o mínimo.
+
+Para o caso de duas regras, cada uma com duas variáveis de entrada e uma saída, o
+
+método TSK é ilustrado no quadro a seguir.
+
+R1:
+
+"Se x1 é A11 e x2 é A12 então u é u1 = g1(x1, x2)"
+
+ou
+
+R2:
+
+"Se x1 é A21 e x2 é A22 então u é u2 = g2(x1, x2)"
+
+Tabela 9: Base de duas regras do método TSK.
+
+Supondo que (cid:52) seja a t-norma mínimo, temos como saída geral, representando o
+
+controle para as ações x1 e x2, o valor de u dado pela equação:
+
+u =
+
+ω1u1 + ω2u2
+ω1 + ω2
+
+=
+
+ω1g1(x1, x2) + ω2g2(x1, x2)
+ω1 + ω2
+
+= fr(x1, x2),
+
+(2.8)
+
+onde ωi = min[ϕAi1(x1), ϕAi2(x2)] corresponde ao peso da regra Ri na saída geral do
+
+processo.
+
+O caso mais frequente é o que os consequentes de cada regra são funções lineares
+
+aﬁns, tendo as funções gi a forma
+
+gi(x1, x2) = aixi + bix2 + ci.
+
+sendo conhecido como método Takagi-Sugeno (TS).
+
+Exemplo 2.11. Considere um controlador fuzzy com duas entradas e uma saída, onde
+os conjuntos fuzzy envolvidos, Aij, são números fuzzy triangulares e as saídas de cada
+regra são dadas por funções gi, lineares aﬁns. Para cada par de entrada x0 e y0, a ﬁgura
+[e uma representação gráﬁca para obtenção da saída, a qual representa o controle a
+ser adotado para tais entradas. Para este exemplo temos a base de regras dadas na
+tabela 10
+
+R1:
+
+"Se x é A11 e y é A12 então u é u1 = g1(x, y) = a1xi + b1x2 + c1"
+
+ou
+
+R2:
+
+"Se x é A21 e y é A22 então u é u2 = g2(x, y) = a2xi + b2x2 + c2"
+
+Tabela 10: Base de regras para o exemplo.
+
+46
+
+L Ó G I C A F U Z Z Y
+
+Neste caso o controle fuzzy, cuja obtenção gráﬁca está ilustrada na ﬁgura 18, é dado
+
+por
+
+u =
+
+ω1u1 + ω2u2
+ω1 + ω2
+
+=
+
+ω1g1(x0, y0) + ω2g2(x0, y0)
+ω1 + ω2
+
+.
+
+(2.9)
+
+Figura 18: Saída do controlador fuzzy TSK para o exemplo [7]
+
+Os controladores fuzzy têm a propriedade de modelar fenômenos (processos) por
+
+meio de um funcional com informações incertas dadas por variáveis linguísticas.
+
+Supondo que certo fenômeno estudado possa ser modelado por um funcional, ao
+se admitir que a saída de cada regra é dada por uma função linear aﬁm, podemos
+pensar que o funcional pode ser aproximado localmente por uma reta. Por exemplo,
+se soubermos a priori que o funcional tem alguma propriedade de suavidade, podemos
+eleger retas tangentes ao funcional para serem as funções consequentes de cada regra.
+
+É interessante observar que se as funções gi dos consequentes forem constantes, en-
+tão os dois métodos, de Mamdani e Takagi-Sugeno, produzem as mesmas saídas, se
+a defuzziﬁcação usada no método de Mamdani for o centro de gravidade. É impor-
+tante ressaltar que os controladores fuzzy têm propriedades matemáticas importantes
+como, por exemplo, a capacidade de aproximar funções contínuas. Observamos que
+os controladores TSK podem ser bem mais gerais, pois as funções de cada consequente
+podem ter argumentos fuzzy, e os valores das entradas podem ser subconjuntos fuzzy.
+
+2.10 M É T O D O S D E D E F U Z Z I F I C A Ç Ã O
+
+47
+
+2.10 M É T O D O S D E D E F U Z Z I F I C A Ç Ã O
+
+Em um controlador fuzzy para cada entrada fuzzy o módulo de inferência produz
+uma saída fuzzy, mesmo que a entrada seja crisp, assim é necessário indicar um mé-
+todo para defuzziﬁcar a saída e obtermos um número real que servirá para o controle,
+apresentaremos a seguir, esses métodos mais utilizados.
+
+2.10.1 Centro de gravidade, Centroide ou Centro de Área
+
+Este método é semelhante à média aritmética para uma distribuição de frequências
+de uma dada variável, com a diferença que os pesos aqui são os valores ϕB(ui), que
+indicam o grau de compatibilidade do valor ui com o conceito modelado pelo conjunto
+fuzzy B.
+
+O centro de gravidade dá a média das áreas de todas as ﬁguras que representam os
+graus de pertinência de um subconjunto fuzzy. As equações 2.10 e 2.11 referem-se ao
+domínio discreto e domínio contínuo, respectivamente.
+
+G(B) =
+
+G(B) =
+
+∑n
+i=0 ui ϕB(ui)
+∑n
+i=0 ϕB(ui)
+
+(cid:82)
+R uϕB(u)du
+(cid:82)
+R ϕB(u)du
+
+(2.10)
+
+(2.11)
+
+Exemplo 2.12. Vamos usar o método de defuzzicação centro de gravidade para deter-
+minar qual a sensação de calor de uma pessoa onde temos as saídas do sistema fuzzy
+dos conjuntos fuzzy quente e frio com suas pertinências, conforme a ﬁgura 19. Iremos
+seguir os passos:
+
+• Determinar o x centroide para cada saída ativada na inferência;
+
+• Calcular a área entre o grau de pertinência e o eixo x para cada saída ativada;
+
+• Calcular a média ponderada dos pontos centroides pelas respectivas áreas.
+
+O cálculo para a obtenção do centroide ?? é descrito a seguir:
+
+Saída Frio:
+
+• no eixo x o centroide é 15;
+
+• para calcular a área do trapézio é necessário encontrar a base menor. Então para
+o grau de pertinência 0,8 encontram-se os pontos (12;0,8) e (18;0,8) nas respectivas
+
+48
+
+L Ó G I C A F U Z Z Y
+
+funções de pertinência. Logo a base menor tem tamanho igual a 6 e a base maior é
+igual a 30. Dessa forma a área resulta em:
+
+Afrio =
+
+0, 8(6 + 30)
+2
+
+= 14, 4
+
+Saída Quente:
+
+• no eixo x o centroide é 35;
+
+• para calcular a área do trapézio é necessário encontrar a base menor. Então para
+o grau de pertinência 0,2 encontram-se os pontos (23;0,2) e (47;0,2) nas respectivas
+funções de pertinência. Logo a base menor tem tamanho igual a 24 e a base maior é
+igual a 30. Dessa forma a área resulta em:
+
+Aquente =
+
+0, 2(24 + 30)
+2
+
+= 5, 4
+
+Média ponderada =
+
+(15.14, 4 + 35.5, 4)
+(14, 4 + 5, 4)
+
+∼= 20, 45oC
+
+FRIO
+
+6
+
+QUENTE
+
+24
+
+y
+
+1.
+
+0.8
+
+0.6
+
+0.4
+
+0.2
+
+f
+
+g
+
+−5.
+
+0
+
+−0.2
+
+5.
+
+10.
+
+15.
+
+20.
+
+25.
+
+30.
+
+35.
+
+Figura 19: Exemplo defuzziﬁcação centroide
+
+2.10.2 Centro dos Máximos
+
+40.
+
+45.
+x = sensação de calor
+
+50.
+
+Neste método são levados em conta apenas as regiões de maior possibilidade entre
+os possíveis valores da variável que modela o conceito fuzzy em questão. temos então:
+
+G(B) =
+
+i + s
+2
+
+,
+
+(2.12)
+
+2.10 M É T O D O S D E D E F U Z Z I F I C A Ç Ã O
+
+49
+
+onde
+
+i = inf{u ∈ R : ϕB(u) = max
+
+u
+
+ϕB(u)}
+
+e
+
+s = sup{u ∈ R : ϕB(u) = max
+
+u
+
+ϕB(u)}
+
+(2.13)
+
+Temos representado este método na ﬁgura 20
+
+Figura 20: Defuzziﬁcador centro de máximo. [7]
+
+2.10.3 Média dos Máximos
+
+O defuzziﬁcador média dos máximos é comum ser utilizado quando tem-se um do-
+
+mínio discreto, temos a deﬁnição a seguir:
+
+M(B) =
+
+n
+∑
+i=1
+
+ui
+n
+
+,
+
+(2.14)
+
+onde n é dado e ui, com 1 ≤ i ≤ n são os elementos de maior pertinência ao conjunto
+fuzzy B.
+
+Exemplo 2.13. No exemplo 19 seriam considerados os valores x = 15 e x = 35
+
+então (15+35)
+
+2
+
+= 25oC
+
+3
+
+A P L I C A Ç Õ E S
+
+Abordaremos nesse capítulo o uso de um controlador fuzzy na tomada de decisão da
+taxa SELIC, incluíndo a taxa de desemprego também como variável de entrada, com
+as informações atualizadas e utilizando o programa R [10] em relação ao artigo [6],
+assim como o uso da lógica fuzzy no controle de um robô para desviar de obstáculos,
+a ideia foi criada de modo a demonstrar de maneira lúdica aos alunos o conceito de
+proximidade utilizando a lógica fuzzy.
+
+3.1 TA X A S E L I C
+
+Uma das aplicações da lógica fuzzy é na tomada de decisões, existem situações em
+que um preço está baixo, razoável ou alto, se um produto é feio, bonito ou adequado,
+entre outras situações em que não podemos aﬁrmar com certeza, quando temos certeza
+podemos usar a lógica clássica.
+
+Abordaremos nessa aplicação a decisão da taxa SELIC, baseado no artigo [6]. A taxa
+SELIC é a taxa básica de juros pelo qual o governo remunera os bancos quando são
+tomados empréstimos, sendo portanto usada como referência para outras taxas.
+
+A taxa SELIC é muito utilizada como ferramenta de controle de inﬂação, pois a
+principal guia da economia é a lei da oferta/procura, por exemplo: quando temos
+uma safra recorde a quantidade é maior do que as pessoas precisam, então para poder
+vender o produto é necessário ter um atrativo, o principal utilizado é a diminuição do
+preço; quando se têm uma quebra de safra, as pessoas ﬁcam dispostas a pagar mais
+pelo produto que lhes é necessário, portanto acaba forçando o aumento do preço.
+
+A lógica fuzzy será utilizada num processo que consiste em etapas:
+
+• Escolha das variáveis de entrada;
+
+• Funções de pertinência para cada entrada;
+
+51
+
+52
+
+A P L I C A Ç Õ E S
+
+• Criar as regras fuzzy adequadas por um especialista;
+
+• Escolher o método de inferência do sistema fuzzy.
+
+• Fazer a defuzzyﬁcação;
+
+No caso da taxa SELIC temos várias entradas possíveis: risco país, desvio da expec-
+tativa da inﬂação, câmbio, dívida líquida, superávit primário, desemprego, capacidade
+de produção da industria, índice de conﬁança do consumidor (ICC), SELIC-Meta defa-
+sada. Utilizaremos apenas três nesse trabalho o IPCA (Índice de Preços ao Consumidor
+Amplo) como referência para inﬂação, o preço do dólar como referência da situação
+econômica, e o índice de desemprego (quando a SELIC está alta existe a preferência
+das pessoas aplicarem seu dinheiro no mercado ﬁnanceiro do que na atividade produ-
+tiva).
+
+Conforme os dados coletados nos sites do IPEA [3] e IBGE [2] colocados na tabela
+11, temos uma correlação (conforme cálculo abaixo) entre a entrada IPCA e saída SE-
+LIC de 0,79, da entrada Dólar e saída SELIC de 0,9 e da entrada desemprego e saída
+SELIC de 0,67. Este índice de correlação varia de -1 (alta relação inversamente pro-
+porcional) a 1 (alta relação diretamente proporcional), sendo 0 não existe relação das
+variáveis, portanto essas variáveis são adequadas para serem utilizadas nesse processo.
+
+ρ =
+
+∑n
+
+i=1(xi − x)(yi − y)
+
+(cid:112)∑n
+
+i=1(xi − x)2.
+
+(cid:112)∑n
+
+i=1(yi − y)2
+
+=
+
+√
+
+Cov(X, Y)
+Var(X).Var(Y)
+
+onde x1, x2, . . . , xn e y1, y2, . . . , yn, são os valores medidos das variáveis.
+
+e
+
+x =
+
+1
+n
+
+.
+
+n
+∑
+i=1
+
+xi
+
+y =
+
+1
+n
+
+.
+
+n
+∑
+i=1
+
+yi
+
+são as médias aritméticas das variáveis.
+
+3.1.1 Programa para modelagem Fuzzy
+
+Existem diversos programas para efetuar a modelagem Fuzzy, entre eles estão o
+Matlab bastante utilizado, mas é um programa pago, e o R [10] que utilizaremos
+
+3.1 TA X A S E L I C
+
+53
+
+por ser gratuito e que pode realizar a modelagem através do inclusão da biblioteca
+sets [9].
+
+No programa R foi utilizado para a modelagem o script abaixo:
+
+# Carrega a biblioteca de funções de lógica
+
+l i b r a r y ( s e t s )
+
+# Lê os dados da tabela selic
+
+s e l i c < read . t a b l e ( " s e l i c . t x t " , header = T , dec = " , " )
+
+# Deﬁne o universo de valores das variáveis do menor até o maior e do incremento
+
+s e t s _ options ( " u n i v e r s e " , seq ( from = 1 ,
+
+t o = 15 , by = 0 . 0 1 ) )
+
+# Valor inicial da saída fuzzy
+
+nebula < numeric ( 0 )
+
+# Funções de pertinência para as variáveis de entrada e saída fuzzy
+
+v a r i a v e i s < s e t (
+
+i p c a=f u z z y _ v a r i a b l e (
+
+B=f u z z y _ t r a p e z o i d ( c o r n e r s = c ( 4 , 5 , 6 , 7 ) ) ,
+
+M=f u z z y _ t r a p e z o i d ( c o r n e r s = c ( 6 , 7 , 8 , 9 ) ) ,
+
+R=f u z z y _ t r a p e z o i d ( c o r n e r s = c ( 8 , 9 , 1 0 , 1 1 ) ) ) ,
+
+d o l a r=f u z z y _ v a r i a b l e (
+
+B=f u z z y _ cone ( 1 . 7 , r a d i u s = 0 . 8 ) ,
+
+M=f u z z y _ cone ( 2 . 7 , r a d i u s = 0 . 5 ) ,
+
+R=f u z z y _ cone ( 3 . 1 , r a d i u s = 1 . 4 ) ) ,
+
+desemprego=f u z z y _ v a r i a b l e (
+
+B=f u z z y _ normal (mean=8,sd = 2 ) ,
+
+R=f u z z y _ normal (mean=10,sd = 2 ) ) ,
+
+s e l i c=f u z z y _ v a r i a b l e (
+
+54
+
+A P L I C A Ç Õ E S
+
+b a i x a r=f u z z y _ normal (mean=6.5 , sd =1.0) ,
+
+manter=f u z z y _ normal (mean=11.3 , sd =0.6) ,
+
+aumentar=f u z z y _ normal (mean=16,sd =2.3)))
+
+# Regras do módulo fuzzy
+
+r e g r a s < s e t (
+
+f u z z y _ r u l e ( i p c a %i s% B && d o l a r %i s% B && desemprego %i s% B , s e l i c %i s% b a i x a r ) ,
+
+f u z z y _ r u l e ( i p c a %i s% M && d o l a r %i s% B && desemprego %i s% B , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% R && d o l a r %i s% B && desemprego %i s% B , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% B && d o l a r %i s% B && desemprego %i s% R , s e l i c %i s% b a i x a r ) ,
+
+f u z z y _ r u l e ( i p c a %i s% M && d o l a r %i s% B && desemprego %i s% R , s e l i c %i s% b a i x a r ) ,
+
+f u z z y _ r u l e ( i p c a %i s% R && d o l a r %i s% B && desemprego %i s% R , s e l i c %i s% b a i x a r ) ,
+
+f u z z y _ r u l e ( i p c a %i s% B && d o l a r %i s% M && desemprego %i s% B , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% M && d o l a r %i s% M && desemprego %i s% B , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% R && d o l a r %i s% M && desemprego %i s% B , s e l i c %i s% aumentar ) ,
+
+f u z z y _ r u l e ( i p c a %i s% B && d o l a r %i s% M && desemprego %i s% R , s e l i c %i s% b a i x a r ) ,
+
+f u z z y _ r u l e ( i p c a %i s% M && d o l a r %i s% M && desemprego %i s% R , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% R && d o l a r %i s% M && desemprego %i s% R , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% B && d o l a r %i s% R && desemprego %i s% B , s e l i c %i s% aumentar ) ,
+
+f u z z y _ r u l e ( i p c a %i s% M && d o l a r %i s% R && desemprego %i s% B , s e l i c %i s% aumentar ) ,
+
+f u z z y _ r u l e ( i p c a %i s% R && d o l a r %i s% R && desemprego %i s% B , s e l i c %i s% aumentar ) ,
+
+f u z z y _ r u l e ( i p c a %i s% B && d o l a r %i s% R && desemprego %i s% R , s e l i c %i s% manter ) ,
+
+f u z z y _ r u l e ( i p c a %i s% M && d o l a r %i s% R && desemprego %i s% R , s e l i c %i s% aumentar ) ,
+
+f u z z y _ r u l e ( i p c a %i s% R && d o l a r %i s% R && desemprego %i s% R , s e l i c %i s% aumentar )
+
+)
+
+3.1 TA X A S E L I C
+
+55
+
+# Criação do sistema fuzzy
+
+s i s t e m a < f u z z y _ system ( v a r i a v e i s , r e g r a s )
+
+# Inferencia e defuzziﬁcacao do sistema fuzzy
+
+f o r ( i
+
+i n 1 : 4 8 ) {
+
+f i < f u z z y _ i n f e r e n c e ( s i s t e m a , l i s t ( i p c a=s e l i c [ i , 2 ] , d o l a r=s e l i c [ i , 3 ] , desemprego=s e l i c [ i , 4 ] ) )
+
+nebula [ i ] < g s e t _ d e f u z z i f y ( f i , " c e n t r o i d " )
+
+}
+
+# Veriﬁcação dos valores da saída fuzzy
+
+nebula
+
+# Mostra como está montado o sistema fuzzy
+
+p r i n t ( s i s t e m a )
+
+# Gráﬁco de pertinência das variáveis fuzzy
+
+p l o t ( s i s t e m a )
+
+# variação do eixo x do gráﬁco de comparação das selic fuzzy e real
+
+meses < 1:48
+
+# gráﬁco de comparação das selic fuzzy e real
+
+p l o t ( meses , s e l i c $ s e l i c , t y p e=" l " , main=" Compara ç ão SELIC Fuzzy e Real " ,
+x l a b=" Jan13 à Dez16 " , y l a b=" S e l i c " , c o l=" red " )
+
+legend ( 4 0 , 10 , c ( " Fuzzy " , " Real " ) , c o l =c ( " b l u e " , " red " ) , pch=rep ( 2 0 , 2 ) )
+
+l i n e s ( meses , nebula , c o l=" b l u e " )
+
+# correlação entre selic real e fuzzy
+
+x=cbind ( s e l i c $ s e l i c , nebula )
+
+x=data . frame ( x )
+
+cor ( x , method= ’ pearson ’ )
+
+56
+
+A P L I C A Ç Õ E S
+
+3.1.2 Variáveis de entrada e saída
+
+Nas variáveis de entrada foram utilizadas: B para cenário bom, M para cenário
+moderado e R para cenário ruim, os dados foram obtidos na internet nos sites do
+IBGE [2] e Banco Central [1], para a saída SELIC temos as decisões de baixar, manter
+ou aumentar. Os gráﬁcos para cada variável podem ser vistos nas ﬁguras 21 , 22 , 23
+e 24.
+
+Figura 21: Entrada variável IPCA
+
+Figura 22: Entrada variável Dólar
+
+3.1 TA X A S E L I C
+
+57
+
+Figura 23: Entrada variável Desemprego
+
+Figura 24: Saída variável SELIC
+
+3.1.3 Funções de Pertinência
+
+Depois de escolhidas as variáveis de entrada que têm relação e interferem na variá-
+vel de saída em um sistema fuzzy, será necessário construir as funções de pertinência,
+essas funções são geralmente construídas por especialistas, no nosso caso, as variáveis
+escolhidas são constantemente citadas nas atas do COPOM (Comitê de Política Mone-
+tária), com a informação destas atas mais as colhidas na internet e adequando com a
+
+58
+
+A P L I C A Ç Õ E S
+
+Figura 25: Funções de pertinência
+
+saída do sistema utilizando o coeﬁciente de correlação de Pearson entre a SELIC real
+e a SELIC fuzzy, chegamos aos gráﬁcos 25.
+
+3.1.4 Regras
+
+Assim como as funções de pertinência, as regras também devem ser feitas por es-
+pecialistas, as regras são as tomadas de decisão conforme os valores das variáveis de
+entrada, produzindo uma saída fuzzy, as regras adotadas nessa aplicação podem ser
+vistas na tabela 12.
+
+3.1.5 Inferência e defuzziﬁcação
+
+Os valores das variáveis de entrada conforme as regras produzem uma saída fuzzy
+(temos um exemplo na ﬁgura 26), que no nosso caso pode ser útil para a tomada de
+decisão, mas se quisermos ter um valor para comparar com a SELIC real, teremos que
+inferir e defuzziﬁcar as saídas fuzzy, utilizamos o centroide (centro de área) para isso.
+
+3.1 TA X A S E L I C
+
+59
+
+Figura 26: Saída sistema fuzzy com valores de janeiro 2013
+
+Figura 27: Comparação SELIC real e fuzzy
+
+3.1.6 Conclusão
+
+A modelagem fuzzy pode ser um método bastante útil para tomada de decisão, con-
+forme podemos ver no gráﬁco 27, onde a saída fuzzy têm um grau de correlação de
+0,95 comparada com a SELIC real.
+
+60
+
+A P L I C A Ç Õ E S
+
+3.2 U S O D A L Ó G I C A F U Z Z Y E M P R O X I M I D A D E S
+
+Quando encontramos situações de estar próximo ou perto de algo, qual valor po-
+demos adotar para dizer que é perto ou próximo? Nesta aplicação mostraremos de
+forma prática que podemos adotar a lógica fuzzy como forma de determinar valores
+próximos de um valor fornecido.
+
+Iremos utilizar a seguinte situação, um robô aproxima-se de uma fonte de calor,
+sendo que ele suporta uma temperatura em torno de 50oC, portanto devendo parar
+quando aproximar-se deste valor. Por quê não utilizar a lógica clássica para isso, fa-
+zendo o robô parar com valores acima de 50oC? porque o robô trabalha com sensores
+que podem ter erros de leitura, fazendo o robô ﬁcar exposto a temperaturas maiores,
+consequentemente o daniﬁcando.
+
+3.2.1 Programa para simulação de robô
+
+Utilizaremos LOGO [8] que é uma linguagem de programação interpretada (pode-
+mos ver passo a passo a execução dos comandos), muito utilizada para educação foi
+criada por Wally Feurzeig e Seymour Papert como uma forma construcionista onde
+os alunos aprendem com seus erros através da visualização dos comandos. A forma
+clássica da linguagem LOGO é o controle de uma tartaruga que movendo-se na tela
+desenha por onde passa.
+
+Existem vários compiladores diferentes, podendo ser utilizados para controle de
+robôs através da saída física da porta paralela dos computadores ou até para IA (inteli-
+gência artiﬁcial), na nossa aplicação utilizaremos o Kturtle [5] que é uma linguagem
+de programação gratuita no sistema operacional LINUX.
+
+Vemos abaixo os comandos para o Kturtle:
+
+# r e i n i c i a o programa
+apague
+
+#tamanho da t e l a
+t t 200 ,200
+
+#c o r do fundo da t e l a
+c f 0 ,0 ,0
+
+s u p o r t a d o
+
+#c a l o r
+$ c a l o r = 50
+
+#f o n t e c a l o r a l e a t o r i o
+
+3.2 U S O D A L Ó G I C A F U Z Z Y E M P R O X I M I D A D E S
+
+61
+
+$ f o n t e = a l 200 ,510
+
+#c o r da f o n t e
+$ c o r = arredonda ( $ f o n t e / 4)
+
+#desenha a f o n t e
+l l 8
+vá para 96 ,0
+pd 90
+c l 0 , 0 , $ c o r
+p f 8
+pd 90
+p f 8
+pd 90
+p f 8
+pd 90
+p f 8
+
+#v o l t a i n i c i o
+c e n t r a l i z e
+
+#d e s a t i v a o r i s c o
+un
+$ c a l = 0
+$ c a l f u z z y = 0
+
+#r e p e t e a t e c h e c a r p e r t o
+enquanto $ c a l f u z z y < 1 {
+
+#d i s t a n c i a com e r r o
+$ d i s t = pegay∗( a l 0 . 9 5 , 1 . 0 5 )
+
+#c a l o r dependente da d i s t a n c i a
+$ c a l =$ f o n t e / ( r a i z q u a d r a d a $ d i s t )
+
+f u z z y
+
+#c a l o r aproximado por
+se $ c a l < ( $ c a l o r
+se ( $ c a l o r
+{ $ c a l f u z z y = ( $ c a l
+se $ c a l > $ c a l o r {$ c a l f u z z y =1}
+
+0 . 1 ∗$ c a l o r ){ $ c a l f u z z y = 0}
+
+0 . 1 ∗$ c a l o r ) <= $ c a l e $ c a l <= $ c a l o r
+
+( $ c a l o r 0 . 1 ∗$ c a l o r ) ) / ( 0 . 1 ∗$ c a l o r )}
+
+#movimenta t a r t a r u g a
+p f 1}
+vá para 0 ,100
+
+#some t a r t a r u g a
+da
+
+62
+
+A P L I C A Ç Õ E S
+
+#c o r do t e x t o
+c l 255 ,255 ,255
+
+f i n a l do c a l o r
+f i n a l : "
+
+#v a l o r
+mostre " c a l o r
+vá para 100 ,100
+mostre $ c a l
+
+3.2.2 Comentários
+
+• A fonte de calor varia de 200oC à 510oC variando também a cor da representação
+
+na tela do kturtle;
+
+• Conforme a distância o calor diminui seguindo a função calor = calor da fonte
+
+√
+
+distancia
+
+;
+
+• Foi utilizada como função de aproximação f (x) = x−(50−0,1.50)
+
+0,1.50
+
+conforme ﬁgura
+
+28;
+
+• Aplicou-se um erro de ±5% na distância em função do erro de leitura do sensor
+
+do robô.
+
+Figura 28: Função de aproximação
+
+3.2 U S O D A L Ó G I C A F U Z Z Y E M P R O X I M I D A D E S
+
+63
+
+3.2.3 Uso da aplicação
+
+Imaginemos um robô no centro de uma sala escura, onde somente existe uma saída
+onde advém uma luz, o robô possui 3 sensores: um sensor de luminosidade que indi-
+cará a saída, outro sensor de proximidade que veriﬁca se o robô está perto da parede,
+para não haver colisão, e um sensor de calor usando a aplicação anterior como forma
+de obstáculo, determinando pela lógica fuzzy o valor suportado pelo robô. O robô se
+movimenta para frente e somente vira para a esquerda ou direita se estiver perto da
+fonte de calor ou estiver perto da parede, vemos na ﬁgura 29 um exemplo da execução
+do programa.
+
+Figura 29: Percurso da tartaruga com desvio e calor ﬁnal
+
+Usando essas premissas chegamos ao código abaixo:
+
+#desenha as p a r e d e s com c o r e s a l e a t o r i a s
+apague
+t t 200 ,200
+c f 0 ,0 ,0
+$ p e r t o = 20
+vá para 0 ,0
+l l 5
+r e p i t a 4 {
+pd 90
+$ r = a l 0 ,255
+$g = a l 0 ,255
+$b = a l 0 ,255
+c l $r , $g , $b
+
+64
+
+A P L I C A Ç Õ E S
+
+p f 200 }
+
+#d e f i n e a p o s i ç ão da p o r t a
+$x = arredonda ( a l 1 ,4)
+c l 255 ,255 ,255
+se $x==1 { $px = a l 0 ,190
+vá para $px , 0
+pd 90
+p f 10}
+sen ão se $x == 2 { $py = a l 0 ,190
+vá para 200 ,$py
+pd 180
+p f 10}
+sen ão se $x == 3 { $px = a l 0 ,190
+vá para $px ,200
+pd 90
+p f 10}
+sen ão
+{$py = a l 0 ,190
+vá para 0 , $py
+pd 180
+p f 10}
+$ d i r = arredonda ( ( l e r d i r e ç ão / 90) + 1)
+se $x==1 {$ p o r t a x = $px
+$ p o r t a y = 0 }
+sen ão se $x == 2 {$ p o r t a x = 200
+$ p o r t a y = $py }
+sen ão se $x == 3 {$ p o r t a x = $px
+$ p o r t a y = 200 }
+sen ão {$ p o r t a x = 0
+$ p o r t a y = $py }
+$ d i s t a t u a l = r a i z q u a d r a d a ( ( pegax
+$ d i s t p f = 90
+
+$ p o r t a x)^2 + ( pegay
+
+#d e f i n e p o s i ç ão da f o n t e de c a l o r
+enquanto $ d i s t p f >70 ou $ d i s t p f < 30 {
+$ f o n t e x = a l 10 ,190
+$ f o n t e y = a l 10 ,190
+$ d i s t p f = r a i z q u a d r a d a ( ( $ f o n t e x
+}
+$ f i n a l =0
+
+$ p o r t a x)^2 + ( $ f o n t e y
+
+s u p o r t a d o
+
+#c a l o r
+$ c a l o r = 50
+
+#f o n t e c a l o r a l e a t o r i o
+$ f o n t e = a l 400 ,1020
+
+$ p o r t a y )^2)
+
+$ p o r t a y )^2)
+
+3.2 U S O D A L Ó G I C A F U Z Z Y E M P R O X I M I D A D E S
+
+65
+
+#c o r da f o n t e
+$ c o r = arredonda ( $ f o n t e / 4)
+
+#desenha a f o n t e
+l l 4
+vá para $ f o n t e x , $ f o n t e y
+pd 90
+c l $cor , 0 , 0
+p f 4
+pd 90
+p f 4
+pd 90
+p f 4
+pd 90
+p f 4
+
+#v o l t a i n i c i o
+c e n t r a l i z e
+c l 255 ,255 ,255
+l l 2
+$ c a l = 0
+$ c a l f u z z y = 0
+
+# v e r i f i c a sw chegou na p o r t a
+enquanto $ p e r t o != 0 {
+$ d i s t a n t = $ d i s t a t u a l
+p f 1
+$ d i s t a t u a l = r a i z q u a d r a d a ( ( pegax
+
+$ p o r t a x)^2 + ( pegay
+
+$ p o r t a y )^2)
+
+#d i s t a n c i a com e r r o
+$ d i s t f = r a i z q u a d r a d a ( ( pegax
+#c a l o r dependente da d i s t a n c i a
+$ c a l =$ f o n t e / ( $ d i s t f )
+
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e y )^2)∗( a l 0 . 9 5 , 1 . 0 5 )
+
+f u z z y
+
+#c a l o r aproximado por
+se $ c a l < ( $ c a l o r
+se ( $ c a l o r
+{ $ c a l f u z z y = ( $ c a l
+se $ c a l > $ c a l o r {$ c a l f u z z y =1}
+
+0 . 1 ∗$ c a l o r ){ $ c a l f u z z y = 0}
+
+0 . 1 ∗$ c a l o r ) <= $ c a l e $ c a l <= $ c a l o r
+
+( $ c a l o r 0 . 1 ∗$ c a l o r ) ) / ( 0 . 1 ∗$ c a l o r )}
+
+se $ d i r == 1 {$ d i s t p a r e d e = pegay }
+sen ão { se $ d i r == 2 {$ d i s t p a r e d e = 200
+sen ão { se $ d i r == 3 {$ d i s t p a r e d e = 200
+sen ão {$ d i s t p a r e d e = pegax }}}
+
+pegax }
+pegay }
+
+# v e r i f i c a se e s t a p e r t o da f o n t e de c a l o r ou da parede
+se ( $ c a l f u z z y > 0) ou ( ( $ c a l f u z z y < 1) e ( $ d i s t a t u a l > $ d i s t a n t ) ) ou ( ( $ c a l f u z z y < 1)
+e ( $ d i s t p a r e d e < $ p e r t o ) ) {
+
+66
+
+A P L I C A Ç Õ E S
+
+#v i r a para esquerda ou d i r e i t a depende da d i s t a n c i a para a s a i d a mais p e r t o
+se $ d i r == 1 {
+$c11 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( ( pegax 1 )
+$c12 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( pegax
+
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e y )^2)))
+
+$ f o n t e y )^2)))
+
+$ p o r t a y )^2)
+
+$ p o r t a y )^2)
+
+$ p o r t a x)^2 + ( pegay
+
+$ p o r t a x)^2 + ( pegay
+
+$d11=r a i z q u a d r a d a ( ( ( pegax 1 )
+$d12=r a i z q u a d r a d a ( ( pegax
+se $ c a l f u z z y > 0 { se $c11 < $c12 { pe 90
+p f 1
+$ p e r t o = $ p e r t o + 1} sen ão {pd 90
+p f 1
+$ p e r t o = $ p e r t o + 1} } sen ão { se $d11 < $d12 { pe 90
+1} sen ão {pd 90
+$ p e r t o = $ p e r t o
+1} }}
+$ p e r t o = $ p e r t o
+
+se $ d i r == 2 {
+$c21 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( pegax
+$c22 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( pegax
+$d21=r a i z q u a d r a d a ( ( pegax
+$d22=r a i z q u a d r a d a ( ( pegax
+
+$ f o n t e x)^2 + ( ( pegay 1 )
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e y )^2)))
+
+$ f o n t e y )^2)))
+
+$ p o r t a x)^2 + ( ( pegay
+$ p o r t a x)^2 + ( pegay
+
+$ p o r t a y )^2)
+
+1)
+$ p o r t a y )^2)
+
+se $ c a l f u z z y >0 { se $c21 < $c22 { pe 90
+p f 1
+$ p e r t o = $ p e r t o + 1} sen ão {pd 90
+p f 1
+$ p e r t o = $ p e r t o + 1} } sen ão { se $d21 < $d22 { pe 90
+1} sen ão {pd 90
+$ p e r t o = $ p e r t o
+$ p e r t o = $ p e r t o
+1} }}
+se $ d i r == 3 {
+$c31 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( ( pegax 1 )
+$c32 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( pegax
+$d31=r a i z q u a d r a d a ( ( ( pegax 1 )
+$d32=r a i z q u a d r a d a ( ( pegax
+
+$ p o r t a x)^2 + ( pegay
+
+$ p o r t a x)^2 + ( pegay
+
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e y )^2)))
+
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e y )^2)))
+
+$ p o r t a y )^2)
+
+$ p o r t a y )^2)
+
+se $ c a l f u z z y > 0 { se $c31 < $c32 { pd 90
+p f 1
+$ p e r t o = $ p e r t o + 1} sen ão {pe 90
+p f 1
+$ p e r t o = $ p e r t o + 1} } sen ão { se $d31 < $d32 { pd 90
+1} sen ão {pe 90
+$ p e r t o = $ p e r t o
+1} }}
+$ p e r t o = $ p e r t o
+se $ d i r == 4 {
+$c41 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( pegax
+$c42 =$ f o n t e / ( ( r a i z q u a d r a d a ( ( pegax
+$d41=r a i z q u a d r a d a ( ( pegax
+$d42=r a i z q u a d r a d a ( ( pegax
+
+$ p o r t a x)^2 + ( ( pegay
+$ p o r t a x)^2 + ( pegay
+
+$ f o n t e x)^2 + ( ( pegay 1 )
+$ f o n t e x)^2 + ( pegay
+
+$ f o n t e y )^2)))
+
+$ f o n t e y )^2)))
+
+$ p o r t a y )^2)
+
+1)
+$ p o r t a y )^2)
+
+3.2 U S O D A L Ó G I C A F U Z Z Y E M P R O X I M I D A D E S
+
+67
+
+se $ c a l f u z z y > 0 { se $c41 < $c42 { pd 90
+p f 1
+$ p e r t o = $ p e r t o + 1} sen ão {pe 90
+p f 1
+$ p e r t o = $ p e r t o + 1} } sen ão { se $d41 < $d42 { pd 90
+1} sen ão {pe 90
+$ p e r t o = $ p e r t o
+$ p e r t o = $ p e r t o
+1} }}
+$ d i r = arredonda ( ( l e r d i r e ç ão / 90) + 1)
+se $ d i r >4 ou $ d i r <=0 {$ d i r =1}
+se $ f i n a l <$ c a l {$ f i n a l=$ c a l }
+}}
+
+f i n a l
+
+#mostra o c a l o r
+vá para 90 ,100
+d i r e ç ão 0
+mostre $ f i n a l
+
+3.2.4 Conclusão
+
+Embora a decisão do desvio de um obstáculo possa ser feita pela lógica clássica,
+usando a lógica fuzzy podemos ter a vantagem de poder desviar da fonte de calor pela
+proximidade, isto é, quanto mais próximo maior poderá ser esse desvio, embora não
+tenha sido utilizado isto na aplicação pois o código seria muito extenso e a ﬁnalidade
+da aplicação é ser a mais didática possível, podemos também utilizar a pertinência para
+o caso do robô ter um extintor de incêndio e variando a quantidade de líquido expelido
+de acordo com a proximidade, decidir desviar quando tiver mais de um obstaculo para
+longe do mais próximo, além de outras que possam utilizar a lógica fuzzy. Este método
+também poderá ser utilizado para qualquer tipo de obstáculo no percurso de um robô.
+
+68
+
+A P L I C A Ç Õ E S
+
+Data
+
+IPCA
+
+Dolar Desemprego
+
+SELIC
+
+jan/13
+fev/13
+mar/13
+abr/13
+mai/13
+jun/13
+jul/13
+ago/13
+set/13
+out/13
+nov/13
+dez/13
+jan/14
+fev/14
+mar/14
+abr/14
+mai/14
+jun/14
+jul/14
+ago/14
+set/14
+out/14
+nov/14
+dez/14
+jan/15
+fev/15
+mar/15
+abr/15
+mai/15
+jun/15
+jul/15
+ago/15
+set/15
+out/15
+nov/15
+dez/15
+jan/16
+fev/16
+mar/16
+abr/16
+mai/16
+jun/16
+jul/16
+ago/16
+set/16
+out/16
+nov/16
+dez/16
+
+6,15
+6,31
+6,59
+6,49
+6,5
+6,7
+6,27
+6,09
+5,86
+5,84
+5,77
+5,91
+5,59
+5,68
+6,15
+6,28
+6,37
+6,52
+6,5
+6,51
+6,75
+6,59
+6,56
+6,41
+7,14
+7,7
+8,13
+8,17
+8,47
+8,89
+9,56
+9,53
+9,49
+9,93
+10,48
+10,67
+10,71
+10,36
+9,39
+9,28
+9,32
+8,84
+8,74
+8,97
+8,48
+7,87
+6,99
+6,29
+
+2,04
+1,99
+1,98
+1,99
+2,01
+2,11
+2,22
+2,29
+2,33
+2,24
+2,25
+2,32
+2,36
+2,4
+2,37
+2,3
+2,26
+2,26
+2,25
+2,27
+2,3
+2,4
+2,5
+2,59
+2,65
+2,73
+3,02
+3,14
+3,07
+3,12
+3,16
+3,39
+3,73
+3,94
+3,9
+3,91
+4,01
+4,05
+3,92
+3,64
+3,51
+3,51
+3,3
+3,22
+3,23
+3,21
+3,26
+3,37
+
+7,2
+7,7
+8
+7,8
+7,6
+7,4
+7,3
+7,1
+6,9
+6,7
+6,5
+6,2
+6,4
+6,8
+7,2
+7,1
+7
+6,8
+6,9
+6,9
+6,8
+6,6
+6,5
+6,5
+6,8
+7,4
+7,9
+8
+8,1
+8,3
+8,6
+8,7
+8,9
+9
+9
+9
+9,5
+10,2
+10,9
+11,2
+11,2
+11,3
+11,6
+11,8
+11,8
+11,8
+11,9
+12
+
+7,25
+7,25
+7,25
+7,5
+8
+8
+8,5
+9
+9
+9,5
+10
+10
+10,5
+10,75
+10,75
+11
+11
+11
+11
+11
+11
+11,25
+11,25
+11,75
+12,25
+12,25
+12,75
+13,25
+13,25
+13,75
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14,25
+14
+13,75
+13,75
+
+Tabela 11: Tabela de valores das entradas fuzzy.
+
+3.2 U S O D A L Ó G I C A F U Z Z Y E M P R O X I M I D A D E S
+
+69
+
+Ipca Dolar Desemprego
+
+Selic
+
+B
+M
+R
+B
+M
+R
+B
+M
+R
+B
+M
+R
+B
+M
+R
+B
+M
+R
+
+B
+B
+B
+B
+B
+B
+M
+M
+M
+M
+M
+M
+R
+R
+R
+R
+R
+R
+
+B
+B
+B
+R
+R
+R
+B
+B
+B
+R
+R
+R
+B
+B
+B
+R
+R
+R
+
+baixar
+manter
+manter
+baixar
+baixar
+baixar
+manter
+manter
+aumentar
+baixar
+manter
+manter
+aumentar
+aumentar
+aumentar
+manter
+aumentar
+aumentar
+
+Tabela 12: Regras de Inferência
+
+B I B L I O G R A F I A
+
+[1] Banco Central dados econômicos. http://www.bcb.gov.br/pt-br/#!/home. Ac-
+
+cessed: 2017-08-01.
+
+[2] IBGE ipca.
+
+http://www.ibge.gov.br/home/estatistica/indicadores/
+
+precos/inpc_ipca/defaultinpc.shtm. Accessed: 2017-08-01.
+
+[3] IPEA dados econômicos. http://www.ipeadata.gov.br/Default.aspx. Acces-
+
+sed: 2017-08-01.
+
+[4] Michal Baczynski and Balasubramaniam Jayaram. Fuzzy implications. Springer,
+
+2008.
+
+[5] Cies Breijs, Anne-Marie Mahfouf, and Mauricio Piacentini. Manual do kturtle.
+
+Acesso em, 16, 2013.
+
+[6] Marco Antonio Leonel Caetano. Lógica Fuzzy para tomada de decisão em negócios
+
+e ﬁnanças. Revista de Economia e Administração, 2006.
+
+[7] Laécio Carvalho de Barros and Rodney Carlos Bassanezi. Tópicos de lógica fuzzy
+
+e biomatemática. Editora da Unicamp, 2006.
+
+[8] Wally Feurzeig and Seymour Papert. Logo. ODP-Open Directory Project, 1967.
+
+[9] David Meyer and Kurt Hornik. Generalized and customizable sets in R. Journal
+
+of Statistical Software, 31(2):1–27, 2009.
+
+[10] R Core Team. R: A Language and Environment for Statistical Computing. R Foun-
+
+dation for Statistical Computing, Vienna, Austria, 2017.
+
+[11] Timothy J Ross. Fuzzy logic with engineering applications. John Wiley & Sons,
+
+2009.
+
+[12] Leo Weber and Pedro Antonio Trierweiler Klein. Aplicação da lógica fuzzy em
+
+software e hardware. Editora da ULBRA, 2003.
+
+71
+
+

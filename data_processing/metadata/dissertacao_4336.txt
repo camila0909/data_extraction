@@ -1,0 +1,7428 @@
+Universidade de Brasília
+Instituto de Ciências Exatas
+Departamento de Matemática
+Programa de Mestrado Proﬁssional em
+Matemática em Rede Nacional
+
+Implementação de Métodos Iterativos e
+Computacionais para Resolução de Sistemas
+de Equações Lineares: um Estudo Aplicado
+
+Alterno Jerônimo Junior
+
+Brasília
+
+2015
+
+Alterno Jerônimo Junior
+
+Implementação de Métodos Iterativos e
+Computacionais para Resolução de Sistemas
+de Equações Lineares: um Estudo Aplicado
+
+Trabalho de Conclusão de Curso apresentado ao Departamento de Matemática da Uni-
+
+versidade de Brasília, como parte dos requisitos para obtenção do grau de Mestre.
+
+Orientador: Prof. Dr. Rui Seimetz
+
+Brasília
+
+2015
+
+Todos os direitos reservados. É proibida a reprodução total ou parcial deste trabalho
+
+sem a autorização da universidade, do autor e do orientador.
+
+Alterno Jerônimo Junior graduou-se em Matemática pelo Centro Universitário São
+
+Camilo- ES e fez especialização pala FIJ- RJ. Atualmente é professor da Secretaria de
+
+Educação do Distrito Federal onde vem desenvolvendo um trabalho na grande área das
+Ciências da Natureza e Matemática com alunos que possuem necessidades educacionais
+
+especiais. Também atua como professor no Centro Universitário IESB-DF onde leciona
+
+as disciplinas de Cálculo Numérico, Cálculo I, Cálculo II e Física Geral I.
+
+Dedicatória
+
+À meus Pais Jerônimo e Neusa, minha irmã Michelle,
+
+meu ﬁlho Juan e minha namorada Yasmim, por todo
+
+incentivo e amor ao longo dessa caminhada.
+
+"Os homens passam, mas suas obras ﬁcam"
+
+Ausgustin Louis Cauchy (1789-1857)
+
+Agradecimentos
+
+Agradecer é sempre um momento difícil. Durante essa jornada de pouco mais de
+
+2 anos, foram muitas pessoas que passaram e de alguma forma contribuíram para o
+
+sucesso desse momento.
+
+Mas vou começar agradecendo aos meu pais, Jerônimo e Neusa. Sempre incansáveis
+no trabalho e fonte de inspiração para todos. Obrigado por me oportunizarem esse
+
+momento, me apoiando e me deixando sempre seguir com minhas escolhas. À vocês
+
+um agradecimento especial.
+
+À minha irmã e amiga Michelle, pelas sábias palavras nos momentos difíceis e pelo
+
+companheirismo.
+
+Ao meu ﬁlho Juan, que desde pequeno ﬁcou longe do pai mas mesmo assim nunca
+
+deixou de querer estar perto. Que essa conquista te inspire a ser um grande homem.
+
+À minha namorada Yasmim, que desde o início me deu forças e foi a primeira a
+saber da aprovação para o mestrado. Obrigado por estar ao meu lado mesmo nos
+
+momentos mais difíceis. Seu amor sempre me inspirou.
+
+Aos meus primos Bruno e Rodrigo, que conviveram comigo sobre o mesmo teto
+
+durante anos e de muitas formas sempre estiveram ao meu lado. À vocês meu mais
+sincero Obrigado!
+
+Ao meu orientador, Professor Rui Seimetz, por ter aceitado esse desaﬁo e dedicado
+
+parte de seu precioso tempo as correções e orientações deste trabalho.
+
+Aos membros da banca examinadora, os professores Guy Grebot e Edson Alves
+da C. Junior, pelo tempo dispendido na leitura deste trabalho e pelas importantes
+
+sugestões apontadas.
+
+Aos nossos professores do Curso de Mestrado Proﬁssional em Matemática (PROF-
+
+MAT) campus UNB, por sempre nos incentivarem e por todos os momentos juntos.
+
+Aos meus amigos, em especial ao Carlos Henrique, que revisou o Resumo e o Abs-
+
+tract e fez valiosas contribuições.
+
+A todos os meus companheiros de classe. Sem vocês essa caminhada não teria tanto
+
+sucesso. Que todos continuem contribuindo para a melhora da Educação desse Pais.
+
+Agradecer a CAPES pelo suporte ﬁnanceiro, que contribuiu de forma signiﬁcativa
+
+para essa formação.
+
+E por ﬁm agradecer ao Pai dos Pais. Senhor Jesus Cristo que pode propiciar todos
+
+esses momentos e agradecimentos. Sem ele nada aqui teria sido feito.
+
+Resumo
+
+Este trabalho tem por objetivo principal mostrar como a implementação de mé-
+todos iterativos e computacionais para resolução de sistemas lineares pode contribuir
+para a motivação e melhoria do aprendizado dos alunos do 2 ◦ ano do Ensino Médio
+em Matemática. Para atingir os objetivos do trabalho, quinze alunos participarem de
+
+aulas sobre o tema e responderam a dois questionários, um no início e outro no ﬁnal
+do programa. Uma revisão bibliográﬁca foi feita analisando livros, artigos e outras
+
+teses/dissertações que também abordavam o assunto. No referencial teórico estudou-se
+
+o surgimento histórico dos sistemas lineares, fez-se uma análise dos métodos de reso-
+
+lução de sistemas lineares estudados no Ensino Médio e outros tratados pelo Cálculo
+Numérico, destacando-se a eliminação de Gauss com pivoteamento e fatoração LU
+
+como métodos diretos e os métodos de Gauss-Jacobi e Gauss-Seidel entre os iterativos.
+
+Também foi analisado as condições de convergência dos métodos iterativos. Mostrou-
+
+se exemplos de como resolver sistemas lineares por cada método citado no trabalho.
+Observou-se métodos de soluções computacionais para sistemas lineares contemplando
+
+os softwares GeoGebra, Winplot, Máxima e SciLab, todos eles de código aberto e divul-
+
+gação livre. Mostrou-se exercícios aplicados de sistemas lineares de dimensão n, com
+
+n > 3, em várias áreas do conhecimento como motivação para a pesquisa de campo.
+Como sujeitos da pesquisa foram selecionados alunos de escolas públicas e privadas da
+
+rede de ensino do DF. Esses alunos participaram das aulas, desenvolvendo os conteúdos
+
+relativos aos métodos abordados neste trabalho, destacando-se os métodos iterativos e
+
+computacionais. Observamos as aulas da pesquisa e os questionários respondidos pe-
+los alunos para inferirmos que a resolução das aplicações, principalmente por métodos
+
+computacionais, motivam e ajudam os alunos a terem uma aprendizagem signiﬁcativa
+
+nas aulas de matemática relacionadas a sistemas lineares.
+
+Palavras-chave
+
+Sistemas Lineares, Métodos iterativos e computacionais, Motivação.
+
+Abstract
+
+The work main objective is to show how the implementation of iterative and compu-
+tational methods for solving linear systems can contribute to motivation and improve
+
+learning of Mathematics classes for high school students. To achieve the objectives of
+
+this paper, a set of classes was delivered to ﬁfteen students and the students answered
+
+two questionnaires, one at the beginning and another at the end of the program. A
+bibliographic review was done considering books, articles and past work about this
+
+subject. The theoretical background includes the history of linear systems. There was
+
+an analysis of linear systems solving methods studied in high school and other methods
+
+from Numerical Calculus. The main direct methods analyzed were the Gaussian eli-
+mination with pivoting and LU factorization. As iterative methods, Gauss-Jacobi and
+
+Gauss-Seidel were used. The conditions of convergence for the iterative methods were
+
+also analyzed. Examples were used to illustrate each method of resolution that is
+
+part of this paper. Many methods of computational solutions for linear systems were
+applied using the following software: GeoGebra, Winplot, Maxima and SciLab. All
+
+the software is freeware and open-source. The motivation for ﬁeld research was the
+
+applicability of linear systems with dimension n, (considering n> 3), in various areas
+
+of knowledge. Students from public and private school system of Distrito Federal were
+selected as research subject. Those students attended classes, and used the methods
+
+discussed in this work, specially the iterative and computational methods. After the
+
+analysis of the classes and feedback questionnaires about the outlined methods, espe-
+
+cially the computational methods for applied exercises, we inferred that they motivate
+the students to have improved learning of Mathematic related to linear systems.
+
+Keywords
+
+Linear systems, iterative and computational methods, Motivation.
+
+Lista de Figuras
+
+1
+
+2
+
+3
+
+Tela inicial do GeoGebra e o campo "Entrada" . . . . . . . . . . . . . .
+
+Solução do exemplo proposto no GeoGebra . . . . . . . . . . . . . . . .
+
+Tela inicial do Winplot . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4 Menu completo Winplot
+5
+
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+Janela de equação Winplot . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6
+
+7
+
+8
+9
+
+Representação das três equações . . . . . . . . . . . . . . . . . . . . . .
+
+Janela incial do Maxima . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Caixa do número de equações no Maxima
+Caixa para inserção das equações no Maxima
+
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . .
+
+10
+
+Solução do exemplo proposto no Maxima . . . . . . . . . . . . . . . . .
+
+11 Matriz aumentada dos coeﬁcientes do Exemplo 4.4 no Scilab . . . . . .
+
+12 Matriz aumentada dos coeﬁcientes do Exemplo 4.4 de forma usual no
+Scilab . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+13 Matriz das constantes do Exemplo 4.4 no Scilab . . . . . . . . . . . . .
+
+14 Matriz das constantes do exemplo 4.4 no Scilab . . . . . . . . . . . . .
+
+15 Comando linsolve para resolução de sistemas lineares no Scilab . . . . .
+Solução do exemplo 4.4 no Scilab . . . . . . . . . . . . . . . . . . . . .
+16
+
+17 Fluxo do tráfego no centro de Gotham . . . . . . . . . . . . . . . . . .
+
+18 Placa metálica sendo aquecida . . . . . . . . . . . . . . . . . . . . . . .
+
+19 Circuito elétrico . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+20 Diagrama de estrutura metálica composta por vigas . . . . . . . . . . .
+
+21 Diagrama de outra estrutura metálica composta por vigas
+
+. . . . . . .
+
+22
+
+23
+24
+
+25
+
+26
+
+27
+28
+
+29
+
+Sistema linear construído por um aluno a partir da Aplicação 1 . . . .
+
+Solução da Aplicação 1 por um dos alunos no SciLab . . . . . . . . . .
+Sistema linear construído por um aluno a partir da Aplicação 2 . . . .
+
+Sistema linear construído por um aluno a partir da Aplicação 3 . . . .
+
+Solução da Aplicação 2 por um dos alunos no SciLab . . . . . . . . . .
+
+Solução da Aplicação 3 por um dos alunos no SciLab . . . . . . . . . .
+Sistema Linear construído por um dos alunos a partir da Aplicação 4 .
+
+Solução da Aplicação 4 feita por um dos alunos utilizando o método de
+
+58
+
+59
+
+60
+
+60
+61
+
+61
+
+63
+
+63
+64
+
+64
+
+66
+
+66
+
+66
+
+67
+
+67
+68
+
+71
+
+73
+
+75
+76
+
+80
+
+87
+
+88
+89
+
+90
+
+91
+
+91
+93
+
+Gauss-Seidel . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+94
+
+30
+95
+Sistema Linear construído por um dos alunos a partir da Aplicação 5 .
+31 Alunos respondendo o questionário inicial e utilizando o SciLab . . . . 113
+
+32 Alunas resolvendo as aplicações e utilizando o SciLab . . . . . . . . . . 113
+
+33 Aluno respondendo o questionário inicial
+. . . . . . . . . . . . . . . . . 113
+34 Aluno montando o sistema linear da Aplicação 1 . . . . . . . . . . . . . 114
+
+35 Aluna resolvendo o sistema linear da Aplicação 1 no SciLab . . . . . . 114
+
+36 Aluno respondendo o questionário ﬁnal
+
+. . . . . . . . . . . . . . . . . . 114
+
+37 Aluno respondendo a Aplicação 2 utilizando o SciLab . . . . . . . . . . 115
+38 Aluno modelando e respondendo a Aplicação 3 utilizando o SciLab . . 115
+
+39 Aluna respondendo a Aplicação 5 . . . . . . . . . . . . . . . . . . . . . 115
+
+Sumário
+
+1
+
+Introdução
+1.1 Revisão bibliográﬁca . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Relevância do problema
+
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.3 Objetivos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.3.1 Objetivo geral . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.3.2 Objetivos Especíﬁcos . . . . . . . . . . . . . . . . . . . . . . . .
+
+2 Fundamentação teórica
+
+2.1 Um breve histórico dos sistemas lineares
+
+. . . . . . . . . . . . . . . . .
+
+2.2 Deﬁnições e análise de sistemas lineares . . . . . . . . . . . . . . . . . .
+
+2.2.1 Deﬁnições via Álgebra Linear
+2.2.2
+
+. . . . . . . . . . . . . . . . . . .
+Sistemas lineares e matrizes . . . . . . . . . . . . . . . . . . . .
+
+2.2.3 Análise de sistemas lineares
+
+. . . . . . . . . . . . . . . . . . . .
+
+2.3 Métodos diretos de resolução . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3.1 Regra de Cramer . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.3.2 Método de eliminação de Gauss . . . . . . . . . . . . . . . . . .
+
+2.3.3 Método de eliminação de Gauss-Jordan . . . . . . . . . . . . . .
+
+2.3.4 Fatoração LU . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.4 Métodos iterativos de resolução . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . .
+
+2.4.1 Convergência dos métodos iterativos
+
+2.4.2 Método de Jacobi . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.4.3 Método de Gauss-Seidel
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+2.5 Comparação entre os métodos diretos e iterativos
+. . . . . . . . . . . .
+2.6 Condicionamento de sistemas lineares . . . . . . . . . . . . . . . . . . .
+
+3 Métodos para resolução de sistemas lineares
+
+3.1 Resolução de sistemas lineares por métodos diretos estudados no Ensino
+
+Médio . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1.1 Regra de Cramer . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.1.2 Escalonamento . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.2 Resolução de sistemas lineares por métodos diretos não estudados no
+
+ensino médio
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.2.1 Eliminação de Gauss com pivoteamento parcial
+. . . . . . . . .
+3.2.2 Eliminação de Gauss com pivoteamento completo . . . . . . . .
+
+14
+15
+
+17
+
+21
+
+21
+21
+
+22
+
+22
+
+23
+
+23
+24
+
+27
+
+31
+
+32
+32
+
+34
+
+34
+
+37
+37
+
+39
+
+40
+
+40
+41
+
+43
+
+43
+
+44
+46
+
+47
+
+47
+48
+
+3.2.3 Eliminação de Gauss-Jordan . . . . . . . . . . . . . . . . . . . .
+
+3.2.4 Fatoração LU . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.3 Resolução de sistemas lineares por métodos iterativos . . . . . . . . . .
+
+3.3.1 Gauss-Jacobi
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.3.2 Gauss-Seidel . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4 Recursos computacionais para resolução de sistemas lineares
+
+4.1 Resolução utilizando o GeoGebra . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . .
+4.2 Resolução utilizando o Winplot
+
+4.3 Resolução utilizando o Maxima . . . . . . . . . . . . . . . . . . . . . .
+
+4.4 Resolução utilizando o Scilab . . . . . . . . . . . . . . . . . . . . . . .
+
+5 Aplicações de sistema lineares de maiores dimensões
+
+6 Exposição e análise do desenvolvimento da pesquisa de campo
+
+6.1 Retomando a questão de investigação e os objetivos . . . . . . . . . . .
+6.2 Metodologia e descrição da pesquisa . . . . . . . . . . . . . . . . . . . .
+
+6.3 Análise do questionário inicial
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+6.4 Análise das aulas da pesquisa . . . . . . . . . . . . . . . . . . . . . . .
+
+6.5 Análise do questionário ﬁnal
+
+. . . . . . . . . . . . . . . . . . . . . . . .
+
+7 Considerações ﬁnais
+
+Referências
+
+A Primeiro Questionário
+
+B Segundo Questionário
+
+1 Anexo- Fotos
+
+49
+
+50
+52
+
+52
+
+54
+
+57
+
+58
+59
+
+62
+
+64
+
+69
+
+81
+
+81
+82
+
+84
+
+86
+
+96
+
+98
+
+101
+
+105
+
+111
+
+113
+
+1 Introdução
+
+A presente dissertação surge da inquietação advinda das aulas de Geometria Ana-
+
+lítica e Cálculo Numérico em um curso de graduação em Engenharia Civil. Por muitas
+
+vezes, a obscuridade do porquê da grande diﬁculdade dos alunos, quando o assunto
+
+pendia para resolução de sistemas de equações lineares ou apenas sistemas lineares,
+causou noites e mais noites de reﬂexão.
+
+Talvez tais diﬁculdades tenham raízes profundas, alicerçadas no mal desempenho
+
+dos estudantes no Ensino Médio. Não muito surpreendente, após algumas pesquisas,
+
+descritas na subseção 1.2, o que se observou foi um problema muito mais grave. O
+Ensino Médio não vem preparando os jovens para prosseguirem seus estudos em Uni-
+
+versidades e Faculdades, nas mais diversas áreas do conhecimento e principalmente na
+
+Matemática, adequadamente. Consequentemente, a rejeição pelas disciplinas envol-
+
+vendo conhecimentos e habilidades em matemática vem aumentando, o que acarreta
+em um péssimo nível de aprendizagem entre os discentes.
+
+Ao analisarmos pesquisas anteriores, descritas na subseção 1.2, que tratam do tema
+
+sistemas lineares, decidimos pelo estudo de sistemas de equações de dimensão n, com
+
+n > 3, ou sistemas de maiores dimensões, como serão denominados agora em diante,
+como forma de motivar e capacitar os estudantes no 2 ◦ ano do ensino médio.
+
+Aproveitamos para apresentar aqui, de maneira sucinta, a estrutura do texto.
+
+No primeiro capítulo procuramos fazer, inicialmente, uma revisão bibliográﬁca des-
+
+tacando as principais pesquisas na área e qual sua relevância para este trabalho. Se-
+guindo, ainda no primeiro capítulo, tratamos da problemática que norteou a pesquisa,
+
+qual a nossa questão de investigação e os objetivos que esperamos que sejam alcançados.
+
+No segundo capítulo, traçamos um perﬁl histórico dos sistemas de equações lineares
+
+seguindo por uma rigorosa fundamentação teórica, onde analisamos as deﬁnições e
+teoremas relevantes ao bom desenvolvimento e compreensão do assunto.
+
+O terceiro capítulo se reserva a resolução de sistemas lineares por diversos métodos,
+
+incluindo os vistos no Ensino Médio e os novos métodos a serem ensinados.
+
+No quarto capítulo são apresentados softwares educacionais para auxiliarem a re-
+
+solução de sistemas lineares de maiores dimensões.
+
+No quinto capítulo apresentamos aplicações de sistemas lineares de maiores di-
+
+mensões onde são explorados usos cotidianos e em outras áreas do conhecimento,
+
+destacando-se: Engenharia, Economia, ﬂuxos de trânsito e alimentação.
+
+O sexto capítulo tem um lugar especial. É onde analisamos e descrevemos a pesquisa
+
+14
+
+de campo realizada com alunos do 2 ◦ ano do Ensino Médio de várias escolas do Distrito
+Federal, incluindo as redes particular e pública, com aplicações de sistemas de equações
+lineares de maiores dimensões, recorrendo a métodos alternativos aos encontrados no
+
+ensino médio para resolução. Também são testados alguns métodos computacionais.
+
+Por ﬁm, apresentamos as considerações ﬁnais, onde esperamos poder responder a
+
+nossa questão de investigação, validar as hipóteses e reﬂetir se nossos objetivos foram
+alcançados. Além disso, orientarmos os rumos as quais novas pesquisas sobre o tema
+
+sistemas lineares podem seguir.
+
+1.1 Revisão bibliográﬁca
+
+Apresentamos aqui uma pequena revisão de livros, artigos e principalmente ou-
+tras dissertações/teses que se preocuparam em pesquisar o tema Sistema de Equações
+
+Lineares e quais suas implicações no Ensino Médio.
+
+De acordo com Pantoja (2008), os sistemas lineares podem ser resolvidos de várias
+
+formas, empregando métodos diferentes e fazendo uma conexão entre esses métodos.
+A autora também evidencia que essa articulação entre os saberes e o conhecimento que
+
+os alunos já possuíam tornou a aprendizagem mais signiﬁcativa e reﬂexiva, visto que
+
+emaranhou a construção dos signiﬁcados.
+
+Para Ferreira (2013) o conteúdo de sistemas lineares abordado no Ensino Médio
+é insuﬁciente, induzindo os estudantes a acreditarem que nada mais sobre o tema é
+
+relevante e que não há muitas aplicações no quotidiano ou em outros campos do saber.
+
+Por não dar continuidade ao conteúdo, peca em limitar-se a manipulações algébricas
+
+extensas, em detrimento de métodos computacionais para auxiliar na resolução de
+sistemas de maiores dimensões. Por ﬁm, delineia o conteúdo de sistemas de equações
+
+em relação a Álgebra Linear, Geometria Analítica e Cálculo Numérico.
+
+Lima (1993), em seu artigo intitulado “Sobre o Ensino de Sistemas Lineares”, mostra
+
+muita preocupação em relação ao ensino de sistemas lineares no Brasil. Segundo o
+autor, a abordagem do tema nas nossas escola é obsoleta, árida e desmotivada pois
+
+os professores não utilizam contextualização para dinamizar e tornar mais atraentes
+
+suas aulas. Critica, também, a abordagem dos conteúdos, que não fazem alusão a
+
+diferentes interpretações como: geométrica, matricial e vetorial. Sugere que a utilização
+de computadores abre caminho para novas técnicas de resolução de sistemas lineares.
+
+Vale salientar que desde 1993, como exposto acima, já se tinha uma preocupação
+
+15
+
+relevante quanto ao ensino de sistemas de equações lineares e essa preocupação ainda
+
+tem lugar, como veremos abaixo.
+
+Matos (2013) inicia sua dissertação se preocupando com a qualidade do ensino da
+
+Matemática nas escolas, que, na sua opinião, cada dia ﬁca pior. Faz uma análise
+
+detalhada de livros de Matemática adotados no Ensino Médio e conclui que houve um
+
+avanço no material mas ainda está longe do ideal. Continua com uma apresentação de
+recursos geométricos e computacionais para resolução de sistemas lineares, vinculando
+
+uma ideia de relações entre diferentes eixos da Matemática. Segundo o autor, essa
+
+relação é benéﬁca para o aluno pois contribui para uma melhoria do aprendizado.
+
+Chiari (2011) se preocupou em investigar o uso do escalonamento na resolução de
+sistemas lineares por alunos do Ensino Médio. Ao aplicar sequências didáticas, observou
+
+que os estudantes se satisfazem encontrando respostas numéricas sem a necessidade
+
+de validação das mesmas. Também orienta que, para uma aprendizagem signiﬁcativa,
+
+outras técnicas de resolução de sistemas lineares devem ser empregadas. Por ﬁm, sugere
+que novas pesquisas explorem sistemas de equações de ordens de grandezas distintas
+
+de 3x3.
+
+Freitas (1999) realizou uma pesquisa com o objetivo de diagnosticar o sentido que
+os alunos dão às soluções de sistemas lineares, no ﬁnal do 2 ◦ ano do Ensino Médio.
+A autora entendeu que o motivo dos estudantes terem diﬁculdades no entendimento
+
+e resolução de um método qualquer está relacionado ao princípio de que métodos se
+
+reduzem a um algoritmo, enquanto que o entendimento dos resultados obtidos exige
+
+articulação entre diversos conceitos, que podem envolver diferentes quadros e registros
+de representação. Assim, as soluções de um sistema linear podem ser relacionadas,
+
+por exemplo, a pontos, retas e planos, o que permite se passar de uma manipulação
+
+algébrica a uma ideia geométrica em dimensão 2 ou 3.
+
+Já para Fernandes e Miyasaki (2011) o estudo de sistemas lineares se delimitou a
+suas aplicações nas áreas tecnológicas, biológicas, engenharias entre outras. Anterior-
+
+mente as aplicações, enfatizaram a importância do estudo de sua história, deﬁnições e
+
+teoremas.
+
+Jordão (2011) explicou que ao perceber que os estudantes resolviam sistemas line-
+ares sem apresentar um sentido a eles, resolveu analisar graﬁcamente essas soluções.
+
+Também relatou que os livros didáticos são carentes em relação a atividades e, desta
+
+forma, abre caminho para exploração de novos modos de ensinar, utilizando, em espe-
+
+cial, a ferramenta computacional. Por ﬁm, mostrou que a análise gráﬁca é um bom
+caminho para introduzir o assunto de sistemas lineares.
+
+16
+
+Em uma perspectiva histórica Tavares e Pereira (2013) ressaltaram a importância
+
+de se utilizar a história da matemática para desenvolver atividades que auxiliem na
+construção de conceitos pelo aluno. Os autores ﬁzeram uma análise de resolução e con-
+
+ceituação de sistema lineares baseado no livro “os nove capítulos da arte matemática”,
+
+publicado na China durante o século III A.C.
+
+Após a análise de diversos autores, ﬁca claro a importância dos sistemas lineares
+para o Ensino Médio. Também é fato que o tema preocupa gerações. É o que podemos
+
+perceber nas falas de Lima (1993) e Ferreira (2013).
+
+A vivência em sala de aula vem mostrando que toda essa preocupação em relação
+
+à qualidade do Ensino Médio e, consequentemente, com o tema sistemas lineares é
+verídica e se alastra para o próximo segmento educacional, o ensino superior. Os alunos
+
+recém chegados aos cursos de exatas em instituições particulares, principalmente, não
+
+vem apresentando saberes necessários inerentes à matemática básica, o que nos permite
+
+inferir sobre a preparação inadequada que o Ensino Médio vem imprimindo a esses
+jovens.
+
+1.2 Relevância do problema
+
+Nos últimos anos, o Ensino Médio teve um aumento considerável no número de
+matriculas (PCN, 2000; p. 8) devido à expansão do ensino proporcionado pelo governo
+
+federal. Ao mesmo tempo, vem amargurando péssimos resultados nos exames de ava-
+
+liação nacionais e internacionais, principalmente nos que dizem respeito às Ciências da
+
+Natureza e, em especíﬁco, à Matemática.
+
+Um dos exames mais conceituados é o PISA - Programa Internacional de Avaliação
+
+de Estudantes – que é uma iniciativa internacional de avaliação comparada, aplicada a
+
+estudantes na faixa dos 15 anos, idade em que se pressupõe o término da escolaridade
+
+básica obrigatória na maioria dos países.
+
+De acordo com o relatório do PISA (2012) no Brasil, mais de um em cada três
+
+(36%) estudantes de 15 anos de idade tinha repetido uma série, pelo menos, uma
+
+vez; muitos tinham sido retidos mais de uma vez. Essa é uma das mais altas taxas de
+
+repetência entre os países que participam do PISA. Repetência no Brasil está associada
+negativamente com o desempenho em Matemática. Nesse mesmo ano, o país amargurou
+a 58a posição entre 65 países participantes.
+
+Segundo Pantoja (2008) as causas dessa aversão à Matemática podem estar asso-
+
+ciadas à não articulação entre os saberes escolares, o que acaba por deixar, na maioria
+
+17
+
+das vezes, os alunos sem a devida compreensão dos signiﬁcados envolvidos no estudo
+
+dos objetos matemáticos.
+
+A desconexão entre os saberes pode levar à um aprendizado mecânico e desprovido
+
+de indagação, visto que sem uma ponte entre os saberes aprendidos e suas aplicações
+
+nos problemas cotidianos, ﬁcamos a mercê de meras repetições conteudistas que não
+
+empolgam o alunado em geral. A esse respeito as Orientações Curriculares para o
+Ensino Médio (2006; p.69) dizem que:
+
+“...espera-se que os alunos saibam usar a Matemática para resolver proble-
+mas práticos do quotidiano; para modelar fenômenos em outras áreas do
+conhecimento; compreendam que a Matemática é uma ciência com caracte-
+rísticas próprias, que se organiza via teoremas e demonstrações; percebam
+a Matemática como um conhecimento social e historicamente construído;
+saibam apreciar a importância da Matemática no desenvolvimento cientí-
+ﬁco e tecnológico.”
+
+Outro fator relevante, para se explicar as diﬁculdades pelas quais vem passando o
+
+Ensino Médio no Brasil, está relacionado a alta taxa de evasão vivenciada pelas escolas.
+
+Segundo Krawczyk (2009; pg.9):
+
+A evasão, que se mantém nos últimos anos, após uma política de aumento
+signiﬁcativo do número de matrículas no Ensino Médio, nos revela uma
+crise de legitimidade da escola que resulta não apenas da crise econômica
+ou do declínio da utilidade social dos diplomas, mas também da falta de
+outras motivações para os alunos continuarem seus estudos.
+
+Em geral a permanência dos estudantes na escola está ligada a sua integração
+
+social e ao seu desempenho nas diversas disciplinas cursadas. Para os grupos sociais
+mais privilegiados, essa continuidade nos estudos já está alçada culturalmente. Mas,
+
+para os grupos menos favorecidos, onde o Ensino Médio não faz parte da realidade dos
+
+seus pais e familiares, o desaﬁo de motivar a permanência na escola é maior.
+
+Os professores têm um papel central nessa motivação. Estimular a curiosidade pela
+disciplina tornando-a mais atraente, investigadora e interligada com os anseios dos
+
+estudantes pode, cada vez mais, estimular alunos a permanecerem na escola.
+
+Embora sejam comum as orientações quanto ao desenvolvimento da Matemática
+
+pautado nos desdobramentos sociais e históricos, alicerçada na modelagem e resolução
+de problemas em diversas áreas do conhecimento e entrelaçada entre os diversos as-
+
+suntos matemáticos PCN (2010), ainda nos deparamos com estudos matemáticos que
+
+não seguem essa métrica. Isto se veriﬁca, por exemplo, com o estudo de Sistemas de
+
+Equações Lineares no Ensino Médio que, na maioria dos livros, é tratada de forma
+
+18
+
+algébrica, totalmente matricial e desconectado de modelos aplicados à realidade e à
+
+vivência dos alunos.
+
+Segundo Leon (2010), mais de 75% dos problemas matemáticos encontrados em
+
+aplicações cientíﬁcas e industriais envolvem a resolução de sistemas lineares em algum
+
+estágio. Delimitando para os problemas de engenharia, temos que estes nos remetem
+
+a resolução de sistemas simples (poucas variáveis e equações) até sistemas complexos
+grandes e esparsos (muitas variáveis, equações e elementos nulos).
+
+Os livros de Ensino Médio que tratam do assunto vão na contramão dessa reali-
+
+dade. Como exemplo, Iezzi et. al (2012) e Filho et. al (2000) introduzem o assunto com
+
+sistemas lineares 2x2 e métodos diretos de solução, a saber: adição e substituição. De-
+pois continuam com escalonamento e regra de Cramer para sistemas 3x3. Em nenhum
+
+momento fazem alusão a outros métodos ou situações problemas que justiﬁquem suas
+
+soluções. Também não mencionam a possibilidade de sistemas de dimensões maiores,
+
+visto que sua manipulação algébrica pelos métodos de escalonamento ou de Cramer
+seriam desgastantes.
+
+Lima (1993) sugere que a abordagem ao assunto deve fornecer diferentes interpreta-
+
+ções como: geométrica, matricial e vetorial. Da mesma forma, para a resolução podem
+
+ser apresentados diversos métodos diretos e iterativos. Ainda destaca que a utilização
+dos computadores abre caminho para novas técnicas de resolução de sistemas lineares
+
+incluindo os de maiores dimensões.
+
+A utilização de softwares computacionais pode surgir como ferramenta importante
+
+para a resolução de sistemas lineares, trazendo um enfoque tecnológico e uma dinâmica
+diferente para aulas de matemática. Também contribui diminuindo o esforço algébrico
+
+para resolução de problemas que envolvem sistemas lineares de maiores dimensões e
+
+esparsos.
+
+Cabe à Matemática do Ensino Médio apresentar ao aluno o conhecimento
+de novas informações e instrumentos necessários para que seja possível a
+ele continuar aprendendo. (PCN, 2000)
+
+Neste sentido, ﬁca evidenciado outro problema característico da utilização de siste-
+
+mas lineares no Ensino Médio.
+
+19
+
+“O aprofundamento ﬁca limitado pelas diﬁculdades de manipulação algé-
+brica. As ferramentas computacionais podem ajudar a suprir essas carên-
+cias, permitindo um estudo mais interessante aos alunos. Podem desmis-
+tiﬁcar um possível conceito de que a partir de sistemas 4x4 a resolução
+é tecnicamente inviável. A utilização de recursos computacionais é uma
+alternativa para o avanço a sistemas de maior porte. Transferindo a ma-
+nipulação algébrica para os softwares especíﬁcos e reduzindo o tempo de-
+dicado aos cálculos manuais, os conceitos e aplicações poderiam ser mais
+explorados.” (Ferreira, 2013; pg. 89)
+
+De forma geral, a apresentação dos sistemas lineares no Ensino Médio é feita de
+
+forma rápida e sem aplicações práticas. Não se tem preocupação em analisar casos mais
+
+especíﬁcos e métodos diferentes dos tradicionais, o que induz os alunos a imaginarem
+
+que acabam ali todas as opções de trabalho com os sistemas lineares. Ainda segundo
+Ferreira (2013; pg. 63):
+
+Aparentemente o conteúdo dos sistemas lineares é abordado no Ensino Mé-
+dio, de maneira sucinta e superﬁcial. Pode levar os alunos a acreditarem
+que tudo que existe de sistemas lineares se ﬁnda ali, sem identiﬁcar quais-
+quer aplicações. As situações problema são sugeridas, em livros didáticos,
+para até três incógnitas e não se trabalham aplicações dos sistemas para
+a percepção de sua importância cientíﬁca e também industrial. [. . . ] Não
+se abordam aplicações mais soﬁsticadas nem se aprimora os problemas
+propostos, impedindo uma visão mais generalista do tema.
+
+Tal abordagem desfavorece os alunos, pois prima por práticas sem conexão entre os
+
+saberes desenvolvidos ao longo de sua história e torna a aula de matemática um lugar
+
+de reprodução em detrimento a indagação e investigação, esvaziando assim o interesse
+
+pela disciplina.
+
+“De fato, não basta revermos a forma ou metodologia de ensino se man-
+tivermos o conhecimento matemático restrito à informação, com as de-
+ﬁnições e os exemplos, assim como a exercitação, ou seja, exercícios de
+aplicação ou ﬁxação. Pois, se os conceitos são apresentados de forma frag-
+mentada, mesmo que de forma completa e aprofundada, nada garante que
+o aluno estabeleça alguma signiﬁcação para as ideias isoladas e desconec-
+tadas umas das outras. Acredita-se que o aluno sozinho seja capaz de
+construir as múltiplas relações entre os conceitos e formas de raciocínio
+envolvidas nos diversos conteúdos; no entanto, o fracasso escolar e as di-
+ﬁculdades dos alunos frente à Matemática mostram claramente que isso
+não é verdade.” (PCN, 2000)
+
+Nesta dissertação são analisadas as condições de ensino de sistemas lineares no 2 ◦
+ano do Ensino Médio bem como as práticas pedagógicas que vem sendo desenvolvidas
+
+20
+
+pelos seus professores, introduzindo técnicas de soluções com auxilio computacional,
+
+inferindo em processos não só diretos como também iterativos para sistemas de maiores
+dimensões, de modo a obter soluções numéricas. Concomitantemente, se lançará uma
+
+fundamentação teórico do tema, sugestões de aplicações nos mais variados campos do
+
+saber e uma transposição didática.
+
+A pesquisa de campo, envolvendo o tema sistemas de equações lineares de maiores
+dimensões, foi aplicada à alunos do 2 ◦ ano do Ensino Médio de diferentes realidades
+educacionais, buscando privilegiar a conexão entre conhecimento quotidiano e matemá-
+
+tico, por meio da construção de sistemas lineares em situações problema e resolvendo-os
+
+por métodos iterativos e computacionais. Ao ﬁnal fez-se uma analogia dos benefícios
+de se expandir o tema, visando o conhecimento e, principalmente, a motivação dos
+
+alunos nas aulas de Matemática.
+
+Ao ﬁnal do trabalho esperamos ser possível responder a pergunta: Como a imple-
+
+mentação dos métodos iterativos e computacionais, para resolução de sistemas lineares
+de maiores dimensões, pode contribuir para motivação e melhora da aprendizagem nas
+aulas de Matemática do 2 ◦ ano do Ensino Médio?
+
+1.3 Objetivos
+
+1.3.1 Objetivo geral
+
+Apresentar metodologia de ensino com o uso de métodos iterativos e computacio-
+nais na resolução de sistemas de equações lineares visando a motivação e melhora na
+aprendizagem dos alunos do 2 ◦ ano do Ensino Médio em Matemática.
+
+1.3.2 Objetivos Especíﬁcos
+
+Na metodologia de ensino proposta, pretende-se:
+- Aplicar e orientar os estudantes em relação a métodos iterativos e computacionais
+
+para resolução de sistemas de equações lineares;
+
+- Avaliar se a resolução de aplicações que envolvem sistemas lineares de maiores
+
+dimensões motiva os alunos nas aulas de Matemática;
+
+- Avaliar se os métodos iterativos e computacionais contribuem para uma melhor
+
+aprendizagem de sistemas lineares.
+
+21
+
+2 Fundamentação teórica
+
+2.1 Um breve histórico dos sistemas lineares
+
+O surgimento dos Sistema Lineares está atrelado as inovações matemática surgidas
+
+na China, datada no século III a.C., e difundida pela importante obra "Chiu-Chang
+
+Suan-Chu"(Nove Capítulos sobre Aritmética).
+
+Até onde se sabe, os chineses foram o primeiro povo a usar um método sis-
+temático para resolver sistemas de equações lineares, o qual, em essência, é
+idêntico ao moderno método de eliminação de Gauss ou de escalonamento.
+A importância que os chineses atribuem a esse tópico pode ser medida pelo
+fato de ele ser o objeto de um dos capítulos da importante obra A arte
+da matemática em nove capítulos (século III a.C.) (IEZZI et. al 2012, pg.
+234)
+
+De forma curiosa, é com grande probabilidade que os chineses devem ter descoberto
+
+esse método, pois sua "calculadora"consistia em um tabuleiro quadriculado e num
+
+conjunto de barras de marﬁm ou bambu usados para representar os números.
+
+Outra referência a equações lineares e talvez, a um par de equações com duas
+incógnitas, pode ser encontrada em problemas matemáticos Egípcios e na Mesopotâmia
+
+quando "em um texto da Babilônia antiga achamos duas equações lineares simultâneas
+
+em duas incógnitas."(BOYER, 2010, pg. 11).
+
+Avançando um pouco mais na história, curiosamente a famosa Regra de Cramer
+que resolve sistemas de equações lineares de n equações em n incógnitas por meio
+
+de determinantes é, na verdade, uma invenção do escocês Colin Maclaurin e data
+
+provavelmente de 1729, embora sua publicação seja de 1750. O nome de Cramer, suíço
+
+de primeiro nome Gabriel, não aparece aí por acaso. Em trabalhos independentes, ele
+também conseguiu desenvolver a regra, mas só em meados de 1750. (IEZZI et. al 2012,
+
+pg. 235)
+
+Atrelado a todo esse conhecimento está a ideia de determinantes. O primeiro a
+
+mostrar conhecimento sobre o assunto foi o japonês Seki Kowa (1642-1708), que, em
+um manuscrito de 1683, discutiu até mesmo a questão do sinal de cada termo, mas não
+
+usou deste conhecimento para resolver sistemas lineares. Porém o alemão Gottfried W.
+
+Leibniz estabeleceu como condição necessária para a compatibilidade de um sistema
+
+com três equações em duas incógnitas que o polinômio, hoje chamado de determinante
+completo do sistema, seja igual a zero.
+
+Luccas (2004, pg. 10), no excerto abaixo, sinaliza bem essa aliança entre Sistemas
+
+22
+
+Lineares e Determinantes, além de conﬁrmar toda a participação dos matemáticos
+
+notáveis citados acima.
+
+Outro ponto positivo da análise epistemológica dos Sistemas de Equações
+consiste no reconhecimento da produção de algumas generalizações, que
+podem acabar originando outros assuntos, como a que o matemático japo-
+nês Seki Kowa e o alemão Leibniz encontraram ao trabalhar com sistemas.
+Tais pesquisadores conseguiram encontrar o mesmo método para eliminar
+os “valores desconhecidos” de um sistema de equações, embora tenham
+utilizado processos cognitivos distintos e inseridos em culturas diferentes,
+descobrindo a gênese do processo que empregamos atualmente no cálculo
+de Determinantes.
+
+Os métodos iterativos de resolução são técnicas frequentemente utilizadas para sis-
+
+temas de médio e grande porte. Métodos clássicos como Jacobi e Gauss-Seidel datam
+do ﬁnal do século XVIII.
+
+Para o leitor interessado em mais histórias de sistemas lineares sugerimos como
+
+referência [BOYER, 2010].
+
+2.2 Deﬁnições e análise de sistemas lineares
+
+2.2.1 Deﬁnições via Álgebra Linear
+
+Para introduzir o assunto, Poole (2004, pp. 56) deﬁne equação linear como:
+
+Deﬁnição 1. Uma equação linear nas n variáveis x1, x2, ..., xn é uma equação que
+pode ser escrita na forma
+
+a1x1 + a2x2 + ... + anxn = b
+
+(2.1)
+
+onde os coeﬁcientes a1, a2, ..., an e o termo independente b são constantes perten-
+centes ao conjunto dos números reais.
+
+Equações lineares, portanto, não contêm produtos, recíprocos ou outras expressões
+algébricas das variáveis; as variáveis aparecem somente na potência 1 e multiplicadas
+
+apenas por constantes. O autor também ressalta que os coeﬁcientes e termos constantes
+
+são números reais, em sua maioria, mas também podem assumir valores no conjunto
+
+dos números complexos.
+
+23
+
+Uma solução de uma equação linear a1x1 + a2x2 + ... + anxn = b é um vetor
+[s1, s2, ..., sn], cujas coordenadas satisfazem a equação quando substituímos x1 = s1, x2 =
+s2, ..., xn = sn.
+
+Assim um sistema de equações lineares é um conjunto ﬁnito de equações lineares,
+
+nas mesmas variáveis. Podemos representá-lo com m equações e n incógnitas como
+
+mostrado em (2.2)
+
+
+
+
+
+
+a11x1 + a12x2 + ... + a1nxn = b1
+
+a21x1 + a22x2 + ... + a2nxn = b2
+...
+
+am1x1 + am2x2 + ... + amnxn = bm
+
+(2.2)
+
+com aij, 1 (cid:54) i (cid:54) m, 1 (cid:54) j (cid:54) n, números reais ou complexos. (Boldrini et. al, 1980,
+pp. 33)
+
+Uma solução do sistema (2.2) é um vetor [x1, x2, ..., xn] que satisfaça simultanea-
+
+mente estas m equações.
+
+Dois sistemas de equações lineares são equivalentes se, e somente se toda solução
+
+de qualquer um dos sistemas também é solução do outro. (Leon, 2010, pg. 4)
+
+2.2.2 Sistemas lineares e matrizes
+
+Neste trabalho não será desenvolvido o conteúdo de matrizes, mas se faz necessário
+sua ideia visto que uma maneira simpliﬁcada de apresentar um sistema linear é por
+
+meio de notação matricial. Segundo Poole (2004, pg. 128)
+
+Deﬁnição 2. Uma matriz é uma tabela retangular de números chamados de elementos
+ou termos da matriz.
+
+Denota-se uma matriz por letra maiúscula do alfabeto. Usamos a notação de índice
+subscrito duplo para nos referirmos aos elementos de uma matriz A: o elemento de A
+na linha i coluna j é denotado por aij.
+
+24
+
+Com essa notação uma matriz genérica de m linhas e n colunas tem a forma:
+
+A =
+
+
+
+
+
+
+
+
+
+
+
+
+a11
+
+a21
+
+a12
+
+... a1n
+
+a22
+...
+
+... a1n
+...
+
+am1 am2
+
+... amn
+
+
+
+
+
+
+
+
+
+
+
+
+(2.3)
+
+Podemos escrever o sistema de equação (2.2) numa forma matricial completa, ge-
+
+ralmente relacionado à:
+
+Ax = b
+
+(2.4)
+
+onde,
+
+
+
+a11
+
+a21
+
+a12
+
+... a1n
+
+a22
+...
+
+... a1n
+...
+
+A =
+
+
+
+
+
+
+
+
+
+
+am1 am2
+
+
+
+
+
+
+
+
+
+
+
+
+(2.5)
+
+(2.6)
+
+é a matriz dos coeﬁcientes,
+
+
+
+x =
+
+é a matriz das incógnitas e
+
+... amn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+
+x2
+...
+
+xn
+
+25
+
+B =
+
+b1
+
+b2
+...
+
+
+
+
+
+
+
+
+
+
+
+
+bm
+
+
+
+
+
+
+
+
+
+
+
+
+(2.7)
+
+é a matriz dos termos independentes.
+
+Deﬁnido matrizes e sua relação direta com o sistema linear podemos então escrever
+
+o sistema (2.2) numa forma matricial (2.8) única, omitindo as incógnitas.
+
+Assim, segundo Poole (2004, pg. 132), se nós mantivermos guardado na memória
+
+a localização dos sinais de soma, das variáveis e das constantes, poderemos abreviar a
+
+escrita de um sistema de m equações lineares e n incógnitas para uma matriz aumentada
+(2.8).
+
+
+
+
+
+
+
+
+
+
+
+
+a11
+
+a21
+...
+
+a12
+
+... a1n
+
+a22
+...
+
+... a1n
+...
+...
+
+b1
+
+b2
+
+am1 am2
+
+... amn
+
+bm
+
+
+
+
+
+
+
+
+
+
+
+
+(2.8)
+
+A matriz (2.8) é chamada de matriz aumentada ou ampliada do sistema linear e nos
+
+fornece os coeﬁcientes numéricos das incógnitas bem como as constantes. Logo, cada li-
+
+nha da matriz é simplesmente uma representação abreviada da equação correspondente
+do sistema e nos será muito útil na hora da resolução.
+
+Outra matriz que se faz necessária para nossos estudos é a matriz reduzida à forma
+
+escada (2.9). Boldrini et. al, (1980, pg. 37) à deﬁne como:
+
+Deﬁnição 3. Uma matriz m x n é reduzida à forma escada se:
+
+i) O primeiro elemento não nulo de uma linha não nula é 1.
+ii) Cada coluna que contém o primeiro elemento não nulo de alguma linha tem
+
+todos os seus outros elementos iguais a zero.
+
+iii) Toda linha nula ocorre abaixo de todas as linhas não nulas (isto é, daquelas que
+
+possuem pelo menos um elemento não nulo).
+
+26
+
+iv) Se as linhas 1, ..., r são linhas não nulas, e se o primeiro elemento não nulo da
+
+linha i ocorre na coluna ki, então k1 < k2 < ... < kr.
+
+Esta última condição impõe a forma escada à matriz (2.9).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 0 0 0 ... 0
+
+0 1 0 0 ... 0
+
+0 0 1 0 ... 0
+
+0 0 0 1 ... 0
+...
+...
+
+...
+
+0 0 0 0 ... 1
+
+0 0 0 0 ... 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(2.9)
+
+2.2.3 Análise de sistemas lineares
+
+Discutir um sistema linear é analisar quais e quantas são suas soluções, caso existam.
+
+De acordo com Boldrini et. al, (1980, pg. 44), um sistema linear descrito por (2.2)
+
+poderá ter:
+
+i) uma única solução:
+
+x1 = k1
+...
+
+(2.10)
+
+
+
+
+
+
+xn = kn
+
+onde k1, ..., kn são números reais;
+
+ii) inﬁnitas soluções;
+
+iii) nenhuma solução.
+No caso (i) dizemos que o sistema é possível (compatível) e determinado. No casso
+
+(ii) dizemos que o sistema é possível e indeterminado. E no caso (iii) dizemos que o
+
+sistema é impossível (incompatível).
+
+Para investigar os casos acima precisamos recorrer as matrizes aumentada (2.8) e
+
+na forma escada (2.9) e utilizar a deﬁnição e os teoremas abaixo.
+
+27
+
+Teorema 1. Toda matriz Amxn é equivalente a uma única matriz reduzida à forma
+escada.
+
+Demonstração.
+1 ◦ parte: Seja A uma matriz m x n qualquer. Se todo elemento da primeira linha
+de A é zero então a condição (i) da deﬁnição 3 está satisfeita, no que diz respeito a
+
+esta linha. Se a primeira linha tem algum elemento não nulo, seja k o menor inteiro j
+tal que aij (cid:54)= 0. Multiplicamos a primeira linha por 1
+e a condição (i) da deﬁnição
+aij
+3 ﬁcará satisfeita. Agora, para i ≥ 2 somemos −aij vezes a primeira linha à i-ésima
+linha. Como resultado, teremos uma matriz cujo primeiro elemento da primeira linha
+
+é 1 e ocorre na coluna k. Além disso, todos os outros elementos da coluna k são nulos.
+
+Consideremos agora a matriz B obtida de A após a operação acima. Se a segunda
+linha desta matriz for nula nada faremos. Se houver elementos não nulos nesta linha,
+1
+seja a coluna k(cid:48) a primeira a conter um destes. Multiplicamos a segunda linha por
+b2k(cid:48)
+e a seguir, somando múltiplos adequados desta nova segunda linha às demais linhas
+
+obtemos uma matriz cujo primeiro elemento não nulo da segunda linha é 1 e todos os
+outros elementos da coluna em que este elemento se encontra são nulos. O importante
+é que nesse processo não foram alterados os elementos b11, b1k, e nem a k-ésima coluna
+da matriz B.
+
+Repetindo o procedimento acima em relação às demais linhas obteremos uma matriz
+
+M que é equivalente à inicial A, e que satisfaz as condições (i) e (ii) da deﬁnição 3.
+
+As condições (iii) e (iv) da deﬁnição 3 serão satisfeitas através de um número ﬁnito
+
+de permutações de linhas da matriz M.
+
+2 ◦ parte: Assim, mostramos nesta primeira parte que toda matriz A é equivalente
+a uma matriz reduzida à forma escada. Para mostrarmos que só existe uma única
+
+matriz na forma escada equivalente a A, observamos primeiro que duas matrizes na
+
+forma escada que são equivalentes só podem ser iguais.
+
+De fato, não temos uma outra condição para essas matrizes. (cid:3)1
+
+Deﬁnição 4. Dada uma matriz Amxn, seja Bmxn a matriz reduzida à forma escada
+equivalente a A. O posto de A, denotado por p, é o número de linhas não nulas de B.
+
+A nulidade de A é o número n-p.
+
+Desse modo, para determinarmos o posto de uma matriz A, qualquer, primeiro é
+
+necessário encontrar sua matriz na forma escada e depois contabilizar suas linhas não
+nulas. Sua nulidade é a diferença entre colunas de A e o posto.
+
+1Símbolo usado para mostrar que a demonstração chegou ao ﬁm
+
+28
+
+Teorema 2. i) Um sistema de m equações e n incógnitas admite solução se, e somente
+
+se, o posto da matriz ampliada é igual ao posto da matriz dos coeﬁcientes.
+
+ii) Se as duas matrizes têm o mesmo posto p e p = n, a solução será única.
+
+iii) Se as duas matrizes tem o mesmo posto p e p < n, podemos escolher n − p
+
+incógnitas, e as outras p incógnitas serão dadas em função destas.
+
+Demonstração.
+1 ◦ parte: Se o posto da matriz ampliada for maior que o da matriz dos coeﬁcientes
+(menor não pode ser), então essa matriz reduzida à forma escada deve ter pelo menos
+uma linha do tipo (0 0 ... 0 ck), com ck (cid:54)= 0. Isto signiﬁca que o sistema associado a
+esta matriz, que é equivalente ao inicial, tem uma equação do tipo:
+
+0x1 + ... + 0xn = ck (cid:54)= 0
+
+(2.11)
+
+e portanto não admite solução.
+2 ◦ parte: Por outro lado, se o posto da matriz ampliada, P, for igual ao da matriz
+
+dos coeﬁcientes, temos dois casos a considerar:
+
+(a) se p = n, teremos a matriz reduzida à forma escada:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+...
+
+...
+
+0
+
+1 0
+
+0 1
+...
+...
+
+0 |
+
+0 |
+...
+
+|
+
+0 0 ...
+
+... 0 1 |
+
+0
+...
+
+0
+
+... 0 0 0
+
+... 0 0 0
+
+c1
+
+c2
+...
+
+cn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(2.12)
+
+A solução do sistema será x1 = c1, ..., xn = cn, portanto o sistema admite uma
+
+única solução.
+
+(b) se p (cid:54)= n então p < n (pois p não pode ser maior que n).
+Nesse caso, devemos considerar as várias possibilidades para a matriz reduzida à
+
+forma escada. Podemos analisar inicialmente quando esta matriz de posto p < n tem
+
+29
+
+a forma:
+
+1.
+
+
+
+1 0 ...
+
+0 1 ...
+...
+...
+
+0 0 ...
+
+0 0 ...
+...
+...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 | a1p+1
+
+...
+
+0 |
+...
+
+|
+
+...
+...
+
+a1n
+...
+...
+
+c1
+...
+...
+
+1 |
+
+cpp+1
+
+... apncp
+
+0
+
+0
+
+...
+
+0 0
+...
+...
+
+0
+...
+
+0
+
+0
+...
+
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 0
+
+... 0 0
+
+...
+
+Teremos nesse caso:
+
+
+
+
+
+
+x1 = c1 − a1p+1xp+1 + ... − a1nxn
+...
+
+xp = cp − app+1xp+1 + ... − apnxn
+
+e o sistema terá portanto inﬁnitas soluções, sendo xp+1, ..., xn variáveis livres.
+
+Uma segunda forma a ser considerada para a matriz reduzida é
+2.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1 ...
+
+0 | a1p+2
+
+1
+
+0 0
+...
+...
+
+0 |
+...
+
+|
+
+...
+...
+
+... a1n
+...
+...
+
+c1
+...
+...
+
+0 0 ... 0 1 |
+
+cpp+2
+
+...
+
+...
+
+apncp
+
+0
+...
+
+0
+
+0
+...
+
+0
+
+0
+...
+
+0
+
+0 0 ... 0 0 0
+...
+...
+
+...
+
+...
+
+...
+
+0 0 ... 0 0 0
+
+...
+
+30
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(2.13)
+
+(2.14)
+
+(2.15)
+
+então:
+
+
+
+
+
+
+x2 = c1 − a1p+2xp+2 + ... − a1nxn
+...
+
+xp+1 = cp − apxp+2 + ... − apnxn
+
+(2.16)
+
+sendo x1, xp+2, ..., xn variáveis livres.
+
+E assim podemos prosseguir de uma maneira sistemática e ver que em todas as
+
+possibilidades para a matriz reduzida à forma escada de posto p < n, teremos um
+sistema de inﬁnitas soluções e n − p variáveis livres.
+
+Observe que na 1a parte mostramos, usando contra-recíproca, que a igualdade de
+postos entre as matrizes ampliada e dos coeﬁcientes é uma condição necessária para a
+existência da solução do sistema. Na 2a parte mostramos que essa condição também
+é suﬁciente, considerando as possibilidades (a) e (b). Ficou assim demonstrada a
+
+aﬁrmação (i) do teorema 2. Note ainda que também as condições (ii) e (iii) foram
+demonstradas em (a) e (b), respectivamente. (cid:3)
+
+2.3 Métodos diretos de resolução
+
+Os métodos diretos são assim denominados porque a solução exata do sistema linear
+
+é obtida, caso ela exista e a menos de erros de arredondamento, após um número ﬁnito
+
+de passos previamente conhecidos. O custo computacional de tempo pode ser estimado
+
+através do número de operações que ele envolve. (Sperandio, Mendes e Silva 2003, pg.
+63)
+
+Para Ruggiero e Lopes (1988, pg. 96) podemos incluir aqui todos os métodos estu-
+
+dados no Ensino Fundamental - Adição, Substituição, Comparação- no Ensino Médio -
+
+Escalonamento (eliminação) e principalmente a Regra de Cramer- e destacamos ainda
+outros métodos diretos que não são vistos no Ensino Básico, entre eles: Eliminação de
+
+Gauss (com pivoteamento), Gauss-Jordan e fatoração LU.
+
+Apresentamos agora os principais métodos.
+
+31
+
+2.3.1 Regra de Cramer
+
+De forma geral podemos analisar a Regra de Cramer a partir do sistema (2.4).
+
+(Leon, 2010, pg. 22)
+
+Para aplicar a regra é preciso calcular o determinante ∆ da matriz dos coeﬁcientes
+e mais os n determinantes ∆xi resultantes da substituição da coluna i da matriz dos
+coeﬁcientes pelo vetor dos termos independentes. É importante observar que este
+
+método é válido para sistemas de equações lineares com n variáveis e n equações.
+Assim, pela Regra de Cramer, a solução (x1, x2, ..., xn) é dada por:
+
+xi =
+
+∆xi
+∆
+
+.
+
+(2.17)
+
+Para Ruggiero e Lopes (1988, pg. 96) é necessário o estudo de métodos mais
+
+eﬁcientes visto que este método envolve um número de operações da ordem de n! e
+a resolução de um sistema linear com 20 incógnitas duraria, em um computador que
+efetua cerca de 100 milhões de multiplicações por segundo, 3 x 108 anos para executar
+a tarefa de obter a solução.
+
+Em suma, a Regra de Cramer apresenta um gasto computacional elevado para so-
+lucionar problemas práticos que, normalmente, exigem a resolução de sistemas lineares
+
+de grande porte.
+
+Para mais detalhes o leitor pode consultar Poole (2004).
+
+2.3.2 Método de eliminação de Gauss
+
+Os métodos de eliminação que são classiﬁcados como métodos diretos, evitam o
+cálculo da matriz inversa e reduzem o tempo de execução em relação a outros métodos
+
+como o da Regra Cramer, por exemplo.
+
+Conforme Sperandio, Mendes e Silva (2003, pg. 63) a ideia fundamental da elimina-
+
+ção de Gauss é transformar o sistema linear (2.2), sendo m = n, por meio de operações
+elementares em matrizes, num sistema cuja matriz dos coeﬁcientes seja triangular su-
+perior (abaixo da diagonal principal todos os elementos são nulos). Os coeﬁcientes aij
+com i > j são transformados por meio do seguinte algoritmo:
+
+i) Faz-se a(1)
+ii) Para k = 1, 2, ..., n − 1, i = k + 1, k + 2, ..., n e j = k + 1, k + 2, ..., n + 1,
+
+ij = aij, 1 ≤ i ≤ n e 1 ≤ j ≤ n + 1 com ain+1 = bi.
+
+32
+
+calcula-se o multiplicador:
+
+e
+
+mik =
+
+a(k)
+ik
+a(k)
+kk
+
+, a(k)
+
+kk (cid:54)= 0
+
+a(k+1)
+ij
+
+= a(k)
+
+ij − mija(k)
+kj .
+
+(2.18)
+
+(2.19)
+
+Após n + 1 passos, a matriz dos coeﬁcientes (2.5), aumentada do vetor constante
+
+(2.7), passa a ter a estrutura triangular:
+
+a(1)
+11
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+0
+
+0
+
+0
+
+a(1)
+12
+
+a(2)
+22
+
+0
+
+0
+
+0
+
+a(1)
+13
+
+a(2)
+23
+
+a(3)
+33
+
+0
+
+0
+
+... a(1)
+1n
+
+a(1)
+1n+1
+
+... a(2)
+2n
+
+a(2)
+2n+1
+
+a(3)
+... a(3)
+3n+1
+3n
+...
+...
+nn a(n)
+... a(n)
+
+...
+
+nn+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(2.20)
+
+iii) Para i = n, n − 1, ..., 1 obtêm-se as incógnitas xn, xn−1, ..., x1 por meio de
+
+a(i)
+in+1 −
+
+xi =
+
+n
+(cid:80)
+k=i+j
+ai
+ii
+
+a(i)
+ik xk
+
+.
+
+(2.21)
+
+Conforme vimos anteriormente o método consiste em transformar covenientemente
+
+o sistema linear original para obter um sistema linear equivalente com matriz dos
+
+coeﬁcientes triangular superior e a partir dessa matriz podemos isolar as variáveis e
+determinar sua solução.
+
+Segundo Ruggiero e Lopes (1988, pg. 103) todo esse algoritmo de resolução requer a
+
+utilização de um multiplicador (2.18) em cada estágio k do processo. Se o pivô escolhido
+
+for nulo impede o procedimento do algoritmo e se for bem próximo de zero pode
+conduzir a resultados totalmente imprecisos. Tentando contornar esse problema deve-
+
+33
+
+se adotar uma Estratégia de Pivoteamento escolhendo uma linha ou coluna pivotal.
+
+Podemos dividir em duas estratégias de pivoteamento:
+
+(a) Pivoteamento Parcial - Esta estratégia consiste em:
+
+(i) no início do estágio k do processo de eliminação, escolher para Pivô o elemento
+
+de maior módulo entre os coeﬁcientes a(k)
+ik .
+
+(ii) trocar as linhas k e i se for necessário.
+
+(b) Pivoteamento Completo - Nesta estratégia, no início do estágio k é escolhido
+
+para Pivô o elemento de maior módulo, entre todos os elementos que ainda atuam no
+processo de eliminação. Logo escolhemos M axj≥k |ak
+
+ij| como Pivô.
+
+2.3.3 Método de eliminação de Gauss-Jordan
+
+O método de Gauss-Jordan é uma complementação ao método de Gauss. Ele
+
+transforma a matriz dos coeﬁcientes em uma matriz diagonal (todos os elementos fora
+da diagonal principal são nulos). De acordo com Sperandio, Mendes e Silva (2003, pg.
+
+72) o algoritmo para resolução pelo método ﬁca sendo:
+
+i) Para k = 1,2,3,...,n-1; i = 1,2, ..., n; i (cid:54)= k; j = k + 1, k + 2, ..., n + 1; calcula-se
+
+
+
+
+
+
+a(k+1)
+ij
+
+a(k+1)
+kj =
+
+a(k)
+kj
+a(k)
+kk
+ij − a(k+1)
+
+ik
+
+= a(k)
+
+akj
+
+(2.22)
+
+ii) A solução do sistema é xi= a(n+1)
+i,n+1 ; i = 1,2, ..., n.
+Este método requer 50% a mais de multiplicações e divisões do que o método de
+eliminação de Gauss. Este motivo o deixa com menos uso em relação aos métodos
+
+diretos vistos acima. Para este método também podemos usar todas as ideias de
+
+pivotação discutidas no método anterior.
+
+2.3.4 Fatoração LU
+
+Para resolver o sistema linear (2.2) podemos empregar um processo de fatoração
+
+que consiste em decompor a matriz A dos coeﬁcientes (2.5) em um produto de dois
+
+34
+
+ou mais fatores e, em seguida, resolver uma sequência de sistemas lineares que nos
+
+conduzirão à solução do sistema linear original. (Ruggiero e Lopes 1988, pg. 96)
+
+A decomposição LU é uma consequência do método de eliminação de Gauss, mas
+
+também pode ser obtido a partir de fórmulas. O uso de fórmulas não contempla as
+
+estratégias de pivoteamento.
+
+De Sperandio, Mendes e Silva (2003, pg. 73), suponhamos que seja possível decom-
+por a matriz A em duas matrizes: uma triangular inferior, L = [mij], e uma triangular
+superior, U = [uij], tal que
+
+A = LU.
+
+(2.23)
+
+Então, o sistema linear (2.4) com m = n em notação matricial é equivalente ao
+
+sistema (LU )X = B, que pode ser decomposto em dois sistemas triangulares:
+
+LY = B e U X = Y.
+
+(2.24)
+
+Dessa forma, de posse de L e U , a solução de (2.4) é imediata, pois
+
+bi −
+
+yi =
+
+mikyk
+
+i−1
+(cid:80)
+k=1
+mij
+
+, i = 1, 2, ..., n
+
+(2.25)
+
+e
+
+uikxk
+
+yi −
+
+n
+(cid:80)
+k=i+1
+uii
+
+xi =
+
+, i = n, n − 1, ..., 1.
+
+(2.26)
+
+Duas questões aparecem: a existência da decomposição LU e como realizá-la. O
+teorema a seguir fornece uma condição suﬁciente para a existência de L e U e a realiza-
+
+ção da fatoração será mostrada como exemplo no capítulo 3 da dissertação. (Dahlquist
+
+e Bjorck, 1974 pg. 47)
+
+Teorema 3. Sejam A uma matriz n x m e Ak a matriz k x k formada pela interseção
+das primeiras k linhas e colunas em A. Se det(Ak) (cid:54)= 0, k = 0, 1, 2, ..., n-1, então
+
+35
+
+existe uma única matriz triangular inferior L = [mij]nxn, com mii = 1, i = 1, 2, ..., n e
+uma única matriz triangular superior U= [uij]nxm, tal que LU = A.
+
+Demonstração.
+Para provar esse teorema usaremos indução sobre n. Se n = 1, temos que: a11 =
+1 · u11 unicamente, e det(A) = u11. Assumimos que o teorema é verdadeiro para
+n = k − 1. Para n = k partimos A em sub-matrizes:
+
+
+
+
+
+
+L =
+
+
+
+
+
+
+Lk−1 0
+
+0
+
+1
+
+U =
+
+
+
+
+
+
+Uk−1 P
+
+0
+
+ukk
+
+
+
+
+
+
+
+
+
+
+
+Lk−1Uk−1
+
+Lk−1P
+
+mUk−1 mP + ukk
+
+(2.27)
+
+(2.28)
+
+(2.29)
+
+
+
+
+
+
+Então:
+
+LU =
+
+Agora, pela hipótese de indução, Lk−1 e Uk−1 são unicamente determinados e Lk−1Uk−1 =
+Ak−1. Além disso, nem Lk−1 nem Uk−1 são singulares2 (ou Ak−1 também seria singular,
+contrariando a hipótese). Assim LU = A é equivalente a Lk−1P = x; mUk−1 = y e
+mP + ukk = akk; ou seja: P = L−1
+k−1 e ukk = akk − mP . Então P , m e ukk
+são determinados univocamente nesta ordem, e L e U são determinados unicamente.
+Finalmente,
+
+k−1x; m = yU −1
+
+Det(A) = det(L) . det(U )
+
+Det(A) = 1. det(Uk−1) . ukk
+
+Det(A) = u11u22...uk−1 . ukk
+
+o que completa a demonstração. (cid:3)
+
+2Uma matriz é dita singular quando não possui inversa, ou seja, seu determinante vale zero
+
+36
+
+2.4 Métodos iterativos de resolução
+
+Apresentamos agora métodos que recorrem ao uso de sucessivas iterações para deter-
+
+minar a solução aproximada do sistema linear, num processo cuja convergência depende
+da matriz dos coeﬁcientes (2.5).
+
+Os métodos iterativos são convenientes para sistemas grandes e esparsos3 que apa-
+
+recem com frequência em problemas cotidianos. (Cunha 2003, pg. 57)
+
+De acordo com Ruggiero e Lopes (1988, pg. 119), para tais sistemas os métodos de
+eliminação ou fatoração (métodos diretos) não são aconselháveis, pois não preservam
+
+a esparsidade do sistema linear tornando muitos elementos nulos não nulos. Ainda,
+
+segundo os autores, os métodos iterativos apresentam outra vantagem, que é o fato de
+
+não se sensibilizarem ao crescimento dos erros de arredondamento.
+
+A ideia central do método iterativo é converter o sistema linear em outro sistema
+de modo que apresente uma função de iteração x(k+1) = Cx(k) + g que, partindo
+de x(0), onde x(0) = [x(0)
+n ], representa um vetor aproximação inicial para
+solução do sistema de equação, construa consecutivos vetores x(1), x(2), ..., x(k), que são
+as soluções aproximadas do sistema de equações nas iterações k seguintes, de modo
+
+2 , ..., x(0)
+
+1 , x(0)
+
+x(k) = α, ou que, α é solução do sistema linear (2.4).
+
+que lim
+n→∞
+O método iterativo é repetido até que o vetor x(k) esteja suﬁcientemente próximo
+
+do vetor x(k−1). Medimos a distância entre x(k) e x(k−1) por:
+
+m(k) = max
+1≤i≤n
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+i − x(k−1)
+x(k)
+
+i
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(2.30)
+
+Assim, dada uma precisão (cid:15), o vetor x(k) será escolhido como solução aproximada se
+m(k) < (cid:15). Chamamos de teste de parada a relação presente em (2.30).
+
+Computacionalmente usamos também como teste de parada um número máximo
+
+de iterações.
+
+2.4.1 Convergência dos métodos iterativos
+
+Sabemos que em todo método iterativo se faz necessário o estudo da convergência
+
+para garantia de que a resposta aproximada seja satisfeita.
+
+Na função de iteração x(k+1) = Cx(k) + g, dependendo da forma da matriz C, com x
+
+3Dizemos que um sistema linear é esparso quando a matriz A dos coeﬁcientes possui uma grande
+
+porcentagem de elementos nulos. (Ruggiero e Lopes 1988, pg. 119)
+
+37
+
+vetor, a sequência gerada pelo processo iterativo pode ou não convergir para a solução
+
+do sistema. Seja x a solução do sistema linear AX = B, logo x satisfaz x = Cx + g.
+Com isto temos x(k+1) − x = C(x(k) − x).
+
+O erro em cada iteração é dado por (cid:15)k = xk − x, logo:
+
+||(cid:15)k|| ≤ ||C|| ||(cid:15)k−1||
+
+||(cid:15)k|| ≤ ||C||2 ||(cid:15)k−2||
+
+...
+
+...
+
+||(cid:15)k|| ≤ ||C||k| |(cid:15)0||.
+
+Logo a sequência {xk} converge para a solução do sistema x se
+
+lim
+n→∞
+
+||(cid:15)k|| = lim
+n→∞
+
+||C||k ||(cid:15)0|| = 0
+
+e isto ocorre se e somente se a matriz C satisfaz a condição ||C|| < 1 onde ||C|| é norma
+da matriz C.4 (Castilho, 2011; pg. 40)
+
+Vale ressaltar e observar que a convergência dos métodos iterativos não está as-
+sociado ao vetor inicial x(0). A única inﬂuência de x(0) está no número de iterações
+necessárias para atingir a precisão desejada. É fácil ver que quanto menor for o erro,
+(cid:15) = ||x(0) − x|| menos iterações serão necessárias.
+
+Critérios de convergência são comumente adotados nos dois métodos iterativos que
+
+foram abordados nas seções anteriores. Para o método de Jacobi o mais comum é o
+critério das linhas. Vejamos como ele se apresenta:
+
+Teorema 4. (Critério das Linhas) Dado o sistema linear Ax = B, sejam os αk da
+forma:
+
+αk =
+
+1
+ak,k
+
+n
+(cid:88)
+
+j=1, j(cid:54)=k
+
+|ak,j| < 1 para k = 1, 2, ..., n.
+
+Então o método de Jacobi gera uma sequência {xk} que converge para a solução do
+sistema.
+
+4Podemos calcular a norma matricial por ||A|| =
+
+(cid:33)2
+
+(cid:32) n
+(cid:80)
+j=1
+
+m
+(cid:80)
+i=1
+
+a2
+i,j
+
+. (LEON 2010, p. 299)
+
+38
+
+Segundo Castilho (2011; pg. 42) o Teorema 4 fornece uma condição necessária, mas
+
+não suﬁciente. Ou seja, o método pode convergir mesmo o critério não sendo satisfeito.
+Para o método de Gauss- Seidel, o critério de convergência mais usado é o chamado
+
+Critério de Sassenfeld. Vejamos:
+
+Teorema 5. (Critério de Sassenfeld) Dado o sistema linear AX = B, seja os βk
+da forma:
+
+βk =
+
+1
+ak,k
+
+(cid:32) k−1
+(cid:88)
+
+j=1
+
+|ak,j|βj +
+
+n
+(cid:88)
+
+j=k+1
+
+(cid:33)
+
+|ak,j|
+
+< 1 para k = 1, 2, ..., n.
+
+Então o método de Gauss-Seidel gera uma sequência {xk} que converge para a solução
+do sistema.
+
+Novamente temos uma condição necessária fornecida pelo teorema.
+
+Abaixo analisamos os métodos iterativos de Jacobi e Gauss-Seidel bem como suas
+
+condições de convergência.
+
+2.4.2 Método de Jacobi
+
+Carl Gustav Jacobi (1804-1851) apresentou o método iterativo que recebe seu nome
+em 1845. O método, de forma geral, consiste em dado x(0), aproximação inicial, obter
+x(1), x(2), ..., x(k) através da relação recursiva x(k+1) = Cx(k) + g. (Cunha 2003, pg. 58)
+De acordo com Sperandio, Mendes e Silva (2003, pg. 82) supor que aij (cid:54)= 0; Para
+
+i = 1, 2, ..., n, podemos reescrever o sistema (2.2) na seguinte forma:
+
+bi −
+
+n
+(cid:80)
+j=1,j(cid:54)=i
+aii
+
+aijxj
+
+xi =
+
+,
+
+i = 1, 2, ..., n.
+
+(2.31)
+
+1 , x(0)
+
+2 , ...., x(0)
+
+Sendo x(0) = [x(0)
+
+n ] uma tentativa inicial para a solução do sistema de
+equações lineares, para k = 0, 1, 2, ..., calcula-se a sequência de aproximações x para a
+solução com x(k+1) = [x(k+1)
+
+] por meio de
+
+, ..., x(k+1)
+n
+
+, x(k+1)
+2
+
+1
+
+aijx(k)
+j
+
+bi −
+
+n
+(cid:80)
+j=1,j(cid:54)=i
+aii
+
+x(k+1)
+i
+
+=
+
+39
+
+,
+
+i = 1, 2, ..., n; k ≥ 0,
+
+(2.32)
+
+até que um teste de parada seja satisfeito. Podemos adotar como teste de parada a
+distância entre x(k) e x(k−1), como em (2.30), ou o número um número máximo de
+iterações.
+
+2.4.3 Método de Gauss-Seidel
+
+Este método iterativo foi apresentado inicialmente por Gauss como forma de re-
+
+solver sistemas de equações provenientes de quadrados mínimos. Mas foi Seidel que
+
+publicou a versão hoje usada. Seidel era aluno de Jacobi. (Cunha 2003, pg. 60)
+
+O método de Gauss-Seidel pode ser olhado como uma modiﬁcação no método de
+
+Jacobi. De forma semelhante ao método de Jacobi, no método de Gauss-Seidel o
+sistema linear (2.2) é escrito na forma equivalente x(k+1) = Cx(k) + g por separação da
+diagonal.
+
+Por Sperandio, Mendes e Silva (2003, pg. 82) o método consiste em reescrever o
+sistema linear (2.2) em sua forma recursiva, como em (2.31). Com tentativa inicial x(0),
+calcula-se a sequência de aproximações x(k+1), k = 0, 1, 2, ..., para a solução, agora por
+meio de
+
+bi −
+
+i−1
+(cid:80)
+j=1
+
+aijx(k+1)
+j
+
+−
+
+n
+(cid:80)
+j=i+1
+
+aijx(k)
+j
+
+aii
+
+x(k+1)
+i
+
+=
+
+,
+
+i = 1, 2, ..., n; k ≥ 0.
+
+(2.32)
+
+O teste de parada pode ser um dos citados anteriormente.
+É fato, então, que no método de Jacobi, x(k+1) ﬁca totalmente determinado usando
+as componentes de x(k). No método de Gauss-Seidel, x(k+1) ﬁca determinado quando
+são usados as componentes de x(k) e x(k+1) já determinadas na iteração, sempre vanta-
+josa por não exigir o armazenamento conjunto dos dois vetores x(k) e x(k+1) em cada
+passo e, na maioria dos casos, convergir mais rápido que o método de Jacobi como
+
+constatamos na análise de sua convergência, feita na seção 2.4.1.
+
+2.5 Comparação entre os métodos diretos e iterativos
+
+Vamos relacionar alguns aspectos inerentes aos sistemas lineares e compará-los entre
+
+os métodos diretos e iterativos. De acordo com Ruggiero e Lopes (1988, pg. 139):
+
+(i) Convergência: Vimos que os métodos diretos são ﬁnitos e, a menos de erros
+
+de arredondamento, obtêm a solução exata de qualquer sistema não singular. Pelos
+
+40
+
+Teoremas 4 e 5 os métodos iterativos têm convergência garantida sob certos aspectos.
+
+(ii) Esparsidade da matriz A: Para sistemas esparsos, que aparecem em muitos
+problemas práticos, os métodos diretos não são aconselháveis visto que destroem a
+
+esparsidade da matriz A com seus processos de triangularização. Os métodos iterativos
+
+têm como principal vantagem não alterar a estrutura da matriz dos coeﬁcientes.
+
+(iii) Número de operações: Os métodos diretos requerem operações da ordem de n3
+(sem contar as operações envolvidas com estratégias de pivoteamento) enquanto que
+o método de Gauss-Seidel requer 2n2 por iteração, assim se o número de iterações de
+Gauss-Seidel é menor que n/2 este método requer menos operações que os diretos.
+
+(iv) Erros de arredondamento: Os erros de arredondamento são um sério problema
+para os métodos diretos. Uma forma de amenizá-los é adotar técnicas de pivoteamento.
+
+Os métodos iterativos como independem da aproximação inicial, uma vez garantida a
+
+convergência, apresentam menos erros de arredondamento. Assim, só erros cometidos
+
+na última iteração inﬂuenciam a solução.
+
+2.6 Condicionamento de sistemas lineares
+
+Um sistema linear está mal condicionado quando mudanças relativamente pequenas
+
+nos elementos da matriz dos coeﬁcientes de (2.5) podem causar mudanças relativamente
+grandes nas soluções de (2.4). Ele é bem condicionado quando ocorre o contrário.
+
+(Burden e Faires; 2003, pg. 397)
+
+Para Cunha (2003, pg. 42) a inﬂuência dessas mudanças nos dados de entrada da
+
+matriz dos coeﬁcientes A pode ser analisada do seguinte modo:
+
+Deﬁnição 5. O número de condição de uma matriz Anxn é
+
+cond(A) = ||A|| ||A−1||,
+
+onde ||A|| é alguma medida da matriz A denominada norma da matriz e A−1 é matriz
+inversa de A .
+
+Suponhamos que, em vez de uma matriz exata A, trabalhemos com uma aproxima-
+
+ção A’. Sejam x e y as soluções exata e aproximada, respectivamente, isto é,
+
+Ax = b
+
+e A(cid:48)y = b.
+
+41
+
+Observe que
+
+x = A−1b = A−1A(cid:48)y = A−1(A + A(cid:48) − A)y = y + A−1(A(cid:48) − A)y.
+
+Assim, se chamarmos δA = A(cid:48) − A teremos x − y = A−1δAy.
+Uma propriedade de normas de produtos de matrizes nos diz que ||Ax|| ≤ ||A|| ||x||
+
+e ||AB|| ≤ ||A|| |B||. Usando duas vezes essa propriedade no último termo do desen-
+
+volvimento acima, temos:
+
+||x − y|| ≤ ||A−1|| ||δA|| ||y|| = ||A|| ||A−1||
+
+||δA||
+||A||
+
+||y||.
+
+Como sabemos que cond(A) = ||A|| ||A−1||, essa desigualdade fornece uma delimi-
+tação para o erro relativo (com relação a y) da solução, em termos do erro relativo dos
+
+dados de entrada, uma vez que ela pode ser escrita como
+
+||x − y||
+||y||
+
+≤ cond(A)
+
+||δA||
+||A||
+
+.
+
+Se o vetor independente b também conter erro, pode-se mostar 5 que
+
+||x − y||
+||x||
+
+≤
+
+cond(A)
+1 − cond(A)
+
+(cid:18) ||δA||
+||A||
+
++
+
+(cid:19)
+
+,
+
+||δb||
+||b||
+
+onde δb representa o erro absoluto do termo independente.
+
+Para entender o papel do número de condição da matriz A podemos veriﬁcar as duas
+
+últimas desigualdades acima. Destes resultados podemos concluir que um número de
+
+condição elevado não nos permite estabelecer boas majorações para o erro relativo.
+
+Quanto maior for o número de condição, pior será a majoração de erro relativo obtida.
+Consequentemente, para matrizes cujo número de condição seja elevado, um pequeno
+
+erro relativo no vetor b, pode provocar um grande erro relativo na solução do sistema.
+
+5O leitor pode encontrar tal demonstração em (Burden e Faires; 2003)
+
+42
+
+3 Métodos para resolução de sistemas lineares
+
+Neste capítulo discorremos, com exemplos, sobre métodos de solução de sistemas
+
+lineares, abordando em tópicos diferentes os métodos estudados no Ensino Médio com
+
+os métodos iterativos propostos.
+
+Na seção anterior comparamos os métodos diretos e iterativos mostrando as vanta-
+
+gens e desvantagens de cada um.
+
+3.1 Resolução de sistemas lineares por métodos diretos estudados no Ensino
+
+Médio
+
+Destacamos aqui a Regra de Cramer e o Escalonamento (também chamado de
+
+Eliminação de Gauss).
+
+Quando se compara esses métodos para resolução de um sistema linear 3x3 veriﬁca-
+
+se que a Eliminação tem custo de 28 operações, enquanto a Regra de Cramer de 39
+operações. Para o caso 3x3, a diferença não é tão grande assim, o problema é que quanto
+
+maior for o sistema, maior vai ser essa diferença, atingindo cifras gigantescas. O custo
+
+da Regra de Cramer para um sistema nxn é de aproximadamente (n + 1)!(e − 1) + n
+
+operações, enquanto que o custo para esse mesmo sistema pelo método da Eliminação
+é de 2n3
+6 operações, considerando o dobro de multiplicações necessárias, para
+que, desta forma, não sejam utilizadas frações.
+
+3 + 3n2
+
+2 − 7n
+
+Para comparar melhor esses métodos, pode-se utilizar como referência um com-
+
+putador capaz de efetuar um milhão de multiplicações ou divisões por segundo. Se
+considerar um sistema 20x20, esse computador gastaria seis milésimos de segundo para
+
+resolvê-lo por Eliminação, enquanto que, pela Regra de Cramer, o mesmo computa-
+
+dor levaria 2754140 anos para resolvê-lo. Isso mostra que a Regra de Cramer não é
+
+apropriada para resolver sistemas de grande porte.
+
+43
+
+3.1.1 Regra de Cramer
+
+Exemplo1: (Filho e Silva, 2000, pg. 355) Para resolver o sistema
+
+
+
+
+
+
+3x + 2y = 7
+
+x − y = 1
+
+(3.1)
+
+calculamos primeiro o determinante D da matriz dos coeﬁcientes:
+
+D =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+3
+
+2
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+1 −1
+(cid:12)
+
+= −5.
+
+(3.2)
+
+Depois calculamos os determinantes substituindo a coluna xi da matriz dos coeﬁcientes
+pela coluna dos termos independentes.
+
+Dx =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+A seguir, calculamos
+
+7
+
+2
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+1 −1
+(cid:12)
+
+= −9.
+
+(3.3)
+
+Dy =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+3 7
+
+1 1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+= −4.
+
+(3.4)
+
+Por ﬁm, calculamos o valor das incógnitas: x = Dx
+5 e y = −4
+
+D e y = Dy
+D .
+5. A solução do sistema é ( 9
+
+Logo: x = −9
+
+−5 = 9
+
+−5 = 4
+
+5, 4
+
+5).
+
+44
+
+Exemplo2: (IEZZI et. al, 2012, pg. 220) Vamos determinar x, y e z no sistema
+
+
+
+
+
+
+x + 2y − z = −5
+
+−x − 2y − 3z = −3
+
+4x − y − z = 4
+
+(3.5)
+
+Como
+
+D =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+(cid:12)
+(cid:12)
+2 −1
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+−1 −2 −3
+(cid:12)
+(cid:12)
+(cid:12)
+4 −1 −1
+(cid:12)
+
+= 2 − 24 − 1 − 8 − 3 − 2 = −36,
+
+(3.6)
+
+então, procedendo como no exemplo anterior obtemos:
+
+Dx =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+−5
+
+(cid:12)
+(cid:12)
+2 −1
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+−3 −2 −3
+(cid:12)
+(cid:12)
+(cid:12)
+4 −1 −1
+(cid:12)
+
+= −10 − 24 − 3 − 8 − 15 − 6 = −36,
+
+(3.7)
+
+Dy =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+1 −5 −1
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+−1 −3 −3
+(cid:12)
+(cid:12)
+(cid:12)
+4 −1
+(cid:12)
+
+4
+
+= 3 + 60 + 4 − 12 + 12 + 5 = 72,
+
+(3.8)
+
+Dz =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+1
+
+(cid:12)
+(cid:12)
+2 −5
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+−1 −2 −3
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+4 −1
+
+4
+
+= 8 − 24 − 5 − 40 − 3 − 2 = −72.
+
+(3.9)
+
+45
+
+Por ﬁm, calculamos o valor das incógnitas: x = Dx
+Logo: x = −36
+
+D e z = Dz
+D .
+−36 = 2. A solução do sistema é (1; −2; 2).
+
+−36 = −2 e z = −72
+
+−36 = 1, y = 72
+
+D , y = Dy
+
+3.1.2 Escalonamento
+
+O método de resolução conhecido, no Ensino Médio, como Escalonamento é igual
+
+ao método de Eliminação de Gauss.
+
+Exemplo: (Filho e Silva, 2000, pg. 355) Encontre a solução do sistema linear usando
+
+o processo de escalonamento.
+
+
+
+
+
+
+x + 2y − 2z = −5
+
+2x − 3y + z = 9
+
+3x − y + 3z = 8
+
+(3.10)
+
+Inicialmente vamos escalonar o sistema:
+
+1a etapa: multiplicamos a 1a equação por (-2) e adicionamos o resultado à 2a
+equação. Multiplicamos a 1a equação por (-3) e adicionamos o resultado 3a equação.
+Obtemos:
+
+
+
+
+
+
+x + 2y − 2z = −5
+
+−7y + 5z = 19
+
+−7y + 9z = 23
+
+(3.11)
+
+2a etapa: adicionamos a 2a equação multiplicada por (-1) à 3a equação. Obtemos:
+
+
+
+
+
+
+x + 2y − 2z = −5
+
+−7y + 5z = 19
+
+4z = 4
+
+(3.12)
+
+Com o sistema escalonado, podemos determinar as incógnitas da seguinte forma:
+- Obtendo z na 3a equação: 4z = 4 ⇒ z = 1.
+
+46
+
+- Substituindo z = 1 na 2a equação, obtemos y: −7y + 5.1 = 19 ⇒ y = −2.
+- Substituindo z = 1 e y = −2 na 1a equação, obtemos x: x + 2.(−2) − 2.(1) =
+
+−5 ⇒ x = 1.
+
+Logo a solução do sistema é (1; -2; 1).
+
+3.2 Resolução de sistemas lineares por métodos diretos não estudados no
+
+ensino médio
+
+No método de escalonamento (eliminação de Gauss) podem ser aplicadas técnicas
+
+mais avançadas com o intuito de minimizar os erros de arredondamento quando assim
+
+se ﬁzer necessário. Essas técnicas são conhecidas como pivoteamento parcial e pivote-
+amento completo, tendo sido deﬁnidas na seção 2 subitem 2.3.2 deste trabalho. Além
+
+deles, podemos também destacar os métodos de Gauss-Jordan e Fatoração LU.
+
+3.2.1 Eliminação de Gauss com pivoteamento parcial
+
+Exemplo: (Ruggiero e Lopes, 1988, pg. 104) Consideremos um sistema linear,
+
+representado na forma matricial após a primeira etapa do pivoteamento por:
+
+A(1)|b(1) =
+
+0 −3 −5
+
+
+3
+
+
+0
+
+
+
+
+
+
+0
+
+1 −1 |
+
+2
+
+1
+
+0
+
+|
+
+|
+
+3
+
+7
+
+0
+
+2
+
+4
+
+| 15
+
+5
+
+6
+
+7
+
+
+
+
+
+
+
+
+
+
+
+
+(3.13)
+
+Início do estágio 2
+I. Escolher o pivô Máx|a(1)
+II. Trocar linhas (2) e (3).
+
+j2 | para j = 2, 3, 4 então |a(1)
+
+32 | = 3 logo: Pivô = -3
+
+47
+
+Assim,
+
+A(1)|b(1) =
+
+2
+
+1 −1 |
+
+
+3
+
+
+
+
+
+
+0
+
+
+0
+
+0 −3 −5
+
+1
+
+2
+
+0
+
+4
+
+5
+
+7
+
+6
+
+
+
+
+
+
+
+
+
+
+
+
+|
+
+|
+
+7
+
+3
+
+0
+
+| 15
+
+(3.14)
+
+e os multiplicadores desse estágio serão m32 = −1/3 e m42 = −2/3.
+2 ; L(2)
+
+Em seguida fazemos as operações: L(2)
+
+4 − m42L(1)
+2 ,
+se refere à linha i na iteração k, e o processo continua até triangularizarmos
+
+3 − m32L(1)
+
+3 = L(1)
+
+4 = L(1)
+
+onde L(k)
+a matriz dos coeﬁcientes.
+
+i
+
+OBS: É fácil ver que a escolha do maior elemento, em módulo, entre os candidatos
+a pivô faz com que os multiplicadores, em módulo, estejam entre zero e um, o que
+
+evita a ampliação dos erros de arredondamento. Para maior detalhamento consultar
+
+(Ruggiero e Lopes, 1988).
+
+3.2.2 Eliminação de Gauss com pivoteamento completo
+
+Exemplo: (Ruggiero e Lopes, 1988, pg. 104) Consideremos um sistema linear,
+
+representado na forma matricial após a primeira etapa do pivoteamento:
+
+A(1)|b(1) =
+
+0 −3 −5
+
+
+3
+
+
+0
+
+
+
+
+
+
+0
+
+1 −1 |
+
+2
+
+1
+
+0
+
+|
+
+|
+
+3
+
+7
+
+0
+
+2
+
+4
+
+| 15
+
+5
+
+6
+
+7
+
+
+
+
+
+
+
+
+
+
+
+
+(3.15)
+
+Início do estágio 2.
+Escolher o pivô Máx|a(k−1)
+
+ij
+
+tando a estratégia de pivoteamento completo, o pivô seria |a(1)
+a troca das colunas 2 e 4 e, em seguida, das linhas 2 e 3, onde:
+
+| para i, j ≥ k. Observamos que, no exemplo acima, ado-
+34 | = 7, o que acarretaria
+
+48
+
+A(1)|b(1) =
+
+
+
+
+
+0
+
+
+
+
+0
+
+
+0
+
+3 −1
+
+1
+
+2
+
+|
+
+7 −5 −3 |
+
+3
+
+0
+
+0
+
+4
+
+1
+
+2
+
+|
+
+| 15
+
+5
+
+7
+
+6
+
+
+
+
+
+
+
+
+
+
+
+
+(3.16)
+
+OBS: Essa estratégia não é muito empregada, pois envolve uma comparação extensa
+
+entre os elementos Máx|a(k−1)
+| para i, j ≥ k e troca de linhas e colunas, conforme
+vimos no exemplo anterior; é evidente que todo este processo acarreta um esforço
+
+ij
+
+computacional maior que a estratégia de pivoteamento parcial.
+
+3.2.3 Eliminação de Gauss-Jordan
+
+Exemplo: Resolver o sistema linear abaixo usando eliminação de Gauss-Jordan:
+
+
+
+
+
+
+x + 2y − 2z = −5
+
+2x − 3y + z = 9
+
+3x − y + 3z = 8
+
+(3.17)
+
+Utilizando eliminação de Gauss chegamos ao sistema (3.12). Agora continuaremos
+eliminando os termos até encontrarmos uma matriz diagonal. Calculando as multipli-
+
+cadores:
+m(3)
+Faremos as operações: L3 = L3; L2 = L2 − m23L3; L1 = L1 − m13L3.
+
+23 = 5/4 e m(3)
+
+13 = −1/2.
+
+Assim:
+
+
+
+
+
+
+x + 2y + 0 = −3
+
+−7y + 0 = 14
+
+4z = 4
+
+49
+
+(3.18)
+
+Continuamos agora calculando o multiplicador m(4)
+
+12 = −2/7. Faremos: L3 = L3;
+
+L2 = L2; L1 = L1 − m12L2.
+
+Logo:
+
+
+
+
+
+
+x + 0 + 0 = 1
+
+−7y + 0 = 14
+
+4z = 4
+
+(3.19)
+
+Agora podemos determinar o valor das incógnitas: L3/4; L2/ − 7 e L1/1.
+Isso nos fornece a solução: x = 1; y = −2 e z = 1.
+
+3.2.4 Fatoração LU
+
+Exemplo: (Ruggiero e Lopes, 1988, pg. 114) Resolver o sistema linear abaixo usando
+
+fatoração LU:
+
+
+
+
+
+
+3x1 + 2x2 + 4x3 = 1
+
+4x1 + 3x2 + 2x3 = 3
+
+x1 + x2 + 2x3 = 2
+
+(3.20)
+
+Usando o processo de Gauss, sem estratégia de pivoteamento parcial, para triângu-
+
+larizar a matriz dos coeﬁcientes A, temos:
+
+Estágio 1: Pivô = a(0)
+11 = 3.
+Multiplicadores: m21 = a(0)
+21
+a(0)
+11
+Então, L1 ↔ L1, L2 ↔ L2 − m21L1 e L3 ↔ L3 − m31L1. Assim:
+
+3 e m31 = a(0)
+31
+a(0)
+11
+
+= 4
+3.
+
+= 1
+
+2
+
+4
+
+A(1) =
+
+0 1/3
+
+2/3
+
+
+3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1/3 −22/3
+
+50
+
+(3.21)
+
+Uma vez que os elementos a(1)
+
+22 e a(1)
+
+31 são nulos, podemos guardar os multiplicadores
+
+nas posições dos zeros.
+
+Estágio 2:
+Pivô = a(1)
+22 = 1/3.
+Multiplicadores: m32 = a(1)
+32
+a(1)
+22
+Então, L1 ↔ L1, L2 ↔ L2 e L3 ↔ L3 − m32L2 assim:
+
+1/3 = 1.
+
+= 1/3
+
+(3.22)
+
+(3.23)
+
+(3.24)
+
+Os fatores L e U são:
+
+A(2) =
+
+L =
+
+
+3
+
+
+
+
+
+0
+
+2
+
+4
+
+0 1/3 2/3
+
+0 −8
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+0 0
+
+1/3 1 0
+
+4/3 1 1
+
+e
+
+U =
+
+Resolvendo L · y = b
+I) Obter y: L · y = b ⇒
+
+2
+
+4
+
+0 1/3 2/3
+
+
+
+
+
+
+
+
+
+
+3
+
+
+
+
+
+0
+
+0 −8
+
+51
+
+⇒ y1 = 1; y2 = 5/3 e y3 = 0.
+
+II) obter x:
+
+U · x = y ⇒
+
+
+
+
+
+
+y1 = 1
+
+1/3y1 + y2 = 2
+
+4/3y1 + y2 + y3 = 3
+
+
+
+
+
+
+3x1 + 2x2 + 4x3 = 1
+
+1/3x2 + 2/3x3 = 5/3
+
+−8x3 = 0
+
+(3.25)
+
+(3.26)
+
+Assim, x1 = −3; x2 = 5 e x3 = 0, é a solução do sistema de equações.
+
+3.3 Resolução de sistemas lineares por métodos iterativos
+
+Abordamos nesta seção os métodos de Gauss-Jacobi (Jacobi) e Gauss-Seidel bem
+
+como suas condições de convergência.
+
+As vantagens e desvantagens em se usar os métodos iterativos, em relação aos
+
+métodos diretos, estão descritas na seção anterior.
+
+3.3.1 Gauss-Jacobi
+
+Exemplo: (Ruggiero e Lopes, p. 122) Seja resolver o sistema linear abaixo pelo
+método de Gauss-Jacobi com x(0) = (0, 7; −1, 6; 0, 6), sendo o vetor aproximação inicial,
+e (cid:15) = 0, 05. Garanta a convergência do método.
+
+52
+
+
+
+
+
+
+10x1 + 2x2 + x3 = 7
+
+x1 + 5x2 + x3 = −8
+
+2x1 + 3x2 + 10x3 = 6
+
+10 = 3
+5 = 2
+10 = 5
+
+I) Garantindo a convergência pelo critério das linhas:
+α1 = 2+1
+α2 = 1+1
+α3 = 2+3
+Critério de convergência satisfeito.
+II) Iniciando o processo iterativo:
+
+10 = 0, 3 < 1.
+5 = 0, 4 < 1.
+10 = 0, 2 < 1.
+
+
+
+3 ) = 0x(k)
+
+x(k+1)
+1
+
+
+
+x(k+1)
+3
+
+x(k+1)
+2
+
+= 1
+
+= 1
+
+10(7 − 2x(k)
+5(−8 − x(k)
+10(6 − 2x(k)
+
+2 − x(k)
+1 − x(k)
+1 − 3x(k)
+
+= 1
+
+3 ) = − 1
+
+2 ) = − 2
+
+2 − 1
+
+1 − 2
+5x(k)
+10x(k)
+
+10x(k)
+1 − 0x(k)
+10x(k)
+
+10x(k)
+5x(k)
+2 − 1
+2 − 0x(k)
+
+3 + 7
+10
+3 − 8
+5
+3 + 6
+10
+
+1 − 3
+
+Na forma matricial x(k+1) = Cx(k) + g temos:
+
+
+
+
+
+
+
+
+
+C =
+
+0
+
+−2/10 −1/10
+
+−1/5
+
+0
+
+−1/5
+
+−1/5 −3/10
+
+0
+
+
+
+
+
+
+
+
+
+e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+7/10
+
+6/10
+
+g =
+
+−8/5
+
+53
+
+(3.27)
+
+(3.28)
+
+(3.29)
+
+(3.30)
+
+Assim (k = 0) temos:
+
+
+
+1 = −0, 2x(0)
+x(1)
+
+2 = −0, 2x(0)
+x(1)
+
+3 = −0, 2x(0)
+x(1)
+
+2 − 0, 1x(0)
+1 − 0, 2x(0)
+1 − 0, 3x(0)
+
+3 + 0, 7 = −0, 2.(−1, 6) − 0, 1.(0, 6) + 0, 7 = 0, 96
+
+3 − 1, 6 = −0, 2.(0, 7) − 0, 2.(0, 6) − 1, 6 = −1, 86
+
+(3.31)
+
+2 + 0, 6 = −0, 2.(0, 7) − 0, 3.(−1, 6) + 0, 6 = 0, 94
+
+Calculando m(1) (teste de parada), temos:
+1 − x(0)
+2 − x(0)
+3 − x(0)
+
+|x(1)
+1 | = 0,26
+|x(1)
+2 | = 0,26
+|x(1)
+3 | = 0,34
+então m(1) = 0,34
+
+= 0,34
+
+1,86 = 0, 1828 > (cid:15)
+
+|
+
+max|x(1)
+
+i
+
+Prosseguindo as iterações, temos: para k = 1
+x(2) = (0, 978; −1, 98; 0, 966) ⇒ m(2) = 0,12
+
+1,98 = 0, 0606 > (cid:15)
+
+e para k = 2
+
+x(3) = (0, 9994; −1, 9888; 0, 9984) ⇒ m(3) = 0,0324
+Então, a solução do sistema linear acima, com erro menor que 0,05 obtida pelo
+
+1,9888 = 0, 0163 < (cid:15).
+
+método de Gauss-Jacobi é:
+
+x(3) = (0, 9994; −1, 9888; 0, 9984).
+
+OBS1: Vale lembrar que o valor de x(0), que é o vetor aproximação inicial, é arbi-
+
+trário, desde que seja satisfeita a condição de convergência do método.
+
+OBS2: O critério das linhas nos mostra que a sequência é convergente, mas não nos
+
+mostra o contrário, ou seja, a condição do critério é apenas suﬁciente.
+
+3.3.2 Gauss-Seidel
+
+Exemplo: (Ruggiero e Lopes, 1988, pg. 126) Seja resolver o sistema linear abaixo
+pelo método de Gauss-Seidel com x(0) = (0; 0; 0) e (cid:15) = 5 × 10−2. Garanta a conver-
+gência do método.
+
+54
+
+
+
+
+
+
+5x1 + x2 + x3 = 5
+
+3x1 + 4x2 + x3 = 6
+
+(3.32)
+
+3x1 + 3x2 + 6x3 = 0
+
+Vamos resolver o exercício em passos:
+
+I) Garantindo a convergência pelo critério de Sassenfeld:
+
+β1 = 1+1
+5 = 2
+5 = 0, 4 < 1.
+β2 = (3).(0,4)+1
+= 2,2
+4
+β3 = (3).(0,4)+(3).(0,55)
+
+= 4,5
+
+4 = 0, 55 < 1.
+
+6 = 0, 75 < 1.
+Critério de convergência satisfeito.
+
+6
+
+II) Iniciando o processo iterativo:
+
+
+
+
+
+
+x(k+1)
+1
+
+= 1 − 0, 2x(k)
+
+2 + 0, 2x(k)
+
+3
+
+x(k+1)
+2
+
+= 1, 5 − 3/4x(k+1)
+
+1
+
+− 1/4x(k)
+3
+
+x(k+1)
+3
+
+= 0 − 0, 5x(k+1)
+
+1
+
+− 0, 5x(k+1)
+
+2
+
+(3.33)
+
+Como x(0) = (0; 0; 0) então k = 0 e
+
+
+
+
+
+
+x(1)
+1 = 1 − 0 − 0 = 1
+
+x(1)
+2 = 1, 5 − 0, 75.(1) − 0 = 0, 75
+
+(3.34)
+
+x(1)
+3 = 0 − 0, 5.(1) − 0, 5.(0, 75) = −0, 875
+
+Calculando m(1) (teste de parada), temos:
+1 − x(0)
+|x(1)
+2 − x(0)
+|x(1)
+|x(1)
+3 − x(0)
+então m(1) =
+
+1 | = 1
+2 | = 0,25
+3 | = 0,125
+
+= 1 > (cid:15).
+
+1
+max|x(1)
+
+|
+
+i
+
+55
+
+Assim, k = 1 e
+
+
+
+
+
+
+x(2)
+1 = 1 − 0, 2.(0, 75) − 0, 2.(−0, 875) = 1, 025
+
+x(2)
+2 = 1, 5 − 0, 75.(1, 025) − 0, 25.(−0, 875) = 0, 95
+
+(3.35)
+
+x(2)
+3 = 0 − 0, 5.(1, 025) − 0, 5.(0, 95) = −0, 9875
+
+1 | = 0,025
+
+1 − x(1)
+2 | = 0,20
+3 | = 0,1125
+
+então: |x(2)
+2 − x(1)
+|x(2)
+|x(2)
+3 − x(1)
+então m(2) = 0,2
+
+max|x(2)
+
+i
+
+= 0, 1951 > (cid:15).
+
+|
+
+Continuando as iterações obtemos:
+x(3) = (1, 0075; 0, 9912; −0, 9993) ⇒ m(3) = 0, 0402 < (cid:15)
+Assim, a solução do sistema linear dado, com erro menor que (cid:15), pelo método de
+
+Gauss-Seidel é: x(3) = (1, 0075; 0, 9912; −0, 9993).
+
+56
+
+4 Recursos computacionais para resolução de sistemas lineares
+
+Ao longo da história educacional recente, muitas mudanças e avanços vem ganhando
+
+espaço. Estamos mais sensíveis ao uso de novas tecnologias no processo de ensino
+
+aprendizagem e, cada vez mais, entendemos como essas tecnologias podem auxiliar no
+
+desenvolvimento cognitivo dos estudantes.
+
+Neste sentido, os recursos computacionais aparecem cada vez mais inseridos em
+
+grande parte da sociedade e podem ser um aliado no desenvolvimento pedagógico e
+
+matemático dos alunos. Esse novo "parceiro"pode contribuir de forma primorosa para
+
+realização de atividades diferenciadas e de novas formas de agir e pensar (Balacheﬀ e
+Kaput, 1996). Mas ainda nos deparamos com uma pouca utilização desses recursos
+
+computacionais, muitas vezes por despreparo do professor, outras por falta de infraes-
+
+trutura da própria escola e em algumas situações por desinteresse dos estudantes.
+
+No ensino médio, os métodos mais utilizados para resolução de sistemas lineares,
+entre eles Regra de Cramer e Escalonamento, dependem de muita manipulação algé-
+
+brica o que inviabiliza o estudo de sistemas lineares de maiores dimensões. Os recursos
+
+computacionais e com eles os softwares matemáticos surgem como alternativa para
+
+minimizar os cálculos, priorizando, assim, os conceitos e possíveis aplicações.
+
+Devemos, portanto, captar o máximo de aproveitamento dos recursos computacio-
+
+nais objetivando uma mudança tecnológica e social, em relação aos alunos, como forma
+
+de motiva-los mais nas aulas de Matemática. Gómez retrata bem essa ideia,
+
+“mesmo que o uso das tecnologias não seja a solução para os problemas de
+ensino e de aprendizagem da Matemática, há indícios de que ela se con-
+verterá lentamente em um agente catalizador do processo de mudança na
+educação matemática. Graças as possibilidades que oferece para manejar
+dinamicamente os objetos matemáticos em múltiplos sistemas de represen-
+tação dentro de esquemas interativos, a tecnologia abre espaço para que os
+estudantes possam viver novas experiências matemáticas (difíceis de con-
+seguir com recursos tradicionais como o lápis e o papel), visto que pode
+manipular diretamente os objetos matemáticos dentro de um ambiente de
+exploração."(GOMEZ, 1997, p.93-110)
+
+Nota-se, na fala do autor, que o uso das tecnologias não é a solução de todos os
+
+problemas da educação, mas pode trazer ao processo educativo uma visão holística
+
+e menos descentralizada em relação ao papel do professor que, por muitas vezes, se
+mantêm resistente as inovações que podem ser implementadas na sala de aula.
+
+Apresentaremos neste capítulo quatro softwares indicados para a resolução de sis-
+
+tema lineares, á saber: GeoGebra, Winplot, Máxima e Scilab. Todos eles são gratuitos.
+
+57
+
+Abaixo discorreremos acerca de cada um e mostraremos exemplos de como utilizar esses
+
+programas na resolução de sistemas lineares.
+
+4.1 Resolução utilizando o GeoGebra
+
+A palavra GeoGebra surgiu de uma junção de Geo (Geometria) e Gebra (Álgebra).
+
+É um software de matemática dinâmica que combina conceitos e representações de
+geometria e álgebra em uma única interface. Possui acesso livre e é escrito em linguagem
+
+Java, o que lhe permite estar disponível em várias plataformas.
+
+Iniciaremos com o GeoGebra por ser de manipulação fácil e, de certa forma, mais
+
+simples para introduzir essa tecnologia nas aulas. Nas seções 4.3 e 4.4 apresentaremos
+softwares que auxiliam na resolução de sistemas lineares de maiores dimensões.
+
+Tal recurso computacional permite resolver sistemas lineares 2x2, traçando as retas
+
+respectivas com o auxílio de cada equação e determinando sua interseção. A partir do
+
+GeoGebra 5.0 também é possível fazer construções em três dimensões e assim resol-
+ver sistemas lineares 3x3. Abaixo, veremos alguns exemplos de soluções utilizando o
+
+software GeoGebra. Seja resolver o sistema linear abaixo utilizando o GeoGebra.
+
+
+
+
+
+
+x + y = 38
+
+10x + 50y = 980
+
+(4.1)
+
+Vamos exempliﬁcar como obter a solução desse sistema utilizando GeoGebra. Ini-
+
+cialmente devemos digitar a primeira equação, respeitando os comandos do GeoGebra,
+
+na parte denominada "Entrada", Figura 1, e em seguida proceder da mesma forma
+
+com a segunda equação.
+
+Figura 1: Tela inicial do GeoGebra e o campo "Entrada"
+
+58
+
+Quando as retas tiverem traçadas basta clicar na interseção delas na janela de
+
+visualização, e o ponto determinado será a solução do sistema. Vamos observar a
+solução na Figura 2 abaixo.
+
+Figura 2: Solução do exemplo proposto no GeoGebra
+
+4.2 Resolução utilizando o Winplot
+
+Winplot é uma ferramenta que visa a interatividade aluno-aluno, aluno-professor e
+
+aluno-máquina de modo que o aluno possa, além de aprender sobre o conteúdo mate-
+
+mático, desenvolver habilidades como criatividade e autonomia.
+
+Uma de suas vantagens é a de ser um "programa leve", ou seja, funciona em com-
+
+putadores mais antigos, sem perder qualidade. Pode ser usado em vários níveis educa-
+cionais e possui recursos que vão de uma simples função de 1 ◦ grau até funções de 3 ◦
+grau com integrais de todos os tipos. Plota gráﬁcos com maestria e possui uma inter-
+face muito simples, como representado na Figura 3. Possui ferramenta computacional
+
+para fazer gráﬁcos 2D e 3D, é gratuito e está disponível em língua portuguesa. Sua
+
+desvantagem é que possui versões apenas para plataforma Windows.
+
+Para se resolver sistemas lineares de três incógnitas e três equações nesse software
+devemos começar pelo menu janela, selecionando a opção 3-dim ou apertando a tecla
+
+F3 (para 2 incógnitas escolhe-se a opção 2-dim). Em seguida, no menu, pode se escolher
+
+a opção "equação explícita"como na Figura 4.
+
+Uma caixa de diálogo irá se abrir para que se possa digitar cada equação. Vale
+observar que a função deve ser digitada em relação as outras duas incógnitas, ou seja,
+
+z = f (x, y). Vamos observar o exemplo abaixo:
+
+59
+
+Figura 3: Tela inicial do Winplot
+
+Figura 4: Menu completo Winplot
+
+Utilizando o software Winplot, representar graﬁcamente as equações do sistema
+
+linear a seguir, (Ishihara e Pessoa apud Ferreira, 2013, pg. 65)
+
+60
+
+
+
+
+
+
+2x + y + 3z = 1
+
+x + y + 2z = −1
+
+3x + 2y − z = 2
+
+(4.2)
+
+Assim, para representarmos a primeira equação, devemos isolar a variável z, ou
+
+seja, z = −2x−y+1
+
+3
+
+. Na janela, procedemos como na Figura 5 abaixo.
+
+Figura 5: Janela de equação Winplot
+
+Seguindo, podemos proceder da mesma forma e traçar as outras equações para
+
+representarmos os três planos característicos as equações (Cada equação de um sistema
+
+3x3 gera um plano diferente no Winplot). A Figura 6 mostra a representação gráﬁca
+das três equações.
+
+Figura 6: Representação das três equações
+
+61
+
+Sendo assim, o Winplot oferece uma representação gráﬁca das equações, que nos
+
+permite determinar seu ponto de interseção, ou a solução do sistema, que é única pela
+ﬁgura acima, e vale (x, y, z) = (7/3; −8/3; −1/3). Ele também oferece comandos que
+
+nos auxiliam a editar a ﬁgura, de forma a mostrar a solução, no espaço, de forma mais
+
+simples. Os eixos podem ser ocultados.
+
+4.3 Resolução utilizando o Maxima
+
+O Maxima é um sistema para a manipulação de expressões simbólicas e numéricas,
+
+incluindo diferenciação, integração, equações diferenciais ordinárias, sistemas de equa-
+
+ções lineares, vetores, matrizes, entre outros. O Maxima produz resultados de precisão
+elevada, e pode traçar funções e dados em duas e três dimensões.
+
+O código fonte do Maxima pode ser compilado em muitos sistemas, incluindo Win-
+
+dows, Linux e MacOS.
+
+O Maxima é um descendente de Macsyma, um sistema legendário de álgebra para
+computador desenvolvido nos anos de 1960 no Instituto de Tecnologia de Massachu-
+
+setts. É o único sistema baseado em Macsyma ainda publicamente disponível e com
+
+uma comunidade de usuários ativa. A ﬁlial do Maxima de Macsyma foi mantida por
+
+William Schelter. Em 1998 obteve permissão para liberar o código fonte sob a GNU
+General Public License (GPL). Foram seus esforços e habilidade que ﬁzeram a sobre-
+
+vivência do Maxima possível. Desde então um grupo de usuários e de colaboradores
+
+deu forma para trazer o Maxima a uma maior audiência. Assim sendo, o Maxima é
+
+considerado um software livre, podendo então ser usado sem necessidade de registro e
+pagamento, isto é, um software open source, um dos poucos nessa área.
+
+Seja resolver o sistema (Ferreira, 2013, pg. 60).
+
+
+
+
+
+
+2x − y + z + 2w − t = 0
+
+x + y + z + w + t = 1
+
+3x − y − 2z + w − t = −4
+
+−2x + 3y − z + w + 11t = −15
+
+−x + y − z + w − t = −19
+
+(4.3)
+
+Poderíamos pensar em uma resolução com ajuda de algum software matemático,
+
+62
+
+mas certamente os dois softwares vistos anteriormente não nos ajudariam, visto que
+
+eles tem uma limitação de solução, à sistemas lineares de dimensão 3. Para sistemas
+igual ao do exemplo (4.3), sistemas de maiores dimensões, podemos utilizar o Maxima,
+
+que não limita o número de equações.
+
+Para iniciarmos a solução do exemplo (4.3) pelo Maxima, selecionamos na janela
+
+inicial o menu "equações"e depois a opção "resolver sistema linear", como mostra a
+Figura 7.
+
+Figura 7: Janela incial do Maxima
+
+Em sequência, será necessário inserir o número de equações e incógnitas do seu
+
+sistema linear. Essa representação está na Figura 8, abaixo.
+
+Figura 8: Caixa do número de equações no Maxima
+
+Continuando com o processo, agora é a vez da inserção das equações no software.
+
+Na nova caixa será digitado cada equação no seu lugar, como mostra a Figura 9.
+
+Por ﬁm, ao se clicar no "OK"obtemos a solução do sistema requerido, conforme
+
+representado na ﬁgura 10.
+
+63
+
+Figura 9: Caixa para inserção das equações no Maxima
+
+Figura 10: Solução do exemplo proposto no Maxima
+
+A solução do sistema linear pelo Maxima é (x; y; z; w; t) = (4; −2; 5; −7; 1).
+É importante salientar que o Maxima, através da sua opção de resolução de sistemas
+
+lineares, como visto na ﬁgura 7, opera sobre o comando linsolve como aparece na solução
+
+do exemplo da ﬁgura 10. Esse comando será melhor detalhado na subseção seguinte,
+
+visto que, o próximo software também pode resolver um sistema linear pelo mesmo
+comando.
+
+O Maxima também possui outras opções para resolver sistemas lineares, que podem
+
+ser programadas como novo algoritmo.
+
+4.4 Resolução utilizando o Scilab
+
+Scilab é um ambiente voltado para o desenvolvimento de algoritmos para resolução
+
+de problemas numéricos. O Scilab foi criado em 1990 por um grupo de pesquisadores
+
+do INRIA – Institut de Recherche en Informatique et en Automatique e do ENPC -
+
+Ècole Nationale des Ponts et Chaussées.
+
+Desde 1994, quando passou a ser disponível na Internet, Scilab é gratuito e distri-
+
+buído com o código fonte aberto. Além da distribuição com o código fonte, existem,
+
+64
+
+também, distribuições pré-compiladas do Scilab para vários sistemas operacionais.
+
+As principais características desse ambiente de programação numérica extrema-
+
+mente ﬂexível são:
+
+• Ambiente poderoso para geração de gráﬁcos bi e tridimensionais, inclusive com
+
+animações;
+
+• Manipulações com matrizes são facilitadas por diversas funções implementadas
+
+nos toolboxes;
+
+• Permite trabalhar com polinômios, funções de transferência, sistemas lineares e
+
+grafos;
+
+• Deﬁne funções facilmente;
+• Permite acesso a rotinas escritas em FORTRAN e C;
+
+• Pode ser acessado por programas de computação simbólica, como o MuPad;
+
+• Permite o desenvolvimento e apresenta diversos conjuntos de funções voltadas
+
+para aplicações especíﬁcas, os chamados toolboxes.
+
+De modo geral, o Scilab é um software avançado onde é possível "criar"programas
+
+mais complexos para resolução de sistemas lineares que requerem mais reﬁnamento,
+
+como são os casos de sistemas lineares cujas soluções não são inteiras, sistemas line-
+
+ares esparsos (como muitas posições valendo zero) ou de grandes dimensões. Assim,
+podemos aplicar os métodos numéricos dependendo da necessidade do sistema linear.
+
+Vejamos como seria resolver o mesmo exemplo exposto na seção 4.3 (4.4) no Scilab
+
+utilizando o método de eliminação de Gauss sem pivoteamento. Exemplo:
+
+
+
+
+
+
+2x − y + z + 2w − t = 0
+
+x + y + z + w + t = 1
+
+3x − y − 2z + w − t = −4
+
+−2x + 3y − z + w + 11t = −15
+
+−x + y − z + w − t = −19
+
+(4.4)
+
+Começamos escrevendo a matriz aumentada dos coeﬁcientes A colocando os ele-
+
+mentos entre parênteses, separando com espaço simples os elementos da mesma linha e
+com ponto-vírgula os elementos de colunas diferentes assim como mostra a Figura 11.
+
+Em seguida clicamos na tecla "enter" e a matriz aparecerá de forma usual (Figura
+
+12).
+
+65
+
+Figura 11: Matriz aumentada dos coeﬁcientes do Exemplo 4.4 no Scilab
+
+Figura 12: Matriz aumentada dos coeﬁcientes do Exemplo 4.4 de forma usual no Scilab
+
+Para a matriz das constantes b é necessário escrever os elementos entre parênteses
+
+e separa-los por ponto-e-vírgula. Vamos observar a Figura 13.
+
+Figura 13: Matriz das constantes do Exemplo 4.4 no Scilab
+
+Novamente, ao acionar a tecla "enter" , a matriz ﬁcará na disposição usual. (ﬁgura
+
+14)
+
+Observe que até agora não se fez necessário a programação na caixa de texto do
+Scilab e isso se deve ao fato do próprio software já possuir a opção da solução de sistemas
+
+66
+
+Figura 14: Matriz das constantes do exemplo 4.4 no Scilab
+
+lineares pelo método tradicional de eliminação de Gauss. Para tal resolução devemos
+
+usar o comando Linsolve, que resolve a equação A.x + b = 0. Mas como queremos
+resolver A.x = b utilizaremos, junto com o comando a notação (A, −b). (Figura 15)
+
+Outro cuidado que devemos ter é perceber se o determinante da matriz dos coeﬁci-
+
+entes é diferente de zero pois, de modo contrário, o sistema não estaria bem deﬁnido e
+
+o programa não encontraria nenhuma solução, mesmo se o sistema tiver solução.
+
+Figura 15: Comando linsolve para resolução de sistemas lineares no Scilab
+
+Por ﬁm acionamos a tecla "enter" para determinar a solução do exemplo (4.4).
+
+67
+
+A solução do sistema linear pelo Scilab é (x; y; z; w; t) = (4; −2; 5; −7; 1), a mesma
+
+encontrada pelo Maxima.
+
+Figura 16: Solução do exemplo 4.4 no Scilab
+
+É fácil observar que tanto o Maxima quanto o Scilab resolvem sistemas lineares de
+
+maiores dimensões com grande facilidade, poupando cálculos e manipulações algébricas
+extensas que muitas vezes inviabilizam o trabalho, em sala de aula, com aplicações que
+
+dependem de tais sistemas.
+
+No próximo capítulo veremos as aplicações de sistemas lineares de maiores dimen-
+
+sões e como poupamos esforços para chegar a suas soluções quando utilizamos softwares.
+
+68
+
+5 Aplicações de sistema lineares de maiores dimensões
+
+Neste capítulo apresentamos Aplicações de sistemas lineares com pelo menos 4
+
+variáveis. Os sistemas resultantes das Aplicações são apresentados e suas soluções são
+
+discutidas no capítulo 6.
+
+O problema seguinte se apresenta como ideia para análise dos nutrientes necessários
+
+a uma boa alimentação.
+
+Aplicação 1: (Boldrini et. al, 1980, p. 54) Sabe-se que uma alimentação diária
+
+equilibrada em vitaminas deve constar de 170 unidades de vitamina A, 180 unidades
+
+de vitamina B, 140 unidades de vitamina C, 180 unidades de vitamina D e 350 unidades
+de vitamina E.
+
+Com o objetivo de descobrir como deverá ser uma refeição equilibrada, foram estu-
+
+dados cinco alimentos. Fixada a mesma quantidade (1g) de cada alimento, determinou-
+
+se:
+
+i) O alimento I tem 1 unidade de vitamina A, 10 unidades de vitamina B, 1 unidade
+
+de vitamina C, 2 unidades de vitamina D e 2 unidades de vitamina E.
+
+ii) O alimento II tem 9 unidades de vitamina A, 1 unidade de vitamina B, 0 unidades
+
+de vitamina C, 1 unidade de vitamina D e 1 unidade de vitamina E.
+
+iii) O alimento III tem 2 unidades de vitamina A, 2 unidades de vitamina B, 5
+
+unidades de vitamina C, 1 unidade de vitamina D e 2 unidades de vitamina E.
+
+iv) O alimento IV tem 1 unidade de vitamina A, 1 unidade de vitamina B, 1 unidade
+
+de vitamina C, 2 unidades de vitamina D e 13 unidades de vitamina E.
+
+v) O alimento V tem 1 unidade de vitamina A, 1 unidade de vitamina B, 1 unidade
+
+de vitamina C, 9 unidades de vitamina D e 2 unidades de vitamina E.
+
+Quantos gramas de cada um dos alimentos I, II, III, IV e V devemos ingerir diariamente
+
+para que nossa alimentação seja equilibrada?
+
+Para modelagem do problema é importante deﬁnir quem será a variável a ser obtida.
+Nesse caso, a variável xi será a quantidade de cada alimento i (em gramas) que deverá
+ser ingerida para obter o total de vitamina exposto no enunciado. Assim:
+
+69
+
+
+
+
+
+
+x1 + 9x2 + 2x3 + x4 + x5 = 170
+
+10x1 + 1x2 + 2x3 + x4 + x5 = 180
+
+x1 + 0x2 + 5x3 + x4 + x5 = 140
+
+2x1 + x2 + 2x3 + x4 + 9x5 = 180
+
+2x1 + x2 + 2x3 + 13x4 + 2x5 = 350
+
+(5.1)
+
+Agora, veremos um problema relacionado a uma certa quantidade de moedas.
+
+Aplicação 2: (Poole, 2004, p. 110) Você tem no bolso algumas moedas de 1 centavo,
+
+5 centavos, 10 centavos, 25 centavos, 50 centavos e 1 real. Há 61 moedas no total e
+
+exatamente duas vezes mais moedas de 1 real do que de 5 centavos. As moedas de 5
+
+centavos, 10 centavos e 25 centavos totalizam 3,80 reais. As moedas de 1 centavo, 10
+centavos, 25 centavos e 50 centavos totalizam 8,60 reais. As moedas de 1 centavo, 10
+
+centavos, 50 centavos e 1 real totalizam 18,60 reais. O valor total das moedas é 22,60
+
+reais. Encontre a quantidade de moedas de cada tipo.
+
+Inicialmente precisamos modelar o problema. Deﬁnimos como variável xi a quanti-
+dade de moedas de cada valor, sendo i = 1, ..., 6 respectivamente em relação as moedas
+
+de 1 centavo, 5 centavos, 10 centavos, 25 centavos, 50 centavos e 1 real.
+
+Logo:
+
+
+
+
+
+
+x1 + x2 + x3 + x4 + x5 + x6 = 61
+
+x6 = 2x2
+
+0, 05x2 + 0, 10x3 + 0, 25x4 = 3, 80
+
+0, 01x1 + 0, 1x3 + 0, 25x4 + 0, 5x5 = 8, 6
+
+0, 01x1 + 0, 10x3 + 0, 50x5 + x6 = 18, 60
+
+(5.2)
+
+0, 01x1 + 0, 05x2 + 0, 10x3 + 0, 25x4 + 0, 50x5 + x6 = 20, 90
+
+Um problema atual e muito discutido em vários níveis, diz respeito à mobilidade
+urbana que, a cada ano, vem causando prejuízos e atrasos nas cidades. Vamos analisar
+
+70
+
+o ﬂuxo de veículos.
+
+Aplicação 3: (Poole, 2004, p. 110) O coração do centro da cidade de Gotham, onde
+
+reside o BATMAN!!, consiste em ruas de mão única; o ﬂuxo f do tráfego é medido
+
+em cada cruzamento. Para os quarteirões mostrados na Figura 17 abaixo, os números
+
+representam o número médio de veículos a cada 10 minutos entrando e saindo dos
+cruzamentos A, B, C, D, E e F durante o horário comercial.
+
+Figura 17: Fluxo do tráfego no centro de Gotham
+
+Monte e resolva um sistema de equações lineares para encontrar os possíveis ﬂuxos
+
+f1, ..., f7.
+
+Organizando os dados dos cruzamentos temos que o ﬂuxo f é a variável deﬁnida.
+-No cruzamento A: f3 + 200 = f1 + 100
+-No cruzamento B: f1 + 150 = f2 + f4
+-No cruzamento C: f2 + f5 = 200 + 100
+-No cruzamento D: 100 + f6 = f3 + 200
+-No cruzamento E: f4 + f7 = f6 + 100
+-No cruzamento F: 100 + 150 = f5 + f7
+
+71
+
+O melhor modo de representar esse sistema é na forma matricial A.x = b, assim:
+
+sendo a matriz dos coeﬁcientes,
+
+sendo a matriz das incógnitas e
+
+0 −1
+
+0
+
+0
+
+1 −1
+
+0 −1 0
+
+A =
+
+
+1
+
+
+
+
+
+
+0
+
+
+
+0
+
+
+
+
+0
+
+
+0
+
+0
+
+0
+
+0
+
+
+0
+
+
+0
+
+
+
+
+0
+
+
+
+
+
+
+
+
+
+1
+
+1
+
+0 −1 0
+
+0 −1 1
+
+1
+
+0
+
+1
+
+0
+
+0
+
+0
+
+0
+
+1
+
+0
+
+0
+
+0
+
+0
+
+1
+
+0
+
+x =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f1
+
+f2
+...
+
+f7
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+b =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+−100
+
+−150
+
+300
+
+100
+
+100
+
+250
+
+(5.3)
+
+(5.4)
+
+(5.5)
+
+a matriz dos termos independentes.
+
+Nota-se, nesse exemplo, que há uma quantidade signiﬁcativa de zeros na matriz dos
+
+coeﬁcientes A, e no cálculo do seu determinante encontraremos zero. Por esse motivo
+
+a matriz não é invertível e o software SciLab não consegue resolver o sistema pelo
+
+72
+
+comando A\b (posto da matriz não é completo). Já o comando linsolve necessita que
+
+o número de equações seja igual ao número de incógnitas.
+
+Tal erro deve levar o aluno a entender as limitações dos comandos usados, ao mesmo
+
+tempo que insere ideias novas como: posto de uma matriz, inversão de matrizes e
+
+solução de sistemas lineares e deve levá-lo a procurar outros métodos de solução, como
+
+veremos no exemplo abaixo.
+
+Na aplicação 3, acima, vimos que nem sempre o modelo computacional irá soluci-
+
+onar o nosso problema. No próximo exemplo, veremos que, com um pouco de sorte e
+
+usando métodos iterativos, podemos obter a solução exata.
+
+Aplicação 4: (Poole, 2004, p. 110) Suponha que aqueçamos cada lado de uma placa
+
+de metal a uma temperatura constante. Com o passar do tempo, a temperatura em
+
+cada ponto do interior da placa alcançará um equilíbrio, e a seguinte propriedade poderá
+
+ser comprovada: A temperatura em cada ponto interior P é a média das temperaturas
+nos pontos adjacentes a P.
+
+Na placa abaixo, Figura 18, reﬁnamos a malha para obter informações mais acura-
+
+das sobre as temperaturas de equilíbrio nos pontos do interior da placa. Vamos obter
+
+soluções aproximadas usando o método Gauss-Seidel.
+
+Figura 18: Placa metálica sendo aquecida
+
+Para resolver esse problema devemos aplicar a propriedade descrita no enunciado
+
+73
+
+acima, onde ti para i = 1, 2, 3, ..., 16 é a temperatura nos 16 vértices interiores da placa.
+A temperatura em um vértice é aproximadamente igual a média dos quatro vértices
+vizinhos mais próximos. Logo:
+
+4
+
+4
+
+4
+
+t1 = t2+t5+0+0
+t2 = t1+t3+t6+0
+t3 = t2+t4+t7+20
+t4 = t3+t8+20+20
+
+t13 = t9+t14+40+40
+t14 = t10+t13+t15+40
+t15 = t11+t14+t16+100
+t16 = t12+t15+100+100
+Antes de iniciarmos as iterações para determinar a solução, temos que garantir a con-
+
+t9 = t5+t10+t13+40
+t10 = t6+t9+t11+t14
+t11 = t7+t10+t12+t15
+t12 = t8+t11+t16+100
+
+t5 = t1+t6+t9+0
+t6 = t2+t5+t7+t10
+t7 = t3+t6+t8+t11
+t8 = t4+t7+t12+20
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+4
+
+vergência do método.
+
+Partindo de um vetor solução qualquer, podemos determinar a solução do problema.
+Podemos desenvolver aplicações interdisciplinares com conteúdos do ensino médio.
+
+Vejamos a aplicação 5 que trata de balanceamento de equações químicas e o exemplo
+
+6 que nos mostra circuitos elétricos físicos.
+
+Aplicação 5: (Pescador et. al., 2011) Num balanceamento de equações químicas,
+o número relativo de reagentes e produtos na reação tem o mesmo número de átomos
+
+de cada tipo do lado esquerdo e direito. Mantêm reagentes à esquerda e produtos à
+direita. Tem-se que 2H2 + O2 → 2H2O é uma equação balanceada. Duas moléculas de
+hidrogênio se combinam com uma molécula de oxigênio para formar duas moléculas de
+água. Ainda, 6H2 + 3O2 → 6H2O também é uma equação balanceada. No caso abaixo,
+a combustão de amônia (N H3) em oxigênio produz nitrogênio (N2) e água. Uma nova
+aplicação de sistemas lineares se dá quando se quer encontrar uma equação química
+
+balanceada para a reação seguinte:
+
+wN H3 + tO2 → yN2 + zH2O
+
+(5.6)
+
+Pode-se fazer a seguinte correspondência:
+Nitrogênio: w = 2y
+
+Hidrogênio: 3w = 2z
+
+Oxigênio: 2t = z
+
+E assim, o sistema linear (homogêneo) está formado:
+
+74
+
+
+
+
+
+
+w − 2y = 0
+
+3w − 2z = 0
+
+2t − z = 0
+
+(5.7)
+
+Sua solução pode ser facilmente calculada usando Eliminação de Gauss com pivo-
+
+teamento.
+
+Neste caso notamos que o sistema possui inﬁnitas soluções. Este tipo de sistema é
+
+muito comum em várias áreas do conhecimento.
+
+Um sistema com mais equações que incógnitas pode ter uma, inﬁnitas ou nenhuma
+
+solução, embora este último caso seja o mais frequente em aplicações e um sistema
+
+com mais incógnitas que equações, que é o caso de (5.7), pode não ter soluções ou ter
+inﬁnitas soluções, que é o caso mais frequente para esse tipo de sistema.
+
+Aplicação 6: (Pescador et. al., 2011) Circuitos elétricos
+
+O ﬂuxo de corrente em um circuito elétrico simples pode ser descrito por um sistema
+linear de equações. Um gerador de voltagem, como uma bateria, faz com que uma
+
+corrente de elétrons percorra o circuito. Quando a corrente passa por uma resistência
+
+(como uma lâmpada ou um motor), parte da voltagem é "consumida"; pela lei de Ohm,
+
+essa "queda de voltagem"ao atravessar um resistor é dada por V = RI onde a voltagem
+V é medida em volts, a resistência R em ohms (denotada por Ω) e o ﬂuxo de corrente
+
+I em ampéres (abreviado por amps).
+
+Figura 19: Circuito elétrico
+
+75
+
+O circuito da ﬁgura 19 contém ciclos fechados. As correntes dos ciclos 1, 2 e 3 são
+denotadas por I, I1, I2, I3, I4 e I5 respectivamente. As direções atribuídas a cada uma
+dessas correntes são arbitrarias. Se uma corrente aparece com valor negativo, então
+
+sua direção real é a inversa da estipulada na ﬁgura. Se a direção indicada da corrente é
+
+do lado positivo da bateria (segmento maior) para o lado negativo (segmento menor),
+
+então a voltagem é positiva; caso contrário, a voltagem é negativa. O ﬂuxo de corrente
+num ciclo é governado pela regra abaixo.
+
+Lei de Kirchhoﬀ para a Voltagem: A soma algébrica das quedas de voltagem, RI,
+
+em tomo de um ciclo é igual a soma algébrica das fontes de voltagem na mesma direção
+
+nesse ciclo.
+
+Agora podemos modelar as equações a partir dos ciclos e determinar as soluções.
+Obtemos a solução: I = 10A, I1 = I5 = 6A, I2 = I4 = 4A e I3 = 3A.
+
+Por ﬁm, uma aplicação complexa e interessante para visualização de temas discu-
+
+tidos na Engenharia.
+
+Aplicação 7: (Ferreira, 2012) Considere o problema do projeto de uma estrutura
+
+metálica como esboçada na Figura 20 . Trata-se de um guindaste que deverá içar
+cargas. O problema consiste em determinar qual é o esforço mecânico em cada viga da
+
+estrutura, de modo que se possa escolher as vigas com a resistência adequada.
+
+Figura 20: Diagrama de estrutura metálica composta por vigas
+
+O cálculo das forças que incidem na estrutura, F1 e F2, é imediato, conhecendo-se a
+
+76
+
+massa que irá ser suspensa e o comprimento do braço do guindaste. Com essas forças,
+
+é preciso agora calcular a força exercida por cada viga nos nós (pontos de interseção
+de duas ou mais vigas) para que a estrutura permanecerá em equilíbrio. Essas forças
+serão denotadas pelas variáveis fij, em que os índices indicam os nós ligados por esta
+viga. Assim, por exemplo, a força f41 signiﬁca a força exercida sobre o nó 4 pela viga
+que liga o nó 4 ao nó 1.
+
+A somatória das forças em cada nó, de 1 a 6, deve ser nula tanto na direção hori-
+
+zontal quanto na direção vertical. Para montar o conjunto de equações, tomemos como
+
+exemplo o nó 1. O nó 1 é afetado pelas vigas que o ligam aos nós 2, 3 e 4. As equações
+
+que implicam no equilíbrio de forças sobre o nó 1 são:
+
+
+
+
+
+
+f12cosθ12 + f13cosθ13 + f14cosθ14 = F1
+
+f12senθ12 + f13sinθ13 + f14senθ14 = 0
+
+(5.8)
+
+Sendo que θij representa o ângulo entre a viga (ij) e a vertical. Construindo cada
+equação da somatória das forças em cada um dos nós, obtém-se o seguinte conjunto de
+
+equações:
+
+
+
+
+
+
+f12cosθ12 + f13cosθ13 + f14cosθ14 = F1
+
+f12senθ12 + f13sinθ13 + f14senθ14 = 0
+
+f21cosθ21 + f23cosθ23 + f24cosθ24 = F2
+
+f21senθ21 + f23sinθ23 + f24senθ24 = F2
+
+f31cosθ31 + f35cosθ35 + f32cosθ32 + f36cosθ36 = 0
+
+(5.9)
+
+f31senθ31 + f35sinθ35 + f32senθ32 + f36senθ36 = 0
+
+f41cosθ41 + f45cosθ45 + f42cosθ42 + f46cosθ46 = 0
+
+f41senθ41 + f45sinθ45 + f42senθ42 + f46senθ46 = 0
+
+f35senθ35 + f46sinθ46 + f54senθ54 + f63senθ63 = 0
+
+A última equação (5.9) diz respeito ao equilíbrio de toda a estrutura, que não deve
+
+77
+
+ter, em conjunto, nenhuma aceleração horizontal.
+
+Claramente, fij = −fji. Assim, por exemplo, f12 = −f21. O conjunto de variáveis
+
+a serem determinadas, portanto, pode ser arranjado no vetor:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f12
+
+f13
+
+f14
+
+f23
+
+f24
+
+f35
+
+f36
+
+f45
+
+f46
+
+f =
+
+Deﬁnindo um vetor F e uma matriz Ω da seguinte forma:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+F1
+
+0
+
+F2
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+F =
+
+78
+
+(5.10)
+
+(5.11)
+
+−cosθ12
+
+−senθ12
+
+Ω =
+
+0
+
+0
+
+−cosθ13
+
+−senθ13
+
+0
+
+0
+
+0
+
+0
+
+cosθ12
+
+cosθ13
+
+cosθ14
+
+senθ12
+
+senθ13
+
+senθ14
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+cosθ23
+
+cosθ24
+
+cosθ23
+
+cosθ24
+
+−cosθ23
+
+−senθ23
+
+0
+
+0
+
+cosθ35
+
+cosθ36
+
+senθ35 senθ36
+
+−cosθ24
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+cosθ46
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+0
+
+−cosθ14
+
+0
+
+0
+
+0
+
+0
+
+senθ35 senθ36 senθ45 senθ46
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+0
+
+0
+
+0
+
+é fácil veriﬁcar que (5.9) é equivalente à equação matricial:
+
+Ωf = F
+
+(5.12)
+
+(5.13)
+
+Qual é a vantagem de se escrever (5.9) na forma (5.13)? Há inúmeras vantagens:
+
+Deve ter ﬁcado claro para o leitor que há uma regra simples que leva diretamente do
+desenho da Figura 20 para as entradas da matriz Ω. Qualquer que fosse a estrutura
+
+composta de vigas que se ligam em nós, a regra seria a mesma. Seria possível repre-
+
+sentar por meio de uma matriz Ω qualquer estrutura e essa representação poderia ser
+
+obtida automaticamente (por meio de um programa de computador). Uma vez nessa
+forma, torna-se pertinente perguntar: quais são as soluções desse problema? Quais
+
+são os valores necessários para as resistências que as vigas devem suportar? Dado um
+
+conjunto de forças externas F, o conjunto de forças sobre as vigas será dado por:
+
+f = Ω−1F
+
+(5.14)
+
+Note-se que a matriz Ω deve ser invertível para que o problema tenha solução. Se não
+
+for invertível, isso quer dizer que a estrutura correspondente não é capaz de se manter
+
+79
+
+de pé e tem de ser trocada.
+
+Considere agora a estrutura da Figura 21:
+
+Figura 21: Diagrama de outra estrutura metálica composta por vigas
+
+A equação que resolve essa outra estrutura possui exatamente a mesma forma que
+
+a equação anterior. Só mudam os ângulos das vigas em relação à vertical, ou seja, as
+entradas da matriz Ω. É possível, portanto. mexer nas posições dos nós da estrutura
+
+e resolver novamente o sistema a cada nova conﬁguração. Dessa forma, é possível
+
+escolher a melhor geometria possível para a estrutura de forma a obter, por exemplo,
+
+as soluções que representem o mínimo gasto de metal, ou a máxima resistência da
+estrutura, etc.
+
+Em que esses exemplos diferem de um exemplo real de engenharia? Na prática,
+
+as estruturas com que se trabalha são maiores, possuindo um número muito maior
+
+de vigas. As estruturas também teriam profundidade, além de largura e altura (em
+outras palavras, seriam estruturas tridimensionais). Por ﬁm, as vigas teriam cada uma
+
+o seu peso. Todos esses detalhes a mais iriam conduzir a equações maiores, mas que,
+
+essencialmente, teriam a mesma forma que as equações mostradas aqui.
+
+80
+
+6 Exposição e análise do desenvolvimento da pesquisa de campo
+
+Neste capítulo descrevemos a exposição e análise do desenvolvimento da pesquisa.
+
+Iniciamos retomando a questão de investigação e os objetivos descritos no Capítulo 1.
+
+Em seguida, apresentamos a metodologia da pesquisa explicitando os sujeitos e
+
+condições com as quais nos deparamos. Finalizamos com uma análise dos dados obtidos
+nos questionários e na observação e depoimentos dos discentes nas aulas.
+
+6.1 Retomando a questão de investigação e os objetivos
+
+No primeiro capítulo, ﬁzemos uma revisão bibliográﬁca do tema e nos preocupamos
+
+em buscar elementos que nos fornecessem ideias para a construção do nosso problema
+de investigação. Nos capítulos subsequentes procuramos nos fundamentar a respeito
+
+da parte teórica de sistemas lineares e dos métodos disponíveis para sua solução.
+
+Assim, tais discussões nos permitiram elaborar a seguinte questão, passível de in-
+
+vestigação, que se realaciona com a motivação e aprendizagem de matemática e, em
+especial, ao tema sistemas lineares:
+
+Como a implementação dos métodos iterativos e computacionais, para resolução de
+
+sistemas lineares de maiores dimensões, pode contribuir para motivação e melhora da
+aprendizagem nas aulas de matemática do 2 ◦ ano do Ensino Médio?
+
+Tal investigação está relacionada com problemas modernos enfrentados pelo sistema
+
+educacional brasileiro e atinge vários níveis de ensino.
+
+Quanto aos objetivos, nos propomos de maneira geral a apresentar metodologias de
+
+ensino com o uso de métodos iterativos e computacionais na resolução de sistemas de
+equações lineares visando a motivação e melhora na aprendizagem dos alunos do 2 ◦
+ano do Ensino Médio.
+
+Queremos então, especiﬁcamente, orientar os estudantes em relação ao uso de mé-
+
+todos iterativos e computacionais e avaliar se a resolução das Aplicações que envolvem
+sistemas lineares de maiores dimensões motiva os alunos nas aulas de Matemática. Re-
+
+tornamos com a questão de investigação e objetivos na elaboração das considerações
+
+ﬁnais no último capítulo.
+
+81
+
+6.2 Metodologia e descrição da pesquisa
+
+Para a pesquisa de campo foram escolhidas duas metodologias: a quantitativa e
+
+a qualitativa. A quantitativa se fez necessária visto que os instrumentos de coleta de
+dados iniciais e ﬁnais, que estão disponíveis nos apêndices "A" e "B", tem um caráter
+
+numérico e estatístico. Já a metodologia qualitativa foi necessária pois observamos as
+
+aulas durante a aplicação da pesquisa e as analisamos, juntamente com as respostas
+
+dos questionários, de modo a obter uma visão descritiva dos fatos. Outro fator deter-
+minante que nos fez optar pela análise ﬁnal qualitativa, se deve ao número reduzido da
+
+amostra. Segundo Gewandsznajder (1989; pg 34):
+
+“... uma característica da pesquisa qualitativa está associada ao pequeno
+número de unidades amostrais - individuais ou em grupo - que em geral
+está envolvido. Os pequenos números não constituem uma característica
+inalienável da pesquisa qualitativa.”
+
+Neste sentido, a metodologia de pesquisa qualitativa é usada quando se deseja
+
+entender respostas ou opiniões de modo a analisar a importância do que se está pesqui-
+
+sando. Os dados qualitativos constituem descrições detalhadas de situações, eventos
+ou interações comportamentais observadas; citações diretas de pessoa acerca de sua
+
+experiências e pensamentos. Os dados coletados quantitativamente quando analisados
+
+de forma discreta e descritiva passam a compor de uma análise qualitativa (Glazier,
+
+1992).
+
+Talvez a melhor maneira de entender o que signiﬁca pesquisa qualitativa é determi-
+
+nar o que ela não é. Ela não é um conjunto de procedimentos que depende fortemente
+
+de análise estatística para suas inferências ou de métodos quantitativos para a coleta
+
+de dados (Glazier, 1992).
+
+Por outro lado, podemos entender por metodologia quantitativa aquela usada para
+
+descobrir quantas pessoas de uma determinada população compartilham uma caracte-
+
+rística ou um grupo de características. Segundo Moresi (2003; pg. 64) ela é especial-
+
+mente projetada para adquirir medidas precisas e conﬁáveis que permitam uma análise
+estatística.
+
+A característica principal da pesquisa quantitativa é a ordem direta e clara das
+
+perguntas onde não é apropriada nem tem custo razoável para compreender "porquês".
+
+Deﬁnidas a metodologia de pesquisa escolhida, passaremos agora para o detalha-
+mento de todas as atividades da pesquisa, buscando descrever o contexto em que ela
+
+foi realizada e seus indivíduos.
+
+82
+
+Além dos questionários, também observamos as aulas que foram aplicadas durante a
+
+pesquisa de campo, bem como as atividades de resolução de sistemas lineares de maiores
+dimensões, para formularmos a análise dos dados descritos nos subseções abaixo como
+
+forma de responder a questão de investigação nas considerações ﬁnais.
+
+A pesquisa de campo foi realizada no segundo semestre do ano de 2014, com 15 alu-
+
+nos, 10 eram homens e 5 mulheres, de 2 escolas públicas e 3 escolas privadas do Distrito
+Federal, individualmente ou em grupos. Dos alunos selecionados para participarem da
+
+pesquisa, 8 deles já haviam tido aulas particulares com o professor/pesquisador e os
+
+outros 7 foram convidados a participar da pesquisa por um dos 8 alunos iniciais.
+
+Os encontros, 5 no total, aconteceram na casa dos alunos pesquisados, em grupos
+de no máximo dois estudantes, onde os questionários foram aplicados entre as aulas da
+
+pesquisa.
+
+Tal abordagem foi necessária visando a diversidade de sistemas de ensino e, princi-
+
+palmente, à falta de condições encontrada para realizar a pesquisa em algumas escolas
+laboratório de Informática sem con-
+públicas do Distrito Federal, podendo destacar:
+
+dições de uso ou sem monitores para auxiliar na instalação dos softwares e utilização
+
+das máquinas, burocracia para liberação e aplicação da pesquisa, equipamentos sem a
+
+capacidade mínima para instalação dos softwares necessários à pesquisa.
+
+Em um primeiro encontro, os alunos foram convidados a participar da pesquisa,
+
+sendo informados dos objetivos gerais e como se desenvolveriam as aulas. A seguir,
+
+foi aplicado o Primeiro Questionário (Apêndice A), divido em duas partes, que visa
+
+traçar, entre outros itens:
+- o perﬁl do discente;
+
+- as condições educacionais gerais a que ele está submetido;
+
+- sua percepção em relação à escola e todas as disciplinas cursadas;
+
+- sua percepção em relação à matemática e ao tema Sistemas Lineares.
+Em seguida, no segundo encontro, o tema sistemas de equações lineares foi intro-
+
+duzido de forma prática com a análise de uma aplicação (Aplicação 1). Ao investigar
+
+a aplicação proposta, encontramos um sistema linear de 5 equações e 5 incógnitas. A
+
+partir desse exemplo, deﬁnimos e exempliﬁcamos sistemas lineares e métodos de solu-
+ção já estudados por eles, que são a Regra de Cramer e o Escalonamento (Eliminação).
+
+Também ali, já introduzimos a ideia dos métodos computacionais para resolver sis-
+
+temas lineares de maiores dimensões, onde mostramos aos alunos como resolver um
+
+sistema linear utilizando o SciLab e, posteriormente, os alunos resolveram a Aplicação
+1 no SciLab.
+
+83
+
+No terceiro encontro, os alunos foram orientados, mais detalhadamente, quanto ao
+
+manuseio do software SciLab para resolução de sistemas lineares e foram convidados a
+modelarem as Aplicações 2 e 3 para resolverem nos software mencionados.
+
+O quarto encontro foi iniciado com uma discussão sobre o problema encontrado na
+
+solução da Aplicação 3 pelo software. Começamos a deﬁnir o método de eliminação
+
+de Gauss com pivoteamento e os métodos iterativos de Gauss-Jacobi e Gauss-Seidel
+com seus critérios de convergência. Os alunos passaram então para a Aplicação 4, onde
+
+tiveram a oportunidade de modelar o problema e analisar qual melhor recurso, métodos
+
+iterativos ou computacional, que poderia ser aplicado para resolver o sistema linear.
+
+No quinto e último encontro, orientamos os alunos quanto às Aplicações 5 e 6. Eles
+puderam modelar e resolver as aplicações da forma que entendiam que seria melhor. A
+
+Aplicação 6 acabou ﬁcando como exercício extra. Depois foram convidados a responder
+
+o questionário ﬁnal (Apêndice B), que trata da sua percepção sobre a matemática e,
+
+principalmente, se as aulas de Matemática seriam mais motivadoras ou não, depois das
+aplicações e dos métodos alternativos para solução de sistemas lineares, estudados.
+
+6.3 Análise do questionário inicial
+
+No início da pesquisa, aplicamos um questionário com o objetivo de identiﬁcar
+a opinião dos participantes em relação à Matemática e ao tema sistemas lineares,
+
+procurando entender sua motivação em relação à escola e, principalmente, as aulas
+
+de Matemática. Aproveitamos para investigar como o conteúdo de sistemas lineares
+
+estava sendo trabalhado pelos professores e se os alunos entendiam o que estava sendo
+aplicado. Também analisamos o perﬁl educacional do aluno, identiﬁcando, entre outros
+
+pontos: a relação da família com a escola, disciplinas que ele não gostava e as que já
+
+havia reprovado.
+
+A maioria dos alunos pesquisados eram dos sexo masculino e os pais possuem curso
+superior, respectivamente 60% e 90% do total. Isso nos mostra que o grau de instrução
+
+entre as famílias é elevado, visto que quase a totalidade dos pais da amostra possui um
+
+diploma de curso superior.
+
+Outro fato relevante é que 20% dos participantes já reprovaram alguma vez e apenas
+uma das reprovações foi em Matemática. Quase a totalidade dos participantes tem
+
+aulas particulares de Matemática, apoio da família na hora dos estudos e costumam
+
+estudar fora do horário da escola. Os alunos pesquisados têm idades entre 15 anos e
+
+18 anos, com maior incidência para estudantes de 16 anos (idade comum a alunos do
+
+84
+
+2 ◦ ano do Ensino Médio).
+
+Os resultados acima nos mostram uma preocupação com o desenvolvimento escolar
+dos estudantes por parte da família. Mesmo os alunos que não reprovaram têm aulas
+
+particulares constantes e apoio da família para fazer as tarefas extra classe. Segundo
+
+(Polonia e Dessen, 2005) "As pesquisas têm demonstrado que os pais estão constante-
+
+mente preocupados e envolvidos com as atividades escolares dos ﬁlhos e que dirigem
+a sua atenção à avaliação do aproveitamento escolar."Esta aﬁrmação conﬁrma os da-
+
+dos coletados, em relação a participação da família, entre os alunos participantes da
+
+pesquisa.
+
+Outro fator que ﬁca claro na pesquisa é a diﬁculdade encontrada pelos alunos com
+as disciplinas chamadas de exatas (Matemática, Física e Química), onde mais de dois
+
+terços (2/3) responderam que estudam mais essas matérias fora do horário escolar.
+
+Entre as disciplinas preferidas, menos de 10% responderam Matemática. E as que
+
+poderiam ser eliminadas do currículo escolar, um terço (1/3) eliminariam Sociologia,
+Filosoﬁa ou Física. Nesse contexto, as escolhas dos estudantes tem nos mostrado
+
+a diﬁculdade real advinda das disciplinas ditas exatas e, em especial à Matemática.
+
+Mas, ao mesmo tempo, reconhecem como a Matemática é relevante no currículo da
+
+aprendizagem. Prova disso, é que a maioria dos alunos não eliminaria a Matemática
+do contexto escolar.
+
+Em relação às aulas de Matemática, a grande maioria, quase 70% dos participantes,
+
+destacou que às vezes entende os conteúdos e o que o professor de Matemática explica
+
+em sala de aula, mas um pouco menos da metade dos entrevistados, cerca de 46%,
+aﬁrmou que às vezes se sentem motivados e, outros 33,33%, disseram que nunca se
+
+sentem motivados a ir nas aulas de Matemática. Em contrapartida, os alunos que
+
+responderam que não se sentem motivados para ir para escola ﬁcou em torno de 7%.
+
+Podemos identiﬁcar aqui, uma concordância, com o que já discorremos em relação a
+desmotivação que os discentes vem sentindo com a escola e, principalmente, com as
+
+aulas de Matemática.
+
+Quando questionados sobre o que foi aprendido em sistemas lineares, quase a tota-
+
+lidade dos alunos disseram que entendem como se resolve um sistema 2x2 e menos da
+metade respondeu que entende como se resolve um sistema 3x3. Em relação a sistemas
+
+de maiores dimensões, um terço dos participantes relatou que os professores ensinaram
+
+métodos para resolver este tipo de sistema, mas destes, um pouco mais da metade
+
+conseguiu entender tais métodos. Quanto a exercícios aplicados de sistemas lineares
+quase todos os alunos responderam ter vistos aplicações de dimensão de, no máximo,
+
+85
+
+n = 3. Podemos identiﬁcar nas respostas da maioria dos estudantes uma tendência
+
+já observada anteriormente, no que diz respeito ao trabalho do professor com sistemas
+lineares de maiores dimensões, que são deixados de lado privando o aluno de desco-
+
+brir outras aplicações advindas de tais sistemas. Em Ferreira (2013, pg. 51) podemos
+
+evidenciar tais fatos:
+
+As situações problema são sugeridas para até três incógnitas e não se
+trabalham aplicações dos sistemas para a percepção de sua importância
+cientíﬁca e também industrial. (...) Não se abordam aplicações mais so-
+ﬁsticadas nem se aprimora os problemas propostos, impedindo uma visão
+mais generalista do tema.
+
+Embora grande parte dos alunos tenham diﬁculdades com Matemática, esse pri-
+
+meiro questionário nos mostrou que os alunos entendem grande parte do que é ensi-
+
+nado pelo professor, mas esbarram na falta de motivação e, quando o tema é sistemas
+lineares, na ausência de exemplos que estimulem sua curiosidade e criatividade.
+
+6.4 Análise das aulas da pesquisa
+
+No segundo semestre de 2014, aconteceram as aulas da pesquisa tendo como objetivo
+o de orientar os estudantes quanto a utilização de métodos iterativos e computacionais
+
+para resolução de sistema lineares de maiores dimensões e identiﬁcar se as aplicações
+
+propostas poderiam motivá-los mais nas aulas de Matemática.
+
+Na segunda aula com os participantes, entre os dias 03 e 08 de novembro, foi
+introduzido o assunto sistemas lineares através da primeira aplicação (Aplicação 1).
+
+Para alguns alunos já se tratava de um exercício conhecido, visto que já sabiam como
+
+montar o problema transformando em um sistema de equações lineares. A maior
+
+surpresa foi em relação ao número de equações e incógnitas, como podemos ver no
+diálogo abaixo, registrado durante as aulas.
+
+Aluno: Montar essas equações até que é fácil. Basta observar os valores associados
+
+a cada vitamina e depois igualar ao valor total. Mas o problema é resolver isto! Vai
+
+dar muito trabalho. Aliás, nem sei como faz isso.
+
+Professor: E se eu disser que existe uma forma de resolver esse problema só digi-
+
+tando as equações em um programa de computador?
+
+Aluno: Mas nem vou precisar fazer contas? Tipo aquele escalonamento e "tals"?
+
+Professor: Não vai precisar. Mas antes precisamos relembrar alguns métodos para
+resolver esse sistema, para entender o que o programa vai fazer para te dar a solução.
+
+86
+
+A ﬁgura 22 mostra o sistema linear resultante da Aplicação 1, feita por um dos
+
+participantes.
+
+Figura 22: Sistema linear construído por um aluno a partir da Aplicação 1
+
+Grande parte dos alunos não teve diﬁculdades em montar o sistema de equações
+proposto pela aplicação, os que não conseguiram foram orientados quanto à sua mon-
+
+tagem e logo conseguiram também.
+
+Antes de mostrar como os alunos poderiam utilizar um programa para resolver
+
+a aplicação, optamos por revisar os métodos de solução por inversão de matrizes,
+escalonamento e Regra de Cramer, assim, poderiam entender o que seria feito pelo
+
+programa para resolver o sistema linear proposto. Essa revisão foi feita com explicações
+
+teóricas e com exemplos. Em seguida, foram orientados em como manusear e resolver
+
+um sistema linear no programa SciLab. Foram abordados duas técnicas para solução: o
+comando linsolve e o comando a\b . O comando linsolve resolve sistemas de equações
+
+em que o número de equações é igual ao número de incógnitas através da equação
+
+87
+
+matricial Ax + b = 0. Já o comando a\b resolve por inversão de matrizes. A ﬁgura 23
+
+mostra uma das soluções da Aplicação 1 feita por um dos alunos.
+
+Figura 23: Solução da Aplicação 1 por um dos alunos no SciLab
+
+Após a resolução da primeira aplicação, através do método computacional descrito
+
+acima, foi nítida a euforia entre os alunos. Veriﬁcamos que todos ﬁcaram impressi-
+onados com a simplicidade da aplicação do método no software SciLab e de como o
+
+resultado era satisfatório. Os diálogos abaixo deﬁnem bem o entusiasmo dos alunos:
+
+Aluno 1: Achei muito fera! O mais legal de tudo é que não precisamos fazer ne-
+
+nhuma conta (risos). Podíamos usar esse programa na escola também né (mais risos).
+Aluno 2: Achei muito fácil resolver o sistema assim professor. Gostei mais porque
+
+foi bem rápido. Acho que do outro jeito teríamos que fazer muitos cálculos.
+
+Quando indagados, pelo pesquisador, se isso os ajudaria a se motivarem mais nas
+
+aulas de Matemática, a resposta foi rápida.
+
+Aluno: Acho que seria legal sim. As aulas, por muitas vezes, são chatas. O profes-
+
+sor ﬁca lá falando e falando, passa exercícios e depois faz a correção. Sempre assim.
+
+Nunca tem nada de novo.
+
+A terceira aula aconteceu na semana seguinte, de 10 à 15 de novembro, e os alunos
+
+88
+
+foram convidados a resolver as aplicações 2 e 3 (pgs. 68 e 69). Antes, foram orientados
+
+em como utilizar corretamente o SciLab em relação aos comandos e ao tipo de sistema
+encontrado. Também foram orientados a utilizar o Máxima e entenderam que o co-
+
+mando Linsolve do SciLab é o mesmo comando que o Máxima utiliza na sua solução.
+
+Os sistemas montados por dois alunos, que se refere às Aplicações 2 (ﬁgura 24) e 3
+
+(ﬁgura 25) estão representadas abaixo.
+
+Figura 24: Sistema linear construído por um aluno a partir da Aplicação 2
+
+Dessa vez os alunos apresentaram algumas diﬁculdades para montar os sistemas
+
+relativos às aplicações. A maior diﬁculdade apareceu na montagem da Aplicação 2.
+
+Neste momento tivemos que fazer uma intervenção e explicar alguns tópicos necessários
+à montagem.
+
+Aluno: Professor, esses aqui estão mais difíceis do que os da aula passada. Como
+
+posso representar o sistema com essas moedas?
+
+Professor: A ideia é parecida com o que ﬁzemos na aula passada. Basta associar
+
+cada incógnita à quantidade de moedas de cada tipo.
+
+Aluno: Mas aqui ele dá valores em reais e centavos. Como faço isso?
+
+Professor: Quando ele der o valor da moeda, associa esse valor á incógnita.
+Aluno: "tipo"10 centavos vale 0,1x?
+
+Professor: isso mesmo.
+
+89
+
+Figura 25: Sistema linear construído por um aluno a partir da Aplicação 3
+
+Aluno: vou tentar
+A mesma dúvida relatada no diálogo acima permaneceu entre quase todos os alunos
+
+sujeitos da pesquisa. Passado as explicações a maioria dos alunos conseguiu montar
+
+corretamente o sistema relativo à Aplicação 2, como mostrou a ﬁgura 24.
+
+Para a solução do sistema, a maioria dos alunos escolheram o SciLab. Não tiveram
+nenhum problema na hora de digitar os dados no programa e visualizar a solução. Uma
+
+das soluções pode ser vista na ﬁgura 26.
+
+Quanto à Aplicação 3, o próprio enunciado já trazia um direcionamento para a
+
+montagem das equações do sistema linear. Aqui os alunos tiveram diﬁculdades em
+deﬁnir as matrizes dos coeﬁcientes e das constantes. Novamente foi necessário uma
+
+intervenção:
+
+Aluno: Como vamos montar o sistema no programa se falta um monte de incógni-
+
+tas?
+
+Professor: As que faltam são nulas.
+
+Aluno: Então a incógnita ﬁca multiplicada por 0?
+
+Professor: isso mesmo.
+
+Aluno: Então vamos ter muitos zeros (risos).
+Montado o sistema e feito a aplicação no SciLab, ﬁgura 27, os alunos perceberam que
+
+a solução não foi a esperada. Nesse momento tivemos que fazer uma nova intervenção:
+
+90
+
+Figura 26: Solução da Aplicação 2 por um dos alunos no SciLab
+
+Figura 27: Solução da Aplicação 3 por um dos alunos no SciLab
+
+Aluno: Professor acho que essa solução não está correta.
+
+Professor: Mas porque você acha isso?
+
+Aluno: "ué"professor, pelo comando linsolve só apareceu um erro e pelo comando
+
+A\b apareceu números negativos e zeros. Não tem sentido o ﬂuxo no cruzamento ser
+
+91
+
+negativo.
+
+Professor: isso mesmo, não faz sentido. Vocês devem se lembrar que o comando
+Linsolve do SciLab só resolve sistemas de equações em que o número de incógnitas é
+
+igual ao número de equações. Você contou a quantidade de incógnitas e equações?
+
+Aluno: Não contei. Como eu já tinha feito os outros dois diretos no "programa"achei
+
+que esse também dava.
+
+Professor: Pois é, nem todos os sistemas lineares podem ser solucionados no SciLab
+
+com os comandos que aprendemos.
+
+Aluno: Entendi. Nesse caso então teríamos que resolver de outro jeito.
+
+Ao analisar a conversa entre professor/pesquisador e aluno, sobre a utilização do
+SciLab em todos os problemas, percebemos que o aluno se identiﬁcou com a resolução
+
+via método computacional, visto que o esforço para se resolver o problema é menor,
+
+mas, de início, não entendeu as limitações que possuíam os comandos estudados. Foi
+
+necessário a intervenção do professor para esclarecer novamente esse tópico.
+
+A quarta aula (17 à 22 de novembro) teve como foco a solução de sistemas lineares
+
+através de métodos numéricos. Iniciamos com observações sobre o erro encontrado na
+
+solução da Aplicação 3 pelo SciLab. Novamente retomamos a discussão sobre quando os
+
+comandos linsolve e A\b podem ser utilizados. Em seguida, trabalhamos os conceitos
+dos métodos iterativos de Gauss-Jacobi e Gauss-Seidel bem como critérios básicos de
+
+convergência. Aproveitamos também para revisar método direto de solução de Gauss
+
+(eliminação) mas com o acréscimo da ideia de pivoteamento.
+
+Essa aula acabou sendo mais extensa que as anteriores, visto que o conteúdo a ser
+apresentado era totalmente novo para os alunos. Para nossa surpresa, os alunos não
+
+encontraram diﬁculdades em entender e aplicar os métodos iterativos. Passamos então
+
+para à Aplicação 4 (pg. 71), onde o aluno deveria montar o sistema linear respectivo
+
+à aplicação e, posteriormente, o resolveria pelo método iterativo de Gauss-Seidel. A
+modelagem do sistema por um dos alunos está representada na ﬁgura 28.
+
+Mais uma vez se fez necessário a intervenção do professor para a modelagem da
+
+aplicação. Muitos alunos ﬁcaram confusos ao perceber que seria necessário a construção
+
+de 16 equações, visto que o problema possuía 16 incógnitas. O enunciado do problema
+dissertava sobre a maneira correta de montar cada equação. Essa parte também trouxe
+
+um pouco de diﬁculdade para os alunos. O diálogo abaixo entre professor e aluno, relata
+
+os problemas advindos da montagem da Aplicação 4.
+
+Professor: Essa cara de assustado deve ser porque teremos 16 equações "né"?
+Aluno: 16 equações? Tenho que calcular cada "T"desses? agora sim vai dar traba-
+
+92
+
+Figura 28: Sistema Linear construído por um dos alunos a partir da Aplicação 4
+
+lho. Se não der para fazer no computador nem quero fazer esse.
+
+Professor: Isso, tem que calcular cada "T". E não vai ser possível fazer no compu-
+tador. Vamos fazer por um dos métodos iterativos que aprendemos. Vocês entenderam
+
+como montar cada equação?
+
+Aluno: Mais ou menos professor. Tem como você fazer o primeiro?
+Professor: Tem sim. Observe que é só pegar os pontos que estão em torno da T1 e
+
+fazer a média, ou seja, são 4 pontos em torno então soma eles e divide por 4
+
+Fizemos a construção da primeira equação da temperatura, para que o aluno per-
+
+cebesse como seria feita a média entre os pontos. Depois da construção da primeira
+
+equação os alunos construíram as outras com certa facilidade como mostra a ﬁgura 28.
+Depois de construídas as equações os alunos perceberam que o melhor método para
+
+solucionar o sistema seria um dos métodos iterativos estudados, visto que as equações
+
+iterativas já estavam prontas. Iniciando com um vetor aproximação zero, uma iteração
+
+da solução está retratada na ﬁgura 29.
+
+Essa aula se mostrou muito proveitosa pois os alunos puderam aplicar um conheci-
+
+mento totalmente novo através de um exercício que, à primeira vista, parecia de difícil
+
+93
+
+Figura 29: Solução da Aplicação 4 feita por um dos alunos utilizando o método de
+Gauss-Seidel
+
+solução. Outro aspecto interessante pode ser observado através do relato de um dos
+
+alunos da pesquisa:
+
+Aluno: Quando estava montando as equações pensei que seria bem difícil resolver
+
+tudo aquilo, mas ao aplicar o método iterativo e substituir os valores tudo foi bem fácil.
+Acho que foi mais fácil do que no computador.
+
+A quinta e última aula aconteceu na semana seguinte, de 25 à 29 de novembro, e
+
+teve como foco a Aplicação 5 e a Aplicação 6, que abordam conteúdos estudados por
+
+eles no ensino médio. A Aplicação 5 tratou de balanceamento de equações químicas e
+a Aplicação 6 da determinação de correntes elétricas em um circuito elétrico.
+
+Os alunos ﬁcaram surpresos quando descobriram que podiam determinar os coeﬁci-
+
+entes do balanceamento químico através de um sistema de equações lineares. Segundo
+
+eles, normalmente usavam regras ou outros métodos químicos para descobrir tais coe-
+ﬁcientes. Logo quiseram fazer o sistema referente à Aplicação 5. Um dos modelos com
+
+a tentativa de resolução está representado na ﬁgura 30.
+
+Aqui o aluno entendeu como esquematizar o sistema linear através da Aplicação 5 e
+
+escolheu o método de eliminação de Gauss com Pivoteamento para resolver o problema.
+No entanto, após construir a matriz aumentada do sistema o aluno cometeu um erro
+ao construir o multiplicador e fazer a operação de soma entre as linhas L1 e L2. Nesse
+momento, o aluno fez alguns questionamentos.
+
+Aluno: Professor acho que alguma coisa está errada. Essa linha aqui ﬁcou -2 e o
+
+restante tudo zero. Pode alguma parte do balanceamento ser zero?
+
+94
+
+Figura 30: Sistema Linear construído por um dos alunos a partir da Aplicação 5
+
+Professor: Nenhuma incógnita pode ser zero. Você se equivocou quando montou o
+multiplicador e quando fez a soma entre as linhas L1 e L2. Tenta fazer novamente a
+operação observando que o multiplicador tem que ser de sinal contrário.
+
+Aluno: Mas não está certo trocar as linhas? Foi assim que você ensinou para
+
+minimizar os erros.
+
+Professor: Trocar as linhas está certo. O multiplicador que tem que ser negativo.
+
+Assim, quando somar com a outra linha vai zerar a posição escolhida.
+
+Aluno: Vi aqui professor. Somei errado também.
+A maioria dos alunos resolveu a Aplicação 5 por eliminação Gaussiana. O inte-
+
+ressante foi observar que a maioria dos alunos aplicou e entendeu o motivo do uso
+
+da eliminação e da eliminação com pivoteamento, como ﬁcou claro no diálogo entre
+
+professor e aluno acima. O problema aqui foi a diﬁculdade em resolver a eliminação,
+algo que não deveria acontecer, visto que este tema é tratado no Ensino Médio.
+
+Outra diﬁculdade percebida foi em relação à solução encontrada. Como o sistema
+
+não tinha uma única solução, sistema SPI, alguns alunos pediram ajuda para encontrar
+
+o valor mínimo de cada coeﬁciente do balanceamento.
+
+95
+
+A Aplicação 6 não foi proposta aos alunos durante as aulas da pesquisa. Como essa
+
+última aula serviu também para responder o questionário ﬁnal da pesquisa, o tempo
+não foi suﬁciente. Sendo assim, decidimos por deixar os alunos livres para tentarem
+
+resolver essa última aplicação em um momento posterior, ﬁcando como exercício extra.
+
+6.5 Análise do questionário ﬁnal
+
+Após as aulas da pesquisa, foi aplicado o questionário ﬁnal, respondido individu-
+
+almente, objetivando retomar questões levantadas no questionário inicial, tentando
+
+identiﬁcar como o aluno se sentia agora em relação às aulas de Matemática e à apren-
+
+dizagem de sistemas lineares; também identiﬁcar se os novos métodos estudados para
+resolução de sistemas lineares de maiores dimensões seriam interessantes e se contri-
+
+buiriam para sua motivação nas aulas de Matemática.
+
+Com relação à aprendizagem de sistemas lineares a grande maioria dos alunos pes-
+
+quisados respondeu que entendeu melhor o conteúdo e que as aplicações usadas para
+introduzir os métodos de resolução são bem interessantes.
+
+Observamos que as aulas da pesquisa contribuíram de forma signiﬁcativa para a
+
+melhoria na aprendizagem de sistemas lineares, em relação ao início da pesquisa, onde
+
+à introdução dos assuntos com aplicações práticas teve uma receptividade positiva por
+parte dos alunos. Isto foi percebido através dos questionários aplicados e principalmente
+
+pela fala dos alunos pesquisados durante as aulas.
+
+No que diz respeito ao aprendizado de métodos iterativos e com pivoteamento,
+
+cerca de 2/3 dos alunos pesquisados aﬁrmaram ter aprendido os conteúdos propostos
+e, estudar os novos métodos, foi interessante.
+
+Em relação aos recursos computacionais analisados, quase a totalidade dos alunos
+
+pesquisados destacaram o modo facilitador para resolução de sistemas lineares. Tam-
+
+bém destacaram seu interesse pelos recursos computacionais e como sua aprendizagem
+foi signiﬁcativa.
+
+Nos parágrafos acima, podemos destacar o interesse dos alunos pelos novos métodos
+
+estudados e como a implementação deles pode contribuir para uma aprendizagem mais
+
+dinâmica e signiﬁcativa.
+
+Quanto à motivação dos alunos nas aulas de Matemática, o questionário mostrou
+
+que mais da metade dos alunos pesquisados se sentiriam mais motivados se as aplicações
+
+de sistemas lineares de maiores dimensões e os novos métodos de solução apresentados
+
+fossem incorporados às aulas de matemática.
+
+96
+
+Desse modo, iremos continuar a análise desse questionário fazendo uma correlação
+
+com o questionário inicial e as aulas da pesquisa nas considerações ﬁnais, nos remetendo
+aos nossos objetivos e a responder a questão de investigação.
+
+97
+
+7 Considerações ﬁnais
+
+É fato que o ensino brasileiro vem passando por transformações e, com o advento
+
+da tecnologia, cada dia mais as pessoas se conectam e se globalizam. Para nossos
+
+alunos não é diferente. Uma grande gama de informação chega até eles e é preciso
+
+saber transformar tudo isso a favor da escola. Alguns avanços já vem sendo feito nesse
+sentido, mas ainda é preciso progredir mais. O que vemos é um contínuo vácuo nas
+
+inovações e uma perpetuação do ensino tradicional a tanto tempo ultrapassado. O
+
+resultado desse atraso educacional torna, cada dia mais, nosso aluno desmotivado e o
+
+reﬂexo é sentido no péssimo desempenho do Brasil em avaliações internacionais.
+
+Nesse momento de retomada de ideias queremos mostrar como a implementação
+
+dos métodos iterativos e computacionais para resolução de sistemas lineares de maio-
+
+res dimensões pode contribuir para a motivação e melhora na aprendizagem nas aulas
+de Matemática do 2 ◦ ano do Ensino Médio, que é justamente nossa questão de inves-
+tigação.
+
+Para responder a essa questão, nos propomos a pesquisar sobre o tema, fazendo
+
+uma revisão bibliográﬁca e, a partir daí, passamos a relacionar nossos objetivos com
+
+a questão de investigação. Traçamos então três objetivos especíﬁcos que poderiam
+nortear todo o trabalho posterior de pesquisa. Antes de iniciarmos com as aulas e
+
+os questionários da pesquisa, tivemos o cuidado de fazer um embasamento teórico e
+
+prático dos temas relacionados a sistemas lineares que foram tratados nessa dissertação.
+
+Nessas considerações, vamos expor nossas reﬂexões sobre os dados produzidos com
+os questionários inicial e ﬁnal, com as aulas da pesquisa e toda a experiência trazida da
+
+sala de aula, tentando elucidar nossa questão central de investigação e nossos objetivos.
+
+Nosso primeiro objetivo tinha como meta Aplicar e orientar os estudantes em re-
+
+lação a métodos iterativos e computacionais para resolução de sistemas de equações
+lineares. Com as aulas da pesquisa conseguimos sistematicamente ensinar os métodos
+
+iterativos e computacionais e, em seguida, usa-los nas aplicações propostas. Com o
+
+questionário ﬁnal e as observações feitas durante as aulas da pesquisa, percebemos que
+
+os alunos entenderam os métodos iterativos e aprenderam como utilizar os recursos
+computacionais propostos para resolução de sistemas lineares.
+
+O segundo objetivo foi o de avaliar se a resolução de aplicações que envolvem
+
+sistemas lineares de maiores dimensões motiva os alunos nas aulas de matemática. Ao
+
+longo das aulas da pesquisa e na análise dos questionários, buscamos observar como os
+alunos se sentiam ao realizar as atividades propostas e, pelos diálogos entre os alunos
+
+98
+
+participantes e entre professor e alunos, alguns citados no capítulo anterior, ﬁca claro
+
+que a inserção de recursos computacionais quando aplicados a resolução de sistemas
+de maiores dimensões auxilia na melhora do tempo de execução da aplicação e com
+
+isso motiva os alunos a tentarem fazer o problema. Quando questionados ao ﬁnal da
+
+pesquisa, a maioria dos alunos participantes da pesquisa aﬁrmaram que a resolução
+
+das aplicações seria um fator motivador nas aulas de matemática. Ao iniciarmos a
+pesquisa um pouco menos da metade dos alunos pesquisados se sentiam motivado nas
+
+aulas de matemática de acordo com o questionário inicial.
+
+Outro ponto que merece destaque está na utilização da tecnologia através dos re-
+
+cursos computacionais. Durante as aulas da pesquisa e depois através do questionário
+ﬁnal é notório o envolvimento dos alunos pesquisados com esse método de resolução,
+
+em particular. Todos eles relataram que utilizar a ferramenta computacional através de
+
+softwares que auxiliam no trato com a matemática é uma forma de deixar a aula mais
+
+prazerosa e menos tradicional. Nesse contexto, seria interessante, ainda, pesquisar sua
+viabilidade na sala de aula com turmas completas.
+
+O terceiro e último objetivo: avaliar se os métodos iterativos e computacionais
+
+contribuem para uma melhor aprendizagem de sistemas lineares. Nesse último objetivo
+
+nos preocupamos com a melhora signiﬁcativa da aprendizagem dos alunos. Não só é
+necessário motivá-los como também trabalhar a qualidade da aprendizagem. No início
+
+da pesquisa, segundo as respostas no questionário inicial, quase 70% dos alunos pes-
+
+quisados disseram entender, as vezes, o que é ensinado pelo professor de Matemática.
+
+Ao ﬁnal das aulas, mais de 2/3 dos alunos pesquisados disseram ter entendido melhor o
+conteúdo de sistemas lineares. Deste modo, considerando o conjunto de alunos pesqui-
+
+sados, os dados coletados dos questionários e das observações feitas durante as aulas
+
+da pesquisa, entendemos que os alunos participantes melhoraram seus conhecimentos
+
+em relação aos sistemas lineares.
+
+Assim sendo, acreditamos que é possível melhorar a motivação dos alunos nas au-
+
+las de Matemática, através da resolução de aplicações de sistemas lineares de maiores
+
+dimensões com o uso de métodos interativos e recursos computacionais e, ao mesmo
+
+tempo, podendo contribuir de forma signiﬁcativa para melhoria na qualidade do apren-
+dizado dos alunos. Sabemos que muitos outros modelos que proporcionam uma melhora
+
+do Ensino podem ser desenvolvidos e esperamos que os leitores continuem nessa busca.
+
+Assim como nós nos validamos de sugestões para construir os tópicos deste traba-
+
+lho, também achamos por bem ﬁnalizá-lo deixando algumas sugestões para trabalhos
+futuros, à saber: exploração de algoritmos programados para resolução dos métodos
+
+99
+
+iterativos no SciLab; aplicação da pesquisa com um número maior de alunos; pes-
+
+quisa e aplicação de outros métodos de resolução de sistema lineares; exploração de
+outros softwares para resolução de problemas numéricos; desenvolvimento de pesquisa
+
+em outras áreas que motivem os alunos nas aulas de Matemática.
+
+100
+
+Referências
+
+[1] BALACHEFF, n., KAPUT, j. Computer-Based Environments in Mathema-
+tics. p. 469-501. En International Handbook of Mathematical Education, Bishop,
+
+Kluwer Academic Publishers, 1996.
+
+[2] BATTAGLIOLI, c.s.m. Sistemas Lineares na Segunda Série do Ensino Médio:
+Um Olhar Sobre os Livros Didáticos. 2008. 114p. Dissertação de Mestrado Proﬁs-
+
+sional em Ensino da Matemática. PUC, São Paulo.
+
+[3] BOLDRINI, j. l.; COSTA, s. i. r.; FIGUEIREDO, v. l.; WETZLER, h. g.
+
+Álgebra linear. São Paulo: Harbra, 1980.
+
+[4] BOYER, c. b. História da Matemática. 3. ed. São Paulo: Edgard Blucher, 2010.
+
+[5] BURDEN, r. l.; FAIRES, j. d. Análise Numérica. São Paulo: Pioneira Thom-
+
+son Learning, 2003.
+
+[6] BRASIL, Ministério da Educação. Parâmetros curriculares nacionais(PCN): en-
+sino médio: Ciências da natureza, Matemática e suas tecnologias, parte III. Bra-
+sília: SEMT, 2000.
+
+[7] BRASIL, Ministério da Educação. Orientacões curriculares para o ensino médio:
+Ciências da natureza, Matemática e suas tecnologias. Brasília: SEB, 2006, v. 2.
+
+[8] CASTILHO, j.e. Cálculo Numérico. Apostila elaborada na Universidade Federal
+
+de Uberlândia, MG; 2011.
+
+[9] CHIARI, a.s. A utilização do escalonamento na resolução de sistemas lineares
+por alunos do ensino médio., 2011. 143p. Dissertação de Mestrado em Educação
+
+Matemática – Universidade Federal do Mato Grosso do Sul,Campo Grande.
+
+[10] CUNHA, m. c. c. Métodos Numéricos. São Paulo: Ed. Unicamp, 2003.
+
+[11] DAHLQUIST, g.; BJORCK, a. Numerical Methods. Englewood Cliﬀs, NJ:
+
+Prentice Hall, 1974.
+
+[12] FERNADES, w. m.; MIYASAKI, r. Sistemas Lineares e aplicações. Anais do
+IX Seminário de Iniciação Cientíﬁca, VI Jornada de Pesquisa e Pós-Graduação e
+
+Semana Nacional de Ciências e Tecnologia, Anápolis, 2011.
+
+101
+
+[13] JORDÃO, a. l. i. Um estudo sobre a resolução algébrica e gráﬁca de sistemas
+lineares 3x3 no 2 ◦ ano do Ensino Médio . 2011. 192f. Dissertação (Mestrado Proﬁs-
+sional em Ensino de Matemática), Pontifícia Universidade Católica de São Paulo,
+
+São Paulo, 2011.
+
+[14] FERREIRA, a. e. g. A importância dos sistemas lineares no ensino médio e a
+contribuição para a matemática e suas aplicações., 2013. 92p. Dissertação de Mes-
+
+trado Proﬁssional em Rede Nacional de Matemática (PROFMAT) – Universidade
+
+Estadual de Ponta Grossa, Ponta Grossa.
+
+[15] FILHO, b. b.; SILVA, c. x. Matemática aula por aula. São Paulo: FTD, 2000.
+
+[16] FREITAS, i.m. Resolução de sistemas lineares parametrizados e seu signiﬁcado
+
+para o aluno. 1999. 101p. Dissertação de Mestrado. PUC, São Paulo.
+
+[17] GEWANDSZNAJDER, f. O que é o método cientíﬁco. São Paulo: Pioneira,
+
+1989.
+
+[18] GLAZIER, j.; POWELL, r. r. Qualitative research in information manage-
+
+ment. Englewood, CO: Libraries Unlimited, 1992 - 238p.
+
+[19] GÓMEZ, p. Tecnologia y educación matemática. 1997. UNIANDES-LIDIE. Vol.
+
+10.
+
+[20] IEZZI, g. ... et al Matemática: ciência e aplicações. São Paulo: ATUAL, 2012.
+
+[21] KOLMAN, b.; HILL, d. r. Introdução a Álgebra Linear com Aplicações. Rio de
+
+Janeiro: LTC, 2006.
+
+[22] KRAWCZYK, N. O Ensino Médio no Brasil. São Paulo: Ação Educativa, 2009.
+
+[23] LEON, s.j. Linear Algebra: With Applications. Dartmouth: Pearson, 8th. ed.,
+
+2010.
+
+[24] LIMA, e.l. Exame de Textos: Análise de livros de Matemática para o Ensino
+
+Médio. Rio de Janeiro: VITAE/IMPA/SBM, 2001.
+
+[25] LIMA, e.l. Sobre o Ensino de Sistemas Lineares. Rio de Janeiro: RPM, n ◦ 23,
+
+1993.
+
+102
+
+[26] LUCCAS, s. Abordagem Histórico-Filosóﬁca no Ensino e na Aprendizagem dos
+Sistemas de Equações Lineares e Determinantes . 2004. VIII Encontro Nacional
+de Educação Matemática, Universidade Federal de Pernambuco, Brasil.
+
+[27] MATOS, v.f. O ensino de sistemas de equações lineares: Uma abordagem geo-
+métrica., 2013. 65p. Dissertação de Mestrado Proﬁssional em Rede Nacional em
+
+Matemática (PROFMAT) – Universidade Federal de Uberaba, Minas Gerais.
+
+[28] MORESI, e. Metodologia da pesquisa., 2003. 108p., Universidade Católica de
+
+Brasília, Distrito Federal.
+
+[29] PANTOJA, l.f.l. A conversão de Registros de Representações Semióticas no
+Estudo de Sistemas de Equações Algébricas Lineares., 2008. 105p. Dissertação
+de Mestrado em Educação em Ciências e Matemática do Núcleo de Pesquisa e
+
+Desenvolvimento da Educação Matemática e Cientíﬁca – Universidade Federal do
+
+Pará, Belém.
+
+[30] PESCADOR, a.; POSSAMAI, j. p.; POSSAMAI, c. r.; Aplicação de Álgebra
+Linear na Engenharia. XXXIX Congresso Nacional de Educação em Engenharia
+
+(COBENGE), Blumenau, Brasil, 2011.
+
+[31] POLÔNIA, a.c.; DESSEN, m.a. Em Busca de uma Compreensão das Relações
+entre Família e Escola. Psicologia Escolar e Educacional (2005), 9(2), 303-312.
+
+[32] POOLE, d. Álgebra linear. São Paulo: Pioneira Thomson Learning, 2004.
+
+[33] RUGIERO, m.; LOPEZ, v.l. Cálculo Numérico: Aspectos Teóricos e Computa-
+
+cionais. São Paulo: MacGraw-Hill, 1988.
+
+[34] SPERANDIO, c.; MENDES, j.t.; SILVA, l. h. m. Cálculo Numérico. São
+
+Paulo: Pearson, 2003.
+
+[35] TAVARES, a.h.; PEREIRA, a.g.c. História da Matemática no Ensino de Sis-
+temas Lineares, Determinantes e Matrizes. 2013. VII CIBEM, Montevideo, Uru-
+guay.
+
+SOFTWARES UTILIZADOS
+
+GEOGEBRA. Disponível em: www.geogebra.org/cms/pt_BR/download. Acesso
+em 25/05/2014.
+
+103
+
+MAXIMA. Disponível em: maxima.sourcef orge.net/download.html. Acesso em
+
+25/05/2014.
+
+WINPLOT. Disponível em: winplot.sof tonic.com.br. Acesso em 25/05/2014.
+
+SCILAB Disponível em: www.scilab.org/download/5.4.1. Acesso em 25/05/2014.
+
+104
+
+A Primeiro Questionário
+
+Este questionário é parte integrante de uma pesquisa de mestrado que está sendo
+realizada a ﬁm de compreender qual a relação de motivação para com o Ensino Médio
+
+e principalmente à matemática. Além deste questionário, você será convidado também
+
+a participar de outras atividades e, posteriormente, responder a um novo questionário.
+
+Conto com sua colaboração para essa pesquisa ser validada de modo a seguir sempre
+com a verdade.
+
+Mestrando: Alterno Jerônimo Junior
+
+Orientador: Prof. Dr. Rui Seimetz
+
+Primeira Parte (Perﬁl do aluno)
+
+1. Idade:
+
+i) ( ) 14 anos
+
+ii) ( ) 15 anos
+
+iii) ( ) 16 anos
+iv) ( ) 17 anos
+
+v) ( ) 18 anos
+
+vi) ( ) NDA
+
+Especiﬁque:
+
+2. Sexo:
+
+i) ( ) Masculino
+
+ii) ( ) Feminino
+
+3. Idade com a qual ingressou na escola?
+
+i) ( ) 2 anos
+
+ii) ( ) 3 anos
+iii) ( ) 4 anos
+
+iv) ( ) 5 anos
+
+v) ( ) 6 anos
+
+vi) ( ) NDA
+Especiﬁque:
+
+105
+
+4. Escolaridade do pai:
+
+i) ( ) Nunca estudou
+ii ( ) Ensino fundamental
+
+iii) ( ) Ensino Médio
+
+iv) ( ) curso superior completo
+
+Proﬁssão do pai:
+
+5. Escolaridade da mãe:
+
+i) ( ) Nunca estudou
+
+ii ( ) Ensino fundamental
+iii) ( ) Ensino Médio
+
+iv) ( ) curso superior completo
+
+Proﬁssão do mãe:
+
+6. Você já reprovou alguma vez?
+
+i) ( )sim
+
+ii) ( ) não
+
+OBSERVAÇÃO: SE VOCÊ RESPONDEU SIM NA QUESTÃO ACIMA, ISTO
+
+É, VOCÊ JÁ REPETIU ALGUMA SÉRIE, RESPONDA AS QUESTÕES ABAIXO.
+
+CASO CONTRÁRIO, SE VOCÊ NUNCA FOI REPROVADO PULE PARA A QUES-
+
+TÃO 10.
+
+7. Quantas vezes você repetiu de ano?
+
+i) ( ) 1
+
+ii) ( ) 2
+iii) ( ) 3
+
+iv) ( ) 4
+
+v) ( ) NDA
+
+Especiﬁque:
+
+8. Quais as séries que você já repetiu?
+
+Especiﬁque:
+
+9. Quais as matérias que você já foi reprovado?
+
+106
+
+Especiﬁque:
+
+10. Você tem apoio da sua família durante os estudos fora da escola?
+
+i) ( )sim
+
+ii) ( ) não
+
+11. Em caso aﬁrmativo, quais pessoas te ajudam?
+
+Especiﬁque:
+
+12. Você já teve algum tipo de aula particular?
+
+i) ( )sim
+
+ii) ( ) não
+
+13. Em caso aﬁrmativo, em qual ou quais disciplinas?
+
+Especiﬁque:
+
+14. Quantas vezes, por semana, você costuma estudar fora da escola?
+
+i) ( ) 1
+ii) ( ) 2
+
+iii) ( ) 3
+
+iv) ( ) 4
+
+v) ( ) NDA
+Especiﬁque:
+
+15. Quais disciplinas você mais estuda fora da escola?
+
+Especiﬁque:
+
+16. Quantas horas, por dia, você estuda matemática fora da escola?
+
+i) ( ) 0
+
+ii) ( ) 1
+iii) ( ) 2
+
+iv) ( ) 3
+
+v) ( ) NDA
+
+Especiﬁque:
+
+107
+
+17. Você consegue entender a matéria de matemática dada em sala?
+
+i) ( ) Sim, entendo sempre.
+ii) ( ) Entendo as vezes.
+
+iii) ( ) Não, nunca entendo.
+
+18. Você consegue entender o que seu professor de matemática explica em sala? i)
+
+( ) Sim, entendo sempre.
+
+ii) ( ) Entendo às vezes.
+
+iii) ( ) Não, nunca entendo.
+
+19. Você presta atenção nas aulas de matemática?
+
+i) ( ) Sim, sempre presto atenção nas aulas.
+
+ii) ( ) Presto atenção as vezes.
+
+iii) ( ) Não, nunca presto atenção nas aulas de matemática.
+
+20. Você se sente motivado, ou seja, você sempre quer ir à escola?
+
+i) ( ) Sim, sempre quero ir à escola.
+
+ii) ( ) Às vezes quero ir à escola.
+iii) ( ) Não, nunca quero ir à escola.
+
+21. E em relação às aula de matemática, você se sente motivado, ou seja, você
+
+sempre quer ir às aulas de matemática?
+i) ( ) Sim, sempre quero ir nas aulas.
+
+ii) ( ) As vezes quero ir nas aulas.
+
+iii) ( ) Não, nunca quero ir as aulas.
+
+22. Suas notas em matemática são sempre?
+
+i) ( ) Melhores que as da turma.
+
+ii) ( ) iguais as da turma.
+
+iii) ( ) menores que a da turma.
+
+23. Qual a matéria que você mais gosta?
+
+Especiﬁque:
+
+24. Qual disciplina você eliminaria do currículo escolar?
+
+108
+
+Especiﬁque:
+
+Segunda parte
+(Diagnóstico inicial em relação ao conteúdo sistemas lineares)
+
+1. Você já estudou sistemas lineares?
+
+i) ( )sim
+
+ii) ( ) não
+
+2. Em caso aﬁrmativo, gostou do modo como seu professor introduziu o conteúdo?
+
+i) ( ) Sim, gostei muito.
+
+ii) ( ) Poderia ter sido melhor.
+
+iii) ( ) Não gostei da forma como ele introduziu o conteúdo.
+
+iv) ( ) Não sei como ele introduziu o conteúdo.
+
+3. O seu professor começou o conteúdo com exemplos práticos do dia-a-dia?
+
+i) ( ) Sim, ele iniciou com exemplos cotidianos.
+
+ii) ( ) Não, ele já iniciou com a teoria.
+iii) ( ) Não sei como ele começou o conteúdo.
+
+4. O seu professor ensinou métodos de resolução de sistemas de equações 2x2?
+
+i) ( ) Sim, ele ensinou.
+ii) ( ) Não, ele não ensinou.
+
+iii) ( ) Não sei responder.
+
+5. Em caso aﬁrmativo, você entendeu a explicação dele?
+
+i) ( ) Sim, entendi.
+
+ii) ( ) Não.
+
+iii) ( ) Não sei responder.
+
+6. O seu professor ensinou métodos de resolução de sistemas de equações 3x3?
+
+i) ( ) Sim, ele ensinou.
+
+ii) ( ) Não.
+
+109
+
+iii) ( ) Não sei responder.
+
+7. Em caso aﬁrmativo, você entendeu a explicação dele?
+
+i) ( ) Sim, entendi.
+
+ii) ( ) Não.
+
+iii) ( ) Não sei responder.
+
+8. O seu professor mostrou aplicações cotidianas de sistemas lineares 2x2 e 3x3?
+
+i) ( ) Sim, ele mostrou aplicações cotidianas.
+
+ii) ( ) Não, ele só ensinou a teoria.
+iii) ( ) Não sei responder.
+
+9. Em caso aﬁrmativo, você entendeu o que ele explicou?
+
+i) ( ) Sim, eu entendi.
+ii) ( ) Não, eu não entendi.
+
+iii) ( ) Não sei responder.
+
+10. O seu professor ensinou métodos de resolução de sistemas de equações lineares
+
+com dimensões maiores que 3x3?
+
+i) ( ) Sim, ele ensinou a resolver sistemas com dimensões maiores que 3x3.
+
+ii) ( ) Não, ele não ensinou sistemas maiores que 3x3.
+
+iii) ( ) Não sei responder.
+
+11. Em caso aﬁrmativo, você entendeu a explicação dele?
+
+i) ( ) Sim, entendi.
+
+ii) ( ) Não.
+iii) ( ) Não sei responder.
+
+12. Como você classiﬁcaria seu interesse pelo conteúdo de sistemas lineares?
+
+i) ( ) Me interesso muito pelo conteúdo.
+ii) ( ) Me interesso pelo conteúdo igual me interesso por todos os outros.
+
+iii) ( ) Não me interesso pelo conteúdo.
+
+iv) ( ) Não me interesso pelo conteúdo e nem por nenhum outro de matemática.
+
+110
+
+B Segundo Questionário
+
+Diagnóstico ﬁnal em relação as aulas ministradas durante a
+pesquisa
+
+1. Você entendeu o conteúdo de sistemas lineares depois da aplicação das aulas da
+
+pesquisa?
+
+i) ( )sim, entendi melhor o conteúdo.
+
+ii) ( ) não, meu entendimento não mudou.
+iii) ( ) Não sei responder.
+
+2. Gostou de como o conteúdo foi introduzido nas aulas da pesquisa?
+
+i) ( ) Sim, gostei muito.
+ii) ( ) Poderia ter sido melhor.
+
+iii) ( ) Não gostei da forma como ele introduziu o conteúdo.
+
+iv) ( ) Não sei como ele introduziu o conteúdo.
+
+3. Você achou interessante aprender métodos alternativos de resolução de sistemas
+
+lineares, entre eles: pivoteamento e métodos iterativos?
+
+i) ( ) Sim, achei interessante.
+
+ii) ( ) Não, achei desnecessário.
+iii) ( ) Não sei responder.
+
+4. Em caso aﬁrmativo, você entendeu como resolver sistemas lineares nesses dife-
+
+rentes métodos analisados?
+i) ( ) Sim, consegui aprender.
+
+ii) ( ) Não, achei muito difícil.
+
+iii) ( ) Não sei responder a essa pergunta.
+
+5. Você achou interessante aprender métodos computacionais que auxiliam a reso-
+
+lução de sistemas lineares?
+
+i) ( ) Sim, achei muito válido.
+
+ii) ( ) Não, achei desnecessário.
+iii) ( ) Não sei responder.
+
+111
+
+6. Em caso aﬁrmativo, você entendeu como resolver sistemas lineares nos softwares
+
+analisados?
+i) ( ) Sim, consegui aprender.
+
+ii) ( ) Não, achei muito difícil.
+
+iii) ( ) Não sei responder a essa pergunta.
+
+7. Na sua opinião, as aplicações de sistemas lineares de maiores dimensões estuda-
+
+das contribuiriam para sua motivação nas aulas de matemática?
+
+i) ( ) Sim, seriam mais motivadoras as aulas.
+
+ii) ( ) Talvez, acho que poderia melhorar um pouco as aulas.
+iii) ( ) Não, minha motivação não mudaria.
+
+iv) ( ) Não sei responder.
+
+8. E os métodos computacionais e iterativos abordados, contribuiriam para sua
+
+motivação nas aulas de matemática?
+
+i) ( ) Sim, seriam mais motivadoras as aulas.
+
+ii) ( ) Talvez, acho que poderia melhorar um pouco as aulas.
+
+iii) ( ) Não, minha motivação não mudaria.
+iv) ( ) Não sei responder.
+
+9. Como você classiﬁcaria seu interesse pelo conteúdo de sistemas lineares depois
+
+da aplicação das aulas da pesquisa?
+i) ( ) Me interesso muito pelo conteúdo.
+
+ii) ( ) Me interesso pelo conteúdo igual me interesso por todos os outros.
+
+iii) ( ) Não me interesso pelo conteúdo.
+
+iv) ( ) Não me interesso pelo conteúdo e nem por nenhum outro de matemática.
+
+10. Como você classiﬁcaria seu interesse pela matemática depois da aplicação das
+
+aulas da pesquisa?
+
+i) ( ) Me interesso muito pela disciplina.
+ii) ( ) Me interesso pela disciplina igual me interesso por todas as outras.
+
+iii) ( ) Não me interesso pela matemática.
+
+112
+
+1 Anexo- Fotos
+
+Figura 31: Alunos respondendo o questionário inicial e utilizando o SciLab
+
+Figura 32: Alunas resolvendo as aplicações e utilizando o SciLab
+
+Figura 33: Aluno respondendo o questionário inicial
+
+113
+
+Figura 34: Aluno montando o sistema linear da Aplicação 1
+
+Figura 35: Aluna resolvendo o sistema linear da Aplicação 1 no SciLab
+
+Figura 36: Aluno respondendo o questionário ﬁnal
+
+114
+
+Figura 37: Aluno respondendo a Aplicação 2 utilizando o SciLab
+
+Figura 38: Aluno modelando e respondendo a Aplicação 3 utilizando o SciLab
+
+Figura 39: Aluna respondendo a Aplicação 5
+
+115
+
+

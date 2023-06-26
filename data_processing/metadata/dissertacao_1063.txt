@@ -1,0 +1,3240 @@
+UNIVERSIDADE ESTADUAL DE MARING ´A
+DEPARTAMENTO DE MATEM ´ATICA
+PROGRAMA DE MESTRADO PROFISSIONAL EM MATEM ´ATICA
+EM REDE NACIONAL - PROFMAT
+
+DIEGO SAMUEL MACIEL RODRIGUES
+
+DIAGRAMA DE VORONOI:
+UMA ABORDAGEM SOBRE JOGOS
+
+Maring´a
+2019
+
+DIEGO SAMUEL MACIEL RODRIGUES
+
+DIAGRAMA DE VORONOI:
+UMA ABORDAGEM SOBRE JOGOS
+
+Trabalho de Conclus˜ao de Curso apresentado
+ao Programa de Mestrado Proﬁssional em Ma-
+tem´atica em Rede Nacional - PROFMAT do De-
+partamento de Matem´atica da Universidade Esta-
+dual de Maring´a, como requisito parcial para ob-
+ten¸c˜ao do t´ıtulo de Mestre em Matem´atica.
+´Area de concentra¸c˜ao: Matem´atica.
+
+Orientador: Profo.Dro. Emerson Vitor Castelani
+
+Maring´a
+2019
+
+Dados Internacionais de Catalogação na Publicação (CIP) 
+(Biblioteca Setorial BSE-DMA-UEM, Maringá, PR, Brasil) 
+
+        Rodrigues, Diego Samuel Maciel    
+R696d      Diagrama de Voronoi : uma abordagem sobre jogos / 
+
+Diego Samuel Maciel Rodrigues. -- Maringá, 2019. 
+
+           80 f. : il., color. 
+
+           Orientador: Prof. Dr. Emerson Vitor Castelani.  
+           Dissertação (mestrado) - Universidade Estadual de 
+
+Maringá, Centro de Ciências Exatas, Departamento de 
+Matemática, 2019. 
+
+           1. Diagrama de Voronoi. 2. Jogos de Voronoi. 3. 
+
+Geometria Computacional. 4. Voronoi Diagram. 5. Voronoi 
+Games. 6. Computational Geometry. I. Castelani, Emerson 
+Vitor, orient. II. Universidade Estadual de Maringá. 
+Centro de Ciências Exatas. Programa de Mestrado 
+Profissional em Matemática em Rede Nacional - PROFMAT. 
+III. Título. 
+
+CDD 22.ed. 519.8  
+Edilson Damasio CRB9-1.123 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Agradecimentos
+
+Agrade¸co integralmente ao meu orientador Emerson Castelani pelo apoio
+e encorajamento, principalmente pelas palavras ditas a mim como ”conﬁo
+no seu trabalho”, ”acredito que vocˆe ir´a produzir um bom trabalho”e ”se
+precisar de algo, pode me avisar”.
+
+Pra mim, tais palavras foram cruciais para a produ¸c˜ao do trabalho diante
+
+das diﬁculdades enfrentadas.
+
+RESUMO
+
+O Diagrama de Voronoi, um dos t´opicos mais discutidos na ´area da Ge-
+ometria Computacional, possui grande difus˜ao em meio a v´arios estudos,
+por´em pouco se sabe da abordagem deste tema em atividades de ensino.
+Prop˜oem-se um suporte did´atico com utiliza¸c˜ao da tem´atica, diante das di-
+ﬁculdades de abstra¸c˜ao no campo da matem´atica, para metodologia mais
+dinˆamica e interativa colaborando para compreens˜ao objetiva do aprendi-
+zado e constru¸c˜ao de conhecimentos. Tendo Teoria dos Jogos em evidˆencia,
+Jogos de Voronoi, diagramas condicionados, despertaram interesse para o
+foco da pesquisa abordando 4 jogos, a saber, Tradicional Linear, Hotelling,
+Tradicional No Plano e M´axima Vizinhan¸ca, explanando suas jogabilidades
+e estrat´egias de vit´oria. A sequˆencia da exposi¸c˜ao das ideias, pela revis˜ao
+bibliogr´aﬁca, contribuiu para estabelecer a capacidade de aplica¸c˜oes da es-
+trutura, principalmente com inser¸c˜ao de algoritmos e estruturas de dados,
+para a resolu¸c˜ao computacional de problemas geom´etricos.
+
+Palavras-chave: Diagrama de Voronoi; Jogos de Voronoi; Geometria Com-
+putacional.
+
+ABSTRACT
+
+The Voronoi Diagram, one of the most discussed topics in the area of
+Computational Geometry, is widely disseminated through several studies,
+but little is known about the approach of this topic in teaching activities. It
+is proposed a didactic support with the use of the thematic, faced with the
+diﬃculties of abstraction in the ﬁeld of mathematics, for a more dynamic and
+interactive methodology collaborating for objective understanding of the le-
+arning and construction of knowledge. Having the Game Theory in evidence,
+Voronoi Games, conditioned diagrams, aroused interest in the research focus
+addressing 4 games, namely Traditional Linear, Hotelling, Traditional On A
+Plane and Maximum Neighborhood, explaining their gameplay and winning
+strategies. The sequence of the exposition of the ideas, through the biblio-
+graphic review, contributed to establish the capacity of applications of the
+structure, mainly with the insertion of algorithms and data structures, for
+the computational resolution of geometric problems.
+
+Keywords: Voronoi Diagram; Voronoi Games; Computational Geometry.
+
+Lista de Figuras
+
+1 Mapa da Matem´atica.
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+1.1 Disposi¸c˜ao da mat´eria no sistema solar por Ren´e Descartes. . . 12
+1.2 Diagrama de Voronoi observados na natureza.
+. . . . . . . . . 15
+. . . . . . . . . . . . . . . 16
+1.3 Cˆonicas pelo Diagrama de Voronoi.
+1.4 Diagrama de Voronoi na Medicina - An´alise da estrutura do
+
+tecido.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+1.5 Diagrama Voronoi Centr´oide.
+. . . . . . . . . . . . . . . . . . 17
+1.6 Diagrama de Voronoi no SIG - Ouro Preto - MG . . . . . . . . 17
+1.7 Diagrama de Voronoi no SIG - Parte do mapa de Victoria,
+
+Australia, com suas subdivis˜oes em rela¸c˜ao as escolas p´ublicas. 18
+1.8 Diagrama de Voronoi no SIG - Rio de Janeiro - RJ . . . . . . 18
+1.9 Diagrama Voronoi na Arquitetura.
+. . . . . . . . . . . . . . . 19
+1.10 Diagrama de Voronoi no Design. . . . . . . . . . . . . . . . . . 20
+1.11 Diagrama de Voronoi na Inform´atica - Estrutura sobre a p´agina
+
+do The New York Times . . . . . . . . . . . . . . . . . . . . . 20
+1.12 Diagrama de Voronoi na rob´otica. . . . . . . . . . . . . . . . . 21
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+2.1 Tessela¸c˜oes.
+2.2 Deﬁni¸c˜ao Diagrama de Voronoi.
+. . . . . . . . . . . . . . . . . 24
+2.3 Diagrama de Voronoi - Semi-planos. . . . . . . . . . . . . . . . 25
+. . . . . . . . . . . . . . . . . . . . . 25
+2.4 Elementos do Diagrama.
+. . . . . 26
+2.5 Circunferˆencia centrada em um v´ertice do Diagrama.
+2.6 Fronteira de um pol´ıgono.
+. . . . . . . . . . . . . . . . . . . . 26
+2.7 Diagrama de Voronoi Linear. . . . . . . . . . . . . . . . . . . . 28
+. . . . . . . . . . . . . . . . 29
+2.8 Diagrama de Voronoi - Intuitiva.
+2.9 Triangula¸c˜ao de Delaunay.
+. . . . . . . . . . . . . . . . . . . . 30
+2.10 Propriedades da Triangula¸c˜ao de Delaunay. . . . . . . . . . . . 31
+2.11 Fecho Convexo de um conjunto de pontos.
+. . . . . . . . . . . 32
+2.12 Flip de Arestas. . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+2.13 Identiﬁca¸c˜ao de aresta ilegal. . . . . . . . . . . . . . . . . . . . 34
+. . . . . . . . . . . . 34
+2.14 Aplica¸c˜ao da Triangula¸c˜ao de Delaunay.
+
+5
+
+3.1 Constru¸c˜ao Fundamental do Diagrama de Voronoi de A.
+. . . 37
+3.2 Constru¸c˜ao Incremental do Diagrama Voronoi. . . . . . . . . . 39
+3.3 Plataforma com implementa¸c˜ao da constru¸c˜ao incremental. . . 40
+. . . . . . . . . . . . . . . . . . . . . . . . . . 41
+3.4 Linha de Praia.
+3.5 Ponto de Quebra e mudan¸ca dos arcos de par´abola.
+. . . . . . 41
+. . . . . . . . . . . . . . . . . . . . . . . . . 42
+3.6 Evento de Ponto.
+. . . . . . . . . . . . . . . . . . . . . . . . 42
+3.7 Evento de C´ırculo.
+3.8 Plataformas com implementa¸c˜ao da constru¸c˜ao por Varredura. 43
+
+4.1 Deﬁni¸c˜oes de termos para Estrat´egia Pontos Chave.
+4.2 Estrat´egia Pontos Chave em uma circunferˆencia com n = 4
+rodadas, um gerador cada rodada (geradores enumerados de
+acordo com a sequˆencia de jogadas). . . . . . . . . . . . . . . . 51
+
+. . . . . . 49
+
+4.3 Estat´egia Pontos Chave em um segmento de reta com n = 4
+rodadas, um gerador cada rodada (geradores enumerados de
+acordo com a sequˆencia de jogadas). . . . . . . . . . . . . . . . 53
+4.4 Resultado Jogo de Hotelling Tradicional, J2 vencedor. . . . . . 55
+. . . . . . 56
+4.5 Resultado Jogo de Hotelling Derivado, J1 vencedor.
+4.6 Contextualiza¸c˜ao Jogo de Hotelling - Carrinhos de sorvete na
+
+beira da praia. . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+4.7 Conﬁgura¸c˜oes Equil´ıbrio Global. . . . . . . . . . . . . . . . . . 58
+4.8 Jogo Tradicional para n = 9. . . . . . . . . . . . . . . . . . . . 60
+4.9 Redu¸c˜ao da ´area de um pol´ıgono de J1 por 2 geradores de J2.
+61
+4.10 Estrat´egia para o Jogo Tradicional No Plano - Uma Rodada
+
+(Derivada) para espa¸co retˆangular com n = 2.
+
+. . . . . . . . . 63
+4.11 Jogo - Exemplo . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+4.12 J2 sempre consegue vizinhan¸ca com J1. . . . . . . . . . . . . . 65
+4.13 Vit´oria J2 com apenas 1 ponto - Crit´erio 1 . . . . . . . . . . . 66
+4.14 Condi¸c˜ao Vizinhos Oponentes Distintos: p1 possui 5 arestas
+sendo 3 delas com pontos de J2, p2 com 2 e p3 com 1. Assim
+sendo, V2 = 3. . . . . . . . . . . . . . . . . . . . . . . . . . . . 66
+4.15 Estrat´egia Esconder um Ponto do Oponente. . . . . . . . . . . 67
+4.16 Vit´oria J2 - Crit´erio 2 . . . . . . . . . . . . . . . . . . . . . . 68
+4.17 Condi¸c˜ao Vizinhos Oponentes N˜ao Distintos: v1 = 3, v2 = 1 e
+
+v3 = 2 implica em V2 = 6.
+
+. . . . . . . . . . . . . . . . . . . . 69
+4.18 Empate - Crit´erio 3.
+. . . . . . . . . . . . . . . . . . . . . . . 69
+4.19 Estrat´egia de vit´oria para J2: n = 2.
+. . . . . . . . . . . . . . 70
+4.20 Estrat´egia Regi˜ao Segura.
+. . . . . . . . . . . . . . . . . . . . 71
+. . . . . . . . . . . . . . . . . . . 72
+4.21 Vizinhos Pr´oprios Distintos.
+4.22 Estrat´egia Regi˜ao Segura Modiﬁcada. . . . . . . . . . . . . . . 73
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+4.23 Crit´erio 5.
+
+Sum´ario
+
+Introdu¸c˜ao
+
+8
+
+1 Hist´oria e Aplica¸c˜oes
+
+11
+1.1 Hist´oria . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+. . . . . . . . . . . . . . . . . . . . . 14
+1.2 Aplica¸c˜oes e Utiliza¸c˜oes
+1.2.1 Visualiza¸c˜oes Naturais . . . . . . . . . . . . . . . . . . 14
+1.2.2 Cˆonicas
+. . . . . . . . . . . . . . . . . . . . . . . . . . 15
+1.2.3 Medicina . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+Sistema de Informa¸c˜oes Geogr´aﬁcas . . . . . . . . . . . 16
+1.2.4
+1.2.5 Arquitetura e Design . . . . . . . . . . . . . . . . . . . 18
+Inform´atica . . . . . . . . . . . . . . . . . . . . . . . . 19
+1.2.6
+
+2 Conceitos B´asicos
+
+22
+2.1 Diagrama de Voronoi . . . . . . . . . . . . . . . . . . . . . . . 22
+2.2 Triangula¸c˜ao de Delaunay . . . . . . . . . . . . . . . . . . . . 28
+
+3 Constru¸c˜ao
+
+35
+3.1 Constru¸c˜ao Fundamental . . . . . . . . . . . . . . . . . . . . . 36
+3.2 Constru¸c˜ao Incremental
+. . . . . . . . . . . . . . . . . . . . . 37
+3.3 Constru¸c˜ao por Varredura . . . . . . . . . . . . . . . . . . . . 40
+
+4 Jogos de Voronoi
+
+4.1.1
+4.1.2
+
+45
+4.1 Jogo de Voronoi Linear . . . . . . . . . . . . . . . . . . . . . . 47
+Jogo Tradicional Linear
+. . . . . . . . . . . . . . . . . 47
+Jogo de Hotelling . . . . . . . . . . . . . . . . . . . . . 54
+4.2 Jogo de Voronoi No Plano . . . . . . . . . . . . . . . . . . . . 59
+Jogo Tradicional No Plano . . . . . . . . . . . . . . . . 59
+Jogo M´axima Vizinhan¸ca . . . . . . . . . . . . . . . . . 63
+
+4.2.1
+4.2.2
+
+Considera¸c˜oes Finais
+
+Referˆencias Bibliogr´aﬁcas
+
+74
+
+76
+
+Introdu¸c˜ao
+
+Estudar a classiﬁca¸c˜ao de padr˜oes de dados pelo m´etodo do vizinho mais
+pr´oximo, o crescimento de ﬂorestas ou microestruturas cristalinas, a capaci-
+dade de uma rede sem ﬁo, o c´alculo da precipita¸c˜ao das chuvas, a epidemia
+da c´olera, entre muitas outras situa¸c˜oes envolvendo an´alise de regi˜oes, o Di-
+agrama de Voronoi, uma estrutura com simples conceito de particionamento
+do espa¸co, est´a inserido diretamente nesses estudos. Por´em, tal ferramenta
+n˜ao se encontra muito difundida no meio de ensino, mesmo com tantos con-
+ceitos matem´aticos elementares e de grande utilidade.
+
+De forma contextual, a formaliza¸c˜ao, [1], do Diagrama de Voronoi con-
+tribuiu para o in´ıcio da Geometria Computacional, jun¸c˜ao da ´area da Ma-
+tem´atica e Ciˆencia da Computa¸c˜ao, que estuda algoritmos e estruturas de
+dados para resolu¸c˜ao computacional de problemas geom´etricos.
+
+Estabelecido o Diagrama de Voronoi como objeto de estudo, o interesse
+neste segmento prov´em da geometria se preocupar com quest˜oes de forma,
+tamanho e posi¸c˜ao de ﬁguras reproduzindo o mapeamento de espa¸cos. J´a
+a Ciˆencia da Computa¸c˜ao ´e relevante por contribuir como reﬁnamento para
+resolver problemas geom´etricos de forma eﬁciente e por ser uma ´area bem
+difundida na tecnologia.
+
+Al´em disso, a matem´atica que se aprende na escola n˜ao faz justi¸ca ao
+real campo da matem´atica. Adquiri-se uma por¸c˜ao deste campo, mas a
+matem´atica, como um todo, ´e um assunto enorme e diverso [2] (Figura 1).
+Ali´as, a matem´atica por muito tempo foi marcada pela sua “cria¸c˜ao” sem
+muito prop´osito, com motiva¸c˜ao apenas por curiosidade, e ent˜ao, quando
+estudos s˜ao feitos no campo da matem´atica aplicada s˜ao encontradas utilida-
+des para essas descobertas. Assim sendo, o Diagrama de Voronoi se encaixa
+inteiramente nessas situa¸c˜oes que abrem espa¸co para solu¸c˜ao com aplica¸c˜ao
+matem´atica.
+
+Envolvendo diversos princ´ıpios matem´aticos e a utiliza¸c˜ao do Diagrama
+de Voronoi, o qual fornece interdisciplinaridade com outras ´areas de ensino,
+jogos foi a vertente selecionada para estudo, pois o sistema de aprendizado
+de matem´atica n˜ao ´e atrativo para alunos em raz˜ao de, geralmente, recair
+
+8
+
+Figura 1: Mapa da Matem´atica.
+Fonte: P´agina Dominic Walliman [2].
+
+em somente acumular exerc´ıcios dos livros. Assim, com inten¸c˜ao de gerar
+maior interesse, a ideia de jogo entra como uma atividade dinˆamica com
+intera¸c˜oes em meio ao estudo, incluindo itera¸c˜ao de conte´udo e exigindo
+racioc´ınio estrat´egico.
+
+Jogos de Voronoi s˜ao modelagens de an´alises de aplica¸c˜oes onde existe
+algum tipo de restri¸c˜ao e/ou condi¸c˜ao na constru¸c˜ao do Diagrama de Vo-
+ronoi. Assim, n˜ao s´o a jogabilidade e rela¸c˜ao entre os jogadores s˜ao os
+principais pontos presentes no estudo, mas tamb´em o emprego dos obje-
+tivos alcan¸cados ap´os as jogadas, fornecendo continuidade no conhecimento.
+Ademais, perante as combina¸c˜oes de regras dos jogos, as publica¸c˜oes s˜ao ma-
+joritariamente trabalhos de conﬁgura¸c˜oes espec´ıﬁcas que foi o que motivou a
+cole¸c˜ao dessas conﬁgura¸c˜oes para investiga¸c˜ao.
+
+Isto posto, tais t´opicos foram chaves para o sele¸c˜ao da tem´atica dessa
+pesquisa com prop´osito em gerar uma contribui¸c˜ao baseada na sintetiza¸c˜ao da
+abordagem dos jogos utilizando a estrutura de Voronoi al´em dos estudos das
+jogabilidades, apresentando os aspectos envolvendo o Diagrama de Voronoi
+para suporte de futuros materiais.
+
+Para tanto, foram organizados quatro cap´ıtulos para o estudo. O pri-
+
+9
+
+meiro, ´e organizado uma cronologia das constata¸c˜oes da estrutura at´e sua
+formaliza¸c˜ao, seguida das aplica¸c˜oes em algumas ´areas como medicina, ge-
+ograﬁa, arte, computa¸c˜ao e na pr´opria matem´atica. O segundo cap´ıtulo se
+resume a deﬁni¸c˜oes e propriedades da estrutura e de seu grafo-dual, a Tri-
+angula¸c˜ao de Delaunay. O pr´oximo cap´ıtulo, terceiro, descreve trˆes tipos de
+constru¸c˜ao do Diagrama de Voronoi: fundamental, incremental e por varre-
+dura. Tais descri¸c˜oes s˜ao baseadas na introdu¸c˜ao do algoritmo para cada tipo
+e citados algumas plataformas onde o Diagrama de Voronoi est´a implemen-
+tado. O ´ultimo cap´ıtulo, Jogos de Voronoi, ´e dividido nos jogos linear e no
+plano. No linear ´e apresentada a estrat´egia Pontos Chaves e Equil´ıbrio Glo-
+bal e no plano s˜ao apresentados dois jogos, sendo o Tradicional e o M´axima
+Vizinhan¸ca, sendo o ´ultimo analisado pela Triangula¸c˜ao de Delaunay, com
+an´alise das estrat´egias destes. Por ﬁm, s˜ao descritas as considera¸c˜oes ﬁnais
+sobre a pesquisa, analisando as contribui¸c˜oes e projeto de trabalhos futuros.
+
+10
+
+Cap´ıtulo 1
+
+Hist´oria e Aplica¸c˜oes
+
+Observa¸c˜oes e constata¸c˜oes registradas ao longo do tempo geram even-
+tos cronol´ogicos onde podemos ter consciˆencia da origem de um tema, que
+chamamos de hist´oria. Tais eventos podem ser classiﬁcados tamb´em como
+aplica¸c˜oes, onde toda informa¸c˜ao coletada e utilizada para um prop´osito
+criam marcos que contribuem para evolu¸c˜ao do conte´udo do objeto em foco.
+E, quanto mais dados, mais se pode agregar interesse a um estudo.
+
+Com essa motiva¸c˜ao, as se¸c˜oes a seguir tem o prop´osito de apresentar
+a relevˆancia do Diagrama de Voronoi por suas contribui¸c˜oes em variados
+trabalhos, por interm´edio de registros hist´oricos e exemplos de empregos do
+diagrama.
+
+1.1 Hist´oria
+
+Uma compila¸c˜ao de referˆencias da hist´oria da estrutura Diagrama de Vo-
+ronoi devem ser levados em considera¸c˜ao para dizer como ela foi descoberta
+ou utilizada.
+
+Considerando a deﬁni¸c˜ao b´asica sendo o particionamento do espa¸co onde
+cada regi˜ao ´e associada a um ponto de um conjunto, sendo essa associa¸c˜ao ge-
+rada por locais mais pr´oximos de um ponto do que de outro desse conjunto,
+ocorreu que entre as utiliza¸c˜oes mais antigas, descobertas, redescobertas e
+observa¸c˜oes na natureza, varia¸c˜oes do diagrama em quest˜ao foram cataloga-
+dos em campos da ciˆencia para ent˜ao, depois de muitos anos convergir para
+uma estrutura com nomenclatura deﬁnida.
+
+Segundo Aurenhammer [3], o registro mais antigo da utiliza¸c˜ao do con-
+ceito do Diagrama de Voronoi ´e em Principia Philosophiae de Ren´e Descartes
+(1596-1650) publicado em 1644 [4]. N˜ao ´e dito explicitamente sobre o dia-
+grama, mas nele ´e poss´ıvel encontrar imagens de desenhos da decomposi¸c˜ao
+
+11
+
+do espa¸co em regi˜oes convexas formada por massas inﬂuenciada pelas estre-
+las, como na imagem da Figura 1.1.
+
+Figura 1.1: Disposi¸c˜ao da mat´eria no sistema solar por Ren´e Descartes.
+Fonte: DESCARTES, 1644, p. 78. [4].
+
+Diversos s˜ao os trabalhos onde foram encontradas as deﬁni¸c˜oes e varia¸c˜oes
+do Diagrama de Voronoi ao longo dos anos nos quais a maioria dos autores
+tomam autoria devido descobertas terem sido em ´areas distintas e onde a
+informa¸c˜ao era diﬁcilmente propagada. O texto em sequˆencia cont´em in-
+forma¸c˜oes que s˜ao dadas em detalhes por Okabe em [5].
+
+Os trabalhos do alem˜ao Johann Peter Gustav Lejeune Dirichlet (1805-
+1859) e do russo Georgy Feodosevich Voronoy (1868-1908) s˜ao os primeiros
+registros a apresentar o conceito da estrutura que se tem ciˆencia hoje. O
+tema do estudo envolvia as formas quadr´aticas deﬁnida positiva, ou seja,
+∀x ∈ Rm; x (cid:54)= 0; Q(x) > 0, onde Dirichlet seguiu os casos R2 e R3 enquanto
+Voronoi tratou o caso Rm. O objetivo do estudo envolvia a distribui¸c˜ao de
+pontos com coordenadas inteiras buscando valores m´ınimos de uma forma
+quadr´atica dada. Dessa forma, era considerado um conjunto de pontos posi-
+cionados regularmente em um espa¸co Rm gerado pela combina¸c˜ao linear de
+m vetores linearmente independentes com coeﬁcientes inteiros e ent˜ao, rea-
+lizava a constru¸c˜ao do Diagrama de Voronoi neste conjunto, resultando em
+parti¸c˜ao do espa¸co em poliedros mutuamente congruentes.
+
+O primeiro a associar Dirichlet e Voronoi foi o russo Boris Nikolaevich
+Delone (1890-1980), quando utilizou o conceito dual do diagrama por Voro-
+noi sobre as rela¸c˜oes das vizinhan¸cas e aplicou seu m´etodo da esfera vazia
+
+12
+
+(Triangula¸c˜ao de Delaunay) e foi ele tamb´em que criou o termo regi˜oes Vo-
+ronoi.
+
+A partir da´ı, entre os s´eculos 19 e 20 v´arias estruturas come¸caram a ser
+descobertas na ´area das ciˆencias naturais, cada uma com nomea¸c˜oes distintas,
+por´em com mesmo conceito.
+
+Em 1885, na ´area da cristalograﬁa, Evgraf Fedorov, no estudo de com-
+bina¸c˜ao de preenchimento de espa¸co de cinco poliedros paralelos em R3,
+chamou as regi˜oes Voronoi de Estereoedros. Na mesma ´area, os termos ´area
+fundamental, esfera de inﬂuˆencia, dom´ınio de a¸c˜ao, campo de atividade e ple-
+sioedro foram utilizados tamb´em por outros pesquisadores alem˜aes e russos
+para designar as regi˜oes Voronoi.
+
+Na meteorologia, geograﬁa e disciplinas sociais foi criado o termo pol´ıgono
+Thissen, em 1911, onde o americano Alfred H. Thiessen computou estima-
+tivas precisas das m´edias regionais de precipita¸c˜ao conhecido at´e hoje como
+M´etodo Thissen.
+
+Em 1933, o h´ungaro Eugene Paul Wigner e o americano Frederick Seitz,
+no estudo das propriedades qu´ımicas do s´odio met´alico, descrevem as regi˜oes
+Voronoi por pontos organizados em grade tridimensional e ent˜ao nomeiam
+c´elulas Wigner-Seitz, os politopos regulares. Na mesma ´area, em 1958,
+o britˆanico Frederick Charles Frank e John S. Kasper focaram em vizi-
+nhan¸cas dos poliedros Voronoi (regi˜oes Voronoi tridimensionais) formados
+pelos ´atomos cont´ıguos a um poliedro Voronoi de um ´atomo dado e cha-
+maram eles de dom´ınio de um ´atomo. J´a em 1971, deﬁniram tamb´em o
+crescimento das zonas de captura de cristais nos graﬁtes iguais as regi˜oes
+Voronoi.
+
+O americano Claude Elwood Shannon, entre 1948 e 1949, desenvolveu um
+estudo num modelo de comunica¸c˜ao equivalente a um Diagrama de Voronoi
+de um conjunto de c´odigos onde a regi˜ao Voronoi ´e a localiza¸c˜ao de uma
+mensagem transmitida e mais tarde, essas regi˜oes foram chamadas regi˜oes de
+m´axima verossimilhan¸ca e, em 1992, Favo de Mel de Voronoi.
+
+Em outro campo, na ecologia, o Diagrama de Voronoi foi observado e
+ent˜ao redescoberto. Nos anos 60s, o britˆanico George Stewart Brown deﬁniu
+a ´area potencialmente dispon´ıvel, uma regi˜ao Voronoi para uma ´arvore, para
+estimar a intensidade de ´arvores em uma ﬂoresta onde o inglˆes Roger Meado
+chamou de pol´ıgonos planta.
+
+Uma das ´ultimas rela¸c˜oes a estrutura registrada foi por Louis Johan Char-
+les Hoofd onde deﬁniu, em 1985, as regi˜oes Voronoi sendo os centros capilares
+em peda¸cos de tecidos, chamando-os de dom´ınios capilares.
+
+Por mais que v´arias descobertas de estruturas naturais estejam relacio-
+nadas ao Diagrama de Voronoi ao longo desses anos, o m´edico inglˆes John
+Snow, em 1855, publicou um mapa referente ao surto de c´olera de 1854 que
+
+13
+
+ocorreu na rua Broad Street em Londres mostrando a incidˆencia de mortes
+perto das bombas de ´agua, provando que o cont´agio da doen¸ca estava ligado
+ao abastecimento de ´agua. A estrutura montada por John Snow se compara
+ao Diagrama de Voronoi pois as bombas podem ser consideradas os geradores
+da estrutura onde os indicadores dos ´obitos se expandiam radialmente.
+
+Outra aplica¸c˜ao cient´ıﬁca, foi a do alem˜ao Carl Haag, em 1898, que uti-
+lizou um estrutura parecida com ao Diagrama de Voronoi para visualizar a
+varia¸c˜ao dial´etica e identiﬁcar as divis˜oes lingu´ısticas no sudoeste da Alema-
+nha.
+
+Mas, nos anos 70s, com o avan¸co da ciˆencia da computa¸c˜ao, algoritmos
+foram desenvolvidos para constru¸c˜ao do Diagrama, criando o que ´e hoje
+o ramo da Geometria Computacional. Foram os americanos Michael Ian
+Shamos e Dan Hoey, em 1975, que inciaram essa formaliza¸c˜ao apresentando
+um algoritmo para constru¸c˜ao (baseado na estrat´egia de divis˜ao e conquista),
+al´em de utilizar esse algoritmo para encontrar a ´arvore geradora m´ınima,
+identiﬁcar o vizinho mais pr´oximo de cada ponto e encontrar o maior c´ırculo
+vazio cujo centro est´a dentro do fecho convexo.
+
+Assim, podemos dizer que em situa¸c˜oes espec´ıﬁcas, n˜ao em lato sensu, a
+natureza se comporta de uma forma que o Diagrama de Voronoi pode mape´a-
+las. Al´em disso, ´e poss´ıvel adaptar a estrutura para in´umeros problemas,
+al´em de auxiliar em an´alise de comportamentos e como assumir uma previs˜ao
+geralmente geogr´aﬁca do objeto estudado. A pr´oxima se¸c˜ao separa algumas
+dessas aplica¸c˜oes.
+
+1.2 Aplica¸c˜oes e Utiliza¸c˜oes
+
+Por mais que o Diagrama de Voronoi j´a existisse dentre identiﬁca¸c˜oes e
+formaliza¸c˜ao, podemos citar algumas aplica¸c˜oes em v´arias ´areas com objeti-
+vos espec´ıﬁcos, demonstrando como o Diagrama de Voronoi pode ser usado
+como uma ferramenta poderosa e como as regi˜oes Voronoi, representadas por
+pol´ıgonos, podem ser diversas.
+
+1.2.1 Visualiza¸c˜oes Naturais
+
+Existem particionamentos naturais do espa¸co que s˜ao simples de relacio-
+nar com Diagramas de Voronoi. As fronteiras que bolhas de sab˜ao adjacentes
+formam, o casco da tartaruga ou at´e mesmo a regularidade do favo de mel,
+s˜ao exemplos n´ıtidos da divis˜ao da superf´ıcie por pol´ıgonos onde ´e at´e mesmo
+poss´ıvel identiﬁcar o gerador da regi˜ao, como observado na Figura 1.2.
+
+14
+
+(a) Bolhas
+
+(b) Casco de Tartaruga
+
+(c) Favo de Mel
+
+(d) Girafa
+
+(e) Asa da Lib´elula
+
+(f) Pinha
+
+Figura 1.2: Diagrama de Voronoi observados na natureza.
+Fonte: Banco de Imagens ﬂickr 1.
+
+1.2.2 Cˆonicas
+
+Uma importante aplica¸c˜ao em geometria anal´ıtica, inspirada por [6], ´e a
+constru¸c˜ao de esbo¸cos de cˆonicas, como a par´abola e a hip´erbole. Quanto
+maior for a quantidade de pontos, mais pr´oximo ﬁcar´a representada a curva.
+Para a constru¸c˜ao, basta considerar os elementos b´asicos das par´abolas e
+hip´erboles, o foco e a reta diretriz, ent˜ao posicionar um gerador no foco e
+distribuir os outros geradores na reta diretriz dando forma ao Diagrama de
+Voronoi. Assim, a fronteira do gerador no foco com os outros geradores
+formar˜ao a curva da cˆonica. ´E poss´ıvel criar os casos degenerados, que s˜ao
+triviais, e al´em do mais, as propriedades dessas cˆonicas continuam sendo
+v´alidas.
+
+1.2.3 Medicina
+
+Uma aplica¸c˜ao do Diagrama de Voronoi na medicina [7] teve como ob-
+jetivo o uso dos pol´ıgonos para mostrar que os tecidos naturais possuem
+distribui¸c˜oes diferentes e entender o desenvolvimento de uma doen¸ca pela es-
+trutura quando alterado o equil´ıbrio das tens˜oes e press˜oes dentro dos tecidos
+com uma patologia (Figura 1.4).
+
+Nesse estudo foi usada uma condi¸c˜ao do Diagrama de Voronoi, onde a
+
+1https://www.ﬂickr.com/photos - Acessados em 15-07-2019
+
+15
+
+(a) Par´abola
+
+(b) Hip´erbole
+
+Figura 1.3: Cˆonicas pelo Diagrama de Voronoi.
+Fonte: Elaborado pelo autor.
+
+(a) Bi´opsia do b´ıceps adulto.
+
+(b) Bi´opsia de b´ıceps de adulto de pa-
+ciente com patologia de atroﬁa neu-
+rogˆenica.
+
+Figura 1.4: Diagrama de Voronoi na Medicina - An´alise da estrutura do
+tecido.
+
+Fonte: S ´ANCHES-GUTI´ERREZ, Daniel et al, 2016, 77-88 [7].
+
+organiza¸c˜ao das c´elulas se d˜ao pelo Diagrama de Voronoi Centr´oide, ou seja,
+os geradores buscam ser o ponto de massa do pol´ıgono, resultando em uma
+estrutura regular. Essa estrutura ´e obtida pela itera¸c˜ao do algoritmo de
+Lloyd [8] (Figura 1.5).
+
+1.2.4 Sistema de Informa¸c˜oes Geogr´aﬁcas
+
+As aplica¸c˜oes do Diagrama de Voronoi no Sistema de Informa¸c˜oes Ge-
+
+ogr´aﬁcas (SIG) geralmente est˜ao ligadas aos problemas de proximidade.
+
+Um trabalho desenvolvido [9] com esse intuito foi a utiliza¸c˜ao dos pol´ıgonos
+para determina¸c˜ao de ´areas de inﬂuˆencia de escolas p´ublicas, considerando o
+n´umero de vagas em cada uma. Como existe uma inﬂuˆencia nas considera¸c˜oes
+de distˆancias, a forma¸c˜ao dos pol´ıgonos levam em considera¸c˜ao alguns atri-
+
+16
+
+(a) Diagrama antes da aplica¸c˜ao do
+Algoritirmo de Lloyd.
+
+(b) Diagrama depois das itera¸c˜oes
+do Algoritimo de Lloyd.
+
+Figura 1.5: Diagrama Voronoi Centr´oide.
+Fonte: Elaborado pelo autor.
+
+butos no c´alculo das suas ´areas, gerando um ponderamento na forma¸c˜ao dos
+pol´ıgonos originais.
+
+Um dos objetivos do trabalho foi delimitar a ´area de inﬂuˆencia das escolas
+p´ublicas de Ouro Preto, al´em de veriﬁcar a rela¸c˜ao do n´umero de vagas e a
+localiza¸c˜ao das escolas na cidade (Figura 1.6).
+
+(a) Divis˜ao Voronoi das escolas.
+
+(b) Diagrama Voronoi Ponderado (fa-
+tor: n´umero de vagas em cada escola)
+
+Figura 1.6: Diagrama de Voronoi no SIG - Ouro Preto - MG
+Fonte: MOURA, 2009 [9].
+
+Outra utiliza¸c˜ao do Diagrama de Voronoi com objeto similar de estudo, ´e
+a divis˜ao da cidade Victoria, Austr´alia, para a cria¸c˜ao de zonas de capta¸c˜ao
+de escolas onde os alunos matriculados s˜ao os que moram dentro dessas zonas.
+Um site [10] ´e disponibilizado com um mapa particionado, sendo as escolas
+os geradores dessas regi˜oes.
+
+Uma aplica¸c˜ao semelhante as escolas de Ouro Preto, por´em com os hos-
+pitais p´ublicos do Rio de Janeiro - RJ, foi retratada em [11], onde n˜ao s´o
+levou em considera¸c˜ao a distˆancia para cria¸c˜ao das regi˜oes mas tamb´em a
+capacidade real da unidade em rela¸c˜ao a oferta de interna¸c˜oes dos hospitais,
+
+17
+
+Figura 1.7: Diagrama de Voronoi no SIG - Parte do mapa de Victoria, Aus-
+tralia, com suas subdivis˜oes em rela¸c˜ao as escolas p´ublicas.
+Fonte: P´agina Melbourne School Zones [10].
+
+dando aos respons´aveis mais dados para um melhor planejamento na ´area da
+sa´ude (Figura 1.8).
+
+(a) Diagrama Voronoi para os hospitais.
+
+(b) Diagrama Voronoi Ponderado (fator
+leitos dispon´ıveis para interna¸c˜ao)
+
+Figura 1.8: Diagrama de Voronoi no SIG - Rio de Janeiro - RJ
+Fonte: REZENDE, ALMEIDA e NOBRE, 2000 [11].
+
+1.2.5 Arquitetura e Design
+
+No ˆambito da arte, o Diagrama de Voronoi tamb´em tem seu lugar e com
+as novas tecnologias, ela ´e representada de forma bem expl´ıcita na arquitetura
+e no design com uma express˜ao contemporˆanea.
+
+Em [12], os autores descrevem tecnicamente a estrutura constru´ıda em
+2010 em frente ao edif´ıcio WestendGate, na Alemanha. Uma cobertura com
+design de pol´ıgonos de Voronoi foi erguida por Just / Burgeﬀ Architekten, es-
+crit´orio de arquitetura, com inten¸c˜ao de estender o espa¸co urbano adjacente,
+com modelo arb´oreo simulando o crescimento de ´arvores (Figura 1.9.a).
+
+18
+
+No mesmo artigo, ´e relatado um projeto onde ´e utilizada a estrutura de
+Voronoi. O escrit´orio de arquitetura ACME, recebeu um prˆemio na com-
+peti¸c˜ao Parque da Paz da ONU, em 2009, por projetar um memorial das
+Na¸c˜oes Unidas onde este possu´ıa design estrutural com os pol´ıgonos de Vo-
+ronoi. Tal estrutura tinha o conceito de representar as na¸c˜oes individuais
+onde se unem em uma ´unica entidade sem perder suas identidades (Figura
+1.9.b).
+
+(a) WestendGate
+
+(b) Projeto Memorial das Na¸c˜oes Unidas.
+
+Figura 1.9: Diagrama Voronoi na Arquitetura.
+Fonte: LIMA, 2017 [12].
+
+Com grande correla¸c˜ao, o Diagrama de Voronoi ´e bastante utilizado no
+design de um m´ovel ou do complemento de um cˆomodo. A pintura de uma
+parede, uma cadeira, uma estante, uma janela, uma lumin´aria, um vaso,
+todos s˜ao elementos pass´ıveis de uma modiﬁca¸c˜ao estrutural, sempre com
+enfase em um objetivo de decora¸c˜ao. Uma delas ´e a prateleira desenhada
+pelo aplicativo de Alan Rorie em 2012 [13], onde ´e poss´ıvel que o consumidor
+produza o design do item com a estrutura do Diagrama de Voronoi (Figura
+1.10).
+
+1.2.6 Inform´atica
+
+N˜ao s´o visualmente o Diagrama de Voronoi pode ser empregado, mas sua
+utiliza¸c˜ao para atingir um objetivo ou auxiliar a ﬁnalidade de um projeto
+pode ser caracterizada como inovadora.
+
+Um exemplo no ramo da inform´atica ´e a aplica¸c˜ao na interface do usu´ario.
+O site do The New York Times, publicou uma p´agina interativa onde era
+poss´ıvel veriﬁcar as possibilidades de ganho nas elei¸c˜oes presidenciais entre
+Barack Obama e Mitt Romney [14]. As sele¸c˜oes dos objetos pela ´arvore
+
+19
+
+(a) Interface do aplicativo.
+
+(b) Prateleira confeccionada.
+
+Figura 1.10: Diagrama de Voronoi no Design.
+Fonte: P´agina Kickstarter [13].
+
+bin´aria de possibilidades, tinham uma diferen¸ca entre seus campos de op¸c˜ao,
+onde n˜ao era necess´ario estar exatamente sobre o item, que era o ponto de
+decis˜ao, e sim em uma regi˜ao da p´agina que pertencia ao mesmo.
+
+Criado pelos americanos Mike Bostock e Shan Carter, Mike relata [15],
+que usou uma sobreposi¸c˜ao invis´ıvel com a estrutura do Diagrama de Voronoi
+para melhorar a intera¸c˜ao com o mouse sobre os itens onde o caminho mais
+pr´oximo do mouse era destacado (Figura 1.11).
+
+Figura 1.11: Diagrama de Voronoi na Inform´atica - Estrutura sobre a p´agina
+do The New York Times
+
+Fonte: P´agina The New York Times [15].
+
+Em rob´otica, v´arios trabalhos sobre planejamento de movimento de robˆos
+
+20
+
+Figura 1.12: Diagrama de Voronoi na rob´otica.
+Fonte: TAKAHASHI e SCHILLING, 1989 [16].
+
+fundamentam o algoritmo que arquiteta um caminho livre de colis˜ao para
+um retˆangulo em um plano preenchido com obst´aculos poligonais [16]. Tal
+caminho ´e obtido pelo Diagrama de Voronoi Ponderado, criando vias distando
+o m´aximo poss´ıvel dos obst´aculos de forma que os pontos desse caminho
+s˜ao equidistantes da arestas desses pol´ıgonos que representam os obst´aculos
+(Figura 1.12).
+
+Desse modo, tanto a l´ogica ser muito parecida com os padr˜oes orgˆanicos
+da natureza quanto a eﬁc´acia do uso da estrutura como ferramenta, in´umeras
+s˜ao as aplica¸c˜oes do Diagrama de Voronoi. E, portanto, a forma como a
+estrutura se encaixa nos objetivos ou como ela propulsiona um resultado,
+tem se revelado um grande benef´ıcio e relevˆancia a sua utiliza¸c˜ao, merecendo
+uma aten¸c˜ao particular.
+
+21
+
+Cap´ıtulo 2
+
+Conceitos B´asicos
+
+Para melhor compreens˜ao de qualquer estrutura, deﬁni¸c˜oes s˜ao enunci-
+adas para n˜ao s´o originar conceitos, mas para tamb´em sustentar qualquer
+desenvolvimento de um estudo. Dessa maneira, s˜ao impostas formaliza¸c˜oes
+para que n˜ao ocorra margem para interpreta¸c˜oes, determinando proposi¸c˜oes
+exatas.
+
+O presente cap´ıtulo segue apresentando deﬁni¸c˜oes matem´aticas do Dia-
+grama de Voronoi, exibindo uma concep¸c˜ao anal´ıtica da sua estrutura al´em
+de exibir os elementos que o comp˜oe.
+
+´E retratado tamb´em, o diagrama complementar do Diagrama de Voro-
+noi, a Triangula¸c˜ao de Delaunay, expondo uma deﬁni¸c˜ao e a sua particulari-
+dade em se diferenciar de outras triangula¸c˜oes pela maximiza¸c˜ao dos ˆangulos
+dos triˆangulos que comp˜oem a parti¸c˜ao do plano. ´E apresentado tamb´em o
+m´etodo Flip de Arestas para transforma¸c˜ao de uma triangula¸c˜ao em Trian-
+gula¸c˜ao de Delaunay e ent˜ao, destacando sua principal aplica¸c˜ao.
+
+2.1 Diagrama de Voronoi
+
+Apesar das deﬁni¸c˜oes matem´aticas, generaliza¸c˜oes e varia¸c˜oes, o Dia-
+grama de Voronoi ´e usualmente deﬁnido com um conjunto ﬁnito de pontos
+distintos sobre um plano onde cada regi˜ao ´e designada ao ponto mais pr´oximo
+desse conjunto, e assim cada ponto determina sua pr´opria regi˜ao.
+
+Como ´e feita a divis˜ao do plano em regi˜oes, o Diagrama de Voronoi ´e
+considerado uma tessela¸c˜ao, ou seja, o cobrimento total de uma superf´ıcie por
+pol´ıgonos sem que existam espa¸cos entre eles ou sobreposi¸c˜oes [17]. Podemos
+citar exemplos de tessela¸c˜ao, como na Figura 2.1, o tabuleiro de xadrez e
+pavimenta¸c˜ao por paralelep´ıpedos, com pol´ıgonos regulares.
+
+Dentre as deﬁni¸c˜oes existentes, algumas ser˜ao apresentadas para melhor
+
+22
+
+(a) Tabuleiro de Xadrez.
+
+(b) Pavimenta¸c˜ao por Para-
+lelep´ıpedos.
+
+Figura 2.1: Tessela¸c˜oes.
+Fonte: Banco de Imagens pixabay 1.
+
+compreens˜ao da sua formaliza¸c˜ao, assim como suas propriedades. Conside-
+raremos em algumas deﬁni¸c˜oes o conjunto de ´ındices In = {1, 2, 3, ..., n},
+subconjunto de N limitado por n. Doravante, frequentemente trataremos a
+terminologia Diagrama de Voronoi somente por Diagrama.
+
+Deﬁni¸c˜ao 2.1 (Diagrama de Voronoi) Seja A = {p1, p2, ..., pn} ⊂ R2
+um conjunto de pontos onde 2 ≤ n < ∞.
+
+Chama-se regi˜ao de Voronoi associada ao ponto pi o conjunto
+
+V (pi) = {p|d(pi, p) ≤ d(pj, p); i (cid:54)= j, i, j ∈ In},
+
+onde d denota a distˆancia euclidiana, e o conjunto formado por essas regi˜oes
+
+V (A) = {V (p1), V (p2), ..., V (pn)},
+
+Diagrama de Voronoi.
+
+A rela¸c˜ao entre os pontos e o Diagrama de Voronoi sobre esse conjunto
+de pontos ´e ilustrada na Figura 2.2, demonstrando a tessela¸c˜ao tradicional.
+Nesta deﬁni¸c˜ao a quantidade de pontos a ser considerada ´e maior que
+um, devido ao Diagrama de Voronoi com um ponto ser trivial, onde existe
+apenas uma regi˜ao, que ´e o plano todo.
+
+Outra varia¸c˜ao que pode ser considerada ´e em rela¸c˜ao a quantidade de
+pontos em um plano, podendo o Diagrama ser ﬁnito (utilizado na abordagem
+dos jogos) ou inﬁnito.
+
+Podemos considerar outra deﬁni¸c˜ao alternativa utilizando o conceito de
+
+semi-planos.
+
+1https://pixabay.com/pt/vectors - Acessado em 15-07-2019
+
+23
+
+(a) Pontos.
+
+(b) Diagrama de Voronoi.
+
+Figura 2.2: Deﬁni¸c˜ao Diagrama de Voronoi.
+Fonte: Elaborado pelo autor.
+
+Deﬁni¸c˜ao 2.2 (Diagrama de Voronoi - Semi-planos ) Seja um conjunto
+A = {p1, p2, ..., pn} ⊂ R2 onde 2 ≤ n < ∞. Chamaremos b(pi, pj) a reta me-
+diatriz ortogonal ao segmento pipj e
+
+s(pi, pj) = {p/d(pi, p) ≤ d(pj, p); i (cid:54)= j, i, j ∈ In},
+
+o semi-plano contendo pi delimitado por b(pi, pj).
+
+Deﬁnimos a regi˜ao de Voronoi V (pi) como sendo a interse¸c˜ao dos n − 1
+
+planos contendo pi, ou seja,
+
+V (pi) = (cid:92)
+
+s(pi, pj),
+
+j∈In\{i}
+
+e o conjunto formado por essas regi˜oes
+
+V (A) = {V (p1), V (p2), ..., V (pn)},
+
+o Diagrama de Voronoi.
+
+Para ilustrar a Deﬁni¸c˜ao 2.2, temos na Figura 2.3a a constru¸c˜ao do semi-
+plano s(pi, pj) de um ponto pi delimitada pela reta mediatriz b(pi, pj) per-
+pendicular ao ponto m´edio do segmento pipj e na Figura 2.3b, a forma¸c˜ao
+do pol´ıgono V (pi) do ponto pi em rela¸c˜ao a outros pontos.
+
+Alguns elementos presentes na constru¸c˜ao de um Diagrama de Voronoi
+devem ser destacados. Todo ponto do conjunto considerado no plano s˜ao
+chamados geradores onde cada regi˜ao que ´e gerada por estes formam os
+pol´ıgonos. Al´em disso, se p ´e um gerador, a ´area do pol´ıgono formada por p
+ser´a denotada por |V (p)|.
+
+Pela Deﬁni¸c˜ao 2.2, pode-se veriﬁcar que ´e considerada a igualdade na
+distˆancia euclidiana onde esta caracteriza a fronteira que o pol´ıgono faz com
+
+24
+
+(a) Semi-plano.
+
+(b) Pol´ıgono (Regi˜ao mais escura).
+
+Figura 2.3: Diagrama de Voronoi - Semi-planos.
+Fonte: Elaborado pelo autor.
+
+outro pol´ıgono adjacente, chamada de aresta a(pi, pj). Estas arestas s˜ao for-
+madas por pontos que est˜ao mais pr´oximos de dois geradores, dos pol´ıgonos
+adjacentes, do que qualquer outro, conforme Figura 2.4a. Se uma aresta
+n˜ao tem ﬁm, ou seja, uma semirreta, ou ´e delimitada pelo limite do plano
+considerado, ela ´e denominada inﬁnita.
+
+Outro elemento do Diagrama ´e o v´ertice deﬁnido pelo ﬁm de um aresta.
+V´ertices s˜ao comuns a 3 ou mais pol´ıgonos e seu grau ´e o n´umero de arestas
+incidentes, como na ilustra¸c˜ao da Figura 2.4b. Quando existe pelo menos
+um v´ertice de grau 4 ou maior, o Diagrama ´e chamado de degenerado.
+
+(a) Aresta.
+
+(b) V´ertices, todos grau 3.
+
+Figura 2.4: Elementos do Diagrama.
+Fonte: Elaborado pelo autor.
+
+Propriedade 2.1 Cada v´ertice v do diagrama ´e centro da circunferˆencia
+C(v) que passam pelos geradores cujas regi˜oes s˜ao comuns a este v´ertice.
+Al´em disso, o interior de C(v) n˜ao cont´em nenhum outro gerador (Figura
+2.5).
+
+25
+
+Figura 2.5: Circunferˆencia centrada em um v´ertice do Diagrama.
+Fonte: Elaborado pelo autor.
+
+Observando que um pol´ıgono ´e um conjunto fechado, suas fronteiras, vide
+
+Figura 2.6, podem ser determinadas da seguinte maneira
+
+∂V (pi) = V (pi) ∩ V (pj); i (cid:54)= j, i, j ∈ In.
+
+Figura 2.6: Fronteira de um pol´ıgono.
+Fonte: Elaborado pelo autor.
+
+Uma deﬁni¸c˜ao alternativa para o Diagrama de Voronoi considera o con-
+junto das fronteiras, V (A) = {∂V (p1), ∂V (p2), ..., ∂V (pn)}, por´em n˜ao ´e
+muito usual essa deﬁni¸c˜ao, pois a estrutura deixaria de ser uma tessela¸c˜ao e
+passaria a ser uma rede.
+
+Devido as deﬁni¸c˜oes usuais do Diagrama de Voronoi serem no espa¸co R2,
+temos que com a deﬁni¸c˜ao alternativa por semi-planos ´e poss´ıvel deﬁnir o
+diagrama em Rm. Assim, consideremos a posi¸c˜ao dos pontos por localiza¸c˜ao
+vetorial para a formaliza¸c˜ao, ou seja, para um ponto p em Rm, suas coorde-
+nadas ser˜ao representadas por p = (x1, x2, ..., xm).
+
+26
+
+Deﬁni¸c˜ao 2.3 (Diagrama de Voronoi - Rm [5] ) Seja um conjunto de pon-
+tos A = {p1, p2, ..., pn} ⊂ Rm, com representa¸c˜ao vetorial, onde 2 ≤ n < ∞.
+
+Cada regi˜ao de Voronoi V (pi) ´e determinada por
+V (pi) = {p/(cid:107)p − pi(cid:107) ≤ (cid:107)p − pj(cid:107) ; i (cid:54)= j, i, j ∈ In} = (cid:92)
+
+s(pi, pj),
+
+j∈In\{i}
+
+e denominada poliedro de dimens˜ao m.
+
+Desse modo, deﬁnimos o Diagrama de Voronoi como a uni˜ao dessas
+
+regi˜oes
+
+V (A) = {V (p1), V (p2), ..., V (pn)}.
+
+Com a abrangˆencia da Deﬁni¸c˜ao 2.3, podemos deﬁnir o diagrama line-
+armente, ou seja, no R, onde essa estrutura ser´a usada para fundamentar
+alguns jogos.
+
+Deﬁni¸c˜ao 2.4 (Diagrama de Voronoi - R [18]) Seja A = {p1, p2, ..., pn}
+⊂ R um conjunto de pontos onde 2 ≤ n < ∞ e os pontos pi est˜ao ordenados
+em ordem crescente p1 < p2 < ... < pn . Seja ei o ponto equidistante entre o
+pontos consecutivos pi−1 e pi, ou seja, ei = 1
+2(pi−1 + pi), sendo e1 = −∞ e
+en = +∞. Dessa forma, a regi˜ao Voronoi de pi ser´a o intervalo
+
+e a uni˜ao destas regi˜oes
+
+V (pi) = [ei, ei+1],
+
+V (A) = {V (p1), V (p2), ..., V (pn)},
+
+o Diagrama de Voronoi.
+
+Como a deﬁni¸c˜ao ´e linear, os elementos pi, geradores, do conjunto A, s˜ao
+pontos da reta R, ou seja, n´umeros reais. Desse modo, a constru¸c˜ao do Dia-
+grama se baseia em determinar quais pontos da reta real est˜ao mais pr´oximo
+ao n´umero real pi. Assim, as regi˜oes Voronoi nessa dimens˜ao s˜ao intervalos
+e n˜ao pol´ıgonos e as fronteiras s˜ao pontos coincidindo com os v´ertices, pois
+v´ertices s˜ao as extremidades das arestas. A Figura 2.7 demonstra o Diagrama
+de Voronoi Linear.
+
+Por mais que seja poss´ıvel formalizar as deﬁni¸c˜oes, existe uma deﬁni¸c˜ao
+intuitiva capaz de demonstrar a origem da forma¸c˜ao das regi˜oes de Voronoi
+construindo o diagrama pela deﬁni¸c˜ao chamada Ondas Expans´ıveis [3] ou
+Modelo de Crescimento Voronoi [5].
+
+Consideremos o seguinte conceito: seja um conjunto A com geradores pi e
+um ponto p arbitr´ario do plano. Centramos um c´ırculo C em p crescendo seu
+raio a partir do zero e em certo momento C ir´a atingir um ou mais geradores
+pi. Trˆes casos podem ocorrer:
+
+27
+
+Figura 2.7: Diagrama de Voronoi Linear.
+Fonte: Elaborado pelo autor.
+
+• Se p atinge apenas um gerador pi, ent˜ao p ∈ V (pi);
+
+• Se p atinge dois geradores pi e pj, ent˜ao p ∈ ∂V (pi) = V (pi) ∩ V (pj);
+
+• Se p atinge trˆes ou mais geradores, ent˜ao p ´e um v´ertice adjacente a
+
+esses geradores.
+
+Desse modo, seguindo esse racioc´ınio, por´em com os geradores, temos
+
+outra deﬁni¸c˜ao do Diagrama de Voronoi.
+
+Deﬁni¸c˜ao 2.5 (Diagrama de Voronoi - Intuitiva ) Seja o conjunto de
+geradores A = {p1, p2, ..., pn} ⊂ R2 e a expans˜ao de um c´ırculo C de cada
+um dos n geradores do plano, a mesma velocidade.
+
+Os pontos do plano pertencer˜ao as regi˜oes dos geradores cujos c´ırculos
+os atingirem primeiro, formando os pol´ıgonos V (pi), i ∈ In at´e os c´ırculos
+atingirem outros c´ırculos (e as delimita¸c˜oes do plano).
+
+O Diagrama de Voronoi ser´a formado pelo conjunto de todos V (pi).
+
+A Figura 2.8 apresenta o comportamento do Modelo de Crescimento Vo-
+ronoi para a Deﬁni¸c˜ao 2.5, crescendo discretamente o raio dos geradores at´e
+a forma¸c˜ao completa do Diagrama de Voronoi.
+
+2.2 Triangula¸c˜ao de Delaunay
+
+O Diagrama de Voronoi e a Triangula¸c˜ao de Delaunay s˜ao comumente
+discutidas em paralelo, principalmente pela obten¸c˜ao de um diagrama a par-
+tir do outro e pelas v´arias an´alises que cada um traz para cada situa¸c˜ao.
+
+28
+
+(a) Raio 0.
+
+(b) Raio 1.
+
+(c) Raio 2.
+
+(d) Raio 3.
+
+(e) Raio 4.
+
+(f) Raio 5.
+
+(g) Raio > 5.
+
+Figura 2.8: Diagrama de Voronoi - Intuitiva.
+Fonte: Elaborado pelo autor.
+
+Exemplo disso ´e a jogabilidade de alguns Jogos de Voronoi serem melhor dis-
+cutidas pela Triangula¸c˜ao de Delaunay quando o crit´erio envolve quantidade
+de fronteiras de uma regi˜ao Voronoi.
+
+Para conceituar o novo diagrama, tomemos um Diagrama de Voronoi e
+consideramos as arestas inﬁnitas e ligamos estas a um ´unico ponto, um v´ertice
+extra. Com essa estrutura teremos um conjunto de pontos, os v´ertices do
+Diagrama de Voronoi, e um conjunto de arestas caracterizando um grafo, ou
+seja, todos os v´ertices tˆem alguma liga¸c˜ao, arestas, e nenhuma cruza com a
+outra. Al´em disso, todo grafo planar possui seu grafo-dual, isto ´e, cria-se um
+v´ertice para cada regi˜ao do planar e para cada aresta do planar que separa
+duas regi˜oes, uma aresta ligando os v´ertices que representam essas regi˜oes
+adjacentes do planar [19].
+
+Assim sendo, seja o grafo planar a partir do Diagrama de Voronoi e
+fazendo a liga¸c˜ao de cada dois geradores que fazem fronteira pelas regi˜oes que
+cada um representa, temos como resultado outra tessela¸c˜ao, esta conhecida
+como Triangula¸c˜ao de Delaunay [20] (Figura 2.9).
+
+29
+
+(a) Diagrama de Voronoi.
+
+(b) Grafo Planar.
+
+(c) Grafo Dual.
+
+(d) Triangula¸c˜ao de Delaunay.
+
+Figura 2.9: Triangula¸c˜ao de Delaunay.
+Fonte: Elaborado pelo autor.
+
+Deﬁni¸c˜ao 2.6 (Triangula¸c˜ao de Delaunay) Seja V (A) o Diagrama Vo-
+ronoi (n˜ao degenerado) deﬁnido por um conjunto A = {p1, p2, ..., pn} ⊂ R2
+de pontos n˜ao-colineares onde 3 ≤ n < ∞.
+
+Ligando todos os pares de geradores cujas regi˜oes compartilham uma aresta
+comum, obtemos como resultado uma tessela¸c˜ao. Os pol´ıgonos formados
+ser˜ao somente triˆangulos, deﬁnindo uma Triangula¸c˜ao de Delaunay dada por
+D(A) [5].
+
+A restri¸c˜ao de que o n´umero de pontos seja maior que 3 implica na
+condi¸c˜ao de que tamb´em n˜ao sejam colineares, j´a que 2 geradores sempre s˜ao
+colineares. Mas o principal motivo ´e que, se a quantidade de pontos no con-
+junto for menor que 3 ou colineares, n˜ao ´e poss´ıvel construir um triˆangulo.
+Desse modo, a Triangula¸c˜ao de Delaunay ser´a utilizada em Jogos onde a
+estrutura ´e bidimensional e frequentemente denotaremos apenas por Trian-
+gula¸c˜ao.
+
+Os triˆangulos formados na estrutura s˜ao denominados faces e suas en-
+volt´orias formadas, arestas e a conex˜ao destas, v´ertices. Conhecidos os ele-
+mentos da estrutura de Delaunay consideremos as seguintes propriedades
+obtidas a partir de [21]:
+
+30
+
+P 1: Trˆes pontos pi, pj e pk s˜ao v´ertices de uma face da Triangula¸c˜ao se,
+e somente se, a circunferˆencia formada por estes pontos n˜ao contem
+nenhum outro ponto em seu interior (Figura 2.10a).
+
+P 2: Dois pontos pi e pj formam uma aresta da Triangula¸c˜ao se, e somente
+se, uma circunferˆencia que passa por estes pontos n˜ao contiver nenhum
+outro ponto em seu interior. (Na Figura 2.10b-c pode ser observado os
+dois casos).
+
+(a) V´ertices de uma face.
+
+(b) Arestas entre dois pon-
+tos.
+
+(c) Impossibilidade de ares-
+tas entre dois pontos.
+
+Figura 2.10: Propriedades da Triangula¸c˜ao de Delaunay.
+Fonte: Elaborado pelo autor.
+
+Uma deﬁni¸c˜ao bastante utilizada na an´alise da Triangula¸c˜ao ´e a do fecho
+convexo (Figura 2.11). Ele ´e uma delimita¸c˜ao do plano estabelecido por
+alguns pontos de um conjunto, tal que forma um per´ımetro contendo todos
+os outros em seu interior, construindo um pol´ıgono convexo. De uma outra
+forma, seja um el´astico envolvendo todos os pontos de um conjunto, de modo
+que ele se ajuste. A regi˜ao que o el´astico forma pode ser considerada o fecho
+convexo desse conjunto de pontos [5].
+
+Durante a constru¸c˜ao da Triangula¸c˜ao pode ocorrer uma anomalia, con-
+tendo faces de quatro ou mais v´ertices provenientes do Diagrama de Voronoi
+(degenerado) conter v´ertices com mais de 3 arestas. A solu¸c˜ao para obter
+
+31
+
+Figura 2.11: Fecho Convexo de um conjunto de pontos.
+Fonte: Elaborado pelo autor.
+
+somente triˆangulos ´e particionar as faces anˆomalas em triˆangulos, por exem-
+plo, tomando uma face anˆomala, escolher um de seus v´ertices e lig´a-lo aos
+outros v´ertices dessa mesma face, exceto aos dois v´ertices adjacentes.
+
+Casos como estas anomalias contidas nas Triangula¸c˜oes resultantes de
+Diagramas de Voronoi Degenerados ou triangula¸c˜oes quaisquer que n˜ao s˜ao
+obtidas pelo Diagrama de Voronoi, podem n˜ao ser Triangula¸c˜oes de Delau-
+nay, pois esta possui uma propriedade que otimiza sua estrutura buscando
+triˆangulos mais uniformes. Mas com a utiliza¸c˜ao da propriedade P 1 ´e poss´ıvel
+obter uma Triangula¸c˜ao de Delaunay. O m´etodo Flip de Arestas garante esta
+propriedade analisando os triˆangulos obtidos ou quando s˜ao inseridos novos
+pontos na estrutura, movendo as arestas e criando novos triˆangulos no lugar.
+
+Flip de Aresta:
+
+• Seja a uma aresta de D(A) e o quadril´atero H formado por dois triˆangulos,
+T1 e T2, tendo a como aresta comum, ou seja, a = T1 ∩ T2. O Flip de
+Aresta ocorre ao trocar os v´ertices que formam a pelos outros 2 v´ertices
+de H, criando novos triˆangulos, T3 e T4;
+
+• Ordenando os ˆangulos dos triˆangulos que formam H, antes e depois
+do ﬂip de a, em ordem crescente. Se o menor ˆangulo antes do ﬂip for
+menor que o menor ˆangulo ap´os o ﬂip, chamamos a, antes do seu ﬂip,
+de aresta ilegal. O m´etodo Flip de Aresta ´e ilustrado pela Figura 2.12,
+com as compara¸c˜oes dos menores ˆangulos, antes e depois do m´etodo.
+
+• Uma triangula¸c˜ao ´e legal quando n˜ao possui arestas ilegais. Al´em disto,
+uma triangula¸c˜ao ´e uma Triangula¸c˜ao de Delaunay se, e somente se, a
+triangula¸c˜ao ´e legal.
+
+32
+
+(a) Menor ˆangulo: 19, 6◦
+
+(b) Menor ˆangulo: 30◦
+
+(c) Aresta Legal e Ilegal
+
+Figura 2.12: Flip de Arestas.
+Fonte: Elaborado pelo autor.
+
+Assim, o Flip de Aresta faz com que arestas ilegais se tornem legais, ou
+seja, o menor ˆangulo dos triˆangulos ´e aumentado trocando os v´ertices da
+aresta comum desses triˆangulos.
+
+Uma maneira de identiﬁcar se uma aresta ´e ilegal para fazer o ﬂip, ´e usar
+a pr´opria propriedade P 1 da seguinte forma: seja pipj a aresta comum aos
+triˆangulos pipjpk e pipjpl e C a circunferˆencia formada pelos pontos pipjpk.
+O segmento pipj ser´a uma aresta ilegal se, e somente se, pl estiver no interior
+de C. Desse modo, se todos os quatros pontos pertencem a C, ambas as
+arestas pipj e pkpl s˜ao legais (Figura 2.13).
+
+Desse modo, podemos dizer que a ﬂip de arestas maximiza o ˆangulo
+m´ınimo por toda a triangula¸c˜ao de um conjunto de pontos. Essa propriedade
+da Triangula¸c˜ao pode ser analisada em uma das suas principais utiliza¸c˜oes:
+a constru¸c˜ao de uma malha [20], mais especiﬁcamente a de uma superf´ıcie
+terrena com relevo ou depress˜ao.
+
+A constru¸c˜ao da malha ocorre da seguinte forma: tomemos um conjunto
+discreto de pontos de uma regi˜ao tridimensional sendo uma das coordenadas
+a altura da regi˜ao. Considerando somente as outras coordenadas, do plano,
+
+33
+
+(a) Aresta Ilegal
+
+(b) Aresta Legal
+
+Figura 2.13: Identiﬁca¸c˜ao de aresta ilegal.
+Fonte: Elaborado pelo autor.
+
+constr´oi-se a Triangula¸c˜ao e ent˜ao inclui as coordenadas da altura. Esse uso
+da tessela¸c˜ao reconstr´oi a superf´ıcie de forma que seja poss´ıvel identiﬁcar
+aproximadamente os desn´ıveis da superf´ıcie real (Figura 2.14a).
+
+A Triangula¸c˜ao de Delaunay faz com que a malha seja mais pr´oxima da
+superf´ıcie do que outra triangula¸c˜ao devido o ﬂip de aresta maximizar os
+ˆangulos dos triˆangulos evitando estes com formas alongadas criando assim
+bifurca¸c˜oes nas superf´ıcies que geralmente n˜ao condiz com a continuidade de
+um relevo, exemplo disso ´e a reconstru¸c˜ao de uma superf´ıcie na Figura 2.14b.
+
+(a) Malha.
+
+(b) Reconstru¸c˜ao de superf´ıcie.
+
+Figura 2.14: Aplica¸c˜ao da Triangula¸c˜ao de Delaunay.
+Fonte: a) Elaborado pelo autor e b) P´agina da USP2.
+
+Portanto, devido ao Diagrama de Voronoi e a Triangula¸c˜ao de Delaunay
+possu´ırem uma dualidade em suas estruturas, cada uma cont´em, de certa
+forma, a mesma informa¸c˜ao que a outra, por´em s˜ao representadas de for-
+mas diferentes [22]. Consequentemente, a Triangula¸c˜ao ser´a utilizada para
+jogos que exijam alguma an´alise ou discuss˜ao particular de acordo com a
+jogabilidade apresentada.
+
+2https://edisciplinas.usp.br/pluginﬁle.php/2027283/mod resource/content/0/PMI3331%20-
+
+MDE.pdf - Acessados em 15-07-2019.
+
+34
+
+Cap´ıtulo 3
+
+Constru¸c˜ao
+
+A parte da constru¸c˜ao do Diagrama de Voronoi ´e o enlace que a ge-
+ometria e a computa¸c˜ao se conectam, pois como dito no Cap´ıtulo 1, sua
+constru¸c˜ao teve maior aten¸c˜ao com o desenvolvimento de ´areas da Ciˆencia
+da Computa¸c˜ao, onde a maior inﬂuˆencia foi no campo da Geometria Com-
+putacional.
+
+Por mais que houvessem formas de constru¸c˜ao do Diagrama, os m´etodos
+eram manuais, envolvendo r´egua e compasso, e por mais que fundamental-
+mente seja esse o m´etodo, gera-se erros devido a aproxima¸c˜oes de medidas e
+cria-se um trabalho bem custoso.
+
+Sendo as classiﬁca¸c˜oes dos Jogos de Voronoi serem diversiﬁcadas, o con-
+ceito para a constru¸c˜ao do Diagrama de Voronoi, se torna crucial para o
+entendimento dessa tessela¸c˜ao e assim abrir portas para trabalhos did´aticos,
+j´a que envolvem uma cole¸c˜ao de elementos matem´aticos.
+
+Al´em disso, ´e a inser¸c˜ao do conceito de algoritmos, elemento principal
+da computa¸c˜ao, que eleva a relevˆancia da abordagem da constru¸c˜ao do Dia-
+grama. Por deﬁni¸c˜ao, algoritmo ´e uma sequˆencia ﬁnita de regras que, apli-
+cada a um n´umero ﬁnito de dados, permite solucionar classes semelhantes
+de problemas [23]. Logo, tal elemento ´e um ponto de partida para o campo
+da computa¸c˜ao, sendo sua extens˜ao extremamente associada a solu¸c˜oes de
+problemas matem´aticos.
+
+Quando ´e constru´ıdo o Diagrama no plano podemos considerar duas si-
+tua¸c˜oes em rela¸c˜ao aos Jogos com 2 jogadores cada um com n geradores:
+jogos de uma rodada ou de n rodadas. Quando o jogo ´e de uma rodada, o
+Diagrama ´e constru´ıdo integralmente, ou seja, todos os 2n pontos j´a est˜ao no
+plano e o Diagrama ´e feito considerando 2n pontos. J´a o jogo com n rodadas,
+o Diagrama pode ser constru´ıdo incrementalmente, quando a regra do jogo
+exige a tessela¸c˜ao constru´ıda a medida que s˜ao feitas as jogadas, pois nesse
+caso o jogo ´e interativo entre os jogadores, ou seja, jogadas intercaladas.
+
+35
+
+Para todas as constru¸c˜oes ser´a considerado o espa¸co de um plano onde,
+primeiramente, ser´a introduzida a constru¸c˜ao fundamental para conceituar a
+estrutura b´asica do Diagrama, seguida da se¸c˜ao que apresenta a constru¸c˜ao
+interativa para as situa¸c˜oes de jogos de n rodadas baseado no algoritmo
+interativo e ent˜ao, explanados todos os conceitos dos objetos que colaboram
+para o algoritmo por varredura que constr´oi o Diagrama em situa¸c˜ao de jogos
+de uma rodada.
+
+3.1 Constru¸c˜ao Fundamental
+
+Consideremos o caso trivial de constru¸c˜ao do Diagrama do conjunto A
+com trˆes geradores, A = {p1, p2, p3}. Tal constru¸c˜ao ´e destina para ﬁns de
+entendimento da gera¸c˜ao das arestas de forma fundamental.
+
+Os elementos para constru¸c˜ao s˜ao bem simples e s˜ao provenientes da
+
+Deﬁni¸c˜ao 2.2, seguindo Algoritmo 1 - Algoritmo Fundamental.
+
+Algoritmo 1: Algoritmo Fundamental
+
+Entrada: A = {p1, p2, p3}
+Sa´ıda: Diagrama de Voronoi de A
+
+Construir os segmentos p1p2, p2p3 e p3p1;
+Construir as retas mediatrizes b(p1p2), b(p2p3) e b(p3p1) ortogonais
+aos segmentos p1p2, p2p3 e p3p1, respectivamente;
+Inserir o ponto v na interse¸c˜ao das retas mediatrizes b(p1p2),
+b(p2p3) e b(p3p1);
+Inserir os pontos m´edios m1, m2 e m3 dos segmentos p1p2, p2p3 e
+p3p1, respectivamente;
+if v ´e exterior ao pol´ıgono p1p2p3 then
+
+Construir a semirreta −−→miv − miv, sendo mi o ponto m´edio
+pertence ao maior lado do pol´ıgono p1p2p3.
+Construir as semirretas −−→vmj; j ∈ {1, 2, 3} e j (cid:54)= i.;
+
+1 in´ıcio
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+else
+
+Construir as semirretas −−→vm1, −−→vm2 e −−→vm3;
+
+end
+Remover as retas mediatrizes.
+
+13
+14 ﬁm
+15 retorna V (A)
+
+Pela Propriedade 2.1, o ponto v ´e o v´ertice, pois o interior de C(v) n˜ao
+
+36
+
+cont´em nenhum outro gerador. Desse modo, v ´e a interse¸c˜ao das 3 semirretas
+constru´ıdas, que s˜ao as arestas, as quais delimitam as regi˜oes dos geradores
+que formam o Diagrama de Voronoi do conjunto A. Podemos veriﬁcar o
+Algoritmo 1 aplicado ao conjunto A pela Figura 3.1.
+
+(a) Linha 1.
+
+(b) Linha 2 − 4.
+
+(c) Linha 5.
+
+(d) Linha 6.
+
+Figura 3.1: Constru¸c˜ao Fundamental do Diagrama de Voronoi de A.
+Fonte: Elaborado pelo autor.
+
+Caso seja tomado esta constru¸c˜ao para conjuntos com mais elementos,
+seriam necess´arias adapta¸c˜oes tomando como base a propriedade 2.1 ocasi-
+onando maior custo para sua constru¸c˜ao. Desse modo, o prop´osito desta
+constru¸c˜ao se restringe apenas ao conjunto A.
+
+3.2 Constru¸c˜ao Incremental
+
+Quando h´a a regra no Jogo de Voronoi de que o Diagrama seja constru´ıdo
+a medida que s˜ao feitas as jogadas, ´e preciso refazer o diagrama com um
+gerador a mais no conjunto de pontos j´a inseridos no plano.
+
+Como h´a o acr´escimo de geradores a medida que s˜ao feitas as jogadas,
+um algoritmo com t´ecnica incremental seria o mais apropriado para que n˜ao
+fosse necess´ario refazer todo o Diagrama com os gerados do conjunto todo.
+
+37
+
+O algoritmo de complexidade O(n2) apresentado por Peter Green e Robin
+Sibson em 1977 [24] atende essa necessidade, onde ´e considerado o Diagrama
+constru´ıdo adicionando um pol´ıgono para o novo gerador inserido.
+
+Seja V (A) o Diagrama de Voronoi constru´ıdo do conjunto A = {p1, p2, ..., pn}
+
+e a inser¸c˜ao do gerador p ao plano. Para construir o pol´ıgono desse novo ge-
+rador p, basta seguir os passos do Algoritmo 2 - Algoritmo Incremental [25].
+
+Algoritmo 2: Algoritmo Incremental
+
+Entrada: p, A
+Sa´ıda: V (A(cid:48)); A(cid:48) = A ∪ {p}
+
+1 in´ıcio
+2
+
+Identiﬁcar o gerador p1 cujo pol´ıgono V (p1) cont´em p; Seja i = 1,
+´ındice auxiliar; repita
+
+Construir a mediatriz b(pi, p) at´e as interse¸c˜oes xi e xj que
+b(pj, p) faz com a fronteira de V (pi);
+if V (pj) ´e o pol´ıgono adjacente a V (pi) de modo que
+xj ∈ ∂V (pj) then
+
+Construir a mediatriz b(pj, p)
+Determinar a interse¸c˜ao xk que b(pj, p) faz com a fronteira
+V (pj);
+Fazer i = j e j = k;
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+at´e que o ponto x1 seja visitado;
+Remover a subestrutura dentro do pol´ıgono criado V (p).
+
+10
+11 ﬁm
+12 retorna V (A(cid:48))
+
+Para exempliﬁcar o funcionamento do Algoritmo 2, considere a inser¸c˜ao
+do gerador p em um Diagrama V (A) de um conjunto A. Temos que p ⊂
+V (p1), ent˜ao constru´ımos a aresta b(p1, p) de modo que determinamos os
+pontos de interse¸c˜ao x1 e x2. Como x2 ⊂ ∂V (p2), fazemos a mediatriz
+b(p2, p), encontrando a interse¸c˜ao x3 e por conseguinte constru´ımos a media-
+triz b(p3, p). Como ´e obtido x4 de forma que x4 ∈ b(p3, p) ∩ ∂V (p4), tracemos
+b(p4, p) revisitando x1 pois x1 ⊂ ∂V (p4). Portanto, ´e obtido V (p) e o novo
+Diagrama V (A(cid:48)); A(cid:48) = A ∪ {p} ´e obtido removendo a subestrutura no interior
+de V (p). Tais procedimentos s˜ao ilustrados pela Figura 3.2.
+
+N˜ao ´e incomum que existam v´arias implementa¸c˜oes que computam tal
+m´etodo, programado dentre v´arias linguagens e plataformas, onde algu-
+mas s˜ao desenvolvidas especiﬁcamente para um certo objetivo em uma ´area
+
+38
+
+(a) Etapa 1
+
+(b) Etapa 2 e 3 para b(p1, p)
+
+(c) Etapa 2 e 3 para b(p2, p)
+
+(d) Etapa 2 e 3 para b(p3, p)
+
+(e) Etapa 2 e 3 para b(p4, p)
+
+(f) Diargrama Voronoi de V (A(cid:48)) = A ∪ p
+
+Figura 3.2: Constru¸c˜ao Incremental do Diagrama Voronoi.
+Fonte: Elaborado pelo autor.
+
+de atua¸c˜ao. Um exemplo dessa implementa¸c˜ao ´e o encontrado no repo-
+sit´orio disponibilizado pelo americano Frederik Brasz [26], onde ´e poss´ıvel
+de forma dinˆamica e parametriz´avel, investigar a inclus˜ao de novos geradores
+no Diagrama. Com v´arias modalidades de visualiza¸c˜ao do Diagrama, existe
+uma conﬁgura¸c˜ao onde ´e poss´ıvel construir incrementalmente o Diagrama de
+forma livre com base em uma imagem informada na ferramenta, criando uma
+conﬁrma¸c˜ao ou n˜ao da estrutura sobre a imagem. A Figura 3.3 apresenta
+exemplos da utiliza¸c˜ao desta plataforma.
+
+39
+
+(a) Diarama Voronoi onde ´e poss´ıvel
+adicionar geradores.
+
+(b) Exemplo de imagem com Diagrama
+de Voronoi.
+
+Figura 3.3: Plataforma com implementa¸c˜ao da constru¸c˜ao incremental.
+Fonte: P´agina Frederik Brasz [26].
+
+3.3 Constru¸c˜ao por Varredura
+
+Para a constru¸c˜ao est´atica do Diagrama de Voronoi, um algoritmo de
+tempo de execu¸c˜ao O(nlog(n)) foi apresentado por Steven Fortune em 1987
+[27]. Tal algoritmo utiliza uma t´ecnica de varredura percorrendo o plano
+com uma linha (Sweep Line) horizontalmente ou verticalmente, tra¸cando as
+arestas do Diagrama.
+
+A constru¸c˜ao n˜ao ocorre exatamente quando a linha intersecta o ponto do
+plano, pois pontos `a frente da linha podem afetar o Diagrama previamente
+tra¸cado, por isso a ´area percorrida pela linha cont´em o Diagrama parcial-
+mente constru´ıdo.
+
+Para a completa constru¸c˜ao, o algoritmo utiliza um artif´ıcio de uma frente
+intermedi´aria composta por arcos de par´abola, chamada linha de praia (be-
+achline), que se utiliza do fato do arco de par´abola conter todos os pontos
+equidistantes de uma reta e de um ponto dado. Assim, a linha de varre-
+dura se comporta como a reta diretriz e os geradores, os focos das par´abolas
+(Figura 3.4).
+
+Assim, quando um arco de par´abola proveniente de um gerador encon-
+tra outro arco de par´abola de outro gerador, na linha de praia, pontos de
+interse¸c˜ao, chamados pontos de quebra (breakpoints), s˜ao obtidos e equidis-
+tam desses geradores. Ali´as, tais pontos de quebra s˜ao pontos pertencentes
+a fronteira dos pol´ıgonos que ir˜ao se formar e `a medida que a linha varre
+o plano, a forma das par´abolas v˜ao mudando e esses pontos de quebra v˜ao
+delineando as arestas do Diagrama (Figura 3.5).
+
+Dois acontecimentos, chamados eventos, ocorrem durante a varredura do
+plano na linha de praia: o surgimento e o desaparecimento de um arco de
+par´abola [21].
+
+40
+
+(a) Par´abola.
+
+(b) Pontos Equidistantes.
+
+Figura 3.4: Linha de Praia.
+Fonte: Elaborado pelo autor.
+
+(a) Varrimento encontra-
+dos 3 geradores.
+
+Varrimento
+quarto
+
+(b)
+um
+encontrado.
+
+com
+gerador
+
+Varrimento
+quinto
+
+(c)
+um
+encontrado.
+
+com
+gerador
+
+Figura 3.5: Ponto de Quebra e mudan¸ca dos arcos de par´abola.
+Fonte: Elaborado pelo autor.
+
+Quando a linha de varredura intersecta um gerador, conhecido como
+evento de ponto, uma par´abola degenerada ´e formada pois a distˆancia do
+foco a diretriz ser zero. Desse modo, uma reta perpendicular a linha de
+varredura, com origem no gerador, at´e a linha de praia ´e tra¸cada para repre-
+sentar essa par´abola degenerada. Assim, ao passo que a linha de varredura
+continua percorrendo o plano, dois pontos de quebra surgem e o arco vai
+ﬁcando mais largo caracterizando o surgimento do arco de par´abola.
+
+O evento do desaparecimento do arco de par´abola deve-se ao evento de
+c´ırculo, no qual este arco, na linha de praia, se reduz a um ponto. Essa
+redu¸c˜ao ´e resultante da aproxima¸c˜ao de dois outros arcos adjacentes at´e se
+encontrarem no ponto de desaparecimento do arco entre eles. Esse ponto
+de encontro dos 3 arcos equidista dos 3 geradores das respectivas par´abolas
+e tra¸cando uma circunferˆencia passando por estes 3 geradores, tal ponto
+de encontro coincide com o centro da circunferˆencia. Se ap´os a linha de
+
+41
+
+(a) Par´abola Degenerada.
+
+(b) Surgimento do arco parab´olico
+ap´os a linha de varredura passar
+pelo gerador.
+
+Figura 3.6: Evento de Ponto.
+Fonte: Elaborado pelo autor.
+
+varredura passar pelo ´ultimo ponto desta circunferˆencia e n˜ao interceptar
+nenhum outro gerador, o centro coincide com um v´ertice do Diagrama, caso
+contr´ario o evento de c´ırculo ´e desconsiderado (Figura 3.7).
+
+(a) Circunferˆencia passando por 3
+geradores.
+
+(b) Desaparecimento do arco ap´os
+a linha de varredura passar pelo
+´ultimo ponto da circunferˆencia e
+evidˆenciando o v´ertice.
+
+Figura 3.7: Evento de C´ırculo.
+Fonte: Elaborado pelo autor.
+
+O algoritmo apresentado por Fortune, por ser um varrimento direcional
+do plano at´e o ´ultimo gerador, necessita de uma estrutura de dados para
+armazenar as informa¸c˜oes referentes ao Diagrama `a medida que ele vai sendo
+constru´ıdo. Por isso, apenas os elementos de constru¸c˜ao foram descritos
+
+42
+
+para compreens˜ao da l´ogica do procedimento que o algoritmo executa, que
+se baseia no encontro da linha de varredura com cada gerador.
+
+Por causa do m´etodo de Fortune ser bem conhecido, as implementa¸c˜oes
+se tornam diversas, consolidando o m´etodo na literatura. Raymond Hill dis-
+ponibiliza em seu site [28] uma implementa¸c˜ao totalmente parametriz´avel
+do Algoritmo de Fortune, que possui uma anima¸c˜ao da linha de varredura,
+passando pelos pontos do plano de modo que ´e poss´ıvel identiﬁcar as ares-
+tas sendo constru´ıdas, os eventos de ponto e de c´ırculo, al´em da linha de
+praia (Figura 3.8.a). J´a na plataforma Desmos [29], uma implementa¸c˜ao
+do algoritmo disponibiliza um gr´aﬁco com o Diagrama j´a constru´ıdo e em
+raz˜ao da ferramenta ser dinˆamica, a linha de varredura ´e control´avel de modo
+que ´e poss´ıvel analisar como os arcos parab´olicos acompanham as arestas da
+estrutura previamente estabelecida (Figura 3.8.b).
+
+(a) Implementa¸c˜ao Raymond Hill.
+
+(b) Implementa¸c˜ao na Plataforma Desmos.
+
+Figura 3.8: Plataformas com implementa¸c˜ao da constru¸c˜ao por Varredura.
+Fonte: a) P´agina Raymond Hill [28] e b) P´agina Desmos [29].
+
+Portanto, tomando como base as v´arias aplica¸c˜oes do Diagrama de Voro-
+noi, problemas geom´etricos surgem e o Diagrama de Voronoi se prova uma po-
+derosa ferramenta para solu¸c˜ao destes. Isto posto, com a necessidade latente
+
+43
+
+da tecnologia entrela¸cada em qualquer atividade, solu¸c˜oes computacionais
+acabam se tornando necess´arias para n˜ao s´o sanar quest˜oes diversiﬁcadas,
+mas tamb´em automatiz´a-las e elevar a sua eﬁciˆencia.
+
+44
+
+Cap´ıtulo 4
+
+Jogos de Voronoi
+
+Em virtude da grande aplicabilidade do Diagrama de Voronoi, v´arias
+an´alises s˜ao discutidas, dentre elas a constru¸c˜ao do diagrama. Quando nos
+referimos a constru¸c˜ao podemos considerar tanto com os pontos j´a dispostos
+no espa¸co assim como a inclus˜ao de novos no Diagrama j´a constru´ıdo.
+
+Essas an´alises motivaram a inser¸c˜ao de regras no processo de constru¸c˜ao
+do Diagrama, que combinadas estabelecem restri¸c˜oes nos fatores que con-
+tribuem para a gera¸c˜ao dos pol´ıgonos e as considera¸c˜oes sobre o resultado
+caracterizando o que chamamos de Jogos de Voronoi.
+
+Existem varia¸c˜oes de Jogos de Voronoi, entre elas, regras, intera¸c˜oes,
+objetivos, estruturas, onde tais jogos servem como modelos utilizados para
+an´alise de um projeto administrativo, por exemplo, ou para an´alise de in-
+tera¸c˜oes entre entidades, como a competi¸c˜ao de mercado.
+
+As an´alises que ser˜ao apresentadas no presente cap´ıtulo s˜ao direcionadas
+`a intera¸c˜ao entre dois jogadores utilizando como estrutura o Diagrama de Vo-
+ronoi. Desse modo, os modelos Jogos de Voronoi tem como base a Teoria dos
+Jogos [30], pois este estuda decis˜oes que s˜ao tomadas em um ambiente onde
+v´arios jogadores interagem, ou seja, estuda as escolhas de comportamentos
+´otimos quando o custo e benef´ıcio de cada op¸c˜ao n˜ao ´e ﬁxo, mas depende da
+escolha dos outros indiv´ıduos [31].
+
+Nos Jogos de Voronoi, as decis˜oes s˜ao tomadas de acordo com a situa¸c˜ao
+do ambiente e, como existe a intera¸c˜ao, cada movimento para seu objetivo
+trar´a uma resposta. Neste estudo, ser˜ao apresentadas estrat´egias encontradas
+para atingir um ou mais objetivos que s˜ao situa¸c˜oes estrat´egicas onde joga-
+dores escolhem diferentes a¸c˜oes na tentativa de melhorar seu retorno. Assim
+sendo, temos que a Teoria dos Jogos contribui para se conhecer, previamente,
+o melhor resultado para os jogadores `a frente das estrat´egias praticadas.
+
+Os primeiros trabalhos sobre Jogos de Voronoi [32, 33] s˜ao baseados no
+Problema de Localiza¸c˜ao de Instala¸c˜oes Competitivas - PLIC (do inglˆes,
+
+45
+
+Competitive Facility Location Problem - CFLP) onde o objetivo era maxi-
+mar a ´area de duas franquias de lojas que seriam instaladas ao longo de uma
+avenida. Com essa aplica¸c˜ao e sua evolu¸c˜ao, pode-se dizer que as ´areas da
+economia e neg´ocios tiveram bastante inﬂuˆencia para fundamentar o Jogo
+de Voronoi j´a que o Diagrama de Voronoi gera uma tessela¸c˜ao que contribui
+visualmente para as estrat´egias de mercado de forma bem apurada.
+
+Por mais que, alguns Jogos de Voronoi apresentados possuam como base
+o PLIC, devido a impuls˜ao dos trabalhos nesse contexto, esses possuem ca-
+tegorias que os diferem. Cada jogo possui sua regra, jogabilidade, objetivo,
+al´em da sua estrutura no espa¸co.
+
+As classiﬁca¸c˜oes dos Jogos de Voronoi est˜ao diretamente ligadas as suas
+regras, o que contribui mais para sua aplica¸c˜ao j´a que ´e poss´ıvel implement´a-
+los de formas distintas. Tais categorias consideram;
+
+1. Dimens˜ao:
+
+(a) Linear: estudos no espa¸co R;
+(b) No Plano: estudos no espa¸co R2;
+
+2. Jogabilidade:
+
+(a) Uma rodada: o primeiro jogador joga todos seus pontos, depois o
+
+segundo jogador, os seus;
+
+(b) n rodadas: cada jogador joga a mesma quantidade de pontos, um
+
+depois do outro, em n rodadas;
+
+3. Objetivo:
+
+(a) Maximizar Regi˜ao: obter maior ´area total;
+
+(b) Maximizar Vizinhan¸ca: obter um total maior de quantidade de
+
+vizinhos (regi˜oes fronteira);
+
+4. Crit´erios: Particularidades que devem ser seguidas para atingir o obje-
+
+tivo.
+
+Comumente, no presente estudo, os jogadores ser˜ao identiﬁcados por J1
+para o primeiro jogador a jogar e J2 para o jogador que joga ap´os o primeiro.
+E, ser´a denominado Jogo, o tipo de Jogo de Voronoi pertinente a cada se¸c˜ao.
+
+46
+
+4.1 Jogo de Voronoi Linear
+
+Quando condicionamos por regras a constru¸c˜ao de um Diagrama de Vo-
+ronoi em R, deﬁnimos o Jogo de Voronoi Linear, o qual pode ser apresentado
+como fundamental para o contexto de Jogos de Voronoi. Por mais que tenham
+uma estrutura simples, possuem grande utiliza¸c˜ao, no caso, para introduzir
+o conceito do jogo.
+
+4.1.1 Jogo Tradicional Linear
+
+Uma formaliza¸c˜ao apresentada por Ahn et.
+
+al [32, 33], descreve es-
+trat´egias de ganho para J2, de turnos alternados em uma estrutura linear
+com formato segmento de reta ou circunferˆencia. Esse Jogo, segue como
+base contextual o PLIC, que determina a ´area de mercado de acordo com a
+atra¸c˜ao que o cliente tem pela instala¸c˜ao em rela¸c˜ao `a distˆancia.
+
+O Jogo ´e disputado por 2 jogadores, J1 e J2, cada um com n > 1 gera-
+dores, em turnos com jogadas alternadas. Ent˜ao, ´e constru´ıdo o Diagrama
+de Voronoi para 2n geradores, onde cada regi˜ao ´e atribu´ıda a um jogador de
+acordo com o gerador que lhe pertence, e o ganhador ´e o jogador que possui
+maior comprimento total da curva.
+
+Chamaremos de L uma por¸c˜ao cont´ınua de uma curva onde ser˜ao feitas
+as jogadas e constru´ıdo o Diagrama, sendo seu formato indiferente para o
+jogo.
+
+Ser˜ao desconsiderados jogos degenerados em que n = 1, pois se L for uma
+circunferˆencia, o jogo empata independentemente da disposi¸c˜ao dos pontos,
+e se L for um segmento de reta, J1 sempre ganha colocando o ponto gerador
+no ponto m´edio do segmento.
+
+´E estabelecido um conjunto dos pontos de cada jogador, assim seja G1 os
+
+geradores de J1 e G2, os de J2.
+
+Uma varia¸c˜ao interessante desse Jogo ´e a quantidade de geradores que
+cada jogador pode posicionar em cada rodada. Os Jogos cl´assicos com turnos
+alternados s˜ao posicionados um gerador por vez, neste ´e poss´ıvel determinar
+um lote de geradores a ser jogado em cada rodada.
+
+Suponhamos um jogo com k ≤ n jogadas sendo αi e βi o n´umero de ge-
+radores que J1 e J2 posicionam, respectivamente, na jogada i. Essa varia¸c˜ao
+possui as seguintes restri¸c˜oes:
+
+R1 ∀ 1 ≤ i ≤ k, αi, βi > 0;
+
+R2 ∀ 1 ≤ j ≤ k, (cid:80)j
+
+i=1 αi ≤ (cid:80)j
+
+i=1 βi;
+
+R3 (cid:80)k
+
+i=1 αi = (cid:80)k
+
+i=1 βi = n;
+
+47
+
+R4 αi < n (no jogo circular);
+
+R5 αi = 1 (no jogo na linha);
+
+Essa generaliza¸c˜ao de posicionamento em lote, al´em de incluir o Jogo
+cl´assico, quando αi = βi = 1, obriga tamb´em que os jogadores joguem a
+mesma quantidade (≥ 1) em cada turno. Antes do in´ıcio do Jogo, deve ser
+estabelecido os valores dos parˆametros k, αi e βi. Eles precisam ser ﬁxados
+antecipadamente para que a jogabilidade n˜ao seja dependente do J1, pois J2
+ter´a que jogar a mesma quantidade que J1 jogar.
+
+Considerando uma curva L, deﬁnimos alguns termos para explana¸c˜ao da
+
+estrat´egia do jogo, ilustrados pela Figura 4.1:
+
+• Intervalo: arco entre dois geradores sem nenhum gerador entre eles;
+
+• Intervalo Uniforme (IU): intervalo com geradores do mesmo jogador
+
+sendo suas extremidades;
+
+• Intervalo Quebrado (IQ): intervalo com geradores de jogadores distintos
+
+sendo suas extremidades;
+
+• Intervalo J1 (IJ1): IU tendo como extremidades geradores do J1;
+
+• Intervalo J2 (IJ2): IU tendo como extremidades geradores do J2;
+
+• Pontos Chave (PC): n posi¸c˜oes pr´e-determinadas em L;
+
+• Intervalo Chave (IC): Intervalo com suas extremidades com geradores
+
+posicionados em PC;
+
+• Intervalo Chave Quebrado (ICQ): IC com suas extremidades sendo ge-
+
+radores de jogadores distintos;
+
+• Intervalo Chave J1 (ICJ1): IC com suas extremidades sendo geradores
+
+de J1;
+
+• Intervalo Chave J2 (ICJ2): IC com suas extremidades sendo geradores
+
+de J2.
+
+Com os termos deﬁnidos, apresentamos a vers˜ao gen´erica da Estrat´egia
+Pontos Chave, que ser´a utilizada em ambas varia¸c˜oes, na linha e circular,
+para as jogadas de J2.
+
+48
+
+Intervalo Uniforme e Que-
+
+(a)
+brado.
+
+(b) Intervalo J1 e J2.
+
+(c) Pontos Chave e Inter-
+valo Chave - n = 5.
+
+Intervalo Chave Qu-
+
+(d)
+brado, J1 e J2 - n = 5.
+
+Figura 4.1: Deﬁni¸c˜oes de termos para Estrat´egia Pontos Chave.
+Fonte: Elaborado pelo autor.
+
+Estrat´egia Pontos Chave:
+
+– Etapa 1 : J2 posiciona seu gerador em um PC vazio;
+
+Esta etapa encerra quando todos PC s˜ao preenchidos, tanto por J1 ou
+J2.
+
+– Etapa 2 : J2 posiciona seu gerador em um ICJ1, quebrando o ICJ1.
+
+Esta etapa encerra quando todos ICJ1 s˜ao quebrados antes da ´ultima
+jogada de J2.
+
+– Etapa 3 : J2 quebra um IJ1. Esta etapa termina com o ´ultimo gerador
+
+de J2 posicionado.
+
+Com a Estrat´egia de Pontos Chave podemos garantir que depois da Etapa
+
+3 n˜ao exista mais ICJ1 e que todos IJ2 sejam ICJ2.
+
+Na primeira garantia, seja j > 1 o n´umero de geradores posicionados em
+PC por J1. Pela restri¸c˜ao R4, J2 tem pelo menos um PC com seu gerador,
+ent˜ao j < n e J1 pode formar no m´aximo j − 1 ICJ1. No ﬁm da Etapa
+
+49
+
+1, sobra n − j PC para J2 posicionar seus geradores e nas etapas seguintes,
+possui j − 1 geradores dispon´ıveis para quebrar os ICJ1.
+
+J´a na segunda garantia, na Etapa 1, J2 s´o posiciona em PC, e nas etapas
+seguintes J2 transforma IJ1 em IQ, assim se houver algum IJ2, estes ser˜ao
+ICJ2. Este caso ocorre quando J1 ou J2 n˜ao quebra um IJ2 ocupando um
+IC.
+
+Jogo de Voronoi Circular
+
+Nessa varia¸c˜ao da estrutura a curva L ´e uma curva fechada, uma circun-
+ferˆencia C, com tamanho do intervalo [0, 1]. A soma dos IJ1 e IJ2 de J1 e
+J2 s˜ao denominados G1c e G2c, respectivamente. O comprimento dos IQ s˜ao
+divididos ao meio e distribu´ıdos para cada jogador a parte que lhe pertence.
+Ganha quem possuir maior soma do comprimento de C, ou seja, J2 ganha se
+G2c − G1c > 0.
+
+Os PC s˜ao distribu´ıdos por C da seguinte forma: ui = i/n, i = 0, 1, ..., n−
+1. Supondo que J1 posiciona o gerador em 0, a Estrat´egia Pontos Chave para
+o jogo circular segue da seguinte maneira (Figura 4.2):
+
+– Etapa 1 : J2 posiciona seu gerador em um PC vazio.
+
+Esta etapa encerra quando todos PC s˜ao preenchidos, tanto por J1 ou
+J2.
+
+– Etapa 2 : J2 quebra o maior IJ1.
+
+Esta etapa encerra antes da ´ultima jogada de J2.
+
+– Etapa 3 : J2 quebra um IJ1:
+
+i) Se existe mais de um IJ1, J2 quebra o maior.
+
+ii) Se existe apenas um IJ1, seja d seu comprimento, ent˜ao J2
+posiciona seu gerador em um ICQ a uma distancia menor que 1/n − d
+da extremidade de J1 desse ICQ.
+
+A restri¸c˜ao R4, αi < n, deve ser declarada permitindo que J2 possa
+posicionar um gerador em um PC, pois caso contr´ario, J1 tomaria todos PC
+e conseguiria um empate.
+
+A Estrat´egia Pontos Chave ´e valida para essa varia¸c˜ao circular, pois na
+Etapa 1, J1 posiciona seu primeiro gerador em um PC, logo J2 pode posicio-
+nar em at´e n − 1 PC. Na Etapa 2, antes de cada jogada de J2, a quantidade
+de geradores de J2 posicionados ´e menor que os de J1, assim sempre pode
+existir pelo menos um IJ1, podendo ser um ICJ1 ou IJ1 menor que 1/n, os
+quais podem ser quebrados. Na Etapa 3, que ´e a ´ultima jogada de J2, se tem
+mais de um IJ1, quebra-se o maior e como os IJ2 s˜ao ICJ2, G2c > G1c. Se, se
+
+50
+
+(a) Pontos Chave.
+
+(b) Etapa 1.
+
+(c) Etapa 2.
+
+(d) Etapa 3.
+
+Figura 4.2: Estrat´egia Pontos Chave em uma circunferˆencia com n = 4
+rodadas, um gerador cada rodada (geradores enumerados de acordo com a
+sequˆencia de jogadas).
+
+Fonte: Elaborado pelo autor.
+
+tem somente um IJ1, este possui tamanho d < 1/n e J2 posiciona seu gerador
+em um ICQ criando um IJ2 maior que d, fazendo com que G2c > d = G1c.
+
+Jogo de Voronoi Na Linha
+
+Neste jogo, L ´e um segmento de reta no intervalo [0, 1]. A regi˜ao de
+comprimento do ponto 0 at´e ao primeiro gerador pertence ao jogador que
+posicionou este gerador, onde o caso para regi˜ao da direita que termina no
+ponto 1 ´e an´alogo.
+
+Para a Estrat´egia Pontos Chave, estende-se L para uma curva fechada
+C (cid:48) conectando os pontos 1 e 0 usando uma curva B chamada arco de borda.
+Os geradores de J1 e J2 em L particionam C (cid:48) em intervalos onde um desses
+contem B e esse ´e chamado Intervalo de Borda (IB). Desse modo, podemos
+deﬁnir IBQ, IBJ1, IBJ2 sendo IB de extremidades com geradores de jogadores
+distintos, com geradores de J1 e com geradores de J2, respectivamente.
+
+Os intervalos IJ1 e IJ2 dos geradores de J1 e J2 s˜ao G1c e G2c, respec-
+
+51
+
+tivamente, onde s´o ´e considerado o comprimento de L. No caso de IBQ, o
+intervalo n˜ao ´e divido igualmente, G1b e G2b denominam o tamanho de IB que
+pertence aos jogadores J1 e J2 e se IB ´e IBJ1 ou IBJ2, ent˜ao G1b = G2b = 0.
+O vencedor ´e quem possuir o maior comprimento da L com soma dos seus
+intervalos, ou seja, J2 ganha se (G2c + G2b) − (G1c + G1b) > 0.
+
+Os PC nessa varia¸c˜ao do jogo s˜ao marcados de acordo com a express˜ao
+ui = 1/2n + i/n, i = 0, 1, ..., n − 1. Supondo que J1 posiciona seu primeiro
+gerador em um PC, a Estrat´egia Pontos Chave para o jogo na linha exige
+uma adapta¸c˜ao da apresentada para o circular (Figura 4.3):
+
+– Etapa 1 : J2 posiciona seu primeiro gerador no PC u0 ou un−1 .
+
+– Etapa 2 : J2 posiciona seu gerador em um PC vazio.
+
+Etapa 2 encerra quando todos PC s˜ao preenchidos, tanto por J1 ou J2.
+
+– Etapa 3 : Casos a considerar:
+
+i) Se existe pelo menos um IJ1, J2 quebra o maior.
+
+ii) Se existe apenas IBJ1 para intervalos de J1:
+
+a) Uma das extremidades de IBJ1 ´e um PC. Assumindo que
+seja u0 e que a outra extremidade esteja no ponto 1 − d, J2 posici-
+ona seu gerador em qualquer lugar do intervalo (d, u0). Se un−1, J2
+posiciona seu gerador em qualquer lugar do intervalo (un−1, 1 − d).
+b) Nenhuma das extremidades de IBJ1 ´e um PC. Seja d o
+comprimento de IBJ1. J2 posiciona seu gerador em um ICQ a
+uma distˆancia menor que 1/n − d da extremidade de J1 desse
+ICQ.
+
+Etapa 3 encerra antes da ´ultima jogada de J2.
+
+– Etapa 4 : J2 posiciona seu ´ultimo gerador se acordo com um dos casos
+
+(nesta etapa n˜ao existe mais IBJ1):
+
+i) Se existe pelo menos um IJ1, J2 quebra o maior.
+
+ii) Se existe um IJ1, seja d o comprimento de IJ1, ent˜ao J2 posiciona
+seu gerador em um ICQ a uma distˆancia menor que 1/n − d da
+extremidade de J1 desse ICQ.
+
+A restri¸c˜ao R5, αi = 1, foi necess´aria para que J2 possa posicionar em um
+dos PC, u0 ou un−1, devido a estrat´egia requerer pelo menos um gerador de
+J2 em u0 ou un−1 para jogada do arco de borda na Etapa 3, caso contr´ario,
+J1 possuiria maiores chances de ganho.
+
+52
+
+(a) Pontos Chave.
+
+(b) Etapa 1 e 2.
+
+(c) Etapa 3.
+
+(d) Etapa 4.
+
+Figura 4.3: Estat´egia Pontos Chave em um segmento de reta com n = 4
+rodadas, um gerador cada rodada (geradores enumerados de acordo com a
+sequˆencia de jogadas).
+
+Fonte: Elaborado pelo autor.
+
+A estrat´egia na linha ´e tamb´em v´alida:
+Na Etapa 1, J1 n˜ao pode tomar ambos PC u0 e un−1. Na Etapa 3 ´e
+garantido pelo menos um IJ1, mesmo que seja IBJ1, e se IBJ1, u0 ou un−1
+tem o gerador de J2 e d < 1/2n, caso contr´ario, existir´a um ICQ. A valida¸c˜ao
+estrat´egia continua seguindo duas condi¸c˜oes:
+
+• Como na linha n˜ao traz a simetria dos PC que tem na circunferˆencia,
+pode ocorrer do J1 n˜ao conseguir colocar nenhum gerador nos PC e J2
+conseguir, assim os IJ1 ser˜ao menores que 1/n.
+
+(cid:5) Se o n´umero de IJ1 e IJ2 forem iguais, G2c > G1c;
+(cid:5) Se houver IBJ1 ou IBJ2, G1b = G2b = 0 e G2c > G1c;
+(cid:5) Se houver IBQ, um dos PC u0 ou un−1 e pertence a J2, ent˜ao
+
+1/2n = G2b < G1b e G2c > G1c.
+
+• Caso J1 consiga pelo menos posicionar em um PC, ap´os Etapa 2 assume-
+se que todos PC foram preenchidos e ent˜ao chegamos na Etapa 4.
+
+(cid:5) Se (ii) da Etapa 3 n˜ao ocorrer, n˜ao existir´a ICJ1 antes da Etapa
+
+4 e se existir ICQ, este poder´a ser um IB.
+
+∗ Se ocorrer (ii) da Etapa 4, ent˜ao G2c > G1c;
+
+53
+
+∗ Se ocorrer (i) da Etapa 4, IJ1 ter˜ao tamanhos menores 1/n e
+IJ2 ser˜ao ICJ2 e G2c > G1c; Se ainda nesta condi¸c˜ao houver
+IBJ1 ou IBJ2, G1b = G2b = 0 e G2c > G1c; e se houver IBQ,
+um dos PC u0 ou un−1 e pertence a J2, ent˜ao
+1/2n = G2b < G1b e G2c > G1c somente se ocorrer (i) da
+Etapa 3.
+
+(cid:5) Se (ii) da Etapa 3 ocorrer, n˜ao haver´a ICJ1 na Etapa 4;
+
+∗ Se ocorrer (ii) da Etapa 4, ent˜ao G2c > G1c;
+∗ Se ocorrer (i) da Etapa 4, considera-se a ´ultima ocorrˆencia de
+
+(ii) da Etapa 3, onde IB ´e o ´unico IJ1.
+
+- Se a), n˜ao haver´a IBJ1 ou IBJ2 depois da jogada de J2,
+assim at´e o ﬁm do jogo, J2 apenas quebra IJ1. Assim, res-
+tar´a apenas IQ e IBQ e consequentemente G1c = G2c = 0
+e G2b < G21.
+
+- Se b), haver´a um IJ2 e um IBJ1 tal que IJ2 > IBJ1 e
+como nessa Etapa J2 s´o quebra IJ1 e n˜ao IBJ1 al´em de
+n˜ao ser poss´ıvel criar mais IJ2, ent˜ao G2c > G1c pois
+G1b = G2b = 0.
+
+Portanto, por mais que seja poss´ıvel empatar no Jogo onde J2 jogue
+em posi¸c˜oes opostas em R em que J1 jogue, garantindo regi˜oes de mesmo
+tamanho, a Estrat´egia de Pontos Chave por [33] pode garantir a vit´oria de
+J2, mesmo que com margem pequena.
+
+Al´em disso, com varia¸c˜oes de estrutura, circular e segmento de reta e
+com adapta¸c˜oes da estrat´egia para cada uma, foi analisada a jogabilidade de
+uma forma generalizada onde ´e poss´ıvel escolher a quantidade de geradores
+a serem posicionados por vez, os geradores em lote, que ´e um diferencial de
+Jogos de Voronoi, j´a que a interatividade usualmente ocorre uma ”vez”para
+cada.
+
+4.1.2 Jogo de Hotelling
+
+Nos Jogos de Voronoi, quando um gerador ´e posicionado, majoritaria-
+mente ele ﬁca ﬁxo para que o Diagrama seja constru´ıdo. Por´em, uma varia¸c˜ao
+dos Jogos de Voronoi existente, Jogo de Hotelling, permite que o gerador po-
+sicionado seja realocado, ou seja, ´e poss´ıvel refazer uma jogada com o mesmo
+gerador.
+
+O Jogo de Hotelling ´e baseado no artigo do estat´ıstico matem´atico Harold
+Hotelling [34], onde ele discute a inﬂuˆencia das estrat´egias de com´ercio por
+
+54
+
+empreendedores, analisando o interesse de clientes em rela¸c˜ao aos pre¸cos de
+produtos ofertados e a distˆancia entre o comprador e vendedor.
+
+O Jogo, ´e em uma linha com 2 jogadores onde cada um posiciona apenas
+um gerador e o reposiciona k vezes, a ﬁm de maximizar sua regi˜ao. O jogador
+garante vit´oria quando possuir a maior regi˜ao linear, magnitude do intervalo,
+ap´os as k rodadas pela constru¸c˜ao do Diagrama de Voronoi.
+
+A estrat´egia de ganho ´e bem simples: posicionar o gerador no ponto m´edio
+da linha ou ﬁnalizar a jogada k posicionando o gerador no centro garantindo
+metade da curva.
+
+Por mais que n˜ao tenha sido encontrada uma estrat´egia elaborada para
+este jogo, combina¸c˜oes de regras podem ser estabelecidas para incrementar
+sua jogabilidade, como exemplo, um Jogo derivado, somar todas as regi˜oes,
+Σ|Vk(p)|, de cada jogador em cada jogada onde o vencedor ´e quem obter
+a maior soma. Assim, posicionando o gerador sempre perto do gerador do
+advers´ario, na maior por¸c˜ao lateral da regi˜ao do oponente, que vai de uma
+extremidade ao gerador advers´ario, garante regi˜oes sempre maiores.
+
+Sendo J1 o primeiro a posicionar seu gerador p seguido do gerador q de
+J2 podemos observar, na Figura 4.4, jogadas do Jogo de Hotelling com o
+resultado J2 vencedor para o primeiro jogo com maior comprimento de um
+segmento de reta de tamanho 1 ap´os 2 rodadas, e na Figura 4.5, com resultado
+J1 vencedor, no Jogo de Hotelling derivado, com o maior somat´orio de com-
+primentos ap´os 2 posicionamentos, sendo Σ|V2(p)| = 1, 01 > Σ|V2(q)| = 0, 99.
+
+(a) k = 1
+
+(b) k = 2
+
+Figura 4.4: Resultado Jogo de Hotelling Tradicional, J2 vencedor.
+Fonte: Elaborado pelo autor.
+
+Contudo, o Jogo de Hotelling geralmente ´e contextualizado pela com-
+peti¸c˜ao de 2 empreendedores em um espa¸co linear contabilizando tanto o
+custo de um cliente para se ter acesso a cada uma das lojas de cada empreen-
+dedor quanto o pre¸co de venda do item de desejo do cliente. Kyle Woodward
+[35] e Presh Talwalkar [36], s˜ao alguns dos pesquisadores que descrevem o
+processo de Hotelling usando o exemplo de dois carrinhos de sorvetes, de
+marcas distintas, na beira da praia.
+
+Cada carrinho, C1 e C2, quer ﬁcar perto dos clientes pois ﬁcam mais
+acess´ıveis, ent˜ao se espalham, cada um criando sua margem de contato ge-
+
+55
+
+(a) k = 1
+
+(b) k = 2 - J1
+
+(c) k = 3 - J2
+
+Figura 4.5: Resultado Jogo de Hotelling Derivado, J1 vencedor.
+Fonte: Elaborado pelo autor.
+
+ograﬁcamente. Se considerar um segmento de reta de tamanho 1, C1 se
+posiciona no ponto 0, 25 e C2 no ponto 0, 75 e ap´os a divis˜ao do espa¸co
+(pelo Diagrama de Voronoi), cada um teria a mesma quantidade de espa¸co.
+Por´em, cada carrinho busca maior territ´orio, ent˜ao um carrinho se aproxima
+do outro para conseguir maior regi˜ao da praia diminuindo a do concorrente.
+Desse modo, na busca de maximizar o territ´orio, acabam se encontrando no
+centro da praia, tendo, ambos, mesma quantidade territorial da praia, igual
+a 0, 5 na reta (Figura 4.6).
+
+Por´em, se ap´os atingirem o centro, se um dos carrinhos se mover, este
+ter´a seu territ´orio reduzido, pois o advers´ario j´a ter´a garantido metade da
+regi˜ao por se situar no centro da praia e ir´a dividir somente metade dela
+ap´os mudan¸ca de localiza¸c˜ao do primeiro carrinho. Okabe [5], chamou essa
+conﬁgura¸c˜ao central de Equil´ıbrio Global, onde as lojas n˜ao possuem nenhum
+incentivo em se reposicionar. No Jogo de Hotelling, o Equil´ıbrio Global se
+caracteriza como empate.
+
+Diferentemente do sentido de geradores equidistantes do centro, a es-
+
+56
+
+(a) Divis˜ao Igual para C1 e C2
+
+(b) Busca em maximizar regi˜ao pelo C1.
+
+(c) Cobertura m´axima simultˆanea por C1 e C2
+
+Figura 4.6: Contextualiza¸c˜ao Jogo de Hotelling - Carrinhos de sorvete na
+beira da praia.
+
+Fonte: Elaborado pelo autor.
+
+trat´egia Equil´ıbrio Global segue o conceito do Equil´ıbrio de Nash [37], que
+busca a melhor solu¸c˜ao onde conduz o jogo a um resultado de estabilidade,
+n˜ao tendo incentivo para que os jogadores fa¸cam algum reposicionamento,
+assim, a estrat´egia de cada jogador ´e a melhor poss´ıvel para ele pr´oprio.
+Para exempliﬁcar essa diferen¸ca, as Figuras 4.6a e 4.6c possuem o mesmo
+resultado, por´em o Equil´ıbrio ocorre apenas em 4.6c, pois pela Figura 4.6a ´e
+poss´ıvel atingir o estado da Figura 4.6b.
+
+O caso ´e an´alogo se ambos jogadores posicionam seus geradores no mesmo
+local que n˜ao seja o centro, um dos geradores pode ser reposicionado para
+o centro e conseguir metade da regi˜ao. Desse modo, para 2 geradores, o
+Equil´ıbrio Global ocorre no ponto 0, 5 do segmento de reta de tamanho 1.
+
+Ao deﬁnir Equil´ıbrio Global, Okabe considerou a competi¸c˜ao de n ins-
+tala¸c˜oes, pi, onde o lucro destas s˜ao proporcionais aos comprimentos das suas
+regi˜oes V (pi), suas ´areas de mercado. Assim, Eaton e Lipsey (1975, p. 27-
+49) s˜ao citados por Okabe atestando as ´unicas conﬁgura¸c˜oes dos Equil´ıbrios
+
+57
+
+Globais para n = 2, 4 e 5, onde 3 n˜ao tem Equil´ıbrio Global e para n ≥ 6,
+existem inﬁnitas conﬁgura¸c˜oes para Equil´ıbrio Global.
+
+(a) n = 4.
+
+(b) n = 5.
+
+(c) Uma conﬁgura¸ca¸c˜ao para n = 6.
+
+Figura 4.7: Conﬁgura¸c˜oes Equil´ıbrio Global.
+Fonte: Elaborado pelo autor.
+
+Mas Willian Spaniel [38], descreve o Equil´ıbrio Global para n par, onde
+cada 2 jogadores ocupam as localiza¸c˜oes 1/n, 3/n, ..., (n − 1)/n, e os locais
+centrais s˜ao ocupados apenas por metade dessas conﬁgura¸c˜oes dos geradores
+no segmento de reta. Por´em, para n ´ımpar os estudos devem ser analisados
+caso a caso pois n˜ao seguem uma regra padr˜ao [39].
+
+Tal comportamento em se manter no centro explica o por quˆe de mui-
+tas lojas do mesmo segmento se mant´em muito pr´oximas, como postos de
+gasolina e redes de supermercados. Empreendedores se mant´em mais equi-
+pados em diversidade quando pr´oximo da concorrˆencia e para o consumidor
+a competi¸c˜ao comercial lhe gera economia e a busca do item ﬁca mais f´acil,
+diferentemente se tais pontos fossem isolados.
+
+Uma an´alise sobre o Equil´ıbrio Global no Jogo de Hotelling ´e na ´area
+pol´ıtica onde dois candidatos de partidos distintos disputam a presidˆencia,
+por exemplo. Cada um possui uma plataforma com posi¸c˜ao pol´ıtica diferente,
+se eleitores est˜ao dispostos em um espectro de posi¸c˜oes pol´ıticas onde cada
+candidato est´a propenso a posi¸c˜oes contr´arias, extremos desse espectro, can-
+didatos tendem a se manter no meio desse espectro cativando o maior n´umero
+de eleitores na busca dos votos m´edios, fazendo eleitores mais propensos a um
+candidato que outro por quˆe est˜ao mais pr´oximos as suas posi¸c˜oes pol´ıticas.
+Por ﬁm, uma outra aplica¸c˜ao desse processo de Hotelling, s˜ao as mat´erias
+televisivas que s˜ao transmitidas. Devido a competi¸c˜ao entre canais, ocorre
+
+58
+
+que v´arias emissoras concorrem pela mesma not´ıcia ao inv´es de reportar
+not´ıcias variadas, isso por quˆe, tendem a se posicionar no centro do espectro
+de interesse de uma manchete, chamando aten¸c˜ao do m´aximo de telespecta-
+dores poss´ıvel.
+
+A t´ıtulo de complemento, existe um estudo sobre o processo de Hotelling
+bidimensional [5], por´em n˜ao como jogo, apenas uma an´alise dos pol´ıgonos e
+suas propriedades, usados para otimiza¸c˜ao de localiza¸c˜ao.
+
+4.2 Jogo de Voronoi No Plano
+
+Quando consideramos as regras de jogos em um plano e n˜ao mais em
+uma curva, deﬁnimos os Jogos de Voronoi No Plano. Estes s˜ao os jogos
+mais comuns entre os Jogos de Voronoi, devido sua aplicabilidade em deter-
+minar ´areas geogr´aﬁcas e, por esse motivo, os mais comuns em atividades
+geom´etricas.
+
+4.2.1 Jogo Tradicional No Plano
+
+O Jogo Tradicional No Plano se resume a jogadas de n rodadas com
+dois jogadores tendo como objetivo a maximiza¸c˜ao da regi˜ao de um espa¸co
+bidimensional, especiﬁcamente de um quadrado.
+
+Ainda ´e dif´ıcil encontrar registros para estrat´egia de ganho para os jogado-
+res com os requisitos citados. Por mais que exista uma forma para encontrar
+a maior regi˜ao a ser constru´ıda [40, 41], ou seja, posicionar o gerador no
+Diagrama a ﬁm de construir o maior pol´ıgono, podendo maximizar a ´area
+total do competidor, uma estrat´egia completa n˜ao foi apresentada devido sua
+complexidade.
+
+Por´em, uma sugest˜ao de estrat´egia bem simples, no estudos de algorit-
+mos, foi relatada em [42] de forma que as jogadas fossem uma mistura de
+ataques e defesas. Assim, o ataque seria a divis˜ao do maior pol´ıgono do
+oponente, diminuindo a regi˜ao total do oponente e conseguindo a mesma
+quantia para a pr´opria regi˜ao total. Tal m´etodo possui sua validade, pois
+caso fosse feita a divis˜ao em uma ´area com v´arias fronteiras, a regi˜ao criada
+perderia abrangˆencia nas pr´oprias vizinhan¸cas e tamb´em n˜ao alcan¸caria uma
+aglutina¸c˜ao m´axima dos pol´ıgonos do oponente. J´a as defesas se baseiam
+em dividir os pr´oprios pol´ıgonos em ´areas aproximadamente iguais, assim
+evita-se grandes perdas provenientes da divis˜ao das jogadas do oponente.
+
+O Jogo implementado por Frederik Brasz [43], tem exatamente os re-
+quisitos exigidos com J1 sendo o jogador Red e J2, Blue. Na plataforma
+´e indicada, a quantidade de geradores posicionados, qual ´e o jogador a po-
+
+59
+
+sicionar o pr´oximo gerador assim como a porcentagem da ´area total que
+cada competidor conquistou, sendo a crit´erio dos jogadores o valor de n para
+ﬁnaliza¸c˜ao, pois o jogo ´e cont´ınuo (Figura 4.8).
+
+Figura 4.8: Jogo Tradicional para n = 9.
+Fonte: P´agina Frederik Brasz [43].
+
+Jogo Tradicional No Plano - Uma Rodada
+
+Dentre as estrat´egias para Jogos de Voronoi no plano com objetivo de ma-
+ximiza¸c˜ao de ´area, um estudo [44] com jogabilidade de uma rodada foi apre-
+sentada uma estrat´egia de ganho para J2, sendo n suﬁcientemente grande,
+onde o espa¸co ´e um quadrado de dimens˜oes
+
+n e ´area igual a n.
+
+√
+
+Como o jogo ´e de uma rodada, todos os n geradores de J1 s˜ao posiciona-
+dos, assim, este possui uma propor¸c˜ao de n/n = 1 da ´area total do quadrado.
+Para J2 ganhar, este precisa que seus n geradores possuam 1/2 + α; α > 0 da
+´area total. Tal estrat´egia mostra que ´e poss´ıvel fazer isso com um gerador a
+qual ´e induzida para o conjunto todo de geradores de J2.
+
+O m´etodo utilizado parte de que, se existe uma quantidade de pol´ıgonos
+de J1 menor ou igual a (cid:98)n/2(cid:99) cobrindo um total de ´area do quadrado maior
+que 1/2 + α; α > 0, J2 pode tomar boa parte dessa ´area atacando cada
+gerador de J1, posicionando seus geradores, dois a dois, em cada lado dos
+geradores de J1, sendo este o centro de simetria dos outros 2 (Figura 4.9),
+sendo (cid:98)n/2(cid:99) o n´umero inteiro do resultado da divis˜ao n/2. O m´etodo falha
+quando os pol´ıgonos de J1 possuem quase o mesmo tamanho, remetendo a
+estrat´egia simples das combina¸c˜oes de ataques e defesas, por´em se mais de
+
+60
+
+εn pol´ıgonos de J1 tˆem ´area menor que 1 − ε; ε > 0, a estrat´egia ainda ´e
+v´alida.
+
+Figura 4.9: Redu¸c˜ao da ´area de um pol´ıgono de J1 por 2 geradores de J2.
+Fonte: Elaborado pelo autor.
+
+Jogo Tradicional No Plano - Uma Rodada (Derivada)
+
+Em [45] ´e apresentado uma deriva¸c˜ao do estudo de [44] onde considera
+um retˆangulo Q no lugar do quadrado e o ´ındice ρ, que ´e a raz˜ao do compri-
+mento menor pelo comprimento maior de Q, caracterizando a propor¸c˜ao das
+dimens˜oes do plano do jogo. A primeira an´alise de ganho para J2 ´e que J1 n˜ao
+comece posicionando seus geradores de modo que forme uma grade regular
+de pol´ıgonos, onde grade regular ´e deﬁnida de forma que todos os pol´ıgonos
+sejam retˆangulos congruentes e os geradores se encontram no centro desses
+pol´ıgonos.
+
+Desse modo, J1 sempre tem chances para vencer quando posiciona seus ge-
+radores em grade regular. Tais chances prov´em do complemento da condi¸c˜oes
+3/2,
+de vit´oria para J2: para n ≥ 3 e ρ >
+somente para retˆangulo de ρ ≤ 1. Assim, os casos restantes J1 garantem
+vit´oria.
+
+2/n ou quando n = 2 e ρ >
+
+√
+
+√
+
+A estrat´egia de ganho para J2 ´e formulada partindo de que J2 ganha
+se, e somente se, for posicionado um dos seus geradores e conseguir uma
+´area estritamente maior que 1/(2n) da ´area de J1. Ent˜ao, ap´os posicionar
+o primeiro gerador, aplicar o m´etodo redu¸c˜ao da ´area de um pol´ıgono de J1
+por 2 geradores de J2, do estudo original, garante-se a J2 ´area ﬁnal maior
+que |Q|/2.
+
+Assim, para n = 1, J2 ganha se J1 n˜ao posicionar no centro de Q, pois
+J1 garante vit´oria se posicionar seu gerador em grade regular. Desse modo,
+J2 consegue atingir ´area maior que |Q|/2 somente se J1 n˜ao posicionar seu
+gerador no centro da ´area de jogo Q.
+
+Para n = 2, sem perda de generalidade, suponhamos o jogo em um qua-
+drado Q de lado 1, ocorrendo ρ = 1, e o canto inferior esquerdo de Q na
+
+61
+
+origem do plano cartesiano. J1 posiciona os pontos de modo grade regular,
+ou seja, nas coordenadas (1/2, ρ/4) e (1/2, 3ρ/4) ou (1/4, ρ/2) e (3/4, ρ/2), e
+consideremos a segunda conﬁgura¸c˜ao onde a primeira possui an´alise an´aloga.
+Para J2 ganhar, como dito anteriormente, J2 tem que conseguir um total
+de 1/(2.2) = 1/4 = ρ/4 da ´area de J1 com o seu primeiro gerador. Seja q
+o gerador posicionado de J2, se yq = ρ/2, J2 consegue ´area no m´aximo ρ/4,
+logo suponhamos yq > ρ/2. Al´em disso, se xq > 3/4, a ´area de J2 ´e reduzida,
+pois quando q move em dire¸c˜ao ao ponto (1/2, ρ/2), |V (q)| aumenta. Ainda,
+se xq = 3/4, J2 n˜ao adquire ´area de tamanho ρ/4. Portanto, suponhamos
+1/2 ≤ xq < 3/4 e yq ≥ ρ/2.
+
+Considere as retas mediatrizes b1 = b(q, (1/4, ρ/2)) e b2 = b(q, (3/4, ρ/2))
+e a interse¸c˜ao b1 ∩ b2 = t pertencente `a reta x = 1/2. Se t se encontra fora
+de Q, ent˜ao |V (q)| < ρ/4, logo suponhamos t no interior de Q. Sejam f1 e f2
+os segmentos de t at´e as extremidades de Q sobre b1 e b2, respectivamente, e
+seja tamb´em C a circunferˆencia passando por t, b1 e b2.
+
+Se b1 n˜ao intersecta o topo de Q, nem b2, e assim, movendo q para a
+esquerda sobre C, |V (q)| ir´a aumentar por´em at´e um limite < ρ/4. Al´em
+do mais, se b1 e b2 intersectam o topo de Q, ent˜ao f1 ≤ f2. Tal constata¸c˜ao
+provem do fato de que se mover q para a direita por C, podemos aumentar
+|V (q)| de modo que f1 v´a diminuindo e f2 aumentando at´e que b2 intersecte o
+canto superior direito de Q. Assim, se b1 intersecta o topo de Q e b2 intersecta
+o topo direito de Q, obtemos f1 ≤ f2. Se continuar movendo q por C, ambos
+f1 e f2 ir˜ao diminuir.
+
+Com isso, |V (q)| cresce enquanto f1 < f2 e atinge valor m´aximo quando
+f1 = f2, e o m´aximo existe `a medida que q se aproxima de (3/4, ρ/2) quando
+1/4 + (ρ − 2yq)2.
+f1 > f2. Assim, se q = (3/4, ρ/2), temos f1 = ρ−yq e f2 =
+Por derivada, f1 > f2 somente se ρ >
+
+3/2.
+
+√
+
+(cid:113)
+
+Por ﬁm, o segundo gerador de J2 garante uma ´area de tamanho 1/4 − (cid:15),
+onde (cid:15) ´e um valor arbitr´ario positivo pequeno, posicionando esse perto de
+(1/4, ρ/2), conseguindo mais da metade de Q.
+
+A Figura 4.10 apresenta um exemplo do posicionamento do primeiro ge-
+rador de J2 com os elementos da prova da estrat´egia de vit´oria para J2,
+apresentando a regi˜ao sobre a linha circular dentro do retˆangulo pontilhado
+que o gerador de J2 precisa posicionar para conseguir 1/4 de Q.
+
+Maiores detalhes da prova do caso n ≥ 3 em [45].
+
+62
+
+Figura 4.10: Estrat´egia para o Jogo Tradicional No Plano - Uma Rodada
+(Derivada) para espa¸co retˆangular com n = 2.
+
+Fonte: Elaborado pelo autor.
+
+4.2.2 Jogo M´axima Vizinhan¸ca
+
+A varia¸c˜ao Jogo de Voronoi M´axima Vizinhan¸ca estudada por Rasheed et
+al.[46] n˜ao leva em considera¸c˜ao a maximiza¸c˜ao da ´area e sim, a maximiza¸c˜ao
+da vizinhan¸ca, ou seja, a quantidade de regi˜oes vizinhas dos geradores de um
+jogador.
+
+A an´alise feita para esse Jogo teve como objetivo a cria¸c˜ao de estrat´egias
+para o Problema de Localiza¸c˜ao de Instala¸c˜oes Competitivas - PLIC, que
+compara o melhor lugar para se abrir um neg´ocio, como uma ﬁlial de uma
+franquia, sem que concorrentes pr´e-existentes o interﬁram e, al´em disso, que
+consiga tamb´em interferir no m´aximo de lojas dos concorrentes. A an´alise
+n˜ao leva em considera¸c˜ao a qualidade do produto ou atendimento de uma
+instala¸c˜ao e sim, a suposi¸c˜ao de que clientes tˆem preferˆencia por instala¸c˜oes
+geograﬁcamente mais pr´oximas a eles.
+
+Neste Jogo de uma rodada, cada jogador posiciona todos seus n gera-
+dores em estrutura em duas dimens˜oes, tendo como objetivo maximizar o
+n´umero de regi˜oes vizinhas. Como J1 n˜ao sabe onde J2 ir´a posicionar seus
+geradores, as estrat´egias de ganho s˜ao para J2. Assim, com os geradores do
+J1 posicionados, J2 tem a vantagem de implementar estrat´egias para vencer.
+Algumas exigˆencias s˜ao pr´e-estabelecidas para que ocorra a investiga¸c˜ao:
+trˆes geradores do Diagrama de Voronoi n˜ao podem ser colineares, quatro
+geradores n˜ao podem ser cocirculares e o m´aximo do grau de um v´ertice ´e 3.
+Em rela¸c˜ao a an´alise pela estrutura, o jogo leva em considera¸c˜ao a vizi-
+nhan¸ca dos geradores para atingir o objetivo do jogo, assim todas as an´alises
+
+63
+
+de vit´oria foram feitas pela Triangula¸c˜ao de Delaunay, do Diagrama de Voro-
+noi, necessitando da atualiza¸c˜ao da estrutura incrementalmente em rela¸c˜ao
+as jogadas de J2, ou seja, a cada inser¸c˜ao de geradores de J2.
+
+Dito isso, deﬁnimos que dois pol´ıgonos do Diagrama de Voronoi s˜ao vi-
+zinhos um do outro se s˜ao adjacentes, isto ´e, compartilham uma aresta da
+fronteira. Logo, como as arestas da Triangula¸c˜ao de Delaunay conectam
+regi˜oes que compartilham uma aresta comum no Diagrama de Voronoi, estas
+ser˜ao vizinhas uma da outra.
+
+Nesta varia¸c˜ao Jogo M´axima Vizinhan¸ca foram analisados 5 crit´erios para
+vencer, discutindo estrat´egia de ganho para cada um, que abordam situa¸c˜oes
+diretas do PLIC. Tais crit´erios s˜ao:
+
+• Crit´erio 1: Conseguir todos pontos do oponente como vizinhos;
+
+• Crit´erio 2: Al´em de considerar o Crit´erio 1, conseguir mais pontos opo-
+nentes como vizinhos do que o oponente conseguir com nossos pontos;
+
+• Crit´erio 3: Atingir Crit´erio 2 considerando a vizinhan¸ca n˜ao distinta
+(considerar vizinhan¸ca com um ponto mesmo que este j´a tenha sido
+contado como vizinho de outro ponto);
+
+• Crit´erio 4: Seguir Crit´erio 2 e evitar vizinhan¸ca pr´opria (vizinhos do
+
+mesmo jogador);
+
+• Crit´erio 5: Alcan¸car Crit´erio 4 considerando vizinhan¸ca pr´opria n˜ao
+
+distinta.
+
+Com o objetivo de maximizar o n´umero de vizinhos segue para cada
+crit´erio: a jogabilidade, o estudo da estrat´egia vencedora, um exemplo e a
+equivalˆencia no PLIC. Al´em do mais, com a ﬁnaliza¸c˜ao das jogadas de J1 e J2,
+seja o jogo da Figura 4.12, o exemplo a ser analisado onde os pontos fechados
+s˜ao os pontos de J1 e os abertos, de J2. Durante as an´alises, no exemplo,
+representaremos as vizinhan¸cas por setas de acordo com as considera¸c˜oes de
+cada crit´erio.
+
+Crit´erio 1: Maximiza¸c˜ao de Vizinhos Oponentes
+
+Com objetivo simples, tenta-se conseguir todos os pontos do oponente
+
+como seus vizinhos, ou seja, maximizar a quantidade de vizinhos.
+
+Pode-se dizer que J2 sempre consegue pontos de J1 como vizinhos, prova
+disso ´e considerar uma face com um ponto de J1 em um dos v´ertices. Se
+J2 inserir um ponto no interior dessa face e atualizar a Triangula¸c˜ao, esse
+ponto de J1, da face, ser´a vizinho do ponto de J2. Desse modo, se J1 tem n
+
+64
+
+(a) Diagrama Voronoi e Trian-
+gula¸c˜ao Delaunay
+
+(b) Somente Triangula¸c˜ao Delau-
+nay
+
+Figura 4.11: Jogo - Exemplo
+Fonte: Elaborado pelo autor.
+
+pontos, J2 consegue os n pontos de J1 como vizinhos. A Figura 4.12 ilustra
+essa maximiza¸c˜ao de J2.
+
+(a) Um ponto de J1 sem
+ponto de J2 como vizinho.
+
+(b) Todos pontos de J1 vi-
+zinhos dos pontos de J2.
+
+Figura 4.12: J2 sempre consegue vizinhan¸ca com J1.
+Fonte: Elaborado pelo autor.
+
+Ali´as, nesse crit´erio ´e poss´ıvel vencer inserindo um n´umero menor que o
+total n de pontos do jogador. ´E poss´ıvel vencer utilizando at´e 2n+2
+pontos
+apenas, sendo este valor uma cota superior para a quantidade de pontos
+necess´arios para vencer neste crit´erio.
+
+3
+
+No exemplo da Figura 4.13, J2 vence devido todos pontos de J1 serem
+seus vizinhos onde o mesmo n˜ao ocorreu para os pontos de J2. Al´em do
+mais, J2 vence com apenas um gerador, ou seja, 1 < 4 = 2(5)+2
+pontos que
+precisaria no m´aximo para vencer.
+
+3
+
+No PLIC, o Jogo corrobora com situa¸c˜oes onde novas instala¸c˜oes podem
+
+afetar todas as instala¸c˜oes concorrentes j´a existentes.
+
+65
+
+Figura 4.13: Vit´oria J2 com apenas 1 ponto - Crit´erio 1
+Fonte: Elaborado pelo autor.
+
+Crit´erio 2: Vizinhos Oponentes Distintos
+
+Adicionando uma exigˆencia ao Crit´erio 1, tenta-se impedir que os pon-
+tos do oponente consiga vizinhos. A condi¸c˜ao de distin¸c˜ao prov´em quando
+consideramos apenas vizinhan¸cas distintas, ou seja, ´e feita a contagem da vi-
+zinhan¸ca somente quando um ponto do oponente possui um ou mais pontos
+do advers´ario como vizinhos.
+
+Ap´os os dois jogadores posicionarem seus pontos, J1 ter´a no total V1
+vizinhan¸cas de J2 e J2, V2 de J1. Como ´e considerada a distin¸c˜ao no re-
+lacionamento de vizinhan¸ca, para a contagem, ´e veriﬁcado cada ponto do
+oponente se este possui pontos do outro jogador como vizinhos. Uma forma
+de fazer essa contagem ´e considerando as arestas incidentes em cada ponto
+do jogador oponente. Seja um ponto do oponente p e as arestas ai incidente
+no mesmo, se uma destas arestas possui um dos pontos qi do outro jogador
+na outra extremidade, p ´e contado no total de vizinhan¸cas com o jogador
+oponente (Figura 4.14). Portanto, se V1 > V2, J1 ser´a vencedor, se V2 > V1,
+J2 ser´a o vencedor e se V1 = V2 ser´a empate.
+
+Figura 4.14: Condi¸c˜ao Vizinhos Oponentes Distintos: p1 possui 5 arestas
+sendo 3 delas com pontos de J2, p2 com 2 e p3 com 1. Assim sendo, V2 = 3.
+Fonte: Elaborado pelo autor.
+
+66
+
+J´a que ´e poss´ıvel conseguir o Crit´erio 1, para vencer, seguindo este Crit´erio
+2, basta que J2 consiga que pelo menos um dos seus pontos n˜ao seja vizinho
+de nenhum ponto de J1. Para que isso aconte¸ca, “escondemos” de J1 pelo
+menos um ponto de J2. O termo esconder utiliza o mesmo resultado da
+estrat´egia de defesa do Jogo Tradicional No Plano da Se¸c˜ao 4.2.1, onde ´e
+feita a divis˜ao dos pr´oprios pol´ıgonos. Como as jogadas de J2 s˜ao feitas
+ap´os as de J1, ´e poss´ıvel “esconder” um ponto de J2 dividindo seus pr´oprios
+pol´ıgonos criando vizinhos pr´oprios.
+
+De forma gen´erica, para esconder um ponto de todos pontos existentes, ´e
+necess´ario de pelo menos 2 pontos extras. Desta maneira, para que nenhum
+ponto de J1 consiga ser vizinho de um ponto q de J2, J2 precisa que 2 de
+seus pontos “escondam”q.
+
+Essa estrat´egia ´e chamada Esconder um Ponto do Oponente: sejam os
+pontos p1 e p2 do fecho convexo F e um ponto x fora de F de modo que a
+uni˜ao da Triangula¸c˜ao de Delaunay com o triˆangulo p1p2x continue convexa.
+Colocamos os pontos q1 e q2 em algum lugar sobre p1x e p2x, respectivamente,
+a uma distˆancia d de x, tal que d < p1x, d < p2x e n˜ao sobrepunha x,
+e colocamos tamb´em q3 dentro do triˆangulo q1q2x perto de x. Assim, na
+Triangula¸c˜ao de Delaunay resultante, qualquer circunferˆencia passando por
+q3, al´em de q1 e q2, conter´a q1 e/ou q2 em seu interior, escondendo o ponto
+q3. A Figura 4.15 representa o resultado da estrat´egia de esconder um ponto.
+
+Figura 4.15: Estrat´egia Esconder um Ponto do Oponente.
+Fonte: Elaborado pelo autor.
+
+Se s˜ao necess´arios m pontos para J2 atender o Crit´erio 1, desse modo
+ser˜ao necess´arios m + 3 pontos de J2 para esconder um de seus pontos de J1.
+Como existe uma cota superior para vit´oria no Crit´erio 1 onde m < n, logo ´e
+poss´ıvel atender o Crit´erio 2 com os n pontos e J2 vencer, pois m + 3 ≤ n. Se
+n < 3, J2 n˜ao possui pontos suﬁcientes para esconder um ponto do oponente
+e o jogo empata.
+
+Na Figura 4.16, V1 = 3 e V2 = 5, portanto, J2 vence.
+
+67
+
+(a) V1 = 3
+
+(b) V2 = 5
+
+Figura 4.16: Vit´oria J2 - Crit´erio 2
+Fonte: Elaborado pelo autor.
+
+No PLIC, esse crit´erio mostra que, al´em de interferir no neg´ocio do con-
+corrente, ´e tentado que o pr´oprio neg´ocio seja afetado o m´ınimo poss´ıvel pelas
+instala¸c˜oes do concorrente.
+
+Crit´erio 3: Vizinhos Oponentes N˜ao Distintos
+
+Considerando o Crit´erio 2, n˜ao ´e feita mais a distin¸c˜ao da vizinhan¸ca, ou
+seja, se um ponto possui k pontos do outro jogador como vizinhos, ent˜ao sua
+vizinhan¸ca ´e contada como k ao inv´es de uma s´o. Portanto, se um ponto
+possui arestas com pontos oponentes nas outras extremidades, o total da
+vizinhan¸ca com o oponente considerar´a na contagem todas as extremidades
+com pontos oponentes.
+
+Cada ponto pi de J1 ter´a ui pontos de J2 como vizinhos, ent˜ao temos
+que V1 = (cid:80)n
+i=1 ui ser´a o total da vizinhan¸ca de J2 com J1 e vi sendo os
+pontos de J1 vizinhos de qi de J2, a quantidade V2 = (cid:80)n
+i=1 vi ser´a o total
+da vizinhan¸ca de J1 com J2. Desse modo, diferentemente do Crit´erio 2, se
+p1, p2 e p3 de J1 s˜ao vizinhos de q1 de J2, ent˜ao v1 = 3, considerando desta
+forma a quantidade de pontos de J1 que fazem vizinhan¸ca com q1. A Figura
+4.17 exempliﬁca graﬁcamente uma contagem das vizinhan¸cas n˜ao distintas.
+Neste crit´erio, o Jogo sempre resulta em empate, pois como n˜ao s˜ao con-
+siderados vizinhos oponentes distintos, cada ponto contar´a a vizinhan¸ca com
+os pontos do oponente onde estes os considerar˜ao tamb´em como vizinho. Isto
+´e, se pi de J1 possui ui pontos de J2 como vizinhos, estes ui pontos de J2
+far˜ao vizinhan¸ca com pi tamb´em e pi ser´a contado ui vezes como vizinho.
+Empregando a mesma contagem para todos os pontos de ambos os jogadores
+ocorrer´a V1 = V2.
+
+No exemplo da Figura 4.18, V1 = V2 = 8, logo o Jogo resulta em empate.
+No PLIC, o motivo de n˜ao fazer distin¸c˜ao das instala¸c˜oes vizinhas ´e querer
+
+68
+
+Figura 4.17: Condi¸c˜ao Vizinhos Oponentes N˜ao Distintos: v1 = 3, v2 = 1 e
+v3 = 2 implica em V2 = 6.
+
+Fonte: Elaborado pelo autor.
+
+(a) V1 = 8
+
+(b) V2 = 8
+
+Figura 4.18: Empate - Crit´erio 3.
+Fonte: Elaborado pelo autor.
+
+interferir em cada instala¸c˜ao do concorrente o m´aximo de vezes poss´ıvel.
+Por mais que cada instala¸c˜ao sofrer´a uma interferˆencia do oponente, neste
+crit´erio, instala¸c˜oes do competidor advers´ario podem ser mais prejudicadas
+pela convergˆencia de v´arios vizinhos.
+
+Crit´erio 4: Vizinhos, Oponentes e Pr´oprios, Distintos
+
+O Crit´erio 4 segue o Crit´erio 2 por´em evitando vizinhos pr´oprios. Aqui,
+tenta-se conseguir ser vizinho de todos pontos oponentes, impedindo que o
+oponente consiga o mesmo e conjuntamente tenta minimizar a gera¸c˜ao de
+pr´oprios pontos como vizinhos. A distin¸c˜ao na vinhan¸ca pr´opria ´e veriﬁcada
+se nas extremidades das arestas incidentes em um ponto possui pelo menos
+um ponto do mesmo jogador.
+
+Assim, como no Crit´erio 2, seja V1 a quantidade de vizinhan¸cas distintas
+de J2 com J1 e V2 a de J1 com J2. Consideremos tamb´em P1 o n´umero
+de vizinhos pr´oprios de J1, tamb´em distintos, e analogamente P2 para J2.
+
+69
+
+Fazemos o c´alculo T1 = V1 −P1 e T2 = V2 −P2 atribuindo T1 e T2 a pontua¸c˜ao
+de J1 e J2, respectivamente. Na Figura 4.12.b temos P1 = 2, assim sua
+pontua¸c˜ao ser´a igual a T1 = V1 − P1 = 3 − 2 = 1. Ap´os atualiza¸c˜ao da
+Triangula¸c˜ao, J2 ser´a vencedor se T1 > T2, J2 ser´a o vencedor se T2 > T1 e
+ser´a empate se T1 = T2.
+
+A estrat´egia de J2 para este crit´erio, ´e garantir que seus pontos ﬁquem
+completamente cercados por pontos de J1. Desse modo, J2 evita que seus
+pontos sejam vizinhos com outros dos seus pontos e ao mesmo tempo os
+pontos de J1 fazem vizinhan¸ca com pelo menos um de seus pr´oprios pontos,
+criando v´arias vizinhan¸cas pr´oprias.
+
+No caso de n = 1, V1 = V2 = 1 e P1 = P2 = 0, logo, o Jogo termina
+em empate, pois T1 = T2. Para n = 2, antes da ´ultima jogada de J2, seja
+a aresta formada pelos pontos de J1. O primeiro ponto de J2 est´a em um
+semiplano divido pela reta formada pelos pontos de J1. J2 vence quando
+posiciona seu segundo ponto no semiplano que n˜ao cont´em seu primeiro e
+exterior a circunferˆencia formada pela pontos de J1 e o primeiro ponto de
+J2 (Figura 4.19). Com essas condi¸c˜oes de regi˜ao para o ´ultimo ponto de J2,
+a aresta formada pelos pontos de J1 se mant´em legal e os pontos de J2 n˜ao
+ser˜ao vizinhos pr´oprios e com isso P1 = 1, P2 = 0 e T2 > T1 garantindo a
+vit´oria de J2.
+
+Figura 4.19: Estrat´egia de vit´oria para J2: n = 2.
+Fonte: Elaborado pelo autor.
+
+Para casos onde n ≥ 3 seguimos a Estrat´egia Regi˜ao Segura: Considere-
+mos marcas nos pontos de J1 onde come¸cam todos desmarcados. De forma,
+iterativa, considere um ponto p desmarcado de J1 e ent˜ao J2 posiciona seu
+ponto q em um triˆangulo onde um de seus v´ertices seja p. Pela estrat´egia do
+Crit´erio 1, todos os pontos desse triˆangulo ser˜ao vizinhos de q e todos pontos
+que forem de J1 nesse triˆangulo s˜ao marcados. Ent˜ao, considerado outro
+ponto desmarcado ´e feito o mesmo procedimento at´e que todos estejam mar-
+cados. Supomos que foram posicionados k pontos de J2, assim que o ´ultimo
+ponto de J1 foi marcado. Sejam todas as circunferˆencias da Triangula¸c˜ao,
+
+70
+
+ent˜ao todos os n − k pontos restantes de J2 s˜ao posicionados exteriormente
+a todas as circunferˆencias evitando que os k pontos sejam vizinhos dos n − k
+pontos restantes (Figura 4.20).
+
+(a) Estado incial antes
+dos pontos de J2 onde os
+pontos de J1 est˜ao des-
+marcados.
+
+(b) Marca¸c˜ao dos pontos
+de J1.
+
+(c) Regi˜ao poss´ıvel para posi-
+cionar pontos de J2.
+
+(d) Inser¸c˜ao dos pontos de J2
+externa as circunfrˆencias.
+
+Figura 4.20: Estrat´egia Regi˜ao Segura.
+Fonte: Elaborado pelo autor.
+
+O termo Regi˜ao Segura adv´em de que quando ´e posicionado um ponto
+de J2, ´e garantido que este n˜ao criar´a uma regi˜ao adjacente a uma outra
+regi˜ao sua, ou seja, criar vizinhan¸ca pr´opria. Ent˜ao, quando ´e selecionado
+um ponto p de J1 desmarcado, ´e determinado que este n˜ao possui vizinhan¸ca
+com algum ponto q de J2. Logo, denominamos que a vizinhan¸ca de p ´e uma
+regi˜ao segura para q.
+
+Ao ﬁnal, ap´os as jogadas de J2, ´e que garantido que os pontos de J2 s˜ao
+vizinhos de todos os pontos de J1; todos pontos de J1 possuem vizinhan¸ca
+pr´opria com pelo menos um de seus pontos (isto ocorre no momento que
+o ´ultimo ponto de J1 ´e marcado) e; pelo menos um dos pontos de J2 n˜ao
+possui vizinhan¸ca pr´opria. Assim, V2 = n, P1 = n e P2 ≤ n − 1 e se
+usarmos a estrat´egia Esconder um Ponto do Oponente, do Crit´erio 2, para
+os pontos (n − k ≥ 3) posicionados ap´os os pontos de J1 estarem todos
+
+71
+
+marcados, teremos V1 ≤ n garantindo a possibilidade de vit´oria de J2 pois
+como T1 = V1 − P1 ≤ n − n = 0 e T2 = V2 − P2 ≤ n − (n − 1) = 1 implica
+em T2 > T1.
+
+No exemplo, pelas Figuras 4.16 e 4.21 temos V1 = 3, V2 = 5, P1 = 5 e
+
+P2 = 4. Logo, T1 = −2 < 1 = T2 e J2 vence.
+
+(a) P1 = 5
+
+(b) P2 = 4
+
+Figura 4.21: Vizinhos Pr´oprios Distintos.
+Fonte: Elaborado pelo autor.
+
+No PLIC, esta estrat´egia adicional ´e motivada em n˜ao atrair o cliente a
+sair da pr´opria loja. Exemplo dessa situa¸c˜ao ´e que quando h´a instala¸c˜oes
+vizinhas da mesma empresa pode ocorrer do cliente sair e checar instala¸c˜oes
+vizinhas, consequentemente, da mesma empresa, abrindo margem para o cli-
+ente mudar de ideia e ent˜ao desistindo de algo que se interessou a princ´ıpio.
+Outra situa¸c˜ao, ´e a cria¸c˜ao de concorrˆencia consigo mesmo e, com a ine-
+xistˆencia de competitividade, gera diminui¸c˜ao da publicidade prejudicando a
+visibilidade da marca.
+
+Crit´erio 5: Vizinhos, Oponentes e Pr´oprios, N˜ao Distintos
+
+Como no Crit´erio 4, o Crit´erio 5 segue as mesmas regras para atingir
+o objetivo do jogo, por´em ´e levado em considera¸c˜ao a n˜ao distin¸c˜ao dos
+vizinhos.
+
+Nesta varia¸c˜ao, ´e aplicada a mesma ideia da n˜ao distin¸c˜ao de vizinhan¸ca
+com pontos do oponente, vista no Crit´erio 3, para a vizinhan¸ca pr´opria, com
+i e u(cid:48)
+v(cid:48)
+i indicando a quantidade de vizinhos pr´oprios de pi, pontos de J1, e
+qi, de J2, respectivamente. Como foi constatado que o n´umero de vizinhos
+oponentes n˜ao distintos ´e igual para J1 e J2, isto ´e, V1 = V2, o fator para
+vit´oria est´a relacionado ao vizinhos pr´oprios n˜ao distintos, pois estes podem
+ser diferentes.
+
+A estrat´egia de ganho para J2 ´e a mesma utilizada no Crit´erio 4, por´em
+com uma altera¸c˜ao na distribui¸c˜ao dos pontos de J2 ap´os as marca¸c˜oes dos
+
+72
+
+pontos de J1. A etapa onde s˜ao postos os n − k restantes pontos de J2,
+dependendo de como forem posicionados, eles podem gerar muitos vizinhos
+pr´oprios, exemplo disso ´e a disposi¸c˜ao dos pontos de forma aproximada um
+do outro criando um arranjo denso com grande n´umero de vizinhos pr´oprios.
+Portanto, os n − k pontos devem ser posicionados fora de todas as cir-
+cunferˆencias existentes da Triangula¸c˜ao de forma uniforme criando un novo
+fecho convexo somente com esses pontos. Assim, cada ponto de J2 do fecho
+convexo ter´a somente 2 vizinhos pr´oprios cada, que s˜ao os pontos adjacentes
+no fecho (Figura 4.18b).
+
+Figura 4.22: Estrat´egia Regi˜ao Segura Modiﬁcada.
+Fonte: Elaborado pelo autor.
+
+Com a estrat´egia neste crit´erio, podemos dizer que P2 ≥ 2n e desde que
+J2 gerar´a somente vizinhan¸ca pr´opria com os n − k pontos do fecho convexo
+resultante, temos que P2 ≤ 2(n − k). Logo, J2 pode vencer pois k ≥ 1 e
+implica em P2 ≤ 2(n − 1).
+
+Pela Figura 4.23, temos que no jogo do exemplo V1 = V2 = 8 e
+P1 = P2 = 10. Desse modo, T1 = T2 = −2 e, nesse caso, o jogo empata.
+
+(a) P1 = 10
+
+(b) P2 = 10
+
+Figura 4.23: Crit´erio 5.
+Fonte: Elaborado pelo autor.
+
+73
+
+Com todas as estrat´egias descritas e analisadas suas aplica¸c˜oes podemos
+dizer que os Jogos de Voronoi s˜ao ferramentas poderosa para an´alise e im-
+plementa¸c˜ao de estrat´egias mercadol´ogicas cobrindo planos quando quest˜oes
+geogr´aﬁcas s˜ao diferencias em estudo.
+
+O termo jogo cabe muito bem na aplica¸c˜ao do Jogo de Voronoi - M´axima
+Vizinhan¸ca, pois cada competidor pode usar a estrutura de forma interativa,
+para investigar o impacto que cada concorrente gerou em suas jogadas ﬁnais
+na utiliza¸c˜ao do jogo anteriormente e tentar se destacar com um novo estudo.
+Por ﬁm, podemos aﬁrmar que a utiliza¸c˜ao de ambas as estruturas somente
+refor¸ca a utilidade dessas tessela¸c˜oes e adaptabilidade de seu uso em ´areas
+que exijam abstra¸c˜ao para planejamento.
+
+74
+
+Considera¸c˜oes Finais
+
+Com objetivo de apresentar o Diagrama de Voronoi e Jogos de Voronoi,
+foi reunido nesta pesquisa os aspectos principais da estrutura, categorizando
+as jogabilidades dos segmentos selecionados, tanto linear quanto no plano.
+Fundamentado com dedica¸c˜ao aos detalhes da maneira que foi exposta, cada
+se¸c˜ao descrita teve a inten¸c˜ao de despertar interesse por cada ponto de vista
+que era discutido.
+
+Considerando as formas b´asicas do Diagrama, passamos pela concep¸c˜ao
+inicial, integra¸c˜ao com outros contextos, apresenta¸c˜ao de suas deﬁni¸c˜oes,
+pelas maneiras de elabora¸c˜ao e pela forma de competi¸c˜ao baseada na parti¸c˜ao
+do espa¸co onde podemos aﬁrmar que foi constru´ıdo um panorama do tema
+capaz de gerar conte´udos para ﬁns did´aticos. Ainda mais que, durante toda
+pesquisa, conseguimos dizer que o Diagrama pode ser considerado de certa
+forma um espectro, onde `a medida que ´e abordado, um leque de aplica¸c˜oes
+´e aberto nas mais distintas ´areas exempliﬁcados tanto na hist´oria, aplica¸c˜ao
+e nos prop´ositos dos jogos.
+
+Esse entrelace da matem´atica e ciˆencia da computa¸c˜ao, refor¸ca mais ainda
+o atrativo que gera ao trabalhar com objeto de estudos em meio as duas
+´areas. Os conceitos primordiais que a geometria fornece para estabelecer os
+elementos matem´aticos de forma a desenhar o espa¸co, combinada com o apuro
+e inﬂuˆencia da computa¸c˜ao, mune num simples t´opico de estudo, conte´udo
+para se adequar as mais diferentes situa¸c˜oes problemas. Caso esse, ´e onde
+os Jogos de Voronoi tomam protagonismo em projetos de estudo envolvendo
+an´alises e decis˜oes nas ciˆencias que n˜ao s˜ao exatas tamb´em.
+
+Mesmo que alguns pontos na parte de Jogos n˜ao fossem muito claros a
+primeiro momento, isto ´e justiﬁcado pela discuss˜ao das jogadas, as quais s˜ao
+difundidas na Teoria dos Jogos, deﬁnidas pela escolha de decis˜oes, proveni-
+entes de estrat´egias que podem atingir grandes possibilidades.
+
+Baseado na revis˜ao bibliogr´aﬁca conclu´ıda, diante da ampla quantidade
+de publica¸c˜oes envolvendo a tessela¸c˜ao, poucas s˜ao as pesquisas envolvendo
+os Jogos de Voronoi. Ent˜ao, foi abordado basicamente 4 jogos diferentes, os
+quais se abriam mais condi¸c˜oes que se faziam necess´arias, ou por representa-
+
+75
+
+rem alguma situa¸c˜ao que exigia algum mapeamento ou era direcionado a um
+objetivo particular. Um desses casos ´e o caso do jogo M´axima Vizinhan¸ca
+com varia¸c˜oes em 5 crit´erios aplicados ao PLIC.
+
+Por ﬁm, o estudo abordado pode servir como base para materiais futuros
+como Jogos de Voronoi tridimensionais, os quais s˜ao pouco propagados, al´em
+de novos crit´erios ou novas ´areas dos jogos discutidos, ainda mais que alguns
+dos jogos n˜ao est˜ao totalmente completos em seu estudo, como ´e o caso do
+Jogo Tradicional No Plano, al´em do estudo do Jogo de Hotelling bidimen-
+sional. Outras m´etricas, como a de Manhattan, seriam poss´ıveis introdu¸c˜ao
+para cria¸c˜ao de novos objetivos al´em de novas an´alises com a deﬁni¸c˜ao Di-
+agrama Voronoi Generalizada. Desse modo, s˜ao vastas as possibilidades de
+sucess˜ao do conte´udo devido as adapta¸c˜oes do diagrama.
+
+76
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] M. I. Shamos and D. Hoey, “Closest-point problems,” in 16th Annual
+Symposium on Foundations of Computer Science (sfcs 1975), pp. 151–
+162, IEEE, 1975.
+
+[2] “Dominic walliman - website.” https://dominicwalliman.com/. Aces-
+
+sado em 2019-07-14.
+
+[3] F. and R. Klein, “Voronoi diagrams,” Handbook of computational geo-
+
+metry, vol. 5, pp. 201–290, 2000.
+
+[4] R. Descartes, “Principia philosophiae; ludovicus elzevirius: Amsterdam,
+
+the netherlands, 1644,”
+
+[5] A. Okabe, B. Boots, K. Sugihara, and S. N. Chiu, Spatial tessellations:
+concepts and applications of Voronoi diagrams, vol. 501. John Wiley &
+Sons, 2009.
+
+[6] “Math: The voronoi game.” http://www.antiquark.com/2005/02/
+
+math-voronoi-game.html. Acessado em 2019-07-14.
+
+[7] D. S´anchez-Guti´errez, M. Tozluoglu, J. D. Barry, A. Pascual, Y. Mao,
+and L. M. Escudero, “Fundamental physical cellular constraints drive
+self-organization of tissues,” The EMBO journal, vol. 35, no. 1, pp. 77–
+88, 2016.
+
+[8] Q. Du, V. Faber, and M. Gunzburger, “Centroidal voronoi tessellations:
+Applications and algorithms,” SIAM review, vol. 41, no. 4, pp. 637–676,
+1999.
+
+[9] A. C. M. Moura, “Aplica¸c˜ao do modelo de pol´ıgonos de voronoi em es-
+tudos de ´areas de inﬂuˆencia de escolas p´ublicas: estudo de caso em ouro
+preto–mg,” Revista Brasileira de Estudos Regionais e Urbanos, vol. 3,
+no. 2, 2009.
+
+77
+
+[10] “Melbourne school zones.” http://melbourneschoolzones.com. aces-
+
+sado em 2019-06-21.
+
+[11] F. A. V. S. Rezende, R. M. V. Almeida, and F. F. Nobre, “Diagramas de
+voronoi para a deﬁni¸c˜ao de ´areas de abrangˆencia de hospitais p´ublicos
+no munic´ıpio do rio de janeiro,” Cadernos de Sa´ude P´ublica, vol. 16,
+pp. 467–475, 2000.
+
+[12] F. F. Lima, “Arquiteturas digitais a partir do diagrama de voronoi e tri-
+angula¸c˜ao de delaunay,” Revista Projetar-Projeto e Percep¸c˜ao do Am-
+biente, vol. 2, no. 2, pp. 52–60, 2017.
+
+[13] “Voronoi
+
+bookshelf.”
+
+https://www.kickstarter.com/projects/
+
+AlmostScientific/voronoi-bookshelf. Acessado em 2019-06-21.
+
+[14] “512
+
+paths
+
+to
+
+the white
+
+house.”
+
+http://archive.nytimes.
+
+com/www.nytimes.com/interactive/2012/11/02/us/politics/
+paths-to-the-white-house.html?utm_campaign=Feed%253A+
+NerdcoreRSS2+%2528Nerdcore%2529&utm_medium=feed&utm_source=
+feedburner. Acessado em 2019-06-22.
+
+[15] “The nyt’s visual election outcome explorer.” https://source.
+opennews.org/articles/nyts-512-paths-white-house. Acessado
+em 2019-06-22.
+
+[16] O. Takahashi and R. J. Schilling, “Motion planning in a plane using
+generalized voronoi diagrams,” IEEE Transactions on robotics and au-
+tomation, vol. 5, no. 2, pp. 143–150, 1989.
+
+[17] D. Seymour and J. Britton, Introduction to Tessellations. ERIC, 1989.
+
+[18] P. J. de Rezende and J. Stolﬁ, Fundamentos de geometria computacio-
+nal. Universidade Federal de Pernambuco, Departamento de Informa-
+tica, 1994.
+
+[19] J. A. Bondy, U. S. R. Murty, et al., Graph theory with applications,
+
+vol. 290. Citeseer, 1976.
+
+[20] S. L. Devadoss and J. O’Rourke, Discrete and computational geometry.
+
+Princeton University Press, 2011.
+
+[21] M. De Berg, M. Van Kreveld, M. Overmars, and O. Schwarzkopf, “Com-
+putational geometry,” in Computational geometry, pp. 1–17, Springer,
+1997.
+
+78
+
+[22] J. o’Rourke, Computational geometry in C. Cambridge university press,
+
+1998.
+
+[23] “Deﬁni¸c˜ao algoritmo - dicion´ario michaelis.” https://michaelis.
+uol.com.br/moderno-portugues/busca/portugues-brasileiro/
+algoritmo/. Acessado em 2019-06-24.
+
+[24] P. J. Green and R. Sibson, “Computing dirichlet tessellations in the
+
+plane,” The computer journal, vol. 21, no. 2, pp. 168–173, 1978.
+
+[25] N. R. Adam and A. Gangopadhyay, Database issues in geographic in-
+formation systems, vol. 6. Springer Science & Business Media, 2012.
+
+[26] “Frederik brasz - programming projects.” http://cfbrasz.github.io/
+
+index.html. Acessado em 2019-06-26.
+
+[27] S. Fortune, “A sweepline algorithm for voronoi diagrams,” Algorithmica,
+
+vol. 2, no. 1-4, p. 153, 1987.
+
+[28] “Raymond hill - steven j.
+
+fortune’s algorithm to compute voronoi
+diagrams.” http://www.raymondhill.net/voronoi/rhill-voronoi.
+html. Acessado em 2019-06-27.
+
+[29] “Fortune’s algorithm (for voronoi diagrams).” https://www.desmos.
+
+com/calculator/ejatebvup4. Acessado em 2019-06-27.
+
+[30] M. J. Osborne and A. Rubinstein, A course in game theory. MIT press,
+
+1994.
+
+[31] “Teoria
+
+dos
+
+trat´egico.”
+teoria-dos-jogos-no-planejamento-estrategico/.
+em 2019-07-25.
+
+es-
+https://www.tiespecialistas.com.br/
+Acessado
+
+planejamento
+
+jogos
+
+no
+
+[32] H.-K. Ahn, S.-W. Cheng, O. Cheong, M. Golin, and R. van Oostrum,
+“Competitive facility location along a highway,” in International Com-
+puting and Combinatorics Conference, pp. 237–246, Springer, 2001.
+
+[33] H.-K. Ahn, S.-W. Cheng, O. Cheong, M. Golin, and R. Van Oostrum,
+“Competitive facility location: the voronoi game,” Theoretical Computer
+Science, vol. 310, no. 1-3, pp. 457–467, 2004.
+
+[34] H. Harold, “Stability in competition,” Economic Journal, vol. 39,
+
+no. 153, pp. 41–57, 1929.
+
+79
+
+[35] “Kyle woodward - economics notes.” https://kylewoodward.com/
+
+economics-notes/. Acessado em 2019-07-14.
+
+or
+
+game,
+nearby.”
+
+[36] “Hotelling’s
+titors
+2008/03/25/game-theory-tuesdays-hotelling%e2%80%
+99s-game-or-why-gas-stations-have-competitors-nearby/.
+Acessado em 2019-07-27.
+
+compe-
+https://mindyourdecisions.com/blog/
+
+stations
+
+have
+
+why
+
+gas
+
+[37] “Infop´edia - equilibrio de nash.” https://www.infopedia.pt/apoio/
+
+artigos/$equilibrio-de-nash. Acessado em 2019-07-14.
+
+[38] “Game theory 101: The complete textbook - willian spaniel.” http:
+//gametheory101.com/tag/hotellings-game/. Acessado em 2019-07-
+14.
+
+[39] C. Ewerhart, “Mixed equilibrium in a pure location game: The case of
+n ≥ 4 ﬁrms,” The BE Journal of Theoretical Economics, vol. 15, no. 2,
+pp. 457–472, 2015.
+
+[40] F. Aurenhammer, R. Klein, and D.-T. Lee, Voronoi diagrams and De-
+launay triangulations. World Scientiﬁc Publishing Company, 2013.
+
+[41] F. Dehne, R. Klein, and R. Seidel, “Maximizing a voronoi region: The
+convex case,” International Journal of Computational Geometry & Ap-
+plications, vol. 15, no. 05, pp. 463–475, 2005.
+
+[42] “Voronoi game - dennis shasha - computer science.” https://cs.
+nyu.edu/courses/fall12/CSCI-GA.2965-001/voronoi.html. Aces-
+sado em 2019-07-08.
+
+[43] “Voronoi coloring -
+
+frederik brasz.” http://cfbrasz.github.io/
+
+VoronoiColoring.html. Acessado em 2019-07-08.
+
+[44] O. Cheong, S. Har-Peled, N. Linial, and J. Matousek, “The one-round
+voronoi game,” Discrete & Computational Geometry, vol. 31, no. 1,
+pp. 125–138, 2004.
+
+[45] S. P. Fekete and H. Meijer, “The one-round voronoi game replayed,”
+
+Computational Geometry, vol. 30, no. 2, pp. 81–94, 2005.
+
+[46] M. M. Rasheed, M. Hasan, and M. S. Rahman, “Maximum neighbour
+voronoi games,” in International Workshop on Algorithms and Compu-
+tation, pp. 93–104, Springer, 2009.
+
+80
+
+

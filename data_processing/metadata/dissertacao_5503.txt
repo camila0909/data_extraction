@@ -1,0 +1,8315 @@
+Instituto de Matem´atica Pura e Aplicada
+
+Mestrado Proﬁssional em Matem´atica
+PROFMAT/SBM
+
+M´etodos iterativos na resolu¸c˜ao de equa¸c˜oes
+
+William Canellas Batista
+
+Orientador
+Prof. Marcelo Miranda Viana da Silva, PhD
+
+Abril - 2014
+IMPA
+
+... Instituto de Matem´atica Pura e Aplicada
+
+Mestrado Proﬁssional em Matem´atica
+PROFMAT/SBM
+
+M´etodos iterativos na resolu¸c˜ao de equa¸c˜oes
+William Canellas Batista
+
+Trabalho de conclus˜ao de curso apresen-
+tado como requisito parcial para obten¸c˜ao
+do grau de mestre em Matem´atica em rede
+nacional pelo PROFMAT
+
+Aprovada pela comiss˜ao examinadora:
+
+Marcelo Miranda Viana da Silva, Phd.
+IMPA - Orientador
+
+Victor Augusto Giraldo, Phd.
+UFRJ
+
+Paulo Cezar Pinto Carvalho, Phd.
+IMPA - Coordenador Acadˆemico - PROFMAT
+
+Rio de Janeiro, Abril - 2014
+IMPA
+
+...
+
+“Se eu vi mais longe, foi por estar de
+p´e sobre ombros de gigantes”.
+
+Isaac Newton
+
+Agradecimentos
+
+A Deus, por me conceder esta oportunidade, pois sem Ele nada seria.
+
+Aos meus pais Sandra e Raimundo por toda a dedica¸c˜ao e apoio incondicio-
+nal durante minha caminhada.
+
+`A minha esposa e ﬁlhas por todo incentivo e perseveran¸ca nessa jornada.
+
+Ao professor Marcelo Viana pela paciˆencia, conﬁan¸ca e fundamenta¸c˜ao na ori-
+enta¸c˜ao, e por todo o incentivo que tornaram poss´ıvel a conclus˜ao deste trabalho.
+
+Ao professor Victor Giraldo, por suas contribui¸c˜oes e observa¸c˜oes inestim´aveis
+para conclus˜ao deste trabalho.
+
+Ao professor Paulo Cezar Carvalho, por suas considera¸c˜oes e impress˜oes va-
+liosas sobre o texto.
+
+Ao professor Cesar Farah, pelo conv´ıvio, apoio, compreens˜ao e amizade.
+
+`As professoras Let´ıcia Rangel e Daniella Assemany do CAp-UFRJ pela soli-
+citude e disponibilidade na concretiza¸c˜ao da proposta deste trabalho.
+
+Ao professor Em´ılio e meus alunos do CPO pela inestim´avel contribui¸c˜ao a
+esta proposta.
+
+`A todos os professores do curso, que foram t˜ao importantes em minha vida
+acadˆemica e que idealizaram e concretizaram esta importante iniciativa.
+
+Aos amigos da Turma PROFMAT-2012 que participaram desta etapa de minha
+vida, pelo incentivo, conv´ıvio e apoio constantes.
+
+`A todos os professores e amigos, que contribu´ıram direta ou indiretamente com
+esta proposta
+
+Dedicat´oria
+
+As minhas amadas, esposa Ana Lucia e ﬁlhas Beatriz e Gabrielle, que com muito
+amor, carinho e dedica¸c˜ao, n˜ao mediram esfor¸cos para que eu concretizasse mais
+este sonho. Esperando que um dia possa fazer o mesmo por elas.
+
+Resumo
+
+Este trabalho tem por ﬁnalidade apresentar, a professores e estudantes do En-
+sino M´edio, certos m´etodos num´ericos para resolu¸c˜ao de equa¸c˜oes. Ele tem
+duas motiva¸c˜oes principais. Por um lado, a resolu¸c˜ao de equa¸c˜oes por meio de
+m´etodos num´ericos constitui uma oportunidade importante para que o aluno te-
+nha contato concreto com no¸c˜oes relevantes do C´alculo, tais como sequˆencias e
+derivada, permitindo aprofundar a sua compreens˜ao sobre esses temas. Por ou-
+tro, tamb´em visamos encorajar outros professores a tirarem proveito das novas
+ferramentas, proporcionadas pelo desenvolvimento tecnol´ogico, as quais podem
+e devem ser utilizadas cada vez mais na pr´atica pedag´ogica, permitindo ao aluno
+realizar experimentos, aprofundar conceitos e formular conjecturas, proporcio-
+nando uma aprendizagem signiﬁcativa.
+
+Palavras-Chave: M´etodo iterativo simples, m´etodo de Newton, m´etodo de
+
+Dandelin-Graeﬀe, sequˆencias e aplica¸c˜oes.
+
+Abstract
+
+This work aims at presenting to teachers and high school students, some nume-
+rical methods for solving equations. It has two main motivations. On the one
+hand, solving equations by numerical methods provides an important opportu-
+nity for the student to have real contact with relevant notions of Calculus, such
+as sequences and derivative, allowing to deepen their understanding of these
+themes. Secondly, we aim to also encourage other teachers to take advantage of
+new tools oﬀered by technological development, which can and should be used
+increasingly in educational practice, allowing students to conduct experiments,
+deepen concepts and formulate conjectures, providing a meaningful learning.
+
+Keywords: Simple iterative method, Newton’s method, Dandelin-Graeﬀe
+
+method, sequences and applications.
+
+Sum´ario
+
+1 Introdu¸c˜ao
+
+2 M´etodos num´ericos na Educa¸c˜ao B´asica - Perspectiva dos pro-
+
+fessores
+
+3 M´etodo Iterativo Simples
+
+4 M´etodo de Newton
+
+5 M´etodo de Dandelin-Graeﬀe
+
+6 Atividades Sugeridas
+
+6.1
+
+Informa¸c˜oes Gerais . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.1.1 Recomenda¸c˜oes ao Professor
+. . . . . . . . . . . . . . . .
+6.1.2 Objetivo . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.1.3 P´ublico-alvo . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.1.4 Pr´e-requisitos . . . . . . . . . . . . . . . . . . . . . . . . .
+6.1.5 Descri¸c˜ao da Atividade
+. . . . . . . . . . . . . . . . . . .
+6.1.6 Recursos Necess´arios . . . . . . . . . . . . . . . . . . . . .
+6.2 Atividade - M´etodo Iterativo Simples . . . . . . . . . . . . . . . .
+6.3 Atividade - M´etodo de Newton . . . . . . . . . . . . . . . . . . .
+6.4 Atividade - M´etodo de Dandelin-Graeﬀe . . . . . . . . . . . . . .
+
+7 Aplica¸c˜oes dos m´etodos iterativos na resolu¸c˜ao de problemas
+7.1 Problemas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.1.1 Aplica¸c˜ao em Finan¸cas . . . . . . . . . . . . . . . . . . . .
+7.1.2 Aplica¸c˜ao em Engenharia Ambiental
+. . . . . . . . . . . .
+7.1.3 Exerc´ıcios . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8 M´etodos num´ericos na Educa¸c˜ao B´asica - Perspectiva dos alu-
+
+nos
+
+9 Considera¸c˜oes ﬁnais
+
+Bibliograﬁa
+
+11
+
+15
+
+22
+
+31
+
+37
+
+51
+51
+51
+51
+51
+52
+52
+52
+52
+58
+64
+
+68
+68
+68
+71
+72
+
+74
+
+79
+
+81
+
+Lista de Figuras
+
+2.1 Abordagem da ideia de limite de sequˆencias . . . . . . . . . . . .
+2.2 Motivo para n˜ao utilizar tecnologias
+. . . . . . . . . . . . . . . .
+2.3 Motivo para n˜ao inserir m´etodos num´ericos na Educa¸c˜ao B´asica .
+
+−
+
+ex . . . . . . . . . . . . . . . . . . . . . .
+3.1 Gr´aﬁco de f (x) = x2
+3.2 Gr´aﬁco de ψ(x) e φ(x) com convergˆencia alternada . . . . . . . .
+3.3 Gr´aﬁco de ψ(x) e φ(x) . . . . . . . . . . . . . . . . . . . . . . . .
+3.4 Gr´aﬁco de ψ(x) e φ(x) com aproxima¸c˜ao inicial x0 = 2 . . . . . .
+1(x) . . . . . . . . . . . . . .
+3.5 Gr´aﬁco da Simetria entre φ(x) e φ−
+1(x) e ψ(x) . . . . . . . . . . . . . . . . . . .
+3.6 Gr´aﬁco de φ(x), φ−
+1(x) e ψ(x) com aproxima¸c˜ao inicial x0 = 7 . . . .
+3.7 Gr´aﬁco de φ−
+
+Interpreta¸c˜ao geom´etrica do M´etodo de Newton . . . . . . . . . .
+4.1
+4.2 Gr´aﬁco de f (x) . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6.1 Gr´aﬁco de ψ(x) e φ(x) . . . . . . . . . . . . . . . . . . . . . . . .
+6.2
+Interpreta¸c˜ao Geom´etrica - M´etodo Iterativo Simples . . . . . . .
+6.3 Retas tangentes `a curva . . . . . . . . . . . . . . . . . . . . . . .
+1(x),φ(x) e ψ(x) . . . . . . . . . . . . . . . . . . .
+6.4 Gr´aﬁcos de φ−
+6.5 Gr´aﬁco de ψ(x) e φ(x) . . . . . . . . . . . . . . . . . . . . . . . .
+6.6 Gr´aﬁco de f (x) . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.7 Gr´aﬁco de f (x) e da sua tangente em x0 = 1 . . . . . . . . . . .
+6.8 Gr´aﬁco - fun¸c˜ao convexa - x0 `a direita da raiz . . . . . . . . . . .
+. . . . . . . . .
+6.9 Gr´aﬁco - fun¸c˜ao convexa - x0 `a esquerda da raiz
+
+7.1 Gr´aﬁco de f (x) . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+7.2 Gr´aﬁco de g(x) . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+8.1 Tipo de Institui¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . .
+8.2 Conceitos percebidos no M´etodo Iterativo Simples
+. . . . . . . .
+8.3 Compreens˜ao da convergˆencia da sequˆencia . . . . . . . . . . . .
+8.4 Maior diﬁculdade para aplica¸c˜ao do m´etodo . . . . . . . . . . . .
+8.5 Maior facilitador para realiza¸c˜ao da atividade . . . . . . . . . . .
+8.6 Nota atribu´ıda pelos alunos `a importˆancia do m´etodo para o En-
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+sino M´edio
+
+17
+19
+21
+
+23
+24
+26
+27
+28
+29
+30
+
+31
+34
+
+53
+54
+55
+56
+59
+59
+60
+61
+61
+
+69
+70
+
+75
+76
+77
+77
+78
+
+78
+
+Lista de Tabelas
+
+16
+2.1 N´ıvel em que lecionam . . . . . . . . . . . . . . . . . . . . . . . .
+16
+2.2 Atividades docentes
+. . . . . . . . . . . . . . . . . . . . . . . . .
+17
+2.3 Abordagem do conte´udo - Sequˆencias . . . . . . . . . . . . . . . .
+18
+2.4 Resolu¸c˜ao de equa¸c˜oes por m´etodos num´ericos na gradua¸c˜ao . . .
+19
+2.5 Trabalharam ou trabalham utilizando tecnologias . . . . . . . . .
+19
+2.6 Recursos tecnol´ogicos trabalhados
+. . . . . . . . . . . . . . . . .
+2.7 Motivo para n˜ao utilizar m´etodos num´ericos . . . . . . . . . . . .
+20
+2.8 Consideram poss´ıvel inserir m´etodos num´ericos na Educa¸c˜ao B´asica 20
+
+3.1 Aproxima¸c˜ao inicial x0 =
+1 . . . . . . . . . . . . . . . . . . . .
+3.2 Aproxima¸c˜ao inicial x0 = 1 . . . . . . . . . . . . . . . . . . . . .
+3.3 Aproxima¸c˜ao inicial x0 = 7 . . . . . . . . . . . . . . . . . . . . .
+
+−
+
+4.1 Aproxima¸c˜ao inicial x0 = 3 . . . . . . . . . . . . . . . . . . . . .
+4.2 Aproxima¸c˜ao inicial x0 = 2 . . . . . . . . . . . . . . . . . . . . .
+4.3 Aproxima¸c˜ao inicial x0 = 1 . . . . . . . . . . . . . . . . . . . . .
+4.4 Aproxima¸c˜ao inicial x0 = 3 . . . . . . . . . . . . . . . . . . . . .
+1 . . . . . . . . . . . . . . . . . . . .
+4.5 Aproxima¸c˜ao inicial x0 =
+−
+4.6 Aproxima¸c˜ao inicial x0 = 1
+. . . . . . . . . . . . . . . . . . . . .
+2
+
+5.1 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+5.2 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+5.3 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+5.4 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+5.5 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+5.6 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+5.7 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+5.8 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+5.9 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+5.10 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+5.11 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+5.12 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+
+6.1 Aproxima¸c˜ao inicial x0 = 6 . . . . . . . . . . . . . . . . . . . . .
+6.2 Aproxima¸c˜ao inicial x0 = 1 . . . . . . . . . . . . . . . . . . . . .
+
+24
+27
+29
+
+33
+33
+35
+35
+35
+36
+
+41
+41
+43
+43
+45
+45
+46
+47
+48
+48
+49
+50
+
+54
+57
+
+9
+
+6.3 Ra´ızes de ln 5x
+x = 0 . . . . . . . . . . . . . . . . . . . . . . . .
+6.4 Aproxima¸c˜ao inicial x0 = 1 . . . . . . . . . . . . . . . . . . . . .
+6.5 Transformadas de Graeﬀe . . . . . . . . . . . . . . . . . . . . . .
+6.6 Ra´ızes n-´ezimas dos coeﬁcientes de P n(x) . . . . . . . . . . . . .
+
+−
+
+7.1 Aproxima¸c˜ao inicial x0 = 1, 1 . . . . . . . . . . . . . . . . . . . .
+7.2 Aproxima¸c˜ao inicial x0 = 1, 1 . . . . . . . . . . . . . . . . . . . .
+7.3 Aproxima¸c˜ao inicial x0 = 1 . . . . . . . . . . . . . . . . . . . . .
+
+8.1 Resolu¸c˜ao de equa¸c˜ao diferente de manipula¸c˜ao alg´ebrica
+. . . .
+8.2 Conhecem sequˆencias diferentes de PA’s e PG’s . . . . . . . . . .
+
+57
+60
+65
+65
+
+70
+71
+72
+
+75
+75
+
+Cap´ıtulo 1
+
+Introdu¸c˜ao
+
+Com o advento da computa¸c˜ao e sua aplica¸c˜ao em diversas ´areas sejam elas
+acadˆemicas e/ou proﬁssionais, a resolu¸c˜ao de problemas modelados por equa¸c˜oes
+alg´ebricas e transcendentes, historicamente, faz parte de todo o desenvolvimento
+alcan¸cado pela civiliza¸c˜ao atual e deve ser inserida na forma¸c˜ao b´asica, onde o
+docente desempenha um papel important´ıssimo na forma¸c˜ao do cidad˜ao.
+
+Partindo deste princ´ıpio, este trabalho tem como principais objetivos:
+
+•
+
+•
+
+•
+
+Apresentar os m´etodos iterativos como ferramentas para a resolu¸c˜ao de
+equa¸c˜oes e instrumentos para concretizar e consolidar a aprendizagem de
+conceitos relativos a sequˆencias de modo geral, visto que a abordagem no
+Ensino M´edio, em grande parte, ´e restrita apenas a sequˆencias que repre-
+sentam progress˜oes aritm´eticas e/ou geom´etricas, passando aos alunos a
+falsa impress˜ao de que existem apenas estes tipos de sequˆencias;
+
+Discutir sobre a resolu¸c˜ao de equa¸c˜oes por m´etodos num´ericos, que diﬁcil-
+mente aparecem na Educa¸c˜ao B´asica, com a inten¸c˜ao de revisar as pr´aticas
+pedag´ogicas, pois grande parte dos professores da Educa¸c˜ao B´asica e dos
+livros did´aticos priorizam as solu¸c˜oes alg´ebricas, o que na sociedade atual
+parece ser anacrˆonico;
+
+Proporcionar ao aluno uma abordagem que se utiliza do potencial tec-
+nol´ogico e ampliar, consideravelmente, a quantidade de equa¸c˜oes que po-
+dem ser resolvidas na Educa¸c˜ao B´asica, que at´e, ent˜ao, para os alunos
+pareciam muito complexas ou imposs´ıveis de serem resolvidas.
+
+Para esse efeito contar-se-´a com: uma pesquisa que possa situar o tema
+“M´etodos Num´ericos” no contexto da Educa¸c˜ao B´asica e na forma¸c˜ao dos pro-
+fessores, atividades estruturadas, visando apresentar tais m´etodos de forma mais
+acess´ıvel ao aluno do Ensino M´edio, a exposi¸c˜ao da relevˆancia destes m´etodos
+atrav´es da aplica¸c˜ao das atividades e dos resultados obtidos com as mesmas e
+situa¸c˜oes-problema, em que as equa¸c˜oes originadas necessitem ser resolvidas,
+utilizando-se um m´etodo num´erico.
+
+11
+
+No primeiro ano do Ensino M´edio e mesmo antes disso, o discente se
+depara com equa¸c˜oes, que em sua maioria s˜ao resolvidas pela mera manipula¸c˜ao
+de f´ormulas. Como, por exemplo, as equa¸c˜oes polinomiais de grau 2, mas a Mo-
+delagem Matem´atica de problemas reais n˜ao gera equa¸c˜oes t˜ao simples de serem
+resolvidas com recursos alg´ebricos. Faz-se necess´ario, ent˜ao, que tenhamos ou-
+tras ferramentas, que sejam eﬁcientes na resolu¸c˜ao dessas equa¸c˜oes, os m´etodos
+num´ericos.
+
+Ao longo deste trabalho ser˜ao explorados trˆes desses m´etodos s˜ao eles:
+o M´etodo Iterativo Simples, tamb´em conhecido por M´etodo do ponto ﬁxo, o
+M´etodo de Newton1 e o M´etodo de Dandelin2-Graeﬀe3.
+
+Apesar dos m´etodos utilizarem conceitos de C´alculo Diferencial e Inte-
+gral a ideia ´e mostrar para o discente do Ensino M´edio que os m´etodos num´ericos
+s˜ao extremamente eﬁcazes na resolu¸c˜ao de uma grande variedade de equa¸c˜oes
+que surgem em problemas de diversas ´areas. No entanto, sem a inten¸c˜ao de in-
+troduzir formalmente o C´alculo, mas apresentar os conceitos matem´aticos nele
+empregados utilizando o potencial computacional hoje existente, pois faz parte
+da realidade da sociedade e deve, cada vez mais, ser introduzida no ambiente
+escolar.
+
+Na antiguidade muitos povos desenvolveram a Matem´atica com o ob-
+jetivo de solucionar problemas reais. Em particular, uma conjectura sobre as
+rela¸c˜oes entre os lados de um triˆangulo retˆangulo, que hoje nos ´e conhecida
+por Teorema de Pit´agoras. Mostrou-se extremamente eﬁcaz no c´alculo das di-
+mens˜oes de um terreno, na astronomia, na navega¸c˜ao, etc.
+
+Os gregos, assim como outros povos antigos, j´a utilizavam m´etodos
+num´ericos, mas concebiam suas unidades de medida apenas como valores in-
+teiros e em alguns casos racionais. Muitos s´eculos foram necess´arios, para que
+chegassemos aos n´umeros reais e complexos.
+
+Atualmente, a ciˆencia que extrapola os limites do “micro ao macro”,
+necessita de ferramentas e resultados cada vez mais precisos. Portanto, diante
+de um mundo informatizado, nada mais natural que utilizar esta tecnologia
+como facilitador de nossas atividades sejam elas acadˆemicas e/ou proﬁssionais.
+
+“Energia el´etrica, telecomunica¸c˜oes, computadores, avi˜oes, ve´ıculos
+espaciais, para citar apenas alguns exemplos, simplesmente n˜ao es-
+tariam a nosso alcance se n˜ao dispus´essemos de um grande arsenal
+matem´atico com que trat´a-los.” (GARBI - 2009)
+
+Outro ponto importante s˜ao as rela¸c˜oes ﬁlos´oﬁco-culturais que inﬂu-
+enciam as pr´aticas de ensino-aprendizagem. Para citar um exemplo temos o
+
+1Isaac Newton (∗1643 − †1727) foi o maior matem´atico inglˆes de sua gera¸c˜ao. Ele lan¸cou
+as bases para o c´alculo diferencial e integral. Seu trabalho em ´optica e gravita¸c˜ao o torna um
+dos maiores cientistas que o mundo conheceu.
+
+2Germinal Pierre Dandelin (∗1794−†1847) matem´atico francˆes que contribuiu com estudos
+em geometria, est´atica, ´algebra, probabilidade e com um m´etodo de aproximar as ra´ızes de
+uma equa¸c˜ao alg´ebrica.
+
+3Karl Heinrich Graeﬀe (∗1799 − †1873) matem´atico alem˜ao mais conhecido por seu m´etodo
+
+de resolu¸c˜ao num´erica de equa¸c˜oes alg´ebricas.
+
+12
+
+m´etodo de completar quadrados, que mesmo n˜ao sendo um processo num´erico
+´e pouco explorado no Ensino Fundamental, mas ´util n˜ao s´o na resolu¸c˜ao de
+equa¸c˜oes de 2o grau como tamb´em, por exemplo, em geometria anal´ıtica, para
+determinar a equa¸c˜ao reduzida das cˆonicas.
+
+Por´em, pela experiˆencia adquirida nas atividades docentes e atrav´es de
+di´alogos informais com outros professores podemos ver que culturalmente n˜ao
+temos o h´abito de resolver equa¸c˜oes de 2o grau completando quadrados e muitas
+vezes quando tentamos, logo somos desencorajados por situa¸c˜oes como: “N˜ao
+tem uma f´ormula para resolver isto?”, “Existe uma maneira mais f´acil para
+resolver?”, ....
+
+Fica claro, que uma mudan¸ca na postura tanto de professores, como de
+alunos ´e necess´aria, para que possamos evoluir nas rela¸c˜oes de ensino-aprendiza-
+gem. De forma, a contribuir de maneira eﬁcaz com a sociedade, pois a Ma-
+tem´atica ´e instrumento fundamental para entendermos o mundo contemporˆaneo.
+H´a, em muitas atividades, a necessidade de se trabalhar com valores
+reais aproximados. No caso de uma constru¸c˜ao de pequeno porte, se usarmos
+√2
+1, 4 ou 1, 41 ou ainda 1, 414, utilizando o metro como unidade de medida
+mais adequada. Essas diferentes aproxima¸c˜oes n˜ao s˜ao signiﬁcativas para o
+resultado ﬁnal da constru¸c˜ao, por´em se tiv´essemos veriﬁcando a distˆancia entre
+dois corpos celestes, em milh˜oes de quilˆometros, a cada casa decimal temos uma
+melhor aproxima¸c˜ao para essa distˆancia.
+
+≈
+
+Para determinar uma aproxima¸c˜ao para um n´umero real como, por
+exemplo: √2, log 6, 1+√5
+ou para determinar ra´ızes de fun¸c˜oes em geral temos
+os m´etodos iterativos, que obedecendo a certas proposi¸c˜oes proporcionam um
+valor aproximado e atenda as necessidades especiﬁcas de cada problema. Um
+m´etodo iterativo est´a diretamente associado a uma sequˆencia de valores que, se
+for convergente, convergir´a para a solu¸c˜ao de nosso problema.
+
+2
+
+Basicamente, o m´etodo iterativo consiste em repetir uma determinada
+opera¸c˜ao4 um certo n´umero de vezes at´e que nos seja fornecida uma apro-
+xima¸c˜ao, que satisfa¸ca as condi¸c˜oes do problema e, para tal, a sequˆencia de
+valores deve ser convergente.
+
+A sequˆencia obtida pelas itera¸c˜oes funciona como composi¸c˜oes da fun¸c˜ao
+
+F (x) assim,
+
+(x, F1(x), F2(x), F3(x), . . . , Fn(x), . . . )
+
+Onde Fn(x) = F
+como aproxima¸c˜ao inicial e F (x) a fun¸c˜ao de itera¸c˜ao.
+
+◦ · · · ◦
+
+F
+
+F
+
+◦
+
+◦
+
+F (x) (n vezes) de forma recorrente temos: x0
+
+x1 = F (x0)
+
+x2 = F (x1) = F (F (x0)) = F2(x0)
+
+x3 = F (x2) = F (F (F (x0))) = F3(x0)
+...
+
+4Entenda-se opera¸c˜ao como a fun¸c˜ao de itera¸c˜ao aplicada a um ponto inicial x0.
+
+13
+
+xn+1 = F (xn) = Fn(x0)
+
+A exemplo das equa¸c˜oes polinomiais de grau superior a 4, que mui-
+tos matem´aticos estudaram por bastante tempo, a ﬁm de determinar as suas
+solu¸c˜oes por meio de f´ormulas que relacionassem seus coeﬁcientes e suas ra´ızes.
+Foi apenas no s´eculo XIX, que o matem´atico Galois5 demonstrou a impossibili-
+dade de resolver tais equa¸c˜oes algebricamente, exceto em alguns casos particu-
+lares. Galois foi tamb´em um dos precursores da ´Algebra Moderna e em um de
+seus trabalhos d´a um tratamento anal´ıtico ao m´etodo de Legendre6 para apro-
+xima¸c˜oes de ra´ızes de equa¸c˜oes alg´ebricas, cujo procedimento era geom´etrico.
+
+Por outro lado, situar o aluno no contexto s´ocio-cultural e hist´orico,
+possibilita uma maior percep¸c˜ao de mundo e apresenta a ele a oportunidade de
+se tornar um agente transformador do meio, sendo este aspecto apresentado nos
+PCNEM:
+
+•
+
+•
+
+•
+
+•
+
+Desenvolver a capacidade de utilizar a Matem´atica na inter-
+preta¸c˜ao e interven¸c˜ao no real.
+
+Aplicar conhecimentos e m´etodos matem´aticos em situa¸c˜oes re-
+ais, em especial em outras ´areas do conhecimento.
+
+Relacionar etapas da hist´oria da Matem´atica com a evolu¸c˜ao
+da humanidade.
+
+Utilizar adequadamente calculadoras e computador, reconhe-
+cendo suas limita¸c˜oes e potencialidades.
+
+Diante da impossibilidade de resolver equa¸c˜oes alg´ebricas de grau supe-
+rior a 4 e da diﬁculdade em resolver equa¸c˜oes transcendentes, apenas com ma-
+nipula¸c˜ao alg´ebrica, faz-se necess´ario desenvolver outros processos de resolu¸c˜ao.
+S˜ao os m´etodos num´ericos, que evolu´ıram durante os s´eculos pela introdu¸c˜ao de
+novas e revolucion´arias nota¸c˜oes, que utilizamos at´e hoje.
+
+Existem muitos m´etodos iterativos, assim como diversos tipos de equa-
+¸c˜oes, ent˜ao, de forma alguma deve-se adotar um determinado m´etodo num´erico
+como “o ´unico” ou “o melhor”, pois cada um tem sua importˆancia e, tamb´em,
+suas limita¸c˜oes. Sob este aspecto, vale destacar, que grande parte dos profes-
+sores da Educa¸c˜ao B´asica ainda elegem uma forma de resolu¸c˜ao em detrimento
+de outra. O que, do ponto de vista pedag´ogico ´e um grande preju´ızo para a
+aprendizagem dos alunos. Para que isso n˜ao ocorra, o professor deve atentar
+para as diferentes formas de abordagem das quest˜oes propostas e analisar com
+cuidado o que for produzido por seus alunos.
+
+5Evariste Galois (∗1811 − †1832) matem´atico francˆes que desenvolveu a Teoria, batizada
+
+com seu nome, que trata da resolu¸c˜ao de equa¸c˜oes gerais de grau superior a 4.
+
+6Adrien-Marie Legendre (∗1752 − †1833) matem´atico francˆes cuja mais importante obra
+
+est´a relacionada com as fun¸c˜oes el´ıpticas.
+
+14
+
+Cap´ıtulo 2
+
+M´etodos num´ericos na
+Educa¸c˜ao B´asica -
+Perspectiva dos professores
+
+Uma pesquisa que n´os realizamos e que contou com a participa¸c˜ao de mais
+de 300 professores de Matem´atica, resultou em dados interessantes sobre as
+pr´aticas pedag´ogicas, proporcionando uma vis˜ao mais ampla da realidade do
+Ensino de Matem´atica. Tal pesquisa tinha por objetivo situar o tema “M´etodos
+N´umericos”na Educa¸c˜ao B´asica e sua aplica¸c˜ao em sala de aula, e, ainda, a sua
+rela¸c˜ao com o estudo de sequˆencias.
+
+A pesquisa apresentada aos professores contou com perguntas objetivas,
+considerando aspectos qualitativos e quantitativos. Mas, quando necess´ario foi
+reservado espa¸co, para que os docentes pudessem dar sua opini˜ao ou fossem
+conduzidos a perguntas diferentes, dependendo da resposta dada `a pergunta
+anterior. A parte inicial da pesquisa visa situar em que n´ıvel os professores
+lecionam e em qual rede trabalham. A segunda parte, avaliar como o estudo
+de sequˆencias ´e conduzido. A terceira, veriﬁcar como os m´etodos num´ericos
+est˜ao inseridos na forma¸c˜ao do professor e em sua pr´atica docente. A quarta,
+analisar a rela¸c˜ao do professor com o uso de novas tecnologias e, por ﬁm, avaliar
+a possibilidade de introdu¸c˜ao de m´etodos num´ericos na Educa¸c˜ao B´asica. O
+formul´ario com as perguntas realizadas na pesquisa pode ser consultado em 9.
+A pesquisa respondida por 353 docentes originou dados relevantes so-
+bre a forma¸c˜ao do professor, suas pr´aticas pedag´ogicas com rela¸c˜ao ao tema
+sequˆencias e, ainda, sua familiaridade com m´etodos num´ericos.
+
+15
+
+Analisando os dados na tabela abaixo.
+
+N´ıvel em que lecionam Quantidade de professores Percentual
+Ensino Fundamental
+Ensino M´edio
+Ensino Superior
+
+38%
+42%
+20%
+
+257
+285
+134
+
+Tabela 2.1: N´ıvel em que lecionam
+
+Vemos que 80% dos professores atuam na Educa¸c˜ao B´asica.
+E de acordo com os dados abaixo.
+
+Atividades docentes Quantidade de professores Percentual
+
+Rede p´ublica
+Rede privada
+Ambas
+
+229
+29
+95
+
+65%
+8%
+27%
+
+Tabela 2.2: Atividades docentes
+
+Temos cerca de 92% dos proﬁssionais pesquisados desempenhando suas
+
+atividades na rede p´ublica de ensino.
+
+Mesmo com a maioria dos professores de Matem´atica atuando na Educa¸c˜ao
+
+B´asica e na rede p´ublica de ensino, surge uma quest˜ao muito importante: “Por
+que a educa¸c˜ao p´ublica possui ´ındices t˜ao ruins na disciplina de Matem´atica1?”
+Independente das pol´ıticas p´ublicas, que n˜ao ´e o objeto de estudo deste
+trabalho, existe um aspecto que pode e deve ser explorado, a pr´atica pedag´ogica,
+ou seja, o papel que o professor deve desempenhar em sala de aula.
+
+Sabemos da importˆancia da Matem´atica para o mundo moderno, con-
+
+forme GARBI(2009).
+
+“N˜ao h´a, portanto, exagero em se aﬁrmar que vivemos em um mundo
+altamente dependente da Matem´atica e que ela est´a presente em tudo
+`a nossa volta, embora a maior parte das pessoas n˜ao se aperceba disso
+e, n˜ao raro, aﬁrme detest´a-la.”
+
+E, ainda, a Matem´atica desenvolva o racioc´ınio l´ogico-dedutivo, im-
+prescind´ıvel a muitas outras ´areas do conhecimento, que encontra-se em con-
+cordˆancia com os Parˆametros Curriculares Nacionais para o Ensino M´edio -
+PCNEM
+
+1No PISA 2012, em Matem´atica, apesar de o Brasil ter evolu´ıdo, encontra-se nas ´ultimas
+posi¸c˜oes, ocupa a 58a posi¸c˜ao e, em Ciˆencias, ocupa o 59o lugar. Segundo dados divulgados
+pela OCDE (Organiza¸c˜ao para Coopera¸c˜ao e Desenvolvimento Econˆomico). Os dados est˜ao
+dispon´ıveis em [17].
+
+16
+
+“Em um mundo onde as necessidades sociais, culturais e proﬁssio-
+nais ganham novos contornos, todas as ´areas requerem alguma com-
+petˆencia em Matem´atica e a possibilidade de compreender conceitos e
+procedimentos matem´aticos ´e necess´aria tanto para tirar conclus˜oes
+e fazer argumenta¸c˜oes, quanto para o cidad˜ao agir como consumidor
+prudente ou tomar decis˜oes em sua vida pessoal e proﬁssional.”
+
+Um dos objetivos das atividades apresentadas ´e fazer o aluno estabele-
+cer conex˜oes entre conte´udos e perceber que a Matem´atica ´e uma ferramenta
+poderosa na resolu¸c˜ao de problemas e n˜ao est´a restrita a c´alculos enfadonhos e
+dispendiosos. Isso pode ser feito por meio de tecnologias.
+
+Os m´etodos iterativos geram sequˆencias de n´umeros reais e ao investigar
+se s˜ao trabalhadas sequˆencias mais gerais, diferentes de PA’s e PG’s, obtemos
+os seguintes resultados:
+
+Quantidade de professores Percentual
+
+Sim
+N˜ao
+
+188
+165
+
+53%
+47%
+
+Tabela 2.3: Abordagem do conte´udo - Sequˆencias
+
+Isto mostra que aproximadamente metade dos professores pesquisados
+n˜ao abordam o conte´udo de sequˆencias ou o fazem apenas restringindo as pro-
+gress˜oes aritm´etica e geom´etrica. Por´em, esse tema ´e muito mais amplo e merece
+ter mais ˆenfase tanto no Ensino Fundamental como no M´edio, seja a partir da
+busca por padr˜oes ou por processos iterativos.
+
+Quanto a trabalhar com a ideia de limite, o gr´aﬁco a seguir mostra, que
+poucos professores abordam este assunto, mesmo trabalhando com a soma dos
+inﬁnitos termos de uma PG.
+
+Figura 2.1: Abordagem da ideia de limite de sequˆencias
+
+17
+
+Vemos que a maioria dos professores trabalham com sequˆencias, anali-
+sando de forma superﬁcial a ideia de limite. Enquanto, 15% dedicam o tempo
+necess´ario para introduzir este conceito, j´a os demais professores consideram
+que n˜ao ´e um assunto compat´ıvel com a Educa¸c˜ao B´asica ou n˜ao analisam o
+comportamento de sequˆencias. Em “outros” convˆem destacar a impress˜ao dada
+pelos professores com algumas de suas justiﬁcativas:
+
+•
+
+•
+
+•
+
+•
+
+•
+
+“A falta de pr´e-requisitos de um ano para outro agrava o desenvolvimento
+dos conte´udos, sendo que dispenso um tempo grande para refor¸co.”
+
+“Poucos livros tem o assunto.”
+
+“N˜ao tenho autonomia pedag´ogica para trabalhar certos conceitos. Me
+atenho aos conte´udos que ser˜ao abordados na rede onde trabalho.”
+
+“N˜ao, devido ao n´ıvel das turmas.”
+
+“Nˆao existe tempo h´abil para vencer os conte´udos exigidos e ainda apro-
+fund´a-los.”
+
+Isso sinaliza a necessidade de debate e reﬂex˜oes sobre quest˜oes como
+
+curr´ıculo, material did´atico e autonomia pedag´ogica.
+
+Por outro lado, quando questionados sobre resolver equa¸c˜oes por m´etodos
+
+num´ericos em seu curso de gradua¸c˜ao, obtemos os seguintes dados:
+
+Quantidade de professores Percentual
+
+Sim
+N˜ao
+
+237
+116
+
+67%
+33%
+
+Tabela 2.4: Resolu¸c˜ao de equa¸c˜oes por m´etodos num´ericos na gradua¸c˜ao
+
+Vemos que 33% n˜ao viram m´etodos num´ericos em seu curso de gra-
+dua¸c˜ao, caracterizando uma deﬁciˆencia na forma¸c˜ao do futuro professor. Isso
+justiﬁca a necessidade de elabora¸c˜ao de material e a discuss˜ao a respeito da
+introdu¸c˜ao no Ensino B´asico desse assunto. Visto que, muitas ´areas como
+automa¸c˜ao, economia, quimica, biologia, entre outras se utilizam de m´etodos
+iterativos para resolver problemas.
+
+Mesmo sendo uma realidade distante, na educa¸c˜ao p´ublica, o uso de
+tecnologias est´a cada vez mais presente na pr´atica pedag´ogica do professor de
+Matem´atica. Sobre trabalhar o conte´udo de sequˆencias e resolu¸c˜ao de equa¸c˜oes
+usando tecnologias, obtemos os seguintes dados:
+
+18
+
+Quantidade de professores Percentual
+
+Sim
+N˜ao
+
+225
+128
+
+64%
+36%
+
+Tabela 2.5: Trabalharam ou trabalham utilizando tecnologias
+
+Dos 64% entrevistados que trabalham ou trabalharam com recursos
+
+diversiﬁcados temos:
+
+Recurso
+Planilhas
+Calculadoras
+Software de Geometria Dinˆamica
+Software Plotador de Gr´aﬁcos
+Outros
+
+Quantidade de professores Percentual
+
+178
+123
+147
+118
+10
+
+31%
+21%
+26%
+20%
+2%
+
+Tabela 2.6: Recursos tecnol´ogicos trabalhados
+
+sendo mencionados tamb´em, jogos e softwares tipo CAS2.
+Entretando, dos 36% que nunca trabalharam com tais recursos, alega-
+
+ram os seguintes motivos, apresentados no gr´aﬁco seguinte.
+
+Figura 2.2: Motivo para n˜ao utilizar tecnologias
+
+Em “outros” conv´em ressaltar que as justiﬁcativas foram: a de n˜ao
+Isto pode
+
+conhecer tais recursos e/ou n˜ao saber trabalhar com os mesmos.
+descrever mais uma lacuna na forma¸c˜ao docente.
+
+2CAS-Computer Algebra System s˜ao programas voltados para o c´alculo em matem´atica
+
+simb´olica como: Maple, Mathematica, Maxima, Yacas, entre outros.
+
+19
+
+Para resolver essa quest˜ao o docente deve em suas pr´aticas pedag´ogicas
+estar atento as diversas metodologias para resolver um problema de Matem´atica
+e dar ˆenfase a procedimentos que apresentem uma maior aplicabilidade, envol-
+vendo diferentes conceitos matem´aticos.
+
+Quanto a utilizar algum m´etodo num´erico em sua pr´atica docente ape-
+nas 119 professores, equivalente a 34%, j´a o ﬁzeram, um percentual modesto,
+tendo em vista a importˆancia e as aplica¸c˜oes deste assunto. Os m´etodos cita-
+dos foram, em sua maioria, os aplicados por professores em cursos de gradua¸c˜ao,
+por´em nenhum m´etodo iterativo foi citado na Educa¸c˜ao B´asica, limitado apenas
+ao c´alculo por estimativas.
+
+Dentre os que nunca utilizaram tais m´etodos, temos os motivos apre-
+
+sentados na tabela seguinte:
+
+Motivo
+N˜ao tive oportunidade
+N˜ao conhe¸co muito sobre
+M´etodos Num´ericos
+Outros
+
+Quantidade de professores Percentual
+
+131
+100
+
+13
+
+54%
+41%
+
+5%
+
+Tabela 2.7: Motivo para n˜ao utilizar m´etodos num´ericos
+
+No grupo de professores que disseram “n˜ao ter oportunidade” pode-
+mos destacar alguns fatores que diﬁcultam tais atividades, como a falta de
+laborat´orios de Matem´atica, a forma como o curr´ıculo ´e estruturado e ainda
+a resistˆencia por parte dos discentes, pois muitas vezes, n˜ao percebem que “o
+fazer Matem´atica”, n˜ao se resume a mera manipula¸c˜ao de f´ormulas. Por outro
+lado, um grupo consider´avel de professores alegam n˜ao ter conhecimento sobre
+esses m´etodos, o que refor¸ca uma falha nos cursos de licenciatura. Enquanto,
+alguns alegaram:
+
+“As diﬁculdades como o tempo para cumprir com os conte´udos.”
+
+“N˜ao faz parte do planejamento.”
+
+“N˜ao ´e compat´ıvel com o n´ıvel dos alunos.”
+
+•
+
+•
+
+•
+
+Se os professores consideram poss´ıvel a introdu¸c˜ao do tema na Educa¸c˜ao
+
+B´asica, temos:
+
+Quantidade de professores Percentual
+
+Sim
+N˜ao
+
+326
+27
+
+92%
+8%
+
+Tabela 2.8: Consideram poss´ıvel inserir m´etodos num´ericos na Educa¸c˜ao B´asica
+
+20
+
+Os 8% contr´arios a essa proposta apresentaram os seguintes motivos:
+
+Figura 2.3: Motivo para n˜ao inserir m´etodos num´ericos na Educa¸c˜ao B´asica
+
+Os dados apresentados na pesquisa refor¸cam a necessidade de reestru-
+tura¸c˜ao das matrizes curriculares e de produ¸c˜ao de material que contemplem o
+tema aqui proposto, sendo conﬁrmados pelos PCNEM:
+
+O impacto da tecnologia na vida de cada indiv´ıduo vai exigir com-
+petˆencias que v˜ao al´em do simples lidar com as m´aquinas... Esse
+impacto da tecnologia, cujo instrumento mais relevante ´e hoje o com-
+putador, exigir´a do ensino de Matem´atica um redirecionamento sob
+uma perspectiva curricular que favore¸ca o desenvolvimento de habili-
+dades e procedimentos com os quais o indiv´ıduo possa se reconhecer e
+se orientar nesse mundo do conhecimento em constante movimento.
+
+E ainda,
+
+...aprender Matem´atica no Ensino M´edio deve ser mais do que me-
+morizar resultados dessa ciˆencia e que a aquisi¸c˜ao do conhecimento
+matem´atico deve estar vinculada ao dom´ınio de um saber fazer Ma-
+tem´atica e de um saber pensar matem´atico.
+Esse dom´ınio passa por um processo lento, trabalhoso, cujo come¸co
+deve ser uma prolongada atividade sobre resolu¸c˜ao de problemas de
+diversos tipos, com o objetivo de elaborar conjecturas, de estimular
+a busca de regularidades, a generaliza¸c˜ao de padr˜oes, a capacidade
+de argumenta¸c˜ao, elementos fundamentais para o processo de for-
+maliza¸c˜ao do conhecimento matem´atico e para o desenvolvimento
+de habilidades essenciais `a leitura e interpreta¸c˜ao da realidade e de
+outras ´areas do conhecimento.
+
+Na esperan¸ca de reverter as duas ´ultimas alega¸c˜oes da pesquisa sobre
+a complexidade do assunto e a falta de material dispon´ıvel, e de conﬁrmar a
+relevˆancia do tema para o Ensino M´edio, as atividades sugeridas no cap´ıtulo
+6 foram aplicadas a grupos de alunos de escolas p´ublicas, cujos resultados s˜ao
+analisados no cap´ıtulo 8 deste trabalho.
+
+21
+
+Cap´ıtulo 3
+
+M´etodo Iterativo Simples
+
+Algumas equa¸c˜oes como por exemplo ax2 + bx + c = 0 possuem solu¸c˜oes que
+podem ser obtidas apenas com manipula¸c˜oes alg´ebricas simples, por´em equa¸c˜oes
+como ex = 2 + cos 3x n˜ao disp˜oem de f´ormulas para determinar suas solu¸c˜oes.
+Ent˜ao, o que fazer para resolver tais equa¸c˜oes? Uma poss´ıvel forma de
+
+abordar esta quest˜ao ´e a utiliza¸c˜ao de um m´etodo num´erico.
+
+O m´etodo iterativo simples consiste em resolver uma equa¸c˜ao do tipo
+x = φ(x), aplicando sucessivamente a fun¸c˜ao φ. De modo que, se a sequˆencia
+xn+1 = φ(xn) for convergente, converge para uma solu¸c˜ao da equa¸c˜ao.
+
+Iterando φ obtemos a sequˆencia de n´umeros reais,
+
+x0
+
+φ(x0) = x1
+
+φ(x1) = x2
+
+φ(x2) = x3
+...
+φ(xn) = xn+1
+
+onde φ(x) ´e denominada fun¸c˜ao de itera¸c˜ao e x0 ´e um valor inicial, convenien-
+temente, escolhido.
+
+Assim, para resolver uma equa¸c˜ao mais geral do tipo f (x) = 0 pode-
+mos utilizar o m´etodo iterativo simples, se for poss´ıvel estabelecer a seguinte
+equivalˆencia:
+
+f (x) = 0
+
+⇔
+
+φ(x) = x
+
+para alguma fun¸c˜ao φ.
+
+A fun¸c˜ao de itera¸c˜ao n˜ao ´e ´unica e a sequˆencia poder´a divergir depen-
+dendo da φ escolhida, mas com um pouco de criatividade e habilidade ´e poss´ıvel
+determinar tal equivalˆencia ao manipular f (x) = 0 de modo a obter uma φ(x),
+cuja sequˆencia seja convergente.
+
+22
+
+Exemplo 3.1. Encontre uma estimativa para raiz da equa¸c˜ao x2
+
+ex = 0.
+
+−
+
+O primeiro passo ´e construir o gr´aﬁco de f (x) associada a equa¸c˜ao, a ﬁm
+de isolar a raiz. Temos, nesse caso, uma ´unica raiz que se encontra no intervalo
+[
+
+1, 0].
+
+−
+
+Figura 3.1: Gr´aﬁco de f (x) = x2
+
+ex
+
+−
+
+Neste ponto, um software1 que construa o gr´aﬁco de fun¸c˜oes, como o
+Winplot, ´e muito importante para a visualiza¸c˜ao da(s) raiz(´ızes). O professor
+deve chamar a aten¸c˜ao dos alunos para uma avalia¸c˜ao quanto ao comportamento
+da fun¸c˜ao, a ﬁm de veriﬁcar se o gr´aﬁco descrito no software condiz com a fun¸c˜ao
+dada, pois cada programa possui suas especiﬁca¸c˜oes e tamb´em limita¸c˜oes e o
+que neles s˜ao representados, n˜ao deve ser considerado como verdade absoluta.
+Para determinar uma fun¸c˜ao de itera¸c˜ao, basta manipular a equa¸c˜ao,
+
+para obter x = φ(x).
+
+x2
+
+ex = 0
+
+−
+x2 = ex
+√ex
+
+x =
+
+±
+
+Como a raiz ´e negativa, a escolha “natural” para fun¸c˜ao de itera¸c˜ao ´e
+
+x =
+
+√ex.
+
+−
+
+1Mesmo sem este recurso, considere ser poss´ıvel a realiza¸c˜ao da atividade desde que o aluno
+tenha conhecimento sobre o comportamento das fun¸c˜oes envolvidas e saiba construir os seus
+gr´aﬁcos.
+
+23
+
+Vamos construir uma planilha2 com os valores de n, xn e xn+1 = φ(xn).
+
+n
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+xn
+1, 0000000000
+0, 60653066
+0, 73840315
+0, 69128605
+0, 707765096
+0, 701957409
+0, 703998746
+0, 703280563
+0, 70353315
+0, 703444304
+0, 703475554
+
+−
+−
+−
+−
+−
+−
+−
+−
+−
+−
+−
+
+φ(xn) = xn+1
+0, 60653066
+0, 73840315
+0, 69128605
+0, 707765096
+0, 701957409
+0, 703998746
+0, 703280563
+0, 70353315
+0, 703444304
+0, 703475554
+0, 703464562
+
+−
+−
+−
+−
+−
+−
+−
+−
+−
+−
+−
+
+Tabela 3.1: Aproxima¸c˜ao inicial x0 =
+
+1
+
+−
+
+Ao analisar o comportamento das sequˆencias vemos que os valores ﬁcam
+alternando em torno de um ponto, chamado de “ponto ﬁxo atrator”, portanto
+
+−
+
+0, 703464562 ´e uma aproxima¸c˜ao para raiz com 5 casas decimais.
+
+Podemos visualizar o comportamento da sequˆencia no gr´aﬁco seguinte:
+
+Figura 3.2: Gr´aﬁco de ψ(x) e φ(x) com convergˆencia alternada
+
+2Se este recurso n˜ao estiver dispon´ıvel, pe¸ca para os alunos construirem uma tabela e neste
+
+caso, os valores podem ser obtidos utilizando uma calculadora cient´ıﬁca.
+
+24
+
+Para veriﬁcar a exatid˜ao da aproxima¸c˜ao, substitu´ımos x
+
+0, 703464562
+
+δ, onde δ ´e a precis˜ao desejada. Desse
+
+≈ −
+
+na equa¸c˜ao original, tal que
+modo,
+
+|
+
+f (xn+1)
+
+| ≤
+
+(
+
+|
+
+−
+
+0, 703464562)2
+
+−
+0, 00000544
+
+0,703464562
+
+e−
+
+δ
+
+| ≤
+
+10−
+
+5.
+
+≤
+
+O leitor interessado poder´a encontrar mais informa¸c˜oes sobre erros de apro-
+xima¸c˜oes e precis˜ao dos resultados em [3] e [9].
+
+A garantia de que a sequˆencia converge para o ponto ﬁxo quando este
+
+´e um ponto ﬁxo atrator ´e dada pelo teorema enunciado a seguir.
+
+Teorema 3.1. Seja r uma raiz da equa¸c˜ao f (x) = 0, isolada no intervalo [a, b].
+Seja φ(x) uma fun¸c˜ao de itera¸c˜ao para equa¸c˜ao f (x) = 0 que satisfaz:
+
+1. φ(x) e φ′(x) s˜ao cont´ınuas em [a, b];
+
+φ′(x)
+
+2.
+
+|
+
+| ≤
+
+M < 1, para todo x pertencente a [a, b];
+
+3. Uma aproxima¸c˜ao inicial x0 tal que x0 ∈
+
+[a, b].
+
+Ent˜ao, a sequˆencia obtida pela itera¸c˜ao de φ(x) converge para r.
+
+Demonstra¸c˜ao. Sendo r uma raiz, ent˜ao
+
+portanto,
+
+f (r) = 0
+
+r = φ(r)
+
+⇒
+
+xn+1 = φ(xn)
+
+xn+1 −
+como φ ´e cont´ınua e diferenci´avel, pelo Teorema do Valor M´edio, existe cn
+pertencente ao intervalo entre cn e r, tal que
+
+r = φ(xn)
+
+φ(r)
+
+⇒
+
+−
+
+logo,
+
+φ(xn)
+
+−
+
+φ(r) = φ′(cn)(xn
+
+r)
+
+−
+
+pelo processo iterativo,
+
+xn+1 −
+
+|
+
+=
+
+r
+
+|
+
+|
+
+φ′(cn)
+
+xn
+
+||
+
+−
+
+r
+
+| ≤
+
+M
+
+xn
+
+|
+
+r
+
+|
+
+−
+
+|
+
+x1 −
+M
+| ≤
+
+x2 −
+
+|
+
+r
+
+r
+M
+| ≤
+x1 −
+...
+
+r
+
+|
+
+x0 −
+r
+|
+= M 2
+
+|
+
+|
+
+|
+
+x0 −
+
+r
+
+|
+
+|
+
+xn+1 −
+|
+
+r
+M
+| ≤
+xn+1 −
+
+|
+r
+
+xn
+
+| ≤
+
+r
+−
+|
+M n+1
+
+= M n+1
+x0 −
+
+x0 −
+|
+temos:
+
+|
+r
+
+|
+
+r
+
+|
+
+→ ∞
+
+M n+1
+
+x0 −
+
+|
+
+r
+
+|
+
+= 0
+
+como M < 1, passando o limite quando n
+
+0
+
+lim
+→∞ |
+n
+
+≤
+
+xn+1 −
+
+r
+
+| ≤
+
+lim
+n
+→∞
+
+portanto,
+
+xn+1 = r
+
+lim
+n
+→∞
+
+25
+
+Pela demonstra¸c˜ao acima podemos ainda veriﬁcar que se
+a convergˆencia ´e alternada e se 0 < M < 1 a convergˆencia ´e monotˆonica.
+
+−
+
+1 < M < 0
+
+Deﬁni¸c˜ao 3.1. Um ponto ﬁxo da fun¸c˜ao φ(x) ´e atrator quando
+repulsor quando
+
+> 1.
+
+φ′(x)
+
+|
+
+|
+
+φ′(x)
+
+|
+
+|
+
+< 1 e
+
+De fato, o ponto ﬁxo ´e atrator, pois
+
+1 < φ′(x) < 0 para todo x
+
+−
+
+∈
+
+[
+
+1, 0].
+
+−
+Exemplo 3.2. Determinar uma aproxima¸c˜ao para o n´umero √2.
+
+O primeiro passo para resolver o problema ´e determinar a equa¸c˜ao que
+forne¸ca este resultado e em seguida, alguma fun¸c˜ao de itera¸c˜ao para a equa¸c˜ao
+dada. Considere x = √2. Elevando ao quadrado obtemos a equa¸c˜ao do tipo
+f (x) = 0 dada por x2
+2 = 0. Mas devemos determinar a fun¸c˜ao de itera¸c˜ao
+φ(x) = x, ou seja, uma express˜ao do
+que satisfa¸ca a equivalˆencia f (x) = 0
+tipo x = φ(x). Somando x a ambos os membros chegamos a x2 + x
+2 = x.
+Onde a fun¸c˜ao de itera¸c˜ao ´e φ(x) = x2 + x
+
+−
+Um fato importante a destacar ´e que a fun¸c˜ao de itera¸c˜ao n˜ao ´e ´unica,
+pois decorre das opera¸c˜oes que podemos efetuar, dependendo da escolha a
+sequˆencia poder´a ou n˜ao convergir.
+
+⇔
+
+−
+
+2.
+
+−
+
+Como exemplo, se a partir de x2
+
+2 = 0 e sabendo que x
+
+multiplicar por x ambos os membros da equa¸c˜ao e obter x = x3
+itera¸c˜ao ´e:
+
+−
+
+= 0 podemos
+2 cuja fun¸c˜ao de
+
+x3
+2
+Trabalhando com a equa¸c˜ao x2 + x
+
+φ(x) =
+
+2 = x, podemos associ´a-las a duas
+fun¸c˜oes, ψ(x) = x e φ(x) = x2 + x
+2 e analisando os seus gr´aﬁcos, claramente
+vemos que existem duas ra´ızes reais que satisfazem a equa¸c˜ao e a raiz positiva
+´e a solu¸c˜ao do problema.
+
+−
+
+−
+
+Figura 3.3: Gr´aﬁco de ψ(x) e φ(x)
+
+26
+
+6
+Agora constru´ımos as sequˆencias xn e xn+1.
+
+n
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+xn
+1
+0
+2
+−
+0
+2
+−
+0
+2
+−
+0
+2
+−
+0
+2
+
+−
+
+φ(xn) = xn+1
+0
+2
+−
+0
+2
+−
+0
+2
+−
+0
+2
+−
+0
+2
+−
+0
+
+Tabela 3.2: Aproxima¸c˜ao inicial x0 = 1
+
+Vemos que a sequˆencia xn+1 formada pelos termos (0,
+
+2, . . .)
+n˜ao converge para nenhum valor. Testando outros valores iniciais na planilha
+podemos perceber que independente do valor inicial a sequˆencia “extrapola”,
+ou seja, tende a inﬁnito ou ﬁca alternando entre os valores 0 e
+2, mas sem
+convergˆencia.
+
+2, 0,
+
+−
+
+−
+
+−
+
+A seguir tem in´ıcio uma abordagem que integra ´algebra e geometria
+proporcionando ao aluno uma percep¸c˜ao mais ampla dos conceitos matem´aticos
+que est˜ao sendo apresentados durante o processo de resolu¸c˜ao. Vejamos de que
+forma isso ocorre.
+
+Ao analisar o gr´aﬁco ψ(x) e φ(x) relacionando com a sequˆencia xn+1.
+
+Figura 3.4: Gr´aﬁco de ψ(x) e φ(x) com aproxima¸c˜ao inicial x0 = 2
+
+27
+
+Temos que a cada itera¸c˜ao os termos das sequˆencias xn e xn+1 s˜ao
+descritos pela linha poligonal que de acordo com o comportamento da fun¸c˜ao
+de itera¸c˜ao tendem a inﬁnito ou simplesmente, divergem. Logo, pela deﬁni¸c˜ao
+3.1, o ponto A ´e um ponto ﬁxo repulsor. E portanto, a sequˆencia de valores
+dada por xn+1 n˜ao convergir´a para solu¸c˜ao que desejamos.
+
+Como podemos, ent˜ao, proceder para obter uma solu¸c˜ao para esta
+
+quest˜ao?
+
+Sabemos que √2 ´e um n´umero irracional, portanto, para sua repre-
+senta¸c˜ao decimal podemos apenas determinar uma aproxima¸c˜ao. Retornando a
+fun¸c˜ao φ(x) = x2 + x
+1(x)
+a sua inversa. Os gr´aﬁcos de uma fun¸c˜ao e sua inversa possuem uma simetria
+em rela¸c˜ao a reta y = x.
+
+2 vamos explorar a rela¸c˜ao existente entre φ(x) e φ−
+
+−
+
+Teorema 3.2 (Teorema da Fun¸c˜ao Inversa). Se f ´e deriv´avel em um intervalo
+I e se f ′(c)
+
+= 0 para todo c pertencente a I, ent˜ao
+
+(f −
+
+1)′(x) =
+
+1
+1(x))
+f ′(f −
+
+A demonstra¸c˜ao deste teorema encontra-se detalhada em [20].
+De fato, os gr´aﬁcos de φ(x) e φ−
+
+1(x) s˜ao sim´etricos em rela¸c˜ao `a reta
+y = x. Considere um ponto gen´erico (a, b) pertencente a φ(x), ent˜ao, φ(a) = b.
+1(b) = a, portanto sim´etrico em rela¸c˜ao `a y = x, como podemos
+Temos que φ−
+ver no gr´aﬁco seguinte:
+
+Figura 3.5: Gr´aﬁco da Simetria entre φ(x) e φ−
+
+1(x)
+
+28
+
+6
+Da´ı, temos que a inversa de φ(x) = x2 + x
+
+do dom´ınio da fun¸c˜ao, ´e dada por:
+
+2, obedecendo as restri¸c˜oes
+
+−
+
+ou
+
+φ−
+
+1(x) =
+
+φ−
+
+1(x) =
+
+√4x + 9
+
+2
+
+√4x + 9
+
+2
+
+±
+
+−
+
+1
+
+−
+
+1
+
+−
+
+Por´em, somente a primeira deﬁni¸c˜ao de φ−
+
+1(x) satisfaz a solu¸c˜ao do
+
+problema, como podemos ver na ﬁgura a seguir:
+
+Figura 3.6: Gr´aﬁco de φ(x), φ−
+
+1(x) e ψ(x)
+
+Retomando o m´etodo, vamos construir uma tabela com as sequˆencias
+
+xn e xn+1 aplicando a nova fun¸c˜ao de itera¸c˜ao φ−
+
+1(x)
+
+n
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+xn
+7
+2, 541381265
+1, 688922398
+1, 484671862
+1, 432529912
+1, 4189919
+1, 415461276
+1, 414539442
+1, 414298682
+1, 414235796
+1, 41421937
+
+φ−1(xn) = xn+1
+2, 541381265
+1, 688922398
+1, 484671862
+1, 432529912
+1, 4189919
+1, 415461276
+1, 414539442
+1, 414298682
+1, 414235796
+1, 41421937
+1, 414215079
+
+Tabela 3.3: Aproxima¸c˜ao inicial x0 = 7
+
+29
+
+Graﬁcamente,
+
+Figura 3.7: Gr´aﬁco de φ−
+
+1(x) e ψ(x) com aproxima¸c˜ao inicial x0 = 7
+
+E pela sequˆencia de n´umeros reais com alguns algarismos, estabilizando
+
+a cada nova itera¸c˜ao e pela deﬁni¸c˜ao de ponto ﬁxo atrator, temos que √2
+1, 414215079 com 5 casas decimais.
+
+≈
+
+30
+
+Cap´ıtulo 4
+
+M´etodo de Newton
+
+O m´etodo de Newton ´e um m´etodo de ponto ﬁxo, mas com uma vantagem em
+rela¸c˜ao ao m´etodo iterativo simples, se a sequˆencia obtida pelo processo iterativo
+for convergente, essa convergˆencia ´e muito mais r´apida. Por´em, para aplicar este
+m´etodo ´e necess´ario conhecer a derivada da fun¸c˜ao associada a equa¸c˜ao que se
+deseja resolver.
+
+Com o aux´ılio de algum software como por exemplo o GeoGebra que
+possui uma janela CAS ´util para o c´alculo das derivadas e tamb´em a constru¸c˜ao
+dos gr´aﬁcos importante para interpreta¸c˜ao geom´etrica da derivada (tangentes).
+O professor tem m´etodo de Newton uma excelente oportunidade para apresentar
+aos alunos o conceito de derivada, visto que este tamb´em ´e conhecido como
+m´etodo das tangentes.
+
+Se a sequˆencia (xn) for convergente, ent˜ao podemos garantir uma apro-
+xima¸c˜ao que satisfa¸ca ao problema. O aspecto geom´etrico do m´etodo de Newton
+pode auxiliar muito na quest˜ao da visualiza¸c˜ao de sua funcionalidade.
+
+Figura 4.1: Interpreta¸c˜ao geom´etrica do M´etodo de Newton
+
+31
+
+A ideia ´e partir de uma aproxima¸c˜ao inicial x0 e tra¸car a tangente a
+curva f (x) e iterar este processo at´e que se obtenha uma aproxima¸c˜ao razo´avel
+para o problema.
+
+Da geometria temos:
+
+tan α1 =
+
+tan α2 =
+
+= f ′(x0)
+
+x1 = x0 −
+
+⇔
+
+= f ′(x1)
+
+x2 = x1 −
+
+⇔
+
+f (x0)
+f ′(x0)
+
+f (x1)
+f ′(x1)
+
+...
+
+f (x0)
+x1
+x0 −
+f (x1)
+x2
+x1 −
+
+f (xn)
+
+tan αn+1 =
+
+xn
+
+xn+1
+
+−
+
+= f ′(xn)
+
+⇔
+
+xn+1 = xn
+
+f (xn)
+f ′(xn)
+
+−
+
+logo, para resolver uma equa¸c˜ao do tipo f (x) = 0 pelo m´etodo de
+
+Newton utilizamos a fun¸c˜ao de itera¸c˜ao deﬁnida por:
+
+F (xn) = xn
+
+f (xn)
+f ′(xn)
+
+−
+
+onde, F (x) ´e a fun¸c˜ao de itera¸c˜ao e xn+1 = F (xn) ´e uma aproxima¸c˜ao para a
+solu¸c˜ao da equa¸c˜ao obtida recursivamente como abordado no m´etodo iterativo
+simples e f ′(x)
+
+= 0.
+
+Exemplo 4.1. Calcular uma aproxima¸c˜ao para √7.
+
+Fazendo x = √7 e elevando ambos os membros da equa¸c˜ao ao quadrado,
+
+obtemos:
+
+x2
+
+−
+
+7 = 0
+
+O nosso problema consiste em determinar a solu¸c˜ao positiva para a
+7, cuja primeira derivada
+
+equa¸c˜ao acima. Ent˜ao, considere a fun¸c˜ao f (x) = x2
+´e 2x. Utilizando a fun¸c˜ao de itera¸c˜ao de Newton,
+
+−
+
+F (xn) = xn+1 = xn
+
+F (xn) = xn+1 = xn
+
+f (xn)
+f ′(xn)
+
+−
+
+7
+
+x2
+n −
+2xn
+
+−
+
+xn+1 =
+
+x2
+
+n + 7
+2xn
+
+simpliﬁcando,
+
+e como √4 < √7 < √9 j´a temos uma referˆencia para o valor da raiz, ou seja, a
+raiz encontra-se no intervalo 2 < √7 < 3.
+
+32
+
+6
+Com o aux´ılio de uma planilha, utilizando a fun¸c˜ao de itera¸c˜ao e o valor
+
+inicial x0 = 3.
+
+n
+0
+1
+2
+3
+4
+
+xn
+3, 000000000000
+2, 666666666667
+2, 645833333333
+2, 645751312336
+2, 645751311065
+
+F (xn) = xn+1
+2, 666666666667
+2, 645833333333
+2, 645751312336
+2, 645751311065
+2, 645751311065
+
+Tabela 4.1: Aproxima¸c˜ao inicial x0 = 3
+
+Na quarta itera¸c˜ao o m´etodo nos fornece uma aproxima¸c˜ao da ordem
+
+de 1012. E se o valor inicial fosse x0 = 2, o que aconteceria?
+
+n
+0
+1
+2
+3
+4
+
+xn
+2, 000000000000
+2, 750000000000
+2, 647727272727
+2, 645752048381
+2, 645751311065
+
+F (xn) = xn+1
+2, 750000000000
+2, 647727272727
+2, 645752048381
+2, 645751311065
+2, 645751311065
+
+Tabela 4.2: Aproxima¸c˜ao inicial x0 = 2
+
+Nos dois casos podemos conjecturar que a sequˆencia (xn) converge para
+o mesmo valor. A sequˆencia sempre convergir´a? A convergˆencia independe do
+ponto inicial? Essas e outras quest˜oes devem ser levantadas e debatidas em sala
+de aula, para enriquecer a aprendizagem dos conceitos envolvidos.
+
+Podemos observar, tamb´em, pelo comportamento apresentado pelos
+valores, que a sequˆencia F (xn) = xn+1 ´e formada pelos mesmos termos da
+sequˆencia xn exceto pelo termo x0. Neste caso, a sequˆencia F (xn) ´e uma sub-
+sequˆencia de xn. Isso quer dizer que se xn converge para um n´umero real r,
+ent˜ao, F (xn) tamb´em converge para r.
+
+Queremos mostrar que se a sequˆencia acima deﬁnida, recursivamente, ´e
+
+convergente, ent˜ao, converge para r. Onde r ´e a raiz de f (x).
+
+R uma fun¸c˜ao diferenci´avel com f ′ continua num
+Teorema 4.1. Seja f : R
+I. Se (xn) ´e uma sequˆencia obtida pelo m´etodo
+dado intervalo I = [a, b] e r
+de Newton a partir de uma condi¸c˜ao inicial x0 e xn tende a r, ent˜ao f (r) = 0.
+
+−→
+∈
+
+Demonstra¸c˜ao. Seja (xn) uma sequˆencia convergente tal que lim
+(xn) = r e
+→∞
+F (xn) = xn+1 obtida recursivamente a partir de xn pelo m´etodo de Newton,
+
+n
+
+33
+
+ent˜ao F (xn) tamb´em converge para r. Logo,
+
+mas,
+
+[xn
+
+lim
+n
+→∞
+
+−
+
+F (xn)] = 0
+
+xn
+
+−
+
+F (xn) = xn
+
+xn+1 =
+
+−
+
+f (xn)
+f ′(xn)
+
+f (xn) = f ′(xn)
+
+[xn
+
+F (xn)]
+
+·
+por hip´otese f ′ ´e continua, ent˜ao, f ′(xn) tende para f ′(r), aplicando o limite
+quando n tende a
+
+, temos:
+
+−
+
+∞
+
+lim
+n
+→∞
+
+f (xn) = lim
+→∞
+
+n
+
+f ′(xn)
+
+[xn
+
+lim
+n
+→∞
+
+·
+
+−
+
+F (xn)] = f ′(r)
+
+0 = 0
+
+·
+
+como, f ´e continua em r, ent˜ao, f (r) = lim
+→∞
+
+n
+
+f (xn) = 0.
+
+Exemplo 4.2. Determine as ra´ızes reais da equa¸c˜ao alg´ebrica f (x) =
+21x4
+
+49x3 + 39x2 + 4x
+
+8 = 0.
+
+3x5 +
+
+−
+
+−
+
+−
+
+Conforme o gr´aﬁco de f a equa¸c˜ao possui trˆes ra´ızes reais. Novamente,
+devemos destacar que o uso do software deve estar acompanhado por uma ava-
+lia¸c˜ao qualitativa da fun¸c˜ao, para que o aluno n˜ao tenha a falsa impress˜ao de
+que o programa est´a sempre correto.
+
+Figura 4.2: Gr´aﬁco de f (x)
+
+Vimos que para utilizar o m´etodo de Newton ´e necess´ario ter conhe-
+cimento de algumas t´ecnicas de deriva¸c˜ao ou acesso a algum software como:
+GeoGebra, YACAS, MAXIMA ou WolframAlpha.
+
+34
+
+Sendo f (x) =
+
+−
+´e dada por f ′(x) =
+−
+obtemos, para cada uma das aproxima¸c˜oes iniciais x0 = 1, x0 = 3 e x0 =
+os seguintes resultados:
+
+49x3 + 39x2 + 4x
+8, a sua derivada 1a
+147x2 + 78x + 4. Usando uma planilha
+1,
+
+3x5 + 21x4
+−
+15x4 + 84x3
+
+−
+
+−
+
+−
+
+n xn F (xn) = xn+1
+0
+1
+2
+3
+4
+5
+
+1
+0
+2
+1
+0
+2
+
+0
+2
+1
+0
+2
+1
+
+Tabela 4.3: Aproxima¸c˜ao inicial x0 = 1
+
+Quando x0 = 1, a sequˆencia de valores n˜ao converge para nenhum valor.
+
+n
+0
+1
+2
+3
+4
+5
+
+xn
+3, 000000000000
+3, 125000000000
+3, 100277838382
+3, 099006843179
+3, 099003595470
+3, 099003595449
+
+F (xn) = xn+1
+3, 125000000000
+3, 100277838382
+3, 099006843179
+3, 099003595470
+3, 099003595449
+3, 099003595449
+
+Tabela 4.4: Aproxima¸c˜ao inicial x0 = 3
+
+Para x0 = 3 a sequˆencia converge para raiz do intervalo [3, 7
+
+2 ].
+
+n
+0
+1
+2
+3
+4
+5
+
+xn
+1, 000000000000
+0, 687500000000
+0, 495460010648
+0, 411080708154
+0, 394433545321
+0, 393823862756
+
+−
+−
+−
+−
+−
+−
+Tabela 4.5: Aproxima¸c˜ao inicial x0 =
+
+F (xn) = xn+1
+0, 687500000000
+0, 495460010648
+0, 411080708154
+0, 394433545321
+0, 393823862756
+0, 393823062878
+
+−
+−
+−
+−
+−
+−
+
+1
+
+raiz do intervalo [
+
+Por outro lado, com x0 =
+1
+2 , 0].
+
+−
+
+−
+
+Vimos anteriormente que se a sequˆencia obtida pelo m´etodo de Newton
+for convergente, ent˜ao converge para a raiz. Mas para que a sequˆencia a ser
+
+−
+1 temos uma sequˆencia que converge para
+
+35
+
+gerada pelo processo iterativo seja convergente, temos a seguinte proposi¸c˜ao:
+
+Proposi¸c˜ao 4.1. Sejam f e f ′ fun¸c˜oes cont´ınuas e diferenci´aveis em um inter-
+valo I = [a, b] com f ′(x)
+I. Para qualquer x0 suﬁcientemente
+pr´oximo da raiz r, a sequˆencia xn+1 = F (xn) obtida pelo m´etodo de Newton ´e
+convergente.
+
+= 0 para todo x
+
+∈
+
+Demonstra¸c˜ao. Como o m´etodo de Newton ´e um m´etodo de ponto ﬁxo, pelo
+m´etodo iterativo simples temos F (x) = x, ent˜ao, F ′(x) = 0.
+
+Mas,
+
+derivando,
+
+F (x) = x
+
+f (x)
+f ′(x)
+
+−
+
+F ′(x) =
+
+f (x)
+
+f ′′(x)
+
+·
+[f ′(x)]2
+
+e como f ′(x)
+
+= 0 para todo x
+
+∈
+
+I e f ′ ´e cont´ınua e diferenci´avel em I.
+
+F ′(x) =
+
+f (x)
+
+f ′′(x)
+[f ′(x)]2 = 0
+
+·
+
+se, e somente se
+
+o que ocorre quando x = r.
+
+f (x) = 0
+
+O termo “suﬁcientemente pr´oximo” signiﬁca uma vizinhan¸ca suﬁciente-
+mente pequena e em [14], o leitor vai encontrar uma demonstra¸c˜ao com o devido
+aprofundamento, com a introdu¸c˜ao do conceito de ponto ﬁxo das contra¸c˜oes.
+
+Voltando ao exemplo e testando outros valores, mais “pr´oximos” da raiz
+indicada pelo ponto B na ﬁgura 4, obtemos uma sequˆencia que converge para
+terceira raiz real da equa¸c˜ao. Como podemos ver na tabela a seguir para x0 = 1
+2
+
+n
+0
+1
+2
+3
+4
+5
+
+xn
+0, 500000000000
+0, 573122529644
+0, 575954246095
+0, 575959500126
+0, 575959500144
+0, 575959500144
+
+F (xn) = xn+1
+0, 573122529644
+0, 575954246095
+0, 575959500126
+0, 575959500144
+0, 575959500144
+0, 575959500144
+
+Tabela 4.6: Aproxima¸c˜ao inicial x0 = 1
+2
+
+Vale ressaltar, que para o aluno do Ensino M´edio devem ser apresen-
+tados os conceitos relacionados com o m´etodo, como existˆencia e unicidade da
+raiz, as retas tangentes `a curva (no¸c˜ao de derivada 1a) e a concavidade do gr´aﬁco
+da fun¸c˜ao (no¸c˜ao da derivada 2a), e n˜ao demonstra¸c˜oes formais dos Teoremas
+do C´alculo.
+
+36
+
+6
+6
+Cap´ıtulo 5
+
+M´etodo de
+Dandelin-Graeﬀe
+
+O m´etodo foi desenvolvido de forma independente pelos matem´aticos Dandelin,
+Lobachevsky1 e Graeﬀe, mas foi Graeﬀe quem mais se ocupou em determinar
+todas as ra´ızes da equa¸c˜ao, utilizando a quadratura das ra´ızes.
+
+O m´etodo de Graeﬀe consiste em determinar polinˆomios utilizando a
+transforma¸c˜ao x2 = y a partir do polinˆomio original, k vezes, com k suﬁci-
+entemente grande e pode ser aplicado a equa¸c˜oes de grau n. Para efeito de
+simpliﬁca¸c˜ao dos c´alculos vamos exempliﬁcar o m´etodo por uma equa¸c˜ao poli-
+nomial de grau 3.
+
+Considere a equa¸c˜ao polinomial ax3+bx2+cx+d = 0, como o coeﬁciente
+l´ıder ´e diferente de zero, dividindo toda a equa¸c˜ao por a obtemos a seguinte
+equa¸c˜ao polinomial x3 +αx2 +βx+γ = 0, cujas ra´ızes s˜ao as mesmas da equa¸c˜ao
+original. Pelas Rela¸c˜oes de Girard2 trabalhadas no Ensino M´edio temos:
+
+x1 + x2 + x3 =
+
+α
+
+−
+
+x1x2 + x1x3 + x2x3 = β
+
+x1x2x3 =
+
+γ
+
+−
+
+O m´etodo consiste em transformar
+
+x3 + αx2 + βx + γ = 0
+
+na equa¸c˜ao,
+
+x3 + α(n)x2 + β(n)x + γ(n) = 0,
+
+1Nikolai Ivanovich Lobachevsky (∗1792 − †1856) matem´atico russo mais conhecido por
+
+desenvolver trabalhos em geometrias n˜ao-euclidianas.
+
+2Albert Girard (∗1595 − †1632) era francˆes e viveu como refugiado religioso na Holanda.
+Trabalhou em ´algebra, trigonometria e aritm´etica e apresenta em Invention Nouvelle en
+l’Alg`ebre seu trabalho sobre as rela¸c˜oes entre os coeﬁcientes e as ra´ızes de uma equa¸c˜ao
+alg´ebrica.
+
+37
+
+cujas ra´ızes s˜ao xn
+forma:
+
+1 , xn
+
+2 e xn
+
+3 . Para tal, deve-se reorganizar a equa¸c˜ao da seguinte
+
+−
+elevando ambos os membros ao quadrado,
+
+x3 + βx2 =
+
+αx2
+
+γ2,
+
+−
+
+(x3 + βx)2 = (
+
+αx2
+
+−
+
+−
+
+γ)2
+
+x6 + 2βx4 + β2x2 = α2x4 + 2αγx2 + γ2
+
+obt´em-se
+
+x6 + (2β
+
+fazendo a transforma¸c˜ao x2 = y
+
+α2)x4 + (β2
+
+2αγ)x2
+
+−
+
+−
+
+γ2 = 0,
+
+−
+
+y3 + (2β
+
+α2)y2 + (β2
+
+2αγ)y
+
+γ2 = 0.
+
+−
+A equa¸c˜ao acima ´e denominada Transformada de Graeﬀe e podemos
+
+−
+
+−
+
+manter a vari´avel x sem perda de generalidade, da´ı:
+
+x3 + (2β
+
+−
+
+α2)x2 + (β2
+
+2αγ)x
+
+−
+
+−
+
+γ2 = 0,
+
+cujas ra´ızes s˜ao x2
+
+1, x2
+Repare que se ﬁzermos:
+
+2 e x2
+3.
+
+(x1 + x2 + x3)2 = (
+
+α)2
+
+−
+
+1 + x2
+x2
+
+3 + 2(x1x2 + x1x3 + x2x3) = α2
+2 + x2
+x2
+3 + 2β = α2
+1 + x2
+1 + x2
+x2
+(2β
+
+2 + x2
+3 =
+
+2 + x2
+
+α2)
+
+−
+Isto pode ser estendido as outras rela¸c˜oes de Girard, repetindo este
+processo mais uma vez obteremos uma transformada de Graeﬀe, cujas ra´ızes s˜ao
+2 e x4
+1, x4
+x4
+3. Efetuando k transforma¸c˜oes, como esta, obtemos uma transformada
+1 , xn
+de ra´ızes xn
+
+3 , com n = 2k.
+
+2 e xn
+
+−
+
+Outra forma de determinar a Transformada de Graeﬀe ´e atrav´es do
+
+produto P (x)
+
+P (
+
+·
+
+(cid:26)
+
+x). Considere:
+
+−
+P (x) = (x
+x) = (
+P (
+
+−
+
+r1)(x
+x
+
+−
+r1)(
+
+r2)
+x
+
+−
+
+−
+
+−
+−
+
+(x
+r2)
+
+· · ·
+−
+
+rn)
+x
+(
+
+−
+
+−
+· · ·
+
+rn)
+
+−
+
+cujas ra´ızes s˜ao r2
+
+Q(x) = P (x)
+
+P (
+
+x) = (
+
+·
+
+−
+, r2
+n.
+No caso da equa¸c˜ao de grau 3, temos:
+
+1, r2
+2,
+
+· · ·
+
+−
+
+−
+
+⇓
+1)n(x2
+
+1)(x2
+r2
+
+r2
+2)
+
+−
+
+· · ·
+
+(x2
+
+−
+
+r2
+n),
+
+P (x) = x3 + αx2 + βx + γ
+P (
+
+x3 + αx2
+
+x) =
+
+βx + γ
+
+(cid:26)
+
+−
+
+−
+
+−
+
+38
+
+P 2(x) = (
+
+−
+
+1)[x6 + (2β
+
+−
+
+α2)x4 + (β2
+
+2αγ)x2
+
+γ2],
+
+−
+
+−
+
+transformando,
+
+P 2(x) = (
+
+−
+
+1)[x3 + (2β
+
+−
+
+α2)x2 + (β2
+
+2αγ)x
+
+γ2],
+
+−
+
+−
+
+de onde obt´em-se a rela¸c˜ao de recorrˆencia entre os coeﬁcientes:
+
+α2
+0
+2α0γ0
+
+
+
+
+
+
+α1 = 2β0 −
+β1 = β2
+0 −
+γ2
+γ1 =
+0
+−
+...
+αk = 2βk
+1 −
+−
+βk = β2
+k
+1 −
+−
+γ2
+γk =
+k
+1
+−
+
+−
+
+
+
+
+
+
+α2
+k
+2αk
+
+1
+1γk
+
+−
+
+−
+
+1
+
+−
+
+Para resolver tal equa¸c˜ao vamos considerar a seguinte proposi¸c˜ao:
+
+Proposi¸c˜ao 5.1. Seja i um n´umero natural qualquer e x1, x2, x3,
+x2| ≥ |
+ros complexos, tais que
+|
+1 + xn
+xn
+
+x3| ≥ · · · ≥ |
+3 +
+
+2 + xn
+
+x1|
+
+xi
+
+>
+
+|
+
+|
+
+n
+
+, ent˜ao, a sequˆencia
+
+· · ·
+
+, xi n´ume-
+
++ xn
+i |
+
+· · ·
+
+q|
+
+converge para
+
+x1|
+Demonstra¸c˜ao. Vamos mostrar que:
+
+|
+
+lim
+n
+→∞
+
+n
+
+q|
+
+xn
+1 + xn
+
+2 + xn
+
+3 +
+
++ xn
+i |
+
+=
+
+.
+
+x1|
+
+|
+
+· · ·
+
+Considere M = max(
+Logo,
+
+,
+
+x1|
+
+|
+
+,
+
+x2|
+
+|
+
+,
+
+x3|
+
+|
+
+· · ·
+
+,
+
+xi
+
+).
+
+|
+
+|
+
+M n
+
+≤ |
+
+1 + xn
+xn
+
+2 + xn
+
+3 +
+
++ xn
+
+· · ·
+xn
+1 + xn
+
+i | ≤ |
+2 + xn
+
+xn
+1 |
+3 +
+
++
+
+|
+
+· · ·
+
++
+
+xn
+2 |
++ xn
+
+|
+
+xn
+3 |
+i
+
+i | ≤
+
++
+
+· · ·
+M n
+
+M n
+
+≤ |
+
++
+
+xn
+i | ≤
+
+|
+
+i
+
+·
+
+M n
+
+M
+
+como
+|
+Temos:
+
+x1|
+
+>
+
+n
+
+xn
+1 + xn
+2 + xn
+3 +
+x3| ≥ · · · ≥ |
+
+xi
+
+q|
+≤
+x2| ≥ |
+
+|
+
+|
+
+·
+
+1
+n
+
+i
+
++ xn
+
+M,
+
+i | ≤
+
+· · ·
+, passando o limite.
+
+·
+
+M
+
+lim
+n
+→∞
+
+n
+
+q|
+
+≤
+
+portanto,
+
+1 + xn
+xn
+
+2 + xn
+
+3 +
+
++ xn
+
+i | ≤
+
+· · ·
+
+M ,
+
+lim
+n
+→∞
+
+n
+
+q|
+
+1 + xn
+xn
+
+2 + xn
+
+3 +
+
++ xn
+i |
+
+· · ·
+
+= M =
+
+.
+
+x1|
+
+|
+
+39
+
+Se a sequˆencia converge para raiz
+>
+|
+N e pela proposi¸c˜ao anterior s˜ao v´alidas as seguintes rela¸c˜oes:
+
+, supondo que
+
+x1|
+
+1|
+
+xi
+
+−
+
+|
+
+|
+
+para
+
+xi
+
+|
+
+todo i
+
+∈
+Rela¸c˜oes 5.1.
+
+= |
+
+x2|
+
+|
+
+= |
+
+x3|
+
+|
+
+x3|
+
+x2|
+
+x1 ·
+x1|
+|
+x2 ·
+x1 ·
+x2|
+x1 ·
+|
+...
+x2 ·
+x2 · · ·
+
+x3 · · ·
+xi
+
+xi
+
+|
+
+,
+
+1|
+
+−
+
+= |
+
+xi
+
+|
+
+|
+
+x1 ·
+x1 ·
+|
+
+restando analisar apenas os sinais das ra´ızes.
+Para que o m´etodo possa ser aplicado desta maneira, obrigatoriamente
+pelo menos uma raiz, em m´odulo, deve ser estritamente maior que as demais.
+Mas ao tratar de equa¸c˜oes polinomiais temos muitas possibilidades a analisar,
+como ra´ızes complexas conjugadas, m´ultiplas, com m´odulos iguais, etc.
+
+Por´em, nada impede que o m´etodo possa ser aplicado e explorado em
+outras situa¸c˜oes. Para isto, basta que a an´alise das sequˆencias seja feita com
+mais cautela e sejam empregados os conhecimentos adquiridos sobre multipli-
+cidade, polinˆomios e complexos. Sendo assim, vamos apresentar alguns casos e
+aplicar o m´etodo com alguns exemplos de 3o e 4o graus, cujos conceitos envol-
+vidos podem ser estendidos a equa¸c˜oes de grau superior, mantidas as an´alises
+das particularidades de cada equa¸c˜ao.
+
+1o Caso: Equa¸c˜ao de 3o grau com trˆes ra´ızes reais e distintas.
+
+P (x) = x3 + αx2 + βx + γ = 0
+
+Exemplo 5.1. Determinar as solu¸c˜oes da equa¸c˜ao polinomial
+
+P (x) = x3
+
+4x2
+
+−
+
+−
+
+7x + 10 = 0
+
+A partir da equa¸c˜ao x3
+−
+´ımpar dos termos de grau par x3
+ambos os membros da equa¸c˜ao.
+
+4x2
+
+−
+
+−
+
+7x + 10 = 0 separar os termos de grau
+10. Elevar ao quadrado
+
+7x = 4x2
+
+−
+
+(x3
+
+7x)2 = (4x2
+
+−
+30x4 + 129x2
+
+10)2
+
+−
+100 = 0,
+
+−
+
+x6
+
+−
+
+cuja Transformada de Graeﬀe ´e:
+
+P 2(x) = x3
+
+−
+
+30x2 + 129x
+
+100 = 0.
+
+−
+
+Com o aux´ılio de uma planilha podemos repetir este processo facilmente e
+determinar os coeﬁcientes dos polinˆomios transformados. Como apresen-
+tado na tabela abaixo.
+
+40
+
+k
+
+k
+
+3
+
+2
+
+1
+
+0
+
+P 2
+P
+P 2
+P 4
+P 8
+P 16
+P 32
+P 64
+6
+7 P 128
+8 P 256
+
+5
+
+4
+
+Coef. L´ıder
+
+α
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+4
+
+−
+
+30
+
+−
+
+642
+
+−
+3, 909
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1, 526
+
+2, 328
+
+5, 421
+
+2, 939
+
+8, 636
+
+·
+
+105
+1011
+1022
+1044
+1089
+10178
+
+·
+
+·
+
+·
+
+·
+
+·
+
+β
+
+7
+
+−
+129
+
+10641
+
+1, 004
+
+1, 000
+
+1, 000
+
+1, 000
+
+1, 000
+
+1, 000
+
+·
+
+108
+1016
+1032
+1064
+10128
+10256
+
+·
+
+·
+
+·
+
+·
+
+·
+
+γ
+
+10
+
+100
+
+−
+10000
+
+−
+1, 000
+
+1, 000
+
+1, 000
+
+1, 000
+
+−
+
+−
+
+−
+
+−
+
+1, 000
+
+1, 000
+
+−
+
+−
+
+·
+
+108
+1016
+1032
+1064
+10128
+10256
+
+·
+
+·
+
+·
+
+·
+
+·
+
+Tabela 5.1: Transformadas de Graeﬀe
+
+n
+2
+4
+8
+16
+32
+64
+128
+256
+
+n√α
+5, 47723
+5, 03366
+5, 00041
+5, 00000
+5, 00000
+5, 00000
+5, 00000
+5, 00000
+
+n√β
+11, 35782
+10, 15654
+10, 00488
+10, 00001
+10, 00000
+10, 00000
+10, 00000
+10, 00000
+
+n√γ
+10, 00000
+10, 00000
+10, 00000
+10, 00000
+10, 00000
+10, 00000
+10, 00000
+10, 00000
+
+Tabela 5.2: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+,
+
+|
+
+|
+
+e
+
+−
+
+x1 ·
+
+x1 ·
+
+x2 ·
+
+Assim, pela Proposi¸c˜ao 5.1, para cada uma das potˆencias de P (x) obtemos
+=
+x3|
+x1|
+x2|
+uma aproxima¸c˜ao para
+|
+5, 00000, isto ´e, 5 ou
+5 ´e uma das ra´ızes de P (x). Para descobrir qual
+delas ´e a raiz, o modo mais simples ´e veriﬁcar se P (x1) = 0. Da´ı, x1 = 5
+x2|
+x1 ·
+e
+2 e
+= 10, ent˜ao x2 = 2 ou x2 =
+|
+10 obtemos x3 = 1. Portanto, as ra´ızes de P (x) =
+x2 ·
+como x1 ·
+4x2
+x3
+7x + 10 = 0 s˜ao: x1 = 5, x2 =
+−
+−
+
+2 veriﬁcando temos x2 =
+
+. Dessa forma,
+
+2 e x3 = 1.
+
+Como op¸c˜ao para analisar os sinais das ra´ızes podemos utilizar a regra de
+sinais de Descartes3.
+
+x3 =
+
+x1|
+
+−
+
+−
+
+−
+
+−
+
+|
+
+3Ren´e Descartes (∗1596 − †1650) ﬁl´osofo francˆes cuja obra, La g´eom´etrie, apresenta uma
+integra¸c˜ao entre ´algebra e geometria conhecida como geometria cartesiana ou geometria
+anal´ıtica. Sua obra teve uma grande inﬂuˆencia entre matem´aticos e ﬁl´osofos.
+
+41
+
+Teorema 5.1 (Regra de sinais de Descartes). Dado um polinˆomio de
+coeﬁcientes reais P (x) = anxn + an
++ a0, o n´umero de ra´ızes
+−
+reais positivas n+ ´e dado pelo n´umero de varia¸c˜oes de sinais na sequˆencia
+de coeﬁcientes de P (x), ou menor que este n´umero por um inteiro par
+(contadas as multiplicidades).
+
+1xn
+
+1 +
+
+· · ·
+
+−
+
+A demonstra¸c˜ao deste teorema encontra-se detalhada em [1].
+
+Corol´ario 5.1. O n´umero de ra´ızes reais negativas n− ´e dado pelo n´umero
+de varia¸c˜oes de sinais na sequˆencia de coeﬁcientes de P (
+x), ou menor
+que este n´umero por um inteiro par (contadas as multiplicidades).
+
+−
+
+Neste exemplo,
+
+P (x) = x3
+
+4x2
+
+−
+
+x) =
+
+P (
+
+−
+
+x3
+
+−
+
+−
+
+7x + 10 = 0
+
+−
+4x2 + 7x + 10 = 0
+
+⇒
+
+n+ = 2 ou 0
+
+n− = 1,
+
+⇒
+
+de fato, temos duas ra´ızes reais positivas e uma negativa. Podemos visu-
+alizar que as sequˆencias geradas pelas ra´ızes n-´ezimas dos coeﬁcientes de
+P n(x) s˜ao convergentes. Considere a equa¸c˜ao polinomial de ra´ızes a, b e
+c,
+
+(x
+
+−
+
+a)(x
+
+−
+
+b)(x
+
+−
+
+c) = 0,
+
+ent˜ao, calculando a n-´ezima potˆencia das ra´ızes podemos construir a se-
+guite equa¸c˜ao:
+
+expandindo,
+
+(x
+
+−
+
+an)(x
+
+bn)(x
+
+cn) = 0,
+
+−
+
+−
+
+x3
+
+−
+
+(an + bn + cn)x2 + (anbn + ancn + bncn)x
+
+anbncn = 0
+
+−
+
+αn
+βn
+γn
+
+|
+|
+|
+
+|
+|
+|
+
+=
+=
+=
+
+an + bn + cn
+|
+anbn + ancn + bncn
+|
+anbncn
+|
+
+|
+
+|
+
+,
+
+|
+
+
+
+
+
+supondo, a > b > c e pela Proposi¸c˜ao 5.1,
+
+a
+
+=
+
+an + bn + cn
+|
+anbn + ancn + bncn
+anbncn
+=
+
+abc
+
+|
+
+|
+
+=
+
+ab
+
+|
+
+|
+
+|
+
+.
+
+
+
+
+n
+
+|
+|
+|
+
+n
+
+n
+
+p
+p
+p
+
+|
+2o Caso: Equa¸c˜ao de 3o grau com duas ra´ızes complexas conjugadas de m´odulo
+
+
+
+|
+
+|
+
+maior que a raiz real.
+
+Exemplo 5.2. Determinar as solu¸c˜oes da equa¸c˜ao polinomial
+
+P (x) = x3
+
+6x2 + 21x
+
+−
+
+26 = 0
+
+−
+
+Pelo mesmo processo aplicado no 1o caso, temos:
+
+42
+
+k
+
+k
+
+0
+
+1
+
+2
+
+P 2
+P (x)
+P 2(x)
+P 4(x)
+P 8(x)
+P 16(x)
+P 32(x)
+P 64(x)
+6
+7 P 128(x)
+
+4
+
+3
+
+5
+
+Coef. L´ıder
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+α
+
+6
+
+−
+6
+
+222
+
+β
+
+21
+
+129
+
+24753
+
+2, 220
+
+1, 631
+
+−
+
+−
+
+1, 330
+
+8, 836
+
+3, 886
+
+·
+
+·
+
+·
+
+·
+
+102
+109
+1018
+1035
+1071
+
+8, 156
+
+6, 653
+
+4, 428
+
+1, 961
+
+3, 844
+
+·
+
+108
+1017
+1035
+1071
+10142
+
+·
+
+·
+
+·
+
+·
+Tabela 5.3: Transformadas de Graeﬀe
+
+−
+
+·
+
+γ
+
+26
+
+−
+
+676
+
+−
+456976
+
+−
+2, 088
+
+4, 361
+
+1, 902
+
+3, 617
+
+1, 308
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1011
+1022
+1045
+1090
+10181
+
+·
+
+·
+
+·
+
+·
+
+·
+
+n
+2
+4
+8
+16
+32
+64
+128
+
+n√α
+2, 44949
+3, 86001
+1, 96469
+3, 76514
+3, 68444
+3, 64469
+3, 62487
+
+n√β
+11, 35782
+12, 54316
+12, 99976
+12, 99987
+13, 00000
+13, 00000
+13, 00000
+
+n√γ
+26, 00000
+26, 00000
+26, 00000
+26, 00000
+26, 00000
+26, 00000
+26, 00000
+
+Tabela 5.4: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+±
+
+Podemos observar que s˜ao convergentes as 3a e 4a colunas. E pelas rela¸c˜oes
+5.1, calcula-se x3 =
+2. Pelos valores de P (x3), obtemos uma raiz, x3 = 2.
+Por outro lado, os valores apresentados na tabela anterior sugerem que
+x1 = x2 ou x1 e x2 s˜ao complexas conjugadas. Veriﬁcando os valores de
+P (x1) e P (x2) vemos que tais valores n˜ao s˜ao ra´ızes da equa¸c˜ao, e portanto,
+as mesmas s˜ao complexas. Mais adiante apresentamos como identiﬁcar se a
+equa¸c˜ao possui ra´ızes complexas conjugadas, analisando o comportamento
+das sequˆencias geradas pelos coeﬁcientes. Logo, x1 = u + vi = ρeiθ e
+x2 = u
+
+vi = ρe−
+
+iθ. Da´ı,
+
+−
+
+x1 + x2 = 2u
+x2 = ρ2
+x1 ·
+
+.
+
+(cid:26)
+
+Sabemos que dada a equa¸c˜ao polinomial P (x) = x3 + αx2 + βx + γ = 0
+temos:
+
+43
+
+x1 + x2 + x3 =
+
+α
+
+−
+
+⇓
+x1 + x2 =
+
+α
+
+−
+
+−
+
+x3
+
+x1 + x2 = 4
+x2 = 13
+x1 ·
+
+,
+
+(cid:26)
+
+como,
+
+ent˜ao,
+
+x1 = 2 + vi
+
+4 + v2 = 13
+
+v = 3
+
+⇒
+obt´em-se, assim, as trˆes ra´ızes da equa¸c˜ao: x1 = 2 + 3i, x2 = 2
+x3 = 2.
+Neste caso, considere as ra´ızes a e ρe±
+ρeiθ)(x
+
+iθ) = 0,
+
+a)(x
+
+ρe−
+
+iθ,
+
+⇒
+
+(x
+
+−
+
+−
+
+−
+
+3i e
+
+−
+
+ent˜ao pelo mesmo processo aplicado no caso anterior, podemos construir
+a seguinte equa¸c˜ao:
+
+an)(x
+
+(x
+
+−
+
+−
+
+ρeiθn)(x
+
+−
+
+ρe−
+
+iθn) = 0
+
+expandindo,
+x3
+
+−
+
+(an + 2ρn cos nθ)x2 + (2anρn cos nθ + ρ2n)x
+
+anρ2n = 0
+
+−
+
+temos trˆes possibilidades:
+
+Se ρ >
+
+a
+
+|
+
+|
+
+•
+
+, ent˜ao, para n suﬁcientemente grande,
+2ρn cos nθx2 + ρ2nx
+
+x3
+
+anρ2n = 0
+
+−
+
+−
+
+•
+
+•
+
+Pode se ver que a coluna dos coeﬁcientes α sofre uma varia¸c˜ao de
+sinais por causa de cos nθ e as outras duas colunas fornecem os valores
+de a e ρ, restando apenas determinar parte real e parte imagin´aria
+das ra´ızes complexas como j´a descrito anteriormente;
+Se ρ <
+
+a
+
+|
+
+, ent˜ao, para n suﬁcientemente grande,
+anx2 + (2anρn cos nθ)x
+
+x3
+
+anρ2n = 0
+
+|
+
+−
+
+−
+
+Aqui, a coluna que sofre a varia¸c˜ao de sinal ´e a dos coeﬁcientes de β
+e a an´alise ´e an´aloga ao item anterior;
+Se ρ =
+
+, ent˜ao, para n suﬁcientemente grande,
+
+(1 + 2 cos nθ)ρnx2 + (1 + 2cosnθ)ρ2nx
+
+ρ3n = 0
+
+−
+
+Desse modo, a sequˆencia dada pelos coeﬁcientes γ converge para ρ3,
+que determina a raiz real e o m´odulo das ra´ızes complexas. Podemos
+observar tamb´em o comportamento das sequˆencias dos coeﬁcientes,
+onde a 4a e 5a colunas sofrem varia¸c˜ao de sinal pelo fator cos nθ e as
+potˆencias da 4a e 5a colunas s˜ao, respectivamente, aproximadamente
+3 das potˆencias da 6a coluna, pelos fatores ρn, ρ2n e ρ3n.
+3 e 2
+1
+
+a
+|
+|
+x3
+
+−
+
+44
+
+3o Caso: Equa¸c˜ao de 3o grau com duas ra´ızes complexas conjugadas de m´odulo
+
+igual a raiz real.
+
+Exemplo 5.3. Determinar as solu¸c˜oes da equa¸c˜ao polinomial
+
+P (x) = x3
+
+−
+
+11x2 + 55x
+
+125 = 0
+
+−
+
+Nos exemplos anteriores, vimos que ao calcular as rela¸c˜oes dadas em 5.1
+determinamos a raiz real. E para determinar as ra´ızes complexas o proce-
+dimento ´e idˆentico ao caso anterior.
+
+Coef. L´ıder
+
+α
+
+k
+
+k
+
+2
+
+1
+
+0
+
+P 2
+P (x)
+P 2(x)
+P 4(x)
+P 8(x)
+P 16(x)
+P 32(x)
+P 64(x)
+6
+7 P 128(x)
+
+3
+
+4
+
+5
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+11
+
+−
+
+11
+
+−
+429
+
+7, 203
+
+−
+4, 391
+
+·
+1, 533
+
+−
+4, 788
+
+·
+7, 484
+
+105
+·
+1010
+1022
+·
+1044
+1089
+
+β
+
+55
+
+275
+
+−
+2, 814
+
+·
+6, 700
+
+−
+3, 569
+
+268125
+1011
+1021
+·
+1044
+1089
+·
+10179
+
+−
+2, 199
+
+·
+2, 596
+
+γ
+
+125
+
+−
+15625
+
+−
+
+5, 960
+
+3, 553
+
+·
+
+−
+244140625
+1016
+1033
+1067
+10134
+10268
+
+·
+
+·
+
+·
+
+1, 262
+
+2, 538
+
+1, 593
+
+−
+
+−
+
+−
+
+−
+
+−
+
+·
+
+·
+Tabela 5.5: Transformadas de Graeﬀe
+
+−
+
+·
+
+n
+2
+4
+8
+16
+32
+64
+128
+
+n√α
+3, 31662
+4, 55108
+5, 39745
+4, 62550
+4, 93510
+4, 99031
+5, 03665
+
+n√β
+16, 58312
+22, 75539
+26, 98724
+23, 12752
+24, 67551
+24, 95155
+25, 18324
+
+n√γ
+125, 00000
+125, 00000
+125, 00000
+125, 00000
+125, 00000
+125, 00000
+125, 00000
+
+Tabela 5.6: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+|
+
+|
+
+a
+
+Observando as sequˆencias apresentadas na tabela 5.5 vemos que ocorre
+converge para 125, pois neste caso pela
+ρ =
+. E como
+xn
+, ent˜ao n
+=
+x3|
+proposi¸c˜ao 5.1, se
+2 ·
+|
+|
+x3
+, logo temos uma raiz real e duas ra´ızes complexas e conjugadas todas
+p
+1|
+|
+de mesmo m´odulo. Logo, ρ3 = 125
+x3 ´e positivo,
+ρ = 5. Como x1 ·
+x1 = 5
+
+x3|
+=
+x2|
+
+xn
+3 |
+x2 ·
+
+x1 ·
+|
+x1|
+|
+
+= n
+p
+
+x2 ·
+=
+|
+
+x3n
+1 |
+
+xn
+1 ·
+
+⇒
+
+|
+
+x2 + x3 = 6
+x3 = 25
+x2 ·
+
+,
+
+(cid:26)
+
+45
+
+ent˜ao,
+
+x2 = 3 + vi
+
+⇒
+
+9 + v2 = 25
+
+v =
+
+4
+
+±
+
+⇒
+
+Obt´em-se assim as trˆes ra´ızes da equa¸c˜ao: x1 = 5, x2 = 3+4i e x3 = 3
+4o Caso: Equa¸c˜ao de 3o grau com trˆes ra´ızes reais, sendo duas de mesmo
+
+4i.
+
+−
+
+m´odulo.
+
+Exemplo 5.4. Determinar as solu¸c˜oes da equa¸c˜ao polinomial
+
+P (x) = x3
+
+2x2
+
+−
+
+−
+
+25x + 50 = 0
+
+Considere a equa¸c˜ao polinomial P (x) = x3 +αx2 +βx+γ = 0, cujas ra´ızes
+s˜ao a,
+
+a e b. Ent˜ao, podemos construir a equa¸c˜ao:
+
+−
+
+expandindo,
+
+P n(x) = (x
+
+P n(x) = x3
+
+−
+
+−
+
+an)(x + an)(x
+
+bn) = 0,
+
+−
+
+bnx2
+
+−
+
+a2nx + a2nbn = 0.
+
+|
+
+|
+
+a
+
+>
+
+b
+Se
+|
+´ezimas de β e γ. Se
+n-´ezimas de α e γ.
+
+|
+
+|
+
+|
+
+|
+
+|
+
+, as sequˆencias que v˜ao convergir s˜ao dadas pelas ra´ızes n-
+, as sequˆencias que convergem s˜ao as ra´ızes
+
+<
+
+a
+
+b
+
+Construindo a tabela com os coeﬁcientes das transformadas temos:
+
+Coef. L´ıder
+
+α
+
+k
+
+k
+
+2
+
+1
+
+0
+
+P 2
+P (x)
+P 2(x)
+P 4(x)
+P 8(x)
+P 16(x)
+P 32(x)
+P 64(x)
+6
+7 P 128(x)
+
+5
+
+3
+
+4
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+2
+
+−
+
+54
+
+−
+1266
+
+−
+7, 815
+
+−
+
+−
+
+−
+
+−
+
+3, 052
+
+4, 657
+
+1, 084
+
+5, 877
+
+·
+
+·
+
+·
+
+·
+
+105
+1011
+1022
+1045
+1089
+
+β
+
+25
+
+−
+825
+
+410625
+
+1, 528
+
+2, 328
+
+5, 421
+
+2, 939
+
+8, 636
+
+·
+
+·
+
+·
+
+·
+
+1011
+1022
+1044
+1089
+10178
+
+γ
+
+50
+
+2500
+
+−
+6250000
+
+−
+3, 906
+
+1, 526
+
+2, 328
+
+5, 421
+
+2, 939
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1013
+1027
+1054
+10108
+10217
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+Tabela 5.7: Transformadas de Graeﬀe
+
+−
+
+·
+
+46
+
+n
+2
+4
+8
+16
+32
+64
+128
+
+n√α
+7, 34847
+5, 96497
+5, 45276
+5, 22137
+5, 10949
+5, 05445
+5, 02715
+
+n√β
+28, 72281
+25, 31403
+25, 00409
+25, 00000
+25, 00000
+25, 00000
+25, 00000
+
+n√γ
+50, 00000
+50, 00000
+50, 00000
+50, 00000
+50, 00000
+50, 00000
+50, 00000
+
+Tabela 5.8: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+Pelas rela¸c˜oes 5.1 e pela regra de sinais de Descartes temos x1 = 2. Como
+o produto de duas ra´ızes ´e
+
+25, logo, x2 = 5 e x3 =
+
+5.
+
+−
+
+−
+
+5o Caso: Equa¸c˜ao de 4o grau com dois pares de ra´ızes complexas conjugadas
+
+de m´odulos distintos.
+
+Exemplo 5.5. Determinar as solu¸c˜oes da equa¸c˜ao polinomial
+
+P (x) = x4
+
+−
+
+10x3 + 62x2
+
+−
+
+178x + 325 = 0
+
+Considere que as ra´ızes da equa¸c˜ao P (x) = x4 + αx3 + βx2 + γx + δ = 0
+sejam ρe±
+
+iφ. Ent˜ao, a n-´ezima Transformada de Graeﬀe ´e:
+
+iθ e λe±
+
+P n(x) = (x
+
+ρneiθn)(x
+
+−
+
+−
+
+ρne−
+
+iθn)(x
+
+−
+
+λneiφn)(x
+
+−
+
+λne−
+
+iφn) = 0.
+
+Desenvolvendo,
+
+x4
+
+−
+
+2(ρn cos nθ + λn cos nφ)x3 + (ρ2n + 4ρnλn cos nθ cos nφ + λ2n)x2
+
+2ρnλn(ρn cos nφ + λn cos nθ)x + ρ2nλ2n = 0.
+
+−
+Se ρ > λ temos:
+
+x4
+
+−
+
+2ρn cos nθx3 + ρ2nx2
+
+Se ρ < λ temos:
+
+x4
+
+−
+
+2λn cos nφx3 + λ2nx2
+
+−
+
+−
+
+2ρ2nλn cos nφx + ρ2nλ2n = 0.
+
+2λ2nρn cos nθx + ρ2nλ2n = 0.
+
+Ocorre irregularidade nos sinais dos coeﬁcientes das colunas de α e γ, e
+regularidade em β e δ.
+
+47
+
+Supondo ρ > λ
+ra´ızes complexas.
+
+⇒
+
+n√β = ρ2, determinando a partir da´ı os m´odulos das
+
+k
+
+k
+
+2
+
+1
+
+0
+
+P 2
+P (x)
+P 2(x)
+P 4(x)
+P 8(x)
+3
+4 P 16(x)
+5 P 32(x)
+6 P 64(x)
+
+Coef. L´ıder
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+α
+
+10
+
+−
+24
+
+1292
+
+3, 292
+
+−
+1, 981
+
+7, 954
+
+1, 021
+
+105
+·
+1011
+1021
+1045
+
+·
+
+·
+
+·
+
+β
+
+62
+
+934
+
+6, 700
+
+1, 532
+
+2, 360
+
+5, 421
+
+2, 939
+
+105
+1011
+1022
+1044
+1089
+
+·
+
+·
+
+·
+
+·
+
+·
+
+γ
+
+178
+
+−
+8616
+
+1, 231
+
+1, 960
+
+−
+3, 811
+
+·
+7, 210
+
+2, 597
+
+−
+
+−
+
+·
+
+108
+1014
+·
+1031
+1062
+10125
+
+·
+
+·
+
+δ
+
+325
+
+105625
+
+1, 116
+
+1, 245
+
+1, 549
+
+2, 400
+
+5, 761
+
+1010
+1020
+1040
+1080
+10160
+
+·
+
+·
+
+·
+
+·
+
+·
+
+Tabela 5.9: Transformadas de Graeﬀe
+
+n
+2
+4
+8
+16
+32
+64
+
+n√α
+4, 89898
+5, 99537
+4, 89419
+5, 08229
+4, 83497
+5, 04970
+
+n√β
+30, 56141
+28, 61046
+25, 01345
+25, 02142
+24, 99998
+25, 00000
+
+n√γ
+92, 82241
+105, 32703
+61, 16837
+94, 14896
+92, 11094
+91, 11714
+
+n√δ
+325, 00000
+325, 00000
+325, 00000
+325, 00000
+325, 00000
+325, 00000
+
+Tabela 5.10: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+Temos,
+
+Consequentemente,
+
+ρ2 = 25.
+
+λ2 = 13.
+
+Sendo as ra´ızes a
+
+bi = ρe±
+
+iθ e c
+
+±
+
+±
+
+di = λe±
+
+iφ, pelas rela¸c˜oes de Girard:
+
+x1 + x2 + x3 + x4 = 2(a + c) = 10
+x1x2x3 + x1x2x4 + x1x3x4 + x2x3x4 = 2(ρ2c + λ2a) = 178
+
+(cid:26)
+
+a + c = 5
+13a + 25c = 89
+
+.
+
+(cid:26)
+
+Da´ı, a = 3 e c = 2. Portanto,
+
+9 + b2 = 25
+
+4 + d2 = 13
+
+b =
+
+d =
+
+4
+
+±
+
+3,
+
+±
+
+⇒
+
+⇒
+
+48
+
+ent˜ao, as ra´ızes s˜ao 3
+
+4i e 2
+
+3i.
+
+±
+
+±
+
+Uma desvantagem do m´etodo de Graeﬀe est´a na quantidade de ra´ızes
+complexas, pois quanto mais ra´ızes complexas, mais d´ıf´ıcil a an´alise das
+sequˆencias dos coeﬁcientes das equa¸c˜oes transformadas.
+
+6o Caso: Equa¸c˜ao com ra´ızes m´ultiplas.
+
+Exemplo 5.6. Determinar as solu¸c˜oes da equa¸c˜ao polinomial
+
+P (x) = x4
+
+−
+
+8x3 + 23x2
+
+−
+
+28x + 12 = 0
+
+Os casos que apresentem ra´ızes com multiplicidade m > 1 podem ser
+resolvidos determinando o M DC entre P (x) e sua derivada P ′(x), pelo
+algoritmo de Euclides. Assim, os zeros do M DC s˜ao ra´ızes m´ultiplas de
+P (x).
+Considere a equa¸c˜ao P (x) = x4 + αx3 + βx2 + γx + δ = 0, cujas ra´ızes s˜ao
+a, a, b e c.
+O comportamento das sequˆencias ´e semelhante ao do 4o caso e pode ser
+explorado da mesma forma ou como op¸c˜ao veriﬁcar o M DC[P (x), P ′(x)].
+Nesse caso, P ′(x) = 4x3
+Da´ı, M DC[P (x), P ′(x)] = x
+
+2 e M DC[P (x), P ′′(x)] = 1.
+
+28 e P ′′(x) = 12x2
+
+24x2 + 46x
+
+48x + 46.
+
+−
+
+−
+
+−
+
+Dizemos que 2 ´e raiz de multiplicidade 2, pois ´e fator comum de P (x) e
+P ′(x), mas n˜ao de P ′′(x).
+
+−
+
+Pelo m´etodo de Graeﬀe,
+
+Coef. L´ıder
+
+α
+
+k
+
+k
+
+0
+
+1
+
+2
+
+3
+
+P 2
+P (x)
+P 2(x)
+P 4(x)
+P 8(x)
+P 16(x)
+P 32(x)
+P 64(x)
+6
+7 P 128(x)
+8 P 256(x)
+
+4
+
+5
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+8
+
+−
+
+18
+
+−
+
+114
+
+−
+7, 074
+
+4, 318
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1, 853
+
+3, 434
+
+1, 179
+
+1, 390
+
+·
+
+·
+
+103
+107
+1015
+1030
+1061
+10122
+
+·
+
+·
+
+·
+
+β
+
+23
+
+105
+
+2, 961
+
+3, 432
+
+5, 647
+
+1, 592
+
+1, 267
+
+8, 024
+
+3, 219
+
+·
+
+·
+
+103
+106
+1012
+1025
+1050
+1099
+10199
+
+·
+
+·
+
+·
+
+·
+
+γ
+
+28
+
+−
+
+232
+
+−
+2, 358
+
+4, 334
+
+1, 849
+
+3, 418
+
+1, 168
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1, 365
+
+1, 864
+
+−
+
+−
+
+·
+
+·
+
+104
+108
+1017
+1034
+1069
+10138
+10276
+
+·
+
+·
+
+·
+
+·
+
+·
+
+δ
+
+12
+
+144
+
+2, 074
+
+4, 300
+
+1, 849
+
+3, 418
+
+1, 168
+
+1, 365
+
+1, 864
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+104
+108
+1017
+1034
+1069
+10138
+10276
+
+·
+Tabela 5.11: Transformadas de Graeﬀe
+
+−
+
+·
+
+49
+
+n
+2
+4
+8
+16
+32
+64
+128
+256
+
+n√α
+4, 24264
+3, 26758
+3, 02836
+3, 00057
+3, 00000
+3, 00000
+3, 00000
+3, 00000
+
+n√β
+10, 24695
+7, 37666
+6, 56056
+6, 26594
+6, 13138
+6, 06534
+6, 03258
+6, 01627
+
+n√γ
+15, 23155
+12, 39237
+12, 01191
+12, 00002
+12, 00000
+12, 00000
+12, 00000
+12, 00000
+
+n√δ
+12, 00000
+12, 00000
+12, 00000
+12, 00000
+12, 00000
+12, 00000
+12, 00000
+12, 00000
+
+Tabela 5.12: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+Pela coluna n√α obtemos a maior raiz em m´odulo e veriﬁcando, obtemos
+x1 = 3, e pelas rela¸c˜oes 5.1 temos x4 = 1, e como x2 = x3 = 2 as ra´ızes
+de P (x) = 0 s˜ao: simples 1 e 3 e dupla 2.
+
+Mesmo limitando o estudo deste m´etodo a apenas alguns casos, existem
+muitas outras situa¸c˜oes que podem ser exploradas e os conceitos aqui empre-
+gados podem ser estendidos a outras equa¸c˜oes de grau superior a 4. Ainda
+podemos destacar, que o m´etodo de Dandelin-Graeﬀe fornece as ra´ızes reais ou
+complexas, sem a necessidade de pr´evia veriﬁca¸c˜ao dos intervalos que as cont´em
+ou de um valor inicial de aproxima¸c˜ao, como nos m´etodos iterativo simples e de
+Newton.
+
+Do ponto de vista computacional, o m´etodo de Dandelin-Graeﬀe pode
+n˜ao ser vi´avel pelas limita¸c˜oes do software durante sua implementa¸c˜ao, o que
+pode ser resolvido aplicando as modiﬁca¸c˜oes propostas por Gregorio Malajo-
+vich e Jorge P. Zubelli nos artigos dispon´ıveis em [15] e [16], sabendo que para
+alunos do Ensino M´edio o aspecto mais relevante encontra-se nos conceitos en-
+volvidos no m´etodo e uma planilha cumpre a fun¸c˜ao computacional de maneira
+satisfat´oria.
+
+50
+
+Cap´ıtulo 6
+
+Atividades Sugeridas
+
+6.1
+
+Informa¸c˜oes Gerais
+
+Neste capitulo s˜ao sugeridas atividades para serem trabalhadas com alunos do
+3o ano do Ensino M´edio. O papel a ser desempenhado pelo professor ´e o de ins-
+tigar os alunos a relacionarem os m´etodos iterativos com o estudo de sequˆencias,
+propondo aos discentes uma poderosa ferramenta para resolu¸c˜ao de diversos ti-
+pos de equa¸c˜oes alg´ebricas e transcendentes e, ainda, proporcionar ao aluno uma
+integra¸c˜ao entre ´algebra, aritm´etica e geometria, pouco exploradas na Educa¸c˜ao
+B´asica, utilizando-se do potencial tecnol´ogico existente.
+
+6.1.1 Recomenda¸c˜oes ao Professor
+
+Prezados colegas, professores, antes de aplicar as atividades em sala de aula,
+sugiro que seja realizada uma leitura de todo o material, pois existem muitos
+conceitos e resultados que podem n˜ao fazer parte da forma¸c˜ao do aluno at´e
+o momento. Sendo assim, a abordagem n˜ao pode ser limitada a aplica¸c˜ao do
+m´etodo. ´E necess´ario que o aluno seja questionado sobre cada um dos passos a
+serem realizados durante as atividades. Este material deve ser encarado como
+uma proposta alternativa e que faz parte de uma demanda e uma tendˆencia no
+ensino de Matem´atica e portanto, n˜ao ´e deﬁnitivo.
+
+6.1.2 Objetivo
+
+Apresentar aos alunos do Ensino M´edio uma vis˜ao geral sobre m´etodos iterativos
+e a sua rela¸c˜ao com o estudo de sequˆencias, utilizando tecnologias e valorizando
+os conceitos matem´aticos envolvidos.
+
+6.1.3 P´ublico-alvo
+
+3o ano do Ensino M´edio.
+
+51
+
+6.1.4 Pr´e-requisitos
+
+No¸c˜oes de Sequˆencias, N´umeros Complexos, Fun¸c˜oes Reais, Polinˆomios e Equa¸c˜oes
+Polinomiais.
+
+6.1.5 Descri¸c˜ao da Atividade
+
+As atividades foram elaboradas, para que o aluno possa se familiarizar com o
+processo, de forma progressiva, adquira conﬁan¸ca e perceba os conceitos que
+est˜ao sendo trabalhados. Inicialmente, o professor deve apresentar um exem-
+plo, dispondo de um conjunto de perguntas a serem direcionadas aos alunos em
+cada etapa do desenvolvimento. Em seguida, s˜ao propostos exerc´ıcios, em or-
+dem crescente de diﬁculdade, que contemplem as diferentes possibilidades, que
+possam surgir durante o desenvolvimento.
+
+6.1.6 Recursos Necess´arios
+
+Computador com internet e/ou software para plotar gr´aﬁcos de fun¸c˜oes;
+
+Planilha eletrˆonica;
+
+Calculadora(cient´ıﬁca);
+
+Folhas A4.
+
+•
+
+•
+
+•
+
+•
+
+6.2 Atividade - M´etodo Iterativo Simples
+
+A atividade, do ponto de vista pedag´ogico, apresenta algumas diﬁculdades que
+possam surgir durante a sua aplica¸c˜ao como por exemplo uma determinada
+fun¸c˜ao de itera¸c˜ao pode ou n˜ao convergir para a solu¸c˜ao procurada.
+
+Por´em, nos exerc´ıcios sugeridos podem aparecer outras situa¸c˜oes como
+a convergˆencia alternada, n˜ao ter diretamente uma fun¸c˜ao de itera¸c˜ao, casos em
+que o professor dever´a estar atento as poss´ıveis d´uvidas que por ventura possam
+ocorrer.
+
+Exemplo 6.1. Determinar a(s) solu¸c˜ao(˜oes) da equa¸c˜ao ln 5x
+
+x = 0.
+
+−
+
+1. Na sua opini˜ao, a equa¸c˜ao tem solu¸c˜ao? Sim ou N˜ao, por que?
+
+Podemos manipular a equa¸c˜ao de forma a obter a igualdade abaixo
+
+x = ln 5x
+
+A ﬁm de explorar a existˆencia de ra´ızes, o aluno pode fazer um esbo¸co
+do gr´aﬁco das fun¸c˜oes ψ(x) = x e φ(x) = ln 5x, utilizando o Winplot,
+Gnuplot ou qualquer outro software para tra¸car gr´aﬁcos de fun¸c˜oes.
+
+O professor sempre deve trabalhar em conjunto com o software, uma
+an´alise qualitativa da fun¸c˜ao baseada nas suas caracter´ısticas como dom´ınio,
+
+52
+
+imagem, intervalos de crescimento e decrescimento, entre outras. Para que
+os alunos possam certiﬁcar-se de que o gr´aﬁco obtido pelo software est´a
+de acordo com a fun¸c˜ao a ser trabalhada.
+
+Figura 6.1: Gr´aﬁco de ψ(x) e φ(x)
+
+Com a visualiza¸c˜ao do gr´aﬁco o aluno pode, conhecendo o comportamento
+das fun¸c˜oes, veriﬁcar que a equa¸c˜ao tem duas solu¸c˜oes reais e essas solu¸c˜oes
+s˜ao dadas pelos pontos de interse¸c˜ao dos gr´aﬁcos de ψ(x) e φ(x) que se
+encontram nos intervalos [0, 1] e [2, 3].
+
+2. Como podemos determinar as solu¸c˜oes da equa¸c˜ao?
+
+Podemos utilizar uma rela¸c˜ao de itera¸c˜ao e tentar determinar tais in-
+terse¸c˜oes. Para este ﬁm, devemos manipular nossa equa¸c˜ao at´e obter a
+seguinte equivalˆencia:
+
+x = φ(x)
+
+f (x) = 0,
+
+⇐⇒
+onde, φ(xn) ´e chamada de fun¸c˜ao de itera¸c˜ao. A rela¸c˜ao de itera¸c˜ao
+xn+1 = φ(xn) para obter as solu¸c˜oes de uma equa¸c˜ao ´e conhecida como
+M´etodo Iterativo Simples.
+
+3. Usando a planilha construir uma coluna para n, uma para xn e outra
+para xn+1 = φ(xn). Escolher o valor inicial x0 e utilizar diversos valores
+iniciais.
+
+Como j´a haviamos feito a manipula¸c˜ao da express˜ao no ´ınicio da atividade
+temos a rela¸c˜ao:
+
+onde nossa fun¸c˜ao de itera¸c˜ao ´e φ(x) = ln 5x.
+
+x = ln 5x
+
+⇐⇒
+
+xn+1 = ln 5xn,
+
+4. Veriﬁcar o comportamento dos valores de xn e xn+1.
+
+Espera-se que o aluno veriﬁque que as sequˆencias est˜ao “se aproximando”
+de um determinado ponto. No nosso exemplo, o ponto A. Logo, a abscissa
+
+53
+
+n
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+xn
+6
+3, 401197382
+2, 833565453
+2, 650973709
+2, 584364922
+2, 558917712
+2, 549022313
+2, 545147791
+2, 543626632
+2, 543028783
+2, 542793717
+
+φ(xn) = xn+1
+3, 401197382
+2, 833565453
+2, 650973709
+2, 584364922
+2, 558917712
+2, 549022313
+2, 545147791
+2, 543626632
+2, 543028783
+2, 542793717
+2, 542701278
+
+Tabela 6.1: Aproxima¸c˜ao inicial x0 = 6
+
+deste ponto ´e candidato a raiz da equa¸c˜ao. E, de fato, sabemos que ´e uma
+das ra´ızes da equa¸c˜ao, pois ´e um ponto de interse¸c˜ao dos gr´aﬁcos de ψ(x)
+e φ(x).
+
+5. A sequˆencia de valores obtidos parece ser convergente? Ou seja, existe um
+
+limite para sequˆencia?
+
+Nesse ponto muitos alunos estar˜ao convencidos da convergˆencia, ent˜ao,
+o que fazer com os c´eticos? Analisar graﬁcamente o que ocorre com a
+sequˆencia, no caso particular, x0 = 6.
+
+Figura 6.2: Interpreta¸c˜ao Geom´etrica - M´etodo Iterativo Simples
+
+Aplicando x0 na fun¸c˜ao de itera¸c˜ao temos x1, aplicando x1 temos x2 e,
+
+54
+
+assim, sucessivamente, at´e obtermos um poss´ıvel valor aproximado para
+raiz com precis˜ao de algumas casas decimais. Para comprovar recorremos
+a an´alise da aproxima¸c˜ao da raiz realizada em 3.
+
+Vejamos por que isso ocorre:
+
+Figura 6.3: Retas tangentes `a curva
+
+Da geometria anal´ıtica, sabemos que a inclina¸c˜ao da reta ´e dada pela
+tangente do ˆangulo que a reta forma com o eixo x. Ent˜ao, o que podemos
+dizer dos coeﬁcientes angulares das retas que s˜ao tangentes `a curva em
+rela¸c˜ao `a fun¸c˜ao ψ(x) = x. A fun¸c˜ao ψ(x) = x tem coeﬁciente angular
+igual a 1, enquanto todas as outras tem coeﬁcientes menores que 1. Essa
+informa¸c˜ao ajuda a compreender a deﬁni¸c˜ao de “ponto ﬁxo atrator” dada
+em 3.1, portanto, a sequˆencia converge para o ponto A e xA de fato ´e raiz
+da equa¸c˜ao.
+
+6. Quantos algarismos estabilizaram na sequˆencia?
+
+Ver quantos s˜ao os algarismos que estabilizaram e em que itera¸c˜ao isso
+ocorreu. Na 11a itera¸c˜ao, temos x11 = 2, 542701278, substituindo na
+f (xA
+equa¸c˜ao veriﬁcamos que satisfaz
+
+δ para δ = 10−
+
+4.
+
+|
+
+| ≤
+
+7. A sequˆencia convergiria para este resultado, independente da valor inicial?
+
+Veriﬁcar outros valores e ver o que acontece. Como graﬁcamente temos
+duas ra´ızes, podemos testar valores antes da 1a raiz, entre as duas ra´ızes
+e ap´os a 2a raiz.
+
+8. Podemos encontrar a outra raiz por este m´etodo?
+
+Ap´os testar diversos valores, veriﬁcamos que uns geram erro e outros con-
+vergem para mesma raiz. O que acontece com os valores da sequˆencia
+quando x0 = 0, 259 e x0 = 0, 26?
+
+9. Como podemos interpretar este resultado?
+
+55
+
+Dizemos que a outra raiz ´e um ponto ﬁxo “repulsor”. Pois, analisando
+as tangentes `a curva antes da 1a raiz veriﬁcamos que os seus coeﬁcientes
+angulares s˜ao todos maiores que 1 e, portanto, a sequˆencia diverge.
+
+10. O que podemos fazer, ent˜ao, para determinar esta outra raiz?
+
+Relembrando o conceito de fun¸c˜ao inversa e o que ela representa graﬁca-
+mente, ou seja, a simetria em rela¸c˜ao `a reta y = x. Temos exatamente os
+mesmos pontos como solu¸c˜oes da equa¸c˜ao original.
+
+Figura 6.4: Gr´aﬁcos de φ−
+
+1(x),φ(x) e ψ(x)
+
+Voltando `a planilha inserimos uma nova coluna com a fun¸c˜ao inversa de
+φ(x) = ln 5x que ´e dada por:
+
+φ−
+
+1(x) =
+
+ex
+5
+
+Atribuindo valores diversos para x0 veriﬁcamos que o ponto B passou a
+ser atrator e o ponto A repulsor.
+
+Dessa forma conseguimos determinar numericamente as solu¸c˜oes da equa¸c˜ao
+ln 5x
+A 1a com 4 casas decimais exatas e a 2a com 5 casas decimais.
+
+x = 0. As duas ra´ızes s˜ao aproximadamente:
+
+−
+
+56
+
+n
+0
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+xn
+1
+0, 543656366
+0, 344458539
+0, 282245118
+0, 265220746
+0, 260743747
+0, 259579007
+0, 259276841
+0, 259198508
+0, 259178205
+0, 259172943
+
+φ−1(xn) = xn+1
+0, 543656366
+0, 344458539
+0, 282245118
+0, 265220746
+0, 260743747
+0, 259579007
+0, 259276841
+0, 259198508
+0, 259178205
+0, 259172943
+0, 259171579
+
+Tabela 6.2: Aproxima¸c˜ao inicial x0 = 1
+
+xA
+2, 542701278
+
+Equa¸c˜ao no ponto xA
+0, 0000363
+
+−
+
+xB
+0, 259171579
+
+Equa¸c˜ao no ponto xB
+0, 000001363
+
+Tabela 6.3: Ra´ızes de ln 5x
+
+x = 0
+
+−
+
+Conclus˜oes
+
+•
+
+•
+
+•
+
+N˜ao existe uma ´unica fun¸c˜ao de itera¸c˜ao, cada equa¸c˜ao pode ser escrita
+da forma que o aluno considere mais conveniente, e a partir da´ı, a fun¸c˜ao
+de itera¸c˜ao poder´a ou n˜ao convergir;
+
+O aluno pode facilmente investigar outras fun¸c˜oes de itera¸c˜ao ou trabalhar
+com a fun¸c˜ao inversa da fun¸c˜ao de itera¸c˜ao;
+
+A convergˆencia ocorre quando
+e diverge quando
+s˜ao os coeﬁcientes angulares das retas tangentes `a curva nos pontos xn;
+
+< 1, isto ´e, o ponto ﬁxo ´e atrator
+> 1, ou seja, ´e um ponto ﬁxo repulsor; tan θn
+
+tan θn
+
+tan θn
+
+|
+
+|
+
+|
+
+|
+
+•
+
+A derivada de uma fun¸c˜ao representa o coeﬁciente angular da reta tangente
+`a fun¸c˜ao num ponto x dado.
+
+Exerc´ıcios Sugeridos
+
+1. Determinar as solu¸c˜oes da equa¸c˜ao sen 2x
+
+casas decimais;
+
+x = 0, com aproxima¸c˜ao de 6
+
+−
+
+2. Determinar as ra´ızes reais da equa¸c˜ao 3x4
+
+x
+
+−
+
+−
+
+3 = 0;
+
+3. Veriﬁcar quantas solu¸c˜oes possui a equa¸c˜ao ex + cos x
+
+5 = 0 e determinar
+
+a(s) solu¸c˜ao(˜oes) com aproxima¸c˜ao de 7 casas decimais;
+
+−
+
+57
+
+4. Obter a maior raiz da equa¸c˜ao x2 + 2x + 1
+
+10−
+
+9;
+
+ex = 0 com aproxima¸c˜ao de
+
+−
+
+5. Utilizando o m´etodo apresentado, determinar uma aproxima¸c˜ao para √5
+
+com 8 casas decimais corretas;
+
+6. Vocˆe ouviu falar sobre o n´umero de ouro ou a raz˜ao ´aurea? Este n´umero ´e
+. Determinar uma aproxima¸c˜ao com 10 casas
+
+representado por φ = 1+√5
+decimais para o n´umero φ;
+
+2
+
+7. Determinar todas as ra´ızes da equa¸c˜ao √x + 1 = 1
+
+x com uma precis˜ao de
+
+10−
+
+5;
+
+8. Calcular as ra´ızes da equa¸c˜ao (4 + x2)(ex
+
+de 10−
+
+6;
+
+e−
+
+x) = 18 com uma precis˜ao
+
+−
+
+9. Determinar a maior raiz positiva de 5x
+
+10−
+
+5;
+
+8 log x = 8 com aproxima¸c˜ao de
+
+−
+
+10. Determinar as ra´ızes da equa¸c˜ao 2√x = cos πx
+
+2 com uma precis˜ao de 10−
+
+4.
+
+6.3 Atividade - M´etodo de Newton
+
+Para utilizar este m´etodo ´e necess´ario que o aluno conhe¸ca a derivada da fun¸c˜ao,
+e assim, obter a fun¸c˜ao de itera¸c˜ao. Fica a crit´erio do professor mostrar algumas
+t´ecnicas de deriva¸c˜ao, como por exemplo de fun¸c˜oes polinomiais, cuja deriva¸c˜ao
+´e bem simples ou utilizar o GeoGebra, pois o objetivo principal da atividade
+´e apresentar ao discente uma nova ferramenta para resolu¸c˜ao de equa¸c˜oes e
+refor¸car os conceitos matem´aticos que servem de base para o m´etodo e relacion´a-
+los com o conte´udo de sequˆencias.
+
+Exemplo 6.2. Determinar com precis˜ao de 10−
+2 + cos 3x.
+
+8 a solu¸c˜ao da equa¸c˜ao ex =
+
+1. Na sua opini˜ao, a equa¸c˜ao tem solu¸c˜ao? Sim ou N˜ao, por que?
+
+Esse questionamento inicial ´e muito importante para iniciar o debate so-
+bre o problema, pois muito provavelmente, n˜ao haver´a unanimidade nas
+respostas. Uma forma de responder a esta quest˜ao ´e atrav´es da an´alise
+do comportamento da fun¸c˜ao, associada a constru¸c˜ao do gr´aﬁco corres-
+pondente a equa¸c˜ao. Como esta fun¸c˜ao ´e resultado da opera¸c˜ao entre as
+fun¸c˜oes exponencial e trigonom´etrica, torna-se d´ıﬁcil para o aluno do En-
+sino M´edio analisar seu comportamento, mas isto pode ser resolvido, ana-
+lisando as fun¸c˜oes associadas, separadamente, por exemplo: ψ(x) = ex e
+φ(x) = 2+cos 3x, cuja interse¸c˜ao dos gr´aﬁcos representa a raiz da equa¸c˜ao,
+conforme a ﬁgura seguinte:
+
+58
+
+Figura 6.5: Gr´aﬁco de ψ(x) e φ(x)
+
+ou pelo gr´aﬁco de f (x) = ex
+
+2
+
+−
+
+−
+
+cos 3x,
+
+Figura 6.6: Gr´aﬁco de f (x)
+
+O professor ao abordar estas duas formas de representa¸c˜ao da equa¸c˜ao,
+proporciona ao aluno enriquecer e concretizar sua percep¸c˜ao sobre o com-
+portamento de fun¸c˜oes e suas opera¸c˜oes. ´E possivel ver que existe uma
+´unica solu¸c˜ao real para a equa¸c˜ao, dada pela abscissa do ponto A locali-
+zada no intervalo [0, 1].
+
+59
+
+2. Como podemos determinar as solu¸c˜oes da equa¸c˜ao?
+
+A ideia ´e obter uma sequˆencia de aproxima¸c˜oes sucessivas a partir da
+f (x)
+f ′(x) . Usando o GeoGebra, a derivada
+rela¸c˜ao de itera¸c˜ao: xn+1 = xn
+de f ´e: f ′(x) = ex + 3 sen 3x.
+E a fun¸c˜ao de itera¸c˜ao dada por:
+
+−
+
+F (x) = x
+
+−
+
+2
+
+ex
+cos 3x
+−
+ex + 3 sen 3x
+
+−
+
+3. Construir um tabela para as sequˆencias n, xn e xn+1.
+
+Com aux´ılio de uma planilha e conhecendo o intervalo onde se encontra a
+raiz.
+
+n
+0
+1
+2
+3
+4
+
+xn
+1, 000000000000
+0, 456247909473
+0, 594065856350
+0, 589604263575
+0, 589604348608
+
+F (xn) = xn+1
+0, 456247909473
+0, 594065856350
+0, 589604263575
+0, 589604348608
+0, 589604348608
+
+Tabela 6.4: Aproxima¸c˜ao inicial x0 = 1
+
+4. As sequˆencias obtidas parecem ser convergentes, isto ´e, tendem a algum
+
+valor?
+
+Vejamos o gr´aﬁco de f (x) e da tangente a essa curva com a aproxima¸c˜ao
+inicial x0 = 1.
+
+Figura 6.7: Gr´aﬁco de f (x) e da sua tangente em x0 = 1
+
+60
+
+A maioria dos alunos dever´a concordar que ocorre a convergˆencia, ent˜ao,
+como justiﬁcar a alunos do Ensino M´edio?
+
+O m´etodo de Newton tamb´em ´e conhecido como m´etodo das tangentes.
+Devemos analisar a rela¸c˜ao existente entre as tangentes e a sequˆencia ob-
+tida. Pelo comportamento das sequˆencias e a sua interpreta¸c˜ao geom´etrica,
+pode se concluir que as sequˆencias s˜ao convergentes.
+
+De fato, pela proposi¸c˜ao 4.1 se x0 for tomado suﬁcientemente pr´oximo
+da raiz r, i.e, x0 pertence a uma vizinhan¸ca de r. Isto implica que x0 ∈
+[r
+δ, r + δ] e δ > 0. Geometricamente, este conceito est´a associado `a
+convexidade da curva como podemos ver no gr´aﬁco seguinte:
+
+−
+
+Figura 6.8: Gr´aﬁco - fun¸c˜ao convexa - x0 `a direita da raiz
+
+Com x0 `a direita da raiz, a sequˆencia tem convergˆencia mon´otona. Por´em,
+se x0 estiver `a esquerda da raiz pode ocorrer a convergˆencia caso em
+alguma itera¸c˜ao se tenha uma aproxima¸c˜ao pertencente a vizinhan¸ca de
+r, ou seja, temos uma subsequˆencia convergente. Como na ﬁgura seguinte.
+
+Figura 6.9: Gr´aﬁco - fun¸c˜ao convexa - x0 `a esquerda da raiz
+
+61
+
+Analogamente, podemos mostrar tal convergˆencia quando a fun¸c˜ao for
+cˆoncava.
+
+5. Quantos algarismos estabilizaram na sequˆencia?
+
+Nesse momento, os alunos devem perceber que a quantidade de algarismos
+que estabilizaram na sequˆencia ´e muito superior e ocorre muito mais r´apido
+se comparado com o m´etodo iterativo simples, na ordem de 1012 casas
+decimais na quarta itera¸c˜ao.
+
+6. A sequˆencia convergiria para este resultado, independente da valor inicial?
+
+Ao testar outros valores, mais distantes da raiz, os discentes devem per-
+ceber que a sequˆencia pode convergir como por exemplo para x0 = 3,
+mas s´o ap´os 20 itera¸c˜oes ´e poss´ıvel chegar ao mesmo valor para r e que
+para outros valores a sequˆencia diverge. Ent˜ao, podemos destacar que o
+m´etodo de Newton ´e muito eﬁcaz, por´em necessita de uma aproxima¸c˜ao
+inicial conveniente.
+
+7. Como podemos interpretar este resultado?
+
+Para aplicar o m´etodo de Newton devemos inicialmente veriﬁcar e iso-
+lar um intervalo suﬁcientemente pequeno e que contenha uma ´unica raiz.
+Sendo assim, poderemos garantir a convergˆencia para esta raiz. Logo, a
+solu¸c˜ao pedida para a equa¸c˜ao ´e dada por x
+
+0, 58960434.
+
+≈
+
+Conclus˜oes
+
+•
+
+•
+
+•
+
+•
+
+Comparando com o m´etodo iterativo simples, a convergˆencia pelo m´etodo
+de Newton ´e muito mais r´apida;
+
+A diﬁculdade para utilizar o m´etodo por necessitar da derivada ´e con-
+tornada com a interpreta¸c˜ao geom´etrica deste conceito, usando as retas
+tangentes. E, ´e poss´ıvel determinar a fun¸c˜ao derivada com o software
+Geogebra ou outros j´a mencionados;
+
+A convergˆencia ocorre quando tomamos como aproxima¸c˜ao inicial um x0
+“suﬁcientemente pr´oximo” da raiz;
+
+Como o objetivo ´e aplicar a atividade para alunos de Ensino M´edio, optou-
+se pelo crit´erio de convergˆencia local do m´etodo, pois deseja-se analisar
+o comportamento das sequˆencias e n˜ao garantir antecipadamente a sua
+convergˆencia.
+
+Exerc´ıcios Sugeridos
+
+1. Quantas e quais s˜ao as ra´ızes da equa¸c˜ao ln x
+
+xima¸c˜ao com 8 casas decimais;
+
+2x =
+
+−
+
+−
+
+2. Dˆe uma apro-
+
+2. Determinar a menor raiz positiva da equa¸c˜ao ex = tan x com 10 casas
+
+decimais corretas;
+
+62
+
+3. Achar a raiz de cos x + ln x + x = 0 com precis˜ao de 10−
+
+5;
+
+4. Utilizando o m´etodo de Newton, determinar uma aproxima¸c˜ao para √5
+com 8 casas decimais corretas, compare com o m´etodo iterativo simples e
+veriﬁque quantas itera¸c˜oes foram necess´arias em cada um dos m´etodos;
+
+5. Encontre uma aproxima¸c˜ao com 6 casas decimais para a raiz real da
+
+equa¸c˜ao x5 + x3 + x2 + x
+
+25 = 0;
+
+−
+
+6. Determine todas as ra´ızes reais de cos x
+
+ﬁcativas corretas;
+
+7. Dada a equa¸c˜ao polinomial 36x5 + 93x4
+
+minar:
+
+3x ln
+
+x
+
+|
+
+|
+
+−
+
+= 0 com 5 casas signi-
+
+11x3
+
+−
+
+−
+
+20x2 + x + 1 = 0, deter-
+
+a. A localiza¸c˜ao de todas as suas ra´ızes, apresentando os intervalos que
+
+as cont´em;
+
+b. Todas as ra´ızes, com 10 casas signiﬁcativas exatas e mostrar se existem
+
+ra´ızes m´ultiplas.
+
+8. Dada a equa¸c˜ao
+
+1
+x3 −
+determinar todas as suas solu¸c˜oes com 7 casas decimais corretas;
+
+x2 + 3 = 0
+
+9. Sendo sen x + cos 3x = ln 5x
+
+3, determinar:
+
+−
+
+a. Quantas ra´ızes reais a equa¸c˜ao possui bem como os intervalos que as
+
+cont´em;
+
+b. As ra´ızes menor, maior e intermedi´aria. Com 12 casas signiﬁcativas
+
+exatas.
+
+10. Determinar as duas menores ra´ızes da equa¸c˜ao sen(cos(√3x)) com apro-
+
+xima¸c˜ao de pelo menos 6 casas decimais corretas.
+
+63
+
+6.4 Atividade - M´etodo de Dandelin-Graeﬀe
+
+O m´etodo de Dandelin-Graeﬀe utiliza a quadratura das ra´ızes, ent˜ao, supondo
+, xi, deve-se obter uma transforma¸c˜ao
+que as ra´ızes de P (x) = 0 s˜ao x1, x2, x3,
+de P (x) = 0, tal que, a transformada P 2(x) = 0 tenha ra´ızes x2
+, x2
+2, x2
+i ,
+3,
+repetindo este processo at´e obter P n(x), com n suﬁcientemente grande.
+
+1, x2
+
+· · ·
+
+· · ·
+
+Exemplo 6.3. Determinar as ra´ızes da seguinte equa¸c˜ao polinomial:
+
+x5
+
+−
+
+3x4
+
+−
+
+53x3 + 171x2 + 304x
+
+420 = 0
+
+−
+
+1. Dada a equa¸c˜ao, como podemos obter a transformada usando a quadratura
+
+das ra´ızes?
+
+Um processo para realizar esta opera¸c˜ao consiste em separar os termos de
+ordem par dos termos de ordem ´ımpar. Vejamos o que ocorre com uma
+equa¸c˜ao geral.
+
+x5 + αx4 + βx3 + γx2 + δx + ε = 0
+
+x5 + βx3 + δx =
+
+(αx4 + γx2 + ε)
+
+−
+
+Elevando ambos os membros ao quadrado e reorganizando os termos,
+
+x10+(2β
+
+−
+
+α2)x8+(β2+2δ
+
+2αγ)x6+(2βδ
+
+2αε
+
+−
+
+−
+
+γ2)x4+(δ2
+
+2γε)x2
+
+ε2 = 0
+
+−
+
+−
+
+−
+
+Fazendo x2 = x sem perda de generalidade,
+
+x5+(2β
+
+−
+
+α2)x4+(β2+2δ
+
+2αγ)x3+(2βδ
+
+2αε
+
+−
+
+−
+
+γ2)x2+(δ2
+
+2γε)x
+
+−
+
+−
+
+ε2 = 0
+
+−
+
+2. Como este processo pode ser aplicado para determinar as ra´ızes da equa¸c˜ao?
+
+A ideia ´e repetir este processo at´e que tenhamos uma k-´esima transfor-
+N e “suﬁcientemente grande”, tal que as
+mada P n, onde n = 2k, k
+4 e xn
+ra´ızes desta transformada sejam xn
+5 .
+
+1 , xn
+
+2 , xn
+
+3 , xn
+
+∈
+
+Sabendo que os coeﬁcientes s˜ao obtidos recursivamente por:
+
+α2
+1 −
+n
+−
+1 + 2δn
+1δn
+
+−
+1 −
+−
+
+−
+2γn
+
+αn = 2βn
+βn = β2
+n
+−
+γn = 2βn
+−
+δn = δ2
+n
+1 −
+−
+ε2
+εn =
+n
+1
+−
+
+−
+
+1
+−
+1 −
+2αn
+
+1εn
+
+−
+1
+
+−
+
+2αn
+
+1γn
+
+−
+1εn
+
+1
+−
+γ2
+1 −
+n
+
+−
+
+1
+
+−
+
+
+
+
+
+
+Com o aux´ılio de uma planilha podemos determinar as trasformadas de
+Graeﬀe.
+
+64
+
+k
+
+P 2
+P (x)
+P 2(x)
+P 4(x)
+P 8(x)
+P 16(x)
+P 32(x)
+P 64(x)
+
+Coef. L´ıder
+
+α
+
+β
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+3
+
+−
+1, 2
+
+4, 3
+
+7, 8
+
+−
+
+−
+
+−
+
+−
+
+−
+
+3, 6
+
+1, 1
+
+1, 2
+
+·
+
+·
+
+·
+
+·
+
+·
+
+102
+103
+106
+1013
+1027
+1054
+
+·
+
+·
+
+53
+103
+106
+1013
+1025
+1051
+10103
+
+·
+
+·
+
+·
+
+−
+4, 4
+
+5, 5
+
+1, 3
+
+9, 9
+
+8, 8
+
+7, 7
+
+γ
+
+171
+
+δ
+
+304
+
+6, 4
+
+2, 0
+
+−
+
+−
+
+3, 8
+
+1, 4
+
+2, 0
+
+−
+
+−
+
+−
+
+4, 2
+
+·
+
+·
+
+104
+109
+1018
+1037
+1074
+10148
+
+·
+
+·
+
+·
+
+·
+
+105
+1010
+1020
+1041
+1083
+10167
+
+2, 4
+
+3, 3
+
+9, 7
+
+9, 4
+
+8, 8
+
+7, 7
+
+·
+
+·
+
+·
+
+·
+
+·
+
+ε
+
+420
+
+−
+1, 8
+
+−
+
+3, 1
+
+9, 7
+
+9, 4
+
+8, 8
+
+−
+
+−
+
+−
+
+−
+
+7, 7
+
+−
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+105
+1010
+1020
+1041
+1083
+10167
+
+−
+
+·
+Tabela 6.5: Transformadas de Graeﬀe
+
+−
+
+·
+
+·
+
+3. Como determinar as ra´ızes?
+
+Supondo que as ra´ızes sejam todas distintas, em m´odulo, pela proposi¸c˜ao
+5.1, obtemos os seguintes resultados:
+
+n
+2
+4
+8
+16
+32
+64
+
+n√α
+10, 72381
+8, 11610
+7, 27373
+7, 03759
+7, 00158
+7, 00001
+
+n√β
+66, 65583
+48, 41812
+43, 40249
+42, 14995
+42, 00386
+42, 00001
+
+n√γ
+252, 95256
+212, 44714
+210, 02245
+210, 00001
+210, 00000
+210, 00000
+
+n√δ
+485, 85595
+426, 69353
+420, 20490
+420, 00040
+420, 00000
+420, 00000
+
+n√ε
+420, 00000
+420, 00000
+420, 00000
+420, 00000
+420, 00000
+420, 00000
+
+Tabela 6.6: Ra´ızes n-´ezimas dos coeﬁcientes de P n(x)
+
+Como α(n) =
+
+|
+
+1 + xn
+xn
+
+2 + xn
+
+3 + xn
+
+4 + xn
+5 |
+
+, ent˜ao n√α =
+
+=
+
+x1|
+
+|
+
+7
+
+±
+
+4. Como saber se os resultados obtidos s˜ao ra´ızes da equa¸c˜ao?
+
+Para isso, basta determinar o valor num´erico de P (7) e de P (
+
+7).
+
+−
+
+P (7) = 75
+
+74
+
+3
+
+·
+
+−
+
+53
+
+·
+
+−
+
+73 + 171
+
+·
+
+72 + 304
+
+7
+
+·
+
+−
+
+420 = 1512
+
+E
+
+7) = (
+
+P (
+
+−
+
+7)5
+
+−
+
+Portanto, x1 =
+
+3
+
+(
+
+7)4
+
+53
+
+(
+
+7)3 + 171
+
+·
+
+−
+
+−
+7 ´e raiz da equa¸c˜ao.
+
+−
+
+·
+
+−
+
+−
+
+7)2 + 304
+
+(
+
+·
+
+−
+
+7)
+
+(
+
+·
+
+−
+
+−
+
+420 = 0
+
+5. Como determinar as demais ra´ızes da equa¸c˜ao?
+
+O processo ´e semelhante,
+
+65
+
+n√β =
+n√γ =
+n√δ =
+n√ε =
+
+42
+
+x1x2|
+=
+|
+±
+x1x2x3|
+=
+|
+±
+x1x2x3x4|
+=
+|
+x1x2x3x4x5|
+|
+
+x2 =
+
+6
+±
+x3 =
+
+⇒
+210
+
+5
+
+⇒
+420
+
+±
+=
+
+⇒
+420
+
+±
+x4 =
+
+±
+x5 =
+
+±
+
+⇒
+
+2
+
+1
+
+±
+
+
+
+
+
+
+Logo, substituindo os poss´ıveis valores, obtemos assim todas as ra´ızes da
+equa¸c˜ao P (x) = 0.
+
+7
+
+2
+
+x1 =
+−
+x2 = 6
+x3 = 5
+x4 =
+−
+x5 = 1
+
+
+
+
+
+
+Conclus˜oes
+
+•
+
+•
+
+•
+
+•
+
+•
+
+O m´etodo de Dandelin-Graeﬀe utiliza o conceito de convergˆencia de sequˆencias
+para cada coeﬁciente da equa¸c˜ao;
+
+O m´etodo n˜ao necessita de nenhuma aproxima¸c˜ao ou veriﬁca¸c˜ao inicial;
+
+A integra¸c˜ao com outros conceitos, como n´umeros complexos, possibilita
+a an´alise de ra´ızes complexas;
+
+´E muito eﬁcaz quando as ra´ızes possuem m´odulos distintos;
+
+Uma desvantagem ocorre quando a equa¸c˜ao polinomial possui muitas
+ra´ızes complexas.
+
+Exerc´ıcios Sugeridos
+
+1. Determinar uma aproxima¸c˜ao para as ra´ızes da equa¸c˜ao x3
+
+10 = 0.
+
+2. Dado o polinˆomio P (x) = x5
+
+236, 4768, obter todas as suas ra´ızes;
+
+17x4 + 109, 55x3
+
+331, 33x2 + 464, 2104x
+
+−
+
+−
+
+4x2 + 10x
+
+−
+
+3. Encontrar as ra´ızes da equa¸c˜ao x4
+
+3x3 + 4x
+
+1 = 0;
+
+4. Determinar as ra´ızes da equa¸c˜ao
+
+5. Dada a equa¸c˜ao 5x3 + 2x2
+
+−
+6. Obter as ra´ızes da equa¸c˜ao x4
+
+−
+0, 2582x2
+
+−
+0, 7562x + 0, 9925 = 0;
+
+−
+
+−
+
+15x
+
+6 = 0, calcular todas as suas ra´ızes;
+
+−
+19x3 + 63x2 + 475x
+
+−
+
+2200 = 0;
+
+−
+34x3 + 36x2 + 297x
+
+7. Encontrar todas as ra´ızes do polinˆomio P (x) = x5
+
+540;
+
+−
+
+66
+
+−
+
+−
+
+−
+
+8. Pelo m´etodo de Dandelin-Graeﬀe tamb´em ´e poss´ıvel determinar as ra´ızes
+complexas de uma equa¸c˜ao polinomial, para isso devem ser empregados
+alguns conceitos relacionados aos n´umeros complexos e equa¸c˜oes alg´ebricas
+em conjunto com a an´alise das sequˆencias obtidas pelos coeﬁcientes. Dessa
+forma, determinar as ra´ızes reais e complexas da equa¸c˜ao x4 + x3
+5x2 +
+201x
+
+406 = 0;
+
+−
+
+−
+
+9. Considere o polinˆomio P (x) = x6
+
+17x5 + 105x4
+
+−
+1260, determinar as solu¸c˜oes da equa¸c˜ao P (x) = 0;
+
+−
+
+325x3 + 614x2
+
+198x
+
+−
+
+−
+
+10. Utilizando apenas uma equa¸c˜ao polinomial, determinar uma aproxima¸c˜ao
+
+para os n´umeros √3, √5, √7 e √13 com 4 casas decimais signiﬁcativas;
+
+11. Sabendo que a equa¸c˜ao x7
+
+5x + 6 = 0 possui apenas
+trˆes ra´ızes reais. Elabore um roteiro, para resolu¸c˜ao de equa¸c˜oes de 7o
+grau contendo as express˜oes recursivas para os coeﬁcientes e aplique na
+equa¸c˜ao dada. Em seguida, obtenha todas as suas ra´ızes.
+
+3x3 + 4x2
+
+2x5
+
+−
+
+−
+
+−
+
+12. Tendo como base o m´etodo de Dandelin-Graeﬀe, elabore uma planilha
+
+para determinar todas as ra´ızes da equa¸c˜ao 2048x12
+3584x6 + 840x4
+
+72x2 + 1 = 0, com 5 casas signiﬁcativas corretas.
+
+6144x10 + 6912x8
+
+−
+
+−
+
+−
+
+67
+
+Cap´ıtulo 7
+
+Aplica¸c˜oes dos m´etodos
+iterativos na resolu¸c˜ao de
+problemas
+
+Atividades atrav´es de problemas visando trabalhar com a contextualiza¸c˜ao apli-
+cando os m´etodos abordados ao longo do trabalho.
+
+7.1 Problemas
+
+7.1.1 Aplica¸c˜ao em Finan¸cas
+
+Como j´a citado anteriormente, os PCNEM prezam pelas habilidades que o aluno
+deve desenvolver de tal forma que em sua vida proﬁssional ou pessoal utilize-as
+de forma consciente e coerente.
+
+Exemplo 7.1. O pre¸co `a vista (P V ) de um im´ovel ´e R$ 312.000,00, mas
+pode ser ﬁnanciado com uma entrada (E) de R$ 91.051,90 e 12 (P ) presta¸c˜oes
+mensais (P M ) de R$ 26.000,00. Determinar os juros (j) sabendo que:
+
+1
+
+−
+
+(1 + j)−
+
+P
+
+j
+
+=
+
+E
+
+P V
+
+−
+P M
+
+Quais ser˜ao os juros se o plano de pagamento for uma entrada de R$ 112.000,00
+e 18 presta¸c˜oes mensais de R$ 20.000,00? Analise a melhor op¸c˜ao de ﬁnacia-
+mento.
+
+Para que o consumidor possa comparar qual plano de ﬁnanciamento
+´e mais vantajoso ´e necess´ario determinar as taxas de juros que est˜ao sendo
+aplicadas nas propostas apresentadas. Fazendo x = 1 + j e k = P V
+P M , temos:
+
+−
+
+E
+
+1
+
+P
+
+−
+x
+
+x−
+1
+
+−
+
+= k
+
+68
+
+Multiplicando por xP ,
+
+xP
+1
+−
+x
+1
+−
+f (x) = kxP +1
+
+−
+
+= kxP
+
+(k + 1)xP + 1 = 0.
+
+Ent˜ao, para determinar a taxa de juros cobrada, basta encontrar a raiz da
+equa¸c˜ao acima.
+
+1a Situa¸c˜ao: Determinando k e substituindo em f (x),
+
+P V
+
+E
+P M ⇒
+
+−
+
+k =
+
+k =
+
+Ent˜ao,
+
+312.000, 00
+
+91.051, 90
+
+−
+26.000, 00
+
+8, 498.
+
+≈
+
+f (x) = 8, 498x13
+
+9, 498x12 + 1 = 0
+
+−
+Sabemos que x = 1 ´e raiz da equa¸c˜ao, mas isto implicaria em “zero” de
+juros o que na verdade n˜ao ocorre. Graﬁcamente,
+
+Figura 7.1: Gr´aﬁco de f (x)
+
+Veriﬁcamos que a outra raiz encontra-se no intervalo [1; 1, 2]. Derivando
+113, 976x11.
+f temos f ′(x) = 110, 474x12
+Utilizando o m´etodo de Newton e uma aproxima¸c˜ao inicial x0 = 1, 1 ob-
+temos os valores apresentados na tabela seguinte.
+
+−
+
+69
+
+n
+0
+1
+2
+3
+4
+5
+
+xn
+1, 100000000000
+1, 075445450277
+1, 062336634961
+1, 058021954991
+1, 057547242609
+1, 057541679072
+
+F (xn) = xn+1
+1, 075445450277
+1, 062336634961
+1, 058021954991
+1, 057547242609
+1, 057541679072
+1, 057541678312
+
+Tabela 7.1: Aproxima¸c˜ao inicial x0 = 1, 1
+
+Como x
+
+1, 0575, ent˜ao, a taxa de juros aplicada ´e j
+
+5, 75%.
+
+≈
+
+obt´em-se:
+
+2a Situa¸c˜ao: Substituindo os novos dados em kxP +1
+
+g(x) = 10x19
+
+−
+11x18 + 1 = 0
+
+≈
+(k + 1)xP + 1 = 0,
+
+−
+Novamente, x = 1 ´e raiz da equa¸c˜ao, mas n˜ao ´e solu¸c˜ao para o problema.
+Ent˜ao, graﬁcamente
+
+Figura 7.2: Gr´aﬁco de g(x)
+
+A outra raiz encontra-se tamb´em no intervalo [1; 1, 2] Derivando g temos
+198x11. Utilizando o m´etodo de Newton e a aproxima¸c˜ao
+g′(x) = 190x12
+inicial x0 = 1, 1 obtemos os seguintes valores:
+
+−
+
+70
+
+n
+0
+1
+2
+3
+4
+5
+
+xn
+1, 100000000000
+1, 082014121009
+1, 073147497629
+1, 070945417211
+1, 070818014769
+1, 070817602349
+
+F (xn) = xn+1
+1, 082014121009
+1, 073147497629
+1, 070945417211
+1, 070818014769
+1, 070817602349
+1, 070817602344
+
+Tabela 7.2: Aproxima¸c˜ao inicial x0 = 1, 1
+
+Como x
+
+≈
+
+1, 0708, ent˜ao, a taxa de juros aplicada ´e j
+
+7, 08%.
+
+≈
+
+Na primeira situa¸c˜ao o valor ﬁnal do im´ovel ´e de R$ 403.051,90, enquanto na
+segunda ´e de R$ 472.000,00. A melhor op¸c˜ao ´e a que possui a menor taxa de
+juros e portanto a 1a op¸c˜ao ´e a mais favor´avel ao comprador.
+
+Devemos destacar que nem sempre o menor valor pago ´e a melhor op¸c˜ao,
+o que pode ser veriﬁcado facilmente criando e investigando outras situa¸c˜oes. De
+posse de recursos computacionais tal tarefa ﬁca mais simples e proporciona ao
+aluno explorar e sedimentar os conceitos matem´aticos.
+
+7.1.2 Aplica¸c˜ao em Engenharia Ambiental
+
+Muitas proﬁss˜oes dependem de conhecimentos matem´aticos para representar
+fenˆomenos f´ısicos e biol´ogicos, um exemplo desta aplica¸c˜ao encontra-se na con-
+centra¸c˜ao de oxigˆenio em um rio com o despejo de res´ıduos poluentes. E com
+o desenvolvimento da ind´ustria e da tecnologia surgem novos problemas, que
+necessitam de aten¸c˜ao e estudo para serem solucionados.
+
+Atrav´es da Modelagem Matem´atica, que n˜ao ´e o objetivo deste cap´ıtulo,
+o aluno deve perceber a necessidade da utiliza¸c˜ao do m´etodo num´erico como
+sendo uma ferramenta eﬁciente na resolu¸c˜ao do problema.
+
+Para calcular o n´ıvel de concentra¸c˜ao de oxigˆenio c, em mg/l, em um
+rio, em fun¸c˜ao da distˆancia d, em km, medida a partir do local de descarga dos
+poluentes, obt´em-se a seguinte fun¸c˜ao:
+
+c = 10
+
+−
+
+20(e−
+
+0,2d
+
+e−
+
+0,75d)
+
+−
+
+Exemplo 7.2. Determinar, usando um m´etodo iterativo, a distˆancia para qual
+o n´ıvel de oxigˆenio desce para o valor 5mg/l, pela primeira vez. Com 5 casas
+decimais signiﬁcativas.
+
+Pelos dados apresentados no enunciado devemos resolver a seguinte
+
+equa¸c˜ao:
+
+5 = 10
+
+−
+
+20(e−
+
+0,2d
+
+e−
+
+0,75d)
+
+−
+
+0 = 5
+
+−
+
+⇒
+
+20(e−
+
+0,2d
+
+−
+
+e−
+
+0,75d)
+
+71
+
+Considerando o m´etodo de Newton, basta determinar a derivada da fun¸c˜ao
+f (d) = 5
+
+0,75d).
+
+0,2d
+
+20(e−
+
+e−
+
+−
+
+−
+
+f ′(d) = 4e−
+
+0,2d
+
+0,75d
+
+15e−
+
+−
+
+Utilizando uma planilha com as colunas n, dn e dn+1 temos:
+
+n
+0
+1
+2
+3
+4
+
+dn
+1, 000000000000
+0, 494227546833
+0, 596414297669
+0, 602336552609
+0, 602355464172
+
+dn+1
+0, 494227546833
+0, 596414297669
+0, 602336552609
+0, 602355464172
+0, 602355464364
+
+Tabela 7.3: Aproxima¸c˜ao inicial x0 = 1
+
+Assim, a distˆancia pedida ´e obtida na 4a itera¸c˜ao e ´e dada por d
+
+0, 60235km
+
+7.1.3 Exerc´ıcios
+
+≈
+
+1. O pH de solu¸c˜oes dilu´ıdas de ´acido fraco ´e calculado pela f´ormula:
+
+[H3O+]3 + Ka[H3O+]2
+
+(KaCa + Kω)[H3O+]
+
+−
+
+KωKa = 0
+
+−
+
+Onde,
+
+pH =
+
+log[H3O+]
+
+−
+
+Ka: Constante de dissocia¸c˜ao do ´acido
+
+Ca: Concentra¸c˜ao do ´acido
+
+Kω: produto iˆonico da ´agua
+
+Calcular o pH de uma solu¸c˜ao de ´acido b´orico a 24◦C, sabendo que:
+
+Ka = 6, 5
+
+10−
+
+Ca = 1, 0
+
+·
+Kω = 1, 0
+
+10−
+
+10−
+
+10M
+5M
+14M 2
+
+·
+
+·
+
+2. Uma corrente oscilante num circuito el´etrico ´e descrita por:
+
+I = 9e−
+
+t sen(2πt)
+
+Com t em segundos. Determinar todos os valores positivos de t para os
+quais I = 3, 5;
+
+72
+
+3. A concentra¸c˜ao de uma bact´eria poluente num lago ´e descrita segundo a
+
+express˜ao:
+
+C = 70e−
+
+1,5t + 2, 5e−
+
+0,075t
+
+Encontrar o tempo para que a concentra¸c˜ao seja reduzida para nove;
+
+4. O deslocamento de uma estrutura est´a deﬁnido pela seguinte equa¸c˜ao:
+
+Onde k = 0, 5 e ω = 3.
+
+D = 8e−
+
+kt
+
+cos(ωt)
+
+·
+
+a. Determinar graﬁcamente uma estimativa inicial do tempo necess´ario
+
+para o deslocamento decrescer para 4;
+
+b. Usar o m´etodo iterativo simples e de Newton para determinar essa raiz.
+
+5. A capacidade calor´ıﬁca Cp, (cal
+temperatura T (K) ´e dada por:
+
+·
+
+1
+
+K −
+
+·
+
+mol−
+
+1), da ´agua em fun¸c˜ao da
+
+Cp(T ) = 7, 219 + 2, 374
+
+10−
+
+3T + 2, 67
+
+10−
+
+7T 2
+
+·
+
+·
+
+Com 300
+determinada capacidade calor´ıﬁca c fazemos:
+
+≤
+
+≤
+
+T
+
+1500. Para sabermos a que temperatura temos uma
+
+−
+Em vista disto, em que temperatura a ´agua tem capacidade calor´ıﬁca igual
+a 10 cal
+
+1?
+
+mol−
+
+K −
+
+1
+
+Cp(T )
+
+c = 0
+
+·
+
+·
+
+73
+
+Cap´ıtulo 8
+
+M´etodos num´ericos na
+Educa¸c˜ao B´asica -
+Perspectiva dos alunos
+
+A atividade referente ao m´etodo iterativo simples, detalhada em 6.2, foi aplicada
+a alunos de dois grupos bem distintos, o primeiro, discentes do 3o ano do En-
+sino M´edio do CAp-UFRJ1, em novembro de 2013, cuja trajet´oria dentro desta
+institui¸c˜ao foi moldada na resolu¸c˜ao de problemas e nos conceitos matem´aticos.
+Vale ressaltar, que este grupo de alunos j´a se encontravam de f´erias e foram at´e
+o col´egio apenas para participar da atividade. O segundo, alunos conclu´ıntes do
+Ensino M´edio no Curso Preparat´orio Primeira Op¸c˜ao, em janeiro de 2014. Os
+quais, em sua grande maioria, n˜ao dispuseram da mesma metodologia aplicada
+ao primeiro grupo, em sua forma¸c˜ao b´asica.
+
+Os dados, aqui expostos, foram originados por um question´ario de ava-
+lia¸c˜ao da atividade respondido pelos alunos ap´os a conclus˜ao da mesma. O
+question´ario encontra-se em 9.
+
+Inicialmente, a pergunta sobre o tipo de institui¸c˜ao em que eles cursa-
+
+ram a maior parte do Ensino M´edio, resultou:
+
+1O col´egio de aplica¸c˜ao da UFRJ ´e conhecido por desenvolver atividades e projetos que
+visam a integra¸c˜ao entre o Ensino Superior e a Educa¸c˜ao B´asica, atrav´es de est´agio supervi-
+sionado para os licenciandos, uma grade curricular diferenciada, elabora¸c˜ao de diversiﬁcadas
+pr´aticas pedag´ogicas e experimenta¸c˜ao de variadas estrat´egias de ensino.
+
+74
+
+Figura 8.1: Tipo de Institui¸c˜ao
+
+Quando questionados sobre outras formas de resolver uma equa¸c˜ao,
+diferente da manipula¸c˜ao alg´ebrica, obtemos os dados apresentados na tabela
+abaixo:
+
+Federal Estadual Particular
+
+Sim
+N˜ao
+
+2
+11
+
+0
+27
+
+0
+4
+
+Tabela 8.1: Resolu¸c˜ao de equa¸c˜ao diferente de manipula¸c˜ao alg´ebrica
+
+Vemos que apenas 5% disseram conhecer outras formas e estes encontram-
+
+se no grupo de alunos do CAp-UFRJ e 95% desconheciam outros processos. Es-
+tes dados mostram a necessidade de reformula¸c˜ao da pr´atica docente, de modo
+a privilegiar m´etodos que permitam ao educando ter consciˆencia dos conceitos
+matem´aticos envolvidos no processo de resolu¸c˜ao de equa¸c˜oes e n˜ao limitar-se
+a aplicar f´ormulas, o que mostra uma limita¸c˜ao dos nossos modelos atuais de
+ensino.
+
+Sobre estudar sequˆencias diferentes de PA’s e PG’s, temos:
+
+Federal Estadual Particular
+
+Sim
+N˜ao
+
+13
+0
+
+1
+26
+
+0
+4
+
+Tabela 8.2: Conhecem sequˆencias diferentes de PA’s e PG’s
+
+Outra informa¸c˜ao importante que podemos extrair destes dados, encontra-
+
+se na metodologia que foi aplicada aos alunos ao longo do Ensino M´edio, pois
+32% conhecem outros tipos de sequˆencias num´ericas, sendo todos do CAp-UFRJ
+e apenas um de escola estadual, enquanto os demais 68%, n˜ao.
+
+75
+
+Ao analisar as respostas ocorreu um dado interessante, 100% dos parti-
+cipantes apontaram o gr´aﬁco das fun¸c˜oes associadas ao m´etodo, como a principal
+ferramenta que auxiliou na visualiza¸c˜ao do comportamento da sequˆencia. Como
+pode ser destacado no trecho do relat´orio da aluna C.:
+
+“A an´alise gr´aﬁca foi bem mais f´acil de entender (principalmente a
+parte da tangente, dos pontos atratores e repulsores). A minha maior
+diﬁculdade foi no Excel (j´a que n˜ao sei usar direito o programa, e
+analisar tabelas de n´umeros ´e mais desaﬁador do que analisar linhas
+em um gr´aﬁco).”
+
+Quando questionados sobre a utiliza¸c˜ao dos recursos tecnol´ogicos, o uso
+da planilha foi um dos obst´aculos que os alunos enfrentaram, pois apesar de ser
+um software comum, n˜ao tem seu potencial como recurso did´atico explorado,
+caracterizando uma deﬁciˆencia na forma¸c˜ao do aluno como cidad˜ao, necessi-
+tando que sejam repensadas as pr´aticas pedag´ogicas, tendo em vista valorizar
+as m´ultiplas competˆencias a serem desenvolvidas nos educandos.
+
+Tal diﬁculdade pode ser destacada no relat´orio do aluno I.:
+
+“Uma das diﬁculdades para o desempenho da atividade foi a minha
+falta de conhecimento sobre o uso do excel.”
+
+E no relat´orio da aluna Y.:
+
+“...trabalhar com o excel foi complicado, uma vez que n˜ao tenho
+pr´atica.”
+
+Quando perguntados sobre que conceitos foram percebidos no m´etodo
+
+iterativo simples, obt´em-se o seguinte resultado:
+
+Figura 8.2: Conceitos percebidos no M´etodo Iterativo Simples
+
+76
+
+A percep¸c˜ao dos alunos com forma¸c˜ao na esfera federal foi superior aos
+demais em todos os conceitos apresentados, sendo citados tamb´em em “outros”
+a no¸c˜ao da derivada, pelas retas tangentes. Que pressup˜oe a importˆancia da
+abordagem dos conte´udos de forma mais anal´ıtica, caracter´ıstica predominante
+no primeiro grupo.
+
+Sobre a justiﬁcativa para a convergˆencia da sequˆencia, ou seja, a inter-
+preta¸c˜ao geom´etrica para a convergˆencia e a deﬁni¸c˜ao de ponto ﬁxo atrator e
+repulsor, temos o gr´aﬁco seguinte:
+
+Figura 8.3: Compreens˜ao da convergˆencia da sequˆencia
+
+A maioria dos alunos de col´egios estaduais, aproximadamente 70%,
+compreenderam parcialmente a justiﬁcativa. O que sup˜oe uma possibilidade
+de melhoria da qualidade do ensino de Matem´atica, atrav´es de atividades que
+relacionem conte´udos, aliadas aos recursos tecnol´ogicos.
+
+Os alunos foram questionados, tamb´em, sobre a maior diﬁculdade para
+
+aplica¸c˜ao do m´etodo, observando o gr´aﬁco abaixo:
+
+Figura 8.4: Maior diﬁculdade para aplica¸c˜ao do m´etodo
+
+Para os alunos do CAp-UFRJ a maior diﬁculdade foi o uso das tecno-
+logias em oposi¸c˜ao aos alunos das escolas estaduais, enquanto os que vieram da
+
+77
+
+escola particular ﬁcaram divididos entre os conceitos matem´aticos e o uso dos
+programas.
+
+Sobre, qual foi o maior facilitador para a realiza¸c˜ao da atividade, foram
+apontados: Para os alunos de escolas estaduais e particulares o que mais faci-
+
+Figura 8.5: Maior facilitador para realiza¸c˜ao da atividade
+
+litou a aplica¸c˜ao da atividade foram a utiliza¸c˜ao dos recursos computacionais,
+enquanto o outro grupo ﬁcou dividido entre o uso dos recursos e os conceitos
+matem´aticos.
+
+Por ﬁm, foi solicitado que atribuissem uma nota de zero a cinco sobre
+a importˆancia do m´etodo na resolu¸c˜ao das equa¸c˜oes apresentadas, no Ensino
+M´edio. Sendo zero, sem importˆancia e cinco, muito importante. Temos:
+
+Figura 8.6: Nota atribu´ıda pelos alunos `a importˆancia do m´etodo para o Ensino
+M´edio
+
+Vemos que, aproximadamente, 80% dos alunos sinalizaram importante
+o uso do m´etodo iterativo como uma ferramenta eﬁcaz na resolu¸c˜ao de equa¸c˜oes,
+que inicialmente, para eles n˜ao tinham solu¸c˜ao.
+
+78
+
+Cap´ıtulo 9
+
+Considera¸c˜oes ﬁnais
+
+Diante de tudo o que foi exposto neste trabalho, a pesquisa com os professo-
+res mostrou a necessidade de reformula¸c˜ao dos cursos de Licenciatura em Ma-
+tem´atica e dos conte´udos de Ensimo M´edio. Pois, muitos professores desconhe-
+cem os m´etodos iterativos e pudemos comprovar com a aplica¸c˜ao da atividade
+tratar-se de um assunto que possui um grande potencial, que permite integrar
+´algebra, geometria e recursos computacionais, mas n˜ao explorado neste n´ıvel de
+ensino.
+
+S˜ao muitas as diﬁculdades em realizar as atividades sejam elas por falta
+de recursos, por apresentar resistˆencia dos alunos, dos professores e at´e mesmo
+do grupo escolar, mas cabe a n´os, professores, buscar meios para sen˜ao resolver,
+ao menos, contornar tais diﬁculdades. E cada vez mais apresentar propostas
+que possam ser amplamente debatidas e divulgadas em prol de uma educa¸c˜ao
+p´ublica e de qualidade.
+
+Independente dos grupos, ambos apresentaram uma resposta positiva
+quanto a sua receptividade e aceita¸c˜ao, o que contribuiu de modo substancial
+para conﬁrmar a importˆancia do tema na Educa¸c˜ao B´asica e mostrar que uma
+metodologia diferenciada como a do CAp-UFRJ faz diferen¸ca no crescimento
+pessoal e intelectual do discente. Mas, n˜ao ´e fator determinante para que isso
+ocorra, pois mesmo sem este crit´erio a longo prazo, os alunos de escolas estaduais
+e particulares apresentaram resultados satisfat´orios mediante uma abordagem
+conceitual e integrada. Neste sentido, os professores e a comunidade escolar
+devem revisar suas pr´aticas de modo a tornar o processo de ensino-aprendizagem
+mais eﬁciente e de acordo com a realidade de cada grupo.
+
+A apresenta¸c˜ao dos m´etodos iterativos como ferramentas eﬁcientes na
+resolu¸c˜ao de equa¸c˜oes e sua abordagem por meio de sequˆencias num´ericas, pro-
+porcionou aos alunos um novo olhar sobre dois temas principais: as sequˆencias
+num´ericas de forma mais ampla, bem diferente do que ´e praticado atualmente,
+restrito a manipula¸c˜ao de f´ormulas em progress˜oes aritm´eticas e geom´etricas; e
+a resolu¸c˜ao de equa¸c˜oes, antes limitadas a casos isolados, acrescentado conside-
+ravelmente a quantidade de equa¸c˜oes que podem ser resolvidas com aplica¸c˜ao
+dos m´etodos iterativos expostos.
+
+79
+
+Sob a ´otica da pr´atica pedag´ogica, devemos aprofundar os debates
+acerca do curr´ıculo de Matem´atica e materiais que possam inserir gradativa-
+mente est´a proposta na Educa¸c˜ao B´asica. Pois, priorizar solu¸c˜oes alg´ebricas
+n˜ao condiz com o mundo moderno, sendo este trabalho um precursor da dis-
+cuss˜ao e um material did´atico inicial ao desenvolvimento desta proposta.
+
+A partir dos dados apresentados, o m´etodo iterativo simples ´e uma fer-
+ramenta ´util e foi adaptada `a Educa¸c˜ao B´asica de maneira satisfat´oria. Propor-
+cionando ao aluno uma rela¸c˜ao entre conceitos matem´aticos, que embora sejam
+trabalhados de forma isolada, aqui mostram-se interligados e dependentes um
+do outro. A quest˜ao da visualiza¸c˜ao e da experimenta¸c˜ao s˜ao outros aspectos
+positivos para inser¸c˜ao de tais atividades, pois encontram-se em consonˆancia
+com os PCNEM e a utiliza¸c˜ao dos recursos computacionais.
+
+“Quando o aprendizado das Ciˆencias e da Matem´atica, al´em de pro-
+mover competˆencias como o dom´ınio de conceitos e a capacidade
+de utilizar f´ormulas, pretende desenvolver atitudes e valores, atrav´es
+de atividades dos educandos, como discuss˜oes, leituras, observa¸c˜oes,
+experimenta¸c˜oes e projetos, toda a escola deve ter uma nova pos-
+tura metodol´ogica dif´ıcil de implementar, pois exige a altera¸c˜ao de
+h´abitos de ensino h´a muito consolidados”.
+
+Embora as atividades sobre os m´etodos de Newton e Dandelin-Graeﬀe
+n˜ao tenham sido aplicadas aos alunos partilham dos mesmos objetivos. E desse
+modo s˜ao propostas vi´aveis por possu´ırem as mesmas caracter´ısticas focadas nos
+conceitos matem´aticos e principalmente na rela¸c˜ao com o estudo de sequˆencias.
+O m´etodo de Newton como citado anteriormente necessita da derivada
+da fun¸c˜ao, mas proporciona ao educando do Ensino M´edio um primeiro con-
+tato com o c´alculo diferencial, mesmo que os objetivos n˜ao estejam centrados
+nos conte´udos da gradua¸c˜ao. Para isto, temos: a interpreta¸c˜ao geom´etrica da
+derivada, pelas retas tangentes `a curva da fun¸c˜ao e o limite de sequˆencias, pela
+no¸c˜ao de convergˆencia. Consolidando conceitos adquiridos durante a Educa¸c˜ao
+B´asica atrav´es de uma linguagem mais simples e acess´ıvel.
+
+Quanto ao m´etodo de Dandelin-Graeﬀe, que se utiliza da quadratura
+das ra´ızes, poder determinar as ra´ızes de uma equa¸c˜ao polinomial de grau
+4
+proporciona ao educando uma ferramenta eﬁciente e um processo que pode ser
+generalizado para equa¸c˜oes polinomiais em geral, visto que n˜ao existe como
+determinar tais ra´ızes por processos puramente alg´ebricos, exceto em alguns
+poucos casos particulares.
+
+≥
+
+Resolver algebricamente uma equa¸c˜ao para maioria dos alunos do En-
+sino M´edio ´e a ´unica forma conhecida e muitos professores desconhecem os
+m´etodos iterativos. A introdu¸c˜ao destes m´etodos num´ericos amplia de forma
+substancial a perspectiva dos alunos sobre o que signiﬁca fazer Matem´atica e
+dos professores sobre como utilizar, no processo pedag´ogico, as novas tecnolo-
+gias a seu favor. Sendo assim, acreditamos que o potencial do tema explorado
+proporciona verdadeiras transforma¸c˜oes no pensamento de alunos e professores.
+
+80
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] Ara´ujo, A. L. M. An´alise Num´erica
+2o
+
+e de Materiais, F.C.T.U.C.
+http://www.uc.pt/fctuc/dmat. Acesso em: fev 2014.
+
+2002,
+
+- Engenharias Mecˆanica
+em:
+capitulo, Dispon´ıvel
+
+[2] ´AVILA, G. An´alise Matem´atica para licenciatura, Edgard Bl¨ucher, S˜ao
+
+Paulo, 2002.
+
+[3] BARBOSA, R. M. C´alculo Num´erico: C´alculos aproximados - Cole¸c˜ao de
+
+Matem´atica Aplicada - V.3, Livraria Nobel, S˜ao Paulo, 1975.
+
+[4] BARROSO, L. C. et all C´alculo Num´erico com aplica¸c˜oes, Harbra, S˜ao
+
+Paulo, 1987.
+
+[5] BRASIL. Parˆametros Curriculares Nacionais - Ensino M´edio, Minist´erio
+da Educa¸c˜ao - Secretaria da Educa¸c˜ao M´edia e Tecnol´ogica, Bras´ılia, 2000.
+
+[6] CHERKASOVA, M. P. Collected problems in numerical methods, Wolters-
+
+Noordhoﬀ Publishing Groningen The Netherlands, German, 1972.
+
+[7] COURANT, R. e ROBBINS, H. O que ´e Matem´atica?, Ciˆencia Moderna,
+
+Rio de Janeiro, 2000.
+
+[8] CRONVICH, L. L. A American Mathematical Monthly - V.46, No 4, Abril
+1939, pp. 185-190, Dispon´ıvel em: http://www.jstor.org. Acesso em: out
+2013.
+
+[9] CAMPOS, FREDERICO F. Algoritmos Num´ericos, 2. ed. LTC Editora,
+
+Rio de Janeiro, 2007.
+
+[10] GARBI, G. G. A Rainha das Ciˆencias, Livraria da F´ısica, S˜ao Paulo, 2009.
+
+[11] GARBI, G. G. O Romance das Equa¸c˜oes Alg´ebricas, Livraria da F´ısica,
+
+S˜ao Paulo, 2007.
+
+[12] HEFEZ, A. e VILLELA, M. L. T. Polinˆomios e Equa¸c˜oes Alg´ebricas -
+
+Cole¸c˜ao PROFMAT, SBM, Rio de Janeiro, 2012.
+
+[13] HUTCHINSON, C. A. A American Mathematical Monthly - V.42, No 3,
+Mar¸co 1935, pp. 149-161, Dispon´ıvel em: http://www.jstor.org. Acesso em:
+out 2013.
+
+81
+
+[14] LIMA, E. L. An´alise Real - Volume 1 - Cole¸c˜ao Matem´atica Universit´aria,
+
+IMPA, Rio de Janeiro, 2004.
+
+[15] MALAJOVICH, G. e ZUBELLI, J.P. On the Geometry of Graeﬀe Itera-
+tion, Journal of Complexity, Volume 17, Issue 3, setembro 2001, P´ag. 541-
+573, Dispon´ıvel em: http://arxiv.org/pdf/math/9908149v1.pdf. Acesso
+em: mar 2014.
+
+[16] MALAJOVICH, G. e ZUBELLI, J.P. Tangent Graeﬀe Iteration, Numeris-
+che Mathematik, Volume 89, N´umero 4, outubro de 2001, Dispon´ıvel em:
+http://arxiv.org/pdf/math/9908150v1.pdf. Acesso em: mar 2014.
+
+[17] OCDE Organiza¸c˜ao para a Coopera¸c˜ao e Desenvolvimento Econˆomico,
+
+Dispon´ıvel em: http://www.oecd.org. Acesso em: dez 2013.
+
+[18] SANTOS, J. D. dos e SILVA, Z. C. da M´etodos Num´ericos - Ed. Univer-
+
+sit´aria da UFPE, Recife, 2006.
+
+[19] SEBASTI ˜AO E SILVA, J. Compˆendio de Matem´atica - Ed. GEP, Lisboa,
+
+1975.
+
+[20] VIANA, M. No¸c˜oes de C´alculo - Cole¸c˜ao PROFMAT, SBM, Rio de Janeiro,
+
+2013.
+
+[21] WHITTAKER, E. T. e ROBINSON, G. The Calculus of Observations,
+
+Blackie & Son, London, 1940.
+
+82
+
+Anexo A
+
+Pesquisa sobre m´etodos num´ericos
+
+1. Vocˆe leciona ou lecionou em qual(is) n´ıveis?
+
+( ) Ensino Fundamental
+
+( ) Ensino M´edio
+
+( ) Ensino Superior
+
+2. Onde vocˆe desempenha suas atividades docentes?
+
+( ) Rede P´ublica
+
+( ) Rede Privada
+
+( ) Ambas
+
+3. Vocˆe j´a trabalha ou trabalhou com o conte´udo de Sequˆencias de modo
+
+mais abrangente, isto ´e, al´em de PA’s e PG’s?
+
+( ) Sim
+
+( ) N˜ao
+
+4. Quanto a ideia de Limite (Convergˆencia de Sequˆencias), vocˆe j´a abordou
+
+este assunto?
+
+( ) N˜ao, pois n˜ao ´e compat´ıvel com a educa¸c˜ao b´asica
+
+( ) N˜ao, porque n˜ao analiso o comportamento de Sequˆencias
+
+( ) Sim, de forma superﬁcial
+
+( ) Sim, dedicando o tempo necess´ario para consolidar a ideia de Limite
+
+( ) Outros
+
+5. Em seu curso de gradua¸c˜ao foram abordados M´etodos Num´ericos para a
+
+resolu¸c˜ao de equa¸c˜oes?
+
+( ) Sim
+
+( ) N˜ao
+
+6. Vocˆe conhece algum modo de trabalhar o conte´udo de Sequˆencias e Re-
+solu¸c˜ao de Equa¸c˜oes utilizando tecnologias como: planilhas, calculadoras,
+softwares, etc?
+
+( ) Sim
+
+( ) N˜ao
+
+Se sim,
+
+7. Qual(is)?
+
+83
+
+( ) Planilhas
+
+( ) Calculadoras
+
+( ) Software de Geometria Dinˆamica
+
+( ) Software Plotador de Gr´aﬁcos
+
+( ) Outros
+
+Se n˜ao,
+
+8. Por qual(is) motivo(s)?
+
+( ) N˜ao tenho interesse em utilizar tecnologias
+
+( ) N˜ao tenho interesse, pois n˜ao h´a infraestrutura para desenvolver este
+
+tipo de trabalho onde leciono
+
+( ) N˜ao percebo interesse por parte dos alunos
+
+( ) Outros
+
+9. Vocˆe j´a utilizou M´etodos Num´ericos para estimar valores ou resolver equa¸c˜oes
+
+com seus alunos?
+
+( ) Sim
+
+( ) N˜ao
+
+Se sim,
+
+10. Qual(is)?
+
+Se n˜ao,
+
+11. Por qual(is) motivo(s)?
+
+( ) N˜ao tive oportunidade
+
+( ) N˜ao conhe¸co muito sobre M´etodos Num´ericos
+
+( ) Outros
+
+12. Vocˆe considera que seja poss´ıvel inserir M´etodos Num´ericos como outra
+
+forma de abordar resolu¸c˜ao de equa¸c˜oes?
+
+( ) Sim
+
+( ) N˜ao
+
+Se n˜ao,
+
+13. Por qual(is) motivo(s)?
+
+( ) ´E um assunto complexo e os alunos n˜ao ter˜ao maturidade suﬁciente
+
+para assimilar
+
+( ) N˜ao existe material ou leituras que possam ser utilizadas
+
+( ) Outros
+
+84
+
+Anexo B
+
+Question´ario para avalia¸c˜ao da atividade - M´etodo iterativo
+simples
+
+1. Vocˆe cursa ou cursou a maior parte do En-sino M´edio em escola:
+
+( ) Federal
+
+( ) Estadual
+
+( ) Municipal
+
+( ) Particular
+
+2. Vocˆe conhecia outras formas para resolver uma equa¸c˜ao, diferente da ma-
+
+nipula¸c˜ao alg´e-brica?
+
+( ) N˜ao
+
+( ) Sim, Quais:
+
+3. Vocˆe j´a estudou sequˆencias num´ericas de modo mais abrangente, ou seja,
+
+al´em de PA’s e PG’s?
+
+( ) N˜ao
+
+( ) Sim
+
+4. Qual a sua opini˜ao quanto a utiliza¸c˜ao de recursos tecnol´ogicos na re-
+
+solu¸c˜ao de equa-¸c˜oes?
+
+5. Que conceitos matem´aticos foram percebi-dos no m´etodo iterativo sim-
+
+ples?
+
+( ) Rela¸c˜ao entre a visualiza¸c˜ao gr´aﬁca e o comportamento da sequˆencia;
+
+( ) A no¸c˜ao de limite de uma sequˆencia - con-vergˆencia e divergˆencia;
+
+( ) Rela¸c˜ao entre uma fun¸c˜ao e sua inversa
+
+( ) Outros, especiﬁque:
+
+6. O gr´aﬁco das fun¸c˜oes associadas ao m´eto-do auxiliaram na visualiza¸c˜ao
+
+do comporta-mento da sequˆencia?
+
+( ) Sim
+
+( ) N˜ao
+
+7. A justiﬁcativa para a convergˆencia da se-quˆencia foi compreendida?
+
+( ) Sim, parcialmente
+
+( ) Sim, totalmente
+
+( ) N˜ao
+
+85
+
+8. Na sua opini˜ao, qual foi a maior diﬁculdade para aplica¸c˜ao do m´etodo?
+
+( ) Uso da planilha/calculadora
+
+( ) Conceitos matem´aticos
+
+( ) Uso do GeoGebra
+
+( ) Outros, especiﬁque:
+
+9. Na sua opini˜ao, qual foi o maior facilitador para a realiza¸c˜ao da atividade?
+
+( ) Clareza dos conceitos matem´aticos
+
+( ) Uso das tecnologias
+
+( ) Outros, especiﬁque:
+
+10. Numa escala de 0 a 5, como vocˆe conside-ra a aplica¸c˜ao deste m´etodo
+na resolu¸c˜ao de equa¸c˜oes para o Ensino M´edio? Justiﬁque. (0-sem im-
+portˆancia/5-muito importante)
+
+11. Elabore um relat´orio apresentando as facilidades e diﬁculdades encontra-
+das na realiza¸c˜ao da ativi-dade, destacando os conceitos matem´aticos que,
+na sua opini˜ao, s˜ao os mais importantes.
+
+86
+
+

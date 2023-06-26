@@ -1,0 +1,5222 @@
+Universidade Federal do Piau´ı
+
+Centro de Ciˆencias da Natureza
+
+P´os-Graduac¸˜ao em Matem´atica
+
+Mestrado Profissional em Matem´atica - PROFMAT
+
+O M´etodo de Ponto Proximal para Otimiza¸c˜ao Quase
+
+Convexa
+
+Gilson Amorim C´esar Filho
+
+Teresina - 2016
+
+Gilson Amorim C´esar Filho
+
+Disserta¸c˜ao de Mestrado:
+
+O M´etodo de Ponto Proximal para Otimiza¸c˜ao Quase Convexa
+
+Disserta¸c˜ao submetida `a Coordena¸c˜ao
+
+Acadˆemica Institucional do Programa de
+
+Mestrado Proﬁssional em Matem´atica em
+
+Rede Nacional na Universidade Federal
+
+do Piau´ı, oferecido em associa¸c˜ao com
+
+a Sociedade Brasileira de Matem´atica,
+
+como requisito parcial para obten¸c˜ao do
+
+grau de Mestre em Matem´atica.
+
+Orientador:
+
+Prof. Dr. Jurandir de Oliveira Lopes
+
+Teresina - 2016
+
+1 
+
+FICHA CATALOGRÁFICA 
+Serviço de Processamento Técnico da Universidade Federal do Piauí 
+Biblioteca Setorial do CCN 
+
+  C422m     César Filho, Gilson Amorim. 
+
+    O  método  de  ponto  proximal  para  otimização  quase 
+convexa / Gilson Amorim César Filho. – Teresina, 2016. 
+
+         50f.: il. 
+
+Dissertação  (Mestrado  Profissional)  –  Universidade 
+Federal  do  Piauí,  Centro  de  Ciências  da  Natureza,  Pós-
+Graduação em Matemática, 2016. 
+
+Orientador: Prof. Dr. Jurandir de Oliveira Lopes. 
+
+1. Algoritmo. 2. Função Quase Convexa.  I. Título 
+
+CDD 511.8 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+        
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+i
+
+“A verdadeira medida de um homem n˜ao ´e como
+
+ele se comporta em momentos de conforto e con-
+
+veniˆencia, mas como ele se mant´em em tempos de
+
+controv´ersia e desaﬁo.”
+
+Martin Luther King Jr.
+
+Agradecimentos
+
+Primeiramente, agrade¸co a Deus por tudo.
+
+Agrade¸co a minha fam´ılia. Pelo amor incondicional, pela cria¸c˜ao e pelos ensinamentos
+
+valiosos.
+
+Agrade¸co ao Profo Jurandir de Oliveira Lopes pela sugest˜ao do tema proposto e por suas
+
+orienta¸c˜oes imprescind´ıveis ao ˆexito deste trabalho.
+
+Agrade¸co aos professores doutores Jo˜ao Xavier da Cruz Neto e Arnaldo Silva Brito por
+
+aceitarem o convite para comporem a banca de defesa e pelas sugest˜oes apresentadas.
+
+Agrade¸co a minha esposa Aline de Carvalho Amorim pelo incondicional apoio, dedica¸c˜ao
+
+e paciˆencia nas horas que n˜ao dei muita aten¸c˜ao a ela e por tudo que ela representa.
+
+Agrade¸co ao meu irm˜ao Hu´erllen Vicente Lemos e Silva pelos momentos de descontra¸c˜ao,
+
+pela dicas e sugest˜oes que ajudaram no desenvolvimento deste trabalho.
+
+Agrade¸co as minhas colegas de trabalho professoras Kedman Jesus Silva e Let´ıcia dos
+
+Santos Rocha pela ajuda na elabora¸c˜ao do abstract e pelo paciente trabalho de revis˜ao
+
+ortogr´aﬁca e gramatical.
+
+Agrade¸co ao Prof. Me. Marcos Wildson Alves Nery pelas sugest˜oes apresentadas e pelo
+
+cuidadoso trabalho de revis˜ao.
+
+Agrade¸co aos amigos do PROFMAT-UFPI, pelos bons momentos, pela troca de conheci-
+
+mentos e pela grande ajuda que me deram durante o mestrado: Delano, Samuel, Renee,
+
+Bruno, Wilson, Jerson, Rubens, Gidˆeone, Pedro, Perivaldo, Queiroz, Valderino, Leonardo
+
+e Raimundinho.
+
+Agrade¸co a todos os professores do PROFMAT-UFPI que de alguma forma contribu´ıram
+
+para minha forma¸c˜ao.
+
+ii
+
+Agrade¸co ao IMPA pela implanta¸c˜ao do PROFMAT em Teresina.
+
+iii
+
+Resumo
+
+Neste trabalho propomos o Algoritmo do Ponto Proximal, que tem como ﬁnalidade
+
+a resolu¸c˜ao do Problema de Minimiza¸c˜ao Quase Convexa. Mostraremos que a sequˆencia
+R,
+(xk)k∈N gerada pelo algoritmo converge para os pontos cr´ıticos de uma fun¸c˜ao f : R
+onde f ´e deriv´avel, com derivada cont´ınua, ou seja, de classe C1, quase convexa e limitada
+
+→
+
+inferiormente. E, que sob a condi¸c˜ao dos parˆametros de regulariza¸c˜ao convergirem a zero
+
+λk = 0), obteremos que a sequˆencia converge para a solu¸c˜ao do problema. Al´em
+
+( lim
+k→
+disso, apresentaremos algumas ilustra¸c˜oes/aplica¸c˜oes voltadas para educa¸c˜ao b´asica, no
+
+∞
+
+intuito de mostrarmos atrav´es da pr´atica a utiliza¸c˜ao do referido m´etodo.
+
+Palavras-chaves: Problema de Minimiza¸c˜ao, Fun¸c˜ao Quase Convexa, Algoritmo do
+
+Ponto Proximal.
+
+iv
+
+Abstract
+
+In this work we propose the Proximal Point Algorithm that aims the solving of the
+
+Minimization QuasiConvex Problem. We will show that the sequence (xk)k∈N generated
+R, where f is
+by the algorithm converges to the critical points of a function f : R
+derivable, with continuous derivative, that is, class C1, quasiconvex and inferiorly limited.
+
+→
+
+And, that below condition of regularization parameter converges to zero ( lim
+k→
+
+λk = 0),
+
+we will obtain that the sequence converges to the problem solution. Moreover, we present
+
+∞
+
+some illustrations/applications related to basic education, in order to show throught the
+
+practice utilization of referred to method.
+
+Keywords: Minimization Problem, Function QuasiConvex, Proximal Point Algo-
+
+rithm.
+
+v
+
+Sum´ario
+
+Resumo
+
+Abstract
+
+Introdu¸c˜ao
+
+1 No¸c˜oes Preliminares
+
+1.1 Sequˆencias de n´umeros reais . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+iv
+
+v
+
+1
+
+3
+
+3
+
+1.2 Algumas No¸c˜oes de Topologia . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+1.3 Limite, Continuidade e Derivada de Fun¸c˜oes Reais . . . . . . . . . . . . . . 11
+
+1.4 Conjuntos Convexos e Fun¸c˜oes Convexas . . . . . . . . . . . . . . . . . . . 18
+
+1.5 Fun¸c˜oes Quase Convexas . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+2 M´etodo de Ponto Proximal
+
+29
+
+2.1 Algoritmo do Ponto Proximal
+
+. . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+2.1.1 Boa Deﬁni¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+2.1.2 An´alise de Convergˆencia . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+2.1.3
+
+Ilustra¸c˜ao do M´etodo . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+3 Considera¸c˜oes Finais
+
+Referˆencias
+
+39
+
+40
+
+vi
+
+Introdu¸c˜ao
+
+Em termos matem´aticos, otimiza¸c˜ao refere-se ao estudo de problemas no qual deseja-se
+
+minimizar ou maximizar uma dada fun¸c˜ao. Para Harrel et. all [15], deﬁne-se otimiza¸c˜ao
+
+como o processo de tentar diferentes combina¸c˜oes de valores para vari´aveis que podem
+
+ser controladas (vari´aveis independentes), buscando a combina¸c˜ao de valores que leva `a
+
+sa´ıda mais desejada.
+
+Problemas de otimiza¸c˜ao s˜ao mais comuns do que aparentam e podem facilmente ser
+
+encontrados nas mais diversas ´areas das ciˆencias e engenharias. Como, por exemplo, um
+
+administrador interessado em maximizar a produ¸c˜ao de determinado produto, ou ainda,
+
+minimizar o custo de produ¸c˜ao deste produto. Neste contexto, ´e poss´ıvel aplicar t´ecnicas
+
+matem´aticas de otimiza¸c˜ao visando encontrar uma “solu¸c˜ao ´otima”do problema, isto ´e,
+
+que resulte no melhor desempenho poss´ıvel.
+
+O problema de otimiza¸c˜ao cl´assico pode ser representado da seguinte forma:
+
+Dados f : A
+
+R, A
+
+⊂
+
+→
+
+Rn. Busca-se encontrar um elemento x∗
+
+f(x∗) 6 f(x),
+
+A.
+
+x
+
+∈
+
+∀
+
+A tal que
+
+∈
+
+O conjunto A ser´a chamado conjunto vi´avel do problema, os pontos de A ser˜ao cha-
+
+mados pontos vi´aveis, e f ser´a chamada fun¸c˜ao objetivo.
+
+A maioria dos trabalhos voltados para otimiza¸c˜ao faz uso de fun¸c˜oes convexas, como
+
+fun¸c˜ao objetivo. No entanto, surgiu-se a necessidade de resolver problemas n˜ao convexos,
+
+como, por exemplo, as fun¸c˜oes quase convexas, que foram objeto de estudo de Attouche e
+
+Teboulle [4], sendo eles os respons´aveis pela introdu¸c˜ao do m´etodo do Ponto Proximal para
+
+resolu¸c˜ao de problemas de minimiza¸c˜ao quase convexa, motivando assim, a publica¸c˜ao de
+
+alguns trabalhos, ver Apolin´ario [3], Bello Cruz [6], Brito [7], Carvalho [9], Silva [26].
+
+Al´em disso, algumas aplica¸c˜oes podem ser encontradas em Cysne [11], Murolo [21], Penot
+
+[23] ou Quiroz e Oliveira [24]. Estudaremos este tipo de problema neste trabalho.
+
+Vamos considerar o problema de otimiza¸c˜ao quase convexa:
+
+1
+
+Sum´ario
+
+2
+
+f(x) := 
+
+
+min
+x∈R
+
+Encontrar x∗
+f(x∗) 6 f(x),
+
+R tal que
+R.
+
+x
+
+∈
+
+∈
+
+∀
+
+
+Com as seguintes hip´oteses: f : R
+
+R ´e deriv´avel, com derivada cont´ınua, ou seja,
+de classe C1; f ´e quase convexa e limitada inferiormente. Neste caso, o m´etodo gera uma
+R e a partir da´ı, iterativamente, dado
+argmin{f(x) + λk(x − xk−1)2}, onde (λk)k∈N ´e uma sequˆencia de
+
+sequˆencia.
+xk−1, encontremos xk ∈
+n´umeros reais positivos tal que 0 < λk < λ.
+
+Inicialmente, devemos escolher x0
+
+→
+
+∈
+
+No que diz respeito a educa¸c˜ao b´asica para o ensino de matem´atica, os PCN’s reco-
+
+mendam um maior aprofundamento dos conhecimentos matem´aticos adquiridos. Nesse
+
+sentido, o nosso M´etodo faz uso de v´arios t´opicos de matem´atica, como por exemplo:
+
+sequˆencias de n´umeros reais, limite e derivadas, conte´udos esses que possibilitam os alunos
+
+da educa¸c˜ao b´asica matematizarem problemas do cotidiano e consequentemente trabalha-
+
+rem na busca de poss´ıveis solu¸c˜oes.
+
+Desta forma, este trabalho encontra-se dividida em trˆes partes. Na primeira, apresen-
+
+taremos alguns resultados cl´assicos e conceitos b´asicos, tais como: sequˆencias de n´umeros
+
+reais, fun¸c˜oes convexas e fun¸c˜oes quase convexas, na qual formar˜ao a parte te´orica b´asica
+
+para o cap´ıtulo subsequente. Em seguida, apresentaremos o algoritmo do ponto proximal
+
+para otimiza¸c˜ao quase convexa, mostraremos a boa deﬁni¸c˜ao do algoritmo, analisaremos
+
+sua convergˆencia, posteriormente, realizaremos alguns testes em fun¸c˜oes reais e utilizare-
+mos o m´etodo para encontrarmos a raiz da equa¸c˜ao, ex = x2. Finalmente, s˜ao feitas as
+
+considera¸c˜oes ﬁnais.
+
+Cap´ıtulo 1
+
+No¸c˜oes Preliminares
+
+Neste cap´ıtulo, apresentaremos alguns conceitos e resultados b´asicos, tais como: no¸c˜oes
+
+de sequˆencia de n´umeros reais, limite de fun¸c˜oes, continuidade, derivadas, fun¸c˜oes conve-
+
+xas e fun¸c˜oes quase convexas, que s˜ao de fundamental importˆancia para o desenvolvimento
+
+deste trabalho.
+
+1.1 Sequˆencias de n´umeros reais
+
+Nesta se¸c˜ao iremos abordar algumas deﬁni¸c˜oes e resultados sobre a convergˆencia de
+
+sequˆencias num´ericas inﬁnitas. Esta teoria pode ser encontrada em Lima ([12], [13]),
+
+Martinet [19] ou Muniz Neto [20].
+
+Observa¸c˜ao 1. Consideremos o n´umero 1 como o menor elemento do conjunto dos na-
+turais N.
+
+Deﬁni¸c˜ao 1. Uma sequˆencia de n´umeros reais ´e uma fun¸c˜ao x : N
+
+R que associa
+
+→
+
+a cada n´umero natural n um n´umero real x(n) = xn, onde xn ´e o n-´esimo termo da
+
+sequˆencia.
+
+Utiliza-se uma das seguintes nota¸c˜oes para representar uma sequˆencia x : N
+
+R:
+
+→
+
+(x1, x2, ..., xn, ...) ou (xn)n∈N, ou simplesmente, (xn).
+
+Exemplo 1. xn = 0, se n ´e par e xn = 1, se n ´e ´ımpar, ou seja, (xn) = (1, 0, 1, 0, 1, ...).
+
+Exemplo 2. xn =
+
+1
+n
+
+, com n
+
+Exemplo 3. xn = n, com n
+
+N.
+
+N.
+
+∈
+
+∈
+
+3
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+4
+
+Observa¸c˜ao 2. Vale ressaltar a diferen¸ca entre uma sequˆencia e o conjunto formado
+
+pelos seus termos. Essa distin¸c˜ao ´e importante, pois uma sequˆencia pode possuir inﬁnitos
+
+elementos, mesmo que seu conjunto de termos seja ﬁnito.
+
+Por exemplo, a sequˆencia (xn) = (1, −1, 1, −1, ...) n˜ao ´e o mesmo que o conjunto
+
+{−1, 1}. Ou ainda, as sequˆencias (1, 2, 1, 2, 1, 2, ..) e (1, 1, 2, 1, 1, 2, ...) s˜ao diferentes, no
+
+entanto o conjunto de seus termos, {1, 2} ´e o mesmo.
+
+x1 < x2 < ... < xn < ..., ou seja, xn < xn+1,
+
+Deﬁni¸c˜ao 2. Seja (xn) uma sequˆencia. Diz-se que (xn) ´e estritamente crescente se
+N. Analogamente, se x1 > x2 > ... >
+N a sequˆencia (xn) ´e estritamente decrescente. Se
+N), dizemos que a sequˆencia (xn) ´e n˜ao
+
+xn 6 xn+1 (respectivamente, xn > xn+1,
+
+xn > ..., ou seja, xn > xn+1,
+
+∈
+
+∈
+
+n
+
+n
+
+n
+
+∀
+
+∀
+
+∀
+
+∈
+
+decrescente (respectivamente, n˜ao crescente).
+
+Observa¸c˜ao 3. Uma sequˆencia (xn) que satisfaz qualquer uma das condi¸c˜oes da (De-
+
+ﬁni¸c˜ao 2) ´e dita mon´otona.
+
+Exemplo 4. xn = n, com n
+
+Exemplo 5. xn =
+
+1
+n
+
+, com n
+
+∈
+
+∈
+
+N. ´E mon´otona (estritamente crescente)
+
+N. ´E mon´otona (estritamente decrescente).
+
+Exemplo 6. xn = (1, 1, 1, 1, ...). ´E mon´otona (n˜ao crescente e n˜ao decrescente)
+
+Exemplo 7. xn = n(−1)n, com n
+
+∈
+
+N. N˜ao ´e mon´otona, pois x1 < x2 e x2 > x3.
+
+Deﬁni¸c˜ao 3. Uma sequˆencia (xn) diz-se limitada inferiormente (respectivamente superi-
+
+ormente) quando existe m
+
+R tal que,
+
+∈
+
+n
+
+∈
+
+∀
+
+N, xn > m (respectivamente xn 6 m).
+
+Diz-se que a sequˆencia (xn) ´e limitada, quando ela ´e limitada inferiormente e superi-
+
+ormente, ou seja, existe um n´umero real r > 0 tal que |xn| 6 r,
+
+n
+
+∈
+
+∀
+
+N.
+
+Exemplo 8. xn =
+
+1
+n
+
+, com n
+
+∈
+
+intervalo fechado [0, 1].
+
+N, ´e limitada, pois todos os seus termos encontram-se no
+
+Exemplo 9. Sejam a e r n´umeros naturais. Considere a sequˆencia (xn) tal que xn =
+
+a + (n − 1)r, com n > 1.
+
+Note que, (xn) ´e uma Progress˜ao Aritm´etica de primeiro termo a e raz˜ao r. Da´ı,
+
+temos:
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+5
+
+Se r = 0, ent˜ao (xn) = (a, a, a, ...) ´e constante e, portanto, limitada;
+
+Se r < 0, ent˜ao (xn) ´e estritamente decrescente, portanto, limitada superiormente;
+
+Finalmente, se r > 0, ent˜ao (xn) ´e estritamente crescente e, portanto, limitada inferi-
+
+ormente.
+
+Deﬁni¸c˜ao 4. Uma subsequˆencia de uma sequˆencia (xn)n∈N ´e a restri¸c˜ao da sequˆencia
+N, isto ´e, a
+xn : N
+
+R a um subconjunto inﬁnito N ′ = {n1 < n2 < ... < ni < ...}
+
+⊂
+
+→
+
+fun¸c˜ao xn : |N ′
+
+R.
+
+→
+
+Nota¸c˜ao: (xn)n∈N ′ ou (xnk).
+
+Do (Exemplo 9), temos que (xn) ´e uma Progress˜ao Aritm´etica, de termo inicial a e
+
+raz˜ao r, com xn = a + (n − 1)r.
+
+A Progress˜ao Aritm´etica (xnk)k∈N de termo inicial a e raz˜ao 2r ´e uma subsequˆencia
+
+de (xn). De fato, tomando nk = 2k − 1, com k
+
+N, temos:
+
+∈
+
+xnk = a + (nk − 1)r = a + (2k − 2)r = a + (k − 1)(2r).
+
+Deﬁni¸c˜ao 5. Dizemos que uma sequˆencia (xn)n∈N converge para um n´umero real L,
+(xn →
+
+L), se dado ε > 0, existe n0
+
+N tal que:
+
+∈
+
+n > n0
+
+∀
+
+⇒
+
+|xn − L| < ε.
+
+Alternativamente, se (xn) convergir para L, diremos que a sequˆencia ´e convergente e
+
+que L ´e um limite da sequˆencia, ou seja, L = lim
+n→
+
+xn.
+
+Se (xn)n∈N n˜ao ´e convergente, ent˜ao dizemos que ela ´e divergente.
+
+∞
+
+Exemplo 10. A sequˆencia cujo termo geral ´e xn =
+
+n
+n + 1
+
+, com n
+
+∈
+
+N, converge para 1.
+
+Solu¸c˜ao.
+
+Inicialmente, observe que, dado ε > 0 qualquer, temos:
+
+|xn − 1| = |
+
+n
+n + 1
+
+− 1| =
+
+1
+n + 1
+
+< ε
+
+⇔
+
+n >
+
+1
+ε
+
+− 1.
+
+Logo, dado ε > 0 qualquer, existe n0 >
+
+1
+ε
+
+− 1, tal que:
+
+n > n0
+
+|
+
+n
+n + 1
+
+⇒
+
+− 1| < ε.
+
+Conforme, (Deﬁni¸c˜ao 5), segue o resultado.
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+6
+
+Teorema 1. Se lim xn = L1 e lim xn = L2, ent˜ao L1 = L2.
+
+Demonstra¸c˜ao. Suponhamos, por absurdo, L1
+
+= L2, onde lim xn = L1 e lim xn = L2.
+
+Tomando ε =
+
+|L2 − L1|
+2
+
+> 0, temos:
+
+(i) Como lim xn = L1, ent˜ao existe n1
+
+N, tal que:
+
+∈
+
+n > n1
+
+∀
+
+⇒
+
+|xn − L1| < ε.
+
+(ii) Como lim xn = L2, ent˜ao existe n2
+
+N, tal que:
+
+∈
+
+n > n2
+
+∀
+
+⇒
+
+|xn − L2| < ε.
+
+Seja n0 = max{n1, n2}. Sendo assim, para todo n > n0, temos:
+
+|L2 − L1| = |(L2 − xn) + (xn − L1)|.
+
+Da´ı, pela desigualdade triangular, segue que:
+
+|L2 − L1| = |(L2 − xn) + (xn − L1)| 6 |xn − L2| + |xn − L1| < ε + ε = 2ε < 2
+
+|L2 − L1|
+2
+
+.
+
+·
+
+Logo, |L2 − L1| < |L2 − L1|, o que ´e um absurdo. Portanto, L1 = L2.
+
+Proposi¸c˜ao 1. Se lim xn = L, ent˜ao toda subsequˆencia de (xn) converge para L.
+
+Demonstra¸c˜ao. Como lim xn = L, ent˜ao dado ε > 0,
+
+n0
+
+⇒
+|xn − L| < ε. Seja (xnk)k∈N = (xn1, xn2, ...) uma subsequˆencia qualquer de (xn). Como os
+
+∈
+
+∀
+
+∃
+
+n > n0
+
+N tal que
+
+´ındices da subsequˆencia formam um subconjunto inﬁnito, existe entre eles um nj > n0.
+
+Ent˜ao:
+
+Logo, lim xnk = L.
+
+ni > nj ⇒
+
+ni > n0
+
+⇒
+
+|xnk − L| < ε.
+
+Observa¸c˜ao 4. Note que a sequˆencia (1, 0, 1, 0, 1, ...) ´e divergente. Pois, se a consi-
+
+der´assemos convergente, ent˜ao, pela Proposi¸c˜ao 1, todas suas subsequˆencias seriam con-
+
+vergentes para um mesmo limite. Por´em, (1, 1, 1, ...) e (0, 0, 0, ...) s˜ao subsequˆencias que
+
+convergem para 1 e 0, respectivamente.
+
+Teorema 2. Toda sequˆencia convergente ´e limitada.
+
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+7
+
+Demonstra¸c˜ao. Seja (xn) uma sequˆencia que converge para L. Logo, dado um ε > 0,
+
+existe n0
+
+∈
+
+N tal que:
+
+ou seja,
+
+n > n0
+
+⇒
+
+|xn − L| < ε,
+
+L − ε < xn < ε + L.
+
+(L − ε, L + ε).
+
+Logo, xn ∈
+Consideremos o conjunto ﬁnito A = {x1, x2, ..., xn0, L − ε, L + ε}. Tomando a =
+
+min{x1, x2, ..., xn0, L − ε, L + ε} e b = max{x1, x2, ..., xn0, L − ε, L + ε}, temos que a 6
+N, ou seja, todos os termos xn da sequˆencia est˜ao contidos no
+
+xn 6 b, para todo n
+
+∈
+
+intervalo [a, b].
+
+Portanto, (xn) ´e limitada.
+
+Vale ressaltar que a rec´ıproca do (Teorema 2) n˜ao ´e verdadeira, como mostra a (Ob-
+
+serva¸c˜ao 4).
+
+Teorema 3. Sejam (xn)n∈N, (yn)n∈N e (zn)n∈N sequˆencias de n´umeros reais.
+
+i) Se xn →
+ii) Se xn →
+iii) (Teorema do confronto) Sejam (xn)n∈N, (yn)n∈N e (zn)n∈N sequˆencias tais que
+
+b, ent˜ao xn ±
+a e yn →
+±
+0 e (yn)n∈N ´e limitada, ent˜ao xn ·
+
+b e xn ·
+yn →
+0.
+
+yn →
+
+yn →
+
+b.
+
+a
+
+a
+
+·
+
+L.
+
+R, ent˜ao yn →
+a + b.
+
+xn 6 yn 6 zn,
+
+n
+
+N. Se xn, zn →
+
+∈
+
+∀
+
+L, para algum L
+
+∈
+
+Demonstra¸c˜ao. i) Parte 1 - Provemos, inicialmente, que xn + yn →
+
+De fato, dado ε > 0, existem n1, n2
+
+∈
+
+N tais que:
+
+n > n1
+
+⇒
+
+|xn − a| <
+
+ε
+2
+
+e n > n2
+
+⇒
+
+|yn − b| <
+
+ε
+2
+
+.
+
+Logo, tomando n > max{n1, n2}, temos:
+
+|(xn + yn) − (a + b)| 6 |xn − a| + |yn − b| <
+
+ε
+2
+
++
+
+ε
+2
+
+= ε.
+
+De modo an´alogo, segue que xn − yn →
+
+a − b.
+
+Parte 2 - Como yn →
+
+b, segue que (yn) ´e limitada, assim:
+
+Seja L > 0, tal que |yn| < L,
+
+n
+
+N. Al´em disso, temos que: xn →
+
+a e yn →
+
+b.
+
+Logo, dado ε > 0, tome n0
+
+n > n0
+
+∈
+
+⇒
+
+∈
+∀
+N tal que:
+
+|xn − a| <
+
+ε
+
+·
+
+L
+
+2
+
+e |yn − b| <
+
+ε
+|a| + 1
+
+.
+
+2
+
+·
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+8
+
+Da´ı,
+
+|xnyn − ab| = |xnyn − ayn + ayn − ab|
+
+|yn| + |a|
+
+|yn − b|
+
+6 |xn − a|
+ε
+
+·
+L + |a|
+
+L ·
+
+·
++
+
+2
+ε
+2
+
+ε
+·
+|a|
+
+|a|
+2
+
+·
+
+<
+
+2
+
+·
++
+
+·
+ε
+2
+
+<
+
+<
+
+·
+ε
+|a| + 1
+ε
+2
+
+= ε.
+
+ab.
+
+Portanto, xnyn →
+ii) Como (yn)n∈N ´e limitada, temos que existe M > 0 tal que |yn| < M,
+∀
+|xn| < ε
+M.
+
+0, logo, dado ε > 0, tomemos n0
+
+N / n > n0
+
+∈
+
+⇒
+
+Al´em disso, xn →
+
+N.
+
+n
+
+∈
+
+Da´ı,
+
+n > n0
+
+⇒
+
+|xnyn − 0| = |xn|
+
+|yn| <
+
+·
+
+ε
+M ·
+
+M = ε.
+
+Portanto, xnyn →
+
+0.
+
+iii) Dado ε > 0, existem n1, n2
+
+N tais que:
+
+n > n1
+
+⇒
+
+|xn − L| <
+
+L − ε < zn < L + ε.
+
+ε
+2
+
+∈
+e n > n2
+
+|zn − L| <
+
+⇒
+
+ε
+2
+
+, ou seja, L − ε < xn < L + ε e
+
+Seja n0 = max{n1, n2}. Ent˜ao, n > n0
+(L − ε, L + ε). Logo, yn →
+
+que, yn ∈
+
+L.
+
+L − ε < xn 6 yn 6 zn < L + ε, isso implica
+
+⇒
+
+Teorema 4. Toda sequˆencia mon´otona e limitada ´e convergente.
+
+Demonstra¸c˜ao. Suponhamos que (xn)n∈N ´e uma sequˆencia mon´otona, digamos n˜ao de-
+
+crescente (os demais casos s˜ao an´alogos), ou seja,
+
+x1 6 x2 6 ... 6 xn 6 ...
+
+Al´em disso, (xn) ´e limitada superiormente, isto ´e, seu conjunto de termos possui
+
+supremo, L. Aﬁrmemos que L = lim xn. Com efeito, dado um ε > 0 qualquer, temos que
+
+L − ε < L, logo o n´umero L − ε n˜ao ´e cota superior do conjunto dos termos de xn. Da´ı,
+N tal que L − ε < x0, como a sequˆencia (xn) ´e mon´otona, temos que:
+
+existe algum n0
+
+∈
+
+e, portanto,
+
+n > n0
+
+⇒
+
+xn0 6 xn
+
+L − ε < xn.
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+9
+
+Como xn 6 L,
+
+∀
+
+n, vemos que:
+
+n < n0
+
+⇒
+
+L − ε < xn < L + ε.
+
+Portanto, lim xn = L.
+
+Teorema 5. (Teorema de Bolzano-Weierstrass). Toda sequˆencia limitada de n´umeros
+
+reais possui uma subsequˆencia convergente.
+
+Demonstra¸c˜ao. Seja (xn)n∈N uma sequˆencia limitada. Considere o seguinte conjunto:
+
+B = {k
+
+∈
+
+N; n > k
+
+⇒
+
+xk > xn}.
+
+Existem duas possibilidades para o conjunto B. A saber ou ele ´e ﬁnito ou ele ´e inﬁnito.
+
+Se B for inﬁnito, escrevamos B = {k1, k2, k3, ..., ki, kj, ...}, onde k1 < k2 < ... < ki <
+
+kj < .... Assim, se i < j ent˜ao ki < kj e, como ki ∈
+(xkn)n∈N ´e uma subsequˆencia decrescente, ou seja, mon´otona. Sendo ela limitada, pelo
+
+B, obtemos que xki > xkj. Logo,
+
+Teorema anterior conclu´ımos que ela ´e convergente.
+
+Se B for ﬁnito, seja m = max{B} e tome k1 = m + 1, onde k1 /
+∈
+B, com k2 > k1 tal que xk1 6 xk2. Como k2 /
+∈
+
+B ent˜ao existe k2 /
+∈
+
+k1 /
+∈
+
+B. Assim, como
+
+B, existe k3 /
+∈
+
+B,
+
+com k3 > k2 tal que xk2 6 xk3. Repetindo esse processo sucessivamente, temos:
+
+xk1 6 xk2 6 ... 6 xkn 6 ....
+
+Deﬁnimos assim uma subsequˆencia (xkn)n∈N n˜ao decrescente (mon´otona). Sendo (xkn)
+
+limitada, segue, pelo Teorema anterior, que esta subsequˆencia ´e convergente.
+
+Proposi¸c˜ao 2. Se uma sequˆencia mon´otona (xn)n∈N tem uma subsequˆencia convergente,
+
+ent˜ao ela pr´opria ´e convergente.
+
+Demonstra¸c˜ao. Sejam (xn)n∈N uma sequˆencia mon´otona n˜ao decrescente (os demais casos
+
+s˜ao an´alogos) e (xnk)k∈N uma subsequˆencia convergente de (xn).
+
+que xnk < M,
+
+Assim, pelo (Teorema 2), a subsequˆencia (xnk)k∈N ´e limitada, logo existe M > 0 tal
+N,
+N. Pela Deﬁni¸c˜ao de subsequˆencia, temos que para todo n
+∀
+N tal que nk > n. Como (xn) ´e uma sequˆencia mon´otona n˜ao decrescente,
+
+∈
+
+∈
+
+k
+
+existe um k
+
+∈
+
+temos:
+
+xn 6 xnk < M.
+
+Logo, conclu´ımos que (xn) ´e limitada superiormente por M. Da´ı, pelo (Teorema 4),
+
+temos que (xn) ´e convergente.
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+10
+
+Corol´ario 1. Se uma subsequˆencia mon´otona (xnk)k∈N converge para um n´umero real p,
+
+a sequˆencia (xn) tamb´em convergente para o n´umero real p.
+
+Demonstra¸c˜ao. Segue imediato das (Proposi¸c˜oes 1 e 2).
+
+1.2 Algumas No¸c˜oes de Topologia
+
+Nesta se¸c˜ao, abordaremos alguns conceitos topol´ogicos elementares, visando estabe-
+
+lecer a base adequada para o melhor desenvolvimento deste trabalho. Os resultados
+
+apresentados podem ser encontrados em Lima ([12] e [13]).
+
+Deﬁni¸c˜ao 6. Um n´umero a
+
+∈
+
+R, diz-se um ponto de acumula¸c˜ao do conjunto D
+
+R
+
+⊂
+
+quando toda vizinhan¸ca de a cont´em algum ponto de D diferente do pr´oprio a, ou seja,
+
+para todo real ε > 0 tem-se (a − ε, a + ε)
+
+(D − {a})
+
+=
+
+.
+
+∅
+
+∩
+
+Exemplo 11. ´E f´acil ver que 0 ´e ponto de acumula¸c˜ao do intervalo ]0, 1[.
+
+Observa¸c˜ao 5. Indica-se por D ′ o conjunto dos pontos de acumula¸c˜ao de D.
+
+Teorema 6. Dados D
+
+R e a
+
+∈
+
+⊂
+
+R, as aﬁrma¸c˜oes abaixo s˜ao equivalentes:
+
+(i) a ´e um ponto de acumula¸c˜ao de D;
+
+(ii) a ´e o limite de uma sequˆencia de pontos xn ∈
+
+D − {a};
+
+(iii) Todo intervalo aberto de centro a cont´em uma inﬁnidade de pontos de D.
+
+Demonstra¸c˜ao. (i)
+n podemos achar um ponto xn ∈
+lim xn = a.
+
+⇒
+
+(ii) Como a ´e ponto de acumula¸c˜ao de D, ent˜ao para todo natural
+
+D, xn 6
+
+= a, na vizinhan¸ca
+
+a −
+
+(cid:18)
+
+1
+n
+
+, a +
+
+1
+n (cid:19)
+
+. Portanto,
+
+(ii)
+
+⇒
+
+(iii) Supondo (ii), ent˜ao para qualquer a
+
+N, o conjunto {xn; n > n0} ´e
+
+∈
+
+inﬁnito, pois caso contr´ario existiria um termo xn1 que se repetiria inﬁnitas vezes, onde
+ter´ıamos uma sequˆencia constante com lim xn1 6
+Proposi¸c˜ao 1.
+
+= a. O que entra em contradi¸c˜ao com a
+
+(iii)
+
+⇒
+
+(i) Segue imediato da deﬁni¸c˜ao de ponto de acumula¸c˜ao.
+
+Exemplo 12. Seja o conjunto A = {1, 1
+
+2 , 1
+
+3 , 1
+
+4 , 1
+
+5 , ...}, mostre que zero ´e ponto de acu-
+
+mula¸c˜ao de A.
+
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+11
+
+1
+2n
+
+,
+
+De fato, seja a sequˆencia xn =
+
+n
+
+N, note que os elementos de xn encontram-se
+
+∈
+contidos no conjunto A. Al´em disso, xn ´e uma sequˆencia que converge para zero, pois,
+
+∀
+
+lim
+n→
+
+1
+2n
+
+= 0.
+
+Logo, pelo Teorema 6, zero ´e ponto de acumula¸c˜ao do conjunto A.
+∞
+
+Deﬁni¸c˜ao 7. Um conjunto X
+
+[−c, c] para todo a em X.
+
+a
+
+∈
+
+⊂
+
+R ´e limitado quando existe um n´umero real c > 0 tal que
+
+Teorema 7. Todo conjunto inﬁnito limitado de n´umeros reais admite ao menos um ponto
+
+de acumula¸c˜ao.
+
+Demonstra¸c˜ao. Seja A
+
+⊂
+
+R um conjunto inﬁnito limitado. A possui um subconjunto
+
+enumer´avel, {a1, a2, ..., an, ...} (ver p. 48 de Lima [12]). Fixando esta enumera¸c˜ao, temos
+
+uma sequˆencia (an), onde seus termos s˜ao dois a dois distintos, pertencentes a A, logo,
+
+(an) ´e uma sequˆencia limitada, a qual, pelo Teorema de Bolzano-Weierstrass, possui uma
+
+subsequˆencia (ank) convergente.
+
+Seja lim ank = a. Como os termos de ank s˜ao todos distintos, no m´aximo um deles
+
+pode ser igual a a. Descartando-o, caso exista, temos a como limite de uma sequˆencia de
+pontos ank ∈
+
+A − {a}. Logo, da (Deﬁni¸c˜ao 6), a ´e um ponto de acumula¸c˜ao de A.
+
+1.3 Limite, Continuidade e Derivada de Fun¸c˜oes Re-
+
+ais
+
+Os principais resultados aqui obtidos podem ser encontrados em Lima [13], Guidorizzi
+
+[14], Izmailov [16], Muniz Neto [20], Neto Antar et. al. [22] ou Rockafallar [25].
+
+Deﬁni¸c˜ao 8. Seja D
+
+R, f : D
+
+⊂
+
+→
+
+R uma fun¸c˜ao real e x0
+
+∈
+
+D ′ um ponto de acumula¸c˜ao
+
+do conjunto D. Diz-se que a fun¸c˜ao f tem limite L quando x tende a x0, e escreve-se
+
+lim
+x→x0
+
+f(x) = L, quando, para qualquer ε > 0 arbitr´ario, ´e poss´ıvel encontrar δ > 0 tal que:
+
+x
+
+∈
+
+D, 0 < |x − x0| < δ
+
+|f(x) − L| < ε.
+
+⇒
+
+Exemplo 13. Seja f : R
+
+R dada por f(x) = 2x − 5. Provemos que lim
+x→4
+
+f(x) = 3.
+
+→
+
+Solu¸c˜ao.
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+12
+
+Inicialmente, note que, |(2x − 5) − 3| = |2.(x − 4)| < ε
+
+|x − 4| <
+
+⇒
+
+ε
+2
+
+. Da´ı, dado ε > 0,
+
+. Logo, se 0 < |x − 4| < δ. Ent˜ao, temos: |f(x) − 3| = |(2x − 5) − 3| = |2x − 8| =
+
+tome δ =
+
+ε
+2
+
+2|x − 4| < 2δ = ε, isto ´e, |f(x) − 3| < ε.
+
+Portanto, lim
+x→4
+
+f(x) = 3.
+
+Teorema 8. Sejam f, g : D
+
+e lim
+x→x0
+
+g(x) = L2, ent˜ao lim
+x→x0
+
+R
+
+R duas fun¸c˜oes dadas e x0
+
+→
+
+⊂
+(f + g)(x) = L1 + L2 e lim
+x→x0
+
+D ′. Se lim
+x→x0
+L2.
+
+∈
+g)(x) = L1
+
+(f
+
+·
+
+·
+
+f(x) = L1
+
+Demonstra¸c˜ao. i) Como lim
+x→x0
+
+f(x) = L1 e lim
+x→x0
+
+arbitr´ario, existem δ1 > 0 e δ2 > 0 tais que:
+
+g(x) = L2 temos que, para todo ε > 0
+
+e
+
+D, 0 < |x − x0| < δ1
+
+D, 0 < |x − x0| < δ2
+
+x
+
+∈
+
+x
+
+∈
+
+|f(x) − L1| <
+
+|g(x) − L2| <
+
+⇒
+
+⇒
+
+ε
+2
+
+ε
+2
+
+.
+
+Tomando δ = min{δ1, δ2}, temos que se 0 < |x − x0| < δ, ent˜ao:
+
+|(f(x) + g(x)) − (L1 + L2)| = |(f(x) − L1) + (g(x) − L2)|,
+
+pela desigualdade triangular, segue que:
+
+|(f(x)+g(x))−(L1 +L2)| = |(f(x)−L1)+(g(x)−L2)| 6 |f(x)−L1|+|g(x)−L2| <
+
+ε
+2
+
++
+
+ε
+2
+
+= ε.
+
+Portanto,
+
+lim
+x→x0
+
+(f + g)(x) = L1 + L2.
+
+ii) Ver p. 203 de Muniz Neto [20].
+
+Deﬁni¸c˜ao 9. Dizemos que lim
+x→
+que se x > M, ent˜ao f(x) > N. Al´em disso, dizemos que lim
+∞
+x→−
+
+f(x) =
+
+∞
+
+, se dado N > 0, existe um real positivo M tal
+
+f(x) =
+
+, se dado N > 0,
+
+existe um real positivo M tal que se x < −M, ent˜ao f(x) > N.
+∞
+
+∞
+
+Exemplo 14. Mostre que lim
+x→
+
+x3 =
+
+.
+
+Solu¸c˜ao.
+
+∞
+
+∞
+
+Dado um n´umero real M > 0, tome N = 3√M > 0, logo, x > 3√M
+
+lim
+x→+
+
+x3 = +
+
+.
+
+∞
+
+∞
+Deﬁni¸c˜ao 10. Sejam f : D
+
+R. A fun¸c˜ao f ´e cont´ınua em x0 se:
+
+→
+
+x3 > M, ent˜ao
+
+⇒
+
+ε > 0,
+
+∃
+
+∀
+
+δ > 0; |x − x0| < δ
+
+|f(x) − f(x0)| < ε.
+
+⇒
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+13
+
+Deﬁni¸c˜ao 11. Diz-se que uma fun¸c˜ao f : D
+
+R ´e cont´ınua em um conjunto D, se f ´e
+
+→
+
+cont´ınua em todos pontos de D.
+
+Teorema 9. Sejam f : D
+
+R e x0
+
+D
+
+∩
+
+∈
+
+→
+
+D ′. Ent˜ao f ´e cont´ınua em x0 se, e somente
+
+se,
+
+lim
+x→x0
+
+f(x) = f(x0).
+
+Demonstra¸c˜ao. Ver p. 223 de Lima [12].
+
+R, f(x) = ax + b, com a, b
+
+R e a
+
+= 0. Prove que f ´e
+
+∈
+
+Exemplo 15. Seja f : R
+cont´ınua em R.
+
+→
+
+Solu¸c˜ao.
+
+Inicialmente, note que:
+
+|(ax + b) − (ax0 + b)| = |a(x − x0)| = |a||x − x0| < ε
+
+|x − x0| <
+
+⇒
+
+ε
+|a|
+
+.
+
+Da´ı, dado ε > 0, tome δ =
+
+ε
+|a|
+
+. Logo, se 0 < |x − x0| < δ, ent˜ao, temos: |f(x) − f(x0)| =
+
+|(ax + b) − (ax0 + b)| = |a||x − x0| < |a|δ = |a|
+
+= ε, isto ´e, |f(x) − f(x0)| < ε.
+
+ε
+|a|
+
+Portanto,
+
+lim
+x→x0
+
+f(x) = f(x0), ou seja, f ´e cont´ınua em todo x0
+
+R.
+
+∈
+
+Proposi¸c˜ao 3. Se f, g : D
+
+→
+
+cont´ınuas as fun¸c˜oes f + g e f.g : D
+
+R no ponto x0.
+
+→
+
+R s˜ao fun¸c˜oes cont´ınuas no ponto x0
+
+D, ent˜ao s˜ao
+
+∈
+
+Demonstra¸c˜ao. Ver p. 144 de Muniz Neto [20].
+
+Teorema 10. (Teorema de Weierstrass). Seja f : [a, b]
+
+R uma fun¸c˜ao cont´ınua
+
+→
+
+deﬁnida no intervalo fechado [a, b] e limitada. Ent˜ao, existem n´umeros c e d em [a, b],
+
+tais que, f(c) 6 f(x) 6 f(d), para todo x
+
+[a, b].
+
+∈
+
+Demonstra¸c˜ao. Ver p. 82 de Lima [13].
+
+Deﬁni¸c˜ao 12. Seja f : R
+
+→
+
+R uma fun¸c˜ao cont´ınua, diz-se que f ´e coerciva se
+
+Exemplo 16. f(x) = 2x4
+
+lim
+x→+
+
+f(x) = lim
+x→−
+
+f(x) = +
+
+.
+
+∞
+
+∞
+
+∞
+
+Exemplo 17. f(x) =
+
+ex + e−x
+2
+
+= cosh(x).
+
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+14
+
+Deﬁni¸c˜ao 13. Sejam f : D
+por f ′(a), ´e dado por:
+
+→
+
+R e a
+
+D
+
+∩
+
+∈
+
+D ′. A derivada de f no ponto a, denotada
+
+f ′(a) = lim
+x→a
+
+f(x) − f(a)
+x − a
+
+= lim
+h→0
+
+f(a + h) − f(a)
+h
+
+,
+
+se este limite existir e for ﬁnito.
+
+Se em algum ponto x de D este limite n˜ao existir ou for inﬁnito, diz-se que a fun¸c˜ao
+
+n˜ao ´e deriv´avel em x.
+
+Observa¸c˜ao 6. Se existir a derivada f ′(x) em todo os pontos x
+
+D
+
+∩
+
+∈
+
+D ′, diz-se que a
+
+fun¸c˜ao f : D
+
+→
+
+R ´e deriv´avel no conjunto D.
+
+Teorema 11. Sejam f : D
+
+R e a
+
+D
+
+∩
+
+∈
+
+→
+
+ponto a.
+
+D ′. Se existe f ′(a) ent˜ao f ´e cont´ınua no
+
+Demonstra¸c˜ao. Suponha que exista f ′(a), logo:
+
+f ′(a) = lim
+x→a
+
+f(x) − f(a)
+x − a
+
+= lim
+h→0
+
+f(a + h) − f(a)
+h
+
+,
+
+Agora,
+
+lim
+x→a
+
+f(x) = lim
+x→a
+
+[f(x) − f(a) + f(a)]
+
+= lim
+x→a
+
+[
+
+=
+
+lim
+(cid:20)
+x→a
+= f ′(a)
+
+f(x) − f(a)
+x − a
+f(x) − f(a)
+x − a
+
+lim
+x→a
+0 + f(a) = f(a).
+
+(cid:21) ·
+
+·
+
+(x − a) + f(a)]
+
+·
+
+(x − a) + f(a)
+
+Portanto, de acordo com Teorema 9, segue o resultado.
+
+Deﬁni¸c˜ao 14. Seja f : D
+
+R e x0
+
+→
+em D, se existe ε > 0 tal que f(x0) 6 f(x), para todo x
+
+∈
+
+D. Dizemos que x0 ´e ponto de m´ınimo local de f
+
+(x0 − ε, x0 + ε)
+
+D. (De modo
+
+∩
+
+∈
+
+an´alogo deﬁne-se m´aximo local).
+
+Deﬁni¸c˜ao 15. Quando x0
+
+∈
+
+m´ınimo global para a fun¸c˜ao f : D
+
+→
+
+global).
+
+D ´e tal que f(x0) 6 f(x),
+
+D, diz-se que x0 ´e ponto de
+R. (De maneira an´aloga deﬁne-se ponto de m´aximo
+
+∈
+
+∀
+
+x
+
+Deﬁni¸c˜ao 16. Se D
+
+Dizemos que x0
+
+∈
+
+R ´e um intervalo aberto e f : D
+D ´e um ponto cr´ıtico de f se, f ′(x0) = 0.
+
+⊂
+
+R uma fun¸c˜ao deriv´avel.
+
+→
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+15
+
+Exemplo 18. A fun¸c˜ao f : R
+x0 = 0, pois f ′(x0) = 2x0
+
+→
+f ′(0) = 0.
+
+⇒
+
+R, deﬁnida por f(x) = x2, possui ponto cr´ıtico em
+
+Observa¸c˜ao 7. Embora se possa trabalhar com m´ınimos e m´aximos, ao longo deste tra-
+
+balho s´o trabalharemos com m´ınimos, pois achar o m´aximo de uma fun¸c˜ao f ´e equivalente
+
+a achar o m´ınimo da fun¸c˜ao −f.
+
+Observa¸c˜ao 8. Os pontos de m´aximos e m´ınimos locais de uma fun¸c˜ao s˜ao pontos
+
+cr´ıticos, mas existem pontos cr´ıticos que n˜ao s˜ao pontos de m´aximos ou m´ınimos locais.
+
+Exemplo 19. Seja f : R
+
+→
+
+R, deﬁnida por f(x) = x3.
+
+Note que f ′(x) = 3x2. Assim, para x = 0 temos que f ′(0) = 0. Logo, x = 0 ´e um
+
+ponto cr´ıtico de f, por´em n˜ao ´e ponto de m´aximo nem m´ınimo local de f.
+
+Teorema 12. Seja f : [a, b]
+
+→
+
+seu valor m´ınimo local em x0
+
+R uma fun¸c˜ao cont´ınua e deriv´avel em (a, b). Se f assume
+(a, b), ent˜ao f ′(x0) = 0.
+
+∈
+
+Demonstra¸c˜ao. Como f : [a, b]
+
+→
+
+R ´e deriv´avel em x0
+
+∈
+f(x) − f(x0)
+x − x0
+
+(a, b), temos:
+
+.
+
+f ′(x0) = lim
+x→x0
+
+Suponha que f assuma seu valor m´ınimo local em x0
+
+f(x)
+
+⇔
+
+f(x) − f(x0) > 0, para todo x
+
+(a, b).
+
+∈
+
+Por outro lado,
+
+(a, b), segue que f(x0) 6
+
+∈
+
+i) se x < x0, temos que x − x0 < 0. Da´ı
+
+limite quando x tende a x0−, segue:
+
+f(x) − f(x0)
+x − x0
+
+6 0, para x0
+
+∈
+
+(a, b). Passando o
+
+lim
+x→x0−
+
+f(x) − f(x0)
+x − x0
+
+6 0.
+
+(1.1)
+
+ii) se x > x0, temos que x − x0 > 0. Da´ı:
+
+limite quando x tende a x0+, segue:
+
+f(x) − f(x0)
+x − x0
+
+> 0 para x0
+
+∈
+
+(a, b). Passando o
+
+lim
+x→x0+
+
+f(x) − f(x0)
+x − x0
+
+> 0.
+
+lim
+x→x0
+
+f(x) − f(x0)
+x − x0
+
+= 0.
+
+De (1.1) e (1.2) implica que:
+
+Portanto, f ′(x0) = 0.
+
+(1.2)
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+16
+
+Teorema 13. (Teorema de Rolle). Seja f : [a, b]
+
+→
+deriv´avel em (a, b), com f(a) = f(b). Ent˜ao, existe c
+
+R uma fun¸c˜ao cont´ınua em [a, b] e
+
+(a, b) tal que f ′(c) = 0.
+
+∈
+
+Demonstra¸c˜ao. i) Se f ´e uma fun¸c˜ao constante para todo x
+
+[a, b], ent˜ao f ′(x) = 0 no
+
+∈
+
+interior do intervalo. Logo, c pode ser qualquer ponto de (a, b).
+
+ii) Suponha que f n˜ao ´e uma fun¸c˜ao constante no intervalo [a, b]. Como f ´e cont´ınua
+
+no intervalo fechado, ent˜ao, pelo Teorema de Weierstrass, existem x1 e x2
+
+[a, b], tais que
+
+∈
+
+f(x1) e f(x2) s˜ao, respectivamente, os valores m´aximos e m´ınimos de f em [a, b]. Como
+
+f(x1)
+
+= f(x2), uma vez que f n˜ao ´e constante, segue que x1 ou x2
+
+Logo, f ′(x1) = 0 ou f ′(x2) = 0.
+
+Portanto, existe um ponto c
+
+(a, b) tal que f ′(c) = 0.
+
+∈
+
+(a, b).
+
+∈
+
+Teorema 14. (Teorema do Valor M´edio). Seja f : [a, b]
+
+R uma fun¸c˜ao cont´ınua [a, b]
+
+→
+
+e deriv´avel em (a, b). Ent˜ao, existe c
+
+(a, b) tal que:
+
+∈
+f ′(c) =
+
+f(b) − f(a)
+b − a
+
+.
+
+Demonstra¸c˜ao. Seja g : [a, b]
+
+R uma fun¸c˜ao dada por:
+
+→
+
+g(x) = f(x) −
+
+f(b) − f(a)
+b − a
+
+·
+
+(x − a).
+
+Note que g ´e uma fun¸c˜ao cont´ınua no intervalo [a, b] e deriv´avel em (a, b), pois f(x)
+
+e h(x) = (x − a) s˜ao cont´ınuas e deriv´aveis. Al´em disso,
+
+e
+
+g(a) = f(a) −
+
+f(b) − f(a)
+b − a
+
+·
+
+(a − a) = f(a)
+
+g(b) = f(b) −
+
+f(b) − f(a)
+b − a
+
+·
+
+(b − a) = f(a).
+
+Ent˜ao, como g(a) = g(b), pelo Teorema de Rolle, existe c
+
+(a, b) tal que g ′(c) = 0.
+
+∈
+
+Logo,
+
+g ′(c) = f ′(c) −
+
+f(b) − f(a)
+
+b − a ⇒
+
+f ′(c) −
+
+f(b) − f(a)
+b − a
+
+= 0
+
+⇒
+
+f ′(c) =
+
+f(b) − f(a)
+b − a
+
+.
+
+Corol´ario 2. Seja f : [a, b]
+
+→
+
+ent˜ao:
+
+R uma fun¸c˜ao cont´ınua e duas vezes deriv´avel em (a, b)
+
+i) f ′ ´e n˜ao-decrescente em [a, b] se, e somente se, f ′′(x) > 0 para todo x em (a, b).
+
+Al´em disso, se f ′′(x) > 0 para todo x
+
+(a, b) ent˜ao f ′ ´e crescente em [a, b].
+
+∈
+
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+17
+
+ii) f ′ ´e n˜ao-crescente em [a, b] se, e somente se, f ′′(x) 6 0 para todo x em (a, b). Al´em
+
+disso, se f ′′(x) < 0 para todo x
+
+∈
+
+(a, b) ent˜ao f ′ ´e decrescente em [a, b].
+
+Proposi¸c˜ao 4. Seja f uma fun¸c˜ao cont´ınua e duas vezes deriv´avel em R. Se f ′′ > 0 para
+todo x em R, ent˜ao f(x) > f(x0) + f ′(x0)(x − x0),
+
+= x0.
+
+x
+
+∀
+
+Demonstra¸c˜ao. Mostraremos que dado x0
+
+∈
+
+reta tangente passando pelo ponto (x0, f(x0)) para todo x
+
+R qualquer, a imagem f(x) est´a acima da
+
+R, com x
+
+= x0.
+
+∈
+
+Suponhamos que x > x0, pelo Teorema do Valor M´edio, no intervalo [x0, x], temos que
+
+existe c
+
+∈
+
+(x0, x) tal que:
+
+f ′(c) =
+
+f(x) − f(x0)
+
+x − x0 ⇒
+
+f ′(c)(x − x0) = f(x) − f(x0).
+
+(1.3)
+
+Por outro lado, como f ′′ > 0 para todo x
+2, que f ′ ´e uma fun¸c˜ao crescente e, portanto,
+
+∈
+
+R temos conforme parte (i) do Corol´ario
+
+f ′(x0) < f ′(c).
+
+(1.4)
+
+Agora, multiplicando a desigualdade (1.4) por x − x0 > 0, temos que:
+
+f ′(c)(x − x0) > f ′(x0)(x − x0)
+
+⇒
+
+f(x0) + f ′(c)(x − x0) > f(x0) + f ′(x0)(x − x0).
+
+Substituindo (1.3) na desigualdade acima, segue que:
+
+f(x) > f(x0) + f ′(x0)(x − x0).
+
+Logo, sendo x < x0 temos que existe c
+
+(x, x0) tal que f ′(c)(x − x0) = f(x) − f(x0)
+∈
+e f ′(c) < f ′(x0), uma vez que f ′ ´e crescente. Multiplicando esta ´ultima desigualdade por
+
+x − x0 < 0, temos:
+
+f ′(c)(x−x0) > f ′(x0)(x−x0)
+
+f(x)−f(x0) > f ′(x0)(x−x0)
+
+⇒
+
+⇒
+
+f(x) > f(x0)+f ′(x0)(x−x0).
+
+Portanto, f(x) > f(x0) + f ′(x0)(x − x0),
+
+x
+
+= x0.
+
+∀
+
+Exemplo 20. Seja f(x) = ax2 + bx + c, com a
+f ′′(x) > 0,
+
+R, ent˜ao f(x) > f(x0) + f ′(x0)
+
+x
+
+∈
+(x − x0),
+
+R∗
+
+∈
+= x0.
+
+x
+
+∀
+
+·
+
+∀
+
+∈
+
++ e b, c
+
+R. Mostre que se
+
+Solu¸c˜ao.
+
+Seja g(x) = f(x) − f(x0) − f ′(x0)(x − x0), sendo x0
+
+e duas vezes deriv´avel, a saber f ′(x) = 2ax + b e f ′′(x) = 2a > 0.
+
+R qualquer. Note que f ´e cont´ınua
+
+∈
+
+6
+6
+6
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+18
+
+Al´em disso,
+
+g(x) = f(x) − f(x0) − f ′(x0)(x − x0)
+
+= (ax2 + bx + c) − (ax2
+
+0 + bx0 + c) − (2ax0 + b)(x − x0)
+
+= ax2 − 2ax0x + ax2
+0
+
+= a(x − x0)2.
+
+Logo, g(x) > 0 para todo x
+
+= x0. Portanto, f(x) > f(x0) + f ′(x0)(x − x0).
+
+Proposi¸c˜ao 5. Seja f : R
+
+→
+
+m´ınimo global.
+
+R uma fun¸c˜ao cont´ınua. Se f ´e coerciva, ent˜ao f possui um
+
+Demonstra¸c˜ao. Como f ´e coerciva, temos que:
+
+lim
+x→+
+
+f(x) = lim
+x→−
+
+f(x) = +
+
+.
+
+∞
+Assim, dado um n´umero real a > 0, ´e poss´ıvel encontrarmos um real positivo b tal
+
+∞
+
+∞
+
+que a
+
+∈
+
+[−b, b] e para todo |x| > b tem-se f(x) > f(a).
+
+Como f ´e cont´ınua em [−b, b], segue, pelo (Teorema 10), que existe x0
+
+[−b, b] tal
+
+∈
+
+que f(x0) 6 f(x),
+
+∀
+f(x0) 6 f(a) < f(x),
+
+x
+
+∀
+
+∈
+x
+
+R. Portanto, x0 ´e m´ınimo global de f.
+
+∈
+
+[−b, b]. E como para todo |x| > b tem-se f(x) > f(a), segue que
+
+1.4 Conjuntos Convexos e Fun¸c˜oes Convexas
+
+Nesta se¸c˜ao faremos um breve estudo sobre conjuntos convexos e fun¸c˜oes convexas.
+
+As deﬁni¸c˜oes e resultados utilizados nesta se¸c˜ao podem ser encontrados em Amaral [1],
+
+Amorin [2], Chaves [10], Lima [13], Izmailov [16] ou Souza e Diniz-Ehrhardt [27].
+
+Deﬁni¸c˜ao 17. (Conjunto Convexo) Um conjunto D
+
+R ´e dito convexo se, dados dois
+
+⊂
+
+pontos a e b
+
+∈
+
+D.
+
+D, o segmento de reta que os une est´a inteiramente contido no conjunto
+
+Observa¸c˜ao 9. Neste caso, todo conjunto convexo em R ser´a um intervalo. Al´em disso,
+
+o conjunto vazio e os conjuntos com um ´unico ponto ser˜ao trivialmente convexos.
+
+Deﬁni¸c˜ao 18. (Fun¸c˜ao Convexa) Seja f : I
+
+R
+
+⊂
+
+→
+
+R. Diz-se que f ´e convexa em I, se
+
+para todo t
+
+[0, 1], vale:
+
+∈
+
+f(ta + (1 − t)b) 6 tf(a) + (1 − t)f(b),
+
+a, b
+
+I.
+
+∈
+
+∀
+
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+19
+
+E, f ´e dita estritamente convexa se a desigualdade acima ´e estrita, ou seja, para a
+
+= b:
+
+f(ta+(1−t)b) < tf(a)+(1−t)f(b), com 0 < t < 1. (Para mais informa¸c˜oes ver Amorin
+
+[2]).
+
+Geometricamente, isso signiﬁca que dados dois pontos quaisquer, a < b, com a, b
+
+I,
+
+∈
+
+o gr´aﬁco de f no intervalo [a, b] ﬁca sempre abaixo da corda de A para B. (Ver ﬁgura
+
+1.1).
+
+Figura 1.1: Fun¸c˜ao Convexa.
+
+Apresentaremos agora alguns exemplos de fun¸c˜oes convexas:
+
+Exemplo 21. f : R
+
+→
+
+R, deﬁnida por f(x) = |x + 1|.
+
+Sejam a, b
+
+R e t
+
+∈
+
+∈
+
+[0, 1]. Pela desigualdade triangular, temos:
+
+f(ta + (1 − t)b) = |ta + (1 − b)b + 1|
+
+= |ta + (1 − t)b + t − t + 1|
+
+= |t(a + 1) + (1 − t)(b + 1)|
+
+6 |t(a + 1)| + |(1 − t)(b + 1)|
+
+6 |t||a + 1| + |(1 − t)||b + 1|
+
+6 tf(a) + (1 − t)f(b),
+
+visto que t e (1 − t) s˜ao positivos. Logo, f(ta + (1 − t)b) 6 tf(a) + (1 − t)f(b) e, portanto,
+
+f ´e convexa.
+
+Exemplo 22. f : R
+
+→
+
+R, deﬁnida por f(x) = x2.
+
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+20
+
+Sejam a, b
+
+R e t
+
+∈
+
+∈
+
+[0, 1], devemos veriﬁcar se vale:
+
+f(ta + (1 − t)b) 6 tf(a) + (1 − t)f(b)
+
+(ta + (1 − t)b)2 6 ta2 + (1 − t)b2.
+
+⇒
+
+Veriﬁcando, temos:
+
+ta2 + (1 − t)
+
+·
+
+b2 − t2a2 − 2t(1 − t)
+
+·
+
+ta2 + (1 − t)
+
+·
+
+b2 − [ta + (1 − t)
+
+·
+ab − (1 − t)2
+
+b]2 > 0
+
+b2 > 0
+
+·
+
+(t − t2)a2 − 2(t − t2)ab + [1 − (1 − t)](1 − t)b2 > 0
+
+(t − t2)
+
+·
+
+a2 − 2(t − t2)
+
+·
+(t − t2)
+
+t
+
+·
+
+ab + (t − t2)
+
+b2 > 0
+
+·
+
+[a2 − 2ab + b2] > 0
+
+·
+(1 − t)
+
+[a − b]2 > 0.
+
+·
+
+De fato, pois t
+
+∈
+
+Logo, vale:
+
+Da´ı,
+
+[0, 1], logo t > 0, (1 − t) > 0 e al´em disso, (a − b)2 > 0,
+
+a, b
+
+R.
+
+∈
+
+∀
+
+(ta + (1 − t)b)2 6 ta2 + (1 − t)b2.
+
+f(ta + (1 − t)b) = (ta + (1 − t)b)2
+
+= t2a2 + 2t(1 − t)
+
+ab + (1 − t)2
+
+·
+6 ta2 + (1 − t)b2 = tf(a) + (1 − t)f(b).
+
+·
+
+b2
+
+Portanto, f ´e uma fun¸c˜ao convexa.
+
+Deﬁni¸c˜ao 19. Seja f : I
+
+R
+
+R uma fun¸c˜ao e α
+
+R, os conjuntos da forma
+
+∈
+→
+I; f(x) 6 α} s˜ao chamados de conjuntos de n´ıvel.
+
+⊂
+
+Aα = {x
+
+∈
+
+Proposi¸c˜ao 6. Se f ´e convexa, ent˜ao todos seus conjuntos de n´ıvel s˜ao convexos.
+
+Demonstra¸c˜ao. De fato:
+i) Se Aα = ∅, segue resultado, pois o conjunto vazio ´e trivialmente convexo;
+ii) Suponha Aα 6
+temos at + (1 − t)b
+
+I tais que f(a) 6 α e f(b) 6 α, ent˜ao
+
+I, pois I ´e convexo. Agora, pela convexidade de f, temos:
+
+= Ø, sejam a, b
+
+∈
+
+∀
+
+[0, 1],
+
+t
+
+∈
+
+∈
+
+f(at + (1 − t)b) 6 tf(a) + (1 − t)f(b) = tα + (1 − t)α = α.
+
+Portanto, at + (1 − t)b
+
+Aα.
+
+∈
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+21
+
+Observa¸c˜ao 10. A rec´ıproca da proposi¸c˜ao acima n˜ao ´e verdadeira. Por exemplo, note
+que f : R
+
+|x| possui conjuntos de n´ıvel convexo, por´em n˜ao ´e uma
+
+R dado por f(x) =
+
+→
+
+fun¸c˜ao convexa.
+
+p
+
+Proposi¸c˜ao 7. Toda fun¸c˜ao f : R
+
+R convexa ´e cont´ınua.
+
+→
+
+Demonstra¸c˜ao. Ver p. 64 de Amorin [2].
+
+Teorema 15. Seja f : I
+
+R
+
+⊂
+
+→
+
+somente se, vale:
+
+R uma fun¸c˜ao diferenci´avel. Ent˜ao, f ´e convexa se, e
+
+f(b) > f(a) + f ′(a)
+
+(b − a),
+
+a, b
+
+I.
+
+∈
+
+∀
+
+·
+
+Demonstra¸c˜ao.
+
+⇒
+
+) Se f ´e convexa, ent˜ao para todo t
+
+[0, 1], temos que:
+
+∈
+
+f(tb + (1 − t)a) 6 tf(b) + (1 − t)f(a).
+
+Assim,
+
+f(tb + a − ta) 6 tf(b) + f(a) − tf(a)
+
+f(a + t(b − a)) − f(a) 6 t[f(b) − f(a)]
+
+f(a + t(b − a)) − f(a)
+
+(cid:20)
+
+(b − a)
+
+t
+
+·
+
+(cid:21) ·
+
+(b − a) 6 f(b) − f(a),
+
+Aplicando o limite na ultima desigualdade acima, com t
+
+0+, temos:
+
+→
+
+(b − a)
+
+lim
+t→0+
+
+·
+
+f(a + t(b − a)) − f(a)
+t(b − a)
+(b − a)
+
+·
+
+6 f(b) − f(a)
+
+f ′(a) 6 f(b) − f(a).
+
+Portanto, f(b) > f(a) + f ′(a)
+
+) Temos por hip´otese que:
+
+⇐
+
+(b − a),
+
+a, b
+
+I.
+
+∈
+
+∀
+
+·
+
+f(b) > f(a) + f ′(a)
+
+(b − a),
+
+a, b
+
+I.
+
+∈
+
+∀
+
+·
+
+Sejam a1, a2
+
+∈
+
+temos:
+
+I e seja a = ta1 + (1 − t)a2, com 0 < t < 1. Quando b = a1 ou b = a2,
+
+f(a1) > f(a) + f ′(a)
+
+f(a2) > f(a) + f ′(a)
+
+(a1 − a).
+
+(a2 − a).
+
+·
+
+·
+
+(1.5)
+
+(1.6)
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+Multiplicando (1.5) e (1.6) por t e (1 − t), respectivamente, temos:
+
+f(a1) > t
+
+t
+
+·
+
+f(a) + t
+
+·
+
+f ′(a)
+
+·
+
+·
+
+(a1 − a).
+
+(1 − t)
+
+·
+
+f(a2) > (1 − t)
+
+[f(a) + f ′(a)
+
+·
+
+(a2 − a)].
+
+·
+
+22
+
+(1.7)
+
+(1.8)
+
+Agora, somando as desigualdades (1.7) e (1.8) membro a membro, segue que:
+
+f(a1) + (1 − t)
+
+t
+
+·
+
+·
+
+f(a2) > t
+
+f(a) + t
+
+·
+
+·
+> f(a) + f ′(a)
+
+> f(a) + f ′(a)
+
+f ′(a)
+
+(t
+
+[t
+
+·
+
+·
+
+·
+
+·
+
+(a1 − a) + (1 − t)
+
+·
+a1 + a2 − t
+
+·
+a2 − a)
+
+[f(a) + f ′(a)
+
+(a2 − a)]
+
+·
+
+a1 + (1 − t)
+
+a2 − a].
+
+(1.9)
+
+·
+
+·
+
+Substituindo a = t
+
+a1 + (1 − t)
+
+·
+
+·
+
+a2 em (1.9), temos:
+
+f(a1) + (1 − t)
+
+t
+
+·
+
+f(a2) > f(t
+
+·
+
+a1 + (1 − t)
+
+a2),
+
+·
+
+∀
+
+a1, a2
+
+I.
+
+∈
+
+·
+
+Portanto, f ´e convexa.
+
+Observa¸c˜ao 11. Note que, para f ′(a) = 0 temos f(a) 6 f(b),
+
+a
+
+∈
+
+∀
+
+I, ou seja, a ´e
+
+minimizador global da fun¸c˜ao f.
+
+Proposi¸c˜ao 8. Seja a fun¸c˜ao f : I
+somente se, f ′′ > 0 (se tivermos f ′′(x) > 0, f ser´a estritamente convexa).
+
+→
+
+⊂
+
+R
+
+R duas vezes deriv´avel, f ´e convexa se, e
+
+Demonstra¸c˜ao. Ver p. 18 de Chaves [10].
+
+Exemplo 23. Seja f : R
+
+→
+
+R, deﬁnida por, f(x) = x4 + 3x. Mostre que f ´e convexa.
+
+Solu¸c˜ao.
+Note que: f ′(x) = 4x3 + 3
+
+f ´e convexa.
+
+f ′′(x) = 12x2 > 0,
+
+⇒
+
+x
+
+∈
+
+∀
+
+R. Logo, pela (Proposi¸c˜ao 8),
+
+Exemplo 24. Seja f : (0, +
+
+)
+
+mente convexa.
+
+∞
+
+→
+
+R, deﬁnida por f(x) = − log x. Mostre que f ´e estrita-
+
+Solu¸c˜ao.
+
+Temos que:
+
+f ′(x) = − 1
+
+x ⇒
+
+f ′′(x) = 1
+
+x2 > 0,
+
+x
+
+∈
+
+∀
+
+(0, +
+
+).
+
+∞
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+23
+
+Portanto, f ´e estritamente convexa.
+
+Proposi¸c˜ao 9. Seja f : I
+
+R
+
+R deriv´avel. Se f possui um ponto de m´ınimo local e f
+
+→
+´e estritamente convexa, ent˜ao esse ponto ´e m´ınimo global e ´unico.
+
+⊂
+
+Demonstra¸c˜ao. Seja x0 o ponto de m´ınimo local de f, temos que f ′(x0) = 0. Como f ´e
+
+estritamente convexa, segue que:
+
+f(x) > f(x0) + f ′(x0)(x − x0),
+
+x
+
+= x0,
+
+∀
+
+logo,
+
+f(x) > f(x0),
+
+x
+
+∈
+
+∀
+
+R com x
+
+= x0.
+
+Portanto, x0 ´e ponto de m´ınimo global de f e ´e ´unico.
+
+Proposi¸c˜ao 10. Se f : R
+
+→
+uma fun¸c˜ao n˜ao-decrescente.
+
+R ´e uma fun¸c˜ao convexa e deriv´avel, ent˜ao f ′ : R
+
+R ´e
+
+→
+
+Demonstra¸c˜ao. Ver p. 110 de Lima [13].
+
+1.5 Fun¸c˜oes Quase Convexas
+
+Nesta se¸c˜ao faremos um breve estudo sobre fun¸c˜oes quase convexas e seus principais
+
+resultados. Tais resultados podem ser encontrados em Apolin´ario [3], Bazarra [5], Brito
+
+et. al. [7], Boyd e Vandenberghe [8], Cysne e Moreira [11], Lima [13], Mangasarian [18]
+
+ou Silva [26].
+
+Deﬁni¸c˜ao 20. (Fun¸c˜ao Quase Convexa) A fun¸c˜ao f : I
+
+⊂
+R, o conjunto de n´ıvel Aα = {x
+
+quando, para todo α
+
+∈
+
+R, ´e dita quase convexa
+
+→
+I; f(x) 6 α} ´e vazio ou um
+
+R
+
+∈
+
+intervalo, ou seja, o conjunto de n´ıvel Aα ´e convexo.
+
+Na Figura (1.2), temos o gr´aﬁco de uma fun¸c˜ao quase convexa, na qual dados α, β
+
+R,
+
+∈
+
+os conjuntos de n´ıveis Aα e Aβ s˜ao deﬁnidos, respectivamente, pelos intervalos: [a, b] e
+
+(−
+
+, c].
+
+∞
+
+6
+6
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+24
+
+Figura 1.2: Fun¸c˜ao quase convexa em R.
+
+Alguns exemplos de fun¸c˜oes quase convexas podem ser observadas abaixo:
+
+Exemplo 25. f : R
+
+→
+
+R, com f(x) = x + 2.
+
+Como Aα = {x
+
+∈
+
+I; f(x) 6 α}, temos que f(x) = x + 2, da´ı: x + 2 6 α
+
+x 6 α − 2.
+
+⇒
+
+Logo A = (−
+
+, α − 2] ´e um intervalo. Portanto, f ´e quase convexa.
+
+∞
+
+Exemplo 26. f : R
+
+→
+
+Note que, se α < 0
+
+i) Se x > 0, ent˜ao
+
+ii) Agora, para x < 0 temos:
+
+p
+
+⇒
+|x| 6 α
+
+R, deﬁnida por f(x) =
+
+|x|.
+
+p
+Aα = ∅. Por outro lado, se α > 0, temos:
+
+⇒
+
+x 6 α2;
+
+|x| 6 α
+
+p
+
+−x 6 α2
+
+x > −α2.
+
+⇒
+
+⇒
+
+Logo, Aα = [−α2, α2] ´e um intervalo. Portanto, f(x) =
+
+convexa.
+
+Proposi¸c˜ao 11. Toda fun¸c˜ao convexa ´e quase convexa.
+
+|x| ´e uma fun¸c˜ao quase
+
+p
+
+Demonstra¸c˜ao. De fato, sejam f uma fun¸c˜ao convexa e o conjunto de n´ıvel Aα = {x
+
+I; f(x) 6 α}.
+
+∈
+
+Ent˜ao, dados a, b
+
+∈
+
+Aα e a < w < b, com w = (1 − t)a + tb, t
+
+(0, 1), temos:
+
+∈
+
+f(w) = f((1 − t)a + tb) 6 (1 − t)f(a) + tf(b) 6 (1 − t)α + αt = α,
+
+desta forma, w
+
+∈
+
+Aα. Logo, Aα ´e um intervalo.
+
+Portanto, f ´e quase convexa.
+
+Observa¸c˜ao 12. Note que a rec´ıproca da Proposi¸c˜ao 11 n˜ao ´e verdadeira, conforme
+
+exemplo abaixo.
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+Seja f : R
+
+R, dada por f(x) = x3. Tomemos um α
+
+R qualquer, ent˜ao dados x
+
+→
+
+∈
+
+temos: f(x) 6 α, ou seja, x3 6 α
+
+x 6 3√α. Logo, Aα = (−
+
+, 3√α].
+
+Portanto, Aα ´e um intervalo, como α ´e qualquer, segue que f ´e quase convexa.
+
+∞
+
+⇒
+
+25
+
+I,
+
+∈
+
+Por outro lado, suponhamos f convexa, logo: f(ta + (1 − t)b) 6 tf(a) + (1 − t)f(b).
+
+Tomando a = −2, y = 0 e t =
+
+1
+2
+
+, temos:
+
+−1 = f(−1) = f
+
+1
+2 ·
+
+(cid:18)
+
+(−2) +
+
+1
+2 ·
+
+6
+
+0
+
+(cid:19)
+
+1
+2 ·
+
+f(−2) +
+
+1
+2 ·
+
+f(0) =
+
+1
+2 ·
+
+(−8) = −4.
+
+Absurdo. Logo, f n˜ao ´e convexa.
+
+Teorema 16. f : I
+
+R
+
+⊂
+
+→
+
+quaisquer, vale:
+
+R ´e quase convexa se, e somente se, para a, b
+
+I e t
+
+∈
+
+∈
+
+[0, 1]
+
+f((1 − t)a + tb) 6 max{f(a), f(b)}.
+
+Demonstra¸c˜ao. (
+
+) Como f ´e quase convexa, segue pela Deﬁni¸c˜ao 20 que Aα ´e um
+
+⇒
+
+conjunto vazio ou um intervalo.
+
+i) Se Aα = ∅, o resultado ´e imediato.
+
+ii) Se Aα ´e um intervalo, ent˜ao (1 − t)a + tb
+Aα e
+R qualquer, temos: f(a) 6 α e f(b) 6 α. Em particular, seja α = max{f(a), f(b)}.
+
+[0, 1], onde a, b
+
+Aα, com t
+
+∈
+
+∈
+
+∈
+
+α
+
+∈
+Assim,
+
+f((1 − t)a + tb) 6 α = max{f(a), f(b)}.
+
+(
+
+) Sejam a e b tais que f(a) 6 α e f(b) 6 α. Pegue α > max{f(a), f(b)}. Da´ı,
+
+⇐
+
+(1 − t)a + tb
+
+⇒
+
+f((1 − t)a + tb) 6 max{f(a), f(b)} = α.
+
+Logo, f ´e quase convexa.
+
+Exemplo 27. Mostremos que f : R
+
+R, deﬁnida por
+
+→
+
+f(x) = 
+
+
+x2,
+−x2,
+
+se x > 0
+
+se x < 0
+
+
+
+´e quase convexa.
+
+Solu¸c˜ao.
+
+Para veriﬁcar se f ´e quase convexa, devemos analisar os seguintes casos:
+
+i) a, b
+
+∈
+
+R tal que 0 < a < b e t
+
+[0, 1]:
+
+∈
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+26
+
+De fato, como 0 < a < b e t
+
+[0, 1], segue que:
+
+∈
+f((1 − t)a + tb) = [(1 − t)a + tb)]2
+
+= (1 − t)2a2 + 2(1 − t)atb + t2b2
+
+6 (1 − t)2b2 + 2(1 − t)btb + t2b2
+
+6 b2 − 2tb2 + t2b2 + 2b2t − 2b2t2 + t2b2
+
+f((1 − t)a + tb) 6 b2 = f(b) = max{f(a), f(b)}.
+
+Portanto, f((1 − t)a + tb) 6 max{f(a), f(b)}.
+
+ii) a, b
+
+∈
+
+R tal que a < b < 0 e t
+
+De fato, como a < b < 0 e t
+
+[0, 1]:
+
+∈
+[0, 1], segue que:
+
+∈
+f((1 − t)a + tb) = −[(1 − t)a + tb)]2
+
+= −[(1 − t)2a2 + 2(1 − t)atb + t2b2]
+
+= −(1 − t)2a2 − 2(1 − t)atb − t2b2
+
+6 −(1 − t)2b2 − 2(1 − t)btb − t2b2
+
+6 −(1 − 2t + t2)b2 − 2tb2 + t2b2 − t2b2
+
+6 −b2 + 2tb2 − t2b2 − 2tb2 + 2t2b2 − t2b2
+
+f((1 − t)a + tb) 6 −b2 = f(b) = max{f(a), f(b)}.
+
+Portanto, f((1 − t)a + tb) 6 max{f(a), f(b)}.
+
+iii) a, b
+
+R tal que a < 0, b > 0 e t
+
+[0, 1]:
+
+∈
+
+∈
+
+Note que: (1 − t)a + tb > 0 ou (1 − t)a + tb 6 0. Da´ı, por i) e ii), segue que:
+
+f((1 − t)a + tb) 6 f(b) = max{f(a), f(b)}
+
+Logo, f ´e quase convexa.
+
+Proposi¸c˜ao 12. Seja f : [a, b]
+
+→
+m´ınimo de f ´e atingido no ponto c
+
+R uma fun¸c˜ao cont´ınua quase convexa, onde o valor
+
+[a, b]. Temos:
+
+∈
+
+i) Se c = b, ent˜ao f ´e n˜ao crescente;
+
+ii) Se c = a, ent˜ao f ´e n˜ao decrescente;
+
+iii) Se a < c < b, ent˜ao f ´e n˜ao crescente em [a, c] e n˜ao decrescente em [c, b].
+
+Demonstra¸c˜ao. i) Se o m´ınimo de f ´e atingido no ponto c = b ent˜ao, dados x1 < x2 em
+
+[a, b], temos que x2
+
+∈
+
+[x1, b], logo f(x2) 6 max{f(x2), f(b)} = f(x2), ou seja, f(x1) > f(x2).
+
+Portanto, f ´e n˜ao crescente;
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+27
+
+ii) Analogamente, se o valor m´ınimo de f ´e atingido no ponto c = a ent˜ao, dados
+
+x1 < x2 em [a, b], temos que x1
+
+[a, x2], logo f(x1) 6 max{f(a), f(x2)} = f(x2), ou seja,
+
+f(x1) 6 f(x2). Portanto, f ´e n˜ao decrescente;
+
+∈
+
+iii) De i) e ii) segue que se f atinge seu m´ınimo no ponto c
+
+(a, b) ent˜ao f ´e n˜ao
+
+∈
+
+crescente em [a, c] e n˜ao decrescente em [c, b].
+
+Teorema 17. Seja f : R
+
+R um fun¸c˜ao cont´ınua, f ´e quase convexa se, e somente se,
+
+existe c
+
+R tal que f ´e mon´otona n˜ao crescente no intervalo (−
+
+→
+
+, c] e mon´otona n˜ao
+
+∞
+
+∈
+decrescente em [c, +
+
+).
+
+Demonstra¸c˜ao. Segue imediato da (Proposi¸c˜ao 12).
+
+∞
+
+Teorema 18. Seja f : R
+
+→
+
+somente se, para todo a, b
+
+∈
+
+R uma fun¸c˜ao diferenci´avel. Ent˜ao, f ´e quase convexa se, e
+R, vale:
+
+f(a) 6 f(b)
+
+⇒
+
+f ′(b).(a − b) 6 0
+
+Demonstra¸c˜ao. Ver p. 9 de Silva [26].
+
+Exemplo 28. Mostremos que a fun¸c˜ao f : R
+
+f(x) = 
+
+
+
+
+´e quase convexa.
+
+→
+(x − 1)3,
+−(x − 1)2,
+
+R, deﬁnida por
+
+se x > 1
+
+se x < 1
+
+Solu¸c˜ao.
+
+i) Sejam a, b
+
+∈
+
+R, tais que a, b > 1. Suponha que f(a) 6 f(b), logo:
+
+(a − 1)3 6 (b − 1)3
+
+(a − 1)3 − (b − 1)3 6 0.
+
+(1.10)
+
+Substituindo a − 1 = t e b − 1 = w na desigualdade (1.10), temos:
+
+t3 − w3 6 0
+
+(t − w)
+
+·
+
+⇒
+
+(t2 + tw + w2) 6 0.
+
+Al´em disso, como a, b > 1, segue que t, w > 0, logo, t2 + tw + w2 > 0. Assim, temos
+
+que t − w 6 0, ou seja, a − b 6 0. Por ﬁm, como f ′(b) = 3(b − 1)2 > 0,
+
+b > 1.
+
+∀
+
+Cap´ıtulo 1. No¸c˜oes Preliminares
+
+28
+
+Conclu´ımos que, f ′(b)
+
+(a − b) 6 0. (De modo an´alogo, segue f(a) > f(b)).
+
+·
+
+ii) Sejam a, b
+
+∈
+
+R, tais que a, b < 1. Suponha que f(a) 6 f(b), logo:
+
+−(a − 1)2 6 −(b − 1)2
+
+(b − 1)2 − (a − 1)2 6 0
+
+(b + a − 2)
+
+·
+
+(b − a) 6 0.
+
+(1.11)
+
+Al´em disso, como a, b < 1, segue que (b + a − 2) < 0, assim, da desigualdade (1.11)
+
+temos que (b − a) > 0
+
+⇒
+Conclu´ımos que, f ′(b)
+
+(a − b) 6 0. Por ﬁm, como f ′(b) = −2(b − 1) > 0,
+
+∀
+(a − b) 6 0. (De modo an´alogo, segue f(a) > f(b)).
+R, tais que a < 1 e b > 1. Note que, f(b) = (b − 1)3 > 0 e f(a) =
+
+·
+
+b < 1.
+
+iii) Sejam a, b
+−(a − 1)2 < 0, logo:
+
+∈
+
+f(a) 6 f(b)
+
+Al´em disso, (a − b) < 0 e f ′(b) = 3(b − 1)2 > 0. Logo, f ′(b)
+
+(a − b) 6 0.
+
+·
+
+Portanto, pelo (Teorema 18) segue que f ´e quase convexa.
+
+Cap´ıtulo 2
+
+M´etodo de Ponto Proximal
+
+Neste cap´ıtulo, apresentaremos uma resolu¸c˜ao para Problema de Minimiza¸c˜ao quase
+
+convexa utilizando o M´etodo de Ponto Proximal. Investigaremos o comportamento dos
+
+termos da sequˆencia, e de suas imagens, que acarreta `a uma solu¸c˜ao (caso exista) e ao
+
+valor de m´ınimo (ou ´ınﬁmo) da fun¸c˜ao f, respectivamente.
+
+Dada uma fun¸c˜ao f : R
+
+→
+
+R. Considere o problema a seguir:
+
+f(x) := 
+
+
+min
+x∈R
+
+
+
+Encontrar x∗
+f(x∗) 6 f(x),
+
+∈
+
+∀
+
+R tal que
+R.
+
+x
+
+∈
+
+(2.1)
+
+O conjunto solu¸c˜ao do Problema (2.1) ser´a denotado por S∗, note que o conjunto S∗
+
+poder´a ser vazio, e at´e mesmo que,
+
+f(x) = −
+
+.
+
+inf
+x∈R
+
+∞
+
+A ﬁm de garantir a boa deﬁni¸c˜ao do m´etodo que deﬁniremos adiante, necessitaremos
+
+das seguintes hip´oteses:
+(H1) f ´e deriv´avel, com derivada cont´ınua, ou seja, de classe C1 e quase convexa;
+
+(H2) f(x) > L, ou seja, f ´e limitada inferiormente.
+
+As fun¸c˜oes citadas abaixo satisfazem as hip´oteses (H1) e (H2).
+
+Exemplo 29. f : R
+
+R, deﬁnida por:
+
+→
+
+,
+
+x3
+3
++ 1,
+
+
+
+
+f(x) =
+
+x2
+3
+R, deﬁnida por f(x) = x
+
+5x
+3
+
+
+
++
+
+se x > −1,
+
+se x < −1.
+
+ex.
+
+·
+
+29
+
+Exemplo 30. f : R
+
+→
+
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+30
+
+Exemplo 31. f : R
+
+→
+
+R, deﬁnida por f(x) = e−x.
+
+Sendo que os dois primeiros exemplos possuem ponto de m´ınimo, isto ´e, (S∗
+
+= ∅) e o
+
+terceiro possui somente o ´ınﬁmo, (S∗ = ∅).
+
+2.1 Algoritmo do Ponto Proximal
+
+Com a ﬁnalidade de resolver o Problema (2.1) descreveremos o nosso algoritmo. Para
+
+isto, considere a seguinte condi¸c˜ao:
+
+(H3) A sequˆencia de n´umeros reais positivos λk satisfaz 0 < λk < λ, para algum λ > 0.
+
+Algoritmo:
+
+Passo 1 (Inicializa¸c˜ao). Escolha x0
+Passo 2 (Itera¸c˜ao). Dado xk−1, encontre xk ∈
+
+∈
+
+R e λk satisfazendo a condi¸c˜ao (H3);
+
+R minimizador da fun¸c˜ao:
+
+fk(x) := f(x) + λk(x − xk−1)2.
+
+(2.2)
+
+Passo 3 (Crit´erio de parada). Se xk = xk−1, pare;
+Passo 4 (Continua). Caso xk 6
+
+= xk−1, fa¸ca k := k + 1 e retorne para o Passo 2.
+
+2.1.1 Boa Deﬁni¸c˜ao
+
+Mostraremos atrav´es do resultado seguinte a boa deﬁni¸c˜ao do m´etodo.
+
+Teorema 19. Seja f : R
+
+→
+
+R uma fun¸c˜ao satisfazendo as hip´oteses (H1) e (H2). Ent˜ao,
+
+para todo k natural existe xk satisfazendo (2.2).
+
+Demonstra¸c˜ao. Para provarmos a existˆencia mostraremos que fk deﬁnida conforme (2.2)
+
+´e cont´ınua e coerciva.
+
+De fato, por (H1), f ´e deriv´avel, logo f ´e cont´ınua (Teorema 11), al´em disso, como
+
+g(x) = λk(x − xk−1)2 ´e cont´ınua, segue que fk ´e cont´ınua pela Proposi¸c˜ao 3.
+
+Agora, por (H2), temos que f(x) > L, para algum L e
+
+x
+
+∈
+
+∀
+
+R. Al´em disso,
+
+lim
+|x|→
+
+g(x) = lim
+|x|→
+
+λk(x − xk−1)2 = +
+
+pois λk > 0.
+
+∞
+Sendo assim, como fk(x) = f(x) + g(x) > L + g(x), temos:
+
+∞
+
+∞
+
+lim
+|x|→
+
+fk(x) = lim
+|x|→
+
+∞
+
+∞
+
+(f(x) + g(x)) > L +
+
+= +
+
+,
+
+∞
+
+∞
+
+6
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+31
+
+Logo,
+
+lim
+|x|→
+
+fk(x) = +
+
+, ou seja, fk ´e coerciva, conforme Deﬁni¸c˜ao 12.
+
+Portanto, pela Proposi¸c˜ao 5,
+
+∞
+
+∞
+
+k
+
+∈
+
+∀
+
+N existe um m´ınimo global xk de fk, o qual pode
+
+n˜ao ser ´unico devido a n˜ao convexidade de f.
+
+Sendo assim, segue do Teorema 12 que se fk assume seu valor m´ınimo em xk, para
+
+todo k, ent˜ao f ′
+
+k(xk) = 0 e como f ′
+
+k(xk) = f ′(xk) + 2λk(xk − xk−1), segue que:
+
+f ′(xk) + 2λk(xk − xk−1) = 0.
+
+(2.3)
+
+Observa¸c˜ao 13. (Crit´erio de parada) Se xk = xk−1, ent˜ao xk ´e uma solu¸c˜ao de (2.1).
+Pois nesse caso, f ′(xk) = 0, onde xk ´e um ponto cr´ıtico. Essa condi¸c˜ao ´e necess´aria, mas
+
+n˜ao ´e suﬁciente para deduzir que xk seja solu¸c˜ao do Problema (2.1). Na verdade, este
+
+processo detecta poss´ıveis candidatos `a solu¸c˜ao. Al´em disso, se f ´e convexa, ent˜ao xk ´e
+
+um ponto de m´ınimo pelo Teorema 15.
+
+Observa¸c˜ao 14. Mesmo que S∗ = ∅, a equa¸c˜ao do Algoritmo (2.2) sempre possui
+
+solu¸c˜ao.
+
+2.1.2 An´alise de Convergˆencia
+
+A partir de agora, suponhamos que xk 6
+
+= xk−1 para todo k natural, pois caso contr´ario,
+
+xk ´e um ponto cr´ıtico de f, de acordo com a Observa¸c˜ao 13.
+
+Proposi¸c˜ao 13. {f(xk)} ´e uma sequˆencia estritamente decrescente e convergente.
+
+Demonstra¸c˜ao. Sendo xk um minimizador de fk, segue que:
+
+fk(xk) 6 fk(x)
+
+⇒
+
+f(xk) + λk(xk − xk−1)2 6 f(x) + λk(x − xk−1)2, para todo x
+
+R.
+
+∈
+
+Em particular, para x = xk−1, temos:
+f(xk) + λk(xk − xk−1)2 6 f(xk−1) + λk(xk−1 − xk−1)2
+
+f(xk) + λk(xk − xk−1)2 6
+
+⇒
+
+f(xk−1)
+
+⇒
+
+f(xk) < f(xk−1), visto que λk(xk − xk−1)2 > 0, pois xk 6
+
+= xk−1 e λk > 0. Logo,
+
+f ´e estritamente decrescente.
+
+De (H2), temos que f ´e limitada inferiormente. Portanto, como f ´e mon´otona e limi-
+
+tada, segue do Teorema 4 que a sequˆencia {f(xk)} ´e convergente.
+
+Com o objetivo de analisarmos a convergˆencia do problema, considere o conjunto:
+
+B := {¯x
+
+∈
+
+R; f(¯x) < f(xk), para todo natural k}.
+
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+32
+
+Proposi¸c˜ao 14. Se S∗
+
+= ∅, ent˜ao B
+
+= ∅.
+
+R tal que f(x∗) 6 f(x), para todo x em
+Demonstra¸c˜ao. Como S∗
+R. Da´ı, f(x∗) 6 f(xk), suponhamos que f(x∗) = f(xk), para algum k. Como a sequˆencia
+
+= ∅, ent˜ao existe x∗
+
+∈
+
+{f(xk)} ´e estritamente decrescente, temos:
+
+... < f(xk+1) < f(x∗) = f(xk) < f(xk−1) < ...
+
+segue que: f(xk+1) < f(x∗). Absurdo.
+
+Portanto, f(x∗) < f(xk),
+
+k
+
+∈
+
+∀
+
+N, ou seja, x∗
+
+∈
+
+B, assim, temos que B
+
+= ∅.
+
+Proposi¸c˜ao 15. Suponha que B
+
+= ∅. Seja ¯x
+
+B, ent˜ao para todo natural k, vale:
+
+∈
+
+(¯x − xk)2 6 (¯x − xk−1)2 − (xk − xk−1)2.
+
+(2.4)
+
+Demonstra¸c˜ao.
+
+(¯x − xk−1)2 = [(¯x − xk) + (xk − xk−1)]
+
+2
+
+= (¯x − xk)2 + 2(¯x − xk)(xk − xk−1) + (xk − xk−1)2.
+
+Assim, de (2.3), segue que:
+
+(¯x − xk−1)2 = (¯x − xk)2 + (λk)−1f ′(xk)(xk − ¯x) + (xk − xk−1)2.
+
+Do Teorema 18, temos que: f ′(xk).(¯x − xk) 6 0, ou seja, f ′(xk).(xk − ¯x) > 0, al´em
+
+disso λk > 0. Logo,
+
+(¯x − xk)2 + (xk − xk−1)2 6 (¯x − xk−1)2
+
+⇒
+
+(¯x − xk)2 6 (¯x − xk−1)2 − (xk − xk−1)2.
+
+Observa¸c˜ao 15. Como xk 6
+Proposi¸c˜ao 15 ´e que |¯x − xk| < |¯x − xk−1|, para todo natural k.
+
+= xk−1, temos (xk − xk−1)2 > 0, assim uma consequˆencia da
+
+Teorema 20. Seja B
+
+= ∅, ent˜ao para todo ¯x
+
+B, temos:
+
+∈
+
+i) A sequˆencia (|¯x − xk|)k∈N ´e convergente. Consequentemente (xk)k∈N ´e limitada;
+
+ii) lim
+k→
+
+|xk − xk−1| = 0;
+
+∞
+
+iii) A sequˆencia (xk)k∈N converge para um ponto cr´ıtico.
+
+6
+6
+6
+6
+6
+6
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+33
+
+Demonstra¸c˜ao. i) Pela Observa¸c˜ao 15, temos que:
+
+|¯x − xk| < |¯x − xk−1| < |¯x − xk−2| < ... < |¯x − x0|.
+
+Logo, a sequˆencia (|¯x−xk|)k∈N ´e mon´otona e limitada, assim do Teorema 4, a sequˆencia
+
+(|¯x − xk|)k∈N converge para algum limite L.
+
+Al´em disso, |¯x − xk| < |¯x − x0|, logo (xk) ´e limitada. Portanto, temos que a sequˆencia
+
+(|¯x − xk|)k∈N ´e convergente e (xk)k∈N ´e limitada.
+
+ii) De (2.4), temos que:
+
+(¯x − xk)2 6 (¯x − xk−1)2 − (xk − xk−1)2,
+
+ou seja, 0 6 (xk − xk−1)2 6 (¯x − xk−1)2 − (¯x − xk)2. Assim,
+
+0 6 |xk − xk−1| 6
+
+(¯x − xk−1)2 − (¯x − xk)2
+
+(2.5)
+
+Aplicando o limite na desigualdade (2.5), com k
+
+→
+
+p
+
+, temos:
+
+∞
+
+0 6 lim
+k→
+
+∞
+
+|xk − xk−1| 6 lim
+k→
+
+(¯x − xk−1)2 − (¯x − xk)2
+
+p
+∞
+lim
+k→
+
+q
+
+6
+
+6
+
+[(¯x − xk−1)2 − (¯x − xk)2]
+
+∞
+lim
+k→
+
+(¯x − xk−1)2 − lim
+k→
+
+(¯x − xk)2.
+
+Da´ı, como (|¯x − xk|)
+
+→
+
+q
+L, segue que, (|¯x − xk|2)
+
+∞
+
+∞
+
+L2, logo:
+
+→
+
+Portanto, pelo item iii) do Teorema 3, temos que:
+
+|xk − xk−1| 6 0.
+
+0 6 lim
+k→
+
+∞
+
+lim
+k→
+
+|xk − xk−1| = 0.
+
+iii) Seja D = {xk; k
+
+∈
+
+∞
+
+N}. Note que k tende a mais inﬁnito e pelo item i) a sequˆencia
+
+(xk) ´e limitada, logo o conjunto inﬁnito D ´e limitado. Da´ı, pelo Teorema 7, D possui ao
+menos um ponto de acumula¸c˜ao. Seja x∗ o ponto de acumula¸c˜ao do conjunto D, logo pelo
+
+Teorema 6 existe uma subsequˆencia (xki) de (xk) tal que:
+
+Assim,
+
+lim
+i→
+
+xki = x∗ e xki ∈
+
+D − {x∗}.
+
+∞
+
+f(x∗) = lim
+i→
+
+f(xki) = lim
+k→
+
+f(xk) < f(xk).
+
+∞
+
+∞
+
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+34
+
+Logo, x∗
+
+∈
+
+B. Da´ı, como (|x∗ − xk|) ´e convergente e (|x∗ − xki|) converge a zero. Temos
+
+pelo Corol´ario 1 que:
+
+lim
+k→
+Al´em disso, temos que: f ′(x∗) = lim
+k→
+
+∞
+
+xk = x∗.
+
+f ′(xk) = lim
+k→
+
+2λk(xk−1 − xk) = 0, pois λk ´e
+
+limitado e lim
+k→
+
+(xk−1 − xk) = 0, ver item ii) do Teorema 3.
+
+∞
+
+∞
+
+∞
+
+Logo, x∗ ´e um ponto cr´ıtico.
+Portanto, a sequˆencia (xk) converge para um ponto cr´ıtico, x∗.
+
+Teorema 21. Se B = ∅, ent˜ao:
+
+i) (xk)k∈N ´e uma sequˆencia ilimitada;
+
+ii) lim
+k→
+
+f(xk) = infx∈Rf(x).
+
+∞
+
+Demonstra¸c˜ao. i) Suponha que (xk) ´e uma sequˆencia limitada. Assim, seja x∗ um ponto
+
+de acumula¸c˜ao da sequˆencia (xk), logo existe uma subsequˆencia (xki) de (xk), tal que
+x∗. Da´ı, pela continuidade da fun¸c˜ao f e como {f(xk)} ´e uma sequˆencia estritamente
+xki →
+decrescente, temos:
+
+f(x∗) = lim
+i→
+
+f(xki) = lim
+k→
+
+f(xk) < f(xk),
+
+k
+
+∈
+
+∀
+
+N.
+
+Logo, x∗
+
+∈
+
+B. Absurdo!
+
+∞
+
+∞
+
+Portanto, (xk)k∈N ´e uma sequˆencia ilimitada.
+
+ii) Suponha que lim
+k→
+
+f(xk)
+
+= infx∈Rf(x), ent˜ao existe α
+
+R tal que:
+
+∈
+
+∞
+
+infx∈Rf(x) < α < lim
+k→
+
+f(xk).
+
+Logo, pela deﬁni¸c˜ao de ´ınﬁmo (ver deﬁni¸c˜ao, p. 76 de Lima [12]) existe x∗, tal que:
+
+∞
+
+infx∈Rf(x) 6 f(x∗) < α < lim
+k→
+
+f(xk) 6 f(xk),
+
+assim, f(x∗) < α < f(xk),
+
+k
+
+∈
+
+∀
+
+N. Logo, x∗
+
+∈
+
+Portanto,
+
+lim
+k→
+
+f(xk) = infx∈Rf(x).
+
+∞
+
+B. Absurdo!
+
+∞
+Observa¸c˜ao 16. Note que, f : R
+
+R, deﬁnida por f(x) = c, onde c
+
+R, n˜ao satisfaz a
+
+∈
+
+→
+
+condi¸c˜ao do conjunto B. No entanto, pelo Algoritmo (2.2) o crit´erio de parada ocorre na
+
+primeira itera¸c˜ao.
+
+Teorema 22. Assumindo (H1), (H2) como verdadeira e que B
+
+= ∅. Se lim
+k→
+
+λk = 0,
+
+ent˜ao a sequˆencia (xk)k∈N, gerada pelo algoritmo (2.2), converge para a solu¸c˜ao de (2.1).
+
+∞
+
+6
+6
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+35
+
+Demonstra¸c˜ao. Pelo item iii) do Teorema 20, a sequˆencia (xk)k∈N converge para um
+
+ponto cr´ıtico, ou seja,
+
+xk = x∗.
+
+lim
+k→
+
+Seja xk o minimizador da fun¸c˜ao f(x) + λk(x − xk−1)2. Logo, para todo x
+
+∞
+
+R, temos:
+
+∈
+
+f(xk) + λk(xk − xk−1)2 6 f(x) + λk(x − xk−1)2.
+
+Aplicando o limite, com k
+
+→
+
+, na desigualdade acima, temos:
+
+lim
+k→
+
+f(xk) + lim
+k→
+
+∞
+
+∞
+
+Por outro lado, como xk, xk−1
+
+∞
+
+λk(xk − xk−1)2 6 f(x) + lim
+k→
+
+λk(x − xk−1)2.
+
+x∗ e lim
+k→
+
+→
+
+∞
+
+λk = 0, temos:
+
+∞
+f(x∗) 6 f(x),
+
+x
+
+∈
+
+∀
+
+R.
+
+Portanto, x∗ ´e a solu¸c˜ao do problema (2.1).
+
+2.1.3
+
+Ilustra¸c˜ao do M´etodo
+
+Apresentaremos algumas ilustra¸c˜oes pr´atica do m´etodo a ﬁm de exempliﬁcar a eﬁciˆencia
+
+do mesmo.
+
+i) Consideremos a fun¸c˜ao f : R
+
+→
+
+R, deﬁnida por f(x) = e−x, na qual de acordo com
+
+o m´etodo temos que encontrar a solu¸c˜ao da equa¸c˜ao:
+
+f ′(xk) + 2λk(xk − xk−1) = 0, ou seja, −e−xk + 2λk(xk − xk−1) = 0.
+
+Solu¸c˜ao.
+
+Aﬁrma¸c˜ao 1: xk > xk−1.
+
+Demonstra¸c˜ao. Suponha que xk 6 xk−1, logo xk − xk−1 6 0. E, como λk > 0, temos que:
+R. Logo, −e−xk +2λk(xk −xk−1) < 0.
+2λk(xk −xk−1) 6 0. Al´em disso, −e−xk < 0,
+
+xk ∈
+
+∀
+
+Absurdo!
+
+Portanto, xk > xk−1.
+
+Aﬁrma¸c˜ao 2: (xk)k∈N ´e uma sequˆencia ilimitada.
+
+Demonstra¸c˜ao. Suponha que (xk) ´e limitada, logo (xk) ´e convergente, visto que (xk) ´e
+
+uma sequˆencia mon´otona e limitada. Assim,
+
+lim
+k→
+
+xk = lim
+k→
+
+∞
+
+∞
+
+xk−1 = x∗.
+
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+36
+
+[−e−xk + 2λk(xk − xk−1)] = −e−x∗
+
+Da´ı,
+lim
+k→
+Portanto, xk →
+∞
+∞
+ii) Agora, consideremos a fun¸c˜ao f : R
+
+e com isso,
+
+lim
+k→
+
++
+
+∞
+
+f(xk) = lim
+k→
+
+= 0. Absurdo! Logo, (xk) ´e ilimitada.
+
+e−xk = 0 = infx∈Rf(x).
+
+∞
+
+R, deﬁnida por f(x) = x
+
+→
+
+ex, analogamente
+
+·
+
+ao caso anterior teremos de encontrar a solu¸c˜ao da equa¸c˜ao:
+
+f ′(xk) + 2λk(xk − xk−1) = 0, ou seja, (xk + 1)
+
+exk + 2λk(xk − xk−1) = 0.
+
+·
+
+Solu¸c˜ao.
+
+Aﬁrma¸c˜ao 1: Se xk−1 = −1 implicar em xk = −1. Pare!
+
+Demonstra¸c˜ao. Dado xk−1 = −1, temos:
+
+(xk + 1)
+
+·
+
+exk + 2λk(xk + 1) = 0
+
+(xk + 1)
+
+·
+
+⇒
+
+(exk + 2λk) = 0,
+
+ou seja, (xk + 1) = 0 ou (exk + 2λk) = 0. Como (exk + 2λk) > 0, segue que:
+
+(xk + 1) = 0
+
+xk = −1.
+
+⇒
+
+Aﬁrma¸c˜ao 2: Se xk−1 > −1, ent˜ao xk 6 xk−1.
+
+Demonstra¸c˜ao. Suponha que xk > xk−1, logo xk − xk−1 > 0, da´ı:
+
+(xk + 1)
+
+·
+
+exk + 2λk(xk − xk−1) > 0. Absurdo!
+
+Portanto, xk 6 xk−1.
+
+Aﬁrma¸c˜ao 3: Se xk−1 < −1, ent˜ao xk > xk−1.
+
+Demonstra¸c˜ao. Suponha que xk < xk−1
+
+xk − xk−1 < 0, logo:
+
+⇒
+
+(xk + 1)
+
+·
+
+exk + 2λk(xk − xk−1) < 0. Absurdo!
+
+Portanto, xk > xk−1.
+
+Da´ı, das Aﬁrma¸c˜oes (2) e (3), a sequˆencia (xk) ´e limitada e mon´otona, portanto,
+
+convergente. Seja lim
+k→
+
+xk = x∗, com isso lim
+k→
+
+2λk(xk − xk−1) = 0, logo:
+
+∞
+[(xk + 1)
+
+·
+
+lim
+k→
+
+∞
+
+exk + 2λk(xk − xk−1)] = (x∗ + 1)
+
+∞
+
+ex∗
+
+= 0
+
+·
+
+⇒
+
+x∗ = −1.
+
+Assim, (xk) tende para o ponto cr´ıtico da fun¸c˜ao f, que a saber ´e −1.
+
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+37
+
+Por outro lado, temos que: f(xk) + λk(xk − xk−1)2 6 f(x) + λk(x − xk−1)2, para todo
+R, isto ´e,
+
+x
+
+∈
+
+xk ·
+Agora, Aplicando o limite, com k
+
+exk + λk(xk − xk−1)2 6 x
+
+ex + λk(x − xk−1)2.
+
+·
+
+→
+
+, na desigualdade acima e considerando
+
+∞
+
+lim
+k→
+
+λk = 0, temos:
+
+∞
+
+∀
+Portanto, x∗ = −1 ´e o ponto ´otimo da fun¸c˜ao.
+
+·
+
+−e−1 6 x
+
+ex,
+
+R.
+
+x
+
+∈
+
+Uma boa aplica¸c˜ao do M´etodo na educa¸c˜ao b´asica ´e a resolu¸c˜ao do problema abaixo.
+
+Aplica¸c˜ao: Qual a solu¸c˜ao da equa¸c˜ao ex = x2?
+
+N˜ao ´e dif´ıcil ver que a equa¸c˜ao acima possui uma ´unica solu¸c˜ao, bastando para isso
+
+construirmos o gr´aﬁco da fun¸c˜ao g(x) = ex que ´e uma curva que tem como ass´ıntota o eixo
+x e toca o eixo y no ponto (0, 1) e h(x) = x2 que ´e uma par´abola com v´ertice na origem e
+
+concavidade voltada para cima. A utiliza¸c˜ao de gr´aﬁcos para ilustrar o problema, torna
+
+a ´algebra mais signiﬁcativa, no entanto essa t´ecnica s´o ´e bem sucedida com o aux´ılio do
+
+c´alculo. Observe a ﬁgura:
+
+Figura 2.1: h(x) = x2 e g(x) = ex.
+
+Nosso objetivo ´e encontrar uma “boa”aproxima¸c˜ao para o ponto A da ﬁgura, fazendo
+
+uso do nosso M´etodo.
+
+f(x) = ex − 1
+
+Para encontrarmos essa solu¸c˜ao, tomemos a fun¸c˜ao auxiliar f : R
+
+R, deﬁnida por
+3 x3, note que f(x) ´e uma fun¸c˜ao convexa, logo quase convexa. Al´em disso,
+f satisfaz as hip´oteses (H1) e (H2), assim utilizando nosso algoritmo encontraremos a
+
+→
+
+solu¸c˜ao para o problema.
+
+Cap´ıtulo 2. M´etodo de Ponto Proximal
+
+38
+
+De fato, sejam x0 = −2 e λk = 1
+
+2k , devemos encontrar x1 tal que:
+
+ou seja,
+
+f ′(x1) + 2λ1(x1 − x0) = 0,
+
+ex1 − x1
+
+2 + x1 + 2 = 0.
+
+Para resolver o problema acima, utilizaremos recursos computacionais (consideremos
+
+apenas 4 casas decimais) at´e encontrarmos a condi¸c˜ao desejada. Geralmente, utilizamos
+um crit´erio de parada espec´ıﬁco, no nosso caso, consideremos que |xk − xk−1| < 10−4.
+
+Assim, como estamos levando em conta apenas 4 casas decimais, nossa condi¸c˜ao de parada
+
+ser´a equivalente a xk = xk−1.
+
+Desta forma, temos: x1 = −1.1065, x2 = −0.7853, x3 = −0.7495, x4 = −0.7281,
+
+x5 = −0.7162, ..., x10 = −0.7039, x11 = −0.7035, x12 = −0.7035 e assim sucessivamente.
+
+Note que, x11 = x12 = −0.7035 ser´a a raiz para nosso problema, pois satisfaz o nosso
+
+crit´erio de parada. Veriﬁcando, temos que: 0.49485
+
+Portanto, xk = −0.7035 ´e o ponto procurado.
+
+e−0.7035 = (−0.7035)2
+
+≈
+
+0.49491.
+
+≈
+
+Cap´ıtulo 3
+
+Considera¸c˜oes Finais
+
+Esse trabalho foi dedicado ao estudo do M´etodo de Ponto Proximal para Otimiza¸c˜ao
+
+Quase Convexa, para tanto foi apresentado o Algoritmo (2.2) e comprovado sua eﬁciˆencia
+para resolu¸c˜ao do problema. O m´etodo consiste em resolver a equa¸c˜ao: f ′(xk) + 2λk(xk −
+
+xk−1) = 0, que ´e quase sempre dada de forma impl´ıcita e onde ´e necess´ario o uso de
+
+recursos computacionais para ser resolvida, por exemplo o m´etodo de Newton. (Ver p.
+
+105 de Izmailov [17]).
+
+Al´em disso, mostramos que a sequˆencia (xk)k∈N gerada pelo Algoritmo (2.2), converge
+
+para um ponto cr´ıtico, e sob a condi¸c˜ao lim
+k→
+sequˆencia para solu¸c˜ao do problema (2.1). Por ﬁm, foram apresentados alguns problemas
+
+λk = 0, obtemos a convergˆencia desta
+
+∞
+
+de matem´atica na qual ﬁzemos uso do m´etodo para resolu¸c˜ao do mesmos.
+
+39
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] AMARAL, Jos´e Henrique Salazar; BENTO, Glaydston de Carvalho. O M´etodo de
+
+Ponto Proximal para Otimiza¸c˜ao Convexa, Goi´as-GO. Instituto de Matem´atica e
+
+Estat´ıstica, Universidade Federal de Goi´as, Campus II.
+
+[2] AMORIN, Ronan Gomes. Introdu¸c˜ao `a An´alise Convexa: Conjuntos e Fun¸c˜oes Con-
+
+vexas, Disserta¸c˜ao de Mestrado. Goi´as-GO, 2013.
+
+[3] APOLIN ´ARIO, Helena C. Fernandes. M´etodo de Ponto Proximal para Minimiza¸c˜ao
+
+Multiobjetivo Quase-Convexa. Tese de Doutorado. Rio de Janeiro-RJ, 2014.
+
+[4] ATTOUCH, H.; TEBOULLE, M.. Regularized Lotka-Volterra Dynamical System as
+
+Continuous Proximal-Like Method in Optimization. Journal of Optimization Theory
+
+and Applications, 2004.
+
+[5] BAZARRA, M. S.; SHERALI, H. D.; SHETTY, C. M.. Nonlinear Programming:
+
+theory and algorithms. 3a ed., John Wiley and Sons, Inc., New York, 2006.
+
+[6] BELLO CRUZ, J. Y.; LUCAMBIO P´EREZ, L. R.; MELO, J. G.. Convergence of the
+
+Projected Gradient Method for Quasiconvex Multiobjective Optimization. Nonlinear
+
+Analysis, 2011.
+
+[7] BRITO, A. S.; CRUZ NETO, J. X. da; LOPES, J. de O.; OLIVEIRA, P.R.. Interior
+
+Proximal Algorithm for Quasiconvex Programming Problems and Variational Ine-
+
+qualities with Linear Constraints. Journal of Optimization Theory and Applications,
+
+2012.
+
+[8] BOYD, Stephen P.; VANDENBERGHE, Lieven. Convex Optimization. Cambridge
+
+University Press, Cambridge. UK, 2004.
+
+40
+
+Referˆencias Bibliogr´aﬁcas
+
+41
+
+[9] CARVALHO, Francisco G. de Sousa. Algoritmo do Ponto Proximal Generalizado
+
+em Espa¸cos de Hilbert para Problema de Desigualdade Variacional. Disserta¸c˜ao de
+
+Mestrado. Teresina-PI, 2010.
+
+[10] CHAVES, Francisco Jones dos Reis. O M´etodo do Ponto Proximal para Otimiza¸c˜ao
+
+Convexa, Disserta¸c˜ao de Mestrado. Teresina-PI, 2014.
+
+[11] CYSNE, Rubens Penha; MOREIRA, Humberto de Athuyde. Curso de Matem´atica
+
+para Economistas, Cap´ıtulo III: calculo no Rn. 1996.
+
+[12] LIMA, Elon Lages. Curso de An´alise, Volume 1. Cole¸c˜ao Projeto Euclides. 14a Ed.,
+
+Rio de Janeiro, IMPA, 2013.
+
+[13] LIMA, Elon Lages. Fun¸c˜oes de uma Vari´avel, Volume 1. 12a ed., Rio de Janeiro,
+
+IMPA, 2013.
+
+[14] GUIDORIZZI, Hamilton, Curso de C´alculo, Volume 1, Quinta Edi¸c˜ao, Rio de Ja-
+
+neiro, RJ, Editora LTC.
+
+[15] HARREL, Charles R.; GHOSH, Biman K.; BOWDEN, Royce. Simulation Using
+
+Promodel. New York, McGraw-Hill, 2000.
+
+[16] IZMAILOV, Alexey; SOLODOV, Mikhail V.. Otimiza¸c˜ao: condi¸c˜oes de otimiza¸c˜ao,
+elementos de an´alise convexa e de Dua, Volume 1, 3a ed., Rio de Janeiro: IMPA,
+
+2014.
+
+[17] IZMAILOV, Alexey; SOLODOV, Mikhail V.. Otimiza¸c˜ao: m´etodos computacionais,
+
+Volume 2, 2a ed., Rio de Janeiro: IMPA, 2012.
+
+[18] MANGASARIAN, O. L.. Nonlinear Programming. McGraw-Hill, New York, 1969.
+
+[19] MARTINET, B. R´egularisation d’in´equations variationnelles par approximations
+
+successives. (French)Rev. Fran¸caise Informat. Recherche Op´erationnelle 4 , Ser. R-3,
+
+154-158, (1970).
+
+[20] MUNIZ NETO, Antˆonio Caminha. T´opicos de Matem´atica Elementar: introdu¸c˜ao `a
+
+an´alise. Volume 3, 2a ed., Rio de Janeiro: SBM, 2013.
+
+Referˆencias Bibliogr´aﬁcas
+
+42
+
+[21] MUROLO, Afrˆanio Carlos; BONETTO, Gi´acomo Augusto. Matem´atica aplicada `a
+
+administra¸c˜ao, economia e contabilidade. S˜ao Paulo: Pioneira Thomson Learning,
+
+2004.
+
+[22] NETO ANTAR, Aref; SAMPAIO, Jos´e L. P.; LAPA, Nilton; CAVALLANTE, Sidney
+
+Luiz. Introdu¸c˜ao `a An´alise. Editora: moderna, S˜ao Paulo, 1985.
+
+[23] PENOT, J. P.. Characterization of solution sets of quasiconvex programs. J. Optim.
+
+Theory Appl. 2006.
+
+[24] QUIROZ, E. A. P.; OLIVEIRA, P. R. Convergence of the Proximal Point Method
+
+for Quasiconvex Minimization. Submitted, 2006.
+
+[25] ROCKAFELLAR, R. T.. Monotone operators and the proximal point algorithm,
+
+SIAM J. Control. Optim. 14, 877-898, (1976).
+
+[26] SILVA, Renata Batista e. M´etodo do Ponto Proximal Interior para Minimiza¸c˜ao
+
+Quase-Convexa. Disserta¸c˜ao de Mestrado. Teresina-PI, 2013.
+
+[27] SOUZA, Matheus; DINIZ-EHRHARDT, Maria A.. Otimiza¸c˜ao e An´alise Convexa:
+
+aspectos te´oricos e aplica¸c˜oes. 2011.
+
+

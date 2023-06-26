@@ -1,0 +1,5774 @@
+Universidade Federal Rural de Pernambuco
+
+Sociedade Brasileira de Matemática - SBM
+
+Departamento De Matemática
+
+Mestrado Proﬁssional em Matemática - PROFMAT
+
+ALGORITMOS DE APROXIMAÇÃO DE RAÍZES QUADRADAS
+
+Danilo Albuquerque de Campos
+
+DISSERTAÇÃO DE MESTRADO
+
+Recife
+Agosto de 2014
+
+UNIVERSIDADE FEDERAL RURAL DE PERNAMBUCO
+CENTRO DE CIÊNCIAS EXATAS E DA NATUREZA
+DEPARTAMENTO DE MATEMÁTICA
+
+Danilo Albuquerque de Campos
+
+Algoritmos de Aproximação de Raízes Quadradas
+
+Trabalho apresentado ao Programa de PÓS-GRADUAÇÃO
+EM MATEMÁTICA do DEPARTAMENTO DE MATEMÁ-
+TICA da UNIVERSIDADE FEDERAL RURAL DE PER-
+NAMBUCO como requisito parcial para obtenção do grau
+de Mestre em MATEMÁTICA.
+
+Orientador: Prof. Dr. Rodrigo José Gondim Neves
+
+Recife
+22 de Agosto de 2014
+
+Dedico esta dissertação a minha Mãe Edileide, ao meu Pai
+Fernando e minha Esposa Patrícia por toda ajuda,
+incentivo e compreensão que tiveram durante este curso.
+
+Agradecimentos
+
+A Deus.
+
+A minha família, principalmente minha mãe, pai e esposa pelo incentivo e amparo nos mo-
+
+mentos difíceis.
+
+Aos colegas que se alegraram com meu sorriso, que ponderaram no entusiasmo, me incen-
+
+tivando nas diﬁculdades, que de forma direta ou indireta colaboraram com meu estudo.
+
+Aos amigos da Escola Pastor Amaro de Sena, principalmente pela compreensão nos mo-
+
+mentos fatigantes e laboriosos.
+
+Aos amigos do PROFMAT: Emerson, Josemar, Carlos Eduardo, Roberto,... que nos mo-
+
+mentos intrincados éramos como irmãos.
+
+Aos professores pela complexa missão e em especial ao orientador deste trabalho Rodrigo
+
+Gondim pela paciência, entusiasmo e dedicação quando solicitado.
+
+v
+
+O fardo é proporcional às forças, como a recompensa o será à resignação
+e à coragem. Mas opulenta será a recompensa, do que penosa a aﬂição.
+Cumpre, porém, merecê-la,... O militar que não é mandado para as linhas
+de fogo ﬁca descontente, porque o repouso no campo nenhuma ascensão de
+posto lhe faculta. Sede, pois, como o miltar e não desejeis um repouso em
+que o vosso corpo se enervaria e se entorpeceria vossa alma. Alegrai-vos,
+quando Deus vos envia para luta,... Quando vos advenha uma causa de
+sofrimento ou de contrariedade, sobreponde-vos a ela, e quando houverdes
+conseguido dominar os ímpetos da impaiência,... dizei, de vós para
+convosco, cheio de justa satisfação: "fui o mais forte".
+—ALLAN KARDEC (O Evangelho Segundo o Espiritismo)
+
+Resumo
+
+Neste trabalho estamos interessados em mostrar três algoritmos de aproximação racional de
+raízes quadradas por métodos pouco utilizados ou desconhecidos pelos professores do ensino
+fundamental e médio. Iniciaremos deﬁnindo sequência numérica e convergência de sequências,
+discutiremos sobre a necessidade de ampliação do conceito de número racional e demonstra-
+remos a irracionalidade da diagonal de um quadrado. Provaremos um importante Teorema
+,conhecido na literatura como o Teorema de Dirichlet, e por ﬁm elencaremos três métodos de
+aproximação de raízes quadradas de números naturais não quadrados perfeitos, muito simples
+de serem trabalhados em sala de aula que são: O algoritmo de aproximção racional de Hierão
+de Alexandria, A escada de Theon e a Equação de Pell-Fermat, sende este último fundamental
+para discursão que iremos realizar sobre a relação dos três métodos apresentados.
+
+Palavras-chave: Raiz Quadrada, Aproximação Racional, Teorema de Dirichlet, Algoritmos
+de Hierão, Escada de Theon, Equação de Pell-Fermat.
+
+ix
+
+Abstract
+
+In this work we are interested in showing three algorithms rational approximation of square
+roots by methods unknown or underutilized by teachers of elementary and secondary education.
+We begin by deﬁning numerical sequence and convergence of sequences, will discuss the need
+to expand the concept of rational number and demonstrate the irrationality of the diagonal of a
+square. Prove an important theorem known in the literature as Dirichlet’s theorem and ﬁnally
+elencaremos three methods of approximating the square roots of natural non-perfect square
+numbers, very simple to be worked on in the classroom that are rational algorithm aproximção
+of Hiero of Alexandria, Theon’s Ladder and the Pell-Fermat equation, sende latter discursão
+fundamental to who will perform on the relationship of the three methods presented.
+
+Keywords: Square Root, Rational Approximation Theorem of Dirichlet, Algorithms Hiero,
+Ladder Theon, Pell-Fermat equation.
+
+xi
+
+Sumário
+
+1 Sequências
+
+1.1 Sequência Numérica
+1.2 Limite de Sequências
+1.3 Subsequências
+
+2 Aproximação Racional
+2.1 Números Racionais
+2.2 Sequências Racionais
+2.3 Números Irracionais
+2.4 Teorema de Dirichlet
+
+3 Algoritmos de Aproximação
+3.1 Algoritmo de Hierão
+
+3.1.1
+
+Interpretação Geométrica do Algoritmo de Hierão
+
+3.2 Aproximações Diofantinas
+
+3.2.1 Equações Diofaninas
+3.2.2 Equação de Pell-Fermat
+
+3.3 Escada de Theon
+
+3.3.1 A Escada de Theon para
+3.3.2 A Escada de Theon Generalizada
+3.3.3 Origem da Recorrência
+
+√
+2
+
+4 A Relação Entre os Algoritmos
+4.1 De Hierão a Pell-Fermat
+4.2 De Theon a Pell-Fermat
+
+5 Conclusão
+
+A Sobre Módulo e Desiguladade Modular
+
+B
+
+xiii
+
+3
+3
+5
+7
+
+11
+11
+11
+12
+14
+
+19
+19
+25
+26
+26
+27
+35
+35
+37
+41
+
+45
+47
+50
+
+53
+
+55
+
+57
+
+Lista de Figuras
+
+Interpretação geométrica do Algoritmo de Hierão
+Interpretação geométrica das soluções inteiras da equação x2 − 3y2 = 1
+
+3.1
+3.2
+3.3 Origem da recorrência Escada de Theon.
+
+25
+29
+42
+
+xv
+
+Lista de Tabelas
+
+3.1 Quociente das soluções da Escada de Theon.
+
+36
+
+xvii
+
+Introdução
+
+O estudo das raízes quadradas é costumeiramente iniciado no ensino fundamental, mais pre-
+cisamente no 6º ano. Porém, geralmente, é no 8º ano que os estudantes se deparam com a
+necessidade de realizar aproximações para encontrar uma raiz quadrada, devido ao fato que
+tradicionalmente é neste ano que se inicia o estudo dos números irracionais, perpetuando-se no
+9º ano.
+
+Quando se quer obter a raiz quadrada de um real r positivo, temos que levar em conside-
+r ⇔ x2 = r. Mesmo, essa relação, sendo muito simples de ser
+ração a seguinte relação x =
+explicada e até certo modo bem entendida pelos estudantes, há em muitos casos uma grande
+diﬁculdade de se encontrar um número real que a satisfaça, provavelmente pelo fato que nem
+sempre a raiz quadrada é exata, sendo na maioria das vezes necessário uma aproximação.
+
+√
+
+A verdade é que o cálculo de raiz quadrada traz certo desconforto para os estudantes do en-
+sino fundamental e médio. Porém, sendo uma operação extremamente comum, ela se apresenta
+em vários problemas matemáticos, por exemplo: Como determinar o lado de um quadrado dado
+sua área? Quais são as raízes da equação x2 = d, d ∈ N? Qual é o comprimento da diagonal
+de um retângulo de lados a e b ou da diagonal de um cubo de aresta a? O certo é que pode-se
+determinar variadas formas de se responder a estas interrogativas, porém, independentemente
+dos processos utilizados para alcançar as soluções, todas passarão pela necessidade da "extra-
+ção de raízes quadradas".
+
+Encontrar a raiz quadrada de um número natural quadrado perfeito é um processo basica-
+mente simples devido ao fato que podemos decompor este natural em fatores primos e obter-
+k j
+mos um natural n = p2k1
+· p2k2
+i )2, sendo p, q, i, j ∈ N, tal que
+3 · · · p
+1
+2
+√
+k j
+1 · pk2
+i . Porém, caso n não seja quadrado perfeito é certo que, pelo menos
+3 · · · p
+3, im-
+
+um desses fatores primos tem expoente ímpar, como por exemplo,
+possibilitando a "extração"dessa raiz quadrada pelo processo acima descrito.
+
+i = (pk1
+
+22 · 31 = 2
+
+2 · pk3
+
+2 · pk3
+
+n = pk1
+
+1 · pk2
+
+· · · p2k j
+
+· p2k3
+3
+
+12 =
+
+√
+
+√
+
+√
+
+Diante do que foi exposto o presente trabalho visa tornar o processo de aproximação raci-
+d, com d ∈ N não quadrado
+onal menos árduo apresentando algoritmos de aproximação de
+perfeito. Sendo que dois desses algoritmos já eram de conhecimento dos matemáticos gregos
+antigos como o Algoritmo de Hierão e a Escada de Theon e um último chamado de Equação
+de Pell-Fermat estudada desde o século VII, onde não sabemos se fora criada para esse objetivo.
+
+√
+
+1
+
+Começaremos estudando, no primeiro capítulo, as sequências reais, convergência e limite
+de sequências, como também o Teorema de Cauchy sobre convergência de sequências. Prosse-
+guimos com o estudo dos números racionais e irracionais, demonstrando que sempre é possível
+encontrar uma sequência de números racionais tal que seu limite é um número irracional dado.
+Continuando, provaremos um importante Teorema conhecido como Teorema de Dirichlet, que
+fundamenta muitas aﬁrmações que serão feitas posteriormente. No terceiro capítulo conhecere-
+mos os algoritmos de aproximação que são a principal proposta deste trabalho. Tais algoritmos
+nada mais são que sequências recorrentes que a cada interação encontra-se um racional mais
+d, com d natural não quadrado perfeito. A cada novo algoritmo apresentado
+próximo de
+sempre será tomado o cuidado de demonstrar sua convergência, como também sua origem que
+fora a Equação de Pell-Fermat, nasceram por processos geométricos, pois foram criados em
+épocas que não se tinha conhecimento da álgebra da forma que a utilizamos hoje. E ﬁnaliza-
+mos mostrando que os três algoritmos de aproximação racional quando utilizados para mesma
+raiz quadrada produzem algumas soluções idênticas, nos levando a conjecturar sobre a possibi-
+lidade da equivalência desses algoritmos que se evidência pela demonstração feita utilizando a
+indução com o auxílio da equação de Pell-Fermat.
+
+√
+
+2
+
+CAPÍTULO 1
+
+Sequências
+
+Neste capítulo vamos descrever algumas deﬁnições importantes e básicas para a continuidade
+do trabalho. Estamos interessados em estudar sobre: sequências monótonas, convergência e
+limite de sequência, estabelecer proposições e teoremas, bem como, conceituar recorrência e
+elencar algumas observações pertinentes.
+
+1.1 Sequência Numérica
+
+Deﬁnição 1.1. Uma sequência de números reais é uma função a : N → R que a cada número
+natural n associa um número real an = a(n), chamado o n-ésimo termo da sequência.
+
+Toda sequência, a : N → R, tal que a(n) = an será denotada simplesmente por (an). Vejamos
+
+alguns exemplos para ilustrar a deﬁnição acima.
+
+Exemplo 1.1. Exemplos de Sequência
+
+1. (xn) =
+
+(cid:19)
+
+(cid:18)
+
+=
+
+1,
+
+(cid:18)1
+n
+
+1
+2
+
+,
+
+1
+3
+
+, ...,
+
+(cid:19)
+;
+
+, ...
+
+1
+n
+
+2. (yn) =
+
+(cid:19)
+
+(cid:18) 1
+2n
+
+=
+
+(cid:18)1
+2
+
+,
+
+1
+22 ,
+
+1
+23 , ...,
+
+(cid:19)
+1
+2n , ...
+
+3. (hn) = (2n) = (2, 4, 8, ...).
+
+4. (kn) = ( n−1
+
+n ) = (0, 1
+
+2 , 2
+
+3 , 3
+
+4 , ...)
+
+5. (tn) = (1, 2, 2, 3, 3, 3, 4, 4, 4, 4, ...)
+
+Vamos analisar o Exemplo 1.1 de forma intuitiva.
+
+2, 1
+
+No primeiro item, (xn) = (1, 1
+
+3, ...), observa-se que a medida que n aumenta, o quociente
+entre 1 e n, tende a diminuir, pois estamos dividindo 1 por um número cada vez maior. Nota-se
+também que este quociente se aproxima de zero, porém como n ∈ N, 1
+n ≤ 1, ou
+seja, todos os termos da sequência estão conﬁnados num intervalo entre 0 e 1. Algebricamente
+podemos escrever que 0 < xn ≤ 1 e com isso ∀n ∈ N, xn ∈ [0, 1].
+
+n > 0, logo 0 < 1
+
+3
+
+No segundo item, o comentário é análogo ao da sequência (xn), porém, note que o quoci-
+
+ente entre 1 e 2n, tende a zero "mais rápido"que (xn) = 1
+
+n e que 0 < yn ≤ 1
+
+2 , logo yn ∈ [0, 1
+2 ].
+
+Já no terceiro item, observe que a medida que n cresce seus termos crescem exponencial-
+mente. Desta forma, não é possível encontrar um intervalo limitado, digamos de (−r, r) com
+r > 0 e r ∈ R, tal que, hn ∈ (−r, r). logo, sempre teremos termos de hn que não pertencerão ao
+intervalo (−r, r) com r ﬁxo, bastando tomar n suﬁcientemente grande.
+
+Com isso, podemos perceber que existem sequências que são limitadas por intervalo e ou-
+tras que extrapolam qualquer intervalo dado arbitrariamente. Desta forma descreveremos a
+seguinte
+
+Deﬁnição 1.2. Uma sequência (an) é dita limitada, se existe r > 0 tal que |an| < r, para todo
+n ∈ N. Quando uma sequência (an) não é limitada, dizemos que ela é ilimitada.
+
+Conhecendo a propriedade do módulo de um número real, dizer que |an| < r é o mesmo
+que −r < an < r e an ∈ [−r, r]. Observe que a sequência hn, no Exemplo 2.1 é dita ilimitada,
+enquanto xn e yn são limitadas.
+
+Deﬁnição 1.3. Uma sequência (an) será dita decrescente se an+1 < an (crescente se an+1 > an)
+para todo n ∈ N. Diremos que a sequência é não crescente, se an+1 ≤ an (não decrescente se
+an+1 ≥ an) para todo n ∈ N.
+
+Da deﬁnição podemos classiﬁcar que xn = 1
+
+n e yn = 1
+
+2n são decrescentes, hn = 2n é crescente
+
+e tn = (1, 2, 2, 3, 3, 3, ...) é não decrescente.
+
+As sequências crescentes, não decrescentes, decrescentes ou não crescentes são chamadas
+
+de sequências monótonas.
+
+Exemplo 1.2. A sequência dos números naturais (1, 2, 3, ..., n, ...) é crescente e ilimitada, desta
+forma, sempre teremos inﬁnitos termos dessa sequência maiores que qualquer real ﬁxo r (r ∈
+R+) dado arbitrariamente. Mesmo parecendo óbvio, o comentário acima é uma importante
+propriedade na construção dos números reais, conhecida na literatura como a Propriedade Ar-
+quimediana dos números Reais.
+
+Todas as deﬁnições e comentários feitos até este momento de certa forma são preparações
+para uma deﬁnição fundamental que faremos na próxima seção. No mais é extremamente im-
+portante estudar se uma sequência é monótona e limitada, pois em caso positivo, poderemos
+aﬁrmar que ela está se aproximando cada vez mais de um número real L. Como está claro tam-
+bém que as sequências (xn) e (yn) têm como candidato, para esse real L, o número 0. Veremos
+que de fato isso ocorre e 0 é chamado de limite dessas sequências.
+
+4
+
+1.2 Limite de Sequências
+
+Deﬁnição 1.4. Dizemos que uma (an) converge para um número real L quando, uma vez
+prescrito um erro r > 0, existir um índice n0 ∈ N, tal que |an − L| < r para todo n > n0.
+
+De forma alternativa, se (an) convergir para L, diremos que a sequência é convergente e
+
+que L é um limite da sequência. Podemos denotar o limite L de uma sequência como:
+
+ou
+
+.
+
+lim
+n→∞
+
+an = L
+
+an −→ L
+
+Exemplo 1.3. Mostraremos que o limite da sequência xn = 1
+
+n é zero.
+
+Demonstração De fato, basta mostar que para n > n0 ⇒ |xn − 0| < r. Pela Propriedade
+< r.
+
+r , assim ﬁxado n0 ∈ N, tal que n0 > 1
+
+Arquimediana podemos tomar n > 1
+Ora mas dado um n > n0 o resultado segue, pois
+
+r temos que 1
+n0
+
+1
+n
+
+<
+
+1
+n0
+
+< r ⇒ |xn| = |
+
+1
+n
+
+| =
+
+1
+n
+
+< r ⇒ |xn − 0| < r
+
+.
+
+Exemplo 1.4. Mostraremos que o limite da sequência yn = 1
+
+2n é zero.
+
+Demonstração: É fato que podemos tomar um n0 ∈ N, tal que
+
+Mas daí, tomando n > n0, temos
+
+2n0 >
+
+1
+r
+
+⇒
+
+1
+2n0
+
+< r
+
+1
+2n <
+
+1
+2n0
+
+< r ⇒ |yn| < r ⇒ |yn − 0| < r
+
+É possível que neste momento haja dúvida sobre se uma sequência possa convergir para
+mais de um limite, pois a deﬁnição não deixa claro. Porém isso não ocorre e demonstraremos
+na seguinte Proposição:
+
+Proposição 1.2.1. Se a sequência (an)n∈N convergir, então seu limite é único.
+
+Demonstração: Sejam L1 e L2 reais. Vamos supor que an −→ L1 e an −→ L2. Assim
+sendo, dado para qualquer real positivo r, pela deﬁnição de limite, está garantida a existência
+de n1 e n2 ∈ N, tais que
+
+n > n1 ⇒ |an − L1| < r
+
+5
+
+e
+
+Somando membro a membro e tomando n > max(n1, n2), temos
+
+n > n2 ⇒ |an − L2| < r
+
+|an − L1| + |an − L2| < 2r
+
+mas pela consequência da desigualdade triângular apresentado no exemplo 1.3, temos que
+
+|(an − L1) − (an − L2)| ≤ |an − L1| + |an − L2| < r ⇒ |L2 − L1| ≤ |an − L1| + |an − L2| < 2r
+
+Como r é positivo e arbitrário, devemos ter |L1 − L2| menor que qualquer real positivo. Por
+outro lado, |L1 − L2| ≥ 0; assim nos resta uma única possibilidade |L1 − L2| = 0 ⇒ L2 = L1,
+concluindo nossa prova.
+
+Continuando, decreveremos o seguinte
+
+Teorema 1.2.1. Uma sequência monótona é convergente se e somente se ela é limitada.
+
+Demonstração ([5],Pag.68-69)
+
+Este Teorema é extremamente importante, pois nos dá condições de aﬁrmar se uma sequên-
+
+cia é convergente.
+
+Exemplo 1.5. Prove que a sequência kn = n−1
+
+n é convergente e kn −→ 1
+
+Demonstração Observe que kn = 1 − 1
+
+n ⇒ kn+1 = 1 − 1
+
+−1 + 1
+que 0 ≤ kn < 1. Como kn é monótona e limitada então é convergente.
+
+n+1 > 1 − 1
+
+n . Como n ∈ N, n + 1 > n ⇒ 1
+
+n+1 <
+n = kn. Concluímos essa forma que kn é crescente. Note gora
+
+n ⇒ −1 + 1
+
+n+1 < 1
+
+Para provar que kn −→ 1, tome n0 ∈ N, tal que, −r < 1
+n0
+
+< r, tome agora n > n0, logo
+
+−r <
+
+1
+n
+
+<
+
+1
+n0
+
+< r ⇒ −r < −
+
+1
+n
+
+< r ⇒ −r < 1 −
+
+1
+n
+
+− 1 < r
+
+ora mas 1 − 1
+
+n = kn, Então
+
+−r < kn − 1 < r ⇒ |kn − 1| < r
+
+concluindo assim nossa prova.
+
+Para demonstrações posteriores que iremos realizar devemos descrever a seguinte proposi-
+
+ção. [4]
+
+6
+
+Proposição 1.2.2. Seja an uma sequência convergente de números reais e k um número real
+qualquer. Se an −→ L, então kan −→ kL.
+
+Demonstração: Se k = 0, então kan −→ 0, pois limn→∞ kan = 0 · L = 0.
+
+Suponha então que k (cid:54)= 0 e seja dado um r > 0. Como an é convergente, existe um n0 ∈ N
+
+tal que n > n0 ⇒ |an − L| < r
+
+|k|. Daí, multiplicando ambos os mebros por |k|, vamos ober:
+
+n > n0 ⇒ |kan − kL| = |k||an − L| < |k| ·
+
+r
+|k|
+
+= r
+
+Demonstrando o que queriamos.
+
+1.3 Subsequências
+
+Nesta seção estudaremos o limite de uma subsequência, sabendo que a sequência original tem
+limite L e enunciaremos um importante Teorema, conhecido como Fundamental ou de Cauchy,
+que utilizaremos no próximo capítulo.
+
+Deﬁnição 1.5. Dada uma sequência (an) deﬁnimos uma subsequência da mesma como a sequên-
+cia obtida a partir de (an), restrigindo-nos a um subconjunto inﬁnito Nk = n1 < n2 < n3 < ...
+do conjunto de índices.
+
+Escreveremos uma subsequência com a seguinte notação (ank), em seguida, pela deﬁnição e
+dado k ∈ N é fácil ver que a aplicação de k (cid:55)→ nk é uma função injetiva e estritamente crescente
+entre N1 e N.
+
+Exemplo 1.6. Exemplos de subsequências
+
+1. Dada a sequência xn = n podemos escrever como subsequência a sequência dos n qua-
+
+drados perfeitos, ou seja, xn = x1, x2, x3, ... = 1, 4, 9, ...
+
+A proposição a seguir nos dá uma propriedade básica de limite de sequências.
+
+Proposição 1.3.1. Se (an) é uma sequência com limite L, então toda subsequência (ank) de
+(an) converge para L.
+
+Demonstração: Pela deﬁnição de limite está garantido que ∀r > 0, existe n0, tal que, n >
+n0 ⇒ |an − L| < r. Como n1 < n2 < n3 < ... < nk < ..., basta tomar k0, tal que nk0 > n0, pois
+desta forma, para k > k0, teremos:
+
+.
+
+nk > nk0 > n0 ⇒ |ank − L| < r
+
+Teorema 1.3.1. (Bolzano - Weierstrass) Toda sequência limitada possui uma subsequência
+convergente.
+
+7
+
+Demonstração: ([4],pág.102-103)
+
+É razoável que a partir de um certo n0 os termos de um sequência convergente se aproxi-
+mem cada vez mais, pois tais termos estão se aproximando do limite L da sequência. Desta
+forma vamos propor a seguinte
+
+Deﬁnição 1.6. Uma sequência (an)n∈N é dita uma sequência de Cauchy se, dado r > 0, existir
+n0 ∈ N tal que
+
+m, n > n0 ⇒ |am − an| < r
+
+O que mais interessa sobre as sequências de Cauchy é o seguinte
+
+Teorema 1.3.2. A sequência (an) de números reais é convergente se, e somente se, for uma
+sequência de Cauchy.
+
+Demonstração: ([1],Pág. 80)
+
+Exemplo 1.7. Retornando a sequência kn = n−1
+de Cauchy.
+
+n , vamos provar a convergência pelo Teorema
+
+Demonstração: Basta provar que ∀r > 0, existe n0 ∈ N tal que n, m > n0 ⇒ |am − an| < r.
+
+Note que
+
+Note agora que | m−n
+
+mn | < 1
+
+n , pois
+
+n2 > 0 ⇒ −n2 < 0 ⇒ mn − n2 < mn ⇒ n(m − n) < mn ⇒
+
+m − n
+mn
+n é convergente podemos concluir que, dado r > 0, |am −an| = | m−n
+
+<
+
+1
+n
+
+mn | < r, concluindo
+
+Como 1
+
+assim nossa prova.
+
+Após esta última seção temos ferramentas suﬁcientes sobre limite de sequência para uma
+demonstração que iremos descrever nos próximos capítulos. Mas antes disso vamos propor um
+exemplo especial de sequências. Para isso tome o seguinte exemplo:
+
+Exemplo 1.8. Dada uma sequência deﬁnida como
+
+xn+1 =
+
+(cid:18)
+
+xn + 2 ·
+
+1
+2
+
+(cid:19)
+
+1
+xn
+
+com n ∈ N e x1 = 2. Escreva os n primeiros termos dessa sequência.
+
+8
+
+Para n = 1 temos: x2 = 1
+
+2 (x1 + 2 · 1
+x1
+
+Para n = 2 temos: x3 = 1
+
+2 (x2 + 2 · 1
+x2
+
+) = 1
+
+2(2 + 2 · 1
+
+2) = 3
+2
+
+) = 1
+
+2( 3
+
+2 + 2 · 2
+
+3 ) = 17
+12
+
+Se prosseguirmos encontraremos para x4 = 577
+408
+
+Note que esse processo pode ser realizado inﬁnita vezes sempre tendo resultado um número
+408 ; ...), diferente
+
+408; ...) e a sequência xn+1 = ( 3
+
+12 ; 577
+
+12 ; 577
+
+2; 17
+
+2 ; 17
+
+racional e que a sequência xn = (2; 3
+somente do primeiro termo.
+
+Sequência como do exemplo 1.10 denominamos como recorrência, pois os termos são da-
+dos em função dos anteriores, ou seja, eles recorrem a valores dos termos anteriores. Talvez os
+exemplos mais clássicos de recorrências são as conhecidas Progressões Aritméticas e Geomé-
+tricas.
+
+Das recorrências gostariamos de elucidar que podemos considerar a sequência (xn+1) como
+uma subsequência da sequência (xn), logo, para n = 1, n = 2, n = 3, ... teriamos (xn) = (x1, x2, x3, ...)
+e (xn+1) = (x2, x3, x4, ...). Desta forma pela Proposição 1.3.1, Se a sequência converge para L,
+então a subsequência em questão também converge para L, logo
+
+.
+
+lim
+n→∞
+
+xn = lim
+n→∞
+
+xn+1 = L
+
+9
+
+CAPÍTULO 2
+
+Aproximação Racional
+
+Este capítulo tem como objetivo mostrar que
+número racional.
+
+√
+
+d com d ∈ N pode ser aproximado por um
+
+2.1 Números Racionais
+
+É trivial o conhecimento que a soma, a diferença e o produto de dois inteiros sempre resulta
+em um número inteiro, porém já na divisão nem sempre isso ocorre, aliás geralmente não há
+um inteiro q tal que nq = m, sendo m e n inteiros e n (cid:54)= 0; por exemplo, não existe um q inteiro
+tal que, 3q = 1.
+
+Desta forma, caso se deseje realizar divisões com inteiros sem restrições, devemos ampliar
+a noção de número criando um novo conjunto numérico, tais que seus elementos comtemplem
+os quocientes de divisões de inteiros. A estes novos números são denominados de números
+racionais, sendo que para estes daremos a seguinte (ver[1])
+
+Deﬁnição 2.1. Um número racional é aquele que pode ser expresso como razão entre dois
+números m, n ∈ Z, com n (cid:54)= 0, i.e.
+
+∀x ∈ Q, ∃m ∈ Z, n ∈ N tais que
+
+x =
+
+m
+n
+
+,
+
+onde Q representa o conjunto dos números racionais. [11].
+
+Dada a deﬁnição de números racionais estudaremos na próxima seção as sequências racio-
+
+nais, ou seja, sequências em que todos seus termos são números racionais.
+
+2.2 Sequências Racionais
+
+Denotamos como sequência de números racionais ou simplesmente de sequência racional a fun-
+ção r : N → Q. Assim, por exemplo, a sequência r(n) = n
+10n que tem como termos: r1 = 0, 1;
+r2 = 0, 02; r3 = 0, 003; ..., é uma sequência racional.
+
+Devemos salientar que um número real x pode ser expresso por sua expansão decimal
+2 = 1, 41421356... =
+
+como por exemplo: 1
+
+10 + 3
+
+102 + 3
+
+103 + ... + 3
+
+3 = 0, 333... = 3
+
+10n + ... e
+
+√
+
+11
+
+1 + 4
+
+10 + 1
+
+102 + 4
+
+103 + 2
+
+104 + ....
+
+De sequências racionais estamos interessados em estudar se dado um x ∈ R, existe uma
+
+sequência {rn} ∈ Q tal que limn→∞ rn = x?
+
+Antes do estudo da interrogativa acima, vamos deﬁnir uma sequência (rn) como a sequência
+da expansão decimal do número π. Observe seus primeiros termos: r1 = 3; r2 = 3, 1; r3 = 3, 14;
+r4 = 3, 141; r5 = 3, 1415; r6 = 3, 14159, ... Note que:
+
+|rm − rn| < 1
+
+10 , quando m, n > 1, pois 1
+
+10 = 0, 1 e rm − rn ≤ 0, 04159265...
+
+|rm − rn| < 1
+
+100, quando m, n > 2, pois 1
+
+100 = 0, 01 e rm − rn ≤ 0, 00159265...
+
+|rm − rn| < 1
+
+1000, quando m, n > 3, pois
+
+1
+1000 = 0, 001 e rm − rn ≤ 0, 00059265..
+
+Observe que essa sequência satisfaz a deﬁnição 2.7 sobre sequências de Cauchy, donde
+10n0 . Sendo con-
+
+podemos concluir que ∀r > 0, existe um n0 tal que m, n > n0 ⇒ |rm − rn| < 1
+vergente pelo Teorema 2.3.2
+
+Para ilustrar que um número x ∈ R pode ser aproximado por uma sequência racional, tome
+103 + ... + an
+
+x = A, a1a2a3a4a5...an... = A + a1
+
+102 + a3
+
+10 + a2
+
+10n + ...
+
+Considere A como a parte inteira de número real x > 0 e 0, a1a2a3...an... a parte deci-
+mal. Tome a sequência {xn} ∈ Q, tal que x0 = A; x1 = A, a1; x2 = A, a1a2; x3 = A, a1a2a3;
+...; xn = A, a1a2a3...an...; ou seja, a sequência da expressão decimal do real x deﬁna como
+xn = A,a1a2a3...an
+
+.
+
+10n
+
+Como feito no exemplo acima, note que:
+
+|xm − xn| < 1
+
+10 , quando m, n > 1, pois 1
+
+10 = 0, 1 e xm − xn ≤ 0, 0a2a3a4...an...
+
+|xm − xn| < 1
+
+100, quando m, n > 2, pois 1
+
+100 = 0, 01 e xm − xn ≤ 0, 00a3a4a5...an...
+
+|xm − xn| < 1
+
+1000, quando m, n > 3, pois
+
+1
+1000 = 0, 001 e xm − xn ≤ 0, 000a4a5a6...an...
+
+Podemos percerber de forma intuitiva que a expansão decimal de números racionais pode
+ser convergente, porém ainda falta provar que existe uma sequência de racionais que converge
+para um real x que será feito na continuidade deste trabalho.
+
+2.3 Números Irracionais
+
+A necessidade de ampliar o conceito de número já era conhecida desda antiga Grécia, pois, re-
+lata a história, que os Pitágoricos analisaram a insuﬁciência dos números racionais para medir
+
+12
+
+a diagonal de um quadrado com medida n a partir de um segmento m, ou seja, não era possível
+encontrar uma razão entre as medidas n e m desses segmentos.
+
+De início os próprios Pitagóricos acreditavam que dados dois segmentos quaisquer eles
+eram sempre comensuráveis, ou seja, em termos atuais, sempre poderiamos encontrar uma
+razão de semelhança de medidas inteiras entre os segmentos. Porém, utilizando o próprio
+Teorema de Pitágoras se estabelece uma contradição quando consideramos a diagonal de um
+quadrado como sendo um número racional. Desta forma não existe uma razão de medidas in-
+teiras entre o lado de um quadrado e sua diagonal e neste caso dizemos que tais segmentos são
+incomensuráveis e que a medida da diagonal de um quadrado é um número Irracional.
+
+Para mostrar que existem segmentos com medidas que não são racionais, considere a diago-
+nal de um quadrado de lado unitário (mas nada impede que seja qualquer quadrado). Em posse
+do Teorema de Pitágoras e por contradição tome a medida dessa diagonal como um número
+racional m
+n , com n (cid:54)= 0, tal que m e n sejam coprimos, ou seja, o máximo divisor comum de m
+e n é igual a 1. Desta forma
+
+(cid:17)2
+
+(cid:16)m
+n
+
+= 12 + 12 ⇒
+
+m2
+n2 = 2 ⇒ m2 = 2n2
+
+Ora note que m2 é par, implicando que m é par, pois se m fosse ímpar, m2 seria ímpar, mas
+m2 = 2n2, logo m não pode ser ímpar. Sabendo que m é par, podemos escrevê-lo da seguinte
+forma m = 2q, mas daí m2 = (2q)2 = 4q2 e assim 4q2 = 2n2, dividindo ambos os membros por
+2 temos 2q2 = n2, logo concluiríamos que n também é par e desta forma 2 divide m e n, mas
+isso é impossível, pois m e n são coprimos. Então a diagonal de um quadrado de lado unitário
+não pode ser um número racional, sendo assim um número Irracional. [11]
+
+Desde o Ensino Fundamental conhecemos os Irracionais como os números que têm a parte
+decimal inﬁnita e não periódica. Entenda parte decimal a sequência 0, a1a2a3a4a5... e período
+de um número como uma determinada sequência ﬁnita, não totalmente nula, tal que a partir de
+um determinado digito todos os outros são uma repetição inﬁnita desta sequência. Exemplos:
+1,34577777..., tem período 7 e 0,7343434..., tem período 34. Esta deﬁnição, de certa forma in-
+gênua, tem razão de existir pela simplicidade em responder ao questionamento se um número
+é ou não Irracional, bastando observar a parte decimal.
+
+Outro ponto importante a destacar que não é mencionado no ensino básico é que os nú-
+meros Irracionais não são enumeráveis, ou seja, não podemos fazer uma associação entre um
+Irracional e um Natural com o intuito de realizar uma contagem pelo motivo que existem mais
+números Irracionais do que Naturais. Porém, para a continuidade deste trabalho quando fa-
+larmos de um número Irracional devemos considerar, deste momento em diante, somente, as
+raízes quadradas de um número natural d, com d não quadrado perfeito, ou seja, d (cid:54)= q2
+
+13
+
+2.4 Teorema de Dirichlet
+
+A expressão aproximação racional é usada para denotar o processo pelo qual certas sequên-
+cias numéricas de termos racionais tendem a se aproximar de um número real L. Desta ma-
+neira, podemos aﬁrmar que a aproximação racional está intimamente ligada à ideia de limite de
+sequências. Todas as sequências que apresentaremos com essa característica se dará por uma
+aproximação por falta ou por excesso, ou seja, quando os termos racionais de uma sequência
+são sempre menores ou maiores que o real L, respectivamente.
+
+Com desenvolvimento gradativo do estudo da Matemática, o homem se deparou que os
+números racionais não eram mais suﬁcientes para responder os questionamentos vingentes, de-
+vendo ampliar o conceito de número e surgindo, desta forma, no cenário matemático os núme-
+ros irracionais. Destes, as raízes quadradas se apresentam de forma natural quer em Geometria,
+em funções ou em qualquer outra área que necessite de algum cálculo aritmético. Encontrar a
+raiz quadrada de um número natural se faz necessário para a resolução de muitos problemas.
+
+Dependendo da situação uma "boa apromxição"para
+√
+
+d, com poucas casas decimais, pode
+∼= 2, 236111, ou seja, uma aproximação de
+ser suﬁciente. Por exemplo:
+três casas decimais, que para muitos cálculos já é mais que suﬁciente. Porém, devemos levar
+em consideração, que dependendo do caso devemos aproximar um pouco ou muito mais.
+
+5 ∼= 2, 236067 e 161
+72
+
+√
+
+O cálculo de uma raiz quadrada na maioria das vezes não é algo tão simples de se realizar,
+d, para d quadrado
+mesmo sendo o processo de extrair raízes simples de se entender. Dado
+perfeito, podemos dispor da decomposição em fatores primos para, com um pouco (ou razoá-
+d. Agora, caso d não seja um quadrado perfeito,
+vel) trabalho (dependendo de d), encontrar
+√
+d é um número Irracional e a decomposição em fatores primos não resolve o problema, co-
+
+√
+
+√
+
+meçando neste momento o trabalhoso processo de aproximar números racionais para
+
+√
+
+d.
+
+√
+
+Alguns povos antigos perceberam a necessidade de encontrar aproximações racionais para
+d e procuraram encontrar soluções para este problema até então. É certo que essas aproxi-
+mações dependem da escolha dos números m e n do racional m
+n , com n (cid:54)= 0 e desta forma ao
+longo dos séculos e em regiões diferentes, algoritmos foram criados com o objetivo de facilitar
+essa escolha.
+
+Entenda algoritmo como um processo, de número ﬁnito de passos, que deve-se chegar a
+um resultado desejado. Tais algoritmos, que apresentaremos posteriormente, aproximam um
+d. Mas antes iremos retornar a sequência do Exemplo 1.10 do Capítulo 1,
+número racional a
+para estudar detidamente seus termos.
+
+√
+
+Observe que seus três primeiros termos da sequência xn+1, já calculados no capítulo 1,
+∼=
+2 ∼= 1, 41421365 podemos levantar a hipótese
+2. Note que, com apenas o terceiro
+
+são: ( 3
+12 , 577
+2, 17
+1, 41666; e x4
+que os termos da sequência xn+1 são aproximações de
+
+408). Tomando o quociente desses três primeiros termos, obtemos: (x2 = 1, 5; x3
+
+∼= 1, 41421568) e analisando com
+
+√
+
+√
+
+14
+
+termo (x4), a aproximação se dá por cinco casas decimais, já sendo uma aproximação muito
+boa em termos reais.
+
+√
+
+Porém se continuarmos gerando novos termos o que garante que tais termos são, ainda,
+2 se
+aproximações de
+tornar o limite dessa sequência? Concluindo dessa forma, que será sempre possível aproximar
+um racional tanto quanto se queira de um Irracional? De fato, as interrogações acima são ver-
+dadeiras, e a última será provado pelo seguinte
+
+2? E se for, será que podemos aproximar cada vez mais ao ponto de
+
+√
+
+Teorema 2.4.1. (Dirichlet) Seja α ∈ R um número irracional. Então existem inﬁnitos inteiros
+p, q, com q > 0 tais que p
+
+q é uma fração irredutível e
+
+(cid:12)
+(cid:12)
+α −
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+p
+q
+
+<
+
+1
+q2
+
+Antes de provarmos o Teorema de Dirichlet vamos escrever algumas deﬁnições e exemplos.
+
+Deﬁnição 2.2. A parte inteira de um real x, representada por (cid:98)x(cid:99), é deﬁnido como o maior
+inteiro menor que ou igual a x, se x ≥ 0 e o menor inteiro maior que ou igual x, se x < 0.
+
+Exemplo 2.1. Observe a parte inteira dos números abaixo.
+
+1. (cid:98)3(cid:99) = 3
+
+2. (cid:98) 3
+
+2 (cid:99) = (cid:98)1, 5(cid:99) = 1
+
+3. (cid:98)−4, 5(cid:99) = −4
+
+Deﬁnição 2.3. A parte fracionária de um real x e denotada por {x} é deﬁnida como {x} =
+x − (cid:98)x(cid:99).
+
+Exemplo 2.2. Observe a parte fracionária dos números abaixo.
+
+1. { 2
+3 } = 0, 66666...
+√
+
+2. {
+
+2} = {1, 414213562373...} = 0, 414213562373...
+
+3. { 5
+
+4 } = {1, 25} = 0, 25
+
+uma observação que devemos fazer, mesmo sendo trivial, é que a parte fracionária de qual-
+
+quer número está contida no intervalo [0,1].
+
+De fato, tome x = a0, a1a2a3...an..., logo {x} = x − (cid:98)x(cid:99) = 0, a1a2a3...an...
+
+Outro ponto a ser abordado antes da demonstração é o Princípio da Casa dos Pombos que
+também é conhecido como "Princípio das Gavetas de Dirichlet"por ter sido pelo prórpio Diri-
+chlet enunciado como: "Se n + 1 objetos são colocados em n gavetas, então pelo menos uma
+
+15
+
+gaveta deverá conter, pelo menos, dois objetos" [3].
+
+Este Princípio, de certo modo ingênuo, é bastante utilizado em demonstrações matemáticas.
+
+Podemos escrevê-lo de modo mais geral como
+
+Teorema 2.4.2. Se n gaiolas são ocupadas por nk + 1 pombos, então pelo menos uma gaiola
+deverá conter pelo menos k + 1 pombos.
+
+Demonstração: Isto também é óbvio, pois se cada uma tiver no máximo k pombos, como
+
+são n gaiolas, teremos no máximo nk pombos distribuidos, o que é uma contradição.
+
+Diante das deﬁnições dadas acima estamos em condição de demonstrar o Teorema de Di-
+richlet enunciado como segue: Seja α ∈ R um número irracional positivo. Então existem
+inﬁnitos inteiros p, q, com q > 0 tais que p
+
+q é uma fração irredutível e
+
+|α −
+
+p
+q
+
+| <
+
+1
+q2
+
+e daí, segundo [8], descrevemos a seguinte
+
+Demonstração: Considere os n + 1 números 0, α − (cid:98)α(cid:99) = {α}, 2α − (cid:98)2α(cid:99) = {2α},
+3α − (cid:98)3α(cid:99) = {3α}, ..., nα − (cid:98)nα(cid:99) = {nα}, e a seguinte divisão do intervalo [0, 1] em n in-
+tervalos:
+
+[0,
+
+1
+n
+
+], [
+
+1
+n
+
+,
+
+2
+n
+
+], ..., [
+
+(n − 1)
+n
+
+, 1]
+
+.
+
+Como cada um dos n + 1 números pertence ao intervalo [0, 1] e este intervalo está dividido
+nos n subintervalos, podemos concluir pelo princícpio das casas dos pombos que dois desses
+números, pertencerão a um mesmo subintervalo.
+
+Digamos que esses números são {ix} e { jx}, com i, j ∈ N, tal que, j > i.
+
+Assim, k−1
+
+n < {ix} < { jx} ≤ k
+
+n , logo |{ jx} − {ix}| < 1
+n .
+
+Ora, mas da deﬁnição 2.3 temos que
+
+16
+
+|{ jx} − {ix}| <
+
+1
+n
+
+⇐⇒ | jα − (cid:98) jα(cid:99) − (iα − (cid:98)iα(cid:99))| <
+
+⇐⇒ |( jα − iα − (cid:98) jα(cid:99) + (cid:98)iα(cid:99))| <
+
+⇐⇒ |( j − i)α − ((cid:98) jα(cid:99) − (cid:98)iα(cid:99))| <
+
+1
+n
+
+1
+n
+
+1
+n
+
+Observe que j − i ≤ n. Logo, sendo q = j − i e p = (cid:98) jα(cid:99) − (cid:98)iα(cid:99), podemos concluir, pela
+
+desigualdade acima, que |qα − p| < 1
+
+n . Multiplicando ambos os membros por 1
+
+q , temos:
+
+e como q = j − i ≤ n, então
+
+concluindo assim a demonstração.
+
+|α −
+
+p
+q
+
+| <
+
+1
+nq
+
+|α −
+
+p
+q
+
+| <
+
+1
+nq
+
+≤
+
+1
+q2
+
+Em posse do Teorema de Dirichlet a interrogativa sobre a possibilidade de aproximar um
+2 é trivial, pois, q −→ ∞, implica que 1
+q2 −→ 0, com isso podemos
+
+racional cada vez mais de
+aﬁrmar que existe uma inﬁnidade de racionais que se aproximação de α.
+
+√
+
+Porém, sobre a possibilidade da sequência xn+1 = 1
+√
+
+2 (xn + 2 · 1
+xn
+
+cada vez mais próximos de
+
+2, será respondida no próximo capítulo.
+
+) gerar sempre mais termos,
+
+17
+
+CAPÍTULO 3
+
+Algoritmos de Aproximação
+
+Este Capítulo tem como objetivo mostrar alguns algoritmos utilizados por povos distintos, em
+tempos diferentes, para aproximar números racionais a raízes quadradas de números naturais
+não quadrados perfeitos. Como também, estudar esses algoritmos para conhecer os diversos
+processos dessa aproximação.
+
+3.1 Algoritmo de Hierão
+
+O algoritmo que estudaremos nesta seção já era conhecido na época da antiga Grécia e recebe
+este nome em homenagem ao matemático grego que o descreveu em seu livro A Métrica [6].
+Estudaremos a convergência deste algoritmo, como também sua interpretação geométrica.
+
+Hierão, também conhecido como Herão, matemático e físico de destaque, ﬁcou bastante
+conhecido pela sua famosa fórmula At = (cid:112)s(s − a)(s − b)(s − c) para o cálculo da área de um
+triângulo qualquer quando é conhecido seus lados, sendo s = a+b+c
+o semi-perímetro e a, b e
+c os lados do triângulo.
+
+2
+
+Um dos problemas do seu livro ele descreve como conseguir aproximações racionais para
+uma raiz quadrada, através de um método aritmético que recorria sempre a termos anteriores a
+partir de um primeiro termo deﬁnido. Desta forma, Hierão realizava um cálculo de recorrência
+onde os passos para encontrar a aproximação, em termos atuais, seria interpretado como a se-
+guinte expressão xn+1 = 1
+
+). (ver [6])
+
+2 (xn + d
+xn
+
+Para estudá-la vamos propor d = 3, tornando à recorrência igual a xn+1 = 1
+
+2 (xn + 3
+xn
+
+), com
+
+x1 = 1. Estudando seus quatro primeiros termos, temos:
+
+19
+
+x2 =
+
+x3 =
+
+x4 =
+
+x5 =
+
+1
+2
+
+1
+2
+
+1
+2
+
+1
+2
+
+(x1 + 3 ·
+
+(x2 + 3 ·
+
+(x3 + 3 ·
+
+(x4 + 3 ·
+
+1
+x1
+
+1
+x2
+
+1
+x3
+
+1
+x4
+
+) =
+
+) =
+
+1
+2
+
+1
+2
+
+(1 + 3) = 2
+
+(2 +
+
+3
+2
+
+) =
+
+7
+4
+
+= 1, 75
+
+) =
+
+1
+2
+
+(
+
+7
+4
+
++
+
+3
+3
+2
+
+) =
+
+97
+56
+
+∼= 1, 73214
+
+) =
+
+1
+2
+
+(
+
+97
+56
+
++
+
+3
+97
+56
+
+) =
+
+18817
+10864
+
+∼= 1, 73205081
+
+√
+
+Note que
+
+3 ∼= 1, 73205080 e comparando com x5
+
+∼= 1, 73205081 é uma aproximação de
+sete casas decimais. Para maioria dos cálculos que realizamos é uma ótima aproximação. Desta
+forma, vemos que a precisão de xn+1 para aproximar frações em raízes quadradas pode não ser
+uma coincidência e estudaremos essa recorrência de forma geral, sendo xn+1 = 1
+), com
+d ∈ N, não quadrado perfeito.
+
+2 (xn + d
+xn
+
+Primeiro vamos analisar se xn+1 é convergente e em seguida, descobriremos seu limite.
+
+Mas antes, da demonstração, vamos precisar da relação de ordem das médias Aritmética e
+
+Geométrica.
+
+Dados dois números reais a ≥ 0 e b ≥ 0, vamos dar as seguintes deﬁnições:
+
+Deﬁnição 3.1. Média Aritmética ( que vamos representar por Ma(a, b)) de a e b é o número
+determinado por a+b
+2 .
+
+Deﬁnição 3.2. Média Geométrica ( que vamos representar por Mg(a, b)) de a e b é o número
+determinado por
+
+ab.
+
+√
+
+Da deﬁnição das médias aritmética e geométrica propomos a seguinte relação: ∀(a, b), Ma ≥
+
+Mg. Para demonstrar a veracidade, tome
+
+com a igualdade valendo se e somente se a = b, daí temos que
+
+√
+(
+
+a −
+
+√
+
+b)2 ≥ 0
+
+√
+
+0 ≤ (
+
+a −
+
+√
+
+b)2 = a + b − 2
+
+ab ⇒
+
+√
+
+√
+
+ab
+
+≥
+
+a + b
+2
+
+para todo a, b ∈ R.
+
+20
+
+Retornando a recorrência xn+1, mostraremos sua convergência pelo teorema 1.3.2, demons-
+trando que esta recorrência satisfaz a deﬁnição 1.7 sobre as sequências de Cauchy, propondo
+primeiramente que xn+1 ≥
+),
+juntamente com a relação de ordem das médias, para obter:
+
+d. Para isso, tome as médias aritmética e geométrica de (xn, d
+xn
+
+√
+
+Ma =
+
+xn + d
+xn
+2
+
+=
+
+1
+2
+
+(xn +
+
+d
+xn
+
+) = xn+1 ≥
+
+√
+
+d =
+
+(cid:114)
+
+xn ·
+
+d
+xn
+
+= Mg
+
+Como d ∈ N e não sendo quadrado perfeito, resulta que
+
+que, podemos aﬁrmar que xn+1 é positivo.
+
+√
+
+d > 1, logo xn+1 ≥
+
+√
+
+d > 1, tal
+
+Considere a expressão
+
+d
+xn·xn+1
+
+> 0.
+
+Nos interessa provar agora que |1 − d
+
+xn·xn+1
+
+| < 1.
+
+Da sequência
+
+xn+1 =
+
+(cid:18)
+
+xn +
+
+1
+2
+
+(cid:19)
+
+d
+xn
+
+podemos ter a seguinte igualdade
+
+2 −
+
+xn
+xn+1
+
+=
+
+d
+xn · xn+1
+
+dividindo ambos os membros por xn+1.
+
+Daí como xn
+xn+1
+
+> 0, temos que
+
+.
+
+ora, mas
+
+d
+xn·xn+1
+
+> 0, logo
+
+d
+xn · xn+1
+
+< 2
+
+0 <
+
+d
+xn · xn+1
+
+< 2 ⇒ −1 < −1 +
+
+d
+xn · xn+1
+
+< 1
+
+então
+
+(cid:12)
+(cid:12)
+1 −
+(cid:12)
+(cid:12)
+
+d
+xn · xn+1
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+< 1
+
+21
+
+Multiplicando ambos os membros por 1
+
+2 |(xn+1 − xn)|, vamos obter:
+
+1
+2
+
+|(xn+1 − xn)| · |(1 −
+
+d
+xn · xn+1
+
+)| <
+
+1
+2
+
+|(xn+1 − xn)|
+
+Multiplicando de forma distributiva o primeiro membro temos:
+
+1
+2
+
+|(xn+1 −
+
+d
+xn
+
+− xn +
+
+d
+xn+1
+
+)| =
+
+1
+2
+
+|(xn+1 +
+
+d
+xn+1
+
+) − (xn +
+
+d
+xn
+
+)| =
+
+= |
+
+1
+2
+
+(xn+1 +
+
+d
+xn+1
+
+) −
+
+1
+2
+
+(xn +
+
+d
+xn
+
+)| = |xn+2 − xn+1|
+
+Portanto |xn+2 − xn+1| < 1
+
+2|(xn+1 − xn)|
+
+Reduzindo os índices, obtemos
+
+|xn+2 − xn+1| <
+
+1
+2
+
+|xn+1 − xn|
+
+|xn+1 − xn| <
+
+1
+2
+
+|xn − xn−1|
+
+|xn − xn−1| <
+
+1
+2
+
+|xn−1 − xn−2|
+
+. . .
+
+|x4 − x3| <
+
+|x3 − x2| <
+
+1
+2
+
+1
+2
+
+|x3 − x2|
+
+|x2 − x1|
+
+multiplicando membro a membro e cancelando os termos iguais, vamos obter:
+
+|xn+2 − xn+1| <
+
+1
+2n · |x2 − x1|
+
+22
+
+O que interessa aqui é mostrar que esta sequência é de Cauchy. Para isso considere, sem
+
+perda de generalidade, m > n. Assim podemos reescrever a sequência acima como
+
+|xn+1 − xn| <
+
+1
+2n−1 · |x2 − x1|
+
+|xn+2 − xn+1| <
+
+1
+2n · |x2 − x1|
+
+|xn+3 − xn+2| <
+
+1
+2n+1 · |x2 − x1|
+
+...
+
+|xm−1 − xm−2| <
+
+1
+2m−3 · |x2 − x1|
+
+|xm − xm−1| <
+
+1
+2m−2 · |x2 − x1|
+
+Somando membro a membro as inequações acima vamos obter
+
+|xn+1 − xn| + |xn+2 − xn+1| + |xn+3 − xn+2| + · · · + |xm−1 − xm−2| + |xm − xm−1| <
+
+<
+
+1
+2n−1 · |x2 − x1| +
+
+1
+2n · |x2 − x1| +
+
+1
+2n+1 · |x2 − x1| + · · · +
+
+1
+2m−3 · |x2 − x1| +
+
+1
+2m−2 · |x2 − x1|
+
+Pelo Teorema A.0.1, da desigualdade triangular (Apêndice), temos que
+
+|xm − xn| = |(xm − xm−1) + (xm−1 − xm−2) + · · · + (xn+2 − xn+1) + (xn+1 − xn)|
+
+= |xn+1 − xn + xn+2 − xn+1 + xn+3 − xn+2 + · · · + xm−1 − xm−2 + xm − xm−1|
+
+≤ |xn+1 − xn| + |xn+2 − xn+1| + |xn+3 − xn+2| + · · · + |xm−1 − xm−2| + |xm − xm−1|
+
+e que
+
+23
+
+1
+2n−1 · |x2 − x1| +
+
+= (
+
+1
+2n · |x2 − x1| + · · · +
+1
+1
+2n + · · · +
+2n−1 +
+
+1
+2m−3 · |x2 − x1| +
+1
+1
+2m−2 ) · |x2 − x1|
+2m−3 +
+
+1
+2m−2 · |x2 − x1| =
+
+Assim
+
+mas
+
+|xm − xn| < (
+
+1
+2n−1 +
+
+1
+2n + · · · +
+
+1
+2m−3 +
+
+1
+2m−2 ) · |x2 − x1|
+
+(
+
+1
+2n−1 +
+
+1
+2n + · · · +
+
+1
+2m−3 +
+
+1
+2m−2 ) =
+
+=
+
+=
+
+=
+
+( 1
+2 )m−n − 1
+1
+2 − 1
+1 − 1
+2m−n
+1
+2
+
+1
+2n−1 ·
+1
+2n−1 ·
+1
+2n−2 · (1 −
+4
+2n · (1 −
+
+1
+2m−n )
+1
+2m−n )
+
+Note agora que
+
+(1 −
+
+1
+2m−n ) < 1 ⇔
+
+4
+2n · (1 −
+
+1
+2m−n ) <
+
+4
+2n ⇔
+
+4
+2n · (1 −
+
+1
+2m−n ) · |x2 − x1| <
+
+4
+2n · |x2 − x1|
+
+Logo
+
+Observe que
+
+|xm − xn| <
+
+4
+2n · |x2 − x1|
+
+4
+2n · |x2 − x1| =
+
+1
+2n · 4|x2 − x1|
+
+Como já foi provado no exemplo 1.4 (capítulo 1) que 1
+
+2n · 4|x2 − x1| também será, logo dado r > 0 existe n0 tal que 4
+
+2n é convergente, a proposição 1.2.2
+2n · |x2 − x1| < r,
+
+nos garante que 1
+quando n > n0.
+
+Então |xm − xn| < r, para m, n > n0, logo podemos concluir que esta sequência é de Cauchy
+
+o que nos garante que ela é convergente.
+
+Até agora provamos que (xn+1) convergente, mas ainda não descobrimos o seu limite. Po-
+d. Fazendo uso da proposição 1.3.1 e que (xn+1) é
+
+rém está bem claro que o candidato a tal
+
+√
+
+24
+
+subsequência da sequência (xn), concluimos
+
+daí, dada a recorrência
+
+quando n −→ ∞, iremos obter
+
+lim
+n→∞
+
+xn = lim
+n→∞
+
+xn+1 = L
+
+xn+1 =
+
+1
+2
+
+(xn +
+
+d
+xn
+
+)
+
+L =
+
+1
+2
+
+· (L +
+
+d
+L
+
+)
+
+e resolvendo esta equação, obtemos:
+
+L2 − d = 0 =⇒ L =
+
+√
+
+d =⇒ lim
+n→∞
+
+√
+
+d.
+
+xn =
+
+3.1.1
+
+Interpretação Geométrica do Algoritmo de Hierão
+
+Uma pergunta que pode nos vir em mente é de onde originou a idéia de usar a sequência
+xn+1 = 1
+)? Infelizmente, Hierão não nos fornece nenhuma indicação no seu livro A
+Métrica. Porém, uma interpretação geométrica para essa expressão encontramos em [5], onde
+descreveremos da seguinte forma.
+
+2(xn + d
+xn
+
+√
+
+Note que encontrar
+
+d é o mesmo que determinar o lado de um quadrado de área d. Denote
+esse quadrado de área d por ABCD inscrito em um quadrado AEFG de lado a dado, tal que,
+B ∈ AE e D ∈ AG (ver ﬁgura abaixo).
+
+Conforme a construção dos quadrados ABCD e AEFG, um terceiro quadrado CIFH de lado
+
+e pode ser considerado, prolongando os lados BC e DC aos lados GF e EF, respectivamente.
+
+Figura 3.1 Interpretação geométrica do Algoritmo de Hierão
+
+Observe que podemos deﬁnir o lado a como uma primeira aproximação de
+
+d e que
+d. Além disso, considerando a área da região BEFGDC, temos que a2 − d = e2 +
+
+√
+
+a − e =
+
+√
+
+25
+
+(a − e)e + (a − e)e = e2 + 2e(a − e) = 2ea − e2.
+
+Dai, se desprezarmos o quadrado de lado e (pois a medida que e diminui e2 é menor ainda)
+
+chegamos a a2 − d ∼= 2ae, logo
+
+e ∼=
+
+a2 − d
+2a
+
+= e(cid:48)
+
+segue-se, desta forma, que se obtêm uma segunda aproximação de
+
+então
+
+√
+
+d tomando a(cid:48) = a − e(cid:48),
+
+a(cid:48) = a −
+
+a2 − d
+2a
+
+=
+
+2a2 − (a2 − d)
+2a
+
+=
+
+a2 + d
+2a
+
+=
+
+1
+2
+
+(a +
+
+d
+a
+
+)
+
+Considerando que podemos repetir esse processo indeﬁnidamente podemos reescrever a
+
+expressão acima como
+
+an+1 =
+
+(cid:18)
+
+an +
+
+1
+2
+
+(cid:19)
+
+d
+an
+
+Concluímos esta seção sabendo um algoritmo de aproximação extremamente eﬁcaz e sim-
+ples para a "extração"de raízes quadradas, de forma recursiva, onde nos dá números racionais
+cada vez melhores. Na próximo seção faremos uma abordagem da aproximação racional com
+uso de uma equação muito importante no ramo da matemática denominada Teoria dos Núme-
+ros.
+
+3.2 Aproximações Diofantinas
+
+Esta seção tem como objetivo estudar a equação diofantina conhecida como Pell-Fermat, deter-
+minar como encontrar inﬁnitas soluções através de uma não trivial e demonstrar que as soluções
+d, com
+da equação de Pell-Fermat podem ser interpretadas como aproximações racionais da
+d ∈ N e não quadrado perfeito.
+
+√
+
+3.2.1 Equações Diofaninas
+
+Uma equação diofantina é uma equação polinomial em várias incógnitas com coeﬁcientes intei-
+ros. Por exemplo: 5x − 2y = 1; x2 − 2y2 = 1 e 4x3 − y2 + 5z = 10 são equações diofantinas. Ta-
+vez a equação diofantina mais famosa é a generalização do Teorema de Pitágoras, a2 + b2 = c2.
+
+Normalmente se estuda as equações diofantinas com o intuito de encontrar soluções in-
+teiras, porém, nada impede, dependendo da situação, que se procure também soluções racio-
+nais. Em alguns casos uma equação diofantina admite inﬁnitas soluções, como por exemplo
+5x − 2y = 1, que para k inteiros, temos como solução da equação x = 1 + 2k e y = 2 + 5k. Já
+em outros casos o número de soluções é ﬁnito ou não existe, como por exemplo: x2 + y2 = 25
+
+26
+
+que tem como soluções inteiras apenas os pares (0,5); (5,0); (3,4) e (4,3), enquanto a equação
+x2 + 5y2 = −1 não possui solução, pois, sendo x2 ≥ 0 e 5y2 ≥ 0 ⇒ x2 + 5y2 ≥ 0.
+
+Observe que a equação x2 + y2 = 25 é também a equação cartesiana de uma circunferência
+com centro no ponto (0,0) do plano cartesiano. Daí podemos notar a intima relação entre equa-
+ções diofantinas e a Geometria Analítica. Porém, devemos destacar que as soluções inteiras de
+x2 + y2 = 25 são pontos inteiros no plano contidos nesta circunferência.
+
+Foi discutido anteriormente que certas equações diofantina pode ter inﬁnitas soluções, ou-
+tras um número ﬁnito ou nenhuma solução. Desta forma, é natural perguntar-se em que con-
+dições tais equações possuem solução e caso tenham como determiná-las. Infelizmente não
+existe um método geral que identiﬁque, se uma equação diofantina tem ou não soluções, de-
+vendo estudar cada equação de forma individual ou pelo menos por grupos ou tipos.
+
+3.2.2 Equação de Pell-Fermat
+
+Estamos interessados nesta momento em estudar, detalhadamente, somente um tipo de equação
+diofantina, descrita a seguir.
+
+Deﬁnição 3.3. Seja d um natural não quadrado perfeito. Chamamos de Equação de Pell-Fermat
+a equação x2 − dy2 = m.
+
+Curiosamente encontramos em vários livros esta equação sendo chamada como equação
+de Pell, pois o própio Euler a denomina assim acreditando que a solução geral das mesmas
+tinha sido descoberta pelo matemático inglês John Pell, porém, na realidade sabe-se que Euler
+cometeu um equívoco, pois Pell organizou os resultados e soluções dos matemáticos da época,
+que estudaram esta equação. A solução geral dessa equação foi dada por Bhaskaracharya ou
+Bhaskara II e o caso em que m = 1 é dado por um matemático Inglês Lord Brounker.
+
+Para este trabalho vamos adotar m = 1 ou m = −1 na equação x2 − dy2 = m e da deﬁnição
+
+√
+
+podemos concluir que
+
+d é Irracional.
+
+A restrição para d não ser quadrado perfeito sustenta-se no fato que, se d = k2, com k ∈ N
+a equação x2 − dy2 = 1 pode ser reescrita como (x + ky)(x − ky) = 1. Contudo, o produto de
+fatores inteiros só pode ser igual a 1 se ambos os fatores forem iguias a 1 ou -1. Como procura-
+mos soluções inteira concluimos que (x + ky) = ±1 e (x − ky) = ±1, resolvendo esses sistemas
+temos: x = ±1 e y = 0, portanto quando d = k2 a equação x2 − dy2 = 1 possui apenas duas
+solução inteira que são os pares (±1, 0).
+
+É óbvio que (±1, 0) são soluções para x2 − dy2 = 1, com d sendo ou não quadrado perfeito.
+Essas soluções triviais não são nada interessantes, sendo desnecessário levá-las em considera-
+ção, pois não podemos gerar outrar soluções a partir delas. Entenda solução trivial o par (x, y)
+
+27
+
+tal que xy = 0.
+
+Denotaremos como solução fundamental o par (x1, y1) a menor solução inteira positiva
+maior que a solução trivial. Por exemplo: a equação x2 − 2y2 = 1 tem como solução fundamen-
+tal o par (3, 2), pois 32 − 2 · 22 = 1 e por tentativa não é possível encontrar nenhuma solução
+(m, n), tal que 0 < m < 3 e 0 < n < 2.
+
+No plano esta equação representa uma Hipérbole. Encontrar soluções inteiras desta equação
+é determinar os pontos de coordenadas inteiras que intercepta esta cônica. Ora, mas conhecendo
+uma hipérbole, uma questão pode surgir: Será que existem inﬁtos pontos de coordenadas intei-
+ras que interceptam a hipérbole? De fato isso ocorre e vamos propor um exemplo para mostrar
+que é possível encontrar mais de um ponto inteiro a partir de uma solução.
+
+Exemplo 3.1. Considere a equação x2 − 3y2 = 1. A partir de uma solução fundamental encon-
+tre uma segunda solução.
+
+Por tentativa podemos facilmente perceber que uma solução para a equação é o par (2, 1),
+pois 22 − 3 · 12 = 1. Chamamos esta solução de fundamental, pois a única solução inteira posi-
+tiva menor que a encontrada é (1, 0) que é uma das soluções triviais.
+
+Note agora, que
+
+22 − 3 · 12 = (2 + 1
+
+3)(2 − 1
+
+3) = 1
+
+√
+
+√
+
+elevando ambos os lados dessa igualdade ao quadrado, vamos obter
+
+√
+
+√
+
+(2 + 1
+
+3)2(2 − 1
+
+3)2 = 12 ⇒ (7 + 4
+
+3)(7 − 4
+
+√
+
+√
+
+3) = 1 ⇒ 72 − 3 · 42 = 1
+
+logo observa-se que o par (7, 4) também é solução.
+
+Ora, mas do exemplo 3.1, podemos nos questionar sobre a possibilidade de elevar ambos
+
+os lados da igualdade ao cubo, já que 13 = 1?
+
+Efetuando os cálculos teríamos:
+
+√
+
+3)3(2 − 1
+
+(2 + 1
+
+√
+
+3)3 = 13 ⇒ (2 + 1
+
+⇒ (7 + 4
+
+√
+
+√
+
+√
+
+√
+
+√
+
+3)2 · (2 − 1
+
+3) = 1
+
+√
+
+3)(2 − 1
+
+3) = 1
+
+3)2 · (2 + 1
+√
+
+3)(2 + 1
+√
+
+3)(2 − 1
+√
+
+3)(7 − 4
+√
+
+3) = 1
+
+⇒ (26 + 15
+⇒ 262 − 3 · 152 = 1
+
+3)(26 − 15
+
+Logo (26, 15) é também solução da equação.
+
+Observe a seguir as soluções da equação x2 − 3y2 = 1 no plano.
+
+28
+
+Figura 3.2 Interpretação geométrica das soluções inteiras da equação x2 − 3y2 = 1
+
+Dos cálculos feitos anteriormente, note que as soluções já se apresentavam antes da última
+3) = 1). Assim, caso a equação se apresente nesta forma:
+d) = 1 é óbvio que a e b são soluções. Diante disso vamos estudar o seguinte
+
+3)(26 − 15
+
+√
+
+√
+
+√
+
+implicação ((26 + 15
+(a + b
+conjunto
+
+d)(a − b
+
+√
+
+Estamos interessados em provar que (a + b
+
+d)n ∈ P, sendo n ∈ N.
+
+P = {(a + b
+
+√
+
+d)|a, b ∈ Z} ⊂ R
+√
+
+Primeiro observe que o conjunto P é fechado para a multiplicação, pois:
+
+√
+
+√
+
+(a + b
+
+d) · (x + y
+
+√
+
+√
+
+d + xb
+
+d + d
+
+√
+
+√
+
+dy
+
+d = ax + byd + (ay + bx)
+
+√
+d
+
+d) = ax + ay
+√
+
+Por indução, suponha que (a + b
+
+Agora devemos provar que (a + b
+
+notar que:
+
+d)n ∈ P já que o caso trivial foi feito acima.
+√
+
+d)n+1 também pertença ao conjunto P. Para isso, basta
+
+√
+
+(a + b
+
+√
+
+d)n+1 = (a + b
+√
+
+d)n · (a + b
+
+√
+
+√
+
+d).
+
+Como por hipótese de indução (a + b
+
+d, então
+
+√
+
+√
+
+(a + b
+
+d)n+1 = (x + y
+
+d) · (a + b
+
+d) = ax + byd + (ay + bx)
+
+d,
+
+√
+
+d)n = x + y
+√
+
+29
+
+provando o que se queria.
+
+√
+
+√
+√
+
+Este resultado será útil em demonstrações posteriores, no mais note que (2 + 1
+3)(2 −
+3) = 22 − 3 · 12 = 1 é a solução fundamental ou primeira solução. Elevando ao quadrado
+1
+3)2 ⇒ 72 − 3 · 42 = 1 obtemos uma segunda solução e elevando ao cubo
+(2 + 1
+3)3 = 262 − 3 · 152 = 1 obtemos uma terceira solução. Daí será que ele-
+(2 + 1
+vando a n com n ∈ N teremos a enésima solução? De fato é verdade e para provar vamos
+descrever a seguinte Proposição:
+
+3)2(2 − 1
+3)3(2 − 1
+
+√
+√
+
+√
+
+Proposição 3.2.1. Seja (x1, y1) a solução fundamental de x2 − dy2 = 1. Então (xn, yn) também
+é solução se xn + yn
+
+d)n, com n ∈ N.
+
+d = (x1 + y1
+
+√
+
+√
+
+Demonstração Primeiro vamos substituir n por 2, para dar uma noção do método que será
+
+utilizado.
+
+Para n = 2, temos:
+
+(x1 + y1
+
+√
+
+d)2 = x1
+
+2 + 2x1y1
+
+√
+
+d + y1
+
+2
+
+√
+
+deﬁnido x2 = x2
+
+1 + y1
+
+2d e y2 = 2x1y1, temos que (x1 + y1
+
+d2 = x2
+√
+
+1 + y1
+
+2d + 2x1y1
+
+√
+d
+
+√
+
+d.
+
+d)n = x2 + y2
+√
+
+√
+
+√
+
+Agora, destacamos que, (
+d)2k =
+
+com i par é (
+
+d2k = dk.
+
+√
+
+√
+
+√
+
+d)i com i ímpar é (
+
+d)2k+1 =
+
+d2kd1 = dk
+
+d e que (
+
+√
+
+d)i
+
+Daí, com o auxílio do Binômio de Newton, [2] temos:
+
+(x1 + y1
+
+√
+
+d)n =
+
+(cid:19)
+
+x1
+
+(cid:18)n
+i
+
+n
+∑
+i=0
+
+n−i · y1
+
+√
+
+i · (
+
+d)i
+
+Separando i ímpar de i par, podemos reescrever a última igualdade como
+
+(cid:19)
+
+x1
+
+(cid:18)n
+i
+
+n
+∑
+i=0
+
+n−i · y1
+
+√
+
+i · (
+
+d)i =
+
+(cid:18) n
+2i
+
+n
+∑
+i=0
+
+(cid:19)
+
+x1
+
+n−2i · y1
+
+2i · di +
+
+(cid:18) n
+
+2i + 1
+
+(cid:19)
+
+x1
+
+n
+∑
+i=0
+
+n−2i−1 · y1
+
+Então, associando
+
+xn =
+
+n
+∑
+i=0
+
+(cid:19)
+
+(cid:18) n
+2i
+
+x1
+
+n−2i · y1
+
+2i · di
+
+e
+
+temos que
+
+yn =
+
+(cid:18) n
+
+2i + 1
+
+(cid:19)
+
+x1
+
+n
+∑
+i=0
+
+n−2i−1 · y1
+
+2i+1 · di
+
+√
+
+2i+1 · di(
+
+d).
+
+(x1 + y1
+
+√
+
+d)n =
+
+n
+∑
+i=0
+
+(cid:19)
+
+(cid:18)n
+i
+
+√
+
+x1
+
+n−i · y1
+
+i · (
+
+d)i = xn + yn
+
+√
+
+d.
+
+30
+
+Com um raciocínio análogo podemos concluír também que
+
+(x1 − y1
+
+√
+
+d)n = xn − yn
+
+√
+
+d.
+
+Ora, mas (x1, y1) são soluções da equação, logo
+√
+
+1 − dy2
+x2
+
+1 = 1 ⇔ (x1 + y1
+
+d)(x1 − y1
+
+√
+
+d) = 1
+
+daí, elevando ambos os membros a n, o resultado segue, pois
+√
+
+√
+
+√
+
+√
+
+(x1 + y1
+
+d)n(x1 − y1
+
+n − dy2
+Com isso demonstramos que (xn, yn) são soluções da Equação de Pell-Fermat.
+
+d)n = 1n ⇒ (xn + yn
+
+d) = 1 ⇔ x2
+
+d)(xn − yn
+
+n = 1
+
+Podemos proceder de forma alternativa para provar a proposição 3.2.1. Mas, para isso, pri-
+d)|a, b ∈ Z} ⊂ R, em que d ∈ N é um natural livre
+
+√
+
+meiro, considere o conjunto P = {(a + b
+de quadrados e as seguintes deﬁnições (ver[12])
+
+Deﬁnição 3.4. Dado z ∈ P, deﬁnimos o conjugado de z = a + b
+
+√
+
+d o número z = a − b
+
+√
+
+d.
+
+Deﬁnição 3.5. A norma algébrica em P é deﬁnida por:
+
+√
+
+N(z) = zz.
+
+Logo, se z = a + b
+Da deﬁnição de conjugado temos a seguinte propriedade: dados z, w ∈ P, então z · w = z · w.
+
+d, então N(z) = a2 − b2d ∈ Z.
+
+Para mostrar, note que z · w = ax + byd + (ay + bx)
+
+d. Com isso,
+
+√
+
+z · w = ax + byd − (ay + bx)
+
+d.
+
+√
+
+Mas,
+
+z · w = (a − b
+
+√
+
+d) · (x − y
+
+d) = ax − ay
+
+d + byd = ax + byd − (ay + bx)
+
+√
+
+√
+
+d − bx
+
+√
+
+√
+d
+
+Então z · w = z · w.
+
+Da deﬁnição de norma temos a seguinte propriedade: N(zw) = N(z)N(w).
+
+Que é facilmente demonstrada pois:
+
+N(zw) = zw · zw = zz · ww = N(z)N(w)
+
+Com isso, se N(z) = 1 e N(w) = 1, então N(zw) = 1.
+
+Agora estamos interessados em demonstrar o seguinte Lema:
+
+31
+
+Lema 3.1. sejam a, b ∈ Z e z = a + b
+e somente, se N(z) = 1.
+
+√
+
+d. Então a e b é solução da Equação de pell-Fermat se
+
+Demonstração: Tome, por hipótese, N(z) = 1. Isso implica que, z · z = 1. Ora mas, z =
+
+√
+
+a + b
+
+d, então
+
+z · z = (a + b
+
+d)(a − b
+
+d) = a2 − db2 = 1
+
+√
+
+√
+
+Reciprocamente, tome agora a e b ∈ Z solução da Equação de Pell-Fermat.
+
+Logo
+
+a2 − db2 = 1 ⇒ (a + b
+
+d)(a − b
+
+d) = 1.
+
+√
+
+√
+
+Como z = a + b
+
+√
+
+d, temos que:
+
+√
+
+√
+
+(a + b
+
+d)(a − b
+
+d) = 1 ⇒ z · z = 1 ⇒ N(z) = 1.
+
+Para demonstrar a proposição 3.2.1, deﬁna zn = zn e z = x1 + y1
+
+√
+
+d, com (x1, y1) solução
+
+da Equação de Pell-Fermat.
+
+Note que, zn = zn ⇒ xn + yn
+
+√
+
+d = x1 + y1
+
+√
+
+d.
+
+Sendo, (x1, y1) solução de Pell-Fermat, logo, N(z) = 1.
+
+Agora note que, como N(z) = 1, temos que N(zn) = N(z)n = 1.
+
+Mas N(zn) = N(zn), logo N(zn) = 1.
+
+Como N(zn) = znzn ⇒ (xn + yn
+
+√
+
+d)(xn − yn
+
+√
+
+d) = 1,
+
+então x2
+
+n − dy2
+
+n = 1, Daí (xn, yn) é solução de Pell-Fermat.
+
+Observe que a proposição 3.2.1 nos informa uma maneira de encontrar uma inﬁnidade de
+soluções para a equação de Pell-Fermat. Mas, ainda, não é possível aﬁrmar que todas as so-
+d)n. Porém, se existir uma solução
+luções são encontradas pela relação xn + yn = (x1 + y1
+diferente de (xn, yn), é óbvio que ela deve estar entre duas soluções inteiras positivas. Assim,
+considerando todas as soluções da equação x2 − dy2 = 1 com x + y
+d > 1, existe uma mínima
+√
+ou fundamental, com x, y e x + y
+
+d mínimos.
+
+√
+
+√
+
+32
+
+Deﬁna (a, b) ∈ N2, uma outra solução da equação de Pell-Fermat, distinta de (xn, yn). Como
+d > 1, pois já tinhamos anteriormente deﬁnido (x1, y1) como solução fundamental,
+
+√
+
+x1 + y1
+existe um n ≥ 1, tal que (ver: [2])
+
+√
+
+√
+
+(x1 + y1
+
+d)n ≤ a + b
+
+d < (x1 + y1
+
+√
+
+d)n+1
+
+Agora note que, x2
+
+n = (xn + yn
+
+√
+
+d)(xn − yn
+
+√
+
+d) = 1, logo
+
+n − dy2
+√
+
+(xn − yn
+
+d) =
+
+1
+(xn + yn
+
+=
+
+√
+
+d)
+
+1
+(x1 + y1
+
+√
+
+d)n
+
+= (x1 + y1
+
+√
+
+d)−n,
+
+√
+
+daí multiplicando a desigualdade (x1 + y1
+d)−n, vamos obter:
+
+y1
+
+√
+
+d)n ≤ a + b
+
+√
+
+d < (x1 + y1
+
+√
+
+d)n+1 por (x1 +
+
+√
+
+1 ≤ (a + b
+
+d)(x1 + y1
+
+√
+
+d)−n < (x1 + y1
+
+√
+
+d).
+
+Mas (a + b
+
+√
+
+d)(x1 + y1
+
+logo:
+
+√
+
+d)−n = (a + b
+
+d)(xn − yn
+
+d) = (axn − dbyn) + (bxn − ayn)
+
+d,
+
+√
+
+√
+
+√
+
+1 ≤ (axn − dbyn) + (bxn − ayn)
+
+d < (x1 + y1
+
+√
+
+√
+
+d).
+
+Como (a, b) e (xn, yn) são soluções da equação de Pell-Fermat, temos que
+√
+
+√
+
+√
+
+√
+
+N((a + b
+
+d)(xn − yn
+
+d)) = N(a + b
+
+d)N(xn − yn
+
+d) = 1
+
+Então, (axn − dbyn, bxn − ayn) é solução da Equação de Pell-Fermat, sendo uma solução
+
+menor que a fundamental ou mínima.
+
+Mas axn − dbyn ≥ 0, pois caso contrário axn − dbyn < 0 ⇔ axn < dbyn ⇔ axn
+byn
+
+da equção x − dy = 1, temos que
+
+< d. Ora mas
+
+n − dy2
+x2
+
+n = 1 ⇒
+√
+
+e analogamente a
+
+b =
+
+(cid:19)2
+
+(cid:19)2
+
+− d =
+
+(cid:18)xn
+yn
+
+(cid:18)xn
+xn
+yn
+yn
+d. Como a, b, xn e yn são positivos, temos que axn
+byn
+
+> d ⇒
+
+= d +
+
+1
+y2
+n
+
+1
+y2
+n
+
+⇒
+
+√
+d
+
+>
+
+> d o que contra-
+
+diz o fato axn
+byn
+
+< d. Então axn − dbyn ≥ 0.
+
+Temos também que bxn − ayn ≥ 0, pois se, por hipótese, bxn − ayn < 0, teriamos xn
+yn
+
+< a
+b .
+
+33
+
+Mas
+
+(cid:17)2
+
+(cid:16) xn
+yn
+
+= d + 1
+y2
+n
+
+e de forma análoga (cid:0) a
+b
+
+(cid:1)2 = d + 1
+
+b2 , temos que
+
+1
+y2
+n
+portanto b < yn ⇒ a < xn o que contradiz o fato de xn + yn
+
+(cid:16)a
+b
+
+xn
+yn
+
+a
+b
+
+⇔
+
+⇒
+
+(cid:17)2
+
+<
+
+<
+
+<
+
+√
+
+1
+b2
+
+(cid:19)2
+
+(cid:18)xn
+yn
+
+d = (x1 + y1
+
+√
+
+√
+
+d)n ≤ a + b
+
+d.
+
+Então (axn − dbyn, bxn − ayn) é uma solução positiva menor que a fundamental, logo essa
+
+solução deve ser a trivial, ou seja, axn − dbyn = 1 e bxn − ayn = 0, logo
+
+(a + b
+
+√
+
+d)(xn − yn
+
+mas
+
+√
+
+d) = (axn − dbyn) + (bxn − ayn)
+
+d = 1 + 0 ·
+
+√
+
+√
+
+d = 1
+
+√
+
+(a + b
+
+d)(xn − yn
+
+√
+
+d) = (a + b
+
+√
+
+d)(x1 + y1
+
+√
+
+d)−n = (a + b
+
+√
+
+d)(
+
+1
+x1 + y1
+
+√
+d
+
+)n = 1
+
+com isso temos que a + b
+
+d = xn + yn
+
+√
+
+√
+
+d, concluindo que (a, b) = (xn, yn).
+
+Resumindo, não há soluções além das encontradas pelo método da proposição anterior,
+d)n, com (x1, y1) as
+
+então as soluções da Equação de Pell-Fermat são xn + yn
+soluções fundamentais.
+
+d = (x1 + y1
+
+√
+
+√
+
+Como sabemos encontrar soluções da equação x2 − dy2 = 1 e que não existe soluções dife-
+d)n vamos enunciar a seguinte
+
+d = (x1 + y1
+
+rentes de xn + yn
+
+√
+
+√
+
+Teorema 3.2.1. Seja (xn, yn) soluções da equação x2 − dy2 = 1. Então xn
+yn
+racionais de
+
+√
+
+d.
+
+são aproximações
+
+Demonstração: Primeiro, sabemos que existe inﬁnitas soluções para a equação x2 − dy2 =
+
+1, bastando encontrar a solução fundamental.
+
+Segundo, como (xn, yn) são soluções da equação x2 − dy2 = 1, podemos escrever x2
+
+√
+
+√
+
+d) = 1, dividindo ambos os membros por (xn + yn
+
+√
+
+n − dy2
+n =
+d) vamos obter
+
+1 → (xn − yn
+(xn − yn
+
+√
+
+d) =
+
+d)(xn + yn
+1
+.
+(xn+yn
+
+d)
+
+√
+
+Terceiro, observe que 0 < xn − yn
+
+√
+
+d =
+
+1
+xn+yn
+
+√
+d
+
+< 1
+yn
+
+, assim
+
+Daí dividindo ambos os membros por yn vamos obter:
+
+|xn − yn
+
+√
+
+d| <
+
+1
+yn
+
+34
+
+|xn − yn
+
+√
+
+d − 0| = |xn − yn
+
+√
+
+d| <
+
+1
+yn
+
+⇒ |
+
+xn
+yn
+
+−
+
+√
+
+d| <
+
+1
+y2
+n
+
+Como as soluções da equação de Pell-Fermat satisfazem o Teorema de Dirichlet, podemos
+
+√
+
+concluir que (xn, yn) são aproximações racionais de
+
+d.
+
+Exemplo 3.2. Observe como encontrar um número racional que se aproxime de
+casas decimais, utilizando os conceitos estabelecidos nesta seção.
+
+√
+
+d com duas
+
+Tome a seguinte equação x2 − 3y2 = 1. Note que a solução fundamental é (2, 1), daí toda
+d = (2 + 1
+
+solução desta equação é da forma xn + yn
+
+3)n.
+
+√
+
+√
+
+√
+
+Para n = 2 temos que x2 + y2
+
+3 = (2 + 1
+
+x2 + y2
+3 = (7 + 4
+uma casa decimal de
+
+3). Então x2 = 7, y2 = 4 e x2
+y2
+√
+3.
+
+√
+
+√
+
+√
+
+3)2. Realizando os cálculos vamos obter
+= 1, 75. Que já é uma aproximação de
+
+√
+
+√
+
+√
+
+√
+
+Para n = 3 temos que x3 +y3
+3). Realizando os cálculos vamos obter x3 + y3
+= 1, 733333... sendo uma aproximação de duas casas decimais de
+
+3)3. Note agora que (2+1
+3 = (26 + 15
+√
+
+3 = (2+1
+
+√
+
+√
+
+3.
+
+3)3 = (7+4
+3)(2+
+3). Então x3 = 26, y3 = 15
+
+√
+
+1
+e x3
+y3
+
+Observe que com duas interações sobre a equação x2 − 3y2 = 1, tendo a solução fundamen-
+15 , que é uma aproximação razoável de
+
+tal, adquirimos um número 26
+
+√
+
+3.
+
+A única diﬁculdade sobre a equação de Pell-Fermat é que nem sempre encontramos com
+facilidade a solução fundamental. Como por exemplo a equação x2 − 13y2 = 1 tem como
+solução fundamental o par (649, 180).
+
+3.3 Escada de Theon
+
+Nesta seção conheceremos o terceiro método para calcular raízes quadradas. Começaremos
+2 utilizando a recursão que deﬁniremos logo em se-
+estudando a aproximação racional para
+guida conhecida como Escada de Theon, continuaremos mostrando que é possível realizar uma
+d, d ∈ N não quadrado perfeito e a provável
+adaptação à recursão para aproximar racionais a
+idéia que originou a recursão.
+
+√
+
+√
+
+3.3.1 A Escada de Theon para
+
+√
+2
+
+Deﬁnição 3.6. Dada as sequências xn e yn, com n > 1. Chamamos de Escada de Theon a
+recursão xn = xn−1 + yn−1 e yn = xn−1 + xn com x1 = y1 = 1.
+
+35
+
+Conhecendo a recursão vamos calcular os seus seis primeiro termos:
+
+n = 2 ⇒ x2 = x2−1 + y2−1 = x1 + y1 = 1 + 1 = 2
+
+n = 3 ⇒ x3 = x3−1 + y3−1 = x2 + y2 = 2 + 3 = 5
+
+e
+
+e
+
+y2 = x2−1 + x2 = x1 + x2 = 1 + 2 = 3
+
+y3 = x3−1 + x3 = x2 + x3 = 2 + 5 = 7
+
+n = 4 ⇒ x4 = x4−1 + y4−1 = x3 + y3 = 5 + 7 = 12
+
+e
+
+y4 = x4−1 + x4 = x3 + x4 = 5 + 12 = 17
+
+n = 5 ⇒ x5 = x5−1 + y5−1 = 12 + 17 = 29
+
+n = 6 ⇒ x6 = x6−1 + y6−1 = 29 + 41 = 70
+
+e
+
+e
+
+y5 = x5−1 + x5 = 12 + 29 = 41
+
+y6 = x6−1 + x6 = 29 + 70 = 99
+
+A Escada de Theon, também chamada de Escada de Teão recebe esta denominação pelo fato
+de ser Theon, ou Teão de Smirna, o primeiro a relatar sobre esta recorrência. Theon descreve
+esta recorrência de modo diferente da deﬁnição dada anteriormente, sendo xn = xn−1 + yn−1
+e yn = 2xn−1 + yn−1 com x1 = y1 = 1. Porém note que as duas são análogas bastando reor-
+ganizar xn = xn−1 + yn−1 ⇒ xn−1 − xn = yn−1 e substituir em yn = xn−1 + yn−1 que teremos
+yn = xn−1 + xn−1 − xn = 2xn−1 + xn.
+
+Tal recursão, extremamente simples, foi utilizada para aproximar racionais a
+
+2, bastando
+e observe na tabela abaixo alguns de seus
+
+tomar o quociente entre yn
+xn
+termos:
+
+. Com isso, deﬁna qn = yn
+xn
+
+√
+
+n
+1
+2
+3
+4
+5
+6
+7
+8
+
+qn
+1
+1,5
+1,4
+1,41666...
+
+yn
+xn
+1
+1
+3
+2
+7
+5
+17
+12
+41 ≈ 1,413793
+29
+99 ≈ 1,41428571
+70
+169 239 ≈ 1,41420118
+408 577 ≈ 1,41421568
+
+Tabela 3.1 Quociente das soluções da Escada de Theon.
+
+√
+
+Lembrando que
+
+2 = 1, 4142135623..., note que na quinta iteração de qn, ou seja, em q6, a
+aproximação é de quatro casas decimais, nos levando a conjecturar que os próximos termos da
+sequência qn também são aproximações de
+2 com um erro de aproximação cada vez menor,
+ou seja, com mais casas decimais exatas. Porém não há garantias que isso ocorra sempre, por
+
+√
+
+36
+
+exemplo, será que q100 é ainda uma aproximação de
+convergente,
+
+2 é um candidato para seu limite, pois sendo
+
+√
+
+√
+
+2? Note também que se qn for realmente
+
+xn = xn−1 + yn−1
+
+e
+
+yn = xn−1 + xn = xn−1 + xn−1 + yn−1 = 2xn−1 + yn−1
+
+temos que
+
+qn =
+
+yn
+xn
+
+=
+
+2xn−1 + yn−1
+xn−1 + yn−1
+
+Multiplicando qn por
+
+1
+xn−1
+1
+xn−1
+
+, vamos obter
+
+qn =
+
+2 + yn−1
+xn−1
+1 + yn−1
+xn−1
+
+Note agora que yn−1
+xn−1
+
+= qn−1 e se qn−1 for convergente qn também será, pois elas diferem
+em um número ﬁnito de termos (mais precisamente somente do primeiro termo, onde podemos
+considerar qn como uma subsequência de qn−1).
+
+Daí, considerando qn−1 convergente e tomando o número real L como seu limite, podemos
+
+aﬁrmar que L também é o limite de qn, logo
+
+qn =
+
+2 + yn−1
+xn−1
+1 + yn−1
+xn−1
+
+=
+
+2 + qn−1
+1 + qn−1
+
+Passando qn ao seu limite, temos
+
+L =
+
+2 + L
+1 + L
+
+⇒ L + L2 = 2 + L ⇒ L =
+
+√
+2
+
+Desta forma temos a garantia que se qn−1 for convergente, qn também será e
+
+2 é seu li-
+mite. Porém, como qn−1 e qn diferem de um número ﬁnito de termos, podemos desconsiderar
+esses números ﬁnitos que os difere e provar, apenas, que qn é convergente. Para isso, vamos re-
+alizar uma adaptação para generalizar a Escada de Theon e em seguida mostrar a convergência
+de qn.
+
+√
+
+3.3.2 A Escada de Theon Generalizada
+
+Ao calcular o suposto limite de
+
+qn =
+
+2 + yn−1
+xn−1
+1 + yn−1
+xn−1
+
+=
+
+2 + qn−1
+1 + qn−1
+
+37
+
+ﬁca claro que, qual seja o termo independente na equação
+
+L =
+
+2 + L
+1 + L
+
+⇒ L + L2 = 2 + L
+
+o limite dessa relação seria a raiz quadrada desse termo, pois
+
+L =
+
+d + L
+1 + L
+
+⇒ L + L2 = d + L ⇒ L =
+
+√
+
+d.
+
+Daí observando que o termo aperece quando substituimos xn em yn, pois
+
+xn = xn−1 + yn−1
+
+e
+
+yn = xn−1 + xn = xn−1 + xn−1 + yn−1 = 2xn−1 + yn−1,
+
+podemos realizar a seguinte adaptação
+
+xn = xn−1 + yn−1
+
+e
+
+yn = xn + (d − 1)xn−1,
+
+com x1 = y1 = 1.
+
+Agora substituindo xn em yn, vamos obter
+
+yn = xn + (d − 1)xn−1 = xn−1 + yn−1 + (d − 1)xn−1 ⇒ yn = dxn−1 + yn−1
+
+Como qn é deﬁnida como qn = yn
+xn
+
+, logo
+
+qn =
+
+dxn−1 + yn−1
+xn−1 + yn−1
+
+=
+
+d + yn−1
+xn−1
+1 + yn−1
+xn−1
+
+=
+
+d + qn−1
+1 + qn−1
+
+Se, novamente, qn−1 convergente e passando a equação acima ao seu limite teriamos:
+
+L =
+
+d + L
+1 + L
+
+⇒ L =
+
+√
+d
+
+Desta forma podemos observar que qn é uma aproximação racional para o natural d, res-
+
+tando mostrar que qn converge.
+
+A prova que descreveremos para a convergência de qn foi dada por João Bosco Pitombeira
+no seu excelente trabalho: "A raiz quadrada ao longo dos séculos"em [3]. Nesse trabalho, ele
+introduz dois lemas preparatórios e depois realiza a prova.
+
+Vamos destrinchar cada passagem das demonstrações com o intuito de apresentá-las o mais
+claro possível, sem sair da linha de raciocínio do texto original. Desta forma descreveremos e
+seguinte
+
+Lema 3.2. Se as sequências xn e yn estão deﬁnidas como xn = xn−1 + yn−1 e yn = xn + (d −
+1)xn−1, então
+
+√
+
+d = (1 +
+
+√
+
+d)n
+
+yn + xn
+
+e
+
+yn − xn
+
+√
+
+d = (1 −
+
+√
+
+d)n.
+
+Demonstração: Por indução, para:
+
+n = 1 ⇒ y1 + x1
+
+√
+
+d = (1 +
+
+√
+
+d)1 = 1 +
+
+√
+d
+
+38
+
+que é verdadeiro, pois
+
+x1 = y1 = 1
+
+Supondo que seja válido para um inteiro k, ou seja, yn + xn
+
+√
+
+d = (1 +
+
+√
+
+d)n é verdade.
+
+Mostraremos que para o inteiro k + 1 também será verdadeiro.
+
+Note que, pela hipótese de indução:
+
+√
+
+d)k+1 = (1 +
+
+√
+
+d)k(1 +
+
+(1 +
+
+√
+
+d) = (yk +
+
+√
+
+dxk)(1 +
+
+√
+
+d) = (dxk + yk) + (xk + yk)
+
+d.
+
+√
+
+Mas pela deﬁnição das sequências (xn) e (yn), podemos escrever xk+1 = xk + yk.
+Com isso
+
+√
+
+d)k+1 = (dxk + yk) +
+
+(1 +
+
+√
+
+d(xk + yk) = (dxk + yk) + xk+1
+
+√
+d
+
+Agora basta mostrar que dxk + yk = yk+1 para ﬁnalizar a prova. Para isso, tome:
+
+dxk + yk = dxk − xk + xk + yk = (d − 1)xk + xk + yk
+
+Mas xk + yk = xk+1, logo
+
+dxk + yk = (d − 1)xk + (xk + yk) = (d − 1)xk + xk+1 = yk+1.
+
+Como yk = (d − 1)xk−1 + xk, logo yk+1 = (d − 1)xk + xk+1
+
+Então, de fato (1 +
+A demonstração de yn −
+
+d)k+1 = yk+1 +
+√
+√
+dxn = (1 −
+
+√
+
+√
+
+dxk+1, ﬁcando, assim demonstrado o que se queria.
+
+d)n é feito de maneira análoga.
+
+Continuando é proposto o segundo
+
+Lema 3.3. Para todo n ≥ 3, xn = 2xn−1 + (d − 1)xn−2.
+
+Demonstração:
+
+Sendo xn = xn−1 + yn−1 e yn = xn + (d − 1)xn−1, logo yn−1 = xn−1 + (d − 1)xn−2 e subisti-
+
+tuindo em xn obtemos:
+
+xn = xn−1 + xn−1 + (d − 1)xn−2 = 2xn−1 + (d − 1)xn−2
+
+Ficando assim demonstrado o que se queria.
+
+Em posse desses dois Lemas o professor João Bosco Pitombeira continua propondo o se-
+
+guinte
+
+39
+
+Teorema 3.3.1. A sucessão qn converge para
+
+√
+
+d.
+
+Demonstração: Da relação yn −
+
+√
+
+dxn = (1 −
+
+√
+
+d)n provada no lema 3.1, dividindo ambos
+
+os membros por xn, vamos obter a seguinte igualdade
+
+√
+
+d =
+
+yn
+xn
+
+−
+
+√
+
+d)n
+
+(1 −
+
+xn
+
+Note que |(1 −
+√
+vamos obter | (1−
+xn
+
+√
+
+d)n
+
+√
+
+d)n| = |(
+√
+| = | (
+
+d−1)n
+xn
+
+d − 1)n|. Como xn > 0, dividindo ambos os membros por xn,
+|.
+
+Com isso
+
+√
+d
+
+−
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+yn
+xn
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+=
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+√
+(
+
+d − 1)n
+xn
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+√
+
+daí, como (
+
+d − 1)n > 0, podemos concluir que
+√
+(
+
+√
+
+−
+
+d| =
+
+|
+
+yn
+xn
+
+d − 1)n
+xn
+
+Observe que do Lema 3.2 é possível concluir que xn > (d − 1)xn−2. Então,
+
+xn > (d − 1)2xn−4
+
+pois, de xn > (d −1)xn−2 podemos concluir que xn−2 > (d −1)xn−4 e daí podemos substiruir
+
+para obter xn > (d − 1)(d − 1)xn−4 = (d − 1)2xn−4. De forma análoga temos:
+
+xn > (d − 1)3xn−6
+xn > (d − 1)4xn−8
+...
+x2n > (d − 1)n
+x2n+1 > (d − 1)n
+
+Assim, para n par,
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+y2n
+x2n
+
+√
+d
+
+−
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+=
+
+√
+(
+
+d − 1)2n
+x2n
+
+√
+d − 1)2n
+(
+(d − 1)n =
+
+<
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+(cid:33)n
+
+e, para n ímpar,
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+y2n+1
+x2n+1
+
+√
+d
+
+−
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+=
+
+√
+(
+
+d − 1)2n+1
+x2n+1
+
+√
+d − 1)2n+1
+(
+(d − 1)n =
+
+<
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+(cid:33)n
+
+40
+
+√
+
+· (
+
+d − 1)
+
+Como
+
+(cid:33)n
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+lim
+n→∞
+
+= 0
+
+segue-se, em ambos os casos, que
+
+então, qn é convergente e seu limite é
+
+d.
+
+√
+d
+
+=
+
+yn
+xn
+
+lim
+n→∞
+√
+
+3.3.3 Origem da Recorrência
+
+Não se sabe ao certo como os gregos chegaram a este resultado, que aproxima racionais a raí-
+zes quadradas de forma tão simples. Porém, o professor João Bosco Pitombeira descreve uma
+hipótese dada pelo historiador de Matemática Van der Waerden nos seguinte termos
+
+"Platão, em seu República aﬁrma que 7 é a diagonal racional que corresponde ao
+lado 5. Proclus explica o que são números diagonais e números lados, conceitos
+que ele aﬁrma virem dos pitagóricos".
+
+"Sendo a fonte de todos os números, a unidade é potencialmente um lado e uma
+diagonal. Ora, tomemos duas unidades, uma lateral e uma diagonal; então um
+novo lado é formado adicionando a unidade diagonal á unidade lateral, e uma nova
+diagonal, adicionando duas vezes a unidade lateral á unidade diagonal"
+
+Para os pitagóricos o número lado ou unidade lado está relacionado com o comprimento do
+lado de um quadrado e o número ou unidade diagonal está relacionada com o comprimento da
+diagonal de um quadrado.
+
+Quando Proclus explica: "então um novo lado é formado adicionando a unidade diagonal
+a unidade lateral"era provavelmente um lado de um novo quadrado que ele estava falando e
+continua aﬁrmando "uma nova diagonal, adicionando duas vezes a unidade lateral a unidade
+diagonal"que provavelmente seria a diagonal desse novo quadrado.
+
+Vamos interpretar geometricamente o que foi escrito acima, para isso observe na ﬁgura 1
+
+que a área do quadrado EDBF é o dobro da área ABCD.
+
+41
+
+(a) Figura 1
+
+(b) Figura 2
+
+Figura 3.3 Origem da recorrência Escada de Theon.
+
+Tome a área do quadrado EDBF = Q2 e a área do quadrado ABCD = Q1. Logo, Q2 = 2Q1,
+
+daí
+
+Q2 = 2Q1 ⇒ (DB)2 = 2(CB)2
+
+Tome agora DB = d1 e CB = c1, assim
+
+d1 = c1
+
+√
+
+2 ⇒ d1
+
+√
+
+2 = 2c1
+
+Tomando como ponto de partida a ﬁgura 1, vamos considerar CB = c1 como o número lado
+e DB = d1 como o número diagonal, ou seja, esse novo quadrado teria como lado (observe a
+ﬁgura 2) c1 + d1 e como diagonal 2c1 + d1.
+
+Com isso basta mostrar que a diagonal desse novo quadrado que chamaremos de d2 =
+
+2c1 + d1. Pois, por construção o lado é c2 = c1 + d1.
+
+Ora, mas pelo Teorema de Pitágoras, temos que
+
+(c1 + d1)2 + (c1 + d1)2 = d2
+
+2 ⇒ (c1 + d1)
+
+2 = d2 ⇒ c1
+
+√
+
+√
+
+2 + d1
+
+√
+
+2 = d2
+
+Como d1 = c1
+
+√
+
+2 e d1
+
+√
+
+2 = 2c1, então
+
+Como queriamos mostrar.
+
+d2 = d1 + 2c1
+
+42
+
+Observe que esse processo pode ser realizado inúmeras vezes, sempre encontrando um novo
+quadrado com lado igual ao lado e a diagonal do quadrado anterior. Desta forma, podemos
+reescrever a relação encontrada (c2 = c1 + d1 e d2 = d1 + 2c1) como:
+
+cn = cn−1 + dn−1
+
+e dn = 2cn−1 + dn−1
+
+Que é equivalente a cn = cn−1 + dn−1 e dn = cn−1 + cn.
+
+43
+
+CAPÍTULO 4
+
+A Relação Entre os Algoritmos
+
+Este capítulo tem por objetivo mostrar que os três algoritmos produzem soluções em comum.
+
+Os algoritmos apresentados (Algorítmo de Hierão, Equação de Pell-Fermat e Escada de
+Theon), como já vimos, foram utiizados por povos distintos e em épocas diferentes, sendo o
+primeiro e o último criados com a ﬁnalidade especíﬁca de encontrar raízes quadradas e no
+segundo (Equação de Pell-Fermat) observado posteriormente esta qualidade. Mesmo tendo ex-
+2, são praticamente
+pressões diferentes entre si, é interessante notar que as aproximações para
+as mesmas. Vejamos:
+
+√
+
+Algoritmo de Hierão:
+
+xn+1 =
+
+1
+2
+
+(xn + 2 ·
+
+1
+xn
+
+)
+
+com x1 = 2
+
+n = 1
+
+temos:
+
+x2 =
+
+1
+2
+
+(x1 + 2 ·
+
+1
+x1
+
+) =
+
+1
+2
+
+(2 + 2 ·
+
+n = 2
+
+temos:
+
+x3 =
+
+1
+2
+
+(x2 + 2 ·
+
+1
+x2
+
+) =
+
+1
+2
+
+(
+
+3
+2
+
++ 2 ·
+
+1
+2
+
+) =
+
+2
+3
+
+) =
+
+3
+2
+
+17
+12
+
+n = 3 ⇒ x4 =
+
+577
+408
+
+Equação de Pell-Fermat:
+
+Solução fundamental: (x1 = 3, y1 = 2), logo xn + yn
+
+x2 − 2y2 = 1
+
+√
+
+√
+
+2 = (3 + 2
+
+2)n, daí:
+
+n = 2 ⇒ x2 + y2
+
+√
+
+2 = (3 + 2
+
+√
+
+2)2 = 17 + 12
+
+√
+2
+
+√
+
+n = 3 ⇒ x3 + y3
+
+√
+
+2 = (3 + 2
+
+√
+
+2)3 = (17 + 12
+
+√
+
+2) · (3 + 2
+
+2) = 99 + 70
+
+n = 4 ⇒ x4 + y4
+
+2 = (3 + 2
+
+2)4 = (99 + 70
+
+2) · (3 + 2
+
+2) = 577 + 408
+
+√
+
+√
+
+√
+
+√
+
+√
+2
+
+√
+2
+
+Tendo como aproximações os números:
+
+45
+
+3
+2
+
+,
+
+17
+12
+
+,
+
+99
+70
+
+,
+
+577
+408
+
+, ...
+
+Escada de Theon:
+
+xn = xn−1 + yn−1
+
+e
+
+yn = xn−1 + xn,
+
+com x1 = y1 = 1
+
+como já calculamos até n = 6, no capítulo anterior, temos:
+
+n = 2 ⇒ x2 = 2
+
+n = 3 ⇒ x3 = 5
+
+n = 4 ⇒ x4 = 12
+
+n = 5 ⇒ x5 = 29
+
+n = 6 ⇒ x6 = 70
+
+e
+
+e
+
+e
+
+e
+
+e
+
+y2 = 3
+
+y3 = 7
+
+y4 = 17
+
+y5 = 41
+
+y6 = 99
+
+n = 7 ⇒ x7 = x6 + y6 = 99 + 70 = 169
+
+e
+
+y7 = x7 + x6 = 169 + 70 = 239
+
+n = 8 ⇒ x8 = x7 + y7 = 169 + 239 = 408
+
+e
+
+y8 = x8 + x7 = 408 + 169 = 577
+
+Tendo como aproximação os números;
+
+1,
+
+3
+2
+
+,
+
+7
+5
+
+,
+
+17
+12
+
+,
+
+41
+29
+
+,
+
+99
+70
+
+,
+
+239
+169
+
+,
+
+577
+408
+
+...
+
+Da sequência acima, observe que os termos de índice ímpar são apoximações por falta e os
+
+termos de índice par são por excesso.
+
+Diante das soluções obtidas pelos três algoritmos, observamos soluções em comum. Note
+que, pelo menos até a terceira iteração, o conjunto das soluções do Algoritmo de Hierão está
+contido no conjunto solução da Equação Pell-Fermat. Como também as solução de Pell-Fermat
+se coinciden com as soluções de índice par da Escada de Theon, pelo menos até as soluções
+calculadas até o momento.
+
+Desta forma, podemos conjecturar sobre alguma relação entre os três algoritmos. Como,
+por exemplo, se sempre encontraremos soluções em comum entres eles para algum n? A res-
+posta é positiva e mostraremos nas próxima seções.
+
+46
+
+4.1 De Hierão a Pell-Fermat
+
+Nesta seção vamos mostrar que o Algoritmo de Hierão e a Equação de Pell-Fermat fornecem
+soluções em comum.
+
+Proposição 4.1.1. Tome (xn, yn) uma solução da equação x2 − dy2 = 1. Se an = xn
+yn
+an+1 = 1
+). Então an+1 é solução da equação de Pell=Fermat.
+
+2 · (an + d
+an
+
+, em
+
+Observe que
+
+an+1 =
+
+1
+2
+
+· (an +
+
+d
+an
+
+) =
+
+a2
+n + d
+2 · an
+
+.
+
+Como an = xn
+yn
+
+, logo an+1 = xn+1
+yn+1
+
+.
+
+Com isso, nossa demonstração consiste em mostrar que xn+1 e yn+1, são soluções de Pell-
+
+Fermat.
+
+Mas de an = xn
+yn
+
+e an+1 = xn+1
+yn+1
+
+, temos que
+
+an+1 =
+
+a2
+n + d
+2 · an
+
+⇒
+
+xn+1
+yn+1
+
+=
+
+( xn
+yn
+
+)2 + d
+2 xn
+yn
+
+=
+
+n+dy2
+x2
+n
+y2
+n
+2 xn
+yn
+
+Multiplicando por y2
+n
+y2
+n
+
+, vamos obter
+
+xn+1
+yn+1
+
+=
+
+n + dy2
+x2
+n
+2xnyn
+
+Dessa expressão estamos interessados em provar que
+
+xn+1 = x2
+
+n + dy2
+n
+
+e
+
+yn+1 = 2xnyn
+
+Para ilustrar a ideia que utilizaremos, considere d = 2 em x2 −dy2 = 1 e an+1 = 1
+
+2 ·(an + d
+an
+
+).
+
+Obeserve que vamos obter um caso particular da expressão obtida acima, ou seja,
+
+xn+1
+yn+1
+
+=
+
+n + 2y2
+x2
+n
+2xnyn
+
+.
+
+47
+
+Como a solução fundamental da equação de Pell-Fermat para esse caso é (x1 = 3, y1 = 2),
+
+temos:
+
+para n=1,
+
+x2
+y2
+
+=
+
+1 + 2y2
+x2
+1
+2x1y1
+
+=
+
+32 + 2 · 22
+2 · 3 · 2
+
+=
+
+17
+12
+
+para n=2,
+
+x3
+y3
+
+=
+
+2 + 2y2
+x2
+2
+2x2y2
+
+=
+
+172 + 2 · 122
+2 · 17 · 12
+
+=
+
+577
+408
+
+= 17
+
+Note que 17 e 12 são primos entre si, x2 e y2 é uma solução da equação x2
+
+n = 1, então
+da igualdade x2
+12 , podemos concluir que x2 = 17 e y2 = 12, se x2 e y2 forem primos entre
+y2
+si. Como também que x3 = 577 e y3 = 408, se x3 e y3 se forem primos tre si e continuando com
+o mesmo raciocínio xn+1 = x2
+n e yn+1 = 2xnyn, se x2
+n e 2xnyn coprimos. Com isso,
+vamos propor o seguinte Lema.
+
+n − dy2
+
+n + 2y2
+
+n + 2y2
+
+Lema 4.1. Seja (xn, yn) solução da Equação de Pell-Fermat. Então xn e yn são coprimos.
+
+Demonstração: Por contradição, suponha que xn e yn não são coprimos. Logo, existe fator
+
+primo em comum. Seja k esse fator. Assim, xn = k · a e yn = k · b, com a e b ∈ N , daí
+
+x2
+n − dy2
+
+n = 1 ⇒ (ka)2 − d(kb)2 = (a2 − d · b2)k2 = 1
+
+.
+
+Ora, mas a expressão acima é um absurdo, pois (a2 − d · b2)k2 = p · k (cid:54)= 1, pois k é um fator
+
+primo e p ∈ Z.
+
+Então xn e yn são coprimos.
+
+Como sabemos que xn e yn são primos entre si, devos agora provar que x2
+
+n + dy2
+
+n e 2xnyn são
+
+coprimos. Mas antes vamos estudar o seguinte Lema:
+Lema 4.2. Sejam xn e yn solução da Equação de Pell-Fermat. Então x2
+
+n + dy2
+
+n é ímpar.
+
+Demonstração: Vamos dividir em dois casos, quando d for par e quando d for ímpar.
+
+Caso 1: suponha d par em x2
+
+n + dy2
+n.
+
+Se d for par, xn deve ser ímpar, pois caso contrário x2
+
+não seriam solução da equação x2
+dentemente de yn, pois dyn é par.
+
+n − dy2
+
+n = 1, Logo x2
+
+n − dy2
+n é ímpar. Então x2
+
+n seria par e desta forma xn e yn
+n é ímpar indepen-
+
+n + dy2
+
+48
+
+Caso 2: suponha agora d ímpar, logo temos que analisar duas situações, pois xn e yn não
+devem ser ambos pares, já que são coprimo (Lema 4.1) e não devem ser ambos ímpares, pois
+se forem, teriamos x2
+
+n (cid:54)= 1, pois, x2
+
+n seria par.
+
+n − dy2
+
+n − dy2
+
+Situação 1: xn par e yn ímpar, onde concluiriamos rapidamente que x2
+
+n + dy2
+
+n é ímpar.
+
+Situação 2: xn ímpar e yn par, onde também concluiriamos que x2
+
+n + dy2
+
+n é ímpar
+
+Então, podemos concluir que x2
+
+n + dy2
+
+n é ímpar.
+
+Em posse do Lema 4.1 e do Lema 4.2 podemos provar que x2
+
+n + dy2
+
+n e 2xnyn são primos
+
+entre si.
+
+Por contradição, suponha que exista um fator primo k ∈ N, tal que k|x2
+
+n + dy2
+
+n e k|2xnyn.
+
+Como x2
+
+n + dy2
+
+n é ímpar, temos que k também é ímpar.
+
+Para a contradição devemos provar que k sendo ímpar, k (cid:45) 2xnyn.
+
+Agora, de k|2xnyn, temos que analisar duas possibilidades: k|yn ou k|xn.
+
+Se k|yn, então k|y2
+temos uma contradição.
+
+n. Mas, k|x2
+
+n + dy2
+
+n. Logo, k|x2
+
+n ⇒ k|xn, ora mas xn e yn são coprimos, logo
+
+Se k|xn, então k|x2
+
+n. Mas, k|x2
+
+n + dy2
+
+n. Logo, k|dy2
+
+n. Ora, dai temos que k|d ou k|y2
+
+n. Para a
+
+contradição, basta provar que k (cid:45) d, pois, dai k|y2
+
+n ⇒ k|yn.
+
+De fato, já que se k|d ⇒ k|x2
+
+n − dy2
+
+n, então k|1, pois k|x2
+
+n. Ora, mas isso é impossível, pois k
+
+é primo. Então, mostramos que de fato k|y2
+
+n e desta forma obtemos um absurdo.
+
+Acabamos de demonstrar que não existe um fator primo comum a x2
+
+n + dy2
+
+n e 2xnyn, então
+
+mdc(x2
+
+n + dy2
+
+n, 2xnyn) = 1.
+
+Diante do que foi exposto concluimos que
+
+xn+1 = x2
+
+n + dy2
+n
+
+e
+
+yn+1 = 2xnyn
+
+Basta agora mostrar que xn+1 e yn+1 também é solução da equação de Pell-Fermat.
+
+Ora, mas
+
+49
+
+n+1 = (x2
+x2
+
+n + dy2
+
+n)2 = x4
+
+n + 2dx2
+
+ny2
+
+n + d2y4
+n
+
+e
+
+n+1 = (2xnyn)2 = 4x2
+y2
+
+ny2
+n
+
+Multiplicando a segunda equação por d, livre de quadrados, obtemos dy2
+
+n+1 = d4x2
+
+ny2
+
+n e
+
+subtraindo de x2
+
+n+1, chegamos a seguinte equação
+
+n+1 − dy2
+x2
+
+n+1 = x4
+
+n + 2dx2
+
+ny2
+
+n + d2y4
+
+n − d4x2
+
+ny2
+
+n = x4
+
+n − 2dx2
+
+ny2
+
+n + d2y4
+
+n = (x2
+
+n − dy2
+
+n)2 = 1.
+
+Onde concluimos que xn+1 e yn+1 é solução da equação x2 − dy2 = 1.
+
+Então, acabamos de mostrar que as soluções do Algoritmo Hierão são também soluções da
+
+Equação de Pell-Fermat.
+
+4.2 De Theon a Pell-Fermat
+
+Para a escada de Theon vamos utilizar o caso original desta recursão, ou seja as expressões
+xn = xn−1 + yn−1
+2, e não
+a sua adaptação.
+
+yn = xn−1 + xn = 2xn−1 + yn−1 que realizam aproximações de
+
+√
+
+e
+
+Um fato interessante sobre as soluções da Escada de Theon (que veriﬁcaremos até a quarta
+iteração e provaremos posteriormente por indução) é que a diferença entre o quadrado de yn e
+o dobro do quadrado de xn é sempre igual a 1 ou -1. Observe:
+
+1 = 12 − 2 · 12 = −1
+2 = 32 − 2 · 22 = 9 − 8 = 1
+3 = 72 − 2 · 52 = 49 − 50 = −1
+4 = 172 − 2 · 122 = 289 − 288 = 1
+Esta característica entre as soluções já era veriﬁcada pelo próprio Theon num livro intitu-
+
+y2
+1 − 2x2
+2 − 2x2
+y2
+3 − 2x2
+y2
+4 − 2x2
+y2
+
+lado Exposição dos conhecimentos úteis para a leitura de Platão (ver: [7])
+
+Em termos gerais, vamos obter:
+
+50
+
+n − 2x2
+y2
+
+n = (2xn−1 + yn−1)2 − 2(xn−1 + yn−1)2
+= 4x2
+= 4x2
+= 2x2
+= −(y2
+
+n−1 + 4xn−1yn−1 + y2
+n−1 − 2x2
+n−1 + y2
+n−1 − y2
+n−1
+n−1 − 2x2
+
+n−1 − 2x2
+
+n−1 − 2y2
+
+n−1)
+
+n−1
+
+n−1 − 4xn−1yn−1 − 2y2
+
+n−1
+
+De y2
+
+n − 2x2
+
+n = −(y2
+
+n−1 − 2x2
+
+n−1), já podemos aﬁrmar que as soluções alternam-se entre po-
+
+sitivas e negativas, bastando provar agora que sempre será 1 e -1.
+
+Por indução essa aﬁrmação é facilmente veriﬁcada como verdadeira, pois tomando xn =
+
+xn−1 + yn−1, yn = 2xn−1 + yn−1 e x1 = y1 = 1, temos:
+
+Para n = 2,
+
+Para n = 3,
+
+2 − 2x2
+y2
+
+2 = −(y2
+
+1 − 2x2
+
+1) = −(12 − 2 · 12) = 1
+
+3 = −(y2
+Agora, sem perda de generalidade, tomando por hipótese de indução que
+
+2) = −(1) = −1
+
+3 − 2x2
+y2
+
+2 − 2x2
+
+Devemos provar que
+
+y2
+n−1 − 2xn−1 = −1
+
+n − 2x2
+y2
+
+n = 1
+
+Ora, mas observando os cálculos feitos anteriormente onde concluímos que
+
+n−1 − 2x2
+Fica evidente a veracidade do passo de indução, pois
+
+n = −(y2
+
+y2
+n − 2x2
+
+n−1)
+
+n − 2x2
+y2
+
+n = −(−1) = 1
+
+n − 2x2
+
+Observe agora que, y2
+
+provamos que essa expressão é sempre igual a 1 ou -1, podemos considerar que y2
+(−1)n e isso se veriﬁca com facilidade, pois como x1 = y1 = 1 ⇒ y2
+aﬁrmar que as soluções da Escada de Theon de ordem ímpar satisfaz a equação y2
+n − 2x2
+e as soluções de ordem par satisfaz y2
+
+n é uma expressão semelhante a Equação de Pell-Fermat e como
+n =
+1 = −1, dai podemos
+n − 2x2
+n = −1
+
+n − 2x2
+
+1 − x2
+
+n = 1.
+
+Com isso concluimos que as soluções da escada de Theon também são soluções da Equação
+
+de Pell-Fermat.
+
+51
+
+CAPÍTULO 5
+
+Conclusão
+
+Estudar aproximação racional de Raízes quadradas é um tema de relativa importância pelo
+grande número de estudantes que não compreendem de forma adequada a ampliação do con-
+ceito de número racional ao número irracional e da necessidade em certos cálculos de se obter
+uma "boa aproximação"para a raiz quadrada na resolução de problemas.
+
+O certo é que a "extração"de raízes quadradas muitas das vezes são por processos trabalho-
+sos ou lentos, como por exemplo o método de aproximação que denominamos na introdução
+como método do confronto que aproxima racionais de forma lenta e entediante caso não haja o
+auxilio de uma calculadora. Com isso nos propusemos em mostrar três métodos de aproxima-
+ção racional de raízes quadradas como proposta de ensino para os estudantes de ensino médio
+ou fundamental, métodos estes que foram estudados neste trabalho, sempre com o cuidado de
+demonstrar a convergência de cada processo de aproximação e estabelecendo exemplos como
+demonstração do cálculo. Sendo que para isso, primeiramente estudamos sobre sequências e
+limite de sequências com o intuito de estabelecer base sobre as demonstrações que seriam re-
+alizadas posteriormente. Depois, foi mostrado a existencia dos números irracionais, perante a
+irracionalidade da diagonal de um quadrado e a possibilidade que sempre poderemos aproximar
+um números racional a um irracional tanto quanto se queira pelo Teorema de Dirichlet. Após
+os estudos mencionados, apresentamos os algoritmos que foram denominados por algoritmos
+de Hierão, Equação de Pell-Fermat e Escada de Theon, sendo que este último adaptado para
+aproximar uma raiz quadrada qualquer.
+
+Consideramos que no ensino médio qualquer método de aproximação seria facilmente com-
+preendido pelos estudantes devido a sua fácil manipulação e cálculos triviais, principalmente
+por estudantes que já estão habituados ao cálculo de sequências numéricas, como progressões
+e recorrências. Porém, não seria impossível estudantes que nunca estudaram sequências numé-
+ricas de compreenderam tais métodos devido a simplicidade dos mesmos como por exemplo a
+Equação de Pell-Fermat, pois tendo a solução fundamental, basta aplicar os conhecimentos de
+produtos notáveis para encontrar as próximas soluções e desta forma as aproximações racionais
+como mostrados na seção 4.2.2.
+
+Por ﬁm, lembramos que os algoritmos mencionados neste trabalho foram criados por povos
+distintos e em épocas diferentes sendo que diante das soluções encontradas pelos processos de
+aproximações, conjecturamos sobre a possibilidade da equivalência entre os três algoritmos,
+2, por exemplo, encontramos racionais que pertencem ao conjunto
+já que as soluções para
+solução dos três métodos. Para mostrar que estes algoritmos produzem soluções em comum,
+
+√
+
+53
+
+utilizamos a Equação de Pell-Fermat levantando as hipótes que toda solução do algoritmo de
+Hierão é também solução de Pell-Fermat, como também toda solução de Pell-Fermat é também
+solução da Escada de Theon.
+
+54
+
+APÊNDICE A
+
+Sobre Módulo e Desiguladade Modular
+
+Deﬁnição A.1. Deﬁnimos o valor absoluto ou módulo |α| do número real α como segue:
+|α| = α quando α ≥ 0, e |α| = −α quando α < 0
+
+Da deﬁnição de módulo podemos descrever a seguinte propriedade:
+
+|α| ≤ r ⇔ −r ≤ α ≤ r, ∀r, r ∈ R+.
+
+Pois, se α ≥ 0 ⇒ α = |α| ≤ r.
+
+E se α ≤ 0 ⇒ −α = |α| ≤ r ⇒ α ≥ −r, logo −r ≤ α ≤ r.
+
+Observação: podemos deﬁnir o módulo de um número real α como |α| =
+
+√
+
+α 2.
+
+Proposição A.0.1. Para todos os números reais não nulos a e b, temos
+
+|a + b| ≤ |a| + |b|
+
+ocorrendo a igualdade se e só se a e b tiverem um mesmo sinal.
+
+Demonstração: |a| ≥ a e |b| ≥ b, logo:
+
+|a||b| ≥ ab =⇒ |ab| ≥ ab =⇒ 2|ab| ≥ 2ab
+
+completando quadrados, temos:
+
+|a|2 + |b|2 + 2|ab| ≥ a2 + b2 + 2ab =⇒ (|a| + |b|)2 ≥ (a + b)2
+
+pela observação feita acima
+
+|(a + b)| =
+
+(cid:113)
+
+(a + b)2 =⇒ |a + b|2 = (a + b)2
+
+logo
+
+(|a| + |b|)2 ≥ (a + b)2 =⇒ (|a| + |b|)2 ≥ |a + b|2 =⇒ |a| + |b| geq|a + b|
+
+extraindo a raiz quadrada em ambos os menbros.
+
+55
+
+Para a igualdade note que de |a|2 +|b|2 +2|ab| ≥ a2 +b2 +2ab, só teremos |a+b| = |a|+|b|
+se só se ab = |ab|, ora mas isso só ocorrerá se ab ≥ 0 mas como a e b são reais não nulos, te-
+remos a igualdade se só se ab > 0, com isso concluímos que a e b devem ter o mesmo sinal.
+
+Teorema A.0.1. Para números reais não nulos a1, a2, ..., an, temos
+
+|a1 + a2 + · · · + an| ≤ |a1| + |a2| + · · · + |an|.
+
+Ademais, a igualdade ocorre se e só se a1, a2, ..., an tiverem todos um mesmo sinal.
+
+Demonstração: Primeiro note para o caso n = 2 a desigualdade acima se torna |a1 + a2| ≤
+
+|a1| + |a2|, onde já foi provada na Proposição A.0.1.
+
+Agora tomando como hipótese de indução que a desigualdade |a1 + a2 + · · · + an| ≤ |a1| +
+
+|a2| + · · · + |an| é verdadeira, devemos provar que também é válido a desigualdade
+
+|a1 + a2 + · · · + an + an+1| ≤ |a1| + |a2| + · · · + |an| + |an+1|
+
+Mas
+
+|a1 + a2 + · · · + an + an+1| ≤ |a1 + a2 + · · · + an| + |an+1|
+
+≤ |a1| + |a2| + · · · + |an| + |an+1|
+
+Por ﬁm, pra provar que a igualdade ocorre quando a1, a2, · · ·, an tem mesmo sinal, suponha
+que todos os termos dessa desigualdade tem o mesmo sinal, digamos que a1, a2, ..., an < 0 (o
+caso em que a1, a2, ..., an > 0 é feito de maneira análoga), então a1 + a2 + · · · + an < 0, daí
+
+|a1 +a2 +···+an| = −(a1 +a2 +···+an) = (−a1)+(−a2)+···+(−an) = |a1|+|a2|+···+|an|
+
+Agora tome como hipótese que |a1 + · · · + an| = |a1| + |a2| + · · · + |an|. Ora, mas se um
+ou mais termos do primeiro membro da igualdade tiver sinal diferente dos demais é óbivo que
+|a1 + · · · + an| < |a1| + |a2| + · · · + |an|. Então todos os termos devem ter mesmo sinal.
+
+56
+
+APÊNDICE B
+
+Lema B.1. Sejam d ∈ N não quadrado perfeito e n ∈ N, então
+
+√
+d − 1)2n
+(
+(d − 1)n =
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+(cid:33)n
+
+√
+d − 1)2n+1
+(
+(d − 1)n =
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+(cid:33)n
+
+e
+
+Demonstração:
+
+Primeira igualdade
+
+√
+
+· (
+
+d − 1)
+
+√
+d − 1)2n
+(
+(d − 1)n =
+
+√
+(
+
+√
+
+d − 1)n(
+
+d − 1)n
+
+(d − 1)n
+
+√
+(
+√
+(
+
+d + 1)n
+d + 1)n
+
+·
+
+√
+(
+(d − 1)n(
+
+d − 1)n(d − 1)n
+√
+d + 1)n
+
+=
+
+=
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+(cid:33)n
+
+Segunda igualdade
+
+√
+d − 1)2n+1
+(
+(d − 1)n =
+
+=
+
+√
+(
+
+√
+
+√
+
+d − 1)n(
+
+d − 1)n(
+
+d − 1)
+
+(d − 1)n
+
+√
+(
+√
+(
+
+d + 1)n
+d + 1)n
+
+·
+
+√
+(
+
+√
+
+d − 1)n(d − 1)n(
+
+d − 1)
+
+√
+
+(d − 1)n(
+
+d + 1)n
+
+(cid:33)n
+
+(cid:32)√
+√
+
+d − 1
+d + 1
+
+=
+
+√
+
+· (
+
+d − 1)
+
+57
+
+Referências Bibliográﬁcas
+
+[1] RIBEMBOIM, Paulo. Funções, Limites e continuidade. Rio de Janeiro, SBM, 2012.
+
+[2] MOREIRA, Carlos G. T. de Araújo; MARTÍNEZ, F. E. Brochero; SALDANHA, N. C.,
+
+Tópicos de Teoria dos Números. Rio de Janeiro, SBM, 2012.
+
+[3] SANTOS, J. P. de Oliveira. Introdução a Teoria dos Números. Rio de Janeiro, IMPA,
+
+2011.
+
+[4] MUNIZ NETO, Antonio Caminha. Tópicos de Matemática Elementar, Volume 3,
+
+Introdução a Análise. Rio de Janeiro, SBM, 2012.
+
+[5] MELO, Mª Eulalia de M., VERA, Jorge A. Hinojosa. Números Reais. Recife, UFRPE,
+
+2012.
+
+[6] CARVALHO, J. B. Pitombeira. A raiz quadrada ao longo dos séculos. Rio de Janeiro,
+
+UFRJ.
+
+[7] HODGSON, Bernard. Uma Breve História da Quinta Operação. Québec (Canadá),
+
+Universidade Laval, 2008, http://gazeta.spm.pt/getArtigo?gid=268.
+
+[8] SHINE, Carlos Yuzo. 21 Aulas de Matemática Olímpica. Rio de Janeiro, SBM, 2009.
+
+[9] PAIVA, Manoel. Matemática 3. São Paulo, Editora Moderna, 1995.
+
+[10] MUNIZ NETO, Antonio Caminha. Tópicos de Matemática Elementar, Volume 1,
+
+Números Reais. Rio de Janeiro, SBM, 2012.
+
+[11] MOREIRA, C. Neri. CABRAL, M. A. Palumbo. Curso de Análise Real Rio de Janeiro,
+
+2ª edição, Departamento de Matemática Aplicada, UFRJ, 2006.
+
+59
+
+[12] MOREIRA, GONDIM, Rodrigo. Aproximação Racionais e Aritméticas Recife, UFRPE,
+
+Projeto Klein/SBM 2012.
+
+60
+
+Este volume foi tipografado em LATEX na classe UFPEThesis (www.cin.ufpe.br/~paguso/ufpethesis).
+
+

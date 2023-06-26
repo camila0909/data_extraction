@@ -1,0 +1,2095 @@
+UNIVERSIDADE FEDERAL DO AMAZONAS
+INSTITUTO DE CIÊNCIAS EXATAS
+PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA
+
+MESTRADO PROFISSIONALIZANTE EM MATEMÁTICA
+
+O ESTUDO DAS ÁRVORES DE STEINER NO PLANO EUCLIDIANO E
+ALGUMAS APLICAÇÕES ATRAVÉS DO ALGORITMO DE MELZAK
+
+Jhones Carvalho Coelho
+
+MANAUS
+
+2016
+
+UNIVERSIDADE FEDERAL DO AMAZONAS
+INSTITUTO DE CIÊNCIAS EXATAS
+PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA
+PROGRAMA DE MESTRADO PROFISSIONALIZANTE EM MATEMÁTICA
+
+Jhones Carvalho Coelho
+
+O estudo das Árvores de Steiner no Plano Euclidiano e algumas aplicações
+através do Algoritmo de Melzak
+
+Trabalho de Conclusão de Curso apresentado ao
+Programa de Mestrado Proﬁssional em Matemá-
+tica da Universidade Federal do Amazonas, como
+
+requisito parcial para obtenção do título de Mestre
+em Matemática.
+
+Orientador: Prof. Dr. Nilomar Vieira de Oliveira
+
+MANAUS
+2016
+
+JHONES CARVALHO COELHO
+
+O ESTUDO DAS ÁRVORES DE STEINER NO PLANO EUCLIDIANO E
+ALGUMAS APLICAÇÕES ATRAVÉS DO ALGORITMO DE MELZAK
+
+Trabalho de Conclusão de Curso apresentado ao
+Programa de Mestrado Proﬁssional em Matemá-
+
+tica da Universidade Federal do Amazonas, como
+requisito parcial para obtenção do título de Mestre
+em Matemática.
+
+Aprovado em 15 de Dezembro de 2016.
+
+BANCA EXAMINADORA
+
+Prof. Dr. Nilomar Vieira de Oliveira
+Presidente
+
+Prof. Dr. Disney Douglas de Lima Oliveira
+
+Membro
+
+Prof. Dr. Antonio da Fonseca de Lira
+
+Membro
+
+AGRADECIMENTOS
+
+A Deus, por tudo.
+
+A minha Esposa, Kátia Dos Santos Coelho, por ter aparecido em minha vida, por está pre-
+sente comigo em todos os momentos, por ter me dado meus dois Filhos. Minha família que eu
+amo e que é o meu maior motivo para vencer.
+
+A minha Mãe, Maria Salete Pinto De Carvalho, que sempre me deu e ainda me dá forças
+para estudar, por sempre ter colocado os ﬁlhos como principal prioridade na vida dela. Dedico
+muito essa minha vitória à ela. Obrigado minha Mãe por tudo.
+
+Ao meu orientador Prof. Dr. Nilomar Vieira de Oliveira, pela paciência em me ajudar neste
+
+trabalho, por acreditar em mim e por ser um grande Mestre.
+
+A meus irmãos, primos e amigos. Pela união e momentos de descontração.
+
+A Universidade Federal do Amazonas (UFAM), por ter me dado essa oportunidade de cursar
+o PROFMAT e por ser o lugar que sempre me atrai em busca de novos conhecimentos e reali-
+zações.
+
+A todos os Professores e aos Colegas do PROFMAT.
+
+RESUMO
+
+Dado um conjunto de pontos no plano, que denominamos terminais ou pontos regulares, prova-
+se que sempre existe uma árvore mínima que os conecta, chamado "árvore de Steiner". Os
+terminais podem representar centros de conexão para rotas, elementos de circuito elétrico, ou
+de redes diversas. Ou seja, o problema em questão é otimizar a comunicação entre os terminais,
+caso isto seja representado por uma árvore de menor comprimento possível. Nem sempre o
+"menor comprimento"representa a otimização. O Problema de Steiner possui variações, por
+exemplo, em que as arestas da árvore só podem seguir direções horizontal e vertical, como
+no caso de circuitos elétricos. Outra variação é quando cada ponto Steiner tem custo muito
+alto, e pretende-se obter uma tal árvore com o menor número de tais pontos. Ela será "mínimo
+local"para comprimento, mas não necessariamente global. Um modelo físico e bastante simples
+para "árvore de Steiner"é que ela pode ser também realizada por películas de sabão, e por isso
+compartilham propriedades de Superfícies Mínimas. Como exemplo, considere uma solução de
+sabão. Ao mergulharmos e retirarmos duas placas paralelas ligadas por pinos, uma película irá
+conectá-los. Esta representa um grafo de comprimento mínimo que interliga os pinos. Como
+é sabido, as películas de sabão realizam as Superfícies Mínimas. Para visualizar uma "Árvore
+de Steiner", recorre-se a Algoritmos Numéricos e Programação Gráﬁca, os métodos baseiam-se
+principalmente na implementação dos algoritmos. Este presente trabalho está dividido em três
+partes: breve história dos problemas de otimização, em destaque o problema de Steiner; teoria
+sobre a Árvore Mínima ou Árvore de Steiner e o Algoritmo de Melzak; alguns exemplos de casos
+reais.
+
+Palavras-chave: Pontos Terminais, Árvore Mínima, Árvore de Steiner, Algoritmo de Melzak.
+
+ABSTRACT
+
+Given a set of points on the plane, we call terminals or regular points, it proves that there is
+always a minimum tree that connects called "Steiner tree". The terminals may represent hubs
+to routes, circuit elements, or different networks. That is, the problem in question is to optimize
+to communication between terminals, if this is represented by a tree of shortest length possible.
+Not always the "shorter"is optimization. Steiner problem has variations, for example, the tree
+can only follow the edges of the horizontal and vertical directions, as in the case of electrical
+circuits. Another variation is when each Steiner point is very expensive, and it is intended to
+obtain such a tree with the lowest number of such points. It will be "local minimum"for length,
+but not necessarily globally. A physical and quite simple model for "Steiner tree"is that it can
+also be performed by soap ﬁlms, and therefore share minimum surface properties. As an exam-
+ple, consider a soap solution. Getting closer and withdraw two parallel plates connected by
+pins, a ﬁlm will connect them. This represents a minimum length graph that interconnects the
+pins. As is known, the soap ﬁlms perform the Minimal Surfaces. To view a "Steiner tree"refers
+to Numerical Algorithms and Graphical Programming, methods are mainly based on the im-
+plementation of the algorithms. This present work is divided into three parts: a brief history of
+optimization problems, highlighted the Steiner problem; theory of the Minimum Tre or Steiner
+tree and algorithm Melzak; some examples of real cases.
+
+Keywords: Endpoints
+
+, Minimum Tree
+
+, Steiner Tree , Algorithm Melazak
+
+LISTA DE SÍMBOLOS
+
+Plano euclidiano.
+Ponto de Steiner.
+Medida do ângulo ABC.
+Número de pontos regulares .
+Pontos regulares.
+Pontos de Steiner.
+Número de pontos de Steiner.
+Igual.
+Lúnula do vértice U V .
+Região com formato de fatia.
+Arestas.
+Força externa em Ai.
+
+Somatório variando de 1 a n.
+
+Comprimento de uma aresta.
+Ponto equilátero dos vértices Pi e Pj.
+Comprimento da árvore mínima de Steiner euclidiana no conjunto V .
+Comprimento da árvore mínima geradora para o mesmo conjunto V .
+Razão de Steiner no Rd.
+Razão de Steiner.
+Problema da Árvore de Steiner Euclidiano.
+Indica o ﬁm de uma demonstração.
+
+R2
+
+S
+(cid:93)ABC
+n
+Pi, i = 1, 2, ..., n
+Si, i = 1, 2, ..., k
+k
+=
+L(U, V )
+W
+Ai, i = 1, 2, ..., n + k − 1
+Fi
+n
+(cid:88)
+
+i=1
+L0
+Eij
+l(SM T (V ))
+l(M ST (V ))
+ρd
+ρ
+P ASE
+(cid:3)
+
+Sumário
+
+Introdução
+
+Motivação
+
+1 Um Breve Histórico
+
+1.1 Problemas de otimização na antiguidade . . . . . . . . . . . . . . . . . . . . .
+1.2 Problemas de otimização na Renascença . . . . . . . . . . . . . . . . . . . . .
+1.3 Problemas de otimização no século XX . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+1.4 O Problema de Steiner
+
+.
+
+.
+
+2 A árvore de Steiner no R2
+.
+Introdução .
+
+.
+
+.
+
+.
+
+.
+
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.1
+.
+2.2 O problema de Torricelli-Fermat
+. . . . . . . . . . . . . . . . . . . . . . . . .
+2.3 O Problema de Steiner Generalizado . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.4 Algumas Deﬁnições .
+. . . . . . . . . . . . . . . . . . . . . . .
+2.5 Propriedades das árvores de Steiner
+
+.
+
+.
+
+.
+
+3 O Algoritmo de Melzak no R2
+
+3.1 Uma aplicação para encontrar uma árvore de Steiner
+
+. . . . . . . . . . . . . .
+
+4 A Razão de Steiner no R2
+
+5 Alguns casos nos quais se pode utilizar uma árvore de Steiner
+
+5.1 Aplicações do PASE na Conﬁguração Molecular
+5.2 Aplicações do PASE no Projeto de Redes
+.
+5.3 Redes Ópticas .
+
+. . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.3.1 Otimização de Distribuição de Sinal de Redes . . . . . . . . . . . . . .
+5.4 Outros casos práticos da Árvore de Steiner . . . . . . . . . . . . . . . . . . . .
+
+.
+
+.
+
+.
+
+.
+
+Considerações Finais
+
+Referências Bibliográﬁcas
+
+2
+
+3
+
+4
+4
+6
+8
+10
+
+13
+13
+13
+18
+19
+20
+
+28
+28
+
+39
+
+41
+41
+42
+43
+44
+45
+
+46
+
+47
+
+Introdução
+
+Os problemas de minimizar ou maximizar algo, começaram a muito tempo atrás na anti-
+guidade, desde que houve a necessidade de saber um limite mínimo ou máximo para certas
+grandezas. O campo da matématica que trata desses estudos chama-se Otimização. Na renas-
+cença muitos matemáticos eminentes se dedicaram ao estudo dos problemas de extremos.
+
+No século XVII o desenvolvimento das Ciências Naturais determinou o aprofundamento nas
+pesquisas no campo da otimização, começando pelas tentativas de explicar a Lei da Refração
+da Luz. Por volta de 1600 o grande matemático francês Pierre de Fermat propôs o princípio
+otimal: O trajeto que um raio luminoso segue num meio heterogêneo é o mais curto possível
+e corresponde a um caminho mínimo. A partir desse momento, surgiu a idéia dos chamados
+"Princípios Variacionais", isto é, as leis da natureza se deduzem de relações extremais, ou seja,
+entre máximos e mínimos de grandezas. Os problemas de otimização surgem com freqüência
+em questões relacionadas a problemas de Engenharias e Ciências. Dentre estes, o de minimizar
+uma soma de distâncias é um dos mais antigos na Matemática e, conseqüentemente, foi estu-
+dado por matemáticos renomados ao longo da História, tais como Euler e Gauss.
+
+Um problema foi proposto no século XVII pelo matemático Pierre Fermat: Dados três pon-
+tos no plano, qual é o quarto ponto tal que a soma dos comprimentos de suas distâncias aos
+três pontos dados é mínima? Em 1640 Torricelle mostrou o primeiro método para solucionar
+este problema utilizando a construção da interseção de três círculos que ﬁcou conhecido como
+círculos de Torricelle, conforme será mostrado no capítulo 2. O segundo método foi descoberto
+por Simpson em 1750. Cerca de 84 anos depois , Heiner juntou esses fatos e propôs uma solu-
+ção para o problema de Fermat que será mostrado adiante.
+
+O caso citado acima é para três pontos no plano chamados de terminais, e o ponto encon-
+trado que miniminiza a soma das distâncias é chamado Ponto de Steiner. Este problema também
+pode ser generalizado para n pontos no plano e perguntar qual é a menor árvore que interco-
+necta esses pontos se pudermos acrescentar tantos pontos extras quanto quisermos, desde que
+esse acréscimo de pontos corresponda a uma diminuição no comprimento total da árvore for-
+mada, esse problema ﬁcou conhecido na literatura como Problema de Steiner em homenagem
+ao geômetra Jacob Steiner(1796 - 1863).
+
+1
+
+Vários algoritmos foram criados para solucionar o Problema de Steiner, o primeiro deles
+para o caso euclidiano no plano em um número ﬁnito de passos foi proposto por Melzak, con-
+forme será explicado com mais detalhes ao logo deste trabalho.
+
+Na prática, existem uma variedades de situações reais, nas quais, a árvore mínima de Steiner
+pode ser aplicada como por exemplo: na conﬁguração das moléculas do DNA, na distribuição
+de redes de sinais ópticos, na distribuição de poços de petróleo, etc. Em geral, são utilizados
+programas desenvolvidos com o uso dos algoritmos, que nos dão uma construção da topologia
+desejada para a árvore mínima. A grande vantagem dessas aplicações pode está associada à
+fatores econômicos, uma vez que se conhece a distância mínima numa rede, então isso trará
+uma diminuição de custos.
+
+2
+
+Motivação
+
+Desde a antiguidade que a geometria é utilizada para resolver situações problemas do dia a
+dia. Os problemas mais comuns que envolvem a abordagem teórica deste trabalho são aqueles
+em que se deve encontar uma posição ou um ponto adequado (ponto ótimo) de onde se pretende
+fazer uma rede de distribuição com distância mínima. Por exemplo:
+
+1. Digamos que se queira fazer uma distribuição de sinal de internet para 5 lugares diferen-
+tes afastados por uma certa distância um do outro e precise saber qual é melhor posição
+para uma torre de transmissão, para que cada lugar tenha um bom sinal recebido, esse
+local provavelmente será aquele que tenha a menor distância para esses cinco lugares,
+isso garante que todos os lugares tenham a mesma qualidade de sinal.
+
+2. Outro problema similar seria se numa vizinhança, digamos com 3 casas, se queira alocar
+uma caixa d’água para abastecer essas três casas. A primeira coisa que se deve consi-
+derar é que as casas tenham o mesmo abastecimento, ou seja, uma casa não pode ﬁcar
+com vazão de água mais "fraca"que a de outra. Para que isso ocorra, então o lugar mais
+adequado seria aquele que minimiza a distância para essas casas.
+
+3
+
+Capítulo 1
+
+Um Breve Histórico
+
+Neste capítulo falaremos um pouco sobre o surgimento dos problemas que tratam sobre a
+natureza de minimizar ou maximizar distâncias, quantidades, espaços, etc. Área esta da mate-
+mática que chamamos de "otimização". Assim, espera-se que esta abordagem histórica sirva de
+motivação para compreendermos a importância da teoria do problema de Steiner para a huma-
+nidade.
+
+1.1 Problemas de otimização na antiguidade
+
+As grandezas máximas e mínimas, deram origem à problemas que foram objeto de minuciosa
+consideração no decorrer de toda a evolução da Matemática. Segundo [1] , o chamado problema
+isoperimétrico clássico: "achar, dentre as curvas planas fechadas de um dado cumprimento,
+aquela que limita a maior superfície possível", é considerado o mais antigo dos problemas de
+máximos e mínimos.
+
+É muito mencionada na literatura sobre a história dos problemas de máximo e de mínimo, a
+lenda de Dido (também chamada de Elisa ou Elisha), que envolve um problema isoperimétrico.
+A mesma está contada na Eneida, poema épico escrito pelo grande poeta romano Virgílio (70
+a.C. - 19 a.C.). Dido era uma princesa fenícia da cidade de Tiro que fugiu de navio no século
+IX a.C. para o norte da África quando seu esposo Siqueu foi assassinado pelo rei Pigmalião,
+que era irmão da Dido. Ela, junto com um grupo dos seus seguidores fundou lá a cidade de
+Cartago (na atual Tunísia). Segundo a lenda, o rei local lhe diz que podia tomar toda a terra
+que couber numa bolsa feita com a pele de um único animal. Dido decidiu cortar a pele em
+tiras muito ﬁnas que foram emendadas formando uma longa corda, que usaram para cercar um
+terreno semicircular na orla marítima. Este tipo de problema, segundo [2], é chamado problema
+isoperimétrico relativo.
+
+Existem algumas variações da lenda de Dido, por exemplo, se era uma circunferência ou
+uma semicircunferência, mas em todas se menciona o problema isoperimétrico. A solução de
+Dido, ou melhor, de algum matemático do seu séquito, foi evidentemente intuitiva. A solução
+
+4
+
+formal não é simples e foi escrita após alguns séculos. Muitas demonstrações foram publicadas,
+algumas devidas a grandes matemáticos, mas incompletas. Por exemplo, o eminente matemá-
+tico germano-suíço Jacob Steiner (1796-1863) resolveu o problema assumindo a existência da
+solução e considerando três etapas na sua demonstração:
+
+(i) A curva deve fechar uma região convexa.
+(ii) Qualquer reta que divida pela metade o perímetro da região, também divide a região em
+
+duas partes com a mesma área.
+
+(iii) A semicircunferência de comprimento π
+
+2 cujos extremos estejam sobre uma reta dada, é
+a curva que abrange uma região de área máxima, considerando todas as curvas de perímetro π
+2
+que limitam regiões convexas a um lado da reta e com extremos nela.
+
+O problema isoperimétrico teve uma importância signiﬁcativa em pesquisas sobre extremos
+vários séculos depois. Ao respeito [2], entender bem o que é uma solução completa do pro-
+blema isoperimétrico foi muito importante para a formulação correta do que é a solução de
+problemas variacionais em Matemática. Principalmente no que se refere ao aspecto existencial
+das soluções.
+
+Voltando à antiga Grécia, os ﬁlósofos tentaram resolver o problema isoperimétrico clássico
+ainda no século V a.C.. Existem escritos de Aristóteles no século III onde já se aﬁrma que a cir-
+cunferência é a solução, mas a sua demonstração era de índole ﬁlosóﬁca. Os gregos Zenódoro e
+Pappus também escreveram sobre o problema nas suas obras. Ainda que a solução do problema
+fosse aceita, não existem registros da época de alguma demonstração matemática de que a cir-
+cunferência é a curva que maximiza a área para um dado perímetro ﬁxo. Os geômetras gregos
+formularam e resolveram vários problemas de máximos e de mínimos, os quais aparecem em
+Os Elementos, de Euclides, e nas obras de Arquimedes e Apolônio.
+
+Um primeiro fato histórico bem documentado está nas obras de Apolônio, um destacado
+matemático grego da antiguidade, que viveu entre 262 e 190 a.C. Apolônio dedicou o Livro V
+da sua obra monumental As Cônicas (em oito volumes), a estudar segmentos de comprimento
+máximo e mínimo traçados com respeito a uma cônica. Segundo [3], Apolônio argumenta em
+sua introdução que "o tema é dos que parece ser digno de estudo pelo seu próprio interesse"(p.
+203). Segundo [4], Apolônio demostra que se O é qualquer ponto no interior de uma cônica e
+se OP é o segmento de reta de comprimento máximo ou mínimo desde O até a cônica, então
+a reta perpendicular a OP em P é tangente à cônica em P ; e se O0 é qualquer ponto fora da
+cônica sobre OP , então O0P é o segmento de comprimento mínimo de O0 até a cônica. Agora,
+esta propriedade é expressa como a perpendicularidade entre a tangente e normal."(P. 97) (em
+tradução livre).
+
+Este problema pode ser estudado atualmente num contexto mais geral, como parte das con-
+dições de transversalidade em problemas de Cálculo das Variações, uma teoria criada por Euler,
+no século XVIII. [3] aﬁrma sobre o trabalho de Apolônio que embora devamos admirar o au-
+tor por sua elevada atitude intelectual, pode ser pertinentemente observado que o que em seu
+tempo era bela teoria, sem perspectiva de aplicabilidade à ciência ou engenharia de seu tempo,
+
+5
+
+a partir daí tornou-se fundamental em campos como a dinâmica terrestre e a mecânica celeste.
+Os teoremas de Apolônio sobre máximos e mínimos na verdade são teoremas sobre tangentes e
+normais de seções cônicas. É claro, em outras palavras, que foi a matemática pura e Apolônio
+que permitiram, cerca de 1800 anos mais tarde, os Princípia de Newton.
+
+Um pouco mais adiante, o já mencionado livro de Boyer, relata um fato histórico da anti-
+guidade vinculado com problemas de otimização e nos lembra um dos princípios ﬁlosóﬁcos
+de Aristóteles, que atribui a natureza um comportamento otimizador. Heron se interessava por
+mensuração em todas as formas. Foi Heron quem mostrou, por um argumento geométrico sim-
+ples, numa obra chamada Catóptrica (ou reﬂexão), que a igualdade dos ângulos de incidência e
+reﬂexão é uma consequência do princípio aristotélico que diz que a natureza nada faz do modo
+mais difícil. Isto é, se a luz deve ir de uma fonte F a um espelho M M0 e, então, ao olho E
+de um observador, o caminho mais curto possível F P E, é aquele em que os ângulos F P M e
+EP M0 são iguais. (Boyer 1986, p. 118).
+
+Veriﬁca-se no próximo item, que na Renascença se retoma a ideia do comportamento otimi-
+zador da natureza. Outro fato histórico interessante que mostra como naquela época estavam
+presentes as ideias sobre extremos numa perspectiva correta, embora não necessariamente rigo-
+rosa e formal, é a obra de Pappus de Alexandria, que escreveu um livro em volta do 320 a.C.
+com o título de Coleção Matemática. Ao respeito, [3] escreve: "Papus parece estar seguindo de
+perto uma obra Sobre ﬁguras isométricas, escrita quase meio milênio antes por Zenodoro (cerca
+de 180 a.C), do qual alguns fragmentos foram preservados por comentadores posteriores. Entre
+as proposições no tratado de Zenodoro, havia uma aﬁrmando que de todas as ﬁguras sólidas de
+igual superfície, a esfera tem o volume máximo, mas evidentemente só se dava uma justiﬁcativa
+incompleta".
+
+No breve resumo acima revela-se a importância atribuída aos problemas extremais desde
+a antiguidade, na própria Matemática e nas suas aplicações a outras ciências, bem como sua
+inﬂuência no desenvolvimento posterior dos conhecimentos sobre problemas gerais, não só
+geométricos, de máximos e mínimos.
+
+1.2 Problemas de otimização na Renascença
+
+O desenvolvimento das Ciências Naturais no século XVII determinou o aprofundamento
+nas pesquisas no campo da otimização. Tudo começou pelas tentativas de explicar a Lei da
+Refração da Luz, que desde a antiguidade se tentou deduzir. No século II a.C., Ptolomeu tentou
+uma abordagem experimental, mas sua empresa fracassou. No século XVII o cientista holandês
+Snellius estabeleceu essa lei e, então, surgiu o problema do estudo dos princípios físicos que
+a fundamentam. Para explicar dita lei, o grande matemático francês Pierre de Fermat propôs,
+aproximadamente no ano 1600, o princípio otimal que posteriormente recebeu seu nome e que
+diz: "O trajeto que um raio luminoso segue num meio heterogêneo é o mais curto possível e
+corresponde a um tempo mínimo".
+
+6
+
+A partir desse momento, a ideia dos chamados "Princípios Variacionais", isto é, a convicção
+de que as leis da natureza se deduzem de relações extremais (relações entre valores máximos e
+mínimos de grandezas), passou a ser uma das ideias centrais das Ciências Naturais e norteou as
+pesquisas. Até a segunda metade do século XVII não houve nenhum procedimento geral que
+permitisse resolver os problemas sobre cálculo de extremos. A necessidade da sua formulação
+estimulou notavelmente a criação do Cálculo Diferencial.
+
+O primeiro procedimento de caráter geral que tinha por objetivo calcular máximos e mínimos
+foi descrito por Fermat no ano 1630. Na linguagem atual é o conhecido Teorema de Fermat,
+encontrado nos livros de Cálculo, pelo qual estabelece que a anulação da derivada num ponto
+do interior do domínio da função, é uma condição necessária para a existência de extremo neste
+ponto. Na realidade, Fermat formulou esse resultado somente para polinômios. Na sua forma
+geral foi obtido por Isaac Newton nos anos sessenta do século XVII e redescoberto, indepen-
+dentemente, por Leibniz e publicado por ele no famoso artigo "Nova methodus promaximis
+et minimis", com o qual começa a história da Análise Matemática. Observe atentamente o tí-
+tulo em latim (na época todos os artigos cientíﬁcos se publicava nesta língua), que livremente
+pode-se traduzir como "Novo método para encontrar máximos e mínimos".
+
+No século XVIII Euler e Lagrange criaram os procedimentos de solução de problemas de
+cálculo de extremos de funções de várias variáveis, com e sem restrições do tipo equação.
+O principal procedimento, denominado Método dos Multiplicadores de Lagrange, atualmente
+forma parte do currículo de qualquer curso superior de engenharia ou de Matemática. Os aportes
+de Lagrange e de Euler permitiram tratar os problemas de otimização nos quais o elemento
+otimizante não é um número real nem um vetor n dimensional, mas uma função. Refere-se ao
+Cálculo de Variações e à solução rigorosa de problemas como o famoso e histórico "Problema
+da Braquistócrona", onde se propõe encontrar a curva plana ao longo da qual uma partícula
+se deslizará unicamente por inﬂuência da gravidade e sem fricção, num tempo mínimo, de um
+ponto P a outro Q, considerando estes pontos num plano vertical, Q mais baixo que P, mas não
+ambos numa mesma reta vertical. Certamente, achar tal curva, é achar a função que a deﬁne.
+
+Na revista Acta Eruditorum do mês de junho de 1696 (primeira e única revista daquela época)
+foi publicado o artigo de Johann Bernoulli cujo título traduzimos livremente como "Um novo
+problema para cuja solução são convidados os matemáticos". Nele propunha-se o problema da
+braquistócrona, a curva do descenso mais rápido, a partir do qual começa a história do Cálculo
+de Variações clássico. Houve soluções muito elegantes, com critérios especíﬁcos para este
+problema, como resposta ao desaﬁo formulado por Johann Bernoulli, aos matemáticos dessa
+época. Cinco matemáticos responderam com soluções: Isaac Newton, Jacques Bernoulli (irmão
+de Johann), Gottfried Leibniz, Ehrenfried Walther von Tschirnhauss e Guillaime de L’Hôpital.
+Destacam-se, dentre as soluções apresentadas, a do próprio Johann Bernoulli, a de Leibniz, a
+de Jacques Bernoulli (irmão de Johann) e a famosa de Newton, que levou o primeiro lugar.
+
+Quatro das soluções (excluída a de L’Hôpital) foram publicadas na edição de maio da revista.
+Newton levava anos retirado da vida cientíﬁca quando esse evento ocorreu e apresentou seu
+
+7
+
+trabalho anonimamente. Conta-se que quando Bernoulli leu a solução anônima de Newton o
+identiﬁcou e exclamou: "Eu reconheço o leão pela marca da garra".
+
+O desenvolvimento da teoria do Cálculo de Variações prosseguiu no transcurso de mais dois
+séculos. Além das condições necessárias de primeira ordem (equações de Euler-Lagrange),
+foram descobertas condições suﬁcientes de segunda ordem para dois tipos de extremos: forte e
+fraco, nos trabalhos de Legendre, Jacobi e Weierstrass, bem como a atualmente chamada teoria
+de Hamilton-Jacobi que permitiu construir a teoria do campo de Kneser e Hilbert.
+
+Os princípios variacionais demonstraram serem umas ferramentas muito poderosas na mecâ-
+nica, na óptica e na eletrodinâmica, com muitas aplicações à engenharia. Na física, nas áreas de
+relatividade e mecânica quântica, aparecem inúmeros exemplos que revelam o poder do Cálculo
+de Variações.
+
+1.3 Problemas de otimização no século XX
+
+No século XX, na década de trinta, considerava-se que o assunto dos problemas extremais
+estava praticamente esgotado. Mas em 1939 o matemático russo Leonid Vitaliyevich Kanto-
+rovich foi convidado a oferecer uma consultoria para uma empresa dedicada à produção de
+madeira compensada. Motivado pelos problemas encontrados criou novos métodos de estudo e
+solução da classe de problemas de otimização que utilizavam exclusivamente funções lineares
+na formulação da função objetivo e das equações e inequações das restrições.
+
+Foram estabelecidos os fundamentos de um novo ramo da teoria dos problemas de otimi-
+zação, após a formalização do problema, hoje chamado Programação Linear. Na realidade,
+embora o nome "Programação Linear"já esteja generalizado, existe certa confusão com a acep-
+ção da palavra programação, que está muito vinculada com a informática. Melhor seria utilizar
+a expressão "Otimização Linear", mas é tarde para alguém tentar obrigar a troca de nome.
+
+Na época de Kantorovich sua descoberta não teve difusão nem impacto cientíﬁco, principal-
+mente porque o ditador soviético Josef Stalin considerava antimarxista a aplicação de métodos
+matemáticos na economia, e os que tentavam eram fortemente reprimidos. Foi em 1975 que
+Kantorovich recebeu o Prêmio Nobel, conjuntamente com o economista norte-americano T.
+Ch. Kupmans, pelos resultados obtidos e suas aplicações econômicas.
+
+A história que aparece na maioria dos livros considera que a Programação Linear se desen-
+volveu a partir da quarta década do século XX. Aqui surgiu o nome Pesquisa Operacional (PO),
+que é bem mais abrangente que a Programação Linear (PL), que é um ramo seu. O nascimento
+da PO foi fruto da Segunda Guerra Mundial, contexto em que foi gerada.
+
+A Administração Militar inglesa convocou um grande grupo de cientistas de diferentes espe-
+cialidades, incluindo vários matemáticos, para estudar a solução de problemas táticos e estraté-
+gicos associados à defesa do país, aplicando o método cientíﬁco a estes e outros problemas de
+índole militar. Devido aos esforços bélicos, existia uma necessidade urgente de assinar recursos
+escassos às operações militares e às atividades dentro de cada operação, na forma mais eﬁciente
+
+8
+
+possível. O nome de Pesquisa Operacional foi dado, aparentemente, porque a equipe estava
+desenvolvendo a atividade de pesquisar operações militares, como, por exemplo, o desenvolvi-
+mento do uso do novo radar no combate aéreo; o gerenciamento das operações anti-submarinas
+e de proteção de comboios no oceano; e em geral a logística das operações militares. Moti-
+vados pelos êxitos dos ingleses, os administradores militares norte-americanos começaram a
+realizar pesquisas similares. Para isto, reuniram um grupo seleto de especialistas que obtive-
+ram bons resultados nos seus trabalhos. Os estudos incluíram problemas logísticos complexos,
+planejamento de colocação de minas no mar e utilização efetiva de equipamentos eletrônicos.
+
+Ao término da guerra, estas bem sucedidas operações militares geraram um grande interesse
+fora do campo militar. Os administradores industriais começaram a aplicar as ferramentas da
+Pesquisa Operacional para a solução dos seus problemas, que se originaram pelo crescimento
+e complexidade das indústrias. Outro fator para o desenvolvimento da Pesquisa Operacional
+foi que muitos cientistas que tinham participado das equipes de PO durante a guerra e tinham
+informação importante sobre este trabalho estavam motivados a continuar procurando resul-
+tados neste campo. Assim, resultaram avanços muito importantes na pós-guerra. Muitas das
+ferramentas da PO, como a Programação Linear, a Programação Dinâmica, Linhas de espera,
+Teoria de Inventários e outras estiveram criadas antes de terminar a década de 1950. Segundo
+o texto de [5], embora tem-se creditado à Inglaterra a criação da Pesquisa Operacional como
+uma nova disciplina, os Estados Unidos tomaram logo a liderança neste campo. A primeira
+técnica matemática amplamente aceita no meio da PO foi o Método Simplex, algoritmo que
+permite resolver qualquer problema de Programação Linear. Ficou amplamente conhecida em
+1947 pelo matemático americano George B. Dantzig. O fato de existir um algoritmo capaz de
+resolver qualquer problema de PL é importantíssimo. Isso deu um grande impulso às aplicações
+da PL e a partir daquela data novas técnicas se desenvolveram graças ao esforço e cooperação
+de matemáticos, cientistas e administradores, tanto da área acadêmica como da industrial.
+
+O surgimento dos computadores deu um grande impulso a Pesquisa Operacional. Para re-
+solver os problemas da PO é necessário um grande número de cálculos e sem a ajuda de um
+computador eletrônico é impossível conseguir resolvê-los. Na década de 1980 apareceram com-
+putadores pessoais (PC) cada vez mais rápidos e com maior memória, acompanhados por pa-
+cotes de softwares eﬁcientes para resolver os problemas de PO. Isto colocou as técnicas da PO
+ao alcance de um grande número de pessoas. Atualmente, milhões de indivíduos têm acesso
+à aplicação das modernas técnicas da PO. As origens cientíﬁcas da PO datam de muito tempo
+antes da Segunda Guerra Mundial. Modelos primitivos de programação matemática foram apre-
+sentados pelos economistas Quesnay, em 1759; e Walras, em 1874; modelos econômicos mais
+soﬁsticados de um gênero semelhante foram propostos por Von Neumann, em 1937, e como foi
+dito, por Kantorovich em 1939. As bases matemáticas de modelos lineares foram estabelecidas
+perto da mudança do século XIX. Em 1826, Fourier descobriu um método para manipular de-
+sigualdades lineares, que está muito relacionado com a solução de problemas de programação
+linear. Outros trabalhos precursores são devidos a Jordan, em 1873; Minkowski, em 1896; e
+
+9
+
+Farks, em 1903. Outro exemplo de resultado precursor é o trabalho seminal sobre modelos
+dinâmicos devido a Markov, que viveu de 1856 a 1922.
+
+O desenvolvimento da PL estimulou o desenvolvimento de outros ramos da Teoria de Otimi-
+zação, como a Análise Convexa, que constitui atualmente um dos pilares mais sólidos e ainda
+em desenvolvimento da Otimização. Os trabalhos do eminente matemático John Von Neumann
+foram decisivos no desenvolvimento dos resultados mais importantes nessas áreas no século
+XX. Outro nome inesquecível na otimização é o do matemático russo Lev S. Pontriaguin, pai
+da Teoria do Controle Ótimo. Observa-se nesta breve síntese a importância dos problemas de
+otimização na Matemática e suas remotas origens na antiguidade da história da matemática,
+onde muitos problemas geométricos de máximos e mínimos conﬁguraram o gérmen de méto-
+dos e técnicas avançadas de otimização. A beleza de muitos desses problemas cativa e pode ser
+fonte de recursos didáticos para ensinar uma Matemática mais atraente para os alunos.
+
+1.4 O Problema de Steiner
+
+Nas áreas Engenharias e Ciências encontram-se com maior freqüência questões relacionadas
+a problemas de otimização . Dentre estes, o de minimizar uma soma de distâncias é um dos
+mais antigos na Matemática e, conseqüentemente, foi estudado por matemáticos renomados ao
+longo da História, tais como Euler e Gauss.
+
+Um problema simples era proposto por Fermat na metade do século XVII: encontrar um
+ponto P que minimizava a soma das distâncias de P a cada um de três pontos dados num plano.
+Soluções para este problema foram conseguidas independentemente pelo próprio Fermat e tam-
+bém Torricelli. Eles deduziram que poderiam surgir duas situações exclusivas: o ponto P estava
+na região interior ao triângulo formado pelos três pontos dados (nesse caso, os ângulos em P
+determinados pelos segmentos unindo P aos três pontos são todos 120o ou P é um dos três vér-
+tices e o ângulo em P, formado pelos segmentos juntando P aos outros dois pontos é maior ou
+igual a 120o.
+
+No século XIX, um matemático da Universidade de Berlim chamado Jacob Steiner, estudou
+este problema e o generalizou com a inclusão de um conjunto arbitrariamente grande de pontos
+no plano. O problema foi generalizado posteriormente para um problema de minimização de
+caminho com a seguinte questão: dados n pontos num plano, encontrar o comprimento do
+menor caminho possível, ligando-os por segmentos de retas, podendo-se acrescentar k pontos,
+com k ≤ n − 2. Este problema foi bastante divulgado após o surgimento do livro de Courant
+e Robbins [7] What is Mathematics?, de 1941. Courant e Robbins ligaram o nome de Steiner
+a este problema generalizado, passando a partir de então a chamar-se "Problema da Árvore
+Mínima de Steiner". A solução para essa questão que permite o acréscimo de outros pontos,
+cada um dos quais chamado ponto de Steiner, é mais geral do que o problema original de Fermat
+para n pontos dados, e tem uma conﬁguração ﬁnal de uma árvore ao invés de uma "estrela".
+
+Até 1961, apesar de muito estudado, apenas heurísticas eram conhecidas para a solução
+
+10
+
+do problema da árvore mínima de Steiner (ou SMT, do inglês Steiner Mínimal Tree). Nesse
+ano, Melzak [8] desenvolveu o primeiro algoritmo conhecido para a solução do SMT com um
+número ﬁnito de passos, explorando propriedades das árvores, e baseando-se em construções
+geométricas com régua e compasso. No entanto, esse algoritmo funciona apenas quando a
+quantidade de pontos é muito pequena, por ser de ordem exponencial. Devemos assinalar que
+persiste a aﬁrmação da inexistência de construção geométrica para n ≥ 4 pontos, dado o fato
+que o algoritmo de Melzak não ensina a escolher dentre as 2n−2 soluções geométricas possíveis
+qual a melhor. Ou seja, a melhor solução não pode ser construída inequivocamentecom régua e
+compasso sem que todas as outras construções possíveis sejam feitas.
+
+Em 1968, Gilbert e Pollak [9] cunharam deﬁnitivamente o termo "Árvore Mínima de Stei-
+ner" para o problema que relaciona a árvore dos pontos dados inicialmente e os pontos de
+Steiner, informalmente deﬁnidos acima. Com demonstração de algumas propriedades conheci-
+das até aquele momento, e espalhadas na literatura, sua revisão estimulou várias pesquisas nos
+anos seguintes, através de várias conjecturas interessantes. Foram também Gilbert e Pollak que
+popularizaram a razão de Steiner, um quociente entre o comprimento das Árvore Mínima de
+Steiner e o comprimento da Árvore Geradora Mínima, que trataremos nos próximos capítulos.
+Nos anos seguintes, ainda no caso bidimensional, várias aplicações relacionadas ao Problema
+de Steiner surgiram, dando nova importância ao problema. Um dos exemplos mais notórios
+é o de planejamento de circuitos eletrônicos para rotas VLSI (Very Large Scale Integrated),
+que precisa usar uma deﬁnição de distância diferente da usual euclidiana, em que o ganho em
+performance em soluções ótimas é muito grande. Em Cieslik [10], e suas referências, podemos
+encontrar algumas outras aplicações interessantes em espaços métricos não necessariamente
+euclidianos.
+
+Até 1992 nenhum algoritmo para tentar encontrar a SMT para o caso tridimensional eucli-
+diano era conhecido. Nesse ano, W. D. Smith [15] forneceu o primeiro algoritmo para tratar
+o problema tridimensional euclidiano que temos notícia, cuja performance, embora altamente
+insatisfatória mesmo para quantidade pequena de pontos, serviu de base para vários trabalhos
+que buscavam algoritmos heurísticos para o caso tridimensional e que, com devido aperfeiçoa-
+mento posteriormente explicado, será utilizado na presente tese como uma aplicação à Biologia
+Matemática.
+
+McGregor Smith e W. Smith [16], ainda em 1995, ﬁzeram uma famosa conjectura que cha-
+maram "Main Conjecture" sobre uma conﬁguração de pontos chamada de Sausage, a ser de-
+ﬁnida posteriormente, na qual a razão de Steiner no caso tridimensional teria um determinado
+valor, alcançado para um número inﬁnito de pontos (diferente, portanto, do caso bidimensio-
+nal), o qual seria obtido quando a conﬁguração inicial dos pontos de entrada estivesse disposta
+em uma estrutura helicoidal, semelhante a uma molécula de DNA. Até o início do presente
+trabalho nenhum experimento computacional numérico havia questionado esse valor como re-
+ferência para o caso tridimensional.
+
+McGregor Smith [17, 18] apresentou várias propriedades que foram generalizadas do espaço
+
+11
+
+euclidiano bidimensional para o tridimensional, e ainda metodologias algorítmicas que devido
+à novidade e potencialidade do problema de Steiner, podem ser utilizadas em diversas áreas
+de aplicações. E uma das aplicações mais interessantes é aquela relacionada ao Problema de
+Conﬁguração de Energia Mínima, descrita em outros artigos, e enfatizada por McGregor Smith
+em [18, 19], que fornece boas idéias para o trabalho do Problema de Enovelamento de Proteínas
+e DNA, de grande importância para vários ramos das Ciências na atualidade, principalmente
+aquelas que buscam a produção de drogas para curas de doenças como Câncer e Aids.
+
+Mondaini e colaboradores [20, 21, 22] estudaram casos do problema de Fermat-Steiner gene-
+ralizado em vários trabalhos, associando-o ao problema de aglomerados moleculares primitivos
+como evolução do problema de Fermat com n arestas densamente conectadas para o problema
+de Steiner com menor quantidade de arestas e estiramento desse aglomerado para minimização
+da energia do referido conjunto. Além disso, iniciaram o estudo de conﬁgurações especíﬁcas
+de pontos do espaço euclidiano Rn, n ≥ 3 . O grupo liderado pelo Prof. Mondaini iniciou um
+estudo para a conﬁguração de pontos de Steiner obtidos a partir de hélice circular reta.
+
+12
+
+Capítulo 2
+
+A árvore de Steiner no R2
+
+2.1
+
+Introdução
+
+Vamos descrever as principais propriedades do problema de Steiner euclidiano plano, apre-
+sentando os métodos utilizados para determinar o Ponto de Steiner no caso de três pontos no
+plano. Estas propriedades podem ser generalizadas para dimensões superiores a 2, sendo im-
+portantes nos algoritmos que descrevemos neste e no capítulo seguinte. Vamos introduzir o
+problema da razão de Steiner, algumas soluções para casos particulares e como o problema foi
+resolvido para o caso bidimensional.
+
+2.2 O problema de Torricelli-Fermat
+
+O problema de Torricelli-Fermat, que ﬁcou conhecido como o Problema de Steiner para três
+pontos neste caso, é um bom exemplo de problema de otimização que combina geometria ele-
+mentar e um princípio de minimização em sua solução. Ele foi proposto pela primeira vez no
+século XVII por Fermat (veja [7, 8, 9]) no ﬁm do seu livro Treatise on Minima and Maxima,
+em que faz o seguinte questionamento:
+
+Dados três pontos no plano, qual é o quarto ponto tal que a soma dos comprimentos de suas
+
+distâncias aos três pontos dados é mínima?
+
+Temos então um caso particular do problema de Steiner para o triângulo. As ﬁguras 2.1, 2.2
+
+e 2.3 apresentam três formas alternativas de encontrarmos a solução para este problema.
+
+Na ﬁgura 2.1, dados três vértices A, B e C de um triângulo, temos três circunferências λ1
+, λ2 e λ3 , cada uma passando por vértices tomados dois a dois desse triângulo e pontos Xi,
+i = 1, 2, 3, em cada uma das circunferências formando triângulos equiláteros com estes vér-
+tices. Estas circunferências se interceptam num ponto S interior ao triângulo ABC (sob certas
+condições para os ângulos internos desse triângulo), o ponto de Steiner.
+
+13
+
+Figura 2.1: O ponto de Steiner como interseção de circunferências.
+
+Na ﬁgura 2.2, são mostrados três triângulos eqüiláteros determinados da mesma forma que
+a abordagem anterior, cujo segmento obtido pela união dos vértices Xi, i = 1, 2, 3, dos triân-
+gulos equiláteros com o vértice oposto do triângulo em questão, determina as chamadas linhas
+de Simpson. As três linhas têm exatamente o comprimento da árvore mínima de Steiner. A
+interseção das linhas de Simpson também determina a localização do ponto de Steiner.
+
+A ﬁgura 2.3 mostra a conformação do problema dual consistindo da construção do triân-
+gulo equilátero circunscritível de altura máxima, passando pelos vértices dados (veja [10]).
+O primeiro método de solução do problema de Fermat apresentado acima foi descoberto por
+Torricelli em 1640, sendo por esta razão os círculos utilizados na construção conhecida como
+círculos de Torricelli. O segundo método foi descoberto por Simpson em 1750. Na realidade,
+redescoberto, pois um aluno de Torricelli chamado Viviani já havia encontrado tal solução. E
+o problema dual foi descoberto em 1846 por Fasbender, considerando que o ponto procurado
+deve estar sempre no interior do triângulo ABC dado.
+
+Ambos os métodos de Torricelli e Simpson resultam num ponto de Steiner somente se os
+ângulos internos do triângulo ABC forem menores que 120o. Se um dos ângulos internos do
+triângulo ABC for maior ou igual a 120o nenhum dos métodos funciona. Nesse caso, o método
+de Torricelli produz um ponto fora do triângulo ABC, e os segmentos determinados pelas linhas
+de Simpson não se interceptam.
+
+Cerca de 84 anos depois, Heinen (veja [10, 23]) juntou todos esses fatos e propôs uma solu-
+
+ção para o problema de Fermat. A seguir apresentamos essa demonstração.
+
+Teorema 2.1. (Heinen - 1834) Se um triângulo ABC tem um ângulo interno maior ou igual a
+120o, então o ponto que minimiza a soma das distâncias aos três vértices coincidirá com aquele
+vértice que determina esse ângulo com os demais. Entretanto, se todos os ângulos internos do
+
+14
+
+Figura 2.2: O ponto de Steiner como interseção das linhas de Simpson
+
+Figura 2.3: Vértices dados sobre os lados do triângulo equilátero de altura máxima
+
+15
+
+triângulo ABC forem menores que 120o então deve existir um ponto S, interior à região do
+triângulo ABC dado, ponto esse determinado pelos círculos de Torriceli, cuja distância do
+ponto S aos pontos A, B e C é mínima. Além disso,
+
+AS + BS + CS = AA(cid:48) = BB(cid:48) = CC(cid:48)
+
+(2.1)
+
+onde AA(cid:48), BB(cid:48) e CC(cid:48) são as linhas de Simpson.
+
+Demonstração. Vamos utilizar uma construção bastante simples para facilitar a prova da
+segunda parte do teorema, onde nenhum dos ângulos internos do triângulo ABC dado é maior
+ou igual 120o. Seja S qualquer ponto no plano do triângulo, conforme mostrado na ﬁgura 2.4,
+abaixo.
+
+Figura 2.4: Todos os ângulos internos do triângulo ABC são menores que 120o.
+
+Com centro de rotação no ponto B, giramos o segmento BA no sentido anti-horário num
+ângulo de 60o até chegar a posição BC’, e semelhantemente giramos o segmento BS até BS (cid:48).
+Dessa forma são equiláteros os triângulos ABC (cid:48) e BSS (cid:48).
+
+Como a construção resulta em uma rotação do triângulo ABS de um ângulo de 60o ao redor
+do ponto B até a posição C (cid:48)BS (cid:48), vemos que AS = C (cid:48)S (cid:48). Também temos que BS = SS (cid:48), e
+portanto
+
+AS + BS + CS = CS (cid:48) + S (cid:48)S + SC .
+
+(2.2)
+
+Então o problema de minimizar a soma do lado esquerdo da equação 2.2 resulta no problema
+de minimizar o lado direito, pela escolha da localização apropriada para o ponto S. Notemos
+agora que o ponto C (cid:48), determinado somente pelo triângulo ABC é independente do ponto S.
+A soma do lado direito de (2.2) denota o caminho do ponto C (cid:48) até o ponto C passando pelos
+pontos intermediários S (cid:48) e S. Se pudermos fazer desse caminho uma linha reta, então o lado
+direito de (2.2) seria minimizado, assim como o comprimento do caminho de C (cid:48) a C. Isto pode
+ser feito se o ponto S pudesse ser localizado de forma que cada um dos ângulos (cid:93)ASB, (cid:93)ASC
+e (cid:93)BSC seja 120o. Neste caso temos
+
+(cid:93)C (cid:48)S(cid:48)B = (cid:93)ASB = 120o,
+
+16
+
+(cid:93)C (cid:48)S(cid:48)B + (cid:93)BS(cid:48)S = 180o = (cid:93)BSS(cid:48) + (cid:93)BSC,
+
+e portanto C (cid:48)S(cid:48)SC é um segmento de linha reta.
+
+Vamos agora mostrar que o ponto S pode realmente ser obtido de forma que os ângulos
+determinados em S pelos lados AB, AC e BC sejam 120o. Considere os círculos circunscritos
+aos triângulos equiláteros C (cid:48)AB e A(cid:48)BC, conforme a ﬁgura 2.5 abaixo.
+
+Figura 2.5: O ponto S é a interseção dos círculos de Torricelli.
+
+Estes círculos se interceptam no ponto B, obviamente, mas também em outro ponto, e este é
+o ponto S que minimiza o comprimento de AS + BS + CS. Como os quatros pontos C (cid:48), A, S, B
+estão no mesmo círculo, os ângulos opostos deste quadrilátero são suplementares, e portanto
+
+(cid:93)AC (cid:48)B + (cid:93)ASB = 180o.
+
+Mas (cid:93)AC (cid:48)B = 60o, então temos (cid:93)ASB = 120o, como queríamos. Similarmente os pontos
+A(cid:48), B, C e S estão num mesmo círculo e pelo mesmo argumento da construção anterior (cid:93)BSC =
+120o. Segue que (cid:93)ASC = 120o, pois os três ângulos em S devem totalizar 360o.
+
+Vamos provar agora a primeira parte do teorema. No caso de um dos ângulos do triângulo
+ABC, digamos (cid:93)ABC, ser maior ou igual a 120o, a análise acima não é satisfatória. No caso
+que o ângulo (cid:93)ABC = 120o, por exemplo, os pontos C (cid:48), B e C são colineares. Isto sugere que
+a localização do ponto S é o ponto B. No caso em que (cid:93)ABC é maior que 120o, a construção
+usada acima não leva a uma solução do problema.
+
+Recomeçaremos com uma construção diferente para ser analisada e utilizaremos um método
+análogo aos anteriores estudados, ou seja, através de rotação de segmentos especíﬁcos. Seja
+S qualquer ponto, que não seja o ponto B, no plano do triângulo ABC. Provaremos que AB +
+BC < AS + BS + CS, como aﬁrmado pelo teorema. A ﬁgura 2.6 mostra o ponto C (cid:48) escolhido
+na reta CB, ou na extensão do segmento BC para ser mais claro, de forma que C (cid:48)B = AB.
+O ponto S(cid:48) é escolhido de forma que o triângulo C (cid:48)S(cid:48)B seja obtido por rotação no sentido
+
+17
+
+anti-horário do triângulo ABS.
+
+Logo vemos que
+
+Segue que
+
+Figura 2.6: O ângulo (cid:93)ABC ≥ 120o.
+
+C (cid:48)S(cid:48) = AS,
+(cid:93)SBS(cid:48) = (cid:93)ABC (cid:48) ≤ 60o
+
+BS ≥ S(cid:48)S,
+AS + BS + CS ≥ C (cid:48)S(cid:48) + S(cid:48)S + SC
+> C (cid:48)C = AB + BC
+
+pois não podem estar ambos S e S(cid:48) sobre o segmento C (cid:48)C pela construção.
+demonstração.
+
+Isto conclui a
+
+2.3 O Problema de Steiner Generalizado
+
+Existem várias maneiras de generalizar o problema de Fermat para três pontos. A pri-
+meira delas é perguntando qual o ponto P cuja soma das distâncias de n pontos, com n ≥ 3,
+P1, P2, ..., Pn a esse ponto é mínima. No caso n = 3 é o caso que estudamos na seção anterior.
+Para o caso n > 3 resulta num problema não-linear que é possível determinar a sua solução
+teórica (veja [20, 21, 22]). Podemos ainda atribuir pesos às arestas que conectam os pontos Pn
+ao ponto P procurado. Não trataremos esses casos no presente trabalho.
+
+Outra generalização para o problema de Fermat é considerar n pontos no plano (ou no es-
+paço d-dimensional, d ≥ 2 ) e perguntar qual é a menor árvore que interconecta esses pontos
+
+18
+
+se pudermos acrescentar tantos pontos extras quanto quisermos, desde que esse acréscimo de
+pontos corresponda a uma diminuição no comprimento total da árvore formada. Esse problema
+ﬁcou conhecido na literatura como "Problema de Steiner", em homenagem ao célebre geômetra
+alemão Jacob Steiner, que lecionou na Universidade de Berlin no século XIX. Foram Courant
+e Robbins que nomearam dessa forma essa generalização do problema de Fermat no seu livro
+What is Mathematics? de 1941, que ajudou a divulgar o problema devido à popularidade deste,
+no entanto causando descontentamento em relação ao nome do problema. Alguns reclamam
+pela prioridade temporal para Fermat, que teria sido o primeiro a propor o problema; outros,
+que a generalização deveria lembrar Jarnik e Kössler, que em 1934 estudaram o problema de
+interconectar pontos no plano com comprimento mínimo, analisando o caso em que os n pontos
+são os vértices de um polígono regular. Mais especiﬁcamente, eles encontraram a árvore mais
+curta para n = 3, 4, 5 e mostraram que n − 1 lados do polígono regular de n lados constituem a
+árvore mais curta quando n ≥ 13.
+
+Neste momento, para ﬁnalizar, citaremos Kuhn [24]:
+
+"Although this very gifted geometer (Steiner) of the 19th century can be counted
+among the dozens of mathematicians who have written on the subject, he does not
+seem to have contributed anything new, either to its formulation on its solution."
+
+Utilizaremos a nomenclatura clássica, ou seja, o segundo problema da generalização do pro-
+blema de Fermat descrito acima nesta seção será chamado de problema de Steiner, termo que
+foi cristalizado no trabalho de Gilbert e Pollak (veja [9]).
+
+2.4 Algumas Deﬁnições
+
+Uma topologia de uma árvore deﬁne quais pares de pontos devem ter conexões entre si, mas
+não as posições dos pontos de Steiner, os pontos adicionados à árvore para encurtá-la. Abaixo,
+na ﬁgura 2.7, são apresentadas duas topologias distintas de árvores de Steiner que possuem
+quatro pontos dados e dois pontos de Steiner.
+
+Fixada uma topologia, uma árvore de Steiner é aquela que não pode ser encurtada por qual-
+quer perturbação. Se uma árvore de Steiner pode ter seu comprimento diminuído pelo acréscimo
+de pontos de Steiner então ela é chamada de árvore relativamente mínima. Uma árvore mínima
+de Steiner, relativa àquela topologia, é árvore de menor comprimento obtida. É importante notar
+que uma árvore mínima de Steiner é sempre uma árvore de Steiner, e que uma árvore de Stei-
+ner é sempre uma árvore mínima, relativamente àquela topologia. A árvore mínima de Steiner
+(global) é a árvore de Steiner obtida quando todas as possíveis topologias são analisadas. As ár-
+vores mínimas relativas possuem duas propriedades importantes: primeiro, existe, no máximo,
+uma árvore mínima referente à topologia escolhida e um conjunto de pontos dados; segundo,
+se existe uma árvore mínima relativa, existe um algoritmo para encontrá-la, com auxílio de
+propriedades elementares dessas árvores, que discutiremos na seção seguinte.
+
+19
+
+Figura 2.7: Duas topologias de uma árvore de Steiner com quatro pontos dados.
+
+A árvore obtida pela conexão de todos os pontos dados, sem formação de ciclos, sem acrés-
+cimos de pontos de Steiner é chamada de árvore geradora mínima. Essa árvore é facilmente
+encontrada, sua complexidade computacional é de ordem polinomial, e existe um vasto número
+de algoritmos para obtê-la, sendo os mais conhecidos os algoritmos de Prim e de Kruskal (veja
+[25, 26]).
+
+2.5 Propriedades das árvores de Steiner
+
+Algumas propriedades do problema de Steiner no plano podem ser utilizadas como guia para
+generalizações em espaços de dimensões superiores e, em particular, no espaço tridimensional.
+Vamos destacar aquelas propriedades que são mais relevantes nas aplicações teóricas e práticas.
+Antes, porém, de apresentar as propriedades das árvores de Steiner, mostraremos duas inter-
+pretações físicas e que são utilizadas para encontrar as posições dos pontos de Steiner para uma
+conﬁguração relativamente pequena de pontos regulares, os pontos dados.
+
+A primeira delas é como um sistema mecânico em que a energia potencial está relacionada
+com a soma das distâncias entre os vértices adjacentes, e o equilíbrio estável é obtido quando
+a árvore tem um comprimento mínimo relativo. Podemos pensar nesse sistema como n pontos
+ﬁxos, seguros por ﬁos elásticos de tensões unitárias constantes não importando o quanto são
+esticados, e com outros k pontos de Steiner podendo mover-se livremente.
+
+A outra interpretação é uma que envolve uma película de sabão entre planos paralelos sepa-
+rados por palitos em P1, P2, ..., Pn, veja ﬁgura 2.8. Como a película pode mudar sua topologia
+por separação, a árvore de equilíbrio é a árvore de Steiner. Existem outros modelos físicos para
+conseguir árvores de Steiner, mas surgem diﬁculdades na sua aplicação, dentre as quais pode-
+mos destacar: não produzir uma SMT; consumir um tempo muito grande para a construção de
+modelos grandes; podem aparecer erros mecânicos em modelos com grande número de pontos
+(veja [23, 27, 28, 29]).
+
+As propriedades mais utilizadas são as seguintes: (veja [23])
+
+20
+
+Figura 2.8: Solução do problema de Steiner por bolha de sabão.
+
+A. Sobre ângulos e arestas na árvore de Steiner
+
+Proposição 2.1. i) Numa árvore de Steiner, nenhum par de arestas se encontra com um ângulo
+
+menor que 120o.
+
+ii) Duas arestas de uma árvore de Steiner não se interceptam mais - não há "loops".
+
+iii) Cada ponto de Steiner possui exatamente três arestas incidentes, e o ângulo entre quaisquer
+
+dois desses segmentos é exatamente 120o.
+
+Demonstração. Vamos mostrar o item i, pois os dois outros são conseqüências imediatas
+dele. Seja S um ponto de Steiner tal que duas arestas da árvore de Steiner se encontram nesse
+ponto formando um ângulo menor que 120o. Sejam A e B dois pontos regulares tais que AS e
+BS sejam as arestas, conforme a ﬁgura 2.9, abaixo.
+
+Figura 2.9: O ângulo ASB tem medida inferior que 120o na árvore de Steiner.
+
+Seja S(cid:48) o ponto de interseção para as três linhas de Simpson para o triângulo ABS. Na árvore
+de Steiner, se trocarmos AS e BS pelos três segmentos AS(cid:48), BS(cid:48) e SS(cid:48) então obtemos uma
+
+21
+
+árvore com um comprimento menor ainda, conforme a ﬁgura 2.10, abaixo. Essa contradição
+mostra que o ângulo entre duas arestas quaisquer numa árvore de Steiner é, no mínimo, 120o.
+
+Figura 2.10: O Ponto S(cid:48) encurta o comprimento da árvore de Steiner.
+
+B. Sobre o número de pontos de Steiner
+
+Cada árvore de Steiner tem um número a mais de pontos do que o número de arestas. Seja
+uma árvore com n pontos regulares P1, P2, ..., Pn, e k pontos de Steiner, logo o número de
+arestas desta árvore deve ser n + k − 1. Como cada aresta tem duas extremidades, obtemos
+2(n + k − 1) arestas incidentes pela soma em todos os vértices do número de arestas incidentes.
+Se nm dos vértices Pi possuem m arestas incidentes ((cid:80)
+
+m nm = n), essa soma será [9]
+
+3k +
+
+(cid:88)
+
+m
+
+mnm = 2(n + k − 1) = 2k − 2 + 2
+
+(cid:88)
+
+m
+
+nm,
+
+então
+
+Em particular,
+
+k = n1 − 2 − n3 − 2n4 − ...
+
+k ≤ n − 2,
+
+com a igualdade valendo se, e somente se, Pi possuir uma única aresta incidente.
+
+C. Envoltória convexa dos pontos de Steiner
+
+Vamos mostrar a seguir que numa árvore com mínimo relativo, todos os pontos de Steiner
+estão dentro de uma envoltória convexa. Uma envoltória de Steiner para um dado conjunto de
+n pontos é deﬁnido como sendo a região que sabemos conter uma árvore mínima de Steiner.
+Uma vez conhecida a envoltória de Steiner, podemos conﬁnar suas computações dentro da área
+dada. Portanto, quanto menor for uma envoltória de Steiner, menor esforço computacional
+
+22
+
+será dispendido. Os dois lemas abaixo nos dão algumas ferramentas para restringir as árvores
+mínimas de Steiner.
+
+Lema 2.1. (Propriedade Lunar [9]). Seja UV qualquer aresta de uma árvore mínima de Steiner.
+Seja L(U,V) a região consistindo de todos os pontos P satisfazendo
+
+P U < U V, P V < U V,
+
+onde L(U,V) é uma interseção de formato lunar de círculos de raios do comprimento de UV,
+centrados nos pontos U e V. Então nenhum outro vértice da árvore mínima de Steiner pode
+estar em L(U,V).
+
+Demonstração. Se Q fosse um desses vértices, a árvore mínima de Steiner deveria conter
+ou um caminho de Q para U não contendo V, ou vice-versa. No último caso, por exemplo, a
+árvore mínima de Steiner pode ser encurtada pela retirada da aresta UV e pela adição da aresta
+QV, uma contradição (veja a ﬁgura 2.11, abaixo).
+
+Figura 2.11: Exemplo de uma lúnula L(U, V ).
+
+Lema 2.2. (Propriedade da fatia [9]) Seja W qualquer região aberta com formato de fatia,
+tendo um ângulo igual ou superior a 120o e não contendo nenhum dos pontos regulares. Então
+W não contém pontos de Steiner.
+
+Demonstração. Sem perda de generalidade, suponhamos que W englobe a região angular
+
+de -60o a 60o, conforme a ﬁgura 2.12, abaixo.
+
+Suponhamos que existam pontos de Steiner nessa região, dos quais o ponto S é aquele com
+maior abscissa. Das três arestas incidentes em S, uma o deixa na direção ±60o do eixo positivo.
+Esta não pode sair de W e, portanto, não pode acabar num ponto regular.
+
+No caso em que a fatia represente um ângulo menor que 120o, podemos supor a existência de
+um ponto S nessa região, do qual as três arestas incidentes se conectam com pontos regulares,
+conforme a 2.13.
+
+23
+
+Figura 2.12: Região em formato de fatia igual a 120o
+
+Corolário 1. (Envoltória convexa [9]) A envoltória convexa dos pontos regulares é uma envol-
+tória de Steiner.
+
+Demonstração. Cada reta suporte da envoltória convexa dos pontos regulares deﬁne uma
+
+fatia de 180o livre de pontos regulares.
+
+C. Teorema de Maxwell para árvores de Steiner
+
+Lema 2.3. Se tomarmos vetores unitários para fora de uma árvore mínima relativa nas direções
+de cada uma das arestas incidentes em A1, A2, ..., An com Fi denotando a soma das forças
+unitárias em Ai. Em termos mecânicos Fi é a força externa necessária em Ai para manter a
+árvore em equilíbrio. O comprimento L da árvore é dado pela fórmula [9]
+
+L =
+
+n
+(cid:88)
+
+i=1
+
+Ai · Fi.
+
+(2.3)
+
+(Aqui qualquer origem conveniente pode ser usada para medir os vetores posição Ai.)
+
+Demonstração. Para provar (2.3), devemos construir um vetor unitário de força fk apon-
+tando para fora de cada ponto Ak, considerando todas as arestas da árvore. Como existem
+
+24
+
+Figura 2.13: Região em formato de fatia menor que 120o
+
+n + s − 1 arestas, devem existir 2(n + s − 1) vetores para traçar. Depois, consideramos uma
+soma de produtos internos deﬁnidos por
+
+(cid:88)
+
+T =
+
+Pk · fk,
+
+onde a soma é estendida a todos os 2(n + s − 1) pontos das arestas. Os termos de T podem ser
+agrupados de duas maneiras. Primeiro, podemos combinar termos para os quais Pk é o mesmo
+ponto. Cada ponto de Steiner aparece em três termos de T . A contribuição de um ponto de
+Steiner S para T é zero porque as três forças em S estão em equilíbrio. A contribuição de um
+dado ponto Ai para T é Ak · Fk . Então T é o lado direito de (2.3). No segundo agrupamento,
+combinamos os dois termos associados com as duas extremidades de cada aresta. Se P1P2 é
+uma aresta de comprimento L12 então
+
+P2 = P1 + L12(cid:126)u,
+
+onde (cid:126)u é um vetor unitário. Os termos para esta aresta contribuem P1 · (−(cid:126)u) + P2 · (cid:126)u = L12.
+Então T é também o lado esquerdo de (2.3).
+
+D. Distância entre pontos de Steiner
+
+Vamos mostrar a seguir uma topologia para a árvore de Steiner com quatro pontos regulares
+
+que formam um retângulo. [6]
+
+25
+
+Lema 2.4. Seja P1P2P3P4 um retângulo, S1 o ponto de Steiner mais próximo de P1 e L0 =
+3 e |P2P3| = |P4P1| = L0
+|P1S1|. Então os lados do retângulo medem |P1P2| = |P3P4| = L0
++ |S1S2|.
+
+√
+
+Figura 2.14: triângulo 1
+
+Figura 2.15: triângulo 1
+
+Demonstração. Pela ﬁgura (2.14) temos que sen 60o =
+
+Como l = |P1P2| = 2x ⇒ l = 2
+
+L0 ⇒ l =
+
+Agora, na ﬁgura (2.15) temos quecos 60o =
+
+√
+
+3
+2
+
+x
+L0
+
+⇒
+
+√
+
+3
+2
+
+=
+
+x
+L0
+
+⇒ x =
+
+√
+
+3
+2
+
+L0.
+
+L0
+2
+
+. Logo segue-se a tese.
+
+√
+
+3L0.
+y
+L0
+
+⇒ y =
+
+As duas ﬁguras a seguir referem-se ao próximo lema:
+
+Lema 2.5. Se |P1P2| > |P1P4| na ﬁgura (2.16), então a árvore mais curta corresponde à ﬁgura
+(2.17).
+
+√
+
+3
+2
+√
+3
+3
+
+=
+
+=
+
+l
+2
+2x
+l
+
+⇒ l = L0
+
+l
+
+⇒ x =
+
+√
+
+√
+3
+
+6
+
+3. Observando o triângulo S2P4M na ﬁgura
+√
+
+. Então z = 1 −
+
+⇒ z =
+
+2l
+
+3
+
+6
+
+√
+3
+
+e
+
+3 − l
+3
+
+Demonstração. Temos L0
+
+x
+l/2
+
+⇒
+
+(2.16), tan 30o =
+√
+
+L0 =
+
+l
+
+3
+
+.
+
+3
+
+Logo, o comprimento desta árvore na ﬁgura(2.16) é 4L0 + z =
+
+26
+
+√
+
+3
+
+4l
+
+3
+
++
+
+3 − l
+3
+
+√
+3
+
+= 1 + l
+
+√
+3
+
+Figura 2.16: triângulo 1
+
+Figura 2.17: triângulo 1
+
+x =
+
+√
+
+3
+6
+
+Observando o triângulo N S1P1 na ﬁgura (2.17) obtemos tan 60o =
+1
+2L0
+3l −
+3
+
+Então, z = l − 2x = l −
+
+√
+3
+2
+3
+3
+
+. Assim, 4L0 + z =
+
+⇒ L0 =
+√
+
+e sen 60o =
+
+1/2
+L0
+
+√
+4
+
+3
+3
+
+⇒
+
+√
+
+√
+
+=
+
+=
+
++
+
+3
+
+3
+
+.
+
+√
+
+√
+
+comprimento desta árvore (2.17). Logo, 1 + l
+a ﬁgura (2.17) tem menor comprimento.
+
+3 > l +
+
+3 ⇔ (
+
+√
+
+3 =
+
+⇒
+
+1/2
+x
+
+1
+2x
+
+⇒
+
+√
+
+3
+
+3l −
+3
+√
+
+√
+
+= l +
+
+3 é o
+3 − 1 ⇔ l > 1 ∴
+
+√
+
+3
+3 − 1)l >
+
+Lema 2.6. Suponha S1eS2 pontos de Steiner conectados por uma aresta em uma árvore mínima
+de Steiner. De S1 e S2 partem duas outras arestas. Seja L0 o comprimento mais curto entre
+essas quatro. Então |S1S2| ≥ (
+
+3 − 1)L0.
+
+√
+
+Demonstração. Sejam P1 e P2 dois pontos os quais são extremos de duas arestas de S1, ambas
+medindo L0. Do mesmo modo, sejam P3 e P4 dois pontos que são extremos de S2 em suas duas
+arestas de comprimento L0. Os pontos P1, P2, P3, P4 são vértices de um retângulo, e a árvore
+que conecta P1, P2, P3, P4 está representada na ﬁgura (2.16) ou (2.17).
+√
+
+√
+
+Pelos lemas (2.4) e (2.5) z = l − L0 ≥ 1 − L0 = L0
+
+3 − L0 = (
+
+3 − 1)L0.
+
+27
+
+Capítulo 3
+
+O Algoritmo de Melzak no R2
+
+3.1 Uma aplicação para encontrar uma árvore de Steiner
+
+O primeiro algoritmo para a resolução do problema de Steiner euclidiano plano em um nú-
+mero ﬁnito de passos foi proposto por Melzak (veja [8]), constituindo uma generalização do
+método para encontrar o ponto de Steiner dados três pontos. Esse algoritmo encontra todas as
+árvores mínimas de Steiner possíveis e escolhe aquela que possuir o menor comprimento. Vá-
+rios outros algoritmos surgiram da adaptação ou melhoramento do algoritmo de Melzak (veja
+[30, 31, 32, 33, 34, 35]).
+
+O algoritmo de Melzak consiste numa fase de combinação dos pontos, em que a árvore
+original será reduzida a dois pontos apenas, e uma outra fase de reconstrução em que são obtidos
+os pontos de Steiner na árvore original. Vamos explicar as duas fases desse algoritmo, ilustrando
+com um exemplo de seis pontos regulares.
+
+Durante a fase de combinação, conforme já foi dito, reduziremos o número de pontos regu-
+lares a dois pontos (não necessariamente regulares) pelo processo que explicaremos a seguir.
+Para ﬁxar as idéias tomaremos uma topologia F como referência. Dizemos que dois pontos
+são vizinhos se estão conectados a um mesmo ponto de Steiner nessa topologia, ou seja, são
+adjacentes a este ponto de Steiner. Um ponto Eij é chamado de ponto equilátero, referente a
+uma aresta AiAj de uma árvore (veja as ﬁguras 3.1 e 3.2 para as duas últimas deﬁnições).
+
+A cada passo do estágio de combinação dois pontos vizinhos são substituídos por um ponto
+equilátero. Pela ﬁgura 3.2 podemos observar que existem dois pontos equiláteros para cada par
+de pontos AiAj. Retiramos Ai e Aj da lista de pontos existentes na árvore e acrescentamos os
+pontos equiláteros Eij, um por vez. A fase de reconstrução termina quando houver apenas dois
+pontos restantes.
+
+A fase de reconstrução começa pela junção dos dois pontos que sobraram pela linha de Simp-
+son para a conﬁguração de n pontos regulares. O segmento determinado por linha de Simpson
+tem a mesma propriedade descrita para três pontos no teorema 2.1, ou seja, é exatamente o com-
+primento da árvore mínima de Steiner nessa topologia (veja [23]). A árvore inicial é mudada de
+
+28
+
+Figura 3.1: Os pares de pontos (P1, P2) e (P4, P5) são vizinhos; P3 não é vizinho de nenhum
+ponto regular
+
+Figura 3.2: Eij é um ponto eqüilátero, pois o triângulo AiEijAj é equilátero
+
+T para T (cid:48) no estágio de reconstrução através da substituição de uma aresta de T , que possui um
+ponto equilátero por um ponto de Steiner e seus dois pontos adjacentes, conforme a ﬁgura 3.3.
+Destacamos novamente o fato dos Ai e Aj não serem necessariamente pontos regulares.
+Neste caso, possivelmente serão pontos equiláteros. Se o arco AiAj não tiver interseção com
+o segmento AkEij então o estágio de reconstrução deve terminar, e concluímos que não existe
+árvore de Steiner cheia para a topologia F. O estágio de reconstrução segue enquanto houver
+algum ponto regular fora da árvore considerada ou até que não exista uma interseção conforme
+descrito acima.
+
+Vamos agora exempliﬁcar o algoritmo de Melzak com uma árvore que possui seis pontos
+regulares, conforme mostra a ﬁgura 3.4. Os pontos de Steiner devem está na menor região
+plana que contém esses pontos regulares.
+
+Procedemos da seguinte maneira: agrupamos P1 e P2 e geramos o ponto eqüilátero E12
+(obviamente existe outro ponto eqüilátero E(cid:48)
+12, mas existem critérios para que seja tomado o
+ponto equilátero adequado). Depois agrupamos os pontos P3 e P4 , dando origem ao ponto
+eqüilátero E34. Agora, agrupamos os pontos equiláteros E12 e E34 num único ponto eqüilátero
+E1234. Finalmente, agrupamos os pontos E1234 e P5 num único ponto E12345. Todos esses pas-
+
+29
+
+Figura 3.3: Eij é substituído por Ai, Aj e Sij
+
+sos pedidos acima são mostrados nas ﬁguras 3.5, 3.6 e 3.7, onde, além da conﬁguração inicial,
+podemos também observar a linha de Simpson da árvore considerada, o segmento ligando os
+pontos E12345 e P6 . O comprimento da árvore de Steiner nessa topologia é igual ao compri-
+mento desse segmento, como veriﬁcaremos a seguir. Finalizamos dessa forma a primeira fase,
+a combinação dos pontos regulares da árvore.
+
+Agora passemos à fase de reconstrução. Vamos começar substituindo o ponto E12345 pelo
+primeiro ponto de Steiner, que chamaremos aqui de S1, também pelos pontos E1234 e P5 , como
+está sendo mostrado na ﬁgura 3.8, abaixo. Esse ponto de Steiner S1, está situado na linha de
+Simpson formada pelo segmento que uni os pontos E12345 e P6, determinado pelas propriedades
+já apresentadas neste trabalho.
+
+Em seguida, devemos substituir o ponto E1234 por E12, E34 e S2 (situado na interseção da
+linha de Simpson E1234S1 com o círculo circunscrito ao triângulo E12E34E1234), conforme a
+ﬁgura 3.9, o ponto E12 por P1, P2 e S3 (situado na interseção da linha de Simpson E12S2 com o
+círculo circunscrito ao triângulo P1P2E12), e o ponto E34 por P3, P4 e S4 (situado na interseção
+da linha de Simpson E34S2 com o círculo circunscrito ao triângulo P3P4E34). Esses passos são
+ilustrados na ﬁgura 3.10
+
+Para veriﬁcar o comprimento da linha de Simpson E12345P6 é, realmente, dada pelo compri-
+
+mento da árvore de Steiner obtida, notemos que
+
+Mas,
+
+e
+
+E12345P6 = E1234S1 + P5S1 + P6S1.
+
+E1234S1 = E12S2 + E34S2 + S2S1
+
+E12S2 = P1S3 + P2S3 + S3S2
+
+30
+
+(3.1)
+
+(3.2)
+
+(3.3)
+
+Figura 3.4: Exemplo de seis pontos regulares
+
+E34S2 = P3S4 + P4S4 + S4S2
+
+(3.4)
+
+Se substituirmos as equações (3.3) e (3.4) na equação (3.2), e em seguida substituindo esta
+última na equação (3.1) obtemos
+
+E12345P6 = P1S3 + P2S3 + P3S4 + P4S4 + S3S2 + S4S2 + S2S1 + P5S1 + P6S1.
+
+Portanto, o comprimento da linha de Simpson E12345P6 (generalizada para n pontos) tem o
+
+mesmo comprimento da árvore de Steiner, ﬁgura 3.11.
+
+Para que tenhamos certeza que encontramos a menor árvore de Steiner, devemos veriﬁcar
+todas as topologias, o que é inviável para uma árvore com grande número de pontos regulares.
+
+31
+
+Figura 3.5: Exemplo da 1a. fase do algoritmo de Melzak
+
+32
+
+Figura 3.6: Exemplo da 1a. fase do algoritmo de Melzak.
+
+33
+
+Figura 3.7: Exemplo da 1a. fase do algoritmo de Melzak
+
+34
+
+Figura 3.8: E12345 é substituído pelo ponto de Steiner S1 e pelos pontos P5 e E1234
+
+35
+
+Figura 3.9: O ponto equilátero E1234 é substituído por E12, E34 e S2.
+
+36
+
+Figura 3.10: O ponto equilátero E12 é substituído por P1, P2 e S3, e o ponto E34 por P3, P4 e
+S4
+
+37
+
+Figura 3.11: topologia de uma árvore com quatro pontos de Steiner para os seis pontos regula-
+res
+
+38
+
+Capítulo 4
+
+A Razão de Steiner no R2
+
+Neste capítulo vamos discutir a razão de Steiner no caso particular em que a dimensão d do
+espaço euclidiano em questão é 2, mas deﬁniremos a caso d-dimensional para uso e referência
+posterior.
+
+Seja l(SM T (V )) o comprimento da árvore mínima de Steiner euclidiana para um conjunto
+V de pontos em Ed ; l(M ST (V )) o comprimento da árvore mínima geradora para esse mesmo
+conjunto V de pontos no espaço euclidiano Ed, então
+
+ρd é a menor razão de Steiner dentre todos os conjuntos V na dimensão d, isto é,
+
+ρd = inf
+V ⊆Rd
+
+ρ(V ),
+
+onde ρ(V ) = l(SM T (V ))
+l(M ST (V )).
+
+Claramente, a razão de Steiner ρd é, no máximo, igual a um. Chamaremos de ρ apenas.
+Existem duas maneiras mais imediatas de interpretação da razão de Steiner. A primeira é o
+conhecimento do quanto podemos ganhar ao substituir a árvore mínima geradora pela árvore
+mínima de Steiner. Como a complexidade computacional para encontrar a árvore mínima de
+Steiner é muito grande, pode ser mais adequado continuar com a árvore mínima geradora, cuja
+complexidade é polinomial no pior caso. Simpliﬁcadamente, essa comparação pode ser feita
+pela observação do fato que a razão de Steiner é equivalente a seguinte igualdade
+
+l(SM T (V )) = ρ · l(M ST (V )),
+
+ﬁxadas as topologias e o número de pontos. Assim, podemos dizer que ρ representa o decrés-
+cimo máximo possível no comprimento da MST, através de pontos de Steiner.
+
+A outra interpretação interessante para a razão de Steiner é a relacionada à de uma conﬁ-
+guração de energia mínima. Sabemos que a energia potencial de um sistema será mínima se
+este estiver em equilíbrio, sendo chamado de estável quando sua função potencial não puder ser
+melhorada para atingir um valor de mínimo ainda inferior ao conseguido. Neste caso, dizemos
+que o sistema atingiu um estado de energia mínima global. No entanto, o sistema pode estar em
+
+39
+
+equilíbrio instável quando a função energia do sistema alcançar um valor menor. Neste caso,
+dizemos que o sistema está num mínimo relativo. A conexão que existe entre a razão de Steiner
+e a conﬁguração de energia mínima é que 1, possivelmente, quanto mais próximo da unidade for
+a razão de Steiner de certos agregados protéicos, mais estáveis estariam essas determinadas mo-
+léculas, ou trechos destas. Ou seja, ao aumento da razão de Steiner corresponderia à diminuição
+da energia potencial da conﬁguração. Assim, algumas macromoléculas de interesse biológico,
+como as proteínas, que representariam conﬁgurações estáveis, estariam com seus átomos numa
+conﬁguração dada por árvores de Steiner, ou seja, a razão de Steiner de sua conﬁguração seria
+aproximadamente igual à unidade, o que representaria um valor de equilíbrio estável.
+
+Antes de sua recente solução, a razão de Steiner para a métrica euclidiana no R2 era problema
+√
+3
+2 para os
+aberto famoso. Em 1968, Gilbert e Pollak observaram que a razão de Steiner era
+vértices de um triângulo equilátero e conjecturaram que nenhum conjunto de pontos no plano
+alcançava uma razão de Steiner inferior. Por vários anos, pesquisadores avançaram em direção
+à demonstração de duas maneiras: pelo estudo de conjuntos arbitrários, mas com um número
+ﬁxo de pontos, para n = 3, 4, 5, 6 (veja [9, 36, 37, 38], respectivamente); e por outra linha
+de raciocínio, levantando o limite inferior para a razão de Steiner para conjuntos arbitrários
+de pontos, com ρ ≥ 0.5, ρ ≥ 0.57, ρ ≥ 0.74 ,ρ ≥ 0.80, ρ ≥ 0.824 (veja [9, 39, 40, 41, 43],
+respectivamente). Finalmente, cerca de vinte e dois anos após conjecturado por Gilbert e Pollak,
+Du e Hwang anunciaram (veja [44]) uma prova da conjectura (veja [45]):
+
+√
+
+3
+2
+
+.
+
+ρ2 =
+
+Demonstrações mais detalhadas podem ser encontradas em dois outros artigos dos mesmos
+autores (veja [46, 47]). Em sua demonstração incorporaram algumas idéias de Rubinstein e
+Thomas (veja [38, 48, 49]).
+
+Para o caso tridimensional, no entanto, a generalização de Gilbert e Pollak se mostrou falsa.
+Smith e Du (veja [42]) mostraram que a razão de Steiner para o d-simplex, que era a conﬁgu-
+ração imaginada por Gilbert e Pollak como a que deveria possuir a menor razão de Steiner, não
+era a que apresentava a menor razão Steiner para o caso d-dimensional, d ≥ 3. Eles mostraram
+que uma conﬁguração que chamaram de d-sausage apresentava valores ainda menores que os
+do d-simplex, e desta constatação, conjecturaram que a conﬁguração da d-sausage seria a que
+apresentava a menor razão de Steiner em todos as dimensões, com d ≥ 3.
+
+1Por modelagem computacional, não conclusiva, pois foram usadas apenas duas proteínas e um algoritmo que
+
+não conseguia trabalhar na molécula inteira, conforme [19].
+
+40
+
+Capítulo 5
+
+Alguns casos nos quais se pode utilizar
+uma árvore de Steiner
+
+O problema da árvore de Steiner Euclidiana (PASE) pode servir de suporte teórico a diversos
+problemas práticos reais, ou seja, resolvendo-se de forma eﬁciente o problema em questão, con-
+seqüentemente, o mesmo acontece com os problemas que podem ser modelados como o PASE.
+Algumas aplicações que podem ser modeladas como um PASE são: conﬁguração molecular
+(bioquímica), projeto de redes (elétrica, minas, dutos, etc.) e inferência ﬁlogenética. A seguir,
+cada uma destas aplicações será apresentada.
+
+5.1 Aplicações do PASE na Conﬁguração Molecular
+
+MCGREGOR SMITH [18] apresentou várias propriedades que foram generalizadas do es-
+paço euclidiano bidimensional para o tridimensional, e ainda metodologias algorítmicas que,
+devido à novidade e potencialidade do problema de Steiner, podem ser utilizadas em diversas
+áreas de aplicações. Uma das aplicações mais interessantes é aquela relacionada ao Problema
+de Conﬁguração de Energia Mínima, descrita em outros artigos, e enfatizada por MCGREGOR
+SMITH [18] que fornece boas idéias para o trabalho do Problema de Enovelamento de Proteínas
+e DNA, sendo muito importante para vários ramos das Ciências na atualidade, principalmente
+aquelas que buscam a produção de drogas para curas de doenças como Câncer e AIDS.
+
+OLIVEIRA [11] propôs em sua tese de doutorado um algoritmo denominado APOLONIO,
+baseado no algoritmo de Smith [15], como também realizou um estudo do problema de árvore
+mínima de Steiner euclidiana tridimensional (PASET), relacionando a função razão de Steiner
+ao problema de conﬁguração de energia mínima de macromoléculas de interesse biológico.
+A seguir, na ﬁgura 5.1, tem-se exemplos de como a estrutura de árvore de Steiner euclidiana
+tridimensional aparece em algumas conﬁgurações moleculares.
+
+41
+
+Figura 5.1: Hélice tripla em uma Árvore de Steiner Mínima (ASM) para P = 20.
+
+5.2 Aplicações do PASE no Projeto de Redes
+
+O projeto dos mais variados tipos de rede (elétrica, minas, dutos, etc) com comprimento
+mínimo é de suma importância e tem grande impacto econômico em diversas situações. No
+caso da necessidade de realização do projeto de uma rede de tamanho mínimo em uma estrutura
+tridimensional, pode-se criar um modelo baseado no problema da árvore de Steiner euclidiano
+tridimensional (PASET), onde os pontos ﬁxos são os pontos da rede que se deseja conectar.
+Assim sendo, resolvendo-se o PASET, obtém-se a rede de custo mínimo que interliga estes
+pontos ﬁxos, fazendo uso, se necessário de pontos extras de conexão (pontos de Steiner). Na
+Figura 5.2 tem-se um exemplo de uma rede de túneis em uma mina subterrânea, onde os pontos
+numerados são os pontos ﬁxos e os não numerados são os pontos de Steiner. Já na Figura 5.3,
+tem-se um exemplo de uma rede de dutos de ventilação, onde os círculos brancos são os pontos
+ﬁxos e os círculos pretos são os pontos de Steiner.
+
+Figura 5.2: Redes de túneis em uma mina subterrânea.
+
+42
+
+Figura 5.3: Redes de dutos de ventilação.
+
+5.3 Redes Ópticas
+
+Em um sistema de transmissão de uma rede óptica passiva, o sinal óptico é transmitido por
+uma Central Ofﬁce através de uma rede de distribuição. Na ﬁbra óptica são feitas derivações
+através do uso de splitters (divisores ópticos passivos).
+
+Estas redes podem atingir um tamanho razoável e envolver custos signiﬁcativos, tanto de
+
+implementação quanto de operação.
+
+A ﬁgura a seguir exibe a conﬁguração de distribuição de uma rede óptica a partir dos split-
+ters. Conhecidas as posições dos splitters (neste caso representam os pontos de Steiner) , a
+otimização da rede pode constituir uma árvore geradora sobre os pontos de demanda.
+
+Figura 5.4: Arquitetura genérica de uma rede óptica
+
+43
+
+5.3.1 Otimização de Distribuição de Sinal de Redes
+
+Um sinal é gerado em um ponto da rede, transita codiﬁcado até pontos de decodiﬁcação e é
+
+distribuído aos usuários.
+
+O serviço de decodiﬁcação tem custos diferentes em cada ponto, em virtude de características
+de demanda e operação nestes pontos. Diferentes conﬁgurações de distribuição têm seu custo
+calculado através do custo do caminho percorrido mais o custo do serviço de decodiﬁcação.
+
+Este problema pode ser modelado como uma árvore de Steiner. As ﬁguras 5.5, 5.6 e 5.7,
+mostram respectivamente, uma distribuição qualquer, uma árvore de custo maior e outra de
+custo inferior.
+
+Figura 5.5: Redes com custo de distribuição nas arestas. Vértices da cor cinza indicam pontos
+de decodiﬁcação
+
+Figura 5.6: Solução com custo de 52 unidades
+
+44
+
+Figura 5.7: Solução com custo de 38 unidades
+
+5.4 Outros casos práticos da Árvore de Steiner
+
+1. Projeto de redes de computadores e de comunicação;
+
+2. Instalações telefônicas, hidráulicas, elétricas, de petróleo e gás;
+
+3. Análise de agrupamentos;
+
+4. Análise genética;
+
+5. Análise de padrões de distribuição espacial de esporos;
+
+6. Astronomia (determinação de agrupamento de quasars);
+
+7. Geração de limites de problemas NP-Difíceis;
+
+8. Computação móvel;
+
+9. Modelos de localização de interação de partículas em ﬂuxo turbulento de ﬂuidos;
+
+10. etc.
+
+45
+
+Considerações Finais
+
+A importância desse trabalho foi conhecer e apreciar o desenvolvimento histórico do
+Problema de Steiner, analisando as propriedades geométricas utilizadas na solução desse pro-
+blema, observa-se que podemos interligar uma distribuição de pontos por uma distância mínima
+e essa distância é encontrada por construções geométricas utilizando régua e compasso. Assim,
+espera-se que este trabalho possa contribuir para aplicações geométricas elementares tanto para
+nível médio, como também para alunos de graduação em busca de mais conhecimentos.
+
+Trabalhos futuros:
+
+Para nós professores que temos o papel de fazer despertar nos nossos alunos o fascínio pela
+matemática, como ferramenta para situações reais, algumas estratégias serão desenvolvidas fu-
+turamente com base nesse estudo:
+
+- Utilização do Geogebra como aplicação para nível médio, para encontar o ponto de Stener
+
+no caso de três pontos no plano;
+
+- Situações problemas nas quais se necessitam determinar os pontos de Steiner;
+
+46
+
+Referências Bibliográﬁcas
+
+[1] GALÉEV E. TIJOMÍROV, V. Breve curso de la teoría de problemas extremales. Moscou:
+
+MIR, 1991.
+
+[2] MERCURI FRANCESCO; PEDROSA, R. L. Uma introdução às desigualdade isoperi-
+
+métricas. Rio de Janeiro: [s.n.], 1993.
+
+[3] BOYER, C. B. História da matemática. São Paulo: Blucher, 2010.
+
+[4] KLINE, M. Mathematical thought from ancient to modern times, Vol. 1. Oxford: [s.n.],
+
+1990.
+
+[5] CASTANEDA, A. M. M. Introdução à programação linear. apostila para a disciplina de
+
+programação linear. departamento de matemática. Boa vista, RR, 2013.
+
+[6] COIMBRA, W. R. Árvores de Steiner : Teoria, geração numérica e aplicações / Wendhel
+
+Raffa Coimbra - Santo André : Universidade Federal do ABC, 2009.
+
+[7] COURANT, R., ROBBINS, H., What is Mathematics?. 1 ed., New York, Oxford Univer-
+
+sity Press, 1941.
+
+[8] MELZAK, Z.A. "On the Problem of Steiner", Canadian Mathematics Bulletin, v.4, pp.
+
+143-148, 1961.
+
+[9] GILBERT, E. N, POLLAK, H.O. "Steiner Minimal Trees", SIAM J. Appl. Math., v. 16,
+
+n.1, pp. 1-29, 1968.
+
+[10] CIESLIK, A., On the Steiner Ratio. 1 ed., Amsterdam, Kluwer Academic Publishers,
+
+2001.
+
+[11] OLIVEIRA, N. V., O Problema de Steiner e a Estrutura das Biomacromoléculas. Tese
+
+de D.Sc., COPPE-UFRJ, Rio de Janeiro, Brasil, 2005.
+
+[12] MONTENEGRO, F., TORREÃO, J. R. A., MACULAN, N. Microcanonical Optimiza-
+tion Algorithm for the Euclidian Steiner Problem in R(n) with application to Phylogenetic
+Inference. Physical Review E - Statistical Physics, Plasmas, Fluids and Related Interdis-
+ciplinary Topics, v. 68, n. 5, p. 56702, 2003.
+
+47
+
+[13] THOMPSON, E. A. ?The Method of Minimum Evolution?. Annals of Human Genetics,
+
+vol 36, pp. 333-340, 1973.
+
+[14] UFOP, U. F. O. P. Departamento de Computação. Ouro Preto, 2016. Disponível em
+
+<http://www.decom.ufop.br/marco/>
+
+[15] SMITH, W.D. "How to Find Steiner Minimal Trees in Euclidean d-Space", Algorithmica,
+
+v. 7, pp. 137-177, 1992.
+
+[16] SMITH, J.M, SMITH, W.D. "On the Steiner Ratio in 3 - Space", Journal of Combinato-
+
+rial Theory, A, v. 69, pp. 301-332, 1995.
+
+[17] SMITH, J. M., WEISS, R., PATEL, M. "An O(N2) Heuristic for Steiner Minimal Trees
+
+in E3", Networks, v. 25, pp. 273-289, 1995.
+
+[18] SMITH, J.M. "Steiner Minimal Tree in E3: Theory, Algorithms and Applications."v.2,
+In: Handbook of Combinatorial Optimization, pp. 397-470. Kluwer Academic Pu-
+blishers, 1998.
+
+[19] SMITH, J.M., TOPPUR, B. "Euclidean Steiner Minimal Trees, Minimal Energy Conﬁ-
+gurations, and the Embbedding Problem of Weighted Graphs in E3". Discrete Applied
+Mathematics, v.71, pp. 187-215, 1996.
+
+[20] MONDAINI, R. "The Minimal Surface Structure of Biomolecules". In: Proceedings of
+the First Brazilian Symposium on Mathematical and Computational Biology, pp. 1-11,
+Rio de Janeiro, 2001.
+
+[21] MONDAINI, R., MONDAINI, D.F., MACULAN N. "The Study of Steiner Points Asso-
+ciated with the Vertices of Regular Tetraedra Joined Together at Common Faces". Inves-
+gation Operativa, v.6, pp.103 - 110, 1998.
+
+[22] MONDAINI, R. P., MONTENEGRO, F., MONDAINI, D. F. Modelling a Steiner Point
+Distribution of a Generic Helix Point conﬁguration. In: Relatório Técnico - UFRJ -
+COPPE - ES-406/96, 1996.
+
+[23] HWANG, F.K., RICHARDS, D.S., WINTER, P. The Steiner Tree Problem. North-
+
+Holland, 1992.
+
+[24] KUHN, H.W. " "Steiner’s" Problem Revisited " . Studies in Optimization, v. 10, Dantzig
+
+, G.B., Eaves, B.C. (eds.), Math. Assoc. Amer., pp. 53-70, 1975.
+
+[25] PRIM, R.C. "Shortest connection networks and some generalizations". Bell System Tech.
+
+J., v. 36, pp. 1389-1401, 1957.
+
+48
+
+[26] KRUSKAL, Jr., J. B. "On the shortest spanning tree of a graph and the traveling salesman
+
+problem". Proc. Amer. Math. Soc., v. 7, pp. 48-50, 1956.
+
+[27] POLYA, G. Induction and Analogy in Mathematics. Princeton Univ. Press, New Jersey,
+
+1954.
+
+[28] MIEHLE, W. "Link-lenght Minimization in Networks". Operations Research, v. 6., 232-
+
+243, 1958.
+
+[29] SOUKUP, J. "Minimal Steiner Tree, Roots of Polynomial, and Other Magic".
+
+ACM/SIGMAP Newsletter, v. 22, 37-51, 1977.
+
+[30] COCKAYNE, E. J. "On the Steiner Problem". Canadian Mathematics Bulletin, v. 10, pp.
+
+431-450, 1967.
+
+[31] COCKAYNE, E. J., SHILLER, D. G. "On the Steiner Problem". Computation of Steiner
+
+Tree. Combinatorics, Welsh , D. J. A., Woodall, D. R. (eds.). pp. 53-71, 1972.
+
+[32] HWANG, F. K. "A Linear Time Algorithm for Full Steiner trees". Operations Research
+
+Letters, v. 4, pp. 235-237, 1986.
+
+[33] COCKAYNE, E.J., HEWGILL, D.E. "Improved Computation of Plane Steiner Minimal
+
+Trees". Algorithmica, v. 7, pp. 219-229, 1992.
+
+[34] WINTER, P. "An Algorithm for the Steiner Problem in the Euclidean Plane". Networks,
+
+v. 15, pp. 323-345, 1985.
+
+[35] COCKAYNE, E. J. "On the Efﬁciency of the Algorithm for Steiner Minimal Trees".
+
+SIAM J. Appl. Math. Programming, v. 69, pp. 150-159, 1995.
+
+[36] POLLAK, H. O. "Some remarks on the Steiner Trees Problems". J. Comb. Theory, Ser.
+
+A, v. 24, pp. 278-295, 1978.
+
+[37] DU, D.Z., HWANG, F.K., YAO, E. N. "The Steiner ratio conjecture is true for ﬁve
+
+points". J. Comb. Theory, Ser. A, v. 38, pp. 230-240, 1985.
+
+[38] RUBINSTEIN, J. H., THOMAS, D. A. "The Steiner Ratio conjecture is true for six
+
+points".J. Comb. Theory, Ser. A, v. 58, pp. 54-77, 1991.
+
+[39] GRAHAM, R. L., HWANG , F. K. "A Remark on Steiner Minimal Trees". Bull. Of the
+
+Inst. of Math. Sinica, v. 4, pp. 177-182, 1976.
+
+[40] CHUNG, F. R. K., HWANG, F. K. "A lower bound for the Steiner Tree Problem". SIAM
+
+J. Appl. Math., v. 34, pp. 27-36, 1978.
+
+49
+
+[41] DU, D.Z., HWANG, F. K. "A new bound for the Steiner Ratio". Trans. Am. Soc., v. 278,
+
+pp. 137-148, 1983.
+
+[42] DU, D.Z., SMITH, W.D.,"The Steiner ratio conjecture is true for ﬁve points". J. Comb.
+
+Theory, Ser. A, v. 38, pp. 230-240, 1985.
+
+[43] CHUNG, F. R. K., GRAHAM, R. L. "A new bound for Euclidean Steiner Minimal
+
+Trees". Ann. N. Y. Acad. Sci., v. 440, pp. 328-346, 1985.
+
+[44] DU, D.Z, HWANG, F.K. "An Approach for Proving Lower Bounds: Solution of Gilbert-
+Pollak’s Conjecture on the Steiner Ratio". In: Proc. of the 31st Ann. Symp. on Foundati-
+ons of the Computer Science, St. Louis, 1990.
+
+[45] DU, D.Z, HWANG, F.K. "The Steiner ratio conjecture of Gilbert and Pollak is true". In:
+
+Proc. Natl. Acad. Sci. U.S.A., v. 87, pp. 9464-9466, 1990.
+
+[46] DU, D.Z, HWANG, F.K. "The state of art in Steiner ratio problems". In: Computing
+in Euclidean Geometry, Du, D.Z., Hwang, F. K. (eds.), pp. 163-192. World Scientiﬁc,
+Singapore, 1992.
+
+[47] DU, D. Z., HWANG, F. K. "A proof of Gilbert-Pollak’s conjecture on the Steiner ratio".
+
+Algorithmica, v. 7, pp. 121-135, 1992.
+
+[48] RUBINSTEIN, J. H., THOMAS, D. A. "Variational approach to the Steiner network
+problem". In: Topological Network Design, Smith, J. M., Winter, P. (eds.), Annals of
+Operations Research, , v. 33, pp. 481-500, J. C. Baltzer AG, Basel, 1991.
+
+[49] MEEKS, W., YAU, S. T. "Topology of three manifolds and the embedding problem in
+
+minimal surface theory". Ann. Math., v. 112, pp. 441-485, 1980.
+
+50
+
+

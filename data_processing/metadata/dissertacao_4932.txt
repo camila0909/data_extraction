@@ -1,0 +1,10523 @@
+UNIVERSIDADE FEDERAL DE SERGIPE
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA
+DEPARTAMENTO DE MATEMÁTICA
+MESTRADO PROFISSIONAL EM MATEMÁTICA EM REDE NACIONAL
+
+Noções de Grafos Dirigidos, Cadeias de Markov e as
+Buscas do Google.
+
+José Carlos Francisco de Oliveira
+
+Agosto de 2014
+São Cristóvão-SE
+
+.
+
+UNIVERSIDADE FEDERAL DE SERGIPE
+CENTRO DE CIÊNCIAS EXATAS E TECNOLOGIA
+DEPARTAMENTO DE MATEMÁTICA
+MESTRADO PROFISSIONAL EM MATEMÁTICA EM REDE NACIONAL
+
+José Carlos Francisco de Oliveira
+
+Noções de Grafos Dirigidos, Cadeias de Markov e as
+Buscas do Google.
+
+Trabalho apresentado ao Programa de Mestrado
+-
+Proﬁssional em Matemática em Rede Nacional
+PROFMAT da Universidade Federal de Sergipe como
+requisito parcial para a conclusão do Mestrado
+Proﬁssional em Matemática.
+
+ORIENTADOR: Prof. Dr. Jose Anderson Valença Cardoso
+
+Este exemplar corresponde à versão ﬁnal da dissertação defendida pelo
+aluno José Carlos Francisco de Oliveira e orientada pelo Prof. Dr.
+Jose Anderson Valença Cardoso.
+
+Agosto de 2014
+São Cristóvão-SE
+
+FICHA CATALOGRÁFICA ELABORADA PELA BIBLIOTECA CENTRALUNIVERSIDADE FEDERAL DE SERGIPEO48n Oliveira, José Carlos Francisco de   Noções de grafos dirigidos, cadeias de Markov e as buscas doGoogle / José Carlos Francisco de Oliveira ; orientador J. AndersonValença Cardoso. - São Cristóvão, 2014.  89 f. : il.   Dissertação (Mestrado em Matemática) - Universidade Federal deSergipe, 2014.  1. Markov, Processos de. 2. Matrizes (Matemática). 3. Sistemaslineares. 4. Probabilidades. 5. Google. 6. Sites da Web - Avaliação eclassificação l. Cardoso, J. Anderson Valença, orient.  lI. Título.CDU 519.217.2:007iv
+
+paciência
+
+Dedico à minha excepcional
+esposa, Maria Tânia, pelo
+grande apoio, carinho, amor
+comigo nos
+e
+momentos mais difíceis. Ao
+meu querido ﬁlho, Carlos
+Nicolas, e peço desculpas
+pela ausência nos momentos
+em que mais precisou de
+minha presença; aos meus
+familiares
+amigos
+que acreditaram na minha
+capacidade, em particular
+minha mãe e minha sogra
+pela força que me deram
+durante esses anos.
+
+e
+
+v
+
+Agradecimentos
+
+Finalmente chego ao ﬁnal de mais uma etapa e é impossível seguir adiante sem
+agradecer ao grande responsável por todos os sucessos obtidos em minha vida, por
+isso, agradeço primeiramente a Deus por ter me dado muita força e coragem para
+persistir nessa caminhada.
+
+Um agradecimento especial deve ser feito a minha querida esposa, Tânia, por
+sua extrema paciência, pelo seu amor, por sempre estar disposta a me ajudar em
+qualquer situação, inclusive neste trabalho e, principalmente, pelo seu apoio que me
+conforta e me deixa mais forte para superar meus desaﬁos. E ao meu ﬁlho, Nicolas,
+maior presente que Deus me deu.
+
+Agradeço aos meus familiares que sempre acreditaram e torceram por mim. Em
+especial, aos meus pais, Salete e Gersio, que me deram não somente a vida, mas
+principalmente educação e condições de estudo e que, junto com meus outros irmãos
+de diferentes maneiras me ajudaram muito a concluir mais esta etapa da minha vida.
+Obrigada por compreenderem todos os momentos de ausência e por todo o apoio
+que me deram, sempre acreditando e me fazendo acreditar que sou capaz. E a minha
+sogra, Terezinha, que sempre estava de prontidão para ajudar no que fosse preciso.
+Aos colegas mestrandos, que lutaram junto comigo durante esses dois anos de
+estudo, que oscilava entre momentos de preocupação e de descontração. E muitas
+das vezes me davam força para continuar juntos até o ﬁm.
+
+Aos amigos Josivan, Eduardo, Valéra, Gilvaneide e Carlos não só por terem me
+acolhido junto com minha família em suas casas quando mais precisei, mas também
+pelo grande apoio que me deram durante todo o curso.
+
+Ao meu orientador e professor Anderson Valença, que cooperou para esse
+
+momento ímpar da minha carreira. Obrigado pelas sugestões e pela paciência.
+
+Agradeço também a SBM pela grande iniciativa em implementar um
+programa tão audacioso objetivando a formação continuada de professores e,
+consequentimente, aumentando o nível da educação básica. Também a CAPES
+pela concessão da bolsa que foi de fundamental importância para o desenvolvimento
+acadêmico.
+
+Por ﬁm, a todos que, direta ou indiretamente, contribuíram na concretização
+
+deste sonho, dedico meus mais sinceros agradecimentos.
+
+vi
+
+Resumo
+
+O presente trabalho tem como objetivo destacar alguns conceitos matemáticos
+que estão por trás do ranqueamento dado por uma pesquisa feita no site de busca
+mais usados do mundo, o “Google”. Inicialmente abordamos de forma breve alguns
+conteúdos da matemática do ensino médio, a exemplo de: matrizes, sistemas lineares,
+probabilidades. Em seguida são introduzidas noções básicas de grafos dirigidos e
+cadeias de Markov de tempo discreto; essa última, é dada uma ênfase ao vetor estado
+estacionário, por ele garantir resultados de previsão de longo prazo. Esses conceitos
+são de grande importância em nosso trabalho, pois serão usados para explicar o
+envolvimento da matemática por trás do site de buscas “Google”. Na sequência,
+buscamos detalhar o funcionamento do ranqueamento das páginas de uma busca no
+“Google”, isto é, como são classiﬁcados os resultados de uma pesquisa, determinando
+quais resultados serão apresentados de modo sequencial em ordem de relevância.
+Finalmente, chegamos na obtenção do “PageRank”, algoritmo que gera a chamada
+Matriz do Google e ranqueia as páginas de uma busca. Encerramos com um breve
+histórico do surgimento dos sites de buscas, desde os seus fundadores até a ascensão
+e hegemonia do Google.
+
+Palavras Chaves: Matrizes, Sistema Lineares, Probabilidades, Grafos Dirigidos,
+Passeios Aleatórios, Cadeias de Markov, PageRank, Vetor Estado Estacionário,
+Buscador Google.
+
+vii
+
+Abstract
+
+This paper has as its main purpose to highlight some mathematical concepts,
+which are behind the ranking given by a research made on the website mostly
+used in the world: Google. At the beginning, we brieﬂy approached some High
+School’s concepts, such as: Matrices, Linear Systems and Probability. After that,
+we presented some basic notions related to Directed Graphs and Markov Chains
+of Discrete Time. From this last one, we gave more emphasis to the Steady State
+Vector because it ensures foreknowledge results from long-term. These concepts
+are extremely important to our paper, because they will be used to explain the
+involvement of Mathematic behind the web search “Google”. Then, we tried to
+detail the ranking operation of the search pages on Google, i.e., how the results of a
+research are classiﬁed, determining which results are presented in a sequential way
+in order of relevance. Finally we obtained “PageRank”, an algorithm which creates
+what we call Google’s Matrices and ranks the pages of a search. We ﬁnished making
+a brief comment about the historical arising of the web searches, from their founders
+to the rise and hegemony of Google.
+
+Key words: Matrices, Linear Systems, Probability, Directed Graphs, Random
+Walks, Markov Chains, PageRank, Steady State Vector, Google Search Engine.
+
+viii
+
+Sumário
+
+Resumo
+
+Abstract
+
+Introdução
+
+vii
+
+viii
+
+1
+
+1 Matrizes e Sistemas Lineares
+
+4
+4
+1.1 Matrizes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+1.1.1 Deﬁnição de Matrizes . . . . . . . . . . . . . . . . . . . . . . .
+1.1.2 Matriz Transposta . . . . . . . . . . . . . . . . . . . . . . . .
+9
+1.1.3 Matriz Inversa . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+1.1.4 Potências de uma Matriz . . . . . . . . . . . . . . . . . . . . . 12
+1.2 Sistemas Lineares . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+1.2.1 Equação Linear . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+Sistema de Equações Lineares . . . . . . . . . . . . . . . . . . 13
+1.2.2
+. . . . . . . . . . 16
+1.2.3 Método de Resolução de um Sistema Linear
+
+22
+2 Noções de Probabilidades
+2.1 Combinação de Eventos
+. . . . . . . . . . . . . . . . . . . . . . . . . 23
+2.2 Frequência Relativa . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+2.3 Deﬁnição de Probabilidade . . . . . . . . . . . . . . . . . . . . . . . . 25
+. . . . 26
+2.4 Propriendades de Probabilidades em Espaço Amostral Finito.
+. . . . . . . . . . . . . . . . . . . . 26
+2.5 Espaços Amostrais Equiprováveis
+2.6 Probabilidade de um Evento num Espaço Equiprovável
+. . . . . . . . 27
+. . . . . . . . . . . . . . . . . . . . . . . . 28
+2.7 Probabilidade Condicional
+. . . . . . . . . . . . . . . . . . . . . 29
+2.8
+
+Independência de Dois Eventos
+
+3 Cadeias de Markov, Grafos e Grafos Dirigidos
+
+32
+3.1 Cadeias de Markov . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+3.1.1 Processo Aleatório de Markov . . . . . . . . . . . . . . . . . . 35
+3.1.2 Vetor e Matriz de Probabilidade . . . . . . . . . . . . . . . . . 36
+3.1.3 O Vetor-estado . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+3.1.4 Matriz Regular
+. . . . . . . . . . . . . . . . . . . . . . . . . . 39
+3.1.5 O Vetor Estado Estacionário . . . . . . . . . . . . . . . . . . . 40
+3.2 Grafos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+3.2.1 Grafos Dirigidos . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+3.2.2 Matriz de um Grafo Dirigido . . . . . . . . . . . . . . . . . . . 48
+
+ix
+
+3.2.3 Passeio Aleatório Simples num Grafo Dirigido . . . . . . . . . 49
+3.2.4 Matriz de Probabilidade de um Passeio Aleatório Simples num
+
+Grafo Dirigido . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+
+4 O Buscador Google
+
+52
+4.1 Funcionamento do buscador Google . . . . . . . . . . . . . . . . . . . 52
+4.1.1 Conceitos Preliminares . . . . . . . . . . . . . . . . . . . . . . 52
+4.1.2
+. . . . . . . . . . 56
+4.1.3 PageRank e a Matriz do Google . . . . . . . . . . . . . . . . . 64
+
+Interpretação do Vetor Estado Estacionário
+
+A Histórico
+
+Referências Bibliográﬁcas
+
+71
+
+79
+
+x
+
+Introdução
+
+Nos dias atuais, é impossível pensar o mundo sem a Internet. Ela se tornou
+parte dos lares de pessoas do mundo inteiro. Está conectado à rede mundial de
+computadores passou a ser uma necessidade básica. Desde a sua criação, a rede
+mundial de computadores passou a ser uma fonte importante de consulta, pois dia
+após dia são disponibilizadas mais e mais informações. Com tantas informações
+disponíveis em apenas um lugar, surge a necessidade de organizá-las. O problema
+é que, mesmo organizadas, se o número de informações é muito grande, torna-
+se impraticável uma pessoa veriﬁcar uma por uma até encontrar a desejada. Foi
+possivelmente da necessidade de encontrar informações em um conjunto muito
+grande delas que surgiram os buscadores. Os primeiros sites que apareceram como
+ferramentas de buscas de informações na Internet foram “Yahoo” e o “Excite” nos
+anos de 1995 e 1996, respectivamente (veja [7]). Esses mecanismos de buscas, embora
+selecionassem informações de interesse de quem fazia a pesquisa, não possuiam um
+modo de determinar quais páginas seriam, provavelmente, mais relevantes para a
+pesquisa; exigindo ao pesquisador veriﬁcar as páginas indicadas uma por uma, num
+processo enfadonho. Essa situação melhorou muito em 1998, quando os mecanismos
+de busca começaram a usar a informação contida na estrutura de hiperlink da rede
+para ajudar a ordenar as páginas. O primeiro dessa nova geração de mecanismos
+de busca foi o Google, um projeto de dois alunos de pós-graduação em ciência da
+computação na Universidade de Stanford: Sergey Brin e Lawrence Page. Brin e
+Page consideraram que uma página na rede era importante se tivesse hiperlinks a
+partir dela, para outras páginas importantes. Eles usaram a ideia de um “surﬁsta
+aleatório”: um surﬁsta na rede movendo-se de página para página, escolhendo
+aleatoriamente o link que deseja seguir. O movimento do surﬁsta entre as páginas
+pode ser modelado usando-se Cadeias de Markov, tema que será abordado no
+Capítulo 3. As páginas visitadas com mais frequência por esse surﬁsta aleatório
+devem ser mais importantes e, portanto, mais relevantes, se seu conteúdo contiver
+as palavras da pesquisa. Embora Brin e Page não soubessem disso na época,
+eles estavam tentando encontrar o Vetor Estado Estacionário para uma Cadeia de
+Markov particular, cuja matriz de transição modelava a estrutura de hiperlinks
+da rede. Depois de algumas modiﬁcações importantes dessa matriz (que passou a
+ser chamada de “Matriz do Google” (veja [9]), pode-se encontrar um Vetor Estado
+Estacionário e suas componentes podem ser interpretadas como a quantidade de
+tempo que um surﬁsta aleatório vai gastar em cada página da Web. O cálculo desse
+Vetor Estado Estacionário é a base para o algoritmo PageRank do Google. Sendo
+assim, da próxima vez que você usar o Google para fazer pesquisas, saiba que está
+usando os resultados aqui destacados neste trabalho para encontrar uma página que
+
+1
+
+provavelmente contenha as informações desejadas.
+
+Como possivelmente já percebido, o buscador Google é repleto de ferramentas
+matemáticas aplicadas para garantir o seu funcionamento. Nele usa-se diversos
+conceitos matemáticos a exemplo de Matrizes, Sistema Lineares, Probabilidades,
+Grafos Dirigidos, Passeios Aleatórios, Cadeias de Markov de Tempo Discreto, etc.
+Geralmente, muitos se perguntam, especialmente os alunos, sobre a aplicabilidade de
+vários assuntos da matemática estudados nos ensinos básico, médio e universitário.
+Com o intuito de responder a algumas dessas perguntas, estudamos neste trabalho
+alguns dos assuntos que possuem aplicações diretas ao funcionamento das buscas
+realizadas no site do Google. O presente trabalho está dividido em quatro capítulos
+que tratam de parte dos assuntos que garantem ao site Google o sucesso de buscas
+realizadas na internet.
+
+No Capítulo 1, estudamos Matrizes e Sistemas Lineares. Nele apresenta-mos
+os principais tipos de Matrizes e suas propriedades, com destaque nas operações
+elementares que aplicamos nas transições das Cadeias de Markov e na represntação
+de Passeios Aleatórios, na obtenção da Matriz do Google e no Vetor Estado
+Estacioário. Nos Sistemas Lineares focamos na classiﬁcação e na resolução de
+sistemas pois são usados também para a obtenção das coordenadas do Vetor Estado
+Estacionário de uma Cadeia de Makov Regular.
+
+O Capítulo 2 é dedicado ao estudo de Probabilidade. Apresentamos os principais
+conceitos e propriedades necessessários ao estudo de passeios aleatórios, com
+aplicação na construção das matrizes estocásticas e que têm aplicações diretas em
+passeios aleatórios nas Cadeias de Markov; ferramentas básicas no algoritmo de
+busca do Google.
+
+Apresentamos no Capítulo 3 os conceitos de Cadeias de Markov e Grafos
+Dirigidos. No primeiro estudamos processos que ocorrem a partir de um estado
+inicial e que passa por uma sequência de estados, onde a transição de um
+determinado estado para o seguinte ocorre segundo uma certa probabilidade que
+depende apenas do estado em que o fenômeno se encontra e do próximo. Nele
+enfatizamos os Processos Aleatórios, a Matriz de Transição, o Vetor-Estado, a Matriz
+Regular e o Vetor Estado Estacionário, onde o principal objetivo é uma previsão do
+comportamento de certos fenômenos que é usada no ranqueamento dos resultados
+das buscas. No segundo é mostrado um estudo e a montagem de uma matriz de um
+grafo dirigido e principalmente a matriz de probabalidades de um passeio aleatório.
+O Capítulo 4 é destinado a uma apresentação de como é feita a busca na
+ferramenta Google e o que está por trás do seu ranqueamento, de forma que
+observamos os principais elementos que deﬁnem uma página importante na rede.
+Depois usamos elementos matemáticos para ranquear páginas nos exemplos dados
+neste capítulo. No ﬁnal, apresentamos as principais modiﬁcações para se chegar na
+chamada Matriz do Google que é usanda pelo algoritmo “PageRank” para classiﬁcar
+a ordem dos resultados e ﬁnalizamos dando um exemplo de uma pesquisa feita em
+sala de aula usando o algoritmo para classiﬁcar o resultado.
+
+Finalmente, concluímos o presente trabalho com um breve histórico sobre o início
+dos sites de buscas, seus desaﬁos de sobrevivência e como se tornaram hoje essenciais
+aos internautas. Falamos brevemente da origem do “Yahoo” e principalmente do
+“Google”.
+
+2
+
+Imaginamos que saber como é o funcionamento desta poderosa ferramenta
+chamada Google, que revolucionou a era da internet e ajuda a maioria dos
+internautas a encontrar o que lhes interessa, geralmente nas primeiras páginas do
+resultado da busca, pode ser bastante motivador, visto que existe uma imensidade
+de sites contidos na rede mundial de computadores.
+
+3
+
+Capítulo 1
+
+Matrizes e Sistemas Lineares
+
+Este capítulo foi baseado nas referências [2, 3, 9, 10, 13]. O leitor interessado em
+
+mais detalhes pode consultar qualquer das citadas referências.
+
+1.1 Matrizes
+
+1.1.1 Deﬁnição de Matrizes
+
+Deﬁnição 1.1. Dados dois números m e n naturais e não nulos, chama-se matriz
+m por n (indica-se ordem m × n) toda tabela A formada por números reais aij
+distribuídos em m linhas e n colunas. Os números reais distribuidos são chamados
+entradas ou elementos da matriz.
+
+A =
+
+
+
+
+
+
+
+
+a11
+a12
+a21
+a22
+...
+...
+am1 am2
+
+. . . a1n
+. . . a2n
+...
+. . .
+. . . amn
+
+
+
+
+
+
+
+
+Quando n = m a matriz A é dita quadrada de ordem n. Os elementos aij , onde
+i = j formam a chamada Diagonal Principal e os elementos onde i + j = n + 1
+formam a chamada Diagonal Secundária.
+
+Numa forma compacta, uma matriz A pode ser representada por A = [aij]m×n
+ou A = (aij)m×n, ou ainda, se a ordem estiver subentendida A = [aij] ou A = (aij).
+
+Tipos Especiais de Matrizes
+
+Existem matrizes que, por apresentarem uma maior utilidade, recebe nomes
+especiais, seja pelo número de linhas ou colunas, ou ainda pela natureza de suas
+entradas.
+
+Matriz Linha: é uma matriz com apenas uma linha.
+
+L = (cid:0) l11
+
+l12
+
+. . .
+
+l1n
+
+(cid:1) .
+
+4
+
+Matriz Coluna: é uma matriz com apenas uma coluna
+
+C =
+
+
+
+
+
+
+
+
+c11
+c21
+...
+cm1
+
+
+
+
+
+
+
+
+.
+
+Matriz Nula: é uma matriz que possui as entradas todas nulas
+
+0m×n =
+
+
+
+
+
+
+
+
+0 0 . . . 0
+0 0 . . . 0
+...
+...
+. . .
+0 0 . . . 0
+
+...
+
+
+
+
+
+
+
+
+.
+
+Matriz Diagonal:
+
+é uma Matriz Quadrada onde os únicos elementos
+
+possivelmente não nulos pertencem a Diagonal Principal
+
+D =
+
+
+
+
+
+
+
+
+d11
+0
+...
+0
+
+0
+d22
+...
+0
+
+0
+. . .
+0
+. . .
+...
+. . .
+. . . dnn
+
+
+
+
+
+
+
+
+.
+
+Matriz Identidade de ordem n (In): é uma Matriz Diagonal cujos elementos
+
+da Diagonal Principal são todos iguais a 1
+
+In =
+
+
+
+
+
+
+
+
+1 0 . . . 0
+0 1 . . . 0
+...
+...
+. . .
+0 0 . . . 1
+
+...
+
+
+
+
+
+
+
+
+.
+
+Matriz Triangular: é uma Matriz Quadrada onde todas as entradas abaixo ou
+
+acima da diagonal principal são nulas,
+
+A =
+
+
+
+
+
+
+
+
+t11
+0
+...
+0
+
+t12
+t22
+...
+0
+
+. . .
+. . .
+. . .
+. . .
+
+
+
+
+
+
+
+
+t1n
+t2n
+...
+tnn
+
+ou B =
+
+
+
+
+
+
+
+
+t11
+t21
+...
+tn1
+
+0
+t22
+...
+tn2
+
+. . .
+. . .
+. . .
+. . .
+
+0
+0
+...
+tnn
+
+
+
+
+
+
+
+
+.
+
+A matriz A anterior é dita Triangular Superior e a matriz B é chamada de Triangular
+Inferior.
+
+Igualdade de Matrizes
+
+Deﬁnição 1.2. Dadas duas matrizes A = (aij)m×n e B = (bij)m×n, dizemos que
+elas são iguais quando aij = bij para cada i ∈ {1, 2, ..., m} e j ∈ {1, 2, ..., n}.
+
+Note que, para serem iguais, duas matrizes devem ter mesma ordem e
+
+apresentarem os elementos das mesmas entradas iguais.
+
+5
+
+Exemplo 1.3. Determine os valores de x, y e z que tornam as matrizes A e B
+iguais.
+
+
+
+A =
+
+
+
+
+
+2
+3
+|z|
+
+x + 1
+5
+0
+
+1
+y − 2
+6
+
+ e B =
+
+
+
+
+
+
+
+ .
+
+2 7 1
+3 5 9
+4 0 6
+
+Observe que as matrizes possuem a mesma ordem. Então, para que as matrizes A
+e B sejam iguais, é necessário que os elementos das mesmas entradas sejam iguais.
+Assim, devemos ter:
+
+• x + 1 = 7 ⇒ x = 6
+
+• y − 2 = 9 ⇒ y = 11
+
+• |z| = 4 ⇒ z = ±4
+
+Operações com Matrizes
+
+Soma
+
+Deﬁnição 1.4. Dadas duas matrizes A = (aij)m×n e B = (bij)m×n, a soma de A e
+B, que denotamos por A + B, é a matriz C = (cij)m×n, onde cij = aij + bij, para
+cada i e j.
+
+Observação 1.5. A soma de duas ou mais matrizes só será possível se forem de
+mesma ordem, caso contrário não existirá a soma. Cada elemento da soma é a soma
+dos elementos das mesmas entradas de cada matriz.
+
+Exemplo 1.6. Considere as matrizes A e B:
+
+A =
+
+(cid:19)
+
+(cid:18) 2 3 1
+0 1 4
+
+e
+
+B =
+
+(cid:18) 0
+
+1 2
+−1 3 5
+
+(cid:19)
+
+.
+
+Para obter a matriz C = A + B, basta somar os elementos correspondentes de A e
+B:
+
+C = A + B =
+
+(cid:18) 2 3 1
+0 1 4
+
+(cid:19)
+
+(cid:18) 0
+
+1 2
+−1 3 5
+
++
+
+(cid:19)
+
+(cid:18) 2 + 0
+
+3 + 1 1 + 2
+0 + (−1) 1 + 3 4 + 5
+
+(cid:19)
+
+.
+
+=
+
+Portanto: C =
+
+(cid:18) 2
+
+4 3
+−1 4 9
+
+(cid:19)
+.
+
+Oposta
+
+Deﬁnição 1.7. Dada uma matriz A = (aij)m×n, chama-se oposta de A, e denotada
+por −A, uma matriz tal que A + (−A) = 0, sendo 0 a matriz nula 0m×n.
+(cid:19)
+
+(cid:19)
+
+Exemplo 1.8. Se A =
+
+então −A =
+
+(cid:18) 1 −2
+5
+−3
+(cid:19)
+(cid:18) 1 −2
+5
+−3
+
++
+
+(cid:18) −1
+
+2
+3 −5
+(cid:19)
+
+(cid:18) 0 0
+0 0
+
+, pois:
+
+.
+
+(cid:18) −1
+
+2
+3 −5
+
+(cid:19)
+
+=
+
+6
+
+Diferença
+
+Deﬁnição 1.9. Dadas duas matrizes A = (aij)m×n e B = (bij)m×n, chama-se
+diferença de A e B, que denotamos por A − B, a soma da matriz A com a oposta
+de B.
+
+Exemplo 1.10. Temos a diferença das matrizes 2 × 3:
+
+(cid:18) 11 8 1
+−1 7 1
+
+(cid:19)
+
+(cid:18) 0 1
+
+1
+4 8 −1
+
+−
+
+(cid:19)
+
+=
+
+=
+
+(cid:18) 11 8 1
+−1 7 1
+
+(cid:19)
+
+(cid:18) 11
+
+0
+7
+−5 −1 2
+
+(cid:18) 0 −1 −1
+1
+−4 −8
+
+(cid:19)
+
++
+
+(cid:19)
+
+.
+
+Propriedades da Soma de Matrizes
+
+Dadas as matrizes A, B, C e 0m×n(matriz nula), todas de mesma ordem, valem
+
+as seguintes propriedades:
+
+• A + B = B + A (comutativa);
+
+• (A + B) + C = A + (B + C) (associativa);
+
+• A + 0m×n = A (0m×n é chamado de elemento neutro);
+
+• A + (−A) = (−A) + A = 0m×n (oposto);
+
+• A + C = B + C ⇔ A = B (cancelamento).
+
+Produto de um Número Real por uma Matriz
+
+Deﬁnição 1.11. Dados um número real a e uma matriz A = (aij)m×n, o produto
+aA é deﬁnido como a matriz (aaij)m×n.
+
+Exemplo 1.12. Considere as matrizes:
+
+A =
+
+(cid:18) 1
+
+7
+2
+5 −1 −2
+
+(cid:19)
+
+e B =
+
+
+
+
+
+4
+2
+0
+8
+4
+6
+10 12 −6
+
+
+
+.
+
+Temos por exemplo:
+
+• 3A = 3
+
+(cid:18) 1
+
+2
+7
+5 −1 −2
+
+(cid:19)
+
+=
+
+(cid:18) 3
+
+6
+21
+15 −3 −6
+
+(cid:19)
+
+;
+
+•
+
+1
+2
+
+B =
+
+
+
+
+
+1
+2
+
+4
+2
+0
+4
+6
+8
+10 12 −6
+
+
+
+
+
+ =
+
+
+
+2
+0 1
+2
+4 3
+5 6 −3
+
+
+
+.
+
+7
+
+Propriedades do Produto de um Número Real por uma Matriz
+
+O produto de um número real por uma matriz apresenta as seguintes
+
+propriedades:
+
+• a(bA) = (ab)A;
+
+• a(A + B) = aA + aB;
+
+• (a + b)A = aA + bA;
+
+• 1A = A.
+
+onde A e B são matrizes quaisquer m × n e a e b são números reais quaisquer.
+
+Produto de Matrizes
+
+Deﬁnição 1.13. Dadas duas matrizes A = (aij)m×n e B = (bjk)n×p, o produto AB
+é deﬁnido como a matriz (cik)m×p tal que
+
+cik = ai1b1k + ai2b2k + ai3b3k + · · · + ainbnk =
+
+n
+(cid:88)
+
+j=1
+
+aijbjk,
+
+para cada i ∈ {1, 2, 3, . . . , m} e k ∈ {1, 2, 3, . . . , p}.
+
+Observação 1.14. Note que a deﬁnição do produto de matrizes, AB só é possível
+se o número de colunas de A for igual ao número de linhas de B. Note que o produto
+AB tem ordem m × p e as entradas de C = AB são da forma cik, que são obtidas
+através da soma das multiplicações de cada termo da i-ésima linha da matriz A com
+cada termo correspondente da k-ésima coluna da matriz B.
+
+Exemplo 1.15. Dadas as matrizes A =
+
+AB como:
+
+(cid:19)
+
+(cid:18) 1
+
+7
+5 −2
+
+e B =
+
+(cid:18) 3
+1
+
+(cid:19)
+
+, temos o produto
+
+AB =
+
+(cid:18) 1
+
+7
+5 −2
+
+(cid:19) (cid:18) 3
+1
+
+(cid:19)
+
+(cid:18) 1 · 3 +
+
+7 · 1
+5 · 3 + (−2) · 1
+
+(cid:19)
+
+(cid:18) 3 + 7
+15 − 2
+
+=
+
+(cid:19)
+
+(cid:18) 10
+13
+
+(cid:19)
+
+.
+
+=
+
+=
+
+Propriedades do produto de matrizes
+
+O produto de matrizes, quando é possível multiplicar, apresenta as seguintes
+
+propriedades:
+
+• Se A = (aij)m×n, então AIn = A e ImA = A (In e Im são ditas elementos
+
+neutros);
+
+• (AB)C = A(BC) (associatividade);
+
+• (A + B)C = AC + BC (distributividade à direita);
+
+• C(A + B) = CA + CB (distributividade à esquerda).
+
+8
+
+• (kA)B = A(kB) = k(AB) (a multiplicação por escalar é associativa).
+
+Observação 1.16. É importante notar que o produto de matrizes não é comutativo,
+isto é, para duas matrizes quaisquer A e B nem sempre tem-se AB = BA. Por
+exemplo, para as matrizes
+
+A =
+
+(cid:19)
+
+(cid:18) 1 0
+0 0
+
+e
+
+B =
+
+(cid:18) 0 1 1
+1 1 1
+
+(cid:19)
+
+,
+
+temos AB, mas sequer faz sentido BA. Quando AB = BA, dizemos que A e B
+comutam. Observe ainda que uma condição necessária para A e B comutarem é que
+sejam quadradas e de mesma ordem.
+
+Exemplo 1.17. As matrizes
+
+A =
+
+(cid:21)
+
+(cid:20) 1 0
+2 3
+
+e B =
+
+(cid:21)
+
+(cid:20) 4 5
+6 0
+
+não comuntam. De fato, veja que:
+
+enquanto
+
+AB =
+
+(cid:20) 1 0
+2 3
+
+(cid:21) (cid:20) 4 5
+6 0
+
+(cid:21)
+
+=
+
+(cid:20) 4
+
+5
+26 10
+
+(cid:21)
+
+BA =
+
+(cid:20) 4 5
+6 0
+
+(cid:21) (cid:20) 1 0
+2 3
+
+(cid:21)
+
+=
+
+(cid:20) 14 15
+0
+6
+
+(cid:21)
+
+.
+
+Logo, AB (cid:54)= BA.
+
+Por outro lado, as matrizes
+
+C =
+
+(cid:21)
+
+(cid:20) 1 −1
+2
+0
+
+e D =
+
+(cid:21)
+
+(cid:20) 5 2
+0 3
+
+comuntam. Com efeito, veja que:
+
+e
+
+CD =
+
+(cid:20) 1 −1
+2
+0
+
+(cid:21) (cid:20) 5 2
+0 3
+
+(cid:21)
+
+=
+
+(cid:20) 5 −1
+6
+0
+
+(cid:21)
+
+DC =
+
+(cid:20) 5 2
+0 3
+
+(cid:21) (cid:20) 1 −1
+2
+0
+
+(cid:21)
+
+=
+
+(cid:20) 5 −1
+6
+0
+
+(cid:21)
+
+.
+
+Portanto, CD = DC.
+
+1.1.2 Matriz Transposta
+
+Deﬁnição 1.18. Dada uma matriz A = (aij)m×n, chama-se transposta de A a
+matriz At = (aji)m×n.
+
+Observe que as linhas (Colunas) de um matriz A são as colunas (linhas) de At.
+
+9
+
+Exemplo 1.19. Dadas as matrizes
+
+A =
+
+
+
+
+
+2 3
+5 1
+0 2
+
+
+
+
+
+3×2
+
+e B = (cid:0) 1 3 5 7 (cid:1)
+
+1×4 .
+
+As transpostas de A e B são
+
+At =
+
+(cid:18) 2 5 0
+3 1 2
+
+(cid:19)
+
+2×3
+
+e Bt =
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+3
+5
+7
+
+.
+
+4×1
+
+Propriedades sobre transposta de uma matriz
+
+Dadas A e B matrizes quaisquer que façam sentido à soma e o produto delas e
+
+k é um número real qualquer, temos válidas as seguintes propriedades:
+
+• (At)t = A;
+
+• (A + B)t = At + Bt;
+
+• (kA)t = kAt;
+
+• (AB)t = BtAt.
+
+1.1.3 Matriz Inversa
+
+Deﬁnição 1.20. Seja A uma matriz quadrada de ordem n. Dizemos que A é matriz
+invertível (ou inversível) se existir uma matriz B tal que AB = BA = In. Se A não
+é invertível, dizemos que A é uma matriz singular.
+
+Teorema 1.21. Se A é invertível, então existe apenas uma matriz B tal que
+
+AB = BA = In.
+
+Demonstração. Admitamos que exista uma outra matriz C tal que AC = CA = In.
+Então,
+
+C = InC = (BA)C = B(AC) = BIn = B.
+
+Notação 1.22. Dada A uma matriz invertível A, denotamos por A−1 a matriz (que
+é única pelo teorema anterior) tal que AA−1 = A−1A = In.
+
+Observação 1.23. Note que A−1 deve ser também quadrada de ordem n, pois A−1
+comuta com A.
+
+10
+
+Exemplo 1.24. A matriz A =
+
+matriz
+
+(cid:19)
+
+(cid:18) 1 3
+2 7
+
+é invertível. De fato, se considerarmos a
+
+B =
+
+(cid:18) 7 −3
+1
+−2
+
+(cid:19)
+
+,
+
+observamos que
+
+AB =
+
+(cid:18) 1 3
+2 7
+
+(cid:19)
+
+(cid:19) (cid:18) 7 −3
+1
+−2
+(cid:19)
+
+(cid:18) 1 · 7 + 3 · (−2) 1 · (−3) + 3 · 1
+2 · 7 + 7 · (−2) 2 · (−3) + 7 · 1
+
+=
+
+(cid:19)
+
+=
+
+(cid:18) 7 − 6 −3 + 3
+14 − 14 −6 + 7
+
+(cid:19)
+
+(cid:18) 1 0
+0 1
+
+=
+
+= In
+
+e
+
+BA =
+
+=
+
+(cid:18) 7 −3
+(cid:19) (cid:18) 1 3
+2 7
+1
+−2
+(cid:19)
+(cid:18) 7 − 6 21 − 21
+−2 + 2 −6 + 7
+
+(cid:19)
+
+(cid:18) 1 0
+0 1
+
+=
+
+(cid:19)
+
+(cid:18) 7 · 1 + (−3) · 2 7 · 3 + (−3) · 7
+(−2) · 1 + 1 · 2 (−2) · 3 + 1 · 7
+
+=
+
+(cid:19)
+
+= In.
+
+Portanto, concluímos que AB = BA = In e que B = A−1.
+
+Exemplo 1.25. Considere a matriz A =
+
+(cid:21)
+
+(cid:20) 3 4
+2 3
+
+. Para a matriz A ser invertível,
+
+deve existir uma inversa A−1, quadrada de ordem 2, tal que AA−1 = In. Então,
+vamos supor que A−1 =
+
+. Assim, temos que
+
+(cid:20) 3 4
+2 3
+
+(cid:21) (cid:20) a b
+c d
+
+(cid:21)
+
+(cid:21)
+
+⇒
+
+(cid:20) 3a + 4c 3b + 4d
+2a + 3c 2b + 3d
+
+(cid:21)
+
+=
+
+(cid:20) 1 0
+0 1
+
+(cid:21)
+
+⇒ a = 3 e c = −2
+
+e
+
+(cid:26) 3b + 4d = 0
+2b + 3d = 1
+
+⇒ b = −4 e d = 3.
+
+Pela igualdade de matrizes, obtém-se
+
+(cid:26) 3a + 4c = 1
+2a + 3c = 0
+
+Portanto,
+
+3 −4
+3
+Agora, pode-se veriﬁcar que A−1A = AA−1 = In.
+
+A−1 =
+
+−2
+
+(cid:20)
+
+(cid:21)
+
+.
+
+Propriedades da Matriz Inversa
+
+Dadas A e B matrizes quaisquer que façam sentido o produto entre elas, temos
+
+válidas as seguintes propriedades:
+
+• (A−1)−1 = A;
+
+• (AB)−1 = B−1A−1;
+
+• (At)−1 = (A−1)t.
+
+11
+
+(cid:21)
+
+(cid:20) a b
+c d
+(cid:20) 1 0
+0 1
+
+=
+
+1.1.4 Potências de uma Matriz
+
+Deﬁnição 1.26. Se A for uma matriz n × n e k for um inteiro não-negativo,
+deﬁnimos as potências inteiras não-negativas de A por
+
+A0 = In
+
+e Ak = AA · · · A
+(cid:125)
+(cid:124)
+
+(cid:123)(cid:122)
+k vezes
+
+, para k > 0.
+
+Exemplo 1.27. Considere a matriz A =
+
+A3 = (
+
+(cid:20) 1 2
+1 3
+
+(cid:21)
+
+(cid:21) (cid:20) 1 2
+1 3
+
+)
+
+(cid:20) 1 2
+1 3
+(cid:20) 1 2
+1 3
+
+(cid:21)
+
+. Temos
+
+(cid:21)
+
+=
+
+(cid:20) 11 30
+15 41
+
+(cid:21)
+
+.
+
+Exemplo 1.28. Considere a matriz B =
+
+
+
+
+
+1 0
+1
+0 2 −1
+0
+3 1
+
+
+
+. Temos
+
+B5 =
+
+
+
+
+
+1 0
+1
+0 2 −1
+0
+3 1
+
+
+
+
+
+
+
+
+
+1 0
+1
+0 2 −1
+0
+3 1
+
+
+
+
+
+
+
+
+
+1 0
+1
+0 2 −1
+0
+3 1
+
+
+
+
+
+=
+
+28
+
+22
+7
+−66 −9 −29
+29 −1
+
+21
+
+1 0
+1
+0 2 −1
+0
+3 1
+
+
+
+
+
+
+
+
+
+1 0
+1
+0 2 −1
+0
+3 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ .
+
+1.2 Sistemas Lineares
+
+Os Sistemas de Equações Algébricas Lineares ou simplesmente Sistemas Lineares
+constituem um dos principais tópicos estudados no Ensino Médio e Superior, sendo
+no último caso, um tópico da “Álgebra Linear”. Aqui nos limitaremos aos conceitos
+mais básicos que ajudarão no bom entendimento do presente trabalho.
+
+1.2.1 Equação Linear
+
+Qualquer linha reta no plano xy pode ser representada por uma equação da
+
+forma
+
+a1x + a2y = b,
+
+onde a1, a2 e b são números reais, sendo a1 e a2 não são ambas nulas. Toda equação
+nessa forma é chamada de Equação Linear nas variáreis x e y. Esse caso bem
+simples motiva o seguinte conceito:
+
+Deﬁnição 1.29. Uma Equação Linear é uma equação da forma
+
+a1x1 + a2x2 + . . . + anxn = b, 1
+
+onde x1, x2, . . . , xn são incógnitas e a1, a2, . . . , an e b são números dados. Os números
+reais a1, a2, . . . , an são chamados de coeﬁcientes e b é chamado termo independente
+da equação.
+
+1Quando o termo independente é nulo, a equação linear é dita Homogênea.
+
+12
+
+Exemplo 1.30. As seguintes equações são lineares:
+
+• x1 + 3x2 − x3 = 7;
+
+• x1 −
+
+1
+2
+
+= 3;
+
+• 2x + 3y − z = 0.
+
+Exemplo 1.31. As seguintes equações NÃO são lineares:
+
+• x2
+
+1 + 3
+
+√
+
+x2 − x3 = 7;
+
+• cos(x1) −
+
+1
+2
+
+= 3;
+
+• 2x + 3y − z3 = 0.
+
+Solução de uma Equação Linear
+
+Deﬁnição 1.32. Dizemos que a sequência ou enupla ordenada de números reais
+
+(α1, α2, . . . , αn)
+
+é uma solução da Equação Linear
+
+a1x1 + a2x2 + . . . + anxn = b
+
+quando a1α1 + a2α2 + a3α3 . . . + anαn = b.
+
+Exemplo 1.33. O par ordenado (3, 5) é solução da equação −3x + 2y = 1, pois
+substituindo x por 3 e y por 5, obtemos uma sentença verdadeira:
+
+−3 · 3 + 2 · 5 = 1.
+
+Exemplo 1.34. A terna ordenada (1, 3, 5) não é solução da equação
+
+3x − 2y − 3z = 14,
+
+pois substituindo x por 1, y por 3 e z por 5, obtemos uma sentença falsa:
+
+3 · 1 − 2 · 3 − 3 · 5 = 12 (cid:54)= 14.
+
+1.2.2 Sistema de Equações Lineares
+
+Frequentemente nos deparamos com situação-problema cuja solução pode ser
+
+obtida com uma formulação de um sistema linear.
+
+Deﬁnição 1.35 (Sistema de Equações Lineares). Um Sistema de Equações
+Lineares m por n é um conjunto de m equações lineares da forma:
+
+S =
+
+
+
+
+
+a11x1 + a12x2 + . . . + a1nxn = b1
+a21x1 + a22x2 + . . . + a2nxn = b2
+...
+...
+am1x1 + am2x2 + . . . + amnxn = bm
+
+...
+
+...
+
+...
+
+,
+
+13
+
+onde x1, x2, . . . , xn são as incógnitas, a11, a12, . . . , a1n, . . .,am1, . . . , amn os coeﬁcientes
+e b1, b2, . . . , bm os termos independentes.2 Por simplicidade, quando não houver risco
+de confusão, dizemos apenas que S é um Sistema Linear.
+
+Exemplo 1.36. O sistema linear
+
+S =
+
+(cid:26) −x + y = 3
+
+2x − 4y = −7
+
+tem 2 equações e 2 incógnitas.
+
+Exemplo 1.37. O sistema linear
+
+
+
+S =
+
+
+
+tem 4 equações e 3 incógnitas.
+
+Exemplo 1.38. O sistema
+
+−x − 3y + z = 0
+5x − 2y − z = 8
+6x + 5y + 2z = 9
+−x + 2y − 4z = −3
+
+S =
+
+(cid:26) 2x − y − 6z = 0
+3x + 5y + z = 0
+
+tem 2 equações e 3 incógnitas e é homogêneo.
+
+Solução de um Sistema Linear
+
+Deﬁnição 1.39. Uma Solução de um sistema linear de m equações com n incógnitas
+é uma enupla
+
+que é solução de cada uma das m equações lineares do sistema.
+
+Exemplo 1.40. O sistema
+
+(α1, α2, . . . , αn)
+
+S =
+
+
+
+
+
+
+x + y + z = 6
+2x + y − z = 1
+3x − y + z = 4
+
+admite como solução a tripla ordenada (1, 2, 3), pois
+
+
+
+
+
+
+1 + 2 + 3 = 6
+2 · 1 + 2 − 3 = 1
+3 · 1 − 2 + 3 = 4
+
+.
+
+A tripla ordenada (−5, 11, 0) não é solução S, pois
+
+
+
+
+
+
+−5 + 11 + 0 = 6
+2 · (−5) + 11 − 0 = 1
+3 · (−5) − 11 + 0 (cid:54)= 4
+
+.
+
+Observação 1.41. Qualquer sistema homogêneo possui uma solução da forma
+(0, 0, ..., 0) chamada de solução nula ou trivial. A soluções de um sistema
+homogêneo que não são nulas, são chamada de soluções não nulas ou não triviais.
+2Quando todos os termos independentes de um sistema linear são nulos, o sistema é dito
+
+Homogêneo.
+
+14
+
+Classiﬁcação de um Sistema Linear
+
+Os sistemas lineares são classiﬁcados de acordo com a existência e o número de
+
+soluções. Classiﬁcamos em:
+
+• Sistema Possível e Determinado (SPD) - quando possui uma única solução;
+
+• Sistema Possível e Indeterminado (SPI) - quando possui inﬁnitas soluções;
+
+• Sistema Impossível (SI) - quando não possui solução.
+
+Exemplo 1.42. O sistema
+
+(cid:26) 2x + y = 5
+x − 2y = 6
+
+tem uma única solução; a saber, o par (3, −1).
+
+Exemplo 1.43. O sistema
+
+(cid:26) 2x − 2z = 0
+2y − z = 0
+
+,
+
+tem inﬁnitas soluções. Por exemplo, (1, 1/2, 1) e (2, 1, 2) são algumas das soluções
+desse sistema. Podemos representar todas as soluções (ou “solução geral”) por
+(α, α/2, α), α ∈ R.
+
+Exemplo 1.44. O sistema
+
+
+
+
+
+
+x + 2y + z = 1
+2x + y − 3z = 4
+3x + 6y + 3z = 0
+
+não possui solução, pois a primeira equação é incompatível com a terceira equação.
+De fato, imagine que (α1, α2, α3) é uma suloção do sistema. Então,
+
+α1 + 2α2 + α3 = 1
+
+e
+
+3α1 + 6α2 + 3α3 = 0.
+
+Assim,
+
+3 = 3 · 1 = 3(α1 + 2α2 + α3) = 3α1 + 6α2 + 3α3 = 0,
+
+o que é impossível.
+
+Sistemas Lineares e Matrizes
+
+Com as operações e propriedades de matrizes podemos estudar sistemas lineares.
+
+Considere um sistema linear m por n
+
+S =
+
+
+
+
+
+a11x1 + a12x2 + . . . + a1nxn = b1
+a21x1 + a22x2 + . . . + a2nxn = b2
+...
+...
+am1x1 + am2x2 + . . . + amnxn = bm
+
+...
+
+...
+
+...
+
+.
+
+15
+
+A igualdade de matrizes nos permite escrever
+
+
+
+
+
+
+
+
+a11x1 + a12x2 + . . . + a1nxn
+a21x1 + a22x2 + . . . + a2nxn
+
+...
+
+...
+
+...
+
+...
+
+am1x1 + am2x2 + . . . + amnxn
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+b1
+b2
+...
+bm
+
+E com a multiplicação de matrizes obtemos
+
+
+
+
+
+
+
+
+a11
+a21
+...
+am1
+
+a12
+a22
+...
+am2
+
+. . .
+. . .
+...
+. . .
+
+a1n
+a2n
+...
+amn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+x2
+...
+xn
+
+=
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+b1
+b2
+...
+bm
+
+1.2.3 Método de Resolução de um Sistema Linear
+
+Nosso objetivo nesta seção é estudar um método para a resolução de sistemas
+linerares em geral. A técnica que será utilizada pode não ser a melhor no caso
+de sistemas muito simples, mas tem a vantagem de poder ser aplicada sempre. É
+particularmente útil em sistemas com grande número de incógnitas onde o uso de
+calculadoras é as vezes inevitável. Em síntese, este método consiste em substituir o
+sistema inicial por sistemas cada vez mais simples, sempre “equivalentes” ao original.
+Para ajudar no entendimento, começamos com um exemplo, enumeramos as
+equações de cada sistema e colocamos ao lado de cada sistema uma matriz que
+chamamos de Matriz Associada ao Sistema. Vamos resolver o seguinte sistema:
+
+(I)
+
+
+
+
+
+
+x1 + 4x2 + 3x3 = 1
+2x1 − 5x2 + 4x3 = 4
+x1 − 3x2 − 2x3 = 5
+
+(I1)
+(I2)
+(I3)
+
+
+
+
+
+3
+4
+1
+4
+5
+2
+1 −3 −2
+
+
+
+
+
+1
+4
+5
+
+1oP asso : Eliminamos o termo de x1 das equações (I2) e (I3). Para tanto,
+multiplicamos a equação (I1) por −2 e somamos a equação obtida com a equação
+(I2), obtendo uma nova equação (II2). Da mesma maneira produziremos a equação
+(II3), obtida ao multiplicarmos a equação (I1) por −1 e somando esse resultado à
+equação (I3). Isto resulta no seguinte sistema:
+
+(II)
+
+
+
+
+
+
+x1 + 4x2 + 3x3 = 1
+0x1 − 3x2 − 2x3 = 2
+0x1 − 7x2 − 5x3 = 4
+
+(II1)
+(II2)
+(II3)
+
+
+
+
+
+1
+3
+4
+0 −3 −2
+0 −7 −5
+
+
+
+
+
+1
+2
+4
+
+2oP asso : Tornamos o coeﬁciente de x2 da equação (II2) igual a 1. Para tanto,
+multiplicamos a equação (II2) por -1/3. O sistema resultante é:
+
+(III)
+
+
+
+
+
+
+x1 + 4x2 + 3x3 =
+0x1 + x2 + 2
+0x1 − 7x2 − 5x3 =
+
+1
+3x3 = − 2
+3
+4
+
+(III1)
+(III2)
+(III3)
+
+
+
+
+
+4
+1
+0
+1
+0 −7 −5
+
+1
+3
+3 − 2
+2
+3
+4
+
+
+
+
+
+3oP asso : Eliminamos x2 das equações (III1) e (III3). Para isso, multiplicamos
+a equação (III2) por −4 e somamos a esta a equação (III1), obtendo (IV1). De
+
+16
+
+maneira análoga obtemos (IV3), multiplicando a equação (III2) por 7 e somando o
+resultado à equação (IV3).
+
+(IV )
+
+
+
+
+
+
+x1 + 0x2 + 1
+0x1 + x2 + 2
+0x1 − 0x2 − 1
+
+3
+
+3x3 = 11
+3x3 = − 2
+3x3 = − 2
+
+3
+
+3
+
+(IV1)
+(IV2)
+(IV3)
+
+
+
+
+
+1
+1 0
+3
+2
+0 1
+0 0 − 1
+
+11
+3
+
+3 − 2
+3 − 2
+
+3
+
+3
+
+
+
+
+
+4oP asso : Tornamos o coeﬁciente de x3 na equação (IV3) igual a 1. Para isso,
+multiplicamos a equação (IV3) por −3. Isto resulta no seguinte sistema:
+
+(V )
+
+
+
+
+
+
+x1 + 0x2 + 1
+0x1 + x2 + 2
+0x1 − 0x2 − x3 =
+
+3x3 = 11
+3x3 = − 2
+3
+2
+
+3
+
+
+
+
+
+(V1)
+(V2)
+(V3)
+
+11
+3
+
+1 0 1
+3
+0 1 2
+0 0 1
+
+3 − 2
+3
+2
+
+
+
+ .
+
+5oP asso Eliminamos x3 das duas primeiras equações do sistema (V ). Multiplicamos
+a equação (V3) por −1/3 e somamos ao resultado à equação (V1). De modo análogo,
+multiplicamos a equação (V3) por −2/3 e a esta nova equação somamos a equação
+(V2). o sistema resultante é:
+
+(V I)
+
+
+
+
+
+
+3
+x1 + 0x2 + 0x3 =
+0x1 + x2 + 0x3 = −2
+2
+0x1 − 0x2 + x3 =
+
+
+
+
+
+3
+1 0 0
+0 1 0 −2
+2
+0 0 1
+
+
+
+ ,
+
+ou seja,
+
+
+
+
+
+
+x1 =
+3
+x2 = −2
+2
+x3 =
+
+.
+
+Observe que cada sistema foi obtido a partir do sistema anterior, por operações
+que preservaram as igualdades. Assim, cada terna (x1, x2, x3) que é solução do
+sistema (I), também será solução dos sistemas seguintes (II), (III), · · · , (V I).
+Deste modo, uma vez encontradas as soluções do sistema V I, as mesmas serão
+soluções do sistema I.
+
+O ponto fundamental desse procedimento é que os passos são todos reversíveis.
+Por exemplo, a partir do sistema (II) podemos obter o sistema (I), da seguinte
+maneira:
+
+(I1) = (II1)
+(I2) = 2 · (II1) + (II2)
+(I3) = (II1) + (II3),
+onde a notação, por exemplo, (I2) = 2 · (II1) + (II2) indicar que a linha (I2) do
+sistema (I) é obtida multiplicando-se por 2 a linha (II1) do sistema (II) e somando-
+se a linha (II2) do sistema (II). De modo análogo, podemos obter o sistema (V ) a
+partir de (V I), (IV ) a partir de (V ), (III) a partir de (IV ) e (II) a partir de (III).
+Usando o argumento anterior, podemos dizer que toda solução de (V I) também é
+solução de (I). Mais ainda, os sistemas (I), (II), (III), (IV ), (V ) e (V I) têm as
+mesmas soluções e, portanto, x1 = 3, x2 = −2 e x3 = 2, que é a solução de (V I),
+é a única solução do sistema inicial (I). Podemos veriﬁcar por substituição direta
+que x1 = 3, x2 = −2 e x3 = 2 é uma solução, mas apenas como garantia de que não
+erramos nos cálculos.
+
+17
+
+Deﬁnição 1.45. Dizemos que dois sistema lineares são equivalentes se possuem as
+mesmas soluções.
+
+No exemplo anterior os
+
+são
+equivalentes. É importante observar que, no exemplo resolvido, as únicas operações
+que efetuamos são dos seguintes tipos:
+
+(I), (II), (III), (IV ), (V )
+
+sistemas
+
+(V I)
+
+e
+
+1. Multiplicar uma equação por um número diferente de zero;
+
+2. Somar uma equação a outra;
+
+3. Permutar duas equações.
+
+Exemplo 1.46. No sistema:
+
+
+
+
+
+
+x2 + 3x3 = 5
+x1 + 3x2 + x3 = 2
+2x1 + 4x2 − x3 = 1
+
+(1)
+(2)
+(3)
+
+nosso primeiro passo seria permutar as equações (1) e (2), de modo a obter o
+coeﬁciente de x1 diferente de zero na primeira equação.
+
+Estas operações num sistema produzem sempre sistemas com mesmo conjunto-
+solução, como visto no exemplo inicial. Usaremos matrizes para apresentar uma
+maneira organizada de resolver sistemas de equações, seguindo a ideia do exemplo
+inicial.
+
+Observação 1.47. Como já comentado, existem alguns métodos para encontrar
+solução de sistemas lineares. Dentre eles, podemos citar o método do isolamento,
+a regra de Cramer e o escalonamento ou eliminação gaussiana. No presente texto,
+nos limitaremos a resolução de sistemas lineares pelo método de escalonamento, o
+qual apresentaremos na sequência.
+
+Redução por linhas e forma escalonada
+
+O método (ou procedimento) sistemático para resolver sistemas lineares
+apresentado aqui é conhecido Método de Escalonamento. A estratégia básica é
+substituir um sistema por um sistema equivalente (isto é, um com o mesmo conjunto
+solução) que seja mais fácil de obter a solução. Seguindo o que já fora apresentado,
+basicamente usamos o termo x1 da primeira equação do sistema para eliminar os
+termos em x1 das outras equações. Depois, usamos o termo em x2 da segunda
+equação para eliminar os temos em x2 das outras equações, e assim por diante, até
+por ﬁm obtermos um sistema equivalente bem simples (mais detalhes básicos podem
+ser obtidos, por exemplo, em [5]). Como já destacado, três operações básicas são
+usadas para simpliﬁcar um sistema linear.
+
+18
+
+Operações elementares nas linhas
+
+De modo geral, as seguintes operações elementares podem ser aplicadas a
+
+qualquer sistema:
+
+1. Multiplicar todos os elementos de uma linha por uma constante não nula.
+
+2. Substituir uma linha pela soma dela mesma com um múltiplo de outra.
+
+3. Troca de duas linhas entre si.
+
+Dizemos que dois sistemas são equivalentes por linhas se existir uma sequência de
+operações elementares de linhas que transforme um sistema em outro. É importante
+observar que as operações elementares são reversíveis. Se dois sistemas lineares são
+equivalentes por linha, então os dois sistemas terão o mesmo conjunto solução.
+
+Notação matricial
+
+A informação essencial de um sistema linear pode ser representada de forma
+
+compacta por meio do uso de matrizes. Por exemplo, dado o sistema
+
+(S)
+
+
+
+
+
+
+x1 − 2x2 + x3 =
+2x2 − 8x3 =
+
+0
+8
+−4x1 + 5x2 + 9x3 = −9
+
+podemos formar uma matriz com os coeﬁcientes de cada variável alinhados em coluna
+
+
+
+
+
+1 −2
+0
+−4
+
+1
+2 −8
+9
+5
+
+
+
+
+
+Essa matriz é chamada matriz dos coeﬁcientes do sistema e a matriz
+
+
+
+
+
+1 −2
+0
+−4
+
+1
+2 −8
+5
+
+0
+8
+9 −9
+
+
+
+
+
+é conhecida como matriz aumentada do sistema. Observemos que a segunda
+linha contém um zero porque a segunda equação poderia ter sido escrita como
+0 · x1 + 2x2 − 8x3 = 8. Uma matriz aumentada de um sistema consiste na matriz dos
+coeﬁcientes, com uma coluna adicional que contém as constantes à direita do sinal
+de igualdade nas equações.
+
+Exemplo 1.48. Resolva o sistema (S) anterior.
+Solução: Vamos realizar o procedimento de eliminação com e sem a notação
+matricial e colocar o resultados lado a lado para compararmos:
+
+(S)
+
+
+
+
+
+
+0 eq.(1)
+x1 − 2x2 + x3 =
+8 eq.(2)
+2x2 − 8x3 =
+−4x1 + 5x2 + 9x3 = −9 eq.(3)
+
+
+
+
+
+1 −2
+0
+−4
+
+1
+2 −8
+5
+
+0
+8
+9 −9
+
+
+
+ .
+
+Queremos manter x1 na primeira equação e eliminá-lo das outras. Para isso,
+adicionamos 4 vezes a primeira equação à terceira. Depois de alguma prática, o
+cálculo seguinte costuma ser feito rapidamente.
+
+19
+
+4 · [eq.(1)] :
++[eq.(3)] :
+[nova eq.(3)] :
+
+4x1 − 8x2 + 4x3 =
+
+0
+−4x1 + 5x2 + 9x3 = −9
+− 3x2 + 13x3 = −9
+
+.
+
+O resultado desse cálculo é colocado no lugar da terceira equação original:
+
+x1 − 2x2 +
+
+0
+x3 =
+2x2 − 8x3 =
+8
+− 3x2 + 13x3 = −9
+
+
+
+
+
+1 −2
+0
+0 −3
+
+1
+2 −8
+
+0
+8
+13 −9
+
+
+
+ .
+
+A seguir, multiplicando a segunda equação por 1/2 para obter o coeﬁciente de x2
+igual a 1. (Esse cálculo irá simpliﬁcar a aritmética do próximo passo).
+
+x1 − 2x2 +
+
+x3 =
+0
+4
+x2 − 4x3 =
+− 3x2 + 13x3 = −9
+
+
+
+
+
+1 −2
+0
+0 −3
+
+1
+1 −4
+
+0
+4
+13 −9
+
+
+
+ .
+
+Usando o x2 na segunda equação para eliminar −3x2 na terceira equação. O cálculo
+é
+
+3 · [eq.(2)]:
++[eq.(3)] :
+[nova eq.(3)]:
+
+3x2 − 12x3 = 12
+− 3x2 + 13x3 = −9
+3
+
+x3 =
+
+.
+
+O novo sistema tem a forma triangular:
+
+x1 − 2x2 + x3 = 0
+x2 − 4x3 = 4
+x3 = 3
+
+
+
+
+
+1 −2
+0
+0
+
+1 0
+1 −4 4
+1 3
+0
+
+
+
+ .
+
+Agora vamos usar x3 da terceira equação para eliminar os termos x3 e −4x3 na
+primeira e segunda equações. Os cálculos são
+
+4 · [eq.(3)] :
++[eq.(2)] :
+[nova eq.(2)] :
+
+4x3 = 12
+x2 − 4x3 = 4
+= 16
+x2
+
+e
+
+−1 · [eq.(3)] :
++[eq.(1)] :
+[nova eq.(1)] :
+
+x1 − 2x2 + x3 =
+x1 − 2x2
+
+− x3 = −3
+0
+= −3.
+
+Combinando os resultados dessas duas operações, obtemos:
+
+x1 − 2x2
+x2
+
+= −3
+= 16
+3
+
+x3 =
+
+
+
+
+
+1 −2 0 −3
+16
+1 0
+0
+3
+0 1
+0
+
+
+
+ .
+
+Assim, tendo eliminado a coluna acima de x3 na terceira equação, retornamos a x2
+na segunda equação para eliminar o −2x2 acima de x2. Por causa da conta anterior
+
+20
+
+com x3, agora não temos nenhuma conta com ele. Somando 2 vezes a segunda
+equação à primeira, obtemos o sistema:
+
+x1
+
+
+
+
+
+
+x2
+
+= 29
+= 16
+x3 = 3
+
+
+
+
+
+1 0 0 29
+0 1 0 16
+3
+0 0 1
+
+
+
+ .
+
+Portanto, o trabalho está concluído. Ele indica que a única solução do sistema
+original é (29, 16, 3). No entanto, como ﬁzemos tantos cálculos, seria uma boa
+idéia veriﬁcar nosso resultado. Para veriﬁcar que (29, 16, 3) é, de fato, uma
+solução, substituímos esses valores nas expressões à esquerda dos sinais de igualdade
+no sistema original e calculamos:
+
+
+
+
+
+
+(29) − 2(16) + (3) =
+2(16) − 8(3) =
+
+0
+8
+−4(29) + 5(16) + 9(3) = −9
+
+.
+
+Os resultados conferem com os números à direita dos sinais de igualdade no sistema
+original, de modo que (29, 16, 3) é uma solução do sistema.
+
+Exemplo 1.49. Resolva o sistema linear homogêneo
+
+(Sh)
+
+
+
+
+
+
+x + y − 3z = 0
+4x − y + z = 0
+2x − 3y + 7z = 0
+
+.
+
+Solução: Refazendo os procedimentos do exemplo anterior. Primeiro montamos a
+matriz aumentada ao associada sistema.
+
+(Sh)
+
+
+
+
+
+
+x + y − 3z = 0
+4x − y + z = 0
+2x − 3y + 7z = 0
+
+
+
+
+
+1
+4 −1
+2 −3
+
+1 −3 0
+1 0
+7 0
+
+
+
+ .
+
+Reduzindo essa matriz a forma escalonada reduzida por linhas obtemos:
+
+
+
+
+
+
+2
+13 0 0
+1
+0 −5
+1 0
+13
+0 0 0
+0
+
+
+
+
+ .
+
+Como não se pode reduzir mais, obtemos x= 2
+13
+5 z, z). Note que a solução trivial é obtida quando z = 0.
+
+5z e y= 13
+
+5 z. Logo a solução geral é ( 2
+
+5z,
+
+Observação 1.50. Um sistema de equações lineares homogêneas tem uma única
+solução (a trivial) ou possui inﬁnitas soluções.
+
+21
+
+Capítulo 2
+
+Noções de Probabilidades
+
+Com o objetivo de tornar o presente trabalho o mais auto contido possível, neste
+capítulo será apresentada uma breve revisão de Probabilidade, abrangendo alguns
+tópicos mais fundamentais. A principais referências deste capítulo são [5, 6, 11, 12].
+Uma das principais aplicações das técnicas de contagem é o cálculo de
+probabilidade em jogos de azar. Grandes matemáticos se interessaram em
+sistematizar a probabilidade, que tem como raízes os estudos dos jogos de azar.
+Um problema clássico que despertou grande interesse de matemáticos do século XV,
+a exemplo de Pascal e Fermat, foi o chamado “Problema dos Pontos”, que hoje em
+dia é apresentado da seguinte maneira (mais detalhes veja [11]):
+
+Dois jogadores apostaram R$ 10,00 cada um em um jogo de cara-e-coroa,
+combinando que o primeiro a conseguir 6 vitórias ﬁcaria com o dinheiro
+da aposta. O jogo, no entanto, precisa ser interrompido quando um dos
+jogadores tem 5 vitórias e o outro tem 3. Qual é a divisão justa da
+quantia apostada?
+
+Foram situações desse tipo que deu início a teoria de probabilidade.
+Relacionado ao problema, parece razoável que a quantia apostada seja dividida
+O cálculo destas
+proporcionalmente à chance de vitória de cada jogador.
+probabilidades está baseado, como veremos mais adiante, na hipótese de que a moeda
+seja honesta, ou seja, que haja chances iguais em um lançamento.
+
+Chamamos de Experimentos Aleatórios, experimentos que,
+
+repetidos em
+condições idênticas, produzem resultados que não podem ser previstos com certeza.
+
+Deﬁnição 2.1. Um conjunto formado por todos os possíveis resultados de um
+experimento aleatório é chamado de espaço amostral, e será denotado por Ω.
+
+Exemplo 2.2. Lançar um dado e observar a face voltada para cima;
+
+Exemplo 2.3. Lançar uma moeda e observar a face voltada para cima;
+
+Ω = {1, 2, 3, 4, 5, 6}.
+
+Exemplo 2.4. Retirar uma carta de um baralho de 52 e registra o seu naipe;
+
+Ω = {Cara, Coroa}.
+
+Ω = {Copas, Espadas, Ouros, Paus}.
+
+22
+
+Deﬁnição 2.5. Chamaremos de evento todo subconjunto de um espaço amostral
+de um experimento aleatório; e denotaremos tais eventos por letras maiúsculas do
+alfabeto: A, B, C, ..., X, Y, Z.
+
+Exemplo 2.6. Um dado é lançado e observa-se o número da face voltada para cima.
+Temos o espaço amostral
+
+Ω = {1, 2, 3, 4, 5, 6}
+
+e alguns eventos:
+
+A: ocorrência de número par; A = {2, 4, 6}.
+B: ocorrência de número maior ou igual a 3; B = {3, 4, 5, 6}.
+C: ocorrência de número múltiplo de 3; C = {3, 6}.
+
+Exemplo 2.7. Uma urna contém 20 bolas idênticas numeradas de 1 a 20. Uma
+bola é retirada da urna e observa-se seu número. Temos o espaço amostral
+
+Ω = {1, 2, 3, . . . , 20}.
+
+Alguns eventos são:
+
+A: ocorrência de múltiplos de 5; A = {5, 10, 15, 20}.
+B: ocorrência de números menores do que 7; B = {1, 2, 3, 4, 5, 6}.
+C: ocorrência de números primos. C = {2, 3, 5, 7, 11, 13, 17, 19}.
+
+Observação 2.8. Note que se Ω é um espaço amostral, então o conjunto vazio e Ω
+são eventos. O conjunto vazio é dito evento impossível e será denotado por ∅. O
+evento Ω é chamado de evento certo.
+
+Observação 2.9. Considere um espaço amostral Ω = {a1, a2, . . . , ak}. Denotaremos
+por #A o número de elementos de um evento A do espaço amostral Ω. Observe que
+#Ω = k e Ω terá 2k subconjuntos, portanto, 2k eventos.
+
+2.1 Combinação de Eventos
+
+Consideremos Ω um espaço amostral de um experimento aleatório e A, B e E
+
+eventos de Ω.
+
+1. União de dois eventos
+
+A ∪ B é um evento que ocorre quando A ou B ocorre, ou ambos ocorrem.
+Dizemos que A ∪ B é a união do evento A com o evento B.
+
+2. Interseção de dois eventos
+
+A ∩ B é um evento que ocorre quando A e B ocorrem simultaneamente.
+Dizemos que A ∩ B é a intersecção do evento A com o evento B.
+
+3. Complementar de um evento
+
+EC é um evento que ocorre quando o evento E não ocorre. Dizemos que EC
+é o evento complementar de E.
+
+23
+
+Exemplo 2.10. Consideremos um tetraedro regular com faces numeradas 1, 2, 3 e
+4. Ao ser lançado, consideramos como face de ocorrência a face não visível. Neste
+caso
+
+Ω = {1, 2, 3, 4}.
+
+Temos os eventos:
+
+• A: ocorrência de número ímpar, A = {1, 3},
+
+• B: ocorrência de número maior ou igual a 2, B = {2, 3, 4}.
+
+Então, teremos as seguintes combinações:
+
+• A ∪ B: ocorrência de número ímpar ou número maior ou igual a 2,
+
+A ∪ B = {1, 2, 3, 4}.
+
+• A ∩ B: ocorrência de número ímpar e número maior ou igual a 2,
+
+A ∩ B = {3}.
+
+• AC: ocorrência de um número não ímpar,
+
+AC = {2, 4}.
+
+• BC: ocorrência de um número menor que 2,
+
+BC = {1}.
+
+2.2 Frequência Relativa
+
+Em experimentos aleatórios podemos não saber qual evento irá ocorrer, mas
+podemos relacionar aos eventos valores que dêem uma ideia quantitativa da
+ocorrência dos mesmos, isso quando o experimento é repetido muitas vezes, em
+mesmas condições. Para tanto, vamos deﬁnir frequência relativa de um evento.
+
+Considere um experimento aleatório com espaço amostral Ω, ﬁnito:
+
+Ω = {a1, a2, a3, ..., ak}.
+
+Agora suponha que o experimento seja repetido N vezes, com mesmas condições.
+Seja ni o número de vezes que ocorre o evento {ai}.
+
+Deﬁnição 2.11. Para cada i ∈ {1, 2, 3, ..., k}, chamamos de Frequência Relativa do
+evento {ai} o valor fi deﬁnido por
+
+A Frequência Relativa de um evento A, denotada por fA, é deﬁnida por
+
+fi =
+
+ni
+N
+
+.
+
+fA =
+
+(cid:88)
+
+fi =
+
+(cid:88)
+
+ai∈A
+
+ai∈A
+
+ni
+N
+
+.
+
+24
+
+Exemplo 2.12. Considere o lançamento de um dado 50 vezes. Temos como espaço
+amostral
+
+Ω = {a1, a2, a3, a4, a5, a6},
+
+onde ai representa a face i, i = 1, 2, 3, 4, 5 e 6. Se após os 50 (N = 50) lançamentos
+observarmos a face de número 2 (a2) ocorrer 10 (n2 = 10) vezes e a face de número
+5 (a5) ocorrer 20 (n5 = 20) vezes, temos que a frequência relativa do evento {a2} é:
+
+e a do evento {a5} é:
+
+f2 =
+
+f5 =
+
+10
+50
+
+20
+50
+
+=
+
+=
+
+1
+5
+
+;
+
+2
+5
+
+.
+
+Além disso, se a frequência relativa do evento A = {a2, a5} é:
+
+fA =
+
+fi =
+
+1
+5
+
++
+
+2
+5
+
+=
+
+3
+5
+
+.
+
+(cid:88)
+
+ai∈A
+
+A frequência relativa possui as seguintes propriedades:
+1. 0 (cid:54) fi (cid:54) 1, ∀ i, pois 0 (cid:54) ni
+N
+
+(cid:54) 1.
+
+2. f1 + f2 + f3 + ... + fk = 1, pois
+
+n1
+N
+
++
+
+n2
+N
+
++ ... +
+
+nk
+N
+
+=
+
+n1 + n2 + ... + nk
+N
+
+=
+
+N
+N
+
+= 1.
+
+2.3 Deﬁnição de Probabilidade
+
+A frequência relativa dá uma informação quantitativa da ocorrência de um
+evento. O que iremos fazer é deﬁnir um valor associado a cada evento, de modo
+que ele tenha as mesmas características da frequência relativa. A esse valor daremos
+o nome de probabilidade do evento considerado.
+
+Considere um espaço amostral ﬁnito Ω = {a1, a2, a3, ..., ak} e uma função
+
+p : Ω → [0, 1] tal que
+
+para cada ai ∈ Ω. Se
+
+p(ai) = pi,
+
+k
+(cid:88)
+
+i=1
+
+pi = p1 + p2 + p3 + ... + pk = 1,
+
+dizemos que a função p, ou os números p1, p2, p3, ..., pk, é uma Distruibuição de
+Probabilidade sobre Ω e que cada pi é a probabilidade do evento {ai}.
+
+Deﬁnição 2.13. Consideremos A um evento de Ω. A Probabilidade de A, que
+denotaremos por P (A), é deﬁnida por:
+
+1. Se A = ∅, então P (A) = 0;
+
+25
+
+2. Se A (cid:54)= ∅, então P (A) =
+
+(cid:88)
+
+ai∈A
+
+pi.
+
+Exemplo 2.14. Consideremos o espaço amostral Ω = {a1, a2, a3, a4} e a
+distribuição de probabilidades:
+
+p1 = 0, 1 p2 = 0, 3 p3 = 0, 2 e p4 = 0, 4.
+
+Para o evento A = {a1, a2, a4}, por deﬁnição, temos:
+
+P (A) = p1 + p2 + p4 = 0, 1 + 0, 3 + 0, 4 = 0, 8.
+
+Exemplo 2.15. Um dado é lançado e observado o número da face voltada para
+cima. Temos
+
+Uma atribuição razoável para p1, p2, p3, p4, p5 e p6 é:
+
+Ω = {1, 2, 3, 4, 5, 6}.
+
+p1 = p2 = p3 = p4 = p5 = p6 =
+
+1
+6
+
+.
+
+Nesse caso, a probabilidade de ocorrência de números primos (A = {2, 3, 5}) será:
+
+P (A) = p2 + p3 + p5 =
+
+3
+6
+
+=
+
+1
+2
+
+.
+
+2.4 Propriendades de Probabilidades em Espaço
+
+Amostral Finito.
+
+Propriedade 1: A probabilidade do evento certo é 1.
+
+Propriedade 2: Se A ⊂ B, então P (A) ≤ P (B).
+
+Propriedade 3: Se A é um evento, então 0 ≤ P (A) ≤ 1.
+
+Propriedade 4: Se A e B são eventos, então P (A ∪ B) = P (A) + P (B) − P (A ∩ B).
+
+Propriedade 5: Se A é um evento, então P (AC) = 1 − P (A).
+
+Observação 2.16. Para o leitor que deseje ver as demonstrações das propriedades
+acima, as mesmas podem ser encontradas, por exemplo, em [6].
+
+2.5 Espaços Amostrais Equiprováveis
+
+Seja Ω = {a1, a2, a3, ..., ak} um espaço amostral,
+
+com distribuição de
+
+probabilidades p1, p2, p3, ..., pk.
+
+Deﬁnição 2.17. Dizemos que uma distribuição de probabilidades sobre Ω é
+Equiprovável quando
+
+p1 = p2 = p3 = ... = pk.
+
+26
+
+Em geral, as características do experimento é que nos levam a supor uma
+
+distribuição equiprovável.
+
+Exemplo 2.18. De uma urna com dez bolas de cores distintas, uma delas é retirada.
+É razoável supor que cada evento elementar tenha a mesma probabilidade. Como
+temos 10 elementos no espaço amostral, então a probabilidade de qualquer bola ser
+retirada é
+
+p =
+
+1
+10
+
+.
+
+2.6 Probabilidade de um Evento num Espaço
+
+Equiprovável
+
+Seja Ω = {a1, a2, ..., ak} um espaço amostral com uma distribuição equiprovável
+
+pi =
+
+1
+k
+
+, para cada i ∈ {1, 2, ..., k}. Seja A o evento:
+
+A = {a1, a2, a3, ..., ar}.
+
+Temos
+
+P (A) = p1 + p2 + p3 + ... + pr =
+
+1
+k
+
++
+
+1
+k
+
++
+
+1
+k
+
++ ... +
+
+1
+k
+
+=
+
+r
+k
+
+,
+
+ou seja, num espaço Ω, com distribuição equiprovável,
+
+P (A) =
+
+#A
+#Ω
+
+.
+
+Exemplo 2.19. De um baralho de 52 cartas, duas são extraídas ao acaso, sem
+reposição. Qual a probabilidade de ambas serem de paus?
+
+Solução:
+Considerando que 2c (signiﬁca dois copas), 2e (signiﬁca dois de espadas), . . ., Ae
+(signiﬁca as de espadas), Ap (signiﬁca as de paus), temos que o espaço amostral do
+experimento é:
+
+Ω = {{2c, 2e}, {2c, 2p}, . . . , {Ae, Ap}},
+
+ou seja, podemos montar cada par de cartas como sendo uma combinação das 52
+cartas do baralho tomadas duas a duas. Então o total de elementos de Ω é
+
+#Ω = C52,2 =
+
+52!
+(52 − 2)!2!
+
+= 1326.
+
+Agora seja A o evento formado pelas combinações de cartas de paus. Logo, o número
+de elementos de A é
+
+#A = C13,2 =
+
+13!
+(13 − 2)!2!
+
+= 78.
+
+Portanto,
+
+P (A) =
+
+78
+1326
+
+=
+
+39
+663
+
+=
+
+1
+7
+
+.
+
+27
+
+2.7 Probabilidade Condicional
+
+Deﬁnição 2.20. Dados dois eventos A e B, com P (A) (cid:54)= 0, a probabilidade
+condicional de B na certeza de A, denotada por P (A|B), é o número
+
+P (B|A) =
+
+P (A ∩ B)
+P (A)
+
+.
+
+Exemplo 2.21. Consideremos o lançamento de um dado e observemos a face
+voltada para cima. Qual a probabilidade de ocorrer um número par sabendo-se que
+ocorreu um número maior do que 2?
+
+Solução:
+Seja A o evento “ocorrer um número maior do que 2” e B o evento “ocorrer um
+número par”. Então #A = 4 e #B = 3. Se A ∩ B é o evento ocorrer um número
+par maior do que 2, então #(A ∩ B) = 2. Portanto,
+
+P (B|A) =
+
+P (A ∩ B)
+P (A)
+
+=
+
+2
+4
+
+=
+
+1
+2
+
+.
+
+Observação 2.22. Em muitos problemas é muito comum a necessidade do cálculo
+de P (A ∩ B). Neste caso, pela Deﬁnição 2.20, temos que
+
+e
+
+P (A ∩ B) = P (A) · P (B|A)
+
+P (A ∩ B) = P (B) · P (A|B).
+
+Exemplo 2.23. Uma urna I contém 2 bolas vermelhas e 3 bolas pretas e uma urna
+II contém 4 bolas vermelhas e 5 bolas pretas. Uma urna é escolhida ao acaso e dela
+uma bola é extraída também ao acaso. Qual a probabilidade de ocorrer a urna I e
+uma bola vermelha?
+
+Solução:
+Vamos colocar o problema na forma de diagrama de árvore. Como uma urna
+é escolhida ao acaso, temos que a probabilidade de escolha de uma urna é 1
+2.
+Dada a escolha da urna, partimos para a escolha condicional: extrair uma bola
+de determinada cor.
+
+•
+
+1
+2
+
+1
+2
+
+2
+5
+
+3
+5
+
+4
+9
+
+5
+9
+
+V
+
+(cid:47) P
+
+V
+
+P
+
+I
+
+II
+
+28
+
+(cid:55)
+(cid:55)
+(cid:47)
+(cid:54)
+(cid:54)
+(cid:40)
+(cid:40)
+(cid:47)
+(cid:47)
+(cid:39)
+(cid:39)
+As probabilidades são colocadas nas ramiﬁcações que partem de cada urna para cada
+resultado do 2o experimento (extração de uma bola). Temos que o espaço amostral
+do experimento é
+
+Ω = {(I, V1), (I, V2), (I, P1), (I, P2), (I, P3), (II, V3), . . . , (II, V6), (II, P4), . . . , (II, P8)}
+
+onde as letras V e P representam as cores das bolas vermelhas e pretas,
+respectivamente. Agora sejam:
+
+• A = {(I, V1), (I, V2), (I, P1), (I, P2), (I, P3)}: o evento escolher urna I;
+
+• B = {(I, V1), (I, V2), (II, V3), . . . , (II, V6)}: o evento escolher bola vermelha.
+
+Note que estamos interessados no evento A ∩ B. Logo, pela Observação 2.22:
+
+P (A ∩ B) = P (A) · P (B|A).
+
+é a
+Como P (A) =
+probabilidade de extração de uma bola vermelha dado que ela seja da urna I, temos
+
+é a probabilidade de escolha da urna I e P (B|A) =
+
+1
+2
+
+2
+5
+
+P (A ∩ B) =
+
+1
+2
+
+.
+
+2
+5
+
+=
+
+1
+5
+
+.
+
+Observe que a probabilidade da ocorrência de A ∩ B é o produto das probabilidades
+que aparecem nos ramos da árvore que estão situados I e V .
+
+V
+
+2
+5
+
+I
+
+1
+2
+
+•
+
+P (A ∩ B) =
+
+1
+2
+
+·
+
+2
+5
+
+=
+
+1
+5
+
+2.8
+
+Independência de Dois Eventos
+
+Deﬁnição 2.24. Dados dois eventos A e B de um espaço amostral Ω, dizemos que
+A é independente de B quando
+
+P (A|B) = P (A).
+
+A deﬁnição anterior, em outras palavras, nos diz que A é independente de B
+
+quando a ocorrência de B não afeta a probabilidade de A.
+
+Teorema 2.25. Considere dois eventos A e B de um espaço amostral Ω, com
+P (A) (cid:54)= 0. Se A é independente de B, então B independente de A, isto é,
+
+P (B|A) = P (B).
+
+29
+
+(cid:65)
+(cid:65)
+(cid:65)
+(cid:65)
+Demonstração. Pela Observação 2.22, temos que
+
+P (B|A) =
+
+P (A ∩ B)
+P (A)
+
+=
+
+P (B) . P (A|B)
+P (A)
+
+=
+
+P (B) . P (A)
+P (A)
+
+= P (B).
+
+Deﬁnição 2.26. Dados dois eventos A e B de um espaço amostral Ω, dizemos que
+A e B são independentes quando
+
+P (A ∩ B) = P (A) · P (B).
+
+Observação 2.27. Note que se A é independente de B e P (A) (cid:54)= 0, então pelo
+Teorema 2.25 e Observação 2.22 temos
+
+P (A ∩ B) = P (A) · P (B|A)
+(cid:124) (cid:123)(cid:122) (cid:125)
+P (B)
+
+= P (A) · P (B).
+
+Logo, A e B são independentes.
+
+Exemplo 2.28. Uma moeda perfeita é lançada duas vezes. Considerando os
+eventos:
+
+• A: sair cara na 1a jogada;
+
+• B: sair cara na 2a jogada.
+
+Veriﬁque que os eventos A e B são independentes.
+
+Solução:
+Considere C(cara) e K(coroa), então o espaço amostral é
+
+Ω = {CC, CK, KC, KK}
+
+e os eventos são
+
+A = {CC, CK} B = {CC, KC} e A ∩ B = {CC}.
+
+Então:
+
+P (A) =
+
+#A
+#Ω
+
+=
+
+2
+4
+
+=
+
+1
+2
+
+, P (B) =
+
+#B
+#Ω
+
+=
+
+1
+2
+
+e P (A ∩ B) =
+
+#(A ∩ B)
+#Ω
+
+=
+
+1
+4
+
+.
+
+Logo, como P (A) · P (B) = P (A ∩ B), com P (A) (cid:54)= 0 e P (B) (cid:54)= 0, temos que os
+eventos A e B são independentes.
+
+Exemplo 2.29. Duas pessoas praticam tiro ao alvo. A probabilidade de a 1a pessoa
+e a probabilidade de a 2a atingir o alvo é
+atingir o alvo é
+. Considerando
+os eventos A = {1a pessoa atingir o alvo} e B = {2a pessoa atingir o alvo}, e
+admitindo A e B independentes, se os dois atiram, qual a probabilidade de:
+
+1
+3
+
+2
+3
+
+1. ambos atingirem o alvo?
+
+30
+
+2. ao menos um atingir o alvo?
+
+Solução:
+
+1. Temos P (A) = 1
+P (A ∩ B). Então,
+
+3 e P (B) = 2
+
+3. A probabilidade de ambos atingirem o alvo é
+
+P (A ∩ B) = P (A) · P (B) =
+
+1
+3
+
+·
+
+2
+3
+
+=
+
+2
+9
+
+.
+
+2. A probabilidade de ao menos um atingir o alvo é P (A ∪ B). Então,
+
+P (A ∪ B) = P (A) + P (B) − P (A ∩ B) =
+
+1
+3
+
++
+
+2
+3
+
+−
+
+2
+9
+
+=
+
+7
+9
+
+.
+
+31
+
+Capítulo 3
+
+Cadeias de Markov, Grafos e Grafos
+Dirigidos
+
+O presente capítulo foi baseado nas referências [2, 3, 9]. Caso o leitor deseje
+
+obter mais detalhes, pode consultar qualquer uma dessas referências citadas.
+
+3.1 Cadeias de Markov
+
+Muitos dos processos que ocorrem na natureza e na sociedade podem ser
+estudados (pelo menos em primeira aproximação) como se o fenômeno estudado
+passasse, a partir de um estado inicial, por uma sequência de estados, onde a
+transição de um determinado estado para o seguinte ocorreria segundo uma certa
+probabilidade. No caso em que esta probabilidade de transição depende apenas do
+estado em que o fenômeno se encontra e do estado seguinte, o processo é chamado
+Processo de Markov e uma sequência de estados seguindo este processo é denominada
+de Cadeia de Markov.
+
+Evidentemente, ao se supor tal restrição, estaremos simpliﬁcando, talvez até
+demasiadamente, uma vez que as probabilidades podem modiﬁcar com o tempo.
+Mas, assim mesmo, a informação que obtivermos com este modelo já nos servirá de
+auxílio para uma previsão do comportamento de certos fenômenos.
+
+Exemplo 3.1. Vamos assumir que em uma determinada região observa-se os
+seguintes dados estatísticos:
+
+Dados Estatísticos:
+
+• Se chover - C bastante em um ano, a probablidade de chover bastante no
+
+ano seguinte é 1
+Notação:
+
+4 e a de ter seca - S é 3
+4.
+
+P (C) =
+
+1
+4
+
+e P (S) =
+
+3
+4
+
+.
+
+• Se tiver seca em um ano, a probabilidade de chover bastante no ano
+
+seguinte é de 1
+Notação:
+
+2 e a de seca é 1
+2.
+
+P (C) =
+
+1
+2
+
+e P (S) =
+
+1
+2
+
+.
+
+32
+
+Hipótese: As probabilidades não mudam com o decorrer dos anos.
+
+Previsão: Sabendo-se que no primeiro ano houve seca, qual a probabilidade de
+
+chover banstante no terceiro ano?
+
+Considere a Árvore de Probabilidades abaixo:
+
+P (1)(C)
+
+•
+
+P (1)(S)
+
+C
+
+S
+
+1
+4
+
+3
+4
+
+1
+2
+
+1
+2
+
+C
+
+(cid:47) S
+
+C
+
+S
+
+1
+4
+
+3
+4
+
+1
+2
+
+1
+2
+
+1
+4
+
+3
+4
+
+1
+2
+
+1
+2
+
+C
+
+· · ·
+
+(cid:47) S
+
+C
+
+S
+
+· · ·
+
+· · ·
+
+· · ·
+
+C
+
+· · ·
+
+(cid:47) S
+
+C
+
+S
+
+· · ·
+
+· · ·
+
+· · ·
+
+Observe que a probabilidade de chover no terceiro ano é portanto:
+
+1
+2
+
+·
+
+1
+4
+
++
+
+1
+2
+
+·
+
+1
+2
+
+=
+
+3
+8
+
+.
+
+Questão-1: Se necessitarmos saber a probabilidade daqui a algumas décadas?
+
+Para responder a questão, vamos analisar a partir da “Árvore de Probabilidades”.
+
+Denotemos
+
+• P n(C): Probabilidade de chover no n-ésimo ano;
+
+• P n(S): Prababilidade de seca no n-ésimo ano;
+
+33
+
+(cid:57)
+(cid:57)
+(cid:47)
+(cid:55)
+(cid:55)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:37)
+(cid:37)
+(cid:62)
+(cid:62)
+(cid:32)
+(cid:32)
+(cid:47)
+(cid:47)
+(cid:39)
+(cid:39)
+(cid:57)
+(cid:57)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:37)
+(cid:37)
+e consideremos a tabela de probabilidades onde o elemento na i-ésima linha e j-ésima
+coluna indica a probabilidade de transição do j-ésimo para i-ésimo estado.
+
+C S
+1
+2
+1
+2
+
+C 1
+4
+3
+S
+4
+
+.
+
+O vetor de probabildade é a matriz
+
+(cid:20) P n(C)
+P n(S)
+
+(cid:21)
+
+,
+
+onde a primeira linha dá a probabilidade de que haja chuva no n-ésimo ano e a
+segunda linha dá a probabilidade de que haja seca no n-ésimo ano. Agora, analisando
+a árvore de probablidade vemos que
+
+P 2(C) =
+
+P 2(S) =
+
+1
+4
+3
+4
+
+· P 1(C) +
+
+· P 1(C) +
+
+1
+2
+1
+2
+
+· P 1(S)
+
+· P 1(S),
+
+e esse resultado pode ser observado na forma matricial
+(cid:34) 1
+4
+3
+4
+
+4 · P 1(C) + 1
+4 · P 1(C) + 1
+
+(cid:34) P 2(C)
+P 2(S)
+
+2 · P 1(S)
+2 · P 1(S)
+
+(cid:34) 1
+
+=
+
+=
+
+(cid:35)
+
+(cid:35)
+
+3
+
+(cid:35)
+
+(cid:34) P 1(C)
+P 1(S)
+
+·
+
+(cid:35)
+
+.
+
+1
+2
+1
+2
+
+Denotando por T a matriz
+
+1
+2
+1
+2
+temos de modo análogo o cálculo do segundo para o terceiro ano, do terceiro para o
+quarto e assim por diante. Vejamos:
+
+,
+
+(cid:34) 1
+4
+3
+4
+
+(cid:35)
+
+(cid:35)
+
+→
+
+(cid:34) P 1(C)
+P 1(S)
+(cid:34) P 3(C)
+P 3(S)
+
+(cid:35)
+
+(cid:35)
+
+(cid:34) P 2(C)
+P 2(S)
+(cid:34) P 2(C)
+P 2(S)
+
+= T ·
+
+(cid:35)
+
+= T 2 ·
+
+(cid:35)
+
+(cid:34) P 1(C)
+P 1(S)
+(cid:34) P 1(C)
+P 1(S)
+
+,
+
+(cid:35)
+
+= T ·
+
+e sucessivamente
+
+(cid:35)
+
+(cid:34) P n(C)
+P n(S)
+
+= T n−1 ·
+
+(cid:34) P 1(C)
+P 1(S)
+
+(cid:35)
+
+.
+
+(3.1)
+
+Questão 2: Qual o comportamento do clima dessa região a longo prazo?
+
+1. Se soubermos que T n se tornará uma matriz ﬁxa P, quando n é muito grande,
+
+teremos:
+
+P ·
+
+(cid:34) P 1(C)
+P 1(S)
+
+(cid:35)
+
+=
+
+(cid:34) P (C)
+P (S)
+
+(cid:35)
+
+;
+
+em linguagem de limites, quando n → ∞, teremos:
+
+T n → P, P n(C) → P (C) e P n(S) → P (S).
+
+34
+
+2. Se T n não se tornar uma matriz ﬁxa P, não é possível qualquer previsão.
+
+Observação 3.2. Note que, em particular, se P(S)=1 temos a conclusão que a
+longo prazo essa região se tornará um deserto.
+
+3.1.1 Processo Aleatório de Markov
+
+Deﬁnição 3.3. Um Processo Aleatório de Markov é um processo que pode assumir
+estados de forma que a probabilidade de transição de um estado para outro é dada
+por um número pij, onde pij depende somente dos estados envolvidos.
+
+Notação 3.4. Em geral denotamos por 1, 2, ..., k os k estados possíveis de uma
+Cadeia de Markov. A probabilidade do sistema está no estado i em qualquer
+observação se na observação imediatamente precedente estava no estado j, é
+denominada por pij e é chamada de Probabilidade de Transição do estado j
+ao estado i. A matriz P = [pij] é chamada de Matriz de Transição da Cadeia de
+Markov.
+
+Exemplo 3.5. Uma locadora de automóveis tem três lojas de atendimento, denotas
+por 1, 2 e 3. Um cliente pode alugar um carro de qualquer uma das três lojas e
+devolver o carro para qualquer uma das três lojas. O gerente nota que os clientes
+constumam devolver os carros de acordo com as seguintes probabalidades:
+
+
+
+3
+
+Alugado da Loja
+2
+1
+0, 8 0, 3 0, 2
+0, 1 0, 2 0, 6
+0, 1 0, 5 0, 2
+
+
+
+
+
+
+
+1 Devolvido
+2
+3
+
+à
+Loja
+
+Esta matriz é a matriz de transição do sistema se ele for considerado uma Cadeia
+de Markov. A partir desta matriz, a probabilidade que um carro alugado na loja 3
+vá ser devolvido na loja 2 é de 0,6, a probabilidade que um carro alugado na loja 1
+vá ser devolvido na loja 1 é de 0,8, e assim para o restante das entradas.
+
+Exemplo 3.6. Conferindo os registro de doações recebidas, a secretaria da
+associação de ex-alunos de uma universidade norte-americana observa que 80% de
+seus ex-alunos que contribuem ao fundo da associação em um certo ano também
+contribuem no ano seguinte e que 30% dos que não contribuem em um certo ano
+contribuem no ano seguinte. Isto pode ser visto com uma cadeia de Markov de dois
+estados: o estado 1 corresponde a um ex-aluno que contribui em um ano qualquer e
+o estado 2 corresponde a um ex-aluno que não contribui naquele ano. A matriz de
+transição é
+
+P =
+
+(cid:20) 0, 8 0, 3
+0, 2 0, 7
+
+(cid:21)
+
+Observe que a matriz P também é uma Matriz de Transição.
+
+As matrizes de transições das Cadeias de Markov têm a propriedade que as
+entradas em qualquer coluna somam 1. Mas isto não é coincidência, considerando
+
+35
+
+que se P = [pij] é uma matriz de transição de uma Cadeia de Markov qualquer de
+k estados, então para cada j nós devemos ter
+
+p1j + p2j + · · · + pkj = 1,
+
+pois se o sistema está no estado j em uma observação, é certo que estará em um dos
+k estados possíveis na próxima observação.
+
+Nos dois exemplos anteriores poderíamos fazer uma previsão da devolução de
+um carro alugado em uma das três lojas após k aluguéis, ou a previsão da doação
+de um ex-aluno após k anos à Universidade.
+
+3.1.2 Vetor e Matriz de Probabilidade
+
+Deﬁnição 3.7. Uma matriz da forma
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+p1
+p2
+...
+pk
+
+é dita um Vetor de Probabilidade quando
+
+pi ≥ 0, ∀ i = 1, 2, . . . , k
+
+e
+
+k
+(cid:88)
+
+i=1
+
+pi = 1
+
+.
+
+Deﬁnição 3.8. Uma matriz
+
+T =
+
+
+
+
+
+
+
+
+p11 p12
+p21 p22
+...
+...
+pk1 pk2
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+p1r
+p2r
+...
+pkk
+
+é chamada de Matriz de Probabilidade ou Estocástica quando cada coluna é um Vetor
+de Probabilidade.
+
+Observação 3.9.
+
+1. Dada uma matriz de probabilidade P = [pij], temos que
+
+(a) pij ≥ 0, ∀ i, j ∈ {1, 2, 3, ..., k};
+
+(b)
+
+(cid:88)
+
+j
+
+pi,j = 1, ∀ i ∈ {1, 2, 3, ..., k}.
+
+2. Seguindo o raciocínio desenvolvido para obter (3.1), obtemos
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+p(n)
+1
+p(n)
+2
+...
+p(n)
+k
+
+= T n−1 ·
+
+36
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+p(1)
+1
+p(1)
+2
+...
+p(1)
+k
+
+3.1.3 O Vetor-estado
+
+Em geral não se pode determinar com certeza o estado de um sistema em uma
+Cadeia de Markov numa observação arbitrária. O máxímo que se pode fazer é
+especiﬁcar probabilidades para cada um dos estados possíveis. Poderíamos descrever
+o estado possível do sistema em uma certa observação em uma Cadeia de Markov
+com k estados, por um vetor-coluna
+
+x(n) =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+x2
+x3
+...
+xk
+
+(probabilidade de que a cadeia esteja no estado j depois de n passos) no qual x1 é
+a probabilidade que o sistema está no estado 1, x2 é a probabilidade que ele está no
+estado 2, x3 é a probabilidade que ele está no estado 3 e xk é a probabilidade que
+ele está no estado k. Em geral, temos a seguinte deﬁnição.
+
+Deﬁnição 3.10. O V etor − estado de uma observação de uma Cadeia de Markov
+com k estados é um vetor-coluna x(n) cujo i-ésimo componente xi é a probabilidade
+do sistema estar, naquela observação, no i-ésimo estado.
+
+Note que as entradas em qualquer Vetor-estado de uma Cadeia de Markov são não
+negativos e têm sempre soma 1 (vetor de Probabilidade). Suponhamos que saibamos
+o vetor-estado x(0) de uma Cadeia de Markov em alguma observação inicial. Com
+argumento análogo ao desenvolvido para obter (3.1) pode-se determinar os Vetores-
+estados
+
+x(1), x(2), ..., x(n), ....
+
+Teorema 3.11. Se P é a matriz de transição de uma Cadeia de Markov e x(n) é
+um Vetor-estado na n-ésima observação, então
+
+x(n+1) = P nx(0)
+
+De modo iterativo, obtemos
+
+x(1) = P x(0)
+x(2) = P x(1) = P 2x(0)
+x(3) = P x(2) = P 3x(0)
+...
+x(n) = P x(n−1) = P n−1x(0)
+
+Dessa forma, o Vetor-estado inicial x(0) e a matriz de transição P determinam x(n)
+para n = 1, 2, . . ..
+
+Exemplo 3.12. Para ilustrar a recorrência, consideremos a matriz de transição do
+Exemplo 3.6:
+
+P =
+
+(cid:20) 0, 8 0, 3
+0, 2 0, 7
+
+(cid:21)
+
+.
+
+37
+
+Podemos agora construir um registro futuro de provável doação de um novo graduado
+que não doou no 1o ano após a formatura. Para um tal graduado, o sistema está,
+inicialmente, com certeza no estado 2, de modo que o vetor-estado inicial é
+
+x(0) =
+
+(cid:20) 0
+1
+
+(cid:21)
+
+.
+
+Temos então
+
+x(1) = P x(0) =
+
+x(2) = P x(1) =
+
+x(3) = P x(2) =
+
+(cid:20) 0, 8 0, 3
+0, 2 0, 7
+(cid:20) 0, 8 0, 3
+0, 2 0, 7
+(cid:20) 0, 8 0, 3
+0, 2 0, 7
+
+(cid:21) (cid:20) 0, 00000
+1, 00000
+(cid:21) (cid:20) 0, 30000
+0, 70000
+(cid:21) (cid:20) 0, 45000
+0, 55000
+
+(cid:21)
+
+(cid:21)
+
+(cid:21)
+
+(cid:20) 0, 30000
+0, 70000
+(cid:20) 0, 45000
+0, 55000
+(cid:20) 0, 52500
+0, 47500
+
+=
+
+=
+
+=
+
+(cid:21)
+
+(cid:21)
+
+(cid:21)
+
+Assim, passados três anos, pode-se esperar com probabilidade 0, 525 que o ex-aluno
+irá fazer uma doação. Depois de três anos, obtemos os seguintes vetores-estado (com
+até cinco casas decimais e usando o programa computacional livre “WINMAT” para
+os cálculos):
+
+x(4) =
+
+x(7) =
+
+x(10) =
+
+(cid:20) 0, 56250
+0, 43750
+(cid:20) 0, 59531
+0, 40469
+(cid:20) 0, 59942
+0, 40058
+
+(cid:21)
+
+(cid:21)
+
+, x(5) =
+
+, x(8) =
+
+(cid:21)
+
+, x(11) =
+
+(cid:20) 0, 58125
+0, 41875
+(cid:20) 0, 59766
+0, 40234
+(cid:20) 0, 59971
+0, 40029
+
+(cid:21)
+, x(6) =
+(cid:21)
+, x(9) =
+(cid:21)
+, x(12) =
+
+(cid:20) 0, 59062
+0, 40938
+(cid:20) 0, 59883
+0, 40117
+(cid:20) 0, 59985
+0, 40015
+
+,
+
+(cid:21)
+
+(cid:21)
+
+,
+(cid:21)
+
+.
+
+Quando os valores de n vão crescendo os valores do Vetor-estado vão se aproximando
+de um vetor constante, isto é, por exemplo, para n ≥ 20, temos
+
+x(n) =
+
+(cid:35)
+
+(cid:34)
+
+x(n)
+1
+x(n)
+2
+
+(cid:20) 0, 60000
+0, 40000
+
+(cid:21)
+
+.
+
+=
+
+Simbolicamente, podemos representar x(n)
+n → ∞.
+
+1 → 0, 60000 e x(n)
+
+2 → 0, 40000 quando
+
+Observação 3.13. No Exemplo 3.12 deve-se destacar que foi possível determinar
+o comportamento limite devido a matriz P possuir uma determinada propriedade
+especial. De fato, por exemplo, se considerarmos a matriz
+
+P =
+
+(cid:21)
+
+(cid:20) 0 1
+1 0
+
+e x(0) =
+
+(cid:20) 1
+0
+
+(cid:21)
+
+,
+
+temos P 2 = I e P 3 = P de maneira que
+
+e
+
+x(0) = x(2) = x(4) = . . . =
+
+x(1) = x(3) = x(5) = . . . =
+
+(cid:21)
+
+(cid:20) 1
+0
+
+(cid:20) 0
+1
+
+(cid:21)
+
+.
+
+38
+
+Este sistema oscila indeﬁnidamente entre os dois vetores-estados
+
+(cid:21)
+
+(cid:20) 1
+0
+
+e
+
+(cid:21)
+
+(cid:20) 0
+1
+
+e assim não converge como no caso anterior.
+
+A observação anterior obriga uma restrição à matriz de transição, que veremos
+
+na próxima subseção.
+
+3.1.4 Matriz Regular
+
+Deﬁnição 3.14. Uma matriz de transição é dita regular quando uma potência
+positiva da matriz tem todas as entradas positivas.
+
+Trabalhando com matrizes regulares podemos veriﬁcar que o sistema se aproxima
+de um vetor-estado ﬁxo. Assim, para uma matriz de transição regular P , existe um
+número inteiro m tal que todas as entradas de P m são positivas.
+
+Uma Cadeia de Markov que é regida por uma matriz de transição regular é
+chamada de Cadeia de Markov Regular. Apresentaremos a seguir um teorema
+que garante que qualquer Cadeia de Markov Regular possui um vetor-estado ﬁxo
+q tal que, para qualquer escolha de x(0), o vetor P nx(0) converge para q quando n
+aumenta. Este resultado é da grande importância na teoria de Cadeia de Markov.
+
+Teorema 3.15. Seja
+
+P =
+
+
+
+
+
+
+
+
+p11 p12
+p21 p22
+...
+...
+pn1 pn2
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+.
+
+p1n
+p2n
+...
+pnn
+
+Se P é uma matriz transição regular, então
+
+P k =
+
+lim
+k→∞
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qn
+
+q1
+q2
+...
+qn
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+,
+
+q1
+q2
+...
+qn
+
+(3.2)
+
+onde os qi são números não negativos tais que q1 + q2 + · · · + qn = 1.
+
+Observação 3.16. A igualdade (3.2) (Limite das Potências de P ), para efeito de
+entendimento e uso, pode ser considerada como:
+
+“cada Pij é tão próximo de qi quanto se deseje, a medida k é
+suﬁcientemente grande”.
+
+Exemplo 3.17. Considere a matriz
+
+
+
+
+
+
+
+P=
+
+0 1/2 0
+0
+0
+0
+1/3 0
+1/3 0
+1
+0
+1/3 1 1/2 0
+
+
+
+
+
+
+
+.
+
+39
+
+Veriﬁque que P é regular e determine o limite das potências de P com 2 casas
+decimais. Para tanto, fazendo as contas, temos:
+
+P 2 =
+
+
+
+
+
+
+
+1/2
+0
+1/6 0
+0
+0
+0 1/6
+1/3 1 2/3
+0
+1/2 0 1/6 1/2
+
+
+
+
+
+
+
+,
+
+· · · , P 6 =
+
+
+
+
+
+
+
+13/54
+5/108
+1/3
+41/108
+
+1/9
+1/12
+1/9
+11/108
+11/18 59/108
+13/54
+7/36
+
+11/36
+1/36
+2/9
+4/9
+
+
+
+
+
+
+
+.
+
+Assim, como P 6 possui todas as entradas positivas, tem-se que P é uma matriz
+de probabilidade regular.
+temos uma
+aproximação com duas casas decimais que
+
+Seguindo com os cálculos das potência,
+
+
+
+
+
+
+
+P 50 =
+
+0, 20002 0, 19994 0, 19996 0, 20005
+0, 06666 0, 06669 0, 06668 0, 06665
+0, 39997 0, 40009 0, 40007 0, 39992
+0, 33335 0, 33327 0, 33329 0, 33338
+
+
+
+
+
+
+
+.
+
+Portanto, de forma intuitiva, com aproximação de duas casas decimais, podemos
+escrever
+
+P k =
+
+lim
+k→∞
+
+
+
+
+
+
+
+0, 20 0, 20 0, 20 0, 20
+0, 07 0, 07 0, 07 0, 07
+0, 40 0, 40 0, 40 0, 40
+0, 33 0, 33 0, 33 0, 33
+
+
+
+.
+
+
+
+
+
+3.1.5 O Vetor Estado Estacionário
+
+Denotemos por
+
+Q =
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+q1
+q2
+...
+qk
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+e
+
+q =
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+Consideremos Q uma matriz de transição com todos colunas iguais ao vetor de
+probabilidade q . A matriz Q tem a seguinte propriedade: se x é qualquer vetor de
+probabilidade, então
+
+Qx =
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qn
+
+q1
+q2
+...
+qn
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+x2
+...
+xk
+
+q1
+q2
+...
+qn
+
+
+
+
+
+
+
+
+=
+
+q1x1 + q1x2 + · · · + q1xn
+q2x1 + q2x2 + · · · + q2xn
+...
+...
+qnx1 + qnx2 + · · · + qnxn
+
+...
+
+...
+
+
+
+
+
+
+
+
+= (cid:2) x1 + x2 + · · · + xn
+
+(cid:3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qn
+
+= 1q = q .
+
+Isto mostra que Q transforma qualquer vetor de probabilidade x num vetor de
+probabilidade q ﬁxo. Isto leva ao próximo teorema:
+
+40
+
+Teorema 3.18. Se P é uma matriz de transição regular e x é um vetor de
+probabilidade qualquer então
+
+P k · x → q
+
+quando k → ∞, onde q é um vetor de probabilidade ﬁxo, independente de k, cujas
+entradas são todas positivas.
+
+Este teorema é uma consequência do Teorema 3.15. De fato, temos P k → Q
+quando k → ∞, de modo que P kx → Qx = q (note que Qx = q qualquer que seja
+x um vetor de probabilidade) quando k → ∞. Assim, para uma Cadeia de Markov
+Regular, o sistema sempre acaba convergido para um vetor-estado q ﬁxo. O vetor
+q é chamado vetor de estado estacionário da Cadeia de Markov Regular.
+
+Uma técnica muito eﬁciente de calcular o vetor de estado estacionário q de
+sistemas com muitos estados, é simplesmente calcular P nx para algum n grande.
+Uma outra maneira de calcular o vetor de estado estacionário é utilizar o próximo
+teorema.
+
+Teorema 3.19. O Vetor de estado estacionário q de uma matriz de transição regular
+P é o único vetor de probabilidade que satisfaz a equação P q = q.
+
+A veriﬁcação do Teorema 3.19 segue do Teorema 3.15. De fato, por deﬁnição
+temos a identidade matricial P P k = P k+1. Então, pelo Teorema 3.15, temos P k e
+P k+1 convergem a Q quando k → ∞, de modo que P Q = Q. Em forma matricial,
+
+
+
+
+
+
+
+
+p11 p12
+p21 p22
+...
+...
+pn1 pn2
+
+· · ·
+· · ·
+...
+· · ·
+
+p1n
+p2n
+...
+pnn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+q1
+q2
+...
+qk
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+=
+
+q1
+q2
+...
+qk
+
+· · ·
+· · ·
+...
+· · ·
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+nos permite concluir que
+
+
+
+
+
+
+
+
+p11 p12
+p21 p22
+...
+...
+pn1 pn2
+
+· · ·
+· · ·
+...
+· · ·
+
+p1n
+p2n
+...
+pnn
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+=
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+q1
+q2
+...
+qk
+
+isto é, P q = q . Para mostrar que q é o único vetor de probabilidade que satisfaz
+esta equação, suponha que r é um outro vetor de probabilidade tal que P r = r .
+Então,
+
+P 2r = r , . . . , P kr = r ,
+
+para k = 1, 2, . . .. Pelo Teorema 3.18, quando k → ∞, resulta q = r .
+
+Podemos escrever o sistema linear P q = q como o sistema linear homogênio
+
+P q = q ⇒ P q − Iq = Iq − Iq ⇒ (P − I)q = 0.
+
+Assim, o Teorema 3.19 também pode ser expresso da seguinte maneira: o sistema
+linear homogêneo
+
+(P − I)q = 0.
+
+tem um único vetor-solução q com entradas não-negativas que satisfazem a condição
+q1 + q2 + · · · + qk = 1.
+
+41
+
+Exemplo 3.20. Considere uma Cadeia de Markov com matriz de transição
+
+
+
+
+
+P =
+
+1/2
+0
+1/2 1/2
+0
+
+1/2
+0
+1/2 1/2
+
+
+
+ .
+
+Encontre o Vetor Estado Estacionário para essa Cadeia de Markov.
+Solução: Observe que P ainda não pode ser considerada regular, pois devemos ter
+um m de modo que P m tenha todos os elementos positivos. Como
+
+
+
+
+
+P 2 =
+
+1/4 1/4 1/2
+1/2 1/4 1/4
+1/4 1/2 1/4
+
+
+
+ ,
+
+segue que P é regular. Para determinarmos o Vetor Estado Estacionário devemos
+resolver a equação (P − I)q = 0. Como
+
+P − I =
+
+
+
+
+
+0
+
+−1/2
+1/2 −1/2
+0
+
+1/2
+1/4
+1/2 −1/2
+
+
+
+
+
+e o escalonamento da matriz aumentada fornece
+
+
+
+
+
+0
+
+−1/2
+1/2 −1/2
+0
+
+0
+0
+1/2 −1/2 0
+
+1/2
+1/4
+
+
+ ∼
+
+
+
+
+
+1 0 −1 0
+0 1 −1 0
+0
+0 0
+
+0
+
+
+
+ ,
+
+temos que a solução geral é t
+
+
+
+
+
+1
+1
+1
+
+
+
+, t um número real. Como q deve ser um vetor
+
+de probabilidade, então se escolhermos t = 1
+
+3 para obter q =
+
+
+
+ .
+
+
+
+
+
+1/3
+1/3
+1/3
+
+3.2 Grafos
+
+Atualmente a Teoria dos Grafos é uma das áreas mais importantes da matématica
+discreta. O seu uso não se restringe somente a essa área, tendo aplicações em
+Química, Informática, Economia, Sociologia, Genética, etc. Seu surgimento se deu
+na resolução do problema das pontes de Königsberg em 1736 por Euler. Hoje, um
+grafo constitui um modelo ideal para estudo das relações entre objetos discretos de
+qualquer natureza.
+
+Existem inúmeros exemplos de situações que dão origem a conjunto com um
+número ﬁnito de elementos nos quais existe alguma relação entre os elementos do
+conjunto.
+
+Exemplo 3.21. Suponhamos que numa escola algumas turmas resolveram realizar
+um torneio de volei. Participam do torneio as turmas 6A, 6B, 7A, 7B, 8A e 8B.
+Digamos que até um dado momento tenham sido realizados alguns jogos:
+
+42
+
+• 6A jogou com 7A, 7B, 8B
+
+• 6B jogou com 7A, 8A, 8B
+
+• 7A jogou com 6A, 6B
+
+• 7B jogou com 6A, 8A, 8B
+
+• 8A jogou com 6B, 7B, 8B
+
+• 8B jogou com 6A, 6B, 7B, 8A.
+
+Podemos representar a situação por um conjunto
+
+V = {6A, 6B, 7A, 7B, 8A, 8B}.
+
+A relação “6A jogou com 7A” pode ser representada por (6A, 7A), por exemplo, assim
+como as demais relações são representadas de forma análoga, de modo que temos o
+conjunto das relações
+
+A = {(6A, 7A), (6A, 7B), (6A, 8B), (6B; 7A), (6B, 8A), . . . , (7B, 8B), (8A, 8B)}.
+
+Uma maneira de representar a situação é através de uma ﬁgura onde as turmas
+serão representadas por pontos e os jogos serão representados por linhas (ver Figura
+3.21).
+
+Figura 3.1: Representação Gráﬁca dos Jogos
+
+O exemplo anterior motiva a deﬁnição de um grafo.
+
+Deﬁnição 3.22. Um Grafo G é um par (V, A), onde V é um conjunto não-vazio
+e A é um conjunto formado por pares ordenados da forma (vi, vj), com vi, vj ∈ V .
+Os elementos de V são chamados vértices e os pares ordenados são chamados de
+arestas do grafo.
+
+43
+
+Não é diﬁcil agora constatar a consistência das informações. A estrutura “grafo”
+admite várias maneiras de ser representada. Quando existe uma aresta ligando dois
+vértices dizemos que os vértices são Adjacentes e que a aresta é Incidente aos
+vértices. De modo geral, denotamos o número de vértices pelo símbolo |V | e o
+número de arestas pelo símbolo |A|. No exemplo anterior |V | = 6 e |A| = 9.
+
+Observação 3.23. Note que a deﬁnição não impede que o conjunto de vértices de
+um grafo seja inﬁnito. Mas esse tipo de grafo não será estudado no presente trabalho.
+
+Grau de um Vértice
+
+No Exemplo 3.21 observa-se que cada turma jogou um número diferente de jogos:
+
+• 6A jogou 3 jogos
+
+• 6B jogou 3 jogos
+
+• 7A jogou 2 jogos
+
+• 7B jogou 3 jogos
+
+• 8A jogou 3 jogos
+
+• 8B jogou 4 jogos
+
+isso nos leva também a observar (ver Figura 3.21), que o vértice 6A tem 3 arestas
+ligadas a ele, o vértice 7A tem 2 arestas ligadas a ele e similarmente os demais.
+Dizemos então que estas arestas são incidentes ao vértice.
+
+Deﬁnição 3.24. Dado um vértice v de um grafo, o Grau do Vértice v é o número
+de vezes que as arestas incidem sobre o respectivo vértice. O grau de um vértice v é
+denotado por d(v).
+
+No Exemplo 3.21, temos por exemplo d(6A) = 3 e d(7A) = 2.
+Observando o Exemplo 3.21, pode veriﬁcar que a soma dos graus de um grafo é
+sempre o dobro do número de arestas e isso não é coincidência. Isso pode ser escrito
+em linguagem matemática. Para tanto, dado um grafo G, denotaremos por V (G) e
+A(G), respectivamente, os conjuntos dos vértices e das arestas de G.
+
+Teorema 3.25. Para todo grafo G
+
+(cid:88)
+
+v∈V (G)
+
+d(v) = 2|A|.
+
+Em palavras: “A soma dos graus dos vértices de um grafo é sempre o dobro do
+número de arestas”.
+
+Demonstração. Quando contamos os graus dos vértices estamos contando as
+extremidades das arestas uma vez. Como cada aresta tem duas extremidades, cada
+aresta foi contada duas vezes.
+
+Corolário 3.26. Todo grafo G possui um número par de vértice de grau ímpar.
+
+Demonstração. Se tivéssemos um número ímpar de vértices de grau ímpar a soma
+dos graus seria ímpar. Mas a soma dos graus é o dobro do número de arestas e,
+portanto é um número par.
+
+44
+
+Observações sobre a Deﬁnição de Grafos
+
+Perguntas acerca da Deﬁnição de Grafo podem nos deixar atrapalhados e com
+dúvidas. Para evitar possíveis situações de confusão, vamos ilustrar algumas delas
+com alguns exemplos:
+
+• Uma aresta pode ligar um vértice a ele mesmo?
+
+Pode. É o que chamamos de Laço. Por exemplo, vamos considerar o grafo
+em que V = {2, 3, 4, 5, 6} que é apresentado na Figura 3.2.
+
+Figura 3.2: Grafo com Laços
+
+Pela deﬁnição do grafo (Figura 3.2), vemos que o vértice 5, por exemplo, não
+está ligado a nenhum outro vértice mas tem um laço (como aliás todos os outros
+vértices deste grafo). Para haver coerência com os resultados anteriores, temos
+que contar o laço duas vezes (uma para cada extremidade) quando calcularmos
+o grau do vértice. Portanto, para o grafo da Figura 3.2, temos:
+
+d(2) = 4,
+
+d(3) = 3,
+
+d(4) = 4,
+
+d(5) = 2
+
+e
+
+d(6) = 5;
+
+e teorema sobre o grau de vértice continua valendo.
+
+• Dois vértices podem estar por uma mesma aresta?
+
+Pode. Neste caso usamos o nome especial de Multigrafo. Por exemplo, a
+situação problema das pontes de Köenisberg resulta no grafo da Figura 3.3.
+
+Grafos sem laços ou arestas múltiplas são chamados de Grafos Simples.
+
+• A Figura 3.4 mostra um grafo ou dois grafos?
+
+A resposta é que muitas vezes depende da situação. Em princípio, parecem
+dois grafos distintos, e podemos considerá-los assim. Mas podemos pensar que
+esse grafo representa as ligação entre casas de uma cidade onde passa um rio
+(veja o grafo ilustrando a situaão na Figura 3.5). Se as portes forem destruídas
+em um temporal a cidade ainda é uma só, apenas foi desconectada.
+
+Os grafos podem ser classiﬁcados em conexo ou desconexo. Dizemos que um
+
+grafo é Conexo se qualquer par de pontos é ligado por ao menos uma aresta.
+
+45
+
+Figura 3.3: Grafo de Köenisberg
+
+Figura 3.4: Um ou dois grafos?
+
+Figura 3.5: Grafos unidos
+
+3.2.1 Grafos Dirigidos
+
+Deﬁnição 3.27. Um Grafo Dirigido é um conjunto ﬁnito de elementos
+{P1, P2, P3, ..., Pn} junto com uma coleção ﬁnita de pares ordenados (Pi, Pj) de
+elementos distintos deste conjunto, sem repetição de pares ordenados. Os elementos
+do conjunto são chamados vértices e os pares ordenados arestas dirigidas do grafo.
+
+Para indicarmos que Pj recebe uma conexão de Pi usamos a simbologia Pi → Pj,
+
+e isso indica que a aresta (Pi, Pj) pertence ao grafo.
+
+46
+
+Exemplo 3.28. Vejamos uma representação gráﬁca de um grafo dirigido:
+
+P1
+
+P4
+
+P6
+
+P2
+
+P3
+
+P5
+
+Caso dois vértices recebam conexões mutuamente, ou seja, Pi → Pj e Pj → Pi,
+
+usaremos a representação Pi ↔ Pj.
+
+Exemplo 3.29. Observando o grafo abaixo
+
+P2
+
+P3
+
+P4
+
+P1
+
+notamos que os vértices P3 e P4 possuem conexões mutuamente.
+
+Podemos também ter grafos dirigidos com componentes separadas.
+
+Exemplo 3.30. Observando o grafo a seguir
+
+P5
+
+P1
+
+P2
+
+P3
+
+P4
+
+P6
+
+notamos uma componente formada pelos vértices P1 e P5 e outra formada pelos
+vértices P2, P3, P4 e P6.
+
+Pode ainda ocorrer vértices isolados, ou seja, vértices que não recebem conexões
+
+de nenhum outro.
+
+47
+
+(cid:111)
+(cid:111)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:127)
+(cid:127)
+(cid:79)
+(cid:79)
+(cid:63)
+(cid:63)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+Exemplo 3.31. No grafo
+
+P7
+
+P1
+
+P2
+
+P3
+
+P4
+
+P6
+
+P5
+
+nota-se os vértices P5 e P7 isolados.
+
+Observação 3.32. Note que se num grafo dirigido algum vértice não receber
+conexão de nenhuma outro, signiﬁca dizer que ali se formou um laço e então a
+simbologia Pi → Pj, com j = i, também faz sentido.
+
+3.2.2 Matriz de um Grafo Dirigido
+
+Para cada grafo dirigido de n vértices podemos associar uma matriz n × n, que
+
+chamaremos de matriz de vértices do grafo dirigido.
+
+Deﬁnição 3.33. Dado um grafo dirigido, com vértices P1, P2, . . . , Pn, deﬁnimos a
+seguinte associação:
+
+mji =
+
+(cid:26) 1,
+0,
+
+se Pi → Pj
+caso contrário
+
+para i, j = 1, 2, ..., n. A matriz M = [mji] é chamada de Matriz de Vértices do Grafo
+Dirigido.
+
+Vejamos alguns exemplos.
+
+Exemplo 3.34. Considere o seguinte grafo dirigido:
+
+P2
+
+P1
+
+(cid:47) P3
+
+.
+
+P4
+
+Note que a matriz de vértices deste grafo dirigido é
+
+M =
+
+
+
+
+
+
+
+0 0 0 0
+1 0 1 0
+0 1 0 0
+0 0 1 0
+
+
+
+
+
+
+
+.
+
+48
+
+(cid:111)
+(cid:111)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+Exemplo 3.35. O grafo dirigido
+
+tem como matriz dos vértices:
+
+P2
+
+P1
+
+P3
+
+P4
+
+M =
+
+
+
+
+
+
+
+0 1 1 1
+1 0 0 0
+0 1 0 0
+0 0 1 0
+
+
+
+
+
+
+
+.
+
+Observação 3.36. Note que, por deﬁnição, as matrizes de vértices de um grafo
+dirigido possuem a propriedades de que todas as entradas são 0 ou 1. Além disso,
+qualquer matriz que satisfaz essa propriedade determina um único grafo dirigido,
+cuja matriz de vértices é a matriz dada.
+
+3.2.3 Passeio Aleatório Simples num Grafo Dirigido
+
+Para deﬁnir um passeio aleatório num grafo dirigido, devemos supor que um
+objeto se mova de vértice em vértice. Estando em um dado vértice, o objeto tem a
+mesma probabilidade de se mover ao longo de qualquer uma das arestas nos sentidos
+indicados. A esse movimento dar-se o nome de Passeio Aleatório Simples num
+Grafo Dirigido.
+
+Exemplo 3.37. Considere o grafo dirigido
+
+P2
+
+1
+3 ↑
+
+P1
+
+1
+→
+
+1
+3
+(cid:37)
+
+1
+3→
+←
+1
+2
+
+(cid:47) P4
+
+1↓
+
+↑ 1
+2
+
+(cid:47) P3
+
+e note que, de acordo com a quantidade de setas que saem de um vértice, temos
+estabelecida uma probabilidade do objeto se mover. Por exemplo, no presente grafo, a
+probabilidade de um objeto estar no vértice P1 e mover-se diretamente para o vértice
+P4 é 1
+3. Observe que neste grafo, partindo de qualquer vértice, pode-se percorrer toda
+estrutura dele.
+
+49
+
+(cid:47)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:127)
+(cid:127)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:63)
+(cid:63)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+Exemplo 3.38. Considere o grafo dirigido
+
+P4
+
+1
+3 ↑
+
+P3
+
+↓ 1
+3
+
+P2
+
+P1
+
+1
+(cid:37)
+
+(cid:45)
+1
+2
+
+1
+3→
+
+P7
+
+1
+3→
+←
+1
+3
+
+1
+2→
+←
+1
+2
+
+P6
+
+1
+3 ↓
+
+↑ 1
+2
+
+P5
+
+e veja que neste grafo, por exemplo, a probabilidade de um objeto estar no vértice
+P5 e mover-se diretamente para o vértice P2 é 1
+2. Note que diferentemente do grafo
+anterior, se partimos de qualquer vértice não poderemos percorrer toda sua estrutura.
+
+3.2.4 Matriz de Probabilidade de um Passeio Aleatório
+
+Simples num Grafo Dirigido
+
+Motivados pela noção de um grafo dirigido, introduziremos agora o conceito de
+matriz de probabilidade de movimento de um passeio aleatório simples num grafo
+dirigido.
+
+Deﬁnição 3.39. Dado um grafo dirigido, com vértices P1, P2, . . . , Pn, denotamos
+por Pij a probabilidade de um objeto está no vértice Pi e escolher dirigir-se
+diretamente ao vértice Pj. A matriz MP = [Pji] é chamada de Matriz de
+Probabilidade de Transição. Vejamos alguns exemplos.
+
+Exemplo 3.40. Considere o grafo dirigido logo abaixo:
+
+P2
+
+1
+3 ↑
+
+P1
+
+1
+→
+
+1
+3
+(cid:37)
+
+1
+3→
+←
+1
+2
+
+(cid:47) P4
+
+1↓
+
+↑ 1
+2
+
+(cid:47) P3
+
+Pela deﬁnição, temos que a matriz de probabilidade de trasição do grafo é dada por:
+
+MP =
+
+
+
+
+
+
+
+0 1/2 0
+0
+0
+0
+1/3 0
+1/3 0
+1
+0
+1/3 1 1/2 0
+
+
+
+
+
+
+
+.
+
+50
+
+(cid:55)
+(cid:55)
+(cid:103)
+(cid:103)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:15)
+(cid:15)
+(cid:47)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:63)
+(cid:63)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+Note que a soma dos elementos de cada coluna resulta sempre em 1.
+
+Exemplo 3.41. Considere novamente o grafo de um passeio aleatório como mostra
+a ﬁgura a seguir e também sua matriz de probabilidae do passeio aleatório:
+
+P4
+
+1
+3 ↑
+
+P3
+
+↓ 1
+3
+
+P2
+
+P1
+
+1
+(cid:37)
+
+(cid:45)
+1
+2
+
+1
+3→
+
+P7
+
+1
+3→
+←
+1
+3
+
+1
+2→
+←
+1
+2
+
+P6
+
+1
+3 ↓
+
+↑ 1
+2
+
+P5
+
+Pela deﬁnição, temos a matriz de probabalidade do passeio aleatório:
+
+MP =
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1/2
+0
+0
+0
+1
+0
+0
+0 1/2
+0
+0
+0
+0
+
+0
+0
+0
+1/3 0 1/2
+0
+0
+0
+0
+1/3 1
+0
+0
+0
+1/3 0 1/2
+0
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+0
+1/3 0
+0
+0
+1/3 0
+0
+0
+1/3 1
+
+Observemos mais uma vez que a soma dos elementos de cada coluna resulta
+
+também 1.
+
+51
+
+(cid:55)
+(cid:55)
+(cid:103)
+(cid:103)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:15)
+(cid:15)
+(cid:47)
+(cid:47)
+(cid:111)
+(cid:111)
+Capítulo 4
+
+O Buscador Google
+
+Embora o número de páginas da Web seja imenso, ainda assim é ﬁnito. Quando a
+estrutura de links da rede mundial de computadores (World Wide Web) é modelada
+por uma Cadeia de Markov, cada página na rede é um estado dessa cadeia.
+Neste capítulo mostraremos uma aplicação do estudo das Cadeias de Markov na
+estrutura dos links da Web, focando nas cadeias que estacionam após um número
+ﬁnito de iterações (“cliques”) partindo de um estado inicial (“página”), pois estas
+possuem uma aplicação especíﬁca no algoritmo PageRank − “algoritmo de busca e
+ranqueamento do buscador Google”. Usaremos a noção de Vetor Estado Estacionário
+para uma Cadeia de Markov, embora nem toda Cadeia de Markov converge para um
+Vetor Estado Estacionário (veja a Observação 3.13 e Exemplo 4.8). Quando uma
+cadeia de Markov converge para um Vetor Estado Estacionário, este vetor pode ser
+interpretado como a quantidade de tempo que a cadeia gastará em cada estado. Essa
+interpretação é necessária para o algoritmo PageRank, de modo que serão estudadas
+as condições sob as quais uma cadeia de Markov irá convergir para um Vetor Estado
+Estacionário. O modelo para a estrutura de links da rede mundial de computadores
+será então modiﬁcado para satisfazer essas condições, formando a chamada Matriz
+do Google.
+
+O principal interesse neste trabalho é mostrar que, com o conhecimento de
+matemática relativamente elementar, é possível explicar coisas usuais da sociedade,
+fazendo esta perceber o quão a matemática está presente em seu dia-a-dia. Além
+disso, imagina-se que o presente trabalho possa servir para motivar alunos que
+estejam cursando ou concluindo o ensino médio a despertar interesse por essa
+disciplina, por muitos mal compreendida e negligenciada.
+
+4.1 Funcionamento do buscador Google
+
+4.1.1 Conceitos Preliminares
+
+A ferramenta de busca do Google é de fundamental importância na vida das
+pessoas hoje em dia.
+Se pensarmos como as buscas são feitas ou, como os
+resultados são classiﬁcados, percebemos como uma matemática relativamente básica
+Inicialmente, quando realizamos uma busca, o Google utiliza dois
+é importante.
+critérios: “On Page” e “Oﬀ Page”. O “On Page” basicamente usa as informações que a
+
+52
+
+página disponibiliza para classiﬁcar a sua relevância, veriﬁcando quais palavras e/ou
+expressões da busca estão contidas nela. Já o critério “Oﬀ Page” usa informações
+fora da página para classiﬁcar sua relevância, que é medida através das indicações
+de outras páginas sobre a página em questão. A importância de uma página é
+medida pelo “PageRank”, que é um tipo de “motor varredor” de busca que vasculha
+e classiﬁca as páginas na rede.
+
+Buscaremos aqui explicar o funcionamento básico das buscas realizadas pelo
+Google, destacando os resultados do ranqueamento numa pesquisa e que esta é
+deﬁnida pela importância das páginas. A importância de uma página considera os
+“Backlinks”. Backlink é um termo que se refere às ligações que apontam para um site
+ou página de outro site. Este tipo de conexão também pode ser chamado de “inlink”
+ou “link de entrada”. Então, de maneira simples, quanto mais backlinks uma página
+tem, maior será sua importância nessa rede. No entanto, as coisas são um pouco
+mais complexas para redes com muitas páginas, pois a quantidade de backlinks não
+deﬁnem totalmente a importância de uma página na rede, sendo necessário levar em
+consideração a qualidade dos backlinks. Para exempliﬁcar isso, vejamos os seguites
+exemplos:
+
+Exemplo 4.1. Imaginemos que você tem uma loja de artigo esportivos que
+denotaremos por P1 . Agora considere dois de seus parentes, que denotaremos por
+P2 e P3 , e também dois de seus amigos, que denotaremos por P4 e P5 , indicando
+sua loja. Certamente essas indicações não farão muita diferença se num certo dia
+um atleta renomado, que indicaremos por P6 , diz em uma entrevista à impresnsa
+que visitou sua loja e gostou muito do que viu lá.
+
+P6
+
+P3
+
+(cid:47) P1
+
+P4
+
+P2
+
+P5
+
+Assim, surge a inevitável pergunta: qual das duas indicações é a mais importante, a
+dos seus parentes e amigos ou a do atleta? Analisando esse exemplo vemos que talvez
+nenhum de seus parentes e amigos entendam de esporte ou seja famoso nesse meio,
+enquanto que o atleta é do meio esportivo e muito famoso. Sendo assim, a quem
+as pessoas irão se referir quando falar de sua loja? Certamente a indicação do tal
+atleta será considerada a mais relevante, dado sua importância no meio esportivo.
+
+Exemplo 4.2. Suponha dois restaurantes que notaremos de R1 e R2 , análogo
+ao exemplo anterior. Suponhamos também que esses restaurantes sirvam o mesmo
+prato, “panquecas” digamos, e esses por sua vez recebem uma indicação (“backlink”)
+de duas pessoas, que denotaremos de P1 e P2 , respectivamente.
+
+P1
+
+P2
+
+(cid:47) R1
+
+(cid:47) R2
+
+53
+
+(cid:15)
+(cid:15)
+(cid:120)
+(cid:120)
+(cid:47)
+(cid:79)
+(cid:79)
+(cid:102)
+(cid:102)
+(cid:47)
+(cid:47)
+Digamos o primeiro seja um chefe de cozinha conhecido e renomado, e o segundo
+é uma pessoa comum. Então, quem recebe a indicação do chefe de cozinha é mais
+relevante do que recebe a indicação da pessoa comum.
+
+Nos dois casos dos exemplos, o que conta é a autoridade de quem indica. A
+busca do Google age de maneira semelhante: a quantidade de backlinks não é tão
+importante quanto a qualidade desses backlinks, ou seja, é melhor ter um backlink
+de um site especializado apontando para o seu site do que vários sites comuns e
+de menor importância o indicando. A importância numa rede é deﬁnida por duas
+coisas: pela quantidade de backlinks recebidos de outros sites e pela indicação de
+sites importantes na rede. A importância de um backlink é medida através de uma
+métrica que se chama PageRank. Basicamente, PageRank é uma distribuição de
+probabilidade que representa a possibilidade de uma pessoa, clicando aleatoriamente
+em links, chegar em uma determinada página.
+
+Exemplo 4.3. Consideremos uma rede organizada conforme a Figura 4.1, onde
+cada “bolinha” representa um site da rede e o percentual que aparece refere-se a
+importância de cada site. Nessa rede, o site C tem 34, 3% de impotância, sendo o
+segundo mais importante da rede. Observe que C recebe apenas um backlink, porém
+ele é recomendado por um site que pode ser entendido como uma autoridade nessa
+rede.
+
+Figura 4.1: Organograma de uma Rede
+
+A teoria do PageRank se baseia na ideia de que um usuário (“surﬁsta aleatório”)
+navegando na rede clica aleatoriamente em links. Um exemplo disso é supor um
+universo de quatro páginas, onde estas páginas se ligam por links, considere também
+que a probabilidade de clicar em um link na página é igual, ou equiprovável, se a
+página apresentar mais de um link, ou seja, as transições de uma página para as
+outras são equiprováveis.
+
+Exemplo 4.4. Suponhamos que um certo usuário aleatório quer navegar nesse
+universo de quatro páginas, admitiremos que essa web é admissível, isto é, que cada
+
+54
+
+página aponta pelo menos para uma outra (ver ﬁgura a seguir).
+
+P2
+
+P1
+
+(cid:47) P4
+
+(cid:47) P3
+
+Agora vamos supor que uma pessoa escolha aleatoriamente uma dessas páginas,
+por exemplo, página 1 (passo 1) e vá para página 4 (passo 2), depois vá para a página
+3 (passo 3) e volte para a página 4 (passo 4).
+
+Passo 1
+
+Passo 2
+
+Passo 3
+
+Passo 4
+
+Página Número de visitas Fração de visitas
+
+1
+2
+3
+4
+
+1
+0
+0
+0
+
+1
+0
+0
+0
+
+Página Número de visitas Fração de visitas
+
+1
+2
+3
+4
+
+1
+0
+0
+1
+
+1
+2
+0
+0
+1
+2
+
+Página Número de visitas Fração de visitas
+
+1
+2
+3
+4
+
+1
+0
+1
+1
+
+1
+3
+0
+1
+3
+1
+3
+
+Página Número de visitas Fração de visitas
+
+1
+2
+3
+4
+
+1
+0
+1
+2
+
+1
+4
+0
+1
+4
+1
+2
+
+Se o usuário continuar as iterações e der mil cliques, então veremos que as frações
+de visitas das tabelas convergem para números mostrados no milésimo passo, que é
+uma medida mais interessante, pois ela mostra a probabilidade de se chegar a uma
+determinada página após um número muito grande de cliques nessa web de quatro
+
+55
+
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:62)
+(cid:62)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+páginas.
+
+Passo 1000
+
+Página Número de visitas Fração de visitas
+
+1
+2
+3
+4
+
+200
+67
+400
+333
+
+0,20
+0,07
+0,40
+0,33
+
+Além disso, obsevemos que essa web é bem conectada, pois de qualquer página
+o usuário pode ir para qualquer outra apenas clicando nos links. Dessa forma
+percebemos que, após a pessoa ter dado os mil cliques, a última coluna se comporta
+como um vetor estocástico e indica as probabilidades do internauta está em cada
+página nessa viagem por essa web.
+
+Exemplo 4.5. A ﬁgura deste exemplo mostra uma web não fortemente conectada.
+Esse tipo de web mostrou-se um pouco difícil de calcular seu PageRank, contudo
+neste trabalho iremos mostrar como a Google conseguiu fazer certas alterações para
+contornar o problema e solucioná-lo.
+
+P3
+
+P1
+
+P4
+
+P5
+
+P6
+
+P7
+
+P12
+
+P11
+
+(cid:47) P2
+
+P10
+
+P8
+
+P9
+
+Uma simulação com muitos processos de iteração, como o problema do usuário
+aleatório, com aplicações num universo hoje de milhões de páginas, mostra-se
+inviável. Como a internet não se restringe à situação do problema de quatro páginas
+acima, é impraticável rodar uma simulação a cada vez que o índice de páginas é
+atualizado. Contudo existe uma maneira para se chegar ao PageRank de milhões de
+páginas: a solução foi obtida modelando o problema como uma Cadeia de Markov
+de Tempo Discreto (CMTD). Sabe-se que uma Cadeia de Markov é uma máquina
+de estados, isto é, uma sequência de variáveis aleatórias que representa o estado em
+determinado tempo. Uma propriedade importantíssima das Cadeias de Markov é a
+falta de memória, mais conhecida como propriedade markoviana. Isso quer dizer que
+o próximo estado depende unicamente do estado atual, ou seja, os estados anteriores
+são irrelevantes para os estados seguintes, desde que o estado atual seja conhecido.
+
+4.1.2
+
+Interpretação do Vetor Estado Estacionário
+
+Para entender melhor a aplicação da Cadeia de Markov no PageRank do Google
+é preciso relembrar alguns conceitos que iremos usar algumas vezes ao longo desse
+trabalho. Para facilitar o entendimento, vamos observar a resolução do mesmo
+exemplo de quatro páginas tratado no Exemplo 4.4. Um desses conceitos é a matriz
+de transição P .
+
+56
+
+(cid:15)
+(cid:15)
+(cid:32)
+(cid:32)
+(cid:15)
+(cid:15)
+(cid:126)
+(cid:126)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:62)
+(cid:62)
+(cid:79)
+(cid:79)
+(cid:96)
+(cid:96)
+Exemplo 4.6. Considerando o Exemplo 4.4 e as probabilidades de transição
+dos estados do referido exemplo, podemos montar a matriz de acordo com as
+probabilidades dos links
+
+P2
+
+1
+3 ↑
+
+P1
+
+1
+→
+
+1
+3
+(cid:37)
+
+1
+3→
+←
+1
+2
+
+(cid:47) P4
+
+.
+
+1↓
+
+↑ 1
+2
+
+(cid:47) P3
+
+
+
+
+
+A matriz P = [pij] é tal que pij = 0 se não houver link de j para i e pij = 1/nj se
+houver link de j para i, sendo nj o número de links que partem de j. Observando a
+conﬁguração com as quatro páginas e seguindo os procedimentos, temos a matriz de
+transição P :
+
+P=
+
+
+
+
+
+
+
+
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+3 1 1
+1
+2 0
+Note que a soma dos elementos de qualquer coluna resulta um e que pij não depende
+do tempo, isto é, em qualquer iteração a probabilidade de transição entre um estado
+e outro é sempre a mesma (quando isso ocorre, diz-se que a Cadeia de Markov é
+Homogênea). Vamos agora calcular a probabilidade de estarmos em qualquer um
+dos estados através do método da potenciação da matriz de transição da cadeia do
+nosso exemplo.
+
+.
+
+Para o estado inicial começamos na página P1 . Como ainda não houve
+
+nenhuma transição, tomemos a matriz elevada a zero
+
+
+
+0
+
+
+
+P 0 =
+
+
+
+
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+3 1 1
+1
+2 0
+
+
+
+
+
+=
+
+
+
+
+
+1 0 0 0
+0 1 0 0
+0 0 1 0
+0 0 0 1
+
+
+
+
+
+
+
+.
+
+Esse resultado nos diz que podemos chegar a página P1 com probabilidade 1 (note
+que já estamos nela). Se efetuarmos a primeira transição, tomaremos a primeira
+potência de transição
+
+P 1 =
+
+
+
+
+
+
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+3 1 1
+1
+2 0
+
+
+1
+
+
+
+
+
+
+
+
+
+
+
+=
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+3 1 1
+1
+2 0
+
+
+
+
+
+
+
+.
+
+Esse resultado nos diz que há 1/3 de chance de sair da página P1 e ir para as
+páginas ligadas.
+
+Para obter o resultado da probabilidade de um usuário sair de uma página
+tendo necessariamente que passar por uma página
+
+Pi para uma página Pj ,
+intermediária Pk , ou seja,
+
+Pi → Pk → Pj ,
+
+57
+
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:62)
+(cid:62)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+precisamos calcular a probabilidade de sair da página Pi para uma página Pk ,
+depois sair da página Pk para a página Pj , onde Pk representa todas as possíveis
+páginas intermediárias. Efetuando os cálculos e somando os resultados obteremos a
+probabilidade de sair da página Pi para a página Pj , exatamente em dois passos
+considerando todos os caminhos possíveis. Para efeito de exemplo, digamos que
+queremos saber a probabilidade de sair da página P1 para a página P4 com dois
+passos. Assim devemos calcular a probabilidade de sair da página P1 para página
+Pk , depois sair da página k para a página P4 , passando por todas as possíveis
+páginas intermediárias Pk . Veriﬁcando o exemplo, observamos que as únicas
+possibilidades neste caso são
+
+P1 → P2 → P4
+
+e
+
+P1 → P3 → P4 ,
+
+que nos dá a probabilidade
+
+1
+2
+O cálculo de todas probablilidades de sair de uma página para outra passando por
+uma intermediária pode ser feito com a simples potencial da matriz de transição.
+Efetuando a segunda potência da matriz de transição temos
+
+(4.1)
+
+· 1 +
+
+1
+2
+
+1
+3
+
+1
+3
+
+=
+
+·
+
+.
+
+P 2 =
+
+
+
+
+
+
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+3 1 1
+1
+2 0
+
+
+2
+
+
+
+
+
+
+
+
+
+
+
+=
+
+0
+
+0
+
+0, 16 0
+
+0, 5
+0
+0
+0 0, 16 0, 5
+
+0 0, 16
+0, 33 1 0, 66
+0, 5
+
+
+
+
+
+
+
+.
+
+Observe que a primeira coluna nos informa que, partindo da página P1 , após duas
+transições, há 16% de chance de ir para a página P1 , 0% de chance de ir para a
+página P2 , 33% de chance de ir para a página P3 e 50% de chance de ir para a
+página P4 .
+
+Deve-se notar que o cálculo da probabilidade efetuado em (4.1), é também
+
+efetuado quando realizamos a potência da matriz de transição:
+
+P 2 =
+
+
+
+
+
+
+
+0 1/2 0
+0
+0
+0
+1/3 0
+1/3 0
+1
+0
+1/3 1 1/2 0
+
+
+2
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+1/3
+1/3
+1/3
+
+0
+0
+0
+1
+
+1/2
+0
+0
+1/2
+
+0
+
+0
+
+0, 16 0
+
+0, 5
+0
+1
+0 0, 16 0, 5
+
+0 0, 16
+0, 33 1 0, 66
+0,5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+1/3
+
+1/3
+
+1/3
+
+0 1/2 0
+0
+0
+0
+
+0
+
+0
+
+1
+
+1 1/2 0
+
+
+
+
+
+
+
+
+
+=
+
+0
+0
+1
+0
+
+
+
+
+
+
+
+e, portanto, a probabilidade de P1 → P4 por dois passos, denotada por p2
+
+14 é
+
+p2
+41 = 1/3 · 0 + 1 · 1/3 + 1/2 · 1/3 + 0 · 1/3 = 1/2 = 0, 5 = 50%.
+
+58
+
+Se continuarmos com nosso exemplo e se repetirmos esse processo um número
+de iterações suﬁcientemente grande, digamos mil vezes, pelo Exemplo 3.17, a matriz
+de transição converge para os resultados das frações visitadas pelo usuário aleatório,
+estando o resultado ordenado em linhas
+
+P 1000 =
+
+
+
+
+
+
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+1
+3 1 1
+2 0
+
+
+
+1000
+
+
+
+
+
+
+
+
+
+
+
+=
+
+0, 20 0, 20 0, 20 0, 20
+0, 07 0, 07 0, 07 0, 07
+0, 40 0, 40 0, 40 0, 40
+0, 33 0, 33 0, 33 0, 33
+
+
+
+
+
+
+
+.
+
+Esse resultado nos informa a probabilidade do usuário encontrar-se em umas das
+quatro páginas após mil iterações desse exemplo (vale resaltar que pelo Exemplo
+3.17, a partir da quinquagésima iteração de P todas são iguais, ou seja, a matriz
+de transição P se encontra em estado estacionário. Podemos assim concluir qual a
+probabilidade de um usuário aleatório encontrar-se em qualquer página (ou seja, um
+“PageRank”).
+
+Pode-se também resolver o mesmo problema do Exemplo 4.6 usando a equação
+
+matricial
+
+P x = x,
+
+onde P é matriz de transição e x o Vetor Estado Estacionário. Para tanto, montando
+um sistema a partir da equação matricial temos
+
+
+
+
+
+
+
+0 0 1
+2 0
+1
+3 0 0 0
+1
+3 0 0 1
+1
+3 1 1
+2 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+⇒
+
+x1 = x3/2
+x2 = x1/3
+x3 = x1/2 + x4
+x4 = x1/3 + x2 + x3/2
+
+⇒
+
+
+
+
+
+
+x1 + 0x2 − x3/2 + 0x4 = 0
+−x1/3 + x2 + 0x3 + 0x4 = 0
+−x1/3 + 0x2 +
+x3 − x4 = 0
+−x1/3 − x2 − x3/2 + x4 = 0
+
+
+
+
+
+
+
+⇒
+
+1
+− 1
+3
+− 1
+3
+− 1
+
+0 − 1
+0 0
+2
+0
+1
+0 0
+1 −1 0
+0
+3 −1 − 1
+1 0
+
+2
+
+
+
+
+
+
+
+.
+
+Agora podemos usar o método do escalonamento para obter a solução do sistema.
+Com efeito, multiplicando a 1a linha por 1/3 e somando o resultado as outras linhas
+obtemos o seguinte resultado
+
+
+
+
+
+
+
+1
+0 −1/2
+0
+1 −1/6
+0
+0
+0 −1 −2/3
+
+0 0
+0 0
+5/6 −1 0
+1 0
+
+
+
+
+
+
+
+.
+
+Somemos a 2a linha com a 4a e obtemos:
+
+
+
+
+
+
+
+1 0 −1/2
+0 1 −1/6
+0 0
+0 0 −5/6
+
+0 0
+0 0
+5/6 −1 0
+1 0
+
+
+
+
+
+
+
+.
+
+59
+
+Somemos por ﬁm a 3a linha com a 4a da última matriz
+
+
+
+
+
+
+
+1 0 −1/2
+0 1 −1/6
+0 0
+0 0
+
+0 0
+0 0
+5/6 −1 0
+0 0
+
+0
+
+
+
+
+
+
+
+.
+
+Essa última matriz nos diz que o sistema é indeterminado e que podemos considerar
+uma variável livre, que neste caso é x4, com isso a solução do sistema é dado da
+seguinte forma:
+
+5x3/6 − x4 = 0 x2 − x3/6 = 0 x1 − x3/2 = 0
+5x3/6 = x4
+x3 = 6x4/5
+
+x1 = x3/2
+x1 = 3x4/5
+
+x2 = x3/6
+x2 = x4/5
+
+.
+
+Além disso, o vetor estacionário tem a soma de suas componentes igual a 1. Disso
+decorre que x1 + x2 + x3 + x4 = 1, portanto temos que:
+
+x1 + x2 + x3 + x4 = 1
+3x4/5 + x4/5 + 6x4/5 + x4 = 1 x1 = 1/5
+15x4 = 5
+x1 = 0, 2
+x4 = 5/15
+x4 = 1/3x4 = 0, 33
+
+x1 = 3/5 · 1/3 x2 = 1/5 · 1/3 x3 = 6/5 · 1/3
+
+x2 = 1/15
+x2 = 0, 07
+
+x3 = 2/5
+x3 = 0, 4
+
+.
+
+Daí temos que o vetor x =
+
+
+
+
+
+
+
+0, 20
+0, 07
+0, 40
+0, 33
+
+
+
+
+
+
+
+.
+
+Concluímos que o site 3 tem importância maior que os outros nessa web e o site
+
+2 é o que tem menor importância, segundo a ordenação do Google.
+
+Exemplo 4.7. Consideremos uma outra rede com 4 páginas e vamos determinar
+seu vetor estado estacionário resolvendo mais um sistema de equações lineares pelo
+método do escalonamento:
+
+Temos a matriz de trasição:
+
+P1
+
+P2
+
+P3
+
+.
+
+P4
+
+P=
+
+
+
+
+
+
+
+0 0 1 1
+2
+1
+3 0 0 0
+1
+2 0 1
+3
+2
+1
+1
+2 0 0
+3
+
+1
+
+
+
+
+
+
+
+.
+
+60
+
+(cid:47)
+(cid:47)
+(cid:32)
+(cid:32)
+(cid:15)
+(cid:15)
+(cid:111)
+(cid:111)
+(cid:47)
+(cid:47)
+(cid:62)
+(cid:62)
+(cid:96)
+(cid:96)
+(cid:79)
+(cid:79)
+Vamos montar a equação matricial e o sistema com os links que saem de cada
+página:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 0 1 1
+2
+1
+3 0 0 0
+2 0 1
+1
+3
+2
+1
+1
+2 0 0
+3
+
+1
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+⇒
+
+
+
+
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+x1 = x3 + x4/2
+x2 = x1/3
+x3 = x1/3 + x2/2 + x4/2
+x4 = x1/3 + x2
+
+⇒
+
+x1
+x2
+x3
+x4
+
+
+
+
+
+x1 + 0x2 − x3 − x4/2 = 0
+−x1/3 +
+x2 + 0x3 + 0x4 = 0
+−x1/3 − x2/2 + x3 − x4/2 = 0
+x4 = 0
+−x1/3 − x2/2 + 0x3 +
+
+
+
+
+
+
+
+⇒
+
+1
+− 1
+3
+− 1
+− 1
+
+0 −1 − 1
+0
+1
+1 − 1
+3 − 1
+3 − 1
+0
+
+2 0
+0 0
+2 0
+1 0
+
+2
+
+2
+
+
+
+
+
+
+
+.
+
+Notemos que os sistemas obtidos sempre são homogêneos, e isto indica que têm
+sempre solução. Então vamos escalonar o sistema acima e pra isso multipliquemos
+por 1/3 a 1a linha e somemos o resultado as demais linhas obtendo o seguinte
+resultado:
+
+
+
+
+
+
+
+1
+0
+0 −1/2
+0 −1/2 −1/3
+
+0
+−1 −1/2 0
+1 −1/3 −1/6 0
+2/3 −2/3 0
+5/6 0
+
+
+
+.
+
+
+
+
+
+Multipliquemos a 2a linha por 1/2 e somemos o resultado a 3a e com a 4a, obtemos:
+
+
+
+
+
+
+
+1 0
+−1 −1/2 0
+0 1 −1/3 −1/6 0
+1/2 −3/4 0
+0 0
+3/4 0
+0 0 −1/2
+
+
+
+
+
+
+
+.
+
+Somemos por ﬁm a 3a linha com a 4a da última matriz, daí temos:
+
+
+
+
+
+
+
+−1 −1/2 0
+1 0
+0 1 −1/3 −1/6 0
+1/2 −3/4 0
+0 0
+0 0
+0 0
+
+0
+
+
+
+
+
+
+
+.
+
+Essa última matriz nos diz novamente que o sistema é indeterminado, e podemos
+considerar uma variável livre, que de novo escolhemos x4, com isso, a solução do
+sistema é obtida da seguinte forma:
+
+x3/2 − 3x4/4 = 0 x2 − x3/3 − x4/6 = 0 x1 − x3 − x4/2 = 0
+x3/2 = 3x4/4
+x3 = 6x4/4
+x3 = 3x4/2
+
+x2 = x3/3 + x4/6
+x2 = 3x4/6 + x4/6
+x2 = 2x4/3
+
+x1 = x3 + x4/2
+x1 = 3x4/2 + x4/2
+x1 = 2x4
+
+.
+
+Além disso o vetor estacionário tem a soma de suas componentes igual a 1. Disso
+decorre que x1 + x2 + x3 + x4 = 1, portanto temos que:
+
+x1 + x2 + x3 + x4 = 1
+2x4 + 2x4/3 + 3x4/2 + x4 = 1 x1 = 12/31
+12x4 + 4x4 + 9x4 + 6x4 = 6
+31x4 = 6
+x4 = 6/31
+
+x1 = 2 · 6/31 x2 = 2/3 · 6/31 x3 = 3/2 · 6/31
+
+x2 = 4/31
+
+x3 = 9/31
+
+.
+
+61
+
+Assim, temos o vetor x =
+
+
+
+
+
+
+
+12/31
+4/31
+9/31
+6/31
+
+
+
+
+
+
+
+.
+
+A principal questão de nosso estudo praticamente é observar se a sequência de
+vetores xk (ver Seção 3.1.3) está convergindo para algum limite quando k aumenta
+e como interpretar esse vetor limite, se existir, ou seja, se o vetor estado converge
+(na Observação 3.13 apresentamos exemplo de sequência de vetores que divergia).
+Os dois exemplos seguintes mostram algumas diﬁculdades que o PageRank pode
+
+se deparar.
+
+Exemplo 4.8. Considere um passeio aleatório entre as páginas P1 , P2 , P3 , P4
+e P5 com fronteiras absorventes, ou seja, páginas que não têm links para outras
+páginas, cujo grafo e a matriz de transição são os seguintes:
+
+e
+
+P2
+
+P1
+
+(cid:47) P3
+
+P4
+
+(cid:47) P5
+
+P =
+
+
+
+
+
+
+
+
+
+1 1/2
+0
+0
+0 1/2
+0
+0
+0
+0
+
+0
+1/2
+0
+1/2
+0
+
+
+
+
+
+
+
+
+
+.
+
+0
+0
+0
+0
+1/2 0
+0
+0
+1/2 1
+
+Nesses casos dizemos que essas redes possuem sumidouros e suas importâncias não
+são passadas adiante e, portanto, na matriz de probabilidade, é como se essas páginas
+apontassem para si mesmas, ou seja, formam laços e todas suas importâncias são
+auto direcionadas.
+
+Existem apenas duas possibilidades a longo prazo para essa cadeia: ela tende a
+terminar em P1 ou em P5 . Assim, a probabilidade de que a cadeia esteja em
+P2 , P3 ou P4 ﬁca cada vez menor à medida que n aumenta, como podemos ver
+na ilustração de P n, com n cada vez maior:
+
+
+
+
+
+
+
+
+
+P 20 =
+
+1 0, 74951 0, 49951 0, 24951 0
+0, 00049 0
+0
+0 0, 00049
+0, 00098
+0
+0
+0 0, 00049
+0, 00049 0
+0
+0 0, 24951 0, 49951 0, 74951 1
+
+0
+
+0
+
+
+
+
+
+
+
+
+
+e
+
+
+
+
+
+
+
+
+
+P 30 =
+
+1 0, 749985 0, 499985 0, 249985 0
+0, 000015 0
+0 0, 000015
+0
+0
+0, 000030
+0
+0 0, 000015
+0, 000015 0
+0
+0 0, 249985 0, 499985 0, 749985 1
+
+0
+
+0
+
+
+
+
+
+
+
+
+
+.
+
+62
+
+(cid:15)
+(cid:15)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:47)
+Nota-se que P n converge para a matriz
+
+
+
+
+
+
+
+
+
+P n =
+
+1 0, 75 0, 5 0, 25 0
+0
+0
+0
+0
+0
+0
+0
+0
+0
+0 0, 25 0, 5 0, 75 1
+
+0
+0
+0
+
+0
+0
+0
+
+
+
+
+
+
+
+
+
+quando n aumenta. Mas as colunas dessa matriz não são iguais; a probabilidade de
+terminar em P1 ou em P5 depende de onde a cadeia começou. Deve-se destacar
+que a cadeia possui vetores estado estacionário, porém não é único e eles não podem
+ser interpretados como no exemplo anterior. Observe que se 0 ≤ q ≤ 1, então cada
+vetor
+
+
+
+
+
+
+
+
+
+q
+0
+0
+0
+1 − q
+
+
+
+
+
+
+
+
+
+é um vetor estado estacionário para P . Essa matriz tem um número inﬁnito de
+vetores estado estacionários possíveis e não se pode esperar que um comportamento
+convergente independente do primeiro estado do processo.
+
+Exemplo 4.9. Considere um passeio aleatório entre páginas P1 , P2 , P3 , P4 e
+P5 com fronteiras reﬂetoras, ou seja, página que só tem link para a página que a
+indicou. O grafo e a matriz de transição são os seguintes:
+
+e
+
+P2
+
+P1
+
+(cid:47) P3
+
+P4
+
+(cid:47) P5
+
+P =
+
+
+
+
+
+
+
+
+
+0 1/2
+0
+1
+0 1/2
+0
+0
+0
+0
+
+0
+1/2
+0
+1/2
+0
+
+
+
+
+
+
+
+
+
+.
+
+0
+0
+0
+0
+1/2 0
+0
+1
+1/2 0
+
+Se essa cadeia começar em P1 , note que ela só poderá retornar a P1 quando n for
+par, enquanto a cadeia só poderá estar em P2 quando n for ímpar. De fato, a cadeia
+tem de estar em um estado par quando n for ímpar e tem de estar em um estado
+ímpar quando n for par. Se a cadeia começar em P2 , no entanto, esta situação
+ﬁcará invertida: a cadeia terá de estar em um estado ímpar quando n for ímpar e
+terá de estar em um estado par quando n for par. Portanto, P n não pode convergir
+para uma única matriz, já que P n tem uma aparência muito diferente dependendo
+
+63
+
+(cid:15)
+(cid:15)
+(cid:47)
+(cid:111)
+(cid:111)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:79)
+(cid:79)
+(cid:47)
+(cid:111)
+(cid:111)
+se n for par ou ímpar (ver [9]):
+
+P 20 =
+
+P 21 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0, 2505
+0
+0, 5000
+0
+0, 2495
+
+0
+0, 5005
+0
+0, 4995
+0
+
+0
+0, 5005
+0
+0, 4995
+0
+
+0, 2502
+0
+0, 5000
+0
+0, 2498
+
+0, 2500
+0
+0, 5000
+0
+0, 2500
+
+0
+0, 5000
+0
+0, 5000
+0
+
+0
+0, 4995
+0
+0, 5005
+0
+
+0, 2498
+0
+0, 5000
+0
+0, 2502
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0, 2495
+0
+0, 5000
+0
+0, 2505
+
+0
+0, 4995
+0
+0, 5005
+0
+
+Embora P n não convirja para uma única matriz, P tem um vetor estado
+estacionário. De fato,
+
+
+
+q =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1/8
+1/4
+1/4
+1/4
+1/8
+
+é um Vetor Estado Estacionário para P. Daí a equação P q = q é válida para qualquer
+n e esse vetor pode ser interpretado como fornecendo probabilidades no longo prazo.
+
+4.1.3 PageRank e a Matriz do Google
+
+A rede mundial de computadores pode ser modelada como um grafo direcionado
+com os vértices representando as páginas e as arestas representando os links entre
+as páginas. Se a matriz de transição P para essa Cadeia de Markov fosse regular, o
+Teorema 3.15 garantiria que existe um Vetor Estado Estacionário q para a cadeia
+e as coordenadas de q poderiam ser interpretadas como tempos de ocupação para
+cada estado. Infelizmente, nem toda cadeia de Markov possui matriz de trasição
+regular, como já destacado na Observação 3.13.
+
+Em termos do modelo, as coordenadas de q diriam que fração de tempo a
+pessoa clicando seria gasto em cada página. Os fundadores do Google, Sergey
+Brin e Lawrence Page, raciocinaram que páginas “importantes” receberiam links
+de páginas “importantes”. Assim, a pessoa clicando de forma aleatória gastaria mais
+tempo em páginas importantes e menos tempo em páginas menos importantes. Mas
+a quantidade de tempo gasta em cada página é simplesmente o tempo de ocupação
+daquele estado na Cadeia de Markov. Essa observação é a base para o algoritmo
+PageRank, que é o modelo usado pelo Google para ordenar por importância todas
+as páginas na rede catalogadas por ele.
+
+Observação 4.10. A importância de uma página na rede é medida pelo tamanho
+relativo da coordenada correspondente no Vetor Estado Estacionário q para uma
+Cadeia de Markov escolhida de modo apropriado.
+
+64
+
+Infelizmente, um passeio aleatório simples no modelo de grafo direcionado para
+a rede não é geralmente uma Cadeia de Markov apropriada, porque a matriz P pode
+não ser regular e assim o Teorema 3.15 não se aplica.
+
+Pode-se heuristicamente aﬁrmar de forma objetiva que o mérito do Google se
+deve aos ajustes desenvolvidos para torna redes de páginas modeladas com cadeias
+de Markov com matrizes de transição regulares.
+
+Exemplo 4.11. Considere o modelo de uma web com sete páginas como o da ﬁgura
+a seguir:
+
+P4
+
+P3
+
+P2
+
+P1
+
+e cuja matriz de transição é
+
+P7
+
+P6
+
+P5
+
+MP =
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1/2
+0
+0
+0
+1
+0
+0
+0 1/2
+0
+0
+0
+0
+
+0
+0
+0
+1/3 0 1/2
+0
+0
+0
+0
+1/3 1
+0
+0
+0
+1/3 0 1/2
+0
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+0
+0
+0
+0
+1/3 0
+0
+0
+1/3 0
+0
+0
+1/3 1
+
+Note que as páginas P4 e P7 recebem indicações das páginas P3 e P6, respectivamente,
+que por sua vez não indica nenhuma outra página. Páginas como essas desiguinamos
+de: páginas penduradas (ou nós pendurados, ou sumidouros, como já mencionado
+nos exemplos anteriores), de modo que são estados absorventes (possibilidade de
+um surﬁsta aleatório permaneça para sempre em uma dessas extremidades quando
+lá chegar), o que já chamamos nos exemplos anteriores de passeio aleatório com
+fronteiras absorventes (“os laços”) para a cadeia. Como nos exemplos anteriores,
+a presença de estados absorventes implica os vetores de estado não tenderem a um
+único limite quando n → ∞. Para tratar nós pendurados, é preciso fazer um ajuste
+na matriz MP :
+
+AJUSTE-1: Se a pessoa surfando na rede chegar a um nó pendurado, ela
+irá escolher qualquer página na rede com a mesma probabilidade e moverá para
+
+65
+
+(cid:55)
+(cid:55)
+(cid:103)
+(cid:103)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:47)
+(cid:15)
+(cid:15)
+(cid:79)
+(cid:79)
+(cid:111)
+(cid:111)
+(cid:79)
+(cid:79)
+(cid:15)
+(cid:15)
+(cid:47)
+(cid:47)
+(cid:111)
+(cid:111)
+aquela página. Em termos da matriz de transição MP , se o estado j for um estado
+absorvente, substitua a coluna j de MP pelo vetor:
+
+
+
+
+
+
+
+
+1/n
+1/n
+...
+1/n
+
+
+
+
+
+
+
+
+,
+
+no qual n é o número de linhas (e colunas) em MP . No exemplo com sete páginas,
+a matriz de transição agora é:
+
+MP ∗ =
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1/2
+0
+0
+0
+1
+0
+0
+0 1/2
+0
+0
+0
+0
+
+0
+1/7
+0
+1/3 1/7 1/2
+0
+0
+1/7
+0
+1/3 1/7
+0
+0
+1/7
+1/3 1/7 1/2
+0
+1/7
+0
+
+1/7
+0
+0
+1/7
+1/3 1/7
+1/7
+0
+1/3 1/7
+0
+1/7
+1/3 1/7
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+No entanto observemos que esse ajuste ainda não é suﬁciente para garantir que a
+matriz de transição seja regular: embora não existam mais nós pendurados, ainda
+é possível existirem “ciclo” de páginas. Note que se a página j só tiver links para
+a página i e a página i só tiver links para a página j, uma pessoa que chegue a
+qualquer uma dessas páginas ﬁcará condenada a passar a eternidade clicando da
+página i para a página j e vice versa. Assim, as colunas de M k
+P ∗ correspondentes a
+essas páginas sempre teriam elementos nulos nelas e a Matriz de Transição MP ∗ não
+seria regular. Assim, é necessário outro ajuste (o que não é o caso deste exemplo-
+analise com calma) que valerá para um caso geral:
+
+AJUSTE-2: Seja p um número entre 0 e 1. Suponha ainda que a pessoa
+surfando na rede esteja agora na página j. Com probabilidade p, a pessoa irá escolher
+uma página entre todos as que recebem links da página j com probabilidades iguais
+e irá se mover para aquela página. Com probabilidade 1 − p, a pessoa irá escolher
+qualquer página na rede com probabilidades iguais e irá se mover para aquela página.
+Em termos da Matriz de Transição MP ∗, a nova matriz de transição será
+
+M G = p · MP ∗ + (1 − p) · K,
+
+onde K é uma matriz n×n com todos os elementos iguais a 1/n. Portanto, a matriz
+M G é chamada Matriz do Google e M G é agora uma matriz regular, já que todos
+os elementos em M G1 = M G são positivos. Embora qualquer valor de p entre 0 e 1
+seja permitido, dizem que o Google usa um valor de p = 0,85 para seus cálculos no
+algoritmo PageRank. No exemplo da rede com sete páginas, a Matriz do Google é
+
+M G = 0, 85 ·
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1/2
+0
+0
+0
+1
+0
+0
+0 1/2
+0
+0
+0
+0
+
+0
+0
+1/7
+1/3 1/7 1/2
+0
+0
+1/7
+0
+1/3 1/7
+0
+1/7
+0
+1/3 1/7 1/2
+0
+1/7
+0
+
+0
+1/7
+1/7
+0
+1/3 1/7
+0
+1/7
+1/3 1/7
+0
+1/7
+1/3 1/7
+
+
+
+
+
+
+
+
+
+
+
+
+
++
+
+66
+
+0, 15 ·
+
+
+
+
+
+
+
+
+
+
+
+
+
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+1/7 1/7 1/7 1/7 1/7 1/7 1/7
+
+
+
+
+
+
+
+
+
+
+
+
+
+,
+
+ou seja,
+
+
+M G =
+
+
+
+
+
+
+
+
+
+
+0, 021429 0, 446429 0, 021429 0, 142857 0, 021429 0, 021429 0, 142857
+0, 021429 0, 021429 0, 304762 0, 142857 0, 446429 0, 021429 0, 142857
+0, 871429 0, 021429 0, 021429 0, 142857 0, 021429 0, 304762 0, 142857
+0, 021429 0, 021429 0, 304762 0, 142857 0, 021429 0, 021429 0, 142857
+0, 021429 0, 446429 0, 021429 0, 142857 0, 021429 0, 304762 0, 142857
+0, 021429 0, 021429 0, 304762 0, 142857 0, 446429 0, 021429 0, 142857
+0, 021429 0, 021429 0, 021429 0, 142857 0, 021429 0, 304762 0, 142857
+
+
+
+
+
+
+
+.
+
+
+
+
+
+Agora é possível encontrar o Vetor Estado Estacionário q pelos métodos já
+mencionados:
+
+
+
+q =
+
+
+
+
+
+
+
+
+
+
+
+0, 116293
+0, 168567
+0, 191263
+0, 098844
+0, 164054
+0, 168567
+0, 092413
+
+
+
+,
+
+
+
+
+
+
+
+
+
+
+
+de modo que a página mais importante de acordo com o PageRank é a página P3, que
+corresponde à maior coordenada de q. A ordenação completa é P3, P2, P6, P5, P1, P4
+e P7.
+
+Observação 4.12. Quando uma rede é fortemente conectada,
+isto é, quando
+podemos passar de um site arbritário para outro qualquer apenas clicando nos
+links, o conjunto de soluções do sistema tem dimensão 1. Entretanto, quando
+uma Web não é fortemente conectada, as soluções de P q = q não são todos
+proporcionais entre si e, consequentemente, encontramos problemas na ordenação
+das importâncias. Por isso os ajustes são aplicados, para tornar qualquer web não
+fortemente conectada em fortemente conectada. Se relacionássemos K a um grafo
+direcionado, esse representaria uma Web onde todos os sites teriam links para todos
+os outros, inclusive para si mesmos, assim, K seria uma matriz “neutra” que estaria
+fazendo uma média ponderada com a matriz Mp. O ponto é que o conjunto de
+solução de P q = q tem dimensão 1 e, assim, é possivel ranquear os sites. Devido à
+“neutralidade” de K, a mudança não afetaria a ordenação intuitiva da importância
+dos sites.
+
+Observação 4.13. O cálculo de q não é trivial, já que a matriz do Google tem mais
+de 8 bilhões de linhas e colunas. O Google usa uma versão do método da potência
+para calcular q. São necessárias apenas 50 ou 100 iterações do método para obter o
+vetor q com a precisão que o Google necessita para sua ordenação. Ainda assim, o
+Google demora dias para calcular um novo valor de q, o que é feito todo mês.
+
+67
+
+Finalizamos o presente trabalho com um exemplo trabalhado com alunos em
+uma sala de aula do Algorítmo PageRank do Google para obter as importâncias das
+páginas, ou seja, o ranqueamento.
+
+Exemplo 4.14. Em uma turma do 2◦ ano médio de 2014 com 24 alunos do colégio
+Estadual Antonio Fontes Freitas foram selecionados 12 alunos para uma pesquisa
+de importância relacionada a quem cada um apontaria como pessoa mais inﬂuente
+da classe, podendo indicar mais de um colega ou nenhum. A matriz de transição
+P a seguir mostra as indicações dos alunos selecionados, observando que eles só
+poderiam indicar apenas os colegas daquele grupo de 12.
+
+P =
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+0
+0
+1/4
+1/4
+0
+1/4
+0
+0
+1/4
+
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+0
+
+0
+0
+0
+0
+0
+1/3
+0
+0
+1/3
+0
+0
+1/3
+
+0
+0
+0
+0
+0
+1/4
+1/4
+0
+1/4
+0
+0
+1/4
+
+0
+0
+0
+0
+0
+1/3
+1/3
+0
+1/3
+0
+0
+0
+
+1/3
+0
+0
+0
+0
+0
+1/3
+0
+1/3
+0
+0
+0
+
+0
+0
+0
+0
+0
+1/4
+0
+1/4
+1/4
+0
+0
+1/4
+
+0
+0
+0
+0
+0
+0
+1/3
+0
+1/3
+0
+0
+1/3
+
+1/3
+0
+0
+0
+0
+1/3
+0
+0
+0
+0
+1/3
+0
+
+0
+0
+0
+0
+0
+1/3
+0
+0
+1/3
+0
+0
+1/3
+
+0
+0
+0
+0
+0
+0
+0
+0
+1/3
+1/3
+0
+1/3
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+1/3
+0
+1/3
+0
+0
+1/3
+0
+0
+0
+
+Podemos calcular as potências de P usando o programa “WINMAT” para determinar
+o Vetor Estado Estacionário com cinco casas decimais de precisão:
+
+P 20 = P 100 = P 1000 = P 10000 = P 10000 =
+
+
+
+
+
+
+
+
+
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+
+
+
+
+
+
+
+
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+q =
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+0, 14475
+0
+0
+0, 04069
+0
+0, 20362
+0, 12461
+0, 03115
+0, 23062
+0, 02562
+0, 07687
+0, 12206
+
+Então a ordenação seria dada da seguinte forma, em 1o lugar ﬁcaria o aluno
+identiﬁcado pelo número 9, com 23, 06%, seguido pelo aluno identiﬁcado pelo número
+6, com 20, 36%, logo em seguida vem o aluno identiﬁcado pelo número 1, com 14, 47%
+e em último ﬁcariam os alunos identiﬁcados pelos números 2, 3 e 5.
+
+Vejamos agora como ﬁcaria a ordenação se fosse usado o algorítmo do PageRank
+
+do Google M G = 0, 85 · P + 0, 15 · K, onde K é a matriz neutra
+
+K =
+
+
+
+
+
+
+
+
+
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+68
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+
+
+
+
+
+.
+
+
+
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+Logo, temos que MG é:
+
+M G = 0, 85 ·
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+0
+0
+1/4
+1/4
+0
+1/4
+0
+0
+1/4
+
+0
+0
+0
+0
+0
+0
+0
+0
+1
+0
+0
+0
+
+0
+0
+0
+0
+0
+1/3
+0
+0
+1/3
+0
+0
+1/3
+
+0, 15 ·
+
+
+
+
+
+
+
+
+
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+0
+0
+0
+0
+0
+1/4
+1/4
+0
+1/4
+0
+0
+1/4
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+0
+0
+0
+0
+0
+1/3
+1/3
+0
+1/3
+0
+0
+0
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/3
+0
+0
+0
+0
+0
+1/3
+0
+1/3
+0
+0
+0
+
+0
+0
+0
+0
+0
+1/4
+0
+1/4
+1/4
+0
+0
+1/4
+
+0
+0
+0
+0
+0
+0
+1/3
+0
+1/3
+0
+0
+1/3
+
+1/3
+0
+0
+0
+0
+1/3
+0
+0
+0
+0
+1/3
+0
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+0
+0
+0
+0
+0
+1/3
+0
+0
+1/3
+0
+0
+1/3
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+0
+0
+0
+0
+0
+0
+0
+0
+1/3
+1/3
+0
+1/3
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+1/3
+0
+1/3
+0
+0
+1/3
+0
+0
+0
+
++
+
+
+
+
+
+
+
+
+
+
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+1/12
+
+=
+
+
+
+
+
+
+
+
+
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 22500
+0, 22500
+0, 01250
+0, 22500
+0, 01250
+0, 01250
+0, 22500
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 86250
+0, 01250
+0, 01250
+0, 01250
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 29583
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 22500
+0, 22500
+0, 01250
+0, 22500
+0, 01250
+0, 01250
+0, 22500
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 29583
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 01250
+
+0, 29583
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 01250
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 22500
+0, 01250
+0, 22500
+0, 22500
+0, 01250
+0, 01250
+0, 22500
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 29583
+
+0, 29583
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 29583
+
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 29583
+0, 01250
+0, 29583
+
+
+
+
+
+
+
+
+
+
+.
+
+0, 01250
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 29583
+0, 01250
+0, 01250
+0, 01250
+
+Essa seria a Matriz do Google para esse exemplo em particular. Agora podemos usar
+o método das potências de matrizes para calcular o Vetor Estado Estacionário que
+representará em sua componentes as importâncias de cada um dos 12 alunos, que
+certamente terá a mesma ordem de importância calculada anteriormente. A difereça
+é que os resultados aqui evitam sumidouros, ou seja, nós pendurados. Calculando a
+centésima iteração, ou seja, P 100, temos:
+
+
+
+
+
+
+
+
+
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+
+
+
+
+
+
+
+
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+e, portanto,
+
+q =
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+0, 12773
+0, 01249
+0, 01249
+0, 04622
+0, 01249
+0, 18686
+0, 11649
+0, 03725
+0, 21987
+0, 03368
+0, 07479
+0, 11904
+
+Obeservemos que as importâncias foram redistribuídas de tal forma que os que
+tinham 0,0% agora tem 1,25% aproximadamente. O resultado ﬁnal do vetor mostra
+que se fosse necessário escolher um aluno desse grupo que fosse mais inﬂuente, que
+por sua vez foi indicado pelos próprios alunos do grupo, bastava selecionar o aluno
+de número 9 correspondente a maior componente do Vetor Estado Estacionário q .
+
+69
+
+Pode-se então concluir que o PageRank é um tipo de programa que varre a rede
+em busca de expressões ou palavras indicadas por links de páginas visitadas e ao
+mesmo tempo constrói uma matriz de tamanho adequado fazendo as alterações
+apropriadas vistas anteriormente para montar a “Matriz do Google”. Por ﬁm
+ranqueia o resultado usando o método das potências e que provavelmente guarda
+na base de dados do Google, fornecendo esse resultado quando solicitado por um
+usuário.
+
+É fato que os resultados dados na página do Google, quando está sendo feito
+uma pesquisa, sofrem várias inﬂuências, tais como: região onde se localiza; sexo,
+religião, pesquisas anteiores, etc. Mas, na essência, o que importa aqui é como
+esse algorítmo transforma indicações de uma página para outra em informação que
+leva ao ranqueamento das mesmas, e isso é feito por um conhecimento matemático
+conforme apresentado.
+
+70
+
+Apêndice A
+
+Histórico
+
+O surgimento dos sites de buscas, desde os seus fundadores até a ascensão
+e hegemonia do Google
+
+A principal contribuição do Google para o mundo pós-moderno foi sem dúvida
+colocar à disposição de qualquer pessoa conectada todo o conteúdo disponível na
+internet, ao ponto de poder ser alcançado através de uma simples busca. Sem
+o Google, o mundo atual seria muito diferente, imagine um mundo em que você
+não pudesse fazer uma pesquisa instantânea ou um mundo onde não pudesse obter
+com um simples click o PIB de um determinado país, por exemplo. Pelo fato da
+sua principal contribuição ter sido a sua poderosa ferramenta de buscas, sem ela
+a nossa vida seria bem mais complexa, ao ponto de tornar a obtenção de algumas
+informações simples num verdadeiro martírio.
+
+Há pouco mais de 15 anos não havia o site Google, e cinco anos antes disso
+não havia como fazer buscas na Internet. Isso era um grande problema, tendo em
+vista que não adiantaria a rede mundial de computadores “World Wide Web” se não
+pudesse navegar e encontrar aquilo que busca. Grandes sites da época como Yahoo
+e o Excite, apesar destes terem algumas das mais brilhantes mentes do comercio
+americano por trás, não foram capazes de descobrir e resolver esse grande embate.
+Até que uma dupla de jovens super nerds (Larry Page e Sergy Brin) solucionaram
+o problema das buscas na rede, trazendo assim grandes inovações tecnológicas.
+
+Hoje ao entrarmos na Web e digitarmos um termo numa ferramenta de busca,
+rapidamente teremos uma lista de sites com links que nos levam até eles. Ou seja,
+em um terço de segundo poderá descobrir as informações básicas, ou até mesmo
+bem detalhada, do que nos interessa. E, dado a todos, a saber, que existe mais de
+150 milhões de sites e bilhões de paginas na Web, essa tecnologia que permite uma
+busca bem precisa é uma espécie de quase milagre que a maioria das pessoas não
+dá seu devido valor. Esquecemos que a pouco tempo a Web era cheia de páginas
+e mais páginas recheadas de textos simples, listas imensas de frases sublinhadas,
+e encontrar o que procurava nela era praticamente impossível. Não havia jeito de
+procurar as coisas, só o que as pessoas podiam fazer era seguir links e torcer para
+que a sorte levasse a alguma coisa útil.
+
+Para entender como chegamos ao nível atual, como tudo aconteceu, voltaremos
+a uma época anterior a da Google, no Vale do Silício na Universidade de Stanford
+(Califórnia), de nomes lendários na área como Apple, Intel e Oracle, fonte de
+
+71
+
+inúmeras ideias brilhantes. Nesse ambiente acadêmico estudou os jovens Jerry
+Yang e David Flio, que tiveram a brilhante ideia que se tornaria base de uma das
+empresas mais conhecidas dos Estados Unidos (YAHOO) e que os transformariam
+em bilionários. Tudo começou quando Jerry e David estavam buscando um jeito
+fútil de usar a Internet para ganhar o concurso da liga de basquete de Stanford,
+os garotos eram estudantes de Engenharia Elétrica e tinha acesso a Web. Eles
+a varreram minuciosamente site por site buscando informações atualizadas sobre
+esportes. David descobriu como acessar um monte de sites diferentes para conseguir
+os dados dos jogos de basquete da noite anterior (quem tinha se machucado, etc.).
+Ele baixou todas as informações e compilou os dados para tentar ver se devia mudar
+de jogador, mudar de estratégia ou o que fosse necessário. É difícil imaginar uma
+meta mais trivial do que um concurso desses, mas ao procurar dados esportivos
+obscuros nessa rede estranha e desajeitada chamada Internet, Jerry e David davam
+os primeiros passos no caminho para a busca. Em 1994, fascinado com a novidade
+chamada World Wide Web, ele e seu colega David Filo criaram um website que
+apresentava um diretório de outros sites. Seu nome oﬁcial era “Jerry’s Guide to
+the World Wide Web” (em inglês, o guia de Jerry para a WWW), mas logo foi
+renomeado para a interjeição “Yahoo!”. David achava que era preciso entender o que
+a Internet tinha a oferecer. Segundo ele, era preciso algum tipo de guia, algum tipo
+de diretório para ajudar a navegar. Era um pensamento simples, porém brilhante,
+um diretório que pudesse mostrar a marinheiros de primeira viagem na Web como
+encontrar coisas legais nesse novo mundo eletrônico. Mas não tinha nada a ver com
+a busca atual, era só um monte de categoria e subcategorias que você podia “caçar”
+e fuçar. Esses viciados em internet passavam horas e horas olhando o máximo de
+sites possível e então decidindo como organizá-los, segundo Flio, da noite para o dia
+jorrou uma procura mundial, milhões de usuários do mundo todo correram para o
+site, os dois perceberam então que precisavam de um nome mais curto e que soasse
+bem. A Yahoo era uma grande ideia, mas uma ótima ideia não basta para se tornar
+uma grande empresa, precisava de dinheiro, e muito, mas como todos sabem, não
+há falta dele no Vale do Silício, lar dos escritórios de muitos investidores de riscos
+lendários, esses investidores decidem quais empresas iniciantes sobreviverão e quais
+nunca verão a luz do dia. E uma das mais bem sucedidas entre essas empresas é
+Sequoia Capital. Seu sócio mais famoso Michael Moritz decidiu fazer uma visita aos
+jovens fundadores da Yahoo, investindo dois milhões de dólares no site de Yang e
+Flio. E ao fazê-lo ajudaria a iniciar a corrida ao ouro que logo tomaria toda a web.
+Em 2007 empresas de busca como o Yahoo e a Google geraram bilhões de dólares
+em receitas e lucros, tornando-os a inveja de empreendedores. Mas se ninguém usava
+a web para negócios ou comercio, a ideia em si era considerada uma heresia, ou, até
+mesmo um veneno. E argumentos a respeito da eminente comercialização da web
+eram ferozes e se resumiam apenas a uma palavra, publicidade.
+
+A publicidade dividiu a comunidade na web, de um lado estavam os investidores
+de risco e outros tipos ﬁnanceiros que acreditavam que a internet era um novo meio,
+e a mídia sempre fora sustentada pela publicidade. Segundo Michael Moritz quando
+você consegue reunir uma plateia grande em um lugar, só poderá vender publicidade
+a ela. E para isso não era preciso muita inteligência. Mas do outro lado estavam
+os utopistas da internet, que viam a Web como um lugar que prometia a liberdade.
+
+72
+
+Mas Yang e Flio haviam aceitado o capital de risco, entraram no jogo para construir
+um negócio, eles tinham que arrumar um jeito da Yahoo ser rentável. De acordo
+com Michael Moritz, Jerry e David estavam muito preocupados com as ramiﬁcações
+e repercussões de se colocar publicidade no site deles, temendo que fosse ruim para
+os usuários e que talvez eles se rebelassem e acabasse fugindo. Para os fundadores
+da Yahoo isso era um dilema grave, ao aceitar publicidade eles arriscavam alienar
+seus usuários leais. Mas realmente não havia qualquer outra opção viável, nada
+mais eles podiam fazer. Para David Flio naquele momento a publicidade parecia
+a melhor escolha, porém estava realmente preocupado com ela. No ﬁnal de 1995
+a Yahoo começou a aceitar publicidade em Banner, mesmo inseguros e céticos em
+relação às primeiras propagandas.
+
+A agonia acabou,
+
+sendo em vão, os usuários do Yahoo continuaram se
+multiplicando e mais usuários signiﬁcavam mais anunciantes pagando mais por seus
+banners, diante de um número crescente de olhos. Pela primeira vez a Yahoo tinha
+mostrado que era possível ganhar dinheiro na web. Era um momento crucial na
+história, e signiﬁcava uma coisa, o surto da web tinha começado.
+
+Em 1996 a Yahoo enfrentava uma série de desaﬁantes que ganhavam terreno
+sobre ela. Cita-se, AltaVista, mas a rival mais formidável da Yahoo era uma empresa
+chamada Excite. Na superfície a Excite era muito parecida com o Yahoo, era outra
+empresa de busca fundada por outro grupo de garotos de Stanford. A tecnologia que
+o site desenvolveu era mais soﬁsticada do que aquela desenvolvida pela Yahoo, em
+vez de uma lista de sites compilados e divididos em categorias por seres humanos,
+o Excite era puro software. A pessoa digitava sua indagação e o serviço vasculhava
+a web encontrando páginas que continham termos que você havia digitado, ou seja,
+era uma versão rudimentar da busca como a conhecemos hoje. Para Joe Kraus
+[Cofundador da Excite], acreditava que eles em pouco tempo, ou seriam os primeiros,
+ou sairiam do ramo.
+
+Em meados do ano de 97 a internet estava explodindo, milhões de pessoas
+entravam online para vê o motivo de tanta exaltação no meio. O Yahoo, o Excite e
+outros mecanismos de busca estavam ocupados se transformando no que se conhece
+hoje como portais. Um mundo diferente e emocionante, repleto de distrações, salas
+de bate papo, tudo isso eram parque de diversões, um mar de atrações, projetadas
+para transformar usuários em uma plateia ﬁel em benefícios dos anunciantes. Mas,
+embora as empresas de busca tivessem fazendo um grande sucesso, seus propositos
+estavam tomando rumos diferentes, concentrando-se apenas nos atrativos, e as
+necessidades de encontrar coisas na web não parava de crescer. Em outras palavras,
+as empresas de busca pararam de se importar com a busca. E ainda de fato o
+maior desaﬁo estava lá fora, encarar empresas de busca bem nos olhos. Mas o
+sucesso as deixou totalmente cegas. Falando claramente, quando o assunto era
+localizar informações relevantes na Web, a Yahoo, a Excite e o resto das empresas
+de busca eram incapazes. Os internautas podiam passar o dia todo digitando varias
+combinações de palavras para encontrar o que queria, e ainda assim poderiam não
+ter sucesso, a maioria dos resultados eram links de sites tentando vender alguma
+coisa que você não queria, e frequentemente sites obcenos.
+
+Em suma, todos queriam uma melhor maneira de fazer buscas na Web. E essa
+virada de mesa sairia da mesma instituição que já havia produzido a Yahoo e a
+
+73
+
+“Google”, um termo matemático para 10100, onde novamente
+Excite, Stanford.
+os fundadores eram uma dupla de jovens poucos socializados, Lawrence Edward
+Page “Larry Page” e Sergey Mihailovich Brin “Sergey Brin”. Eles se conheceram
+na primavera de 1996 em uma visita guiada em São Francisco para estudantes que
+iam se formar em Stanford. Quem liderava a visita era Sergey, um garoto russo
+americano, que emigrou junto com seus pais para os Estados Unidos em 1979, ele
+tinha 19 anos, era um garoto muito novo e um dos candidatos mais jovens ao PhD.
+Seu professor Terry Winograd de Ciências da Computação dizia que ele era bem
+sucinto, era um tipo de pessoa com respostas rápidas e tinha ponto de vista radical.
+Já Larry foi um dos últimos estudantes na visita naquele dia, era um garoto típico
+do meio oeste, ﬁlho de um acadêmico, e a coisa mais incrível que já tinha feito tinha
+sido uma impressora a jato de tinta com legos.
+
+Os dois se juntaram para pesquisarem e desenvolverem o Google, quando Larry
+teve a ideia de gênio que transformou a busca em uma coisa mágica e lançou o
+site. Dadas as consequências abrangentes dessa ideia social, cultural e com certeza
+ﬁnanceira, poderíamos pensar que era absurdamente complexo, mas o fato é que era
+incrivelmente bem simples na sua forma básica.
+
+A ideia começou com a noção de que a web realizava um concurso de popularidade
+sobre seu próprio conteúdo, e que a quantidade de vezes que uma certa página
+da Web tinha links em outros sites poderia ser uma medida de sua utilidade ou
+relevância. Page acreditava que um link de site para outro é uma espécie de
+recomendação. Ele e Brin construíram a ferramenta de busca da Google e com
+base nessa convicção escreveu a nova dissertação acadêmica de 1998. Em essência
+a Google interpreta um link da página A para página B como um voto da página
+A em prol da B, a Google avalia a importância de uma página pelos votos que ela
+recebe. Em outras palavras, quando um site sobre Abraham Lincoln resulta em
+quinze milhões de links, isso signiﬁca que muita gente acha-o útil, e se outro site
+sobre Lincoln resultou em apenas onze links, isso signiﬁca que não impressionou
+quase ninguém. Ou seja, para encontrar os sites mais relevantes só precisava contar
+os links. A ideia de Larry sobre a contagem de links era simples mais brilhante e
+acabaria sendo o coração do incrível sucesso da Google. A primeira pessoa a ver
+a Google em ação foi o professor de Ciências da Computação dos rapazes Hector
+Garcia-Molina. Segundo ele, passaram horas e horas brincando em uma sala olhando
+as contagens dos links.
+
+No inicio quando eles lançaram a Google no site de Stanford todos que viram a
+ferramenta, perceberam que ela tinha algo especial, era uma ferramenta de busca que
+voltava a se importar com buscas. Page e Brin lutaram para gerenciar a popularidade
+de sua novidade inovadora, havia tanto tráfego no Google que quase toda internet
+da Universidade Stanford entrou em colapso, então a administração da universidade
+disse a eles que tinham que sair do campus, Stanford não era mais útil para Larry e
+Sergey era hora deles saírem do campus e irem para o vale do Silício arranjar alguma
+verba e transformar sua ideia brilhante em uma empresa de verdade, e ao fazê-lo eles
+se juntaria a milhares de candidatos a empreendedores buscando fama e fortuna no
+ramo das “.com”. Mas, para se transformar numa empresa gigantesca, era necessário
+investimentos e de alguem que acreditasse que iria valer a pena. Um deles foi o
+grande empresário Vinod Khosla, um investidor de risco altamente bem sucedido, do
+
+74
+
+ramo da tecnologia e um dos cofundadores da Sun Microsystems. Foi Khosla quem
+apresentou Page de Brin a Excite, que se impressionou com a ferramenta de busca,
+e achou que tinha uma abordagem melhor. Khosla incentivou a Excite a comprar
+ou licenciar a tecnologia de busca da Google, que daria uma vantagem contra sua
+rival a Yahoo, a qual parecia está dominando cada batalha e derrotando todos seus
+oponentes nas guerras dos portais. Khosla arranjou uma reunião para o tecnologista
+chefe da Excite, Graham Spencer, conhecer Larry e Sergey num restaurante japonês,
+e os rapazes da Google chegaram com esperança de garantir a continuidade do
+projeto. Eles ﬁzeram um teste para demonstrar como seus resultados de busca eram
+melhores do que os da Excite. Spencer voltou a empresa e contou ao diretor da
+Excite George Bell sobre a tecnologia da Google assim como Khosla. Para muitos
+não havia dinheiro na busca, ou que havia pouco dinheiro na busca, não acreditava
+na sua rentabilidade, e segundo Khosla, houve muita resistência por parte do pessoal
+da Excite que se achavam capazes de fazer o mesmo que a Google. Então fecharam
+as portas assim como todas as empresas do Vale, não enxergaram o potencial do
+site. Frustrados Larry e Sergey procuraram um de seus professores de Stanford que
+também era um empresário, David Cheriton. Cheriton arranjou uma maneira deles
+mostrarem seu projeto a Andy Bechtolsheim (Sun Microsystems Inc.) que é um
+conhecido investidor da região. Encontraram-se na casa de David e ﬁzeram uma
+demonstração da ferramenta, e se Andy não enxergasse seu potencial, então era
+hora deles voltarem a se dedicar ao seu PhD, mas Andy ﬁcou muito impressionado
+e imediatamente acertou com os rapazes. Se pensarmos bem esse investidor salvou,
+de certa forma, as buscas como ela é hoje, e talvez se passassem muitos anos para
+aparecer outra ideia genial feito essa.
+
+Agora o próximo passo era mais ambicioso, eles queriam organizar literalmente
+todas as informações do mundo e torná-la universalmente acessível. Esse plano
+atraiu os olhares de outra pessoa, John Doerr, um famoso e bem sucedido investidor
+de risco do Vale do Silício, ele já ﬁnanciara a Sun, a Compaq o Netscape e
+Amazon.com. Eles o convenceu de que a busca era uma coisa tão grande tão
+importante e que ia crescer tanto que teria bilhões em receitas, e então Doerr caiu
+o queixo, pois já que eles tinham solucionado a coisa mais difícil da internet, então
+aquilo era possível. Mas como investidor, precisava descobrir como ganhar dinheiro.
+No entanto descobrir como o Google se tornaria lucrativa não foi nada fácil, e à
+medida que o tempo passava sem um plano empresarial, os investidores foram ﬁcando
+cada vez mais inseguros. Para Michael Morits não havia nenhum meio de sustento
+para nenhum dos associados ao Google, não havia receita e só despesas, e cerca de
+meio milhão de dólares saia das portas da Google todo mês, isso signiﬁcava que
+os 25 milhões no banco dos investidores não durariam muito. A solução óbvia era
+seguir os passos da Yahoo e da Excite, era pôr banners de anúncios no site, mas em
+uma das suas mais corajosas e mais visionárias decisão Page e Brin se recusaram
+seguir esse caminho, eles simplesmente não conseguiam suportar a ideia de que a
+Google se tornasse mais um portal semelhantes aos já existente. Os fundadores
+queriam garantir que as pessoas tivessem uma experiência incrível, mas também
+com anúncios que ﬁzessem sentido para elas. Eles não eram contra a publicidade em
+si, eles só queriam que fosse de maneira mais signiﬁcativa, porém não conseguiam
+pensar qual seria essa forma. O tempo e o dinheiro estavam acabando, então eles
+
+75
+
+encontraram uma solução para o seu problema de uma maneira típica, copiaram de
+outra pessoa, e essa outra pessoa era Bill Gross, um administrador de uma pequena
+empresa chamada de Idealab uma espécie de incubadora de ideias inovadoras em Lós
+Angeles. Gross não tinha nenhuma ligação com a Google, foi ele quem descobriu
+como inserir publicidade no site e garantiu a salvação da Google. A vida de Bill
+Gross era olhar problemas e procurar maneiras de solucioná-los. No decorrer de
+sua carreira Gross já tinha feito muita coisa, mas no ﬁnal da década de 90 a sua
+obsessão era a propaganda na Web. Quando Gross viu aquele problema da Google,
+começou a se indagar de que maneira eﬁcaz a publicidade encaixava. Olhando para
+trás a ideia de Gross assim como a contagem dos links de Page era brilhantemente
+simples, começou com a percepção de que quando uma pessoa digita uma indagação
+não só está dizendo ao mundo o que esta procurando, mas frequentemente diz ao
+mundo o que lhe interessa, agora pegue essa informação digitada no Google e de
+repente ele tem uma imagem detalhada do pesquisador, uma informação de grande
+valor para as empresas de anúncio, e isso em essência foi o que Bill Gross viu,
+e percebeu antes do que qualquer um, que uma ferramenta de busca poderia ser
+e provavelmente seria uma das formas de propaganda indexada mais poderosas e
+eﬁcazes do mundo. No jargão do ramo os termos que uma pessoa digita numa
+ferramenta de busca são chamadas de palavras-chave, e Gross se deu conta de que
+elas poderiam valer uma fortuna. Para Gross, as palavras chaves eram o futuro do
+setor, a solução para as ferramentas de busca, pois elas davam em uma janela enorme
+de sua intenção naquele momento. Gross acreditava que poderia vender palavras
+chaves aos anunciantes, os quais pagariam um bom dinheiro para garantir que cada
+vez que alguém digitasse uma palavra numa ferramenta de busca um link para o
+seu site apareceria no topo dos resultados da busca. Em uma reunião Bill Gross
+apresentou suas ideias aos acionistas de sua empresa, porém muitos acharam isso
+recursivo, havendo algumas pessoas repudiando aquilo, e Gross insistia na ideia, para
+ele era igualzinha às páginas amarelas dos catálogos telefônicos, na sua utilidade,
+pois são anúncios pagos e é isso que o cliente quer quando está procurando por
+um serviço, e por que não fazer isso numa ferramenta de busca, seria útil, e a
+grande ideia dele era sendo uma busca feita como nas páginas amarelas. Gross
+ﬁnalmente persuadiu os céticos em sua empresa e em 1998 lançou um site baseado
+em palavras chave e links patrocinados que acabou sendo conhecido como Overture,
+foi um sucesso instantâneo. Sem perceber solucionou o dilema de projeto empresarial
+da Google. Então os rapazes da Google combinaram algumas reuniões com Gross,
+no ﬁm dessas reuniões não acertaram com a Overture, então, pouco depois a Google
+inaugurou um serviço chamado AdWords que era incrivelmente semelhante com o
+da sua concorrente, Gross processou a Google, levando mais tarde a fazerem um
+acordo.
+
+A Google incrementaria a ideia original de Gross de várias maneiras importantes,
+mas a principal é que separaria os anúncios dos resultados de busca orgânica, basta
+dar uma olhada na página da Google que estamos familiarizados nos dias atuais, a
+caixa branca onde é digitada a expressão para pesquisa, do lado esquerdo está os
+resultados limpos gerados pelo algoritmo de relevância do Google, do lado direito
+temos os anúncios, os links azuis patrocinados, pelos quais as empresas pagaram,
+e é deles que a Google faturou bilhões de dólares em lucros nos últimos anos. A
+
+76
+
+ideia realmente era maravilhosa, incrível e surpreendente no inicio de dois mil. O
+que a Google tinha feito não foi apenas abrir um caminho na direção de seu sucesso
+comercial, tinha criado as fundações para a astronômica decolagem da publicidade
+na internet em grande escala. Em dezenove de agosto de 2004 a Google abriu o
+seu capital colocando as suas ações a venda na bolsa de valores Nasdaq, nos cinco
+anos anteriores a empresa tinha saído de zero a incríveis três bilhões de dólares
+em receitas anuais e tinha se tornado um nome conhecido. A abertura do capital
+da Google causou um frenesi de especulação e expectativa, e especialmente entre
+aqueles que esperavam ou torciam para ela revitalizar o setor de tecnologia, ainda
+se recuperando das quedas das empresas “.com”. Muitas especulações foram feitas
+sobre a abertura do capital da Google e no ﬁm, apesar de toda tempestade, foi um
+sucesso único. Qualquer um que tenha comprado ações naquele dia e ainda tem
+a sorte e a inteligência de tê-las, guardou uma fortuna, três anos depois de sua
+abertura a Google vale mais que a Fedex, a McDonalds, a Coca-Cola, a Intel, a
+IBM ou Walmart, ações que renderam muitos dólares e colocaram Brin e Page entre
+as pessoas mais ricas do mundo. Para Mary Meeker (Diretora-Gerente, Morgan
+Stanley) a Google sem dúvida é a empresa que mais cresceu no mundo. Apesar
+de está na lista da Fortune 500, os fundadores da Google sempre lutaram para que
+sua empresa não fosse percebida como mais uma empresa truculenta e gananciosa,
+e o seu lema corporativo é “não seja mau”, o seu campus remonta a era das“.com”,
+mas apesar de todos os atrativos simpáticos a Google continua sendo uma grande
+empresa capitalista que continua a prosperar com casamento de busca e publicidade
+que ela aperfeiçoou. A Google despejou investimentos em incontáveis experimentos
+e projetos apostando em tudo que estava ao seu alcance. Hoje existe o Google
+Books, Google Mail, Google Maps, Google Earth, Google Calendar e o Google
+Docs, a empresa comprou a iniciante Blogger para publicação pessoal na Web,
+e também a iniciante Picasa para compartilhamento de fotos online e é claro o
+Youtube para compartilhamento de vídeos online. Para muitos que gostam de
+teoria da conspiração, tudo isso se resume em um plano para dominar o mundo,
+então não é a toa que a Google mania gradualmente começou a dar lugar a uma
+crescente Google fobia, e a Google fobia pode ser mais grave entre os defensores da
+privacidade que se preocupam com a quantidade de informações sobre cada um, pois
+estão armazenada nas bases de dados da Google. Para Terry Winograd (Professor
+de Stanford) as pessoas vão sentir perigo em ter informações demais guardadas sobre
+tudo que ﬁzeram e tudo que buscaram. Para alguns a dominância metastática e a
+expansão feroz da Google é um chamado à guerra, embora a Excite esteja há muito
+tempo falecida, a Yahoo aumentou as suas ofertas em buscas de publicidade e quem
+também tem como missão derrubar a Google é a Microsoft, uma empresa conhecida
+por chegar tarde à festa e por nunca desistir, mas sempre ser a última a permanecer
+de pé, e uma que de alguma forma ver grande oportunidade na internet ou em
+software bem rápido.
+
+É óbvio que à medida que a Google expandiu seu alcance em tantos cantos do
+comércio a sua lista de inimigos fora e dentro do ramo da tecnologia ﬁcou bem maior,
+e entre elas estão a Viacom, a News Corporation, editores de livros e em breve toda
+indústria de telecomunicações, as forças que agora estão se reunindo contra o Google
+irão confrontar a empresa com desaﬁos muito maiores do que quaisquer outros já
+
+77
+
+enfrentou. Para a Google continuar a sua ascensão meteórica Larry Page, Sergey
+Brin e o resto do pessoal da empresa terão de ser ágeis, inovadores, e incrivelmente
+criativos, a história da alta tecnologia nos ensina que toda empresa não importa
+o seu tamanho, tem apogeu e decadência, embora isso não tenha acontecido ainda
+com o Google, mas é inevitável que aconteça. A Google foi mais longe e mais rápido
+do que qualquer outra empresa já foi em pouco tempo, mas suas maiores batalhas e
+a verdadeira guerra ainda estão por vir. (O leitor mais interessado em se aprofundar
+no assunto ver [7])
+
+78
+
+Referências Bibliográﬁcas
+
+[1] Almeida, M. F. L. B. P., Celeman, S., A Matemática Escondida no Google,
+Revista do Professor de Matemática, n. 80, editora SBM, pp. 42-45, (2013).
+
+[2] Anton, H., Rorres, C., Álgebra Linear com Aplicações, Editora Bookman, 8a
+
+Ed. (2001).
+
+[3] Boldrini, J. L., Costa, S. I. R., Figueiredo, V. L., Wetzler, H. G., Algebra Linear,
+
+Editora Harbra, 3a Ed. (1980).
+
+[4] Bryan, K. Leise, T., The $25,000,000,000 eingenvector:
+
+the linear algebra
+
+behind Google, SIAM Review, vol. 48, no 3, (2006).
+
+[5] Dante, L. R., Matemática: Contexto & Aplicações, 2o ano - Editora Ática, 3a
+
+Ed. - 2a impressão (2008).
+
+[6] Hazzan, S., Combinatória e Probabilidade, Coleção Fundamentos da
+
+Matemática Elementar - Volume 5. Editora Atual, 7a Ed.(2004).
+
+[7] Heilemann, J. A., A Verdadeira História da Internet - Parte 2: A Pesquisa -
+A ascensão do Google e Yahoo. Discovery Channel: Documentário, (2008).
+
+[8] http://www.tecmundo.com.br/youtube/2295-
+
+historia-do-google.htm, página consultada em 25/03/2014. Artigo escrito por
+Luísa Barwinski.
+
+[9] Lay, D. C, Álgebra Linear e suas Aplicações, Editora LTC, 4a Ed. (2013).
+
+[10] Leithold, L., O Cálculo com Geometria Analítica, vol 1, Editora Harbra, 3a Ed.
+
+(2002).
+
+[11] Lima, E. L., Carvalho, P. C. P., Wagner, E., Morgado, A. C. Temas e Problemas
+Elementares, Coleção do Professor de Matemática. Editora SBM, 12a Ed.
+(2006).
+
+[12] Lima, E. L., Carvalho, P. C. P., Wagner, E., Morgado, A. C., A matemática do
+
+ensino médio - volume 2 - Editora SBM, 6a Ed.(2006).
+
+[13] Stewart, J., Cálculo, vol 1, Editora Pioneira Thamson Learning, 5a Ed. (2006).
+
+79
+
+

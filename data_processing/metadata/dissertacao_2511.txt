@@ -1,0 +1,3612 @@
+UNIVERSIDADE FEDERAL DE SANTA CATARINA
+DEPARTAMENTO DE MATEM`TICA
+
+Nicole Bertoluci Rodrigues
+
+C(cid:211)DIGOS CORRETORES DE ERROS
+
+Florian(cid:243)polis
+
+2017
+
+Nicole Bertoluci Rodrigues
+
+C(cid:211)DIGOS CORRETORES DE ERROS
+
+Disserta(cid:231)ªo submetida ao Programa
+de Mestrado Pro(cid:28)ssional de MatemÆ-
+tica em rede nacional - PROFMAT
+para a obten(cid:231)ªo do Grau de Mestre
+em MatemÆtica.
+Universidade Federal de Santa Cata-
+rina
+Orientador: Prof. Dr. Fernando de
+Lacerda Mortari
+
+Florian(cid:243)polis
+
+2017
+
+Ficha de identificação da obra elaborada pelo autor, através do Programa de Geração Automática da Biblioteca Universitária da UFSC.Rodrigues, Nicole Bertoluci   Códigos Corretores de Erros / Nicole BertoluciRodrigues ; orientador, Fernando de LacerdaMortari, 2017.   71 p.   Dissertação (mestrado profissional) -Universidade Federal de Santa Catarina, Centro deCiências Físicas e Matemáticas, Programa de PósGraduação em Matemática, Florianópolis, 2017.   Inclui referências.    1. Matemática. 2. Códigos Corretores. 3. Código deHamming. 4. Matriz de Teste de Paridade. I. deLacerda Mortari, Fernando. II. Universidade Federalde Santa Catarina. Programa de Pós-Graduação emMatemática. III. Título.C´odigos Corretores de Erros
+
+por
+
+Nicole Bertoluci Rodrigues
+
+Esta disserta¸c˜ao foi julgada aprovada para a obten¸c˜ao do T´ıtulo de
+Mestre em Matem´atica e aprovada em sua forma ﬁnal pelo Programa
+de P´os-Gradua¸c˜ao em Matem´atica.
+
+Prof. Dr. Celso Melchiades D´oria
+Coordenador do Curso
+
+Banca Examinadora
+
+Prof. Dr. Fernando de Lacerda Mortari
+Universidade Federal de Santa Catarina -
+Orientador
+
+Prof. Dr. Eliezer Batista
+Universidade Federal de Santa Catarina
+
+Prof. Dra. Maria Inez Cardoso Gon¸calves
+Universidade Federal de Santa Catarina
+
+Prof. Dra. Silvia Martini de Holanda
+Instituto Federal de Santa Catarina
+
+Florian´opolis, 18 de setembro de 2017.
+
+1
+
+Este trabalho Ø dedicado a todos aqueles
+que direta ou indiretamente contribu(cid:237)ram
+nesta minha jornada, em especial a meu
+marido Cesar Augusto Cardoso e a minha
+(cid:28)lha Valentina Rodrigues Cardoso.
+
+AGRADECIMENTOS
+
+Gostaria de agradecer a todos os colegas que me acompanharam
+durante esta jornada de estudos, em especial a Daine Debortoli e seu
+marido Ezequiel Debortoli, pelo acolhimento e ajuda para que o sonho
+da conclusªo deste curso fosse poss(cid:237)vel.
+
+A todos os professores que buscaram nos ajudara e transmitiram
+conhecimentos para que obtivØssemos o grau de mestre: Daniel Gon-
+(cid:231)alves, Abdelmoubine Amar Henni, Eliezer Batista, Celso Melchiades
+Doria, Ruy Coimbra Charªo e Gilles Gon(cid:231)alves de Castro, em espe-
+cial ao professor Fernando de Lacerda Mortari por ter disposto de seu
+tempo e me orientado durante esse trabalho.
+
+A minha mªe Divanir Bertoluci que sonhou comigo e me apoiou
+quando precisei. Ao meu pai Lourival Det(cid:226)nico Rodrigues (in Memo-
+riam) por sempre me mostrou que a educa(cid:231)ªo e o conhecimento sªo os
+maiores e melhores bens que podemos ter.
+
+Ao meu marido Cesar Augusto Cardoso, e a minha (cid:28)lha Va-
+lentina Rodrigues Cardoso pela paciŒncia, ajuda e compreensªo pelas
+minhas faltas e ausŒncia durante esses dois anos de estudo.
+
+A CAPES, pela ajuda (cid:28)nanceira durante o curso.
+
+Tu te tornas eternamente responsÆvel por
+aquilo que cativas.
+
+(Antoine de Saint-ExupØry, 1943)
+
+RESUMO
+
+Neste trabalho mostraremos a capacidade de c(cid:243)digos lineares detecta-
+rem e corrigirem erros atravØs da utiliza(cid:231)ªo de matrizes de teste de
+paridade. Para isso, precisaremos de conceitos de Ælgebra linear como
+as opera(cid:231)ıes entre matrizes, em especial a multiplica(cid:231)ªo.
+
+Palavras-chave: C(cid:243)digos corretores. Matrizes de teste de paridade.
+C(cid:243)digo de Hamming.
+
+ABSTRACT
+
+In this work we will show the ability of linear codes to detect and
+correct errors through the use of parity test matrices. For this, we will
+need concepts of linear algebra such as operations between matrices,
+especially multiplication.
+
+Keywords: Correcting codes. Parity test matrices. Code of Hamming.
+
+LISTA DE FIGURAS
+
+Figura 1 Diagrama de Venn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+Figura 2 D(cid:237)gitos da Mensagem . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+Figura 3 Diagrama de Venn . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+1101. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+Figura 4
+1101. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+Figura 5
+1101. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+Figura 6
+0011 0001 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+Figura 7
+1111 000 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+Figura 8
+Figura 9
+1111 000-1. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Figura 10 1110 000 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Figura 11 1011 011 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Figura 12 1011 011 - 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Figura 13 1011 010 - 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+Figura 14 1001 001 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+Figura 15 1001 001 - 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+Figura 16 1001 001 - 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+SUM`RIO
+
+19
+
+1
+2
+
+INTRODU˙ˆO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+C.C.E. NO PONTO DE VISTA DO ENSINO FUN-
+DAMENTAL E M(cid:201)DIO . . . . . . . . . . . . . . . . . . . . . . . .
+21
+DIAGRAMA DE VENN . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+2.1
+DETECTANDO E CORRIGINDO ERROS . . . . . . . . . . . . . 28
+2.2
+C(cid:211)DIGOS CORRETORES DE ERROS . . . . . . . . .
+3
+35
+A M(cid:201)TRICA DE HAMMING . . . . . . . . . . . . . . . . . . . . . . . . 38
+3.1
+3.2
+C(cid:211)DIGOS CORRETORES . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+3.2.1 Dist(cid:226)ncia M(cid:237)nima de um C(cid:243)digo Linear . . . . . . . . . . . 51
+MATRIZES GERADORAS DE UM C(cid:211)DIGO LINEAR . . 52
+3.3
+MATRIZES DE TESTE DE PARIDADE . . . . . . . . . . . . . . 57
+3.4
+CONCLUSˆO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4
+67
+REFER˚NCIAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+69
+
+19
+
+1 INTRODU˙ˆO
+
+A tecnologia estÆ presente em nosso dia-a-dia e junto com ela a
+matemÆtica, por mais que muitas vezes nem percebamos sua presen(cid:231)a.
+Hoje em dia, Ø muito dif(cid:237)cil encontrar alguma pessoa que nªo
+assista televisªo, que nªo ou(cid:231)a mœsica, que nªo tenha celular e e-mail,
+e para que todas essas tecnologias consigam transmitir informa(cid:231)ıes a
+matemÆtica aparece. Para que consigamos concluir simples tarefas,
+como ler um e-mail, os c(cid:243)digos corretores de erros (C.C.E.) entram em
+a(cid:231)ªo. Sªo eles que permitem que erros nas transmissıes de dados sejam
+detectados e corrigidos.
+
+Mas nªo Ø somente na transmissªo de informa(cid:231)ıes por meio de
+equipamentos eletr(cid:244)nicos que identi(cid:28)camos estes c(cid:243)digos. Por exemplo
+quando nos encontramos em uma ambiente muito ruidoso, com muitas
+pessoas conversando, o nosso cØrebro automaticamente utiliza um c(cid:243)-
+digo corretor de erro, que nos permite compreender o que uma pessoa
+esta nos falando, mesmo com as diversas interferŒncias que o ambiente
+estÆ fazendo.
+
+Outra aplica(cid:231)ªo de c(cid:243)digos corretores de erros pelo nosso cØre-
+bro Ø no caso de frases escritas com letras trocadas que ainda assim
+podem ser compreendidas. Um exemplo Ø a frase "(cid:201) F4C1L L3R 357A
+M3N5AG3M S3M P3NS4R MU170", presente em [D’ORNELAS, 2012]
+que apesar de conter algarismos nos lugares de letras nosso cØrebro
+ainda tem capacidade de decifrar a mensagem.
+
+Com o crescimento das tecnologias da informa(cid:231)ªo foi crescendo
+tambØm a necessidade de que estas informa(cid:231)ıes chegassem ao seu des-
+tino com o mesmo signi(cid:28)cado que sa(cid:237)ram de sua origem, mesmo que na
+transmissªo ocorram ru(cid:237)dos (interferŒncias no processo de transmissªo
+de dados).
+
+Na dØcada de 40, Richard W. Hamming, matemÆtico, Ph.D pela
+Universidade de Illinois em Urbana-Champaign trabalhou de 1946 a
+1976 nos Laborat(cid:243)rios da Bell Telephone, onde tinha acesso a compu-
+tadores. Estes gravavam seus dados em cartıes perfurados e durante
+sua leitura se um erro fosse detectado ela era imediatamente interrom-
+pida.
+
+Nªo satisfeito com isso, Hamming pensou que se as mÆquinas
+conseguiam detectar o erro, por que nªo conseguir localizÆ-lo e corrigi-
+lo? E com essa motiva(cid:231)ªo ele come(cid:231)ou seu estudo, que levou em torno
+de trŒs anos para ser publicado no "The Bell System Technical Jour-
+nal".
+
+20
+
+Claude E. Shannon, matemÆtico, conhecido como o pai da Te-
+oria da Informa(cid:231)ªo, que tambØm trabalhava nos Laborat(cid:243)rios da Bell
+Telephone, era parceiro de pesquisa de Hamming e teve um artigo pu-
+blicado em 1948 (antes mesmo do artigo de Hamming) no qual prop(cid:244)s
+um c(cid:243)digo capaz de detectar e corrigir erros, que foi chamado de (7,4)-
+C(cid:243)digo de Hamming.
+
+Marcel J.E. Golay, matemÆtico, f(cid:237)sico e te(cid:243)rico da informa(cid:231)ªo, foi
+um pro(cid:28)ssional muito importante para o desenvolvimento da tecnolo-
+gia da informa(cid:231)ªo. Ele teve papel bastante importante para o ExØrcito
+Americano, principalmente por desenvolver sistemas de radares, que
+identi(cid:28)cavam emissıes infravermelhas dos aviıes. No que diz respeito
+aos c(cid:243)digos corretores de erros, Golay aprofundou o estudo de Ham-
+ming e Shannon, conseguindo determinar um c(cid:243)digo de comprimento
+primo p. Golay desenvolveu tambØm, os c(cid:243)digos (23,12) e (11,6) du-
+rante seus estudos.
+
+A NASA, com suas missıes espaciais precisa transmitir uma
+grande quantidade de informa(cid:231)ıes que estªo muito suscet(cid:237)veis a interfe-
+rŒncias. As espa(cid:231)onaves Voyager 1 e 2, come(cid:231)aram a transmitir imagens
+em cores gra(cid:231)as ao c(cid:243)digo (24,12,8) de Golay, c(cid:243)digo este muito usado
+tambØm nas transmissıes de rÆdio de alta frequŒncia.
+
+No segundo cap(cid:237)tulo apresentaremos os c(cid:243)digos corretores de er-
+ros do ponto de vista do ensino mØdio, em particular o C(cid:243)digo de
+Hamming, mostrando como o Diagrama de Venn pode ser utilizado
+para veri(cid:28)car e corrigir mensagens com atØ um erro na transmissªo.
+
+No terceiro cap(cid:237)tulo apresentaremos os c(cid:243)digos corretores de er-
+ros do ponto de vista da Ælgebra linear, de(cid:28)nindo o que Ø alfabeto,
+palavra, comprimento de palavra, mØtrica de Hamming, dist(cid:226)ncia en-
+tre palavras, c(cid:243)digo corretor. Exempli(cid:28)camos os c(cid:243)digos do Teste de
+Paridade, de Repeti(cid:231)ªo BinÆria e do C(cid:243)digo de Hamming, de(cid:28)nimos
+tambØm a dist(cid:226)ncia m(cid:237)nima de um c(cid:243)digo linear e matrizes geradoras
+de um c(cid:243)digo, para entªo chegarmos a uma matriz de teste de paridade
+do C(cid:243)digo de Hamming.
+
+Segue, entªo, que o objetivo do nosso trabalho Ø mostrar a aplica-
+(cid:231)ªo do c(cid:243)digo de Hamming do ponto de vista do Ensino Fundamental e
+tambØm da `lgebra Linear, e apresentar uma Matriz Teste de Paridade
+especial para o C(cid:243)digo de Hamming.
+
+21
+
+2 C.C.E. NO PONTO DE VISTA DO ENSINO
+
+FUNDAMENTAL E M(cid:201)DIO
+
+N(cid:243)s seres humanos estamos constantemente nos comunicando,
+com tudo aquilo que nos cerca. O simples fato de olharmos uma ima-
+gem e identi(cid:28)cÆ-la exempli(cid:28)ca um processo de comunica(cid:231)ªo, jÆ que
+comunica(cid:231)ªo Ø a a(cid:231)ªo de transmitir uma mensagem e tambØm de rece-
+ber mensagens, ou seja, pode ser dita como transmissªo e recebimento
+de informa(cid:231)ıes. Por exemplo, a nossa capacidade de falar e ouvir, nos
+faz constantemente estar transmitindo e recebendo informa(cid:231)ıes.
+
+O nosso cotidiano estÆ cercado de intera(cid:231)ıes, com o meio ambi-
+ente, com outras pessoas, com materiais. O recebimento de correspon-
+dŒncias, como contas de luz, Ægua e telefone, via correio, tambØm pode
+ser entendida como uma intera(cid:231)ªo entre o remetente e o destinatÆrio
+e uma transmissªo de informa(cid:231)ıes. Nossa visªo, tambØm sugere uma
+intera(cid:231)ªo, para que consigamos enxergar uma Ærvore, o nosso cØrebro
+recebe informa(cid:231)ıes que sªo captadas por nossos olhos e as traduz na
+imagem que vemos. Quando sentimos um cheiro gostoso, ou nªo muito
+bom, tambØm estamos recebendo um tipo de informa(cid:231)ªo que Ø proces-
+sada pelo nosso cØrebro.
+
+Mas nem todos esses processos de comunica(cid:231)ªo ocorrem facil-
+mente. Na transmissªo de informa(cid:231)ıes podem ocorrer diversos tipos de
+interferŒncias. No caso da nossa fala, barulhos externos podem interfe-
+rir na compreensªo de uma conversa, assim como problemas auditivos.
+Imagine que o seu carteiro pegue um dia muito chuvoso e que
+suas correspondŒncias molhem no percurso que ele faz atØ a sua casa.
+VocŒ receberÆ seus documentos molhados e provavelmente com di(cid:28)cul-
+dades de decifrar o que esta escrito neles, isso Ø mais um exemplo de
+interferŒncia. Assim como, quando olhamos por uma janela que Ø feita
+de um vidro opaco, isso acaba interferindo na imagem que vemos e
+nem sempre conseguimos decifrar o que esta por de trÆs do vidro. No
+caso do olfato, se ao mesmo tempo que alguØm cozinha uma comida
+muito perfumada, alguØm estiver utilizando um produto qu(cid:237)mico muito
+forte, seu olfato nªo serÆ capaz de identi(cid:28)car a informa(cid:231)ªo que esta re-
+cebendo, pois esta sofrendo interferŒncia.
+
+Mas o que podemos fazer para ajudar nesses processos de trans-
+missªo de informa(cid:231)ıes que estªo sofrendo interferŒncias? Muitas vezes
+quando estamos conversando com alguma pessoa e nªo conseguimos
+compreender o que ela falou, pedimos que ela repita. Nesse processo,
+nem sempre a pessoa fala exatamente o que havia dito antes, mas com
+
+22
+
+as informa(cid:231)ıes que coletamos no primeiro momento, mais as informa-
+(cid:231)ıes que coletamos no segundo momento, normalmente conseguimos
+decifrar o que a pessoa quis nos falar.
+
+Nesse processo de repeti(cid:231)ªo, estamos utilizando redund(cid:226)ncia, que
+consiste em acrescentar partes extras (cid:224) mensagem, que auxiliam no pro-
+cesso de sua compreensªo. Nem sempre a repeti(cid:231)ªo nos ajuda a decifrar
+a mensagem, por exemplo no caso de olhar atravØs do vidro opaco, re-
+petidamente nªo irÆ nos ajudar a enxergar o que esta atrÆs dele, para
+resolver essa interferŒncia precisamos de outra abordagem.
+
+A redund(cid:226)ncia, por se tratar de qualquer informa(cid:231)ªo extra acres-
+cida na mensagem original, pode ser na forma de informa(cid:231)ıes sendo
+enviadas repetidamente, como tambØm pode ser alguma informa(cid:231)ªo
+diferente da enviada, mas que junto com a mensagem original, auxilia
+na sua compreensªo. Nosso estudo acontecerÆ em cima dessas informa-
+(cid:231)ıes extras que surgem a partir da mensagem original.
+
+Com o desenvolvimento da tecnologia e surgimento dos compu-
+tadores, veio a necessidade de armazenar qualquer tipo de informa(cid:231)ªo
+com mais con(cid:28)abilidade e simplicidade. Sendo assim, as informa(cid:231)ıes
+armazenadas e transmitidas por computadores, CD’s, sªo codi(cid:28)cadas
+em sequŒncias binÆrias. Mas esse processo nªo estÆ livre de interferŒn-
+cias.
+
+Na transmissªo de informa(cid:231)ªo, existem diversas maneiras de co-
+di(cid:28)car e decodi(cid:28)car mensagens em binÆrio. Primeiramente Ø dif(cid:237)cil pen-
+sarmos em como Ø poss(cid:237)vel escrever um texto com d(cid:237)gitos, mas existem
+artif(cid:237)cios para isso.
+
+A partir de 1960, foi desenvolvida uma tabela chamada ASCII,
+capaz de converter caracteres em sequŒncias binÆrias. Esta tabela con-
+siste em um conjunto de 255 sequŒncias binÆrias de 8 d(cid:237)gitos, em que
+cada sequŒncia representa um caracter (uma letra ou um sinal de pon-
+tua(cid:231)ªo, por exemplo); assim, podemos utilizar a tabela ASCII para co-
+di(cid:28)car em uma sequŒncia binÆria, qualquer mensagem escrita usando
+os caracteres contemplados pela tabela, trocando cada caractere pela
+sequŒncia binÆria de 8 d(cid:237)gitos que a ele corresponde. Esta tabela Ø
+apenas uma das maneiras de codi(cid:28)carmos uma mensagem.
+
+Vejamos a frase "Quando abro a porta de uma nova descoberta
+jÆ encontro Deus lÆ dentro." de Albert Einsten. Utilizando a tabela
+ASCII, podemos codi(cid:28)car o s(cid:237)mbolo " de aspas duplas, como 00100010,
+a letra Q maiœscula como 01010001, e assim a frase codi(cid:28)cada (cid:28)ca
+(lendo-se em linhas, da esquerda para a direita):
+
+23
+
+00100010 01010001 01110101 01100001 01101110 01100100
+
+01101111 00100000 01100001 01100010 01110010 01101111
+
+00100000 01100001 00100000 01110000 01101111 01110010
+
+01110100 01100001 00100000 01100100 01100101 00100000
+
+01110101 01101101 01100001 00100000 01101110 01101111
+
+01110110 01100001 00100000 01100100 01100101 01110011
+
+01100011 01101111 01100010 01100101 01110010 01110100
+
+01100001 00100000 01101010 11100001 00100000 01100101
+
+01101110 01100011 01101111 01101110 01110100 01110010
+
+01101111 00100000 01000100 01100101 01110101 01110011
+
+00100000 01101100 11100001 00100000 01100100 01100101
+
+01101110 01110100 01110010 01101111 00101110 00100010
+
+A Tabela ASCII tambØm pode ser usada para a codi(cid:28)ca(cid:231)ªo de
+mensagens numØricas. Por exemplo, o nœmero 6347 em base decimal
+pode ser codi(cid:28)cado como
+
+00110110001100110011010000110111,
+
+se o tratarmos como um texto escrito considerando 6, 3, 4 e 7 como
+caracteres.
+
+Na matemÆtica, existe uma maneira de representar qualquer nœ-
+mero natural usando uma sequŒncia binÆria, usando a representa(cid:231)ªo
+numØrica em base 2. Adiante mostrarei como fazer esta conversªo.
+
+Nosso sistema usual de numera(cid:231)ªo, Ø o sistema posicional em
+base 10, que esse que se utiliza de dez algarismos (0,1,2,3,4,5,6,7,8,9)
+para formar os in(cid:28)nitos nœmeros naturais que conhecemos e operamos.
+Mas esta nªo Ø a œnica base em que podemos escrever um nœmero.
+(cid:201) poss(cid:237)vel escrever qualquer nœmero natural em outra base, como por
+exemplo a base 8, a base 2, entre outras.
+
+Nossas televisıes, celulares e computadores utilizam o sistema
+binÆrio, ou seja, o sistema de base 2, que Ø compostos de somente dois
+algarismos, o 0 e o 1, ou seja, os nœmeros sªo compostos apenas por
+sequŒncias binÆrias.
+
+Identi(cid:28)car um nœmero na base 10 Ø um processo automÆtico para
+n(cid:243)s; jÆ no sistema binÆrio, requer um pouco de aten(cid:231)ªo. Observe: O
+
+24
+
+nœmero
+
+3 377
+
+estÆ representado na base 10. A representa(cid:231)ªo de um nœmero na base
+10, signi(cid:28)ca que cada algarismo corresponde a multiplica(cid:231)ªo do mesmo,
+por uma potŒncia de base 10, onde o algarismo das unidades Ø multi-
+plicado por 100, o algarismo das dezenas Ø multiplicado por 102, o
+algarismo da centena Ø multiplicado por 103, e assim sucessivamente,
+aumentando uma unidade no expoente por vez, isto signi(cid:28)ca que sua
+representa(cid:231)ªo decimal (cid:28)ca
+
+3 × 103 + 3 × 102 + 7 × 101 + 7 × 100.
+
+Mas e se quisØssemos fazer sua representa(cid:231)ªo no sistema binÆrio, como
+seria?
+
+O processo consiste em escrever o nœmero utilizando potŒncias de
+base 2, mas para isso, Ø preciso que fa(cid:231)amos as sucessivas divisıes por 2.
+
+3 377 = 2 × 1 688 + 1
+
+1 688 = 2 × 844 + 0
+
+884 = 2 × 422 + 0
+
+422 = 2 × 211 + 0
+
+211 = 2 × 105 + 1
+
+105 = 2 × 52 + 1
+
+52 = 2 × 26 + 0
+
+26 = 2 × 13 + 0
+
+13 = 2 × 6 + 1
+
+6 = 2 × 3 + 0
+
+3 = 2 × 1 + 1
+
+Para escrever o nœmero na base 2, devemos utilizar os d(cid:237)gitos
+dos restos das divisıes, ou seja, em sequŒncia binÆria, logo o nœmero
+pode ser escrito como:
+
+110 100 110 001,
+
+e como na base decimal, isto signi(cid:28)ca que cada algarismo representa
+
+25
+
+uma multiplica(cid:231)ªo por uma potŒncia de base 2, ou seja:
+
+1 × 211 + 1 × 210 + 0 × 29 + 1 × 28 + 0 × 27 + 0 × 26+
+1 × 25 + 1 × 24 + 0 × 23 + 0 × 22 + 0 × 21 + 1 × 20.
+
+2.1 DIAGRAMA DE VENN
+
+No envio de uma mensagem na forma de sequŒncias binÆrias,
+queremos incluir informa(cid:231)ıes extras, redundantes, que ajudem o recep-
+tor a decidir se houve erros na transmissªo da mensagem e, caso um
+erro ocorra, que o auxiliem a corrigi-lo. Mas como decidir qual infor-
+ma(cid:231)ªo extra enviar? Abaixo irei apresentar uma maneira de fazer isso,
+visto que existem diversas.
+
+Imagine que a mensagem binÆria a ser enviada Ø uma sequŒncia
+
+de quatro d(cid:237)gitos:
+
+d1 d2 d3 d4 .
+
+Cada um desses d(cid:237)gitos pode ser o 0 ou o 1. Por exemplo, uma
+mensagem poderia ser 1001, outra seria 1110, entre tantas outras pos-
+s(cid:237)veis de se formar.
+
+Considere um Diagrama de Venn com trŒs conjuntos, A, B e C,
+
+como na Figura 1.
+
+Figura 1 (cid:21) Diagrama de Venn
+
+Preencha as intersec(cid:231)ıes dos conjuntos com os d(cid:237)gitos da men-
+
+sagem, como apresentado na Figura 2.
+
+Na Figura 2, hÆ trŒs regiıes restantes sem d(cid:237)gitos. Usaremos os
+d(cid:237)gitos jÆ presentes em cada um dos conjuntos para determinar quais
+d(cid:237)gitos escrever nessas regiıes.
+
+• Se em um dos conjuntos tivermos uma quantidade par de d(cid:237)gitos
+
+1, escreveremos o d(cid:237)gito 0 na regiªo correspondente;
+
+• Se o conjunto tiver uma quantidade (cid:237)mpar de d(cid:237)gitos 1, escreve-
+
+remos o d(cid:237)gito 1 na regiªo correspondente.
+
+26
+
+Figura 2 (cid:21) D(cid:237)gitos da Mensagem
+
+Nosso diagrama agora (cid:28)carÆ preenchido como na Figura 3.
+
+Figura 3 (cid:21) Diagrama de Venn
+
+Entªo, a mensagem (cid:28)nal a ser enviada, constitu(cid:237)da pelos quatro
+d(cid:237)gitos da mensagem original, acrescidos dos trŒs d(cid:237)gitos extras encon-
+trados como acima, (cid:28)ca:
+
+d1 d2 d3 d4 v1 v2 v3.
+
+Exemplo 1. Considere a mensagem
+
+1101.
+
+Iremos colocar os d(cid:237)gitos no diagrama de Venn, seguindo a ordem
+
+de d1, d2, d3, d4.
+
+Figura 4 (cid:21) 1101
+
+Para decidir quais serªo os d(cid:237)gitos extras na mensagem (cid:28)nal a
+ser enviada, vamos analisar na Figura 5 cada conjunto, com seus res-
+
+27
+
+pectivos d(cid:237)gitos jÆ presentes.
+
+Figura 5 (cid:21) 1101
+
+Ao analisarmos o conjunto B, notamos que a parte sombreada
+possui dois d(cid:237)gitos 1, ou seja, uma quantidade par, entªo o d(cid:237)gito a ser
+acrescentado Ø o 0. No conjunto C, notamos que a parte sombreada
+possui dois d(cid:237)gitos 1, ou seja, uma quantidade par, entªo o d(cid:237)gito a ser
+acrescentado Ø o 0. JÆ no conjunto A, notamos que a parte sombreada
+possui trŒs d(cid:237)gitos 1, ou seja, uma quantidade (cid:237)mpar, entªo o d(cid:237)gito a
+ser acrescentado Ø o 1.
+
+O diagrama da mensagem 1101 a ser enviada, com d(cid:237)gitos extras
+
+serÆ como o da Figura 6.
+
+Figura 6 (cid:21) 1101
+
+Entªo a mensagem com informa(cid:231)ıes extras a ser enviada serÆ:
+
+d1
+|
+1
+
+d2
+|
+1
+
+d3
+|
+0
+
+d4
+|
+1
+
+v1
+|
+0
+
+v2
+|
+0
+
+v3
+|
+1
+
+Mas o que acontece se a mensagem a ser enviada possuir mais
+de quatro d(cid:237)gitos? Utilizando o Diagrama de Venn para encontrar as
+informa(cid:231)ıes adicionais a serem enviadas juntamente com a mensagem,
+escrevemos quatro d(cid:237)gitos e adquirimos trŒs informa(cid:231)ıes extras, por-
+tanto, devemos separar a mensagem a ser enviada em blocos de quatro
+d(cid:237)gitos, e, para cada bloco de quatro d(cid:237)gitos, encontramos os trŒs d(cid:237)gi-
+tos extras como acima.
+
+28
+
+Observe o nœmero 3 377 que anteriormente escrevemos em base
+2 na forma: 110 100 110 001. Perceba que os quatro primeiros d(cid:237)gitos
+do nœmero, sªo exatamente o exemplo que acabamos de fazer.
+
+Seguindo a mesma regra aplicada para os quatro primeiros di-
+gitos, os diagramas de Venn correspondente aos pr(cid:243)ximos oito d(cid:237)gitos
+(separados em dois blocos de quatro d(cid:237)gitos cada) sªo os seguintes:
+
+Figura 7 (cid:21) 0011 0001
+
+Desta maneira, a mensagem
+
+1101 0011 0001
+
+serÆ transmitida em blocos de sete algarismos, onde os quatro primeiros
+d(cid:237)gitos sªo a mensagem e os trŒs œltimos sªo os d(cid:237)gitos extras obtidos
+com o aux(cid:237)lio do diagrama de Venn. Deste modo a mensagem que o
+destinatÆrio deve receber Ø:
+
+1101 001 0011 001 0001 111.
+
+2.2 DETECTANDO E CORRIGINDO ERROS
+
+Como jÆ dito anteriormente um processo de transmissªo de infor-
+ma(cid:231)ıes pode sofrer constantemente interferŒncias, e com isso um d(cid:237)gito
+que foi transmitido como 0 pode chegar a seu destinatÆrio como 1, o
+que modi(cid:28)ca completamente a mensagem.
+
+Hamming na dØcada de 40, jÆ estudava como identi(cid:28)car e corri-
+gir estes problemas de interferŒncias, jÆ que os computadores da Øpoca,
+quando identi(cid:28)cavam que houve algum erro simplesmente interrom-
+piam a leitura.
+
+Com base nos estudos de Hamming, em 1948, Shannon criou
+um c(cid:243)digo que chamou de (7,4)-C(cid:243)digo de Hamming, e que Ø capaz de
+identi(cid:28)car e corrigir erros.
+
+No exemplo utilizado anteriormente, acrescentamos informa(cid:231)ıes
+
+29
+
+extras (cid:224) mensagem original a ser enviada, com a ideia de identi(cid:28)car-
+mos poss(cid:237)veis erros na transmissªo da mensagem. Isso nos mostra uma
+maneira de utilizar redund(cid:226)ncia, capaz de nos ajudar a detectar e tal-
+vez corrigir poss(cid:237)veis erros causados pelas interferŒncias no processo de
+transmissªo da informa(cid:231)ªo.
+
+Exemplo 2. Vamos analisar a mensagem recebida em binÆrio
+
+1111000.
+
+Vamos assim, exempli(cid:28)car como o c(cid:243)digo (7,4)-Hamming possi-
+bilita detectar erros nas transmissıes de informa(cid:231)ıes. Suponha que na
+transmissªo da mensagem houve erro em apenas um d(cid:237)gito.
+
+Para isso vamos utilizar o diagrama de Venn, da Figura 8 colo-
+
+cando todos os d(cid:237)gitos respeitando a ordem d1, d2, d3, d4, v1, v2, v3.
+
+Figura 8 (cid:21) 1111 000
+
+Vamos analisar cada um dos conjuntos e seus respectivos elemen-
+tos na Figura 9. Note que no conjunto B, a parte sombreada possui
+uma quantidade (cid:237)mpar de d(cid:237)gitos 1, logo seu d(cid:237)gito extra tambØm de-
+veria ser o 1 ao invØs do 0. No conjunto C, notamos que a sua parte
+sombreada tambØm possui uma quantidade (cid:237)mpar de d(cid:237)gitos 1, entªo
+seu d(cid:237)gito extra deveria ser o 1 e nªo o zero. Ao analisarmos o conjunto
+A, a parte sombreada, possui uma quantidade (cid:237)mpar de d(cid:237)gitos 1, logo,
+o d(cid:237)gito extra deveria ser o 1 e nªo o zero.
+
+Com isso, conseguimos perceber que o erro encontra-se na inter-
+sec(cid:231)ªo presente nos trŒs conjuntos, ou seja, no d4, e portanto a mensa-
+gem correta a ser transmitida Ø
+
+1110 000
+
+e sua representa(cid:231)ªo correta no Diagrama de Venn (cid:28)ca como na Figura
+10.
+
+30
+
+Figura 9 (cid:21) 1111 000-1
+
+Figura 10 (cid:21) 1110 000
+
+Exemplo 3. Vamos analisar outro exemplo:
+
+1011011.
+
+Suponha que na transmissªo da mensagem houve erro em apenas um
+d(cid:237)gito.
+
+Para isso, vamos utilizar o mesmo processo do exemplo anterior,
+distribuindo os d(cid:237)gitos no diagrama de Venn, na ordem jÆ especi(cid:28)cada,
+como na Figura 11
+
+Figura 11 (cid:21) 1011 011
+
+Seguindo o mesmo processo do exemplo anterior, e analisando as
+
+intersec(cid:231)ıes correspondentes a cada conjunto, temos:
+
+A parte sombreada do conjunto B na Figura 12 possui uma quan-
+tidade par de d(cid:237)gitos 1, logo a informa(cid:231)ªo extra Ø o 0. No conjunto C a
+parte sombreada, possui uma quantidade (cid:237)mpar de d(cid:237)gitos 1, logo o d(cid:237)-
+gito extra Ø o 1. Continuando a nossa anÆlise, olhando agora o conjunto
+
+31
+
+Figura 12 (cid:21) 1011 011 - 1
+
+A, vemos que a parte sombreada possui uma quantidade par de d(cid:237)gitos
+1, portanto o seu d(cid:237)gito extra deve ser 0, e nªo o 1. Encontramos um
+erro nesta transmissªo.
+
+Com o auxilio do c(cid:243)digo (7,4)-Hamming, fomos capazes de perce-
+ber um erro no conjunto A e, somente nele, portanto o erro encontra-se
+na informa(cid:231)ªo extra, pois se estivesse em algum dos d(cid:237)gitos da mensa-
+gem original, ter(cid:237)amos detectado erros nos outros d(cid:237)gitos extras tam-
+bØm.
+
+Entªo a mensagem sofreu interferŒncia em sua transmissªo, e
+como esse erro ocorreu na informa(cid:231)ªo extra, somos capazes de corrigi-
+la. Portanto a mensagem correta seria
+
+1011 010.
+
+Figura 13 (cid:21) 1011 010 - 2
+
+Exemplo 4. Vamos analisar outro exemplo. Vejamos a mensagem
+
+1001 001.
+
+Suponha que na transmissªo da mensagem houve erros, mas que nªo
+sabemos a quantidade.
+
+Novamente vamos colocÆ-la no diagrama de Venn para podermos
+
+analisar os poss(cid:237)veis erros na transmissªo.
+
+32
+
+Figura 14 (cid:21) 1001 001
+
+Vamos observar agora as intersec(cid:231)ıes com seus respectivos d(cid:237)gi-
+
+tos extras.
+
+Figura 15 (cid:21) 1001 001 - 1
+
+Podemos observar que no conjunto B da Figura 15, a parte som-
+breada possui uma quantidade (cid:237)mpar de d(cid:237)gitos 1, logo seu d(cid:237)gito extra
+deveria ser o 1 e nªo o 0. No conjunto C, a parte sombreada possui
+uma quantidade par de d(cid:237)gitos 1, logo seu d(cid:237)gito Ø o 0. Ao olharmos
+o conjunto A, notamos que a parte sombreada possui uma quantidade
+par de d(cid:237)gitos 1, portanto o seu d(cid:237)gito deveria ser o 0 e nªo o 1.
+
+Analisando o diagrama para fazermos as devidas corre(cid:231)ıes, per-
+cebemos que tanto os d(cid:237)gitos extras dos conjuntos A e B podem estar
+errados quanto o algarismo colocado no espa(cid:231)o de intersec(cid:231)ªo d2.
+
+Desta maneira nªo conseguimos corrigir a mensagem, pois existe
+mais de uma possibilidade, como podemos ver nos diagramas abaixo:
+
+Figura 16 (cid:21) 1001 001 - 2
+
+Entªo existem duas possibilidades para a mensagem que foi en-
+
+33
+
+viada, e nªo conseguimos identi(cid:28)car a correta:
+
+1101 001 ou 1001 100.
+
+Percebemos com essas anÆlises, que o c(cid:243)digo (7,4)-Hamming Ø
+capaz de identi(cid:28)car atØ dois erros ocorridos durante a transmissªo de
+dados, mas Ø capaz de corrigir apenas um erro.
+
+34
+
+35
+
+3 C(cid:211)DIGOS CORRETORES DE ERROS
+
+Este cap(cid:237)tulo trarÆ a formaliza(cid:231)ªo da ideia de codi(cid:28)ca(cid:231)ªo de
+mensagens para transmissªo e da ideia de detec(cid:231)ªo e corre(cid:231)ªo de erros
+de transmissªo.
+
+Analisando o que Ø uma mensagem, percebemos que estas sªo
+compostas de palavras, e estas por sua vez, sªo compostas de letras
+pertencentes ao alfabeto. PorØm, como visto anteriormente, cada letra
+pode ser representada por uma sequŒncia binÆria, composta apenas
+pelos caracteres 0 e 1, e assim as mensagens sªo transformadas em
+mensagens binÆrias.
+
+De(cid:28)ni(cid:231)ªo 3.1. Por alfabeto entendemos um conjunto nªo vazio A (cid:28)-
+xado. Os elementos de A serªo chamados de letras deste alfabeto. Uma
+palavra no alfabeto A consiste de uma sequŒncia de n letras deste alfa-
+beto, para algum n ∈ N; neste caso, n Ø chamado de comprimento da
+palavra. O conjunto de todas as palavras no alfabeto A de comprimento
+n Ø denotado por An.
+
+Se p Ø uma palavra de comprimento n no alfabeto A dada pela
+
+sequŒncia de letras a1, a2, . . . , an, denotaremos este fato por
+
+p = a1a2 . . . an.
+
+Esta nota(cid:231)ªo Ø a que utilizamos normalmente no caso de palavras
+no alfabeto usual da l(cid:237)ngua portuguesa: a palavra dada pela sequŒncia
+de letras f,a,m,(cid:237),l,i,a Ø escrita simplesmente como fam(cid:237)lia, com as letras
+concatenadas uma ao lado da outra em ordem.
+
+Exemplo 5. No alfabeto A = {0, 1}, as letras do alfabeto sªo 0 e 1;
+tem-se que 0011011 Ø uma palavra de comprimento 7, e 101 Ø uma
+palavra de comprimento 3. O conjunto A3 de todas as palavras de
+comprimento 3 neste alfabeto Ø
+
+A3 = {000, 001, 010, 011, 100, 101, 110, 111}.
+
+De(cid:28)ni(cid:231)ªo 3.2. Para um alfabeto A e n ∈ N∗, um c(cid:243)digo corretor de
+erros no alfabeto A consiste de um subconjunto nªo vazio C ⊆ An.
+Neste caso, n Ø chamado de comprimento do c(cid:243)digo C. No caso parti-
+cular em que A = 0, 1, um c(cid:243)digo corretor de erros C no alfabeto A Ø
+tambØm chamado de um c(cid:243)digo binÆrio.
+
+Exemplo 6. Os conjuntos C1 = {000, 100, 001, 010} e C2 = {111, 011}
+
+36
+
+sªo c(cid:243)digos binÆrios de comprimento 3.
+
+Como vimos anteriormente, em um processo de transmissªo de
+mensagens, temos as palavras que queremos transmitir e as palavras
+que realmente transmitimos, estas acrescidas de redund(cid:226)ncias, ou seja,
+informa(cid:231)ıes extras capazes de nos permitir perceber se a mensagem
+que recebemos realmente Ø a mensagem que nos foi enviada. As pa-
+lavras originais da mensagem, formam um conjunto de palavras que Ø
+um c(cid:243)digo corretor de erros, chamado de c(cid:243)digo da fonte. JÆ, as pala-
+vras acrescidas de redund(cid:226)ncias, formam um conjunto de palavras que
+tambØm Ø um c(cid:243)digo corretor de erros, chamado de c(cid:243)digo do canal. O
+processo utilizado para transformar as palavras originais nas palavras
+acrescidas de redund(cid:226)ncia Ø chamado de codi(cid:28)ca(cid:231)ªo de canal. Por-
+tanto, uma codi(cid:28)ca(cid:231)ªo de canal Ø, formalmente, uma fun(cid:231)ªo do c(cid:243)digo
+da fonte para o c(cid:243)digo de canal.
+
+Exemplo 7. No cap(cid:237)tulo anterior, (cid:28)zemos exemplos disso, com o c(cid:243)-
+digo de Hamming. Naqueles exemplos, as palavras originais sªo pa-
+lavras de 4 letras no alfabeto A = {0, 1} que geram um conjunto de
+palavras que Ø o c(cid:243)digo da fonte, e este por sua vez Ø A4. As palavras
+que transmitiremos, sªo as palavras originais acrescidas de 3 informa-
+(cid:231)ıes redundantes, formando palavras de 7 letras no alfabeto A, e este
+processo jÆ foi descrito anteriormente. Entªo, o c(cid:243)digo de canal Ø um
+subconjunto de A7. O processo que utilizamos para transformar pala-
+vras de 4 letras em palavras de 7 letras, que foi descrito anteriormente
+atravØs de diagramas de Venn, forma a codi(cid:28)ca(cid:231)ªo de canal.
+
+Exemplo 8. Utilizando novamente o alfabeto A = {0, 1}, vamos consi-
+derar A6 como c(cid:243)digo da fonte. Isso indica que as mensagens originais
+serªo palavras de 6 letras no alfabeto A. Para transmitirmos a mensa-
+gem, modi(cid:28)caremos cada palavra acrescentando uma letra ao (cid:28)nal. A
+codi(cid:28)ca(cid:231)ªo de canal Ø feita da seguinte maneira:
+
+• Se a soma das letras da palavra original for par, acrescentamos
+
+0;
+
+• Se a soma das letras da palavra original for (cid:237)mpar, acrescentamos
+
+1.
+
+Por exemplo, a palavra 100100 do c(cid:243)digo da fonte serÆ modi(cid:28)cada para a
+palavra 1001000, pois 1 + 0 + 0 + 1 + 0 + 0 = 2, que Ø par. Note que essa
+letra extra Ø uma redund(cid:226)ncia, que foi obtida atravØs da informa(cid:231)ªo
+presente nas letras da palavra original. Esta letra acrescida ao (cid:28)nal
+da palavra original p ∈ A6 Ø chamada de bit de paridade da palavra
+
+37
+
+p. Realizando esse processo em todas as palavras de A6, obteremos um
+subconjunto C de A7, dado por
+
+C = {p = a1 . . . a7 ∈ A7|a7 Ø o bit de paridade de a1 . . . a6}.
+
+Note que C Ø o c(cid:243)digo de canal neste caso, o qual chamamos de c(cid:243)digo
+do teste de paridade. O processo descrito acima, que leva cada palavra
+do c(cid:243)digo da fonte na nova palavra do c(cid:243)digo de canal, Ø a codi(cid:28)ca(cid:231)ªo
+de canal, que acrescenta um bit de paridade ao (cid:28)nal da palavra.
+
+AtØ o presente momento, tratamos da formaliza(cid:231)ªo do processo
+de codi(cid:28)ca(cid:231)ªo para o envio de mensagens. Precisamos agora, pensar a
+respeito do problema em detectar erros de transmissªo e corrigi-los se
+poss(cid:237)vel.
+
+O processo de detectar erros Ø simples, apesar de nem sempre
+ser poss(cid:237)vel fazŒ-lo: tanto o emissor quanto o receptor da mensagem
+conhecem o c(cid:243)digo de canal, portanto sabem quais palavras poderiam
+em princ(cid:237)pio ter sido enviadas. Por exemplo, se o c(cid:243)digo de canal usado
+Ø
+
+C = {00000, 10010, 01100, 10101}
+
+e o receptor recebeu a palavra p = 10110, entªo consultando o c(cid:243)digo
+de canal percebe-se que a palavra p nªo pertence ao c(cid:243)digo de canal.
+Isto signi(cid:28)ca que o emissor nªo enviou a palavra p, e detectou-se por-
+tanto um erro na transmissªo.
+
+Para corrigir os erros da transmissªo, o problema Ø mais deli-
+cado, pois nªo sabemos quantos erros ocorreram na transmissªo. Por
+exemplo, a palavra enviada poderia ter sido 00000, e na transmissªo
+ocorreram erros na primeira, terceira e quarta letras, uma vez que a
+palavra recebida foi p = 10110; ou a palavra enviada poderia ter sido
+10010, e neste caso teria havido erro na transmissªo apenas na terceira
+letra.
+
+Para que o processo de corre(cid:231)ªo dos erros na transmissªo seja
+poss(cid:237)vel, precisamos saber algo a respeito da con(cid:28)abilidade do meio de
+transmissªo das mensagens. (cid:201) preciso saber alguma informa(cid:231)ªo sobre a
+mØdia de erros que podemos esperar na transmissªo de um certa quan-
+tidade de letras pelo meio de transmissªo escolhido.
+
+Por exemplo, se optarmos por um meio de transmissªo em que a
+mØdia de erros na transmissªo Ø de uma em cada um milhªo de letras
+transmitidas, Ø provÆvel que se o receptor detectou um erro na trans-
+missªo de uma palavra esse erro tenha ocorrida em apenas uma letra.
+Assim, pode-se supor que houve apenas um erro (ele pode estar errado,
+mas muito provavelmente estÆ correto), e tentar corrigir a palavra re-
+
+38
+
+cebida com base nesta informa(cid:231)ªo.
+
+Comparando a palavra recebida p = 10110 com as palavras pos-
+s(cid:237)veis do c(cid:243)digo da fonte C, vemos que a œnica palavra de C que difere
+de p em uma œnica letra Ø a palavra 10010. Deste modo, o receptor
+conclui que a palavra enviada foi 10010, e o processo de corre(cid:231)ªo estÆ
+conclu(cid:237)do.
+
+Nosso trabalho nªo tem o intuito de estudar as particularidades
+dos meios de transmissªo nem suas con(cid:28)abilidades; temos o interesse
+em saber se o c(cid:243)digo de canal que apresentamos Ø capaz de detectar
+que houve erros na transmissªo e, se houverem erros, se ele nos fornece
+informa(cid:231)ıes su(cid:28)ciente para corrigi-los, supondo que seja de nosso co-
+nhecimento que tenha havido no mÆximo t erros durante a transmissªo.
+Tratando formalmente o problema desse ponto de vista, somos
+capazes de criar c(cid:243)digos de canal com capacidade de detec(cid:231)ªo e corre-
+(cid:231)ªo de erros determinados; deste modo, quando o usuÆrio conhecer a
+con(cid:28)abilidade do meio de transmissªo a ser usado, ele poderÆ optar por
+um c(cid:243)digo de canal que melhor se adeque (cid:224)s particularidades do meio
+de transmissªo escolhido, para maximizar as possibilidades de corre(cid:231)ªo
+de eventuais erros de transmissªo.
+
+Usaremos agora, uma abordagem geomØtrica e essa envolve no-
+(cid:231)ıes de dist(cid:226)ncia: se temos palavras p, q, r, com p e q diferindo em uma
+letra e p e r diferindo em duas letras, podemos imaginar que a palavra
+q estÆ mais pr(cid:243)xima da palavra p do que a palavra r, ou que a palavra
+r estÆ mais distante da palavra p do que a palavra q.
+
+A no(cid:231)ªo de dist(cid:226)ncia entre palavras, surge a partir desta com-
+para(cid:231)ªo entre palavras e as letras em que elas diferem e Ø conhecida
+como dist(cid:226)ncia de Hamming. Formalmente, a dist(cid:226)ncia de Hamming Ø
+exemplo do que chamaremos de mØtrica sobre um conjunto de palavras,
+e portanto Ø tambØm conhecida por mØtrica de Hamming; veremos isto
+com mais detalhes, a partir de agora.
+
+3.1 A M(cid:201)TRICA DE HAMMING
+
+Como vimos anteriormente, em matemÆtica, mØtrica Ø um con-
+ceito que diz respeito a generaliza(cid:231)ªo da ideia geomØtrica de dist(cid:226)ncia.
+
+De(cid:28)ni(cid:231)ªo 3.3. Dado um conjunto nªo vazio M , uma mØtrica sobre
+M consiste de uma fun(cid:231)ªo d : M × M → R+ satisfazendo trŒs axiomas:
+
+(M1) Para quaisquer x, y ∈ M , d(x, y) = 0 se e somente se x = y.
+
+39
+
+(M2) Para quaisquer x, y ∈ M tem-se que d(x, y) = d(y, x).
+
+(M3) Para quaisquer x, y, z ∈ M tem-se que d(x, z) ≤ d(x, y) +
+d(y, z).
+
+Dada uma mØtrica d sobre um conjunto M e elementos x, y ∈ M
+quaisquer, dizemos que d(x, y) Ø a dist(cid:226)ncia de x atØ y, ou simplesmente
+a dist(cid:226)ncia entre x e y.
+De(cid:28)ni(cid:231)ªo 3.4. Dados n ∈ N∗, A um alfabeto e para palavras u, v ∈ An
+quaisquer,a dist(cid:226)ncia de Hamming entre u e v Ø de(cid:28)nida como o nœmero
+de letras em que u e v diferem. A fun(cid:231)ªo d : An × An → R+ que leva
+cada par ordenado (x, y) de palavras de comprimento n no alfabeto A na
+dist(cid:226)ncia de Hamming entre elas Ø chamada de dist(cid:226)ncia de Hamming.
+
+Exemplo 9. Seja o alfabeto A = {0, 1} e todas as palavras de 4 letras
+pertencentes a A, ou seja A4, temos as seguintes palavras:
+
+0000, 0001, 0010, 0100, 1000, 0011, 0110, 1100,
+
+0101, 1001, 1010, 0111, 1011, 1101, 1110, 1111.
+
+Vamos analisar a dist(cid:226)ncia de algumas palavras, com 1111.
+d(0000, 1111) = 4, pois as palavras diferem em quatro posi(cid:231)ıes.
+d(0010, 1111) = 3, pois as palavras diferem em trŒs posi(cid:231)ıes.
+d(1100, 1111) = 2, pois as palavras diferem em duas posi(cid:231)ıes.
+d(0111, 1111) = 1, pois as palavras diferem em uma posi(cid:231)ªo.
+
+De(cid:28)ni(cid:231)ªo 3.5. Dados n ∈ N∗, A um alfabeto, x, y ∈ An e i ∈ 1, . . . , n
+quaisquer, denotando por xi e yi as i-Øsimas letras de x e y, respecti-
+vamente, de(cid:28)nimos o nœmero d(x, y)i como
+
+d(x, y)i =
+
+(cid:40)
+
+0 se xi = yi
+1 se xi (cid:54)= yi
+
+.
+
+Observa(cid:231)ªo 3.1. Segue das de(cid:28)ni(cid:231)ıes que para quaisquer x, y ∈ An
+tem-se que
+
+d(x, y) = d(x, y)1 + d(x, y)2 + . . . + d(x, y)n =
+
+n
+(cid:88)
+
+i=1
+
+d(x, y)i
+
+Iremos agora provar que a dist(cid:226)ncia de Hamming Ø uma mØtrica.
+Proposi(cid:231)ªo 3.1.1. Para quaisquer n ∈ N∗ e alfabeto A, a dist(cid:226)ncia
+de Hamming Ø uma mØtrica sobre An.
+
+40
+
+Demonstra(cid:231)ªo. JÆ sabemos que a dist(cid:226)ncia de Hamming Ø uma fun(cid:231)ªo
+d : An × An → R+. Logo, basta mostrarmos que d satisfaz os trŒs
+axiomas da mØtrica.
+
+Para (M1): Sejam x, y ∈ An quaisquer e suponha que d(x, y) = 0,
+temos que xi = yi ∀i ∈ 1, . . . , n, logo x = y. Por outro lado, se
+x = y entªo xi = yi ∀i ∈ 1, . . . , n, portanto d(x, y) = 0.
+
+Para (M2): Sejam x, y ∈ An quaisquer. Sabemos que d(x, y) Ø,
+por de(cid:28)ni(cid:231)ªo, o nœmero de letras em que x e y diferem. TambØm,
+d(y, x) Ø o nœmero de letras em que y e x diferem. Claramente,
+sªo a mesma coisa, isto Ø, d(x, y) = d(y, x).
+
+Para (M3): Sejam x, y, z ∈ An quaisquer. Seja i ∈ 1, . . . , n qual-
+quer. Temos dois casos: ou xi = yi, ou xi (cid:54)= yi.
+
+• Se xi = yi, entªo d(x, y)i = 0 ≤ d(x, z)i + d(z, y)i.
+
+• Se xi (cid:54)= yi, entªo d(x, y)i = 1.
+
+AlØm disso, neste caso zi nªo pode ser simultaneamente igual a xi
+e a yi, logo, temos que ou xi (cid:54)= zi ou yi (cid:54)= zi. Em outras palavras,
+ou d(x, z)i = 1 ou d(y, z)i = 1, e portanto d(x, z)i + d(y, z)i ≥ 1.
+Nos dois casos, chegamos (cid:224) mesma conclusªo, portanto tem-se
+que para todo i ∈ 1, . . . , n vale que
+
+d(x, y)i ≤ d(x, z)i + d(z, y)i.
+
+Usando a Observa(cid:231)ªo 3.1,
+
+d(x, y) =
+
+n
+(cid:88)
+
+i=1
+
+d(x, y)i ≤
+
+=
+
+n
+(cid:88)
+
+i=1
+n
+(cid:88)
+
+i=1
+
+(d(x, z)i + d(z, y)i)
+
+d(x, z)i +
+
+n
+(cid:88)
+
+i=1
+
+d(z, y)i
+
+= d(x, z) + d(z, y)
+
+Por esta razªo, a dist(cid:226)ncia de Hamming tambØm Ø chamada de
+
+mØtrica de Hamming.
+
+41
+
+De(cid:28)ni(cid:231)ªo 3.6. Dados n ∈ N∗, A um alfabeto e C um c(cid:243)digo corretor
+de erros de comprimento n sobre o alfabeto A, a dist(cid:226)ncia m(cid:237)nima de
+C Ø a menor dist(cid:226)ncia de Hamming entre pares de palavras distintas
+de C, isto Ø,
+
+min{d(u, v)|u, v ∈ C com u (cid:54)= v}.
+
+Denotaremos a dist(cid:226)ncia m(cid:237)nima do c(cid:243)digo C por d.
+
+Exemplo 10. Sejam C um c(cid:243)digo corretor de comprimento 4 e u, v, w ∈
+C e u (cid:54)= v, u (cid:54)= w e v (cid:54)= w, tais que u = 0010, v = 0011 e w = 1001.
+Vamos comparar as palavras de C duas a duas.
+
+• (u e v) Note que a primeira entrada de u e v sªo iguais, entªo
+d(u1, v1) = 0. A segunda entrada de u e v sªo iguais, entªo
+d(u2, v2) = 0. A terceira entrada de u e v sªo iguais, entªo
+d(u3, v3) = 0. E na quarta entrada de u e v, notamos que hÆ
+diferen(cid:231)a, entªo d(u4, v4) = 1.
+Segue da Observa(cid:231)ªo 3.1,
+
+d(u, v) = 0 + 0 + 0 + 1 = 1.
+
+• (u e w) Note que a primeira entrada de u e w sªo diferentes,
+entªo d(u1, w1) = 1. A segunda entrada de u e w sªo iguais,
+entªo d(u2, w2) = 0. A terceira entrada de u e w sªo diferentes,
+entªo d(u3, w3) = 1. E na quarta entrada de u e v, notamos que
+hÆ diferen(cid:231)a, entªo d(u4, w4) = 1.
+Segue da Observa(cid:231)ªo 3.1,
+
+d(u, w) = 1 + 0 + 1 + 1 = 3.
+
+• (v e w ) Note que a primeira entrada de v e w sªo diferentes,
+entªo d(v1, w1) = 1. A segunda entrada de v e w sªo iguais,
+entªo d(v2, w2) = 0. A terceira entrada de v e w sªo diferentes,
+entªo d(v3, w3) = 1. E na quarta entrada de v e w, notamos que
+nªo hÆ, entªo d(v4, w4) = 0.
+Segue da Observa(cid:231)ªo 3.1,
+
+d(v, w) = 1 + 0 + 1 + 0 = 2.
+
+Portanto, pela De(cid:28)ni(cid:231)ªo 3.6, a dist(cid:226)ncia m(cid:237)nima do c(cid:243)digo C Ø d = 1.
+
+De(cid:28)ni(cid:231)ªo 3.7. Dados n, r ∈ N∗, A um alfabeto e a ∈ An, o disco de
+centro a e raio r Ø o subconjunto de An denotado por D(a, r) formado
+
+42
+
+por todas as palavras de An que diferem de a em no mÆximo r posi(cid:231)ıes,
+isto Ø,
+
+D(a, r) = {u ∈ An|d(u, a) ≤ r}.
+
+Quando tratamos de discos, a ideia Ø de que se um c(cid:243)digo corre-
+tor de erros C possuir dist(cid:226)ncia m(cid:237)nima grande, entªo os discos centra-
+dos em palavras deste c(cid:243)digo C com raios menores que esta dist(cid:226)ncia
+m(cid:237)nima nªo terªo palavras em comum; o tamanho deste raio depende
+da dist(cid:226)ncia m(cid:237)nima do c(cid:243)digo C. Pensando geometricamente, pode-
+mos supor que se esses raios nªo ultrapassarem metade da dist(cid:226)ncia d,
+conseguimos garantir que os discos centrados nas palavras do c(cid:243)digo
+C com estes raios nªo terªo intersec(cid:231)ªo, ou seja, serªo disjuntos. Mas
+precisamente, temos a seguinte de(cid:28)ni(cid:231)ªo.
+
+De(cid:28)ni(cid:231)ªo 3.8. Dados n ∈ N∗, A um alfabeto e C um c(cid:243)digo corretor
+de erros de comprimento n sobre o alfabeto A com dist(cid:226)ncia m(cid:237)nima d,
+denotaremos por k o nœmero natural dado pela parte inteira de d−1
+2 .
+
+Se a parte inteira de um nœmero real t Ø denotada por [t], entªo
+
+temos que
+
+k =
+
+(cid:20) d − 1
+2
+
+(cid:21)
+
+.
+
+Proposi(cid:231)ªo 3.1. Sejam d e k como acima.
+
+1. Se d Ø par, entªo d = 2k + 2;
+
+2. Se d Ø (cid:237)mpar, entªo d = 2k + 1.
+
+Demonstra(cid:231)ªo. Se d Ø par, existe l ∈ N∗ tal que d = 2l. Nesse caso,
+
+temos que
+
+k =
+
+(cid:21)
+
+(cid:20) d − 1
+2
+
+=
+
+(cid:21)
+
+(cid:20) 2l − 1
+2
+
+= l − 1 ⇒ l = k + 1.
+
+Entªo d = 2(k + 1) = 2k + 2, como quer(cid:237)amos provar.
+
+Se d Ø (cid:237)mpar, existe um l ∈ N∗ tal que d = 2l − 1. Nesse caso, temos
+
+que
+
+k =
+
+(cid:21)
+
+(cid:20) d − 1
+2
+
+=
+
+(cid:21)
+
+(cid:20) 2l − 1 − 1
+1
+
+=
+
+(cid:21)
+
+(cid:20) 2l − 2
+2
+
+= l − 1 ⇒ l = k + 1.
+
+Entªo d = 2(k + 1) − 1 = 2k + 2 − 1 = 2k + 1, como quer(cid:237)amos
+provar.
+
+43
+
+Nosso pr(cid:243)ximo resultado, mostrarÆ precisamente que k Ø o maior
+raio de modo que todos os discos centrados em palavras do c(cid:243)digo C
+com esse raio k sªo disjuntos aos pares.
+
+Proposi(cid:231)ªo 3.2. Para quaisquer n ∈ N∗, A um alfabeto, C um c(cid:243)digo
+corretor de erros com dist(cid:226)ncia m(cid:237)nima d e r ∈ N, sªo equivalentes:
+
+1. r ≤ k;
+
+2. para quaisquer c, c(cid:48) ∈ C com c (cid:54)= c(cid:48) temos que
+
+D(c, r) ∩ D(c(cid:48), r) = ∅.
+
+Demonstra(cid:231)ªo.
+
+(1 ⇒ 2) Seja r ∈ N qualquer e suponha que r ≤ k.
+Tome c, c(cid:48) ∈ C quaisquer tais que c (cid:54)= c(cid:48). Suponha x ∈ D(c, r) ∩
+D(c(cid:48), r). Logo pelo item (iii) da De(cid:28)ni(cid:231)ªo 3.3 temos que
+
+d(c, c(cid:48)) ≤ d(c, r) + d(c(cid:48), r) ≤ r + r ≤ k + k = 2k ≤ d − 1.
+
+Observe que 2k ≤ d − 1 pois k = (cid:2) d−1
+
+2
+
+(cid:3), logo
+
+d(c, c(cid:48)) ≤ d − 1
+
+o que Ø absurdo, pois a menor dist(cid:226)ncia entre duas palavras do
+c(cid:243)digo C Ø d.
+
+(2 ⇒ 1) Seja r ∈ N e suponha r > k. A dist(cid:226)ncia m(cid:237)nima de C Ø d,
+logo existem c, c(cid:48) ∈ C que d(c, c(cid:48)) = c Suponha que r > k. Desta
+maneira encontraremos palavra a ∈ An, tal que d(c, a) = k + 1
+e d(c(cid:48), a) = d − (k + 1). Visto que k < r por hip(cid:243)tese, temos
+k +1 ≤ r e assim d(c, a) = k +1 ≤ r, de onde obtemos a ∈ D(c, r).
+a ∈ D(c(cid:48), r): de fato, temos dois casos, d Ø par ou d Ø (cid:237)mpar.
+
+• Se d Ø par, temos d = 2k + 2 pela Proposi(cid:231)ªo 3.1 , logo
+
+d(c(cid:48), a) = d − (k + 1) = (2k + 2) − (k + 1) = k + 1 ≤ r.
+
+44
+
+• Se d Ø (cid:237)mpar temos d = 2k + 1, logo
+
+d(c(cid:48), a) = d − (k + 1) = (2k + 1) − (k + 1) = k < r.
+
+Assim, tem-se que d(c(cid:48), a) ≤ r nos dois casos, e portanto a ∈
+D(c(cid:48), r), como a(cid:28)rmamos. Portanto, a ∈ D(c, r) ∩ D(c(cid:48), r),
+de onde segue que D(c, r) ∩ D(c(cid:48), r) (cid:54)= ∅, e isto conclui a
+demonstra(cid:231)ªo, por contra positiva.
+
+O resultado anterior nos mostra que k dita a capacidade de cor-
+re(cid:231)ªo de erros do c(cid:243)digo C. Por exemplo, se em uma transmissªo,
+soubermos que ocorreram 4 erros e a palavra recebida foi p, entªo po-
+demos a(cid:28)rmar que a dist(cid:226)ncia entre a palavra original c e a palavra
+recebida Ø 4, ou seja, d(p, c) = 4
+
+Agora, se c(cid:48) Ø outra palavra deste c(cid:243)digo C e a dist(cid:226)ncia entre
+c(cid:48) e p for 4, ou seja, d(c(cid:48), p) = 4, o receptor nªo saberÆ decidir qual das
+duas palavras do c(cid:243)digo foi enviada, jÆ que as palavras c e c(cid:48) diferem
+da palavra recebida em quatro posi(cid:231)ıes.
+
+Pensando geometricamente, temos que, se d(p, c) = 4, entªo
+p ∈ D(c, 4) e similarmente se d(p, c(cid:48)) = 4, entªo p ∈ D(c(cid:48), 4), por-
+tanto, p pertence aos dois discos, o seja p ∈ D(c, 3) ∩ D(c(cid:48), 3) e com
+isso D(c, 3) ∩ D(c(cid:48), 3) (cid:54)= ∅. O que nos mostra que se o nœmero de erros
+for muito grande, entªo haverÆ pelo menos dois discos centrados em
+palavras do c(cid:243)digo C com raio igual ao nœmero de erros, com alguma
+palavra p em comum, e neste caso o receptor nªo saberÆ como corrigir a
+palavra p, visto que pelo menos duas palavras diferem em quantidades
+iguais de letras da palavra p recebida.
+
+Se o nœmero de erros na transmissªo de uma palavra (cid:28)car abaixo
+do nœmero k acima, garantimos que os discos centrados nas palavras de
+C com raios k serªo disjuntos, e portanto a palavra recebida pertencerÆ
+a apenas um destes discos, logo o erro poderÆ ser corrigido!
+
+Vamos agora a formaliza(cid:231)ªo destas ideias.
+
+Proposi(cid:231)ªo 3.3. Para quaisquer n ∈ N∗, A um alfabeto, C um c(cid:243)digo
+corretor de erros de comprimento n sobre A e t ∈ N, sªo equivalentes:
+
+1. C pode corrigir todas as transmissıes com no mÆximo t erros;
+
+2. os discos de raio t centrados nas palavras de C sªo disjuntos aos
+
+pares.
+
+45
+
+Demonstra(cid:231)ªo.
+
+(1 ⇒ 2) Por contrapositiva: Seja t ∈ N qualquer e su-
+ponha que existam c, c(cid:48) ∈ C tais que D(c, t) ∩ D(c(cid:48), t) (cid:54)= ∅. Entªo,
+existe uma palavra a ∈ An nesta intersec(cid:231)ªo.
+Usaremos a para mostrar que existe uma poss(cid:237)vel transmissªo
+com no mÆximo t erros que nªo pode ser corrigida: de fato, supo-
+nha que a palavra c foi transmitida, mas a palavra a foi recebida.
+Entªo, como d(c, a) ≤ t, pois a ∈ D(c, t), temos que nesta trans-
+missªo ocorreram no mÆximo t erros.
+Para corrigir os erros, procuramos as palavras de C que distam de
+a no mÆximo t unidades. O problema aqui Ø que hÆ pelo menos
+duas tais palavras: c e c(cid:48).
+Assim, o receptor nªo tem informa(cid:231)ıes su(cid:28)cientes para decidir se
+a palavra enviada foi c ou c(cid:48), e deste modo o erro nªo pode ser
+corrigido.
+
+(2 ⇒ 1) Seja t ∈ N qualquer e suponha que os discos de raio t centra-
+
+dos nas palavras de C sªo disjuntos aos pares.
+A(cid:28)rmamos que C pode corrigir todos os erros de atØ t s(cid:237)mbolos:
+com efeito, suponha que ao transmitirmos uma palavra c ∈ C, a
+palavra recebida foi a ∈ An, e sabemos que ocorreram no mÆximo
+t erros na transmissªo. Entªo, a ∈ D(c, t), pois d(c, a) ≤ t.
+Por hip(cid:243)tese, os discos de raio t centrados nas palavras de C sªo
+disjuntos aos pares; logo, a palavra nªo estÆ em nenhum outro
+disco de raio t centrado em alguma palavra de a. Isto garante ao
+receptor que a palavra transmitida foi de fato a palavra C, visto
+que todas as outras palavras c(cid:48) ∈ C sªo tais que d(c(cid:48), a) > t e
+sabemos que houve no mÆximo t erros na transmissªo.
+
+Deste modo, a transmissªo pode ser corrigida, e o resultado estÆ
+
+provado.
+
+Agora, com o pr(cid:243)ximo resultado, mostraremos que k no mostra
+
+precisamente a capacidade de corre(cid:231)ªo de erros de um c(cid:243)digo C.
+
+Teorema 3.1. Para quaisquer n ∈ N∗, A um alfabeto, C um c(cid:243)digo
+corretor de erros de comprimento n sobre A e d ∈ N∗, se C tem dis-
+t(cid:226)ncia m(cid:237)nima d, entªo k = (cid:2) d−1
+(cid:3) Ø o maior t tal que C pode corrigir
+todas as transmissıes com no mÆximo t erros.
+
+2
+
+Demonstra(cid:231)ªo. Suponha que C tem dist(cid:226)ncia m(cid:237)nima d. Pela Propo-
+si(cid:231)ªo 3.2, os discos de raio k centrados nas palavras de C sªo disjuntos
+aos pares. Pela Proposi(cid:231)ªo 3.3, C pode corrigir todas as transmissıes
+
+46
+
+com no mÆximo k erros. Provaremos que k Ø o maior nœmero natural
+positivo tal que C pode corrigir todas as transmissıes com no mÆximo
+k erros. Seja t ∈ N qualquer e suponha que t > k. Pela Proposi(cid:231)ªo 3.2,
+existem palavras c, c(cid:48) ∈ C tais que D(c, t) ∩ D(c(cid:48), t) (cid:54)= ∅. Pela Proposi-
+(cid:231)ªo 3.3, isto garante que C nªo consegue corrigir todas as transmissıes
+com no mÆximo t erros. Assim, k Ø de fato o maior nœmero natural
+positivo tal que C pode corrigir todas as transmissıes com no mÆximo
+k erros.
+
+3.2 C(cid:211)DIGOS CORRETORES
+
+Ao longo desta se(cid:231)ªo e das seguintes, denotaremos F como um
+corpo (cid:28)nito com q elementos, que serÆ o alfabeto de todos os c(cid:243)digos
+apresentados, a menos que dito o contrÆrio.
+
+Dado um n ∈ N∗, considere o espa(cid:231)o vetorial Mn×1(F) sobre o
+corpo F, que por simplicidade denotaremos por Vn. Note que cada vetor
+v de Vn Ø uma matriz coluna com n entradas, todas estas, preenchidas
+com elementos de F, unicamente determinados por v. (cid:201) poss(cid:237)vel criar,
+portanto, uma identi(cid:28)ca(cid:231)ªo entre vetores de Vn e palavras de compri-
+mento n no alfabeto F: identi(cid:28)camos cada vetor v ∈ Vn, digamos
+
+v =
+
+
+
+
+
+
+
+
+,
+
+
+
+
+
+
+
+
+a1
+a2
+...
+an
+
+com a palavra a1a2 . . . an ∈ F; por esta razªo, tambØm chamamos os
+vetores de Vn de palavras de comprimento n no alfabeto F.
+
+Para cada vetor v ∈ Vn, denotaremos a i-Øsima entrada de v por
+
+vi, de modo que
+
+v =
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+v1
+v2
+...
+vn
+
+Um corpo particularmente importante para o nosso estudo Ø Z2,
+que consiste no conjunto {0, 1} com adi(cid:231)ªo e multiplica(cid:231)ªo de(cid:28)nidas
+como:
+
+• Adi(cid:231)ªo:
+
+47
+
+• Multiplica(cid:231)ªo:
+
++ 0
+0
+0
+1
+1
+
+·
+0
+1
+
+0
+0
+0
+
+1
+1
+0
+
+1
+0
+1
+
+Este serÆ o corpo usado em todos os c(cid:243)digos lineares binÆrios.
+
+De(cid:28)ni(cid:231)ªo 3.2.1. Dado n ∈ N∗, um c(cid:243)digo linear de comprimento n
+consiste de um subespa(cid:231)o vetorial W de Vn. No caso particular em que
+F = Z2, dizemos que W Ø um c(cid:243)digo linear binÆrio de comprimento n.
+
+Exemplo 11. (C(cid:243)digo do Teste de Paridade)
+
+Sejam F = Z2, n ∈ N∗ e considere o seguinte subconjunto Wn de
+
+Vn:
+
+Wn = {v ∈ Vn|vn = v1 + v2 + · · · + vn−1}.
+
+A(cid:28)rma(cid:231)ªo: Wn Ø um subespa(cid:231)o de Vn.
+
+−→
+0 Ø tal que
+
+−→
+0 i = 0 ∀ i ∈ {1, . . . , n}, logo
+
+•
+
+−→
+0 1 +
+
+−→
+0 2 + . . .
+
+−→
+0 n−1 = 0 + · · · + 0 = 0 =
+
+−→
+0 n,
+
+logo
+
+−→
+0 ∈ W .
+
+• Sejam u, v ∈ Wn quaisquer. Entªo
+
+vn = v1 + . . . vn−1 e un = u1 + · · · + un−1.
+
+Assim,
+
+vn + un = (v1 + u1) + · · · + (vn−1 + un−1).
+
+Como (v + u)i = vi + ui ∀ i ∈ {1, . . . n}, temos que v + u ∈ Wn.
+
+48
+
+• Sejam v ∈ Wn e α ∈ Z2 qualquer. Entªo
+
+vn = v1 + . . . vn−1
+
+e
+
+α · vn = α(v1 + . . . vn−1) = α · v1 + · · · + α · vn−1,
+
+portanto αv ∈ Wn.
+
+Pelo exposto, Wn Ø subespa(cid:231)o vetorial de Vn.
+
+A(cid:28)rma(cid:231)ªo: este c(cid:243)digo Ø capaz de detectar no mÆximo um erro
+
+na transmissªo de uma palavra qualquer.
+
+Demonstra(cid:231)ªo. Seja v ∈ Wn+1 qualquer e suponha que ao transmiti-la
+ocorreu um erro. Se a palavra recebida foi v(cid:48) entªo d(v, v(cid:48)) = 1.
+
+• Se o erro foi em vn+1, entªo
+
+1 + · · · + v(cid:48)
+v(cid:48)
+
+n = v1 + · · · + vn = vn+1 (cid:54)= v(cid:48)
+
+n+1,
+
+logo v(cid:48) /∈ Wn+1 e conclui-se que houve erro.
+
+• Se o erro foi em vi para algum i ∈ {1, . . . , n}, temos que v(cid:48)
+
+i (cid:54)= vi
+
+e v(cid:48)
+
+j = vj ∀ j (cid:54)= i. Assim,
+
+n+1 = vn+1 = v1 + . . . vn = v(cid:48)
+v(cid:48)
+i−1 + vi + v(cid:48)
+1 + · · · + v(cid:48)
+
+= v(cid:48)
+
+1 + · · · + v(cid:48)
+i+1 + v(cid:48)
+
+i−1 + vi + v(cid:48)
+
+i+1 + v(cid:48)
+n
+
+n (cid:54)= v(cid:48)
+
+1 + · · · + v(cid:48)
+n
+
+e portanto v(cid:48) /∈ Wn+1, logo houve erro.
+
+PorØm, nªo podemos corrigir o erro, por exemplo: seja
+
+v =
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+1
+1
+1
+
+∈ W3+1.
+
+Suponha que a palavra v(cid:48) recebida seja
+
+v(cid:48) =
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+0
+1
+1
+
+∈ W3+1,
+
+49
+
+percebemos que houve erro, pois o bit de paridade Ø o d(cid:237)gito 1 e a
+soma dos algarismos da palavra Ø 1 + 0 + 1 = 2 que Ø par, porØm
+nªo conseguimos determinar em qual das trŒs entradas de v(cid:48) ocorreu o
+erro.
+
+Exemplo 12. (C(cid:243)digo de Repeti(cid:231)ªo BinÆria)
+
+Este c(cid:243)digo consiste em utilizarmos uma repeti(cid:231)ªo das letras da
+
+palavra em uma ordem n.
+
+Vnk = Mnk×1(R), dado por
+
+Seja F = Z2, n, k ∈ N∗, considere o subconjunto R ⊆ Vnk, onde
+
+R = {v ∈ Vnk| ∀ i ∈ {0, . . . , n − 1} temos vik+1 = vik+2 = · · · = vik+k} .
+
+A(cid:28)rma(cid:231)ªo: R Ø subespa(cid:231)o de Vnk.
+
+−→
+0 Ø tal que
+
+−→
+0 ik = 0 ∀ i ∈ {1, . . . , n}, logo
+
+•
+
+−→
+0 0k+1 =
+
+−→
+0 1k+2 = · · · =
+
+−→
+0 (n−1)k+k =
+
+−→
+0 nk,
+
+logo
+
+−→
+0 ∈ Vnk.
+
+• Sejam u, v ∈ Vnk quaisquer. Entªo ∀i ∈ {0, . . . , n − 1},
+
+vik+1 = vik+2 = · · · = vik+k e uik+1 = uik+2 = . . . vik+k.
+
+Assim,
+
+vik + uik = vik+1 + uik+1 = · · · = vik+k + uik+k.
+
+Como (v + u)ik = vik + uik∀i, temos que v + u ∈ Vnk.
+
+• Sejam v ∈ Vnk e α ∈ Z2 qualquer. Entªo ∀i ∈ {0, . . . , n − 1},
+
+αvik+1 = . . . = αvik+k.
+
+Portanto, αv ∈ Vnk.
+
+Para codi(cid:28)ca(cid:231)ªo: Vn Ø o c(cid:243)digo de fonte e R Ø o c(cid:243)digo de canal.
+
+Portanto temos que, para v ∈ Vn, v =
+
+
+
+
+
+, monta-se a palavra
+
+
+
+
+
+v1
+...
+vn
+
+50
+
+v(cid:48) ∈ Vnk repetindo-se cada letra de v k vezes.
+
+Note que v(cid:48) ∈ R, logo temos codi(cid:28)ca(cid:231)ªo de canal T : Vn → R tal
+
+que T (v) = v(cid:48) ∀ v ∈ Vn.
+
+Exemplo 13. (C(cid:243)digo de Hamming)
+Em F = Z2, considere o subconjunto W de V7 dado por
+
+W = {v ∈ V7| v5 = v2 + v3 + v4 e v6 = v1 + v3 + v4 e v7 = v1 + v2 + v3} .
+
+−→
+0 Ø tal que
+
+−→
+0 i = 0 ∀ i ∈ {1, . . . , n}, logo
+
+•
+
+−→
+0 5 =
+
+−→
+0 2 +
+
+−→
+0 3 +
+
+−→
+0 4 =
+
+−→
+0
+
+−→
+0 6 =
+
+−→
+0 1 +
+
+−→
+0 3 +
+
+−→
+0 4 =
+
+−→
+0
+
+−→
+0 7 =
+
+−→
+0 1 +
+
+−→
+02 +
+
+−→
+0 4 =
+
+−→
+0
+
+e
+
+e
+
+−→
+0 ∈ W.
+
+logo
+
+• Sejam u, v ∈ W quaisquer. Entªo
+
+v5 = v2 + v3 + v4 e v6 = v1 + v3 + v4 e v7 = v1 + v2 + v4
+
+e
+
+u5 = u2 + u3 + u4 e u6 = u1 + u3 + u4 e u7 = u1 + u2 + u4.
+
+Assim,
+
+e
+
+e
+
+v5 + u5 = v2 + u2 + v3 + u3 + v4 + u4
+
+v6 + u6 = v1 + u1 + v3 + u3 + v4 + u4
+
+v7 + u7 = v1 + u1 + v2 + u2 + v4 + u4.
+
+Como (v + u)i = vi + ui ∀ i ∈ {1, . . . n}, temos que v + u ∈ W .
+
+• Sejam v ∈ W e α ∈ Z2 qualquer. Entªo
+
+v5 = v2 + v3 + v4 e v6 = v1 + v3 + v4 e v7 = v1 + v2 + v4.
+
+Assim,
+
+αv5 = α(v2 + v3 + v4) = αv2 + αv3 + αv4,
+
+51
+
+,
+
+e
+
+αv6 = α(v1 + v3 + v4) = αv1 + αv3 + αv4
+
+αv7 = α(v1 + v2 + v4) = αv1 + αv2 + αv4.
+
+Portanto, como (αv)i = αvi, temos que αv ∈ W .
+
+Pelo exposto, W Ø um subespa(cid:231)o vetorial de V7.
+
+Para codi(cid:28)ca(cid:231)ªo: V4 Ø o c(cid:243)digo da fonte, W Ø o c(cid:243)digo do canal
+
+e T Ø a codi(cid:28)ca(cid:231)ªo de canal. Portanto temos que
+
+v =
+
+
+
+
+
+
+
+
+
+
+
+
+
+v1
+v2
+v3
+v4
+
+∈ V4 T−→ v(cid:48) =
+
+
+
+
+
+
+
+
+
+
+
+v1
+v2
+v3
+v2 + v3 + v4
+v1 + v3 + v4
+v1 + v2 + v4
+
+
+
+
+
+
+
+
+
+
+
+∈ W.
+
+3.2.1 Dist(cid:226)ncia M(cid:237)nima de um C(cid:243)digo Linear
+
+Para um c(cid:243)digo linear W de comprimento n, dadas duas palavras
+
+v, w ∈ W podemos fazer a diferen(cid:231)a entre elas,
+
+v − w =
+
+
+
+
+
+
+
+
+v1
+v2
+...
+vn
+
+
+
+
+
+
+
+
+−
+
+
+
+
+
+
+
+
+w1
+w2
+...
+wn
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+v1 − w1
+v2 − w2
+...
+vn − wn
+
+
+
+
+
+
+
+
+.
+
+perceba que as palavras v e w diferem na letra i se e somente se as
+entradas vi e wi forem diferentes, ou seja vi (cid:54)= wi, o que ocorre se e
+somente se vi − wi (cid:54)= 0. Assim, podemos perceber que para determinar
+a dist(cid:226)ncia de Hamming entre v e w basta olharmos para o nœmero de
+entradas de v − w. Disso segue a seguinte de(cid:28)ni(cid:231)ªo.
+
+De(cid:28)ni(cid:231)ªo 3.9. Dados um c(cid:243)digo linear W de comprimento n e v ∈ W ,
+o peso de v Ø o nœmero denotado por w(v) e dado pelo nœmero de
+entradas nªo nulas de v.
+
+Note que, em particular, como w(v) Ø o nœmero de entradas nªo
+nulas de v, a dist(cid:226)ncia de v ao vetor nulo (cid:126)0 serÆ exatamente w(v), ou
+
+52
+
+seja w(v) = d(v,(cid:126)0). Como a dist(cid:226)ncia m(cid:237)nima de um c(cid:243)digo Ø a me-
+nor das dist(cid:226)ncias poss(cid:237)vel entre palavras distintas do c(cid:243)digo, temos de
+imediato o seguinte resultado.
+
+Proposi(cid:231)ªo 3.4. Para um c(cid:243)digo linear W, a dist(cid:226)ncia m(cid:237)nima de W
+Ø
+
+d = min{w(v)|v ∈ W \ {(cid:126)0}} = min{d(v,(cid:126)0)|v ∈ W \ {(cid:126)0}}.
+
+Logo, temos que para determinar a dist(cid:226)ncia m(cid:237)nima de um c(cid:243)-
+digo linear W com M vetores, basta realizarmos o cÆlculo de M − 1
+dist(cid:226)ncias de Hamming. Perceba que quando este M for grande, isto
+Ø muito melhor do que calcular todas as M (M −1)
+dist(cid:226)ncias entre os
+pares de elementos distintos do c(cid:243)digo linear W para determinar qual
+delas Ø a menor.
+
+2
+
+3.3 MATRIZES GERADORAS DE UM C(cid:211)DIGO LINEAR
+
+De(cid:28)ni(cid:231)ªo 3.10. Dados n, k ∈ N∗ tais que k ≤ n. Se k ≤ n, dizemos
+que uma matriz R ∈ Mn×k(F) tem forma padrªo se as primeiras k
+linhas de R formam matriz identidade k × k.
+
+Note que uma matriz na forma padrªo Ø como a que segue:
+
+(cid:21)
+
+(cid:20) Ik×k
+A(n−k)×k
+
+.
+
+De(cid:28)ni(cid:231)ªo 3.11. Dado um c(cid:243)digo linear W de comprimento n tal que
+dim(W ) = k, uma matriz geradora para W consiste de uma matriz
+G ∈ Mn×k(F) cujas k colunas formam uma base de W .
+
+Segundo a De(cid:28)ni(cid:231)ªo 3.11, temos que, se
+
+G =
+
+
+
+
+
+|
+|
+w1 w2
+|
+|
+
+|
+|
+. . . wk
+|
+|
+
+
+
+
+
+n×k
+
+e v =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+α1
+α2
+...
+αk
+
+∈ Vk, entªo
+
+G·v =
+
+
+
+
+
+|
+α1w1 + α2w2 + · · · + αkwk
+|
+
+
+
+ = α1w1 +α2w2 +· · ·+αkwk ∈ W.
+
+53
+
+Uma matriz geradora G para um c(cid:243)digo linear W pode ser usada
+para fazer uma codi(cid:28)ca(cid:231)ªo de canal, veja: seja Vk o c(cid:243)digo da fonte, e
+W o c(cid:243)digo de canal. Para cada palavra v ∈ Vk, podemos produzir a
+palavra v(cid:48) ∈ W dada por
+
+v(cid:48) = G · v.
+
+Observe que v(cid:48) Ø combina(cid:231)ªo linear das colunas de G, que por
+
+sua vez formam uma base de W , logo de fato v(cid:48) ∈ W .
+
+Se a matriz G estÆ na forma padrªo, entªo esta codi(cid:28)ca(cid:231)ªo de
+canal se dÆ de uma maneira bastante simples: o vetor v(cid:48) serÆ obtido
+a partir de v apenas adicionando algumas redund(cid:226)ncias nas œltimas
+entradas: Por exemplo, se F = R, k = 3 e n = 5, e se tivermos a matriz
+geradora G para um c(cid:243)digo linear W de comprimento 5 na forma padrªo
+dada por
+
+G =
+
+
+
+
+
+
+
+
+
+1 0
+0 1
+0 0
+7 2
+3 8
+
+
+0
+0
+
+
+1
+
+
+5
+
+4
+
+entªo para cada vetor v do c(cid:243)digo da fonte V3, digamos
+
+v =
+
+tem-se que v(cid:48) Ø dado por
+
+
+
+
+
+
+
+
+
+a
+b
+c
+
+v(cid:48) = G · v =
+
+
+1
+0
+
+
+0
+
+
+7
+
+3
+
+
+
+
+
+
+
+
+
+0 0
+1 0
+0 1
+2 5
+8 4
+
+
+
+·
+
+
+
+
+
+a
+b
+ =
+c
+
+
+
+
+
+
+
+
+
+a
+b
+c
+7a + 2b + 5c
+3a + 8b + 4c
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+|
+v
+|
+7a + 2b + 5c
+3a + 8b + 4c
+
+
+
+
+
+
+
+
+
+.
+
+Conseguimos com isso perceber que as trŒs primeiras entradas de
+v(cid:48) correspondem ao vetor v, e as demais entradas sªo obtidas a partir
+das trŒs primeiras, caracterizando-se assiim, como redund(cid:226)ncias.
+
+Com o pr(cid:243)ximo exemplo, mostraremos uma matriz geradora do
+
+c(cid:243)digo de Hamming.
+
+54
+
+Exemplo 14. Seja G a matriz dada por
+
+G =
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 0
+0 1
+0 0
+0 0
+0 1
+1 0
+1 1
+
+0
+0
+1
+0
+1
+1
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+0
+0
+0
+1
+1
+1
+1
+
+.
+
+Mostraremos que G Ø matriz geradora do c(cid:243)digo de Hamming, segundo
+a De(cid:28)ni(cid:231)ªo 3.11. Pela De(cid:28)ni(cid:231)ªo 3.11, temos que
+
+v(cid:48) = G · v,
+
+entªo
+
+v(cid:48) = G =
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 0
+0 1
+0 0
+0 0
+0 1
+1 0
+1 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 0
+0 0
+1 0
+0 1
+1 1
+1 1
+0 1
+
+·
+
+
+
+
+
+
+
+
+
+
+
+
+
+a
+b
+c
+d
+
+
+
+
+
+
+
+
+
+
+
+
+
+a
+b
+c
+d
+b + c + d
+a + c + d
+a + b + d
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+|
+v
+|
+b + c + d
+a + c + d
+a + b + d
+
+
+
+
+
+
+
+
+
+
+
+.
+
+=
+
+Conseguimos perceber que as quatro primeiras entradas do vetor
+v(cid:48) sªo correspondentes ao vetor v e as demais entradas sªo formadas
+a partir das quatro primeiras, caracterizando assim de G como uma
+matriz geradora do c(cid:243)digo de Hamming.
+
+Se transportarmos este exemplo para os exemplos que trabalha-
+mos com diagramas de Venn, percebemos que as quatro primeiras entra-
+das correspondem (cid:224)s entradas que no diagrama de Venn chamÆvamos
+de d1, d2, d3, d4 e que as demais trŒs entradas correspondem (cid:224)s entradas
+que no diagrama chamÆvamos de v1, v2, v3.
+
+Para um dado c(cid:243)digo linear W de comprimento n e dimensªo k,
+podemos construir diversas matrizes geradoras para esse c(cid:243)digo W , no
+caso, uma para cada base ordenada de W , mas isso nªo garante que
+teremos matriz geradora para W na forma padrªo.
+
+Por exemplo, se W Ø o subespa(cid:231)o vetorial de V3 dos vetores com
+primeira entrada igual a zero, entªo W nªo possui matriz geradora
+na forma padrªo, pois nªo existe vetor em W com primeira entrada
+igual a 1, e portanto nªo poder(cid:237)amos fazer a primeira coluna da matriz
+
+55
+
+identidade na matriz geradora.
+
+Entretanto, podemos encontrar uma matriz geradora G tal que,
+ap(cid:243)s uma permuta(cid:231)ªo de suas linhas, consigamos produzir uma matriz
+G(cid:48) na forma padrªo. Esta nova matriz nªo serÆ geradora do c(cid:243)digo W ,
+mas tambØm poderÆ ser usada para fazer codi(cid:28)ca(cid:231)ªo de canal.
+
+As colunas de G(cid:48) geram um outro c(cid:243)digo linear W (cid:48) tambØm de
+comprimento n e dimensªo k, que por sua vez pode ser dito equivalente
+ao c(cid:243)digo W . A ideia Ø entªo usar W (cid:48) como c(cid:243)digo de canal e G(cid:48) para
+efetuar a codi(cid:28)ca(cid:231)ªo de canal, jÆ que estÆ na forma padrªo.
+
+Para fazermos isso, Ø preciso relembrar as opera(cid:231)ıes elementares
+
+nas colunas de uma matriz, sªo elas:
+
+(C1) Permuta(cid:231)ªo de duas colunas;
+
+(C2) Multiplica(cid:231)ªo de uma coluna por um escalar nªo nulo;
+
+(C3) Adi(cid:231)ªo de um mœltiplo escalar de uma coluna a outra.
+
+O importante para n(cid:243)s Ø lembrar que usar opera(cid:231)ıes elementares
+nas colunas de uma matriz R ∈ Mn×k(F) nªo altera o subespa(cid:231)o veto-
+rial W de Vn gerado pelas colunas desta matriz; entªo, se as colunas de
+R formam uma base de W , as opera(cid:231)ıes elementares sobre as colunas
+de R sempre resultarªo em novas colunas que tambØm serªo base de
+W .
+
+Teorema 3.2. Seja W um c(cid:243)digo linear de comprimento n e dimensªo
+k. Entªo existe uma matriz geradora G para W e uma permuta(cid:231)ªo de
+suas linhas que produz uma matriz G(cid:48) na forma padrªo.
+
+Demonstra(cid:231)ªo. Suponha que W Ø um subespa(cid:231)o vetorial de Vn, com
+dim(W ) = k. Logo, existe base para W com k vetores, digamos B =
+{v1
+
+k}. Considere a matriz
+
+1, . . . v1
+
+A =
+
+
+
+
+
+|
+v1
+1
+|
+
+|
+v1
+2
+|
+
+|
+. . . v1
+k
+|
+
+
+
+
+
+.
+
+n×k
+
+Como B Ø uma base de W , os vetores v1
+e, em particular, v1
+1 (cid:54)=
+(v1
+
+k sªo todos nªo nulos
+−→
+0 . Assim, existe um i1 ∈ {1, . . . n} tal que
+
+1, . . . , v1
+
+1)i1 (cid:54)= 0.
+
+tiplicando-a por (v1
+
+Usaremos a opera(cid:231)ªo (C2) na primeira coluna desta matriz, mul-
+1)i1 (cid:54)= 0 e F Ø corpo), obtendo
+
+i1 (que existe pois (v1
+
+1)−1
+
+56
+
+uma nova matriz A(cid:48)
+1)−1
+(v1
+i1
+
+1)i1 · (v1
+
+= 1, a unidade do corpo F.
+
+1 cuja primeira coluna v2
+
+1 tem entrada i1 igual a
+
+Em seguida, usaremos a opera(cid:231)ªo (C3) sucessivamente, de modo
+a zerar a entrada i1 de todas as colunas, da segunda em diante: mais
+especi(cid:28)camente, para cada j ∈ {2, . . . , k}, trocamos a j-Øsima coluna
+j da matriz A(cid:48)
+v1
+j dado por
+
+1 pelo vetor v2
+
+j = v1
+v2
+
+j − (v1
+
+j )ij · v2
+1.
+
+Obtemos deste modo uma nova matriz A2 ∈ Mn×k(F) cujas
+k ainda sªo uma base para W , e de modo que para
+
+colunas v2
+todo j ∈ {1, . . . , k} tem-se que
+
+1. . . . .v2
+
+(v2
+
+j )i1 =
+
+(cid:40)
+
+1 se j = 1
+0 se j (cid:54)= 1.
+
+Sabemos que v2
+
+2)i2 (cid:54)= 0; alØm disso i2 (cid:54)= i1, pois (v2
+
+2 (cid:54)= (cid:126)0, pois a base de W , logo existe i2 ∈ {1, . . . , n}
+2)i1 = 0 por constru(cid:231)ªo.
+
+tal que (v2
+
+Prosseguindo como feito no caso da matriz A1, usamos a ope-
+2)−1
+ra(cid:231)ªo (C2) na segunda coluna de A2, multiplicando-a por (v2
+i2 para
+chegar em uma nova matriz A(cid:48)
+2 tem entrada
+i2 = 1 (e entrada i1 ainda igual a zero). Agora, usamos (C3) sucessi-
+vamente para que, para cada j ∈ {1, . . . , k} com j (cid:54)= 2, troquemos a
+j-Øsima coluna v2
+
+2 cuja segunda coluna v3
+
+2 pelo vetor v3
+
+j dado por
+
+j de A(cid:48)
+
+j = v2
+v3
+
+j − (v2
+
+j )i2 · v3
+2.
+
+(3.1)
+
+Assim, chegamos a uma matriz A3 ∈ Mn×k(F) cujas colunas
+k ainda sªo uma base para W , e tal que para qualquer j ∈
+
+1, . . . , v3
+v3
+{1, . . . , k} temos que
+
+(v3
+
+j )i2 =
+
+(cid:40)
+
+1 se j = 1
+0 se j (cid:54)= 1
+
+.
+
+Mais ainda, uma vez que (v3
+
+2)i1 = 0 por constru(cid:231)ªo, temos da
+
+Equa(cid:231)ªo 4.1 que (v3
+
+j )ij = (v2
+
+j )i1 para todo j, e assim, segue que
+
+(cid:40)
+
+(v3
+
+j )i1 =
+
+(v2
+(v2
+
+j )i1 = 1 se j = 1
+j )i1 = 0 se j (cid:54)= 1
+
+.
+
+57
+
+Em outras palavras, a primeira entrada da i1-Øsima linha de A3
+Ø igual a 1, e todas as outras zero; a segunda da i2-Øsima linha de A3 Ø
+igual a 1, e todas as demais zero. Prosseguindo desta forma, chegaremos
+a uma matriz Ak ∈ Mn×k(F) cujas colunas vk
+k sªo base de W ,
+e em inteiros distintos i1, . . . , ik ∈ {1, . . . , n} de modo que para todo
+r ∈ {1, . . . , k}, a r-Øsima entrada da linha ir de Ak Ø igual a 1, e todas
+as demais entradas desta linha sªo iguais a zero; resumindo, para cada
+r ∈ {1, . . . , k} tem-se que a ir-Øsima linha de Ak Ø igual a et
+r, onde er
+Ø o vetor da base can(cid:244)nica de Ak e et
+
+r Ø a transposta deste vetor.
+
+1 , . . . , vk
+
+Seja G = Ak. Entªo, pelo que vimos G Ø matriz geradora para
+W . AlØm disso, se permutarmos as linhas de G, trocando para cada
+r ∈ {1, . . . , k} a linha r com a linha ir, obteremos uma nova matriz
+G(cid:48) que, por constru(cid:231)ªo, tem as k primeiras linhas formando a matriz
+identidade k × k, e portanto estÆ na forma padrªo.
+
+3.4 MATRIZES DE TESTE DE PARIDADE
+
+Para darmos continuidade, Ø preciso (cid:28)xarmos algumas nota(cid:231)ıes
+
+e relembrar resultados de `lgebra Linear.
+
+Teorema 3.3. Sejam n, m ∈ N∗ e T : Vn −→ Vm uma transforma(cid:231)ªo
+linear. Entªo existe uma matriz A ∈ Mm×n(F) tal que para qualquer
+v ∈ Vn tem-se que
+
+T (v) = A · v.
+
+Demonstra(cid:231)ªo. Sendo B = {e1, . . . , en} e C = {g1, . . . , gm} as bases
+can(cid:244)nicas de Vn e Vm, respectivamente, para cada j ∈ {1, . . . , n} exis-
+tem escalares α1j, . . . , αmj tais que
+
+T (e1) = α11g1+α21g2+. . .+αm1gm = α11·
+
+
+1
+0
+
+
+...
+
+
+0
+
+...
+
+
+
+
+
+
+
+
++. . .+αm1·
+
+
+0
+...
+
+
+
+0
+
+1
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+α11
+α21
+...
+αm1
+
+58
+
+T (ej) = α1jg1+α2jg2+. . .+αmjgm = α1j·
+
++. . .+αmj·
+
+
+
+1
+0
+
+
+
+
+...
+
+
+
+
+0
+
+
+
+
+
+
+
+
+
+0
+...
+
+
+
+0
+
+1
+
+=
+
+
+
+
+
+
+
+
+α1j
+α2j
+...
+αmj
+
+
+
+
+
+
+
+
+=
+
+T (ej) = Σm
+
+i=1α1jgi =
+
+
+
+
+
+
+
+
+α1j
+α2j
+...
+αmj
+
+Seja A a matriz m × n dada por A = (αij)ij.
+
+
+
+|
+
+|
+
+
+
+|
+
+A =
+
+T (e1) T (e2)
+
+
+
+. . . T (en)
+
+ =
+
+|
+
+|
+
+|
+
+
+
+
+
+
+
+
+α11
+α21
+...
+αm1
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+. . . α1n
+. . . α2n
+...
+. . .
+. . . αmn
+
+= (αij)ij.
+
+Note que A Ø a matriz cujas colunas sªo os vetores T (ej). Para cada
+j ∈ {1, . . . , n}, tem-se que
+
+A · ej =
+
+
+
+
+
+
+
+
+= T (ej).
+
+
+
+
+
+
+
+
+α1j
+α2j
+...
+αmj
+
+Segue disso, da linearidade de T e da distributividade da multiplica(cid:231)ªo
+de matrizes pela adi(cid:231)ªo que, para qualquer v ∈ Vn, v = β1e1+. . .+βnen.
+Entªo
+
+59
+
+T (v) = β1T (e1) + . . . + βnT (en)
+= β1A · e1 + . . . + βnA · en
+= A(β1e1 + . . . + βnen) = A · v.
+
+Mostraremos a seguir que todo subespa(cid:231)o vetorial de Vn Ø nœcleo
+
+de alguma transforma(cid:231)ªo linear.
+
+Para um espa(cid:231)o vetorial V sobre um corpo F, k ∈ N∗ e vetores
+v1, . . . , vk ∈ V , denotaremos o subespa(cid:231)o vetorial de V gerado por estes
+vetores por
+
+[v1, . . . , vk].
+
+De `lgebra Linear, temo que para n, m ∈ N∗, espa(cid:231)os vetoriais
+V, U sobre um corpo F com dimensıes n e m respectivamente B =
+{v1, . . . , vn} base de V e T : V −→ U uma transforma(cid:231)ªo linear, a
+imagem de T Ø o subespa(cid:231)o de U dado por
+
+[T (v1), . . . , T (vn)] .
+
+Em particular, se A Ø a matriz associada a transforma(cid:231)ªo T como
+mostrado no resultado acima, entªo temos que Im(T ) Ø o subespa(cid:231)o
+de Vn gerado pelas colunas de A.
+
+Teorema 3.4. Sejam V, U espa(cid:231)os vetoriais sobre um corpo F, n ∈ N∗,
+B = {v1, . . . , vn} base de V e C = {u1, . . . , un} um subconjunto de U .
+Entªo existe uma œnica transforma(cid:231)ªo linear T : V → U de modo que
+para qualquer i ∈ {1, . . . , n} tem-se que T (vi) = ui.
+
+Teorema 3.5. Sejam n, k ∈ N∗ e W um subespa(cid:231)o vetorial de Vn com
+dim(W ) = k. Entªo, existe uma transforma(cid:231)ªo linear T : Vn → Vn−k
+de modo que ker(T ) = W .
+
+Demonstra(cid:231)ªo. Por hip(cid:243)tese dim(W ) = k. Seja {w1, . . . , wk} base de
+W , e complete-a para obter uma base B(cid:48) de Vn, digamos
+
+B(cid:48) = {w1, . . . , wk, v1, . . . , vn−k}.
+
+Agora, considerando C = {g1, . . . , gn−k} uma base qualquer de Vn−k,
+seja T : Vn → Vn−k a œnica transforma(cid:231)ªo linear tal que T (wi) = (cid:126)0
+para todo i ∈ {1, . . . , k} e T (vi) = gi para todo i ∈ {1, . . . , n − k}
+garantida pelo resultado anterior.
+Por constru(cid:231)ªo wi ∈ ker(T ) para todo i ∈ {1, . . . , k}, logo W ⊆ ker(T ).
+
+60
+
+AlØm disso,
+
+Im(T ) = [T (w1), . . . , T (wk), T (vi), . . . , T (vn−k)]
+
+= [T (v1), . . . , T (vn−k)]
+= [g1, . . . , gn−k]
+= Vn−k,
+
+logo dim(Im(T )) = n − k. Pelo teorema da dimensªo,
+
+dim(ker(T )) = n − dim(Im(T )) = n − (n − k) = k.
+
+Finalmente, como dim(W ) = k e W ⊆ ker(T ), segue que W = ker(T ),
+como desejado.
+
+CorolÆrio 3.1. Sejam n, k ∈ N∗ e W um subespa(cid:231)o vetorial de Vn com
+dim(W ) = k. Entªo, existe uma matriz H ∈ M(n−k)×n(F) tal que
+
+W = {v ∈ Vn|H · v = (cid:126)0 ∈ Vn−k}.
+
+Demonstra(cid:231)ªo. Seja W um subespa(cid:231)o vetorial de Vn, com dim W = k.
+Pelo Teorema 3.5, W Ø nœcleo de uma transforma(cid:231)ªo linear.
+
+T : Vn → Vn−k.
+
+Pelo Teorema 3.3, existe uma matriz H ∈ M(n−k)×n(F) tal que
+
+T (v) = H · v, ∀v ∈ Vn.
+
+W = ker T = {v ∈ Vn|T (v) = (cid:126)0 ∈ Vn−k}
+= {v ∈ Vn|H · v = (cid:126)0 ∈ Vn−k}.
+
+De(cid:28)ni(cid:231)ªo 3.12. Dados n, k ∈ N∗ e um c(cid:243)digo linear W de compri-
+mento n tal que dim(W ) = k, uma matriz de teste de paridade para
+W consiste de uma matriz H ∈ M(n−k)×n(F) tal que
+
+W = {v ∈ Vn|H · v = (cid:126)0 ∈ Vn−k}.
+
+Observa(cid:231)ªo 3.2. Com os resultados mostrados acima, conseguimos
+a(cid:28)rmar que um c(cid:243)digo linear W sempre admite matrizes de teste de
+paridade.
+
+61
+
+Teorema 3.6. Sejam n, k ∈ N∗, W um c(cid:243)digo linear de comprimento
+n tal que dim(W ) = k com matriz geradora G ∈ Mn×k(F), e seja H ∈
+M(n−k)×n(F) uma matriz com n−k colunas linearmente independentes.
+Entªo, H Ø matriz de teste de paridade para W se e somente se H · G
+Ø a matriz nula em M(n−k)×n(F).
+
+Demonstra(cid:231)ªo. (⇒) Suponha que H Ø matriz de teste de paridade para
+W . Por hip(cid:243)tese G Ø matriz geradora para W , logo W Ø gerado pelas
+colunas de G. Em outras palavras,
+
+W = [G · e1, . . . , G · ek].
+
+em que {e1, . . . , ek} Ø base can(cid:244)nica de Vk. Por outro lado, W = {v ∈
+Vn|H · v = (cid:126)0 ∈ Vn−k}; em particular, para i ∈ 1, . . . , k,
+
+(H · G) · ei = H · (G · ei) = (cid:126)0 ∈ Vn−k,
+
+garantindo que todas as colunas da matriz H · G sªo nulas, e portanto
+que H · G Ø a matriz nula em M(n−k)×k(F).
+(⇐) Suponha agora que H · G Ø a matriz nula em M(n−k)×k(F), e seja
+
+W (cid:48) = {v ∈ Vn|H · v = (cid:126)0 ∈ Vn−k}.
+
+Mostraremos que W (cid:48) = W : dado w ∈ W qualquer, w Ø combina(cid:231)ªo
+linear das colunas de G, logo existe v ∈ Vk tal que
+
+w = G · v,
+
+e portanto
+
+H · w = H · (G · v) = (H · G) · v = (cid:126)0 ∈ Vn−k.
+
+Isto mostra que w ∈ W (cid:48), e assim que W ⊆ W (cid:48). Agora, considere a
+transforma(cid:231)ªo linear TH : Vn → Vn−k de multiplica(cid:231)ªo por H. Assim,
+
+W (cid:48) = {v ∈ Vn|H · v = (cid:126)0 ∈ Vn−k}
+= {v ∈ Vn|TH (v) = (cid:126)0 ∈ Vn−k}
+= ker(TH ).
+
+A imagem de TH Ø o subespa(cid:231)o vetorial de Vn−k gerado pelas colunas de
+H; como H possui n − k colunas linearmente independentes, segue que
+dim(Im(TH )) = n−k, e do teorema da dimensªo podemos concluir que
+dim(W (cid:48)) = dim(ker(TH )) = k. Uma vez que dim(W ) = k e W ⊆ W (cid:48),
+
+62
+
+segue disso que W = W (cid:48), como quer(cid:237)amos provar.
+
+Quando a matriz geradora de um c(cid:243)digo W estiver na forma
+
+padrªo, (cid:28)ca fÆcil determinar a matriz de teste de paridade.
+
+CorolÆrio 3.2. Sejam n, k ∈ N∗ e W um c(cid:243)digo linear de comprimento
+n tal que dim(W ) = k com matriz geradora G ∈ Mn×k(F) na forma
+padrªo,
+
+(cid:20) Ik×k
+A(n−k)×k
+Entªo, a matriz H ∈ M(3)×7(F) dada por
+
+G =
+
+(cid:21)
+
+.
+
+(cid:2)−A I(n−k)×(n−k)
+
+(cid:3)
+
+Ø uma matriz de teste de paridade para W .
+
+Demonstra(cid:231)ªo. Uma simples veri(cid:28)ca(cid:231)ªo direta por multiplica(cid:231)ªo de
+matrizes mostra que H ·G resulta na matriz nula de tamanho (n−k)×k.
+Como as œltimas n − k colunas de H sªo linearmente independentes, o
+resultado segue pelo teorema anterior.
+
+Exemplo 15. Seja o c(cid:243)digo Hamming W , que possui comprimento
+n = 7 e dim W = 4, com matriz geradora G na forma padrªo
+
+G =
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 0
+0 1
+0 0
+0 0
+0 1
+1 0
+1 1
+
+0
+0
+1
+0
+1
+1
+0
+
+
+0
+0
+
+
+0
+
+
+1
+
+
+1
+
+
+1
+
+1
+
+Entªo a matriz H ∈ M(n−k)×n(F) Ø tal que
+
+H =
+
+
+
+
+
+0 −1 −1 −1 1
+−1
+0 −1 −1
+−1 −1
+
+0 −1 0
+
+
+0
+0
+0 1 0
+
+1
+0
+
+H =
+
+
+0
+1
+
+1
+
+1 1 1
+0 1 1
+1 0 1
+
+1
+0
+0
+
+
+
+
+
+0 0
+1 0
+0 1
+
+63
+
+Exemplo 16. Com os exemplos que jÆ trabalhamos, mostramos que
+um mesmo c(cid:243)digo linear W pode admitir diversas matrizes de teste de
+paridade. Assim, uma outra matriz de teste de paridade para o c(cid:243)digo
+de Hamming Ø dada por
+
+H =
+
+
+0
+0
+
+1
+
+0 0 1
+1 1 0
+0 1 0
+
+1
+0
+1
+
+1
+1
+0
+
+
+
+ .
+
+1
+1
+1
+
+Esta matriz Ø muito interessante pois suas colunas sªo compostas pelos
+nœmeros naturais d 1 a 7 escritos no sistema binÆrio.
+
+Matrizes de teste de paridade sªo uteis na detec(cid:231)ªo e corre(cid:231)ªo de
+poss(cid:237)veis erros de transmissªo, mais exemplos a quem possa interessar
+estªo presentes no livro [HEFEZ, 2008]. Neste momento, mostraremos
+como usar a matriz de teste de paridade H, mostrada anteriormente,
+para o C(cid:243)digo de Hamming, para detectar e corrigir erros no processo
+de transmissªo.
+
+Seja W o c(cid:243)digo de Hamming e w ∈ W uma palavra, que possui
+
+comprimento 7,
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+w1
+w2
+...
+w7
+
+Suponha que na transmissªo desta palavra sabemos que ocorreu exata-
+mente um erro, ou seja, que a palavra recebida possui uma letra errada
+em uma posi(cid:231)ªo i ∈ {1, . . . , 7} que nªo sabemos qual Ø, mas precisamos
+determinar.
+
+Observe que se o erro foi na transmissªo da i-Øsima letra de w,
+
+entªo a palavra recebida foi
+
+v = w + ei,
+
+em que ei Ø o i-Øsimo vetor da base can(cid:244)nica de V7; de fato, ei tem 1
+na entrada i e zero nas demais, logo w + ei tem as mesmas entradas
+que w, exceto a i-Øsima que Ø igual a wi + 1 e portanto serÆ igual a 0
+se wi = 1, e igual a 1 se wi = 0. Agora, como H Ø matriz de teste de
+paridade para o c(cid:243)digo de Hamming e w ∈ W , temos H · w = (cid:126)0 ∈ V3.
+Assim,
+
+H · v = H · (w + ei) = H · w + H · ei = (cid:126)0 + H · ei = H · ei,
+
+64
+
+que Ø a i-Øsima coluna de H; mas a i-Øsima coluna de H Ø formada pela
+representa(cid:231)ªo binÆria do nœmero i, logo o cÆlculo de H · v nos indica
+exatamente onde estÆ o erro na transmissªo!
+
+Vamos aplicar as matrizes de teste de paridade para veri(cid:28)car e
+corrigir erros, nos exemplos que resolvemos utilizando o Diagrama de
+Venn.
+
+Exemplo 17. Considere que em uma transmissªo a mensagem rece-
+bida seja 1111000 como no Exemplo 2. A mensagem recebida gera a
+matriz
+
+v =
+
+.
+
+
+
+1
+1
+
+
+
+
+1
+
+
+
+
+1
+
+
+
+
+0
+
+
+
+
+0
+
+
+0
+
+Efetuando a multiplica(cid:231)ªo da matriz H pela matriz v teremos:
+
+H · v =
+
+
+
+
+
+0 0
+0 1
+1 0
+
+0
+1
+1
+
+1 1 1
+0 0 1
+0 1 0
+
+
+
+ ·
+
+1
+1
+1
+
+
+
+1
+1
+
+
+
+
+1
+
+
+
+
+1
+
+
+
+
+0
+
+
+
+
+0
+
+
+0
+
+
+
+1
+0
+ .
+
+0
+
+=
+
+Esse resultado nos mostra que o erro encontra-se na quarta entrada da
+matriz pois 100 Ø o nœmero 4 em binÆrio, logo a mensagem correta Ø
+1110000.
+
+Exemplo 18. Considere agora a outra mensagem recebida 1011011
+como no Exemplo 3. A mensagem recebida gera a matriz
+
+v =
+
+
+
+1
+0
+
+
+
+
+1
+
+
+
+
+1
+
+
+
+
+0
+
+
+
+
+1
+
+
+1
+
+.
+
+65
+
+Efetuando a multiplica(cid:231)ªo da matriz H pela matriz v teremos:
+
+H · v =
+
+
+0
+0
+
+1
+
+0 0 1
+1 1 0
+0 1 0
+
+1
+0
+1
+
+
+
+ ·
+
+1 1
+1 1
+0 1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+0
+
+
+1
+
+
+1
+
+
+0
+
+
+1
+
+1
+
+
+
+1
+1
+ .
+
+1
+
+=
+
+Esse resultado nos mostra que o erro encontra-se na sØtima entrada da
+matriz pois o nœmero 111 representa o nœmero 7 em binÆrio, logo a
+mensagem correta Ø 1011010.
+
+66
+
+67
+
+4 CONCLUSˆO
+
+Ao tØrmino deste trabalho, conseguimos encontrar uma matriz
+
+de teste de paridade, capaz de detectar e corrigir um erro, dizendo
+exatamente em qual d(cid:237)gito encontra-se o erro.
+
+Para chegar a este resultado, foi necessÆrio que constru(cid:237)ssemos
+
+vÆrios resultados como provar que a dist(cid:226)ncia de Hamming Ø uma
+mØtrica, provar a quantidade mÆxima de erros que um c(cid:243)digo Ø capaz
+de corrigir, tambØm mostrar que um c(cid:243)digo corretor possui dist(cid:226)ncia
+m(cid:237)nima.
+
+Mostramos tambØm que um c(cid:243)digo pode ser representado na
+
+forma de um vetor e tambØm de uma matriz, e com isso chegarmos ao
+nosso resultado. Para isso foi necessÆrio termos conhecimentos sobre
+como operar com vetores e matrizes.
+
+(cid:201) importante salientar que com a elabora(cid:231)ªo deste trabalho
+
+apresentamos um exemplo de uma matriz de teste de paridade para o
+C(cid:243)digo de Hamming, mas esta nªo Ø a œnica, e sim um tipo especial
+que nos mostra exatamente em qual d(cid:237)gito o erro se encontra.
+
+68
+
+69
+
+REFER˚NCIAS
+
+[1] D’ORNELAS, Stephanie. Como sue cerbero pedo lre itso. 2012.
+Dispon(cid:237)vel em:
+https://hypescience.com/como-sue-cerbero-pedo-lre-itso. Acesso em:
+14 set. 16.
+
+[2] HEFEZ, Abramo; VILLELA, Maria Lœcia T. C(cid:243)digos corretores
+de erros. Instituto de Matematica Pura e Aplicada, 2008.
+
+[3] ABRANTES, S(cid:237)lvio A. C(cid:243)digos Correctores de Erros em
+Comunica(cid:231)ıes Digitais. FEUP edi(cid:231)ıes, 2010.
+
+4] MILIES, CØsar Polcino. Breve introdu(cid:231)ªo a Teoria dos
+C(cid:243)digos Corretores de Erros. Departamento de MatemÆtica,
+UFMS, 2009.
+
+[5] BARBOSA, Lucas Diego Antunes; HOYOS, Mariana Garabini
+Cornelissen. Uma aplica(cid:231)ao ao estudo de Matrizes.
+Departamento de MatemÆtica, UFSJ, 2015.
+
+[6] BOLDRINI, JosØ Luiz; COSTA, Sueli I. Rodrigues; FIGUEREDO,
+Vera Lœcia, WETZLER, Henry G. `lgebra Linear. Sªo Paulo:
+Harper and Row do Brasil, 1980.
+
+[7] LIPSCHUTZ, Seymour; Lipson, Marc Lars. `lgebra Linear.
+Porto Alegre: Bookmann, 2011.
+
+[8] HEFEZ, Abramo; FERNANDEZ, Cec(cid:237)lia de Souza. Introdu(cid:231)ªo (cid:224)
+Ælgebra linear Rio de Janeiro: SBM, 2012.
+
+

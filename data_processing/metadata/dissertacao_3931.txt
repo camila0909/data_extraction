@@ -1,0 +1,7547 @@
+Universidade Federal de Goiás
+Instituto de Matemática e Estatística
+
+Programa de Mestrado Proﬁssional em
+Matemática em Rede Nacional
+
+Técnicas do Cálculo Numérico Aplicadas no
+
+Ensino Médio
+
+Paulenrike Gonçalves Pereira
+
+Goiânia
+
+2015
+
+Paulenrike Gonçalves Pereira
+
+Técnicas do Cálculo Numérico Aplicadas no
+Ensino Médio
+
+Trabalho de Conclusão de Curso apresentado ao Instituto de Matemática e Estatística
+da Universidade Federal de Goiás, como parte dos requisitos para obtenção do grau de
+Mestre em Matemática.
+Área de Concentração: Bisseção
+Orientador: Prof. Dr. Rogério
+
+Goiânia
+
+2015
+
+Esta é a Página da Ficha de Catalogação com os dados internacionais de Catalo-
+
+gação, fornecidos pela Biblioteca da UFG”. OBS. ESTA PÁGINA DEVE SER ENCA-
+DERNADA NO VERSO DA PÁGINA ANTERIOR. OBS: O aluno deve pegar esta
+
+Ficha no site da Biblioteca, http:
+
+www.bc.ufg.br, preenche-la, e enviar para a Biblioteca (Tel. (62) 3521-1229), junta-
+
+mente com Sumário, Resumo, e Folha de rosto do TCC. Posteriormente a Biblioteca
+envia de volta a Ficha com todos os dados.
+
+Todos os direitos reservados. É proibida a reprodução total ou parcial deste trabalho
+
+sem a autorização da universidade, do autor e do orientador.
+
+PAULENRIKE GONÇALVES PEREIRA Graduou-se em Matemática pela Uni-
+versidade Federal de Goiás, atualmente é professor do Colégio Estadual Jardim Bal-
+
+neário Meia Ponte e do Colégio Estadual Amália Hermano Teixeira.
+
+Dedico este trabalho aos meus pais, Jorge e Ruth, que
+
+sempre me incentivaram nos meus estudos; aos meus
+
+amigos do mestrado, que proporcionaram vários momen-
+
+tos de aprendizado; aos meus alunos, que me inﬂuenci-
+
+aram ao aperfeiçoamento proﬁssional.
+
+Agradecimentos
+
+Agradeço a todos os professores do PROFMAT, por proporcionarem esse ensino de
+
+excelência;
+
+Agradeço ao meu orientador Dr. Rogério, pela dedicação, disponibilidade e ponde-
+
+rações feitas neste trabalho;
+
+Agradeço à CAPES pelo suporte ﬁnanceiro nesse período de dois anos
+
+Resumo
+
+Diante da necessidade de se determinar valores que satisfaçam equações da forma
+f (x) = 0, este trabalho apresenta como escopo, três importantes métodos de isolamento
+de raízes, considerados na literatura matemática como elementares. Inicialmente, traz
+
+algumas deﬁnições e expõe ao leitor, a impossibilidade de criação de fórmulas de ob-
+
+tenção de raízes para equações polinomiais de grau superior a três. Todavia, mostra
+mecanismos que proporcionam uma aproximação aceitável, com erro o quão próximo
+
+de zero se achar necessário. Com o intuito de otimizar o tempo de busca desses me-
+
+canismos, aborda algumas técnicas de isolar raízes, feitas para delimitar intervalos que
+
+poderão contê-las. Ainda em seu corpo, levanta um comparativo entre os três méto-
+dos de calcular os zeros das funções, abordando possíveis vantagens e desvantagens.
+
+E ao ﬁnal, expõe uma experiência do ensino de um desses conteúdos para alunos do
+
+ensino médio, veriﬁcando sua compatibilidade ao nível intelectual desses estudantes e
+mostrando alguns resultados.
+
+Palavras-chave
+
+Raízes de Equações, Ensino Médio, Cálculo Numérico.
+
+9
+
+Abstract
+
+In face of the need to determine values , satisfying equations of the form f (x) = 0,
+the purpose is this paper to present three important methods isolating roots, consi-
+
+dered in mathematical literature as elementary. First of all, this work puts out some
+
+deﬁnitions and exposes the reader to the impossibility of creating formulas, for roots
+
+of polynomial equations greater than tree degrees. However, it shows techniques that
+provide acceptable approximation in minimizing the error possible, how close to zero
+
+can the result can be reached.
+
+In order to optimize speidof these techmiques, this
+
+paper also discusses some techniques to isolate roots to identying intervals that may
+
+contain them. Futhermore, this paper raises a comparison between the three methods
+of calculating the zeros of functions, addressing possible advantages and disadvantages
+
+of them. Finally, it presents the experience of teaching one of these contents in high
+
+school, assessing their compatibility to the students intellectual level of the students
+and showing some results of that.
+
+Keywords
+
+Roots of an Equation, High School, Numerical Calculation.
+
+10
+
+Lista de Figuras
+
+1
+2
+
+3
+
+4
+
+5
+6
+
+7
+
+8
+
+|
+
+2
+
+1
+
+x
+
+−
+
+Raízes de uma equação ou zeros da função . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . .
+Gráﬁco de f (x) =
+| −
+Gráﬁco de g(x) = 2x2 + 4x
+. . . . . . . . . . . . . . . . . . . . . .
+Gráﬁco da função i(x) = tan x . . . . . . . . . . . . . . . . . . . . . . .
+Delimitando um possível intervalo . . . . . . . . . . . . . . . . . . . . .
+f (x) = x3
+2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . .
+Algumas iterações do método da Bisseção
+
+−
+
+−
+
+1
+
+Iterações . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Sucessivas iterações na função f (x) =
+
+9
+10 Gráﬁco de f (x) = x4 + 4x3 + 2x2
+
+1 . . . . . . . . . . . .
+0.5 . . . . . . . . . . . . . . . . . .
+
++ x
+
+−
+
+−
+
+. . . . . . . . . . . . . . . .
+11 Gráﬁco da Função f (x) = 3,4
+12
+Segunda Iteração do Método da Secante para a Função f (x) . . . . . .
+13 Quinta Iteração do Método da Secante para a Função f (x) . . . . . . .
+14 Exemplo em que o Método da Secante não Converge
+. . . . . . . . . .
+x2 + 5x
+15 Gráﬁco de f (x) =
+4 . . . . . . . . . . . . . . . . . . . . . .
+−
+16 Gráﬁco de f (x) = x5
+x7
+4
+
+1 . . . . . . . . . . . . . . . . . . . . . . .
+17 Gráﬁco de f (x) =
+. . . . . . . . . . . . . . . . . . . .
+18 Algorítimo das Divisões Sucessivas
+19 Bom de Mira . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+−
++ x2
+
+−
+1
+3
+
+2x +
+
+−
+
+x2
+3
+
+−
+(x + 2,4)2
+3
+
+18
+19
+
+19
+
+20
+
+22
+26
+
+27
+
+32
+
+32
+
+33
+
+36
+36
+37
+
+38
+40
+
+43
+
+47
+
+53
+60
+
+11
+
+28
+
+29
+
+34
+
+38
+
+41
+41
+
+42
+
+44
+
+45
+
+46
+
+47
+
+48
+
+49
+
+49
+
+50
+
+51
+54
+
+54
+55
+55
+
+55
+
+2
+
+−
+
+3x5 + 4x4
+
+−
++ 4x
+
+Iterações de f (x) = x6
+x4
+2
+
+Iterações de f (x) =
+Iterações de f (x) = x4 + 4x3 + 2x2
+9x3 + 3x + 1
+Iterações de f (x) =
+x2 + 5x
+Iterações de f (x) =
+x2 + 5x
+Iterações de f (x) =
+x2 + 5x
+Iterações de f (x) =
+−
+Iterações de f (x) = x5
+
+2x +
+
+−
+−
+
+−
+−
+
+−
+
+−
+
+Iterações de f (x) = x5
+
+2x +
+
+−
+
+3x3 + 2x2
+
+1 . . . . . . . . . . .
+
+−
+
+−
+
+−
+. . . . . . . . . . . . . . . . . . . . .
+0.5 . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . .
+4 . . . . . . . . . . . . . . . . . . . . .
+4 . . . . . . . . . . . . . . . . . . . . .
+4 . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . .
+
+Lista de Tabelas
+
+1
+
+2
+3
+
+4
+
+5
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+Iterações de f (x) =
+
+Iterações de f (x) = x5
+x7
+4
+x7
+4
+
+Iterações de f (x) =
+
+Iterações de f (x) =
+
+Iterações de f (x) =
+
+Iterações de f (x) =
+
+−
+
+−
+
+−
+
+−
+1
+3
+1
+3
+1
+3
+
+2x +
+
+−
++ x2
+
+−
+
+−
+
++ x +
+
++ x +
+
++ x +
+
++ x2
+x3
+4
+x3
+4
+x3
+4
+x3
+4
+
+1
+2
+1
+2
+1
+2
+1
+2
+
+16
+17 Cartão c1
+18 Cartão c2
+19 Cartão c3
+20 Cartão c4
+21 Cartão c5
+
+Iterações de f (x) =
+
+. . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
++ x +
+
+−
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+1 . . . . . . . . . . . . . . . . . . . . . .
+
+1 . . . . . . . . . . . . . . . . . . . . . .
+
+no intervalo [1, 3]
+
+. . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . .
+
+Sumário
+
+1 Introdução
+
+1.1 Objetivos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.1.1 Objetivo Geral
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.1.2 Objetivos Especíﬁcos . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.1.3 Organização do Trabalho . . . . . . . . . . . . . . . . . . . . . .
+
+2 Raízes de uma Equação
+
+3 Isolamento das Raízes
+
+3.1 Equação Polinomial . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.2 Raízes de uma Equação Polinomial
+
+. . . . . . . . . . . . . . . . . . . .
+
+4 Reﬁnamento das Raízes
+
+4.1 Método da Bisseção . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.2 Pesquisa Binária . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.3 Método da Falsa Posição . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.4 Método da Secante . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5 Um Paralelo Entre os Métodos
+
+6 Ensino de Bisseção na Sala de Aula
+
+6.1 Pense um Número que eu Adivinho . . . . . . . . . . . . . . . . . . . .
+6.2 Pense em um Número
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.3 As 27 cartas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6.4 Bom de Mira . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+6.5 Cálculo da Raiz Aproximada de um Polinômio . . . . . . . . . . . . . .
+
+6.6 Experiências em Sala de Aula . . . . . . . . . . . . . . . . . . . . . . .
+6.6.1 Pense um Número que Eu Adivinho . . . . . . . . . . . . . . . .
+
+6.6.2
+
+Jogo das 27 cartas
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+6.6.3 Bom de Mira . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+7 Conclusão
+
+14
+
+15
+
+15
+
+15
+
+15
+
+17
+
+21
+
+21
+
+22
+
+24
+
+24
+
+29
+31
+35
+
+40
+
+52
+
+52
+57
+58
+
+59
+
+60
+
+61
+61
+
+61
+
+62
+
+63
+
+1
+
+Introdução
+
+O estudo de métodos de aproximação de raízes, especiﬁcamente incluindo algumas
+técnicas de isolamento e reﬁnamento de raízes, como a Bisseção, Falsa posição e Secante,
+
+são tidos como escopo desse trabalho, haja vista a simplicidade de compreensão. Tal
+
+fato, diz, inicialmente, a possibilidade de uma adequação e inclusão deste conteúdo aos
+
+componentes curriculares do Ensino Médio. Outro motivo importante, se dá pela sua
+relevância.
+
+A necessidade de se determinar valores que satisfaçam uma equação da forma
+f (x) = 0 ocorre com bastante frequência em várias áreas das ciências exatas. Esses
+valores são tidos como raízes da equação ou zeros da função.
+
+O registro mais antigo relacionado a problemática de encontrar a raiz de uma equa-
+ção data do ano de 1700 a.C. em uma tábua cuneiforme da Babilônia (BURDEN, 2008).
+Ele ainda relata que “... um dos problemas básicos mais importantes da aproximação
+
+numérica é o problema de determinação de raiz (...) ou solução de uma equação da
+forma f (x) = 0”
+
+Campos Filho (2010) aﬁrma que existem alguns métodos para se calcular anali-
+
+ticamente raízes de funções polinomiais de graus 2, 3 e até 4, que exigiram séculos
+de desenvolvimento matemático para que fossem consolidados. Porém, existem ainda
+diversos tipos de funções não lineares, funções polinomiais de grau superior a quatro,
+que não possibilitam a utilização de métodos diretos para o cálculo de suas raízes.
+
+Quando a forma analítica de se obtiver a raiz de uma equação for de difícil obtenção,
+
+deve-se utilizar métodos que encontrem uma solução aproximada para essas raízes
+(CAMPOS FILHO, 2010). Esses métodos, em sua maioria, consistem em processos
+iterativos, onde as iterações seguintes fornecem aproximações mais precisas dos zeros
+das funções que as iterações anteriores (FRANCO, 2006).
+
+Diante disso, o presente trabalho se respalda em fontes bibliográﬁcas, que prima
+mostrar alguns desses métodos de encontrar os zeros reais das funções polinomiais
+
+existentes na literatura, mostrando ainda a experiência obtida na sua exposição para
+
+um grupo de 30 estudantes da terceira série do ensino médio.
+
+É importante salientar que este trabalho também ilustra várias interações lúdicas
+envolvendo especiﬁcamente o método da Bisseção, como forma de motivação. Ainda
+
+aqui, são dispostas aplicações por meio de problemas práticos, que despertaram a
+
+curiosidade do leitor e espectador.
+
+14
+
+1.1 Objetivos
+
+1.1.1 Objetivo Geral
+
+Pretendemos veriﬁcar a possibilidade de inserção de novos itens aos componentes
+
+curriculares destinados à matemática do Ensino Médio, promovendo ensino de quali-
+dade.
+
+Com isso, realizarei uma revisão bibliográﬁca de alguns métodos para encontrar
+
+zeros de funções polinomiais, para que tal estudo possa ser experimentado em uma
+
+turma de 30 alunos, comparando os métodos estudados, proporcionando interações
+lúdicas e aplicando problemas práticos.
+
+1.1.2 Objetivos Especíﬁcos
+
+Veriﬁcar métodos compatíveis de encontrar zeros de funções polinomiais;
+
+Sugerir maneiras de solidiﬁcar o conhecimento algébrico dos estudantes;
+Fazer um comparativo dos métodos estudados, mediante sua aplicação a alguns
+
+problemas existentes na literatura;
+
+Propor interações lúdicas em sala de aula, relacionadas aos métodos que são pro-
+
+postos, para despertar o interesse dos alunos.
+
+1.1.3 Organização do Trabalho
+
+O presente trabalho está organizado da seguinte forma:
+No capítulo 2 é apresentada uma prévia sobre raízes de equações , abordando a pro-
+
+blemática de se encontrar raízes para equações polinomiais de grau superior a quatro.
+Neste capítulo são lembrados alguns conceitos de continuidade de funções e aproxima-
+ção de raízes.
+
+No capítulo 3, é deﬁnido o que é equação polinomial, e aplica o Teorema de Bolzano,
+
+o Teorema de Lagrange e a regra de Descartes para delimitar um intervalo que contenha
+
+a raiz procurada.
+
+No capítulo 4, são apresentados três métodos de se calcular raízes de equações
+
+polinomiais: o Método da Bisseção, Falsa Posição e Secante.
+
+No capítulo 5, é feito um paralelo entre os três de se calcular raízes, visando sedi-
+
+mentar o conteúdo ao leitor.
+
+15
+
+No capítulo 6, são propostas atividades e interações lúdicas para a sala de aula.
+
+Além disto, comenta sobre a sua inserção no Ensino Médio, relatando experiências
+obtidas em sua aplicação.
+
+No capítulo 7, ﬁnalizamos o trabalho, com as considerações e conclusões acerca do
+
+que foi proposto na introdução.
+
+16
+
+2 Raízes de uma Equação
+
+Uma equação é uma igualdade envolvendo expressões algébricas, relacionando uma
+ou mais variáveis. Seu estudo é feito para determinar soluções de problemas do dia a dia
+
+ou até mesmo aqueles atípicos. A necessidade de se encontrar valores x que satisfaçam
+uma determinada equação da forma f (x) = 0 ocorre com bastante frequência em uma
+grande variedade de problemas nas mais diversas áreas do conhecimento. Estes valores
+são chamados de raízes da equação ou zeros da função
+
+y = f (x),
+
+que podem ser reais ou complexos. Porém, neste trabalho estamos interessados somente
+nos zeros reais de f (x).
+
+Ao analisar graﬁcamente a função f (x) = x5
+
+50x2 + 24x, na Figura
+1, vemos que os pontos A, B, C, D e E são interseções do gráﬁco da função f (x) com
+o eixo das abscissas.
+
+10x4 + 35x3
+
+−
+
+−
+
+Algumas equações polinomiais podem ser resolvidas analiticamente como as de 1◦
+grau, isolando a variável. Para as do 2◦ grau utiliza-se o método de completar o
+quadrado. Já as do terceiro grau, podem ser resolvidas pelo método de Cardano, e
+equações do 4◦ grau de diferentes modos, sendo que alguns são aplicados em equações
+biquadradas, outros em equações recíprocas, etc. Para equações de grau superior a 4,
+
+utilizam-se métodos que podem fornecer aproximações para as raízes, isto é, dentro de
+uma pequena margem de erro pré-estabelecida.
+
+O erro é a diferença entre o valor exato e o valor apresentado para uma determinada
+raiz da equação. Considerar um erro aceitável é um fato muito particular. Compare
+
+por exemplo, o erro aceitável para pesar uma pessoa, é diferente do erro aceitável para
+pesar ouro ou diamante. Portanto, para cada situação, estipular-se-á o erro adequado.
+Um fato importante, que garante a aproximação de raízes, é que as funções po-
+
+linomiais são contínuas, o que permite estipular um erro aceitável, de acordo com a
+
+necessidade.
+
+Portanto, é conveniente relembrar a deﬁnição de função contínua em um intervalo.
+
+R, e c
+Deﬁnição 1. Dada uma função f : (a, b)
+no ponto c se para todo ε > 0, existe δ > 0 tal que
+
+→
+
+∈
+
+(a, b), dizemos que f é contínua
+
+(a, b),
+
+x
+
+∈
+
+x
+
+|
+
+−
+
+a
+|
+
+< δ
+
+⇒ |
+
+f (x)
+
+f (c)
+
+|
+
+−
+
+< ε
+
+17
+
+Figura 1: Raízes de uma equação ou zeros da função
+
+Se a função for contínua em todos os pontos do domínio (a, b), dizemos que
+
+f : (a, b)
+
+R é contínua.
+
+→
+
+Lembrando que, para alunos do ensino básico, podemos passar uma ideia intuitiva,
+
+ilustrada a seguir.
+
+Uma função f é dita contínua, se é possível esboçar o gráﬁco sem tirar o lápis do
+
+papel.
+
+Exemplo 1. Considere a função f (x) =
+
+x
+
+1
+
+|
+
+−
+
+| −
+
+2 deﬁnida no intervalo [
+
+3, 3].
+
+−
+
+18
+
+Figura 2: Gráﬁco de f (x) =
+
+x
+
+1
+
+|
+
+−
+
+| −
+
+2
+
+O gráﬁco de f não possui interrupção, logo f é contínua no intervalo dado.
+
+Exemplo 2. Considere a função g(x) = 2x2 + 4x
+
+1 deﬁnida no intervalo [
+
+3, 3].
+
+−
+
+−
+
+Figura 3: Gráﬁco de g(x) = 2x2 + 4x
+
+1
+
+−
+
+O gráﬁco de g não possui interrupção, logo g é contínua no intervalo dado.
+
+19
+
+Exemplo 3. Considere a função
+
+h(x) =
+
+deﬁnida no intervalo [
+
+−
+
+10, 10].
+
+, x <
+
+6
+
+−
+
+, x =
+
+6
+
+,
+
+−
+
+−
+6 < x <
+
+−
+2 6 x < 2
+
+2
+
+4 ,
+
+−
+x
+3
+
+−
+
+−
+, x > 2
+
+2
+
+4
+
+2
+
+x2
+
+2
+
+
+
+
+
+
+Figura 4: Gráﬁco da função i(x) = tan x
+
+Logo,h é uma função descontínua neste intervalo.
+
+Sabendo que existem funções contínuas e descontínuas, é importante delimitar o
+
+intervalo no qual a função seja contínua, e que tenha raiz ou raízes reais.
+
+Em razão disso, na aproximação das raízes de uma equação, podem-se usar dois
+
+passos:
+
+Fase 1. Isolamento das raízes: Determinar um intervalo [a, b] que contenha pelo
+
+menos uma raiz da equação f (x) = 0.
+
+Fase 2. Reﬁnamento: Utilizar métodos numéricos, para calcular uma aproximação
+
+da raiz no intervalo com o grau de exatidão pré-estabelecido.
+
+20
+
+3
+
+Isolamento das Raízes
+
+A primeira etapa na busca por raízes de uma equação, consiste da delimitação, enu-
+meração e separação das raízes com o objetivo de determinar intervalos que contenham
+
+pelo menos uma raiz.
+
+Nesta fase, é feita uma análise teórica e gráﬁca da função f (x). Esta análise é
+
+importante para se obter sucesso em alguns métodos na fase seguinte.
+
+3.1 Equação Polinomial
+
+Deﬁnição 2. Chamamos de Equação Polinomial toda equação da forma P (x) = 0 em
+que P (x) é um polinômio da seguinte forma
+
+P (x) = anxn + an−1xn−1 +
+
++ a1x + a0,
+
+· · ·
+
+(1)
+
+R para todo i = 0, 1,
+
+, n, são denominados coeﬁcientes do polinômio e
+
+∈
+
+· · ·
+N é o maior expoente de x e determina o grau do polinômio.
+
+onde ai
+n
+
+∈
+
+Alguns exemplos de equações polinomiais são
+
+x + 2 = 0, equação polinomial do primeiro grau (grau 1);
+
+x2 + 2x
+
+−
+
+3 = 0, equação polinomial do segundo grau (grau 2);
+
+x3 + 2x2
+
+−
+
+3x + 15 = 0, equação polinomial do terceiro grau (grau 3).
+
+•
+
+•
+
+•
+
+Portanto, pela deﬁnição, não são equações polinomiais:
+
+x−1 + 2 = 0, pois o expoente é negativo;
+
+√x5 + 2x
+
+−
+
+3 = 0, pois o expoente é fracionário.
+
+•
+
+•
+
+O valor numérico de um polinômio P (x) é o número que se obtém calculando o
+R.
+
+polinômio para um particular valor de x
+
+∈
+
+Exemplo 4. O valor numérico de P (x) = x2
+
+2x + 1 para x = 5.
+
+−
+
+Substituindo x = 5 em P (x), temos
+
+P (5) = 52
+
+2
+
+·
+
+−
+
+5 + 1
+
+⇒
+
+P (5) = 16.
+
+21
+
+Exemplo 5. O valor numérico de P (x) = x3
+
+4x2 + 3x
+
+−
+
+−
+
+15 para x = 0 é
+
+P (0) = 03
+
+02 + 3
+
+4
+
+·
+
+−
+
+0
+
+·
+
+−
+
+15
+
+⇒
+
+P (0) =
+
+15.
+
+−
+
+Quando se tem um número x tal que P (x) = 0, dizemos que x é uma raiz do
+
+polinômio P .
+
+3.2 Raízes de uma Equação Polinomial
+
+Para determinar a existência de pelo menos uma raiz em um intervalo, sob deter-
+minadas condições, utilizaremos o seguinte Teorema de Bolzano, cuja demonstração
+
+pode ser encontrada em [5].
+
+Teorema 1. Seja f (x) uma função polinomial de coeﬁcientes reais e dois números
+reais a, b, com a < b. Se f (a)
+(a, b)
+tal que f (c) = 0.
+
+f (b) < 0, então existe pelo menos um número c
+
+∈
+
+·
+
+Lembrando que, para alunos do ensino básico, podemos passar uma ideia intuitiva,
+
+ilustrada a seguir.
+
+Considerando a função f esboçada na Figura 5 é polinomial, veriﬁcamos que, para
+x = a temos f (a) < 0 e para x = b, temos f (b) > 0, assim pelo teorema 1, existe pelo
+menos um c
+(a, b) tal que o gráﬁco de f intersecta o eixo das abscissas em c, isto é,
+f (c) = 0.
+
+∈
+
+Figura 5: Delimitando um possível intervalo
+
+22
+
+Em outras palavras, dada uma função contínua em uma determinado intervalo [a, b],
+com valores positivos e negativos nos extremos desde intervalo, então f necessariamente
+assumirá o valor zero em algum c
+
+(a, b).
+
+De maneira geral, em uma função qualquer, para encontrar um intervalo que conte-
+
+∈
+
+nha pelo menos uma raiz, basta atribuir valores para x, e analisar os respectivos valores
+de f (x), que ilustraremos através do seguinte exemplo.
+
+Exemplo 6. Seja f (x) =
+reais.
+
+−
+
+x2 + 2, vamos determinar intervalos que contenham raízes
+
+x
+
+f (x)
+
+2
+
+2
+
+−
+
+−
+
+1
+
+−
+1
+
+0
+
+2
+
+1
+
+1
+
+2
+
+3
+
+4
+
+5
+
+2
+
+−
+
+7
+
+−
+
+14
+
+−
+
+23
+
+−
+
+Portanto, pelo Teorema 1, constatamos a existência de raízes nos seguintes inter-
+
+valos [
+
+2,
+
+−
+
+−
+
+1] e [1, 2].
+
+Exemplo 7. Seja f (x) = 16x5
+40x4
+intervalos que contenham raízes reais.
+
+−
+
+−
+
+40x3 + 100x2 + 9x
+
+−
+
+22, 5, vamos determinar
+
+x
+
+4
+
+−
+
+f (x)
+
+22522,5
+
+−
+
+−
+
+3
+
+−
+5197,5
+
+2
+
+−
+472,5
+
+1
+
+−
+52,5
+
+−
+
+0
+
+1
+
+2
+
+3
+
+4
+
+22,5
+
+22,5
+
+−
+
+−
+
+52,5
+
+472,5
+
+5197,5
+
+Portanto, pelo Teorema 1, constatamos a existência de raízes nos seguintes inter-
+
+valos [
+
+2,
+
+1], [
+
+1, 0], [0, 1], [1, 2] e [2, 3].
+
+−
+
+−
+
+−
+
+Agora que sabemos como isolar as raízes de um polinômio, o próximo passo consiste
+em utilizar métodos que geram uma sequência que converge para uma raiz do polinômio
+
+em estudo. Mas primeiro vejamos o que é sequência e sequência convergente.
+
+Deﬁnição 3. Uma sequência de números reais, é uma função c : N
+cada número natural n, um número real cn.
+
+→
+
+R que associa a
+
+Deﬁnição 4. Dizemos que uma sequência converge para um número x, se para todo
+N tal que todos os termos
+número ε > 0, dado arbitrariamente, pudermos obter n0 ∈
+cn com índices n > n0 cumprem a condição
+
+< ε.
+
+cn
+
+x
+
+|
+
+−
+
+|
+
+Assim dizemos que a sequência
+
+ser encontrados em [5].
+
+cn
+{
+
+}
+
+converge para x. Para mais detalhes podem
+
+23
+
+4 Reﬁnamento das Raízes
+
+Depois de delimitar a raiz em um intervalo [a, b], passa-se a calculá-la através de mé-
+que se aproxima
+
+todos numéricos. Estes métodos permitem obter uma sequência
+
+cn
+{
+
+}
+
+da raiz exata.
+
+Os métodos que utilizamos neste trabalho, consistem de uma sequência de instru-
+
+ções que serão executadas passo a passo, e algumas das quais são repetidas em ciclos.
+A cada ciclo é dado o nome de iteração. Estes ciclos podem se repetir inﬁnitamente,
+
+portanto deve-se adotar um critério de parada. O critério de parada ideal é
+
+x
+
+< ε,
+
+cn
+
+|
+
+−
+
+|
+
+onde x é a raiz da equação. Porém, como não conhecemos a raiz da equação, usamos
+
+um dos seguintes critérios de parada:
+
+ou
+
+f (cn)
+
+|
+
+|
+
+6 ε (abordagem pelo eixo y)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+6 ε (abordagem pelo eixo x).
+
+A partir deste minucioso critério de isolamento de raízes, há que se entender melhor
+
+alguns métodos que utilizam conhecimentos elementares, compatíveis aos utilizados no
+Ensino Médio. Destes, podemos destacar
+
+Método da Bisseção;
+
+Método da Falsa Posição;
+
+•
+
+•
+
+Método da Secante.
+
+•
+Os dois primeiros são classiﬁcados como métodos de quebra, isto é, o intervalo
+de busca se reﬁna a cada iteração. O terceiro deles é classiﬁcado como método de
+múltiplos pontos, isto é, a cada iteração um novo ponto é calculado através de vários
+
+outros pontos encontrados anteriormente.
+
+4.1 Método da Bisseção
+
+Dentre os métodos numéricos mencionados anteriormente, o método da bisseção é
+o mais intuitivo. Sua explicação é bem elementar, e pode ser entendida pela seguinte
+
+ilustração.
+
+Sendo constatado que existe uma raiz em um determinado intervalo, divide-se o
+
+mesmo ao meio. Após essa divisão, há que se entender que a raiz estará presente ou na
+
+24
+
+primeira metade, ou na segunda metade, ou exatamente no meio deste intervalo. Em
+
+caso aﬁrmativo desta terceira hipótese, cessa-se a busca. Na negativa desta terceira
+hipótese, veriﬁca-se em qual das metades encontra-se a raiz. Logo, o local em que ela
+
+estiver presente, é o novo intervalo para se fazer a próxima busca, seguindo o mesmo
+
+critério.
+
+Formalmente, considere uma função f : [a, b]
+
+R contínua neste intervalo. Se f (a)
+possui sinal oposto a f (b), pelo Teorema 1, existe pelo menos um ponto x, tal que
+f (x) = 0.
+
+→
+
+Deﬁnindo
+
+cn =
+
+bn + an
+2
+
+,
+
+tomando bn+1 = cn e bn+1 = bn se f (an)
+f (cn) > 0,
+caso contrário encontramos a raiz. As tomadas sucessivas de cn formam uma sequência
+que converge para uma raiz de f no intervalo, como aﬁrma o teorema a seguir, cuja
+demonstração pode ser encontrada em [9].
+
+f (cn) < 0, e an+1 = cn se f (an)
+
+·
+
+·
+
+Teorema 2. Se f : [a, b]
+gera uma sequência que converge para x
+
+→
+
+R é contínua e f (a)
+
+·
+
+[a, b] tal que f (x) = 0.
+
+∈
+
+f (b) < 0, então o Método da Bisseção
+
+O intervalo que contém a raiz é dividido ao meio a cada iteração. Consequente-
+
+mente, na n-ésima iteração o comprimento do intervalo que contém a raiz se reduz
+a
+
+a
+|
+
+.
+
+b
+
+|
+
+−
+2n
+
+Para determinar a priori o número n de iterações que serão necessárias para se obter
+
+um intervalo com a precisão ε dada, podemos calcular n da seguinte forma
+
+|
+
+b
+a
+|
+−
+2n+1
+
+6 ε
+
+⇒
+
+n >
+
+log |b−a|
+
+ε
+log 2 −
+
+1.
+
+Exemplo 8. Este método pode ser usado para calcular a raiz cúbica de 2, como uma
+raiz de f (x) = x3
+2. O gráﬁco desta função está representado pela Figura 6 para um
+melhor entendimento, haja vista que, este não é necessário para a aplicação do método.
+
+−
+
+25
+
+Figura 6: f (x) = x3
+
+2
+
+−
+
+Independentemente de se ter o gráﬁco, é fácil observar que, por exemplo, f (0) =
+60 < 0.
+
+2 = 6. Desta forma, f (0)
+
+2 e f (2) = 23
+
+f (2) =
+
+2 = 8
+
+2 = 0
+
+2 =
+
+(0,2) tal que f (x) = 0. Alternativamente, 1 < 2 < 8
+
+·
+
+−
+
+−
+
+(0)3
+Pelo Teorema 1, existe um x
+3√1 < 3√2 < 3√8
+
+−
+
+−
+
+∈
+
+1 < 3√2 < 2. Seja
+
+−
+
+−
+
+⇒
+
+⇒
+
+c0 =
+
+b + a
+2
+
+=
+
+0 + 2
+2
+
+= 1.
+
+Consequentemente, temos o ponto médio do intervalo [0, 2].
+
+Veriﬁcando que f (c0) = 13
+
+2 =
+
+1, f (2) > 0 e f (1)
+
+−
+
+−
+
+intervalo para a nova iteração é [1, 2]. Tomando
+
+f (2) < 0, logo, o próximo
+
+·
+
+c1 =
+
+1 + 2
+2
+
+= 1,5,
+
+Teremos um valor para c1, tal que sua aproximação da raiz
+
+ε <
+
+c1 −
+
+|
+
+c0|
+
+=
+
+1
+
+|
+
+−
+
+1,5
+
+|
+
+= 0,5.
+
+26
+
+Figura 7: Algumas iterações do método da Bisseção
+
+Para obter uma melhor aproximação da raiz, podemos calcular c2, c3,
+
+modo análogo aos passos acima, como mostra a Figura 7.
+
+, cn, de
+
+· · ·
+
+A seguir, mostraremos um exemplo, que utiliza os conceitos de Lagrange e da
+
+bisseção vistos até agora.
+
+Exemplo 9. Calcule uma raiz de f (x) = x6
+
+ao intervalo
+
+2;
+
+(cid:20)−
+
+1
+3 (cid:21)
+
+−
+
+com erro absoluto menor que 0,01.
+
+3x5 + 4x4
+
+3x3 + 2x2
+
+−
+
+−
+
+−
+
+1 pertencente
+
+Veja que f (
+
+1/3) < 0. Desta forma, pelo Teorema 2, temos que a
+sequência de aproximações gerada pelo método da bisseção converge, para uma raiz
+
+2) > 0 e f (
+
+−
+
+−
+
+contida no intervalo.
+
+De
+
+temos
+
+n >
+
+ln |b−a|
+ε
+ln 2 −
+
+1,
+
+n >
+
+ln |−
+
+1
+3 −(−2)|
+0,01
+ln 2
+
+−
+
+1 = 6,96.
+
+27
+
+Então, tomando qualquer natural n > 7,38, cn é uma aproximação da raiz com erro
+
+absoluto menor que 0,01.
+
+n
+
+an
+
+bn
+
+cn
+
+f (an)
+
+f (cn)
+
+f (an)
+
+2,000
+
+1,167
+
+0,750
+
+0,542
+
+0,542
+
+0,490
+
+0,490
+
+0,333
+
+0,333
+
+0,333
+
+0,333
+
+0,438
+
+0,438
+
+0,464
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1,167
+
+255,000
+
+22,902
+
+0,750
+
+22,902
+
+3,546
+
+0,542
+
+3,546
+
+0,573
+
+0,438
+
+0,573
+
+0,490
+
+0,573
+
+0,464
+
+0,159
+
+0,477
+
+0,159
+
+0,164
+
+−
+0,159
+
+0,013
+
+−
+0,071
+
+0,028
+
+0,477
+
+0,464
+
+0,470
+
+0,071
+
+−
+
+−
+Tabela 1: Iterações de f (x) = x6
+
+f (cn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+(+)
+
+(+)
+
+(+)
+
+(
+
+)
+
+−
+(+)
+
+(
+
+)
+
+−
+(+)
+
+(+)
+
+−
+0,417
+
+0,208
+
+0,104
+
+0,052
+
+0,026
+
+0,013
+
+0,007
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+·
+
+(+)
+
+(+)
+
+(+)
+
+(+)
+
+(+)
+
+(+)
+
+(+)
+
+(+)
+
+3x5 + 4x4
+
+3x3 + 2x2
+
+1
+
+−
+
+−
+
+−
+
+Deste modo, obtemos o valor aproximado c8 =
+Vejamos outro exemplo para ﬁxar os conceitos até aqui apresentados.
+
+0,464 com 8 iterações.
+
+−
+
+x4
+Exemplo 10. Calcule uma raiz de f (x) =
+2
+[0,333; 2,414] com erro absoluto menor que 0,005.
+
++ 4x
+
+−
+
+2 pertencente ao intervalo
+
+Podemos observar que f (0,333) < 0 e f (2,414) > 0, assim pelo Teorema 2 temos
+
+que o método da bisseção irá convergir para uma raiz contida no intervalo.
+
+Calculando a quantidade de iterações,
+
+1
+
+ln |b−a|
+ε
+ln 2 −
+ln |2,414−0,333|
+0,005
+ln 2
+
+7,701.
+
+n >
+
+=
+
+≈
+
+1
+
+−
+
+Logo, tomando qualquer natural n > 7,701, cn é uma aproximação da raiz com erro
+
+menor que 0,005.
+
+Por isso, obtemos o valor aproximado c9 = 0,4918 com 9 iterações.
+
+28
+
+n
+
+an
+
+bn
+
+cn
+
+f (an)
+
+f (cn)
+
+f (an)
+
+f (cn)
+
+·
+
+cn
+
+|
+
+cn−1|
+
+−
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+0,3333
+
+2,4142
+
+1,3738
+
+0,3333
+
+1,3738
+
+0,8536
+
+0,3333
+
+0,8536
+
+0,5934
+
+0,3333
+
+0,5934
+
+0,4634
+
+0,4634
+
+0,5934
+
+0,5284
+
+0,4634
+
+0,5284
+
+0,4959
+
+0,4634
+
+0,4959
+
+0,4796
+
+0,4796
+
+0,4959
+
+0,4878
+
+0,4878
+
+0,4959
+
+0,4918
+
+0,6605
+
+5,2760
+
+0,6605
+
+1,6796
+
+0,6605
+
+0,4358
+
+0,6605
+
+0,1234
+
+0,1234
+
+−
+0,1526
+
+0,1234
+
+0,0138
+
+0,1234
+
+0,0550
+
+0,0206
+
+0,0550
+
+0,0206
+
+0,0034
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
++
+
+−
+
+−
++
+
++
+
++
+
+Tabela 2: Iterações de f (x) =
+
+x4
+2
+
++ 4x
+
+2
+
+−
+
+−
+0,5202
+
+0,2601
+
+0,1301
+
+0,0650
+
+0,0325
+
+0,0163
+
+0,0081
+
+0,0041
+
+Pela facilidade de implementar o Método da Bisseção, pode-se encontrar algumas
+maneiras de aplicá-lo em sala de aula, através de atividades de encontrar as raízes
+
+de equações, truques e jogos que motivam o estudo do método. Podemos encontrar
+
+métodos semelhantes em diversas áreas do conhecimento e vejamos isso através de um
+
+exemplo mostrando um deles, presente na computação, que é um algoritmo de busca
+conhecido como pesquisa ou busca binária.
+
+4.2 Pesquisa Binária
+
+A pesquisa ou busca binária é um algoritmo de busca em uma lista de elementos
+
+ordenados.
+
+Assim, como no método da bisseção, a pesquisa binária faz sucessivas divisões do
+
+espaço de busca. Estas divisões são deﬁnidas de duas formas: se n é ímpar, então o
+
+próximo elemento a ser analisado, é o elemento do meio; caso contrário, é o elemento
+n/2 pertencente ao subconjunto analisado.
+
+Se este elemento for menor, então a busca continua na metade superior, caso con-
+
+trário na metade inferior. Este processo continua até obter um conjunto com apenas 1
+
+elemento.
+
+29
+
+Considere uma lista ordenada com n elementos. A pesquisa binária executa uma
+(menor inteiro k tal que log2 n 6 k) consultas,
+
+busca por um elemento com até
+⌉
+ao contrário de uma busca sequencial, que podemos requerer até n consultas.
+
+log2 n
+
+⌈
+
+Exemplo 11. Considere uma lista A com 17 elementos:
+.
+A =
+
+1, 5, 5, 7, 8, 9, 13, 15, 15, 16, 19, 20, 28, 47, 88, 89, 90
+
+{
+
+}
+
+Veriﬁque se o elemento 7 pertence a à lista utilizando a pesquisa binária.
+
+i) Como A possui 17 elementos, logo o ponto inicial é A9 = 15, como 7 < 15, a
+
+busca continua na metade anterior, isto é, no conjunto
+
+1, 5, 5, 7, 8, 9, 13, 15, 15
+{
+
+.
+}
+
+ii) Com 9 elementos, assim a próxima iteração é em A5 = 8, como 7 < 8, a busca
+
+continua na metade anterior, isto é, no conjunto
+
+1, 5, 5, 7
+
+.
+
+}
+
+{
+
+iii) Com 4 elementos, assim a próxima iteração é em A2 = 5, como 5 < 7, a busca
+
+continua na metade posterior, isto é, no conjunto
+
+5, 7
+
+.
+
+}
+
+{
+
+iv) Com 2 elementos, assim a próxima iteração é em A3 = 5, como 5 < 7, a busca
+
+continua na metade posterior, isto é, no conjunto
+
+v) Com 1 elemento, a busca ﬁnaliza em A4 = 7.
+
+.
+
+7
+{
+
+}
+
+Deste modo, encontramos o elemento com
+
+=
+
+4,1699
+
+= 5 iterações.
+
+log2 18
+
+⌈
+
+⌉
+
+⌈
+
+⌉
+
+Em seguida, apresentamos dois outros métodos, dentre os vários que buscam raízes,
+
+que são acessíveis ao ensino médio, que são o Método da Falsa Posição e o Método da
+
+Secante.
+
+30
+
+4.3 Método da Falsa Posição
+
+De modo análogo ao método anterior, o método da falsa posição utiliza conheci-
+
+mentos elementares.
+
+Sendo constatado que existe uma raiz em um determinado intervalo, temos dois
+
+pontos do gráﬁco, que deﬁnem uma reta, que intersecta o eixo das abscissas no ponto
+
+c. Este ponto c é a abscissa em um novo ponto do gráﬁco. Tomando-o, com um dos
+
+pontos anteriores, que tem sinal oposto, podemos deﬁr uma nova reta, que também
+intersecta o eixo das abscissas.
+
+Esse processo é cíclico, é interpretado formalmente da seguinte forma:
+Dada uma função f : [a, b]
+
+R, contínua neste intervalo, se f (a) possui sinal oposto
+a f (b), pelo Teorema 1, existe pelo menos um ponto x neste intervalo, tal que f (x) = 0.
+
+→
+
+Deﬁnindo
+
+cn =
+
+anf (bn)
+f (bn)
+
+bnf (an)
+f (an)
+
+,
+
+−
+−
+
+que é a interseção da reta que passa por (an, f (an)) e (bn, f (bn)) com o eixo das abs-
+cissas, tomamos bn+1 = cn e an+1 = an se f (an)
+f (cn) < 0, caso contrário tomamos
+an+1 = cn e bn+1 = bn. As tomadas sucessivas de cn formam uma sequência que
+converge para a raiz de f no intervalo, desde que f (an)
+
+f (bn) < 0.
+
+·
+
+Analisando o intervalo que contém a raiz pelo eixo x, não podemos utilizar
+
+cn−1|
+lizamos o intervalo dado por
+
+−
+, pois este nem sempre contém a raiz da equação. Por outro lado, quando ana-
+,
+
+se f (an)
+|
+chegamos à conclusão de que nem sempre a aproximação satisfaz ao critério estabele-
+cido. Portanto, no método da falsa posição, para que tenhamos uma maior convicção,
+utilizamos a aproximação da raiz pelo eixo y, dada por cn, tal que
+< ε. E a
+critério de curiosidade, mostraremos o erro da aproximação pelo eixo x.
+
+f (cn) < 0, caso contrário,
+
+f (cn)
+
+an
+
+cn
+
+cn
+
+cn
+
+bn
+
+−
+
+−
+
+|
+
+|
+
+|
+
+|
+
+·
+
+|
+
+|
+
+·
+
+x2
+Exemplo 12. Considere a função f (x) =
+1, cujo gráﬁco está representado na
+3
+Figura 9 (apenas para um melhor entendimento, haja vista que não é necessário para
+a aplicação do método).
+
++ x
+
+−
+
+Podemos observar que, f (
+
+3) =
+
+−
+
+(
+
+3)2
+−
+3
+
++ (
+
+3)
+
+−
+
+−
+
+1 =
+
+−
+
+1 e f (3) =
+
+32
+3
+
++ 3
+
+−
+
+1 = 5,
+
+desta forma,
+f (
+
+3)
+
+f (3) =
+
+−
+
+·
+
+−
+
+5 < 0. Pelo Teorema 1, existe um x
+
+(
+
+3,3) tal que f (x) = 0. Seja
+
+c0 =
+
+af (b)
+f (b)
+
+−
+−
+
+bf (a)
+f (a)
+
+3
+
+= −
+
+5
+·
+3
+
+−
+(
+−
+
+31
+
+−
+1)
+
+−
+
+3
+
+∈
+(
+·
+3)
+−
+
+=
+
+2.
+
+−
+
+(a) Primeira iteração
+
+(b) Segunda iteração
+
+Figura 8: Iterações
+
+Como f (
+
+2)
+2) =
+intervalo para a nova iteração é [
+
++(
+
+−
+
+−
+
+(
+
+2)2
+−
+3
+
+5
+1 =
+3
+2, 3]. Tomando
+
+< 0, f (3) > 0, e f (
+
+f (3) < 0, o próximo
+
+2)
+
+·
+
+−
+
+−
+
+−
+−
+b1f (a1)
+f (a1)
+
+−
+−
+
+c1 =
+
+a1f (b1)
+f (b1)
+
+2
+
+= −
+
+5
+·
+5
+
+−
+(
+−
+
+−
+
+3
+
+(
+·
+5
+3 )
+−
+
+5
+3 )
+
+=
+
+3
+4
+
+−
+
+temos um valor para c2. Se quizermos calcular uma raiz com aproximação de 0,01, por
+exemplo, devemos calcular cn até encontrar
+
+< 0, 01.
+
+f (cn)
+
+|
+
+|
+
+Figura 9: Sucessivas iterações na função f (x) =
+
+x2
+3
+
++ x
+
+1
+
+−
+
+Exemplo 13. Calcule a raiz da equação f (x) = x4 + 4x3 + 2x2
+com um erro ε 6 0,005.
+
+−
+
+0.5 no intervalo [0, 1]
+
+32
+
+Para ilustrar o exemplo, temos o esboço do gráﬁco na Figura 10.
+
+Figura 10: Gráﬁco de f (x) = x4 + 4x3 + 2x2
+
+0.5
+
+−
+
+33
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+1
+
+0
+
+1
+
+0,0714
+
+0,5000
+
+6,5
+
+−
+
+0,4883
+
+−
+
+Observe que f (a1)
+
+·
+
+f (c1) > 0, logo temos
+
+n
+
+an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+|
+
+|
+
+Erro
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+0,071
+
+0,136
+
+0,193
+
+0,239
+
+0,275
+
+0,303
+
+0,324
+
+0,338
+
+10
+
+0,349
+
+11
+
+0,356
+
+12
+
+0,361
+
+13
+
+0,364
+
+14
+
+0,367
+
+15
+
+0,368
+
+16
+
+0,369
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+1
+
+0,136
+
+0,193
+
+0,239
+
+0,275
+
+0,303
+
+0,324
+
+0,338
+
+0,349
+
+0,356
+
+0,361
+
+0,364
+
+0,367
+
+0,368
+
+0,369
+
+0,370
+
+0,488
+
+6, 5
+
+0,452
+
+0,864
+
+0,452
+
+6, 5
+
+0,396
+
+0,807
+
+0,396
+
+6, 5
+
+0,328
+
+0,761
+
+0,328
+
+6, 5
+
+0,259
+
+0,725
+
+0,259
+
+6, 5
+
+0,196
+
+0,697
+
+0,196
+
+6, 5
+
+0,144
+
+0,676
+
+0,144
+
+6, 5
+
+0,103
+
+0,662
+
+0,103
+
+6, 5
+
+0,073
+
+0,651
+
+0,073
+
+6, 5
+
+0,051
+
+0,644
+
+0,051
+
+6, 5
+
+0,035
+
+0,639
+
+0,035
+
+6, 5
+
+0,024
+
+0,636
+
+0,024
+
+6, 5
+
+0,016
+
+0,633
+
+0,016
+
+6, 5
+
+0,011
+
+0,632
+
+0,011
+
+6, 5
+
+0,008
+
+0,631
+
+0,008
+
+6, 5
+
+0,005
+
+0,630
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+17
+
+0,370
+
+1
+
+0,370
+
+0,005
+
+6, 5
+
+0,003
+
+−
+Tabela 3: Iterações de f (x) = x4 + 4x3 + 2x2
+
+0,630
+
+0.5
+
+−
+
+Logo, foram necessárias 17 iterações, para encontrar a raiz aproximada c17 = 0,370
+
+que satisfaz a condição ε < 0,005.
+
+Com isso veriﬁcamos que o método da falsa posição é de fácil entendimento.
+
+34
+
+4.4 Método da Secante
+
+Na sequência, estabelecemos o método da secante, que difere no isolamento do
+
+intervalo de busca da raiz, pois este não necessariamente precisa conter a raiz. De
+modo análogo aos métodos anteriores, o método da secante também é acessível ao
+
+Ensino Médio. Sua explicação é de fácil entendimento, pois em sua construção, a
+
+iteração é semelhante ao método anterior.
+
+Tomando dois pontos quaisquer (c1, f (c1)) e (c2, f (c2)) do gráﬁco (com ordenadas
+diferentes). A reta que passa por (c1, f (c1)) e (c2, f (c2)), intersepta o eixo das abs-
+cissas em um ponto que denominamos c3. Calculando a sua ordenada, temos o ponto
+(c3, f (c3)) pertencente ao gráﬁco. Por (c2, f (c2)) e (c3, f (c3)), passa uma reta que inter-
+cepta o eixo das abscissas em c4. Calculando a sua ordenada, temos o ponto (c4, f (c4)),
+que também pertence ao gráﬁco. De modo análogo, far-se-á esse processo até que se
+tenha uma aproximação desejada da raiz.
+
+A deﬁnição deste método é escrita da seguinte forma:
+Seja uma função f : R
+= f (cn+1), deﬁnimos
+
+R contínua. Dados dois números cn, cn+1 ∈
+
+→
+
+f (cn)
+
+R com
+
+cn+1 =
+
+cn−1f (cn)
+f (cn)
+
+cnf (cn−1)
+f (cn−1)
+
+,
+
+−
+−
+
+que é a interseção da reta secante ao gráﬁco da função f pelos pontos (cn, f (cn)) e
+, n > 2, gerada desta forma,
+(cn+1, f (cn+1)), com o eixo das abscissas. A sequência
+converge para a raiz de f , desde que em nenhum passo tenhamos f (cn)
+
+= f (cn−1).
+
+cn
+
+}
+
+{
+
+Exemplo 14. Considere a função f (x) = 3,4
+sentada na Figura 11 para um melhor entendimento.
+
+−
+
+(x + 2,4)2
+3
+
+, c1 = 3 e c2 =
+
+2 repre-
+
+−
+
+A partir de c2 e c1, obtemos
+
+c3 =
+
+=
+
+=
+
+c2f (c1)
+f (c1)
+(
+
+2)f (3)
+−
+f (3)
+
+−
+−
+−
+2)
+
+−
+
+c1f (c2)
+f (c2)
+2)
+
+3f (
+
+−
+f (
+
+−
+0,27,
+
+−
+
+como representado na Figura 11.
+
+35
+
+6
+6
+Figura 11: Gráﬁco da Função f (x) = 3,4
+
+(x + 2,4)2
+3
+
+−
+
+A partir de c2 e c3, obtemos
+
+c4 =
+
+c2f (c3)
+−
+f (c3)
+−
+0,27f (
+f (
+
+c3(c2)
+f (c2)
+2)
+2)
+
+−
+−
+
+−
+−
+
+= −
+
+0,27)
+
+2)f (
+−
+0,27)
+
+(
+−
+f (
+−
+
+= 1,97,
+
+como representado na Figura 12.
+
+Figura 12: Segunda Iteração do Método da Secante para a Função f (x)
+
+Poderemos repetir este processo cíclico (iteração) quantas vezes for necessário para
+
+36
+
+minimizar o erro. Na representação a seguir encontramos até o ponto c5.
+
+Figura 13: Quinta Iteração do Método da Secante para a Função f (x)
+
+Vemos a seguir que nem sempre o método da secante é eﬁcaz.
+
+Exemplo 15. Considere a função f (x) = x2
+intervalo (
+
+1; 1,5).
+
+−
+
+2, calcule a raiz de f (x) contida no
+
+−
+
+Seja c1 = 1,5 e c2 =
+
+−
+c2f (c1)
+f (c1)
+
+1, calculando c3 temos
+
+c1f (c2)
+f (c2)
+
+= −
+
+1
+
+·
+
+0,25
+0,25
+
+−
+−
+
+−
+−
+
+1,5
+(
+
+(
+·
+1)
+
+−
+
+1)
+
+−
+
+=
+
+1,25
+1,25
+
+= 1.
+
+c3 =
+
+De modo análogo, deveríamos encontrar c4. Porém isto não é possível pois
+
+c4 =
+
+c3f (c2)
+f (c2)
+
+−
+−
+
+c2f (c3)
+f (c3)
+
+1
+
+(
+
+·
+
+=
+
+−
+(
+
+1)
+
+−
+
+(
+
+1)
+
+−
+1)
+
+−
+(
+
+−
+
+−
+
+1)
+
+.
+
+−
+
+(
+·
+1)
+
+Analiticamente, há uma impossibilidade de resolução, haja vista que não podemos
+
+dividir por zero.
+
+Geometricamente, a reta que passa pelos pontos de abcissas c3 e c4 é paralela ao
+eixo das abscissas. Tornando-se impossível encontrar a sua interseção com o eixo das
+
+abscissas, como pode ser veriﬁcado pela Figura 14.
+
+Esse fato é interessante para que o leitor saiba que o método da secante não é
+
+totalmente eﬁcaz, ao contrário do método da bisseção e falsa posição.
+
+Exemplo 16. Para f (x) =
+com um erro absoluto de menor que 0,005 usando o método da secante.
+
+9x3 + 3x + 1, calcule a raiz pertencente ao intervalo [0, 1]
+
+−
+
+37
+
+Figura 14: Exemplo em que o Método da Secante não Converge
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+5
+
+−
+1,4583
+
+−
+0,1882
+
+1,6624
+
+1,5328
+
+5
+
+−
+1,4583
+
+1,6624
+
+12,1775
+
+1,7752
+
+0,7346
+
+12,1775
+
+0,8749
+
+0,1374
+
+0,0000
+
+1,0000
+
+0,1667
+
+1
+
+1,0000
+
+0,1667
+
+0,3548
+
+1,1780
+
+−
+0,5972
+
+0,1667
+
+0,3548
+
+1,1780
+
+−
+0,5972
+
+0,3548
+
+1,1780
+
+−
+0,5972
+
+0,7346
+
+0,6942
+
+0,8749
+
+0,7346
+
+0,6942
+
+0,7009
+
+0,6942
+
+0,7009
+
+0,7013
+
+0,3637
+
+−
+0,0714
+
+0,3637
+
+−
+0,0714
+
+0,0403
+
+0,0066
+
+0,0043
+
+0,0004
+
+Tabela 4: Iterações de f (x) =
+
+9x3 + 3x + 1
+
+−
+
+A aproximação da raiz é c8 = 0,7013.
+Entendemos que a diferença básica entre o método da falsa posição e o da secante
+
+é que, neste último, usam-se intervalos baseados nos dois últimos pontos da iteração.
+Consequentemente, o método da secante não garante que a raiz pertence ao intervalo.
+
+38
+
+Ao contrário do anterior, que sempre gera uma sequência que converge para a raiz
+
+da equação, uma vez que esta sempre permanece no intervalo, que se reduz a cada
+iteração. Todavia, as consequências dessa diferença são comentadas na próxima seção.
+
+39
+
+5 Um Paralelo Entre os Métodos
+
+Neste trabalho apresentamos três métodos iterativos, que permitem o cálculo de
+raízes aproximadas de funções reais. Em cada situação há vantagens e desvantagens
+
+no uso desses métodos. Por este motivo, não fazemos comparações. O nosso intuito
+
+nesta seção é sedimentar o conhecimento exposto anteriormente, resolvendo o mesmo
+
+exercício com aplicação dos três métodos: bisseção, falsa posição e secante.
+
+Os cálculos podem ser feitos de diversas formas. Neste trabalho, foi usada uma
+
+planilha eletrônica, para dar praticidade e otimizar o tempo. Isto porque, ao selecionar
+
+um conjunto de células e arrastar, as conﬁgurações das células são copiadas para as
+
+demais. Além disto, qualquer aluno com o conhecimento básico do software é capaz
+de refazer os passos. Colocamos os valores dos extremos do intervalo a e b em duas
+células de uma planilha, e, em outras duas, calculamos f (a) e f (b). Estes valores, por
+sua vez, são utilizados para se calcular, em uma outra célula, o valor de c, conforme o
+
+método utilizado.
+
+A seguir, vemos o cálculo das raízes de algumas funções através dos três métodos
+
+estudados.
+
+Exemplo 17. Calcule a raiz de f (x) =
+absoluto menor que 0,005.
+
+−
+
+x2 + 5x
+
+−
+
+4 no intervalo [
+
+−
+
+2, 2] com um erro
+
+Veriﬁcando que f (
+
+4 = 2, percebemos
+a existência de pelo menos uma raiz no intervalo dado. Portanto, podemos aplicar os
+
+18 e f (2) =
+
+4 + 10
+
+2) =
+
+4 =
+
+10
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+4
+
+métodos estudados. Podemos observar o gráﬁco a seguir apenas como ilustração.
+
+Figura 15: Gráﬁco de f (x) =
+
+x2 + 5x
+
+4
+
+−
+
+−
+
+40
+
+a) Método da bisseção
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (cn)
+
+1
+
+2
+
+2
+
+−
+0
+
+2
+
+2
+
+0
+
+1
+
+18
+
+−
+
+4
+
+−
+
+4
+
+−
+0
+
+f (cn)
+
+f (an)
+
+·
++
+
+cn
+
+|
+
+cn−1|
+−
+0
+
+-
+
+1
+
+Tabela 5: Iterações de f (x) =
+
+x2 + 5x
+
+4
+
+−
+
+−
+
+Portanto, em apenas 2 iterações encontramos a raiz c2 = 1.
+
+b) Método da Falsa Posição
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+1
+
+2
+
+−
+
+2
+
+1,6
+
+18
+
+−
+
+2
+
+1,44
+
+Sabendo que f (a1)
+
+f (c1) < 0, temos
+
+·
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+|
+
+|
+
+Erro
+
+n
+
+an
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+bn
+
+2
+
+1,600
+
+1,600
+
+1,333
+
+1,333
+
+1,176
+
+1,176
+
+1,091
+
+1,091
+
+1,046
+
+1,046
+
+1,023
+
+1,023
+
+1,012
+
+1,012
+
+1,006
+
+1,006
+
+1,003
+
+1,003
+
+1,001
+
+18
+
+18
+
+18
+
+18
+
+18
+
+18
+
+18
+
+18
+
+18
+
+18
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+2,000
+
+1,440
+
+3,600
+
+1,440
+
+0,889
+
+3,333
+
+0,889
+
+0,498
+
+3,176
+
+0,498
+
+0,264
+
+3,091
+
+0,264
+
+0,136
+
+3,046
+
+0,136
+
+0,069
+
+3,023
+
+0,069
+
+0,035
+
+3,012
+
+0,035
+
+0,018
+
+3,006
+
+0,018
+
+0,009
+
+3,003
+
+0,009
+
+0,004
+
+3,001
+
+Tabela 6: Iterações de f (x) =
+
+x2 + 5x
+
+4
+
+−
+
+−
+
+Portanto, em 10 iterações encontramos a aproximação da raiz c10 = 1,001.
+
+41
+
+c) Método da Secante
+
+an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+2,0000
+
+−
+2,0000
+
+2,0000
+
+1,6000
+
+18,0000
+
+2,0000
+
+−
+
+1,6000
+
+0,5714
+
+2,0000
+
+1,4400
+
+−
+1,0286
+
+0,5195
+
+0,0792
+
+1,4694
+
+−
+0,2645
+
+0,0349
+
+0,0120
+
+0,0004
+
+0,0011
+
+−
+x2 + 5x
+
+4
+
+−
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+1,6000
+
+0,5714
+
+1,0909
+
+1,4400
+
+0,5714
+
+1,0909
+
+1,0117
+
+1,0909
+
+1,0117
+
+0,9996
+
+1,4694
+
+−
+0,2645
+
+1,0117
+
+0,9996
+
+1,0000
+
+0,0349
+
+Tabela 7: Iterações de f (x) =
+
+−
+
+42
+
+Logo, com 6 iterações encontramos c6 =
+
+1.
+
+−
+
+Exemplo 18. Calcule a raiz de f (x) = x5
+absoluto menor que 0,006.
+
+−
+
+2x +
+
+1
+3
+
+no intervalo [
+
+−
+
+2, 1] com um erro
+
+2) =
+
+Sabendo que f (
+
+1) = 4/3, veriﬁcamos que existe pelo menos uma
+raiz no intervalo dado e, podemos aplicar os métodos estudados. Podemos observar o
+gráﬁco a seguir apenas como ilustração.
+
+83/3 e f (
+
+−
+
+−
+
+−
+
+Figura 16: Gráﬁco de f (x) = x5
+
+2x +
+
+−
+
+1
+3
+
+43
+
+a) Método da bisseção
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+an
+
+2
+
+−
+1,5
+
+−
+
+1,25
+
+1,25
+
+1,25
+
+−
+
+−
+
+−
+
+1,25
+
+−
+1,2344
+
+−
+
+1,2344
+
+−
+
+bn
+
+1
+
+1
+
+−
+
+−
+
+1
+
+−
+1,125
+
+−
+
+1,1875
+
+1,2188
+
+1,2188
+
+1,2266
+
+−
+
+−
+
+−
+
+−
+
+cn
+
+f (an)
+
+f (cn)
+
+1,5
+
+−
+
+27,6667
+
+−
+
+4,2604
+
+−
+
+0,2184
+
+−
+0,7813
+
+4,2604
+
+0,2184
+
+0,2184
+
+0,3469
+
+0,2184
+
+0,0819
+
+0,2184
+
+0,0636
+
+0,0636
+
+0,0636
+
+−
+0,0103
+
+0,0264
+
+−
+
+1,25
+
+−
+1,1250
+
+−
+
+1,1875
+
+1,2188
+
+1,2344
+
+1,2266
+
+1,2305
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+f (an)
+
+·
++
+
++
+
+−
+
+−
+
+−
++
+
+−
++
+
+f (cn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+−
+0,25
+
+0,125
+
+0,0625
+
+0,0313
+
+0,0156
+
+0,0078
+
+0,0039
+
+Tabela 8: Iterações de f (x) = x5
+
+2x +
+
+−
+
+1
+3
+
+Logo, encontramos a aproximação da raiz c8 =
+
+1,2305 com 8 iterações.
+
+−
+
+b) Método da Falsa Posição
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+1
+
+2
+
+−
+
+1
+
+−
+
+1,046
+
+−
+
+−
+
+27,6667
+
+1,3333
+
+1,1733
+
+Através de f (a1)
+modo, temos:
+
+·
+
+f (c1) < 0, veriﬁcamos que a raiz está neste intervalo. Deste
+
+44
+
+n
+
+an
+
+bn
+
+cn
+
+f (bn)
+
+f (cn)
+
+|
+
+|
+
+Erro
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1,046
+
+1,085
+
+1,117
+
+1,142
+
+1,163
+
+1,179
+
+1,191
+
+1,200
+
+1,207
+
+1,212
+
+1,216
+
+1,219
+
+1,221
+
+1,223
+
+1,224
+
+1,225
+
+1,226
+
+1,226
+
+1,227
+
+1,227
+
+1,227
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+1,085
+
+1,173
+
+1,001
+
+0,915
+
+1,117
+
+1,001
+
+0,830
+
+0,883
+
+1,142
+
+0,830
+
+0,672
+
+0,858
+
+1,163
+
+0,672
+
+0,533
+
+0,837
+
+1,179
+
+0,533
+
+0,416
+
+0,821
+
+1,191
+
+0,416
+
+0,321
+
+0,809
+
+1,200
+
+0,321
+
+0,244
+
+0,800
+
+1,207
+
+0,244
+
+0,185
+
+0,793
+
+1,212
+
+0,185
+
+0,139
+
+0,788
+
+1,216
+
+0,139
+
+0,104
+
+0,784
+
+1,219
+
+0,104
+
+0,078
+
+0,781
+
+1,221
+
+0,078
+
+0,058
+
+0,779
+
+1,223
+
+0,058
+
+0,043
+
+0,777
+
+1,224
+
+0,043
+
+0,032
+
+0,776
+
+1,225
+
+0,032
+
+0,024
+
+0,775
+
+1,226
+
+0,024
+
+0,017
+
+0,774
+
+1,226
+
+0,017
+
+0,013
+
+0,774
+
+1,227
+
+0,013
+
+0,010
+
+0,773
+
+1,227
+
+0,010
+
+0,007
+
+0,773
+
+1,227
+
+0,007
+
+0,005
+
+0,773
+
+1,227
+
+0,005
+
+0,004
+
+0,773
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+−
+
+Tabela 9: Iterações de f (x) = x5
+
+2x +
+
+−
+
+1
+3
+
+45
+
+Logo encontramos uma aproximação da raiz c22 =
+ções com 22 iterações.
+
+−
+
+1,227 que satisfaz as condi-
+
+c) Método da Secante
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+an
+
+2
+
+−
+
+1
+
+−
+1,0459
+
+1,3829
+
+1,1721
+
+1,2125
+
+−
+
+−
+
+−
+
+−
+
+1
+
+−
+1,046
+
+1,383
+
+−
+
+−
+
+1,1722
+
+1,2126
+
+1,2295
+
+−
+
+−
+
+−
+
+1,046
+
+−
+
+27,6667
+
+1,3333
+
+1,383
+
+1,3333
+
+1,1733
+
+−
+
+−
+
+1,1722
+
+1,1733
+
+1,2126
+
+1,2295
+
+1,9600
+
+−
+0,4648
+
+1,2276
+
+0,1370
+
+−
+
+−
+
+−
+
+−
+
+−
+0,3370
+
+0,2108
+
+0,0404
+
+1,9600
+
+−
+0,4648
+
+0,1370
+
+0,0169
+
+0,0169
+
+0,0019
+
+2x +
+
+1
+3
+
+−
+
+−
+
+Tabela 10: Iterações de f (x) = x5
+
+Temos uma aproximação da raiz c6 =
+
+1,2276 com apenas 6 iterações.
+
+−
+
+Exemplo 19. Calcule a raiz de f (x) =
+absoluto menor que 0,0001.
+
+x7
+4
+
++ x2
+
+−
+
+1 no intervalo [0, 1] com um erro
+
+Como sabemos que f (0) =
+
+1 e f (1) = 1/4, constatamos que existe pelo menos
+uma raiz no intervalo dado e, podemos aplicar os métodos estudados. Podemos observar
+o gráﬁco a seguir apenas como ilustração.
+
+−
+
+a) Método da bisseção
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (cn)
+
+1
+
+0
+
+1
+
+0,50
+
+1,0000
+
+−
+
+−
+
+0,7480
+
+f (an)
+
+·
++
+
+f (cn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+−
+
+46
+
+Figura 17: Gráﬁco de f (x) =
+
+x7
+4
+
++ x2
+
+1
+
+−
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+0,5
+
+0,75
+
+0,875
+
+1
+
+1
+
+1
+
+0,75
+
+0,875
+
+0,93750
+
+0,875
+
+0,9375
+
+0,90625
+
+0,90625
+
+0,9375
+
+0,92188
+
+0,92188
+
+0,9375
+
+0,92969
+
+0,92188
+
+0,92969
+
+0,92578
+
+0,92188
+
+0,92578
+
+0,92383
+
+10
+
+0,92383
+
+0,92578
+
+0,92480
+
+11
+
+12
+
+13
+
+14
+
+0,9248
+
+0,92578
+
+0,92529
+
+0,9248
+
+0,92529
+
+0,92505
+
+0,9248
+
+0,92505
+
+0,92493
+
+0,9248
+
+0,92493
+
+0,92487
+
+0,748
+
+−
+0,40413
+
+−
+
+0,1362
+
+0,1362
+
+0,0532
+
+−
+
+−
+
+−
+
+0,00868
+
+0,00868
+
+0,00868
+
+0,00297
+
+−
+
+−
+
+−
+
+−
+
+0,0001
+
+0,4041 +
+
+0,25
+
+−
+
+0,13620 + 0,125
+
+0,0625
+
+−
+0,05320 + 0,03125
+
+0,00868 + 0,01563
+
+−
+0,03803
+
+−
+
+−
+0,01439
+
+0,00781
+
+−
+
+0,00278
+
+0,00391
+
+−
+0,00297 + 0,00195
+
+−
+
+0,00010 + 0,00098
+
+−
+0,00134 + 0,00049
+
+−
+
+−
+
+−
+
+−
+
+0,0001
+
+0,00062
+
+0,0001
+
+0,00026
+
+0,0001
+
+0,00008
+
+0,00024
+
+0,00012
+
+0,00006
+
+−
+
+−
+
+−
+
+Tabela 11: Iterações de f (x) =
+
+x7
+4
+
++ x2
+
+1
+
+−
+
+47
+
+Logo, encontramos a aproximação da raiz c14 = 0,92487 com 14 iterações.
+
+b) Método da Falsa Posição
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+1
+
+0
+
+1
+
+0,8
+
+1
+
+−
+
+0,25
+
+0,3076
+
+−
+
+Sabendo que f (b1)
+temos:
+
+·
+
+f (c1) < 0, logo, a raiz está neste intervalo. Deste modo,
+
+n
+
+2
+
+3
+
+4
+
+5
+
+6
+
+an
+
+0,8
+
+0,9103
+
+0,9231
+
+0,9246
+
+0,9248
+
+bn
+
+cn
+
+f (an)
+
+f (cn)
+
+|
+|
+0,0418
+
+Erro
+
+0,11033
+
+0,3076
+
+1
+
+1
+
+1
+
+1
+
+1
+
+0,9103
+
+0,9232
+
+0,9246
+
+0,9248
+
+0,9248
+
+−
+
+−
+
+−
+
+−
+
+−
+
+0,0418
+
+0,0049
+
+0,01284
+
+0,0049
+
+0,0006
+
+0,00148
+
+0,0006
+
+0,0001
+
+0,00017
+
+0,0001
+
+0,0000
+
+0,00002
+
+Tabela 12: Iterações de f (x) =
+
+x7
+4
+
++ x2
+
+1
+
+−
+
+Logo encontramos uma aproximação da raiz c6 = 0,9248 que satisfaz as condições
+com 6 iterações.
+
+c) Método da Secante
+
+Temos uma aproximação da raiz c5 = 0,92484 com apenas 5 iterações.
+
+Exemplo 20. Calcule a raiz de f (x) =
+absoluto menor que 0,0001.
+
+x3
+4
+
+−
+
++ x +
+
+1
+2
+
+no intervalo [1, 3] com um erro
+
+Veriﬁcando que f (1) = 5/4 e f (3) =
+
+13/4, podemos perceber que existe pelo
+−
+menos uma raiz no intervalo dado e, podemos aplicar os métodos estudados. Observe
+o gráﬁco na Figura ?? apenas como ilustração.
+
+48
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+an
+
+0
+
+1
+
+bn
+
+1
+
+cn
+
+0,8
+
+0,8
+
+0,91033
+
+0,8
+
+0,91033
+
+0,92767
+
+0,91033
+
+0,92767
+
+0,92477
+
+0,92767
+
+0,92477
+
+0,92484
+
+Tabela 13: Iterações de f (x) =
+
+f (an)
+
+f (bn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+1
+
+−
+0,25
+
+0,30757
+
+−
+
+0,04179
+
+−
+0,00839
+
+x3
+4
+
+−
+
++ x +
+
+0,25
+
+0,30757
+
+0,11033
+
+−
+
+0,04179
+
+−
+0,00839
+
+0,01735
+
+0,00290
+
+0,00019
+
+0,00006
+
+no intervalo [1, 3]
+
+−
+
+1
+2
+
+a) Método da bisseção
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+an
+
+1
+
+2
+
+2
+
+2
+
+2,125
+
+bn
+
+3
+
+3
+
+2,5
+
+2,25
+
+2,25
+
+cn
+
+f (an)
+
+f (cn)
+
+1, 555
+
+1,25
+
+0,5
+
+f (an)
+
+·
++
+
+2,5
+
+2,25
+
+2,125
+
+0,5
+
+0,5
+
+0,5
+
+0,9063
+
+−
+
+0,0977
+
+−
+0,2261
+
+2,1875
+
+0,2261
+
+0,0706
+
+2,1875
+
+2,25
+
+2,21875
+
+0,0706
+
+2,1875
+
+2,21875
+
+2,20313
+
+0,0706
+
+0,0119
+
+−
+0,0298
+
+2,20313
+
+2,21875
+
+2,21094
+
+0,0298
+
+0,0090
+
+2,21094
+
+2,21875
+
+2,21484
+
+0,0090
+
+10
+
+2,21094
+
+2,21484
+
+2,21289
+
+0,0090
+
+0,0014
+
+−
+0,0038
+
+11
+
+2,21289
+
+2,21484
+
+2,21387
+
+0,0038
+
+0,0012
+
+12
+
+2,21387
+
+2,21387
+
+2,21387
+
+0,0012
+
+0,0012
+
+f (cn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+−
+0,5
+
+0,25
+
+0,125
+
+0,0625
+
+0,03125
+
+0,01563
+
+0,00781
+
+0,00391
+
+0,00195
+
+0,00098
+
+0,00000
+
+−
+
+−
++
+
++
+
+−
++
+
++
+
++
+
++
+
++
+
++
+
+Tabela 14: Iterações de f (x) =
+
+x3
+4
+
+−
+
++ x +
+
+1
+2
+
+49
+
+Logo, encontramos a aproximação da raiz c12 = 2,21387 com 12 iterações.
+
+b) Método da Falsa Posição
+
+n an
+
+bn
+
+cn
+
+f (an)
+
+f (bn)
+
+f (cn)
+
+1
+
+1
+
+3
+
+0,99548
+
+1,25
+
+3,25
+
+1,2489
+
+−
+
+O produto f (b1)
+
+·
+
+f (c1) < 0, então a raiz está neste intervalo. Deste modo, temos:
+
+n
+
+an
+
+bn
+
+cn
+
+f (an)
+
+1,9244
+
+1,1145
+
+f (cn)
+
+|
+|
+0,64271
+
+Erro
+
+0,36886
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+1,555
+
+1,924
+
+2,101
+
+2,173
+
+2,199
+
+2,209
+
+2,212
+
+2,214
+
+10
+
+2,214
+
+11
+
+2,214
+
+3
+
+3
+
+3
+
+3
+
+3
+
+3
+
+3
+
+3
+
+3
+
+3
+
+2,1020
+
+0,6427
+
+0,28013
+
+0,17759
+
+2,1733
+
+0,2801
+
+0,10715
+
+0,07126
+
+2,1996
+
+0,1072
+
+0,03893
+
+0,02639
+
+2,2091
+
+0,0389
+
+0,01388
+
+0,00947
+
+2,2125
+
+0,0139
+
+0,00491
+
+0,00336
+
+2,2137
+
+0,0049
+
+0,00174
+
+0,00119
+
+2,2141
+
+0,0017
+
+0,00061
+
+0,00042
+
+2,2142
+
+0,0006
+
+0,00022
+
+0,00015
+
+2,2143
+
+0,0002
+
+0,00008
+
+0,00005
+
+Tabela 15: Iterações de f (x) =
+
+x3
+4
+
+−
+
++ x +
+
+1
+2
+
+Logo encontramos uma aproximação da raiz c11 = 2,2143 que satisfaz as condições
+com 11 iterações.
+
+c) Método da Secante
+
+Temos uma aproximação da raiz c8 = 2,21432 com apenas 8 iterações.
+
+Com base nestes exemplos, percebemos a facilidade em executar as operações ne-
+
+cessárias para o desenvolvimento de cada método.
+
+50
+
+cn
+
+f (an)
+
+f (bn)
+
+cn
+
+|
+
+cn−1|
+
+−
+
+1,55556
+
+1,2500
+
+n
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+bn
+
+3
+
+an
+
+1
+
+3
+
+1,55556
+
+1,92441
+
+1,55556
+
+1,92441
+
+2,42686
+
+3,2500
+
+−
+1,1145
+
+1,92441
+
+2,42686
+
+2,17490
+
+0,6427
+
+2,42686
+
+2,17490
+
+2,20952
+
+2,17490
+
+2,20952
+
+2,21444
+
+0,6465
+
+−
+0,1030
+
+2,20952
+
+2,21444
+
+2,21432
+
+0,0128
+
+2,21444
+
+2,21432
+
+2,21432
+
+0,0003
+
+−
+
+3,2500
+
+−
+1,1145
+
+−
+0,36886
+
+0,6427
+
+0,50245
+
+0,6465
+
+−
+0,1030
+
+0,25196
+
+0,03462
+
+0,0128
+
+0,00492
+
+0,0003
+
+−
+0,0000
+
+0,00012
+
+0,00000
+
+Tabela 16: Iterações de f (x) =
+
+x3
+4
+
+−
+
++ x +
+
+1
+2
+
+Podemos observar também que, dos três exemplos apresentados, o método da bis-
+seção se mostrou o mais eﬁciente no primeiro deles, enquanto que nos dois últimos,
+o método da secante se mostrou melhor. Já o método da falsa posição, utilizou mais
+iterações para dar aproximação desejada em dois, dos três exemplos apresentados.
+
+Para a aplicação em sala de aula, sugerimos iniciar pelo método da bisseção por
+sua simplicidade de implementação, e por encontrar maiores aplicações lúdicas, haja
+vista que estas auxiliam na aprendizagem dos alunos e proporcionam maior interesse.
+Os demais devem ser introdidos se a turma estiver preparada para lidar com situações
+um pouco mais complexas.
+
+51
+
+6 Ensino de Bisseção na Sala de Aula
+
+O método da Bisseção pode ser apresentado no ensino médio de forma ampla.
+Com a atual disposição da grade curricular de matemática dessa fase escolar, o
+conteúdo de polinômios é o último item apresentado aos alunos, ao ﬁnal da 3a Série do
+Ensino Médio.
+
+Seguindo este raciocínio, pressupõe-se que o candidato a aprender essa técnica tri-
+vial, possui experiência e ferramentas necessárias para entender o método da bisseção.
+
+Além disso, é interessante que o professor mostre ao estudante que nem sempre
+
+existem fórmulas para se encontrar raízes de polinômios de graus elevados e esses tais
+
+cálculos devem ser feito por aproximações. Dentro desse contexto, mostra-se ao aluno
+essa técnica bastante interessante.
+
+6.1 Pense um Número que eu Adivinho
+
+Antes de descrever est atividade lúdico, vamos revisar a representação binária dos
+
+números naturais.
+
+Consindere os números (155)10 e (110111)2.
+
+15510
+
+= 1
+
+1101112 = 1
+
+102 + 5
+
+25 + 1
+
+·
+
+·
+
+·
+
+101 + 5
+
+·
+24 + 0
+
+100
+
+·
+23 + 1
+
+·
+
+22 + 1
+
+21 + 1
+
+20
+
+·
+
+·
+
+·
+
+De modo geral, a representação de um número, em uma base b, (anan−1an−2 · · ·
+
+1), k = 0, 1, 2,
+
+n, pode ser escrita na forma polinomial
+
+com 0 6 ak 6 (b
+
+a2a1a0)b,
+
+−
+
+· · ·
+anbn + an−1bn−1 +
+
++ a1b1 + a0b0.
+
+· · ·
+
+Com esta representação, podemos converter números no sistema binário para o
+
+sistema decimal, colocando o número 2 em evidência.
+
+11101112 = 1
+
+26 + 1
+
+·
+
+= 2
+
+(1 + 2
+
+·
+= 11910
+
+25 + 1
+
+(1 + 2
+
+·
+
+·
+
+·
+
+·
+
+24 + 0
+
+23 + 1
+
+22 + 1
+
+·
+(1 + 2
+
+·
+(1 + 2
+
+·
+
+(2
+
+·
+
+1))))) + 1
+
+·
+
+21 + 1
+
+20
+
+·
+
+·
+
+Vemos agora a conversão de números no sistema decimal para o sistema binário.
+a2a1a0)2 a sua repre-
+
+Considere, por exemplo, o número N0 = 5510 e (anan−1an−2 · · ·
+
+52
+
+sentação na base 2. Temos, então
+
+55 = 2
+
+(an
+
+·
+
+2n−1 + an−1 ·
+
+2n−2 + an−2 ·
+
+·
+
+2n−3 +
+
++ a2 ·
+
+· · ·
+
+2 + a1) + a0 = 2
+
+27 + 1
+
+·
+
+Dessa forma, o dígito a0 = 1, é o resto da divisão de 155 por 2. Repetindo este
+
+processo para o número 27 temos
+
+27 = 2
+
+(an
+
+·
+
+2n−1 + an−2 ·
+
+2n−3 + an−2 ·
+
+·
+
+2n−4 +
+
+· · ·
+
++ a2 + a1) = 2
+
+13 + 1
+
+·
+
+obtemos o dígito a1 = 1. Seguindo este raciocínio obtemos a sequência de números Nn
+e an.
+
+N3 = 13 = 2
+
+N4 = 6 = 2
+
+N5 = 3 = 2
+
+N6 = 1 = 2
+
+6 + 1
+
+3 + 0
+
+1 + 1
+
+0 + 1
+
+·
+
+·
+
+·
+
+·
+
+⇒
+
+⇒
+
+⇒
+
+⇒
+
+a3 = 1
+
+a4 = 0
+
+a5 = 1
+
+a6 = 1
+
+De uma maneira mais acessível aos alunos do Ensino Médio, utilizamos divisões
+
+sucessivas por dois como mostra a Figura 18.
+
+Figura 18: Algorítimo das Divisões Sucessivas
+
+53
+
+Portanto, a representação de (55)10 na base 2 é (110111)2.
+Um bom truque matemático que explora esta propriedade através do método da
+
+bisseção é a atividade que descrevemos a seguir.
+
+Dispondo de 6 cartões que denominamos de ci, 1 6 i 6 6, com 32 números cada,
+o objetivo desta atividade é advinhar um número de 1 a 64, através das dicas que
+
+informam em quais dos cartões o número está presente.
+Os números estão distribuídos da seguinte forma;
+
+1. No cartão c1, apenas os números cuja representação binária termina com 1, isto
+
+é, (xxxxx1)2, conforme a tabela a seguir;
+
+1
+
+3
+
+5
+
+7
+
+9
+
+11
+
+13
+
+15
+
+17
+
+19
+
+21
+
+23
+
+25
+
+27
+
+29
+
+31
+
+33
+
+35
+
+37
+
+39
+
+41
+
+43
+
+45
+
+47
+
+49
+
+51
+
+53
+
+55
+
+57
+
+59
+
+61
+
+63
+
+Tabela 17: Cartão c1
+
+2. No cartão c2, apenas os números cuja representação binária possui a forma
+
+(xxxx1x)2, conforme a tabela a seguir;
+
+2
+
+3
+
+6
+
+7
+
+10
+
+11
+
+14
+
+15
+
+18
+
+19
+
+22
+
+23
+
+26
+
+27
+
+30
+
+31
+
+34
+
+35
+
+38
+
+39
+
+42
+
+43
+
+46
+
+47
+
+50
+
+51
+
+54
+
+55
+
+58
+
+59
+
+62
+
+63
+
+Tabela 18: Cartão c2
+
+3. No cartão c3, apenas os números cuja representação binária possui a forma
+
+(xxx1xx)2, conforme a tabela a seguir;
+
+54
+
+4
+
+5
+
+6
+
+7
+
+12
+
+13
+
+14
+
+15
+
+20
+
+21
+
+22
+
+23
+
+28
+
+29
+
+30
+
+31
+
+36
+
+37
+
+38
+
+39
+
+44
+
+45
+
+46
+
+47
+
+52
+
+53
+
+54
+
+55
+
+60
+
+61
+
+62
+
+63
+
+Tabela 19: Cartão c3
+
+4. No cartão c4, apenas os números cuja representação binária possui a forma
+
+(xx1xxx)2, conforme a tabela a seguir;
+
+8
+
+9
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+24
+
+25
+
+26
+
+27
+
+28
+
+29
+
+30
+
+31
+
+40
+
+41
+
+42
+
+43
+
+44
+
+45
+
+46
+
+47
+
+56
+
+57
+
+58
+
+59
+
+60
+
+61
+
+62
+
+63
+
+Tabela 20: Cartão c4
+
+5. No cartão c5, apenas os números cuja representação binária possui a forma
+
+(x1xxxx)2, conforme a tabela a seguir;
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+27
+
+28
+
+29
+
+30
+
+31
+
+48
+
+49
+
+50
+
+51
+
+52
+
+53
+
+54
+
+55
+
+56
+
+57
+
+58
+
+59
+
+60
+
+61
+
+62
+
+63
+
+Tabela 21: Cartão c5
+
+6. No cartão c6, apenas os números cuja representação binária possui a forma
+
+(1xxxxx)2, conforme a tabela a seguir;
+
+Solicitando a um aluno para informar em quais dos cartões o número pensado
+estava, fui informado que o número estava presente nos cartões c1, c2, c3, c5 e c6, isto é,
+
+55
+
+32
+
+33
+
+34
+
+35
+
+36
+
+37
+
+38
+
+39
+
+40
+
+41
+
+42
+
+43
+
+44
+
+45
+
+46
+
+47
+
+48
+
+49
+
+50
+
+51
+
+52
+
+53
+
+54
+
+55
+
+56
+
+57
+
+58
+
+59
+
+60
+
+61
+
+62
+
+63
+
+Tabela 22: Cartão c6
+
+em sua representação binária, ele possui a forma
+
+(xxxxx1)2, (xxxx1x)2, (xxx1xx)2, (x1xxxx)2, (1xxxxx)2.
+
+Portanto, o número pensado é
+
+20 + 21 + 22 + 24 + 25 = 1 + 2 + 4 + 16 + 32 = 55.
+
+Observe que, dos números que estão no primeiro cartão, apenas metade está pre-
+
+sente no segundo, isto é,
+
+· · ·
+apenas 1/4 está presente nos três primeiros, isto é,
+
+c2 =
+
+c1 ∩
+
+3, 7, 11,
+{
+
+, 63
+
+,
+
+}
+
+c1 ∩
+
+c2 ∩
+
+c3 =
+
+{
+
+7, 15, 23,
+
+, 63
+
+,
+}
+
+· · ·
+
+e assim, vemos que a cada cartão, o conjunto de busca é dividido em dois até encontrar
+um único número. Logo, temos
+
+= 16
+
+=
+
+|
+
+c2|
+
+c1 ∩
+= 8
+
+|
+
+|
+
+c1 ∩
+c1 ∩
+c1 ∩
+c1 ∩
+c1 ∩
+
+=
+
+c2|
+c2 ∩
+c2 ∩
+c2 ∩
+c2 ∩
+
+=
+
+c1 ∩
+|
+c3|
+=
+c3 ∩
+c3 ∩
+c3 ∩
+
+c2|
+c1 ∩
+|
+c4|
+=
+c4 ∩
+c4 ∩
+
+c1 ∩
+c2|
+|
+c3|
+c2 ∩
+=
+c2 ∩
+c1 ∩
+|
+c5|
+c1 ∩
+=
+|
+c6|
+c5 ∩
+=
+
+|
+
+· · ·
+c3 ∩
+c2 ∩
+c1 ∩
+
+|
+
+|
+
+=
+
+= 4
+
+c4|
+c3 ∩
+c2 ∩
+Este truque pode ser generalizado para o caso de 2n números. Desta forma, cada
+cartão deverá ter 2n−1 números, é necessário log2 n cartões para distribuir os números.
+Esta atividade lúdica pode ser utilizada na terceira série do Ensino Médio com o
+
+· · ·
+c4 ∩
+c3 ∩
+
+c5|
+c4 ∩
+
+· · ·
+c5 ∩
+
+c6|
+
+= 1
+
+= 2
+
+· · ·
+
+=
+
+=
+
+|
+
+objetivo de ilustrar um método de aproximação, ou em outras séries de forma recreativa,
+
+explorando potências de dois e operação de adição.
+
+56
+
+6.2 Pense em um Número
+
+Outra atividade que utiliza o conceito de busca binária (raciocínio semelhante ao
+
+jogo anterior), é a interação lúdica “Pense em um número”. Nela, o professor deve
+informar ao aluno um intervalo em que o aluno deve pensar um número inteiro. O
+
+professor, então, pergunta ao aluno: “o número pensado é menor do que x?”. Este
+
+número x deve ser tomado de forma que x seja o valor médio do intervalo. Após
+
+essa informação, o novo intervalo é a metade inferior caso aﬁrmativo, caso contrário a
+metade superior. O professor faz o mesmo processo de forma cíclica até encontrar o
+
+número pensado.
+
+Nesta atividade temos que o número de perguntas necessárias é k 6
+
+log2 n
+
+, onde
+
+⌈
+
+⌉
+
+n é o módulo da diferença entre os extremos mais 1 e k é a quantidade de perguntas.
+
+Exemplo 21. Pense em um número inteiro de 1 a 100.
+
+Neste exemplo, temos k 6
+
+= 7 que é o número suﬁciente de
+=
+perguntas para se descobrir o número pensado. Por exemplo, suponhamos que a pessoa
+tenha pensado no número 13. O diálogo entre o professor e o aluno transcorreria como
+se segue.
+
+log2 100
+
+6,64
+
+⌉
+
+⌉
+
+⌈
+
+⌈
+
+•
+
+•
+
+•
+
+•
+
+Professor: “O número pensado é menor do que 50?”.
+
+Aluno: “sim”.
+
+Desta forma, o próximo intervalo será de 1 a 49.
+
+Professor: “O número pensado é menor do que 25?”.
+
+Aluno: “sim”.
+
+Então, o próximo intervalo será de 1 a 24.
+
+Professor: “O número pensado é menor do que 12?”.
+
+Aluno: “não”.
+
+Deste modo, o próximo intervalo será de 12 a 24.
+
+Professor: “O número pensado é menor do que 18?”.
+
+Aluno: “sim”.
+
+Logo, o próximo intervalo será de 12 a 17.
+
+57
+
+Professor: “O número pensado é menor do que 14?”.
+
+Aluno: “sim”.
+
+Assim, o próximo intervalo será de 12 a 13.
+
+Professor: “O número pensado é menor do que 13?”.
+
+•
+
+•
+
+Aluno: “não”.
+
+Portanto, o número pensado é o 13.
+
+6.3 As 27 cartas
+
+Um raciocínio análogo ao método da bisseção é utilizado para o “truque das 27 car-
+tas”, no qual dividimos uma determinada seção (ou conjunto) em três outras subseções.
+Partindo desta interpretação descrevemos, a seguir, o truque das 27 cartas.
+
+1. Distribuindo as cartas em 3 montes de 9 cartas cada um. Peça para alguém
+escolher uma carta qualquer presente em um deles e anunciar o monte a qual
+está presente.
+
+2. Juntando o baralho de forma que você saiba onde estão as 9 cartas da possível
+escolha, e redistribua, colocando em cada monte três dessas cartas. Uma sugestão
+para isto é distribuir de uma em uma para os montes. Pergunte em qual dos
+montes está a carta escolhida.
+
+3. Após o passo anterior, temos três cartas candidatas. Portanto, basta formar
+
+novos montes colocando em cada um deles uma dessas cartas candidatas.
+
+A quantidade suﬁciente de iterações para encontrar uma carta presente neste ba-
+= 3. Logo com apenas 3 iterações, conseguimos localizar uma
+
+ralho, é n =
+carta neste baralho, como mostra o exemplo a seguir
+
+log3 27
+
+⌈
+
+⌉
+
+Exemplo 22. Vamos encontrar uma carta em um baralho de 27 cartas.
+
+Para facilitar a compreensão, considere o baralho com as cartas c1, c2,
+
+, c27, e
+suponha que o aluno escolheu a carta c17. Considere também que as cartas foram
+, c9, o monte
+distribuídas da seguinte forma, o monte m1 recebeu as cartas c1, c2,
+, c27.
+m2 recebeu as cartas c10, c11,
+
+, c18 e o monte m3 recebeu as cartas c19, c20,
+
+· · ·
+
+· · ·
+
+· · ·
+
+· · ·
+
+58
+
+1. Professor: “Em qual monte está a carta selecionada?”
+
+Aluno: “2”
+
+Neste ponto, o professor sabe que a carta está entre c10 e c18. Ao juntar o baralho,
+e redistribuir as cartas de forma que o monte m1 receba as cartas c1, c4,
+, c25,
+, c26, e m3 as cartas c3, c6,
+m2 as cartas c2, c5,
+
+, c27.
+
+· · ·
+
+· · ·
+
+· · ·
+
+2. Professor: “Em qual monte está a carta selecionada?”
+
+Aluno: “2”
+
+A carta é c11, c14 ou c17. Agora basta colocá-las em montes distintos, isto é,
+distribuindo conforme foi feito anteriormente e obtemos qual foi a selecionada.
+
+O truque funciona porque, a cada iteração (divisão do monte de cartas), o jogador
+
+sabe em qual monte está a carta e grava a posição dessas cartas na próxima distribuição
+das cartas. Então, para um conjunto de 27 cartas, precisará apenas de log3 27 = 3
+divisões do monte.
+
+Podemos generalizar para uma quantidade 3n de cartas, com n > 0. Consequen-
+temente, a quantidade de iterações será k > log3 3n = n. Logo com n iterações,
+conseguimos localizar uma carta neste baralho seguindo os passos anteriores, porém
+
+agora com n divisões do monte.
+
+6.4 Bom de Mira
+
+Bom de Mira é um truque que só pode ser realizado se o seu operador tiver noções
+do método da bisseção. Em suma, essa brincadeira é feita com a escolha inicial de oito
+
+números quaisquer, como descrevemos a seguir.
+
+Em um círculo com divisões como na Figura 19 e distribuindo 8 números no anel
+
+externo.
+
+Escolhendo um número x, ao acaso, dentro deste conjunto, escreva-o em um papel,
+
+sem que vejam, dobre-o e entregue a um voluntário.
+
+1. Pedindo para um voluntário marcar, com X, quatro números quaisquer do con-
+
+junto, escreva no nível mais interior o conjunto ao qual x pertence.
+
+2. Solicitando que circule outros dois números quaisquer entre o novo conjunto,
+
+escreva no nível mais interior o conjunto ao qual x pertence.
+
+59
+
+Figura 19: Bom de Mira
+
+3. Solicitando que sublinhe um entre os dois números restante.
+
+Se sublinhar o x, este é o número que estava escrito no papel, caso contrário, o número
+
+não sublinhado é o que está no papel.
+
+Isto se dá porque o método da busca binária garante que, para se determinar um
+
+elemento de um conjunto com 8 elementos, são necessárias log2 8 = 3 buscas.
+
+Podemos generalizar, também, para um conjunto com 2n números, n > 1, e de-
+terminar um número qualquer dentre estes em apenas n iterações seguindo passos
+
+semelhantes aos anteriores.
+
+6.5 Cálculo da Raiz Aproximada de um Polinômio
+
+Para consolidar o conhecimento acerca do método da bisseção, desenvolvemos o
+Exemplo 10 da seção anterior em sala de aula, com o intuito de explicar e exempliﬁcar
+
+esta técnica. Através da explicação geométrica do método da bisseção, ilustrado pela
+
+Figura 7, os alunos tiveram uma noção melhor do seu funcionamento. Para isto, cons-
+truímos uma tabela no quadro, explicamos todo o desenvolvimento da parte algébrica
+
+do método.
+
+De uma maneira geral, os alunos consideraram o conhecimento dessa técnica aces-
+
+sível e, posteriormente, ﬁzeram alguns exercícios. Na correção destes exercícios, perce-
+bemos que eles tinham se familiarizado e entendido esse método elementar.
+
+60
+
+6.6 Experiências em Sala de Aula
+
+Após concluir o conteúdo de função polinomial, já na semana de recuperação, ﬁ-
+
+zemos um convite a um grupo de 30 alunos, que já havia entrado de férias, para que
+estes, fossem assistir uma aula extra, que poderia aprofundar tudo aquilo que fora visto
+
+no decorrer do semestre.
+
+Então, explicamos aos convidados que falaríamos sobre o Método da Bisseção, que
+
+é um conteúdo do Cálculo Numérico. E para participar da aula, eu precisava que eles
+levassem calculadora, lápis e borracha.
+
+6.6.1 Pense um Número que Eu Adivinho
+
+Chamei por um voluntário na sala de aula, para realizar o experimento, e solicitei
+
+que pensasse em um número qualquer de 1 a 64.
+
+De posse de seis cartões, com 32 números impressos em cada um, perguntamos se
+o número estava presente no primeiro cartão. Feito isto, perguntamos em qual dos
+
+cartões seguintes estava aquele número. Após apresentar os 5 cartões restantes, e ele
+
+me passar a informação, anunciamos o número que havia sido pensado.
+
+Todos ﬁcaram fascinados com tal façanha, questionando como seria seu funciona-
+
+mento. Então, antes de explicá-lo, expusemos aos estudantes que aquela introdução,
+
+nada mais era do que uma aplicação do que iríamos ver a seguir.
+
+6.6.2 Jogo das 27 cartas
+
+De posse de 27 cartas quaisquer de um baralho comum as distribuímos em três
+
+montes, contendo 9 cartas cada um deles.
+
+Pedimos para que um aluno voluntário memorizasse uma das cartas e nos informasse
+
+em qual monte ela estava. Embaralhamos e redistribuímos (novamente em três montes,
+contendo nove cartas cada um) e perguntamos novamente em qual deles estava a carta
+escolhida. Fizemos este processo mais uma vez, e em seguida anunciamos a carta
+
+escolhida.
+
+Novamente os alunos ﬁcaram admirados com este jogo, e vários deles conseguiram
+
+relacioná-lo com o raciocínio das atividades anteriormente.
+
+61
+
+6.6.3 Bom de Mira
+
+Ao incluir essas atividades lúdicas , tentamos despertar a curiosidade dos alunos
+
+para o conteúdo que seria exposto na sequência, fazendo-os ver que podemos, sim, en-
+contrar a matemática (mais precisamente o método da bisseção) em situações diversas.
+
+Pedimos uma folha de caderno a um aluno, e sugerimos que ele viesse nos ajudar
+
+como um “ajudante de mágico”. Desenhamos o alvo, conforme a Figura 19 e o instruí-
+
+mos a preencher a parte externa do alvo com oito números quaisquer, podendo o mesmo
+ser auxiliado pelos demais alunos presentes na sala. Ele faria aquilo, para que nos pu-
+
+dêssemos sair da sala e não inﬂuenciá-los naquele truque. Todavia, ﬁcamos espiando
+
+próximo à porta, na tentativa de ouvir pelo menos um daqueles números. De fato,
+
+escutamos alguém pedindo para o "ajudante"colocar o número sete. Rapidamente,
+escrevemos este número em um papel e o dobrei várias vezes.
+
+Ao ﬁnalizarem o preenchimento, voltamos à sala, e entregamos o papel dobrado
+
+para um dos alunos pedindo-o para que não abrisse ainda.
+
+Aleatoriamente, solicitamos a presença de uma nova ajudante, para que esta pudesse
+assinalar com um “x”, quatro daqueles números. Assim, ela o fez, não incluindo o “7”.
+Pedimos então, para que ela colocasse na parte interna, os quatro números que não
+foram assinalados.
+
+De modo análogo, solicitamos a presença de outro ajudante, para que o mesmo
+pudesse circular dois daqueles quatro números centralizados no alvo. Ele então os
+circulou, incluindo o “7”. Pedimos para que o mesmo colocasse na parte central do alvo
+aqueles dois que foram circulados.
+
+Então, para ﬁnalizar o truque, pedimos para um último voluntário sublinhar apenas
+
+um daqueles dois números restantes. Ele então sublinhou o número “7”.
+
+Pedimos para que o “guardião da folha dobrada” fosse à frente, para mostrar o
+
+conteúdo do papel dobrado. Para o espanto de todos, o número sete apareceu escrito
+naquela folha!
+
+Então eu disse: “ - No alvo!”
+
+62
+
+7 Conclusão
+
+O objetivo de realizar uma revisão bibliográﬁca de métodos elementares para en-
+contrar raízes de equações polinomiais, e veriﬁcar sua inserção aos componentes curri-
+
+culares destinados à matemática do Ensino Médio, foi alcançado com sucesso.
+
+Esta inserção se mostrou possível, por conta da adequação intelectual dos alunos
+
+expostos às atividades realizadas, e às técnicas de fácil operação.
+
+Assim, ﬁzemos um experimento em uma turma de 30 alunos da terceira série do
+
+Ensino Médio, com tempo estimado de experimento em 4 horas e meia (distribuídas
+
+em três aulas de 1 hora e 30 minutos cada). Dessa forma, levando em conta o nível
+
+intelectual dos estudantes, tivemos a preocupação de acompanhá-los para responder
+possíveis dúvidas a respeito do entendimento dessas técnicas.
+
+Recebendo o crivo do Mestrado Proﬁssional em Matemática, formação voltada para
+a capacitação de professores da rede pública, introduzimos o método da bisseção em
+
+sala de aula com muito êxito.
+
+A tentativa de trabalhar problemas que buscam encontrar raízes, juntamente com
+formas lúdicas de ensinar, foi bem aceita. Além de atender todas as expectativas em
+
+despertar o interesse dos estudantes.
+
+Neste sentido, o desenvolvimento deste trabalho proporcionou um enorme apren-
+dizado, fomentando possibilidades de crescimento proﬁssional, aliados à qualiﬁcação e
+experiência adquiridas.
+
+63
+
+Referências
+
+[1] Barroso, l.c.; Barroso, m.m.a;Campos, f.f.c;Carvalho, m.l.b.;Maia,
+
+m.l. Cálculo Numperico:Com aplicações, HARBRA ltda, (1987),p. 367.
+
+[2] Campos, f.f.c Algoritmos Numéricos, Ltc, Rio de Janeiro, 2010.
+
+[3] Dante, l.r. Matemática: Contexto e Aplicações, ática, São Paulo, 2008. p. 444.
+
+[4] Franco, n.b. Cálculo Numérico, Pearson, Rio de Janeiro, 2006.
+
+[5] lima, e.l. Análise Real: Funções de uma Variável, Coleção Matemática Univer-
+
+sitária, Rio de Janeiro, 2009. p. 195.
+
+[6] Hoffmann, l.d.; Bradley, g.l. Cálculo: Um Curso Moderno e Suas Aplica-
+
+ções. LTC S.A, Rio de Janeiro, (2002), p. 525.
+
+[7] ferreira, j.a.t. Cálculo Numérico - Notas de aulas, Universidade Federal de
+
+Ouro Preto, Ouro Preto, 2013, p.31.
+
+[8] Ruggiero, m.a.g.; Lopes, v.l.r. Cálculo Numérico: Aspectos Teóricos e Com-
+
+putacionais, Pearson, São Paulo. p. 395.
+
+[9] Satuf, f. O método da Bisseção, Matemática Universitária, no 36. 2004. pp.
+
+39-49.
+
+[10] Sperandio, d.; Mendes, j.t.; Silva, l.h.m. Cálculo Numérico: Caracteríisti-
+cas Matemáticas e Computacionais dos Métodos Numéricos, Pearson, São Paulo,
+2003, p. 355.
+
+64
+
+

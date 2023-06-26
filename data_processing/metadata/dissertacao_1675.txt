@@ -1,0 +1,6824 @@
+Universidade Federal de Mato Grosso do Sul
+
+Instituto de Matem´atica
+
+Programa de P´os-Gradua¸c˜ao
+
+Mestrado Proﬁssional em
+
+Matem´atica em Rede Nacional
+
+Estev˜ao Vin´ıcius Candia
+
+MATEM ´ATICA E O METAPOST
+
+Campo Grande - MS
+
+2018
+
+Universidade Federal de Mato Grosso do Sul
+
+Instituto de Matem´atica
+
+Programa de P´os-Gradua¸c˜ao
+
+Mestrado Proﬁssional em
+
+Matem´atica em Rede Nacional
+
+Estev˜ao Vin´ıcius Candia
+
+MATEM ´ATICA E O METAPOST
+
+Orientadora: Profa. Dra. Elisabete Sousa Freitas
+
+Disserta¸c˜ao apresentada ao Programa de P´os-Gradua¸c˜ao
+
+Mestrado Proﬁssional em Matem´atica em Rede Nacional do
+
+Instituto de Matem´atica da Universidade Federal de Mato
+
+Grosso do Sul - INMA/UFMS, como parte dos requisitos
+
+para obten¸c˜ao do t´ıtulo de Mestre.
+
+Campo Grande - MS
+
+2018
+
+MATEM ´ATICA E O METAPOST
+
+Estev˜ao Vin´ıcius Candia
+
+Disserta¸c˜ao submetida ao Programa de P´os-Gradua¸c˜ao em Matem´atica em Rede Na-
+
+cional do Instituto de Matem´atica da Universidade Federal de Mato Grosso do Sul -
+
+INMA/UFMS, como parte dos requisitos para obten¸c˜ao do t´ıtulo de Mestre.
+
+Aprovada pela banca examinadora:
+
+Prof. Dr. Claudemir Aniz
+
+Universidade Federal de Mato Grosso do Sul - UFMS
+
+Profa. Dra. Elisabete Sousa Freitas (Orientadora)
+
+Universidade Federal de Mato Grosso do Sul - UFMS
+
+Prof. Dr. Vanderlei Minori Horita
+
+Universidade Estadual Paulista - UNESP
+
+Campo Grande - MS, 01 de Novembro de 2018.
+
+Aos meus pais, Eliane e Estev˜ao, dedico.
+
+i
+
+“A essˆencia da matem´atica reside na sua liberdade.”
+
+Georg Cantor
+
+ii
+
+Agradecimentos
+
+Aos meus pais, Eliane e Estev˜ao, pela educa¸c˜ao que me deram e pelos est´ımulos, desde
+
+crian¸ca, ao racioc´ınio e aos estudos. Agrade¸co pelo apoio que me deram durante todo
+
+meu processo acadˆemico, desde a pr´e-escola at´e agora.
+
+`A minha amada esposa, Juliana, por sua compreens˜ao e carinho mostrados durante
+
+todo o processo de pesquisa e elabora¸c˜ao dessa disserta¸c˜ao, per´ıodo ao qual, sempre que
+
+poss´ıvel, esteve ao meu lado.
+
+A todos os professores do Instituto de Matem´atica da UFMS, que compartilharam
+
+comigo seu conhecimento e me ajudaram a aprender Matem´atica desde minha participa¸c˜ao
+
+no Programa de Inicia¸c˜ao Cient´ıﬁca Jr., em 2008, at´e agora. Em especial, aos professores
+
+Antonio Tamarozzi, Sonia Di Gi´acomo, Maura Candolo, Marilena Bittar, Fl´avia Zechineli,
+
+Janete Ferrareze, Rubia Santos e Claudemir Aniz. Muito obrigado!
+
+`A minha fam´ılia e aos meus amigos, que com o incentivo, de certa forma, contribu´ıram
+
+na produ¸c˜ao dessa disserta¸c˜ao. Em especial, agrade¸co a Nicole, por sempre deixar claro
+
+o orgulho que tem de ser minha irm˜a. O sentimento ´e rec´ıproco.
+
+Aos meus colegas da turma de 2016 do PROFMAT/UFMS, pelos momentos de estudo
+
+e tamb´em de descontra¸c˜ao, pela troca de saberes e pelo apoio prestado durante esses anos.
+
+Tamb´em, `a CAPES pelo apoio ﬁnanceiro e ao PROFMAT por manter este programa de
+
+p´os-gradua¸c˜ao ao qual pude tirar proveito.
+
+Ao professor Troy Henderson, pela aten¸c˜ao e suporte prestados com o previewer do
+
+METAPOST, a meu amigo Raphael Rocha e a Dailton Valverde, que me ajudaram muito
+
+com o LATEX. Sem vocˆes, esse trabalho n˜ao seria o mesmo. Muito obrigado, mesmo!
+
+Por ﬁm, agrade¸co imensamente a professora Elisabete pela sugest˜ao do tema e, pos-
+
+teriormente, pela dedica¸c˜ao, pela paciˆencia, pela responsabilidade e comprometimento
+
+demonstradas durante a orienta¸c˜ao deste trabalho. Seu conhecimento e paix˜ao pela Ma-
+
+tem´atica s˜ao cativantes e me motivaram a dar o meu melhor para o desenvolvimento dessa
+
+disserta¸c˜ao, ao quais serei eternamente grato.
+
+iii
+
+Resumo
+
+METAPOST ´e uma linguagem gr´aﬁca baseada no processamento batch. Proveniente
+
+do METAFONT, linguagem de programa¸c˜ao criada pelo matem´atico e cientista da com-
+
+puta¸c˜ao Donald Knuth, o METAPOST possui ferramentas que possibilitam a cria¸c˜ao de
+
+imagens em alta qualidade geradas a partir de c´alculos matem´aticos. Este trabalho busca
+
+apresentar como funcionam os comandos b´asicos dessa linguagem, explicar alguns concei-
+
+tos matem´aticos inerentes `a sua programa¸c˜ao e mostrar como estes podem ser utilizados
+
+para criar ﬁguras geom´etricas e gr´aﬁcos de Fun¸c˜oes Reais.
+
+Palavras-chave: METAPOST; Geometria; Vetores; Transforma¸c˜oes; Fun¸c˜oes Reais.
+
+iv
+
+Abstract
+
+METAPOST is a graphical language based on batch processing. It comes from META-
+
+FONT, a programming language created by mathematician and computer scientist Donald
+
+Knuth. METAPOST provides tools that create high quality images generated from mathe-
+
+matical calculations. This thesis presents the basic commands of this language, explains
+
+some mathematical concepts related to its built-in functions and shows how they can be
+
+used to create geometric ﬁgures and graphs of Real Functions.
+
+Keywords: METAPOST; Geometry; Vectors; Transformations; Real Functions.
+
+v
+
+Sum´ario
+
+1 Figuras B´asicas
+
+1.1 Estilos gr´aﬁcos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 R´otulos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4
+
+8
+
+9
+
+1.3 Setas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+1.4 Tipos de dados
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+1.5 Cores e preenchimento de ´areas
+
+. . . . . . . . . . . . . . . . . . . . . . . . 14
+
+1.6 Operadores matem´aticos . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+1.7 Fluxo de Trabalho do METAPOST . . . . . . . . . . . . . . . . . . . . . . 18
+
+2 Vetores e Geometria
+
+21
+
+2.1 Vetores . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+2.1.1 Produto Interno de Vetores
+
+. . . . . . . . . . . . . . . . . . . . . . 23
+
+2.1.2 Uma aplica¸c˜ao do produto interno no METAPOST . . . . . . . . . . 26
+
+2.2 Pontos Not´aveis do Triˆangulo . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+2.2.1 Baricentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+
+2.2.2 Circuncentro
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+2.2.3 Ortocentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+2.2.4
+
+Incentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+2.3 Pol´ıgonos Regulares . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+3 Tranforma¸c˜oes
+
+47
+
+3.1 Transforma¸c˜oes no Plano . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+3.1.1 Tipo transform . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+3.2 C´ırculos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+3.3 Elipses . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+
+vi
+
+SUM ´ARIO
+
+vii
+
+3.4 Problemas cl´assicos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 59
+
+3.4.1 C´ırculo dos nove pontos
+
+. . . . . . . . . . . . . . . . . . . . . . . . 59
+
+3.4.2 Elipses inscritas no triˆangulo . . . . . . . . . . . . . . . . . . . . . . 62
+
+4 Fun¸c˜oes Reais
+
+67
+
+4.1 Gr´aﬁcos com o METAPOST . . . . . . . . . . . . . . . . . . . . . . . . . . 72
+
+4.2 Limitando eixos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 74
+
+4.3 Macros . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 77
+
+Lista de Figuras
+
+1.1 Reta num´erica . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Sistema cartesiano . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.3 Triˆangulo Retˆangulo Is´osceles
+
+. . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.4 Seis pontos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.5 Algumas possibilidades de curvas
+
+. . . . . . . . . . . . . . . . . . . . . . .
+
+1.6 Triˆangulo Retˆangulo Is´osceles com v´ertices marcados em escalas diferentes
+
+1.7 Triˆangulo Retˆangulo Is´osceles com lados tracejados
+
+. . . . . . . . . . . . .
+
+1.8 Triˆangulo Retˆangulo Is´osceles com lados pontilhados
+
+. . . . . . . . . . . .
+
+4
+
+5
+
+6
+
+7
+
+8
+
+8
+
+9
+
+9
+
+1.9 Triˆangulo Retˆangulo Is´osceles ABC . . . . . . . . . . . . . . . . . . . . . . 10
+
+1.10 Suﬁxos do comando label . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+1.11 Plano cartesiano em malha quadriculada de 1 cm . . . . . . . . . . . . . . 11
+
+1.12 Circunferˆencia com raio de 1 cm . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+1.13 Exemplos de curvas modiﬁcadas pela dire¸c˜ao no ponto inicial . . . . . . . . 13
+
+1.14 Curva fechada preenchida com vermelho . . . . . . . . . . . . . . . . . . . 14
+
+1.15 Varia¸c˜ao de tons de cinza . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+1.16 Formas preenchidas com varia¸c˜oes de cinza . . . . . . . . . . . . . . . . . . 15
+
+1.17 Preenchimento com cor roxa n˜ao predeﬁnida . . . . . . . . . . . . . . . . . 16
+
+1.18 Convers˜ao de cores em preto e branco . . . . . . . . . . . . . . . . . . . . . 17
+
+1.19 Fluxo de trabalho do METAPOST . . . . . . . . . . . . . . . . . . . . . . . 19
+
+1.20 C´odigo de entrada para a Figura 1.3 . . . . . . . . . . . . . . . . . . . . . 19
+
+2.1 Vetor
+
+2.2 Vetor
+
+−→
+OP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+−→
+AB . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+2.3 Regra do paralelogramo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+2.4 Vetores
+
+−→
+AB e
+
+−→
+OP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+viii
+
+LISTA DE FIGURAS
+
+ix
+
+2.5 Vetor
+
+−→
+OP e ˆangulo θ . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+2.6 Triˆangulo ABC . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+2.7 Triˆangulo ABC com altura relativa ao lado AB tra¸cada . . . . . . . . . . . 28
+
+2.8 Triˆangulo ABC obtusˆangulo com altura relativa ao lado AB tra¸cada
+
+. . . 28
+
+2.9 Triˆangulo ABC e trˆes cevianas . . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+2.10 Triˆangulo ABC e uma mediana . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+2.11 Triˆangulo ABC e a altura relativa ao v´ertice C . . . . . . . . . . . . . . . . 29
+
+2.12 Bissetriz
+
+−−→
+CD de ∠ACB . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+2.13 Determina¸c˜ao da medida do ˆangulo da bissetriz
+
+−−→
+CD de ∠ACB . . . . . . . 31
+
+2.14 Triˆangulo ABC e a bissetriz relativa ao ˆangulo (cid:98)C.
+
+. . . . . . . . . . . . . . 32
+
+2.15 Triˆangulo ABC e a mediatriz s do lado AB.
+
+. . . . . . . . . . . . . . . . . 32
+
+2.16 Medianas e o baricentro de ABC . . . . . . . . . . . . . . . . . . . . . . . 33
+
+2.17 Baricentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+
+2.18 Mediatrizes e o circuncentro de ABC . . . . . . . . . . . . . . . . . . . . . 36
+
+2.19 Circuncentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+2.20 Ortocentro no triˆangulo retˆangulo . . . . . . . . . . . . . . . . . . . . . . . 37
+
+2.21 Ortocentro no triˆangulo acutˆangulo . . . . . . . . . . . . . . . . . . . . . . 38
+
+2.22 Ortocentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+2.23 Incentro de um triˆangulo . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+
+2.24 Incentro . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+2.25 Pol´ıgono convexo de 6 lados . . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+2.26 Pol´ıgono regular de trˆes lados
+
+. . . . . . . . . . . . . . . . . . . . . . . . . 42
+
+2.27 Constru¸c˜ao do triˆangulo equil´atero . . . . . . . . . . . . . . . . . . . . . . 42
+
+2.28 Quadrado com 3 cm de lado . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+2.29 Pent´agono. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+
+2.30 Pentadec´agono regular . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+
+2.31 Ene´agono regular . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+
+2.32 Dec´agono regular com 2 cm de lado.
+
+. . . . . . . . . . . . . . . . . . . . . 46
+
+3.1 Compress˜ao vertical . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+3.2 Compress˜ao horizontal
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+3.3 Transforma¸c˜ao no Triˆangulo ABC . . . . . . . . . . . . . . . . . . . . . . . 50
+
+3.4 Rota¸c˜ao de 90◦ do Triˆangulo ABC . . . . . . . . . . . . . . . . . . . . . . 50
+
+LISTA DE FIGURAS
+
+x
+
+3.5 Eixos transladados
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+3.6 Triˆangulo ABC transladado . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+3.7 Triˆangulo ABC rotacionado e transladado . . . . . . . . . . . . . . . . . . 52
+
+3.8 C´ırculo C de centro A e raio O . . . . . . . . . . . . . . . . . . . . . . . . . 53
+
+3.9 C´ırculo com raio 2 e centro em (3, 1).
+
+. . . . . . . . . . . . . . . . . . . . . 54
+
+3.10 Elipse E de centro O e focos F1 e F2 e eixo focal 2a . . . . . . . . . . . . . 55
+
+3.11 Elipse com focos F1 = (1, 2) e F2 = (3, 1) que passa por P = (3, 2). . . . . . 59
+
+3.12 C´ırculo dos 9 pontos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+
+3.13 C´ırculo dos nove pontos nos trˆes tipos de triˆangulos. . . . . . . . . . . . . . 62
+
+3.14 Constru¸c˜ao da elipse inscrita no triˆangulo ABC com um foco em F . . . . . 63
+
+3.15 Elipse inscrita no triˆangulo ABC com focos F e F (cid:48)
+
+. . . . . . . . . . . . . 63
+
+3.16 Triˆangulos ABC e a elipse inscrita com focos em diversos pontos.
+
+. . . . . 64
+
+3.17 Elipse inscrita de Steiner num triˆangulo retˆangulo is´osceles ABC . . . . . . 66
+
+4.1 Ponto P no primeiro quadrante do ciclo trigonom´etrico . . . . . . . . . . . 69
+
+4.2 Gr´aﬁco da fun¸c˜ao f (x) = x.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . 73
+
+4.3 Gr´aﬁco da fun¸c˜ao f (x) = x2. . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+
+4.4 Fun¸c˜ao f (x) = x3 tra¸cada com os limites dos eixos extrapolados . . . . . . 74
+
+4.5 Fun¸c˜ao f (x) = x3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+
+4.6 Fun¸c˜ao f (x) = x7 − 2x5 − 3x4 + 4x2 + 1 . . . . . . . . . . . . . . . . . . . 75
+
+4.7 Fun¸c˜ao f (x) = |x2 − 4|
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+
+4.8 Fun¸c˜ao f (x) =
+
+1
+x
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+
+4.9 Fun¸c˜ao f (x) = sen x . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+
+4.10 Fun¸c˜ao f (x) =
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+4.11 Fun¸c˜oes f (x) = 1 + (cid:112)1 − |x − 1|2 e g(x) = 1 + arccos (1 − |x|) − π . . . . . 80
+
+cos 10x
+x
+
+4.12 Representa¸c˜ao gr´aﬁca de
+
+b
+(cid:82)
+
+a
+
+f (x) dx com f (x) = 1 + ln x . . . . . . . . . . . 81
+
+4.13 Outra representa¸c˜ao gr´aﬁca de
+
+b
+(cid:82)
+
+f (x) dx com f (x) = 1 + ln x . . . . . . . 82
+
+a
+4.14 Alguns passos do M´etodo Iterativo de Newton para encontrar zeros
+
+. . . . 83
+
+4.15 Ilustra¸c˜ao da Soma de Riemann Superior e Inferior da fun¸c˜ao f (x) = 4 − x2 84
+
+4.16 Figuras tridimensionais.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+
+4.17 Campo direcional correspondente `a equa¸c˜ao diferencial ordin´aria y(cid:48) = y . . 86
+
+4.18 Quebra-cabe¸cas. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 86
+
+Introdu¸c˜ao
+
+A comunica¸c˜ao escrita ´e base para o ensino e aprendizagem de v´arias ´areas do co-
+
+nhecimento. Escrever um trabalho matem´atico leg´ıvel e de forma elegante n˜ao era t˜ao
+
+simples antigamente sem as ferramentas computacionais dispon´ıveis hoje. A competˆencia
+
+de expor conhecimento em conformidade com exigˆencias t´ecnicas, ou at´e mesmo normas
+
+pessoais, moveu pessoas a criar sistemas tipogr´aﬁcos de escrita que inclu´ıssem s´ımbolos e
+
+conceitos matem´aticos. Donald Knuth1 ´e um dos pioneiros nesse aspecto.
+
+Knuth ´e autor de uma das principais referˆencias da Ciˆencia da Computa¸c˜ao, o li-
+
+vro The Art of Computer Programming. Segundo Beebe [3], quando o primeiro volume
+
+apareceu em 1968, a maioria das composi¸c˜oes tipogr´aﬁcas ainda era feita por digita¸c˜ao
+
+mecˆanica. Tip´ografos especialistas, mesmo com d´ecadas de experiˆencia, tinham de lidar
+
+com problemas de quebra de linha, quebra de p´agina e layout de p´agina. Em meados da
+
+d´ecada de 1970, os sistemas propriet´arios de editora¸c˜ao computacional haviam entrado no
+
+mercado e, na opini˜ao de Knuth, haviam rebaixado seriamente a qualidade do material.
+
+Alguns meses depois, Knuth veio a conhecer novos dispositivos que usavam t´ecnicas
+
+digitais para criar imagens de letras e a sua estreita conex˜ao com os algarismos bin´arios
+
+da ciˆencia da computa¸c˜ao. Isso o levou a pensar em como ele pr´oprio poderia projetar
+
+sistemas para colocar caracteres em uma p´agina, desenhando os caracteres individuais
+
+como uma matriz de pontos pretos e brancos. Assim, surgem prot´otipos funcionais de
+dois programas de software para esse prop´osito, que Knuth descreve no livro TEX e META-
+FONT: New Directions in Typesetting.
+
+A composi¸c˜ao digital de seu projeto durou cerca de uma d´ecada e produziu v´arios
+
+outros livros. Tamb´em gerou teses de doutorado para Frank Liang [15], Michael Plass
+
+[22], Lynn Ruggles [24] e Ignacio Zabala Salelles [25]. Al´em disso, esses softwares viraram
+
+produto da ind´ustria de formata¸c˜ao de documentos comerciais e das primeiras impressoras
+
+1Professor Em´erito da Universidade de Stanford.
+
+1
+
+LISTA DE FIGURAS
+
+2
+
+a laser. O sistema TEX e o sistema LATEX, que foi baseado nele, tornaram-se os sistemas
+padr˜ao de escrita tipogr´aﬁca nas comunidades de ciˆencia da computa¸c˜ao, matem´atica e
+
+f´ısica. Ambos tˆem sido amplamente usados em muitos outros campos at´e hoje.
+
+Outra tese de doutorado orientada por Knuth foi a de John Douglas Hobby [11].
+
+Hobby continuou sua pesquisa sobre o METAFONT e criou, cerca de 10 anos depois, a
+
+linguagem gr´aﬁca METAPOST2. METAPOST ´e uma linguagem gr´aﬁca desenvolvida para
+
+gerar imagens com processamento batch, isto ´e, ela processa uma lista de comandos de
+
+texto para criar uma sa´ıda gr´aﬁca. Esse arquivo de sa´ıda ´e uma ﬁgura em PostScript que
+
+´e baseada em c´alculos matem´aticos. Este tipo de imagem ´e excepcional pois pode ser
+
+redimensionada para qualquer resolu¸c˜ao sem perda de qualidade.
+
+Essa disserta¸c˜ao apresenta uma introdu¸c˜ao aos comandos b´asicos dessa linguagem.
+
+Para isso, alguns conceitos matem´aticos s˜ao explicados, pois fazem parte de sua pro-
+
+grama¸c˜ao. Espera-se mostrar como estes conceitos podem ser utilizados para criar ﬁguras
+
+em alta qualidade utilizadas em ´areas da Matem´atica como a Geometria e o estudo do
+
+gr´aﬁco de fun¸c˜oes reais.
+
+O Cap´ıtulo 1 aborda alguns comandos utilizados para criar ﬁguras b´asicas com o
+
+METAPOST. Neste cap´ıtulo, ´e explicado o funcionamento do METAPOST, levando em
+
+conta como o seu ﬂuxo de trabalho opera, quais s˜ao alguns tipos de vari´aveis utilizadas e
+
+quais s˜ao os operadores matem´aticos dispon´ıveis nele. Tamb´em ´e explicado como produzir
+
+uma ﬁgura e inseri-la em um documento TEX.
+
+O Cap´ıtulo 2 discute conceitos matem´aticos de vetores e de geometria que podem ser
+
+utilizados para fazer desenhos no METAPOST. Nele, ´e apresentada a base matem´atica
+
+para realizar algumas opera¸c˜oes vetoriais dispon´ıveis no METAPOST. Uma aplica¸c˜ao
+
+do produto interno para se tra¸car uma altura de um triˆangulo qualquer ´e exposta. S˜ao
+
+explanados tamb´em os conceitos geom´etricos utilizados para marcar os pontos not´aveis
+
+de um triˆangulo, bem como desenhar um pol´ıgono regular.
+
+O Cap´ıtulo 3 cont´em a base matem´atica utilizada para fazer transforma¸c˜oes no plano.
+
+Alguns recursos dispon´ıveis no METAPOST para isso s˜ao apresentados. Com esse recursos,
+
+´e poss´ıvel esbo¸car c´ırculos e elipses. Al´em disso, ´e abordado como fazer os desenhos de
+
+dois problemas interessantes da Geometria.
+
+2Segundo Vieth [27], Hobby pessoalmente prefere a escrita “MetaPost”, escrita com fonte romana em
+vez da fonte logo, utilizada em textos editados em TEX. Por´em, esse tipo de escrita foi introduzida pelo
+pr´oprio criador do TEX, Donald Knuth. Logo, n˜ao h´a problemas em utilizar a escrita com a fonte logo
+e, assim, ela ser´a utilizada nesta disserta¸c˜ao.
+
+LISTA DE FIGURAS
+
+3
+
+O Cap´ıtulo 4 discute a elabora¸c˜ao de gr´aﬁcos de fun¸c˜oes cont´ınuas deﬁnidas em in-
+
+tervalos da reta. Inicialmente ´e feito um resumo com algumas proposi¸c˜oes sobre fun¸c˜oes
+
+cont´ınuas. Em seguida, s˜ao apresentadas algumas t´ecnicas do METAPOST para esbo¸car
+
+gr´aﬁcos de fun¸c˜oes, com diversos exemplos. Tamb´em s˜ao apresentadas macros do META-
+
+POST que permitem utilizar operadores matem´aticos n˜ao predeﬁnidos.
+
+O trabalho ´e ﬁnalizado com as considera¸c˜oes ﬁnais e algumas sugest˜oes de trabalhos
+
+futuros.
+
+Cap´ıtulo 1
+
+Figuras B´asicas
+
+Neste cap´ıtulo, ser˜ao introduzidos alguns comandos b´asicos do METAPOST, bem como
+a produ¸c˜ao de ﬁguras e a inser¸c˜ao delas em documento TEX. O METAPOST ´e capaz de
+interpretar comandos de texto que lhe indicam o que, como e onde desenhar 1. Para
+
+identiﬁcar as posi¸c˜oes no desenho utiliza-se a correspondˆencia biun´ıvoca entre os pontos
+
+de um plano e o conjunto de pares ordenados de n´umeros reais.
+
+Primeiramente, considere o conjunto R dos n´umeros reais e sua representa¸c˜ao por
+
+meio dos pontos de uma reta. Para isso, tome um ponto qualquer da reta e a ele associe o
+
+n´umero zero, denominado de origem. Em seguida, escolha uma unidade de comprimento
+
+e marque cada ponto P da reta com um n´umero real r, dado pela medida do segmento
+
+OP em fun¸c˜ao da unidade de comprimento escolhida. Os pontos que ﬁcam do lado direito
+
+da origem s˜ao marcados com n´umeros reais positivos e os do outro lado s˜ao marcados com
+
+n´umeros negativos. O n´umero r que marca o ponto P ´e chamado coordenada de P ou
+
+abscissa de P . Uma reta onde cada ponto est´a associado `a sua abscissa ´e chamada de reta
+
+num´erica ou eixo real. Quando trabalha-se com um eixo isolado, ´e costume desenh´a-lo na
+
+horizontal.
+
+−1
+
+1
+
+√
+
+2
+
+O
+
+x
+
+Figura 1.1: Reta num´erica
+
+Do mesmo modo que os pontos de uma reta podem ser caracterizados por n´umeros,
+tamb´em pode ser feita a associa¸c˜ao de coordenadas aos pontos de um plano. ´E cos-
+
+1O professor Troy Henderson criou uma ferramenta online [9] que possibilita ao usu´ario pr´e-visualizar
+
+uma imagem interpretada pelo METAPOST a partir de comandos digitados em uma caixa de texto.
+
+4
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+5
+
+tume desenhar um eixo na horizontal, representando uma reta num´erica, e outro eixo
+
+verticalmente, orientado de baixo para cima, representando outra reta num´erica.
+
+Dado um ponto P do plano, tra¸ca-se por P , paralelas aos dois eixos, obtendo os pontos
+
+P1 e P2, de coordenadas x e y, respectivamente. Reciprocamente, sendo dado um par de
+
+coordenadas (x, y), determina-se P1 e P2 e tra¸cando por estes pontos, paralelas aos eixos,
+
+encontra-se o ponto P em sua interse¸c˜ao. Existe, assim, uma correspondˆencia biun´ıvoca
+
+entre pares ordenados de n´umeros reais e pontos do plano.
+
+Observe que o par (x, y) ´e distinto do par (y, x) a n˜ao ser que x = y, por isso que (x, y)
+
+´e dito um par ordenado. Se um ponto P corresponde ao par ordenado (x, y), o n´umero
+
+x, que ocorre em primeiro lugar, ´e chamado de abscissa de P , enquanto y, que aparece
+
+em segundo lugar, ´e a ordenada do ponto P . Um tal sistema de eixos ´e chamado sistema
+
+cartesiano ou sistemas de eixos ortogonais. O eixo das abscissas ´e representado por Ox e
+
+o das ordenadas por Oy.
+
+Deﬁni¸c˜ao 1 O conjunto formado por todos os pares ordenados de n´umeros reais ´e indi-
+
+cado por R × R ou R2. Assim,
+
+R2 = {(x, y) | x, y s˜ao n´umeros reais} .
+
+y
+
+2
+
+P = (1, 2)
+
+−1
+
+O
+
+1
+
+x
+
+−2
+
+Figura 1.2: Sistema cartesiano
+
+Para fazer um desenho, o METAPOST utiliza comandos do tipo draw. Por exemplo,
+
+o comando
+
+drawdot (20,0)
+
+desenha um ponto de coordenadas (20, 0). Se n˜ao ´e indicada nenhuma unidade de medida
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+6
+
+espec´ıﬁca, o METAPOST interpreta como sendo um bp, sigla de “big points”, que equiva-
+
+lem a unidade padr˜ao de pontos PostScripts, cuja medida ´e igual a 1
+
+72 de uma polegada.
+Essa nomenclatura ´e utilizada para distinguir dos pontos de impress˜ao, cuja sigla ´e pt,
+
+cuja medida ´e
+
+1
+72,27 de uma polegada.
+
+Al´em dessas unidades de medida, o METAPOST conta com outras mais tradicionais
+
+e algumas nem t˜ao familiares no Brasil. Dentre as utilizadas no Brasil, as mais comuns
+
+s˜ao cm para cent´ımetros, in para polegadas e mm para mil´ımetros. Por´em, ´e poss´ıvel usar
+
+tamb´em outras unidades como pc para paicas (que equivalem a 1
+
+6 de uma polegada), cc
+
+para c´ıceros e dd para pontos Didot.
+
+Unidade de Medida
+
+Convers˜ao
+
+pt
+
+bp
+
+in
+
+pc
+
+mm
+
+cc
+
+dd
+
+0,035145 cm
+
+0,035278 cm
+
+2,54 cm
+
+0,423333 cm
+
+0,1 cm
+
+0,451167 cm
+
+0,0376 cm
+
+Tabela 1.1: Tabela de convers˜ao das unidades de medida utilizadas no METAPOST
+
+Para desenhar segmentos de reta, utiliza-se o comando draw seguido das coordenadas
+
+das extremidades do segmento unidas por --. V´arios segmentos podem ser escritos na
+
+mesma linha de comando. Na Figura 1.3, por exemplo, trˆes segmentos foram escritos no
+
+mesmo comando. Esses segmentos formaram um triˆangulo retˆangulo cujo a medida dos
+
+dois catetos ´e 3 cm.
+
+draw (0,0)--(3cm,0)--(0,3cm)--(0,0);
+
+Figura 1.3: Triˆangulo Retˆangulo Is´osceles
+
+´E cˆomodo manipular um fator de escala de sua preferˆencia indicado por u. Assim, ´e
+
+poss´ıvel deﬁnir as coordenadas em termos de u e, depois, ﬁxar a medida desse fator. Para
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+7
+
+gerar um fator u com 1 cm, por exemplo, utiliza-se no in´ıcio o comando
+
+u=1cm;
+
+Tamb´em, ´e poss´ıvel utilizar a palavra cycle ao ﬁnal de uma sequˆencia de pontos para
+
+fechar a ﬁgura a ser formada, voltando para o ponto de in´ıcio. O c´odigo utilizado para a
+
+Figura 1.3, poderia ser re-escrito como
+
+u=1cm; draw (0,0)--(3u,0)--(0,3u)--cycle;
+
+gerando a mesma ﬁgura.
+
+Um detalhe importante ´e que, apesar de visualmente (0,0)--(3u,0)--(0,3u)--(0,0);
+
+ser um caminho fechado, o METAPOST n˜ao o interpreta assim. Estar com a extens˜ao
+
+cycle no ﬁnal ´e requisito para ser reconhecido como fechado. Alguns comandos discutidos
+adiante s˜ao aplic´aveis apenas a ﬁguras que o METAPOST considera como fechadas.
+
+O METAPOST faz tamb´em linhas curvas. O comando utilizado ´e semelhante ao de
+
+linhas retas, com a diferen¸ca de usar .. no lugar de --. Em uma mesma linha de comando,
+
+pode haver linhas curvas e retil´ınias. Por exemplo, considere os seis pontos marcados na
+
+Figura 1.4.
+
+z1
+
+z2
+
+z5
+
+z0=(0,0); z1=(-2,2); z2=(2,3);
+z3=(5,1); z4=(3,-1); z5=(1,2);
+
+z3
+
+z0
+
+z4
+
+Figura 1.4: Seis pontos
+
+Existem v´arias ﬁguras que podem ser criadas a partir desses pontos. A Figura 1.5
+
+mostra trˆes dessas possibilidades. A Figura 1.5(a) mostra uma curva aberta que inicia em
+
+z0 e termina em z5. A Figura 1.5(b) mostra uma curva fechada, por isso ´e usado no ﬁnal
+
+a palavra cycle. A Figura 1.5(c) mostra como ´e poss´ıvel mesclar linhas retas e curvas
+
+num mesmo comando draw.
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+z1
+
+z2
+
+z5
+
+z1
+
+z3
+
+z2
+
+z5
+
+z1
+
+z3
+
+z2
+
+z5
+
+z0
+
+z0
+
+z0
+
+z4
+
+z4
+
+z4
+
+(a) draw z0..z1..z2..z3..z4..z5
+
+(b) draw z0..z1..z2..z3..z4..z5..cycle
+
+(c) draw z0--z1..z2..z3--z4..z5..cycle
+
+Figura 1.5: Algumas possibilidades de curvas
+
+8
+
+z3
+
+1.1 Estilos gr´aﬁcos
+
+Num trabalho do METAPOST vocˆe talvez queira mudar a largura da linha, dos pontos,
+
+ou at´e mesmo a fonte a ser utilizada. Diversos comandos d˜ao essas ferramentas. Um
+
+comando de muita utilidade nesse aspecto ´e pencircle. Este comando refere-se a forma
+
+da “caneta” utilizada para tra¸car as linhas das ﬁguras. Por exemplo, escrever a linha de
+
+comando
+
+pickup pencircle scaled 1.5mm
+
+indica que a caneta ter´a ponta circular e a largura com que as linhas do desenho ser˜ao
+desenhadas dali para frente ser´a 1.5mm. ´E como se, literalmente, vocˆe tomasse uma caneta
+
+esferogr´aﬁca com essa largura no bico e a utilizasse para fazer o desenho. Esse comando
+
+pode ser utilizado para marcar no desenho pontos de tamanhos diferentes. A caneta
+
+padr˜ao utilizada possui 1
+
+2 pt de largura. Assim, na Figura 1.6 a seguir, foi utilizado esse
+tamanho padr˜ao para os lados do triˆangulo e um tamanho diferente para cada v´ertice do
+
+mesmo.
+
+u:=3cm;
+draw (0,0)--(u,0)--(0,u)--(0,0);
+pickup pencircle scaled 1mm;
+drawdot (0,0);
+pickup pencircle scaled 1.5mm;
+drawdot (u,0);
+pickup pencircle scaled 2mm;
+drawdot (0,u);
+
+Figura 1.6: Triˆangulo Retˆangulo Is´osceles com v´ertices marcados em escalas diferentes
+
+Al´em de mudar a largura das linhas, ´e poss´ıvel tracej´a-las com comandos dashed. A
+
+linha de comando ﬁca da forma
+
+draw (cid:104)caminho(cid:105) dashed (cid:104)tipo de tracejado(cid:105);
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+9
+
+onde (cid:104)caminho(cid:105) refere-se `a reta ou curva a ser desenhada e (cid:104)tipo de tracejado(cid:105) refere-se
+
+a um padr˜ao predeﬁnido de tra¸co. Os dois padr˜oes comuns s˜ao evenly que faz tra¸cos
+
+e withdots que faz pontos. Veja como ﬁcaria o triˆangulo da Figura 1.6 com os lados
+
+tracejados na Figura 1.7. J´a a Figura 1.8 mostra o mesmo triˆangulo, por´em com as linhas
+
+pontilhadas.
+
+u:=3cm;
+draw (0,0)--(u,0) dashed evenly scaled 4;
+draw (u,0)--(0,u) dashed evenly scaled 2;
+draw (0,u)--(0,0) dashed evenly;
+
+Figura 1.7: Triˆangulo Retˆangulo Is´osceles com lados tracejados
+
+u:=3cm;
+draw (0,0)--(u,0) dashed withdots scaled 0.2;
+draw (u,0)--(0,u) dashed withdots scaled 0.6;
+draw (0,u)--(0,0) dashed withdots;
+
+Figura 1.8: Triˆangulo Retˆangulo Is´osceles com lados pontilhados
+
+1.2 R´otulos
+
+Com o METAPOST, ´e poss´ıvel integrar texto e ﬁguras. Assim, com alguns comandos,
+
+como label e dotlabel, vocˆe pode utilizar letras, s´ımbolos matem´aticos e, at´e mesmo,
+
+frases e equa¸c˜oes matem´aticas em sua imagem. O comando label ´e utilizado para rotular
+
+objetos em geral no trabalho. J´a o comando dotlabel marca o ponto nas coordenadas
+
+onde deseja-se rotular algo, al´em de rotular o mesmo. No exemplo da Figura 1.3, pode-se
+
+rotular os v´ertices e os lados do triˆangulo retˆangulo como ´e mostrado na Figura 1.9.
+
+Os r´otulos s˜ao postos nas linhas de comando na forma
+
+label.(cid:104)suﬁxo(cid:105) ((cid:104)r´otulo(cid:105),(cid:104)posi¸c˜ao(cid:105)) ;
+
+Ap´os o comando dotlabel ou label, utiliza-se um suﬁxo que determine a posi¸c˜ao onde
+
+o r´otulo ser´a colocado. Se essa posi¸c˜ao n˜ao for especiﬁcada, o r´otulo ser´a centralizado.
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+10
+
+u:=3cm;
+draw (0,0)--(u,0)--(0,u)--(0,0);
+dotlabel.llft("A", (0,0));
+dotlabel.lrt("B", (u,0));
+dotlabel.ulft("C", (0,u));
+label.bot(btex $c$ etex, (u/2,0));
+label.urt(btex $a$ etex, (u/2,u/2));
+label.lft(btex $b$ etex, (0,u/2));
+
+C
+
+b
+
+A
+
+a
+
+c
+
+B
+
+Figura 1.9: Triˆangulo Retˆangulo Is´osceles ABC
+
+Os suﬁxos utilizados para determinar a posi¸c˜ao do r´otulo s˜ao oito: lft, rt, top, bot,
+
+ulft, urt, llft e lrt. Quando se usa o suﬁxo bot, por exemplo, o r´otulo do objeto
+
+em quest˜ao ´e posto abaixo da posi¸c˜ao escrita. A Figura 1.10 mostra uma ilustra¸c˜ao para
+
+o uso de cada tipo de suﬁxo em rela¸c˜ao a um ponto.
+
+.ulft
+
+.top
+
+.urt
+
+.lft
+
+.rt
+
+.llft
+
+.bot
+
+.lrt
+
+Figura 1.10: Suﬁxos do comando label
+
+O r´otulo pode ser escrito com a letra padr˜ao se posto entre aspas. No caso da Figura
+
+1.9, por exemplo, os v´ertices foram rotulados com letras mai´usculas A, B e C. Isso justiﬁca
+
+o uso das aspas. No entanto, os lados do triˆangulo foram escritos utilizando-se os comandos
+
+btex etex. Esses comandos fazem com que o interpretador METAPOST escreva o que
+
+estiver entre eles utilizando o ambiente matem´atico do TEX.
+
+A posi¸c˜ao tamb´em pode ser escrita de diversas maneiras. No caso da Figura 1.9, foi
+
+utilizado o ponto m´edio de cada segmento. Dessa forma, por exemplo, o r´otulo c teve
+
+como posi¸c˜ao deﬁnida o ponto m´edio de AB.
+
+1.3 Setas
+
+O uso de setas ´e essencial para o esbo¸co de certos desenhos, gr´aﬁcos e vetores. O
+
+METAPOST possui dois comandos que podem ser utilizados para esse ﬁm: drawarrow
+
+e drawdblarrow. Ambos podem ser utilizados com caminhos retil´ıneos ou curvos. Por
+
+exemplo, o comando
+
+drawarrow origin--(1,1);
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+11
+
+desenha uma seta no segmento de in´ıcio na origem e ﬁm no ponto (1, 1). A diferen¸ca entre
+
+os dois comandos citados ´e que o primeiro coloca a seta apenas na extremidade ﬁnal do
+
+segmento, enquanto o segundo p˜oe nas duas extremidades.
+
+Com as setas, ´e poss´ıvel desenhar os eixos do plano cartesiano, como ilustrado na
+
+Figura 1.11. Os c´odigos utilizados para rotular os eixos e para fazer a malha pontilhada
+
+j´a podem ser entendidos com o que foi discutido at´e ent˜ao. O c´odigo
+
+u:=1cm; drawarrow ((-4u,0)--(4u,0)); drawarrow ((0,-4u)--(0,4u));
+
+foi utilizado para criar os eixos.
+
+y
+
+x
+
+Figura 1.11: Plano cartesiano em malha quadriculada de 1 cm
+
+1.4 Tipos de dados
+
+O METAPOST trabalha com dez tipos de dados: numeric, pair, path, transform,
+
+rgbcolor, cmykcolor, string, boolean, picture e pen. Esses tipos de dados possibili-
+
+tam que o usu´ario armazene partes do desenho ou do c´odigo para uso posterior. Nessa
+
+se¸c˜ao ser˜ao explorados alguns desses tipos, bem como a forma em que eles podem ser
+
+utilizados em um desenho gerado pelo METAPOST.
+
+Para representar uma vari´avel, pode-se utilizar qualquer combina¸c˜ao de caracteres
+
+simples mai´usculos ou min´usculos. Para declarar de qual tipo ser´a uma vari´avel a ser
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+12
+
+utilizada no trabalho, basta digitar o tipo, seguido da vari´avel a se utilizar e um sinal
+
+de “;”. Utilizando-se de colchetes, o METAPOST cria uma fam´ılia de vari´aveis. Sendo
+
+assim,
+
+numeric u; path p[];
+
+indica que u ´e uma vari´avel do tipo numeric e que qualquer vari´avel da forma p[i], onde
+
+i ´e um n´umero real, ´e do tipo path.
+
+O tipo numeric ´e utilizado para se armazenar vari´aveis num´ericas. Pode-se declarar
+
+que raio ser´a uma vari´avel num´erica simplesmente por escrever uma linha de comando
+
+numeric raio;
+
+no come¸co do trabalho. Ap´os isso, ´e poss´ıvel deﬁnir o valor dessa vari´avel. Para fazer
+
+isso, ´e necess´ario utilizar “:=” e n˜ao apenas o sinal de “=”. Por exemplo,
+
+raio:= 1cm;
+
+deﬁne que a vari´avel raio equivaler´a a 1 cm. Quando se usa apenas o sinal de =, o META-
+POST n˜ao interpreta como uma declara¸c˜ao de vari´avel, mas como uma equa¸c˜ao. Assim,
+
+se a vari´avel for ter o mesmo valor no c´odigo inteiro, apenas = ´e suﬁciente. Mas, se o valor
+
+for alterado no meio do c´odigo, ´e necess´ario declar´a-lo com := para que n˜ao haja erro de
+
+compila¸c˜ao.
+
+Pode-se declarar mais de uma vari´avel em uma ´unica linha de comando. Para isso,
+
+basta separar por v´ırgula cada vari´avel no mesmo comando e ﬁnalizar com o ponto e
+
+v´ırgula. Na Figura 1.12, por exemplo, foram deﬁnidas duas vari´aveis num´ericas, uma
+
+raio e outra diametro, para desenhar uma circunferˆencia. Essa circunferˆencia foi feita por
+
+meio do comando fullcircle, que se refere a um caminho circular fechado de diˆametro
+
+unit´ario centrado na origem. Para que a circunferˆencia tenha 1 cm de raio, ´e necess´ario
+
+redimension´a-la pelo tamanho de seu diˆametro com a transforma¸c˜ao j´a citada scaled.
+
+numeric raio, diametro;
+raio:=1cm;
+diametro:=2*raio;
+draw fullcircle scaled diametro;
+
+Figura 1.12: Circunferˆencia com raio de 1 cm
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+13
+
+O tipo pair deﬁne um par de duas vari´aveis num´ericas. Como visto, essas vari´aveis
+representam um ponto do R2. ´E poss´ıvel fazer opera¸c˜oes com esse tipo de vari´avel, como
+adi¸c˜ao e subtra¸c˜ao entre pares. ´E poss´ıvel tamb´em multiplicar ou dividir um par por
+
+uma vari´avel num´erica. Essas opera¸c˜oes ser˜ao discutidas mais a frente. Cada par possui
+
+uma abscissa x e uma ordenada y. O METAPOST usa a estrutura padr˜ao para deﬁnir
+
+os pontos no plano, sendo essa (x, y). Isso signiﬁca que se ´e deﬁnido um par P:=(1,2),
+por exemplo, o METAPOST gera automaticamente duas vari´aveis num´ericas que podem
+
+ser escritas como xpart P e ypart P, valendo, respectivamente, 1 e 2. N˜ao ´e preciso
+
+declarar no come¸co do c´odigo que as vari´aveis da forma z(cid:104)´ındice(cid:105) s˜ao do tipo pair. Essa
+informa¸c˜ao ´e intr´ınseca ao METAPOST. No entanto, para outras vari´aveis, como, por
+
+exemplo, A1, A2, A3, etc., ´e necess´ario fazer a declara¸c˜ao de vari´aveis como pair. Para
+
+facilitar o trabalho, o comando
+
+pair A[];
+
+deﬁne que qualquer vari´avel do tipo A[(cid:104)´ındice(cid:105)] ou A(cid:104)´ındice(cid:105) ser´a um par.
+
+O tipo path ´e utilizado para armazenar caminhos entre pontos agrupados com os
+
+comandos j´a citados “--” e “..”, ou caminhos predeﬁnidos como o fullcircle, j´a citado.
+
+Os pontos agrupados com “--” formam segmentos de reta. J´a os pontos agrupados com
+“..” formam curvas “suaves”, interpolando esses pontos par a par. ´E poss´ıvel com o
+METAPOST alterar a curva entre uma lista de pontos.
+
+Isso ´e feito por se determinar
+
+uma dire¸c˜ao angular espec´ıﬁca para o caminho em um determinado ponto, utilizando o
+
+comando dir α, onde α representa o ˆangulo em graus. A Figura 1.13 mostra trˆes curvas
+
+que sofrem modiﬁca¸c˜oes no ponto de partida A. O c´odigo referente `as cores dessas linhas
+
+e tamb´em os tipos referentes a cores s˜ao o assunto da pr´oxima se¸c˜ao.
+
+pair A, B, C; path p, q, r;
+A:=origin; B:=(1cm, 4cm); C:=(0,2cm);
+p:=A{dir 45}..B..C;
+draw p withcolor blue;
+q:=A{dir 0}..B..C;
+draw q withcolor red;
+r:=A{dir 130}..B..C;
+draw r withcolor green;
+
+B
+
+C
+
+A
+
+Figura 1.13: Exemplos de curvas modiﬁcadas pela dire¸c˜ao no ponto inicial
+
+O tipo picture ´e utilizado para armazenar ﬁguras. Para isso, ´e utilizada uma vari´avel
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+14
+
+interna pr´e-deﬁnida currentpicture. Essa vari´avel armazena a ﬁgura atual no modo que
+
+j´a est´a desenhada com os comandos fill, draw, filldraw e seus respectivos comandos
+
+de desfazer a a¸c˜ao unfill, undraw e unfilldraw. Esse comando n˜ao ´e muito utilizado
+
+em desenhos b´asicos, mas ´e indispens´avel para os mais complexos.
+
+O tipo transform ser´a tratado no Cap´ıtulo 3. Os tipos pen, boolean e string n˜ao
+
+agregam informa¸c˜oes que ser˜ao pr´aticas para essa disserta¸c˜ao, por isso n˜ao ser˜ao discutidos
+
+aqui.
+
+1.5 Cores e preenchimento de ´areas
+
+Outro comando simples e pr´atico de se usar no METAPOST ´e o fill. Este ´e utilizado
+para preencher caminhos e curvas fechadas, aqueles com cycle no ﬁnal. ´E poss´ıvel pre-
+
+encher com cor vermelha a Figura 1.5(b), por exemplo, adicionando aos seus comandos a
+
+linha
+
+fill (z0..z1..z2..z3..z4..z5..cycle) withcolor red;,
+
+o resultado ´e mostrado na Figura 1.14. Note que o METAPOST trabalha seguindo a
+
+ordem das linhas de comando. Isso signiﬁca que se o comando fill for posto depois dos
+
+comandos dotlabel e draw, por exemplo, o preenchimento ﬁcar´a sobreposto ao contorno
+
+da curva e aos r´otulos dos pontos.
+
+z1
+
+z2
+
+z5
+
+z3
+
+z0
+
+z4
+
+Figura 1.14: Curva fechada preenchida com vermelho
+
+Com o exemplo da Figura 1.14, entende-se que withcolor seleciona a cor a ser utilizada
+
+pelo comando fill. O que ´e digitado ap´os esse comando pode ser o nome da cor pr´e-
+deﬁnida pelo METAPOST, em inglˆes. Essas cores pr´e-deﬁnidas s˜ao: red, para vermelho;
+
+blue, para azul; green, para verde; cyan, para ciano; magenta, para magenta; yellow,
+
+para amarelo; black, para preto; e white, para branco.
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+15
+
+Para utilizar outras cores diferentes das pr´e-deﬁnidas, ´e poss´ıvel utilizar-se de uma
+
+vari´avel do tipo rgbcolor (que pode tamb´em ser escrito como color) ou do tipo cmykcolor.
+
+Esses tipos funcionam como o tipo pair, com a diferen¸ca de que em vez de usar duas
+
+vari´aveis num´ericas, usam trˆes ou quatro. Esses valores variam de 0 a 1. Al´em disso,
+
+opera¸c˜oes podem ser feitas como adi¸c˜ao, subtra¸c˜ao e multiplica¸c˜ao por quantidades num´ericas.
+
+O tipo color utiliza trˆes vari´aveis. A primeira componente se refere `a quantidade de
+
+vermelho; a segunda, de verde; e a terceira, de azul. Assim, a cor preta ´e (0, 0, 0) e
+
+branco ´e (1, 1, 1). Como citado, algumas cores j´a s˜ao pr´e-deﬁnidas. Pode-se deﬁnir
+
+uma cor a partir de outra utilizando comandos operat´orios. Por exemplo, algumas escalas
+
+de cinza podem ser deﬁnidas a partir da cor pr´e-deﬁnida white apenas multiplicando-a
+
+por um fator entre 0 e 1. O quadro da Figura 1.15 ´e apresentado em [7] com onze tons
+
+de cinza, sendo estes os resultados de i*0.1*white, para i = 0, 1, .., 10.
+
+Figura 1.15: Varia¸c˜ao de tons de cinza
+
+Como white ´e a forma escrita da cor (1, 1, 1), escrever 0.3white ´e uma forma
+
+abreviada de (0.3, 0.3, 0.3) e resulta num tom escuro de cinza. Veja como ﬁca a
+
+curva da Figura 1.14 preenchida com algumas varia¸c˜oes de cinza na Figura 1.16.
+
+z1
+
+z2
+
+z5
+
+z1
+
+z3
+
+z2
+
+z5
+
+z1
+
+z3
+
+z2
+
+z5
+
+z3
+
+z0
+
+z0
+
+z0
+
+z4
+
+z4
+
+z4
+
+(a) withcolor 0.3white
+
+(b) withcolor 0.6white
+
+(c) withcolor 0.9white
+
+Figura 1.16: Formas preenchidas com varia¸c˜oes de cinza
+
+O tipo cmykcolor utiliza o sistema CMYK de cores. Diferente do sistema RGB, que ´e
+
+aditivo, CMYK ´e um sistema subtrativo de cores. S˜ao utilizadas quatro valores num´ericos
+
+ordenados entre 0 e 1. 2
+
+2O objetivo deste trabalho n˜ao contempla a explana¸c˜ao dos sistemas de cores CMYK e RGB. Para
+
+informa¸c˜oes mais detalhadas, consulte [21].
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+16
+
+Para utilizar cores que n˜ao s˜ao pr´e-deﬁnidas, ´e preciso saber suas coordenadas RGB
+
+ou CMYK. A cor roxa, por exemplo, no sistema RGB ´e deﬁnida pela tripla (128, 0, 128).
+
+Para fazer a convers˜ao para as coordenadas que o METAPOST interpreta, divide-se cada
+
+coordenada por 256. Assim, a color (0.5, 0, 0.5) representa a cor roxa. Para gravar
+
+uma vari´avel dessa cor e utiliz´a-la numa ﬁgura, um exemplo de sintaxe ´e
+
+rgbcolor roxo; roxo := (0.5, 0, 0.5);.
+
+Com essa linha de comando, ´e poss´ıvel recolorir a curva da Figura 1.14 como mostrado
+
+na Figura 1.17.
+
+rgbcolor roxo;
+roxo := (0.5, 0, 0.5);
+u:=1cm;
+z0=(0,0); z1=(-2u,2u); z2=(2u,3u);
+z3=(5u,1u); z4=(3u,-u); z5=(u,2u);
+path p;
+p:= z0..z1..z2..z3..z4..z5..cycle;
+fill p withcolor roxo;
+draw p;
+
+z1
+
+z2
+
+z5
+
+z3
+
+z0
+
+z4
+
+Figura 1.17: Preenchimento com cor roxa n˜ao predeﬁnida
+
+Heck [7] criou o quadro ilustrativo da Figura 1.18(a) com a varia¸c˜ao que ocorre entre
+
+o verde e vermelho em tons sem azul. Ele tamb´em propˆos um exerc´ıcio com o objetivo de
+
+que, com o METAPOST, fosse criado um quadro como esse que mostra a convers˜ao real
+
+dessas cores em preto e branco, deﬁnida pela fun¸c˜ao
+
+(r, g, b) (cid:55)→
+
+r + g + b
+3
+
+· (1, 1, 1)
+
+e, depois, outro com as cores utilizadas nas televis˜oes em preto e branco, que ´e dada pela
+
+f´ormula de convers˜ao
+
+(r, g, b) (cid:55)→ (0, 30r + 0, 59g + 0, 11g) · (1, 1, 1) .
+
+E, al´em disso, que ao ﬁnal se ﬁzesse uma compara¸c˜ao entre os dois. Com uma simples
+
+mudan¸cas no c´odigo utilizado para o quadro original, ´e poss´ıvel analisar os dois quadros
+
+do exerc´ıcio, dispostos nas Figuras 1.18(b) e 1.18(c). O resultado aponta que a convers˜ao
+
+utilizada na televis˜ao ´e um pouco mais clara que o natural.
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+17
+
+RGB(r,g,0)
+
+RGB(r,g,0)
+
+RGB(r,g,0)
+
+g
+
+1
+
+0.9
+
+0.8
+
+0.7
+
+0.6
+
+0.5
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+0
+
+g
+
+1
+
+0.9
+
+0.8
+
+0.7
+
+0.6
+
+0.5
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+0
+
+g
+
+1
+
+0.9
+
+0.8
+
+0.7
+
+0.6
+
+0.5
+
+0.4
+
+0.3
+
+0.2
+
+0.1
+
+0
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+r
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+r
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1
+
+0
+
+0.1
+
+0.2
+
+0.3
+
+0.4
+
+0.5
+
+0.6
+
+0.7
+
+0.8
+
+0.9
+
+1
+
+r
+
+(a) Varia¸c˜oes entre vermelho e
+
+(b) Convers˜ao real
+
+(c) Convers˜ao feita pelas tele-
+
+verde
+
+vis˜oes
+
+Figura 1.18: Convers˜ao de cores em preto e branco
+
+1.6 Operadores matem´aticos
+
+O METAPOST possui intr´ınseco a sua linguagem de programa¸c˜ao alguns operadores
+
+matem´aticos que s˜ao pr´aticos para cria¸c˜ao de gr´aﬁcos em geral. Os mais b´asicos s˜ao
+
++, -, * e /, utilizados para as opera¸c˜oes de adi¸c˜ao, subtra¸c˜ao, multiplica¸c˜ao e divis˜ao,
+
+respectivamente. A exponencia¸c˜ao ´e representada por **, isto ´e, 2**3 representa 23.
+
+´E importante ressaltar que o METAPOST foi programado para entender as opera¸c˜oes
+
+numa determinada ordem. Para n˜ao ter d´uvidas, ´e recomend´avel utilizar parˆenteses. Por
+
+exemplo, 5*a**2 signiﬁca (5a)2, n˜ao 5a2. Para n˜ao haver esse tipo de confus˜ao, basta
+
+digitar 5*(a**2).
+
+Existem tamb´em operadores para o que Hobby [13] chama de “Adi¸c˜ao Pitag´orica”e
+
+“Diferen¸ca Pitag´orica”.
+
+Deﬁni¸c˜ao 2 Sejam b e c dois n´umeros reais positivos. Dizemos que a ´e a adi¸c˜ao pi-
+
+tag´orica entre b e c se a ´e a medida da hipotenusa de um triˆangulo retˆangulo de catetos b
+
+e c. Assim, pelo Teorema de Pit´agoras,
+
+√
+
+a =
+
+b2 + c2
+
+Deﬁni¸c˜ao 3 Sejam a e b dois n´umeros reais positivos, com a > b. Dizemos que c ´e a
+
+diferen¸ca pitag´orica entre a e b se c ´e a medida do cateto desconhecido de um triˆangulo
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+18
+
+retˆangulo de hipotenusa a e cateto b. Assim, pelo Teorema de Pit´agoras,
+
+√
+
+a2 − b2
+
+c =
+
+A sintaxe para a adi¸c˜ao pitag´orica e subtra¸c˜ao pitag´orica no METAPOST ´e ++ e +-+,
+
+respectivamente. Assim, a++b signiﬁca
+
+a2 + b2 e a+-+b signiﬁca
+
+a2 − b2.
+
+√
+
+√
+
+Alguns operadores conhecidos e tamb´em utilizados por outros softwares s˜ao abs, sqrt,
+
+ceiling, floor e mod. O comando abs a computa |a|, enquanto abs (x1,y1) ´e o mesmo
+que (cid:112)x2
+
+1, isso ´e, a soma pitag´orica de seus dois componentes. J´a sqrt x ´e utilizado
+
+1 + y2
+
+para representar
+
+x. Os comandos ceiling a e floor a computam, respectivamente,
+
+√
+
+(cid:100)a(cid:101) e (cid:98)a(cid:99), onde (cid:100)a(cid:101) ´e o menor n´umero inteiro maior ou igual a a e (cid:98)a(cid:99) ´e o maior n´umero
+
+inteiro menor ou igual a a. O comando a mod b retorna o resto da divis˜ao euclidiana de
+
+a por b.
+
+C´alculos trigonom´etricos s˜ao feitos com os comandos sind a e cosd a, que computam
+
+o seno e cosseno, respectivamente, de um ˆangulo a em graus. Para usar a vari´avel em
+
+radianos, o uso de macros pode facilitar o trabalho. Essas macros ser˜ao explanadas no
+
+Cap´ıtulo 4. Hobby [13] aborda uma lista completa com outros operadores n˜ao citados
+
+aqui, inclusive operadores l´ogicos, al´em da ordem em que a linguagem foi programada
+
+para compreendˆe-los.
+
+1.7 Fluxo de Trabalho do METAPOST
+
+Para produzir uma ﬁgura, o usu´ario precisa criar uma entrada contendo as instru¸c˜oes
+escritas na linguagem METAPOST em algum editor TEX. A extens˜ao de arquivo mais
+comum para esse prop´osito ´e a “.mp”. O interpretador do METAPOST processa esse
+
+arquivo e retorna como uma sa´ıda PostScript que pode ser inclu´ıda num documento TEX
+ou visto em algum leitor PostScript. Hobby [13] utiliza a Figura 1.19 para ilustrar esse
+
+processo.
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+19
+
+Editor
+
+Visualizador
+
+fig.mp
+
+fig.1
+
+fig.log
+
+MetaPost
+
+Figura 1.19: Fluxo de trabalho do METAPOST
+
+Para compreender os detalhes do arquivo de entrada, analise o c´odigo completo mos-
+
+trado na Figura 1.20. Observe que cada linha ´e terminada por um ponto-e-v´ırgula. Como
+
+um arquivo no METAPOST funciona como uma lista de instru¸c˜oes, quando ele lˆe um
+
+;, ele entende que o que est´a escrito ´e um comando e o faz o que ali ´e solicitado antes
+
+de passar para o pr´oximo na ﬁla. As exce¸c˜oes s˜ao os casos em que a instru¸c˜ao tem um
+
+ﬁm claro, como ´e o caso de end e endfig. Nesses casos, n˜ao h´a problemas em omitir o
+
+ponto-e-v´ırgula. Uma linha do c´odigo pode ter v´arios comandos separados por ;, ou seja,
+
+n˜ao ´e necess´ario que esteja um em cada linha.
+
+outputformat:="mps";
+outputtemplate:=("%j-%c.mps");
+beginfig(1); % tri^angulo ret^angulo
+draw (0,0)--(3cm,0)--(0,3cm)--(0,0);
+endfig;
+end
+
+Figura 1.20: C´odigo de entrada para a Figura 1.3
+
+Para facilitar a escrita e a leitura do c´odigo ´e aceit´avel separar um ´unico comando
+
+em diversas linhas. Com o s´ımbolo de porcentagem, %, pode-se adicionar coment´arios `as
+
+linhas do c´odigo. Qualquer coisa escrita depois desse s´ımbolo em uma linha ´e ignorada
+
+durante o processamento que o METAPOST faz a partir da leitura do arquivo.
+
+As vari´aveis utilizadas antes da chave beginfig(1) servem para facilitar o trabalho
+
+do usu´ario ao importar a imagem para um trabalho em TEX. A primeira atribui¸c˜ao
+apresentada, outputformat permite que o METAPOST grave as sa´ıdas conforme se queira.
+
+CAP´ITULO 1. FIGURAS B ´ASICAS
+
+20
+
+Como o foco aqui ´e fazer uso dessas ﬁguras em arquivos TEX, conv´em atribuir o formato
+“.mps” que ´e o utilizado pelo TEX para imagens PostScripts.
+
+´E digno de nota como foi atribu´ıda a estrutura do nome do arquivo na vari´avel
+
+outputtemplate. O c´odigo %j refere-se ao jobname, ou seja, ao nome do arquivo original.
+
+J´a o c´odigo %c refere-se ao counter, isto ´e, ao contador das ﬁguras dispostas no arquivo.
+
+Esse c´odigo ´e ´util pois um mesmo documento pode conter diversas ﬁguras. Todas as ﬁgu-
+
+ras podem ser criadas em um mesmo arquivo. Cria-se entre as chaves beginfig(1);. . .
+
+endfig; o c´odigo para a primeira ﬁgura, depois entre beginfig(2);. . . endfig; o c´odigo
+
+para a segunda, e assim sucessivamente. Quando todas as ﬁguras est˜ao digitadas, basta
+
+encerrar o arquivo com a chave end. Todas as ﬁguras ser˜ao exportadas para o diret´orio
+de origem do arquivo quando invocado o METAPOST e o c´odigo for compilado.
+
+Com os arquivos “.mps” gerados, inclu´ı-los em um documento TEX ´e f´acil. Para
+
+importar a ﬁgura gerada pelo METAPOST, utiliza-se o comando
+
+\includegraphics {(cid:104)ﬁgura.mps(cid:105)}
+
+onde (cid:104)ﬁgura.mps(cid:105) se refere ao arquivo da imagem. Este arquivo precisa estar no mesmo
+
+diret´orio em que o arquivo “.tex” ser´a salvo.
+
+Cap´ıtulo 2
+
+Vetores e Geometria
+
+Alguns conceitos matem´aticos de vetores e de geometria podem ser utilizados para
+
+fazer desenhos no METAPOST. O METAPOST possui operadores vetoriais e ´e capaz de
+
+entender os dados do tipo pair como vetores. A base matem´atica para isso, bem como
+
+algumas aplica¸c˜oes dessas opera¸c˜oes na geometria, ser˜ao abordadas neste cap´ıtulo.
+
+2.1 Vetores
+
+Considere o conjunto de pares ordenados de n´umeros reais
+
+R2 = {(x, y) | x, y s˜ao n´umeros reais} .
+
+Dados um n´umero real λ e dois pontos quaisquer P1 = (x1, y1) e P2 = (x2, y2) de R2,
+
+deﬁne-se
+
+P1 + P2 = (x1 + x2, y1 + y2) (adi¸c˜ao de pontos)
+
+λ · P = (λx1, λx2) (multiplica¸c˜ao por um n´umero real)
+
+As conhecidas propriedades alg´ebricas dos n´umeros reais permitem demonstrar facil-
+
+mente as seguintes propriedades: para quaisquer que sejam os pontos P1 = (x1, y1), P2 =
+
+(x2, y2) e P3 = (x3, y3), tem-se que
+
+P1 + P2 = P2 + P1
+
+(P1 + P2) + P3 = P1 + (P2 + P3)
+
+21
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+22
+
+P1 + (0, 0) = P1
+
+P1 + (−P1) = (0, 0), onde −P1 = (−x1, −y1).
+
+Tamb´em, quaisquer que sejam P1 = (x1, y1) e P2 = (x2, y2) e os n´umeros reais r e s,
+
+tem-se
+
+(rs)P1 = r(sP1)
+
+(r + s)P1 = rP1 + sP2
+
+r (P1 + P2) = rP1 + sP2
+
+1 · P1 = P1
+
+Assim, o conjunto R2 com estas opera¸c˜oes, uma interna e a outra externa, ´e um
+
+espa¸co vetorial, seus elementos passam a ser chamados de vetores e os n´umeros reais s˜ao
+
+chamados de escalares.
+
+Graﬁcamente, ﬁxado um sistema de eixos ortogonais, um vetor P = (x, y) ´e repre-
+
+sentado pelo segmento OP orientado de O para P , indicado por
+
+−→
+OP e desenhado como
+
+uma ﬂexa dirigida de O para P . Tamb´em, ser´a indicado um vetor por uma ´unica letra
+
+encimada por uma seta, como (cid:126)v.
+
+y
+
+O
+
+P
+
+−−→
+OP
+
+x
+
+Figura 2.1: Vetor
+
+−→
+OP
+
+Considere dois vetores A = (x1, y1) e B = (x2, y2), segue que
+
+B − A = B + (−A) = (y2 − y1, x2 − x1).
+
+Se (x1, y1) (cid:54)= (x2, y2), o segmento orientado
+−→
+OP pode ser representado por qualquer segmento
+
+P = (x2 − x1, y2 − y1). Assim, o vetor
+
+−→
+AB ´e paralelo ao segmento orientado
+
+−→
+OP , com
+
+orientado
+
+−→
+AB, paralelo a
+
+−→
+OP , de mesmo comprimento e mesma orienta¸c˜ao.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+23
+
+B
+
+y2 − y1
+
+P
+
+−−→
+OP
+
+A
+x2 − x1
+
+O
+
+Figura 2.2: Vetor
+
+−→
+AB
+
+Deﬁni¸c˜ao 4 Dois vetores −→u = (x1, y1) e −→v = (x2, y2) s˜ao colineares quando existe t ∈ R
+tal que −→u = t−→v .
+
+−→
+0 = (0, 0) ´e colinear com qualquer outro vetor, pois
+
+O vetor nulo
+Geometricamente, a soma de dois vetores −→u e −→v ´e calculada pela regra do paralelo-
+
+−→
+0 = 0 · −→v .
+
+gramo.
+
+y
+
+(cid:126)u + (cid:126)v
+
+(cid:126)v
+
+(cid:126)u
+
+x
+
+Figura 2.3: Regra do paralelogramo
+
+2.1.1 Produto Interno de Vetores
+
+Deﬁni¸c˜ao 5 Dado um vetor (cid:126)v = (x, y), deﬁne-se o seu m´odulo, denotado por |(cid:126)v|, como
+
+sendo
+
+|(cid:126)v| =
+
+(cid:112)
+
+x2 + y2
+
+Assim, dado o vetor (cid:126)v =
+
+−→
+OP , o seu m´odulo ´e a distˆancia da extremidade P `a origem.
+
+Observa-se, tamb´em, que o m´odulo de um vetor (cid:126)v = (x, y) ´e o comprimento de qualquer
+
+segmento que o represente, isto ´e, qualquer segmento
+
+−→
+AB tal que B − A = (x, y).
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+24
+
+P
+
+B
+
+y
+
+O
+
+A
+
+x
+
+Figura 2.4: Vetores
+
+−→
+AB e
+
+−→
+OP
+
+Dado um vetor (cid:126)v = (x, y), n˜ao nulo, considerando o ˆangulo θ do eixo Ox com a dire¸c˜ao
+
+de (cid:126)v, 0 ≤ θ ≤ 2π, tem-se que
+
+x = |(cid:126)v|cos θ e y = |(cid:126)v|sen θ
+
+y
+
+O
+
+P
+
+(cid:126)v
+
+θ
+
+x
+
+Figura 2.5: Vetor
+
+−→
+OP e ˆangulo θ
+
+Deﬁni¸c˜ao 6 O produto interno ou produto escalar de dois vetores (cid:126)v1 = (x1, y1) e (cid:126)v2 =
+
+(x2, y2), denotado por (cid:126)v1 · (cid:126)v2, ´e deﬁnido por
+
+(cid:126)v1 · (cid:126)v2 = x1x2 + y1y2
+
+Considerando os ˆangulos θ1 e θ2 de (cid:126)v1 e (cid:126)v2, respectivamente, com o eixo Ox segue que
+
+(cid:126)v1 · (cid:126)v2 = x1x2 + y1y2 = | (cid:126)v1|| (cid:126)v2| (cos θ1 cos θ2 + sen θ1 sen θ2)
+
+(cid:126)v1 · (cid:126)v2 = | (cid:126)v1|| (cid:126)v2| cos (θ1 − θ2)
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+25
+
+Observando que, se θ ´e o ˆangulo entre os vetores (cid:126)v1 e (cid:126)v2, tem-se que
+
+(cid:126)v1 · (cid:126)v2 = | (cid:126)v1|| (cid:126)v2| cos θ
+
+e conclui-se que o produto interno (cid:126)v1 · (cid:126)v2 s´o se anula em dois casos: quando um dos
+
+vetores ´e o vetor nulo ou quando cos θ = 0. No segundo caso, as dire¸c˜oes dos vetores s˜ao
+
+perpendiculares.
+
+Deﬁni¸c˜ao 7 Dois vetores s˜ao ortogonais quando o seu produto interno ´e igual a zero.
+
+Seguem facilmente as seguintes propriedades do produto interno:
+
+(cid:126)v · (cid:126)v = |(cid:126)v|2
+
+(cid:126)u · ((cid:126)v + (cid:126)w) = (cid:126)u · (cid:126)v + (cid:126)u · (cid:126)w
+
+((cid:126)u + (cid:126)v) · (cid:126)w = (cid:126)u · (cid:126)w + (cid:126)v · (cid:126)w
+
+(t(cid:126)u) · (cid:126)v = t((cid:126)u · (cid:126)v) = (cid:126)u · (t(cid:126)v)
+
+Antes de prosseguir para o pr´oximo t´opico, vale a pena discutir uma nota¸c˜ao prede-
+
+ﬁnida no METAPOST para pares, bem como formas de deﬁni-las implicitamente. Para
+
+tanto, considere um triˆangulo ABC, como o da Figura 2.6, cujo c´odigo est´a transcrito ao
+
+seu lado.
+
+C
+
+u:=1cm;
+z1=origin; z2=(5u,-u); z3=(2u,2u);
+draw z1--z2--z3--cycle;
+dotlabel.llft(btex $A$ etex, z1);
+dotlabel.lrt(btex $B$ etex, z2);
+dotlabel.top(btex $C$ etex, z3);
+
+A
+
+Figura 2.6: Triˆangulo ABC
+
+B
+
+´E interessante analisar um pouco as vari´aveis utilizadas para a constru¸c˜ao do triˆangulo
+
+da Figura 2.6. Quando foram deﬁnidas as coordenadas dos v´ertices do triˆangulo com o co-
+
+mando z1=origin; z2=(5u,-u); z3=(2u,2u), poderiam ser utilizadas quaisquer letras
+
+ou combina¸c˜oes de letras e algarismos num´ericos. A forma z(cid:104)´ındice(cid:105) ´e muito conveniente
+porque ´e uma abrevia¸c˜ao predeﬁnida no METAPOST para
+
+(x(cid:104)´ındice(cid:105), y(cid:104)´ındice(cid:105)).
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+26
+
+Isso possibilita dar valores para vari´aveis z por meio de equa¸c˜oes lineares que envolvam
+
+suas coordenadas. Por exemplo, os pontos z1, z2, z3, e z4 de um quadrado de 2 cm de
+
+lado, podem ser deﬁnidos pelas seguintes equa¸c˜oes:
+
+z1=-z3=(1cm,1cm);
+
+x4=-y4=-x2=y2=1cm;
+
+Exatamente os mesmos pontos podem ser obtidos deﬁnindo seus valores diretamente:
+
+z1=(1cm,1cm); z2=(-1cm,1cm); z3=(-1cm,-1cm); z4=(1cm,-1cm);
+
+Depois de ler as equa¸c˜oes, o MetaPost conhece os valores de z1, z2, z3, e z4. Com
+
+esses valores, utilizando um comando draw, vocˆe ´e capaz de tra¸car um quadrado de 2 cm
+
+de lado. Essa representa¸c˜ao ´e poss´ıvel pois uma caracter´ıstica importante que prov´em do
+
+METAFONT ´e a capacidade de resolver equa¸c˜oes lineares para que os programas tamb´em
+
+possam vir a ser escritos de uma forma n˜ao estritamente expl´ıcita. Por exemplo, o META-
+
+POST pode ler
+
+a+b=3; 2a=b+3;
+
+e deduzir que a = 2 e b = 1. Essas mesmas equa¸c˜oes tamb´em poderiam ser escritas de
+
+maneira um pouco mais compacta, sendo unidas com v´arios sinais de igual:
+
+a+b = 2a-b = 3;
+
+Com esse assunto da interpreta¸c˜ao do METAPOST de equa¸c˜oes lineares explanado, ´e
+
+poss´ıvel entender bem como uma altura do triˆangulo ABC pode ser tra¸cada.
+
+2.1.2 Uma aplica¸c˜ao do produto interno no METAPOST
+
+Como visto, se dois vetores s˜ao perpendiculares o produto interno entre eles ´e nulo.
+
+Na Geometria, isso pode ser aplicado quando se quer tra¸car a altura de um triˆangulo
+
+qualquer. Para desenhar a altura relativamente ao v´ertice C, considere o ponto HC, p´e
+
+da perpendicular do v´ertice C ao lado AB. O ponto HC ´e caracterizado por pertencer `a
+
+reta determinada pelos pontos A e B e por
+
+−−−→
+CHC ser perpendicular a
+
+−→
+AB. Vetorialmente,
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+27
+
+signiﬁca que os vetores
+
+−→
+AB e
+
+−−−→
+AHC s˜ao colineares e o produto interno entre os vetores
+
+B − A e C − HC ´e igual a zero.
+
+O METAPOST possui um comando operador que calcula o produto interno entre dois
+
+vetores, que ´e o dotprod. Assim, z1 dotprod z2 ´e equivalente a z1 · z2, isto ´e, como
+
+z1=(x1,y1) e z2=(x2,y2), ent˜ao z1 dotprod z2 ´e equivalente a x1*x2 + y1*y2.
+
+Considerando que A, B e C foram deﬁnidos, respectivamente, como z1, z2 e z3, ao
+
+utilizar-se o comando
+
+(z2-z1) dotprod (z4-z3)=0;,
+
+que representa o produto interno entre
+
+−−−→
+CHC, onde z4 refere-se ao ponto HC, o
+METAPOST ainda n˜ao ´e capaz de deﬁnir exatamente suas duas coordenadas. De fato,
+−−→
+CH seja perpendicular a
+
+existe uma inﬁnidade de pontos H tal que
+
+−→
+AB e
+
+−→
+AB.
+
+Para o METAPOST determinar precisamente as coordenadas do ponto HC procurado
+
+´e preciso que, com outro comando, seja deﬁnido que os vetores
+
+−→
+AB e
+
+−−−→
+AHC s˜ao colineares.
+
+−→
+Como as coordenadas dos pontos H tais que
+AB formam outra
+equa¸c˜ao linear, o METAPOST conseguir´a deﬁnir exatamente a localiza¸c˜ao do ponto HC.
+
+−−→
+AH ´e um m´ultiplo de
+
+Para essa informa¸c˜ao, o comando utilizado ´e z4=whatever[z1,z2]. Matematicamente, o
+METAPOST entende esse comando como sendo z4=z1+t(z2-z1), isto ´e,
+
+HC = A + t(B − A) ⇐⇒ HC − A = t(B − A)
+
+ou seja, os vetores
+
+−→
+AB e
+
+−−−→
+AHC s˜ao colineares. O comando whatever serve para representar
+
+alguma vari´avel qualquer cuja qual n˜ao se ´e preciso saber o valor exato. Se for utilizado
+
+um n´umero real em vez de whatever, o METAPOST efetua este c´alculo e gera um par. Por
+A + B
+2
+
+exemplo, 0.5[A,B] gera o ponto m´edio entre A e B, pois equivale a A+
+
+(B −A) =
+
+1
+2
+
+.
+
+Com o ponto HC j´a deﬁnido, basta um comando dotlabel para marcar e rotul´a-lo
+
+e um draw para tra¸car a altura CHC. A Figura 2.7 mostra o c´odigo, juntamente com o
+
+resultado gr´aﬁco.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+28
+
+u:=1cm;
+z1=origin; z2=(5u,-u); z3=(2u,2u);
+draw z1--z2--z3--cycle;
+dotlabel.llft(btex $A$ etex, z1);
+dotlabel.lrt(btex $B$ etex, z2);
+dotlabel.top(btex $C$ etex, z3);
+(z2-z1) dotprod (z4-z3)=0;
+z4=whatever[z1,z2];
+draw z3--z4 dashed evenly;
+dotlabel.llft(btex $H_C$ etex, z4);
+
+C
+
+A
+
+HC
+
+B
+
+Figura 2.7: Triˆangulo ABC com altura relativa ao lado AB tra¸cada
+
+Note que se o triˆangulo em quest˜ao for obtusˆangulo, a altura ser´a tra¸cada fora do
+
+triˆangulo. No caso do triˆangulo ABC trabalhado at´e ent˜ao, se C = (−2, 2), ent˜ao o
+triˆangulo ´e obtusˆangulo. ´E poss´ıvel, nesse caso, desenhar tracejadamente o segmento
+
+CHC e o prolongamento do lado AB, unindo os pontos A e HC, como exempliﬁcado na
+
+Figura 2.8.
+
+u:=1cm; z1=origin;
+z2=(5u,-u); z3=(-2u,2u);
+draw z1--z2--z3--cycle;
+dotlabel.bot(btex $A$ etex, z1);
+dotlabel.lrt(btex $B$ etex, z2);
+dotlabel.top(btex $C$ etex, z3);
+(z2-z1) dotprod (z4-z3)=0;
+z4=whatever[z1,z2];
+draw z3--z4 dashed evenly;
+draw z1--z4 dashed evenly;
+dotlabel.llft(btex $H_C$ etex, z4);
+
+C
+
+HC
+
+A
+
+B
+
+Figura 2.8: Triˆangulo ABC obtusˆangulo com altura relativa ao lado AB tra¸cada
+
+2.2 Pontos Not´aveis do Triˆangulo
+
+Nessa se¸c˜ao ser˜ao apresentadas algumas deﬁni¸c˜oes e proposi¸c˜oes utilizadas para os
+
+pontos not´aveis do triˆangulo. Todas elas tˆem como referˆencia Muniz Neto [18].
+
+Deﬁni¸c˜ao 8 Uma ceviana de um triˆangulo ´e qualquer segmento (ou a reta ou a semirreta
+
+correspondente) que une um v´ertice do triˆangulo a um ponto sobre a reta suporte do lado
+
+oposto a tal v´ertice.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+29
+
+C
+
+B
+
+A
+
+Figura 2.9: Triˆangulo ABC e trˆes cevianas
+
+Tra¸car uma ceviana com o METAPOST ´e simples. Na Figura 2.9, por exemplo, os
+
+pontos A, B e C foram deﬁnidos, respectivamente, como A, B e C. Depois, com comandos
+
+draw foram tra¸cados os segmentos C--0.2[A,B], C--0.5[A,B] e C--0.9[A,B].
+
+Deﬁni¸c˜ao 9 Uma mediana de um triˆangulo ´e um segmento que une um v´ertice do mesmo
+
+ao ponto m´edio do lado oposto a esse v´ertice.
+
+C
+
+B
+
+A
+
+Figura 2.10: Triˆangulo ABC e uma mediana
+
+Uma mediana ´e uma ceviana particular de um triˆangulo. Logo, o c´odigo utilizado
+
+para fazer esse segmento no METAPOST ´e o mesmo citado anteriormente. No entanto, ´e
+
+preciso especiﬁcar que o ponto deﬁnido por C ´e unido ao ponto m´edio de AB. A sintaxe
+
+utilizada para esse segmento ´e C--0.5[A,B]. Todo triˆangulo possui trˆes medianas.
+
+Deﬁni¸c˜ao 10 Em um triˆangulo ABC, a altura relativa ao lado AB (ou ao v´ertice C) ´e
+
+o segmento que une o v´ertice C ao p´e da perpendicular baixada de C `a reta
+
+←→
+AB.
+
+C
+
+B
+
+A
+
+Figura 2.11: Triˆangulo ABC e a altura relativa ao v´ertice C
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+30
+
+Os comandos utilizados para tra¸car uma altura num triˆangulo qualquer foram discu-
+
+tidos na Subse¸c˜ao 2.1.2. Obviamente, todo triˆangulo possui trˆes alturas relativas a cada
+
+lado (ou a cada v´ertice).
+
+Deﬁni¸c˜ao 11 Dado um ˆangulo ∠ACB, a bissetriz de ∠ACB ´e a semirreta
+
+−−→
+CD que o
+
+divide em dois ˆangulos iguais. Neste caso, diz-se ainda que
+
+−−→
+CD bissecta ∠ACB. Assim,
+
+−−→
+CD bissecta ∠ACB ⇐⇒ A (cid:98)CD = B (cid:98)CD.
+
+y
+
+C
+
+A
+
+D
+
+B
+
+x
+
+Figura 2.12: Bissetriz
+
+−−→
+CD de ∠ACB
+
+Para entender como tra¸car uma bissetriz com o METAPOST, ´e necess´ario utilizar-se
+
+dos comandos dir e angle. Utilizar o operador dir ´e uma maneira simples de deﬁnir
+
+um ponto no c´ırculo unit´ario em um dado ˆangulo com o eixo horizontal. Por exemplo,
+
+dir(30) gera o par
+
+. Matematicamente, o METAPOST traduz dir(a) como
+
+(cid:33)
+
+(cid:32)√
+3
+2
+
+,
+
+1
+2
+
+sendo o par (cosd(a), sind(a)). J´a o operador angle se refere ao operador inverso de
+
+dir. Este comando toma um par, interpreta-o como um vetor e calcula o arco-tangente
+
+de dois argumentos, isto ´e, d´a o ˆangulo, em graus, correspondente ao formado pelo vetor
+
+em rela¸c˜ao ao eixo horizontal.
+
+Sendo assim, dado um ˆangulo ∠ACB, considere um sistema de eixos com origem em
+
+C, como na Figura 2.12. Sejam α e β os ˆangulos dos vetores
+
+−−→
+CB e
+
+−→
+CA em rela¸c˜ao ao eixo
+
+horizontal, respectivamente. Rotacionando β graus o ponto B em torno de C no sentido
+
+anti-hor´ario, obt´em-se o ponto B(cid:48), tal que o ˆangulo do vetor
+
+−−→
+CB(cid:48) em rela¸c˜ao ao eixo das
+
+abscissas ´e α + β.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+31
+
+y
+
+B(cid:48)
+
+A
+
+D
+
+α
+
+β
+
+β
+
+α
+
+C
+
+B
+
+x
+
+Figura 2.13: Determina¸c˜ao da medida do ˆangulo da bissetriz
+
+−−→
+CD de ∠ACB
+
+Com isso, ´e f´acil perceber que o ˆangulo formado pelo vetor
+
+−−→
+CD e pelo eixo horizontal
+
+´e a metade de α + β. O comando para se referir a esse ˆangulo no METAPOST ´e
+
+1/2*(angle(A-C)+angle(B-C)).
+
+Para determinar algum ponto D que esteja nessa bissetriz, basta utilizar a seguinte linha
+
+de comando
+
+D = C + whatever*dir(1/2*(angle(A-C)+angle(B-C))),
+
+sendo whatever qualquer constante. Determinado o ponto, basta fazer o desenho da
+
+bissetriz com um comando draw.
+
+Em um triˆangulo ABC, a bissetriz interna relativa a AB (ou ao v´ertice C) ´e a por¸c˜ao
+
+CD da bissetriz do ˆangulo interno (cid:98)C do triˆangulo, desde C at´e o lado AB. O ponto D ∈
+
+AB ´e o p´e da bissetriz interna relativa a AB. Assim, todo triˆangulo possui trˆes bissetrizes
+internas. ´E preciso utilizar outra linha de comando, al´em da j´a citada no par´agrafo
+
+anterior, para tra¸car apenas a bissetriz interna pois requer-se um ponto espec´ıﬁco da
+
+bissetriz que esteja no lado AB. Este comando, j´a discutido, ´e D = whatever[A,B].
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+32
+
+C
+
+D
+
+B
+
+A
+
+Figura 2.14: Triˆangulo ABC e a bissetriz relativa ao ˆangulo (cid:98)C.
+
+Apesar de n˜ao ser uma ceviana, outra reta tamb´em importante para o estudo dos
+
+pontos not´aveis do triˆangulo ´e a mediatriz.
+
+Deﬁni¸c˜ao 12 Dados os pontos A e B no plano, deﬁne-se como sendo a mediatriz do
+
+segmento AB a reta perpendicular a AB e que passa por seu ponto m´edio.
+
+s
+
+C
+
+B
+
+A
+
+Figura 2.15: Triˆangulo ABC e a mediatriz s do lado AB.
+
+Para fazer o desenho da mediatriz s do lado AB de um triˆangulo ABC com o META-
+
+POST, primeiramente deﬁna com a linha de comando
+
+pair M; numeric AB; path t;
+
+trˆes vari´aveis que ser˜ao utilizadas. A vari´avel M se referir´a ao ponto m´edio de AB; o valor
+−→
+AB em rela¸c˜ao ao eixo horizontal; e o caminho
+
+num´erico AB, ao ˆangulo, em graus, do vetor
+
+t, `a mediatriz do segmento AB. Essas vari´aveis facilitar˜ao a digita¸c˜ao do c´odigo para a
+
+ﬁgura.
+
+Para deﬁnir M como o ponto m´edio de AB, basta utilizar a sintaxe M=0.5[A,B]. Da
+
+mesma forma, como j´a visto anteriormente, para deﬁnir AB como a medida do ˆangulo,
+
+graus, do vetor
+
+−→
+AB, a sintaxe ´e AB=angle(B-A). Para deﬁnir a reta s, mediatriz de AB,
+
+´e necess´ario tra¸car um segmento de reta que passe pelo ponto m´edio de AB. No caso da
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+33
+
+Figura 2.15, foi utilizado um com uma unidade abaixo do ponto m´edio e trˆes unidades
+
+acima. Como dir(90+AB) gera um vetor perpendicular ao segmento AB, o c´odigo usado
+
+para deﬁnir a mediatriz foi
+
+t:=(M-u*dir(90+AB))--(M+3u*dir(90+AB)).
+
+Com isso, basta um comando draw t dashed evenly para desenh´a-la tracejada. Uti-
+
+lizar essa nota¸c˜ao vetorial tamb´em ´e pr´atica para rotular a reta. A linha de comando
+
+utilizada para escrever o s no desenho foi
+
+label.urt(btex $s$ etex,M+2.6u*dir(90+AB));.
+
+Vale observar, tamb´em, que como um triˆangulo possui trˆes segmentos, cada um deles
+
+possui uma mediatriz. A intersec¸c˜ao das trˆes mediatrizes, bem como a das cevianas
+
+particulares discutidas at´e ent˜ao geram os pontos not´aveis dos triˆangulos. Esses pontos
+
+possuem algumas caracter´ısticas interessantes que ser˜ao discutidas a seguir.
+
+2.2.1 Baricentro
+
+Proposi¸c˜ao 1 Em todo triˆangulo, as trˆes medianas passam por um ´unico ponto chamado
+
+baricentro. Ademais, o baricentro divide cada mediana, a partir do v´ertice correspondente,
+
+na raz˜ao 2:1.
+
+Demonstra¸c˜ao: Sejam N e P os pontos m´edios dos lados AC e AB, respectiva-
+
+mente, e seja BN ∩ CP = {G}, como mostrado na Figura 2.16.
+
+C
+
+T
+
+N
+
+G
+
+P
+
+S
+
+B
+
+A
+
+Figura 2.16: Medianas e o baricentro de ABC
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+34
+
+Considere, tamb´em, os pontos m´edios S e T dos segmentos BG e CG, respectivamente.
+
+Sendo assim, N P ´e a base m´edia de ABC relativa a BC, enquanto ST ´e a base m´edia de
+
+BCG relativa a BC.
+
+O Teorema da Base M´edia, aﬁrma que um segmento que ´e base m´edia referente a um
+
+dos lado do triˆangulo ´e paralelo a esse lado. Logo, tanto N P quanto ST s˜ao paralelos a
+
+BC. Esse teorema tamb´em aﬁrma que essa base m´edia mede metade da medida do lado
+
+ao qual ela ´e paralela. Logo, conclui-se tamb´em que N P = ST =
+
+1
+2
+
+BC. Isso ´e suﬁciente
+
+para garantir que N P ST ´e um paralelogramo. Como as diagonais de um paralelogramo
+
+se interscetam nos seus respectivos pontos m´edios, segue que P G = GT e N G = GS.
+
+Mas, como BS = SG e CT = T G, segue que BS = SG = GN e CT = T G = GP ,
+
+igualdades que fornecem BG = 2GN e CG = 2GP .
+
+Note, agora, que se M for o ponto m´edio de BC e G(cid:48) for o ponto de interse¸c˜ao das
+
+medianas AM e BN , conclui-se, analogamente, que G(cid:48) divide AM e BN na raz˜ao 2 : 1
+
+a partir de cada v´ertice. Da´ı, segue que os pontos G e G(cid:48) s˜ao tais que BG = 2GN e
+
+BG(cid:48) = 2G(cid:48)N , ou seja, G ≡ G(cid:48). Assim, AM , BN e CP se intersectam no mesmo ponto
+
+G, baricentro do triˆangulo ABC, de forma que G divide cada uma das medianas na raz˜ao
+
+2 : 1, a partir do v´ertice correspondente.
+
+Desenhar um triˆangulo e seu baricentro no METAPOST ´e uma tarefa muito simples.
+
+A Figura 2.17 mostra o c´odigo utilizado para desenhar as medianas e o baricentro de um
+
+triˆangulo com v´ertices nos pontos A(−2, 1), B(4, 0) e C(2, 2). A declara¸c˜ao das vari´aveis
+
+num´ericas, das fam´ılias de pares A[], B[] e C[] e os comandos de rotular foram omitidos
+
+do c´odigo aqui mostrado. O mesmo ser´a feito para os c´odigos dos outros pontos not´aveis.
+
+Nos outros c´odigos, ser´a omitida tamb´em a deﬁni¸c˜ao das coordenadas dos v´ertices, que
+
+s˜ao os pares A0, B0 e C0.
+
+pair G;
+A0 = (-2u,u); B0 = (4u,0); C0 = (2u,2u);
+A1 = 0.5[C0,B0]; B1 = 0.5[A0,C0];
+C1 = 0.5[B0,A0];
+G = whatever[A0,A1] = whatever[B0,B1];
+draw A0--B0--C0--cycle;
+draw C0--C1; draw A0--A1; draw B0--B1;
+
+A
+
+Figura 2.17: Baricentro
+
+C
+
+G
+
+B
+
+Perceba que basta deﬁnir os pontos m´edios de cada lado com os comandos e deﬁnir
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+35
+
+que o baricentro G ser´a a interse¸c˜ao de apenas duas dessas medianas, visto que a Pro-
+
+posi¸c˜ao 1 mostrou que a terceira mediana tamb´em passar´a por esse ponto. Como n˜ao h´a
+
+possibilidades de o baricentro estar para fora do triˆangulo, outra forma que poderia ser
+
+utilizada para deﬁni-lo seria com o comando intersectionpoint. Esse comando opera-
+
+dor ´e utilizado entre caminhos e gera as coordenadas do ponto de interse¸c˜ao deles. No
+
+caso do baricentro, poderia ser utilizada a linha de comando
+
+G = (A0--A1) intersectionpoint (B0--B1).
+
+Outra forma de determinar as coordenadas baricentro G de um triˆangulo ABC ´e
+
+calcul´a-las por meio das coordenadas do v´ertice. Considerando P e N os pontos m´edios
+
+dos lados AB e AC, respectivamente, tem-se que P =
+
+A + B
+2
+
+e N =
+
+A + C
+2
+
+. Como G
+
+est´a nos segmentos BN e CP , existem n´umeros t e λ tais que
+
+G = B + t(N − B) = (1 − t)B + tN e G = C + λ(P − C) = (1 − λ)C + λP
+
+Substituindo os valores de P =
+
+A + B
+2
+
+e N =
+
+A + C
+2
+
+obt´em-se
+
+G =
+
+t
+2
+
+A + (1 − t)B +
+
+t
+2
+
+C =
+
+λ
+2
+
+A + (1 − λ)C +
+
+λ
+2
+
+B.
+
+As duas equa¸c˜oes fornecem o mesmo ponto G quando t = λ =
+
+2
+3
+
+e, assim,
+
+G =
+
+1
+3
+
+A +
+
+1
+3
+
+B +
+
+1
+3
+
+C =
+
+A + B + C
+3
+
+.
+
+Como os pontos A, B e C foram deﬁnidos com os pares A0, B0 e C0, usando a equa¸c˜ao
+
+anterior tem-se que
+
+G:=(A0+B0+C0)/3;.
+
+2.2.2 Circuncentro
+
+Proposi¸c˜ao 2 Em todo triˆangulo, as mediatrizes dos lados passam todas por um mesmo
+
+ponto chamado circuncentro.
+
+Demonstra¸c˜ao: Sejam ABC um triˆangulo qualquer, r, s e t, respectivamente, as medi-
+
+atrizes dos lados BC, CA e AB, e O o ponto de interse¸c˜ao das retas s e t, como na Figura
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+36
+
+2.18. A mediatriz de um segmento pode ser caracterizada como o lugar geom´etrico dos
+
+pontos equidistante das suas extremidades. Assim, tem-se que, como O ∈ t, OB = OA
+
+e, tamb´em, como O ∈ s, OA = OC. Portanto, OB = OC e segue, de novo pela caracte-
+
+riza¸c˜ao da mediatriz como lugar geom´etrico, que O ∈ r.
+
+C
+
+r
+
+B
+
+s
+
+A
+
+O
+
+t
+
+Figura 2.18: Mediatrizes e o circuncentro de ABC
+
+Para esbo¸car as mediatrizes e o circuncentro de um triˆangulo ABC ser´a necess´ario
+
+declarar um par O que representar´a o circuncentro; trˆes caminhos r, s, t, referentes
+
+`as mediatrizes; e trˆes valores num´ericos AB, BC e CA, referentes aos ˆangulos, em graus,
+−→
+AB,
+
+formado pelo eixo horizontal e os vetores
+
+−−→
+BC e
+
+−→
+CA.
+
+O primeiro passo ´e deﬁnir todas as coordenadas dos v´ertices e dos pontos m´edios do
+
+triˆangulo ABC. Como no exemplo do baricentro, os pares A0, B0 e C0 s˜ao os v´ertices do
+
+triˆangulo e os pares A1, B1 e C1, os pontos m´edios dos lados BC, CA e AB, respectiva-
+
+mente. Depois, com o comando angle, atribuir os valores das vari´aveis num´ericas AB, BC
+e CA. Para o METAPOST computar as coordenadas do circuncentro, basta analisar que se
+
+O ser´a um ponto tal que o produto interno entre os vetores (O-A1) e (C0-B0) e entre os
+
+vetores (O-B1) e (A0-C0) ser˜ao nulos, pois s˜ao perpendiculares. A sintaxe para escrever
+isso no METAPOST ´e
+
+(O-A1) dotprod (C0-B0) = (O-B1) dotprod (A0-C0) = 0.
+
+Os comandos discutidos at´e aqui j´a s˜ao suﬁcientes para marcar o circuncentro no
+
+triˆangulo. Por´em, se h´a interesse em tra¸car, tamb´em, as mediatrizes do triˆangulo, basta
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+37
+
+utilizar os comandos citados no in´ıcio dessa Se¸c˜ao. Como as coordenadas do circuncentro
+
+e dos pontos m´edios j´a est˜ao deﬁnidas, basta com um comando draw tra¸car segmentos de
+
+reta que passem por esses pontos. A Figura 2.19 mostra os c´odigos utilizados para deﬁnir
+
+cada uma das retas, dos ˆangulos e do circuncentro.
+
+pair O; path r, s, t;
+numeric AB, BC, CA;
+AB=angle(B0-A0); BC=angle(C0-B0);
+CA=angle(A0-C0);
+(O-A1) dotprod (C0-B0) =
+(O-B1) dotprod (A0-C0) = 0;
+t:=(O+u*dir(90+AB))--(C1-u*dir(90+AB));
+r:=(O+u*dir(90+BC))--(A1-u*dir(90+BC));
+s:=(O+u*dir(90+CA))--(B1-u*dir(90+CA));
+
+C
+
+s
+
+r
+
+B
+
+A
+
+O
+
+t
+
+Figura 2.19: Circuncentro
+
+2.2.3 Ortocentro
+
+Proposi¸c˜ao 3 Em todo triˆangulo, as trˆes alturas se intersectam em um s´o ponto chamado
+
+ortocentro.
+
+Demonstra¸c˜ao: Seja ABC um triˆangulo qualquer. H´a trˆes casos a serem levados em
+
+considera¸c˜ao:
+
+(a) ABC ´e retˆangulo, como na Figura 2.20. Nesse caso, suponha sem perda de ge-
+
+neralidade, que o triˆangulo ABC ´e retˆangulo em A. Dessa forma, A ´e o p´e das
+
+alturas relativas aos lados AB e AC. Como a altura relativa ao lado BC passa (por
+
+deﬁni¸c˜ao) por A, segue que as alturas de ABC concorrem em A.
+
+A
+
+C
+
+Figura 2.20: Ortocentro no triˆangulo retˆangulo
+
+B
+
+(b) ABC ´e acutˆangulo, como na Figura 2.21. Sejam r, s e t retas paralelas a BC, CA
+
+e AB, respectivamente, passando por A, B e C, tamb´em respectivamente. Sejam
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+38
+
+tamb´em r ∩ s = {P }, s ∩ t = {M } e t ∩ r = {N }. Ent˜ao, os quadril´ateros ABCN e
+
+ABM C s˜ao paralelogramos, de forma que CN = AB = CM e, assim, C ´e o ponto
+
+m´edio de M N . Da mesma forma, B ´e o ponto m´edio de M P e A o ponto m´edio de
+
+N P .
+
+N
+
+r
+
+A
+
+C
+
+t
+
+M
+
+B
+
+s
+
+P
+
+Figura 2.21: Ortocentro no triˆangulo acutˆangulo
+
+Por outro lado, a altura relativa ao lado BC tamb´em ´e perpendicular ao lado N P ,
+
+visto que
+
+←→
+BC e
+
+←→
+N P s˜ao paralelas. Do mesmo modo, as alturas relativas a AC e
+
+AB s˜ao respectivamente perpendiculares a M P e M N . Com isso, as alturas do
+
+triˆangulo ABC s˜ao as mediatrizes dos lados do triˆangulo M N P . Mas, a Proposi¸c˜ao
+
+2 provou que as mediatrizes dos lados de um triˆangulo s˜ao concorrentes, logo as
+
+alturas de ABC assim tamb´em ser˜ao.
+
+(c) ABC ´e um triˆangulo obtusˆangulo. Neste caso, a prova ´e an´aloga `a do caso (b).
+
+Agora, veja como ser´a poss´ıvel, com o METAPOST, tra¸car o ortocentro dos triˆangulos
+
+das Figuras 2.17 e 2.19. Al´em das vari´aveis j´a declaradas anteriormente, para esse desenho
+
+ser´a necess´ario declarar um par H, que ser´a o ortocentro, e trˆes caminhos r, s, t, para
+
+tra¸car as alturas, se desejado.
+
+Declaradas as vari´aveis e lembrando que A0, B0 e C0 s˜ao os v´ertices do triˆangulo, a
+
+nova fam´ılia de pontos a ser utilizada aqui, A2, B2 e C2, ser´a a dos p´es das alturas relativas
+
+a cada lado. A sintaxe para se obter esses pontos foi discutida na Subse¸c˜ao 2.1.2. Por
+
+exemplo, a linha de comando
+
+A2 = whatever[B0,C0]; (A2-A0) dotprod (C0-B0) =0;
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+39
+
+´e utilizada para gerar A2, o p´e da altura relativa ao v´ertice A. Depois de deﬁnidos os trˆes
+
+pontos A2, B2 e C2, para deﬁnir o par de coordenadas do ortocentro H, basta utilizar a
+
+linha de comando
+
+H = whatever[A0,A2] = whatever[B0,B2];
+
+pois, como visto, as trˆes alturas se intersectam num mesmo ponto.
+
+Com H deﬁnido, j´a ´e poss´ıvel marc´a-lo no desenho com um comando de r´otulo.
+
+Mas se for de interesse tra¸car as alturas, basta fazˆe-las com os caminhos declarados
+
+r, s, t, como mostrado no c´odigo na Figura 2.22. Os segmentos do ﬁnal do c´odigo,
+
+C0--(C0+2u*dir(BC)) e C0--(C0-2u*dir(CA)) s˜ao os prolongamentos dos lados CA e
+
+BC do triˆangulo.
+
+pair H; path r, s, t;
+A2 = whatever[B0,C0];
+B2 = whatever[C0,A0];
+C2 = whatever[A0,B0];
+(A2-A0) dotprod (C0-B0) =
+(B2-B0) dotprod (A0-C0) =
+(C2-C0) dotprod (B0-A0) = 0;
+H=whatever[A0,A2]=whatever[B0,B2];
+t:=
+(H+u*dir(90+AB))--(C2-u*dir(90+AB));
+r:=
+(H-u*dir(90+BC))--(A0+u*dir(90+BC));
+s:=
+(H-u*dir(90+CA))--(B0+u*dir(90+CA));
+draw
+C0--(C0+2u*dir(BC)) dashed evenly;
+draw
+C0--(C0-2u*dir(CA)) dashed evenly;
+
+A
+
+Figura 2.22: Ortocentro
+
+H
+
+C
+
+B
+
+2.2.4 Incentro
+
+Proposi¸c˜ao 4 As bissetrizes internas de todo triˆangulo concorrem em um ´unico ponto,
+
+o incentro do triˆangulo.
+
+Demonstra¸c˜ao: Sejam r, s e t, respectivamente, as bissetrizes internas dos ˆangulos (cid:98)A,
+
+(cid:98)B e (cid:98)C do triˆangulo ABC e I o ponto de interse¸c˜ao das retas s e t.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+40
+
+C
+
+t
+
+I
+
+r
+
+s
+
+B
+
+A
+
+Figura 2.23: Incentro de um triˆangulo
+
+A bissetriz de um ˆangulo pode ser caracterizada como o lugar geom´etrico dos pontos
+
+que equidistam dos lados desse ˆangulo. Como I ∈ s, segue da caracteriza¸c˜ao das bissetrizes
+
+como lugar geom´etrico que I equidista dos lados AB e BC de ABC. Analogamente, I ∈ t
+
+garante que I equidista dos lados BC e AC. Portanto, I equidista de AC e AB e, usando
+
+novamente a caracteriza¸c˜ao como lugar geom´etrico das bissetrizes, conclui-se que I est´a
+
+na bissetriz do ˆangulo (cid:98)C, ou seja, I ∈ r. Assim, r, s e t concorrem em I.
+
+Para determinar o incentro de um triˆangulo com o METAPOST, ser´a necess´ario de-
+
+terminar os trˆes p´es das bissetrizes internas, A3, B3 e C3, de cada lado e determinar a
+
+interse¸c˜ao entre os segmentos com uma extremidade em um v´ertice do triˆangulo e outra
+
+no p´e da bissetriz interna relativa a esse v´ertice. O c´odigo utilizado para determinar as
+
+coordenadas de pontos da bissetriz referente a um determinado ˆangulo j´a foi discutido an-
+
+teriormente. Para marcar o incentro, a ´unica vari´avel diferente que precisar´a ser declarada
+
+´e um par I que representar´a o incentro do triˆangulo.
+
+Para determinar A3, o p´e da bissetriz interna referente ao ˆangulo (cid:98)A, por exemplo, o
+
+c´odigo utilizado ter´a duas equa¸c˜oes. A primeira ´e
+
+A3 = whatever[C0,B0];
+
+que determina que esse ponto est´a na reta que passa por BC. A segunda ´e
+
+A3 = A0+whatever*dir(1/2*angle(C0-A0)+1/2*angle(B0-A0));,
+
+que indica que esse ponto est´a na bissetriz do ˆangulo formado pelos vetores
+
+−→
+AC e
+
+−→
+AB.
+
+Depois de deﬁnidos os trˆes p´es das bisstrizes, o incentro I pode ser deﬁnido por meio
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+41
+
+da forma vetorial
+
+I = whatever[C0,C3] = whatever[A0,A3];
+
+ou utilizando o comando de intersec¸c˜ao entre caminhos
+
+I = (B0--B3) intersectionpoint (A0--A3);,
+
+visto que as bissetrizes sempre se intersectam dentro do triˆangulo.
+
+pair I;
+A3 = whatever[C0,B0] = A0 + whatever*
+dir(1/2*angle(C0-A0)+1/2*angle(B0-A0));
+B3 = whatever[A0,C0] = B0 + whatever*
+dir(1/2*angle(A0-B0)+1/2*angle(C0-B0));
+C3 = whatever[B0,A0] = C0 + whatever*
+dir(1/2*angle(A0-C0)+1/2*angle(B0-C0));
+I = whatever[C0,C3] = whatever[A0,A3];
+
+A
+
+Figura 2.24: Incentro
+
+C
+
+I
+
+B
+
+2.3 Pol´ıgonos Regulares
+
+Deﬁni¸c˜ao 13 Sejam n ≥ 3 um natural e A1, A2, . . . , An pontos distintos do plano. Diz-se
+
+que A1A2 . . . An ´e um pol´ıgono (convexo) se, para 1 ≤ i ≤ n, a reta
+
+←→
+AiAi+1 n˜ao cont´em
+
+nenhum outro ponto Aj, mas deixa todos eles em um mesmo semiplano, dentre os que ela
+
+determina (aqui e no que segue, A0 = An, An+1 = A1 e An+2 = A2).
+
+A3
+
+A2
+
+A4
+
+A5
+
+A6
+
+A1
+
+Figura 2.25: Pol´ıgono convexo de 6 lados
+
+Tra¸car um pol´ıgono com o METAPOST ´e uma tarefa simples e pode ser feita com os
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+42
+
+recursos discutidos at´e agora. Basta deﬁnir as coordenadas dos v´ertices e fazer o tra¸cado
+
+dos lados.
+
+Deﬁni¸c˜ao 14 Um pol´ıgono ´e dito regular se todos os seus lados e todos os seus ˆangulos
+
+internos tiverem medidas iguais.
+
+Para desenhar com o METAPOST um pol´ıgono regular de trˆes lados, ou seja, um
+
+triˆangulo equil´atero, por exemplo, pode-se deﬁnir as coordenadas de um v´ertice e depois
+
+calcular as coordenadas dos outros dois em fun¸c˜ao das do primeiro. Considere, o c´odigo
+
+e o resultado na Figura 2.26.
+
+numeric l; pair A[]; l:=3cm; A1=origin;
+A2=A1+l*dir(10); A3=A1+l*dir(70);
+draw A1--A2--A3--cycle;
+dotlabel.bot(btex $A_1$ etex, A1);
+dotlabel.rt(btex $A_2$ etex, A2);
+dotlabel.lft(btex $A_3$ etex, A3);
+
+A3
+
+A1
+
+A2
+
+Figura 2.26: Pol´ıgono regular de trˆes lados
+
+Primeiramente foram declaradas as vari´aveis a serem utilizadas para o desenho. A
+
+fam´ılia A de pares se refere aos v´ertices do triˆangulo e o valor num´erico l, `a medida dos
+
+lados do mesmo. O primeiro par, referente ao v´ertice A1, foi deﬁnido na origem, mas
+
+poderia ter sido deﬁnido em qualquer ponto. Os pontos A2 e A3 foram deﬁnidos de forma
+
+que A2 estivesse a l unidades na dire¸c˜ao de 10◦ e A3, 70◦.
+
+A3
+
+70◦
+
+A2
+
+10◦
+
+A1
+
+Figura 2.27: Constru¸c˜ao do triˆangulo equil´atero
+
+Determinados os pontos, basta tra¸car o triˆangulo com o comando draw e marcar os
+
+pontos com os comandos de dotlabel. Veja que, como os ˆangulos internos de um triˆangulo
+
+equil´atero medem 60◦, o ˆangulo utilizado para determinar os outros dois v´ertices A2 e A3
+
+poderiam ser quaisquer tais que a diferen¸ca fosse 60◦.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+43
+
+Para tra¸car um quadrado, isto ´e, um pol´ıgono regular de quatro lados, o METAPOST
+
+cont´em um comando predeﬁnido unitsquare. Esse comando refere-se ao caminho
+
+(0,0)--(1,0)--(1,1)--(0,1)--cycle,
+
+que ´e um quadrado de lado unit´ario com v´ertice na origem desenhado no primeiro qua-
+
+drante. Para fazer um quadrado de 3 cm de lado, por exemplo, basta utilizar a linha de
+
+comandos
+
+draw unitsquare scaled 3cm;
+
+que o resultado ´e o mostrado na Figura 2.28.
+
+Figura 2.28: Quadrado com 3 cm de lado
+
+Para construir um pol´ıgono regular de n lados, basta dividir um c´ırculo de centro O
+
+em n arcos iguais, obtendo os pontos A1, A2, . . . , An. Assim, o pol´ıgono A1A2 . . . An tem
+
+n lados iguais e os ˆangulos correspondente iguais, portanto ´e um pol´ıgono regular de n
+
+lados.
+
+Para tra¸car um pol´ıgono regular de n lados dividindo um c´ırculo em n partes iguais
+
+com o METAPOST ´e necess´ario, apenas, determinar as coordenadas destes pontos e, da´ı,
+
+tra¸car os lados do pol´ıgono. Considere o pent´agono da Figura 2.29 e o c´odigo utilizado
+
+para determinar as coordenadas dos v´ertices e o utilizado para tra¸car os seus lados.
+
+numeric n, theta, raio; path P;
+n:=5; theta := 360/n; raio:=2cm;
+for i = 1 upto n:
+z[i] = dir(i*theta)*raio; endfor
+P := z[1] for i = 1 upto n:
+--z[i] endfor --cycle;
+draw P;
+
+z[2]
+
+z[3]
+
+z[1]
+
+O
+
+z[5]
+
+Figura 2.29: Pent´agono.
+
+z[4]
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+44
+
+Note que, primeiramente, foram deﬁnidas vari´aveis num´ericas. A vari´avel n foi deﬁnida
+
+para ser a quantidade de lados. Como um c´ırculo equivale a um arco de 360◦, se este ser´a
+
+dividido em n partes, os arcos formados pelos v´ertices ser˜ao de θ =
+
+a vari´avel num´erica theta foi deﬁnida como
+
+360◦
+n
+
+. Por essa raz˜ao,
+
+theta := 360/n.
+
+A vari´avel num´erica raio se refere `a medida do raio r do c´ırculo que ser´a dividido e o
+
+caminho P ao pol´ıgono regular.
+
+Deﬁnidas as vari´aveis a serem utilizadas, o pr´oximo passo ´e deﬁnir as coordenadas dos
+
+v´ertices. Para facilitar a escrita, foi utilizado um loop que deﬁne todos os v´ertices. O
+
+comando
+
+for i = 1 upto n: z[i]=dir(i*theta)*raio; endfor
+
+deﬁne que o primeiro ponto, z[1], ter´a as coordenadas calculadas pelo vetor que forma
+
+1 · θ graus com a horizontal, a uma distˆancia r da origem. J´a o segundo v´ertice, z[2],
+
+´e deﬁnido da mesma forma, s´o que o ˆangulo ´e 2 · θ. Deﬁnidos todos os n v´ertices, os
+
+arcos formados por cada par de v´ertices consecutivos medem θ graus e, assim, o pol´ıgono
+
+´e regular. Na Figura 2.29, foram nomeados os v´ertices e o ponto O, que ´e a origem, foi
+
+marcado para facilitar o entendimento.
+
+O segundo passo ´e deﬁnir o caminho P, que nada mais ´e do que a jun¸c˜ao dos v´ertices
+
+por tra¸cos (--), formando os segmentos de reta que ser˜ao os lados do pol´ıgono. Uma
+
+forma de deﬁnir esse caminho seria
+
+P:=z[1]--z[2]--z[3]--z[4]--z[5]--cycle;,
+
+pois o pol´ıgono em quest˜ao ´e um pent´agono. Como o objetivo ´e criar um c´odigo que possa
+
+ser utilizado para qualquer n´umero n de lados, o comando utilizado,
+
+P:=z[1] for i=1 upto n: --z[i] endfor --cycle;,
+
+gera justamente o caminho citado anteriormente, s´o que para qualquer valor de n. Com
+
+isso, basta um comando draw P que o pol´ıgono regular ser´a desenhado. Com uma simples
+
+mudan¸ca na vari´avel n de 5 para 15, o resultado ´e o mostrado na 2.30.
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+45
+
+Figura 2.30: Pentadec´agono regular
+
+Note que com esse c´odigo ´e preciso deﬁnir a medida do raio do c´ırculo circunscrito
+
+ao pol´ıgono. Por´em, utilizando alguns conhecimentos geom´etricos, ´e poss´ıvel tra¸car um
+
+pol´ıgono regular com uma medida l de lado ﬁxada. Para isso ´e necess´ario escrever a
+
+medida r do raio em fun¸c˜ao da medida l do lado. Essa tarefa n˜ao ´e dif´ıcil, pois como pode
+
+ser visto na Figura 2.31, pela Lei dos Cossenos, tem-se que
+
+l
+
+r
+
+θ
+
+r
+
+Figura 2.31: Ene´agono regular
+
+l2 = r2 + r2 − 2 cos θ · r2
+
+l2 = 2r2 (1 − cos θ)
+(cid:18)
+
+l2 = 2r2
+
+1 − cos2
+
+(cid:18)
+
+(cid:18)
+
+(cid:18)
+
+l2 = 2r2
+
+l2 = 4r2
+
+l2 = 4r2
+
+1 − cos2
+
+1 − cos2
+
+sen2
+
+(cid:18) θ
+2
+
+(cid:18) θ
+2
+(cid:18) θ
+2
+(cid:18) θ
+2
+(cid:19)(cid:19)
+
+(cid:19)
+
+(cid:19)
+
++ sen2
+
+(cid:19)(cid:19)
+
+(cid:18) θ
+2
+
++ 1 − cos2
+
+(cid:19)(cid:19)
+
+(cid:18) θ
+2
+
+(cid:19)(cid:19)
+
+CAP´ITULO 2. VETORES E GEOMETRIA
+
+46
+
+Como θ =
+
+360◦
+n
+
+e n ≥ 3, ent˜ao θ ≤ 120◦. Assim, sen
+
+θ
+2
+
+≥ 0 e, por sua vez,
+
+l = 2r sen
+
+θ
+2
+
+.
+
+Com essa informa¸c˜ao, se for desejada uma medida espec´ıﬁca do lado do pol´ıgono
+
+regular a ser desenhado, basta deﬁnir outra vari´avel num´erica l, referente a medida do
+
+lado e escrever a vari´avel num´erica raio em fun¸c˜ao de l, isto ´e,
+
+r =
+
+l
+2 sen θ
+2
+
+.
+
+A Figura 2.32 mostra um exemplo em que um dec´agono regular ´e desenhado com seus
+
+lados medindo exatamente 2 cm.
+
+numeric n, l, theta, raio; path P;
+n:=10; l:= 2cm; theta := 360/n;
+raio:=l/(2*sind(theta/2));
+for i = 1 upto n:
+z[i]=dir(i*theta)*raio; endfor
+P:=z[1] for i=1 upto n:
+--z[i] endfor --cycle;
+draw P;
+
+Figura 2.32: Dec´agono regular com 2 cm de lado.
+
+Cap´ıtulo 3
+
+Tranforma¸c˜oes
+
+Neste cap´ıtulo ser˜ao discutidas algumas transforma¸c˜oes no plano, bem como alguns
+
+recursos que permitem utiliz´a-las no METAPOST para elabora¸c˜ao de alguns gr´aﬁcos.
+
+Tamb´em ser˜ao apresentadas algumas aplica¸c˜oes dessas transforma¸c˜oes para o esbo¸co de
+
+c´ırculos e elipses, sendo estas exempliﬁcadas com alguns problemas interessantes de Geo-
+
+metria.
+
+3.1 Transforma¸c˜oes no Plano
+
+Deﬁni¸c˜ao 15 Uma transforma¸c˜ao no plano R2 ´e uma fun¸c˜ao T : R2 → R2, isto ´e, uma
+
+correspondˆencia que associa a cada ponto P do plano outro ponto P1 = T (P ) do plano,
+
+chamado sua imagem por T .
+
+A transforma¸c˜ao identidade T : R2 → R2, deﬁnida por T (x, y) = (x, y) ´e indicada no
+
+Metapost pelo comando identity.
+
+Exemplo 1 Considere T : R2 → R2 deﬁnida por T (x, y) =
+
+(cid:18)
+
+x,
+
+1
+2
+
+(cid:19)
+
+y
+
+. Tal transforma¸c˜ao
+
+´e denominada compress˜ao vertical do plano. Aplicada a um ponto (x, y) do plano, ela
+
+preserva a abscissa e reduz a ordenada `a metade, comprimindo verticalmente as ﬁguras
+
+planas.
+
+47
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+48
+
+y
+
+C
+
+T (C)
+
+x
+
+Figura 3.1: Compress˜ao vertical
+
+Exemplo 2 Considere T : R2 → R2 deﬁnida por T (x, y) =
+
+(cid:19)
+
+x, y
+
+. Tal transforma¸c˜ao
+
+(cid:18) 1
+2
+
+´e denominada compress˜ao horizontal do plano. Aplicada a um ponto (x, y) do plano, ela
+
+preserva a ordenada e reduz a abscissa `a metade, comprimindo horizontalmente as ﬁguras
+
+planas.
+
+y
+
+C
+
+T (C)
+
+x
+
+Figura 3.2: Compress˜ao horizontal
+
+3.1.1 Tipo transform
+
+Al´em dos tipos b´asicos de dados j´a explanados anteriormente, o METAPOST possui
+
+um tipo de vari´avel avan¸cado que faz transforma¸c˜oes. Algumas transforma¸c˜oes s˜ao bem
+
+pr´aticas para recursos gr´aﬁcos matem´aticos. O tipo transform ´e utilizado para guardar
+
+transforma¸c˜oes em uma ´unica vari´avel. Uma transforma¸c˜ao pode ser qualquer combina¸c˜ao
+
+de rota¸c˜ao, dimensionamento, inclina¸c˜ao e deslocamento. Essas transforma¸c˜oes podem
+
+ser aplicadas tanto a pontos como a caminhos deﬁnidos com path. No caso de caminhos,
+
+elas transformam cada um de seus pontos conforme as equa¸c˜oes predeﬁnidas de cada uma.
+
+Quando se quer declarar uma vari´avel, por exemplo, T, como sendo uma tranforma¸c˜ao,
+
+escreve-se transform T;. Em seguida a transforma¸c˜ao precisa ser descrita. A trans-
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+49
+
+forma¸c˜ao predeﬁnida identity ´e um ponto de partida necess´ario para esse processo.
+
+Ela n˜ao altera o ponto ou caminho inicial. Apenas deﬁne que a partir dele, as outras
+
+transforma¸c˜oes ser˜ao realizadas. Veja como essas transforma¸c˜oes funcionam com alguns
+
+exemplos gr´aﬁcos b´asicos.
+
+Transforma¸c˜ao yscaled a: A transforma¸c˜ao indicada por yscaled a ´e a trans-
+
+forma¸c˜ao que a cada ponto (x, y) do plano associa o ponto (x, ay). Assim,
+
+(x, y) yscaled a = (x, ay)
+
+Transforma¸c˜ao xscaled a: A transforma¸c˜ao indicada por xscaled a ´e a trans-
+
+forma¸c˜ao que a cada ponto (x, y) do plano associa o ponto (ax, y). Assim,
+
+(x, y) xscaled a = (ax, y)
+
+No Exemplo 1, o c´odigo utilizado para gerar as curvas C e T (C) foi:
+
+transform T;
+T:= identity yscaled (1/2);
+path f, g;
+u:=0.8cm; r:=2*u;
+f:=fullcircle scaled 2.5r;
+g:=f transformed T;
+draw f withcolor black;
+draw g withcolor red;
+
+Transforma¸c˜ao scaled a: A transforma¸c˜ao scaled a j´a foi abordada no Cap´ıtulo 1
+
+e ´e a mais comum dentre as transforma¸c˜oes. O comando scaled a indica a transforma¸c˜ao
+
+T (x, y) = (ax, ay), assim
+
+(x, y) scaled a = (ax, ay)
+
+Exemplo 3 Considere um triˆangulo com v´ertices em A = (0, 0), B = (3, 5) e C = (4, 1)
+
+e a transforma¸c˜ao T (x, y) =
+
+. Aplicando a transforma¸c˜ao T , obt´em-se o triˆangulo
+
+(cid:18)
+
+e F =
+
+2,
+
+(cid:19)
+
+1
+2
+
+. No METAPOST, essa transforma¸c˜ao
+
+(cid:17)
+
+(cid:16)x
+2
+(cid:18) 3
+2
+
+,
+
+,
+
+y
+2
+(cid:19)
+5
+2
+
+de v´ertices D = (0, 0), E =
+
+´e feita com o comando scaled 1/2.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+50
+
+B
+
+numeric u; u:=1cm;
+pair A, B, C, D, E, F;
+path ABC, DEF;
+transform T; T:= identity scaled (1/2);
+A:=(0,0); B:=(3u,5u); C:=(4u,u);
+ABC:= A--B--C--cycle;
+DEF:= ABC transformed T;
+draw ABC; draw DEF withcolor red;
+
+E
+
+C
+
+D
+
+A
+
+F
+
+Figura 3.3: Transforma¸c˜ao no Triˆangulo ABC
+
+Transforma¸c˜ao rotated θ: O comando de transforma¸c˜ao rotated θ indica a trans-
+forma¸c˜ao em R2 deﬁnida por T (x, y) = (x cos θ − y sen θ, x sen θ + y cos θ) e efetua uma
+
+rota¸c˜ao de centro na origem e ˆangulo θ graus.
+
+numeric u; u:=1cm;
+pair A, B, C, D, E, F;
+path ABC, DEF;
+transform T;
+T:= identity rotated (90);
+A:=(0,0); B:=(u,4u); C:=(3u,u/2);
+ABC:= A--B--C--cycle;
+DEF:= ABC transformed T;
+draw ABC; draw DEF withcolor red;
+
+E
+
+B
+
+F
+
+D
+
+A
+
+C
+
+Figura 3.4: Rota¸c˜ao de 90◦ do Triˆangulo ABC
+
+Transforma¸c˜ao shifted (a,b): O comando shifted (a,b) indica a transforma¸c˜ao
+em R2 denominada Transla¸c˜ao, deﬁnida por T (x, y) = (x + a, y + b). A transla¸c˜ao trans-
+
+forma toda ﬁgura F numa ﬁgura T (F ) = {(x + a, y + b) | (x, y) ∈ F }. Um sistema de
+
+eixos ortogonais Ox e Oy ´e transformado no sistema Ox1 e Oy1, cujos eixos s˜ao paralelos
+
+a Ox e Oy preservando tamb´em os sentidos.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+51
+
+numeric u; u:=1cm;
+path eixox, eixoy, eixor, eixos;
+eixox:=(-2u, 0)--(3u,0);
+eixoy:=(0,-2u)--(0,3u);
+drawarrow eixox; drawarrow eixoy;
+transform T;
+T:= identity shifted (u, 2u);
+eixor:= eixox transformed T;
+eixos:= eixoy transformed T;
+drawarrow eixor dashed evenly;
+drawarrow eixos dashed evenly;
+
+y1
+
+y
+
+(1, 2)
+
+x1
+
+x
+
+Figura 3.5: Eixos transladados
+
+Exemplo 4 Considere um triˆangulo de v´ertices A = (0, 0), B = (3, 5) e C = (4, 1)
+
+e T (x, y) = (x + 2, y − 2). Aplicando T em ABC, obt´em-se o triˆangulo de v´ertices
+
+D = (2, −2), E = (5, 3) e F = (6, −1). No METAPOST essa transforma¸c˜ao ´e feita com o
+
+comando shifted (2,-2).
+
+numeric u; u:=1cm;
+pair A, B, C, D, E, F;
+path ABC, DEF;
+transform T;
+T:= identity shifted (2u,-2u);
+A:=(0,0); B:=(3u,5u); C:=(4u,u);
+ABC:= A--B--C--cycle;
+DEF:= ABC transformed T;
+draw ABC; draw DEF withcolor red;
+
+A
+
+B
+
+E
+
+C
+
+F
+
+Figura 3.6: Triˆangulo ABC transladado
+
+D
+
+A partir de transforma¸c˜oes dadas pode-se fazer composi¸c˜oes destas transforma¸c˜oes,
+
+como mostra a Figura 3.7. Quando esse recurso for utilizado, ´e preciso se atentar `a
+
+ordem em que as transforma¸c˜oes s˜ao compostas. Dependendo da posi¸c˜ao em que elas s˜ao
+
+dispostas na linha de comando, pode ser que o resultado n˜ao seja o esperado.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+52
+
+F
+
+u:=2cm;
+pair A, B, C, D, E, F;
+path ABC, DEF; transform T;
+T:= identity rotated -45 shifted (0,2);
+A:=origin; B:=(1,1); C:=(-1,2);
+ABC:=A--B--C--cycle;
+DEF:=ABC transformed T;
+draw ABC scaled u;
+draw DEF scaled u withcolor red;
+
+C
+
+D
+
+E
+
+B
+
+Figura 3.7: Triˆangulo ABC rotacionado e transladado
+
+A
+
+Nas se¸c˜oes a seguir, ser˜ao apresentadas algumas aplica¸c˜oes de transforma¸c˜oes para o
+
+tra¸cado de c´ırculos e elipses com o METAPOST. Para isso, vale a pena retomar alguns
+
+conceitos e resultados da Geometria Anal´ıtica, encontrados em [5]. Como visto na Se¸c˜ao
+
+1.4, o comando fullcircle desenha um c´ırculo de raio unit´ario centrado na origem. Esse
+
+comando e algumas das transforma¸c˜oes citadas nessa se¸c˜ao ser˜ao ´uteis para criar c´ırculos
+
+e elipses no METAPOST.
+
+3.2 C´ırculos
+
+Deﬁni¸c˜ao 16 O c´ırculo C de centro no ponto A ∈ π e raio r > 0 ´e o conjunto dos pontos
+
+do plano π situados `a distˆancia r do ponto A, ou seja:
+
+C = {P ∈ π | d (P, A) = r} .
+
+Considerando um sistema de coordenadas ortogonal OXY do plano π, suponha que o
+
+centro A do c´ırculo esteja sobre o ponto (a, b). Segue que
+
+P = (x, y) ∈ C ⇔ d (P, A) = r ⇔ d(P, A)2 = r2 ⇔ (x − a)2 + (y − b)2 = r2.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+53
+
+Com isso, a equa¸c˜ao do c´ırculo com centro em (a, b) e raio r ´e dada por
+
+(x − a)2 + (y − b)2 = r2.
+
+Y
+
+y
+
+b
+
+O
+
+P
+
+r
+
+A
+
+C
+
+a
+
+x
+
+X
+
+Figura 3.8: C´ırculo C de centro A e raio O
+
+O comando utilizado para representar um c´ırculo com o METAPOST ´e o fullcircle,
+
+comentado na Se¸c˜ao 1.4. Se o objetivo for tra¸car um c´ırculo de raio r, centrado em
+
+(a, b) em um plano cartesiano como o comentado na Se¸c˜ao 1.3, basta utilizar aplicar a
+
+transforma¸c˜ao
+
+T:=identity scaled 2r shifted (a,b);
+
+a um caminho deﬁnido por fullcircle. Isso acontece porque o comando fullcircle
+
+gera um c´ırculo de diˆametro unit´ario, ou seja, de raio
+
+1
+2
+
+. Os pontos desse c´ırculo, por sua
+
+vez, satisfazem a equa¸c˜ao
+
+x2 + y2 =
+
+(cid:19)2
+
+(cid:18) 1
+2
+
+(3.1)
+
+A primeira transforma¸c˜ao, scaled 2r, multiplica as duas coordenadas, x e y, pelo
+
+fator 2r. Assim, os pontos (x, y) s˜ao transformados em pontos (x(cid:48), y(cid:48)) tais que
+
+(x(cid:48), y(cid:48)) = (2r · x, 2r · y) ⇒
+
+
+
+
+
+x =
+
+y =
+
+x(cid:48)
+
+2r
+y(cid:48)
+
+2r
+
+(3.2)
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+54
+
+Substituindo os valores da Equa¸c˜ao 3.2 na Equa¸c˜ao 3.1, segue que
+
+
+
+
+
+x(cid:48)
+
+2r
+
+2
+
+
+
+
+
+
+
++
+
+
+
+y(cid:48)
+
+2r
+
+2
+
+
+
+
+
+
+
+=
+
+
+
+2
+
+
+1
+
+2
+
+(x(cid:48))2
+4r2 +
+
+(y(cid:48))2
+4r2 =
+
+1
+
+4
+
+⇒
+
+⇒ (x(cid:48))2 + (y(cid:48))2 = r2
+
+(3.3)
+
+que ´e a equa¸c˜ao de um c´ırculo centrado na origem com raio r.
+
+A segunda transforma¸c˜ao, shifted (a,b), soma a primeira coordenada com a e a
+
+segunda com b. Desta maneira, os pontos (x(cid:48), y(cid:48)) s˜ao transformados em pontos (x(cid:48)(cid:48), y(cid:48)(cid:48))
+
+de forma que
+
+(x(cid:48)(cid:48), y(cid:48)(cid:48)) = (x(cid:48) + a, y(cid:48) + b) ⇒
+
+
+
+
+
+
+x(cid:48) = x(cid:48)(cid:48) − a
+
+y(cid:48) = y(cid:48)(cid:48) − b
+
+(3.4)
+
+Substituindo os valores da Equa¸c˜ao 3.4 na Equa¸c˜ao 3.3, segue que o resultado ﬁnal
+
+ser´a os pontos (x(cid:48)(cid:48), y(cid:48)(cid:48)) tais que
+
+(x(cid:48)(cid:48) − a)2 + (y(cid:48)(cid:48) − b)2 = r2
+
+que ´e a equa¸c˜ao do c´ırculo esperado, de raio r e centro (a, b).
+
+Exemplo 5 Tra¸car um c´ırculo num plano cartesiano com raio 2 e centro em (3, 1).
+
+path C; pair c; transform T;
+u:=1cm; r:= 2u; c:=(3u,u);
+T:= identity scaled 2r shifted c;
+C:= fullcircle transformed T;
+draw C withpen pencircle scaled 1bp;
+
+Y
+
+1
+
+O
+
+2
+
+3
+
+X
+
+Figura 3.9: C´ırculo com raio 2 e centro em (3, 1).
+
+3.3 Elipses
+
+Na Figura 3.1, do in´ıcio deste cap´ıtulo, foi aplicada uma compress˜ao vertical em um
+
+c´ırculo, resultando numa elipse. Agora ser´a mostrado como a Geometria Anal´ıtica com-
+
+prova que, de fato, as elipses no plano s˜ao resultados de transforma¸c˜oes do c´ırculo. Conse-
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+55
+
+quentemente, ser´a poss´ıvel tra¸car quaisquer elipses utilizando-se apenas de transforma¸c˜oes
+
+no comando fullcircle.
+
+Deﬁni¸c˜ao 17 Uma elipse E de focos F1 e F2 ´e o conjunto dos pontos P do plano cuja
+
+soma das distˆancias a F1 e F2 ´e igual a uma constante 2a > 0, maior do que a distˆancia
+
+entre os focos 2c ≥ 0. Ou seja, sendo 0 ≤ c < a e d (F1, F2) = 2c,
+
+E = {P | d (P, F1) + d (P, F2) = 2a} .
+
+A reta que cont´em os dois focos, F1 e F2, da elipse ´e chamada reta focal. O centro da
+
+elipse ´e o ponto m´edio do segmento F1F2. O eixo focal ´e o segmento cujas extremidades
+
+s˜ao os dois pontos de intersec¸c˜ao da reta focal com a elipse. A reta n˜ao focal ´e a reta
+
+perpendicular `a reta focal que passa pelo centro da elipse. O eixo n˜ao focal ´e o segmento
+
+com extremidades nas intersec¸c˜oes da reta n˜ao focal com a elipse.
+
+Para determinar uma equa¸c˜ao que satisfa¸ca qualquer ponto P = (x, y) ∈ E, considere
+
+um sistema de coordenadas ortogonal OXY , onde a origem, O, est´a no centro da elipse e
+
+os eixos focal e n˜ao focal sejam, respectivamente, o eixo OX e OY . Considere os n´umeros
+
+reais a, b e c conforme a Figura 3.10.
+
+−c
+
+F1
+
+−a
+
+Y
+
+y
+
+b
+
+O
+
+E
+
+−b
+
+P
+
+x
+
+c
+
+F2
+
+a
+
+X
+
+Figura 3.10: Elipse E de centro O e focos F1 e F2 e eixo focal 2a
+
+Primeiramente, observe que F1 = (−c, 0) e F2 = (c, 0). Isso posto, seja B1 = (0, b).
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+56
+
+Note que, como B1 ∈ E, ´e poss´ıvel aﬁrmar que
+
+B1 = (0, b) ∈ E ⇔ d (B1, F1) + d (B1, F2) = 2a
+(cid:113)
+
+(cid:113)
+
+(0 − c)2 + (b − 0)2 = 2a
+
+⇔
+
+⇔
+
+(0 + c)2 + (b − 0)2 +
+√
+
+√
+
+c2 + b2 = 2a
+
+c2 + b2 +
+√
+
+⇔ 2
+
+c2 + b2 = 2a
+
+⇔ c2 + b2 = a2
+
+(3.5)
+
+A Equa¸c˜ao 3.5 revela que o segmento B1F1 possui a medida a. De fato, isso faz sentido,
+
+pois como os triˆangulos OF1B1 e OF2B1 s˜ao congruentes pelo caso LAL, F1B1 e F2B1
+
+possuem a mesma medida. Como a soma de suas medidas deve ser igual a 2a, cada um
+
+deve medir a. Tendo isso em mente, tome um ponto P ∈ E e seja P = (x, y). Segue que
+
+P = (x, y) ∈ E ⇔ d (P, F1) + d (P, F2) = 2a
+(cid:113)
+
+(cid:113)
+
+(x + c)2 + y2 +
+
+(x − c)2 + y2 = 2a
+
+(cid:113)
+
+(x + c)2 + y2 = 2a −
+
+(cid:113)
+
+(x − c)2 + y2
+(cid:113)
+
+⇔
+
+⇔
+
+⇔ (x + c)2 + y2 = 4a2 − 4a
+
+(x − c)2 + y2 + (x − c)2 + y2
+
+⇔ x2 + 2cx + c2 = 4a2 − 4a
+
+(cid:113)
+
+(x − c)2 + y2 + x2 − 2cx + c2
+
+⇔ 4cx = 4a2 − 4a
+
+(cid:113)
+
+(x − c)2 + y2
+
+(cid:113)
+
+(x − c)2 + y2 = a2 − cx
+
+⇔ a
+⇔ a2 (cid:0)(x − c)2 + y2(cid:1) = (cid:0)a2 − cx(cid:1)2
+⇔ a2 (cid:0)x2 − 2cx + c2 + y2(cid:1) = a4 − 2a2cx + c2x2
+⇔ x2 (cid:0)a2 − c2(cid:1) + a2y2 = a4 − a2c2
+⇔ x2 (cid:0)a2 − c2(cid:1) + a2y2 = a2 (cid:0)a2 − c2(cid:1)
+
+⇔ b2x2 + a2y2 = a2b2
+
+⇔
+
+x2
+a2 +
+
+y2
+b2 = 1
+
+(3.6)
+
+(3.7)
+
+(3.8)
+
+(3.9)
+
+(3.10)
+
+Quase todas as equivalˆencias s˜ao imediatas. Por´em, ´e preciso provar ainda que 3.7 ⇒
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+57
+
+3.6 e que 3.9 ⇒ 3.8. Para a segunda implica¸c˜ao, ´e preciso garantir que
+
+a2 − cx ≥ 0
+
+quando
+
+x2
+a2 +
+
+y2
+b2 = 1. Sendo assim, levando em considera¸c˜ao que 0 ≤ c < a, tem-se
+
+x2
+a2 ≤
+
+x2
+a2 +
+
+y2
+b2 = 1 ⇒
+
+x2
+a2 ≤ 1 ⇒ x2 ≤ a2 ⇒ |x| ≤ a ⇒ −a ≤ x ≤ a
+
+⇒ a2 − cx ≥ a2 − ca > a2 − a2
+
+⇒ a2 − cx > 0
+
+Para mostrar que 3.7 ⇒ 3.6 ´e preciso veriﬁcar que
+
+(cid:113)
+
+(x − c)2 + y2 ≥ 0
+
+2a −
+
+quando
+
+x2
+a2 +
+
+y2
+b2 = 1. Ent˜ao, lembrando que 0 ≤ c < a e a2 = b2 + c2, tem-se
+
+y2
+b2 ≤
+
+x2
+a2 +
+
+y2
+b2 = 1 ⇒
+
+y2
+b2 ≤ 1 ⇒ y2 ≤ b2 ⇒ y2 − b2 ≤ 0
+
+⇒ (x − c)2 + y2 = x2 − 2cx + c2 + y2 ≤ a2 + 2a2 + a2 − b2 + y2 ≤ 4a2
+
+(cid:113)
+
+(x + c)2 + y2 ≤
+
+√
+
+4a2
+
+⇒
+
+⇒ 2a −
+
+(cid:113)
+
+(x + c)2 + y2 ≥ 0
+
+Com todas as equivalˆencias e implica¸c˜oes demonstradas, conclui-se que a Equa¸c˜ao
+
+3.10 ´e a forma canˆonica da elipse de centro na origem e reta focal coincidente com o eixo
+
+OX. Esse ser´a o ´unico caso considerado aqui porque o foco ´e tra¸car uma elipse com o
+
+METAPOST. Os outros casos de elipses, como a com eixo focal coincidente ao eixo OY ,
+
+elipses com centro fora da origem ou, ainda, elipses rotacionadas s˜ao todos resultados de
+
+transforma¸c˜oes nos pontos da elipse. Saber tra¸car uma elipse com centro na origem e eixo
+
+focal coincidente ao eixo OX ´e suﬁciente para tra¸car os outros casos.
+
+Com o METAPOST a transforma¸c˜ao T:=identity xscaled 2a yscaled 2b ´e suﬁci-
+
+ente para transformar o caminho fullcircle em uma elipse com as caracter´ısticas des-
+
+critas at´e ent˜ao. Isso acontece porque, como citado, fullcircle gera o c´ırculo descrito
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+por
+
+x2 + y2 =
+
+(cid:19)2
+
+.
+
+(cid:18) 1
+2
+
+58
+
+(3.11)
+
+Depois disso, a primeira transforma¸c˜ao, xscaled 2a, mant´em as coordenadas y com o
+
+mesmo valor e multiplica as coordenadas x por 2a. Assim, os pontos (x, y) de fullcircle
+
+s˜ao transformados em pontos (x(cid:48), y(cid:48)) tais que
+
+(x(cid:48), y(cid:48)) = (2a · x, y) ⇒
+
+
+
+
+
+
+x(cid:48)
+
+x =
+
+2a
+y = y(cid:48)
+
+Ao substituir os valores de x e y de 3.12 na Equa¸c˜ao 3.11, tem-se
+
+(cid:19)2
+
+(cid:18) x(cid:48)
+2a
+
++ (y(cid:48))2 =
+
+(cid:19)2
+
+.
+
+(cid:18) 1
+2
+
+(3.12)
+
+(3.13)
+
+A segunda transforma¸c˜ao, yscaled 2b, multiplica as ordenadas dos pontos por 2b e
+
+mant´em as abscissas com os mesmos valores. Logo, cada ponto (x(cid:48), y(cid:48)) ´e transformado em
+
+(x(cid:48)(cid:48), y(cid:48)(cid:48)), tal que
+
+(x(cid:48)(cid:48), y(cid:48)(cid:48)) = (x(cid:48), 2b · y(cid:48)) ⇒
+
+
+
+
+
+
+x(cid:48) = x(cid:48)(cid:48)
+y(cid:48)(cid:48)
+2b
+
+y(cid:48) =
+
+(3.14)
+
+Fazendo a substitui¸c˜ao de 3.14 na Equa¸c˜ao 3.13, o caminho ﬁnal da transforma¸c˜ao ser´a
+
+dado pela equa¸c˜ao
+
+(cid:19)2
+
+(cid:18) x(cid:48)(cid:48)
+2a
+
++
+
+(cid:18) y(cid:48)(cid:48)
+2b
+
+(cid:19)2
+
+(cid:19)2
+
+=
+
+(cid:18)1
+2
+
+⇒
+
+(x(cid:48)(cid:48))2
+a2 +
+
+(y(cid:48)(cid:48))2
+b2 = 1
+
+que ´e, justamente, a equa¸c˜ao da elipse de centro na origem, reta focal coincidente com o
+
+eixo OX, eixo focal com medida igual a 2a e eixo n˜ao focal com medida igual a 2b.
+
+Exemplo 6 Tra¸car a elipse com focos F1 = (1, 2) e F2 = (3, 1) que passa por P = (3, 2).
+
+Note que essa elipse n˜ao possui o centro na origem e tamb´em est´a rotacionada.
+
+Ent˜ao, al´em de utilizar as transforma¸c˜oes xscaled 2a yscaled 2b para transformar o
+
+fullcircle na elipse, ser´a necess´ario rotacionar e translad´a-la. A medida a pode ser
+calculada implicitamente pelo METAPOST com a linha de comando
+
+2a=abs(F1-P)+abs(F2-P);
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+59
+
+enquanto c e b s˜ao calculados explicitamente por
+
+c=abs(F1-C); b=a+-+c;.
+
+O ˆangulo theta que ´e preciso rotacionar este caminho ´e o do vetor formado pelos
+
+focos, ou seja,
+
+theta:=angle(F2-F1);.
+
+Assim, o c´odigo e o resultado ﬁnal dessas transforma¸c˜oes s˜ao os mostrados na Figura 3.11.
+
+path E; pair F[], P, C; transform T;
+numeric a, b, c, theta;
+F1:=(u,2u); F2:=(3u,u); P:=(3u,2u);
+C=0.5[F1,F2];
+2a=abs(F1-P)+abs(F2-P);
+c=abs(F1-C); b=a+-+c;
+theta:=angle(F2-F1);
+T:= identity xscaled 2a yscaled 2b
+rotated theta shifted C;
+E:= fullcircle transformed T;
+draw E withpen pencircle scaled 1bp;
+
+Y
+
+2
+
+1
+
+O
+
+F1
+
+P
+
+F2
+
+1
+
+3
+
+X
+
+Figura 3.11: Elipse com focos F1 = (1, 2) e F2 = (3, 1) que passa por P = (3, 2).
+
+3.4 Problemas cl´assicos
+
+Utilizando os conceitos de c´ırculos, elipses e transforma¸c˜oes vistos at´e ent˜ao, ´e poss´ıvel
+
+esbo¸car a solu¸c˜ao de alguns problemas interessantes da Geometria. Esta se¸c˜ao trata de
+
+dois deles.
+
+3.4.1 C´ırculo dos nove pontos
+
+Em 1821, os matem´aticos franceses Poncelet e Brianchon [4] demonstraram que existe,
+
+em qualquer triˆangulo, um c´ırculo que passa pelos trˆes pontos m´edios dos lados, pelos
+
+trˆes p´es das alturas e pelos trˆes pontos m´edios dos segmentos com uma extemidade nos
+
+v´ertices do triˆangulo e outra no ortocentro do mesmo. Esse c´ırculo ´e conhecido como
+
+c´ırculo dos nove pontos.
+
+Exemplo 7 (C´ırculo dos nove pontos) Tra¸car o c´ırculo dos nove pontos de um
+
+triˆangulo com v´ertices A = (0, 1), B = (5, 1) e C = (1, 10).
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+60
+
+O esbo¸co desse desenho, bem como o c´odigo utilizado no METAPOST encontra-se na
+
+Figura 3.12. Para determinar os pontos, primeiramente, foram declaradas as vari´aveis a
+
+serem utilizadas. Ser˜ao necess´arios trˆes pontos para o v´ertice (A,B,C), os nove pontos do
+
+c´ırculo (D,E,F,G,H,I,J,K,L), um ponto para o centro do c´ırculo (O) e um ponto para o
+
+ortocentro (X). Tamb´em foi deﬁnida a unidade de medida como sendo u=1cm.
+
+Declaradas as vari´aveis, o pr´oximo passo ´e deﬁnir as coordenadas de cada ponto, seja
+
+de forma expl´ıcita ou por meio de equa¸c˜oes lineares. Os pontos dos v´ertices do triˆangulo
+
+podem ser dados de forma expl´ıcita, com os comandos
+
+A=(0,u); B=(5u,u); C=(u,10u);.
+
+Escrever todos os outros pontos em fun¸c˜ao desses faz com que o c´odigo possa ser utilizado
+
+para qualquer outro triˆangulo, alterando-se apenas as coordenadas do v´ertice.
+
+Os seis primeiros pontos do c´ırculo s˜ao os trˆes pontos m´edios dos lados e os trˆes p´es das
+
+alturas. Os comandos e equa¸c˜oes utilizadas para este ﬁm foram explanadas na Se¸c˜ao 2.2.
+
+Os outros trˆes pontos, os pontos m´edios dos segmentos com uma extemidade nos v´ertices
+
+do triˆangulo e outra no ortocentro, precisam das coordenadas do ponto X, ortocentro do
+
+triˆangulo. Esse comando j´a foi discutido tamb´em na Subse¸c˜ao 2.2.3. As coordenadas dos
+
+´ultimos trˆes pontos ser˜ao calculadas pelos comandos
+
+J=.5[A,X]; K=.5[B,X]; L=.5[C,X];.
+
+Com as coordenadas de todos os pontos do c´ırculo determinadas, falta determinar as
+
+coordenadas do centro do c´ırculo. Poncelet e Brianchon [4] provaram que esse c´ırculo
+
+existe pois existe um ponto que equidista desses nove pontos. Escolhendo-se dois pares
+
+desses pontos, basta determinar as coordenadas da intersec¸c˜ao entre suas mediatrizes. Na
+
+Figura 3.12, foram utilizados os pontos D e I e os pontos G e K para esse c´alculo. A linha
+
+de comandos
+
+(O-0.5(D+I)) dotprod (D-I) = (O-0.5(G+K)) dotprod (G-K) = 0;
+
+determina que O ´e um ponto tanto da mediatriz do segmento DI quanto do segmento GK.
+
+Todos as vari´aveis de pares est˜ao deﬁnidas. Agora basta desenhar o triˆangulo e o
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+61
+
+c´ırculo com comandos draw. O triˆangulo ´e simples, basta escrever
+
+draw A--B--C--cycle;.
+
+Para tra¸car o c´ırculo, ´e s´o usar a sequˆencia de transforma¸c˜oes no comando fullcircle
+
+citadas anteriormente. Por´em, ´e preciso determinar a medida do raio do c´ırculo. Como
+
+o centro equidista dos nove pontos, o raio dele pode ser calculado por abs(O-D), por
+
+exemplo. Assim, a linha de comandos
+
+draw fullcircle scaled (2*abs(O-D)) shifted O;
+
+desenhar´a o c´ırculo desejado. No c´odigo mostrado na Figura 3.12, os comandos de r´otulo
+
+foram omitidos.
+
+C
+
+numeric u; u=1cm;
+pair A,B,C,D,E,F,G,H,I,J,K,L,O,X;
+A=(0,u); B=(5u,u); C=(u,10u);
+D=.5[A,B]; E=.5[B,C]; F=.5[A,C];
+G=whatever[C,B];
+H=whatever[A,C];
+I=whatever[B,A];
+(A-G) dotprod (B-C) =
+(B-H) dotprod (C-A) =
+(C-I) dotprod (A-B) = 0;
+X = whatever[A,G] = whatever[B,H];
+J=.5[A,X]; K=.5[B,X]; L=.5[C,X];
+(O-0.5(D+I)) dotprod (D-I) =
+(O-0.5(G+K)) dotprod (G-K) = 0;
+draw A--B--C--cycle;
+draw fullcircle
+scaled (2*abs(O-D)) shifted O;
+
+L
+
+F
+
+E
+
+O
+
+G
+
+H
+
+A
+
+J
+
+I
+
+K
+
+D
+
+B
+
+Figura 3.12: C´ırculo dos 9 pontos
+
+A Figura 3.13 mostra como ´e poss´ıvel tra¸car o c´ırculo dos nove pontos com esse
+
+c´odigo apenas por alterar as coordenadas dos v´ertices do triˆangulo para os trˆes tipos
+
+de triˆangulos (obtusˆangulo, retˆangulo e acutˆangulo). Note, na Figura 3.13(b), que no
+
+Triˆangulo Retˆangulo v´arios pontos s˜ao coincidentes.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+62
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+•
+
+•••
+
+•
+
+•
+
+•
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+(a) Triˆangulo obtusˆangulo
+
+(b) Triˆangulo retˆangulo
+
+(c) Triˆangulo acutˆangulo
+
+Figura 3.13: C´ırculo dos nove pontos nos trˆes tipos de triˆangulos.
+
+3.4.2 Elipses inscritas no triˆangulo
+
+Alves [1] mostrou que existem inﬁnitas elipses inscritas em um triˆangulo qualquer.
+
+Na verdade, dado um ponto interior a um triˆangulo, sempre ´e poss´ıvel tra¸car uma elipse
+
+inscrita a esse triˆangulo com um dos focos neste ponto. Dados um triˆangulo ABC e um
+
+ponto interno F , a constru¸c˜ao dessa elipse ´e descrita da seguinte forma:
+
+1. Obtenha os pontos sim´etricos G1, G2 e G3 do foco F em rela¸c˜ao `as retas que cont´em
+
+os lados do triˆangulo ABC.
+
+2. Marque o centro F (cid:48) do c´ırculo que passa por G1, G2 e G3. Este ser´a o outro foco
+
+da elipse.
+
+3. Marque os pontos P1, P2 e P3 na intersec¸c˜ao dos lados do triˆangulo com os segmentos
+
+que possuem uma extremidade em F (cid:48) e a outra em G1, G2 e G3.
+
+4. Trace a elipse que possui focos em F e F (cid:48) e passa pelo ponto P1. Essa elipse ´e
+
+inscrita ao triˆangulo ABC e os pontos de tangˆencia s˜ao P1, P2 e P3.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+63
+
+G3
+
+P3
+
+F (cid:48)
+
+C
+
+P1
+
+G1
+
+F
+
+A
+
+G2
+
+P2
+
+B
+
+Figura 3.14: Constru¸c˜ao da elipse inscrita no triˆangulo ABC com um foco em F .
+
+Exemplo 8 Construa a elipse inscrita no triˆangulo de v´ertices A = (−1, −3), B = (3, 0)
+
+e C = (1, 7) que tem como um dos focos o ponto F = (1, −1).
+
+numeric u,a,b,c,theta; transform T;
+pair A,B,C,F[],G[],O,P[]; path E;
+u=1cm; A=(-u,-3u); B=(3u,0); C=(u,7u);
+draw A--B--C--cycle;
+F1=(u,-u); F3=whatever[A,C];
+F4=whatever[A,B]; F5=whatever[C,B];
+(F3-F1) dotprod (A-C)=
+(F4-F1) dotprod (A-B)=
+(F5-F1) dotprod (C-B)=0;
+G1 = F1 rotatedaround (F3,180);
+G2 = F1 rotatedaround (F4,180);
+G3 = F1 rotatedaround (F5,180);
+(F2-0.5(G2+G3)) dotprod (G2-G3) =
+(F2-0.5(G1+G2)) dotprod (G1-G2) = 0;
+P1=whatever[A,C]=whatever[F2,G1];
+O=0.5[F1,F2];
+2a=abs(F1-P1)+ abs(F2--P1);
+c=abs(F1--O); b=a+-+c;
+theta=angle(F2-F1);
+T:= identity xscaled 2a yscaled 2b
+rotated theta shifted O;
+E:= fullcircle transformed T; draw E;
+
+C
+
+B
+
+F
+
+Figura 3.15: Elipse inscrita no triˆangulo ABC com focos F e F (cid:48)
+
+A
+
+O c´odigo e a ﬁgura desse exemplo est˜ao na Figura 3.15. Note que foram deﬁnidas as
+
+vari´aveis num´ericas e a de pares primeiro. Os pares A, B e C s˜ao os v´ertices do triˆangulo.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+64
+
+Os da fam´ılia F[] s˜ao os dois focos e os p´es das perpendiculares baixada a partir de F
+
+sobre os lados do triˆangulo ABC. Os da fam´ılia G[] s˜ao os sim´etricos do foco F em
+
+rela¸c˜ao aos lados do triˆangulo. Por ´ultimo, O refere-se ao centro da elipse e a fam´ılia P[]
+
+aos pontos de tangˆencia dela com o triˆangulo.
+
+Deﬁnidos os v´ertices e as coordenadas do ponto interno F1 que ser´a um dos focos da
+
+elipse, ´e preciso determinar os pontos F3, F4 e F5 que ser˜ao, respectivamente, os p´es das
+
+perpendiculares baixadas por F sobre os lados AC, BA e CB. Feito isso, determinar os
+
+sim´etricos de F em rela¸c˜ao a cada lado ´e f´acil de fazer com uma transforma¸c˜ao dispon´ıvel
+
+no METAPOST, a rotatedaround. A linha de comandos
+
+G1 = F1 rotatedaround (F3,180);
+
+determina que o par G1 ´e F1 rotacionado 180◦ em torno do ponto F3. Ou seja, G1 ´e,
+
+justamente, o sim´etrico de F em rela¸c˜ao ao lado AC.
+
+Com as coordenadas dos pontos G1, G2 e G3 calculadas, os outros comandos utilizados
+
+para fazer os pr´oximos passos da constru¸c˜ao j´a foram discutidos anteriormente. Determi-
+
+nado o outro foco F2 e um ponto P1 que ser´a o ponto de tangˆencia do lado AC com a
+
+elipse, basta utilizar a transforma¸c˜ao utilizada no Exemplo 6.
+
+A Figura 3.16 mostra o triˆangulo com v´ertices em A = (0, 0), B = (4, 1) e C = (1, 5)
+
+e o ponto F em trˆes posi¸c˜oes diferentes. A diferen¸ca entre os c´odigos de uma imagem
+
+para outra ´e a simples mudan¸ca das coordenadas do foco F e, obviamente, a posi¸c˜ao dos
+
+r´otulos.
+
+C
+
+C
+
+C
+
+P1
+
+F
+
+P3
+
+F (cid:48)
+
+P2
+
+A
+
+(a) F =
+
+(cid:32)
+
+(cid:33)
+
+3
+, 2
+2
+
+P3
+
+F
+
+P1
+
+F (cid:48)
+
+P3
+
+P1
+
+B
+
+F (cid:48)
+
+P2
+
+A
+
+B
+
+A
+
+F
+
+P2
+
+B
+
+(b) F = (2, 3)
+
+(c) F = (3, 1)
+
+Figura 3.16: Triˆangulos ABC e a elipse inscrita com focos em diversos pontos.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+65
+
+Exemplo 9 Tra¸car, com o METAPOST, a elipse inscrita de Steiner de um triˆangulo
+
+retˆangulo is´osceles.
+
+Dado um triˆangulo qualquer, o Teorema de Steiner garante a existˆencia de uma ´unica
+
+elipse inscrita que tangencia os lados do triˆangulo nos seus pontos m´edios. A elipse com
+
+essas caracter´ısticas ´e chamada de Elipse Inscrita de Steiner e seu centro ´e o baricentro
+
+do triˆangulo. Este Teorema foi tema da disserta¸c˜ao de Nascimento [19].
+
+Considere o plano R2 como o conjunto C dos n´umeros complexos, identiﬁcando (x, y) ∈
+R2 com o n´umero complexo z = x + yi. Suponha que os n´umeros complexos z1, z2 e z3
+
+sejam os v´ertices de um triˆangulo. Segundo Minda e Phelps [16], os focos da elipse inscrita
+
+de Steiner s˜ao as ra´ızes da derivada do polinˆomio de coeﬁcientes complexos e grau trˆes,
+
+p(z) = (z − z1)(z − z2)(z − z3).
+
+Como provado por Aniz e Nascimento [2], considerando o caso particular de um
+
+triˆangulo retˆangulo is´osceles, as coordenadas dos focos da Elipse de Steiner s˜ao obtidas
+
+explicitamente como
+
+(cid:32)√
+
+2d
+3
+
+(cid:33)
+
+,
+
+d
+3
+
+F1 =
+
+(cid:32)
+
+e F2 =
+
+−
+
+√
+
+2d
+3
+
+(cid:33)
+
+,
+
+,
+
+d
+3
+
+onde o sistema de eixos foi escolhido de forma que os v´ertices do triˆangulo sejam
+
+z1 = (0, d) = di, z2 = (−d, 0) = −d, z3 = (d, 0) = d.
+
+Neste caso, com os focos conhecidos e sabendo que ela passar´a pelo ponto (0, 0), ponto
+m´edio dos pontos z2 e z3, a elipse pode ser desenhada com o METAPOST, conforme
+
+mostrado na Figura 3.17.
+
+CAP´ITULO 3. TRANFORMAC¸ ˜OES
+
+66
+
+pair A,B,C,F[],P,M[],M,G;
+numeric u,a,b,c,d; path E;
+transform T;
+u=1.5cm; d=3u;
+A:=(0,d); B:=(-d,0);
+C:=(d,0);
+draw A--B--C--cycle;
+F1=(((sqrt 2)*d)/3, d/3);
+F2=((-(sqrt 2)*d)/3, d/3);
+P:=(0,0); M:=0.5[F1,F2];
+2a=abs(F1-P)+abs(F2-P);
+c=abs(F1-M); b=a+-+c;
+T:= identity xscaled 2a
+yscaled 2b shifted M;
+E:= fullcircle
+transformed T;
+draw E withpen
+pencircle scaled 1bp;
+M1=(A+B)/2; M2=(A+C)/2;
+M3=(B+C)/2; G=(A+B+C)/3;
+draw F1--F2 withcolor red;
+draw A--M3 dashed evenly;
+draw B--M2 dashed evenly;
+draw C--M1 dashed evenly;
+
+A
+
+M1
+
+M2
+
+F2
+
+G
+
+F1
+
+B
+
+M3
+
+C
+
+Figura 3.17: Elipse inscrita de Steiner num triˆangulo retˆangulo is´osceles ABC
+
+Cap´ıtulo 4
+
+Fun¸c˜oes Reais
+
+Neste cap´ıtulo ser´a discutida a elabora¸c˜ao de gr´aﬁcos de fun¸c˜oes cont´ınuas deﬁnidas
+
+em intervalos da reta.
+
+Inicialmente ´e feito um resumo com algumas proposi¸c˜oes sobre
+
+fun¸c˜oes cont´ınuas. Em seguida, s˜ao apresentadas algumas t´ecnicas do METAPOST para
+
+esbo¸car gr´aﬁcos de fun¸c˜oes.
+
+Deﬁni¸c˜ao 18 Uma fun¸c˜ao real f ´e uma terna
+
+(A, B, a (cid:55)→ b)
+
+onde A e B s˜ao dois subconjuntos n˜ao vazios de R e a (cid:55)→ b ´e uma regra que associa a
+
+cada elemento de a ∈ A um ´unico elemento b ∈ B. O ´unico b ∈ B associado ao elemento
+
+a ∈ A ´e indicado por f (a).
+
+Exemplo 10 Considere a fun¸c˜ao f : (0, +∞) → R, dada por f (x) =
+
+1
+x
+
+. Nessa fun¸c˜ao, o
+
+conjunto de partida, chamado de dom´ınio, ´e (0, +∞) e o conjunto de chegada, chamado
+
+de contradom´ınio, ´e R. Essa fun¸c˜ao associa cada elemento de (0, +∞) ao seu inverso
+
+multiplicativo
+
+1
+x
+
+. Os requisitos que deﬁnem uma fun¸c˜ao s˜ao satisfeitos nesse caso pois
+
+todos os elementos de (0, +∞) possuem um inverso e este ´e ´unico. Essa fun¸c˜ao pode ser
+
+denotada da seguinte maneira:
+
+f : (0, +∞) → R
+
+x (cid:55)→ f (x)
+
+Deﬁni¸c˜ao 19 Uma fun¸c˜ao f : X → R ´e cont´ınua em um ponto x0 ∈ X se dado ε > 0,
+
+67
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+68
+
+existe δ > 0 tal que
+
+x ∈ X, |x − x0| < δ ⇒ |f (x) − f (x0)| < ε.
+
+(4.1)
+
+A fun¸c˜ao f ´e dita cont´ınua se for cont´ınua em todo x0 ∈ X.
+
+Exemplo 11 Dados X, Y ⊂ R e um valor ﬁxo c ∈ Y , a fun¸c˜ao constante c de X em Y
+
+´e a fun¸c˜ao f : X → Y tal que f (x) = c para todo x ∈ X. Qualquer fun¸c˜ao constante ´e
+
+cont´ınua.
+
+Demonstra¸c˜ao: Sejam c ∈ Y um valor ﬁxo e f : X → Y a fun¸c˜ao constante
+
+dada por f (x) = c. Note que a segunda desigualdade de 4.1 ´e sempre verdadeira, pois
+
+|f (x) − f (x0)| = |c − c| = 0 < ε. Portanto, tomando qualquer δ, tem-se que, se x ∈ X,
+
+|x − x0| < δ ⇒ |f (x) − f (x0)| = |c − c| = 0 < ε.
+
+Exemplo 12 Uma fun¸c˜ao aﬁm ´e uma fun¸c˜ao f : R → R tal que f (x) = ax + b para todo
+
+x real, onde a e b s˜ao n´umeros reais dados, com a (cid:54)= 0. As fun¸c˜oes aﬁns s˜ao cont´ınuas.
+
+Demonstra¸c˜ao: Se f : R → R ´e uma fun¸c˜ao aﬁm, ent˜ao f (x) = ax+b, para a, b ∈ R
+
+n´umeros reais dados com a (cid:54)= 0. Fixado x0 ∈ R, se |x − x0| < δ, ent˜ao
+
+|f (x) − f (x0)| = |(ax + b) − (ax0 + b)| = |a| |x − x0| < |a| δ.
+
+Sendo assim, dado ε > 0, tomando 0 < δ < ε
+
+|a| , tem-se:
+
+|x − x0| < δ ⇒ |f (x) − f (x0)| = |a| |x − x0| < |a| δ < |a| ε
+
+|a| = ε.
+
+Portanto, a fun¸c˜ao aﬁm ´e cont´ınua.
+
+Exemplo 13 A fun¸c˜ao real dada por f (x) = |x| ´e cont´ınua.
+
+Demonstra¸c˜ao: Dado x0 ∈ R, se |x − x0| < δ, tem-se que
+
+|f (x) − f (x0)| = ||x| − |x0|| (cid:54) |x − x0| < δ.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+69
+
+Sendo assim, tomando 0 < δ (cid:54) ε, pelas desigualdades anteriores segue que
+
+|x − x0| < δ ⇒ |f (x) − f (x0)| < ε.
+
+Portanto, f ´e cont´ınua.
+
+Exemplo 14 As fun¸c˜oes f, g : R → R, deﬁnidas por f (x) = sen x e g(x) = cos x s˜ao
+
+cont´ınuas.
+
+Para demonstrar este resultado, ser´a necess´ario um resultado que ser´a enunciado e
+
+demonstrado a seguir.
+
+Lema 1 Para todo x ∈ R, a desigualdade |sen x| (cid:54) |x| ´e v´alida.
+
+Demonstra¸c˜ao:
+
+Inicialmente, ser´a mostrado que sen x (cid:54) x, para 0 (cid:54) x (cid:54) π
+2
+, considere
+
+x = 0, a desigualdade ´e ´obvia, pois sen 0 = 0 (cid:54) 0. Sendo assim, para 0 < x (cid:54) π
+2
+na Figura 4.1 o ponto P marcado no primeiro quadrante do ciclo trigonom´etrico de forma
+
+. Se
+
+(cid:95)
+que (cid:96) (AP
+
+) = x.
+
+B
+
+P
+
+x
+
+A
+
+O
+
+Q
+
+A(cid:48)
+
+B(cid:48)
+
+Figura 4.1: Ponto P no primeiro quadrante do ciclo trigonom´etrico
+
+Considerando o ponto Q, p´e da perpendicular baixada de P `a reta
+
+←→
+AA(cid:48), tem-se que
+
+sen x = P Q < (cid:96)
+
+(cid:17)
+
+(cid:16)←→
+AP
+
+= x.
+
+A fun¸c˜ao seno ´e ´ımpar, isto ´e, sen (−x) = − sen x. Assim, ´e imediato que |sen x| ≤ |x|
+
+para |x| ≤ π
+
+2 . Considerando agora o caso em que |x| > π
+
+2 , tem-se que
+
+|sen x| ≤ 1 <
+
+π
+2
+
+< |x| .
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+70
+
+Portanto, |sen x| (cid:54) |x| para todo x ∈ R.
+
+Agora ser´a demonstrado que as fun¸c˜oes f (x) = sen x e g(x) = cos x s˜ao cont´ınuas.
+Demonstra¸c˜ao: Seja x0 ∈ R um valor ﬁxo. Dado ε > 0, tome 0 < δ < ε e veja que,
+
+pelas f´ormulas de transforma¸c˜ao em produto, tem-se
+
+|cos x − cos x0| =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+−2 · sen
+
+(cid:19)
+
+(cid:18) x − x0
+2
+
+· sen
+
+(cid:18) x + x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+,
+
+donde obt´em-se
+
+|cos x − cos x0| = 2 ·
+
+|cos x − cos x0| ≤ 2 ·
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+sen
+
+sen
+
+(cid:18) x − x0
+2
+(cid:18) x − x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+·
+
+sen
+
+(cid:18) x + x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+≤ 2 ·
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+sen
+
+(cid:18)x − x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+Pelo Lema 1, ´e poss´ıvel concluir que
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+sen
+
+(cid:18) x − x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+≤
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+x − x0
+2
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+. Sendo assim,
+
+sen
+
+(cid:18) x − x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+≤ 2 ·
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+x − x0
+2
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+|cos x − cos x0| ≤ 2 ·
+
+|cos x − cos x0| ≤ 2 ·
+
+x − x0
+2
+|cos x − cos x0| ≤ |x − x0|
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+Dessa maneira, se |x − x0| < δ, segue que |cos x − cos x0| ≤ |x − x0| < δ < ε. Logo,
+
+a fun¸c˜ao cosseno ´e cont´ınua. Agora o mesmo ser´a feito para a fun¸c˜ao seno. Dado ε > 0,
+
+tome 0 < δ < ε e veja que, pelas f´ormulas de transforma¸c˜ao em produto e pelo Lema 1,
+
+tem-se
+
+|sen x − sen x0| =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+2 · cos
+
+|sen x − sen x0| = 2 ·
+
+|sen x − sen x0| ≤ 2 ·
+
+cos
+
+sen
+
+|sen x − sen x0| ≤ 2 ·
+
+x − x0
+2
+|sen x − sen x0| ≤ |x − x0|
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:18) x + x0
+2
+(cid:18) x + x0
+2
+(cid:18) x − x0
+2
+
+(cid:19)
+
+· sen
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+·
+
+sen
+
+≤ 2 ·
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:18) x − x0
+2
+(cid:18) x − x0
+2
+x − x0
+2
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+≤ 2 ·
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+sen
+
+(cid:18) x − x0
+2
+
+(cid:19)(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+Dessa forma, se |x − x0| < δ, segue que |sen x − sen x0| ≤ |x − x0| < δ < ε. Logo, a
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+71
+
+fun¸c˜ao seno ´e cont´ınua.
+
+Os resultados a seguir ter˜ao suas demonstra¸c˜oes omitidas deste trabalho mas podem
+
+ser conferidas em [17].
+
+Proposi¸c˜ao 5 Considere I um intervalo da reta. Se f, g : I → R s˜ao fun¸c˜oes cont´ınua,
+
+ent˜ao f ± g e f · g tamb´em s˜ao cont´ınuas em I.
+
+Proposi¸c˜ao 6 Considere I um intervalo da reta. Sejam f, g : I → R s˜ao fun¸c˜oes
+
+cont´ınuas. Se g n˜ao se anula em I, ent˜ao a fun¸c˜ao
+
+f
+g
+
+´e cont´ınua em I.
+
+Proposi¸c˜ao 7 Sejam I e J intervalos da reta. Se f : I → R e g : J → R, com
+
+f (I) = {f (x) | x ∈ I} ⊂ J, s˜ao fun¸c˜oes cont´ınuas, ent˜ao a fun¸c˜ao composta g ◦ f ,
+
+deﬁnida por (g ◦ f ) (x) = g(f (x)) ´e cont´ınua em I.
+
+Exemplo 15 A fun¸c˜ao f (x) = tg(x) =
+
+sen x
+cos x
+
+, deﬁnida nos intervalos onde a fun¸c˜ao tg x
+
+n˜ao se anula, ´e cont´ınua em cada um desses intervalos. De fato, f (x) = tg x ´e quociente
+
+de fun¸c˜oes cont´ınuas, portanto cont´ınua.
+
+Exemplo 16 Considere um n´umero natural n > 0. A fun¸c˜ao f : R → R, deﬁnida por
+
+f (x) = xn, denominada fun¸c˜ao potˆencia, ´e cont´ınua. De fato, f (x) = xn = x · x · · · x
+(cid:125)
+
+(cid:124)
+
+´e
+
+(cid:123)(cid:122)
+n vezes
+
+um produto de fun¸c˜oes cont´ınuas, portanto cont´ınua.
+
+Exemplo 17 (Fun¸c˜ao Polinomial)
+
+Considere n´umeros reais a0, a1, · · · , an e um n´umero natural n. A fun¸c˜ao f : R → R,
+deﬁnida por f (x) = anxn + an−1xn−1 + · · · + a1x + a0, denominada fun¸c˜ao polinomial, ´e
+
+uma fun¸c˜ao cont´ınua.
+
+De fato, f ´e uma soma de um n´umero ﬁnito de produtos do tipo ai · xi, produto de uma
+
+fun¸c˜ao constante por uma fun¸c˜ao potˆencia, logo f ´e soma ﬁnita de fun¸c˜oes cont´ınuas,
+
+portanto cont´ınua.
+
+Exemplo 18 A fun¸c˜ao f : R → R, deﬁnida por
+
+f (x) = |x2 + x − 2 − sen2 (3x2 − 2x)|
+
+´e cont´ınua. De fato, f ´e o resultado de somas e composi¸c˜oes de fun¸c˜oes cont´ınuas.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+72
+
+4.1 Gr´aﬁcos com o METAPOST
+
+Neste cap´ıtulo s˜ao tratados alguns exemplos de fun¸c˜oes cont´ınuas. O foco agora ser´a
+
+utilizar o METAPOST para tra¸car gr´aﬁcos no plano cartesiano.
+
+Deﬁni¸c˜ao 20 Seja f : A → B uma fun¸c˜ao real. O gr´aﬁco da fun¸c˜ao f , indicado por Gf ,
+´e o subconjunto de R2 deﬁnido por
+
+Gf = {(x, f (x)) | x ∈ A}.
+
+Para esbo¸car o gr´aﬁco de uma fun¸c˜ao ´e necess´ario marcar os pontos (x, y) que sa-
+
+tisfazem y = f (x). Al´em disso, um plano cartesiano precisa ser desenhado tamb´em. O
+
+c´odigo a seguir mostra como este pode ser desenhado entre os intervalos [−4, 4] em x e
+
+em y. Para alterar os intervalos, basta mudar os valores m´ınimos e m´aximos de x e y no
+
+primeiro bloco de c´odigos.
+
+% limites do desenho
+u:=0.8cm; % unidade de medida
+minx:=-4; % limite m´ınimo para o eixo x
+maxx:=4; % limite m´aximo para o eixo x
+miny:=-4; % limite m´ınimo para o eixo y
+maxy:=4; % limite m´aximo para o eixo y
+
+% plano cartesiano
+drawarrow ((minx,0)--(maxx,0)) scaled u; % eixo x
+drawarrow ((0,miny)--(0,maxy)) scaled u; % eixo y
+label.bot (btex $x$ etex, (maxx*u,0)); % r´otulo do eixo x
+label.llft (btex $y$ etex, (0,maxy*u)); % r´otulo do eixo y
+
+Nos exemplos que ser˜ao mostrados a seguir, este c´odigo que desenha o plano cartesiano,
+
+bem como os c´odigos de rotula¸c˜ao e linhas tracejadas, ser˜ao omitidos para que se foque
+
+apenas no c´odigo para os gr´aﬁcos das fun¸c˜oes.
+
+Exemplo 19 Desenhar o gr´aﬁco da fun¸c˜ao f (x) = x no intervalo [0, 3].
+
+A Figura 4.2 mostra este gr´aﬁco e o c´odigo utilizado para ger´a-lo. Note que primei-
+
+ramente ´e declarada uma vari´avel do tipo path para representar a reta do gr´aﬁco. O
+
+n´umero n refere-se a quantidade de subintervalos em que o intervalo [0, 3] ser´a dividido.
+
+As vari´aveis num´ericas a e b se referem ao intervalo em que o gr´aﬁco ser´a desenhado. A
+
+vari´avel h refere-se ao passo dado a partir de a para calcular os outros pontos do gr´aﬁco.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+73
+
+Deﬁnidas as vari´aveis a serem utilizadas no gr´aﬁco ´e necess´ario deﬁnir as coordenadas
+
+dos pontos que o METAPOST calcular´a para fazer o desenho. Os n+1 pontos a serem
+
+calculados ter˜ao, para i=0, 1,..., n, abscissa x[i]:=a+i*h e ordenada y[i]:=x[i],
+
+pois a fun¸c˜ao a ser esbo¸cada ´e y = x. Para deﬁnir a curva do gr´aﬁco, p[1], ´e interessante
+
+analisar a linha de comandos
+
+p[1]:=z[0] for j=1 upto n: ..z[j] endfor;
+
+utilizada para isso. Esta linha ´e uma forma mais r´apida e pr´atica de escrever
+
+p[1]:=z[0]..z[1]..z[2]..z[3]..z[4]..z[5]..z[6]..z[7]..z[8];.
+
+Esse la¸co ´e pr´atico pois para valores altos de n ´e invi´avel escrever ponto por ponto. Com
+
+este caminho deﬁnido, basta um comando draw para desenhar o gr´aﬁco.
+
+path p[];
+n:=8;
+a:=0; b:=3;
+h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=x[i]; endfor
+p[1]:=z[0] for j=1 upto n:..z[j] endfor;
+pickup pencircle scaled 1bp;
+draw p[1] scaled u withcolor red;
+
+y
+
+3
+
+•
+0
+
+•
+
+3
+
+x
+
+Figura 4.2: Gr´aﬁco da fun¸c˜ao f (x) = x.
+
+Exemplo 20 Desenhar o gr´aﬁco da fun¸c˜ao f (x) = x2 no intervalo [−2, 2].
+
+path p[];
+n:=80;
+a:=-2; b:=2;
+h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=x[i]**2; endfor
+p[1]:=z[0] for j=1 upto n:..z[j] endfor;
+pickup pencircle scaled 1bp;
+draw p[1] scaled u withcolor red;
+
+•
+
+y
+
+4
+
+•
+
+−2
+
+•
+0
+
+2
+
+x
+
+Figura 4.3: Gr´aﬁco da fun¸c˜ao f (x) = x2.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+4.2 Limitando eixos
+
+Exemplo 21 Desenhar o gr´aﬁco da fun¸c˜ao f (x) = x3.
+
+74
+
+Quando o gr´aﬁco de uma fun¸c˜ao extrapola o limite imposto ao tra¸car os eixos do
+
+plano cartesiano, se vocˆe n˜ao utilizar um comando que corte parte da curva, o META-
+
+POST tra¸car´a o gr´aﬁco inteiro e o resultado n˜ao ser´a o desejado. Uma maneira de evitar
+
+essas extrapola¸c˜ao ´e utilizar os comandos cutbefore e cutafter.
+
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--
+(maxx,maxy)--(minx,maxy)--cycle) scaled 0.95;
+n:=100;
+a:=-2; b:=2;
+h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=x[i]**3; endfor
+p[1]:=z[0] for j=1 upto n:..z[j] endfor;
+draw q scaled u withcolor 0.5white dashed evenly;
+pickup pencircle scaled 1bp;
+draw p[1] scaled u withcolor red;
+
+y
+
+x
+
+Figura 4.4: Fun¸c˜ao f (x) = x3 tra¸cada com os limites dos eixos extrapolados
+
+Na Figura 4.4, o retˆangulo cinza tracejado ´e o caminho q do c´odigo. Com o comando
+p[1] cutbefore q, o METAPOST retira de p[1] o que est´a para fora desse caminho do
+
+lado esquerdo. O comando p[1] cutafter q faz o mesmo para o excedente `a direita.
+
+Assim, o resultado de se usar ambos os comandos pode ser visto na Figura 4.5.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+75
+
+y
+
+x
+
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)
+--(minx,maxy)--cycle) scaled 0.95;
+n:=100;
+a:=-2; b:=2;
+h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=x[i]**3; endfor
+p[1]:=z[0] for j=1 upto n:..z[j] endfor;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q)
+scaled u withcolor red;
+
+Figura 4.5: Fun¸c˜ao f (x) = x3
+
+Exemplo 22 Desenhar o gr´aﬁco da fun¸c˜ao f (x) = x7 − 2x5 − 3x4 + 4x2 + 1.
+
+y
+
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--
+(maxx,maxy)--(minx,maxy)--cycle)
+scaled 0.95;
+n:=100;
+a:=-2; b:=2;
+h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=x[i]**7-2*(x[i]**5)
+-3*(x[i]**4)+4*(x[i]**2)+1;
+endfor
+p[1]:= z[0] for j=1 upto n:..z[j]
+endfor;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore
+q) scaled u withcolor red;
+
+x
+
+Figura 4.6: Fun¸c˜ao f (x) = x7 − 2x5 − 3x4 + 4x2 + 1
+
+Fun¸c˜oes com m´odulo podem ser escritas com o operador abs, como mostra o exemplo
+
+a seguir.
+
+Exemplo 23 Desenhar o gr´aﬁco da fun¸c˜ao f (x) = |x2 − 4|.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+76
+
+y
+
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)
+--(minx,maxy)--cycle) scaled 0.95;
+n:=100;
+a:=-2; b:=2;
+h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=abs(x[i]**2-4); endfor
+p[1]:= z[0] for j=1 upto n:..z[j] endfor;
+draw q withcolor 0.5white dashed evenly;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q)
+scaled u withcolor red;
+
+x
+
+Figura 4.7: Fun¸c˜ao f (x) = |x2 − 4|
+
+Quando o gr´aﬁco de uma fun¸c˜ao precisa ser separado em partes para ser desenhado,
+
+basta gerar um caminho p para cada parte. Veja o exemplo a seguir.
+
+Exemplo 24 Desenhar o gr´aﬁco da fun¸c˜ao f (x) =
+
+1
+x
+
+.
+
+Essa fun¸c˜ao n˜ao ´e deﬁnida em x = 0. Portanto, ´e preciso tra¸car a por¸c˜ao do gr´aﬁco
+
+em que x < 0 e a outra em que x > 0. Para a primeira curva p[1] do gr´aﬁco, o intervalo
+
+utilizado foi a:=minx (que ´e deﬁnido inicialmente como o valor m´ınimo de x no plano que
+est´a sendo utilizado) e b:=-0.1. Esse valor para b n˜ao pode ser 0 porque o METAPOST
+
+n˜ao seria capaz de calcular o ´ultimo ponto da curva. A segunda curva, p[2], foi deﬁnida
+
+com os valores de a:=0.1 e b:=maxx. O c´odigo e o desenho resultante est˜ao mostrados
+
+na Figura 4.8.
+
+y
+
+x
+
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)
+--(minx,maxy)--cycle) scaled 0.95;
+n:=1000;
+a:=minx; b:=-0.1; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=1/x[i]; endfor;
+p[1]=z[0] for j=1 upto n: ..z[j] endfor;
+a:=0.1; b:=maxx; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=1/x[i]; endfor;
+p[2]=z[0] for j=1 upto n: ..z[j] endfor;
+draw q withcolor 0.5white dashed evenly;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q)
+scaled u withcolor red;
+
+Figura 4.8: Fun¸c˜ao f (x) =
+
+1
+x
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+77
+
+4.3 Macros
+
+Os recursos do METAPOST descritos at´e ent˜ao fazem parte de um pacote de macros
+
+simples predeﬁnido do METAPOST chamado Plain. O objetivo desta se¸c˜ao ´e explicar como
+
+escrever macros para criar outras opera¸c˜oes e n´umeros ´uteis para o esbo¸co de gr´aﬁcos de
+
+fun¸c˜oes reais.
+
+Uma deﬁni¸c˜ao macro do tipo
+
+def (cid:104)token simb´olico(cid:105) = (cid:104)texto de substitui¸c˜ao(cid:105) enddef;
+
+faz com que o (cid:104)token simb´olico(cid:105) vire uma abrevia¸c˜ao para o (cid:104)texto de substitui¸c˜ao(cid:105),
+
+onde o (cid:104)texto de substitui¸c˜ao(cid:105) pode ser virtualmente qualquer sequˆencia de comandos,
+
+deﬁni¸c˜oes, etc. Por exemplo, o n´umero π n˜ao ´e predeﬁnido no METAPOST. Por´em, ´e
+
+poss´ıvel com uma macro deﬁnir que toda vez que “pi” for escrito, ele interprete como
+
+um valor aproximado de π. Isso ´e pr´atico pois se o usu´ario fosse deﬁnir pi como uma
+
+vari´avel num´erica, seria necess´ario deﬁni-la novamente a cada ﬁgura de um documento.
+
+No entanto, utilizar uma macro como
+
+def pi = 3.1415926536 enddef;
+
+j´a deixa deﬁnido para todas as ﬁguras do documento em quest˜ao que “pi” ´e um valor
+
+aproximado de π.
+
+O METAPOST possui o comando arclength que calcula o comprimento de um cami-
+
+nho. Como π =
+
+C
+d
+
+, onde C ´e o comprimento de um c´ırculo qualquer e d o seu diˆametro,
+
+em vez de se deﬁnir π por meio de uma aproxima¸c˜ao, ´e poss´ıvel deﬁni-lo como o compri-
+
+mento do c´ırculo predeﬁnido fullcircle, uma vez que seu diˆametro ´e unit´ario. A sintaxe
+
+usada para isso ´e
+
+def pi = arclength fullcircle enddef;
+
+As macros com argumentos s˜ao semelhantes, com a diferen¸ca de terem parˆametros
+
+formais que informam como usar os argumentos no (cid:104)texto de substitui¸c˜ao(cid:105). Por exemplo,
+
+na Se¸c˜ao 1.6 foi citado que, apesar de o METAPOST ter em seu pacote simples de macros
+
+os operadores sind e cosd para calcular, respectivamente, o seno e cosseno de ˆangulos em
+
+graus, ´e poss´ıvel criar uma macro para calcular essas raz˜oes trigonom´etricas em radianos.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+78
+
+Como π rad equivalem a 180◦, uma macro que deﬁna um comando novo sin(a), em que
+
+a ´e um n´umero real (em radianos), pode ser escrita assim:
+
+def sin(expr a) = sind(a*pi/180) enddef;
+
+A palavra expr nesta deﬁni¸c˜ao signiﬁca que o parˆametro a pode ser qualquer express˜ao
+
+arbitr´aria. Essas deﬁni¸c˜oes de macros s˜ao pr´aticas para criar comandos que n˜ao est˜ao
+
+predeﬁnidos no METAPOST.
+
+Para deﬁnir novas fun¸c˜oes e opera¸c˜oes matem´aticas, ´e recomend´avel utilizar macros
+
+do tipo vardef, que trabalha diretamenta com valores num´ericos. A lista de fun¸c˜oes
+
+matem´aticas a seguir foi adaptada da criada por Heck [7].
+
+vardef sqr primary x = (x*x) enddef;
+vardef log primary x = (if x=0: 0 else: mlog(x)/mlog(10) fi) enddef;
+vardef ln primary x = (if x=0: 0 else: mlog(x)/256 fi) enddef;
+vardef exp primary x = ((mexp 256)**x) enddef;
+vardef inv primary x = (if x=0: 0 else: x**-1 fi) enddef;
+vardef pow (expr x,p) = (x**p) enddef;
+
+% fun¸c~oes trigonom´etricas
+numeric pi; pi := 3.1415926;
+numeric radian; radian := 180/pi;
+vardef tand primary x = (sind(x)/cosd(x)) enddef;
+vardef cotd primary x = (cosd(x)/sind(x)) enddef;
+vardef sen primary x = (sind(x*radian)) enddef;
+vardef cos primary x = (cosd(x*radian)) enddef;
+vardef tan primary x = (sen(x)/cos(x)) enddef;
+vardef cot primary x = (cos(x)/sen(x)) enddef;
+
+% fun¸c~oes hiperb´olicas
+vardef senh primary x = save xx; xx = exp xx; (xx-1/xx)/2 enddef;
+vardef cosh primary x = save xx; xx = exp xx; (xx+1/xx)/2 enddef;
+vardef tanh primary x = (senh(x)/cosh(x)) enddef;
+vardef coth primary x = (cosh(x)/senh(x)) enddef;
+
+% inversas das fun¸c~oes trigonom´etricas e hiperb´olicas
+vardef arcsend primary x = angle((1+-+x,x)) enddef;
+vardef arccosd primary x = angle((x,1+-+x)) enddef;
+vardef arcsen primary x = ((arcsend(x))/radian) enddef;
+vardef arccos primary x = ((arccosd(x))/radian) enddef;
+vardef arccosh primary x = ln(x+(x+-+1)) enddef;
+vardef arcsenh primary x = ln(x+(x++1)) enddef;
+
+Os exemplos que seguem utilizam essas macros.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+79
+
+Exemplo 25 Desenhar o gr´aﬁco da fun¸c˜ao f (x) = sen x no intervalo [0, 2π].
+
+def pi = arclength fullcircle enddef;
+numeric radian; radian := 180/pi;
+vardef sen primary x =
+(sind(x*radian)) enddef;
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)
+--(minx,maxy)--cycle) scaled 0.95;
+n:=1000;
+a:=0; b:=2*pi; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=sen x[i]; endfor;
+p[1]=z[0] for j=1 upto n: ..z[j] endfor;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q)
+scaled u withcolor red;
+
+y
+
+•0
+
+Figura 4.9: Fun¸c˜ao f (x) = sen x
+
+Exemplo 26 Desenhar o gr´aﬁco da fun¸c˜ao f (x) =
+
+cos 10x
+x
+
+.
+
+def pi = arclength fullcircle enddef;
+numeric radian; radian := 180/pi;
+vardef cos primary x =
+(cosd(x*radian)) enddef;
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)
+--(minx,maxy)--cycle) scaled 0.95;
+n:=1000;
+a:=0.1; b:=maxx; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=(cos (10*x[i]))/x[i]; endfor;
+p[1]=z[0] for j=1 upto n: ..z[j] endfor;
+a:=minx; b:=-0.1; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=(cos (10*x[i]))/x[i]; endfor;
+p[2]=z[0] for j=1 upto n: ..z[j] endfor;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q)
+scaled u withcolor red;
+draw ((p[2] cutafter q) cutbefore q)
+scaled u withcolor red;
+
+Figura 4.10: Fun¸c˜ao f (x) =
+
+cos 10x
+x
+
+2π
+•
+
+x
+
+x
+
+y
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+80
+
+Exemplo 27 Desenhar, em um mesmo plano cartesiano, os gr´aﬁcos das fun¸c˜oes f (x) =
+1 + (cid:112)1 − |x − 1|2 e g(x) = 1 + arccos (1 − |x|) − π no intervalo [−2, 2].
+
+y
+
+def pi = arclength fullcircle enddef;
+numeric radian; radian := 180/pi;
+vardef arccosd primary
+x = angle((x,1+-+x)) enddef;
+vardef arccos primary
+x = ((arccosd(x))/radian) enddef;
+path p[], q;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)
+--(minx,maxy)--cycle) scaled 0.95;
+n:=1000;
+a:=-2; b:=2; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=1+sqrt(1-(abs(x[i])-1)**2); endfor;
+p[1]=z[0] for j=1 upto n: ..z[j] endfor;
+for i=0 upto n: x[i]:=a+i*h;
+y[i]:=1+arccos(1-abs(x[i]))-pi; endfor;
+p[2]=z[0] for j=1 upto n: ..z[j] endfor;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q)
+scaled u withcolor red;
+draw ((p[2] cutafter q) cutbefore q)
+scaled u withcolor 0.6red;
+Figura 4.11: Fun¸c˜oes f (x) = 1 + (cid:112)1 − |x − 1|2 e g(x) = 1 + arccos (1 − |x|) − π
+
+x
+
+Este cap´ıtulo ser´a ﬁnalizado com algumas ﬁguras apresentadas sem discuss˜ao das
+
+ferramentas diferentes utilizadas, visando apenas mostrar a pontecialidade do METAPOST
+
+quando se trata de gr´aﬁcos de fun¸c˜oes.
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+81
+
+% vari´aveis e macros
+vardef ln primary x = (if x=0: 0 else: mlog(x)/256 fi) enddef;
+numeric u, minx, maxx, miny, maxy; path q;
+numeric h,n; path p[ ];
+path hline[], vline[], int;
+% limites gr´aficos
+u:=1.5cm; minx:=-1; maxx:=6; miny:=-1; maxy:=3;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)--(minx,maxy)--cycle) scaled 0.95;
+% gr´afico
+n:=1000; a:=0.1; b:=maxx; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h; y[i]:=1+ln(x[i]); endfor;
+p[1]=z[0] for j=1 upto n: ..z[j] endfor;
+% integral
+hline0 = (0,0)--(maxx,0);
+vline0 = (0,0)--(0,maxy);
+vline0.5 = (1,0)--(1,maxy);
+vline4 = (5,0)--(5,maxx);
+int = buildcycle(hline0, vline0.5, p[1], vline4);
+% desenhos
+fill int scaled u withcolor 0.8[blue,white];
+draw ((1,0)--vline0.5 intersectionpoint p[1]) scaled u;
+draw ((5,0)--vline4 intersectionpoint p[1]) scaled u;
+drawarrow ((minx,0)--(maxx,0)) scaled u;
+drawarrow ((0,miny)--(0,maxy)) scaled u;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q) scaled u withcolor red;
+% r´otulos
+label.bot (btex $x$ etex, (maxx*u,0));
+label.llft (btex $y$ etex, (0,maxy*u));
+label.ulft(btex $f$ etex, z[1000]*u);
+label(btex $\int\limits_a^b{f(x)}\;dx$ etex, center(int scaled u));
+label.bot(btex $a$ etex, (u,0));
+label.bot(btex $b$ etex, (5u,0));
+y
+
+f
+
+b
+(cid:82)
+
+a
+
+f (x) dx
+
+a
+
+b
+
+x
+
+Figura 4.12: Representa¸c˜ao gr´aﬁca de
+
+b
+(cid:82)
+
+a
+
+f (x) dx com f (x) = 1 + ln x
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+82
+
+% vari´aveis e macros
+numeric u, minx, maxx, miny, maxy; path q, c[];
+numeric h,n; path p[ ];
+path hline[], vline[], int; picture lab[];
+vardef ln primary x = (if x=0: 0 else: mlog(x)/256 fi) enddef;
+% limites gr´aficos
+u:=1.5cm; minx:=-1; maxx:=6; miny:=-1; maxy:=3;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)--(minx,maxy)--cycle) scaled 0.95;
+% gr´afico
+n:=1000; a:=0.1; b:=maxx; h:=(b-a)/n;
+for i=0 upto n: x[i]:=a+i*h; y[i]:=1+ln(x[i]); endfor;
+p[1]=z[0] for j=1 upto n: ..z[j] endfor;
+% integral
+c0 = -500*dir(50)--500*dir(50);
+for i=0 upto 300: draw c0 shifted (0,5*i);
+draw c0 shifted (0,-5*i); endfor;
+hline0 = (0,0)--(maxx,0);
+vline0 = (0,0)--(0,maxy);
+vline0.5 = (1,0)--(1,maxy);
+vline4 = (5,0)--(5,maxx);
+int = buildcycle(hline0, vline0.5, p[1], vline4);
+clip currentpicture to int scaled u;
+% desenhos
+draw ((1,0)--vline0.5 intersectionpoint p[1]) scaled u;
+draw ((5,0)--vline4 intersectionpoint p[1]) scaled u;
+drawarrow ((minx,0)--(maxx,0)) scaled u;
+drawarrow ((0,miny)--(0,maxy)) scaled u;
+pickup pencircle scaled 1bp;
+draw ((p[1] cutafter q) cutbefore q) scaled u withcolor red;
+% r´otulos
+label.bot (btex $x$ etex, (maxx*u,0));
+label.llft (btex $y$ etex, (0,maxy*u));
+label.ulft(btex $f$ etex, z[1000]*u);
+label.bot(btex $a$ etex, (u,0));
+label.bot(btex $b$ etex, (5u,0));
+lab0:=thelabel(btex $\int\limits_a^b{f(x)}\;dx$ etex, center(int scaled u));
+unfill bbox lab0; draw lab0;
+
+f
+
+y
+
+b
+(cid:82)
+
+a
+
+f (x) dx
+
+a
+
+b
+
+x
+
+Figura 4.13: Outra representa¸c˜ao gr´aﬁca de
+
+b
+(cid:82)
+
+a
+
+f (x) dx com f (x) = 1 + ln x
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+83
+
+% vari´aveis e macros
+numeric u, minx, maxx, miny, maxy; path p[];
+% limites gr´aficos
+u:=1.5cm; minx:=-1; maxx:=6; miny:=-1; maxy:=3;
+% gr´afico
+p[1]:=(-1u,-u){right}..{dir 60}(2u,.5u)..(4u,1u){right}..(6u,3u);
+drawarrow ((minx,0)--(maxx,0)) scaled u;
+drawarrow ((0,miny)--(0,maxy)) scaled u;
+draw p[1] withpen pencircle scaled 1bp withcolor red;
+% m´etodo
+x0 = 5.8*u; numeric t[];
+for i=0 upto 2: (t[i],whatever) = p[1] intersectiontimes ((x[i],-infinity)--(x[i],infinity));
+z[i] = point t[i] of p[1];
+(x[i+1],0) = z[i] + whatever*direction t[i] of p[1];
+draw (x[i],0)--z[i]--(x[i+1],0);
+fill fullcircle scaled 3.6pt shifted z[i];
+endfor;
+% r´otulos
+label.urt (btex $x$ etex, (maxx*u,0));
+label.llft (btex $y$ etex, (0,maxy*u));
+label.bot(btex $x_0$ etex, (x0,0));
+label.bot(btex $x_1$ etex, (x1,0));
+label.bot(btex $x_2$ etex, (x2,0));
+label.bot(btex $x_3$ etex, (x3,0));
+
+y
+
+x3
+
+x2
+
+x1
+
+x
+
+x0
+
+Figura 4.14: Alguns passos do M´etodo Iterativo de Newton para encontrar zeros
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+84
+
+% vari´aveis e macros
+pair t; path p[], q, r[], s[]; def f(expr x) = (4-x**2) enddef;
+% limites gr´aficos
+u:=1cm; minx:=-3; maxx:=3; miny:=-1; maxy:=5;
+q:=((minx,miny)--(maxx,miny)--(maxx,maxy)--(minx,maxy)--cycle) scaled 0.95u;
+% ret^angulos
+n:= 16; x0:= -2; x1:= 2; inc:= (x1-x0)/n; for i=x0 step inc until x1-inc:
+r[i] = (i,0)--(i+inc,0)--(i+inc,max(f(i),f(i+inc)))--(i, max(f(i),f(i+inc)))--cycle;
+r[i]:= r[i] scaled u; fill r[i] withcolor 0.8white; draw r[i]; endfor;
+% gr´afico
+inc := 0.01;
+p[1]:= (minx*u,f(minx)*u) for x=minx+inc step inc until maxx: ..(x*u,f(x)*u) endfor;
+drawarrow ((minx,0)--(maxx,0)) scaled u; drawarrow ((0,miny)--(0,maxy)) scaled u;
+draw ((p[1] cutafter q) cutbefore q) withpen pencircle scaled 1bp withcolor red;
+% transla¸c~ao
+t := (6.5u,0); inc:= (x1-x0)/n; for i=x0 step inc until x1-inc:
+s[i] = (i,0)--(i+inc,0)--(i+inc,min(f(i),f(i+inc)))--(i, min(f(i),f(i+inc)))--cycle;
+s[i] := s[i] scaled u shifted t; fill s[i] withcolor 0.8white; draw s[i]; endfor;
+drawarrow ((minx,0)--(maxx,0)) scaled u shifted t;
+drawarrow ((0,miny)--(0,maxy)) scaled u shifted t;
+draw ((p[1] cutafter q) cutbefore q) shifted t withpen pencircle scaled 1bp withcolor red;
+% r´otulos
+label.urt (btex $x$ etex, (maxx*u,0)); label.llft (btex $y$ etex, (0,maxy*u));
+label.urt (btex $x$ etex, t+(maxx*u,0)); label.llft (btex $y$ etex, t+(0,maxy*u));
+
+y
+
+y
+
+x
+
+x
+
+Figura 4.15: Ilustra¸c˜ao da Soma de Riemann Superior e Inferior da fun¸c˜ao f (x) = 4 − x2
+
+Considera¸c˜oes Finais
+
+O METAPOST ´e uma ferramenta poderosa para se usar conhecimentos Matem´aticos
+
+na elabora¸c˜ao de ﬁguras. As imagens geradas por meio dessa linguagem tˆem o n´ıvel
+
+proﬁssional satisfat´orio para o que ´e esperado de um trabalho acadˆemico. Pessoas que
+
+ensinam e pesquisam Matem´atica poder˜ao melhorar a apresenta¸c˜ao de seus trabalhos
+
+e orientar seus alunos na aplica¸c˜ao dos conhecimentos matem´aticos adquiridos. Assim,
+
+espera-se que esse trabalho possa, de certa forma, ter contribu´ıdo para a forma¸c˜ao de
+
+professores de Matem´atica e, consequentemente, para a forma¸c˜ao de seus alunos.
+
+Essa ferramenta n˜ao ´e muito conhecida em ambientes n˜ao acadˆemicos pois foi feita, pri-
+mariamente, para ser utilizada juntamente com o LATEX. Como o METAPOST ´e pioneiro
+na cria¸c˜ao de imagens vetoriais, outras linguagens j´a foram desenvolvidas com algumas
+
+semelhan¸cas e mais funcionalidades, como PGF/Tik Z, PSTricks e Asymptote. Mesmo
+
+assim, a sua praticidade e simplicidade de comandos n˜ao a torna antiquada.
+
+Os itens a seguir podem ser pesquisados para trabalhos futuros.
+
+• Hobby [12] apresenta um pacote de macros utilizados especialmente para diversos
+
+gr´aﬁcos estat´ısticos.
+
+• Henkel [10] fez um estudo sobre o m´etodo num´erico utilizado pelo METAPOST para
+
+o c´alculo do comprimento de curvas c´ubicas de B´ezier por meio de integrais el´ıpticas
+
+e concluiu que o m´etodo vale a pena, mas precisa de mais pesquisa matem´atica para
+
+ser mais robusto em alguns casos especiais.
+
+• Roegel [23] estudou as funcionalidades do pacote de macros 3d para a Geometria
+
+Espacial.
+
+• Oswald [20] mostra como fazer diversas ﬁguras com o METAPOST, incluindo pa-
+
+rametriza¸c˜ao de curvas, caminhos recursivos e gr´aﬁcos tridimensionais, como os da
+
+Figura 4.16.
+
+85
+
+CAP´ITULO 4. FUNC¸ ˜OES REAIS
+
+86
+
+z
+
+z
+
+x
+
+y
+
+x
+
+y
+
+Figura 4.16: Figuras tridimensionais.
+
+• Heck [7] mostra exemplos de campos vetoriais, como mostrado na Figura 4.17.
+
+y
+
+y = ex
+
+Figura 4.17: Campo direcional correspondente `a equa¸c˜ao diferencial ordin´aria y(cid:48) = y
+
+x
+
+• Hagen [6] utiliza o METAPOST para criar esquematiza¸c˜oes de quebra-cabe¸cas (como
+
+na Figura 4.18) e busca criar uma biblioteca de macros que permitam desenhar
+
+ilustra¸c˜oes matem´aticas.
+
+Figura 4.18: Quebra-cabe¸cas.
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] ALVES, Sergio. Elipses inscritas num triˆangulo. Revista do Professor de Ma-
+
+tem´atica, v. 96, 2018.
+
+[2] ANIZ, Claudemir; NASCIMENTO, Luiz H. A. S. A elipse de Steiner. Revista do
+
+Professor de Matem´atica, v. 82, 2013.
+
+[3] BEEBE, Nelson. The design of TEX and METAFONT: A retrospective. Dis-
+pon´ıvel em http://www.math.utah.edu/~beebe/talks/2005/tug2005/pt2005.pdf;
+acesso em 30/09/2018.
+
+[4] BRIANCHON, Charles J. PONCELET, Jean-Victor. Recherche
+
+sur
+
+la
+
+d´etermination d’une hyperbole ´equilat`ere au moyen de quatre condi-
+
+tions donn´ees. Annales de Math´ematiques pures et Appliqu´ees, 1821.
+
+[5] DELGADO, Jorge. Geometria Anal´ıtica - Jorge Delgado, Katia Frensel, Lhaylla
+
+Crissaﬀ. 1.ed. Rio de Janeiro: SBM, 2013.
+
+[6] HAGEN, Hans. Puzzling graphics in METAPOST. PRAGMA Advanced Do-
+
+cument Engineering, 1997. Dispon´ıvel em http://www.pragma-ade.com/articles/
+
+art-puzz.pdf; acesso em 30/09/2018.
+
+[7] HECK, Andr´e. Tutorial in MetaPost. AMSTEL Institute, 2003, dispon´ıvel em
+
+http://tex.loria.fr/prod-graph/heck-metapost2003.pdf; acesso em 30/09/2018.
+
+[8] HENDERSON, Troy; HENNIG, Stephan. A Beginner’s Guide to METAPOST
+
+for Creating High-Quality Graphics. 2013. Dispon´ıvel em http://www.tug.org/
+
+docs/metapost/mpintro.pdf; acesso em 30/09/2018.
+
+[9] HENDERSON, Troy. MetaPost Previewer. Dispon´ıvel em http://www.tlhiv.
+
+org/mppreview/; acesso em 30/09/2018.
+
+87
+
+REFER ˆENCIAS BIBLIOGR ´AFICAS
+
+88
+
+[10] HENKEL, Harmut. Calculating the Cubic B´ezier Arc Length by Elliptic
+
+Integrals. Oftersheim, Alemanha. 2014. Dispon´ıvel em http://www.circuitwizard.
+
+de/metapost/arclength.pdf; acesso em 30/09/2018.
+
+[11] HOBBY, John D. Digitized Brush Trajectories. Tese de Doutorado, Department
+
+of Computer Science, Stanford University, Stanford, CA, USA, 1986.
+
+[12] HOBBY, John D. Drawing Graphs with METAPOST. Technical Report 164,
+
+AT&T Bell Laboratories, Murray Hill, New Jersey, 1992. Dispon´ıvel em https://www.
+
+tug.org/docs/metapost/mpgraph.pdf; acesso em 30/09/2018.
+
+[13] HOBBY, John D. METAPOST - A USER’S MANUAL. Technical Report 162,
+
+AT&T Bell Laboratories, Murray Hill, New Jersey, 1992. Dispon´ıvel em http://www.
+
+tug.org/docs/metapost/mpman.pdf; acesso em 30/09/2018.
+
+[14] KNUTH, Donald E. Fundamental Algorithms. Volume 1 of The Art of Computer
+
+Programming. Addison-Wesley, Reading, MA, USA, 1968.
+
+[15] LIANG, Frank. Word hy-phen-a-tion by compu-ter. Tese de Doutorado, Com-
+
+puter Science Department, Stanford University, Stanford, CA, USA, 1984.
+
+[16] MINDA, David. PHELPS, Steve. Triangles, Ellipses, and Cubic Polynomials.
+
+The American Mathematical Monthly, Vol. 115, No. 8, p. 679-689, 2008.
+
+[17] MUNIZ NETO, Antonio C. Fundamentos de C´alculo. 1.ed. Rio de Janeiro: SBM,
+
+2015.
+
+[18] MUNIZ NETO, Antonio C. Geometria. 1.ed. Rio de Janeiro: SBM, 2013.
+
+[19] NASCIMENTO, Luiz H. A. S. Elipse Inscrita de Steiner. Disserta¸c˜ao de Mes-
+
+trado, PROFMAT, Universidade Federal de Mato Grosso do Sul, Campo Grande, MS,
+
+Brasil, 2017.
+
+[20] OSWALD, Urs. MetaPost: A Very Brief Tutorial. Dispon´ıvel em http://www.
+
+ursoswald.ch/metapost/tutorial.pdf; acesso em 30/09/2018.
+
+[21] PEDROSA, Israel. Da Cor `a Cor Inexistente. Rio de Janeiro: Editora Universi-
+
+dade de Bras´ılia, 1982.
+
+REFER ˆENCIAS BIBLIOGR ´AFICAS
+
+89
+
+[22] PLASS, Michael. Optimal pagination techniques for automatic typesetting
+
+systems. Tese de Doutorado, Computer Science Department, Stanford University,
+
+Stanford, CA, USA, 1981.
+
+[23] ROEGEL, Denis. La g´eom´etrie dans l’espace avec METAPOST. Cahiers GU-
+
+Tenberg no 39–40, pp. 107-138, 2001. Dispon´ıvel em https://members.loria.fr/
+
+DRoegel/TeX/39-roegel.pdf; acesso em 30/09/2018.
+
+[24] RUGGLES, Lynn E. Paragon, an interactive, extensible, environment for
+
+typeface design. Tese de Doutorado, University of Massachusetts Amherst, Amherst,
+
+MA, USA, 1987.
+
+[25] SALELLES, Ignacio A. Z. Interfacing with graphics objects. Tese de Doutorado,
+
+Department of Computer Science, Stanford University, Stanford, CA, USA, 1982.
+
+[26] VICENTE, Lucas. Escrevendo Imagens com MetaPost. Dispon´ıvel em http:
+
+//www.ime.usp.br/~alkaid/metapost.pdf; acesso em 30/09/2018.
+
+[27] VIETH, Ulrik. The mflogo package. Dispon´ıvel em http://mirrors.ctan.org/
+
+macros/latex/contrib/mflogo/mflogo.pdf; acesso em 30/09/2018.
+
+

@@ -1,0 +1,1595 @@
+ UNIVERSIDADE FEDERAL DO CEARÁ 
+
+CENTRO DE CIÊNCIAS 
+
+DEPARTAMENTO DE MATEMÁTICA 
+
+PROGRAMA DE PÓS-GRADUAÇÃO EM MATEMÁTICA EM REDE NACIONAL 
+
+RAIMUNDO INÁCIO NETO 
+
+O ALGORITMO GANANCIOSO: UMA INTRODUÇÃO À TEORIA DOS 
+
+MATRÓIDES 
+
+FORTALEZA 
+
+2023 
+
+RAIMUNDO INÁCIO NETO 
+
+O ALGORITMO GANANCIOSO: UMA INTRODUÇÃO À TEORIA DOS MATRÓIDES 
+
+Dissertação  apresentada  ao  Programa  de 
+Pós-Graduação  em  Matemática  em  Rede 
+Nacional  (PROFMAT)  do  Departamento  de 
+Matemática  da  Universidade  Federal  do 
+Ceará,  como  requisito  parcial  à  obtenção  de 
+título  de  mestre  em  Matemática.  Área  de 
+Concentração: Ensino de Matemática. 
+
+Orientador: Prof. Dr. Marcos Ferreira de Melo. 
+
+FORTALEZA 
+
+2023 
+
+Dados Internacionais de Catalogação na Publicação 
+
+Universidade Federal do Ceará
+Sistema de Bibliotecas
+Gerada automaticamente pelo módulo Catalog, mediante os dados fornecidos pelo(a) autor(a)
+
+I32a
+
+Inácio Neto, Raimundo.
+    O algoritmo ganancioso : uma introdução à teoria dos matróides / Raimundo Inácio Neto. – 2023.
+    25 f. : il. color.
+
+     Dissertação (mestrado) – Universidade Federal do Ceará, Centro de Ciências, Departamento de
+Matemática, Programa de Pós-Graduação em Matemática em Rede Nacional, Fortaleza, 2023.
+     Orientação: Prof. Dr. Marcos Ferreira de Melo.
+
+1. Matróides. 2. Dependência linear. 3. Matrizes (matemática). 4. Teoria dos grafos. 5. Algoritmo
+
+ganancioso. I. Título.
+
+CDD 510
+
+RAIMUNDO INÁCIO NETO 
+
+O ALGORITMO GANANCIOSO: UMA INTRODUÇÃO À TEORIA DOS MATRÓIDES 
+
+Dissertação apresentada ao Programa de Pós- 
+Graduação  em  Matemática  em  Rede  Nacional 
+do  Departamento 
+da 
+Universidade Federal do Ceará, como requisito 
+parcial  à  obtenção  do  título  de  mestre  em 
+Matemática.  Área  de  concentração:  Ensino  de 
+Matemática 
+
+de  Matemática 
+
+Aprovada em 20/01/2023. 
+
+BANCA EXAMINADORA 
+
+________________________________________ 
+Prof. Dr. Marcos Ferreira de Melo (Orientador) 
+
+Universidade Federal do Ceará (UFC) 
+
+_________________________________________ 
+Prof. Dr. Marcelo Ferreira de Melo  
+
+Universidade Federal do Ceará (UFC) 
+
+_________________________________________ 
+Prof. Dr. Ângelo Papa Neto 
+
+Instituto Federal de Educação, Ciência e Tecnologia do Ceará (IFCE) 
+
+Este trabalho é dedicado ao meu avô Raimundo 
+
+Inácio (in memoriam), maior exemplo de um ser 
+
+humano íntegro e ético. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+AGRADECIMENTOS 
+
+A Deus por ter me dado saúde e força para superar as dificuldades. 
+
+A esta Universidade, seu corpo docente, direção e administração que me deram a 
+
+oportunidade de fazer o curso. 
+
+Aos professores pelas orientações ao longo do curso. 
+
+À minha família, que em todos os momentos me apoiaram e que ao longo de toda 
+
+a minha formação sempre me incentivaram nos momentos de fraqueza e serviram de alento nos 
+
+momentos difíceis. 
+
+Aos companheiros de curso, pela ajuda mútua em percorrer esse caminho. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+“A matemática, vista corretamente, possui não 
+
+apenas verdade, mas também suprema beleza - 
+
+uma beleza fria e austera, como a da escultura.” 
+
+(RUSSELL) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+RESUMO 
+
+Em matemática, um matróide é uma estrutura apresentada como uma generalização da noção  
+
+de independência  linear.  Está,  portanto,  naturalmente  ligado  à álgebra  linear,  mas  também 
+
+à teoria dos grafos, ao algoritmo ganancioso e à geometria. (Para várias questões relacionadas 
+
+com representação). Este trabalho visa estabelecer explicitamente qual a relação dessa estrutura 
+
+com  o  algoritmo  ganancioso.  Partindo  de  problemas  que  exigem  uma  solução  otimizada, 
+
+definimos o conceito de matróide e suas propriedades. Em seguida serão demonstradas através 
+
+de  teoremas  e  exemplos  as  relações  com  matrizes  e  grafos,  assim  como  alguns  tipos  de 
+
+matróides. Por fim, será demonstrado o teorema que consolida a ligação com o algoritmo. 
+
+Palavras-chave:  matróides;  dependência  linear;  matrizes  (matemática);  teoria  dos  grafos; 
+
+algoritmo ganancioso. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ABSTRACT 
+
+In mathematics, a matroid is a structure presented as a general framework for the concept of 
+
+linear independence. It is therefore naturally linked to linear algebra, but also to graph theory, 
+
+the greedy algorithm and geometry. (For various questions related to representation). This work 
+
+aims to explicitly establish the relationship of this structure with the greedy algorithm. Starting 
+
+from  problems  that  require  an  optimized  solution,  we  define  the  concept  of  matroid  and  its 
+
+properties. Next, relations with matrices and graphs, as well as some types of matroids, will be 
+
+demonstrated  through  theorems  and  examples.  Finally,  the  theorem  that  consolidates  the 
+
+connection with the algorithm will be demonstrated. 
+
+Keywords:  matroids;  linear  dependence;  matrices  (mathematics);  graph  theory;  greedy 
+
+algorithm.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+LISTA DE FIGURAS 
+
+Figura 1  − Grafo representante das estradas entre cidades...............................................  12 
+
+Figura 2  − Exemplo de grafo............................................................................................  14 
+
+Figura 3  − O ciclo é um grafo que satisfaz o circuito eliminatório do axioma (C3)..........  19 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SUMÁRIO 
+
+1 
+
+2 
+
+2.1 
+
+2.2 
+
+3 
+
+INTRODUÇÃO..................................................................................................  10 
+
+MATRÓIDES.....................................................................................................  13 
+
+Definição de Matróides......................................................................................  15 
+
+Matróides Pesados..............................................................................................  21 
+
+CONCLUSÃO....................................................................................................  24 
+
+REFERÊNCIAS.................................................................................................  25 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 10 
+
+1 INTRODUÇÃO 
+
+Em  geral,  quando  temos  que  fazer  escolhas,  tendemos  a  escolher  aquelas  que 
+
+maximizam  nossos  ganhos  e/ou  minimizam  nossas  perdas.  Mas  há  problemas  em  que  suas 
+
+soluções decorrem de uma série de escolhas sucessivas, e ao fazermos sempre a escolha onde 
+
+a  situação  é  “localmente”  otimizada,  estamos  utilizando  um  algoritmo  conhecido  como 
+
+“Algoritmo Ganancioso” ou “Algoritmo Guloso.” Sobre o algoritmo guloso, Parberry (1995) 
+
+diz: 
+
+Um algoritmo guloso começa com uma solução para um subproblema muito pequeno 
+e o aumenta sucessivamente para uma solução para o grande problema. O aumento é 
+feito de maneira 'gananciosa', ou seja, prestando atenção ao ganho de curto prazo ou 
+local, sem levar em conta se isso levará a uma boa solução de longo prazo ou global. 
+Como na vida real, algoritmos gananciosos às vezes levam à melhor solução, às vezes 
+levam a soluções muito boas e às vezes levam a soluções ruins. O truque é determinar 
+quando ser ganancioso. (PARBERRY, 1995, p.101) 
+
+Dessa forma nos vem a seguinte pergunta: Quando podemos ser gananciosos? Antes 
+
+de  responder  a  essa  pergunta,  abaixo  veremos  alguns  problemas  e  tentaremos  resolvê-los 
+
+utilizando o algoritmo  guloso. A partir daí,  vamos  estabelecer o cenário ideal  para o uso do 
+
+mesmo. 
+
+Problema 1. 
+
+Um certo número de trabalhos será executado por uma única máquina. Todos 
+
+requerem  o  mesmo  tempo  de  processamento,  uma  hora.  Estão  associados  a  um  tempo 
+
+para entrega, o qual não satisfeito, implica em uma penalidade fixa 𝒑𝒊, independente do 
+
+atraso.  Determinar  a  sequência  para  execução  dos  trabalhos  de  forma  que  o  total  das 
+
+penalidades seja mínimo. 
+
+Para  que  o  total  de  penalidades  seja  mínimo,  podemos  resolver  o  problema  da 
+
+seguinte maneira: A princípio, devemos organizar os trabalhos em ordem crescente de tempo 
+
+de  entrega,  no  caso  de  empate,  deve-se  organizar  em  ordem  decrescente  de  penalidade. 
+
+Começando assim, a máquina deve executar os trabalhos nessa ordem estabelecida, descartando 
+
+somente aqueles trabalhos que não puderem ser feitos, obedecendo o tempo de entrega. Por 
+
+fim, os trabalhos descartados serão feitos após o último feito dentro do tempo de entrega, sendo 
+
+esses em qualquer ordem. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 11 
+
+Temos então que pudemos utilizar o algoritmo guloso nesse problema e ele nos leva 
+
+à melhor solução possível. Para melhor visualização, tomemos o exemplo abaixo. 
+
+TRABALHOS 
+
+T. DE ENTREGA 
+
+PENALIDADE 
+
+1 
+
+1 
+
+9 
+
+2 
+
+3 
+
+7 
+
+3 
+
+2 
+
+6 
+
+Organizando utilizando o algoritmo, temos: 
+
+TRABALHOS 
+
+T. DE ENTREGA 
+
+4 
+
+1 
+
+PENALIDADE 
+
+10 
+
+1 
+
+1 
+
+9 
+
+3 
+
+2 
+
+6 
+
+4 
+
+1 
+
+10 
+
+2 
+
+3 
+
+7 
+
+5 
+
+3 
+
+4 
+
+5 
+
+3 
+
+4 
+
+6 
+
+6 
+
+2 
+
+6 
+
+6 
+
+2 
+
+Com essa ordenação a máquina realizaria o trabalho 4, descartaria o 1, realizaria o 
+
+3 e o 2, descartaria o 5, realizaria o 6. Depois  disso realizaria o 1  e 5,  em  qualquer  ordem, 
+
+totalizando uma penalidade P = 13. Que é a menor possível, em qualquer situação. 
+
+Problema 2. 
+
+Deseja-se  construir  trechos  de  estradas  que  conectem  cinco  cidades  com  a 
+
+menor quantidade de asfalto possível. Sejam as cidades A, B, C, D e E, se há um trecho 
+
+que liga A e B, e outro que ligue B e C, então A e C já estão conectadas. 
+
+Para que a quantidade de asfalto seja a mínima possível, deve-se construir os trechos 
+
+que ligam duas cidades com a menor distância possível. Usando o algoritmo ganancioso, basta 
+
+escolhermos os trechos em ordem crescente de distância, descartando somente os trechos que 
+
+conectam a uma cidade já escolhida formando um ciclo. Vejamos no exemplo abaixo. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Figura 1 - Grafo representante das estradas entre cidades 
+
+ 12 
+
+Fonte: elaborada pelo autor. 
+
+A  menor  distância  entre  duas  cidades  é  2,  logo  o  primeiro  trecho  escolhido  é  o 
+
+trecho DC. Seguindo a ordem crescente, temos em seguida o trecho CB, com distância 3. O 
+
+próximo trecho seria BD, com distância 4, mas ao fazermos isso criamos um ciclo, pois B já 
+
+está  conectada  com  D  pelo  trecho  DCB. Assim,  descartamos  esse  trecho  e  vamos  para  o 
+
+próximo de menor valor, que pode ser tanto AC ou BA, pois ambos têm a mesma distância 5. 
+
+Escolhemos  então  AC,  fazendo  isso  descartamos  o  trecho  BA,  pois  teríamos  um  ciclo.  O 
+
+próximo e último trecho a ser feito então é EC, com distância 6. Assim, todas as cidades estão 
+
+conectadas, e a soma dos trechos é 2+3+5+6 = 16, que é a menor possível. 
+
+Problema 3. 
+
+Após  realizar  uma  venda,  deve-se  dar  um  troco  de  40  centavos  para  o 
+
+comprador entregando a menor quantidade de moedas possível. As moedas disponíveis 
+
+para o troco são de 5, 10, 20 e 25 centavos. 
+
+Se seguirmos o algoritmo ganancioso, então para que a quantidade de moedas seja 
+
+a  menor  possível  devemos  começar  com  as  de  maior  valor  e  seguir  em  ordem  decrescente, 
+
+descartando somente aquelas que ultrapassariam a quantia desejada. Temos assim a seguinte 
+
+escolha: Primeiramente escolhemos a de 25 centavos, em seguida a de 10, pois com mais 25 ou 
+
+mais 20, ultrapassaríamos a quantia desejada. Para finalizar, escolhemos a de 5, totalizando 25+ 
+
+10+5 = 40. Porém para que a quantidade de moedas seja mínima, a configuração de escolha 
+
+correta deve ser duas moedas de 20 centavos, e não as três moedas obtidas com o algoritmo. 
+
+Podemos concluir com os problemas acima que somente em algumas situações o 
+
+algoritmo ganancioso nos dá a resposta para uma questão de escolhas otimizada. Na seção a 
+
+seguir,  veremos  uma  estrutura  matemática  onde  sempre  poderemos  utilizar  o  algoritmo 
+
+ganancioso, dando uma introdução à Teoria dos Matróides. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 13 
+
+2 MATRÓIDES 
+
+São passados quase 90 anos desde que pela primeira vez surgiu o termo matróide e 
+
+este continua desconhecido da maioria dos amantes da matemática. Apesar disto, os matróides 
+
+têm  um  papel  muito  importante  em  diversas  áreas  científicas.  Álgebra,  geometria,  teoria  da 
+
+computação, investigação operacional  são algumas das que os utilizam,  muitas vezes sem  o 
+
+saberem. 
+
+Tal como o nome sugere, matróide vem da palavra matriz. O conceito de matróide 
+
+surgiu  em  1935,  quando  Whitney  tentou  generalizar  a  noção  de  dependência  linear  de  um 
+
+conjunto de vetores, pertencentes a um dado espaço vetorial. A teoria de matróides surgiu da 
+
+tentativa de unificar, de certa maneira a álgebra e a teoria dos grafos. Hassler Whitney após 
+
+vários  anos  de  estudos  sobre  teoria  dos  grafos  notou  similaridades  entre  as  ideias  de 
+
+independência e posto em teoria dos grafos a independência linear e dimensão no estudo de 
+
+espaços vetoriais. Vejamos um exemplo na álgebra linear: 
+
+Exemplo 2.1 Seja 𝐴 a seguinte matriz, com três linhas, seis colunas e preenchida 
+
+por  números  reais:  𝐴 = [
+
+1 0 0
+0 1 0
+0 0 1
+
+1 1 0
+1 1 0
+1 0 0
+
+].  Numerando  as  colunas  da  matriz  𝐴  e 
+
+simplificando a notação, podemos designar por E = {1, 2, 3, 4, 5, 6} o conjunto das colunas da 
+
+matriz 𝐴. Reparando nas colunas 1, 4, 5, se tentarmos encontrar números reais 𝑎1, 𝑎2 e 𝑎3 tais 
+
+1
+] + 𝑎2 [
+0
+0
+𝑎2
+𝑎2
+𝑎2
+
+1
+1
+1
+𝑎3
+𝑎3
+0
+
+] + [
+
+que 𝑎1 [
+
+] + [
+
+𝑎1
+0
+[
+0
+𝑎1 + 𝑎2 + 𝑎3
+𝑎2 + 𝑎3
+𝑎2
+
+[
+
+] + 𝑎3 [
+
+1
+1
+0
+
+] = [
+
+0
+] , teremos de encontrar números reais 𝑎1, 𝑎2 e 𝑎3 tais que 
+0
+0
+
+] = [
+
+0
+],  isto  é  equivalente  a  encontrar  números  reais  𝑎1, 𝑎2 e  𝑎3  tais  que 
+0
+0
+
+] = [
+
+0
+0
+0
+
+], ou seja, resolver o sistema {
+
+𝑎1 + 𝑎2 + 𝑎3 = 0
+𝑎2 + 𝑎3 = 0
+𝑎2 = 0
+
+. A única solução deste 
+
+sistema é 𝑎1 = 𝑎2 = 𝑎3 = 0. Isto significa que o subconjunto de E formado pelas colunas 1, 4, 
+
+5 de 𝐴 é linearmente independente. Este subconjunto não seria linearmente independente se o 
+
+sistema anterior tivesse mais do que uma solução. Sendo 𝐼1 a coleção de subconjuntos de E, 
+
+formados por colunas da matriz A, linearmente independentes, então podemos afirmar que 𝐼1  
+
+tem todos os conjuntos com, no máximo, três elementos de 𝐸 − {6}, exceto os conjuntos {1, 2, 
+
+5} e {3, 4, 5}. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+     
+ 14 
+
+Outra  noção  é  a  de  grafo.  Este  pode  ser  definido  como  um  conjunto  de  pontos 
+
+(chamados vértices do grafo) e uma coleção de linhas a unir determinados pontos (chamadas 
+
+arestas do grafo). 
+
+Exemplo 2.2 Na figura 2 pode ver-se o grafo 𝐺 com o conjunto de vértices 𝑋 =
+
+{𝑥1, 𝑥2, 𝑥3, 𝑥4} e a coleção das arestas 𝑈 = {𝑢1, 𝑢2, 𝑢3, 𝑢4, 𝑢5, 𝑢6}. 
+
+Figura 2 - Exemplo de grafo 
+
+Fonte: Fernandes (2015, p. 38). 
+
+Para  falarmos  da  noção  de  dependência  em  grafos,  necessitamos  de  um  outro 
+
+conceito, o conceito de ciclo. Um ciclo é uma sequência alternada de vértices e arestas de um 
+
+grafo, iniciada e terminada num vértice, tal que cada aresta tem uma extremidade no vértice 
+
+que imediatamente a precede na sequência e outra extremidade no vértice que imediatamente a 
+
+sucede  na  sequência. Além  disto,  num  ciclo,  todas  as  arestas  são  distintas  e  todos  os  seus 
+
+vértices também, à exceção do primeiro e do último, que são o mesmo. Reparando na figura, 
+
+temos por exemplo: 
+
+-A sequência 𝑥3, 𝑢1, 𝑥1, 𝑢5, 𝑥2, 𝑢2, 𝑥3 é um ciclo do grafo 𝐺. 
+
+-A sequência 𝑥4, 𝑢6, 𝑥4 também é um ciclo do grafo 𝐺 (ciclos com uma única aresta 
+
+chamam-se laços). 
+
+Quando nomeamos uma aresta ficam definidos os vértices que são extremidades 
+
+dessa aresta, assim podemos omitir os vértices quando estamos a escrever um ciclo. Pensando 
+
+nos ciclos exemplificados anteriormente no grafo 𝐺, poderíamos escrever o primeiro ciclo como 
+
+ 𝑢1, 𝑢5, 𝑢2,  e  o  segundo,  que  é  um  laço,  como  𝑢6.  Com  o  conceito  de  ciclo  estabelecido, 
+
+podemos falar da noção de dependência nos conjuntos constituídos por arestas de um grafo. 
+
+Exemplo 2.3 Olhando para o grafo 𝐺, e sendo 𝐼2 a coleção dos subconjuntos de 𝑈, 
+
+formados  por  arestas  do  grafo  G  que  não  contêm  nenhum  ciclo  do  grafo,  então,  podemos 
+
+afirmar que 𝐼2 tem todos os conjuntos com, no máximo, três elementos de 𝑈 − {𝑢6}, exceto os 
+
+conjuntos {𝑢1, 𝑢2, 𝑢5} 𝑒 {𝑢3, 𝑢4, 𝑢5}. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 15 
+
+Repare  na  semelhança  que  existe  entre  𝐼1  do  exemplo  2.1  e  𝐼2  do  exemplo  2.3. 
+
+Whitney reparou nesta semelhança e reparou também nas seguintes três propriedades que 𝐼1 e 
+
+𝐼2 verificavam: (designando por 𝐼 indiferentemente as coleções 𝐼1 e 𝐼2) 
+
+𝑷𝟏) ∅ é elemento de 𝐼. 
+
+𝑷𝟐) Se 𝑌 ∈ 𝐼 e 𝑍 ⊆ 𝑌, então 𝑍 ∈ 𝐼 . 
+
+𝑷𝟑) Se 𝑍, 𝑌  ∈  𝐼 e |𝑍| > |𝑌|, então existe 𝑧 ∈ 𝑍 − 𝑌 tal que 𝑌 ∪ {𝑧} ∈ 𝐼 (em que 
+
+|𝑌| e |𝑍| designam o número de elementos dos conjuntos 𝑌 e 𝑍, respectivamente). 
+
+Foi a partir destas três propriedades que Whitney definiu o conceito de matróide. 
+
+2.1 DEFINIÇÃO DE MATRÓIDES 
+
+Definição 2.1.1 Um matróide 𝑀 é uma estrutura do tipo 𝑀 = (𝐸, 𝐼) em que 𝐸 é um 
+
+conjunto  finito  e  𝐼  é  uma  coleção  de  subconjuntos  de  𝐸  que  verificam  as  três  propriedades 
+
+anteriores. 
+
+Se  𝑀 = (𝐸, 𝐼)  é  um  matróide,  então  os  conjuntos  de  𝐼  chamam-se  conjuntos 
+
+independentes do matróide 𝑀. O conjunto 𝐸 é o suporte do matróide 𝑀. O subconjunto de E que 
+
+não está em 𝐼 é chamado dependente.  Se o conjunto 𝐼 satisfizer as propriedades P1 e P2 mas não 
+
+necessariamente P3, então (𝐸, 𝐼) é denominado um complexo simplicial. 
+
+Proposição 2.1.1 Seja E o conjunto de colunas rotuladas de uma matriz m x n sobre 
+
+um corpo F, e seja 𝐼 o conjunto dos subconjuntos X de E para os quais multiconjuntos (conjunto 
+
+cujos  elementos  podem  ser  repetidos)  de  colunas  rotuladas  por  X  é  linearmente  independente 
+
+(L.I) no espaço vetorial de dimensão 𝑉(𝑚, 𝐹) sobre o corpo F. Então (E, 𝐼) é um Matróide. 
+
+Demonstração:  Evidentemente,  𝐼  satisfaz  (P1),  pois  ∅  ∈  𝐼  e  (P2)  também  é 
+
+satisfeito, pois, subconjuntos de conjuntos linearmente independentes também são linearmente 
+
+independentes.  Para  provar  (P3),  sejam  𝐼1 𝑒 𝐼2  conjuntos  independentes  de  𝐼.  Supondo  que 
+
+|𝐼1| < |𝐼2|, devemos provar que ∃ 𝑒 ∈ 𝐼2 − 𝐼1 com 𝐼1 ∪ {𝑒} ∈ 𝐼. Por absurdo, vamos supor que 
+
+∀ 𝑒 ∈ 𝐼2 − 𝐼1, 𝐼1 ∪ {𝑒} ∉ 𝐼 ⇒ 𝐼1 ∪ {𝑒} gera vetores linearmente dependentes. Seja W subespaço 
+
+de  𝑉(𝑚, 𝐹)  gerado  por  𝐼1 ∪ 𝐼2.  Logo  a  dimensão  de  W  é  no  mínimo  |𝐼2|,  pois  𝐼2 ⊂ 𝐼1 ∪ 𝐼2. 
+
+Portanto,  W  está  contido  no  gerado  de  𝐼1.  Assim  |𝐼2| ≤  𝑑𝑖𝑚 𝑊 ≤   |𝐼1| < |𝐼2|   é  uma 
+
+contradição. Logo, concluímos que 𝐼2 − 𝐼1 contém um elemento 𝑒 tal que 𝐼1 ∪ {𝑒} ∈ 𝐼, isto é, 
+
+(P3) é válida. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 16 
+
+Um Matróide obtido de uma matriz A como do exemplo 2.1, denotada por M[A], é 
+
+chamado Matróide Vetorial de A.  
+
+Exemplo  2.1.1  Voltando  a  analisar  a  matriz  𝐴 = [
+
+1 0 0
+0 1 0
+0 0 1
+
+1 1 0
+1 1 0
+1 0 0
+
+]  do 
+
+exemplo 2.1, cujas colunas são rotuladas por 1,2,3,4,5 e 6. Obtemos: 
+
+E = {1, 2, 3, 4, 5, 6} e 
+
+A coleção de subconjuntos dependentes é: 
+
+{{1,2,5}, {3,4,5}} ∪ {𝑋 ⊆ 𝐸; |𝑋| ≥ 4 𝑜𝑢 6 ∈ 𝑋} 
+
+Dentre  os  conjuntos  dependentes  existem  os  minimais,  ou  seja,  conjuntos 
+
+dependentes cujos subconjuntos próprios são independentes, e isso origina a seguinte definição: 
+
+Definição  2.1.2  Um  conjunto  dependente  minimal  de  um  Matróide  M  será 
+
+denominado circuito de M, e o conjunto de todos os circuitos do Matróide M será denominado 
+
+por 𝒞 ou 𝒞(M).   
+
+Um circuito de M com n elementos é denominado n-circuito. Evidentemente, tal 
+
+como no exemplo anterior, toda vez que 𝒞(M) for especificado, M também o será: os membros 
+
+de 𝐼(𝑀) são os subconjuntos de M e E que não contêm nenhum membro de 𝒞(M). Assim, um 
+
+Matróide é determinado exclusivamente por seu conjunto 𝒞 de circuitos.  
+
+Vamos  agora  analisar  algumas  propriedades  de  𝒞,  com  vista  a  caracterizar  esses 
+
+dois subconjuntos de que pode ocorrer como o conjunto de circuitos de um Matróide sobre E. 
+
+Lema 2.1.1 Seja 𝒞 o conjunto dos circuitos de um Matróide M, então são válidas 
+
+as seguintes propriedades:  
+
+C1) ∅ ∉ 𝒞.  
+
+C2) Se 𝐶1 𝑒 𝐶2 são membros de 𝒞 e 𝐶1 ⊆ 𝐶2, então 𝐶1 = 𝐶2.  
+
+C3) Se 𝐶1 𝑒 𝐶2 são membros distintos de 𝒞 e ℰ ∈ 𝐶1 ∩ 𝐶2. Então existe um membro 
+
+𝐶3 de 𝒞 tal que  𝐶3 ⊆ (𝐶1 ∪ 𝐶2) – ℰ.  
+
+Demonstração: C1) ∅ ∉ 𝒞. Por P1) ∅ ∈ I, pois I não contém circuito.  
+
+C2) Vamos supor que 𝐶1, 𝐶2 ∈ 𝒞 com 𝐶1 ⊆ 𝐶2 e 𝐶1 ≠ 𝐶2. ∃ 𝓍 ∈ 𝐶2 − 𝐶1. Então 
+
+𝐶1 ⊆ 𝐶2 − {𝓍}. Mas 𝐶2 − {𝓍} ∈  𝐼, por P2) 𝐶1 ∈ I é um absurdo.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+     
+ 17 
+
+Para  verificar  C3)  vamos  supor  que  não  existe  um  circuito  contido  em 
+
+(𝐶1 ∪ 𝐶2)– {ℰ}, ou seja, (𝐶1 ∪ 𝐶2) – ℰ é independente. Por C2), 𝐶2 − 𝐶1 ≠ ∅ então existe f em 
+
+𝐶2 − 𝐶1. Como  𝐶2  é  conjunto  dependente  minimal,  𝐶2– 𝑓 ∈ 𝐼.  Seja  J  um  subconjunto  de         
+
+𝐶1 ∪ 𝐶2  que  é  maximal  com  a  propriedade  que  este  contém  a  𝐶2 – 𝑓  é  independente. 
+
+Evidentemente f ∉ J. Mas como 𝐶1 é um circuito, algum elemento g de 𝐶1 não está em I. Como 
+
+𝑓 ∈ 𝐶2 − 𝐶1, os elementos f e g são distintos. Então  
+
+│𝐽│ ≤ │(𝐶1 ∪ 𝐶2) − {𝑓, 𝑔} │ = │(𝐶1 ∪ 𝐶2)│ – 2  < │(𝐶1 ∪ 𝐶2) – {ℰ}│.  
+
+Agora  aplicando,  P3),  tomando  𝐼1  como  J  e  𝐼2  como  (𝐶1 ∪ 𝐶2) – ℰ.  O  conjunto 
+
+independente resultado contradiz com a maximalidade de J. 
+
+A condição C3) é chamada de axioma da eliminação do circuito 
+
+Podemos então classificar um Matróide através das condições C1, C2 e C3. 
+
+Teorema  2.1.1  Seja  E  um  conjunto  e  𝒞  uma  coleção  de  subconjuntos  de  E  que 
+
+satisfaz  C1,  C2  e  C3.  Seja  I  uma  coleção  de  todos  os  subconjuntos  de  E  que  não  contém 
+
+membros de 𝒞. Então (𝐸, 𝐼) é um Matróide que tem 𝒞 como sua coleção de circuitos. 
+
+Demonstração: Primeiramente mostraremos que 𝐼 satisfaz P1, P2 e P3. Por C1, ∅ 
+
+não é um elemento de 𝒞, dessa forma ∅ ∈ 𝐼. Logo P1 é satisfeito. Se Y não contém elementos 
+
+de 𝒞 e Z está contido em Y, então Z não contém elementos de 𝒞. Logo P2 é satisfeito.  
+
+Para provar P3, suponhamos que 𝐼1 e 𝐼2 são membros de 𝐼 e |𝐼1| ˂ |𝐼2|. Suponhamos 
+
+que P3 falha para o par 𝐼1, 𝐼2. Agora 𝐼 contém um elemento que é um subconjunto de 𝐼1 ∪ 𝐼2 e 
+
+contém  mais  elementos  que  𝐼1.  Escolha  um  subconjunto  𝐼3  de  𝐼  contido  em  𝐼1 ∪ 𝐼2  tal  que 
+
+a |𝐼1– 𝐼3| é minimal. Como P3 falha, 𝐼1– 𝐼3 é não vazio, assim podemos escolher um elemento 
+𝑒 deste conjunto. Para cada elemento f de 𝐼3– 𝐼1, seja 𝑇𝑓 = (𝐼3 − {𝑓}) ∪   {𝑒}. Então 𝑇𝑓   ⊆   𝐼1 ∪
+
+𝐼2  e  │𝐼1 − 𝑇𝑓│ ˂ │𝐼1– 𝐼3│.  Portanto  𝑇𝑓 ∉ 𝐼,  assim  𝑇𝑓  contém  um  elemento  𝐶𝑓  de  𝒞. 
+
+Evidentemente 𝑓 ∉ 𝐶𝑓. Mas, 𝑒 ∈ 𝐶𝑓, pois caso contrário temos 𝐶𝑓 ⊆ 𝐼3 contradiz o fato que 𝐼3 ∈
+
+𝐼.   
+
+Seja g um elemento de 𝐼3– 𝐼1. Se 𝐶𝑔 ∩ (𝐼3– 𝐼1) = ∅. Então 𝐶𝑔 ⊆ (𝐼1 ∩ 𝐼3) ∪ {𝑒} −
+
+{𝑔} ⊆ 𝐼1 o que dá uma contradição. Portanto, tem um elemento h em 𝐶𝑔 ∩ (𝐼3– 𝐼1). Então 𝑒 ∈
+
+𝐶𝑔 ∩ 𝐶ℎ. Assim, C3 implica que tem um membro 𝐶 de 𝒞 tal que 𝐶 ⊆ (𝐶𝑔 ∪ 𝐶ℎ) − {𝑒}. Mas, 
+
+ambos 𝐶𝑔 e 𝐶ℎ são subconjuntos de 𝐼3 ∪ {𝑒} e, portanto 𝐶 ⊆ 𝐼3 é uma contradição. Concluímos 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 18 
+
+que P3 não falha e consequentemente (𝐸, 𝐼) é um Matróide M. 
+
+Para provar que 𝒞 é um conjunto 𝒞 (M) de circuitos de M, notamos que os seguintes 
+
+enunciados são equivalentes.  
+
+(i) C é um circuito de M.  
+
+(ii) C ∉ I(M) e C – x ∈ I(M) para todo x em C.  
+
+(iii)  C  contém  um  membro  C’  de  𝒞  como  um  subconjunto,  mas  C’  não  é  um 
+
+subconjunto próprio de C.  
+
+(iv) C ∈ 𝒞.  
+
+Como consequência imediata do teorema anterior tem-se: 
+
+Corolário 2.1.1 Seja 𝒞 uma coleção de subconjuntos de E. Então 𝒞 é uma coleção 
+
+de subconjuntos do circuito de um Matróide M se, e somente se, satisfaz as seguintes condições:  
+
+(C1) ∅ ∉ 𝒞.  
+
+(C2) Se 𝐶1 e 𝐶2 são elementos de 𝒞 e 𝐶1 ⊆ 𝐶2. Então 𝐶1= 𝐶2.  
+
+(C3)  Se  𝐶1  e  𝐶2  são  elementos  distintos  de  𝒞  e  𝜀  ∈  𝐶1  ∩  𝐶2,  então,  existe  um 
+
+elemento 𝐶3 de 𝒞 tal que 𝐶3 ⊆ (𝐶1 ∪ 𝐶2) – 𝜀. 
+
+Proposição  2.1.2  Seja  I  um  conjunto  independente  em  um  Matróide  M  e  𝜀  um 
+
+elemento  de  M  tal  que  𝐼 ∪ {𝜀}  é  dependente.  Então  M  tem  um  único  circuito  C  contido  em       
+
+𝐼 ∪ {𝜀}, que contém 𝜀.  
+
+Demonstração:  Evidentemente,  𝐼 ∪ {𝜀}  contém  um  circuito,  pois  𝐼 ∪ {𝜀}  é  um 
+
+conjunto  dependente.  Portanto,  todo  circuito  C  contido  em  𝐼 ∪ {𝜀}  contém  𝜀,  pois,  caso 
+
+contrário,  C  ⊂  I,  um  absurdo.  Supor  que  existe  um  circuito  C’,  distinto  de  C,  contido  em            
+
+𝐼 ∪ {𝜀}. Então, por (C3), (C ∪ C’) − 𝜀 contém um circuito C’, mas (C ∪ C’) − 𝜀 ⊆ I, e assim C’ 
+
+⊂  I,  o  que  é  um  absurdo,  pois  I  é  independente.  Portanto,  C  é  o  único  circuito  contido  em          
+
+𝐼 ∪ {𝜀}  e que contém 𝜀. 
+
+Com  as definições, teoremas e proposições acima demonstradas, podemos agora 
+
+escrever formalmente como se dá a construção de matróides derivados de grafos, como visto 
+
+no exemplo 2.2. 
+
+Proposição 2.1.3. Seja E o conjunto das arestas de um grafo G e 𝒞 a família dos 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 19 
+
+conjuntos das arestas dos ciclos de G. Então 𝒞 é a família dos circuitos de um Matróide sobre 
+
+E.  
+
+Demonstração: (C1) ∅ ∉  𝒞. Por P1, ∅ ∈ 𝐼.  
+
+(C2) Supor 𝐶1  e 𝐶2  ∈ 𝒞 com 𝐶1 ⊆ 𝐶2  e 𝐶1 ≠ 𝐶2. Então ∃ 𝜀 ∈   𝐶2 – 𝐶1 , e assim 
+
+𝐶1   ⊆ 𝐶2 − {𝜀}. Mas 𝐶2 − {𝜀}   ∈  𝐼, donde, por P2, 𝐶1 ∈ I, uma contradição. 
+
+(C3)  Sejam  𝐶1  e  𝐶2  os  conjuntos  das  arestas  de  dois  ciclos  distintos  de  G  que 
+
+possuem 𝑒 como uma aresta em comum. Considere a Fig. (3). Sejam u e v os vértices da aresta 
+
+𝑒. Vamos agora construir um ciclo de G cujas arestas estão contidas em 𝐶1 ∪ 𝐶2 – 𝑒, para i = 1, 
+
+2,  seja  𝑃1  um  caminho  de  u  a  v  em  G  cujas  arestas  estão  em  𝐶𝑖 – 𝑒.  Começando  em  u, 
+
+percorrendo 𝑃1 em direção de v, seja w o primeiro vértice cuja próxima aresta de 𝑃1 não pertence 
+
+a 𝑃2. Continuando a percorrer 𝑃1 de w em direção v, encontramos um vértice x distinto de w 
+
+que também está em 𝑃2. Como 𝑃1 e 𝑃2 terminam em v tal vértice existe. Unindo o subcaminho 
+
+de 𝑃1 que vai de w a x ao subcaminho de 𝑃2 vai de x até w encontramos um ciclo cujas arestas 
+
+estão  contidas  em  𝐶1 ∪ 𝐶2 – 𝑒.  Portanto,  𝒞  satisfaz  a  propriedade  (C3),  𝐶3 ⊆ 𝐶1 ∪ 𝐶2 − 𝑒. 
+
+Logo 𝒞 é a família dos circuitos de um Matróide sobre E. 
+
+Assim, um ciclo é uma sequência alternada de arestas e vértices, de um grafo G, 
+
+formando um ciclo fechado. 
+
+Figura 3 - O ciclo é um grafo que satisfaz o circuito eliminatório do axioma (C3) 
+
+Fonte: Ales (2017, p. 24). 
+
+Definição 2.1.3  MATRÓIDE UNIFORME: Sejam 𝑛 e  𝑟 dois números inteiros 
+
+não  negativos,  com  0 ≤ 𝑟 ≤ 𝑛.  Chama-se  matróide  uniforme,  denotando-se  por  𝑈𝑟,𝑛,  um 
+
+matróide 𝑀 = (𝐸, 𝐼) em que E é um conjunto com 𝑛 elementos e 𝐼 é a coleção de subconjuntos 
+
+de E com, no máximo, 𝑟 elementos.  
+
+É fácil verificar que o par (𝐸, 𝐼) da definição acima constitui um matróide. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 20 
+
+Exemplo 2.1.2 Pedro tem uma lista de compras para o supermercado: 1 dúzia de 
+
+ovos;  1  kg  de  arroz;  1  lata  de  atum;  1  pacote  de  salada.  No  supermercado,  repara  que  se 
+
+esqueceu da carteira em casa e que nos seus bolsos só tem três reais. Olha para as prateleiras e 
+
+acrescenta à sua lista de produtos os respectivos preços: 1 dúzia de ovos = 1,00 real; 1 kg de 
+
+arroz = 1,10 reais; 1 lata de atum = 1,30 reais; 1 pacote de salada = 1,20 reais. Face ao exposto, 
+
+Pedro tem, no máximo,  dinheiro para  comprar quaisquer dois  produtos  da sua lista. Ou não 
+
+compra nada, ou compra um produto, ou compra dois produtos. Estamos perante um problema 
+
+que tem quatro elementos (os produtos da lista do Rui) e podemos construir subconjuntos destes 
+
+quatro elementos com, no máximo, dois elementos (o Rui só tem dinheiro para comprar, no 
+
+máximo, dois produtos da lista). Portanto o que temos neste exemplo é o matróide uniforme 
+
+𝑈2,4. 
+
+Definição  2.1.4  Seja  um  conjunto  E,  um  conjunto  sobre  o  qual  definimos  uma 
+
+propriedade. Seja o  MÁXIMO (MÍNIMO) ou MAXIMAL (MINIMAL)  subconjunto  𝑅 ⊆ 𝐸 
+
+aquele  tal  que  não  existe  um  outro  subconjunto  𝑅′ ⊆ 𝐸  que  contém  (contido  em) 𝑅 
+
+propriamente, satisfazendo a mesma propriedade.  
+
+Exemplo 2.1.3 Seja 𝐸 = {𝑂, 2, . . . , 10} conjunto dos pares menores ou iguais a 10. 
+
+O  subconjunto  maximal  (minimal)  𝑅 ⊆ 𝐸  contendo  pares  menores  que  7  é  𝑅 = {𝑂, 2, 4, 6}    
+
+(𝑅 = {𝑂}, 𝑅 = {2}, 𝑅 = {4}, 𝑅 = {6} todos minimais). 
+
+Um  outro  tipo  de  matróide  que  será  utilizado  nas  seções  posteriores  são  os 
+
+matróides transversais. Para caracterizá-los definiremos alguns elementos básicos. 
+
+Seja  E  um  conjunto  finito  e  𝑄 = {𝑄1, 𝑄2, … , 𝑄𝑛}  um  conjunto  de,  não 
+
+necessariamente  distintos,  subconjuntos  de  E.  Um  TRANSVERSAL  DE  Q  é  um  conjunto 
+
+formado tomando-se um único elemento de cada subconjunto 𝑄1, 𝑄2, … , 𝑄𝑛, de maneira que 
+
+todos estes elementos sejam distintos. Um PARCIAL TRANSVERSAL DE Q é uma transversal 
+
+de algum subconjunto de 𝑄. 
+
+Exemplo  2.1.4  𝑄 = {𝑄1, 𝑄2, 𝑄3}  um 
+
+conjunto  de 
+
+subconjuntos  de                                
+
+𝐸 = {𝑒1, 𝑒2, 𝑒3, 𝑒4} onde 𝑄1 = {𝑒2, 𝑒3, 𝑒4} e 𝑄2 = 𝑄3 = {𝑒1}. Não temos um transversal pois 
+
+𝑄2 = 𝑄3, mas ∅, {𝑒1}, {𝑒2}, {𝑒3}, {𝑒4}, {𝑒1, 𝑒2}, {𝑒1, 𝑒3}, {𝑒1, 𝑒4} são parciais transversais. 
+
+Definição  2.1.5  Com  as  definições  acima,  𝑀 = (𝐸, 𝐼)  é  um  MATRÓIDE 
+
+TRANSVERSAL sobre 𝐸 se 𝐼 é o conjunto de parciais transversais de 𝑄, ou seja, as parciais 
+
+transversais de 𝑄 são os subconjuntos independentes de 𝐸. As propriedades P1, P2 e P3 são 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 21 
+
+facilmente verificadas. 
+
+Entre  os  subconjuntos  independentes  de  𝐸  temos  o  MAXIMAL  PARCIAL 
+
+TRANSVERSAL DE Q, que é o parcial transversal tal que não existe nenhum outro parcial 
+
+transversal contendo-o. 
+
+2.2 MATRÓIDES PESADOS 
+
+Queremos agora relacionar matróides com problemas de otimização. Grosso modo, 
+
+o objetivo de um problema de otimização é minimizar/maximizar uma determinada quantidade, 
+
+de acordo com certas restrições. Vamos fazer isso atribuindo uma certa quantidade (designada 
+
+por “peso”) a cada elemento de E. 
+
+Seja 𝑀 = (𝐸, 𝐼) um matróide e seja 𝑤: 𝐸 ⟶ ℝ0
+
++ uma função. Dizemos que w é a 
+
+função  peso  do  matróide  e  w(x)  é  o  peso  do  elemento  x.  Dado  𝑋 ⊆ 𝐸,  o  peso  de  𝑋,  que 
+
+denotamos por w(X) (abuso de notação!) é a soma de todos os pesos dos seus elementos, ou 
+
+seja, 𝑤(𝑋) = ∑
+
+𝑥∈𝑋
+
+𝑤(𝑥)
+
+. O problema que pretendemos resolver é o seguinte: 
+
+PROBLEMA: Determinar um conjunto independente maximal de peso máximo. 
+
+Por “conjunto independente maximal” entenda-se um conjunto independente que 
+
+não  está  estritamente  contido  em  nenhum  outro  conjunto  independente.  O  problema  de 
+
+determinar um independente maximal de peso mínimo é inteiramente análogo, logo, focar-nos-
+
+emos apenas no caso acima. 
+
+Vamos  agora  ver  que  a  resposta  ao  problema  acima  é  “usando  um  algoritmo 
+
+ganancioso!”. 
+
+Seja M = (E, I) um matróide pesado cuja função peso é 𝑤: 𝐸 ⟶ ℝ0
+
++. Consideremos 
+
+o  seguinte  algoritmo  ganancioso  (ou  guloso),  cujo  objetivo  é  determinar  um  conjunto 
+
+independente maximal de peso máximo: 
+
+• Passo 1: Começamos por considerar o conjunto independente 𝑋 = ∅  
+
+•  Passo  2:  Acrescentamos  a  X  um  elemento  x  de  peso  máximo  satisfazendo             
+
+𝑋 ∪ {𝑥} ∈ 𝐼. 
+
+• Passo 3:  Continuamos  a acrescentar  elementos como  no  Passo 2  até obter um 
+
+independente maximal. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 22 
+
+Nota-se que a propriedade P3 satisfeita pelo matróide assegura que conseguimos 
+
+“completar”  qualquer  conjunto  independente  até  atingirmos  um  independente  maximal,  daí 
+
+podermos  executar  o  Passo  2  até  alcançarmos  um  tal  conjunto.  Além  disso,  esta  mesma 
+
+propriedade  garante  que  quaisquer  dois  conjuntos  independentes  maximais  têm  a  mesma 
+
+cardinalidade. 
+
+Chegamos enfim ao resultado que procuramos: 
+
+Teorema 2.2.1  O algoritmo  ganancioso  acima encontra a melhor solução  para  o 
+
+PROBLEMA. 
+
+Demonstração: Seja M = (E, I) um matróide pesado com função peso 𝑤: 𝐸 ⟶ ℝ0
+
++. 
+
+Suponhamos,  com  vista  a  um  absurdo,  que  o  algoritmo  ganancioso  devolve  um  conjunto 
+
+independente maximal 𝑋 = {𝑥1, . . . , 𝑥𝑛}, mas existe um conjunto independente maximal  𝑌 =
+{𝑦1, . . . , 𝑦𝑛}  satisfazendo  𝑤(𝑌 ) > 𝑤(𝑋).  Suponhamos  ainda  que  𝑤(𝑥1) ≥ · · · ≥ 𝑤(𝑥𝑛)  e  
+
+𝑤(𝑦1) ≥ · · · ≥ 𝑤(𝑦𝑛). Então, tem de existir algum 1 ≤ 𝑘 ≤ 𝑛 tal que 𝑤(𝑦𝑘) > 𝑤(𝑥𝑘). Como 
+
+os  conjuntos  𝑋′ = {𝑥1, . . . , 𝑥𝑘−1}  e  𝑌′ = {𝑦1, . . . , 𝑦𝑘}  são  independentes  e  |𝑌′| > |𝑋′|,  a 
+
+propriedade P2 satisfeita por I garante que existe 1 ≤ 𝑟 ≤ 𝑘 tal que o conjunto {𝑥1, . . . , 𝑥𝑘−1, 𝑦𝑟} 
+
+é independente. Mas 𝑤(𝑦𝑟) ≥ 𝑤(𝑦𝑘) pois 𝑟 ≤ 𝑘, e 𝑤(𝑦𝑘) > 𝑤(𝑥𝑘) pela escolha de 𝑘. Logo 
+
+𝑤(𝑦𝑟) > 𝑤(𝑥𝑘), pelo que o algoritmo ganancioso teria escolhido o elemento 𝑦𝑟 ao invés de 𝑥𝑘, 
+
+absurdo! Concluímos então que X é um independente maximal de peso máximo. 
+
+Está então demonstrado que, se um problema de otimização possui a estrutura de 
+
+matróide, então um algoritmo ganancioso fornece a melhor solução possível. 
+
+Mas, intuitivamente, porque é que a prova funciona? Novamente, a propriedade P3 
+
+é o ingrediente essencial: ela permite-nos assegurar a existência de uma solução ótima para o 
+
+problema que é consistente com as escolhas que o algoritmo ganancioso vai fazendo. Isto é, 
+
+podemos ir acrescentando cada vez mais elementos aos nossos independentes “locais” de modo 
+
+a culminar num independente “global” que satisfaz o pretendido. 
+
+A  observação  prévia  motiva  a  seguinte  questão:  o  que  acontece  se  não 
+
+considerarmos a propriedade P3? Será que as propriedades P1 e P2 são suficientes para garantir 
+
+que  um  algoritmo  ganancioso  encontra  a  solução  ótima  para  o  problema  em  questão? 
+
+Lembremos que um complexo simplicial S é uma estrutura do tipo 𝑆 = (𝐸, 𝐼) em que o conjunto 
+
+𝐼 ⊆ 𝑃(𝐸), onde P(E) é o conjunto de todos os subconjuntos de 𝐸, satisfaz as propriedades P1 e 
+
+P2,  mas  não  necessariamente  P3.  Para  ser  mais  simples,  vamos  continuar  a  referir-nos  aos 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 23 
+
+elementos I como “independentes”. O próximo resultado indica que se um complexo simplicial 
+
+não satisfaz P3, então existe uma função peso 𝑤: 𝐸 ⟶ ℝ0
+
++ tal que o algoritmo ganancioso NÃO 
+
+encontra um independente maximal com peso máximo. Ou seja, a propriedade  P3 é mesmo 
+
+indispensável para que o algoritmo ganancioso forneça a solução ótima para qualquer função 
+
+peso que possamos considerar! 
+
+Teorema 2.2.2 Se um complexo simplicial não for um matróide, então o algoritmo 
+
+ganancioso pode não encontrar a solução ótima para o PROBLEMA. 
+
+Demonstração: Seja 𝑆 = (𝐸, 𝐼) um complexo simplicial e sejam 𝑋, 𝑌 ∈ 𝐼 tais que 
+
+|𝑌 | > |𝑋| mas 𝑋 ∪ {𝑦} ∉ 𝐼 para todo 𝑦 ∈ 𝑌 − 𝑋 (i.e. |𝑋| e |𝑌| violam a propriedade P3. Como 
+
+|𝑌 − 𝑋| > |𝑋 − 𝑌 |, existe algum 0 < 𝑐 < 1 satisfazendo |𝑋 − 𝑌| < 𝑐|𝑌 − 𝑋|. Consideremos 
+
+a função peso 𝑤: 𝐸 ⟶ ℝ0
+
++  dada por 
+
+𝑤(𝑥) = {
+
+1       𝑠𝑒 𝑥 ∈ 𝑋         
+𝑐       𝑠𝑒 𝑥 ∈ 𝑌 − 𝑋 
+ 0       𝑠𝑒 𝑥 ∉ 𝑌 ∪ 𝑋  
+
+Então, no processo de obtenção de um independente maximal com peso máximo, o 
+
+algoritmo ganancioso começa por escolher todos os elementos de X; consequentemente, não 
+
+vai poder escolher nenhum elemento de Y, pois estamos a assumir que 𝑋 ∪ {𝑦} ∉ 𝐼 para todo o 
+
+𝑦 ∈ 𝑌 − 𝑋.  Assim,  os  elementos  restantes  que  o  algoritmo  escolhe  têm  de  pertencer  a                 
+
+𝐶 − (𝑋 ∪ 𝑌),  pelo  que  todos  terão  peso  0.  Portanto,  o  peso  do  independente  maximal  Z 
+
+selecionado  pelo  algoritmo  ganancioso  é  dado  por  𝑤(𝑍) = |𝑋|.  Por  outro  lado,  sendo  Y 
+
+independente, existe algum 𝑊 ∈ 𝐼 maximal tal que 𝑌 ⊆ 𝑊, e tem-se 
+
+𝑤(𝑊) ≥ 𝑤(𝑌) = 𝑤(|𝑋 ∩ 𝑌|) + 𝑤(|𝑌 − 𝑋|) 
+
+                 = |𝑋 ∩ 𝑌| + 𝑐|𝑌 − 𝑋| 
+
+               > |𝑋 ∩ 𝑌| + |𝑋 − 𝑌| 
+
+   = |𝑋| = 𝑤(𝑍) 
+
+Portanto,  o  independente  maximal  W  tem  um  peso  superior  ao  independente 
+
+maximal Z fornecido pelo algoritmo ganancioso. Mostramos assim que, para esta função peso, 
+
+o algoritmo ganancioso não alcança a solução ótima para o problema. 
+
+Combinando os dois teoremas anteriores, obtemos a seguinte caracterização: 
+
+Teorema  2.2.3:  Os  complexos  simpliciais  em  que  os  algoritmos  gananciosos 
+
+alcançam a solução ótima para o PROBLEMA são precisamente os matróides. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 24 
+
+3 CONCLUSÃO 
+
+Verificamos que inicialmente é definido o conjunto E e em seguida uma “estrutura 
+
+de  independência”  que  gerará  I.  Este  passo  nem  sempre  é  evidente.  Para  a  conclusão  deste 
+
+trabalho,  veremos  o  porquê  de  os  problemas  propostos  que  nos  serviram  como  motivação 
+
+podem ser, ou não, resolvidos com o algoritmo ganancioso.  
+
+O problema 3 não tem resultado otimizado com o algoritmo ganancioso, logo não 
+
+possui estrutura de matróide. Com relação ao problema 2, temos um problema de grafos, que 
+
+já foi demonstrado possuir uma estrutura de matróide. Logo nos resta analisar o problema 1. 
+
+Vejamos novamente o problema: 
+
+Problema  1.  Um  certo  número  de  trabalhos  será  executado  por  uma  única 
+
+máquina. Todos requerem o mesmo tempo de processamento, uma hora. Estão associados 
+
+a  um  tempo  para  entrega,  o  qual  não  satisfeito,  implica  em  uma  penalidade  fixa  𝒑𝒊, 
+
+independente do atraso. Determinar a sequência para execução dos trabalhos de forma 
+
+que o total das penalidades seja mínimo. 
+
+Nesse problema um conjunto de trabalhos serão executados. Seja 𝐸 = {𝑒1, … , 𝑒𝑛} 
+
+este  conjunto  de  trabalhos.  A  cada  trabalho  está  associado  um  tempo  de  entrega  e  uma 
+
+penalidade. Podemos assim separar os trabalhos em conjuntos por tempo de entrega. Seja 𝑄 =
+
+{𝑄1, … , 𝑄𝑛} onde 𝑄𝑖 contém todos os trabalhos a serem entregues no tempo 𝑡 = 𝑖. Definimos 
+
+assim um matróide transversal 𝑀 = (𝐸, 𝐼) sobre 𝐸. 𝐼 é o conjunto dos parciais transversais de 
+
+𝑄, ou seja, o conjunto de sequências para execução dos trabalhos. Como a cada elemento de 𝐸 
+
+está  associada  uma  penalidade,  uma  função  de  pesos  não  negativa,  aplicando  o  algoritmo 
+
+ganancioso, obtemos um transversal S de peso máximo. Consequentemente uma sequência para 
+
+execução dos trabalhos com um total mínimo de penalidade.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 25 
+
+REFERÊNCIAS 
+
+ALES, R. Matróides e códigos quânticos. 2017. 87p. Dissertação (Mestrado em Ciências) – 
+Universidade Estadual de Ponta Grossa, Ponta Grossa, 2017. 
+
+FERNANDES, R. O que é um matróide? Gazeta de Matemática, n. 175, ano 76, p. 36-40, 
+mar. 2015. Disponível em: https://gazeta.spm.pt/get?gid=175. Acesso em: 02 jan. 2023. 
+
+MATEUS,  G.  R.  Matróides  e  algoritmos  greedy.  1980.  249  p.  Dissertação  (Mestrado  em 
+Engenharia  de  Sistemas  e  Computação)  –  Universidade  Federal  do  Rio  de  Janeiro,  Rio  de 
+Janeiro, 1980. 
+
+OXLEY, J. G. Matroid theory. Oxford: Oxford University Press, 1992. 
+
+PARBERRY, I. Problems on algorithms. Englewood Cliffs, N. J.: Prentice Hall, 1995. 
+
+WHITNEY,  H.  On  the  abstract  properties  of  linear  dependence.  American  Journal 
+Mathematics, v. 57, n. 3, p. 509-533, Jul. 1935. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+

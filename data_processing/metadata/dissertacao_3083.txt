@@ -1,0 +1,3934 @@
+Criptografia RSA
+
+Daniele Helena Bonfim
+
+SERVIÇO DE PÓS-GRADUAÇÃO DO ICMC-USP
+
+Data de Depósito:
+
+Assinatura: ______________________
+
+Daniele Helena Bonfim
+
+Criptografia RSA
+
+Dissertação apresentada ao Instituto de Ciências
+Matemáticas e de Computação – ICMC-USP,
+como parte dos requisitos para obtenção do título
+de Mestra em Ciências – Programa de Mestrado
+Profissional em Matemática. VERSÃO REVISADA
+
+Área de Concentração: Matemática
+
+Orientador: Prof. Dr. Marcelo Rempel Ebert
+
+USP – São Carlos
+Março de 2017
+
+Ficha catalográfica elaborada pela Biblioteca Prof. Achille Bassi
+e Seção Técnica de Informática, ICMC/USP,
+com os dados fornecidos pelo(a) autor(a)
+
+Bonfim, Daniele Helena
+
+B634c
+
+Criptografia RSA / Daniele Helena Bonfim; orientador
+
+Marcelo Rempel Ebert. -- São Carlos -- SP, 2017.
+
+91 p.
+
+Dissertação (Mestrado - Programa de Pós-graduação em
+Mestrado Profissional em Matemática em Rede Nacional)
+-- Instituto de Ciências Matemáticas e de Computação,
+Universidade de São Paulo, 2017.
+
+1. Criptografia. 2. RSA. 3. Congruência modular.
+4. Teoria dos Números. I. Ebert, Marcelo Rempel, orient.
+II. Título.
+
+Daniele Helena Bonfim
+
+Cryptography RSA
+
+Master dissertation submitted to the Instituto de
+Ciências Matemáticas e de Computação – ICMC-
+USP, in partial fulfillment of the requirements for the
+degree of Mathematics Professional Master’s Program.
+FINAL VERSION
+
+Concentration Area: Mathematics
+
+Advisor: Prof. Dr. Marcelo Rempel Ebert
+
+USP – São Carlos
+March 2017
+
+Dedico este trabalho á minha mãe, Maria José; ao meu marido, Pedro; à minha
+irmãzinha Ana Luiza; à minha vó Maria da Penha; ao meu pai Lázaro; ao professor
+Luciano Pedroso que me apresentou ao PROFMAT, assim como aos meus professores
+da graduação Maria de Fátima Bernades, Wagner Bernardes, Waldemar Gianini e
+Fernando Oliveira; aos meu queridos alunos do PIC: Deivid Cezar da Silva, Gustavo
+Teixeira Simões, Jonas Cassiano Costa, André Rodrigues Gomes Silva, Leonardo
+Siqueira Aprile Pires, Cibele Louise de Almeida Cardoso, Rafael Vasconcelos Martins,
+Vanessa de Oliveira, Pedro Henrique Silva Alves, Jean Lima Alves, Layane Avila,
+Matheus de Oliveira Gonçalves, Hugo Rodrigues Salomão, Leticia Maria Costa, Merhy
+End Dias Faria; aos meu professores Marcelo Rempel Ebert, Kátia Andréia Gonçalves de
+Azevedo e Vanessa Rolnik Artioli do PROFMAT.
+
+AGRADECIMENTOS
+
+Agradeço primeiramente à Deus e à minha mãe, que me deu muito apoio em todos
+os momentos. Ao meu marido, Pedro, que teve extrema paciência e sempre me apoiou.
+Ao IMPA que teve a iniciativa de proporcionar o PROFMAT, à USP, ao meu orientador
+Marcelo Rempel Ebert e à CAPES que proporcionou a aplicação nas aulas do Programa
+de Iniciação Científica da Obmep, assim como a todos os professores que me ajudaram a
+aprofundar meus conhecimentos e a realizar este sonho.
+
+“Precisamos nos comunicar
+Da rotina escapar
+Ao amor nos entregar.
+Algumas coisas gritamos ao mundo,
+Outras guardadas estão bem lá no fundo
+Da alma, ou do coração.
+Mas pra sempre assim não ficarão.
+Muitas vezes não queremos falar,
+Porque nem todos precisam escutar,
+Por isso minha mensagem vou criptografar
+Para que só alguns possam receptar”
+(Daniele Helena Bonfim)
+
+RESUMO
+
+BORGES, DANIELE H. B.. Criptografia RSA. 2017. 91 f. Dissertação (Mestrado em
+Ciências – Programa de Mestrado Profissional em Matemática) – Instituto de Ciências
+Matemáticas e de Computação (ICMC/USP), São Carlos – SP.
+
+Neste trabalho é apresentado um pouco da história da criptografia, assim como sua impor-
+tância nos dias atuais, a base da teoria dos números e de congruência modular necessárias
+para compreender a criptografia RSA, que é o foco deste trabalho. A criptografia RSA
+é a mais usada atualmente por causa da dificuldade em ser decodificada. Foi elaborada
+e apresentada uma aula aos alunos do ensino fundamental e médio participantes do Pro-
+grama de Iniciação Científica Júnior da OBMEP, sendo mostrado o porquê ela funciona,
+os métodos de codificação e decodificação.
+
+Palavras-chave: Criptografia, RSA, Congruência modular, Teoria dos Números.
+
+ABSTRACT
+
+BORGES, DANIELE H. B.. Criptografia RSA. 2017. 91 f. Dissertação (Mestrado em
+Ciências – Programa de Mestrado Profissional em Matemática) – Instituto de Ciências
+Matemáticas e de Computação (ICMC/USP), São Carlos – SP.
+
+In this work some of the history of cryptography is presented, as well as its nowadays
+applications. The RSA encryption is the most widely used because of the difficulty to
+being decoded. In order to understand the RSA encryption, which is the focus of this work,
+we recall some basis of number theory and modular congruence. Also, it was prepared
+and presented a lecture to the students of middle and high school participants in the
+Program of Junior Scientific Initiation of OBMEP, being shown why it works, methods
+of encoding and decoding.
+
+Keywords: Cryptography, RSA, Modular congruence, Number Theory.
+
+LISTA DE ILUSTRAÇÕES
+
+Figura 1 – Crivo de Eratóstenes . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+Figura 2 – Criptografia em sites . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+Figura 3 – Criptografia em sites . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+Figura 4 – Como funciona a criptografia . . . . . . . . . . . . . . . . . . . . . . . 52
+Figura 5 – Citale Espartano . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+Figura 6 – Frequência das letras no alfabeto (Brasil) . . . . . . . . . . . . . . . . . 54
+Figura 7 – Cifra 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+Figura 8 – Cifra 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+Figura 9 – Cifra 3 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+Figura 10 – 3 (cid:2) 2 - Três linhas por duas colunas . . . . . . . . . . . . . . . . . . . . 58
+Figura 11 – Tabela de consulta para letras e números em Braille . . . . . . . . . . . 59
+. . . . . . . . . . . . . . 74
+Figura 12 – Programação dos Primeiros Encontros do G4
+Figura 13 – Programação dos Primeiros Encontros do G3
+. . . . . . . . . . . . . . 74
+Figura 14 – Encontrando N . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+Figura 15 – Encontrando φN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+Figura 16 – Fatoração de φN
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 76
+Figura 17 – Encontrando d . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 77
+Figura 18 – Codificando a mensagem . . . . . . . . . . . . . . . . . . . . . . . . . . 77
+Figura 19 – Codificando a mensagem . . . . . . . . . . . . . . . . . . . . . . . . . . 78
+Figura 20 – Decodificando a mensagem . . . . . . . . . . . . . . . . . . . . . . . . . 78
+Figura 21 – Decodificando a mensagem . . . . . . . . . . . . . . . . . . . . . . . . . 79
+
+LISTA DE TABELAS
+
+. . . . . . . . . . . . . . . . . . . . 28
+Tabela 1 – Diagrama - Algoritmo de Euclides
+Tabela 2 – Maiores pares de primos gêmeos conhecidos
+. . . . . . . . . . . . . . . 45
+Tabela 3 – Tabela para Cifra de Blaise de Vigenère . . . . . . . . . . . . . . . . . 56
+Tabela 4 – Criptografando com a Cifra de Blaise . . . . . . . . . . . . . . . . . . . 56
+Tabela 5 – Código Morse . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+Tabela 6 – Criptografia convencional e de chave pública . . . . . . . . . . . . . . . 63
+Tabela 7 – Tabela Para Conversão . . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+
+SUMÁRIO
+
+1
+
+2
+
+2.1
+
+2.2
+
+2.3
+
+2.4
+
+2.5
+
+2.6
+
+2.7
+
+2.8
+
+2.9
+
+INTRODUÇÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+
+ARITMÉTICA BÁSICA . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+Divisão nos Inteiros
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+
+O algoritmo de Euclides . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+Equações diofantinas lineares . . . . . . . . . . . . . . . . . . . . . . . 32
+
+Os números primos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 34
+
+Congruência e Propriedades . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+Congruências Lineares . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+
+Teorema Chinês do Resto . . . . . . . . . . . . . . . . . . . . . . . . . 41
+
+Métodos Para Achar Números Primos
+
+. . . . . . . . . . . . . . . . . 43
+
+Como Encontrar Números Primos Grandes . . . . . . . . . . . . . . . 43
+
+2.10
+
+Teste de Primalidade . . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+
+3
+
+3.1
+
+3.1.1
+
+3.1.2
+
+3.1.3
+
+3.1.4
+
+3.1.5
+
+3.1.6
+
+3.1.7
+
+3.1.8
+
+3.1.9
+
+3.1.10
+
+3.1.11
+
+3.1.12
+
+3.2
+
+3.2.1
+
+3.2.2
+
+3.2.3
+
+CRIPTOGRAFIA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+Tipos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+Heródoto . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+
+Bastão de Licurgo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+
+Método de César . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+
+Anagrama . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+Blaise de Vigenère . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+A cifra de Beale . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+Braille . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+
+Disco de Alberti
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 58
+
+Máquina Enigma . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 60
+
+Máquina Colossus
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+
+Código Morse . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+
+Sistema Binário . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+
+RSA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+
+Como Funciona? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+
+Por que funciona? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 70
+
+Segurança . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 71
+
+4
+
+4.1
+4.2
+4.3
+4.4
+
+APLICAÇÕES DA CRIPTOGRAFIA RSA NO PROGRAMA DE INI-
+CIAÇÃO CIENTÍFICA OBMEP . . . . . . . . . . . . . . . . . . . . 73
+Planejamento . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 73
+A aplicação . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+MAXIMA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 75
+Resultados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 79
+
+REFERÊNCIAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 81
+
+APÊNDICE A
+
+PROPRIEDADE ARQUIMEDIANA . . . . . . . . . . . 85
+
+APÊNDICE B
+B.1
+B.2
+B.3
+
+OS PROBLEMAS DO PRÊMIO MILLENNIUM . . . . 87
+A hipótese de Riemann . . . . . . . . . . . . . . . . . . . . . . . . . . 88
+P versus NP . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 89
+Curiosidades . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 90
+
+21
+
+CAPÍTULO
+
+1
+
+INTRODUÇÃO
+
+Neste trabalho será apresentado a Criptografia, que estuda o ato de cifrar men-
+sagens, derivada do grego cryptos que significa “secreto, oculto”, usada para codificar
+mensagens de forma que somente o destinatário e o remetente compreendam. Segundo
+Coutinho (2008, p. 1) é o estudo dos: “métodos para codificar uma mensagem de modo
+que só seu destinatário consiga interpretá-la”.
+
+Durante a história é possível perceber o quanto a Criptografia evoluiu para que
+as mensagens ficassem mais seguras de serem transmitidas, já que, com seu surgimento
+também veio a Criptoanálise que estuda os métodos de quebrar ou decifrar mensagens
+cifradas.
+
+Para compreender melhor o processo veja o exemplo: Ana quer enviar uma men-
+sagem à Felipe, contudo ela quer que somente ele leia e compreenda a mensagem, para
+isso ela irá escrever a mensagem e cifrá-la ou codificá-la antes de enviar, de modo que,
+quando Felipe receber ele terá que decifrar a mesma. O ato de Ana é para que caso uma
+terceira pessoa intercepte a mensagem, esta não possa ler ou compreender.
+
+Segundo Diffie e Hellman (2007, p. 30): “A criptografia é o estudo de sistemas
+“matemáticos” envolvendo dois tipos de problemas de segurança: privacidade e autentica-
+ção”.
+
+Atualmente está presente na linguagem de computadores, quando é enviado um
+e-mail, nas senhas de bancos e redes sociais, dentre outros, mas ela não é um conteúdo
+presente no Ensino Médio atual. No Conteúdo Básico Comum (CBC) de Minas Gerais
+(CARNEIRO; SPIRA; SABATUCCI, 2016) ela não aparece, nem nos Parâmetros Curri-
+culares Nacionais (PCNs) de Matemática (BRASIL, 1997).
+
+Contudo, segundo os PCNs, é preciso que haja contextualização nos conteúdos
+ensinados, pois todo conhecimento envolve uma relação entre sujeito e objeto, ou seja,
+
+22
+
+Capítulo 1.
+
+Introdução
+
+entre o aluno e a matéria, assim se o conhecimento é trabalhado de modo contextualizado
+a escola irá retirar o aluno da sua condição de expectador passivo e fazer com que ele se
+interesse mais pelo conteúdo (BRASIL, 1997).
+
+No CBC de Minas Gerais é possível observar a abertura para o estudo de situ-
+ações problemas envolvendo conteúdos abordados em sala de aula, para que haja uma
+fixação maior e também, como método de conseguir um interesse maior por parte do
+aluno (CARNEIRO; SPIRA; SABATUCCI, 2016).
+
+Muitos estudiosos defendem a contextualização do conteúdo como forma não só
+de reter a atenção do aluno por mais tempo, mas também fazer com que ele compreenda
+a utilização daquele conhecimento. De acordo com Fonseca (1995, p. 53):
+
+As linhas de frente da Educação Matemática tem hoje um cuidado crescente
+com o aspecto sociocultural da abordagem Matemática. Defendem a necessi-
+dade de contextualizar o conhecimento matemático a ser transmitido, buscar
+suas origens, acompanhar sua evolução, explicitar sua finalidade ou seu papel
+na interpretação e na transformação da realidade do aluno. É claro que não se
+quer negar a importância da compreensão, nem tampouco desprezar a aquisi-
+ção de técnicas, mas busca-se ampliar a repercussão que o aprendizado daquele
+conhecimento possa ter na vida social, nas opções, na produção e nos projetos
+de quem aprende. (FONSECA, 1995, p. 53)
+
+D’Ambrosio (1997) também defende a contextualização, principalmente em mate-
+mática, para que o aluno possa levar os conteúdos para o cotidiano com o objetivo de
+fazer com que ele a entenda e compreenda, não somente decore conteúdos os quais não
+vê finalidade.
+
+Segundo Tamarozzi (2004, p. 69): “a criptografia é tão antiga quanto a própria
+escrita; já estava presente no sistema de escrita hieroglífica dos egípcios”, por isso é uma
+importante ferramenta, seja no Ensino Fundamental ou Médio, para a construção de um
+material útil como atividades e jogos de codificação, de forma com que o aluno possa fixar
+conteúdos matemáticos, como, por exemplo, funções e matrizes.
+
+De acordo com Cantoral (2003), o tema Criptografia é uma ferramenta atual, que
+permite contextualizar algumas matérias, fazendo com que o aluno se interesse mais e
+desperte a atenção pelos conteúdos desenvolvidos na sala de aula.
+
+Trivinos (1987) defende o estudo da exploração por parte do aluno, de modo que
+ele possa aumentar a experiência em torno de um problema, aprofundando os estudos em
+sua realidade específica.
+
+De acordo com BRASIL (1997, p. 19):
+
+Recursos didáticos como jogos, livros, vídeos, calculadoras, computadores e ou-
+
+tros materiais têm um papel importante no processo de ensino e aprendizagem.
+
+Contudo, eles precisam estar integrados a situações que levem ao exercício da
+
+análise e da reflexão, em última instância, a base da atividade matemática.
+
+23
+
+A criptografia pode ser então uma motivadora em algumas situações problemas
+para o processo de ensino-aprendizagem, podendo ser uma matéria auxiliar inclusive no
+ensino do uso da calculadora.
+
+Neste trabalho será visto em específico a Criptografia RSA e a base aritmética
+necessária para sua compreensão, também sendo mostrado um pouco da história por trás
+da linguagem dos códigos.
+
+Além disso será abordado um pouco sobre o programa MAXIMA, que foi usado
+como auxiliar já que, para exemplos mais complexos de criptografia RSA cálculos à mão
+tornam-se impossíveis, precisando assim de auxílio de programas.
+
+O objetivo deste trabalho é abordar principalmente a criptografia RSA, de forma
+a introduzir ao aluno um pouco da história, alguns métodos mais simples, a Teoria dos
+Números e por fim o método RSA, abordando: sua importância, o porquê ele é seguro,
+como ele funciona e alguns exercícios e atividades para exploração do conteúdo.
+
+Com este método de criptografia é possível aprofundar conteúdos com os alunos
+que são introduzidos deste os primeiros anos do Ensino Fundamental, levando-o a observar
+a importância desses, aumentando o interesse em matemática.
+
+25
+
+CAPÍTULO
+
+2
+
+ARITMÉTICA BÁSICA
+
+2.1 Divisão nos Inteiros
+
+Dados dois números d, m 2 Z, dizemos que d divide m, ou que m é um múltiplo de
+d, ou ainda que d é um divisor de m se existir um número q 2 Z tal que m = qd. Neste
+caso, usa-se a notação d j m.
+
+Se isso não acontecer, ou seja, se d não dividir m escreve-se d ∤ m.
+
+Lema 1. Sejam a, b, c, d 2 Z. Tem-se:
+
+(1) (“d divide”) Se d j a e d j b então d j (ax + by) para qualquer combinação linear de a
+
+e b com coeficientes x; y 2 Z.
+
+(2) (Limitação) Se d j a então a = 0 ou jdj (cid:20) jaj.
+
+(3) (Transitividade) Se a j b e b j c então a j c.
+
+Demonstração. Se d j a e d j b, então pode-se escrever a = dq1 e b = dq2 com q1, q2 2 Z,
+logo ax + by = d(q1x + q2y). Como q1x + q2y 2 Z, tem-se d j ax + by, donde conclui-se (1).
+Para mostrar (2), suponha que d j a e a ̸= 0. Neste caso, a = dq com q ̸= 0, assim
+
+jqj (cid:21) 1 e jaj = jdjjqj (cid:21) jdj.
+
+Finalmente provaremos (3). Se ajb e bjc, então existem q1, q2 2 Z tais que b = aq1
+
+e c = bq2, logo c = aq1q2 e portanto ajc.
+
+Teorema 1. (Divisão Euclidiana) Dados a, b 2 Z com b ̸= 0, então existem únicos q, r 2 Z
+tais que
+
+Neste caso q é chamado de quociente e r de resto.
+
+a = bq + r e 0 (cid:20) r <j b j :
+
+26
+
+Capítulo 2. Aritmética Básica
+
+Demonstração. Considere o conjunto:
+
+S = fx = a (cid:0) by; y 2 Zg \ (N [ f0g):
+
+Como o conjunto dos Naturais não permite cota superior (Propriedade Arquime-
+
+diana), existe n 2 Z tal que n((cid:0)b) > (cid:0)a, logo a (cid:0) nb > 0, mostrando que S não é vazio.
+
+O conjunto S é limitado inferiormente por 0, logo, pelo princípio da Boa Ordenação,
+
+tem-se que S possui um menor elemento r.
+
+Suponhamos então que r = a (cid:0) bq. Sabendo que r (cid:21) 0 é preciso mostrar que r <j b j.
+
+Presuma por absurdo que r (cid:21)j b j, isso implica que existe s 2 N [ f0g tal que
+r =j b j +s, com 0 (cid:20) s < r. Mas isso contradiz o fato de r ser um menor elemento de S, pois
+s = a (cid:0) (q (cid:6) 1)b 2 S, com s < r.
+
+Para provarmos a unicidade, suponha que a = bq + r = bq′ + r′, onde q, q′, r, r′ 2 Z,
+0 (cid:20) r < jbj e 0 (cid:20) r′ < jbj. Assim tem-se que (cid:0)jbj < (cid:0)r (cid:20) r′ (cid:0) r (cid:20) r′ < jbj. Logo, jr′ (cid:0) rj < jbj.
+Por outro lado, b(q (cid:0) q′) = r′ (cid:0) r, o que implica que jbjjq (cid:0) q′j = jr′ (cid:0) rj < jbj, o que só é
+possível se q = q′ e consequentemente, r = r′.
+
+2.2 O algoritmo de Euclides
+
+Dados a e b ambos diferentes de zero e pertencentes ao conjunto dos números
+inteiros, cada um pode ser associado à um conjunto finito de divisores Da e Db de a e b,
+respectivamente. Temos que a intersecção destes conjuntos nunca é vazia, pois pelo menos
+o número 1 é comum aos dois conjuntos. Como a intersecção é não vazia e finita (já que os
+dois conjuntos o são) pode-se determinar um maior elemento nesta intersecção, chamado
+de Máximo Divisor Comum (mdc). Por razões técnicas, usaremos a seguinte definição
+equivalente:
+
+Definição 1. Dado um número inteiro d (cid:21) 0 e d é um máximo divisor comum de a e b,
+se possuir as seguintes propriedades:
+
+1. d é um divisor comum de a e b, e
+
+2. d é divisível por todo divisor comum de a e b.
+
+A notação usada para Máximo Divisor Comum entre a e b é (a; b).
+
+Observação 1. Sejam a e b números inteiros não nulos, e suponha que exista d = (a; b).
+Seja c um divisor comum de a e b, então jcj divide d e, portanto c (cid:20) jcj (cid:20) d. Isso nos
+mostra que o máximo divisor comum de dois números, não ambos nulos, quando existe,
+é efetivamente o maior entre todos os divisores comuns desses números. Desta maneira,
+conclui-se a existência do mdc conforme definição acima.
+
+2.2. O algoritmo de Euclides
+
+27
+
+Proposição 1. O máximo divisor comum de a e b é único.
+
+Demonstração. A segunda condição implica que, se d e d′ são dois mdc de um mesmo
+par de números, então, d j d′ e d′ j d, o que juntamente com as condições d (cid:21) 0 e d′ (cid:21) 0,
+implica que d = d′. Ou seja, o mdc de dois números, quando existe é único.
+
+Exemplo 1. Temos que (28; 36) = 4, pois D28 = f(cid:6)1; (cid:6)2; (cid:6)4; (cid:6)7; (cid:6)14; (cid:6)28g e D36 =
+f(cid:6)1; (cid:6)2; (cid:6)3; (cid:6)4; (cid:6)6; (cid:6)9; (cid:6)12; (cid:6)18; (cid:6)36g.
+
+Como o mdc de a e b não depende da ordem em que a e b são tomados, temos que
+
+(a; b) = (b; a):
+
+Se a é um número inteiro, tem-se claramente que (0; a) = jaj, (1; a) = 1 e que
+
+(a; a) = jaj. Para todo b 2 Z, temos que
+
+a j b , (a; b) = jaj:
+
+De fato, se a j b, temos que jaj é um divisor comum de a e b, e se c é um divisor
+de a e b, então c divide jaj, o que mostra que jaj = (a; b). Reciprocamente, se (a; b) = jaj,
+segue-se que jaj divide b, logo a j b.
+
+Dados a, b 2 Z, se existir o mdc entre a e b, então
+
+(a; b) = ((cid:0)a; b) = (a; (cid:0)b) = ((cid:0)a; (cid:0)b):
+
+Assim para efeito do cálculo do mdc de dois números, podemos supô-los não negativos.
+
+O algoritmo de Euclides ou algoritmo das divisões sucessivas é uma forma eficiente
+
+de encontrar o mdc entre dois números. Tal algoritmo se baseia na divisão euclidiana.
+
+Lema 2. (Euclides) Se a = bq + r, então (a; b) = (b; r).
+
+Demonstração. Para provar este teorema é preciso verificar se Da \ Db = Db \ Dr. Se d 2
+Da \ Db tem-se que d j a e d j b, logo d j (a (cid:0) bq) , d j r e portanto d 2 Db \ Dr.
+
+Por outro lado, se d 2 Db \ Dr implica que d j b e d j r, logo d j (bq + r) , d j a.
+
+Logo d 2 Da \ Db. Portanto Da \ Db = Db \ Dr e (a; b) = (b; r).
+
+No que segue, vamos aplicar o Lema 2 para calcular o (a; b). Vamos supor que
+1 < b < a. Se bja então (a; b) = b. Se b ∤ a, pela divisão euclidiana, pode-se escrever:
+a = bq1 + r1 com 0 < r1 < b, e pelo Lema 2 tem-se duas possibilidades:
+
+(1) r1jb , (a; b) = (r1; b) = r1
+
+28
+
+Capítulo 2. Aritmética Básica
+
+(2) r1 ∤ b, então pode-se efetuar a divisão euclidiana de b por r1, obtendo b = r1q2 + r2
+com 0 < r2 < r1. Novamente há duas possibilidades r2 dividir ou não r1, podendo ser
+aplicado o algoritmo sucessivamente, gerando uma sequência decrescente finita de
+r j, j = 1; 2; (cid:1) (cid:1) (cid:1) : (o que sempre ocorre, pois o conjunto dos Naturais tem um menor
+elemento).
+
+Este algoritmo pode ser escrito da seguinte forma de diagrama:
+
+1. a = bq1 + r1, com 0 < r1 < b;
+
+2. b = r1q2 + r2, com 0 < r2 < r1;
+
+3. r1 = r2q3 + r3, com 0 < r3 < r2;
+
+...
+
+4. rn(cid:0)2 = rn(cid:0)1qn + rn, com 0 < rn < rn(cid:0)1;
+
+5. rn(cid:0)1 = rnqn+1.
+
+q1
+b
+r2
+
+q2
+r1
+r3
+
+q3
+r2
+r4
+
+a
+r1
+
+(cid:1) (cid:1) (cid:1)
+(cid:1) (cid:1) (cid:1)
+(cid:1) (cid:1) (cid:1)
+
+qn(cid:0)1
+rn(cid:0)2
+rn
+
+qn
+rn(cid:0)1
+
+qn+1
+rn = (a; b)
+
+Tabela 1 – Diagrama - Algoritmo de Euclides
+
+Desta forma, conclui-se que rn = (a; b).
+
+No que segue, apresentamos outra idéia relacionada ao cálculo do mdc. Sejam a,
+
+b 2 Z define-se o conjunto:
+
+I(a; b) = fxa + yb; x; y 2 Zg:
+
+Observa-se que se a e b não são simultaneamente nulos, então I(a; b) \ N ̸= /0. De
+
+fato, tem-se que a2 + b2 = a (cid:2) a + b (cid:2) b 2 I(a; b) \ N.
+
+Teorema 2. Sejam a, b 2 Z, não ambos nulos. Se d = min I(a; b) \ N, então:
+
+(1) d é o mdc de a e b; e
+
+(2) I(a; b) = dZ.
+
+Para provar que d = (a; b) basta verificar que:
+
+i) dja e djb,
+
+2.2. O algoritmo de Euclides
+
+29
+
+ii) Se cja e cjb, então cjd.
+
+Demonstração. (Teorema 2)
+
+(1) Suponha que c divida a e b, logo c divide todos os números naturais da forma
+xa + yb. Portanto, c divide todos os elementos de I(a; b), e, consequentemente, cjd.
+Para mostrar que d divide todos os elementos de I(a; b): seja z 2 I(a; b) e suponha,
+por absurdo, que d ∤ z. Logo pela divisão Euclidiana,
+
+z = dq + r; com 0 < r < d:
+
+(2.1)
+
+Como z = xa + yb e d = ma + nb para alguns x, y, n, m 2 Z, segue-se de (2.1) que
+
+r = (x (cid:0) qm)a + (y (cid:0) qn)b 2 I(a; b) \ N;
+
+o que é um absurdo, pois d =min I(a; b) \ N e r < d. Em particular, dja e djb. Assim,
+fica provado que d é o mdc de a e b.
+
+(2) Dado que todo elemento I(a; b) é divisível por d, tem-se que I(a; b) (cid:26) dZ. Por outro
+
+lado, para todo ld 2 dZ, tem-se que:
+
+ld = l(ma + nb) = (lm)a + (ln)b 2 I(a; b)
+
+e, portanto, dZ (cid:26) I(a; b). Em conclusão, tem-se que I(a; b) = dZ.
+
+Corolário 1. Quaisquer que sejam a, b 2 Z, não ambos nulos, e n 2 N, tem-se que
+
+(na; nb) = n(a; b):
+
+Demonstração. Note inicialmente que
+
+I(na; nb) = nI(a; b) (= fnz; z 2 I(a; b)g):
+
+Logo, segue do Teorema 2
+
+(na; nb) = minfI(na; nb) \ Ng = minfnI(a; b) \ Ng = nminfI(a; b) \ Ng = n(a; b):
+
+Definição 2. Dois números inteiros a e b são primos entre si se (a; b) = 1.
+
+Proposição 2. Dois números inteiros a e b são primos entre si se, e somente se, existem
+números inteiros m e n tais que ma + nb = 1.
+
+30
+
+Capítulo 2. Aritmética Básica
+
+Demonstração. Suponha que a e b são primos entre si, i.e., (a; b) = 1. Logo, pelo Teorema
+2, temos que existem números inteiros m e n tais que ma + nb = 1, donde segue a primeira
+parte da proposição.
+
+Reciprocamente, suponha que existam números inteiros m e n tais que ma + nb = 1.
+
+Se d = (a; b), temos que d j ((ma + nb), o que mostra que d j 1, e, portanto, d = 1.
+
+Teorema 3. (Lema de Gauss) Sejam a, b e c números inteiros. Se a j bc e (a; b) = 1, então
+a j c.
+
+Demonstração. Se a j bc, então existe e 2 Z tal que bc = ae.
+
+Se (a; b) = 1, então, pela Proposição 2, temos que existem m, n 2 Z tais que
+
+ma + nb = 1:
+
+Multiplicando por c ambos os lados da igualdade acima, temos que
+
+c = mac + nbc:
+
+Substituindo bc por ae nesta última igualdade, temos que
+
+c = mac + nae = a(mc + ne);
+
+e portanto a j c.
+
+Dados dois números inteiros a e b, dizemos que c é um múltiplo comum de a e
+b, se c é múltiplo simultaneamente de a e b. Defini-se o mínimo múltiplo comum (mmc)
+entre a e b como o menor múltiplo comum entre estes dois números. Por razões técnicas,
+usaremos a seguinte definição equivalente:
+
+Definição 3. Um inteiro m (cid:21) 0 é dito um mínimo múltiplo comum dos números inteiros
+a e b, se possuir as seguintes propriedades:
+
+1. m é um múltiplo comum de a e b, e
+
+2. se c é um múltiplo comum de a e b, então m j c.
+
+A notação usada para Mínimo Múltiplo Comum entre a e b é [a; b].
+
+Observação 2. Se m é o mmc de a b e c é um múltiplo comum de a e b, então m j c.
+Portanto se c é positivo, temos que m (cid:20) c, mostrando-se que m é o menor dos múltiplos
+comuns positivos de a e b.
+
+Exemplo 2. Temos que [2; 5] = 10, [3; 5] = 15 e [6; 8] = 24.
+
+2.2. O algoritmo de Euclides
+
+31
+
+Proposição 3. O mínimo múltiplo comum dos números inteiros a e b é unico.
+
+Demonstração. Se m e m′ são dois mínimos múltiplos comuns de a e b, então, do segundo
+item da definição acima, temos que m j m′ e m′ j m. Como m e m′ são números inteiros não
+negativos, temos que m = m′, o que mostra que o mínimo múltiplo comum é único.
+
+É possível calcular o mmc entre dois números em termos do mdc pela proposição
+
+abaixo:
+
+Proposição 4. Sejam a e b dois números naturais, então
+
+(a; b) (cid:2) [a; b] = ab:
+
+Para provar que m = [a; b] basta verificar que:
+
+i) ajm e bjm;
+
+ii) se ajc e bjc, então mjc.
+
+Demonstração. Se a = 0 ou b = 0, a igualdade é satisfeita. Sejam a; b 2 N e m = ab
+Como m = a b
+
+(a;b).
+
+(a;b) = b a
+
+(a;b).
+
+Desta forma ajm e bjm, portanto m é um múltiplo comum de a e b.
+Seja c um múltiplo comum de a e b, logo c = na = n′b. Segue assim que: n a
+
+(a;b) =
+
+n′ b
+
+(a;b).
+
+Como
+divisor entre eles),
+
+a
+(a;b) e
+
+b
+(a;b) são primos entre si (já que a e b são divididos pelo máximo
+a
+
+(a;b) divide n′, e, portanto, m = a
+
+(a;b)b divide n′b que é igual a c.
+
+As nocões de mdc e mmc podem ser generalizadas.
+
+Proposição 5. Dados números inteiros n1, n2, (cid:1) (cid:1) (cid:1) , nm todos não nulos, existe o seu mdc
+e
+
+(n1; n2; (cid:1) (cid:1) (cid:1) ; nm) = (n1; (cid:1) (cid:1) (cid:1) nm(cid:0)2; (nm(cid:0)1; nm)):
+
+Demonstração. Provaremos por indução sobre m (cid:21) 2. É fácil ver que para m = 2, o resul-
+tado é válido. Partiremos do princípio que o resultado vale para m.
+
+Para provar que o resultado é válido para m + 1, basta mostrar que se d é o mdc
+
+de n1, (cid:1) (cid:1) (cid:1) ,(nm; nm+1), então d é o mdc de n1, (cid:1) (cid:1) (cid:1) ,nm; nm+1.
+
+Seja d o mdc de n1, (cid:1) (cid:1) (cid:1) ,(nm; nm+1). Logo d j n1, d j n2, (cid:1) (cid:1) (cid:1) , d j nm(cid:0)1, e d j (nm; nm+1).
+
+Portanto, d j n1, d j n2, (cid:1) (cid:1) (cid:1) , d j nm(cid:0)1, d j nm d j nm+1.
+
+32
+
+Capítulo 2. Aritmética Básica
+
+Por outro lado, seja c divisor comum de n1,n2,(cid:1) (cid:1) (cid:1) , nm, nm+1, logo c é um divisor
+
+comum de n1,n2, (cid:1) (cid:1) (cid:1) , nm(cid:0)1 e (nm, nm+1), e, portanto, c j d.
+
+Proposição 6. Sejam n1, n2, (cid:1) (cid:1) (cid:1) , nk números inteiros não nulos. Então existe o número
+[n1, n2, (cid:1) (cid:1) (cid:1) , nk] e
+
+[n1; n2; (cid:1) (cid:1) (cid:1) ; nk] = [n1; n2; (cid:1) (cid:1) (cid:1) ; nk(cid:0)2; [nk(cid:0)1; nk]]:
+
+Demonstração. Sejam m = [n1; n2; (cid:1) (cid:1) (cid:1) ; nk(cid:0)2; [nk(cid:0)1; nk]]. Logo, n1; n2; (cid:1) (cid:1) (cid:1) ; nk(cid:0)2 e [nk(cid:0)1; nk]] di-
+videm m. Como nk(cid:0)1 j [nk(cid:0)1; nk] e nk j [nk(cid:0)1; nk], segue que m é um múltiplo comum de n1,
+n2, (cid:1) (cid:1) (cid:1) , nk.
+
+Por outro lado, suponha que c seja múltiplo comum de n1, n2, (cid:1) (cid:1) (cid:1) , nk. Logo, n1 j c,
+n2 j c, (cid:1) (cid:1) (cid:1) , nk(cid:0)2 j c e [nk(cid:0)1; nk] j c, daí segue que c é múltiplo de m = [n1; n2; (cid:1) (cid:1) (cid:1) ; nk(cid:0)2; [nk(cid:0)1; nk]].
+
+Proposição 7. Sejam a1, a2, (cid:1) (cid:1) (cid:1) , ar números inteiros não nulos então vale:
+
+(a1; [a2; a3; (cid:1) (cid:1) (cid:1) ; ar]) = [(a1; a2); (a1; a3); (cid:1) (cid:1) (cid:1) ; (a1; ar)]:
+
+Demonstração. Seja d o mdc entre a1 e [a2; a3; (cid:1) (cid:1) (cid:1) ; ar] isso implica que d j a1 e d j [a2; a3; (cid:1) (cid:1) (cid:1) ; ar].
+De acordo com o Lema 1: d (cid:20) a1 e d (cid:20) [a2; a3; (cid:1) (cid:1) (cid:1) ; ar].
+
+Seja d′ = [(a1; a2); (a1; a3); (cid:1) (cid:1) (cid:1) ; (a1; ar)] isso implica que (a1; a2) j d′, (a1; a3) j d′, (cid:1) (cid:1) (cid:1) ,
+(a1; ar) j d′, além disso (a1; a2) j a1, (a1; a3) j a1, (cid:1) (cid:1) (cid:1) , (a1; ar) j a1, como cada elemento a2, a3,
+(cid:1) (cid:1) (cid:1) , ar pode não ter divisor em comum com a1: d′ (cid:20) a1 e d′ j a1 implicando que d′ = d.
+
+2.3 Equações diofantinas lineares
+
+As equações diofantinas lineares em duas variáveis são equações na forma:
+
+aX + bY = c;
+
+(2.2)
+
+em que a; b; c 2 Z, são dados, e busca-se por soluções inteiras X, Y .
+
+Nem sempre este tipo de equação tem solução no conjunto dos inteiros, sendo que
+
+condições necessárias e suficientes dão dadas na seguinte proposição:
+
+Proposição 8. Sejam a; b; c 2 Z e d = (a; b). A equação aX + bY = c admite solução nos
+números inteiros se, e somente se, djc.
+
+Demonstração. Pelo Teorema 2, tem-se que:
+
+I(a; b) = fma + nb; m; n 2 Zg = dZ;
+
+em que d = (a; b). Assim é claro que a equação aX + bY = c admite solução se, e somente
+se, c 2 I(a; b), o que é equivalente a c 2 dZ, que por sua vez, é equivalente a djc.
+
+2.3. Equações diofantinas lineares
+
+33
+
+Suponda que (a; b) = 1. Pelo resultado anterior, temos que (2.2) admite solução.
+
+No que segue, vamos caracterizar o conjunto de todas as soluções.
+
+Proposição 9. Seja x0, y0 uma solução da equação aX + bY = c, onde (a; b) = 1. Então,
+as soluções x; y em Z da equação são
+
+x = x0 + tb; y = y0 (cid:0) ta; t 2 Z:
+
+Demonstração. Sejam x; y uma solução de aX + bY = c, logo,
+
+ax0 + by0 = ax + by = c:
+
+(2.3)
+
+Consequentemente, a(x (cid:0) x0) = b(y0 (cid:0) y). Como (a; b) = 1, segue-se que bj(x (cid:0) x0). Logo,
+x (cid:0) x0 = tb; t 2 Z.
+
+Substituindo a expressão de x (cid:0) x0 em (2.3), segue-se que
+
+y0 (cid:0) y = ta;
+
+o que prova que as soluções são do tipo exibido.
+
+Por outro lado, x, y, como no enunciado, é solução, pois
+
+ax + by = a(x0 + tb) + b(y0 (cid:0) ta) = ax0 + by0 = c:
+
+Desta proposição segue que a equação diofantina aX + bY = c, com (a; b) = 1,
+
+admite infinitas soluções em Z.
+
+Um método para encontrar uma solução particular de uma equação diofantina é
+obtido usando o algoritmo de euclidiano estendido, a saber, supondo que (a; b) = 1, pela
+Proposição 2 existem m; n 2 Z tais que
+
+ma + nb = 1:
+
+Multiplicando ambos os membros da igualdade acima por c, obtêm-se
+
+cma + cnb = c:
+
+Logo, x0 = cm e y0 = cn é uma solução particular da equação e usando a Proposição 9 é
+possível encontrar as demais soluções.
+
+34
+
+Capítulo 2. Aritmética Básica
+
+2.4 Os números primos
+
+Nesta seção apresentaremos alguns resultados sobre números primos, cujo conceito
+
+é fundamental para a aritmética e uma base para a teoria de criptografia.
+
+Definição 4. Um número natural maior que 1 que só possui como divisores positivos 1
+e ele próprio é chamado de número primo.
+
+Proposição 10. Dados dois números primos p e q e um número inteiro a qualquer. Temos
+que:
+
+I) Se p j q, então p = q.
+
+II) Se p ∤ a, então (p; a) = 1.
+
+Demonstração. (I) Como p j q e sendo q primo, temos que p = 1 ou p = q. Sendo p primo,
+tem-se que p > 1, o que acarreta p = q.
+
+(II) Seja (p; a) = d, temos que d j p e d j a. Portanto, d = p ou d = 1. Mas d ̸= p,
+
+pois p ∤ a e, consequentemente, d = 1.
+
+Se um número n não é primo diz-se que ele é composto. Portanto, se um número
+natural n > 1 é composto, existirá um divisor natural n1 de n tal que 1 < n1 < n. Logo,
+existirá um número natural n2 tal que:
+
+n = n1n2; com 1 < n1 < n e 1 < n2 < n
+
+Por exemplo, 2, 3, 5, 7, 11 e 13 são números primos, enquanto que 4, 6, 8, 9, 10 e 12 são
+compostos.
+
+Proposição 11. (Lema de Euclides) Sejam a, b, p 2 Z, com p primo. Se p j ab, então
+p j a ou p j b.
+
+Demonstração. Basta provar que, se p j ab e p ∤ a, então p j b. Mas, se p ∤ a, temos que
+(p; a) = 1, e o resultado seque-se do Lema de Gauss (Teorema 3).
+
+Lembrando algumas propriedades da divisibilidade de acordo com o Lema 1.
+
+Todo número natural pode ser escrito na forma fatorada por números primos:
+
+Teorema 4. (Teorema Fundamental da Aritmética). Sejam n (cid:21) 2 um número natural,
+pode-se escrever n de uma única forma como um produto
+
+onde m (cid:21) 1 é um natural e p1 (cid:20) (cid:1) (cid:1) (cid:1) (cid:20) pm são primos.
+
+n = p1 (cid:1) (cid:1) (cid:1) pm
+
+2.4. Os números primos
+
+35
+
+Demonstração. Se n é um número primo não há o que demonstrar, pois basta que se faça
+m = 1 ) p1 = n. Se n é composto, seja p1 > 1 o menor dos divisores positivos de n. Pode-se
+provar que p1 é primo. De fato, caso contrário existiria um p, com 1 < p < p1 tal que
+p j p1, donde p j n, o que iria contradizer a escolha de p1 como menor divisor. Assim n
+pode ser escrito como n = p1n1.
+
+Se n1 for primo a prova está finalizada, mas se n1 for composto, seja p2 > 1 o menor
+dos divisores positivos de n1. Pode-se provar que p2 é primo, logo n = p1 p2n2. Repete-se
+o processo até que encontra-se um nr primo.
+
+Como n1, n2, n3, (cid:1) (cid:1) (cid:1) , nr é uma sequência decrescente, onde todos os termos perten-
+
+cem aos naturais, será finita.
+
+Os primos da sequência p1,p2, p3, p4, (cid:1) (cid:1) (cid:1) , pm não são necessariamente distintos,
+
+assim a forma de n será:
+
+n = p
+
+a1
+1 p
+
+a2
+2 p
+
+a3
+3 p
+
+a4
+4
+
+(cid:1) (cid:1) (cid:1) pam
+m :
+
+Precisa-se provar a unicidade da fatoração. Para n = 2 a afirmação é verdadeira.
+Se n for primo também não há nada o que provar. Para isso suponha que n seja composto
+e tenha duas fatorações:
+
+n = p1 p2 p3 p4 (cid:1) (cid:1) (cid:1) pm = q1q2q3q4 (cid:1) (cid:1) (cid:1) qn:
+
+É preciso provar que m = n e que cada pi é igual a algum dos q j. Como p1 divide
+q1q2q3q4 (cid:1) (cid:1) (cid:1) qn, e como ambos são primos, logo p1 divide um dos fatores q j, donde a menos
+da ordem podemos supor p1 = q1. Da mesma forma p2 divide um dos fatores q j, como
+ambos são primos, implica que p2 = q2, repetindo o processo por indução tem-se que
+m = n, logo as fatorações p1 p2 p3 p4 (cid:1) (cid:1) (cid:1) pm e q1q2q3q4 (cid:1) (cid:1) (cid:1) qn são idênticas.
+
+Teorema 5. A sequência dos números primos é infinita.
+
+Demonstração. Suponhamos que a sequência de números primos seja finita.
+
+Deste modo temos que a listagem de todos os primos é p1,p2, p3, p4, (cid:1) (cid:1) (cid:1) , pm. Agora
+considere o número K = p1 p2 p3 p4 (cid:1) (cid:1) (cid:1) pm + 1, ele não pode ser divisível por nenhum dos
+números primos listados, como K é maior que qualquer um dos primos listados e não é
+divisível por nenhum deles, pelo Teorema 4, K é um número primo ou é composto (escrito
+em fatores primos), desta forma há um primo que não pertence à nossa lista, implicando
+que a sequência de números primos não pode ser finita.
+
+Além de Euclides, outros matemáticos provaram este teorema como, por exemplo,
+Kummer, Hermite, Goldbach, Euler, Thue, Perott, Auric, Métrod, dentre outros (RIBEN-
+BOIM, 2012).
+
+36
+
+Capítulo 2. Aritmética Básica
+
+Lema 3. Seja p um número primo. Os números
+divisíveis por p.
+
+(
+
+)
+
+p
+i
+
+= p!
+
+(p(cid:0)i)!i!, onde 0 < i < p, são todos
+
+Demonstração. É trivial para i = 1. Para 1 < i < p, como
+
+(
+
+)
+
+p
+i
+
+=
+
+p(p (cid:0) 1) (cid:1) (cid:1) (cid:1) (p (cid:0) i + 1)
+i!
+
+é um inteiro, segue que i!jp(p (cid:0) 1) (cid:1) (cid:1) (cid:1) (p (cid:0) i + 1). Por outro lado, como (i!; p) = 1, então
+i!j(p (cid:0) 1) (cid:1) (cid:1) (cid:1) (p (cid:0) i + 1), donde por definição p j
+
+(
+
+.
+
+)
+p
+i
+
+Teorema 6. (Pequeno Teorema de Fermat) Seja p um número primo, tem-se que p divide
+o número ap (cid:0) a, para todo número inteiro a.
+
+Demonstração. Se p = 2 então 2j(a2 (cid:0) a) já que a2 (cid:0) a = a(a (cid:0) 1) e a ou a (cid:0) 1 é par.
+
+Para p ímpar provaremos o resultado por indução, assumindo que a (cid:21) 0. O resul-
+tado é óbvio para a = 0, pois pj0. Suponha que seja válido para a, provaremos para a + 1.
+Pela fórmula do Binômio de Newton:
+
+(a + 1)p (cid:0) (a + 1) = ap (cid:0) a +
+
+)
+
+(
+
+ap(cid:0)1 + (cid:1) (cid:1) (cid:1) +
+
+(
+
+p
+1
+
+p
+p (cid:0) 1
+
+)
+
+a:
+
+Pelo Lema 3 e pela hipótese de indução, o segundo membro da equação é divisível por p.
+
+Para concluir a prova no caso a < 0, basta observar que ((cid:0)a)p (cid:0) ((cid:0)a) = (cid:0)ap + a =
+
+(cid:0)[ap (cid:0) a].
+
+Deste teorema é possível concluir o Corolário abaixo:
+
+Corolário 2. Se p é um número primo e se a é um número inteiro não divisível por p,
+então p divide ap(cid:0)1 (cid:0) 1
+
+Demonstração. De acordo com o Teorema 6, temos que pjap (cid:0) a , pja(ap(cid:0)1 (cid:0) 1). Como
+(a; p) = 1 então p divide ap(cid:0)1 (cid:0) 1.
+
+Pelo algoritmo da divisão quando divide-se um número por 6, os restos possíveis
+são 0, 1, 2, 3, 4 e 5, ou seja, qualquer número pode ser escrito em uma das formas 6k,
+6k + 1, 6k + 2, 6k + 3, 6k + 4 ou 6k + 5.
+
+Se p é um número primo maior que 3 ele não pode ser par, logo ele é da forma
+6k + 1, 6k + 3, ou 6k + 5, mas como todo número da forma 6k + 3 é divisível por 3, p só
+pode ser da forma 6k + 1 ou 6k + 5.
+
+Proposição 12. Existem infinitos primos da forma 6k + 5.
+
+2.5. Congruência e Propriedades
+
+37
+
+Demonstração. Para provar que existem infinitos números primos da forma 6k + 5 supo-
+nha, por absurdo, que existe um número finito de primos nesta forma.
+
+Sejam estes números: 5, p1, p2, p3, (cid:1) (cid:1) (cid:1) , pn, todos distintos, e considere o número
+
+P = 6p1 p2 p3 (cid:1) (cid:1) (cid:1) pn + 5, P não é divisível por nenhum dos primos 5, p1, p2, p3, (cid:1) (cid:1) (cid:1) , pn.
+
+Podemos afirmar que P possui um fator primo da forma 6k + 5 distinto dos ante-
+riores. De fato, caso contrário, se todos fossem da forma 6k + 1, como o produto de dois
+números desta forma é sempre igual a outro da forma 6k′ + 1, donde uma contradição.
+
+No que segue, enunciamos um resultado mais geral conhecido como Teorema de
+
+Dirichlet ou Teorema dos Primos em Progressão Aritmética:
+
+Teorema 7. (Teorema dos Primos em Progressão Aritmética). Se a e b são inteiros
+relativamente primos entre si, então a progressão aritmética an + b, n = 1, 2, 3, (cid:1) (cid:1) (cid:1) contém
+um número infinito de primos.
+
+A demonstração usual deste teorema usa variáveis complexas. Muitos casos parti-
+culares admitem demonstrações elementares mais ou menos simples. É possível encontrar
+a demonstração em http://www.mat.puc-rio.br/ nicolau/papers/mersenne/node10.html.
+
+2.5 Congruência e Propriedades
+
+Seja m um número natural. Diremos que dois números inteiros a e b são congruentes
+módulo m se os restos de sua divisão euclidiana por m são iguais. Quando os inteiros a e
+b são congruentes módulo m, escreve-se
+
+a (cid:17) b mod m:
+
+Por exemplo, 6 (cid:17) 11 mod 5, já que quando dividimos 6 por 5 o resto é 1 e quando
+
+dividimos 11 por 5 o resto também é 1. Outro exemplo é 241 (cid:17) 1 mod 2.
+
+Observa-se que todo número inteiro é congruente módulo m ao seu resto 0 (cid:20) r < m
+
+da divisão euclidiana por m, como no exemplo acima.
+
+Quando a relação a (cid:17) b mod m for falsa, diremos que a e b não são congruentes,
+
+ou que são incongruentes, módulo m. Escrevemos, nesse caso, a ̸(cid:17) b mod m.
+
+Como o resto da divisão de um número inteiro por 1 é sempre nulo, implica que
+
+a (cid:17) b mod 1 para quaisquer a e b 2 Z. Portanto, consideraremos sempre m > 1.
+
+Proposição 13. Suponha que a, b, m 2 Z, com m > 1. Tem-se que a (cid:17) b mod m se, e
+somente se, m j b (cid:0) a.
+
+38
+
+Capítulo 2. Aritmética Básica
+
+Demonstração. Sejam a = mq + r, com 0 (cid:20) r < m e b = mq′ + r′, com 0 (cid:20) r′ < m, as divisões
+euclidianas de a e b por m, respectivamente. Logo,
+
+b (cid:0) a = m(q′ (cid:0) q) + (r′ (cid:0) r):
+
+Portanto, a (cid:17) b mod m se, e somente se, r = r′, o que, em vista da igualdade acima,
+
+é equivalente a dizer que m j b (cid:0) a, já que jr (cid:0) r′j < m.
+
+Temos as propriedades de congruência:
+
+Proposição 14. Seja n 2 N e n > 1, Para todos a, b, c 2 Z, tem-se que:
+
+(1) (Reflexividade) a (cid:17) a mod n;
+
+(2) (Simetria) se a (cid:17) b mod n então b (cid:17) a mod n;
+
+(3) (Transitividade) se a (cid:17) b mod n e b (cid:17) c mod n, então a (cid:17) c mod n;
+
+(4) (Compatibilidade com a soma e a diferença) se a (cid:17) b mod n e c (cid:17) d mod n, então
+
+a + c (cid:17) b + d mod n e a (cid:0) c (cid:17) b (cid:0) d mod n,
+
+Desta pode ser concluida uma propriedade em particular: se a (cid:17) b mod n, então
+ka (cid:17) kb mod n para todo k 2 Z;
+
+(5) (Compatibilidade com o produto) se a (cid:17) b mod n e c (cid:17) d mod n, então ac (cid:17) bd mod n.
+
+Em particular, se a (cid:17) b mod n, então am (cid:17) bm mod n para todo m 2 N;
+
+(6) (Cancelamento) se (c; n) = 1, então ac (cid:17) bc mod n , a (cid:17) b mod n.
+
+(7) Se c ̸= 0, então ac (cid:17) bc mod n , a (cid:17) b mod n
+
+(c;n).
+
+Demonstração. (4): Suponha que a (cid:17) b mod n e c (cid:17) d mod n. Deste modo n j (b (cid:0) a) e
+n j (d (cid:0) c) isso implica que n j (b (cid:0) a) (cid:6) (d (cid:0) c) e n j (b (cid:6) d) (cid:0) (a (cid:6) c).
+
+(5): como n j (b (cid:0) a) e n j (d (cid:0) c) segue que n j d(b (cid:0) a) e n j a(d (cid:0) c). Desta forma
+
+pode-se concluir que n j d(b (cid:0) a) + a(d (cid:0) c), ou seja, n j bd (cid:0) ac.
+
+Deixamos os itens (1) (cid:0) (3) e (6) (cid:0) (7) como um exercício ao leitor.
+
+Algumas propriedades adicionais que serão utilizadas:
+
+Proposição 15. Sejam a; b 2 Z e m; n; m1; (cid:1) (cid:1) (cid:1) ; mr inteiros maiores que 1. Tem-se que:
+
+(1) se a (cid:17) b mod m e njm então a (cid:17) b mod n;
+
+(2) a (cid:17) b mod mi, 8i = 1; (cid:1) (cid:1) (cid:1) ; r , a (cid:17) b mod [m1; (cid:1) (cid:1) (cid:1) ; mr];
+
+(3) se a (cid:17) b mod m, então (a; m) = (b; m).
+
+2.6. Congruências Lineares
+
+39
+
+Demonstração.
+
+(1) Se a (cid:17) b mod m, então mjb(cid:0)a. Como njm, segue-se que njb(cid:0)a. Logo,
+
+a (cid:17) b mod n.
+
+(2) Se a (cid:17) b mod mi, i = 1; (cid:1) (cid:1) (cid:1) ; r, então mijb (cid:0) a, para todo i. Sendo b (cid:0) a um múltiplo
+de cada mi, segue-se que [m1; (cid:1) (cid:1) (cid:1) ; mr]jb (cid:0) a, o que prova que a (cid:17) b mod [m1; (cid:1) (cid:1) (cid:1) ; mr].
+A recíproca decorre do primeiro item.
+
+(3) Se a (cid:17) b mod m, então mjb (cid:0) a e, portanto, b = a + tm com t 2 Z. Logo, pelo Lema
+
+2, tem-se que
+
+(a; m) = (a + tm; m) = (b; m):
+
+O Pequeno Teorema de Fermat pode ser escrito na seguinte forma:
+
+Corolário 3. Se p é um número primo e a 2 Z, então
+
+Se p ∤ a, isso implica que
+
+ap (cid:17) a mod p:
+
+ap(cid:0)1 (cid:17) 1 mod p:
+
+A prova segue do Teorema 6 e do Corolário 2.
+
+2.6 Congruências Lineares
+
+A resolução de problemas de congruências do tipo:
+
+aX (cid:17) b mod m; onde a; b; m 2 Z; m > 1;
+
+é o problema de determinar se existem números x 2 Z tais que ax (cid:17) b mod m.
+
+É preciso inicialmente um critério para decidir se tais congruência admitem solução
+
+Proposição 16. Dados a; b; m 2 Z, com m > 1, a congruência
+
+possui solução se, e somente se, (a; m)jb.
+
+aX (cid:17) b mod m
+
+Demonstração. Suponha que a congruência aX (cid:17) b mod m tenha uma solução x; logo,
+temos que mj(ax (cid:0) b), o que equivale à existência de y pertencente aos inteiros tal que
+ax (cid:0) b = my. Portanto, a equação aX (cid:0) mY = b admite solução. A Proposição 8 implica
+que (a; m)jb.
+
+Reciprocamente, suponha que (a; m)jb. Logo, em virtude das Proposições 8 e 9 a
+equação aX (cid:0) mY = b admite uma solução x, y. Portanto, ax = b + my e, consequentemente,
+x é solução da congruência pois, ax (cid:17) b mod m.
+
+40
+
+Capítulo 2. Aritmética Básica
+
+Nota-se que se x0 é solução da congruência aX (cid:17) b mod m, então todo x tal que
+
+x (cid:17) x0 mod m é também solução da congruência, pois
+
+ax (cid:17) ax0 (cid:17) b mod m:
+
+Portanto, toda solução particular determina, automaticamente, uma infinidade
+de soluções da congruência. Essas soluções serão identificadas (módulo m), já que são
+congruentes entre si, e, consequentemente, se determinam mutuamente.
+
+O seguinte resultado nos fornece uma coleção completa de soluções duas a duas
+incongruentes módulo m, as quais serão chamadas de sistema completo de soluções incon-
+gruentes da congruência.
+
+Teorema 8. Sejam a; b; m 2 Z, com m > 1 e (a; m)jb. Se x0 é uma solução da congruência
+aX (cid:17) b mod m, então
+
+x0; x0 +
+
+m
+d
+
+; x0 + 2
+
+m
+d
+
+; (cid:1) (cid:1) (cid:1) ; x0 + (d (cid:0) 1)
+
+m
+d
+
+;
+
+onde d = (a; m) formam um sistema completo de soluções incongruentes da congruência.
+
+Demonstração. Pela Proposição 16, sabe-se que a congruência admite solução.
+
+É preciso mostrar que os números x0 + i m
+
+d , com i 2 N, são soluções. De fato,
+
+a(x0 + i
+
+m
+d
+
+) = ax0 + i
+
+a
+d
+
+m (cid:17) ax0 (cid:17) b mod m:
+
+Além disso, esses números são dois a dois incongruentes módulo m. De fato, se,
+
+para i; j < d,
+
+então
+
+x0 + i
+
+i
+
+m
+d
+
+m
+d
+
+(cid:17) x0 + j
+
+m
+d
+
+mod m;
+
+(cid:17) j
+
+m
+d
+
+mod m:
+
+Pelo item 7 da Proposição 14 e como
+
+m
+( m
+d ; m)
+
+= d;
+
+segue-se que i (cid:17) j mod d, implicando que i = j.
+
+Finalmente, é preciso mostrar que toda solução x da congruência aX (cid:17) b mod m é
+d para algum i < d. De fato, seja x uma solução qualquer
+
+congruente, módulo m, a x0 + i m
+da congruência. Logo,
+
+e
+
+ax (cid:17) ax0 mod m;
+
+a
+d
+
+x (cid:17) a
+d
+
+x0 mod
+
+m
+d
+
+:
+
+2.7. Teorema Chinês do Resto
+
+41
+
+Como ( a
+
+d ; m
+
+d ) = 1, segue do item (6) da Propriedade 14 que
+
+x (cid:17) x0 mod
+
+m
+d
+
+:
+
+Logo, x (cid:0) x0 = km=d. Pela divisão euclidiana, existe i < d tal que k = qd + i e,
+
+portanto,
+
+x = x0 + qm + i
+
+m
+d
+
+(cid:17) x0 + i
+
+m
+d
+
+mod m:
+
+2.7 Teorema Chinês do Resto
+
+Considere o sistema de congruências da forma:
+
+X (cid:17) ci mod mi; i = 1; (cid:1) (cid:1) (cid:1) ; r:
+
+(2.4)
+
+O resultado seguinte nos fornece um método para resolvê-lo:
+
+Teorema 9. Se (mi; m j) = 1, para todo par mi; m j com i ̸= j, então o sistema (2.4) possui
+uma única solução módulo M = m1m2 (cid:1) (cid:1) (cid:1) mr. As soluções são
+
+x = M1y1c1 + (cid:1) (cid:1) (cid:1) + Mryrcr + tM;
+
+onde t 2 Z, Mi = M=mi e yi é a solução de MiY (cid:17) 1 mod mi; i = 1; (cid:1) (cid:1) (cid:1) ; r.
+
+Demonstração. Primeiramente será provado que x é uma solução simultânea do sistema
+(2.4). De fato, como mijM j, se i ̸= j, e Miyi (cid:17) 1 mod mi, segue-se que
+
+x = M1y1c1 + (cid:1) (cid:1) (cid:1) + Mryrcr (cid:17) Miyici (cid:17) ci mod mi:
+
+Por outro lado, se x′ é outra solução do sistema (2.4), então
+
+x (cid:17) x′ mod mi; 8i; i = 1; (cid:1) (cid:1) (cid:1) ; r:
+
+Como (mi; m j) = 1, para i ̸= j, segue-se que
+
+[m1; (cid:1) (cid:1) (cid:1) ; mr] = m1 (cid:1) (cid:1) (cid:1) mr = M
+
+e, consequentemente, pela Proposição 15 item (2), tem-se que x (cid:17) x′ mod M.
+
+Proposição 17. O sistema de congruências
+
+X (cid:17) c1 mod m1; X (cid:17) c2 mod m2
+
+(2.5)
+
+admite solução se, e somente se c2 (cid:17) c1 mod (m1; m2). Além disso, dada uma solução a do
+sistema, um número a′ é também uma solução se, e somente se, a′ (cid:17) a mod [m1; m2].
+
+42
+
+Capítulo 2. Aritmética Básica
+
+Demonstração. O sistema (2.5) admite uma solução se, e somente se, existem a, y, z 2
+Z tais que a (cid:0) c1 = ym1 e a (cid:0) c2 = zm2. Assim, a existência de soluções do sistema é
+equivalente à soluções da equação diofantina ym1 (cid:0)zm2 = c2 (cid:0)c1. Por sua vez, essa equação
+diofantina possui solução se, e somente se, (m1; m2) divide c2 (cid:0) c1, o que equivale a c2 (cid:17)
+c1 mod (m1; m2).
+
+Suponhamos que a seja uma solução do sistema (2.5). Se a′ é uma outra solução
+do sistema, então a′ (cid:17) c1 (cid:17) a mod m1 e a′ (cid:17) c2 (cid:17) a mod m2, o que, em vista da Proposição
+15 ítem (2), implica que a′ (cid:17) a mod [m1; m2].
+
+Por outro lado, se um número a′ é tal que a′ (cid:17) a mod [m1; m2], então a′ (cid:17) a (cid:17)
+
+c1 mod m1 e a′ (cid:17) a (cid:17) c2 mod m2. Portanto, a′ é solução do sistema (2.5).
+
+Teorema 10. (Teorema Chinês dos Restos Generalizado) O sistema de congruências
+
+X (cid:17) ci mod mi; i = 1; (cid:1) (cid:1) (cid:1) ; r
+
+admite solução se, e somente se,
+
+ci (cid:17) c j mod (mi; m j); 8i;
+
+j = 1; (cid:1) (cid:1) (cid:1) ; r:
+
+Nesse caso, a solução é única módulo [m1; (cid:1) (cid:1) (cid:1) ; mr]:
+
+Demonstração. Esta prova será feita por indução sobre r. O caso r = 2 é dado pela Pro-
+posição 17.
+
+Suponhamos que a propriedade seja válida para r (cid:0) 1. Pela hipótese de indução,
+temos que o sistema X (cid:17) ci mod mi, i = 1; (cid:1) (cid:1) (cid:1) ; r (cid:0) 1, admite uma única solução c módulo
+[m1; (cid:1) (cid:1) (cid:1) ; mr(cid:0)1]. Temos que mostrar agora que o sistema
+
+X (cid:17) c mod [m1; (cid:1) (cid:1) (cid:1) ; mr(cid:0)1]
+
+X (cid:17) cr mod mr
+possui uma solução única módulo [m1; (cid:1) (cid:1) (cid:1) ; mr]. Para estabelecer isso, em vista do caso
+r = 2, só falta mostrar que
+
+cr (cid:17) c mod (mr; [m1; (cid:1) (cid:1) (cid:1) ; mr(cid:0)1]):
+
+Como temos que c (cid:17) ci mod mi para i = 1; (cid:1) (cid:1) (cid:1) ; r (cid:0) 1, seque-se, por mais forte razão,
+que c (cid:17) ci mod (mr; mi). Por outro lado, por hipótese, sabemos que cr (cid:17) ci mod (mr; mi),
+para todo i, logo cr (cid:17) c mod (mr; mi), para todo i = 1; (cid:1) (cid:1) (cid:1) ; r (cid:0) 1, e pelo item 2 da Proposição
+15 segue que
+
+cr (cid:17) c mod [(mr; m1); (mr; m2); (cid:1) (cid:1) (cid:1) ; (mr; mr(cid:0)1)]:
+
+O resultado agora segue da Proposição 7, que garante que
+
+(mr; [m1; (cid:1) (cid:1) (cid:1) ; mr(cid:0)1]) = [(mr; m1); (mr; m2); (cid:1) (cid:1) (cid:1) ; (mr; mr(cid:0)1)]:
+
+2.8. Métodos Para Achar Números Primos
+
+43
+
+Temos também que a solução do sistema é única módulo
+
+[mr; [m1; (cid:1) (cid:1) (cid:1) ; mr(cid:0)1]] = [m1; (cid:1) (cid:1) (cid:1) ; mr(cid:0)1; mr]:
+
+2.8 Métodos Para Achar Números Primos
+
+Um método conhecido na escola, no final do Ensino Fundamental I e início do
+Ensino Fundamental II é o Crivo de Eratóstenes, criado por Erastóstenes no século II
+A.C., deve ser composto por todos os números menores que n (dado de maneira arbitraria)
+(CARNEIRO; SPIRA; SABATUCCI, 2016). Ele foi o primeiro matemático que tentou
+sistematizar o conjunto dos números primos (COUTINHO, 2008). Este método consiste
+no seguinte: escreve-se todos os números, por exemplo, para n = 250, deve ser escrito os
+números de 2 à 250, risca-se primeiro os múltiplos de 2 superiores à ele, depois todos
+os múltiplos de 3 superiores à ele, e assim por diante: cortando todos os múltiplos do
+próximo primo, menos ele mesmo até o primo p tal que p2 não ultrapasse n, neste caso
+em particular: p2 < 250, ou seja, até o número 15. Observe a figura 1, de acordo com
+(HEFEZ, 2005, p. 35).
+
+p
+
+Desta forma, foi retirado todos os múltiplos dos primos 2, 3, 5, 7, 11, 13, 14, 15
+251, ficando os números primos inferiores à 250: 2 ,3, 5, 7, 11, 13, 17, 19, 23, 29, 31,
+<
+37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113, 127, 131, 137,
+139, 149, 151, 157, 163, 167, 173, 179, 181, 191, 193, 197, 199, 211, 223, 227, 229, 233,
+239, 241.
+
+Este critério é baseado no seguinte teorema:
+
+Teorema 11. Se n não é primo, então n possui, necessariamente, um fator primo menor
+do que ou igual a
+
+p
+
+n.
+
+Demonstração. Sendo n composto então n = n1 (cid:2) n2 onde 1 < n1 < n, 1 < n2 < n. Sem
+perda de generalidade suponha n1 (cid:20) n2. Logo n1 tem que ser (cid:20)
+n pois, caso contrário,
+p
+teríamos n = n1 (cid:2) n2 >
+n = n o que é absurdo. Logo, como pelo Teorema 4, n1
+possui algum fator primo p, este deve ser (cid:20)
+n. Como p, sendo um fator primo de n1 é
+também um fator de n, logo a demonstração está completa.
+
+n (cid:2)
+
+p
+
+p
+
+p
+
+Como consequência, se n não possui um fator primo (cid:20)
+
+p
+
+n, então n é primo.
+
+2.9 Como Encontrar Números Primos Grandes
+
+Os números primos são procurados até hoje, quanto maior o número achado mais
+difícil de quebrar o código na criptografia RSA, assim tem-se alguns recordes de primos,
+
+44
+
+Capítulo 2. Aritmética Básica
+
+Figura 1 – Crivo de Eratóstenes
+
+observe a tabela 2, que contém récordes de primos gêmeos (p e q são primos e jp (cid:0) qj = 2)
+(MARTINEZ et al., 2013, p. 367).
+
+Contudo estas tabelas podem se tornar obsoletas em um curto período de tempo,
+por isso o site https://primes.utm.edu/largest.html mantêm uma tabela atualizada dos
+dez maiores primos, consultada no dia 15 de outubro de 2015 o maior número primo era
+257885161 (cid:0) 1, com 17:425:170 dígitos, descoberto no ano de 2013. Mas em 19 de janeiro
+de 2016 foi publicado um novo recorde: 274207281 (cid:0) 1 com 22:338:618 dígitos ambos des-
+cobertos por GIMPS (Great Internet Mersenne Prime Search by Woltman e Kurowski)
+(CALDWELL, 2016).
+
+Estes primos foram descobertos em um projeto para encontrar primos de Mersenne,
+
+que são da forma: 2n (cid:0) 1 (WOLTMAN; KUROWSKI, 2016).
+
+Em criptografia RSA, é fundamental, para a criação da chave pública, que saiba-se
+encontrar números primos grandes. Para garantir a segurança da codificação, o ideal é
+
+2.9. Como Encontrar Números Primos Grandes
+
+45
+
+Primo
+3756801695685 (cid:2) 2666669 (cid:6) 1
+65516468355 (cid:2) 2333333 (cid:6) 1
+2003663613 (cid:2) 2195000 (cid:6) 1
+194772106074315 (cid:2) 2171960 (cid:6) 1
+100314512544015 (cid:2) 2171960 (cid:6) 1
+16869987339975 (cid:2) 2171960 (cid:6) 1
+33218920 (cid:2) 2169690 (cid:6) 1
+22835841624 (cid:2) 754321 (cid:6) 1
+1679081223 (cid:2) 2151618 (cid:6) 1
+84966861 (cid:2) 2140219 (cid:6) 1
+12378188145 (cid:2) 2140002 (cid:6) 1
+23272426305 (cid:2) 2140001 (cid:6) 1
+8151728061 (cid:2) 2125987 (cid:6) 1
+
+Número de dígitos Data
+2011
+2009
+2007
+2007
+2006
+2005
+2002
+2010
+2012
+2012
+2010
+2010
+2010
+
+200700
+100355
+58711
+51780
+51780
+51779
+51090
+45917
+45651
+42219
+42155
+42155
+37936
+
+Tabela 2 – Maiores pares de primos gêmeos conhecidos
+
+que cada número primo possua mais de cem algarismos.
+
+De acordo com Martinez et al. (2013) existem progressões aritméticas arbitraria-
+mente grandes formadas exclusivamente por números primos, isso foi provado por Ben
+Green e Terence Tao, onde a maior conhecida é:
+
+43142746595714191 + 5283234035979900 (cid:2) n
+
+para todo n = 0; 1; (cid:1) (cid:1) (cid:1) ; 25, que foi descoberta em 12 de abril de 2010 por Benoãt Perichon
+em um projeto do PrimeGrid disponível no site http://www.primegrid.com/ (RACKS-
+PACE, 2016).
+
+De acordo com OEIS (2016) e Ballinger e Rodenkirch (2016) existem outros pro-
+jetos para procurar primos grandes, provando algumas conjecturas, como a de Sierpinski,
+a de Riesel , ou os números de Brier (que são simultaneamente de Sierpinski e de Riesel).
+
+Dada esta necessidade de encontrar primos grandes, de acordo com Martinez et
+
+al. (2013, p. 332):
+
+A relevância desse problema tem crescido imensamente em anos recentes devido
+à utilização intensa de números primos em algoritmos de criptografia, como os
+algoritmos RSA e El Gamal para criptografia pública. Dessa forma o problema
+do teste de primalidade se tornou um importante problema para a ciência da
+computação teórica. Sobre esse ponto de vista duas coisas são requiridas: um
+certificado de prova que o algoritmo realmente produz a resposta correta; e
+uma medida da eficiência do algoritmo, isto é, quão bem o algoritmo faz uso
+dos recursos computacionais (como o tempo ou número de passos executados,
+espaço ou memória utilizada) em função do tamanho da entrada do problema
+para a obtenção da solução.
+
+Para encontrar primos que possuam esse tamanho, a aplicação de algoritmos de-
+
+46
+
+Capítulo 2. Aritmética Básica
+
+terminísticos 1 como o Crivo de Eratóstenes é inviável, pois o tempo gasto é muito grande.
+A solução para esse problema é utilizar algoritmos randomizados 2 que forneçam números
+primos grandes.
+
+A base desses algoritmos randomizados são testes de primalidade fundamentados
+
+no Pequeno Teorema de Fermat/Euler: Teorema 6 e Corolário 2.
+
+2.10 Teste de Primalidade
+
+Para os testes de primalidade, será utilizado o Pequeno Teorema de Fermat:
+
+“Sejam a e n números inteiros tais que n ∤ a, se an(cid:0)1 ̸(cid:17) 1 mod n, então n é composto.”
+
+Na prática, o algoritmo escolhe um número natural n (tão grande quanto for ne-
+
+cessário) e um inteiro a, tal que n ∤ a, em seguida, analisa-se a congruencia an(cid:0)1 mod p.
+Se an(cid:0)1 ̸(cid:17) 1 mod n, concluí-se que n é composto e passa-se para o próximo número
+a ser testado. Entretanto, se an(cid:0)1 (cid:17) 1 mod n, não pode-se afirmar que n é primo, isso
+ocorre porque a recíproca do Pequeno Teorema de Fermat não é verdadeira. Um contra
+exemplo:
+
+724 (cid:17) 1 mod 25, porém 25 é um número composto.
+
+Sempre que um número n não é primo e satisfaz o Pequeno Teorema de Fermat
+
+para uma base a, n é chamado de pseudoprimo na base a.
+
+Sempre que an(cid:0)1 (cid:17) 1 mod n, é preciso decidir se n é primo ou se é um pseudoprimo
+na base a, para isso, escolhe-se outra base b e testa-se se bn(cid:0)1 (cid:17) 1 mod n, caso bn(cid:0)1 ̸(cid:17)
+1 mod n, pode-se concluir que n é composto e pseudoprimo na base a, entretanto se
+bn(cid:0)1 (cid:17) 1 mod n, repete-se o processo para outra base c.
+
+O problema é que existem números que são pseudoprimos para todas as bases
+menores que n que são relativamente primas com n, esses números são chamados de
+números de Carmichael, cujo menor exemplo conhecido é 561 = 3 (cid:1) 11 (cid:1) 17, ou seja, a560 (cid:17)
+1 mod 561 para todo a relativamente primo com 561. Sendo demonstrado recentemente
+por Alford, Granville e Pomerance que se CN(x) é considerado a quantidade de números
+de Carmichael menores que x, então CN(x) (cid:21) x2=7, onde x é suficientemente grande, ou
+seja, existem infinitos números de Carmichael, para a lista destes números de Carmichael
+menores que 106 consulte ftp://ftp.dpmms.cam.ac.uk/pub/Carmichael.
+
+Entretanto, pseudoprimos e números de Carmichael são bem raros quando testa-se
+
+1 Usado em Ciência da Computação, é o nome do algoritmo que sempre produz o mesmo resultado
+
+2
+
+dado determinadas entradas de dados.
+são aqueles que utilizam experimentos randômicos para decidir, em um ou mais momentos du-
+rante sua execução, o que fazer ou para onde ir. Por motivo de clareza, algoritmos clássicos (não-
+randomizados) são também ditos determinísticos. É possível compreender melhor sobre o assunto em
+http://www.impa.br/opencms/pt/biblioteca/cbm/ 26 CBM/26CBM07.pdf
+
+2.10. Teste de Primalidade
+
+47
+
+números da ordem 109, por exemplo, existem 50:847:534 primos de 1 até 1:000:000:000,
+mas apenas 5587 pseudoprimos para a base 2 (0; 01%), caso sejam utilizadas as bases 2 e 3,
+esse número cai para 1271 (0; 0025%), se houver o teste de outras bases, essa porcentagem
+cai ainda mais.
+
+A pequena probabilidade de um número ser pseudoprimo, quando testa-se várias
+bases, é o que fundamenta o teste de primalidade mais utilizado por programas de com-
+putação algébrica, o Teste de Miller-Rabin. Rabin provou que quando se testa uma base
+
+, ou
+aleatória a, a probabilidade de que o teste acuse um pseudoprimo é menor que
+seja, se aplica o teste para k bases distintas, a probabilidade de que o teste acuse um
+
+1
+4
+
+pseudoprimo é menor do que
+
+, por exemplo, se o teste for aplicado para 10 bases
+
+(
+
+)
+k
+
+1
+4
+
+distintas, a probabilidade de encontrar um pseudoprimo é igual a
+
+)
+
+10
+
+(
+
+1
+4
+
+≃ 0; 0000954%.
+
+Esse teste está fundamentado na Hipótese de Riemman Generalizada, que afirma
+ser suficiente testar um número pequeno de bases para se garantir a primalidade de um
+número.
+
+49
+
+CAPÍTULO
+
+3
+
+CRIPTOGRAFIA
+
+A criptografia está no cotidiano de cada pessoa. A linguagem de escrever em códi-
+gos é usada atualmente em celulares, bancos, computadores, carros, alarmes, na internet
+para proteger compras on line ou seus dados bancários, dentre outros.
+
+Figura 2 – Criptografia em sites
+
+Nas figuras 2 e 3 é possível observar a criptografia em um site bancário para a
+proteção dos dados da conta do usuário, bem como a proteção de sua conta e seu dinheiro.
+
+Nos carros também é encontrada a linguagem dos códigos, que pode ser usada no
+alarme, como na nova chave keyless que permitem a partida apenas com o acionamento
+de um botão (ATMEL, 2016). 1
+1 Fonte disponível em: http://www.atmel.com
+
+50
+
+Capítulo 3. Criptografia
+
+Figura 3 – Criptografia em sites
+
+A natureza humana tem uma necessidade à privacidade, mesmo que seja para
+guardar simples segredos. É possível observar na história que a linguagem de códigos
+sempre foi muito usada como recurso militar, político, em questões comerciais, em guerras
+e até mesmo motivos sentimentais (SINGH, 2005).
+
+Os indícios são que a criptografia começou a ser usada no antigo Egito quando o
+faraó Amenemhet II governava, por volta de 1900 a.C. pelo arquiteto Khnumhotep II. Em
+documentos que indicavam a localização de tesouros, o escriba de Khnumhotep II, para
+dificultar que ladrões os encontrassem, substituiu alguns trechos e palavras de documentos
+importantes por símbolos estranhos.
+
+O filósofo Heródoto demonstrou que a criptografia já era usada há muito tempo
+nas guerras, um dos métodos era raspar a cabeça do mensageiro, escrever a mensagem e
+esperar que o cabelo crescesse novamente, mas dada a facilidade de ser descoberta houve
+a necessidade de ferramentas que guardassem melhor a mensagem ou de métodos mais
+difíceis de serem descobertos (LARCHER, 1950).
+
+Nos séculos XVIII e XIX surgiram as Câmeras Escuras, onde a arte de quebrar
+códigos era usada para decifrar mensagens diplomáticas, empregando muitos matemáti-
+cos famosos, a de Viena era conhecida como a mais eficiente, quebrando cerca de 100
+mensagens internacionais por dia.
+
+Com isso os métodos foram aprimorando: escrita na madeira com cera por cima,
+embaralhamento das letras, Bastão de Licurgo, método de substituição (como o usado por
+Júlio César, imperador de Roma), disco de Alberti, máquina Enigma (Segunda Guerra
+
+51
+
+Mundial), máquina Colossos, criptografia RSA e criptografia quântica.
+
+A criptografia tem sido aprimorada e estado presente desde antes de Cristo, seu
+desenvolvimento é marcado por três grandes fases: artesanal, mecânica e digital (SINGH,
+2005).
+
+A Criptografia artesanal surge paralelamente com o surgimento da escrita, durante
+as idades antiga e média, onde a utilização das técnicas é fácil com lápis e papel, sendo
+fáceis de serem quebradas como: a de Heródoto, Bastão de Licurgo, O código de César, Ci-
+frário de Francis Bacon, Criptoanalistas Árabes, A Cifra de Vigenère, Braille, microponto
+são alguns exemplos.
+
+Inclusive Thomas Jefferson (1743-1826), que foi presidente dos Estados Unidos
+da América de 1801 a 1809 desenvolveu seu próprio sistema de criptografia chamado de
+Cilindro de Jefferson, que ele usou durante a revolução americana, onde ele precisava
+enviar cartas importantes por mensageiros (KAHN, 1996).
+
+A mecânica começa no início da Idade Moderna, a partir da Revolução Industrial
+as máquinas tomaram conta do mundo e da criptografia, tendo seu apogeu na Segunda
+guerra Mundial, como o Disco de cifras, o código morse, a máquina Enigma, Colossus,
+etc.
+
+Segundo Diffie e Hellman (2007, p. 39): ‘‘Antes deste século, sistemas de cripto-
+grafia foram limitados a cálculos que poderiam ser realizadas à mão ou com dispositivos
+simples”.
+
+Depois da Primeira Guerra Mundial já era possível ver o avanço das máquinas
+para criptografar mensagens, inclusive como sistemas eletromecânicos, mas foi o desen-
+volvimento dos computadores digitais que permitiu que métodos mais seguros fossem
+desenvolvidos (DIFFIE; HELLMAN, 2007).
+
+A criptografia Digital veio com o aperfeiçoamento dos computadores, fazendo cál-
+culos extremamente grandes em pouco tempo, se tornaram uma ferramenta valiosa na
+criptografia, com códigos mais complicados de serem quebrados, pode-se observar a cripto-
+grafia simétrica, DES, AES, IDEA, Assimétrica, RSA, ElGamal, Curvas Elípticas, dentre
+outras (SINGH, 2005).
+
+Do mesmo modo que a arte de criptografar mensagens envoluiu a arte de tentar
+desvendá-las também, um exemplo famoso de decifração é a contagem de frequência, onde
+a decifração de alguns hieróglifos egípcios feitos por J.F. Champollion no ano de 1822 ficou
+famoso, a chave para decifrar era a pedra de Roseta, atualmente no museu Britânico, em
+Londres (COUTINHO, 2011).
+
+Alguns destes métodos serão descritos abaixo.
+
+52
+
+3.1 Tipos
+
+Capítulo 3. Criptografia
+
+A criptografia é usada quando o remetente pretende escrever mensagens ou textos
+com o objetivo de que somente a pessoa interessada na mensagem possa lê-la. Um esquema
+de seu funcionamento segundo Stallings (2008, p. 172):
+
+Figura 4 – Como funciona a criptografia
+
+O texto claro é aquele que tem informação legível, o texto codificado ou texto
+ilegível, é aquele que foi gerado pela codificação de um texto claro. O ato de codificar ou
+cifrar é tranformar um texto claro em um texto ilegível, e, o ato de decodificar ou decifrar
+é transformar um texto codificado em um texto claro - uma mensagem pode ser quebrada,
+ou seja, decodificada, se aplicada as técnicas corretas.
+
+A criptografia pode ser dividida em simétrica (convencional) e assimétrica (de
+chave Pública), na primeira a mesma chave que criptografa a mensagem é a que des-
+criptografa, desta forma se uma pessoa tem a chave para criptografar uma mensagem
+automaticamente ela consegue descriptografar. Na segunda há uma chave para criptogra-
+far a mensagem: chave pública, e uma para descriptografar: chave privada, logo mesmo que
+uma pessoa tenha a chave para a criptografia da mensagem ela não consegue decodificar
+uma sem a outra chave: privada.
+
+Quando há as duas chaves: pública e privada, a primeira pode ser divulgada e
+deve ser feita de tal forma que mesmo que uma pessoa tenha ela não conseguirá descobrir
+a privada. A chave privada deve permanecer em segredo, afinal é ela que decodifica a
+mensagem.
+
+Quando há somente uma chave, no caso da criptografia simétrica, esta deve per-
+
+manecer secreta e quem a tem pode codificar ou decodificar qualquer mensagem.
+
+O nível de segurança de uma criptografia é medido de acordo com o número de
+bits, desta forma, quanto mais bits forem usados, mais difícil será quebrar a criptografia
+usada.
+
+3.1. Tipos
+
+53
+
+Bit é a sigla para Binary Digit, que significa dígito binário, assim 1 bit só pode
+assumir dois valores: 0 ou 1, essa quantidade de valores é medida de acordo com: 2n, onde
+o n é o número de bits. Dez bits tem assim 210 possíveis valores.
+
+3.1.1 Heródoto
+
+Heródoto viveu de 484 a.C. a 425 a.C. e adotou alguns métodos para comunicação
+chamados esteganografia (derivado das palavras gregas steganos, que significa coberto,
+e graphein, que significa escrever) arte de ocultar o que está escrito, os que mais se
+destacaram foram: raspar o cabelo do mensageiro, escrever a mensagem, deixar o cabelo
+crescer e enviá-lo para o destino; e escrever mensagens em tabletes e cobri-los com cera
+(LARCHER, 1950).
+
+Existem outros métodos de esteganografia, alguns usam processos físico-químico,
+como a tinta invisível, basta escrever com suco de limão sobre uma folha de papel branca,
+para que a mensagem apareça basta colocar a folha em contato com uma fonte de calor.
+
+3.1.2 Bastão de Licurgo
+
+Bastão de Licurgo ou Cítala foi o primeiro aparelho criptográfico militar, presente
+
+no século V a.C., foi usado pelos espartanos para envio de mensagens secretas.
+
+Era formada por dois bastões de madeira de espessura semelhante e uma tira de
+
+couro (cítala) que era usada como cinto para a transmissão da mensagem.
+
+Cada uma das varas fica em posse de um dos participantes da mensagem: uma
+com o mensageiro e outra com o destinatário. Para enviar a mensagem era enrolado
+a tira de couro de forma espiral em um dos bastões, depois se escrevia a mensagem
+longitudinalmente, aparecendo uma letra em cada parte da volta. Depois da mensagem
+escrita bastava desenrolar a tira e enviar, de posse da cítala o mensageiro enroladava a
+tira em seu bastão para ler a mensagem original (OLGIN, 2011).
+
+Esta criptografia também é conhecida como cifra de transposição que pode ser
+aplicada com uma função bijetiva para cifrar e a sua inversa para decifrar. A figura 5,
+segundo (FIARRESGA, 2010, p. 47), é um exemplo de Citale Espartano.
+
+3.1.3 Método de César
+
+O próprio imperador romano, general Júlio César usava a criptografia, mais
+simples, para se comunicar. Ele trocava cada letra da mensagem original pela terceira
+letra que a segue no alfabeto, assim quem pegasse a mensagem e não soubesse o código
+não conseguiria lê-la (MALAGUTTI, 2015).
+
+54
+
+Capítulo 3. Criptografia
+
+Figura 5 – Citale Espartano
+
+Contudo esse método não é difícil de ser quebrado, isso é possível aplicando uma
+análise probabilística de cada letra. No Brasil, por exemplo, a letra mais usada é a e a
+menos usada é x, logicamente nem todos os textos tem a letra a em maior frequência,
+como a frase: O impossível é inexistente, nela a letra a não aparece (COUTINHO, 2008).
+
+Mesmo assim quebrar frases criptografadas com este método são mais simples,
+mas às vezes pode dar muito trabalho. Observe a Figura 6 que mostra a distribuição de
+frequência das letras no alfabeto Brasileiro de acordo com Almeida (2015):
+
+Figura 6 – Frequência das letras no alfabeto (Brasil)
+
+3.1. Tipos
+
+3.1.4 Anagrama
+
+55
+
+É possível criptografar uma mensagem retirando os espaços entre as palavras e
+embaralhando as letras (anagrama), ou trocar letras por números, é possível criar vários
+métodos, quanto mais complexo o método for mais difícil será quebrá-lo (COUTINHO,
+2008).
+
+Também conhecida como cifra de transposição, é eficaz, pois caso a frase seja muito
+grande torna-se quase impossível reorganizar sem que se tenha a regra, uma frase com n
+letras têm n! modos de arranjo (lembrando que este caso é com n letras distintas, pois
+quando há repetição o cálculo é outro), este tipo de criptografia é interessante para se
+trabalhar contagem com os alunos.
+
+3.1.5 Blaise de Vigenère
+
+Inventada por Giovan Batista Belaso, em 1553, é um sistema polialfabético, foi
+conhecida como cifra indecifrável, apesar de ser facilmente decifrada com a aplicação de
+análise estatística.
+
+A cifra recebe este nome por ter sido atribuída erroneamente a Blaise de Vigenère,
+contudo apesar de não criá-la, ele criou a noção de auto-chave, que é usado ainda hoje
+(como no sistema DES).
+
+Para criptografar uma mensagem nesta cifra usa-se a tabela (3), que é uma repre-
+sentação das 26 possibilidades da cifra de César, e uma palavra chave a escolha. Para
+criptografar repete-se a palavra escolhida em cima ou em baixo da mensagem, a letra da
+palavra escolhida deve ser localizada na linha e a letra da mensagem na coluna ( ou vice-
+verso), o encontro delas corresponde à letra da mensagem criptografada, como mostrado
+na tabela 4 que usa a palavra chave mágica.
+
+Na tabela 4 para criptografar a mensagem Cifra de Blaise com a palavra chave
+mágica relaciona-se pela tabela 3 a letra C com a m, encontrando a letra o, o encontro
+das letras i e a é i, e assim por diante, obtendo a frase: oilzc do briksq.
+
+3.1.6 A cifra de Beale
+
+No ano de 1885 foi publicado um livro chamado The Beale Papers por James
+B. Ward, informando tudo sobre um tesouro que ele havia enterrado juntamente com
+um grupo, o qual ele chefiou, de 30 pessoas. As imagens abaixo foram tiradas de um
+documento publicado pela Agência Nacional de Segurança (NSA, 2015).
+
+Beale sumiu em 1822, muitas pessoas desde então, criptoanalistas ou não, tentaram
+desvendar as três cifras que ele deixou, deixando a especulação de que o tesouro de Beale
+é uma farsa (KRUH, 1982).
+
+56
+
+Capítulo 3. Criptografia
+
+J K L M N O P Q R S T U V W X Y Z
+A B C D E F G H I
+J K L M N O P Q R S T U V W X Y Z
+A B C D E F G H I
+J K L M N O P Q R S T U V W X Y Z A
+B C D E F G H I
+J K L M N O P Q R S T U V W X Y Z A B
+C D E F G H I
+J K L M N O P Q R S T U V W X Y Z A B C
+D E F G H I
+J K L M N O P Q R S T U V W X Y Z A B C D
+E F G H I
+J K L M N O P Q R S T U V W X Y Z A B C D E
+F G H I
+J K L M N O P Q R S T U V W X Y Z A B C D E F
+G H I
+J K L M N O P Q R S T U V W X Y Z A B C D E F G
+H I
+I
+J K L M N O P Q R S T U V W X Y Z A B C D E F G H
+J K L M N O P Q R S T U V W X Y Z A B C D E F G H I
+J
+K L M N O P Q R S T U V W X Y Z A B C D E F G H I
+J K
+L M N O P Q R S T U V W X Y Z A B C D E F G H I
+J K L
+J K L M
+J K L M N
+J K L M N O
+J K L M N O P
+J K L M N O P Q
+J K L M N O P Q R
+J K L M N O P Q R S
+J K L M N O P Q R S T
+J K L M N O P Q R S T U
+J K L M N O P Q R S T U V
+J K L M N O P Q R S T U V W
+J K L M N O P Q R S T U V W X
+J K L M N O P Q R S T U V W X Y
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M M N O P Q R S T U V W X Y Z A B C D E F G H I
+N O P Q R S T U V W X Y Z A B C D E F G H I
+N
+O P Q R S T U V W X Y Z A B C D E F G H I
+O
+P Q R S T U V W X Y Z A B C D E F G H I
+P
+Q R S T U V W X Y Z A B C D E F G H I
+Q
+R S T U V W X Y Z A B C D E F G H I
+R
+S T U V W X Y Z A B C D E F G H I
+S
+T U V W X Y Z A B C D E F G H I
+T
+U V W X Y Z A B C D E F G H I
+U
+V
+V W X Y Z A B C D E F G H I
+W W X Y Z A B C D E F G H I
+X Y Z A B C D E F G H I
+X
+Y Z A B C D E F G H I
+Y
+Z A B C D E F G H I
+Z
+
+Tabela 3 – Tabela para Cifra de Blaise de Vigenère
+
+Mensagem C i
+Palavra chave m a
+i
+Mensagem o
+
+f
+g
+l
+
+r
+i
+z
+
+a d
+c
+c d
+
+e B l
+g
+r
+
+a m a
+b
+o
+
+a
+i
+i
+
+i
+c
+k
+
+e
+s
+a m
+q
+s
+
+Tabela 4 – Criptografando com a Cifra de Blaise
+
+Nas figuras 7, 8 e 9 é possível observar suas mensagens cifradas que ainda não
+
+foram decifradas.
+
+É possível encontrar vários documentos sobre este caso no site: www.nsa.gov, em
+
+Declassification and Transparency (NSA, 2016).
+
+3.1.7 Braille
+
+A linguagem Braille também é uma maneira de codificação, foi desenvolvido como
+um método de escrita para que as pessoas com deficiência visual possam ler através do
+sentido do tato. O criador foi Louis Braille, um francês que com três anos de idade perdeu
+a visão após um ferimento no olho que infeccionou.
+
+Esta linguagem consiste em um arranjo 3 (cid:2) 2 de pontos, dispostos como uma pedra
+
+de dominó:
+
+De acordo com a localização do ponto ou pontos em auto relevo é possível deco-
+dificar a mensagem, na figura 10, por exemplo, é representado a letra A, onde apenas
+o primeiro ponto da primeira coluna é em relevo. Observe a Figura 10 (Disponível na
+Apostila 10 - Atividades de contagem a partir da criptografia - do Programa de Iniciação
+
+3.1. Tipos
+
+57
+
+Figura 7 – Cifra 1
+
+Figura 8 – Cifra 2
+
+58
+
+Capítulo 3. Criptografia
+
+Figura 9 – Cifra 3
+
+Figura 10 – 3 (cid:2) 2 - Três linhas por duas colunas
+
+Científica OBMEP, Malagutti (2015, p. 45)) :
+
+O Instituto Benjamin Constant oferece cursos e informações sobre o assunto (BRA-
+
+SIL, 2016).
+
+3.1.8 Disco de Alberti
+
+O disco de Alberti ou Disco de Cifras , foi a primeira máquina criptográfica, cri-
+ada por Leon Battista Alberti em 1466, que ficou conhecido como “O pai da criptologia
+Ocidental”por ter criado a substituição polialfabética, método que permite que diferentes
+símbolos cifrados representem o mesmo símbolo no texto.
+
+Criou também o método de recifragem, onde ele fabricou uma tabela com combi-
+nações possíveis dos números 1, 2, 3 e 4, com valores entre 11 e 4444, obtendo 336 grupos.
+Estes eram utilizados como um dicionário de códigos que correspondia a uma palavra,
+
+3.1. Tipos
+
+59
+
+Figura 11 – Tabela de consulta para letras e números em Braille
+
+quando aparecia em um texto era substituída pelo número e criptografada novamente
+junto com a mensagem.
+
+O disco é uma das cifras mais seguras, composto por dois anéis concentricos, onde
+o externo é fixo e contém 24 casas (20 letras latinas maiúsculas em ordem alfabética e
+os números 1, 2, 3 e 4) que corresponderá ao texto claro, e o anél interno móvel com 24
+letras minúsculas desordenadas para o texto cifrado.
+
+60
+
+Capítulo 3. Criptografia
+
+Fixada uma letra maiúscula como índice, o disco deve ser ajustado e a frase cifrada,
+podendo ser trocada a qualquer momento no texto se escrevendo uma nova letra maiúscula
+cifrante, indicando ao destinatário que o disco deve ser movido novamente, os números
+servem de nulos, ou seja, não tem significado prático na mensagem, são apenas para
+confundir ou dificultar a quebra do código, eles também podem servir para uma nova
+chave (indicando ao destinatário com antecendência qual deles significaria a nova chave),
+este método acelerava o trabalho de criptografar ou descriptografar mensagens e reduzia
+erros (SINGH, 2005).
+
+No site http://www.numaboa.com.br/criptografia/127-substituicao-polialfabetica/164-
+
+alberti é possível encontrar um aplicativo que cifra mensagens pelo método do Disco de
+Alberti (TKOTZ, 2016).
+
+3.1.9 Máquina Enigma
+
+Foi uma série de máquinas de cifra, patenteada em 1918 por Arthur Scherbius,
+desenvolvida quando percebeu-se que o sistema criptográfico da Alemanha estava atra-
+sado, embora não tenha sido atrativa em um primeiro momento, após várias modificações
+conquistou a marinha alemã em 1926 (Enigma-D), e o exército com sua própria versão
+(Enigma G) em 1928. Seu funcionamento é baseado em rotores, em uma combinação de
+sistemas mecânicos e elétricos (WINTERBOTHAM, 1978).
+
+Na Segunda Guerra Mundial, foi usada pela Alemanha, Itália e Japão (Eixo) para
+enviar mensagens codificadas que eram facilmente interceptadas, mas difícil de serem que-
+bradas, impedindo que Inglaterra, Estados Unidos, França e URSS (Aliados) soubessem
+de seus planos.
+
+Segundo WINTERBOTHAM (1978) até então era usado um livro de códigos que
+relacionava palavras ou frases com números, mas não eram considerados completamente
+secretos, já que se um fosse capturado todas as mensagens podiam ser decifradas.
+
+Havia também o bloco com folhas descartáveis, que era um auxiliar ao livro de
+códigos, ele indicava números a serem somados na mensagem, cada página usada deveria
+ser destruída, mas se tornou inviável para ser utilizado em grande escala e com muita
+frequência.
+
+A máquina Enigma se tornou um grande instrumento de guerra, muitos criptógra-
+fos foram contratados para tentar quebrar seu código, pois isso seria decisivo. Apesar dos
+esforços o código só foi quebrado em 1933 com a ajuda de uma máquina eletromecânica,
+desenvolvida por Alan Turing e Gordon Welchman, durante o trabalho em Bletchley Park,
+juntamente com os poloneses.
+
+Recentemente (2015) foi lançado um filme: O Jogo da Imitação, baseado na vida
+do matemático Alan Turing, mostrando como ele e sua equipe do Bletchley Park deci-
+
+3.1. Tipos
+
+61
+
+fraram a Máquina enigma na Segunda Gerra Mundial. Foi adaptado de um livro Alan
+Turing: The Enigma escrito por Andrew Hodges, sendo criado um site com notas do
+autor: http://www.turing.org.uk/ .
+
+Contudo a vida de Alan Turing já havia sido parcialmente retratada no filme
+Breaking the Code de 1996, dirigido por Herbert Wise, e no filme Codebreaker de Clare
+Beavan e Nic Stacey, lançado em 2011.
+
+3.1.10 Máquina Colossus
+
+Projetado em 1943 por Tommy Flowers, engenheiro elétrico, foi um computador
+digital eletrônico usado na Segunda Guerra Mundial para quebrar có́digos da máquina
+de cifras Lorenz SZ-40, uma das muitas máquinas usadas pelo governo alemão para crip-
+tografar suas mensagens. Tinha mais de 1700 válvulas e é referido muitas vezes como o
+primeiro computador.
+
+Após o fim da guerra muitas desta máquinas foram destruídas, mas em 1991 co-
+meçou o pensamento de que era possível reconstruir Colossus de modo totalmente opera-
+cional.
+
+No site http://www.cryptomuseum.com/crypto/colossus/index.htm é possível en-
+
+contrar uma das poucas fotos tiradas dela.
+
+3.1.11 Código Morse
+
+É a representação das letras e números em forma de sinais de pontuação (ponto e
+
+traço). Foi desenvolvido por Samuel Morse em 1835, também inventor do telégrafo.
+
+É um código fácil de ser enviado, pois pode ser utilizado pulsos elétricos transmi-
+tidos por um cabo, ondas mecânicas, sinais visuais ou ondas eletromagnéticas, o receptor
+reconhece quatro estados: voltagem-ligada longa (traço), voltagem-ligada curta (ponto),
+voltagem-desligada longa (espaço entre caracteres e palavras) e voltagem-desligada curta
+(espaço entre pontos e traços).
+
+3.1.12 Sistema Binário
+
+O sistema binário, usado em computadores, é outra forma de codificação, existe
+uma forma especial para este código chamada de American Standard Code for Informa-
+tion Interchange, sendo referida como ASCII (completo ou extendido) muito usada em
+microprocessadores onde o número x de bits informa a quantidade de caracteres diferentes
+que podem ser usados aplicando: 2x (SCOTTI; FERREIRA, 2011).
+
+A ASCII relaciona cada letra do alfabeto com uma sequência de sete dígitos, zeros
+
+ou uns, mais um para verificação de erro (paridade), totalizando 8 bits.
+
+62
+
+Capítulo 3. Criptografia
+
+Letras
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+K
+L
+M
+
+Código Internacional Letra
+
+Código Internacional Número
+
+.-
+-...
+-.-.
+-..
+.
+..-.
+- -.
+...
+- -
+.- - -
+-.-
+.-..
+- -
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+0
+
+N
+O
+P
+Q
+R
+S
+T
+U
+V
+W
+X
+Y
+Z
+Tabela 5 – Código Morse
+
+-.
+- - -
+.- -.
+- -.-
+.-.
+...
+-
+..-
+..-
+.- -
+-..-
+-.- -
+- -..
+
+Código Internacional
+.- - - -
+.. - - -
+...- -
+....-
+.....
+-....
+- -...
+- - -..
+- - - -.
+- - - - -
+
+O Data Encryption Standard (DES) foi criado pela International Business Machi-
+nes (IBM) em 1977, permitia 72 quadrilhões de combinações (56 bits) e foi o algoritmo
+simétrico mais difuso no mundo até que foi padronisado a AES.
+
+A Advanced Encryption Standard (AES) veio a partir de 2001, aplicada nas cone-
+xões de Wi-Fi, tem o tamanho de 128 bits, mas suas chaves variam de 128, 192 ou 256
+bits, ficou popular por ser rápido, fácil de ser executado e ocupar pouca memória.
+
+Ao se observar a história é possível ver que essa cifra surgiu com Francis Bacon,
+filósofo do século XVI, contudo ao invéz de 0 e 1 ele utilizava as letras a e b, em um grupo
+de 5 caracteres (5 bits) que foi publicada no livro VI, capítulo I do The Advancement of
+Learning (ROSS, 1996).
+
+3.2 RSA
+
+O sistema mais usado e mais conhecido atualmente é o de criptografia RSA, que
+
+segundo Coutinho (2011, p. 3):
+
+Este código foi inventado em 1978 por R. L. Rivest, A. Shamir e L. Adleman,
+que na época trabalhavam no Massachussets Institute or Technology (M.I.T.).
+As letras RSA correspondem às iniciais dos inventores do código. Há vários
+outros códigos de chave pública, mas o RSA é, atualmente, o mais usado em
+aplicações comerciais. Este é o método utilizado, por exemplo, no Netscape, o
+mais popular dos softwares de navegação da Internet (COUTINHO, 2011, p. 3).
+
+Existe diferença entre a criptografia convencional e a de chave pública (exemplo
+
+RSA), segundo Stallings (2008, p. 173) elas estão descritas na tabela 6.
+
+No site http://demonstrations.wolfram.com é possível encontrar programas que
+
+codificam e decodificam mensagens tanto no método de César quanto no de RSA.
+
+3.2. RSA
+
+63
+
+Criptografia convencional
+Necessário para funcionar:
+O mesmo algoritmo com a mesma
+chave é usado para criptografia e des-
+criptografia.
+
+O emissor e o receptor precisam com-
+partilhar o algoritmo e a chave.
+
+Necessário para a segurança:
+A chave precisa permanecer secreta.
+
+Deverá ser impossível ou pelo menos
+impraticável decifrar uma mensagem se
+nenhuma outra informação estiver dis-
+ponível.
+O conhecimento do algoritmo, com
+amostras do texto cifrado precisam ser
+insuficientes para determinar a chave.
+
+Criptografia de chave pública
+Necessário para funcionar:
+Um algoritmo é usado para criptografia
+e descriptografia com um par de chaves,
+uma para criptografia e outra para des-
+criptografia.
+O emissor e o receptor precisam ter
+uma das chaves do par casado de cha-
+ves (não a mesma chave).
+Necessário para a segurança:
+Uma da duas chaves precisa permane-
+cer secreta.
+Deverá ser impossível ou pelo menos
+impraticável decifrar uma mensagem se
+nenhuma outra informação estiver dis-
+ponível.
+O conhecimento do algoritmo, com
+uma das chaves, e amostras do texto
+cifrado precisam ser insuficientes para
+determinar a outra chave.
+
+Tabela 6 – Criptografia convencional e de chave pública
+
+3.2.1 Como Funciona?
+
+O método de criptografia RSA funciona do seguinte modo:
+
+1. Escolhe-se dois primos p e q, distintos entre si.
+
+2. Define-se N = pq e φ(N) = (p (cid:0) 1) (q (cid:0) 1).
+
+3. Deve-se escolher um número e, que faz parte da chave Pública, de forma que o
+máximo divisor comum (mdc) entre ele e φ(N) seja 1: (e; φ(N)) = 1 e 1 < e < φ(N).
+
+4. Resolvendo a congruência ed (cid:17) 1(modφ(N)) encontra-se d, que faz parte da chave
+
+Privada.
+
+5. De acordo com uma tabela pré formulada e de domínio público é feita a transforma-
+ção de todos os caracteres da mensagem em números (nesta tabela todos os números
+devem ter a mesma quantidade de dígitos), obtendo-se a mensagem numérica em
+um único bloco que será dividida em blocos b, de forma que: 1 (cid:20) b < N. Isso garante
+que ao utilizar congruência obtenha-se um único resultado na decodificação.
+
+6. De posse da Chave Pública (e; N) criptografa-se os blocos b de acordo com a con-
+
+gruência: be (cid:17) C(b) (mod N), onde C(b) é a mensagem criptografada.
+
+64
+
+Capítulo 3. Criptografia
+
+7. De posse da Chave Privada (d; N) descriptografa-se de acordo com a congruên-
+cia: C(b)d (cid:17) D(C(b)) (mod N), onde D(C(b)) é a mensagem descriptografada, 1 (cid:20)
+D(C(b)) < N.
+
+8. Cada bloco D(C(b)) deve ser colocado em sequência e de acordo com a mesma tabela
+
+usada no ítem 5 os números devem ser convertidos em caracteres.
+
+Exemplo 3. Neste exemplo será usado números primos menores, que facilitem o cálculo
+com o uso de uma calculadora comum. Dado os primos p e q da forma 6n + 5, sendo
+p = 11 e q = 17, pode-se obter N = 11 (cid:2) 17 = 187 e φN = (11 (cid:0) 1) (cid:2) (17 (cid:0) 1) = 160.
+
+Dada a tabela abaixo:
+
+33
+
+22
+
+24
+
+I
+29
+
+F G H
+28
+27
+26
+
+J
+A B C D E
+21
+31
+25
+23
+K L M N O P Q R S T
+42
+37
+32
+U V W X Y Z
+48
+43
+5
+0
+55
+49
+
+47
+4
+54
+
+44
+1
+51
+
+46
+3
+53
+
+45
+2
+52
+
+7
+57
+
+9
+59
+
+8
+58
+
+6
+56
+
+36
+
+38
+
+39
+
+41
+
+35
+
+34
+
+Tabela 7 – Tabela Para Conversão
+
+O valor de e deve ser escolhido de modo que (e; φN) = 1, deste modo será escolhido
+
+o número 3 e d deverá seguir a congruência ed (cid:17) 1(modφN), assim:
+
+3d (cid:17) 1(mod160):
+
+Deste modo 160k = 3d (cid:0) 1 , 1 = 3d (cid:0) 160k, resolvendo pelo método do algoritmo
+
+de Euclides:
+
+160 = 3 (cid:2) 53 + 1 , 1 = 160 (cid:0) 3 (cid:2) 53:
+
+Como o valor de d não pode ser negativo e as soluções desta equação são: d =
+
+(cid:0)53 + 160t e k = (cid:0)1 (cid:0) 3t:
+
+(cid:0)53 + 160t > 0 , t >
+
+53
+160
+
+:
+
+Substituindo t = 1 tem-se o menor valor possível para d que é 107. Deste modo
+já tem-se a chave para Ciptografar (e; N) = (3; 187) e para Descriptografar (d; N) =
+(107; 187).
+
+A mensagem é “CHAVE”, primeiro é preciso transformar as letras em números
+de acordo com a tabela, assim tem-se C= 23, H= 28, A= 21, V= 44 e E= 25. Ficando:
+23 (cid:0) 28 (cid:0) 21 (cid:0) 44 (cid:0) 25.
+
+3.2. RSA
+
+65
+
+A mensagem deve ser separada em blocos b de modo que cada bloco tenha números
+menores que 187. Como os primos escolhidos são pequenos, os blocos também devem ser,
+assim:
+
+2328214425 = 2 (cid:0) 32 (cid:0) 82 (cid:0) 14 (cid:0) 42 (cid:0) 5
+
+Para codificar a mensagem usaremos a chave (3; 187) e a congruência be (cid:17) C(b) mod N:
+
+23 (cid:17) C(b1) mod N , C(b1) = 8
+
+323 (cid:17) C(b2) mod N , 323 (cid:17) 32768 mod N , C(b2) = 43
+
+823 (cid:17) C(b3) mod N , 823 (cid:17) 551368 mod N , C(b3) = 92
+
+143 (cid:17) C(b4) mod N , 143 (cid:17) 2744 mod N , C(b4) = 126
+
+423 (cid:17) C(b5) mod N , 423 (cid:17) 74088 mod N , C(b5) = 36
+
+53 (cid:17) C(b6) mod N , 53 (cid:17) 125 mod N , C(b6) = 125
+
+O bloco codificado será:
+
+8 (cid:0) 43 (cid:0) 92 (cid:0) 126 (cid:0) 36 (cid:0) 125:
+
+Para decodificar é preciso da chave (107; 187) e da congruência:
+
+C(b)d (cid:17) D(C(b)) mod N:
+
+Como 107 é um número primo e usá-lo como expoente faz com que não seja possível
+usar uma calculadora comum será usado algumas propriedades de congruência citadas na
+Proposição 14.
+
+Para decodificar o primeiro bloco: 8 deve-se usar:
+
+8107 (cid:17) D(C(b)) mod 187
+
+Assim como 107 = 3 (cid:2) 7 (cid:2) 5 + 2 temos:
+
+Pelo ítem 5 da Proposição 14:
+
+83 (cid:17) 512 (cid:17) 138 mod 187:
+
+(83)5 (cid:17) 1385 mod 187
+
+e
+
+então:
+
+1385 = 1382 (cid:2) 1382 (cid:2) 138 = 19044 (cid:2) 19044 (cid:2) 138;
+
+815 (cid:17) 1385 (cid:17) 1382 (cid:2) 1382 (cid:2) 138 mod 187
+
+Capítulo 3. Criptografia
+
+66
+
+pois
+
+Portanto
+
+Ainda,
+
+, 815 (cid:17) 19044 (cid:2) 19044 (cid:2) 138 mod 187
+
+, 815 (cid:17) 157 (cid:2) 157 (cid:2) 138 mod 187;
+
+19044 (cid:17) 157 mod 187:
+
+3401562 (cid:17) 32 mod 187
+
+, 815 (cid:17) 32 mod 187:
+
+, (815)7 (cid:17) 327 (cid:17) 323 (cid:2) 323 (cid:2) 32 mod 187
+
+, 8105 (cid:17) 32768 (cid:2) 32768 (cid:2) 32 (cid:17) 43 (cid:2) 43 (cid:2) 32 mod 187
+
+, 8105 (cid:17) 59168 (cid:17) 75 mod 187:
+
+Finalmente conclui-se que
+
+, 8105 (cid:2) 82 (cid:17) 76 (cid:2) 82 (cid:17) 4864 (cid:17) 2 mod 187:
+
+, 8107 (cid:17) 2 mod 187:
+
+Contudo com este método é gasto muito tempo e deve-se fazer muitos cálculos,
+
+um modo mais fácil é usar o Teorema Chinês do Resto.
+
+Assim como sabe-se que N = 187 = 11 (cid:2) 17, pelo Teorema 2 tem-se que:
+
+Desta forma:
+
+e
+
+Assim:
+
+e
+
+pjap(cid:0)1 (cid:0) 1 , ap(cid:0)1 (cid:17) 1 mod p:
+
+810 (cid:17) 1 mod 11
+
+816 (cid:17) 1 mod 17:
+
+(810)10 (cid:17) 110 mod 11
+
+8100 (cid:2) 87 (cid:17) 1 (cid:2) 87 (cid:17) 2 mod 11
+
+8107 (cid:17) 2 mod 11
+
+(816)6 (cid:17) 16 mod 17
+
+896 (cid:2) 85 (cid:17) 1 (cid:2) 85 mod 17
+
+8101 (cid:17) 9 mod 17
+
+3.2. RSA
+
+67
+
+8101 (cid:2) 85 (cid:17) 9 (cid:2) 85 (cid:17) 9 (cid:2) 9 (cid:17) 13 mod 17
+
+8106 (cid:2) 8 (cid:17) 13 (cid:2) 8 (cid:17) 2 mod 17
+
+8107 (cid:17) 2 mod 17
+
+Substituindo 8107 por x tem-se um sistema de congruências:
+
+Pelo Teorema Chinês do Resto:
+
+Assim:
+
+e:
+
+x (cid:17) 2 mod 11
+
+x (cid:17) 2 mod 17:
+
+M = 11 (cid:2) 17 = 187
+
+M1 =
+
+M2 =
+
+187
+11
+187
+17
+
+= 17
+
+= 11:
+
+17y1 (cid:17) 1 mod 11
+
+, y1 = 2
+
+11y2 (cid:17) 1 mod 17
+
+, y2 = 14
+
+X = 17 (cid:2) 2 (cid:2) 2 + 11 (cid:2) 14 (cid:2) 2 + t187
+
+X = 376 + t187:
+
+O menor valor de X no conjunto dos naturais para a equação é com t = (cid:0)2, desta
+
+forma X = 2.
+
+Obtem-se assim o primeiro bloco decodificado. Para obter o segundo bloco decodi-
+
+ficado o processo é o mesmo.
+
+Repetindo o processo em todos os blocos será obtido a mensagem decodificada: 2 -
+32 - 82 - 14 - 42 - 5. Como é conhecido a Tabela 7, basta reagrupar a mensagem e trocar
+os números pelas letras voltando à mensagem “CHAVE”.
+
+Exemplo 4. Para resolver este exemplo foi usado o software MAXIMA, que é livre e
+gratuito, pois os cálculos necessários não são feitos por uma calculadora normal e à mão
+levaria muito tempo.
+
+Dado os primos p e q da forma 6n + 5, sendo p = 857 e q = 2207, pode-se obter
+
+N = 857 (cid:2) 2207 = 1891399 e φN = (857 (cid:0) 1) (cid:2) (2207 (cid:0) 1) = 1888336.
+
+68
+
+Capítulo 3. Criptografia
+
+Considere a Tabela 7 já usada no Exemplo 1.
+
+O valor de e deve ser escolhido de modo que (e; φN) = 1. Vejamos algumas opções:
+
+3, 5,7,11,13, 15, 17, 19, 25, 29, 31, 35 , 55 : : : O valor escolhido será e = 3.
+
+Para obter d é preciso utilizar a congruência:
+
+Substituindo, temos:
+
+ed (cid:17) 1(modφ(N))
+
+3 (cid:2) d (cid:17) 1(mod1888336);
+
+ou seja 3d (cid:0) 1 = 1888336k , 3d (cid:0) 1888336k = 1:
+
+Logo recaímos em uma equação diofantina, com solução nos inteiros já que (3; 1888336) =
+
+1 j 1.
+
+Assim resolvendo a equação diofantina:
+
+1888336 = 3 (cid:2) 629445 + 1
+
+, 1888336 (cid:0) 3 (cid:2) 629445 = 1:
+
+Logo, pela Proposição 9 as soluções para d e k nos inteiros é dada por: d =
+(cid:0)629445 + 1888336t e k = 1 (cid:0) 3t. Contudo quer-se números inteiros positivos para d desta
+forma:
+
+(cid:0)629445 + 1888336t > 0
+
+encontra-se que t > 0; 33:::. Substituindo t por 1 obtem-se: d = 1258891.
+
+A chave Pública
+
+e a chave Privada
+
+(e; N) ) (3; 1891399)
+
+(d; N) ) (1258891; 1891399):
+
+Com a chave Pública será codificada a mensagem:
+
+NÚMER0S D0M1N4M 0 MUND0.
+
+De acordo com a tabela 7 a mensagem ficará:
+
+3543342539494124493451355434493443352449
+
+será dividida em blocos de três dígitos ficando: 354 - 334 - 253 - 949 - 412 - 449 - 345 -
+135 - 543 - 449 - 344 - 335 - 244 - 9:
+
+3.2. RSA
+
+69
+
+Bloco 354:
+
+3543 (cid:17) 859687 mod(1891399:)
+
+Assim o primeiro bloco será: 859687:
+
+Do mesmo modo:
+
+Bloco 334:
+3343 (cid:17) 1323123 mod(1891399)
+
+Bloco 253:
+
+2533 (cid:17) 1063085 mod(1891399)
+
+Bloco 949:
+
+9493 (cid:17) 1649400 mod(1891399)
+
+Bloco 412:
+
+4123 (cid:17) 1844164 mod(1891399)
+
+Bloco 449:
+
+4493 (cid:17) 1623096 mod(1891399)
+
+Bloco 345:
+
+3453 (cid:17) 1344246 mod(1891399)
+
+Bloco 135:
+
+1353 (cid:17) 568976 mod(1891399)
+
+Bloco 543:
+
+5433 (cid:17) 1225491 mod(1891399)
+
+Bloco 449:
+
+4493 (cid:17) 1623096 mod(1891399)
+
+Bloco 344:
+
+3443 (cid:17) 988205 mod(1891399)
+
+Bloco 335:
+
+3353 (cid:17) 1658794 mod(1891399)
+
+Bloco 244:
+
+24433 (cid:17) 1286991 mod(1891399)
+
+Bloco 9:
+93 (cid:17) 729 mod(1891399)
+
+Mensagem codificada: 859687 - 1323123 - 1063085 - 1649400 - 1844164 - 1623096
+
+- 1344246 - 568976 - 1225491 - 1623096 - 988205 - 1658794 - 1286991 - 729:
+
+Para decodificar a mensagem é preciso usar a chave Privada (1258891; 1891399):
+
+70
+
+Capítulo 3. Criptografia
+
+Para o primeiro bloco:
+8596871258891 (cid:17) 354 mod(1891399):
+
+Fazendo todo o processo inverso volta-se à mensagem criptografada:
+354 - 334 - 253 - 949 - 412 - 449 - 345 - 135 - 543 - 449 - 344 - 335 - 244 - 9
+) 3543342539494124493451355434493443352449
+) 35 (cid:0) 43 (cid:0) 34 (cid:0) 25 (cid:0) 39 (cid:0) 49 (cid:0) 41 (cid:0) 24 (cid:0) 49 (cid:0) 34 (cid:0) 51 (cid:0) 35 (cid:0) 54 (cid:0) 34 (cid:0) 49 (cid:0) 34 (cid:0) 43 (cid:0) 35 (cid:0)
+24 (cid:0) 49
+) NÚMER0S D0M1N4M 0 MUND0
+
+3.2.2 Por que funciona?
+
+Mas por que o método funciona?
+
+A mensagem b deve ser igual à mensagem decodificada D(C(b)). De acordo com o
+
+processo:
+
+be (cid:17) C(b) mod N;
+
+C(b)d (cid:17) D(C(b)) mod N;
+
+ed (cid:17) 1 mod φ(N);
+
+(3.1)
+
+(3.2)
+
+(3.3)
+
+em que N = pq, φ(N) = (p (cid:0) 1)(q (cid:0) 1). Como b < N, D(C(b)) < N, para provar que a
+criptografia RSA funciona é suficiente verificar que D(C(b)) (cid:17) b mod N se verifica. Pela
+Proposição 14, quinto item e usando as equações (3.1) e (3.2), temos que:
+
+(be)d (cid:17) D(C(b)) mod N:
+
+(3.4)
+
+De acordo com a equação (3.3), existe inteiro k tal que
+
+ed = kφ(N) + 1:
+
+Usando (3.4):
+
+Se p j b implica que
+
+então:
+
+bkφ
+
+(N)+1 (cid:17) D(C(b)) mod N:
+
+(3.5)
+
+b (cid:17) 0 mod p;
+
+bed (cid:17) 0 mod p:
+
+3.2. RSA
+
+Implicando assim que
+
+provando que
+
+bed (cid:17) b mod p;
+
+D(C(b)) (cid:17) b mod p:
+
+71
+
+Analogamente se q j b. Agora, supondo que p e q não dividam b, pelo Pequeno Teorema
+de Fermat tem-se que
+
+(3.6)
+
+(3.7)
+
+(3.8)
+
+(3.9)
+
+bp(cid:0)1 (cid:17) 1 mod p;
+
+bq(cid:0)1 (cid:17) 1 mod q;
+
+e
+
+o que implica
+
+e
+
+(b(p(cid:0)1))(q(cid:0)1) (cid:17) 1(q(cid:0)1) mod p;
+
+(b(q(cid:0)1))(p(cid:0)1) (cid:17) 1(p(cid:0)1) mod q:
+
+Usando (3.8) e (3.9), e o item 2 da Proposição 15, temos que
+
+e logo
+
+φ
+(N) (cid:17) 1 mod pq
+b
+
+φ
+(N))kb (cid:17) b mod N:
+
+(b
+
+Usando transitividade e (3.5) obtem-se
+
+b (cid:17) D(C(b)) mod N:
+
+Logo a mensagem b é igual à mensagem decodificada D(C(b)).
+
+3.2.3 Segurança
+
+Para quebrar o código é preciso ter a chave de decodificação (d; N), acontece que
+a chave pública (e; N) já fornece parte do que é preciso, a saber, o número N. Assim é
+preciso apenas encontrar d e ter a mensagem em mãos.
+
+O número N é igual ao produto de dois números primos p e q que foram escolhidos,
+assim é preciso encontrar a fatoração de N para que p e q sejam achados e assim encontrar
+φ(N) = (p (cid:0) 1)(q (cid:0) 1), para que resolva-se a congruência ed (cid:17) 1 mod φ(N), encontrando
+d.
+
+72
+
+Capítulo 3. Criptografia
+
+Parece simples, mas não é, na realidade é inviável já que não existe computadores
+rápidos o suficientes, nem algoritmos tão bons que nos permitam fatorar um número
+inteiro muito grande que não tenha fatores pequenos.
+
+É preciso, neste caso, dar significado à palavra grande: o quão grande deve ser
+N? O RSA Laboratory pertence à uma empresa que detém os direitos do sistema de
+codificação RSA, já lançou desafios para a fatoração de possíveis chaves, uma delas com
+193 algarismos foi finalizada no ano de 2005 por F. Bahr, M. Boehm, J. Franke e T.
+Kleinjung no Escritório Federal de Segurança de Informação da Alemanha. Eles usaram
+80 computadores de 2:2 GHz cada um, levando 5 meses para a tarefa.
+
+Há chaves maiores, podendo chegar à 2467 algarismos.
+
+De acordo com Garrett (2017) o novo Sunway TaihuLight é um supercomputador
+da China, o mais poderoso do mundo com mais de dez milhões de núcleos de processa-
+mento, sendo assim ele pode fazer 93 quatrilhões de cálculos por segundo, e tudo isso
+fabricado na China.
+
+Existe uma listagem destes supercomputadores onde China e Estados Unidos lide-
+ram, com 167 e 165 computadores cada, respectivamente, no Brasil há 4 deles e o mais
+poderoso está no 265 lugar.
+
+73
+
+CAPÍTULO
+
+4
+
+APLICAÇÕES DA CRIPTOGRAFIA RSA NO
+PROGRAMA DE INICIAÇÃO CIENTÍFICA
+OBMEP
+
+A aula foi ministrada aos alunos do 10◦ Programa de Iniciação Científica Júnior
+(PIC), Polo Passos - MG, da Olimpíada Brasileira de Matemática das Escolas Públicas
+(OBMEP).
+
+Nesta turma em particular todos os estudantes já haviam feito o curso pelo menos
+uma vez anteriormente, assim a explicação da matéria podia ser mais aprofundada, pois
+muitos conteúdos eles já haviam tido uma introdução.
+
+A programação do Grupo 4 deste ano traz Criptografia e Teoria dos Números nos
+
+três primeiros encontros, como mostra na figura 12.
+
+Como a turma é misturada, todos os alunos participaram da explanação dos con-
+teúdos programados para os dois grupos, o planejamento do grupo 3 também aborda
+conhecimentos de Teoria dos Números, como é possível ver na figura 13.
+
+A aula foi ministrada no encontro 6, depois de ter sido abordado todos os conteúdos
+
+básicos para se compreender Criptografia RSA.
+
+4.1 Planejamento
+
+Primeiramente foi apresentado um resumo da história da criptografia com a cifra
+de César, que é mais simples, para isso foi usada as apostilas 7: Criptografia de Severino
+Collier Coutinho, a apostila 10: Atividades de contagem a partir da Criptografia de Pedro
+Luiz Malagutti, disponíveis no site http://www.obmep.org.br/.
+
+Depois foi falado um pouco sobre os tópicos:
+
+74
+
+Capítulo 4. Aplicações da Criptografia RSA no Programa de Iniciação Científica OBMEP
+
+Figura 12 – Programação dos Primeiros Encontros do G4
+
+Figura 13 – Programação dos Primeiros Encontros do G3
+
+1. a máquina enigma, usada na Segunda Guerra Mundial para as comunicações nazis-
+tas, e o site http://www.numaboa.com.br/criptografia/dispositivos/861-enigma que
+
+4.2. A aplicação
+
+75
+
+tem um simulador on line da máquina enigma onde é possível codificar mensagens,
+mas não decodificá-las;
+
+2. O código morse;
+
+3. codificação binária ASCII;
+
+4. e, um breve resumo dos outros tipos de criptografia ao longo da história que estão
+
+presentes neste trabalho
+
+Foi apresentado a criptografia RSA e um pouco de sua história, assim como onde
+ela é usada (foi mostrado sites de bancos e de compras), o porque ela funciona, como ela
+funciona e porque ela é segura, sendo feita as demostrações necessárias.
+
+Foi discutido também as formas de se encontrar os números primos, onde foi apre-
+sentado o site http://primes.utm.edu/largest.html e os Problemas do Prémio Millennium
+(Hipótese de Riemann).
+
+4.2 A aplicação
+
+O Exemplo 1 da Seção 2:2 foi feito passo-a-passo com os alunos. A turma então
+foi dividida em duas equipes e para cada uma foi dada uma mensagem simples para que
+eles decodifiquem. Com as respostas em mãos foi dada a elas uma segunda mensagem que
+não pode ser resolvida apenas com calculadora (Exemplo 2), mas sim com algum software
+como, por exemplo, o MAXIMA.
+
+Nesta parte da aula os alunos discutiram a importância dos recursos eletrônicos
+e foi apresentado o programa MAXIMA. Alguns deles cursam Técnico em Informática
+integrado ao Ensino Médio no Institudo Federal do Sul de Minas (IFSul), então foi uma
+conversa muito rica.
+
+4.3 MAXIMA
+
+O programa MAXIMA pode ser baixado gratuitamente, a versão usada foi a 5:30:0.
+Existe um tutorial em http://maxima.sourceforge.net. É possível usá-lo como auxiliar na
+criptografia RSA, além de outros campos como funções e matriz. Para mostrar como ele
+é usado será mostrado a resolução do Exemplo 2.
+
+Depois de escolhido os números primos, é possível encontrar o produto com o
+comando: p (cid:3) q, conforme a figura 14, onde p e q são os números primos escolhidos, depois
+é só dar enter ou a combinação de teclas [Shift][Enter].
+
+É possível encontrar φN de forma parecida como na figura 15.
+
+76
+
+Capítulo 4. Aplicações da Criptografia RSA no Programa de Iniciação Científica OBMEP
+
+Figura 14 – Encontrando N
+
+Figura 15 – Encontrando φN
+
+Para encontrar e temos que (e; φN), por isso é possível usar o comando factor(a)
+como na figura 16, onde a é o número a ser fatorado, para garantir que o mdc entre eles
+seja 1 basta escolher um número primo que não pertença à fatoração de φN e seja menor
+possível. Como os números primos usados são da forma 6k + 5 isso implica que φN nunca
+será divisível por 3.
+
+Figura 16 – Fatoração de φN
+
+Além disso o comando de fatoração, é útil na criptoanálise para descobrir quais
+números primos estão sendo usados na codificação e assim poder decodificar a mensagem
+(quando não se tem a chave privada), afinal basta descobrir a fatoração de N para descobrir
+a Chave Privada.
+
+É possível encontrar d também, que seria o inverso multiplicativo, para isso é
+
+4.3. MAXIMA
+
+77
+
+preciso usar o comando inv_mod(e,φN) como na figura 17.
+
+Figura 17 – Encontrando d
+
+Para potência é usado ,̂ por exemplo: 105 ficaria “10^5”. O comando mod(m; n) dá
+
+o resto da divisão de m por n, o que é preciso nas congruências usadas.
+
+Assim ao se utilizar as formulas be (cid:17) C(b)mod N e [C(b)]d (cid:17) D(C(b)) mod N, basta
+colocar o comando mod (be; N) e terá o resultado C(b) como nas figuras 18 e 19, o comando
+mod ([C(b)]d; N) obtendo D(C(b)) como nas figuras 20 e 21.
+
+Figura 18 – Codificando a mensagem
+
+78
+
+Capítulo 4. Aplicações da Criptografia RSA no Programa de Iniciação Científica OBMEP
+
+Figura 19 – Codificando a mensagem
+
+Figura 20 – Decodificando a mensagem
+
+4.4. Resultados
+
+79
+
+Figura 21 – Decodificando a mensagem
+
+4.4 Resultados
+
+Primeiramente foi feita a separação dos dois grupos para o desafio final, ficando
+cada grupo com 10 alunos. Durante a explanação da história da criptografia, foram feitas
+muitas observações interessantes por parte dos alunos, como: as maneiras de se interceptar
+a mensagem, as dificuldades que podiam ser encontradas na decifração, como deixar um
+código simples mais difícil de ser quebrado, dentre outros, funcionando como uma mesa
+redonda.
+
+Alguns alunos mostraram que já tinham um código próprio para comunicação
+com amigos, assim foram desafiados a construirem um código único e simples baseado no
+de César e depois trocar uma mensagem criptografada com este código, foi dado quinze
+minutos para que eles tentassem quebrar o código, sem nenhum exito, então eles pediram
+mais tempo e com trinta minutos decorridos um grupo já havia quebrado o código.
+
+Quatro dos alunos que fazem o curso também fazem técnico em informática, assim
+a discussão sobre códigos binários e programas computacionais foi muito aprofundada, um
+dos alunos mostrou um programa simples que ele havia criado para cálculo de números
+primos.
+
+Alguns tópicos que foram introduzidos pelos alunos:
+
+1. O assassino em série Zodiaco que escreveu cartas codificadas, onde algumas não
+
+foram decifradas até hoje.
+
+2. Cicada 3301, um desafio que surgiu em um site com vários enigmas e códigos a
+
+serem decifrados.
+
+80
+
+Capítulo 4. Aplicações da Criptografia RSA no Programa de Iniciação Científica OBMEP
+
+3. 11B x 1371, um vídeo onde aparecem mensagens para serem decodificadas, incluindo
+
+algumas em código morse.
+
+4. criptografia quântica.
+
+O fato desta aplicação ter sido em um programa de iniciação científica próprio para
+alunos que gostam de matemática não significa que ela não possa ser aplicada na sala de
+aula, afinal não é preciso explanar cada teorema com os alunos, porque a criptografia RSA
+usa restos de divisões (congruência) e potênciação.
+
+81
+
+REFERÊNCIAS
+
+ALMEIDA, P. Q. de. Página sobre Criptologia (Criptografia e Criptoanálise). Por-
+tugal, 2015. Departamento de Matemática - Faculdade de Ciências e Tecnologia - Universi-
+dade de Coimbra. Disponível em: <http://www.mat.uc.pt/~pedro/cientificos/Cripto/>.
+Citado na página 54.
+
+ATMEL. Entrada remota sem chave. http://www.atmel.com: [s.n.], 2016. Disponível
+em: <http://www.atmel.com>. Citado na página 49.
+
+BALLINGER, R.; RODENKIRCH, M. Proth Search Page. http://prothsearch.net/:
+[s.n.], 2016. Disponível em: <http://www.prothsearch.net/>. Citado na página 45.
+
+BRASIL. Parâmetros Curriculares Nacionais: matemática. Brasília: MEC/SEF,
+1997. Citado 2 vezes nas páginas 21 e 22.
+
+BRASIL, A. INSTITUTO BENJAMIN CONSTANT. http://www.ibc.gov.br/,
+2016. Disponível em: <http://www.ibc.gov.br/>. Citado na página 58.
+
+CALDWELL,
+https://primes.utm.edu/largest.html:
+utm.edu/largest.html>. Citado na página 44.
+
+The
+
+K.
+
+C.
+
+Primes.
+[s.n.], 2016. Disponível em: <https://primes.
+
+Largest
+
+Known
+
+CANTORAL, R. Desarrollo del pensamiento matemático. México: Trillas: ITESM,
+Universidade Virtual, 2003. Citado na página 22.
+
+CARNEIRO, M. J. D.; SPIRA, M.; SABATUCCI, J. Conteúdo Básico Comum
+(CBC) de Matemática no Ensino Médio. 2016. Disponível em: <www.crv.educacao.
+mg.gov.br>. Citado 3 vezes nas páginas 21, 22 e 43.
+
+CLAY, L. D.; CLAY, L. T. Clay Mathematics
+(CMI). 2016.
+Http://www.claymath.org/. Disponível em: <http://www.claymath.org/>. Citado na
+página 87.
+
+Institute
+
+COUTINHO, S. C. Criptografia. Rio de Janeiro: IMPA, 2008. v. 7. (Programa de Inici-
+ação Científica - OBMEP, v. 7). Citado 4 vezes nas páginas 21, 43, 54 e 55.
+
+. Números Inteiros e Criptografia RSA. Rio de Janeiro: IMPA, 2011. (Coleção
+
+Matemática e Aplicações). Citado 2 vezes nas páginas 51 e 62.
+
+D’AMBROSIO, U. Educação Matemática: da teoria à prática. Campinas: Papirus,
+1997. (Coleção Perspectiva em Educação Matemática). Citado na página 22.
+
+DIFFIE, W.; HELLMAN, M. E. New Directions in Cryptography. New York, 2007.
+IEEE Xplore. Disponível em: <ieeexplore.ieee.org>. Citado 2 vezes nas páginas 21 e 51.
+
+FIARRESGA, V. M. C. Criptografia e matemática. Universidade de Lisboa Facul-
+dade de Ciências, Departamento de Matemática, 2010. Citado na página 53.
+
+82
+
+Referências
+
+FONSECA, M. C. Por que ensinar Matemática. Belo Horizonte: Presença Pedagógica,
+1995. v. 1. Citado na página 22.
+
+F.
+
+93
+
+Computador
+de
+
+GARRETT,
+cula
+ponível
+pc-mais-poderoso-do-mundo-calcula-93-quatrilhoes-de-dados-por-segundo.html>.
+tado na página 72.
+
+cal-
+mundo
+2017. Techtudo. Dis-
+<http://www.techtudo.com.br/noticias/noticia/2016/06/
+Ci-
+
+quatrilh￿es
+em:
+
+poderoso
+segundo.
+
+dados
+
+mais
+
+por
+
+do
+
+HEFEZ, A. Iniciação à Aritmética. Rio de Janeiro, 2005. OBMEP. Disponível em:
+<http://www.obmep.org.br/docs/apostila1.pdf>. Citado na página 43.
+
+KAHN, D. The codebreakers: The story of Secret Writing. New York: Scribner,
+1996. Citado na página 51.
+
+KRUH, L. A Basic Probe of the Beale Cipher as a Bamboozlement.
+http://www.tandfonline.com/doi/abs/10.1080/0161-118291857190: [s.n.], 1982. v. 6 and
+12. Citado na página 55.
+
+LARCHER, P. H. História Heródoto (484 A.C. - 425 A.C.). Rio de Janeiro: W.
+M. Jackson Inc., 1950. XXIII e XXIV. (Clássicos Jackson, XXIII e XXIV). Disponível
+em: <http://www.ebooksbrasil.org/eLibris/historiaherodoto.html>. Citado 2 vezes nas
+páginas 50 e 53.
+
+MALAGUTTI, P. L. Atividades de Contagem a partir da Criptografia. Rio de
+Janeiro: IMPA, 2015. v. 10. (Programa de Iniciação científica - OBMEP, v. 10). Disponível
+em: <http://www.obmep.org.br/docs/apostila10.pdf>. Citado 2 vezes nas páginas 53
+e 58.
+
+MALAGUTTI, P. L. A. P versus NP. 2017. UFSCAR. Disponível em: <http://www.
+dm.ufscar.br/hp/hp501/hp501001/hp501001.html>. Citado na página 89.
+
+MARTINEZ, F. B.; MOREIRA, C. G.; SALDANHA, N.; TENGAN, E. Teoria dos
+números: um passeio com primos e outros números familiares pelo mundo
+inteiro. 3. ed. Rio de Janeiro: IMPA, 2013. (Projeto Euclides). Citado 2 vezes nas
+páginas 44 e 45.
+
+NSA, N. S. A. Has The Beale Treasure Code Been Solved. 2015. Dis-
+ponível em: <https://www.nsa.gov/news-features/declassified-documents/beale-papers/
+assets/files/doc656743.pdf>. Citado na página 55.
+
+Beale
+
+. The
+
+Papers.
+documents/beale-papers/index.shtml:
+nsa.gov/news-features/declassified-documents/beale-papers/index.shtml>.
+página 56.
+
+https://www.nsa.gov/news-features/declassified-
+em: <https://www.
+[s.n.], 2016. Disponível
+Citado na
+
+OEIS. Brier numbers: numbers that are both Riesel and Sierpinski, or odd
+n such that for all k >= 1 the numbers n (cid:2) 2k + 1 and n (cid:2) 2k (cid:0) 1 are compo-
+site. http://oeis.org/A076335: [s.n.], 2016. Disponível em: <http://oeis.org/A076335>.
+Citado na página 45.
+
+OLGIN, C. D. A. Currículo no Ensino Médio: uma experiência com o tema
+criptografia. Canoas: Universidade Luterana do Brasil, 2011. Citado na página 53.
+
+Referências
+
+83
+
+RACKSPACE. PrimeGrid. http://www.primegrid.com/: [s.n.], 2016. The first managed
+cloud company. Disponível em: <http://www.primegrid.com/>. Citado na página 45.
+
+RIBENBOIM, P. Números Primos: Velhos mistérios e novos recordes. 1. ed. Rio
+de Janeiro: IMPA, 2012. (Coleção Matemática Universitária). Citado na página 35.
+
+ROSS, T. The Code that Failed: Testing a Bacon-Shakespeare Cipher. 1996.
+The Shakespeare Authorship Page. Disponível em: <http://shakespeareauthorship.com/
+bacpenl.html>. Citado na página 62.
+
+SANTOS, J. C. A hipótese de Riemann ￿ 150 anos. 2017. Disponível em: <http:
+//www.fc.up.pt/mp/jcsantos/PDF/artigos/Riemann_150.pdf>. Citado na página 88.
+
+SCOTTI, H. de S.; FERREIRA, R. F. Sistemas de numeração. UFSC, 9 2011. Dispo-
+nível em: <http://www.inf.ufsc.br/~bosco.sobral/extensao/sistemas-de-numeracao.pdf>.
+Citado na página 61.
+
+SINGH, S. O livro dos códigos. Rio de Janeiro: Record, 2005. Citado 3 vezes nas
+páginas 50, 51 e 60.
+
+STALLINGS, W. Criptografia e segurança de redes. 4. ed. São Paulo: Pearson Pren-
+tice, 2008. Citado 2 vezes nas páginas 52 e 62.
+
+TAMAROZZI, A. C. Codificando e decifrando mensagens. Brasília: Ministério da
+Educação, Secretaria de Educação Básica, 2004. Citado na página 22.
+
+TKOTZ, V. O Disco de Alberti. 2016. Disponível em: <http://www.numaboa.com.br/
+criptografia/127-substituicao-polialfabetica/164-alberti>. Citado na página 60.
+
+TRIVINOS, A. N. Introdução à pesquisa em Ciências Sociais. São Paulo: Atlas,
+1987. Citado na página 22.
+
+WINTERBOTHAM, F. W. Enigma: o segredo de Hitler. Rio de Janeiro: Biblioteca
+do exército, 1978. Citado na página 60.
+
+WOLTMAN, G.; KUROWSKI, S. GIMPS (Great Internet Mersenne Prime Se-
+arch). http://www.mersenne.org/primes/:
+[s.n.], 2016. Disponível em: <http://www.
+mersenne.org/primes/>. Citado na página 44.
+
+85
+
+APÊNDICE
+
+A
+
+PROPRIEDADE ARQUIMEDIANA
+
+A Propriedade Arquimediana é uma propriedade do conjunto dos números R que
+diz que 8x 2 R; 9 n 2 N=x < n. A propriedade arquimediana diz simplesmente que o con-
+junto N não admite cota superior.
+
+Proposição 18. (A Propriedade Arquimediana). Dados números reais 0 < a < b, existe
+um número natural n tal que b < na.
+
+Demonstração. Suponhamos, por contradição, que na (cid:20) b, para todo n 2 N. Isto implica
+que o conjunto A = fna; n 2 Ng é limitado superiormente (b é uma de suas cotas supe-
+riores). De acordo com o Postulado de Dedekind, A possui supremo, digamos a. Assim,
+na (cid:20) a, para todo n 2 N, de onde (n + 1)a (cid:20) a, de modo que n (cid:20) a (cid:0) a. Como a > 0, a (cid:0)
+a seria cota superior de A, menor que o seu supremo a o que é impossível. Então, existe
+n 2 N tal que na > b.
+
+87
+
+APÊNDICE
+
+B
+
+OS PROBLEMAS DO PRÊMIO MILLENNIUM
+
+Os Problemas do Prêmio Millennium são sete problemas matemáticos. Até o fe-
+chamento deste trabalho havia seis problemas que ainda não tinham solução. A solução
+correta de um destes problemas contempla um prêmio de um milhão de dólares que o
+Instituto Clay de Matemática em Massachusetts, nos Estados Unidos, oferece. O site do
+Instituto é http://www.claymath.org/.
+
+Este instituto é um fundação privada fundada em 1998 e que não tem fins lu-
+crativos. Seu objetivo é ampliar e disseminar o conhecimento matemático promovendo
+premiações e patrocinando matemáticos promissores, além de organizar oficinas, confe-
+rências, etc.
+
+Seu fundador é o empresário Landon T. Clay com sua esposa Lavinia D. Clay,
+
+financiadores (CLAY; CLAY, 2016).
+
+Os Problemas são:
+
+1. P versus NP;
+
+2. A conjectura de Hodge;
+
+3. A conjectura de Poincaré (resolvido por Grigori Perelman);
+
+4. A hipótese de Riemann;
+
+5. A existência de Yang-Mills e a falha na massa;
+
+6. A existência e suavidade de Navier-Stokes;
+
+7. A conjectura de Birch e Swinnerton-Dyer.
+
+A conjectura de Poincaré foi resolvida pelo matemático russo Gregori Perelman
+
+no ano de 2006.
+
+88
+
+APÊNDICE B. Os Problemas do Prêmio Millennium
+
+B.1 A hipótese de Riemann
+
+Esta conjectura matemática foi publicada pela primeira vez em 1859 pelo matemá-
+tico Bernhard Riemann. De acordo com Santos (2017) para que seja possível compreender
+o problema devemos voltar à 1650 quando foi publicado o livro Novae quadraturae arith-
+meticae seu se additione fractionum, de Pietro Mengoli.
+
+Neste livro está presente duas séries:
+
+z(1) = 1 +
+
+1
+2
+
++
+
+1
+3
+
++
+
+1
+4
+
++ :::
+
+e
+
+1
+42 + :::;
+que são importantes para a hipótese de Riemann.
+
+z(2) = 1 +
+
+1
+32 +
+
+1
+22 +
+
+(B.1)
+
+(B.2)
+
+No livro é demonstrado que a primeira série é divergente, levantando o problema:
+
+qual é a soma da segunda?
+
+O problema foi proposto depois por Jacob Bernoulli, sendo intitulado na época
+como problema de Basileia, que alguns anos após este questionamento iniciou a estudar
+séries como:
+
+z(n) = 1 +
+
+1
+2n +
+
+1
+3n +
+
+1
+4n + :::
+
+(B.3)
+
+para cada n 2 N n 1. 1
+
+Euler provou que z(2) = p2
+além de ter obtido o produto euleriano:
+
+6 e calculou z(n) para cada número natural par n, para
+
+z(n) = (cid:213)
+p
+
+(1 (cid:0) p(cid:0)n)(cid:0)1;
+
+(B.4)
+
+para qualquer n 2 N n 1. Aqui o símbolo (cid:213)p denota o produto sobre todos os números
+primos. Desta forma ele mostrou que existe uma relação entre a função z e a distribuição
+dos números primos.
+
+Assim o problema da hipótese de Riemann se resume à provar que apesar da distri-
+buição de números primos no conjunto dos números naturais não seguir nenhum padrão
+regular, o matemático alemão GFB Riemann (1826-1866) observou que a frequência de
+números primos está muito intimamente relacionada ao comportamento da função
+
+z(s) = 1 + (
+
+1
+2
+
+)s + (
+
+1
+3
+
+)s + (
+
+1
+4
+
+)s + : : : ;
+
+s 2 C:
+
+1
+
+n: significa menos; sem; exceto.
+
+B.2. P versus NP
+
+89
+
+Esta função é chamada de função Zeta de Riemann, e a afirmação de que todas
+as soluções interessantes da equação z(s) = 0 estão sobre a reta vertical Re(s) = 1=2 é
+conhecida como a famosa hipótese de Riemann. A prova desta hipótese lançará luz sobre
+muitos dos mistérios em torno da distribuição de números primos.
+
+B.2 P versus NP
+
+É um problema ligado à Ciências da Computação, entrelaçando campos desde a
+
+engenharia até a criptografia.
+
+De acordo com Malagutti (2017):
+
+A classe de algoritmos P é formada pelos procedimentos para os quais existe
+um polinômio p(n) que limita o número de passos do processamento se este
+for iniciado com uma entrada de tamanho n. [...] Os algoritmos NP não se
+referem a procedimentos não polinomiais (na verdade isto é uma conjectura).
+A leitura correta para procedimentos NP é dizer que se referem a algoritmos
+”não-determinísticos polinomiais”no tempo.[...] A classe dos problemas NP é
+aquela para as quais podemos verificar, em tempo polinomial, se uma possível
+solução é correta.
+
+Como exemplo: queremos descobrir se um número é primo ou composto, mas não
+existe um modo rápido para descobrir isso ou descobrir sua fatoração, um dos métodos é o
+Crivo de Eratóstenes que testa os possíveis divisores, mas isso dá muito trabalho até para
+um computador, demandando muito tempo, contudo se fosse possível uma certificação
+que apenas validasse se algo é resposta ou não isso seria mais simples que testar todos os
+resultados possíveis.
+
+Outro exemplo: suponha que precisaremos dividir um grupo de pessoas em duplas,
+mas nem todas são compatíveis umas com as outras, tentar todas as possibilidades não é
+uma alternativa, este é um problemas em que há algoritmos eficientes para solucioná-lo
+e por isso está na classe P de “Tempo Determinístico Polinomial”. Inclusive foi resolvido
+por Jack Edmonds em 1965 ajudando a definir o que é computação eficiente.
+
+Agora vamos reformular o mesmo problema: queremos dividir as pessoas em trios
+nos quais todos os pares delas são compatíveis (partição em triângulos). Neste caso não
+há um algoritmo eficiente, dada uma solução qualquer, é possível conferir a solução de
+maneira eficiente: este tipo de problema que possue soluções verificáveis em tempo polino-
+mial define a classe NP: de “Tempo Polinomial Não Determinístico”. Além disso somente
+uma Máquina de Turing Não Determinística pode resolvê-lo.
+
+O problema N versus NP se refere à prova de que P ̸= NP dado as descobertas que
+foram feitas através do tempo é o que grande parte dos cientistas da computação passou
+a acreditar, mas é preciso provar. Por isso é um dos problemas mais importante da ciência
+da computação e da matemática.
+
+90
+
+APÊNDICE B. Os Problemas do Prêmio Millennium
+
+Há a possibilidade de P = NP: “O que ganharíamos com P = NP faria com que
+a Internet inteira parecer apenas um rodapé na história” - Fortnow, L. 2009. Neste caso
+muitas tarefas de logística se tornariam triviais como: o transporte de pessoas ou produtos
+seria mais rápido e mais barato, previsões de tempo, terremoto e tsunamis, sem contar
+que a criptografia não teria mais função, isso porque ela se baseia em problemas difíceis
+de serem resolvidos, no caso da RSA: a fatoração de números muito grandes em números
+primos, mas se isso for um problema trivial ela é quebrada facilmente.
+
+Um filme que retrata o impacto deste problema é Travelling Salesman ou O caixeiro
+viajante, de 2012, dirigido por Timothy Lanzone, conta a história de quatro matemáticos
+que descobrem um algoritmo eficiente para o Problema do Caixeiro Viajante, um problema
+NP-Completo, implicando em consequências drásticas para qualquer sistema de segurança
+virtual no planeta.
+
+B.3 Curiosidades
+
+Estes problemas já apareceram em alguns seriados famosos, como NUMB3RS,
+produzido pela rede americana CBS, seriado estrelado em 2005 onde um matemático ajuda
+agentes do FBI a solucionar crimes. Foi produzido somente seis temporadas, representando
+a matemática e como ela pode ser aplicada.
+
+Em sua primeira temporada, no episódio 5, a filha de um matemático que supos-
+tamente havia resolvido a hipótese de Riemann é sequestrada, abordando assim os temas:
+criptografia, a Hipótese de Riemann e as consequências de sua solução, assim como os pro-
+blemas do Millennium. Para amantes de números é um seriado interessante, explorando
+vários campos da matenática.
+
+Também apareceu em Elementary, também produzido pela rede americana CBS,
+iniciada em 2012 ela representa uma nova versão de Sherlock Holmes, criado por Arthur
+Conan Doyle, contudo desta vez as histórias se passam nos Estados Unidos. Possui até o
+momento cinco temporadas.
+
+A criptografia aparece no episódio 2 (Solve for X) da segunda temporada, onde
+o episódio começa com a morte de um matemático, abordando o problema P versus NP,
+criptografia, suas implicações para a comunidade científica.
+
+Sherlock é outro seriado baseado no detetive criado por Sir Arthur Conan Doyle,
+sendo uma co-produção da British Broadcasting Corporation (BBC), a segunda tempo-
+rada tem em seu primeiro episódio uma mensagem aparentemente indecifrável, contudo
+Holmes a decifra em oito segundos.
+
+No seriado Bones, exibido pela FOX nos Estados Unidos, a criptografia é abordada
+na sétima temporada, episódio 6, onde é preciso decifrar vários códigos deixados por um
+
+B.3. Curiosidades
+
+assassino em série.
+
+91
+
+Já no seriado Hawaii Five-0 o tema é abordado na primeira temporada, episódio
+19, onde falam sobre a facilidade em quebrar uma criptografia de 64 bits e novamente
+na terceira temporada, episódio 7, onde eles lidam com hackers e precisam de uma senha
+para quebrar uma criptografia de 1024 bits (que levaria meses para ser quebrada e era
+preciso urgentemente), além de outros.
+
+No seriado Prison Break, segunda temporada, episódio 15, um dos protagonistas
+precisa enviar uma mensagem, então ele codifica-a para que só seu destinatário compre-
+enda, além disso é abordado o código morse.
+
+O livro Zodíaco escrito por Robert Graysmith, aborda sobre um serial killer que
+aterrorizou a cidade de São Francisco em 1968, deixou várias cartas codificadas, algumas
+não foram decodificadas até hoje, a revista Mundo Estranho traz uma reportagem sobre
+isso: http://mundoestranho.abril.com.br/cultura/as-outras-cartas-do-serial-killer-zodiaco/.
+Um filme também foi feito: Zodíaco, lançado em 2007 com direção de David Fincher.
+
+Os clássicos livros sobre o investigador Sherlock Holmes e seu parceiro Watson,
+escrito por Arthur Conan Doyle, também trazem o tema, no livro O vale do Terror os
+investigadores são chamados à uma casa de campo através de uma mensagem codificada. O
+investigador Holmes adora quebra-cabeças, outra mensagem assim aparece em O regresso
+de Sherlock Holmes.
+
+A revista Super Interessante fez uma reportagem em 31/10/2016 intitulada O
+segredo da criptografia, é possível acessá-la em http://super.abril.com.br/tecnologia/o-
+segredo-da-criptografia/, que traz algumas curiosidades sobre o tema. Em abril de 2016 foi
+udado 9500 computadores e quatro meses para quebrar um código, mostrando o quanto
+um bom código é importante para que seja possível guardar um segredo ou algo impor-
+tante através da criptografia.
+
+

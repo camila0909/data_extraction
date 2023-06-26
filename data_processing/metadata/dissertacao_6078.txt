@@ -1,0 +1,2438 @@
+Universidade Federal de Sergipe
+Pr(cid:19)o-Reitoria de P(cid:19)os-Graduac(cid:24)~ao e Pesquisa
+Programa de P(cid:19)os-Graduac(cid:24)~ao em Matem(cid:19)atica - PROMAT
+Mestrado Profissional em Matem(cid:19)atica em Rede
+Nacional - PROFMAT
+
+Desvendando a Matem(cid:19)atica do GPS
+
+por
+
+Davi Dantas Lima
+
+Mestrado Pro(cid:12)ssional em Matem(cid:19)atica - S~ao Crist(cid:19)ov~ao - SE
+
+Orientador: Prof. Dr. Almir Rog(cid:19)erio Silva Santos
+
+Abril de 2013
+
+Davi Dantas Lima
+
+Desvendando a Matem(cid:19)atica do GPS
+
+Disserta¸c˜ao apresentada ao Pro-
+grama de P´os-Gradua¸c˜ao em Ma-
+tem´atica da Universidade Federal
+de Sergipe, como requisito ﬁnal
+para a obten¸c˜ao de T´ıtulo de Mes-
+tre em Matem´atica.
+
+Orientador: Prof. Dr.
+Rog´erio Silva Santos
+
+Almir
+
+S~ao Crist(cid:19)ov~ao
+2013
+
+Sum(cid:19)ario
+
+Agradecimentos
+
+Resumo
+
+Abstract
+
+Introdu(cid:24)c~ao
+
+1 Hist(cid:19)orico
+
+2 A Geometria do Globo Terrestre
+
+2.1 Coordenadas Geogr´aﬁcas . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Geometria Plana . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.3 Geometria Espacial . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+iv
+
+vi
+
+vii
+
+viii
+
+1
+
+6
+
+6
+
+8
+
+9
+
+2.3.1 Planos e Superf´ıcies Esf´ericas
+
+. . . . . . . . . . . . . . . . . . . . . 10
+
+2.3.2
+
+Superf´ıcie Esf´erica em Coordenadas Cartesianas . . . . . . . . . . . 12
+
+2.3.3 Rela¸c˜ao entre Coordenadas Geogr´aﬁcas e Coordenadas Cartesianas
+
+17
+
+2.4 Como ´e Medida a Altitude . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+2.5 Distˆancia entre Dois Pontos em uma Superf´ıcie Esf´erica . . . . . . . . . . . 21
+
+3 Como Funciona o GPS
+
+4 An(cid:19)alise de erros do sistema
+
+26
+
+29
+
+4.1 Desvios dos Sinais na Atmosfera . . . . . . . . . . . . . . . . . . . . . . . . 29
+4.2 Erros de ´Orbita . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+. . . . . . . . . . . . . . . . . . . . . . . . . 30
+4.3 Erros do Rel´ogio do Receptor
+
+4.4 Erros de Multitrajet´oria . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+4.5 Erros Devido `a Geometria dos Sat´elites . . . . . . . . . . . . . . . . . . . . 31
+
+5 Sugest~oes de Atividades
+
+33
+
+5.1 Distˆancia entre Duas Localidades no Planeta . . . . . . . . . . . . . . . . . 33
+
+5.2 Trilatera¸c˜ao em Mapas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 35
+
+5.3 Geometria do GPS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+ii
+
+Refer^encias Bibliogr(cid:19)a(cid:12)cas
+
+39
+
+iii
+
+Agradecimentos
+
+Chego ao ﬁnal de mais uma etapa e ´e imposs´ıvel ir adiante sem agradecer ao grande
+
+respons´avel por todos os sucessos que obtive em minha vida. A ti, ´o Deus! Toda honra,
+
+toda gl´oria e todo o louvor.
+
+`A minha esposa Nealda, a quem amo muito, pela paciˆencia e perseveran¸ca, pois segu-
+rou as cordas, em casa, nas minhas “ausˆencias”, enquanto eu trabalhava de dia e estudava
+
+at´e tarde da noite e `a minha ﬁlha Soﬁa, presente que Deus me deu, que na sua inocˆencia
+
+n˜ao entendia por que o papai n˜ao podia mais coloc´a-la para dormir.
+
+Ao meu pai Roosevelt, um “devorador de livros”com quem aprendi o gosto pela leitura
+
+e pelo estudo e `a minha m˜ae Eulina, que dedicou longos anos de sua vida para me dar
+
+sempre do melhor e em quem tenho um grande exemplo de for¸ca.
+
+Ao meu Orientador, Prof. Dr. Almir Rog´erio Silva Santos, amigo de longa data, que
+
+foi pe¸ca fundamental desde a escolha do tema at´e a conclus˜ao do trabalho, de quem me
+
+orgulho muito por ter sido colega de turma na Universidade Federal de Sergipe e por ter
+
+acompanhado cada passo de sua caminhada de sucesso proﬁssional.
+
+Aos professores, que compartilharam conosco este bem t˜ao precioso: “Conhecimento”,
+
+cobrando de n´os um pre¸co justo: “Dedica¸c˜ao”, nessa contabilidade sa´ımos todos lucrando.
+
+Estes ainda nos ﬁzeram lembrar que avaliar ´e muito mais do que uma mera prova, s´o nos
+
+lembramos disso quando estamos do outro lado do birot, na condi¸c˜ao de alunos.
+
+Aos colegas mestrandos, que lutaram junto comigo durante esses dois anos, pelo
+
+esp´ırito de grupo que nos uniu e por termos conseguido nos manter ﬁrmes, apesar das
+
+grandes diferen¸cas que nos distinguiam, sendo que poucos ﬁcaram para tr´as.
+
+Aos amigos: H´elio e Welington, pelo grande apoio que me deram durante o curso e na
+
+prepara¸c˜ao para o exame de qualiﬁca¸c˜ao e tamb´em a Elisabete, S´ergio, Anselmo, L´ucia,
+
+M´arcio, C´esar e Andr´e pelos momentos que passamos juntos no grupo de estudo onde,
+
+em meio ao desespero e ao cansa¸co, ainda encontr´avamos for¸cas para rir muito. J´a sinto
+
+saudades!
+
+`A SBM pela iniciativa em implementar no nosso pa´ıs um programa t˜ao ousado obje-
+tivando a forma¸c˜ao continuada de professores e, por conseguinte, uma eleva¸c˜ao do n´ıvel
+
+da educa¸c˜ao b´asica.
+
+iv
+
+`A CAPES pela concess˜ao da bolsa de estudos que foi de fundamental importˆancia
+
+para o desenvolvimento acadˆemico.
+
+Aos membros da Banca Examinadora que aceitaram prontamente o convite e nos
+
+honraram com suas presen¸cas e contribui¸c˜oes.
+
+A todos que, direta ou indiretamente, contribu´ıram para que este sonho pudesse ser
+
+concretizado, dedico meus mais sinceros agradecimentos.
+
+v
+
+Resumo
+
+A presente monograﬁa tem como objetivo evidenciar os princ´ıpios matem´aticos por tr´as
+
+do funcionamento do Sistema de Posicionamento Global conhecido por GPS. Ap´os uma
+
+abordagem geral da evolu¸c˜ao ocorrida at´e chegarmos a essa tecnologia, demonstraremos
+
+alguns teoremas das geometrias: plana, espacial e anal´ıtica que, aplicados juntamente
+
+com alguns princ´ıpios da F´ısica (velocidade m´edia, velocidade da luz, efeito Doppler,...),
+
+nortearam os criadores desta poderosa ferramenta que determina com not´aveis precis˜ao e
+
+exatid˜ao, em qualquer parte do globo terrestre incluindo a atmosfera, a hora e a posi¸c˜ao
+
+(latitude, longitude e altitude) de um transmissor. E, a partir da´ı, sugerir atividades
+
+interdisciplinares, a serem desenvolvidas em n´ıvel de educa¸c˜ao b´asica, que estimulem a
+
+curiosidade dos alunos pelos conhecimentos cient´ıﬁcos nelas contidos.
+
+Palavras Chaves: Sistema de posicionamento global, GPS, geometria, latitude, longi-
+
+tude, altitude, trilatera¸c˜ao, superf´ıcie esf´erica, interdisciplinar.
+
+vi
+
+Abstract
+
+The purpose of this monograph is to study the mathematical principles behind the
+
+Global Positioning System, the so-called GPS. We start with a historical approach of
+
+the evolution of this technology. Then we show some theorems in geometry: plane,
+
+spatial and analytic, which together with some physical principles (average speed, speed
+
+of light, the Doppler eﬀect,...) guided the creators of this powerful tool that determines
+
+with remarkable accuracy the position (latitude, longitude and altitude) of a transmitter.
+
+Finally, we suggest activities to be performed at the level of basic education, to stimulate
+
+students’ curiosity by scientiﬁc knowledge contained therein.
+
+Keywords: Global Positioning System, GPS, satellites, latitude, longitude, altitude,
+
+trilateration, spherical surface, interdisciplinary.
+
+vii
+
+Introdu(cid:24)c~ao
+
+\Onde estamos?" esta ´e uma pergunta comum, mas sua resposta pode n˜ao ser t˜ao
+
+simples. Desde a antiguidade o homem necessita se localizar em seu mundo de modo que
+
+sabendo onde est´a ele pode pensar em uma forma pr´atica e segura de “como ir e voltar”.
+
+O avan¸co da ciˆencia humana resolveu esse problema quando, dentre outras enge-
+
+nhocas, foi criado o GPS. Por´em muitas cria¸c˜oes maravilhosas n˜ao sairiam do papel se
+
+os seus criadores n˜ao detivessem conhecimentos (muitos deles b´asicos) da “boa” e “ve-
+
+lha” Matem´atica.
+
+O GPS, em sua essˆencia, est´a repleto de aplica¸c˜oes de geometria b´asica e avan¸cada,
+
+envolvendo em seu funcionamento elementos como: distˆancias, ˆangulos, circunferˆencias,
+
+esferas, planos, vetores, equa¸c˜oes, dentre outros.
+
+E ainda nos permite relacionar a Matem´atica, a F´ısica e a Geograﬁa gerando uma rica
+
+fonte de pesquisa e fornecendo bagagem suﬁciente para um excelente projeto interdisci-
+
+plinar.
+
+Ao come¸carmos a explor´a-lo, perceberemos o qu˜ao vasto ´e o conhecimento contido
+
+no projeto do GPS, mas aqui nos deteremos quase sempre nos aspectos matem´aticos e
+
+funcionais do mesmo.
+
+Constru´ımos o trabalho em cinco cap´ıtulos sendo o primeiro deles o “Hist´orico” onde
+
+relatamos como os sistemas de localiza¸c˜ao foram aprimorados at´e chegarmos ao GPS.
+
+Em seguida, vem o Cap´ıtulo “A Geometria do Globo Terrestre” que traz os princ´ıpios
+
+matem´aticos envolvidos no funcionamento do GPS como embasamento te´orico para que
+
+no cap´ıtulo seguinte, “Como Funciona o GPS”, pud´essemos entendˆe-lo. No Cap´ıtulo
+
+“An´alise de Erros” mostramos quais e como s˜ao contornados os principais erros contidos no
+
+processo de localiza¸c˜ao e conclu´ımos com “Sugest˜oes de Atividades”a serem desenvolvidas
+
+com alunos do ensino b´asico.
+
+viii
+
+Cap(cid:19)(cid:16)tulo 1
+
+Hist(cid:19)orico
+
+O grande desaﬁo do processo de localiza¸c˜ao sempre foi determinar um referencial se-
+
+guro. Elementos da natureza como ´arvores, montanhas, rios etc., serviram por algum
+
+tempo em pequenos deslocamentos mas, devido a sua mutabilidade, nunca foram eﬁcien-
+
+tes. O c´eu passa ent˜ao a ser o foco das aten¸c˜oes pois o homem encontra nas estrelas um
+
+referencial perdur´avel que o levou a criar e utilizar instrumentos para medir o ˆangulo de
+
+eleva¸c˜ao dos astros acima do horizonte e assim, determinar a latitude. S˜ao alguns desses
+
+instrumentos:
+
+O Kamal - Pequena t´abua quadrada ou retangular, presa a uma corda com n´os, que era
+
+erguida a altura dos olhos e suas bordas opostas eram alinhadas com o horizonte e
+
+a estrela polar, respectivamente. A corda era presa aos dentes e esticada de modo
+
+que os n´os determinavam o ˆangulo de eleva¸c˜ao - ver Figura 1.1;
+
+A balestilha - conjunto de duas varas graduadas perpendiculares entre si, devia-se olhar
+
+por uma extremidade da maior vara e mover a menor de modo a visualizar simul-
+
+taneamente, por suas extremidades, a linha do horizonte e o astro - ver Figura
+
+1.2;
+
+O astrol(cid:19)abio - roda graduada que tinha, presa ao seu centro, uma seta m´ovel que,
+
+quando alinhada com o astro, indicava na roda a altura do mesmo - ver Figura 1.3;
+
+O quadrante - Quarto de c´ırculo graduado em sua borda, feito em madeira ou lat˜ao e
+
+com duas miras em um dos lados retos, mirando no astro determinava-se, por um
+
+ﬁo de prumo preso ao centro do arco, o ˆangulo de eleva¸c˜ao do astro - ver Figura 1.4.
+
+A estrela polar, por ser ﬁxa sobre o polo norte, torna-se um elemento fundamental no
+
+processo de localiza¸c˜ao humana.
+
+Outra descoberta importante foi o magnetismo terrestre, possibilitando a inven¸c˜ao da
+
+b´ussola (agulha met´alica, magnetizada, suspensa pelo seu centro de gravidade de modo
+
+a girar livremente e apontando sempre para o polo sul magn´etico da terra que equivale
+
+1
+
+Figura 1.1: Utiliza¸c˜ao do Kamal.
+
+Figura 1.2: Utiliza¸c˜ao da Balestilha.
+
+Figura 1.3: Astrol´abio.
+
+Figura 1.4: Quadrante Marinho.
+
+a um ponto pr´oximo do polo norte geogr´aﬁco - ver Figura 1.5) que durante o per´ıodo
+
+das grandes navega¸c˜oes (a partir do s´ec. XV), foi largamente utilizada juntamente com
+
+instrumentos a pouco citados. Estes foram satisfat´orios por muito tempo, apesar de
+
+apresentarem limita¸c˜oes como: n˜ao poderem ser usados durante o dia ou numa noite
+
+nublada (com exce¸c˜ao da b´ussola) e, principalmente, por n˜ao fornecerem a posi¸c˜ao da
+
+embarca¸c˜ao, mas apenas a dire¸c˜ao a ser seguida.
+
+Quando tomou conhecimento da forma da terra, o homem criou os conceitos de latitude
+
+e longitude, sendo que a primeira j´a era facilmente determinada atrav´es da observa¸c˜ao da
+
+estrela polar, por´em a longitude exigia a determina¸c˜ao da diferen¸ca entre a hora local e a
+hora de Greenwich (cada hora equivale a 15o, j´a que 360o÷ 24 = 15o), o problema ´e que
+os rel´ogios de ent˜ao n˜ao eram conﬁ´aveis pois n˜ao suportavam as intemp´eries de viagens
+
+mar´ıtimas (como: umidade, varia¸c˜ao de temperatura e balan¸co do navio) at´e que, em
+
+1761, o inglˆes John Harrison desenvolveu o cronˆometro marinho que tinha compensadores
+
+de dilata¸c˜ao t´ermica e pe¸cas resistentes a desgastes.
+
+2
+
+Figura 1.5: B´ussola.
+
+Durante a Segunda Guerra Mundial, ocorreu um grande avan¸co no que se refere a
+
+navega¸c˜ao, quando passou-se a usar ondas de r´adio para localizar ve´ıculos fazendo uso
+
+do efeito Doppler, esta propriedade da F´ısica relaciona a velocidade do m´ovel com a
+
+diferen¸ca entre a frequˆencia com que as ondas de r´adio incidem e a frequˆencia com que
+
+s˜ao reﬂetidas e assim determinava-se as distˆancias entre o ve´ıculo e as emissoras. Com
+
+essas trˆes distˆancias e a localiza¸c˜ao das emissoras era poss´ıvel determinar, pelo processo de
+
+trilatera¸c˜ao, trˆes circunferˆencias cuja intersec¸c˜ao (representada por um ponto ´unico como
+
+veremos no pr´oximo cap´ıtulo) determinava a localiza¸c˜ao do ve´ıculo. “LORAN” (long range
+
+navigation - navega(cid:24)c~ao de longo alcance em ingl^es), “Decca”e “Omega” s˜ao exemplos de
+
+sistemas desenvolvidos com essa tecnologia. Tais sistemas apresentavam limita¸c˜oes como
+
+o pequeno alcance dos sinais de r´adio e da disponibilidade de um n´umero pequeno de
+
+esta¸c˜oes.
+
+Na d´ecada de 50, tem in´ıcio a “Corrida Espacial” com o lan¸camento do sat´elite Sputinik
+
+1, pela antiga Uni˜ao Sovi´etica em 1957 e a contrapartida americana: o sat´elite Explorer
+
+1 em 1958. Dois anos mais tarde os Estados Unidos lan¸cam o sat´elite Transit 1B, imple-
+
+mentando o primeiro sistema de navega¸c˜ao por sat´elite baseado no efeito Doppler. Por
+
+ser um sistema bidimensional, por s´o calcular a posi¸c˜ao de m´oveis em velocidades baixas e
+
+por existir muita interferˆencia nos sat´elites, seu uso ﬁcou restrito basicamente a navega¸c˜ao
+
+mar´ıtima.
+
+Todo conhecimento sobre localiza¸c˜ao e posicionamento, acumulado at´e ent˜ao, con-
+
+tribuiu para que ﬁnalmente fosse desenvolvido um sistema eﬁciente. Assim, em 1973,
+
+come¸cava a ser desenvolvido um projeto revolucion´ario que s´o viria entrar em pleno fun-
+
+cionamento a partir de 1991: O NAVSTAR/GPS (Navigation Satellite with Time and
+
+Ranging / Global Positioning System). H´a uma controv´ersia quanto `a autoria do projeto
+
+sendo que a pelo menos trˆes americanos ´e atribu´ıda a autoria: O astrof´ısico Ivan Getting
+
+(1912 - 2003), o engenheiro Bradford Parkinson (1935 -) e o f´ısico Roger L. Easton (1921
+
+-) os quais foram premiados pelo feito por diferentes institui¸c˜oes cient´ıﬁcas (Ver Figuras
+
+1.6; 1.7; 1.8).
+
+3
+
+Figura 1.6: Parkinson.
+
+Figura 1.7: Easton.
+
+Figura 1.8: Ivan.
+
+O GPS, como ´e mais conhecido, foi em princ´ıpio de uso exclusivamente militar at´e
+
+que, em 1983, um avi˜ao comercial invadiu inadvertidamente o espa¸co a´ereo sovi´etico
+
+sendo abatido por m´ısseis. O ocorrido levou o Ex´ercito Americano a liberar o uso civil
+
+e assim, novas fatalidades seriam evitadas. Mas, temendo que o sistema fosse usado
+
+contra eles, o sinal era distorcido propositalmente, o que ocasionava uma baixa precis˜ao
+
+na localiza¸c˜ao. S´o em 2000 acabou a distor¸c˜ao do sinal, permitindo que uma pessoa
+
+munida de um receptor, possa determinar, em tempo real, informa¸c˜oes ao seu respeito
+
+como: latitude, longitude, altitude, rumo e velocidade com uma exatid˜ao de alguns metros
+
+(at´e de cent´ımetros, no caso de receptores geod´esicos, como veremos no Cap´ıtulo 3 - p.
+
+26).
+
+Figura 1.9: Distribui¸c˜ao das esta¸c˜oes de controle no planeta.
+
+Em sua composi¸c˜ao o sistema ´e dividido em trˆes partes chamadas de segmentos. O
+
+primeiro deles ´e o segmento espacial, composto por vinte e quatro sat´elites que giram ao
+
+redor da terra, a uma altitude de aproximadamente 20.200 Km, em um per´ıodo de 11
+
+horas e 58 minutos e em seis diferentes ´orbitas (cada uma com 4 sat´elites e espa¸cadas 60
+
+graus uma da outra e inclinadas em 55 graus em rela¸c˜ao ao plano que cont´em a linha do
+
+4
+
+Equador) de modo que, observando de qualquer lugar do planeta, h´a sempre um m´ınimo
+
+de quatro sat´elites acima da linha do horizonte. Cada sat´elite disp˜oe de quatro rel´ogios
+
+de alta precis˜ao (dois de c´esio e dois de rub´ıdio).
+
+O segundo ´e o segmento de controle (ver Figura 1.9), formado por 5 esta¸c˜oes loca-
+
+lizadas estrategicamente nas proximidades da linha do Equador em: Colorado Springs
+
+(EUA), Hava´ı (no Pac´ıﬁco), Kwajalein (Ilhas Marshall, no Pac´ıﬁco), Ilha de Ascens˜ao (no
+Atlˆantico Sul), Ilha de Diego Garcia (no ´Indico). Estas tem a fun¸c˜ao de monitorar os
+sat´elites corrigindo, quando necess´ario, suas ´orbitas. A de Colorado Springs ´e a esta¸c˜ao
+
+principal e controla todo o sistema.
+
+O terceiro e ´ultimo ´e o segmento de usu´arios representado por todos os receptores espa-
+
+lhados por todo o mundo. Cada receptor, ao captar o sinal de no m´ınimo quatro sat´elites,
+
+pode calcular sua posi¸c˜ao. Alguns aparelhos disp˜oem de mapas que permitem fazer ro-
+
+teiros de viagens, sugerir rotas alternativas mais r´apidas e que evitam engarrafamentos.
+
+Tamb´em s˜ao aplicados na navega¸c˜ao mar´ıtima e a´erea, na geod´esia, na topograﬁa, na
+
+agricultura de precis˜ao, na cartograﬁa e na log´ıstica, rastreamento de ve´ıculos e cargas,
+
+dentre outras aplica¸c˜oes.
+
+5
+
+Cap(cid:19)(cid:16)tulo 2
+
+A Geometria do Globo Terrestre
+
+Agora vamos nos aprofundar um pouco mais, desvendando a matem´atica que h´a
+
+por tr´as do sistema GPS. Baseado em [1] e [2], vamos expor alguns conceitos ligados a
+
+localiza¸c˜ao geogr´aﬁca como: latitude, longitude, meridianos e paralelos, tamb´em apresen-
+
+taremos teoremas das geometrias: plana, espacial e anal´ıtica, envolvendo o importante
+
+processo de trilatera¸c˜ao e as superf´ıcies esf´ericas. Todo este conhecimento norteou os
+
+inventores na execu¸c˜ao deste ousado projeto.
+
+2.1 Coordenadas Geogr(cid:19)a(cid:12)cas
+
+J´a hav´ıamos mencionado a latitude e a longitude como contribui¸c˜oes importantes do
+
+homem para a sua localiza¸c˜ao global. Para melhor compreens˜ao desses conceitos, vamos
+
+identiﬁcar pelos nomes alguns elementos j´a conhecidos. Supondo que a terra ´e uma esfera,
+
+chamamos de eixo polar a reta que cont´em o centro da terra e ao redor da qual a mesma
+
+desenvolve o movimento de rota¸c˜ao. Chamamos respectivamente de polo Norte e polo
+
+Sul os pontos N e S, intersec¸c˜oes do eixo polar com a superf´ıcie da terra (ver Figura 2.1).
+
+O plano perpendicular ao eixo polar e que passa pelo centro da terra chamamos de
+
+plano do Equador este divide a terra em duas partes chamadas de Hemisf(cid:19)erio Norte
+
+e Hemisf(cid:19)erio Sul e cada uma cont´em os respectivos polos (ver Figura 2.2).
+
+A circunferˆencia determinada pelo plano do Equador e a superf´ıcie da Terra chamamos
+
+de linha do Equador(ver Figura 2.1). Os Paralelos s˜ao circunferˆencias determinadas
+
+na superf´ıcie da terra por planos paralelos ao plano do Equador sendo que a linha do
+
+Equador tamb´em ´e um paralelo.
+
+Os meridianos s˜ao semicircunferˆencias com extremidades nos polos, dos quais des-
+tacamos o meridiano de Greenwich onde, por deﬁni¸c˜ao a longitude ´e 0o (ver Figura
+2.1). Ele se chama assim porque passa pelo famoso Observat´orio Real na localidade de
+
+Greenwich, a sudeste de Londres. O plano que o cont´em divide a terra em duas partes:
+
+Hemisf(cid:19)erio oeste e Hemisf(cid:19)erio leste (ver Figura 2.3).
+
+6
+
+Figura 2.1: O Ponto P de latitude θo N e longitude φo E.
+
+Figura 2.2: Plano do Equador.
+
+Figura 2.3: Plano de Greenwich.
+
+De(cid:12)ni(cid:24)c~ao 2.1 Dado um ponto P na superf(cid:19)(cid:16)cie terrestre a Latitude de P (cid:19)e a medida (em
+
+graus, minutos e segundos) do arco que vai de P at(cid:19)e o Equador e que est(cid:19)a contido em um
+meridiano. A latitude se mede de 0o a 90o e, dependendo do hemisf(cid:19)erio onde P est(cid:19)a, (cid:19)e
+classi(cid:12)cada em N (north - norte em ingl^es) ou S (south - sul em ingl^es).
+
+De(cid:12)ni(cid:24)c~ao 2.2 Dado um ponto P na superf(cid:19)(cid:16)cie terrestre a Longitude de P (cid:19)e a medida
+
+(em graus, minutos e segundos) do arco que vai de P at(cid:19)e o Meridiano de Greenwich e que
+est(cid:19)a contido em um paralelo. A longitude mede de 0o a 180o e, dependendo do hemisf(cid:19)erio
+onde P est(cid:19)a, (cid:19)e classi(cid:12)cada em E (east - leste em ingl^es) ou W (west - oeste em ingl^es).
+
+7
+
+2.2 Geometria Plana
+
+No Cap´ıtulo 1 mencionamos o processo de trilatera¸c˜ao pelo qual era determinada a posi¸c˜ao
+
+fazendo uso de trˆes circunferˆencias cuja intersec¸c˜ao era formada por um ´unico ponto, para
+
+ilustr´a-la vamos imaginar a seguinte situa¸c˜ao inspirada em [2]:
+
+Exemplo 2.1 (cid:19)E perto do meio-dia e So(cid:12)a est(cid:19)a perdida no interior de Sergipe entre Ma-
+lhador e Divina Pastora. Ela disp~oe de um mapa (ver Figura 2.4) e material de desenho
+
+geom(cid:19)etrico e sabe que em Divina Pastora, Riachuelo e Santa Rosa de Lima (cidades
+
+pr(cid:19)oximas) existem igrejas onde os sinos soam precisamente a cada hora sendo ouvidos a
+
+grandes dist^ancias.
+
+Figura 2.4: Mapa da regi˜ao.
+
+Digamos que o rel(cid:19)ogio de So(cid:12)a e das igrejas est~ao sincronizados e que cada sino tem
+
+um timbre diferente o que permite identi(cid:12)c(cid:19)a-los. 12,5 segundos ap(cid:19)os o meio-dia So(cid:12)a
+
+ouve o sino de Riachuelo, o de Divina Pastora (cid:19)e ouvido 17,3 segundos ap(cid:19)os o meio-dia e
+
+por (cid:12)m o de Santa Rosa de Lima em 19,8 segundos.
+
+Sabendo que o som se propaga a uma velocidade de 340 metros por segundo, So(cid:12)a pode
+ent~ao calcular as dist^ancias r1, r2 e r3 em rela(cid:24)c~ao a Riachuelo, Divina Pastora e Santa
+Rosa de Lima, respectivamente.
+
+r1 = 12, 5 × 340 = 4.250 m;
+
+r2 = 17, 3 × 340 = 5.882 m;
+
+r3 = 19, 8 × 340 = 6.732 m.
+
+8
+
+Figura 2.5: Soﬁa est´a em P ou Q.
+
+Figura 2.6: Soﬁa est´a em P .
+
+Assim So(cid:12)a tra(cid:24)ca no mapa uma circunfer^encia centrada em Riachuelo e de raio r1
+e outra centrada em Divina Pastora e de raio r2. As circunfer^encias se intersectam em
+dois pontos P e Q (ver Figura 2.5). Se So(cid:12)a souber que est(cid:19)a pr(cid:19)oxima do Rio Sergipe,
+
+eliminar(cid:19)a o ponto Q caso contr(cid:19)ario, ela tra(cid:24)ca uma terceira circunfer^encia centrada em
+Santa Rosa de Lima e de raio r3 determinando assim que sua localiza(cid:24)c~ao (cid:19)e o ponto P
+(ver Figura 2.6).
+
+´E importante considerar que, no exemplo 2.1, o som n˜ao sofre interferˆencias do vento,
+relevo,... e que Soﬁa tem conhecimento de desenho geom´etrico, propor¸c˜ao, velocidade,
+
+escalas. O exemplo considera a regi˜ao como um plano, logo admitiu-se uma altitude
+
+constante.
+
+De modo geral, conhecendo as distˆancias de onde estamos at´e trˆes pontos bem locali-
+
+zados em um sistema de coordenadas, a nossa localiza¸c˜ao ´e dada por um ´unico ponto.
+
+2.3 Geometria Espacial
+
+Como a terra tem um formato aproximadamente esf´erico (na verdade se aproxima mais
+
+de um elips´oide), ´e importante conhecer as caracter´ısticas deste elemento geom´etrico, a
+
+esfera, que contribuiu para o desenvolvimento do GPS. Baseado em [1] apresentamos as
+
+seguintes deﬁni¸c˜oes e teoremas.
+
+9
+
+PQ2.3.1 Planos e Superf(cid:19)(cid:16)cies Esf(cid:19)ericas
+
+De(cid:12)ni(cid:24)c~ao 2.3 Dado um ponto O e um n(cid:19)umero real r, chamamos de superf(cid:19)(cid:16)cie esf(cid:19)erica
+
+de raio r e centro O, indicada por S, o conjunto de todos os pontos P do espa(cid:24)co tais
+
+que
+
+onde d(P, O) denota a dist^ancia entre P e O.
+
+d(P, O) = r,
+
+De(cid:12)ni(cid:24)c~ao 2.4 Dado um ponto O e um n(cid:19)umero real r,chamamos de esfera de raio r e
+
+centro O, indicada por F, o conjunto de todos os pontos P do espa(cid:24)co tais que
+
+d(P, O) ≤ r.
+
+Os pontos que pertencem `a esfera e n˜ao pertencem `a superf´ıcie esf´erica a ela corres-
+
+pondente s˜ao chamados de pontos interiores (cid:18)a superf(cid:19)(cid:16)cie esf(cid:19)erica.
+
+Um plano E ´e tangente a uma superf´ıcie esf´erica S se a intersec¸c˜ao entre ambos
+
+´e um ´unico ponto que ´e chamado de ponto de tang^encia. Se a intersec¸c˜ao contiver
+
+mais de um ponto, o plano ent˜ao ´e dito secante `a S e, neste caso, a intersec¸c˜ao ´e uma
+
+circunferˆencia.
+
+No teorema a seguir chamaremos tamb´em de raio o segmento de reta com extremidades
+
+no centro e na superf´ıcie esf´erica.
+
+Teorema 1 Um plano perpendicular a um raio na sua extremidade comum com a su-
+
+perf(cid:19)(cid:16)cie esf(cid:19)erica (cid:19)e tangente (cid:18)a mesma. Reciprocamente, todo plano tangente a uma su-
+
+perf(cid:19)(cid:16)cie esf(cid:19)erica (cid:19)e perpendicular ao raio no ponto de tang^encia.
+
+Demonstra(cid:24)c~ao: Se E ´e um plano perpendicular ao raio em T , O ´e o centro da superf´ıcie
+
+esf´erica S e OT ´e um raio de medida denotada por OT , ent˜ao basta mostrar que nenhum
+
+outro ponto de E est´a na superf´ıcie esf´erica S.
+
+Seja P um ponto qualquer de E, diferente de T . Como E ´e perpendicular a OT temos
+que o triˆangulo OP T ´e retˆangulo em bT , assim, OP > OT = r o que nos leva a concluir
+que P n˜ao est´a na superf´ıcie esf´erica.
+
+Para a rec´ıproca, seja E um plano tangente `a superf´ıcie esf´erica no ponto T . Supondo
+
+por absurdo, que E n˜ao seja perpendicular a OT mostraremos que tal hip´otese nos leva
+
+a uma contradi¸c˜ao.
+
+Se F ´e um ponto de E tal que OF ´e perpendicular a E ent˜ao, F ̸= T . Tomemos
+um ponto R pertencente `a reta suporte de F T tal que F ´e ponto m´edio de T R. Ent˜ao,
+△OF R ∼
+= △OF T , assim, OR = OT = r donde conclu´ımos que R tamb´em pertence a S
+o que ´e absurdo pois E ´e tangente a superf´ıcie esf´erica S (ver Figura 2.7).
+
+10
+
+Figura 2.7:
+
+(cid:3)
+
+Teorema 2 A interse(cid:24)c~ao de uma superf(cid:19)(cid:16)cie esf(cid:19)erica com um plano que passa pelo seu
+
+centro (cid:19)e uma circunfer^encia de mesmo centro e mesmo raio.
+
+Demonstra(cid:24)c~ao: Dada a superf´ıcie esf´erica S com centro O e raio r e plano E que passa
+por O, tem-se que E ∩ S ´e o conjunto formado por todos os pontos de E cuja distˆancia
+at´e O ´e igual a r, ou seja, uma circunferˆencia de centro O e raio r .
+
+(cid:3)
+
+Teorema 3 Se um plano cont(cid:19)em um ponto interior de uma superf(cid:19)(cid:16)cie esf(cid:19)erica, ent~ao a
+
+intersec(cid:24)c~ao do plano com a superf(cid:19)(cid:16)cie esf(cid:19)erica (cid:19)e uma circunfer^encia. Se esse plano n~ao
+
+cont(cid:19)em o centro da superf(cid:19)(cid:16)cie esf(cid:19)erica, ent~ao o centro dessa circunfer^encia (cid:19)e o p(cid:19)e da
+
+perpendicular ao plano tra(cid:24)cada a partir do centro da superf(cid:19)(cid:16)cie esf(cid:19)erica.
+
+11
+
+FORTESOXEYFSDemonstra(cid:24)c~ao: Seja E um plano que n˜ao passa pelo centro O da superf´ıcie esf´erica S de
+
+raio r e que cont´em o ponto Y em seu interior. Seja F um ponto de E tal que OF ´e
+perpendicular a E. Devemos mostrar que E ∩ S ´e uma circunferˆencia de centro F.
+
+Note que OY < r (j´a que Y est´a no interior de S) e, em △OF Y , temos que a
+hipotenusa OY e o cateto OF s˜ao tais que OF < OY < r, o que nos leva a concluir que
+F tamb´em est´a no interior de S. Dado um ponto X ∈ E ∩ S temos que em △OF X ´e
+retˆangulo em F da´ı, pelo Teorema de Pit´agoras,
+
+o que implica que
+
+OF 2 + F X 2 = OX 2 = r2,
+
+√
+
+r2 − OF 2 > 0.
+
+F X =
+
+Assim, E ∩ S est´a contida na circunferˆencia λ de centro F e raio
+
+r2 − OF 2. Falta
+agora mostrar que se X ∈ λ, ent˜ao X ∈ E ∩ S. De fato, pelo Teorema de Pit´agoras,
+temos
+
+√
+
+X ∈ λ ⇒ OX 2 = OF 2 + F X 2
+
+= OF 2 + r2 − OF 2
+= r2
+⇒ OX = r e X ∈ S
+⇒ X ∈ E ∩ S, (∀X ∈ λ).
+
+(cid:3)
+
+Chamamos de circunfer^encia m(cid:19)axima a intersec¸c˜ao de uma superf´ıcie esf´erica com
+
+qualquer plano que passe pelo seu centro.
+
+2.3.2 Superf(cid:19)(cid:16)cie Esf(cid:19)erica em Coordenadas Cartesianas
+
+Lema 1 Os pontos A, B, C e D em R3 s~ao coplanares se, e somente se,
+
+B − A
+C − A
+D − A
+
+= 0,
+
+onde cada linha (cid:19)e dada pelas entradas dos vetores
+
+−→
+AB = B−A,
+
+−→
+AC = C −A,
+
+−−→
+AD = D−A.
+
+Demonstra(cid:24)c~ao:Se quatro pontos distintos A, B, C e D do R3 s˜ao coplanares, ent˜ao
+−−→
+−→
+AD tamb´em s˜ao coplanares logo, algum desses vetores ´e combina¸c˜ao linear dos
+AB,
+
+−→
+AC,
+
+outros dois. Suponhamos, sem perda de generalidade, que
+−→
+AC e
+
+−−→
+AD assim, existem α, β ∈ R tais que B − A = α · (C − A) + β · (D − A) e da´ı:
+
+−→
+AB seja combina¸c˜ao linear de
+
+12
+
+B − A
+C − A
+D − A
+
+=
+
+α · (C − A) + β · (D − A)
+C − A
+D − A
+
+=
+
+α · (C − A)
+C − A
+D − A
+
++
+
+β · (D − A)
+C − A
+D − A
+
+=
+
+= α ·
+
+C − A
+C − A
+D − A
+
++ β ·
+
+D − A
+C − A
+D − A
+
+= α · 0 + β · 0 = 0.
+
+Para a rec´ıproca, se
+
+B − A
+C − A
+D − A
+
+= 0,
+
+ent˜ao temos duas possibilidades: Um dos vetores linha do determinante ´e nulo. Supo-
+nhamos que seja B − A.
+Isso implica que A = B, que ´e um absurdo, pois os pontos
+s˜ao distintos. Resta a possibilidade de um dos vetores linha, B − A por exemplo, ser
+combina¸c˜ao linear dos outros dois. Assim, B − A = α · (C − A) + β · (D − A) o que
+implica que os vetores B − A, C − A e D − A s˜ao coplanares, logo A, B, C e D do R3
+s˜ao coplanares.
+
+(cid:3)
+
+De(cid:12)ni(cid:24)c~ao 1 (Sistema Ortogonal de Coordenadas Cartesianas) Sistema formado
+
+por tr^es retas mutuamente perpendiculares que se intersectam em um (cid:19)unico ponto chamado
+
+de origem, e onde:
+
+• Essas retas s~ao ditas eixos ordenados chamamos de eixo Ox, eixo Oy e eixo
+
+Oz;
+
+• Cada dois eixos formam um plano que (cid:19)e ortogonal ao eixo remanescente;
+
+• Esses planos, ditos planos ordenados, s~ao chamamos de plano xy, plano xz e
+
+plano yz;
+
+• Os planos ordenados dividem o espa(cid:24)co em oito partes chamadas de octantes;
+
+• Cada ponto P do espa(cid:24)co corresponde, de forma biun(cid:19)(cid:16)voca, a um terno ordenado de
+
+n(cid:19)umeros reais (a, b, c);
+
+• A coordenada “a” corresponde a dist^ancia de P at(cid:19)e o plano yz, a coordenada “b” cor-
+responde a dist^ancia de P at(cid:19)e o plano xz e a coordenada “c” corresponde a dist^ancia
+
+de P at(cid:19)e o plano xy;
+
+13
+
+• A origem corresponde ao terno (0, 0, 0).
+
+Dado um ponto P = (x, y, z) do espa¸co em um sistema ortogonal de coordenadas
+
+cartesianas com origem O (ver Figura 2.8), se aplicarmos o Teorema de Pit´agoras, pri-
+meiramente no triˆangulo △QOR, determinamos a distˆancia d(O, Q) =
+x2 + y2 e depois,
+no triˆangulo △OP Q, concluimos que a distˆancia de P at´e O ´e dada por
+
+√
+
+√
+
+d(P, O) =
+
+x2 + y2 + z2.
+
+Figura 2.8: Sistema Ortogonal.
+
+De modo geral, a distˆancia entre os pontos P = (x, y, z) e C = (q, r, s) ´e dada por
+
+√
+
+d(P, C) =
+
+(x − q)2 + (y − r)2 + (z − s)2.
+
+(2.1)
+
+Assim, dado R ∈ R, (R > 0) representamos uma superf´ıcie esf´erica S de centro
+
+C = (q, r, s) e raio R pelo conjunto de todos os pontos P tais que
+
+(x − q)2 + (y − r)2 + (z − s)2 = R2.
+
+(2.2)
+
+A equa¸c˜ao (2.2) ´e chamada de equa¸c˜ao reduzida da superf´ıcie esf´erica S que, quando
+
+desenvolvida, ﬁca da forma
+
+x2 + y2 + z2 + ax + by + cz + d = 0,
+
+(2.3)
+
+onde a, b, c, d s˜ao n´umeros reais tais que a = −2q, b = −2r, c = −2s e d = q2 +r2 +s2 −R2.
+A equa¸c˜ao (2.3) ´e chamada de equa¸c˜ao geral da superf´ıcie esf´erica S e ´e importante
+
+ressaltar que nem toda equa¸c˜ao da forma (2.3) representa uma superf´ıcie esf´erica pois ´e
+
+necess´ario que, quando escrita na forma da equa¸c˜ao (2.2), R seja positivo e como
+
+√
+
+R =
+
+q2 + r2 + s2 − d =
+
+√
+
+a2
+4
+
++
+
+b2
+4
+
++
+
+c2
+4
+
+− d,
+
+14
+
+ent˜ao
+
+R > 0 ⇒ a2 + b2 + c2 > 4d.
+
+Uma forma pr´atica de veriﬁcar pode ser vista no Exemplo 2.2 a seguir.
+
+Exemplo 2.2 Veri(cid:12)car se x2 + y2 + z2 − 4x + 6y − 2z + 17 = 0 representa uma superf(cid:19)(cid:16)cie
+esf(cid:19)erica.
+
+Veri(cid:12)ca(cid:24)c~ao:
+
+Basta completar os quadrados
+
+x2 + y2 + z2 − 4x + 6y − 2z = −17
+
+(x2 − 4x + 4) + (y2 + 6y + 9) + (z2 − 2z + 1) = −17 + 4 + 9 + 1
+
+(x − 2)2 + (y + 3)2 + (z − 1)2 = −3 ≤ 0.
+
+Assim, x2 + y2 + z2 − 4x + 6y − 2z + 17 = 0 representa o conjunto vazio e, por conseguinte,
+n~ao representa uma superf(cid:19)(cid:16)cie esf(cid:19)erica, visto que n~ao existem x, y e z tais que a soma de
+
+seus quadrados seja negativa.
+
+Agora enunciaremos um importante teorema que garante a unicidade da localiza¸c˜ao
+
+determinada pelo GPS. Trata-se da aplica¸c˜ao do processo de trilatera¸c˜ao no espa¸co, ou
+
+seja, assim como a intersec¸c˜ao das trˆes circunferˆencias determinaram a localiza¸c˜ao de
+
+Soﬁa no mapa (ver Exemplo 2.1, p. 8) temos que, para cada i = 1, 2, 3, 4, se conhecidas
+as distˆancias σi de um ponto P a quatro outros pontos Ci bem escolhidos no espa¸co,
+ent˜ao a intersec¸c˜ao de quatro superf´ıcies esf´ericas de cetros Ci e raio σi ir´a determinar a
+localiza¸c˜ao do ponto P no espa¸co (ver Figura 2.9).
+
+Figura 2.9: S´o a quarta superf´ıcie esf´erica determinar´a qual dos dois pontos ´e P .
+
+15
+
+Teorema 4 Se quatro superf(cid:19)(cid:16)cies esf(cid:19)ericas de centros n~ao coplanares se intersectam,
+
+ent~ao essa interse(cid:24)c~ao (cid:19)e um (cid:19)unico ponto.
+
+Demonstra(cid:24)c~ao: Sejam S1, S2, S3 e S4 superf´ıcies esf´ericas cujos centros s˜ao, respectiva-
+mente, C1 = (x1, y1, z1), C2 = (x2, y2, z2), C3 = (x3, y3, z3) e C4 = (x4, y4, z4).
+
+Se (E1), (E2), (E3) e (E4),abaixo, s˜ao equa¸c˜oes das superf´ıcies esf´ericas S1, S2, S3 e
+
+S4, ent˜ao precisamos mostrar que (2.4) tem solu¸c˜ao ´unica.
+
+
+
+
+
+
+x2 + y2 + z2 + a1x + b1y + c1z + d1 = 0
+x2 + y2 + z2 + a2x + b2y + c2z + d2 = 0
+x2 + y2 + z2 + a3x + b3y + c3z + d3 = 0
+x2 + y2 + z2 + a4x + b4y + c4z + d4 = 0
+
+(E1)
+(E2)
+(E3)
+(E4)
+
+(2.4)
+
+Por hip´otese, a intersec¸c˜ao das superf´ıcies Si para i = 1, 2, 3, 4 ´e um conjunto n˜ao-vazio
+
+e solu¸c˜ao de (2.4).
+
+Fazendo (E1) − (E2), (E1) − (E3) e (E1) − (E4) eliminamos os termos quadr´aticos e
+obteremos o sistema linear (2.5) cujas equa¸c˜oes representam, respectivamente, os planos
+que contˆem as intersec¸c˜oes Sj ∩ S1 (para j = 2, 3, 4) e cuja solu¸c˜ao ´e tamb´em solu¸c˜ao do
+sistema (2.4).
+
+
+
+
+
+
+(a1 − a2)x + (b1 − b2)y + (c1 − c2)z + (d1 − d2) = 0
+(a1 − a3)x + (b1 − b3)y + (c1 − c3)z + (d1 − d3) = 0
+(a1 − a4)x + (b1 − b4)y + (c1 − c4)z + (d1 − d4) = 0
+
+(2.5)
+
+Tal sistema ter´a solu¸c˜ao ´unica se:
+
+D =
+
+a1 − a2
+a1 − a3
+a1 − a4
+
+b1 − b2
+b1 − b3
+b1 − b4
+
+c1 − c2
+c1 − c3
+c1 − c4
+
+̸= 0.
+
+De fato, com base na compara¸c˜ao das equa¸c˜oes (2.2) e (2.3), temos que ai = −2xi,
+bi = −2yi e ci = −2zi, i = 1, 2, 3, 4 e assim:
+
+D =
+
+−2x1 + 2x2 −2y1 + 2y2 −2z1 + 2z2
+−2x1 + 2x3 −2y1 + 2y3 −2z1 + 2z3
+−2x1 + 2x4 −2y1 + 2y4 −2z1 + 2z4
+
+= 8 ·
+
+= 8 ·
+
+x2 − x1 y2 − y1 z2 − z1
+x3 − x1 y3 − y1 z3 − z1
+x4 − x1 y4 − y1 z4 − z1
+
+C2 − C1
+C3 − C1
+C4 − C1
+
+̸= 0.
+
+16
+
+Logo, pelo Lema 1, se os centros C1, C2, C3 e C4 n˜ao s˜ao coplanares segue que D ̸= 0.
+
+(cid:3)
+
+´E importante ressaltar que a hip´otese S1 ∩ S2 ∩ S3 ∩ S4 ̸= ∅ ´e essencial ao teorema
+pois, se omitida, n˜ao poder´ıamos garantir que a solu¸c˜ao de (2.5) ´e a mesma solu¸c˜ao de
+
+(2.4).
+
+Um exemplo que ilustra bem isso, ´e o das superf´ıcies esf´ericas
+
+S1 : x2 + y2 + z2 = 3
+S2 : (x − 2)2 + y2 + z2 = 2
+S3 : x2 + (y − 2)2 + z2 = 2
+S4 : x2 + y2 + (z − 2)2 = 2
+cujos centros C1 = (0, 0, 0), C2 = (2, 0, 0), C3 = (0, 2, 0) e C4 = (0, 0, 2) n˜ao s˜ao coplanares
+(com base no Lema 1) e cujo respectivo sistema (2.5) ´e dado por
+
+
+
+
+
+
+4x − 5 = 0
+4y − 5 = 0
+4z − 5 = 0,
+
+5
+o que nos leva a uma ´unica solu¸c˜ao x =
+, mas que n˜ao representa
+4
+o ponto de intersec¸c˜ao das superf´ıcies S1, S2, S3 e S4, como se veriﬁca facilmente. Tal
+situa¸c˜ao decorre do simples fato que S1 ∩ S2 ∩ S3 ∩ S4 = ∅. O ponto (
+) representa
+a intersec¸c˜ao dos planos que contˆem as intersec¸c˜oes Sj ∩ S1 (para j = 2, 3, 4) e n˜ao a
+intersec¸c˜ao S1 ∩ S2 ∩ S3 ∩ S4.
+
+e z =
+
+, y =
+
+5
+4
+
+5
+4
+
+5
+4
+
+5
+4
+
+5
+4
+
+,
+
+,
+
+2.3.3 Rela(cid:24)c~ao entre Coordenadas Geogr(cid:19)a(cid:12)cas e Coordenadas
+
+Cartesianas
+
+Vamos considerar um sistema ortogonal de coordenadas cartesianas de centro O e eixos
+
+positivos Ox, Oy e Oz tais que:
+
+• O ´e o centro da terra;
+
+• O eixo Oz positivo aponta na dire¸c˜ao norte;
+
+• O plano Oxy ´e o plano do Equador;
+
+• O plano Oxz cont´em o meridiano de Greenwich;
+
+• O eixo Oy ´e cortado pelo meridiano de longitude 90oE.
+
+17
+
+Seja P um ponto sobre a superf´ıcie terrestre (ver Figura 2.10) temos que sua latitude e
+
+sua longitude s˜ao representadas respectivamente por θ e φ conforme foi deﬁnido na Se¸c˜ao
+
+2.1. J´a a altitude de P , que indicaremos por h, ´e dada por
+
+h = OP − r =
+
+√
+
+x2 + y2 + z2 − r,
+
+(2.6)
+
+onde OP ´e a eleva¸c˜ao do ponto P e r ´e o raio da terra cuja medida, para efeitos did´aticos,
+
+ser´a aproximada para 6.400 km. Sendo assim, a altitude tamb´em ter´a sua medida apro-
+
+ximada. Sobre a altitude, nos aprofundaremos mais na Se¸c˜ao 2.4.
+
+Figura 2.10: Latitude θ = m(\AOP ) e longitude φ = m(\COA).
+
+Do triˆangulo retˆangulo △OP B da Figura 2.10 temos que
+
+cos(90o − θ) =
+
+OB
+OP
+
+=
+
+z√
+
+x2 + y2 + z2
+
+.
+
+Como cos(90o − θ) = sin θ temos que
+
+sin θ =
+
+z√
+
+x2 + y2 + z2
+
+.
+
+(2.7)
+
+Ressaltamos que, quando z > 0, θ assume um ´unico valor entre 0o e 90o e quando
+z < 0, θ assume um ´unico valor entre -90o e 0o. Assim, se z > 0, ent˜ao diremos que o
+ponto P tem latitude θ N e se z < 0, ent˜ao diremos que o ponto P tem latitude −θ S. No
+Exemplo 2.3, logo a seguir na p´agina 19, veremos que z = 6 × 106 > 0 e que θ = 45o > 0,
+o que corresponde a latitude 45o N, se z = −6 × 106 < 0, ent˜ao θ = −45o < 0, o que
+corresponde a latitude −(−45)o S ou seja 45o S.
+
+18
+
+Analizando agora o triˆangulo retˆangulo △OAC da Figura 2.10 temos que
+
+sin φ =
+
+cos φ =
+
+AC
+OA
+
+=
+
+OC
+OA
+
+=
+
+y√
+
+x2 + y2
+
+x√
+
+x2 + y2
+
+.
+
+.
+
+(2.8)
+
+(2.9)
+
+E tamb´em ressaltamos que, quando y > 0, φ assume um ´unico valor entre 0o e 180o
+e, quando y < 0, φ assume um ´unico valor entre -180o e 0o. Assim, se y > 0, ent˜ao
+diremos que o ponto P tem longitude φ E e se y < 0, ent˜ao diremos que o ponto P tem
+longitude −φ W. A explica¸c˜ao para o sinal negativo de φ ´e an´aloga `a que foi dada para
+θ na latitude.
+
+Podemos ainda determinar as coordenadas cartesianas (x, y, z) em fun¸c˜ao das coorde-
+
+nadas geogr´aﬁcas θ, φ e da sua eleva¸c˜ao ρ = OP aplicada na equa¸c˜ao (2.6).
+
+Como ρ =
+
+x2 + y2 + z2 temos que sin θ =
+
+portanto, z = ρ sin θ. Da Figura 2.10
+
+√
+
+√
+
+z
+ρ
+
+√
+
+portanto
+
+x2 + y2 = ρ cos θ que, substitu´ıdo nas equa¸c˜oes:
+
+temos que cos θ =
+
+x2 + y2
+ρ
+
+(2.8) e (2.9), nos d´a x = ρ cos θ cos φ e y = ρ cos θ sin φ. Assim,
+
+x = ρ cos θ cos φ
+
+y = ρ cos θ sin φ
+
+(2.10)
+
+
+
+
+
+
+z = ρ sin θ.
+√
+
+Exemplo 2.3 Dado o ponto P = (−3 × 106, 3
+nadas geogr(cid:19)a(cid:12)cas e a altitude, tendo o metro como unidade de medida adotada.
+
+3 × 106, 6 × 106) determine suas coorde-
+
+Solu(cid:24)c~ao:
+
+Aplicando diretamente as equa(cid:24)c~oes (2.6), (2.7) , (2.8) e (2.9) temos:
+
+√
+
+h =
+
+(−3 × 106)2 + (3
+
+√
+
+3 × 106)2 + (6 × 106)2 − 6, 4 × 106
+
+= 6 × 106
+
+√
+
+2 − 6, 4 × 106 ≃ 2, 1 × 106 m.
+
+sin θ =
+
+√
+
+6 × 106
+√
+
+(−3 × 106)2 + (3
+
+3 × 106)2 + (6 × 106)2
+
+=
+
+√
+
+6 × 106
+72 × 1012
+
+=
+
+6 × 106
+√
+
+6 × 106
+
+2
+
+=
+
+sin φ =
+
+√
+
+√
+2
+2
+
+.
+√
+3
+
+(−3 × 106)2 + (3
+√
+3 × 106
+3
+6 × 106 =
+
+√
+3
+2
+
+.
+
+=
+
+3 × 106
+√
+
+3 × 106)2
+
+√
+
+3
+√
+
+3 × 106
+36 × 1012
+
+=
+
+19
+
+cos φ =
+
+√
+
+−3 × 106
+
+√
+
+(−3 × 106)2 + (3
+
+=
+
+−3 × 106
+6 × 106 =
+
+−1
+2
+
+.
+
+=
+
+−3 × 106
+√
+36 × 1012
+
+3 × 106)2
+
+Assim, as coordenadas geogr(cid:19)a(cid:12)cas de P s~ao θ = 45o N e φ = 120o E e a altitude (cid:19)e
+
+aproximadamente 2, 1 × 106 m.
+
+(cid:3)
+
+2.4 Como (cid:19)e Medida a Altitude
+
+Para entendermos como o GPS determina a altitude em um planeta que n˜ao ´e perfei-
+
+tamente esf´erico precisamos considerar alguns detalhes.
+
+A altitude ´e a distˆancia entre um ponto na superf´ıcie do planeta at´e a curva que
+
+determina o n´ıvel do mar.
+
+Figura 2.11: Elipse e.
+
+Figura 2.12: elips´oide E.
+
+Por ser levemente achatada nos polos a forma da terra pode ser modelada matema-
+
+ticamente por um elips´oide, que ´e um s´olido geom´etrico formado quando giramos uma
+
+elipse em torno de um de seus eixos (ver Figuras 2.11 e 2.12).
+
+Temos uma elipse e de eixo maior medindo 2a e eixo menor medindo 2b. ao girar e
+
+em torno do eixo menor geramos o elips´oide E. No caso da terra chamamos de \elips(cid:19)oide
+
+de refer^encia" `aquele em que os eixos 2a e 2b s˜ao respectivamente o diˆametro equatorial
+
+e a distˆancia entre os polos.
+
+Atualmente o elips´oide de referˆencia mais usado num contexto de Sistema de Posicio-
+
+namento Global ´e o “World Geodetic System”(do inglˆes - Sistema Geod´esico Mundial),
+
+criado em 1984 e conhecido pela sigla WGS-84.
+
+20
+
+Assim, pode-se determinar a altitude, chamada de elipsoidal, pela diferen¸ca entre as
+
+distˆancias do centro da terra ao receptor e ao elips´oide, respectivamente.
+
+Outro modelo utilizado ´e o ge´oide que ´e um modelo f´ısico da forma da terra. Ele simula
+
+o planeta Terra como uma superf´ıcie inteiramente coberta pelos oceanos e sob a a¸c˜ao
+
+das for¸cas centr´ıpeta (gerada pela rota¸c˜ao da terra) e de atra¸c˜ao de massas (gravidade).
+
+Como essas for¸cas interferem no n´ıvel do mar, o ge´oide apresenta-se como uma superf´ıcie
+
+irregular.
+
+O ge´oide ´e baseado no potencial gravitacional constante. Comparando com o elips´oide
+de referˆencia, o ge´oide ´e consideravelmente mais suave (varia em ±100 m) que a superf´ıcie
+terrestre (varia de −11530 m a 8844 m).
+
+Para model´a-lo matematicamente utiliza-se uma fun¸c˜ao com aproximadamente 65.000
+
+diferentes coeﬁcientes e cujas vari´aveis: θ, φ e ρ correspondem respectivamente `a latitude,
+
+`a longitude e ao raio geocˆentrico. Para efeitos did´aticos, evitaremos c´alculos excessivos
+
+considerando que a terra ´e uma esfera de raio ρ = 6.400 km como j´a hav´ıamos estabelecido
+
+na p´agina 20.
+
+2.5 Dist^ancia entre Dois Pontos em uma Superf(cid:19)(cid:16)cie
+
+Esf(cid:19)erica
+
+Uma fun¸c˜ao interessante do GPS ´e a determina¸c˜ao de distˆancias entre pontos loca-
+
+lizados na superf´ıcie terrestre, sejam no mesmo bairro onde estamos ou at´e mesmo em
+pa´ıses diferentes. ´E ´obvio que o GPS n˜ao utiliza a f´ormula 2.1 (ver p. 14), pois se o ﬁzesse
+ter´ıamos, por exemplo, que a distˆancia entre Macap´a (capital do Amap´a) e Halmahera
+
+(na Indon´esia) seria algo pr´oximo do diˆametro da terra (cerca de 12.800 km) j´a que essas
+
+localidades praticamente est˜ao sobre a linha do Equador e s˜ao quase que diametralmente
+opostas (fato facilmente veriﬁc´avel no Google Maps1), por´em para viajarmos de uma des-
+sas localidades at´e a outra percorrendo os 12.800 km ter´ıamos que cavar um t´unel, que
+
+passaria pelo centro a terra, o que tornaria a viagem bem calorenta!
+
+O fato ´e que a terra ´e esf´erica (lembremos que a consideramos assim anteriormente)
+
+por´em vivemos em sua superf´ıcie sem percebˆe-lo e, por conta de sua imensid˜ao, achamos
+
+que vivemos num plano. Se observarmos v´arias cirunferˆencias (Figura 2.13) com raio de
+
+diferentes comprimentos perceberemos que, quanto maior for raio, mais pr´oximo de uma
+
+reta estar´a um arco de comprimento constante nela contido.
+
+Sendo assim, numa superf´ıcie esf´erica, o arco dAB que se aproxima mais de uma reta
+´e o menor dentre os dois arcos contidos em uma circunferˆencia m´axima, o que nos leva
+
+a crer que este represente a menor trajet´oria entre dois pontos A e B(ver Figura 2.14).
+
+Podemos encontrar a demonstra¸c˜ao dessa aﬁrma¸c˜ao em [1] (Cap´ıtulo 6 - pp. 74-76).
+
+1http://maps.google.com.br
+
+21
+
+Figura 2.13: Os arcos se aproximam da reta com o aumento do raio.
+
+Figura 2.14: O arco dAB ´e a menor trajet´oria entre A e B.
+
+Como o comprimento de um arco dAB ´e diretamente proporcional ao ˆangulo central
+\AOB de medida α (em graus) a ele correspondente e considerando que ρ e O s˜ao
+respectivamente o raio e o centro da terra, temos
+
+360o
+α
+
+=
+
+2πρ
+d(A, B)
+
+,
+
+e assim,
+
+d(A, B) =
+
+α
+360o
+
+· π · 12.800.
+
+(2.11)
+
+Basta agora determinar a medida α. Para tanto faremos uso de uma rela¸c˜ao estabele-
+
+cida entre as normas dos vetores, seu produto interno usual e o ˆangulo α. Antes por´em,
+
+deﬁniremos produto interno usual e norma.
+
+22
+
+ Circunferência máximaABO α De(cid:12)ni(cid:24)c~ao 2 Dados dois vetores u = (x1, y1, z1) e v = (x2, y2, z2) do R3 chamamos de
+produto interno usual e denotamos por ⟨u, v⟩ ao n(cid:19)umero real
+
+⟨u, v⟩ = x1x2 + y1y2 + z1z2.
+
+De(cid:12)ni(cid:24)c~ao 3 Chamamos de norma (ou m(cid:19)odulo) de um vetor u = (x1, y1, z1) e denota-
+mos por ∥u∥ ao n(cid:19)umero real
+
+∥u∥ =
+
+√
+
+⟨u, u⟩ =
+
+√
+
+1 + y2
+x2
+
+1 + z2
+1.
+
+Teorema 5 Se α for a medida do ^angulo entre dois vetores n~ao-nulos u e v, ent~ao
+
+cos α =
+
+⟨u, v⟩
+∥u∥ ∥v∥.
+
+Demonstra(cid:24)c~ao:
+
+Figura 2.15: Triˆangulo △OAB no R3.
+
+Sejam A = (x1, y1, z1) e B = (x2, y2, z2), sabemos m(\AOB) = α. Aplicando a lei dos
+
+cossenos no triˆangulo △OAB (ver Figura 2.15) temos,
+
+∥u∥2 + ∥v∥2 − ∥w∥2
+2 ∥u∥ ∥v∥
+1 + z2
+
+1) + (x2
+
+1 + y2
+
+(x2
+
+cos α =
+
+=
+
+=
+
+Logo,
+
+2 + y2
+
+2 + z2
+
+2) − [(x2 − x1)2 + (y2 − y1)2 + (z2 − z1)2]
+2 ∥u∥ ∥v∥
+
+2x1x2 + 2y1y2 + 2z1z2
+2 ∥u∥ ∥v∥
+
+.
+
+cos α =
+
+⟨u, v⟩
+∥u∥ ∥v∥.
+
+23
+
+(2.12)
+
+(cid:3)
+
+wAproveitando o exemplo no in´ıcio desta se¸c˜ao (p´agina 21), calculamos a distˆancia entre
+
+Macap´a e Halmahera, que chamaremos de A e B respectivamente. Precisamos de suas
+coordenadas geogr´aﬁcas, as quais encontramos no Google Maps2, observe que as medidas
+est˜ao em graus decimais e que os sinais negativos representam latitude sul e longitude
+
+oeste:
+
+• Macap´a → (0,109863o , -51,064453o)
+
+• Halmaera → (-0,131836o , 127,792969o)
+
+Utilizando as f´ormulas (2.10) determinamos as coordenadas cartesianas que represen-
+
+tam os pontos A e B e analogamente os vetores u e v:
+
+u = 6.400(0, 628445 , −0, 777852 , 0, 001917)
+v = 6.400(−0, 612808 , 0, 790228 , −0, 002301).
+
+Agora aplicando na f´ormula (2.12), temos
+
+6.4002 × (−0, 385116 − 0, 614680 − 0, 000004)
+6.400 × 6.400
+
+cos α =
+cos α = −0, 9998
+α = arccos(−0, 9998) = 178, 854165o.
+
+Assim, aplicando a f´ormula (2.11), a distˆancia entre Macap´a e Halmahera ´e dada por
+
+d(A, B) =
+
+178, 854165o
+360o
+
+· π · 12.800 ≃ 19.978, 2 km,
+
+bem maior que os 12.800 km do t´unel intra-planet´ario.
+
+Com base em [4], que fornece a distˆancia entre cidades do mundo de forma interativa,
+
+veriﬁcamos que a distˆancia entre Macap´a e Halmahera Indon´esia (´e necess´ario escrever o
+
+pa´ıs para localiz´a-la), ´e 19.899 km valor pr´oximo do encontrado por n´os.
+
+Apesar de termos dado um exemplo envolvendo localidades pr´oximos `a linha do Equa-
+
+dor, ressaltamos que o processo ´e aplic´avel a quaisquer dois pontos sobre a superf´ıcie
+
+terrestre desde que sejam conhecidas suas coordenadas geogr´aﬁcas, conforme o exemplo
+
+a seguir.
+
+Exemplo 2.4 Determinar a dist^ancia entre Aracaju (−10, 919618o , −37, 089844o) e
+Porto Alegre (−30.034259o , −51.228020o).
+Resolu(cid:24)c~ao:
+
+Sejam A o ponto que representa Aracaju e B o ponto que representa Porto Alegre. Os
+
+vetores u e v s~ao tais que:
+
+u = 6.400(0, 783248 , −0, 592147 , −0, 189432)
+v = 6.400(0, 542137 , −0, 674959 , −0, 500518).
+
+2http://maps.google.com.br/
+
+24
+
+Agora aplicando na f(cid:19)ormula (2.12), temos:
+
+cos α =
+
+6.4002 × (0, 424628 + 0, 399675 + 0, 094814)
+6.400 × 6.400
+
+cos α = 0, 919117
+α = arccos(0, 919117) = 23, 202667o.
+
+Assim, aplicando a f(cid:19)ormula (2.11), a dist^ancia entre Aracaju e Porto Alegre (cid:19)e dada
+
+por
+
+d(A, B) =
+
+23, 202367o
+360o
+
+· π · 12.800 ≃ 2.592 km,
+
+que, se comparada com a dist^ancia obtida em [4] que (cid:19)e 2.582 km, veri(cid:12)camos uma dife-
+
+ren(cid:24)ca de 10 km.
+
+25
+
+Cap(cid:19)(cid:16)tulo 3
+
+Como Funciona o GPS
+
+Tentaremos descrever de forma simples como funciona o sistema GPS, detalhes t´ecnicos
+
+n˜ao ser˜ao aprofundados ou at´e ser˜ao deixados de lado e nos ateremos `a matem´atica, aos
+
+princ´ıpios da F´ısica como tempo, distˆancia e velocidade e aos aspectos funcionais de cada
+
+segmento envolvido no processo.
+
+Devemos dispor de um receptor GPS que nada mais ´e do que um rastreador de sat´elites.
+
+Ele desempenha essa tarefa gra¸cas aos dados de almanaque, que s˜ao informa¸c˜oes contidas
+
+no receptor que dizem onde procurar cada sat´elite a qualquer momento do dia.
+
+De acordo com a precis˜ao podemos classiﬁcar os receptores GPS em trˆes categorias:
+
+• Receptores de navega¸c˜ao: com erro em torno de 15 m;
+
+• Receptores topogr´aﬁcos: com erro em torno de 1 m;
+
+• Receptores Geod´esicos: com erro em torno de 1 cm.
+
+Para obter erros inferiores a 15 m os modelos topogr´aﬁcos e geod´esicos necessitam
+
+de uma corre¸c˜ao diferencial que consiste na utiliza¸c˜ao de um sinal terrestre emitido por
+
+uma esta¸c˜ao de referˆencia (geralmente R´adio-farol) al´em dos sinais de sat´elite. O GPS
+
+diferencial (ou DGPS) ´e utilizado na navega¸c˜ao em ´aguas restritas como tamb´em em
+
+levantamentos hidrogr´aﬁcos, oceanogr´aﬁcos e geof´ısicos, agricultura de precis˜ao, dentre
+
+outras aplica¸c˜oes. No Cap´ıtulo 4 trataremos sobre erros mais especiﬁcamente.
+
+Cada sat´elite foi programado para descrever ´orbitas ligeiramente el´ıpticas de modo
+
+que sua localiza¸c˜ao seja perfeitamente conhecida dentro de um sistema ortogonal de co-
+
+ordenadas cartesianas deﬁnido anteriormente (ver Deﬁni¸c˜ao 1, p. 13), a essa localiza¸c˜ao
+
+chamamos de efem´eride. Como os sat´elites d˜ao aproximadamente duas voltas por dia ao
+
+redor da terra, qualquer desvio na ´orbita ´e detectado e corrigido pelas esta¸c˜oes de controle
+
+na terra.
+
+De acordo com [1] (Resolu¸c˜ao da atividade 9 - p. 30, pp. 65 e 66) a fra¸c˜ao da superf´ıcie
+
+terrestre que ﬁca vis´ıvel para um sat´elite ´e cerca de 37,9%, o que o leva aﬁrmar que um
+
+receptor em qualquer ponto da terra disp˜oe de, pelo menos, quatro sat´elites vis´ıveis (acima
+
+26
+
+da linha do horizonte). J´a [3] aﬁrma que a chance de ocorrer tal visibilidade ´e de 95%.
+
+Mas ´e not´orio que uma constela¸c˜ao de vinte e quatro sat´elites far´a uma boa cobertura do
+
+planeta.
+
+Devemos ent˜ao determinar as distˆancias entre n´os e os sat´elites. Isso ´e feito por meio
+
+de sinais de r´adio codiﬁcados por um padr˜ao chamado de “Pseudo-Random Code” (c´odigo
+
+pseudo-randˆomico) que ´e emitido pelo sat´elite e captado pelo receptor (ver Figura 3.1).
+
+Cada sat´elite emite um sinal com modula¸c˜ao espec´ıﬁca e em duas frequˆencias, designadas
+
+de L1 e L2, que permite identiﬁc´a-lo.
+
+Figura 3.1: O c´odigo que vem do sat´elite ´e comparado ao do receptor.
+
+Para tanto utilizam-se dois c´odigos:
+
+• O c´odigo C/A (coarse/acquisition code) para aquisi¸c˜ao e navega¸c˜ao;
+
+• O C´odigo P (precision code), para medi¸c˜oes de precis˜ao, ap´os a aquisi¸c˜ao e sincro-
+niza¸c˜ao do sinal pelo receptor e est´a dispon´ıvel apenas para os usu´arios militares
+
+norte-americanos e os aliados da OTAN, al´em de outras agˆencias governamentais
+
+dos EUA.
+
+O sinal L1 ´e modulado pelos C´odigos P e C/A enquanto L2 apenas pelo C´odigo P.
+
+O sat´elite e receptor est˜ao programados para emitir o mesmo c´odigo no mesmo ins-
+
+tante, por meio de rel´ogios atˆomicos altamente precisos (da ordem 1 nanosegundo =1 ηs=
+10(cid:0)9 s). Tal precis˜ao ´e necess´aria porque, se o sinal leva menos que 0, 1 s para chegar
+ao receptor, uma m´ınima diferen¸ca interferiria drasticamente na medi¸c˜ao. Para se ter
+
+uma ideia: uma pequena varia¸c˜ao de 1 microsegundo (0, 000001 s) ocasiona um erro de
+
+aproximadamente 300 m na medi¸c˜ao da distˆancia.
+
+O sinal, que viaja `a velocidade da luz (aproximadamente 2, 99792458 × 108 m/s),
+chega com uma defasagem ao receptor que calcula o lapso de tempo pela diferen¸ca entre
+
+27
+
+os instantes em que recebeu e em que gerou o mesmo c´odigo (ver Figura 3.1). A distˆancia
+
+´e determinada multiplicando-se o lapso de tempo pela velocidade da luz. Conhecidos os
+
+pontos de localiza¸c˜ao e as distˆancias a pelo menos quatro sat´elites, s˜ao geradas equa¸c˜oes
+
+de no m´ınimo quatro superf´ıcies esf´ericas imagin´arias cuja intersec¸c˜ao ´e o ponto onde
+
+estamos em coordenadas cartesianas (Teorema 4).
+
+A partir da´ı, utilizamos as equa¸c˜oes (2.6), (2.7), (2.8) e (2.9) para determinarmos
+
+nossas coordenadas geogr´aﬁcas e nossa altitude, e a partir delas o instante atual (hora)
+
+com alt´ıssima precis˜ao.
+
+28
+
+Cap(cid:19)(cid:16)tulo 4
+
+An(cid:19)alise de erros do sistema
+
+Assim como em toda atividade humana, o sistema GPS est´a sujeito a erros. Minimiz´a-
+
+-los ´e uma tarefa que muitas vezes envolve mais investimentos em tecnologia e busca de
+
+t´ecnicas de medi¸c˜ao mais precisas. Explanaremos agora alguns tipos de erros e como s˜ao
+
+confrontados.
+
+4.1 Desvios dos Sinais na Atmosfera
+
+Os sinais de r´adio percorrem a atmos-
+
+fera na velocidade da luz que somente ´e
+
+constante no v´acuo. Al´em disso, ao mu-
+
+dar de meio (do v´acuo para a atmosfera)
+
+os sinais sofrem desvios (ver Figura 4.1).
+
+O primeiro, ao atingir a ionosfera devido
+
+`a presen¸ca de part´ıculas ionizadas oca-
+
+sionando um erro de, aproximadamente,
+
+5 m. O segundo, ao chegar a troposfera
+
+pela presen¸ca de grande quantidade de
+
+vapor d’´agua, desta vez o erro ´e da or-
+
+dem de 0, 5 m.
+
+4.2 Erros de (cid:19)Orbita
+
+Figura 4.1: Difra¸c˜ao Atmosf´erica.
+
+S˜ao pequenas varia¸c˜oes detectadas nas ´orbitas e que s˜ao causadas por atra¸c˜ao gravita-
+
+cional da Lua, ou do Sol, e pela press˜ao da radia¸c˜ao solar sobre o sat´elite. Estas varia¸c˜oes
+
+orbitais s˜ao transmitidas para os sat´elites, que passam a consider´a-las nas suas emiss˜oes.
+
+Como as ´orbitas s˜ao pr´e-deﬁnidas para cada sat´elite, as esta¸c˜oes de controle em terra mo-
+
+29
+
+IonosferaTroposfera~ 200 km~ 50 kmSinal do SatéliteTerraTerranitoram a cada passagem do sat´elite informando ao mesmo quando ´e necess´ario corrigir
+
+sua ´orbita.
+
+4.3 Erros do Rel(cid:19)ogio do Receptor
+
+J´a hav´ıamos comentado sobre a grande precis˜ao dos rel´ogios contidos nos sat´elites, no
+
+entanto ´e ﬁnanceiramente invi´avel que cada receptor tenha um rel´ogio atˆomico. Dispondo
+
+de um rel´ogio comum de cristal de quartzo as medi¸c˜oes de tempo e, consequentemente, das
+
+distˆancias aos sat´elites ter˜ao erros que levariam a uma situa¸c˜ao semelhante a do exemplo
+
+dado na p´agina 17 onde as superf´ıcies esf´ericas n˜ao se intersectam em nenhum ponto,
+
+essas distˆancias s˜ao chamadas de pseudo-ranges ou pseudodistˆancias. Como sabemos que
+
+o ponto existe, minimizar esse erro consiste em reduzir a regi˜ao onde possivelmente esse
+
+ponto est´a.
+
+Para resolver esse problema foi utilizado um artif´ıcio simples: o processador do re-
+
+ceptor, por meio de tentativas, simula o valor desse erro e o atribui a cada medi¸c˜ao de
+
+lapso de tempo feita, de modo que as superf´ıcies esf´ericas se aproximem ou intersectem
+
+em algum ponto. Al´em disso a presen¸ca de um quarto sat´elite minimiza esse tipo de erro.
+
+Digamos que o rel´ogio do meu receptor esteja atrasando 0, 0000005 s, erro que levaria
+
+a uma diminui¸c˜ao de 150 m na distˆancia do sat´elite o que levaria a uma situa¸c˜ao como a
+
+ilustrada no plano pela ﬁgura 4.2. Por´em o processador detecta esse erro veriﬁcando que
+
+se for acrescentado 0, 0000005 s aos lapsos de tempo medidos para cada sinal de sat´elite
+
+ent˜ao ocorrer´a a intersec¸c˜ao como vemos na ﬁgura 4.3.
+
+Figura 4.2: Antes da corre¸c˜ao.
+
+Figura 4.3: Depois da corre¸c˜ao.
+
+30
+
+ 4.4 Erros de Multitrajet(cid:19)oria
+
+Tamb´em chamados erros de multicaminho ou erros de multipercurso, s˜ao erros
+
+da ordem de 0, 6 m e ocorrem devido `a recep¸c˜ao de mais de um sinal proveniente da
+
+mesma fonte. S˜ao provocados por obst´aculos pr´oximo a antena do receptor (ver Figura
+
+4.4), estes reﬂetem na dire¸c˜ao do receptor um sinal que n˜ao seria captado por ele. Esse
+
+tipo de erro n˜ao pode ser facilmente identiﬁcado, pois depende de onde ´e feita a recep¸c˜ao
+
+dos sinais (se em campo aberto se em ´area urbana).
+
+Figura 4.4: Multitrajet´oria provocada por edif´ıcios.
+
+4.5 Erros Devido (cid:18)a Geometria dos Sat(cid:19)elites
+
+Esse tipo de erro ocorre quando os sat´elites est˜ao posicionados muito pr´oximos uns
+
+dos outros, sob o ponto de vista do receptor. O fato ´e que quanto mais espalhados no
+
+c´eu estiverem os sat´elites (o que se chama de geometria boa), maior ser´a a precis˜ao na
+
+determina¸c˜ao da posi¸c˜ao do receptor.
+
+Figura 4.5: Quanto menor a ´area menor ser´a o erro.
+
+O erro ocorre porque, ao ﬁcarem pr´oximos, os sat´elites determinam superf´ıcies esf´ericas
+
+quase que coincidentes o que implicaria em uma ´area de intersec¸c˜ao muito grande (ver
+
+31
+
+Sinal corretoSinal refletidoﬁgura 4.5). Para quantiﬁcar esse erro foi criado o fator de dilui¸c˜ao da precis˜ao da posi¸c˜ao
+
+ou PDOP (“positional dilution of precision”) que ´e inversamente proporcional ao volume
+
+da pirˆamide que tem os quatro sat´elites e o receptor em seus v´ertices (ver Figura 4.6).
+
+Figura 4.6: Quanto maior o volume da pirˆamide menor ´e o erro.
+
+A tabela a seguir mostra os valores da PDOP e suas classiﬁca¸c˜oes:
+
+Valor da PDOP Condi¸c˜ao
+
+P DOP < 4
+
+´Otimo
+4 < P DOP < 6 Aceit´avel
+
+6 < P DOP < 8
+
+ruim
+
+P DOP > 8
+
+Inaceit´avel
+
+32
+
+Cap(cid:19)(cid:16)tulo 5
+
+Sugest~oes de Atividades
+
+No funcionamento do sistema GPS, ´e not´oria a presen¸ca de alguns elementos ma-
+
+tem´aticos avan¸cados para estudantes dos ensinos:
+
+fundamental e m´edio. Deste modo,
+
+seria invi´avel a apresenta¸c˜ao completa deste trabalho se os alunos desconhecem produto
+
+interno, superf´ıcie esf´erica e elips´oide, por exemplo. Por´em, com as ferramentas certas,
+
+´e poss´ıvel desenvolver projetos envolvendo atividades que despertem o interesse dos alu-
+
+nos pela matem´atica do GPS e outras ´areas correlacionadas. Se necess´ario, as propostas
+
+que seguem podem e devem ser adaptadas, j´a que sabemos que cada turma (ou escola,
+
+ou professor) vive uma realidade geralmente diferente. Os materiais tamb´em podem ser
+
+substitu´ıdos.
+
+5.1 Dist^ancia entre Duas Localidades no Planeta
+
+Objetivos
+
+• Associar meridianos e paralelos aos seus respectivos modelos matem´aticos;
+
+• Informar o aluno da existˆencia das geometrias n˜ao-euclideanas;
+
+• Deﬁnir com o aluno o que ´e circunferˆencia m´axima e dar exemplos;
+
+• Construir e aplicar uma f´ormula para o c´alculo de comprimento de arcos.
+
+P(cid:19)ublico alvo
+
+Alunos a partir do 8o ano que tenham conhecimento pr´evio de comprimento de circun-
+ferˆencia e propor¸c˜ao.
+
+Materiais
+
+• globo terrestre;
+
+33
+
+• bolas de isopor de tamanhos diversos;
+
+• barbante colorido;
+
+• palitos de churrasco;
+
+• pincel atˆomico;
+
+• palitos de dente;
+
+• l´apis;
+
+• borracha;
+
+• caderno.
+
+Descri(cid:24)c~ao
+
+Iniciaremos a atividade perguntando sobre o que os alunos sabem sobre meridianos, pa-
+
+ralelos, polos, eixo de rota¸c˜ao etc. e apresentaremos o globo terrestre. Depois que todos
+
+estiverem cientes do que sejam estes elementos, pediremos que um aluno tente espetar
+
+um palito de churrasco em uma bola de isopor exatamente em seus “polos”. Depois,
+
+pediremos que outro aluno marque alguns pontos com o pincel sobre a superf´ıcie da bola.
+
+Lan¸caremos os questionamentos abaixo gradativamente, e de acordo com as respostas
+
+iremos direcionando a discuss˜ao para os objetivos.
+
+Podemos usar os palitos para marcar os pontos e o barbante, amarrado aos mesmos,
+
+para demarcar a trajet´oria entre os pontos. Levaremos a discuss˜ao para a necessidade
+
+de criar uma rela¸c˜ao entre o comprimento de uma circunferˆencia m´axima e a distˆancia
+
+entre dois pontos na superf´ıcie esfera. Ser´a necess´ario falar sobre o ˆangulo central e ent˜ao
+
+poderemos propor que calculem distˆancias entre pontos sobre as bolas dados o raio e a
+
+medida do ˆangulo central. Daremos um tempo para que discutam em grupos de 3 ou 4
+
+componentes e depois apresentem os resultados.
+
+1. Que tipo de trajet´oria liga dois pontos marcados na bola?
+
+2. Que trajet´oria representa a menor distˆancia entre dois pontos marcados na bola?
+
+3. Como poder´ıamos calcular essa distˆancia?
+
+4. Como poder´ıamos calcular o comprimento da linha do Equador?
+
+5. Como poder´ıamos calcular a distˆancia entre os polos?
+
+6. Que rela¸c˜ao tˆem as distˆancias calculadas nas quest˜oes 3 e 4?
+
+34
+
+5.2 Trilatera(cid:24)c~ao em Mapas
+
+Objetivos
+
+• Associar equa¸c˜oes de circunferˆencias ao princ´ıpio que norteia o GPS;
+
+• Dar ao aluno uma vis˜ao inicial da geometria anal´ıtica espacial;
+
+• Aplicar os conhecimentos sobre velocidade;
+
+• Aplicar propor¸c˜ao na interpreta¸c˜ao de escalas;
+
+• Aplicar sistemas de equa¸c˜oes no processo de localiza¸c˜ao.
+
+P(cid:19)ublico alvo
+
+Alunos do 3o ano do ensino m´edio que tenham conhecimento pr´evio de distˆancia entre
+dois pontos, das equa¸c˜oes da circunferˆencia, escalas em mapas e sistemas de equa¸c˜oes
+
+quadr´aticas.
+
+Materiais
+
+• mapas impressos em papel A4;
+
+• compasso;
+
+• receptor GPS;
+
+• l´apis;
+
+• borracha;
+
+• r´egua;
+
+• caderno.
+
+Descri(cid:24)c~ao
+
+Parte 1 Iniciaremos perguntando aos alunos sobre o que eles entendem a respeito de
+
+localiza¸c˜ao global, depois de ouvir algumas respostas mostraremos um receptor GPS e per-
+
+guntaremos se eles sabem o que ´e. Ap´os mostrar as fun¸c˜oes do receptor, direcionaremos
+
+o debate para a unicidade da localiza¸c˜ao, ou seja, cada lugar na superf´ıcies terrestre tem
+
+coordenadas geogr´aﬁcas e altitude ´unicas, determinadas pelo receptor. Entraremos na
+
+discuss˜ao do processo de trilatera¸c˜ao comentando que ´e poss´ıvel calcular distˆancia de um
+
+transmissor de r´adio at´e uma esta¸c˜ao ﬁxa e perguntaremos se os alunos tˆem conhecimento
+
+sobre as velocidades da luz e do som. Perguntaremos qual a rela¸c˜ao entre a velocidade e
+
+35
+
+as varia¸c˜oes do tempo e da distˆancia. Ap´os dirimir as d´uvidas dos alunos, simularemos a
+
+situa¸c˜ao proposta no Exemplo 2.1 (p. 8). Para tanto, forneceremos os mapas da referida
+
+regi˜ao e os tempos de propaga¸c˜ao dos sons dos sinos. Pediremos que tentem calcular as
+
+distˆancias. Assim que forem encontrando as distˆancias devemos orient´a-los na convers˜ao
+
+das medidas de acordo com a escala. Pediremos que tracem as circunferˆencias e determi-
+
+nem a localiz¸c˜ao de Soﬁa. Alguns alunos podem n˜ao conseguir encontrar (provavelmente
+
+por terem errado alguma medida ou desenho) ent˜ao pediremos que discutam entre si onde
+
+o processo falhou.
+
+Parte 2 Ap´os essa etapa pediremos que os alunos construam um plano cartesiano sobre
+
+o mapa colocando os eixos onde acharem conveniente e, com o aux´ılio de uma r´egua, de-
+
+terminem as coordenadas das cidades envolvidas no problema (centros). Depois escrevam
+
+as equa¸c˜oes reduzida e geral de cada uma das trˆes circunferˆencias e resolvam o sistema
+
+formado por elas veriﬁcando se a solu¸c˜ao do Sistema coincide com o ponto encontrado
+
+na primeira parte da atividade. Pediremos tamb´em que comparem entre si os resultados
+
+deixando que eles percebam que a posi¸c˜ao dos eixos n˜ao interfere na solu¸c˜ao. Concluire-
+
+mos a atividade comentando que o processo aplicado na atividade ´e similar ao aplicado
+
+no GPS.
+
+Sugest~ao: Esta atividade tamb´em pode ser desenvolvida utilizando um software educa-
+cional e livre de geometria dinˆamica chamado GeoGebra1, basta dispor de computadores
+com o GeoGebra instalado e um arquivo de imagem do mapa com a escala. Os alunos
+
+devem ter conhecimento b´asico do programa. A seguir, listamos os passos da atividade:
+
+Passo 1 Inserir o mapa: Menu Ferramentas → Objetos especiais → Inserir imagens;
+
+Passo 2 Ajustar a escala: posicione a ﬁgura em lugar conveniente e depois, girando o
+
+rolete do mouse, ajuste as unidades de medi¸c˜ao dos eixos `a escala do mapa isso
+
+ajudar´a nas convers˜oes;
+
+Passo 3 Enviar a ﬁgura para tr´as do plano: Menu Editar → Propriedades. Marcar a
+
+op¸c˜ao “Imagem de fundo” do objeto “ﬁg1”;
+
+Passo 4 Determinar os raios das circunferˆencias utilizando a escala (regra de trˆes);
+
+Passo 5 Construir as circunferˆencias: Menu Ferramentas → C´ırculos e Arcos → C´ırculo
+dado Centro e Raio. Clicar sobre o ponto que representa a cidade e digitar na caixa
+
+de di´alogo o valor do raio, utilizando “.” (ponto) ao inv´es de “,” (v´ırgula)
+
+1Dispon(cid:19)(cid:16)vel em: http://www.geogebra.org/cms/
+
+36
+
+Passo 6 Determinar o ponto de intersec¸c˜ao: Menu Ferramentas → pontos → intersec¸c˜ao
+de dois Objetos. Depois coloca o ponteiro sobre o poss´ıvel ponto (as circunferˆencias
+
+ﬁcar˜ao destacadas) e clicar;
+
+Passo 7 Com o rolete do mouse dar um “zoom” no ponto de intersec¸c˜ao e veriﬁcar se
+
+realmente as trˆes circunferˆencias se intersectam (provavelmente n˜ao), falar ent˜ao
+
+sobre a imprecis˜ao do programa.
+
+5.3 Geometria do GPS
+
+Objetivos
+
+• Explicar o funcionamento do GPS;
+
+• Apresentar ao aluno a matem´atica envolvida na programa¸c˜ao do GPS;
+
+• Mostrar na pr´atica como se d´a a intersec¸c˜ao entre esferas;
+
+• Incentivar o trabalho de equipe e a coopera¸c˜ao;
+
+P(cid:19)ublico alvo
+
+Alunos do 2o ano do ensino m´edio com conhecimento pr´evio de esferas e superf´ıcies
+esf´ericas.
+
+Materiais
+
+• esferas ocas de pl´astico (aquelas de piscina de bolinhas infantil);
+
+• tesouras;
+
+• estiletes;
+
+• compassos;
+
+• pistolas de cola quente;
+
+• quadro negro;
+
+• giz;
+
+• Kit audiovisual para exibi¸c˜ao de v´ıdeo.
+
+37
+
+Descri(cid:24)c~ao
+
+Parte 1 Iniciaremos exibindo o v´ıdeo “As Aventuras do Geodetetive - GPS”, dispon´ıvel
+
+em [12], ap´os a apresenta¸c˜ao perguntaremos aos alunos:
+
+1. Vocˆes entenderam como funciona o GPS?
+
+2. Que elementos da geometria vocˆes identiﬁcaram no v´ıdeo?
+
+3. Vocˆes seriam capazes de reproduzir as ilustra¸c˜oes das intersec¸c˜oes apresentadas no
+
+v´ıdeo, utilizando o quadro negro?
+
+Ap´os as tentativas de dois ou trˆes volunt´arios, perguntaremos sobre a compreens˜ao
+
+dos desenhos por parte dos outros alunos e da diﬁculdade em constru´ı-los e pediremos su-
+
+gest˜oes para facilitar a visualiza¸c˜ao induzindo a constru¸c˜ao de modelos em trˆes dimens˜oes.
+
+A partir da´ı, dividiremos a turma em equipes, cada uma com: quatro esferas de pl´astico,
+
+um compasso, uma tesoura, um estilete e uma pistola de cola quente, ent˜ao pediremos
+
+que, em um determinado tempo, tentem reproduzir as intersec¸c˜oes atrav´es de maquetes
+
+(caso seja necess´ario forne¸ca mais esferas para novas tentativas). Depois de constru´ıdas
+
+as maquetes, pediremos que cada equipe apresente seu projeto, explicando o funciona-
+
+mento do GPS e comente suas diﬁculdades na constru¸c˜ao e as estrat´egias para super´a-las.
+
+Podemos fazer uma exposi¸c˜ao dos melhores trabalhos para toda a escola.
+
+38
+
+Refer^encias Bibliogr(cid:19)a(cid:12)cas
+
+[1] Alves, S., A Geometria do Globo Terrestre, Programa de Inicia¸c˜ao Cent´ıﬁca -
+
+OBMEP.
+
+[2] Crato, N. P., A Matem(cid:19)atica das Coisas, Editora Gradiva,10a edi¸c˜ao, pp. 71 - 74,
+
+2010.
+
+[3] http://paginas.fe.up.pt/∼hmiranda/st2/galileu.pdf (19/03/2013).
+
+[4] http://www.howmanyhours.com/ (19/03/2013).
+
+[5] http://www.nrl.navy.mil/media/news-releases/2005/president-announces-roger-
+
+eastonrecipient-of-national-medal-of-technology (19/03/2013).
+
+[6] http://erstopograﬁa.blogspot.com.br/2011/04/equipamentos-topograﬁcos.html
+
+(19/03/2013).
+
+[7] https://www.mar.mil.br/dhn/bhmn/download/cap-37.pdf (19/03/2013).
+
+[8] http://www.ibge.gov.br/home/geociencias/geodesia/oquee geoide.shtm
+
+(19/03/2013).
+
+[9] http://minx.com.br/manual GPS.pdf (19/03/2013).
+
+[10] http://www.popa.com.br/ 2008/cronicas/gps/funcionamento do gps.htm
+
+(19/03/2013).
+
+[11] http://www.lps.usp.br/lps/arquivos/conteudo/grad/dwnld/ApostilaGPS.pdf
+
+(19/03/2013).
+
+[12] http://m3.ime.unicamp.br/recursos/1107 (19/03/2013)
+
+39
+
+

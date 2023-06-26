@@ -1,0 +1,3845 @@
+Luiz Gustavo Benedito de Sousa
+
+Criptograﬁa: a arte de ocultar
+
+Santo Andr´e, Novembro de 2015
+
+Universidade Federal do ABC
+
+Centro de Matem´atica, Computa¸c˜ao e Cogni¸c˜ao
+
+Luiz Gustavo Benedito de Sousa
+
+Criptograﬁa: a arte de ocultar
+
+Orientador: Prof. Dr. Daniel Miranda Machado
+
+Disserta¸c˜ao de mestrado apresentada ao Centro de
+Matem´atica, Computa¸c˜ao e Cogni¸c˜ao para
+obten¸c˜ao do t´ıtulo de Mestre em Matem´atica pelo
+PROFMAT.
+
+Este exemplar corresponde `a redac¸˜ao final da dissertac¸˜ao
+devidamente corrigida e defendida por luiz Gustavo benedito
+de sousa e aprovada pela comiss˜ao julgadora.
+
+Santo Andr´e, Novembro de 2015
+
+Este exemplar foi revisado e alterado em rela¸c˜ao `a vers˜ao original, de acordo com as
+observa¸c˜oes levantadas pela banca no dia da defesa, sob responsabilidade ´unica do
+autor e com a anuˆencia de seu orientador.
+Santo Andr´e,
+.
+de
+Assinatura do autor:
+Assinatura do orientador:
+
+de 20
+
+4
+
+Resumo
+
+Este trabalho buscou na criptograﬁa uma nova abordagem para ilustrar e exempliﬁcar
+os conceitos de fun¸c˜oes e aritm´etica modular no ensino m´edio. Nesse intuito discor-
+remos sobre as cifras de substitui¸c˜ao, C´esar, transposi¸c˜ao, colunas, disco de cifras,
+Poli-alfab´eticas, divisibilidade dos n´umeros, crivo de Erat´ostenes, algoritmo estendido
+de Euclides, chave sim´etrica, p´ublica, assim´etrica, fun¸c˜ao de m˜ao ´unica R.S.A, com-
+partilhamento de segredo. Na sequˆencia apresentamos tamb´em algumas atividades
+envolvendo fun¸c˜ao inversa, aritm´etica modular, cifra de C´esar, Vigen`ere, protocolo de
+compartilhamento de segredos de Shamir para o uso em sala de aula.
+Palavras-chaves: Aritm´etica Modular, Fun¸c˜ao e Criptograﬁa.
+
+5
+
+Abstract
+
+This study aimed to present cryptography as a means to illustrate and exemplify the
+concepts of functions and modular arithmetic in high school using cryptography. To
+that end we present the substitution ciphers , Caesar, transposition , columns, cipher
+disk , poly alpha , divisibility of numbers, Eratosthenes sieve the extended algorithm of
+Euclid , symmetric key , public , asymmetrical, one-way function RSA , sharing secret.
+Following we present some activities involving inverse function , modular arithmetic,
+Caesar cipher , Vigenere , Shamir’s secret sharing protocol for use in the classroom.
+
+Keywords: Modular Arithmetic, Function e Cryptography.
+
+7
+
+Agradecimentos
+
+• A Deus em primeiro lugar.
+
+• Ao professor Dr. Daniel Miranda pela paciˆencia.
+
+• A minha querida esposa e ﬁlhas, pela paciˆencia dos ﬁnais de semana empregados
+
+na dedica¸c˜ao desde trabalho.
+
+• Aos colegas do Profmat em especial a colega Marceli que me recebeu em sua casa
+
+no curso de ver˜ao.
+
+• Nossa senhora de Aparecida pela prote¸c˜ao na estrada no longo caminho percor-
+
+rido.
+
+9
+
+Sum´ario
+
+1 Introdu¸c˜ao.
+
+2 Arte de ocultar
+
+2.1 Cifra . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . .
+2.2 Cifra de Substitui¸c˜ao.
+. . . . . . . . . . . . . . . . . . . . . . . .
+2.2.1 Cifra de C´esar
+2.3 Transposi¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.3.1 Transposi¸c˜ao das Colunas . . . . . . . . . . . . . . . . . .
+2.4 Disco de Cifra . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.5 Cifras Poli-alfab´eticas
+. . . . . . . . . . . . . . . . . . . . . . . .
+2.6 C´odigo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+2.7 Enigma . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3 Fundamentos da Teoria dos N´umeros
+
+3.4.1 O Crivo de Erat´ostenes
+
+3.1 Divisibilidade . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.2 M´aximo Divisor Comum . . . . . . . . . . . . . . . . . . . . . . .
+3.3 Algoritmo Estendido de Euclides . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+3.4 N´umeros Primos
+. . . . . . . . . . . . . . . . . . .
+3.5 Teorema Fundamental da Aritm´etica . . . . . . . . . . . . . . . .
+3.6 Pequeno Teorema de Fermat
+. . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . .
+3.7 Aritm´etica Modular
+3.7.1 Propriedades . . . . . . . . . . . . . . . . . . . . . . . . .
+3.7.2 Equa¸c˜oes Modulares . . . . . . . . . . . . . . . . . . . . .
+3.8 Crit´erios de Divisibilidade. . . . . . . . . . . . . . . . . . . . . . .
+
+4 Criptograﬁa Moderna
+4.1 Chave Sim´etrica.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.1.1 Alguns Sistemas de Chave Sim´etrica . . . . . . . . . . . .
+4.1.1.1 Chaves P´ublicas . . . . . . . . . . . . . . . . . .
+4.2 Chave Assim´etrica . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.2.1 Alguns Sistemas de Chave Assim´etrica . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . .
+4.3 Resumos Criptogr´aﬁcos
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+4.4 Assinatura Digital
+4.5 Protocolos
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.6 Sigilo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.7 Fun¸c˜ao de M˜ao ´Unica . . . . . . . . . . . . . . . . . . . . . . . .
+4.8 R.S.A . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+4.8.1 Matem´atica do R.S.A . . . . . . . . . . . . . . . . . . . .
+4.8.2 Codiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+17
+
+19
+19
+19
+20
+22
+23
+24
+24
+27
+27
+
+29
+29
+30
+31
+34
+36
+37
+38
+38
+38
+41
+42
+
+45
+45
+46
+47
+48
+48
+49
+49
+49
+49
+49
+50
+50
+51
+
+11
+
+51
+52
+
+55
+55
+55
+56
+
+56
+
+57
+
+58
+
+60
+
+61
+
+Sum´ario
+
+4.8.3 Decodiﬁca¸c˜ao do R.S.A . . . . . . . . . . . . . . . . . . .
+4.9 Compartilhamento de Segredos . . . . . . . . . . . . . . . . . . .
+
+5 Aplica¸c˜oes e Atividades em Sala de Aula
+
+5.1 Fun¸c˜oes Inversas
+
+5.2 Aritm´etica Modular
+
+lend´ario)
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.1.1 Atividade para Sala de Aula - Fun¸c˜ao Inversa . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.1 Atividade para Sala de Aula - Aritm´etica Modular (ca-
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.2 Atividade para Sala de Aula - Aritm´etica Modular - Cifra
+de C´esar . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.3 Atividade para Sala de Aula - Aritm´etica Modular - Cifra
+de Vigen`ere. . . . . . . . . . . . . . . . . . . . . . . . . . .
+5.2.4 Atividade para Sala de Aula - Abertura do cofre (protocolo
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+
+de Shamir)
+
+A Fun¸c˜oes
+
+12
+
+Lista de Figuras
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+2.1 Citale Espartano [8]
+2.2 Disco de Cifra [5] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+2.3 Cifra de Vigen`ere [7]
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+2.4 M´aquina Enigma [6]
+
+13
+
+Lista de Tabelas
+
+2.1 Algoritmo de Cifra . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+2.2 M´etodo da Substitui¸c˜ao. . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+2.3 Cifra de C´esar.[1] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+. . . . . . . . . . . . . . . . . . . . . . . . . . 21
+2.4 Fun¸c˜ao da Cifra de C´esar
+2.5 Fun¸c˜ao Inversa . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+2.6 Decodiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+2.7 Frequˆencia Relativa das Letras na L´ıngua Portuguesa.[1] . . . . . . . . . 22
+. . . . . . . . . . . . . . . . . . . . . . . . . . 24
+2.8 Transposi¸c˜ao de Colunas
+. . . . . . . . . . . . . . . . . . . . . . . . 24
+2.9 Disco de Cifragem de Alberti
+. . . . . . . . . . . . . . . . 26
+2.10 Codiﬁca¸c˜ao Utilizando a Cifra de Vigen`ere
+
+3.1 Algoritmo Estendido de Euclides- Procedimento.
+3.2 Primeiros N´umeros Primos.
+3.3 Algoritmo Estendido de Euclides( Exemplo)
+3.4 Algor´ıtimo Estendido de Euclides ( Aplica¸c˜ao).
+
+. . . . . . . . . . . . . 33
+. . . . . . . . . . . . . . . . . . . . . . . . . 34
+. . . . . . . . . . . . . . . 35
+. . . . . . . . . . . . . . 41
+
+4.1 Exemplo da cifra de ﬂuxo . . . . . . . . . . . . . . . . . . . . . . . . . . 46
+4.2 Exemplo de Cifra de Blocos
+. . . . . . . . . . . . . . . . . . . . . . . . 46
+4.3 Troca de Informa¸c˜oes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+4.4 Tabela de Pr´e Codiﬁca¸c˜ao do R.S.A . . . . . . . . . . . . . . . . . . . . 50
+4.5 Codiﬁca¸c˜ao do R.S.A . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+4.6 Decodiﬁca¸c˜ao do R.S.A . . . . . . . . . . . . . . . . . . . . . . . . . . . 52
+
+. . . . . . . . 56
+5.1 Letras e N´umeros Correspondentes para Cifrar e Decifrar
+5.2 Cifragem e Decodiﬁca¸c˜ao Utilizando a Fun¸c˜ao e sua Inversa. . . . . . . . 56
+5.3 Dias da Semana
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+5.4 Codiﬁca¸c˜ao e Decodiﬁca¸c˜ao . . . . . . . . . . . . . . . . . . . . . . . . . 58
+5.5 Fun¸c˜ao Modular na Cifra de Vigen`ere . . . . . . . . . . . . . . . . . . . 59
+
+15
+
+1 Introdu¸c˜ao.
+
+Desde pequeno, me intrigo: como pesquisadores do mundo inteiro descobrem fatos de
+civiliza¸c˜oes antigas, como decifram textos escritos com s´ımbolos? Nessa empolga¸c˜ao em
+descobrir segredos de textos antigos, de mensagens cifradas ´e que vou descrever sobre
+criptograﬁa e sua aplica¸c˜ao em sala de aula, como fonte motivadora. Utilizarei essa
+fonte inspiradora para surpreender os alunos de forma a tornar a aula de matem´atica
+mais agrad´avel e qui¸c´a mais pr´oxima da pratica da matem´atica corrente.
+
+Em especial, esperamos que a posse de algumas ferramentas apresentadas nesse
+texto torne o ensino mais coeso. Nesse sentido observamos que o conceito de divisi-
+bilidade ´e trabalhado de forma desconexa, pois ao ensinar a divis˜ao de um n´umero
+pelo outro, o resto n˜ao possui aplicabilidade mas quando utilizamos a congruˆencia esta
+nos possibilita mostrar crit´erios de divisibilidade que a maioria dos professores des-
+conhece, e melhor ainda as demostra¸c˜oes feitas utilizando a congruˆencia s˜ao de f´acil
+compreens˜ao. Outro conte´udo trabalhado no ensino m´edio ´e a fun¸c˜ao inversa; essa
+literalmente ´e transmitida aos alunos, quase sempre sem nenhuma aplica¸c˜ao. Isso po-
+deria ser o contr´ario se o professor relacionasse como uma fun¸c˜ao de m˜ao dupla ou seja,
+quando se utiliza a criptograﬁa para relacionar a aplica¸c˜ao da fun¸c˜ao inversa os alunos
+ﬁcam boquiabertos pois uma fun¸c˜ao que aparentemente n˜ao tem aplica¸c˜ao nenhuma
+transforma-se na divers˜ao da turma em criar textos criptografados e ao mesmo tempo
+decifr´a-los. A an´alise de frequˆencia ´e uma outra boa aplica¸c˜ao no ensino m´edio para
+trabalhar porcentagem com os alunos pois ao fazer a contagem das letras e comparar
+com a porcentagem que cada letra aparece no nosso alfabeto os alunos conseguem
+decifrar mensagens antes imposs´ıveis ao seu olhar.
+
+Assim este trabalho descreve no terceiro e quinto cap´ıtulo um pouco de teoria dos
+n´umeros: propriedades da divis˜ao, M.D.C. e crit´erios de divisibilidade que s˜ao mais
+utilizados no dia a dia do professor e do aluno, uma pequena deﬁni¸c˜ao de fun¸c˜ao aﬁm
+e inversa e principalmente uma descri¸c˜ao da evolu¸c˜ao da criptograﬁa e suas aplicabi-
+lidades no ensino fundamental e m´edio de maneira criativa e qui¸c´a inspiradora.
+
+17
+
+2 Arte de ocultar
+
+A origem do termo criptograﬁa vem do Grego krypt´os, signiﬁca “escondido”, e gr´aphein,
+“escrita”. A criptograﬁa estuda m´etodos para codiﬁcar uma mensagem de modo que
+somente seu destinat´ario leg´ıtimo consiga interpret´a-la, mesmo quando transmitida em
+qualquer canal p´ublico de comunica¸c˜ao.
+
+Dois conceitos, decifrar e decodiﬁcar que ser˜ao utilizados no decorrer do texto podem
+
+causar alguma confus˜ao logo iremos deﬁnir.
+
+Deﬁni¸c˜ao 1. A decodiﬁca¸c˜ao ´e o processo de revela¸c˜ao da mensagem por parte do
+destinat´ario, ou usu´ario leg´ıtimo.
+
+Deﬁni¸c˜ao 2. A decifra¸c˜ao ´e processo de revela¸c˜ao da mensagem por outra pessoa
+que n˜ao ´e destinat´ario da mensagem.
+
+Observa¸c˜ao 3. Contudo, a necessidade de se salvaguardar uma mensagem ´e t˜ao antiga
+quanto a pr´opria escrita, e foi utilizada para diversas ﬁnalidades, tanto para o bem
+quanto para mal. Nesse sentido, h´a aproximadamente 4000 anos, surgiram os primei-
+ros registros de criptograﬁa, que consistiam em hier´oglifos, os quais eram utilizados
+por membros da nobreza eg´ıpcia, em seus t´umulos, no Antigo Egito. Tamb´em, em
+diferentes civiliza¸c˜oes, observou-se a utiliza¸c˜ao da criptograﬁa como a Cifra Atbash,
+Albam e Atbah pelos hebreus, Bast˜ao de Licurgo ou C´ıtalo pelos espartanos e Cifra
+de Pol´ıbio, em 200 a.C. (Fiarresga, 2010).
+
+2.1 Cifra
+
+Deﬁni¸c˜ao 4. O processo de cifragem ´e a modiﬁca¸c˜ao da mensagem original, sendo
+que quem a interceptar e n˜ao souber como reproduzir a mensagem original, n˜ao consiga
+decifrar.
+
+Existe v´arios tipos: cifra de substitui¸c˜ao ou mono-alfab´etica, transposi¸c˜ao, polial-
+fab´etica, homofˆonica e poligrˆamicas. Conforme a tabela 2.1, tem-se um texto original,
+com um algoritmo cifra o texto e com o mesmo ou outro algoritmo dependendo da
+cifragem retorna-se ao texto original.
+
+2.2 Cifra de Substitui¸c˜ao.
+
+Deﬁni¸c˜ao 5. Uma cifra mono-alfab´etica ou cifra de substitui¸c˜ao, ´e um processo
+que consiste em substituir cada car´acter de um texto por outras letras, s´ımbolos,
+
+texto original
+
+algoritmo
+→
+
+texto cifrado
+
+algoritmo
+→
+
+texto original
+
+Tabela 2.1: Algoritmo de Cifra
+
+19
+
+2 Arte de ocultar
+
+Alfabeto
+
+J K L M
+Alfabeto para substitui¸c˜ao L M N O P Q R S T U V W X
+N O P Q R S T U V W X Y Z
+J K
+
+Alfabeto para substitui¸c˜ao Y Z A B C D E F G H I
+
+A B C D E F G H I
+
+Alfabeto
+
+Tabela 2.2: M´etodo da Substitui¸c˜ao.
+
+Alfabeto
+cifra
+
+a
+d
+Alfabeto n
+q
+
+cifra
+
+b
+e
+o
+r
+
+c
+f
+p
+s
+
+d
+g
+q
+t
+
+e
+h
+r
+u
+
+f
+i
+s
+v
+
+h
+g
+k
+j
+t
+v
+x w y
+
+k
+j
+i
+l m n
+x w y
+b
+a
+
+l m
+o
+p
+z
+c
+
+Tabela 2.3: Cifra de C´esar.[1]
+
+n´umeros, ﬁguras, etc.
+
+Um exemplo seria trocar uma letra pela duas pr´oximas letras do alfabeto. A cifra ´e
+fundamental na criptograﬁa, ela ´e um algoritmo e toda a cifra deve ser acompanhada
+de uma chave que especiﬁca os detalhes exatos da codiﬁca¸c˜ao.
+
+Com base na tabela do m´etodo da substitui¸c˜ao 2.2 iremos codiﬁcar a mensagem: “
+A matem´atica ´e a nossa vida” , trocando as letras, ﬁca dessa maneira “ L xlepxletnl p
+l yzddl gtol”.
+
+2.2.1 Cifra de C´esar
+
+Por volta do s´eculo 60 a.C. um dos sistemas criptogr´aﬁcos mais famosos foi utilizado
+por J´ulio C´esar, o qual foi intitulado de Cifra de C´esar.
+
+Deﬁni¸c˜ao 6. A Cifra de C´esar ´e um processo que consiste na substitui¸c˜ao das letras
+do alfabeto simples por outras letras do pr´oprio alfabeto, sendo que a substitui¸c˜ao ´e
+feita conforme uma tabela.
+
+Um exemplo de tabela de C´esar ´e apresentada na Tabela 2.3.
+Dessa forma, a comunica¸c˜ao de C´esar com seus generais seguia um padr˜ao bem
+
+estipulado. Este m´etodo empregado ´e conhecido como substitui¸c˜ao simples.
+
+Assim podemos associar uma fun¸c˜ao matem´atica que relaciona cada letra a um
+
+n´umero, conforme veremos a seguir.
+
+Iremos utilizar a fun¸c˜ao f(x) = x+3 para criar a cifra de C´esar, pois se relacionarmos
+x com cada letra do alfabeto transformando-as em n´umeros teremos conforme a tabela
+2.4.
+
+Exemplo 7. Vamos cifrar a mensagem “A matem´atica”.
+
+Utilizando a tabela 2.3 podemos cifrar a mensagem da seguinte forma “ D pdwhpd-
+
+wlfd”
+
+Para decodiﬁcar teremos que utilizar a fun¸c˜ao inversa para retornar a fun¸c˜ao original.
+
+Exemplo 8. Utilizando a fun¸c˜ao f−1(x) = x − 3 vamos decifrar a mensagem “D
+pdwhpdwlfd”
+
+20
+
+2.2 Cifra de Substitui¸c˜ao.
+
+Alfabeto
+valor de cada letra
+Alfabeto
+valor de cada letra
+
+Alfabeto
+valor de cada letra
+Alfabeto
+valor de cada letra
+
+10
+
+I
+8
+
+3
+S
+18
+
+F G H
+7
+6
+5
+
+J K L M N O
+A B C D E
+14
+9
+4
+2
+1
+0
+T U V W X Y Z A B C · · ·
+P Q R
+15
+· · ·
+24
+19
+17
+16
+APLICANDO A FUNC¸ ˜AO f(x) = x + 3
+J K L M N O
+A B C D E
+7
+3
+17
+12
+5
+4
+T U V W X Y Z A B C · · ·
+P Q R
+· · ·
+27
+22
+20
+19
+18
+
+F G H
+10
+9
+8
+
+6
+S
+21
+
+I
+11
+
+16
+
+13
+
+28
+
+31
+
+26
+
+14
+
+29
+
+25
+
+23
+
+24
+
+28
+
+15
+
+13
+
+21
+
+22
+
+27
+
+12
+
+23
+
+25
+
+26
+
+11
+
+30
+
+20
+
+Tabela 2.4: Fun¸c˜ao da Cifra de C´esar
+
+Aplicando a fun¸c˜ao inversa retornaremos a mensagem original
+Alfabeto
+cifrado
+
+F G H
+10
+9
+8
+
+J K L M
+15
+12
+
+I
+11
+
+13
+
+14
+
+4
+
+1
+
+A B C D E
+7
+6
+5
+3
+f(x)−1 = x − 3
+0
+4
+3
+2
+N O P Q R
+19
+20
+18
+16
+f(x)−1 = x − 3
+17
+16
+
+5
+S
+21
+
+14
+
+15
+
+17
+
+13
+
+18
+
+decodiﬁcado
+Alfabeto
+cifrado
+
+decodiﬁcado
+
+8
+
+7
+
+6
+12
+9
+T U V W X Y Z
+28
+25
+22
+
+26
+
+27
+
+11
+
+24
+
+10
+
+23
+
+19
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+Tabela 2.5: Fun¸c˜ao Inversa
+
+Entrada
+d
+
+valor da letra
+3
+
+f(x)−1 = x − 3
+f(3)−1 = 3 − 3
+
+Sa´ıda Decodiﬁcado
+
+p
+d
+w
+h
+p
+d
+w
+l
+f
+d
+
+15
+3
+22
+7
+15
+3
+22
+11
+5
+3
+
+f(15)−1 = 15 − 3
+f(3)−1 = 3 − 3
+f(22)−1 = 22 − 3
+f(7)−1 = 7 − 3
+f(15)−1 = 15 − 3
+f(3)−1 = 3 − 3
+f(22)−1 = 22 − 3
+f(11)−1 = 11 − 3
+f(5)−1 = 5 − 3
+f(3)−1 = 3 − 3
+
+Tabela 2.6: Decodiﬁca¸c˜ao
+
+0
+
+12
+0
+19
+4
+12
+0
+19
+8
+2
+0
+
+a
+
+m
+a
+t
+e
+m
+a
+t
+i
+c
+a
+
+21
+
+2 Arte de ocultar
+
+A 14,63% H 1,28% O 10,73% V 1,67%
+6,18% P 2,52% W 0,01%
+B
+I
+1,4%
+C 3,88% J
+0,40% Q 1,20% X 0,21%
+D 4,99% K 0,02% R 6,53% Y 0,01%
+E 12,57% L 2,78% S
+7,81% Z 0,47%
+F
+
+1,02% M 4,74% T 4,34%
+
+Tabela 2.7: Frequˆencia Relativa das Letras na L´ıngua Portuguesa.[1]
+
+Mas a frente voltaremos a utilizar a cifra de C´esar utilizando a congruˆencia como
+
+ferramenta para codiﬁcar e decodiﬁcar uma mensagem.
+
+No entanto uma das limita¸c˜oes do m´etodo de substitui¸c˜ao simples ´e que em boa
+parte das l´ınguas, algumas letras costumam ser utilizadas em maior frequˆencia em
+blocos. Isso faz com que a frequˆencia utilizada das palavras seja distinta. Na d´ecada
+de 80, al-Kindi descreveu um m´etodo utilizando a an´alise de frequˆencia, assim com o
+conhecimento das frequˆencias ´e poss´ıvel decifrar qualquer texto sabendo a frequˆencia
+relativa de cada letra. Contudo, Fiarresga (2010) ressalta que em cada l´ıngua, quando
+se faz a contagem do n´umero de vezes que cada letra aparece em textos longos, observa-
+se que cada letra tem uma determinada frequˆencia relativa. Deste modo, a l´ıngua
+portuguesa tem conforme a tabela 2.7:
+
+2.3 Transposi¸c˜ao
+
+Deﬁni¸c˜ao 9. A transposi¸c˜ao ´e um m´etodo criptogr´aﬁco baseado na troca de posi¸c˜ao
+das letras.
+
+A transposi¸c˜ao ´e um m´etodo relativamente inseguro pois possui um n´umero limi-
+tado de possibilidades para organizar as letras. A transposi¸c˜ao sem nenhuma regra
+espec´ıﬁca, tornar´a a mensagem com uma boa seguran¸ca, mas vai gerar um trabalho
+´arduo para o destinat´ario. Assim deve ser previamente combinado entre o emitente e
+o destinat´ario, facilitando a vida de quem organizar´a a mensagem.
+
+Exemplo 10. Vamos cifrar a palavra “ali”.
+
+Utilizando o m´etodo da transposi¸c˜ao teremos: ila; ial; ail; lai; lia.
+
+Exemplo 11. Vamos cifrar a a palavra “Otorrinolaringologista”.
+
+Ela possui nada a menos que 22 letras ou seja para calcular todas as varia¸c˜oes
+
+ter´ıamos de efetuar o c´alculo de
+
+5!·2!·3!·3!·2!·2!·2!·2! , que ´e um n´umero gigantesco (8130792301632000).
+
+22!
+
+A transposi¸c˜ao sem nenhuma regra espec´ıﬁca, tornar´a a mensagem com uma boa
+seguran¸ca, mas vai gerar um trabalho ´arduo para o destinat´ario. Assim deve ser
+previamente combinado entre o emitente e o destinat´ario, facilitando a vida de quem
+organizar´a a mensagem.
+
+Citale espartano era um aparelho criptogr´aﬁco militar para realizar a transposi¸c˜ao,
+criado no s´ec. V a.C. O Citale era constitu´ıdo de madeira e `a sua volta enrolava-se
+uma tira de couro conforme a ﬁgura 2.1. O funcionamento do Citale era bem simples,
+bastava o remetente escrever a mensagem ao longo do comprimento do instrumento e
+depois desenrolava a ﬁta, formando uma mensagem contendo letras sem sentido. Para
+
+22
+
+2.3 Transposi¸c˜ao
+
+Fig. 2.1: Citale Espartano [8]
+
+decodiﬁcar a mensagem o destinat´ario deveria possuir um Citale contendo o mesmo
+diˆametro do que foi usado pelo remetente, e simplesmente enrolava a tira em volta do
+bast˜ao, formando assim a mensagem. Assim como o m´etodo de substitui¸c˜ao simples,
+a transposi¸c˜ao tem como principal problema a grande variedade de chaves entre os
+usu´arios para se decodiﬁcar a mensagem.
+
+Deﬁni¸c˜ao 12. Anagrama ´e uma palavra formada pela transposi¸c˜ao de uma palavra
+ou frase..
+
+Proposi¸c˜ao 13. O n´umero de permuta¸c˜ao de k elementos distintos ´e k!
+
+Demonstra¸c˜ao. Utilizando a formula de arranjo temos que A(k, k) = k!
+que mostra que a permuta¸c˜ao de k elementos distintos ´e k!.
+
+(k−k)! = k!, o
+
+Proposi¸c˜ao 14. O numero de anagramas com os caracteres repetidos ´e
+nos quais ki s˜ao os elementos repetidos.
+
+k!
+k1!·k2!·····kn! ,
+
+Exemplo 15. Quantos anagramas possui a palavra “ CRIPTOGRAFIA”?
+
+Como criptograﬁa possui 12 letras e duas letras r repetidas, duas letras i repetidas
+
+e duas letras a repetidas, assim teremos :
+
+2.3.1 Transposi¸c˜ao das Colunas
+
+12!
+
+2!·2!·2! = 479001600
+
+8
+
+= 59875200
+
+Deﬁni¸c˜ao 16. A transposi¸c˜ao das colunas ´e um m´etodo de escrever a mensagem
+em linhas, sendo que a primeira linha utiliza uma chave, sendo esta a que ir´a orientar
+a escrita codiﬁcada, e as pr´oximas linhas segue a mensagem a ser codiﬁcada, conforme
+o exemplo 2.8.
+
+A escrita deve seguir um crit´erio pr´e determinado, em nosso exemplo utilizaremos
+a chave em ordem alfab´etica para procedermos a codiﬁca¸c˜ao. Vamos codiﬁcar a men-
+sagem “ estamos sendo atacados”, observando a tabela 2.8, sendo que a nossa chave
+ser´a “segredo”
+
+A mensagem codiﬁcada “doas esec emoo gtna osta radd sesa” como a cifra de colunas
+
+a transposi¸c˜ao de colunas ´e muito simples de ser descoberta.
+
+Em 1466, foi desenvolvido um sistema no qual combinava a substitui¸c˜ao de letras e
+
+a transposi¸c˜ao. Esse m´etodo ﬁcou conhecido como Disco de Alberti.
+
+23
+
+2 Arte de ocultar
+
+s
+e
+s
+a
+
+e
+s
+e
+c
+
+g
+t
+n
+a
+
+r
+d
+e
+a m o
+a
+o
+d
+s
+o
+d
+
+o
+s
+t
+a
+
+Tabela 2.8: Transposi¸c˜ao de Colunas
+
+DISCO MAIOR
+DISCO MENOR ( j´a posicionado)
+DISCO MAIOR
+DISCO MENOR ( j´a posicionado)
+
+A B C D E F G I
+f
+c & b m d
+p
+1
+Q R S T V X Z
+h
+l
+k
+t
+
+g
+
+o
+
+e
+
+s
+
+r
+
+l M N O P
+x
+z
+v
+4
+2
+q
+a
+
+n
+3
+i
+
+y
+
+Tabela 2.9: Disco de Cifragem de Alberti
+
+2.4 Disco de Cifra
+
+Tal nome se deve ao seu desenvolvedor, o arquiteto italiano Leone Battista Alberti, o
+qual foi considerado o pai da criptologia ocidental ([1]). Para se utilizar esse m´etodo
+´e necess´ario um disco.
+
+Deﬁni¸c˜ao 17. O disco de cifra ´e constitu´ıdo por dois discos concˆentricos e de raios
+diferentes. O disco maior ´e ﬁxo, e o menor m´ovel, conforme a ﬁgura 2.2.
+
+Dessa forma, tornou-se necess´ario que tanto o emissor quanto o receptor da men-
+sagem possu´ıssem os discos. A codiﬁca¸c˜ao ´e realizada de modo que o emissor escolhe
+uma letra chave do disco maior e a posicione e combine com uma letra qualquer do
+disco menor. Assim, a letra da mensagem, que est´a no disco maior ser´a substitu´ıda
+pela letra do disco menor. De forma an´aloga ser´a realizado em todas as outras letras
+da mensagem.
+
+Exemplo 18. Vamos descrever um m´etodo de cifragem utilizando o disco, lembrando
+que podemos ter varias formas de cifrar pois depender´a da escolha da posi¸c˜ao inicial
+do disco menor.
+
+Vamos cifrar a mensagem, “O traidor ´e o tenente”, vamos observar a tabela 2.9 que
+
+facilitar´a nossa cifragem.
+
+• Eliminando os espa¸cos e acentos obtemos: “Otraidoreotenente”
+
+• cifrando letra a letra temos: “ykocfmyodykdxdxkd”.
+
+• Para decodiﬁcar a mensagem o destinat´ario dever´a saber a posi¸c˜ao inicial para
+
+realizar a mesma.
+
+2.5 Cifras Poli-alfab´eticas
+
+Em 1518 Johannes Trithemius desenvolveu um m´etodo em seu livro Poligraﬁa, de
+cifras Poli-alfab´eticas que consiste em uma tabela quadrada. Essa tabela intitulou-
+se de Tabula recta. A tabula consiste na inser¸c˜ao do alfabeto completo na primeira
+
+24
+
+2.5 Cifras Poli-alfab´eticas
+
+Fig. 2.2: Disco de Cifra [5]
+
+linha e na primeira coluna. A partir de ent˜ao insere-se nas linhas e colunas restantes
+o alfabeto de modo circular conforme a ﬁgura 2.3. Um grande marco na hist´oria da
+criptograﬁa ´e dado quando o italiano Giovannni Battista Bellaso, introduz o conceito
+de chaves para se codiﬁcar e decodiﬁcar uma mensagem. Dessa forma, o m´etodo
+da tabula recta foi utilizado com palavras ou sequˆencia de letras ou frases para se
+decodiﬁcar uma informa¸c˜ao. O francˆes Blaise de Vigen`ere, em sua publica¸c˜ao, em
+1586, descreve o m´etodo de Belasso, o qual, acaba inapropriadamente chamado de
+sistema Vigen`ere. No entanto, o francˆes adicionou uma peculiaridade: a auto chave.
+A auto chave consiste de que o pr´oprio texto ´e usado como chave, ([1]). Os principais
+problemas desses sistemas s˜ao primeiramente que a codiﬁca¸c˜ao/decodiﬁca¸c˜ao dever´a
+ser realizada letra a letra, o que torna o processo bastante trabalhoso.
+
+Deﬁni¸c˜ao 19. Cifra Poli-alfab´etica ´e a utiliza¸c˜ao de v´arios alfabetos para cifrar
+uma mensagem, diﬁcultando assim a quebra da cifra atrav´es da an´alise de frequˆencia.
+
+A cifra de Vigen`ere utiliza v´arios alfabetos para codiﬁcar uma mensagem sendo
+necess´ario uma chave que combinada com o texto gera aleatoriamente um texto cifrado,
+assim conforme a ﬁgura 2.3, cada letra da mensagem a ser codiﬁcada observa-se a linha
+e cada letra da chave observa-se a coluna a intersec¸c˜ao entre a linha e a coluna ´e a
+letra cifrada.
+
+A cifra de Vigen`ere diﬁculta a quebra por analise de frequˆencia, ela ´e conhecida
+como polialfab´etica, pois utiliza v´arios alfabetos. Mas a frente ser´a apresentado uma
+atividade utilizando a cifra de Vigen`ere com aritm´etica modular.
+
+Exemplo 20. Vamos utilizar a tabela 2.3 para codiﬁcar a mensagem “O traidor ´e
+o tenente” e precisamos de uma chave que ser´a “O professor Daniel”, para facilitar
+a compreens˜ao vamos observar a tabela 2.10, assim observamos a tabela 2.3 letra
+correspondente da mensagem na linha e a letra correspondente na coluna, assim a
+intersec¸c˜ao ser´a a letra cifrada. Na codiﬁca¸c˜ao feita na tabela 2.10 observamos a letra
+“o” na linha e a letra “o” na coluna assim a intersec¸c˜ao ser´a a letra c, o mesmo acontece
+letra a letra.
+
+Al´em da cifra de Vigen`ere outra cifra ´e a homofˆonica esse m´etodo de cifragem, cada
+letra ´e substitu´ıda por v´arios substitutos, sendo proporcional a frequˆencia da letra.
+
+25
+
+2 Arte de ocultar
+
+mensagem o
+o
+c
+
+chave
+cifrado
+
+t
+p
+i
+
+r
+r
+i
+
+a
+o
+o
+
+i
+f
+n
+
+d
+e
+h
+
+o
+s
+g
+
+r
+s
+j
+
+e
+o
+s
+
+o
+r
+f
+
+e
+t
+a
+d
+w e
+
+n
+e
+n
+e
+i
+n
+a m r
+
+t
+l
+e
+
+e
+o
+s
+
+Tabela 2.10: Codiﬁca¸c˜ao Utilizando a Cifra de Vigen`ere
+
+Fig. 2.3: Cifra de Vigen`ere [7]
+
+26
+
+2.6 C´odigo
+
+Por exemplo, a letra “a” corresponde a 14, 63% de todas as letras que aparecem num
+texto em portuguˆes, logo este possuir´a quatorze s´ımbolos para represent´a-lo. Caso,
+por exemplo, a letra “e” 12, 57% corresponda de um texto em portuguˆes, este possuir´a
+doze s´ımbolos para represent´a-lo.
+
+2.6 C´odigo
+
+Deﬁni¸c˜ao 21. O c´odigo ´e um processo que consiste na substitui¸c˜ao de uma palavra
+ou frase, por um s´ımbolo, n´umero ou outra palavra pr´e ﬁxada.
+
+Na regi˜ao sudeste quando se joga truco, ( jogo de cartas), combina-se alguns sinais
+para representar as cartas, sem que o advers´ario descubra. Um outro exemplo cl´assico
+´e o c´odigo utilizado pelos policiais no radio ao transmitir uma placa para a central,
+cada letra corresponde a uma palavra ou seja N em uma placa o policial fala navio, M
+de macaco e assim por diante.
+
+2.7 Enigma
+
+Durante a segunda guerra mundial, as cifras ganharam destaques `as comunica¸c˜oes e
+sua quebra foi fundamental para a hist´oria mundial. Famosa m´aquina eletromecˆanica
+Enigma inventada pelo alem˜ao Arthur Scherbius e seu amigo Richard Ritter em 1918,
+fundadores da empresa Scherbius & Ritter. Como o sistema era complexo, os alem˜aes
+estavam convictos da seguran¸ca da troca de informa¸c˜oes. A grosso modo, o sistema
+desenvolvido era bem complexo e de acordo com [1] embaralhava as letras da mensa-
+gem original atrav´es de um circuito que era ajustado atrav´es de uma chave trocada
+diariamente. A m´aquina, possu´ıa trˆes elementos b´asicos ligados por ﬁos, sendo um
+mostrador contendo v´arias lˆampadas para indicar a letra cifrada, um teclado para a
+entrada das letras do texto original, uma unidade misturadora que cifra cada letra. A
+m´aquina enigma com trˆes misturadores possu´ıa 26 · 26 · 26 posi¸c˜oes iniciais para cada
+letra, mesmo uma pessoa com uma m´aquina enigma, ao interceptar uma mensagem,
+se n˜ao possu´ısse a disposi¸c˜ao inicial seria dif´ıcil decifrar.
+
+27
+
+2 Arte de ocultar
+
+28
+
+Fig. 2.4: M´aquina Enigma [6]
+
+3 Fundamentos da Teoria dos N´umeros
+
+Para o estudo matem´atico da criptograﬁa ´e fundamental o entendimento de certas
+propriedades da divis˜ao dos n´umeros.
+
+3.1 Divisibilidade
+
+Vamos estabelecer algumas propriedades para efetuar a divis˜ao de dois n´umeros no
+conjunto dos inteiros.
+
+Deﬁni¸c˜ao 22. Dados dois n´umeros a e b ∈ Z, diz-se que a divide b, e escreve-se a|b,
+quando existir q ∈ Z tal que b = a · q, nesse caso diremos tamb´em que a ´e um divisor
+e b ´e m´ultiplo de a, ent˜ao b ´e divis´ıvel por a.
+
+Ent˜ao podemos aﬁrmar que b ´e m´ultiplo de a, logo a ´e fator de b.
+
+Proposi¸c˜ao 23. Se a|b e b|c, ent˜ao a|c.
+
+Demonstra¸c˜ao. Se a|b e b|c, ent˜ao existem f e g ∈ Z, tais que b = a · f e c = b · g. O
+que implica que c = b · g = (a · f) · g = a · (f · g).
+
+Proposi¸c˜ao 24. Sejam a, b, c, e f n´umeros inteiros. Se a|b, com a (cid:54)= 0 ent˜ao a·c|b·c,
+qualquer que seja c.
+
+Demonstra¸c˜ao. Se a|b, ent˜ao existe um f ∈ Z tal que b = a · f. Pelo que, b · c =
+(a · f) · c = f · (a · c).
+
+Se a|b e b (cid:54)= 0, existe f ∈ Z e f (cid:54)= 0 tal que b = a · f. ent˜ao | b |=| a · f |(cid:62)| a |.
+
+Proposi¸c˜ao 25. Sejam a, b, e c n´umeros inteiros. Se a|b e a|c, ent˜ao a|(x · b + y · c),
+∀x e y∈ Z.
+
+Demonstra¸c˜ao. Se a|b e a|c, ent˜ao existem f e g ∈ Z tais que b = f · a e c = g · a. O
+que implica que x · b + y · c = x · f · a + y · g · a = (x · f + y · g) · a.
+
+Exemplo 26. Sendo a = 10, b = 20, c = 30, x = 2 e y = 3, assim 10 | 20 e 10 | 30
+ent˜ao 10 | (2 · 20 + 3 · 30).
+
+No conjunto dos n´umeros naturais incluindo o zero a divisibilidade ´e uma rela¸c˜ao de
+
+ordem:
+
+1. Reﬂexiva, ou seja qualquer que seja a∈ N a| a.
+
+2. Transitiva, a | b e b | c, assim a | c .
+
+3. Antissim´etrica, a | b e b | a, logo a = b.
+
+29
+
+3 Fundamentos da Teoria dos N´umeros
+
+J´a no conjunto dos inteiros a divisibilidade n˜ao ´e uma rela¸c˜ao de ordem, mesmo sendo
+reﬂexiva e transitiva ela n˜ao ´e antissim´etrica. Exempliﬁcando, temos 2 | −2 e −2 | 2
+mas 2 (cid:54)= −2.
+
+Proposi¸c˜ao 27. Sejam a e b ∈ Z. e n ∈ N Temos que a − b | an − bn.
+
+Demonstra¸c˜ao. Para fazer a prova utilizaremos o m´etodo de indu¸c˜ao.
+
+Para n = 1 temos a−b | a1 −b1que ´e verdadeira. Vamos admitir que a−b | an −bn
+
+´e verdadeira para para algum n ∈ N.
+
+Agora vamos mostrar para n + 1. Assim temos a − b | an+1 − bn+1→ a − b |
+a · an − b · an + b · an − b · bn= (a − b) · an + b · (an − bn), o que mostra que
+a − b | an+1 − bn+1 pois a − b | a − b e por hip´otese a − b | an − bn.
+
+Exemplo 28. Vamos mostrar que 10 | 11n − 1, ∀n ∈ N, utilizando a proposi¸c˜ao 27
+temos a − b | an − bn,observando temos a = 11 e b = 1, assim 11 − 1 | 11n − 1.
+
+Logo quando efetuamos uma divis˜ao possu´ımos dois n´umeros q e r , sendo q e r∈ N,
+chamamos ent˜ao q de quociente e r de resto, obtendo assim a = q · b + r. ´E importante
+deﬁnir a divis˜ao, pois mais a frente utilizaremos uma poderosa arma para solucionar
+grandes problemas somente olhando para o resto.
+
+Exemplo 29. A divis˜ao de 3 | 10 resulta em um q = 3 e r = 1, pois 10 = 3 · 3 + 1.
+
+3.2 M´aximo Divisor Comum
+
+Proposi¸c˜ao 30. Dados dois n´umeros n˜ao nulos m e n ∈ Z, se existir um n´umero
+p ∈ N que divide m e n dizemos que p ´e divisor comum.
+
+Demonstra¸c˜ao. p | n ent˜ao existe um k ∈ Z tal que n = p · k o mesmo acontece com
+p | m existe um j tal que m = j · p , assim p ´e divisor comum de m e n.
+
+Exemplo 31. ±1, ±2, ±3 ± 4 ± 6 ± 8, ±12, ±24 s˜ao os divisores comuns de 24 e 48.
+
+Deﬁni¸c˜ao 32. O m´aximo divisor comum, “m.d.c”, entre dois n´umeros inteiros a e b,
+sendo a ou b diferente de zero, ´e o maior elemento do conjunto dos divisores de a e b
+e ser´a representado por (a, b)
+
+Proposi¸c˜ao 33. Se a (cid:54)= 0 e d for um divisor comum de a e de b, ent˜ao |d| (cid:54) |a|
+e |d| (cid:54) |b| . Ent˜ao o conjunto d = (a, b) ´e limitado superiormente e deve ter um
+elemento m´aximo, ou seja, existe um divisor comum de a e b maior que todos os
+demais. Dessa maneira para b (cid:54)= 0, o conjunto d = (a, b) tamb´em tem um elemento
+m´aximo. Assim se d = (a, b) n˜ao ´e limitado superiormente ´e o conjunto d(0, 0), j´a
+que zero ´e m´ultiplo de qualquer inteiro n˜ao nulo.
+
+Demonstra¸c˜ao. Um inteiro, n˜ao negativo, d ´e o m´aximo divisor comum dos n´umeros
+inteiros a e b, se:
+
+• d | a e d | b (assim d ´e um divisor comum);
+
+• Seja c um divisor qualquer de a e b, logo c | a e c | b se c | d (assim, d ´e o maior
+
+dos divisores comuns).
+
+30
+
+3.3 Algoritmo Estendido de Euclides
+
+• Se d ´e um m.d.c de a e b e seja c ´e um divisor comum desses n´umeros, ent˜ao
+
+c < d. O que nos mostra que d ´e o m´aximo divisor comum de a e b.
+
+Exemplo 34. Qual ´e o m´aximo divisor comum entre 9 e 30?
+
+Sendo W o conjunto dos divisores de 9 e J o conjunto dos divisores de 30, temos
+W = {1, 3, 9} e J = {1, 3, 5, 6, 10, 15, 30}, observando os dois conjuntos temos que o
+m´aximo divisor comum de 9 e 30 ´e 3 , pois 3 ´e o maior n´umero que divide ao mesmo
+tempo 9 e 30.
+
+Proposi¸c˜ao 35. Seja d o m´aximo divisor comum de dois n´umeros, se existir ele ´e
+´unico.
+
+Demonstra¸c˜ao. Vamos supor por absurdo que exista dois valores para o m.d.c de a e
+b um d ´e um d (cid:48), pela deﬁni¸c˜ao temos que d ´e maior de todos logo d > d (cid:48), mas como
+d (cid:48) tamb´em ´e o m.d.c ﬁca que d (cid:48) > d, o que torna numa contradi¸c˜ao, ent˜ao d se existir
+´e ´unico.
+
+Exemplo 36. Os divisores de 8 s˜ao 1, 2, 4, 8 e os divisores de 16 s˜ao 1, 2, 4, 8, 16 assim
+o maior divisor comum entre 8 e 16 ´e 8, ent˜ao ele ´e ´unico.
+
+3.3 Algoritmo Estendido de Euclides
+
+Uma maneira f´acil e eﬁciente de encontrar o m´aximo divisor comum de dois n´umeros
+´e o algoritmo de Euclides, esse algoritmo ´e um dos mais antigos data por volta de 300
+a.c, est´a nos Livros VII e X de sua obra.
+
+Lema 37. (Euclides). Sejam a,b,n ∈ Z tais que a < na < b. Ent˜ao MDC(a, b) =
+MDC(a, b − na).
+
+Demonstra¸c˜ao. Seja d= MDC(a, b − na). Como d/a e d/(b − na), segue que d divide
+b e b = b − na + na. Assim d e divisor comum de a e b. Suponha agora que k seja
+um divisor comum de a e b, assim k ´e divisor de b − na consequentemente k/d. o que
+mostra que o MDC (a, b) ´e igual ao MDC (a, b − na).
+
+Teorema 38. [Teorema de Divis˜ao de Euclides] Sejam a e b inteiros positivos. Exis-
+tem n´umeros inteiros q e r tais que:
+
+a = b.q + r com 0 (cid:54) r < b
+
+Al´em disso, q e r s˜ao ´unicos.
+
+Demonstra¸c˜ao. Vamos supor por absurdo que a divis˜ao a por b resulta dois quocientes
+e dois restos diferentes q, q´, r, r´ pertencente aos naturais:
+
+a = b · q + r sendo 0 (cid:54) r < b
+
+a = b · q(cid:48) + r(cid:48) sendo 0 (cid:54) r(cid:48) < b
+
+Vamos subtrair 3.1 de 3.2, obtemos:
+
+r − r(cid:48) = b · (q(cid:48) − q)
+
+(3.1)
+
+(3.2)
+
+31
+
+3 Fundamentos da Teoria dos N´umeros
+
+mas 0 (cid:54) r, r(cid:48) < b e portanto 0 (cid:54) r − r(cid:48) < b. Ou seja,
+
+0 (cid:54) b · (q(cid:48) − q) < b
+
+Como b > 0, temos
+
+0 (cid:54) q − q(cid:48) < 1,
+
+ou seja, q − q(cid:48) = 0 → q = q(cid:48) e r = r(cid:48). O que ´e um absurdo, logo q e r s˜ao ´unicos.
+
+Algoritmo Estendido de Euclides
+
+Vamos apresentar a prova da existˆencia do m.d.c dada por Euclides.
+
+Demonstra¸c˜ao. Dados a, b ∈ N, vamos supor b (cid:54) a. se b = 1, ou a = b, e se b/a, o
+M.D.C(a; b) = a. Supondo que 1 < b < a e que b (cid:46) a, podemos escrever pela divis˜ao
+euclidiana
+
+a = b · q1 + r1,com 0 < r1 < b
+
+Temos duas possibilidades r1/b e r1 (cid:46) b:
+
+1. r1/b. Nesse caso temos que o M.D.C de (b, r1) =r1 e pelo lema 37 chegamos a
+
+conclus˜ao que:
+
+r1 = (b, r1) = (b, a − q1 · b) = (b, a) = (a, b),
+
+e assim ﬁnaliza-se o algoritmo.
+
+2. r1 (cid:46) b, assim quando efetuamos a divis˜ao obtemos um segundo resto, conforme a
+
+equa¸c˜ao abaixo:
+
+b = r1 · q2 + r2 sendo que 0 < r2 < r1.
+
+Assim obtemos duas novas possibilidades:
+
+• r2/r1. Nesse caso temos que o M.D.C de (r1, r2) =r2 e pelo lema 37 chegamos a
+
+conclus˜ao que:
+
+r2 = (r1, r2) = (r1, b − q2 · r1) = (r1, b) = (a − q1 · b, b) = (a, b)
+
+e assim ﬁnaliza-se o algoritmo.
+
+• r2 (cid:46) r1,assim quando efetuamos a divis˜ao obtemos um novo resto, conforme a
+
+equa¸c˜ao abaixo:
+
+r1 = r2 · q3 + r3 sendo que 0 < r3 < r2.
+
+Dessa maneira continuamos at´e que n˜ao possamos mais fazer a divis˜ao nos naturais.
+Podemos aﬁrmar, pois o princ´ıpio da boa ordena¸c˜ao nos garante que existe um menor
+elemento.
+
+32
+
+3.3 Algoritmo Estendido de Euclides
+
+q1 q2 q3
+r2
+r1
+b
+r4
+r3
+r2
+
+· · ·
+· · ·
+· · ·
+
+qn−1
+rn−2
+rn
+
+a
+r1
+
+qn
+rn−1
+
+qn+1
+rn = (a, b)
+
+Tabela 3.1: Algoritmo Estendido de Euclides- Procedimento.
+
+Exemplo 39. Determinar, pelo Algoritmo de Euclides, o MDC entre 355 e 2450.
+
+Primeiro passo ser´a colocar os dois n´umeros na segunda linha, primeira coluna o
+
+maior n´umero e na segunda coluna o menor n´umero.
+
+2450
+
+355
+
+Segundo passo ser´a fazer a divis˜ao do menor pelo maior e colocar o resto abaixo do
+
+maior n´umero e o quociente em cima do menor n´umero.
+
+1
+
+6
+355
+
+2450
+320
+
+Terceiro passo ser´a observar o resto, como o resto n˜ao ´e zero copiamos este resto
+
+“320” ao lado do 355 e repetimos o processo anterior.
+
+1
+320
+
+6
+355
+35
+
+2450
+320
+
+Quarto passo , como o resto ainda n˜ao ´e zero repetimos a divis˜ao novamente.
+
+6
+355
+35
+
+1
+320
+5
+
+9
+35
+
+2450
+320
+
+Quinto passo , como o resto ainda n˜ao ´e zero repetimos a divis˜ao novamente.
+
+6
+355
+35
+
+1
+320
+5
+
+9
+35
+0
+
+7
+5
+
+2450
+320
+
+Como o resto ´e 0 terminamos nossa divis˜ao dessa forma temos que o m.d.c de
+
+(2450, 355) = 5.
+
+O algoritmo de Euclides resulta em algumas equa¸c˜oes, vejamos:
+5 = 320 − 9 · 35
+35 = 355 − 1 · 320
+320 = 2450 − 6 · 355
+Substituindo uma equa¸c˜ao na outra obtemos:
+5 = 320 − 9 · 35 = 320 − 9 · (355 − 1 · 320) = 10 · 320 − 9 · 355 = 10 · (2450 − 6 · 355) −
+
+9 · 355 = 10 · 2450 − 69 · 355.
+
+33
+
+3 Fundamentos da Teoria dos N´umeros
+
+2
+13
+31
+53
+73
+
+3
+17
+37
+59
+79
+
+5
+19
+41
+61
+83
+
+7
+23
+43
+67
+89
+
+11
+29
+47
+71
+97
+
+Tabela 3.2: Primeiros N´umeros Primos.
+
+Que resulta em:
+5 = 10 · 2450 − 69 · 355 = (2450, 355), observamos que utilizando o algoritmo de
+Euclides conseguimos encontrar o m.d.c. Essa ultima equa¸c˜ao ´e uma representa¸c˜ao do
+algoritmo estendido de Euclides, pois quando escrevemos o m.d.c de (a, b) na forma
+a · k + b · j = (a, b), com k e j∈ Z.
+
+3.4 N´umeros Primos
+
+Deﬁni¸c˜ao 40. Um n´umero natural p ´e primo se e somente se possui apenas dois
+divisores 1 e p.
+
+Quando um n´umero possui mais de dois divisores ele ´e chamado de composto. Todo
+
+n´umero composto pode ser escrito como uma multiplica¸c˜ao de fatores primos.
+
+Teorema 41. Existem inﬁnitos n´umeros primos.
+
+Demonstra¸c˜ao. (livro de Euclides)
+
+Suponha por absurdo, que existem uma quantidade ﬁnita de n´umeros primos, que
+chamaremos de p1, p2, . . . , pn. Vamos considerar o n´umero N = p1p2 · · · pn + 1. O
+n´umero N n˜ao ´e divis´ıvel por nenhum dos n´umeros p1, p2, ..., pn (o resto da divis˜ao
+´e sempre 1). Logo, N ´e primo. Isto contradiz a nossa hip´otese inicial de que existem
+somente n n´umeros primos e portanto existem inﬁnitos n´umeros primos.
+
+Exemplo 42. Conforme a tabela 3.2 temos os primeiros vinte cinco n´umeros primos.
+
+Proposi¸c˜ao 43. Entre um n´umero n, e seu dobro existe pelo menos um n´umero primo,
+sendo n (cid:54)= 1 ∈ N.
+
+Demonstra¸c˜ao. Suponha que n = p1·p2·p . . . pk , sabemos que, j = p1..p2.p3. · · · .pk+1
+´e primo, mas dobro de n ´e 2n = 2(p1 · p2 · · · · · pK) , e j < 2n.
+
+j < 2n, pois j = n + 1 e n + 1 < 2n; dividindo ambos os lados por n temos;
+
+• n+1
+
+n < 2n
+
+n
+
+• 1 + 1
+
+n < 2, para qualquer valor de n > 1.
+
+Exemplo 44. Entre 20 e 40 como 20 = 2 · 2 · 5 logo pela proposi¸c˜ao 43 temos 2 · 3 · 5 + 1
+´e primo ou seja 31 , o que veriﬁca que entre um n´umero e seu dobro existe pelo menos
+um primo.
+
+34
+
+3.4 N´umeros Primos
+
+1
+9
+4
+
+1
+5
+1
+
+1
+4
+0
+
+4
+1
+
+14
+5
+
+Tabela 3.3: Algoritmo Estendido de Euclides( Exemplo)
+
+Deﬁni¸c˜ao 45. Dado que o m.d.c de dois n´umeros (a, b) = 1, dizemos que a e b s˜ao
+primos entre si ou seja coprimos.
+
+Teorema 46. (Teorema de B´ezout) Seja d = (a, b) assim podemos escrever utilizando
+o algoritmo estendido de Euclides a seguinte equa¸c˜ao x · a + y · b = d sendo x e y ∈ Z.
+
+Demonstra¸c˜ao. Vamos considerar o conjunto c de todas as combina¸c˜oes lineares de
+(a · x + b · y) e n = a · x0 + b · y0, sendo n o menor elemento natural de c.
+
+Suponha por absurdo que seja imposs´ıvel escrever n (cid:46) a ent˜ao temos a = n · q + r,
+sendo 0 < r < n,o que implica que r = a − n · q → r = a − (a · x0 + b · y0) · q → r =
+a · (1 − x0 · q) − b · y0 · q. Logo sabemos que r ´e uma combina¸c˜ao linear de (a · x + b · y),
+o que um absurdo pois r < n e n ´e o menor elemento. Assim n/a e analogamente n/b,
+assim n ´e divisor comum de a e b. Resta mostrar que n = d, como d ´e o M.D.C de a
+e b temos que d/a e d/b assim podemos escrever a = d · q1e b = d · q2 e substituindo
+na equa¸c˜ao n = a · x0 + b · y0 → n =(d · q1) · x0 + (d · q2) · y0 → n = d · (q1 · x0 + q2 · y0),
+assim temos que d/n logo d (cid:54) n, mas d ´e o m´aximo divisor comum ou seja d = n.
+
+Lema 47. (Gauss) Se a, b e m ∈ Z. Dessa forma se m|a · b e (a, m) = 1 ent˜ao m|b
+
+Demonstra¸c˜ao. Se m divide o produto de a por b, logo existe k ∈ Z tal que k·m = a·b
+e se (a, m) = 1 sabemos ent˜ao pelo teorema 46 que existem um i e j ∈ Z tais que
+
+i · a + j · m = 1
+
+Multiplicando ambos os lados por b obteremos a seguinte equa¸c˜ao
+
+b · i · a + b · j · m = b · 1
+
+e como k · m = a · b, substituindo a · b por k · m temos
+
+k · m · i + b · j · m = b · 1 → m · (i · k + b · j) = b
+
+o que mostra que m/b.
+
+Exemplo 48. (14, 9) = 1 utilizando o algoritmo estendido de Euclides temos
+
+logo
+1 = 5 − 4 · 1
+4 = 9 − 5 · 1
+5 = 14 − 9 · 1,
+ent˜ao temos : 1 = 5 − 4 · 1 = 5 − 1 · (9 − 5 · 1) = 2 · 5 − 9 = 2 · (14 − 9 · 1) − 9 =
+
+2 · 14 − 3 · 9 = 1
+
+35
+
+3 Fundamentos da Teoria dos N´umeros
+
+3.4.1 O Crivo de Erat´ostenes
+
+Erat´ostenes (a.c. 285-194 a.C.) nasceu em Cyrene estudou ﬁlosoﬁa, foi diretor da
+biblioteca de Alexandria, muito estudioso e ex´ımio matem´atico, geografo, historiador,
+ﬁlosofo e poeta, conhecido por calcular a circunferˆencia da terra.
+
+Deﬁni¸c˜ao 49. Uma tabela que cont´em os n´umeros naturais de dois at´en, ent˜ao marca-
+se o primeiro n´umero 2 e criva-se seus m´ultiplos, assim o n´umero 2 ´e primo, o pr´oximo
+n´umero que n˜ao foi crivado ´e primo que ´e o 3, assim ele procede-se da mesma forma
+at´e restarem somente primos na tabela.
+
+Esse m´etodo ´e bom at´e um certo valor, ap´os ele se torna invi´avel, como qualquer
+
+m´etodo de for¸ca bruta.
+
+Teorema 50. Seja n um n´umero composto, ent˜ao n possui um ou mais divisores
+primos, tal que qualquer que seja o primo ´e sempre menor ou igual que a raiz quadrada
+do pr´oprio n´umero.
+
+Demonstra¸c˜ao. Se n ´e composto logo n = a.p sendo p primo e a ∈ N dessa maneira
+0 < a < n e 0 < p < n . Vamos supor que p (cid:54) a, suponhamos tamb´em por absurdo
+n, mas se n = a.p, como a (cid:54) p podemos ent˜ao trocar a e p por
+que p >
+n , assim
+n = n, logo ´e um absurdo n > n, portanto p (cid:54)
+n.
+1524ˆ{50}n = a.p >
+
+√
+√
+
+n.
+
+√
+
+√
+
+√
+
+Exemplo 51. Vamos determinar os n´umeros primos entre 1 e 55.
+
+Determina-se o maior n´umero a ser checado. Ele corresponde `a raiz quadrada do
+valor limite, arredondado para baixo. No caso, a raiz de 55, arredondada para baixo,
+´e 7.
+
+Vamos construir uma tabela com os n´umeros at´e 55
+
+# 2
+10
+9
+18
+17
+26
+25
+34
+33
+42
+41
+50
+49
+
+3
+11
+19
+27
+35
+43
+51
+
+4
+12
+20
+28
+36
+44
+52
+
+5
+13
+21
+29
+37
+45
+53
+
+6
+14
+22
+30
+38
+46
+54
+
+8
+7
+16
+15
+24
+23
+32
+31
+40
+39
+47
+48
+55 #
+
+Encontre o primeiro n´umero da lista. Ele ´e um n´umero primo, 2. Remova da lista
+
+todos os m´ultiplos do n´umero primo encontrado.
+
+# 2
+3 # 5 # 7
+9 # 11 # 13 # 15
+17 # 19 # 21 # 23
+25 # 27 # 29 # 31
+33 # 35 # 37 # 39
+41 # 43 # 45 # 47
+49 # 51 # 53 # 55
+
+O pr´oximo n´umero da lista ´e primo que ´e o n´umero trˆes, vamos repetir o procedi-
+
+mento.
+
+36
+
+3.5 Teorema Fundamental da Aritm´etica
+
+# 2
+3 # 5 # 7
+# # 11 # 13 # #
+17 # 19 # # # 23
+25 # # # 29 # 31
+# # 35 # 37 # #
+41 # 43 # # # 47
+49 # # # 53 # 55
+
+O pr´oximo n´umero da lista ´e primo que ´e o n´umero cinco, vamos repetir o procedi-
+
+mento.
+
+3 # 5 # 7
+# 2
+# # 11 # 13 # #
+17 # 19 # # # 23
+# # # # 29 # 31
+# # # # 37 # #
+41 # 43 # # # 47
+49 # # # 53 # #
+
+O pr´oximo n´umero da lista ´e primo que ´e o n´umero sete, vamos repetir o procedi-
+
+mento, que o ultimo n´umero a ser checado.
+
+3 # 5 # 7
+# 2
+# # 11 # 13 # #
+17 # 19 # # # 23
+# # # # 29 # 31
+# # # # 37 # #
+41 # 43 # # # 47
+# # # # 53 # #
+
+3.5 Teorema Fundamental da Aritm´etica
+
+Nesta sec¸c˜ao iremos explanar sobre a composi¸c˜ao dos n´umeros.
+
+Corol´ario 52. Se p1,p2 · · · pn s˜ao n´umeros primos e, se p/p1·p2 · · · pn, assim p = pi,
+para algum i sendo i = 1, 2 · · · , n.
+
+Teorema 53. Todo n´umero natural maior do que 1 ou ´e primo ou se escreve de modo
+´unico (a menos da ordem dos fatores) como um produto de n´umeros primos.
+
+Demonstra¸c˜ao. Vamos utilizar indu¸c˜ao para fazer a prova. Seja n = 2 o resultado ´e
+imediato.
+
+Suponhamos quer seja valido para qualquer n´umero menor que n.Vamos mostrar
+
+que o resultado ´e valido para n.
+
+Se n ´e primo nada temos a demonstrar. Se n ´e composto, logo temos dois n´umeros
+
+naturais n1e n2, tais que n = n1 · n2, sendo que 1 < n1 < n e1 < n2 < n .
+
+Pela hip´otese de indu¸c˜ao, existem n´umeros primos n1 = p1, ..., pr, n2 = q1 · · · qs,
+assim n = p1, ..., pr · q1 · · · qs. Vamos mostrar que existe somente uma forma de
+escrever ou seja a unicidade da escrita de n.
+
+37
+
+3 Fundamentos da Teoria dos N´umeros
+
+Suponha, agora, que n = p1, ..., pr=q1 · · · qs, aonde pi e qs s˜ao n´umeros primos.
+Como p/q1 · · · qs,, pelo corol´ario 52, temos que p1 = pj para algum j, que, ap´os
+reordenamento deqi, ..., qs, supomos que seja q1,assim: p1, ..., pr=q1 · · · qs. Como
+p1 · · · pr ¡ n, a hip´otese de indu¸c˜ao acarreta que r = s e os pi e qj s˜ao iguais aos
+pares.
+
+3.6 Pequeno Teorema de Fermat
+
+Lema 54. Seja p um n´umero primo. Os n´umeros da forma (cid:0) p
+i
+todos divis´ıveis por p.
+
+(cid:1), onde 0 < i < p, s˜ao
+
+Demonstra¸c˜ao. O resultado vale para i = 1. Vamos supor para 1 < i < p. Assim
+i!/p · (p − 1) · · · (p − i + 1), Como (i!, p) = l, dessa maneira i!/(p − 1) · · · (p − i + 1),
+logo (cid:0) p
+i
+
+(cid:1)= i!/p · (p − 1) · · · (p − i + 1).
+
+Teorema 55. (Pequeno Teorema de Fermat). Seja um n´umero primop, tem-se
+que p divide o n´umero ap—a, para todo a ∈ N.
+
+Demonstra¸c˜ao. Vamos mostrar por indu¸c˜ao, seja a = 0, logo 0p−0
+p/ .
+
+p , o que mostra pois
+
+Agora vamos mostrar para a + 1,utilizando a f´ormula do binˆomio de Newton,
+
+3.7 Aritm´etica Modular
+
+Aritm´etica modular ou aritm´etica dos restos ou ainda aritm´etica do rel´ogio, inicial-
+mente criada por Euler em 1750 e posteriormente introduzida por Gauss no seu livro
+Disquisitiones arithmeticae em 1801. A seguir discorreremos uma pequena parte da
+aritm´etica modular, para utilizarmos nas aplica¸c˜oes em sala de aula.
+
+Proposi¸c˜ao 56. Dois inteiros p e q s˜ao congruentes modulo m com m ∈ Z, m > 1
+se, e somente se, p − q for divis´ıvel por m e representamos p ≡ q mod m.
+
+Demonstra¸c˜ao. Suponhamos sem perda de generalidade que p > q, assim podemos
+escrever p = m · a + r1 e q = m · b + r2, com a, b ∈ N e com 0 (cid:54) r1 < m e 0 (cid:54) r2 < m,
+mas p − q = m · (a − b) + (r1 − r2), logo para ser congruente temos que ter r1 = r2, o
+que implica m divide p − q.
+
+Exemplo 57. Seja 8 ≡ 10 mod 2, ou seja 10 − 8 ´e divis´ıvel por 2.
+
+3.7.1 Propriedades
+
+O conjunto dos inteiros Z modulo m, ´e fechado para as opera¸c˜oes de multiplica¸c˜ao e
+soma.
+
+Consideremos {a, b, c}⊂ Z, as propriedades a seguir fazem uma rela¸c˜ao de equi-
+valˆencia da congruˆencia modulo m. Se e somente se cada n´umero inteiro corresponde
+a somente um dos restos da divis˜ao euclidiana por m, consequentemente torna o con-
+junto inﬁnito Z ao conjunto ﬁnito Zm = 0, 1, 2, 3, ......m − 1.
+
+Proposi¸c˜ao 58. Temos algumas propriedades como:
+
+38
+
+3.7 Aritm´etica Modular
+
+• Reﬂexiva: a ≡a mod m
+
+• Sim´etrica: a ≡ b mod m ⇐⇒ b ≡a mod m
+
+• Transitiva ou seja a ≡ b mod m, b ≡ c mod m → a ≡ c mod m.
+
+Iremos proceder a prova da propriedade transitiva, a reﬂexiva e a sim´etrica ﬁca a
+crit´erio do leitor.
+
+Demonstra¸c˜ao. a ≡ b mod m, b − a ´e divis´ıvel por m, assim temos b − a= m · q1→
+b = a + m · q1
+
+b ≡ c mod m, c − b ´e divis´ıvel por m, assim temos c − b= m · q2.
+Substituindo uma equa¸c˜ao na outra temos c − a − m · q1= m · q2→ (c − a) =
+
+m (q2 + q1), o que mostra que (c − a) ´e divis´ıvel por m.
+
+Exemplo 59. Dado 32 ≡ 38 mod 6 e 38 ≡ 26 mod 6 → 32 ≡ 26 mod 6.
+
+Proposi¸c˜ao 60. Se a ≡ b mod m e c ≡ d mod m ent˜ao (a + c) ≡(b + d) mod
+m.
+
+Demonstra¸c˜ao. Vamos supor sem perda de generalidade, que b (cid:62) a e d (cid:62) c.
+a ≡ b mod m, b − a ´e divis´ıvel por m, assim temos b − a= m · q1.
+c ≡ d mod m, c − d ´e divis´ıvel por m, assim temos d − c= m · q2.
+Somando ambas as equa¸c˜oes temos (b − a) + (d − c) = m · (q2 + q1) → (b + d) −
+
+(a + c) = m · (q2 + q1), ou seja (b + d) − (a + c) ´e divis´ıvel por m.
+
+Exemplo 61. Dado 7 ≡ 9 mod 2 e 11 ≡ 13 mod 2, logo temos que 7 + 11 ≡ 9 + 13
+mod 2, ou seja 18 e 22 deixam o mesmo resto quando dividido por ,2.
+
+Proposi¸c˜ao 62. Se a ≡ b mod m e c ≡ d mod m, ent˜ao (a − c) ≡ (b − d) mod
+m.
+
+Demonstra¸c˜ao. Suponhamos sem perda de generalidade que b (cid:62) a e d (cid:62) c, sabemos
+que b − a e d − c ´e divis´ıvel por m, logo:
+
+b − a = m · r1
+d − c = m · r2
+Subtraindo ambas as equa¸c˜oes temos:
+(b − a) − (d − c) = m · r1 − m · r2
+b − a − d + c = m · (r1 − r2)
+(b − d) − (a − c) = m · (r1 − r2)
+Dessa maneira temos que (b − d) − (a − c)´e divis´ıvel por m.
+
+Exemplo 63. Dado 10 ≡ 15 mod 5 e 25 ≡ 30 mod 5 ent˜ao pela prova anterior
+temos que (15 − 10) − (30 − 25) ´e divis´ıvel por 5, que ´e verdadeiro pois (15 − 10) −
+(30 − 25) = 5 − 5 = 0.
+
+Proposi¸c˜ao 64. Se a ≡ b mod m e c ≡ d mod , ent˜ao a · c ≡ b · d mod m.
+
+39
+
+3 Fundamentos da Teoria dos N´umeros
+
+Demonstra¸c˜ao. Suponhamos sem perda de generalidade que b (cid:62) a e d (cid:62) c, sabemos
+que b − a e d − c ´e divis´ıvel por m, logo:
+
+b − a = m · r1
+d − c = m · r2
+Vamos multiplicar b − a = m · r1 por d , assim teremos d · (b − a) = d · (m · r1) e
+vamos tamb´em multiplicar d − c = m · r2 por a , assim teremos a · (d − c) = a · (m · r2),
+somando as duas novas express˜oes temos:
+
+[d · (b − a)] + [a · (d − c)] = [a · (m · r2)] + [d · (m · r1)]
+d · b − d · a + a · d − a · c =a·(m · r2) + d · (m · r1)
+d·b−a·c = m·(a · r2 + d · r1), o que mostra que a·c ≡ b·d mod m ´e verdadeiro.
+
+Exemplo 65. Dado 10 ≡ 15 mod 5 e 25 ≡ 30 mod 5, 10 · 25 ≡ 15 · 30 mod 5
+que resulta em (15 · 30) − (25 · 10) = 450 − 250 = 200 e 200/5 = 40.
+
+Dessa maneira podemos entender que o resto da divis˜ao deixado pelo produto de
+dois n´umeros, quando dividido por m, ´e fornecido pelo resto do produto dos restos
+deixados por esses mesmos n´umeros quando dividido por m.
+
+Proposi¸c˜ao 66. Se a ≡ b mod m, temos que an ≡ bn mod m.
+
+Demonstra¸c˜ao. Vamos considerar n congruˆencias a ≡ b mod m:
+
+a ≡ b mod m
+a ≡ b mod m
+a ≡ b mod m
+· · ·
+· · ·
+a ≡ b mod m
+Multiplicando todas as congruˆencias temos:
+a · a · · · · · a≡ b · b · · · · · b mod m= an ≡ bn mod m
+
+Exemplo 67. Dado que 10 ≡ 20 mod 2 ent˜ao 102 ≡ 202 mod 2, pois 100/2 deixa
+resto 0 e 400/2 tamb´em deixa resto 0.
+
+Dessa maneira podemos entender que o resto da divis˜ao deixado pela potˆencia de n
+de um n´umero, quando dividido por m, ´e fornecido pelo resto da divis˜ao do n´umero
+por m,elevado a n.
+
+Exemplo 68. Vejamos a express˜ao (cid:0)63251 · 36562 + 256234(cid:1), ao ser dividida por 2
+deixa que resto?
+
+63251 ≡ 1 mod 2
+36562 ≡ 0 mod 2
+25623 ≡ 1 mod 2
+Dessa maneira temos (cid:0)1 · 0 + 14(cid:1) = 0 + 1 = 1
+
+Proposi¸c˜ao 69. Para qualquer que seja a, b, c ∈ Z valem as seguintes propriedades:
+
+1. a ± b ≡ mod m = [(a mod m) · (b mod m)] mod m;
+
+2. ab ≡ mod m = [(a mod m) · (b mod m)] mod m;
+
+40
+
+3.7 Aritm´etica Modular
+
+2
+1
+
+1
+3
+1
+
+1
+2
+0
+
+5
+2
+
+Tabela 3.4: Algor´ıtimo Estendido de Euclides ( Aplica¸c˜ao).
+
+Exemplo 70. Desenvolvendo a express˜ao a seguir obtemos:
+
+(36 · 8 + 54 · 54 − 15) mod 7.
+= 36 mod 7·8 mod 7+54 mod 7·54 mod 7−15 mod 7
+= (1 · 1 + 5 · 2 − 1) mod 7
+= 10 mod 7
+= 3
+
+3.7.2 Equa¸c˜oes Modulares
+
+Nesta subse¸c˜ao iremos explanar um pouco sobre resolu¸c˜oes de equa¸c˜oes modulares
+
+Proposi¸c˜ao 71. Uma equa¸c˜ao modular do tipo ax + b ≡ k mod m, tem solu¸c˜ao se
+e somente se existe solu¸c˜ao se mdc de (a, m) = 1,ou seja existe um inverso para a,
+ainda existe solu¸c˜ao se (a, m) > 1 = j, j/k − b.
+
+Exemplo 72. Vamos resolver a equa¸c˜ao 5x − 11 ≡ 8 mod 3
+
+Como (5, 3) = 1, a equa¸c˜ao tem solu¸c˜ao.
+5x ≡ 11 + 8 mod 3
+5x ≡ 19 mod 3
+5x ≡ 1 mod 3
+x ≡ 1 · 5−1 mod 3
+Vamos determinar o inverso de 5−1 mod 152450 3
+Observando a tabela 3.4 temos:
+
+1 = 3 − 2 · 1
+
+2 = 5 − 3 · 1
+
+(3.3)
+
+(3.4)
+
+Assim substituindo 3.4 na 3.3 teremos:
+1 = 3 − (5 − 3 · 1) · 1
+1 = 2 · 3 − 1 · 5
+Aplicando o m´odulo temos :
+2 · 3 mod 3 + (−1 · 5) mod 3= 1
+0+(−1 · 5) mod 3= 1→ 5−1 = −1 ≡ 5 mod 3, logo o inverso de 5−1 mod 3 ´e
+
+pr´oprio 5.
+
+Portanto a solu¸c˜ao ´e: X ≡ 1 · 5−1 mod 3 → 1 · 5 mod 3, ent˜ao x = 5 + 3 · k sendo
+
+k ∈ Z
+
+41
+
+3 Fundamentos da Teoria dos N´umeros
+
+3.8 Crit´erios de Divisibilidade.
+
+Esse assunto ´e tratado nas escolas de ensino fundamental como um conjunto de re-
+gras, tornando f´acil a vida do professor e indiscutivelmente sem fundamentos para os
+alunos. Dessa maneira vamos mostrar alguns crit´erios de divisibilidade utilizando as
+congruˆencias, tornando f´acil a vida dos professores.
+
+Para todas as demonstra¸c˜oes iremos utilizar um n´umero com n algarismos, decom-
+
+posto da seguinte forma: N = an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0
+
+Proposi¸c˜ao 73. Todo n´umero ´e divis´ıvel por 2 se e somente se o ultimo algarismo
+for par.
+
+Demonstra¸c˜ao. Sabemos que 10 = 5 · 2
+
+Seja N = an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0, assim
+2·(cid:0)an−1 · 5n−1 · 2n−2 + an−2 · 5n−2 · 2n−3 + · · · + a1 · 51 · 20(cid:1)+a0 ≡ 0 mod 2←→
+
+a0 for divis´ıvel por 2. ou seja a0 tem que ser par.
+
+Exemplo 74. Determine o resto da divis˜ao de 120250por 2.
+
+Como 1202 deixa resto 0, na divis˜ao por 2, temos
+1202 ≡ 0 mod 2
+120250 ≡ 050 mod 2, ou seja deixa resto 0 na divis˜ao .
+
+Exemplo 75. Determine o resto da divis˜ao de 120150por 2.
+
+Como 1201 deixa resto 1, na divis˜ao por 2, temos
+1201 ≡ 1 mod 2
+120150 ≡ 150 mod 2, ou seja deixa resto 1 na divis˜ao . Dessa forma qualquer n´umero
+
+dividido por 2 deixa dois poss´ıveis resto 0 e 1.
+
+Proposi¸c˜ao 76. Todo n´umero ´e divis´ıvel por 3 se e somente se a soma de todos os
+algarismos for divis´ıvel por 3 .
+
+Demonstra¸c˜ao. Seja N = an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0 e temos das
+congruˆencias que :
+
+10 ≡ 1 mod 3 ; 102 ≡ 12 mod 3 ; 103 ≡ 13 mod 3 ; · · · 10n ≡ 1n mod 3.
+an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0 ≡ x mod 3, logo podemos substituir
+
+as congruˆencias acima.
+
+an−1 · 1n−1 + an−2·1n−2 + · · · + a1 · 11 + a0 ≡ x mod 3
+an−1 + an−2+ · · · + a1 · +a0 ≡ x mod 3, assim para veriﬁcar se um n´umero ´e
+divis´ıvel por 3 temos que somar seus algarismos e veriﬁcar se essa soma ´e divis´ıvel por
+3.
+
+Exemplo 77. Vamos veriﬁcar se 1524 ´e divis´ıvel por 3.
+
+1523 = 1000 + 500 + 20 + 4
+1 · 103 + 5 · 102 + 2 · 10 + 4,
+10 = 1 mod 3, temos que:
+1 · 13 + 5 · 1 + 2 · 1 + 4 ≡ x mod 3
+1 + 5 + 2 + 4 ≡ x mod 3
+12 ≡ x mod 3
+ou seja x = 0, pois 12 ´e divis´ıvel por 3, logo 1524 ´e divis´ıvel por 3.
+
+42
+
+3.8 Crit´erios de Divisibilidade.
+
+Exemplo 78. Determine o resto da divis˜ao de 152450por 3.
+
+1524 ≡ 0 mod 3
+152450 ≡ 050 mod 3
+logo deixa resto 0 na divis˜ao por 3.
+
+Exemplo 79. Determine o resto da divis˜ao de 152330por 3.
+
+1523 ≡ x mod 3
+1 + 5 + 2 + 3 ≡ x mod 3
+11 ≡ x mod 3 → x = 2 ,
+152330 ≡ 230 mod 3, mas 24 = 16 ≡ 1 mod 3 e 230 = 24 · 24 · 24 · 24 · 24 · 24 · 24.22
+como 24 = 16 ≡ 1 mod 3→230 = 1 · 1 · 1 · 1 · 1 · 1 · 1.22 ≡ y mod 3
+22 ≡ y mod 3→4 ≡ y mod 3 → 1 = y, logo o resto da divis˜ao ´e 1.
+
+Proposi¸c˜ao 80. Todo n´umero ´e divis´ıvel por 5 se termina em 0 ou 5.
+
+Demonstra¸c˜ao. Seja N = an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0 e temos das
+congruˆencias que :
+
+5 ≡ 0 mod 5 ; 0 ≡ 0 mod 5 ; 10 ≡ 0 mod 5 ; 102 ≡ 02 mod 5 ; 103 ≡ 03 mod 5 ;
+
+· · · 10n ≡ 0n mod 5.
+
+an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0 ≡ x mod 5, logo podemos substituir
+
+as congruˆencias acima.
+
+an−1 · 0n−1 + an−2·0 + · · · + a1 · 01 + a0 ≡ x mod 5
+ou seja devemos observar somente o ultimo algarismo a0.
+
+Exemplo 81. Veriﬁcar se 152320 − 42615 ´e divis´ıvel por 5.
+
+1523 ≡ 3 mod 5
+34 ≡ 1 mod 5
+Ent˜ao 152320 ≡ 320 mod 5→ 320 = 34 · 34 · 34 · 34 · 34 ≡ 1 · 1 · 1 · 1 · 1 mod 5
+logo 152320 ≡ 1 mod 5
+Agora vamos veriﬁcar a segunda parcela
+426 ≡ 1 mod 5
+42615 ≡ 115 mod 5
+Dessa maneira temos que:
+152320 − 42615 ≡ 1 − 1 mod 5
+Assim 152320 − 42615 ´e divis´ıvel por 5.
+
+Proposi¸c˜ao 82. Todo n´umero ´e divis´ıvel por 11 se e somente se o algarismo da uni-
+dade somado ao d´ecuplo dos algarismos da ordem ´ımpar e somado com os algarismos
+da ordem par o for.
+
+Demonstra¸c˜ao. Seja N = an−1 · 10n−1 + an−2·10n−2 + · · · + a1 · 101 + a0 e temos das
+congruˆencias que :
+
+a0 · 100 ≡ 1 · a0 mod 11 ;
+a1 · 101 ≡ 10 · a1 mod 11 ; ou a1 · 101 ≡ −1 · a1 mod 11 ;
+a2 · 102 ≡ 1 · a2 mod 11 ; ou a2 · 102 ≡ −10 · a2 mod 11 ;
+a3 · 103 ≡ 10 · a3 mod 11 ; ou a3 · 103 ≡ −1 · a3 mod 11 ;
+a4 · 104 ≡ 1 · a4 mod 11 ; ou a4 · 104 ≡ −10 · a4 mod 11 ;
+a5 · 105 ≡ 10 · a5 mod 11 ; ou a5 · 105 ≡ −1 · a5 mod 11 ;
+a6 · 106 ≡ 1 · a6 mod 11 ; ou a6 · 106 ≡ −10 · a6 mod 11 ;
+
+43
+
+3 Fundamentos da Teoria dos N´umeros
+
+a7 · 107 ≡ 10 · a7 mod 11 ; ou a7 · 107 ≡ −1 · a7 mod 11 ;
+a8 · 108 ≡ 1 · a8 mod 11 ; ou a8 · 108 ≡ −10 · a8 mod 11 ;
+a9 · 109 ≡ 10 · a9 mod 11 ; ou a9 · 109 ≡ −1 · a9 mod 11 ;
+a10 · 1010 ≡ 1 · a10 mod 11 ; ou a10 · 1010 ≡ −10 · a10 mod 11 ;
+Assim temos : a0 + (a2 + a4 + a6 + · · · ) + 10 · (a1 + a3 + a5 + · · · )for divis´ıvel por
+
+11.
+
+Exemplo 83. Vamos veriﬁcar se 649 ´e divis´ıvel por 11, utilizando o crit´erio de divi-
+sibilidade.
+
+Logo pelo crit´erio encontrado temos: 9 + 10 · (4) + 6 = 9 + 40 + 6 = 55 , como 55 ´e
+
+divis´ıvel por 11 temos que 649 ´e divis´ıvel por 11.
+
+Exemplo 84. Vamos veriﬁcar se 78510 − 1 ´e divis´ıvel por 11, utilizando congruˆencia.
+Logo pelo crit´erio encontrado temos: 5 + 10 · (8) + 7 = 5 + 80 + 7 = 92 , logo 785
+
+n˜ao ´e divis´ıvel por 11.
+
+Sabemos que 785 ≡ 4 mod 11
+78510 ≡ 410 mod 11
+42 ≡ 5 mod 11
+(cid:0)42(cid:1)5 ≡ 55 mod 11
+52 ≡ 3 mod 11
+53 ≡ 4 mod 11
+53 · 52 ≡ 4 · 3 mod 11
+55 ≡ 12 mod 11
+12 ≡ 1 mod 11
+logo 78510 ≡ 1 mod 11,
+78510 − 1 ≡ 1 − 1 mod 11,
+78510 − 1 ≡ 0 mod 11,
+Assim 78510 − 1 ´e divis´ıvel por 11.
+
+44
+
+4 Criptograﬁa Moderna
+
+Com a utiliza¸c˜ao crescente de computadores pelas empresas e a necessidade do uso da
+criptograﬁa como medida de seguran¸ca, foi necess´ario proceder uma padroniza¸c˜ao, de
+modo que as empresas pudessem trocar mensagens de uma forma segura e eﬁciente.
+
+Assim, surge a American Stardard Code for Information Interchange (C´odigo Padr˜ao
+Americano para o Intercˆambio de Informa¸c˜ao) que n˜ao consiste em uma cifra, mas em
+linguagem bin´aria (7 d´ıgitos que transformam letras do alfabeto pontua¸c˜ao e algaris-
+mos em n´umeros bin´arios). Com o sistema bin´ario, percebeu-se a necessidade de obter
+a seguran¸ca das informa¸c˜oes lan¸cadas e, portanto, necessitou-se da deﬁni¸c˜ao de um
+sistema criptogr´aﬁco. Adotaram oﬁcialmente o sistema desenvolvido pela IBM, cha-
+mado de Data Encryption Standard (DES). O DES ´e um sistema complexo, que utiliza
+uma chave sim´etrica, ou seja, ´e concordada entre o codiﬁcador e o decodiﬁcador. No
+entanto, o problema da distribui¸c˜ao da chave era grande e embasava-se na conﬁan¸ca
+m´utua. Em 1976, trˆes norte-americanos encontraram a solu¸c˜ao para esse problema.
+Whitﬁeld Driﬃe, Martin Hellman e Ralph Merkle descobriram uma forma de distribuir
+a chave sem que os envolvidos precisassem se encontrar. Esses inventores perceberam
+que as chaves atuais eram fun¸c˜oes matem´aticas bijetivas – Uma determinada fun¸c˜ao
+servia para cifrar uma mensagem, a sua inversa para decifrar (Fiarresga 2010). Assim
+Driﬃe considerou a hip´otese de se utilizar chaves assim´etricas (at´e ent˜ao as chaves
+eram sim´etricas – a mesma servia para codiﬁcar e decodiﬁcar a informa¸c˜ao). Desta
+forma, cada usu´ario teria duas chaves, uma p´ublica para cifragem e outra privada para
+decifragem (Hefez, 2013). Contudo, Driﬃe publicou seu artigo revolucion´ario que utili-
+zado at´e hoje. Foi ent˜ao que em 1978, Ronald Rivest, Adi Shamir e Leonard Adleman,
+no Laborat´orio de Ciˆencia da Informa¸c˜ao do Massachusetts Institute of Technology
+(MIT) descobriram a forma de como colocar em pr´atica a ideia de Driﬃe e deram as
+iniciais de seus pr´oprios nomes a descoberta (RSA). A descoberta parte da proposi¸c˜ao
+de que ´e necess´ario encontrar n´umeros primos grandes e ao mesmo tempo na enorme
+diﬁculdade pr´atica em fatorar o produto de dois desses n´umeros (Hefez, 2013).
+
+4.1 Chave Sim´etrica.
+
+Deﬁni¸c˜ao 85. A chave sim´etrica ´e um m´etodo que consiste em cifrar e decodiﬁcar
+utilizando uma mesma chave.
+
+Essa chave faz com que o remetente consiga codiﬁcar a mensagem, tornando-a em
+uma mensagem completamente diferente, assim somente o destinat´ario com a posse
+da chave consiga decodiﬁcar a mensagem. Esse sistema possui uma caracter´ıstica que
+pode ser inconveniente dependendo da situa¸c˜ao, pois se duas pessoas precisam trocar
+informa¸c˜oes e essas informa¸c˜oes forem criptografadas eles precisam da chave para cifrar
+e decodiﬁcar, mas como fazˆe-la sem que uma terceira descubra essa chave.
+
+• Existem dois tipos de chave sim´etrica: Cifras de ﬂuxo, Cifras de bloco.
+
+45
+
+4 Criptograﬁa Moderna
+
+texto original
+c´odigos aleat´orios
+texto criptografado
+
+010101
+111000
+101101
+
+Tabela 4.1: Exemplo da cifra de ﬂuxo
+
+texto original
+
+0011
+texto criptografado 1100
+
+1010
+0101
+
+1100
+0011
+
+1001
+0110
+
+Tabela 4.2: Exemplo de Cifra de Blocos
+
+Deﬁni¸c˜ao 86. A cifra de ﬂuxo ´e um processo que mistura a mensagem original com
+um outro texto para codiﬁc´a-lo, sem alterar a quantidade de c´odigos.
+
+Deﬁni¸c˜ao 87. A cifra de blocos ´e um processo que transforma sequˆencias de mesmo
+tamanho em sequˆencias criptografadas sem alterar a quantidade de c´odigos de cada
+bloco.
+
+Vamos construir um exemplo de troca de chaves conforme a tabela 4.3, utilizando
+
+aritm´etica modular.
+
+Esse sistema n˜ao ´e perfeito, pois necessita das duas partes estarem conectas ao
+
+mesmo tempo, mas foi uma ideia genial.
+
+4.1.1 Alguns Sistemas de Chave Sim´etrica
+
+• O AES ´e uma cifra de bloco, usado para criptograﬁa de chave sim´etrica essa
+chave possui tamanho de 128 , 192 ou 256 bits , ele ´e r´apido tanto em software
+quanto em hardware , ´e relativamente f´acil de executar e requer pouca mem´oria.
+
+• DES - 56 bits : O Data Encryption Standard ( DES ).Foi criado pela IBM em
+1977 e , apesar de permitir cerca de 72 quadrilh˜oes de combina¸c˜oes , seu tamanho
+de chave ( 56 bits ) ´e considerado pequeno , tendo sido quebrado por for¸ca bruta
+em 1997.
+
+• 3DES -112 ou 168 bits : O 3DES ´e uma simples varia¸c˜ao do DES , utilizando
+o em trˆes ciframentos sucessivos , podendo empregar uma vers˜ao com duas ou
+com trˆes chaves diferentes.
+
+• IDEA 128 bits : O International Data Encryption Algorithm ( IDEA ) foi criado
+em 1991 por James Massey e Xuejia Lai e possui patente da su´ı¸ca ASCOM
+Systec.Mas na maioria dos microprocessadores , uma implementa¸c˜ao por software
+do IDEA ´e mais r´apida do que uma implementa¸c˜ao por software do DES.
+
+• Blowﬁsh 32 a 448 bits : Algoritmo desenvolvido por Bruce Schneier , que oferece
+a escolha , entre maior seguran¸ca ou desempenho atrav´es de chaves de tamanho
+vari´avel.
+
+• O Twoﬁsh ´e uma chave sim´etrica que emprega a cifra de bloco de 128 bits ,
+utilizando chaves de tamanhos vari´aveis , podendo ser de 128 , 192 ou 256 bits.
+
+46
+
+4.1 Chave Sim´etrica.
+
+Fun¸c˜ao
+1º passo
+
+Gustavo
+3a ≡ x mod 5
+Gustavo escolhe o n´umero
+a = 5 e mant´em em segredo
+2º passo Gustavo substitui 5 na fun¸c˜ao
+
+Daniel
+3B ≡ x mod 5
+Daniel escolhe o n´umero B =7 e mant´em
+em segredo
+37 ≡ x mod 5 → x = 2
+
+3º passo
+
+35 ≡ x mod 5 → x = 3
+Gustavo atribui o valor de
+α = 3 e envia para Daniel
+
+Daniel atribui o valor de β = 2 e envia
+para Gustavo.
+
+Nessa fase acontece a troca de informa¸c˜oes, ou seja
+algu´em pode interceptar os n´umeros 3 e 2, mas na
+verdade isso n˜ao importa pois 3 e 2 n˜ao s˜ao chaves.
+4º passo
+
+Gustavo calcula a solu¸c˜ao da
+congruˆencia Bα ≡ x mod 5
+23 ≡ x mod 5 → x = 3
+
+chave
+
+x = 3
+
+Daniel calcula a solu¸c˜ao da congruˆencia
+αB ≡ x mod 5
+37 ≡ x mod 5 → 2187 ≡ x mod 5
+→ x = 2
+x = 2
+
+Tabela 4.3: Troca de Informa¸c˜oes
+
+4.1.1.1 Chaves P´ublicas
+
+Deﬁni¸c˜ao 88. Chave p´ublica ´e um processo para codiﬁcar uma palavra ou texto que
+utiliza fun¸c˜oes que s˜ao dif´ıceis de inverter computacionalmente mas s˜ao distribu´ıdas
+de forma livre, para qualquer meio de comunica¸c˜ao.
+
+Para uma chave p´ublica ser conﬁ´avel e vi´avel temos pelo menos trˆes possibilidades
+
+de abortar esse assunto.
+
+• Algu´em de conﬁan¸ca assina a chave p´ublica.
+
+• Rede de conﬁan¸ca de maneira que cada uma assina a chave p´ublica do outro.
+
+• Criptograﬁa baseada em identidades conhecido como IBE. Esse tipo de cripto-
+graﬁa n˜ao necessita de um reposit´orio para armazenamento de chaves p´ublicas
+o custo computacional reduzido, permite tamb´em a implementa¸c˜ao dos modelos
+hier´arquicos e assinaturas em Anel, Curtas e Grupo.
+
+Vamos observar a sequˆencia a seguir:
+
+1. Gustavo envia para Daniel a sua chave p´ublica.
+
+2. Daniel cifra uma mensagem usando a chave p´ublica de Gustavo
+
+3. Gustavo decodiﬁca a mensagem de Daniel com sua chave privada.
+
+Como garantir que a chave p´ublica ´e realmente de Gustavo?, essa quest˜ao ´e amplamente
+estudada pois, deve se ter um protocolo para garantir que a chave p´ublica n˜ao foi
+substitu´ıda por uma falsa. Assim existe um banco de dados com acesso p´ublico que
+possui todas as chaves p´ublicas. Esse banco de dados ´e protegido por uma pessoa ou
+
+47
+
+4 Criptograﬁa Moderna
+
+por um grupo, se n˜ao for protegido, qualquer pessoa pode trocar a chave p´ublica de
+Gustavo e sem saber Daniel cifra a mensagem utilizando essa chave falsa que n˜ao ´e de
+propriet´ario e ao enviar para Gustavo ele n˜ao conseguir´a decodiﬁcar, mas a pessoa que
+trocou a chave sim, ela conseguir´a decodiﬁcar tornando o sistema inseguro. Supondo
+que ningu´em consiga trocar essa chave no banco de dados ainda pode ocorrer a troca
+quando Gustavo enviar para Daniel, para evitar esse tipo de constrangimento a pessoa
+ou grupo que proporciona a seguran¸ca do banco de dados “assina” cada uma das chaves
+que Gustavo envia para Daniel.
+
+4.2 Chave Assim´etrica
+
+Uma sequˆencia de opera¸c˜oes ´e realizada para a cifragem que ´e feita por uma chave
+p´ublica e a decodiﬁca¸c˜ao ´e feita por uma chave privada que n˜ao pode ser calculada
+atrav´es da chave p´ublica.
+
+Esse sistema possui duas chaves uma p´ublica e outra secreta.
+
+Deﬁni¸c˜ao 89. A chave assim´etrica ´e um m´etodo que consiste em cifrar utilizando
+uma chave publica e decodiﬁcar utilizando uma chave privada.
+
+Se Gustavo e Daniel desejam se comunicar Gustavo cria duas chaves uma publica e
+outra privada o mesmo faz Daniel. Quando Gustavo for enviar uma mensagem a Daniel
+ele criptografa a mensagem utilizando a chave publica de Daniel e quando Daniel recebe
+a mensagem ele decodiﬁca utilizando a sua chave secreta. As vantagens desse sistema
+e que n˜ao h´a troca de chaves, o remetente n˜ao precisa esperar o recebimento da uma
+informa¸c˜ao para dar sequˆencia a sua cifragem.
+
+4.2.1 Alguns Sistemas de Chave Assim´etrica
+
+• O RSA ´e um algoritmo assim´etrico que possui este nome devido a seus invento-
+res: Ron Rivest , Adi Shamir e Len Adleman , que o criaram em 1977 no MIT.
+Atualmente, ´e o algoritmo de chave p´ublica mais amplamente utilizado, al´em de
+ser uma das mais poderosas formas de criptograﬁa de chave p´ublica conhecidas
+at´e o momento. A premissa por tr´as do RSA consiste na facilidade de multi-
+plicar dois n´umeros primos para obter um terceiro n´umero, mas muito dif´ıcil de
+recuperar os dois primos a partir daquele terceiro n´umero .Gerar a chave p´ublica
+envolve multiplicar dois primos grandes; qualquer um pode fazer isto. Derivar a
+chave privada a partir da chave p´ublica envolve fatorar um grande n´umero .
+
+• O ElGamal ´e outro algoritmo de chave p´ublica utilizado para gerenciamento de
+chaves. Sua matem´atica difere da utilizada no RSA, mas tamb´em ´e um sistema
+comutativo.
+
+• Diﬃe-Hellman - Tamb´em baseado no problema do logaritmo discreto, e o criptos-
+sitema de chave p´ublica mais antigo ainda em uso. O conceito de chave p´ublica,
+ali´as foi introduzido pelos autores deste criptossitema em 1976 .
+
+• Curvas El´ıpticas-Miller propˆos de forma independente a utiliza¸c˜ao de curvas
+el´ıpticas para sistemas criptogr´aﬁcos de chave p´ublica. Eles n˜ao chegaram a
+
+48
+
+4.3 Resumos Criptogr´aﬁcos
+
+inventar um novo algoritmo criptogr´aﬁco com curvas el´ıpticas sobre corpos ﬁ-
+nitos, mas implementaram algoritmos de chave p´ublica j´a existentes, como o
+algoritmo de Diﬃe-Hellman, usando curvas el´ıpticas .
+
+4.3 Resumos Criptogr´aﬁcos
+
+O resumo criptogr´aﬁco ´e um m´etodo que aplicado a uma informa¸c˜ao criptografada de
+qualquer tamanho e resulta em uma informa¸c˜ao de um tamanho ﬁxo (hash). Alguns
+desses m´etodos de hash s˜ao: SHA-1, SHA-256 e MD5. O hash ´e criado de forma a n˜ao
+se poder obter a informa¸c˜ao original.
+
+4.4 Assinatura Digital
+
+Assinatura digital consiste em veriﬁcar se uma determinada informa¸c˜ao publicada, est´a
+correta sem altera¸c˜oes e tamb´em veriﬁcar se ´e a mesma pessoa que a publicou. Essa
+veriﬁca¸c˜ao ´e feita utilizando a chave publica que decodiﬁca a mensagem possibilitando
+a autentica¸c˜ao. A chave publica apenas decifra, evitando assim a n˜ao repudia¸c˜ao
+da informa¸c˜ao publicada. Alguns algoritmos de assinatura digital s˜ao RSA, DSA e
+ELGAMAL .
+
+4.5 Protocolos
+
+Os protocolos de seguran¸ca visam garantir a integridade a conﬁdencialidade da mensa-
+gem. Um protocolo bem detalhado deve fornecer informa¸c˜oes necess´arias sobre estru-
+turas , em que ponto ele pode ser usado para implementar v´arias vers˜oes e opera¸c˜oes
+de um programa e e representa¸c˜oes de dados. Um protocolo tem pelos menos em
+sua estrutura um acordo de chave ou estabelecimento uma entidade de autentica¸c˜ao
+Sim´etrica de encripta¸c˜ao e mensagem de autentica¸c˜ao, transporte de dados em apli-
+cativos de seguran¸ca e m´etodos N˜ao rep´udio.Um exemplo de protocolo ´e Transport
+Layer Security (TLS) que ´e usada para prote¸c˜ao da internet.
+
+4.6 Sigilo
+
+Uma informa¸c˜ao criptografada precisa de sigilo e isso s´o ´e poss´ıvel se qualquer ad-
+vers´ario n˜ao possa descobrir a informa¸c˜ao transmitida, dessa maneira chamamos de
+sigilo perfeito. Hipoteticamente ´e quase imposs´ıvel ter um sistema com sigilo perfeito,
+mas com a tecnologia atual temos sistemas indecifr´aveis mas ao mesmo tempo invi´aveis.
+Podemos citar um exemplo de sigilo perfeito a cifra de Vernam. Todo sistema parece
+bom at´e ser colocado em pr´atica e algu´em o decifr´a-lo.
+
+4.7 Fun¸c˜ao de M˜ao ´Unica
+
+Uma fun¸c˜ao de m˜ao ´unica ´e basicamente f´acil calcular f(x) dado x mas quase “im-
+poss´ıvel” ou dif´ıcil de calcular x dado f(x). Esse termo utilizado “imposs´ıvel” se refere
+
+49
+
+4 Criptograﬁa Moderna
+
+12
+
+A B C D E F G H I
+11
+22
+19
+15
+O P Q R S T U V X W Y Z
+36
+25
+
+J K L M
+23
+20
+
+13
+
+14
+
+29
+
+28
+
+30
+
+16
+
+26
+
+27
+
+31
+
+35
+
+34
+
+21
+
+33
+
+32
+
+17
+
+18
+
+N
+24
+ESPAC¸ O
+37
+
+Tabela 4.4: Tabela de Pr´e Codiﬁca¸c˜ao do R.S.A
+
+que dado um polinˆomio de tamanho p , leva um tempo extremamente grande para
+efetuar seu c´alculo.
+
+Deﬁni¸c˜ao 90. Dizemos que uma fun¸c˜ao ´e possivelmente de m˜ao ´unica se e somente
+se temos um algoritmo que fornece um f(x) em tempo h´abil e ao mesmo tempo dif´ıcil
+de inverter computacionalmente dada uma imagem qualquer.
+
+Exemplo 91. Produto e decomposi¸c˜ao
+
+A fun¸c˜ao f(x) ´e gerada a partir do produto de dois n´umeros primos p e q, essa fun¸c˜ao
+pode ser calculada aonde n ´e o tamanho da entrada e dependendo da quantidade de
+d´ıgitos da entrada ﬁca dif´ıcil de inverter essa fun¸c˜ao, pois requer encontrar os fatores
+de um determinado n´umero inteiro n.
+
+Exemplo 92. A fun¸c˜ao Rabin f ´e gerada a partir de dois inteiros positivos c e n,
+sendo n ´e o produto de dois primos p e q, sua sa´ıda ´e c2m´odulo n. O processo inverso
+requer encontrar as ra´ızes quadradas m´odulo n; que ´e: dado y e n, ache um x que x2
+mod n = y.
+
+4.8 R.S.A
+
+O sistema R.S.A, foi criado em cima da teoria dos n´umeros baseando-se na diﬁculdade
+de se fatorar um n´umero muito grande em especial n´umeros formados pelo produto de
+primos. Como j´a foi provado todos os n´umeros podem ser escritos em forma de produto
+a menos de uma ordem em fatores primos. Para implementar o R.S.A precisamos de
+dois parˆametros b´asicos: dois n´umeros primos que vamos chamar de p e q. Para
+codiﬁcar uma mensagem usando o R.S.A ´e suﬁciente conhecer o produto dos dois
+primos, que vamos chamar de n. Para decodiﬁcar uma mensagem precisamos conhecer
+os primos p e q. A chave de codiﬁca¸c˜ao do R.S.A ´e portanto constitu´ıda essencialmente
+pelo n´umero n = pq. Esta chave ´e tornada p´ublica: todos ﬁcam sabendo que, para
+mandar uma mensagem, deve ser usada a chave n. Por isso n tamb´em ´e conhecido
+como a “chave p´ublica”. J´a a chave de decodiﬁca¸c˜ao ´e constitu´ıda pelos primos p e
+q. Cada usu´ario tem que manter sua chave de decodiﬁca¸c˜ao secreta ou a seguran¸ca do
+m´etodo estar´a comprometida.
+
+4.8.1 Matem´atica do R.S.A
+
+Vamos come¸car transformando nosso alfabeto em uma sequˆencia de n´umeros, chama-
+mos isso de pr´e codiﬁca¸c˜ao, nessa sec¸c˜ao iremos adotar a seguinte tabela 4.4.
+
+Observe que o espa¸co entre duas palavras ser´a substitu´ıdo pelo n´umero 37, assim por
+exemplo quando codiﬁcarmos a frase “A matem´atica” teremos a sequˆencia de n´umeros
+113723113015231130191311.
+
+50
+
+4.8 R.S.A
+
+blocos pr´e codiﬁcados
+113
+72
+31
+130
+15
+23
+11
+30
+19
+131
+1
+
+cf
+1137
+727
+317
+1307
+157
+237
+117
+307
+197
+1317
+17
+
+cf mod 143
+9
+19
+125
+26
+115
+23
+132
+134
+46
+131
+1
+
+Tabela 4.5: Codiﬁca¸c˜ao do R.S.A
+
+A vantagem de se escolher dois algarismos ´e que evitaremos ambiguidades, o que
+aconteceria por exemplo como o n´umero 12, poderia ser A e B ou outra letra do al-
+fabeto. Agora vamos especiﬁcar dois parˆametros ou seja dois n´umeros primos p e
+q e temos n = p · q. Para trabalharmos na codiﬁca¸c˜ao da frase “A matem´atica”
+iremos adotar p = 11 e q = 13 assim teremos n = 143 . O pr´oximo passo da
+pr´e codiﬁca¸c˜ao ´e transformar o n´umero acima em blocos da seguinte maneira 113-
+72 − 31 − 130 − 15 − 23 − 11−30−19−131−1, os blocos foram escolhidos da seguinte
+maneira, nenhum deles ´e maior que 143 e nenhum deles come¸ca com 0, pois isso traria
+problemas na hora da decodiﬁca¸c˜ao. Outro fator muito importante que os blocos n˜ao
+correspondem as letras da frase pr´e codiﬁcada isso torna o sistema imune ao ataque
+de frequˆencia.
+
+4.8.2 Codiﬁca¸c˜ao
+
+Para realizar a codiﬁca¸c˜ao necessitamos de n e de um n´umero que seja um inteiro
+positivo e que seja invers´ıvel m´odulo φ(n) e torna-se f´acil calcular pois conhecemos p
+e q,assim φ(n) = (p − 1)(q − 1),
+
+Para codiﬁcar a frase “A matem´atica” utilizaremos n = 143, que invers´ıvel m´odulo
+φ(n) = (11 − 1)(13 − 1) = 120, logo o m.d.c de (143, 120) ´e 1. Assim codiﬁcaremos
+cada bloco separado e teremos uma nova sequˆencia de blocos. A formula para codiﬁcar
+os blocos ´e a seguinte K(c) =resto da divis˜ao por cf, sendo f o menor n´umero primo
+que n˜ao divide 120 que ´e 7.
+
+Assim obtemos a nova sequˆencia codiﬁcada 9 − 19 − 125 − 26 − 115 − 23 − 132 − 134 −
+46 − 131 − 1, vejamos agora como refazer o processo para chegar a mensagem original.
+
+4.8.3 Decodiﬁca¸c˜ao do R.S.A
+
+Para realizar a decodiﬁca¸c˜ao teremos que observar cf mod 143 e o inverso f em φ(n),
+assim teremos t(d) o resultado da decodiﬁca¸c˜ao. Vejamos que n = 143 e f = 7,
+logo pelo algoritmo estendido euclidiano teremos 120 = 7 · 17 + 1, aonde resulta que
+1 = 120 + (−17) · 7, assim o inverso 7 modulo 120 ´e −17. Como utilizaremos d como
+expoente teremos 120 − 17 = 103, que ´e o menor inteiro positivo m´odulo 120. Como
+
+51
+
+4 Criptograﬁa Moderna
+
+blocos codiﬁcados
+9
+19
+125
+26
+115
+23
+132
+134
+46
+131
+1
+
+(cf mod 143)d
+9103
+19103
+125103
+26103
+115103
+23103
+132103
+134103
+46103
+131103
+1103
+
+(cf mod 143)d mod 143
+113
+72
+31
+130
+15
+23
+11
+30
+19
+131
+1
+
+Tabela 4.6: Decodiﬁca¸c˜ao do R.S.A
+
+os c´alculos s˜ao altamente diﬁcultosos com apenas caneta e papel efetuaremos somente
+um c´alculo e o restante ﬁca ao leitor, pois o restante dos c´alculos foram usados um
+sistema computacional.
+
+• 9103 = (93)34 · 9 mod 143
+
+• 93 = 36 ≡ 14 mod 143
+
+• 143≡ 27 mod 143
+
+• 9103 = (93)34 · 9 mod 143 →(14)34 · 9 mod 143→(143)11 · 14 · 9 mod
+143→(27)11·14·9 mod 143→(33)11·14·9 mod 143→335·14 mod 143→(36)5·
+35 · 14 mod 143→ (14)5 · 35 · 14 mod 143 → 146 · 35 mod 143→ 143 · 143 · 35
+mod 143→ 27 · 27 · 35 mod 143→ 36 · 35 mod 143→ 14 · 35 mod 143→ 14 · 243
+mod 143→ 3402 mod 143= 113
+
+A quest˜ao ´e esse sistema ´e seguro?, depende da escolha dos n´umeros primos empregados
+na codiﬁca¸c˜ao do sistema que deve ser da ordem de 100 algarismo cada, assim tornando
+dif´ıcil computacionalmente a decomposi¸c˜ao de n.
+
+Embora esse sistema aparentemente pare¸ca f´acil de ser utilizado, n˜ao ´e, pois necessita-
+se de computadores quando se trabalha com n´umeros primos muito grandes. Ap´os essa
+descoberta, grandes avan¸cos vieram acontecendo. Pode-se mencionar Criptograﬁa as
+curvas el´ıpticas por Miller e Criptograﬁa Quˆantica publicada por Charles H. Bennett
+e Gilles Brassard, dentre outros. No entanto, estudos continuam sendo realizados para
+maiores avan¸cos no campo da criptograﬁa.
+
+4.9 Compartilhamento de Segredos
+
+Parte importante da criptograﬁa ´e manter um segredo em sigilo como por exemplo,
+uma senha de um cofre ou n´umero primo importante algo desse tipo, que n˜ao seja
+conhecido apenas por uma pessoa mas por varias e que fosse revelado somente quando
+todas as partes estiverem decididas a fazˆe-lo. Nesse caso vamos descrever um m´etodo
+de compartilhamento de segredos chamado protocolo secreto de Shamir. Esse m´etodo
+
+52
+
+4.9 Compartilhamento de Segredos
+
+consiste em utilizar um polinˆomio sendo que o termo independente ´e o segredo, e os
+coeﬁcientes s˜ao distribu´ıdos entre as partes interessadas.
+
+Deﬁni¸c˜ao 93. O protocolo de Shamir ´e um sistema que fraciona uma chave (po-
+linˆomio) entre n usu´arios e t fra¸c˜oes da chave.
+
+Para recuperar a chave temos que ter t sendo t (cid:54) n fra¸c˜oes necess´arias
+
+Deﬁni¸c˜ao 94. Seja f uma fun¸c˜ao deﬁnida num intervalo [a; b] e conhecida nos pontos.
+
+a = x0 < x1 < · · · < xn−1 < xn = b:
+Sendo P um polinˆomio qualquer que satisfaz
+f(xi) = P(xi) i = 0, 1, 2, · · · , n, ´e chamado de polinˆomio interpolador (de Lagrange)
+
+def(x) nos pontos dados.
+
+Proposi¸c˜ao 95. Sejam n + 1 pontos dados por (xi, Li), i = 0, ..., n xi (cid:54)= xi, para i (cid:54)= j.
+Ent˜ao existe um ´unico polinˆomio de graun que passa por estes pontos.
+
+Demonstra¸c˜ao. Vamos considerar L(x) um polinˆomio de grau n sendo L(x) = a0 +
+a1x + a2x2 + a3x3 + ... + anxn e sendo an constantes
+
+L(x) =
+
+k(cid:88)
+
+i=0
+
+yi · li(x)
+
+que passa pelos pontos L(xi) = Li, i = 0, ..., n , vamos determinar as constantes para
+depois determinar o L(x).
+
+0 + a3x3
+1 + a3x3
+
+l(xi) = li, i = 0, ..., n ´e equivalente ao sistema:
+a0 + a1x0 + a2x2
+a0 + a1x1 + a2x2
+...
+a0 + a1xn + a2x2
+n = ln
+Esse sistema tem solu¸c˜ao ´unica se e somente se os coeﬁcientes das inc´ognitas seja
+
+0 + ... + anxn
+1 + ... + anxn
+
+n + ... + anxn
+
+0 = l0
+1 = f1.
+
+n + a3x3
+
+n˜ao nulo.
+
+· · · xn
+1
+· · · xn
+2
+...
+· · ·
+· · · xn
+l
+
+1 x0 x2
+1
+1 x2 x2
+2
+...
+...
+...
+1 xl x2
+l
+essa ´e uma matriz Vandermonde, sendo que seu determinante ´e dado por: det(A) =
+1(cid:54)i<j(cid:54)n (xj − xi)
+Como xi (cid:54)= xj para i (cid:54)= j, temos que det(A) (cid:54)= 0, como quer´ıamos demonstrar.
+
+(cid:81)
+
+Teorema 96. (Lagrange) Seja f uma fun¸c˜ao deﬁnida num intervalo [a, b] e conhecida
+nos pontos (xi, fi)i = 0, ..., n. Existe somente um Polinˆomio Interpolador de Lagrange
+pn de grau menor ou igual a n interpolador de f nos pontos dados.
+
+(cid:80)
+
+(cid:81)
+
+Demonstra¸c˜ao. Seja o polinˆomio p(x) =
+aonde i = 1, 2, · · · , n., assim cada li ´e um polinˆomio de grau n, e ainda para li(xj)
+quando i = j temos 1 e i (cid:54)= j temos 0. Isto ´e li(xj) = δi;j, portanto a fun¸c˜ao Pn ´e
+um polinˆomio de grau menor ou igual a n veriﬁcando as condi¸c˜oes de interpola¸c˜ao,
+provando a existˆencia do polinˆomio. Agora devemos provar que ele ´e ´unico. Vamos
+
+n
+i=0 F(xi)li(x) , aonde li(x) =
+
+k
+j=0,j(cid:54)=i
+
+(x−xj)
+(xi−xj) ,
+
+53
+
+4 Criptograﬁa Moderna
+
+supor que Pn e QN s˜ao dois polinˆomios de grau menor ou igual a n interpoladores de
+f nos pontos conhecidos assim o polinˆomio MN(x) = Pn(x) − Qn(x) vai anular pelo
+menos, nos pontos xi, com i = 0, 1; · · · ; n. dessa maneira MN ´e um polinˆomio de grau
+menor ou igual a n, ele s´o pode ter n + 1 zeros se for identicamente nulo. Assim sendo,
+Pn(x) = Qn(x), o que mostra que se existir ele ´e ´unico.
+
+Exemplo 97. Seja os pontos (0, −5), (1, 1) e (3, 25), vamos descobrir o polinˆomio que
+passa pelos trˆes pontos.
+l(x0) = (x−1)(x−3)
+l(x1) = (x−0)(x−3)
+l(x2) = (x−0)(x−1)
+Assim temos:
+
+(0−1)(0−3) = x2−4x+3
+(1−0)(1−3) = −x2+3x
+(3−0)(3−1) = x2−x
+;
+(cid:80)
+6
+l(x) =
+
+n
+i=0 F(xi)li(x) , ent˜ao p(x) = f(x0).l(x0) + f(x1).l(x1) +
+) + 1 · (−x2 + 3x) + 25 · ( x2−x
+f(x2).l(x2) = (−5) · ( x2−4x+3
+) = 2x2 + 4x − 5, encontramos
+o polinˆomio que passa pelos trˆes pontos.
+
+3
+
+3
+
+2
+
+6
+
+Lema 98. Para qualquer s,∈ (cid:54) ZpZ existe exatamente um polinˆomio pt−m−1 e a,(x)∈
+(cid:54) ZpZ de grau (cid:54) t − 1 com a,(0) = s,e a (cid:48)(xi) = yi, 1 (cid:54) i (cid:54) m.
+
+O lema 98 mostra que n˜ao ´e poss´ıvel obter informa¸c˜ao nenhuma do segredo desde
+que as partes, estejam todas separadas, assim a ´unica forma de descobrir o segredo
+ser´a juntando todas as partes.
+
+Exemplo 99. A grande vantagem do compartilhamento de segredo utilizando o m´etodo
+de Shamir ´e que todas as partes envolvidas devem estar juntas para conseguir revelar
+o segredo, pois alguns pontos ou coeﬁcientes de um polinˆomio n˜ao revelam informa¸c˜ao
+nenhuma, o que n˜ao acontece se dividir por exemplo a senha de um cofre.
+
+Suponhamos que um cofre possui 6 d´ıgitos e que sua senha seja dividida em trˆes
+partes, e que cada pessoa sabe a posi¸c˜ao da sua senha assim se qualquer uma das trˆes
+pessoas tentar descobrir a senha ela ter´a 104 possibilidades de descobrir, mas se duas
+delas juntarem para abrir o cofre o n´umero de possibilidades ser´a de 102, tornando
+invi´avel a distribui¸c˜ao de partes da senha.
+
+54
+
+5 Aplica¸c˜oes e Atividades em Sala de Aula
+
+Muitos professores s˜ao pegos com a seguinte pergunta, “como e aonde aplicar isso e
+aquilo”, esse questionamento n˜ao ´e especiﬁco de um conte´udo mas de todos, mesmo
+colegas de outras disciplinas tem uma enorme aspers˜ao a matem´atica. Devemos ent˜ao
+como mediadores do conhecimento mostrar aonde ´e utilizado esse ou aquele conheci-
+mento e na medida do poss´ıvel aplicar o conte´udo ensinado. Dessa maneira vamos
+propor algumas aplica¸c˜oes de fun¸c˜oes e aritm´etica modular.
+
+5.1 Fun¸c˜oes Inversas
+
+Vamos utilizar uma fun¸c˜ao polinomial do 1º grau para cifrar e a sua inversa decifrar
+uma determinada mensagem.
+
+5.1.1 Atividade para Sala de Aula - Fun¸c˜ao Inversa
+
+• Objetivo Geral: Desenvolver a compreens˜ao pelos alunos da importˆancia da uti-
+
+liza¸c˜ao da fun¸c˜ao inversa.
+
+• Objetivo espec´ıﬁco: Resolver fun¸c˜oes determinando seu conjunto solu¸c˜ao e suas
+
+inversas.
+
+• P´ublico-alvo: Estudantes do ensino m´edio.
+
+• Recursos Metodol´ogicos: Quadro negro, giz, multim´ıdia.
+
+• Pr´e-requisito: conhecimento sobre imagem, dom´ınio e contradom´ınio de como
+
+inverter uma fun¸c˜ao.
+
+• Metodologia: Pode-se trabalhar com apenas trˆes grupos na sala ou v´arios grupos
+de apenas trˆes alunos. A atividade deve ser desenvolvida atrav´es de um remetente
+um destinat´ario um interceptador.
+
+• Dura¸c˜ao: Duas aulas de 50 minutos cada.
+
+Exemplo 100. Gustavo e Ana Paula desejam trocar uma mensagem pelo telefone
+e como ´e uma ´epoca de guerra todos os telefones est˜ao grampeados, sem seguran¸ca
+nenhuma. A mensagem a ser decifrada ´e uma localiza¸c˜ao para o encontro dos dois.
+Sabendo que Gustavo est´a a uma distˆancia consider´avel de sua amada, ele estipula
+uma localiza¸c˜ao para ela, atrav´es de uma mensagem criptografada por uma fun¸c˜ao e
+de posse de sua inversa sua amada saber´a exatamente a posi¸c˜ao de encontro dos dois.(
+previamente eles j´a estipularam a fun¸c˜ao )
+
+55
+
+5 Aplica¸c˜oes e Atividades em Sala de Aula
+
+12
+
+A B C D E F G H I
+11
+19
+15
+O P Q R S T U V W X Y Z espa¸co
+25
+
+J K L
+22
+21
+20
+
+M
+23
+
+13
+
+29
+
+28
+
+14
+
+26
+
+27
+
+16
+
+30
+
+37
+
+35
+
+36
+
+31
+
+34
+
+33
+
+17
+
+32
+
+18
+
+N
+24
+
+Tabela 5.1: Letras e N´umeros Correspondentes para Cifrar e Decifrar
+
+LETRAS
+
+D
+E
+L
+F
+I
+M
+espa¸co
+M
+O
+R
+E
+I
+R
+A
+
+VALOR DE
+CADA LETRA
+(X) de acordo
+com a tabela
+5.1
+14
+15
+22
+16
+19
+23
+37
+23
+25
+28
+15
+19
+28
+11
+
+F(x) = x +
+2(remetente)-
+cifra
+
+f−1(x) = x −
+2(destinat´ario)
+- decodiﬁca
+
+f(14) = 16
+f(15) = 17
+f(22) = 24
+f(16) = 18
+f(19) = 21
+f(23) = 25
+f(37) = 39
+f(23) = 25
+f(25) = 27
+f(28) = 30
+f(15) = 17
+f(19) = 21
+f(28) = 30
+f(11) = 13
+
+f−1(16) = 14
+f−1(17) = 15
+f−1(24) = 22
+f−1(18) = 16
+f−1(21) = 19
+f−1(25) = 23
+f−1(37) = 35
+f−1(25) = 23
+f−1(27) = 25
+f−1(30) = 28
+f−1(17) = 15
+f−1(21) = 19
+f−1(30) = 28
+f−1(13) = 11
+
+Tabela 5.2: Cifragem e Decodiﬁca¸c˜ao Utilizando a Fun¸c˜ao e sua Inversa.
+
+Gustavo, deseja que o lugar de encontro seja Delﬁm Moreira, dessa maneira ele utiliza
+a seguinte fun¸c˜ao F(x) = x + 2, de acordo com a tabela 5.2, Gustavo cifrou a mensagem
+resultando na seguinte sequˆencia “1415221619233723252815192811”, sua amada recebe
+a sequˆencia e a decodiﬁca sem diﬁculdade. Observando que foram utilizados n´umeros
+de dois algarismos na tabela 5.1, para evitar ambiguidades.
+
+5.2 Aritm´etica Modular
+
+Descreveremos algumas atividades utilizando aritm´etica modular como fonte motiva-
+dora.
+
+5.2.1 Atividade para Sala de Aula - Aritm´etica Modular (calend´ario)
+
+• Objetivo Geral: Instigar nos alunos pela descoberta da deliciosa maneira de se
+
+criar matem´atica.
+
+56
+
+5.2 Aritm´etica Modular
+
+Dia da semana
+Quinta-feira
+Sexta-feira
+S´abado
+Domingo
+Segunda-feira
+Ter¸ca-feira
+Quarta- feira
+
+resto da divis˜ao por 7
+0
+1
+2
+3
+4
+5
+6
+
+Tabela 5.3: Dias da Semana
+
+• Objetivo espec´ıﬁco: Desenvolver aplica¸c˜oes dos n´umeros primos.
+
+• P´ublico-alvo: Estudantes do ensino m´edio.
+
+• Recursos Metodol´ogicos: Quadro negro, giz, multim´ıdia.
+
+• Pr´e-requisito: conhecimento sobre, MDC e congruˆencia.
+
+• Metodologia: Desenvolver a atividade em grupos de no m´aximo 4 alunos.
+
+• Dura¸c˜ao: Duas aulas de 50 minutos.
+
+Exemplo 101. Em um determinado pa´ıs comemora-se a sua independˆencia no dia 4
+de julho, e o natal no dia 25 de dezembro, sabendo que 4 de julho foi uma quinta feira
+deseja-se saber que dia da semana ir´a cair o natal?
+
+Vamos inicialmente enumerar os dias da semana, observe a tabela abaixo.
+
+Vejamos ent˜ao quantos dias existem entre quatro de julho e 25 de dezembro.
+
+• Julho, 27 dias, agosto, 31 dias, setembro, 30 dias, outubro, 31 dias, novembro, 30
+dias, dezembro- 25 dias. Temos um total de dias 27 + 31 + 30 + 31 + 30 + 25 = 174
+dias. Agora vejamos quando dividimos 174 por 7 deixa resto 6 , observando a
+tabela 5.3 o natal ser´a na quarta-feira.
+
+5.2.2 Atividade para Sala de Aula - Aritm´etica Modular - Cifra de C´esar
+
+• Objetivo Geral: Instigar nos alunos pela descoberta da deliciosa maneira de se
+
+criar matem´atica.
+
+• Objetivo espec´ıﬁco: Desenvolver aplica¸c˜oes dos n´umeros primos e fun¸c˜oes .
+
+• P´ublico-alvo: Estudantes do ensino fundamental.
+
+• Recursos Metodol´ogicos: Quadro negro, giz, multim´ıdia.
+
+• Pr´e-requisito: conhecimento sobre, MDC e congruˆencia.
+
+• Metodologia: Desenvolver a atividade em grupos de no f(x) ≡ x+3 mod 26,m´aximo
+
+4 alunos.
+
+• Dura¸c˜ao: Uma aula de 50 minutos.
+
+57
+
+5 Aplica¸c˜oes e Atividades em Sala de Aula
+
+Alfabeto
+valor de cada letra
+codiﬁcar- f(x) ≡ x + 3 mod 26
+decodiﬁcar - f(x)−1 ≡ (x + 3)-3 mod 26
+Alfabeto
+valor de cada letra
+codiﬁcar- f(x) ≡ x + 3 mod 26
+decodiﬁcar - f(x)−1 ≡ (x + 3)-3 mod 26
+Alfabeto
+valor de cada letra
+codiﬁcar-f(x) ≡ x + 3 mod 26
+decodiﬁcar - f(x)−1 ≡ (x + 3)-3 mod 26
+
+6
+9
+6
+
+3
+6
+3
+
+1
+4
+1
+
+7
+10
+7
+
+A B C D E
+F G H I
+4
+2
+0
+8
+5
+5
+3
+7
+11
+8
+8
+4
+2
+0
+5
+J K L M N O P Q R
+16
+17
+13
+9
+10
+19
+20
+16
+12
+13
+10
+9
+17
+16
+13
+T U V W X Y Z
+S
+25
+22
+19
+18
+2
+25
+22
+21
+25
+22
+19
+18
+
+14
+17
+14
+
+15
+18
+15
+
+11
+14
+11
+
+12
+15
+12
+
+23
+0
+23
+
+21
+24
+21
+
+20
+23
+20
+
+24
+1
+24
+
+Tabela 5.4: Codiﬁca¸c˜ao e Decodiﬁca¸c˜ao
+
+Exemplo 102. Vamos cifrar a mensagem “A criatividade ´e essencial na matem´atica”.
+Nesse exemplo utilizaremos a congruˆencia a nosso favor, f(x) ≡ x + 3 mod 26,
+
+vamos observar a tabela 5.4 .
+
+Assim observando a tabela 5.4veriﬁcamos que ao codiﬁcar a letra x , trocar´ıamos
+ela pela letra a. Codiﬁcando a mensagem proposta ir´a ﬁcar da seguinte forma “D
+fuldwlylgdgh h hvvhqﬂdo qd pdwhpdwlfd”. Esse tipo de cifragem possui 25 possibili-
+dades, pois na fun¸c˜ao somamos 3, mas poder´ıamos ter somado 1 at´e 25, para fazer a
+cifragem.
+
+5.2.3 Atividade para Sala de Aula - Aritm´etica Modular - Cifra de
+
+Vigen`ere.
+
+• Objetivo Geral: Instigar nos alunos pela descoberta da deliciosa maneira de se
+
+criar matem´atica.
+
+• Objetivo espec´ıﬁco: Desenvolver aplica¸c˜oes dos n´umeros primos e fun¸c˜oes .
+
+• P´ublico-alvo: Estudantes do ensino fundamental.
+
+• Recursos Metodol´ogicos: Quadro negro, giz, multim´ıdia.
+
+• Pr´e-requisito: conhecimento sobre, MDC e congruˆencia.
+
+• Metodologia: Desenvolver a atividade em grupos utilizando f(x) ≡ xN+kn mod 26,
+(aonde x representa o valor da mensagem a ser codiﬁcada e k representa o valor
+de cada letra da chave), m´aximo 4 alunos.
+
+• Dura¸c˜ao: Uma aula de 50 minutos.
+
+Exemplo 103. Para facilitar a compreens˜ao, vamos construir uma tabela 5.5 para
+codiﬁcar a mensagem utilizaremos a = 0,b = 1 e assim at´e z = 25.
+
+A codiﬁca¸c˜ao feita na tabela 5.5, pode ser conferida pelos alunos, sem efetuar c´alculos
+
+somente observando a ﬁgura 2.3.
+
+58
+
+5.2 Aritm´etica Modular
+
+Chave Valor
+
+f(x) ≡ xN + kn mod 26 ResultadoMensagem
+
+cifrada
+
+Mensagem
+
+Valor
+da
+Mensa-
+gem
+14
+
+a ser
+codiﬁ-
+cada
+o
+
+t
+e
+n
+e
+n
+t
+e
+
+´e
+
+o
+
+t
+r
+a
+i
+d
+o
+r
+
+19
+4
+13
+4
+13
+19
+4
+
+4
+
+14
+
+19
+17
+0
+8
+3
+14
+17
+
+o
+
+p
+r
+o
+f
+e
+s
+s
+
+o
+
+r
+
+D
+a
+n
+i
+e
+l
+o
+
+14
+
+15
+17
+14
+5
+4
+18
+18
+
+14
+
+17
+
+3
+0
+13
+8
+4
+11
+14
+
+f(14) ≡ 14 + 14 mod 26
+
+f(19) ≡ 19 + 15 mod 26
+f(4) ≡ 4 + 17 mod 26
+f(13) ≡ 13 + 14 mod 26
+f(4) ≡ 4 + 5 mod 26
+f(13) ≡ 13 + 4 mod 26
+f(19) ≡ 19 + 18 mod 26
+f(4) ≡ 4 + 18 mod 26
+
+f(4) ≡ 4 + 14 mod 26
+
+f(14) ≡ 14 + 17 mod 26
+
+f(19) ≡ 19 + 3 mod 26
+f(17) ≡ 17 + 0 mod 26
+f(0) ≡ 0 + 13 mod 26
+f(8) ≡ 8 + 8 mod 26
+f(3) ≡ 3 + 4 mod 26
+f(14) ≡ 14 + 11 mod 26
+f(17) ≡ 17 + 14 mod 26
+
+2
+
+8
+21
+1
+9
+17
+11
+22
+
+18
+
+5
+
+22
+17
+13
+16
+7
+25
+5
+
+Tabela 5.5: Fun¸c˜ao Modular na Cifra de Vigen`ere
+
+C
+
+I
+V
+B
+J
+R
+L
+W
+
+Q
+
+F
+
+W
+R
+N
+Q
+H
+Z
+F
+
+59
+
+5 Aplica¸c˜oes e Atividades em Sala de Aula
+
+5.2.4 Atividade para Sala de Aula - Abertura do cofre (protocolo de
+
+Shamir)
+
+• Objetivo Geral: Instigar nos alunos pela descoberta da deliciosa maneira de se
+
+criar matem´atica.
+
+• Objetivo espec´ıﬁco: Desenvolver aplica¸c˜oes sobre fun¸c˜oes .
+
+• P´ublico-alvo: Estudantes do ensino m´edio.
+
+• Recursos Metodol´ogicos: Quadro negro, giz, multim´ıdia.
+
+• Pr´e-requisito: conhecimento sobre, MDC e congruˆencia e fun¸c˜oes.
+
+• Metodologia: Desenvolver a atividade em grupos de no m´aximo 4 alunos.
+
+• Dura¸c˜ao: Uma aula de 50 minutos.
+
+Exemplo 104. Sr Jos´e ´e um milion´ario que j´a est´a quase no ﬁm de sua vida. Ele
+possui trˆes herdeiros em sua fam´ılia mas nenhum deles ´e de se conﬁar, assim o Sr Jos´e
+colocou toda a sua fortuna em um cofre que s´o poder´a ser aberto no dia do seu vel´orio.
+Pensando nisto forneceu aos seus herdeiros algumas informa¸c˜oes . Essas informa¸c˜oes
+sozinhas n˜ao tem possibilidade nenhuma de abrir o cofre mas juntas fornecem um
+polinˆomio que desvenda o segredo, sendo que o termo independente desse polinˆomio
+que ´e o segredo n˜ao ´e revelado a nenhum de seus herdeiros. Para o primeiro o Sr Jos´e
+lhe deu o primeiro coeﬁciente 10, para o segundo herdeiro o segundo coeﬁciente 15 e
+para o terceiro herdeiro um ponto (1, 800), como era de costume o Sr Jos´e adorava
+misturar fun¸c˜oes e aritm´etica modular e tamb´em gostava de um n´umero em especial
+que er´a o 641. Ao falecer os herdeiros se reuniram para tentar abrir o cofre e perceberam
+que teriam muito trabalho tentando acertar a senha ao acaso, dessa maneira juntaram
+suas informa¸c˜oes para desvendar a fun¸c˜ao.
+
+Os herdeiros obtiveram a seguinte fun¸c˜ao, f(x) = 10x2 + 15x + c, como a fun¸c˜ao
+deveria ser congruente a 641 e o ultimo herdeiro possu´ıa um ponto, assim substi-
+tuindo na fun¸c˜ao eles conseguiram descobrir o valor do termo independente, da se-
+guinte forma: 10 · 12 + 15 · 1 + c ≡ 800 mod 641 → c ≡ 800 − 25 mod 641 → c ≡
+775 mod 641 → c ≡ 134 mod 641.Assim os herdeiros abriram o cofre.
+
+60
+
+A Fun¸c˜oes
+
+Neste apˆendice discorreremos algumas deﬁni¸c˜oes de fun¸c˜oes, que s˜ao trabalhadas no
+ensino m´edio.
+
+Deﬁni¸c˜ao 105. Uma fun¸c˜ao de R → R, recebe o nome de fun¸c˜ao aﬁm, se e somente
+se ´e da forma f(x) = a · x + b , sendo a e b pertencente ao conjunto dos reais. E para
+cada x ∈ R ∃ somente um f(x) associado. Chamamos a de coeﬁciente angular e b de
+coeﬁciente linear da fun¸c˜ao.
+
+Exemplo 106. Seja f(x) = x + 3 , observamos que o coeﬁciente linear ´e igual a 3
+aonde o gr´aﬁco corta o eixo da ordenada e o coeﬁciente angular ´e 1 que ´e a tangente
+do ˆangulo formado pela fun¸c˜ao com o eixo da abscissa.
+
+Deﬁni¸c˜ao 107. Uma fun¸c˜ao ´e injetiva se e somente se quaisquer que sejam x1 e x2
+pertencente ao dom´ınio da fun¸c˜ao ex1 (cid:54)= x2 implica que f(x1) (cid:54)= f(x2).
+
+Exemplo 108. Seja f(x) = x + 3, temos que a fun¸c˜ao ´e injetiva, pois para x = 1 →
+f(x1) = 4 e para x = 2 →f(x2) = 5.
+
+Deﬁni¸c˜ao 109. Uma fun¸c˜ao ´e sobrejetiva se e somente se o contradom´ınio da fun¸c˜ao
+´e igual a sua imagem.
+
+Exemplo 110. Seja f(x) = x + 3, ´e uma fun¸c˜ao ´e sobrejetiva, pois qualquer que seja
+o valor de x sempre teremos um valor para f(x).
+
+Deﬁni¸c˜ao 111. Uma fun¸c˜ao ´e bijetora se e somente se ela ´e injetiva e sobrejetiva ao
+mesmo tempo.
+
+Como f(x) = x + 3, ´e injetiva e sobrejetiva, ent˜ao ela ´e bijetiva.
+
+61
+
+resumos criptogr´aﬁcos, 49
+
+sigilo, 49
+substitui¸c˜ao, 19
+
+transposi¸c˜ao, 22
+transposi¸c˜ao das colunas, 23
+Troca de Informa¸c˜oes, 47
+
+Vigen`ere, 25
+
+´Indice Remissivo
+
+Alberti, 24
+algoritmo estendido de Euclides, 33
+aritm´etica modular, 38
+assinatura digital, 49
+
+B´ezout, 35
+
+C´esar, 20
+c´odigo, 27
+chave assim´etrica, 48
+Chave Sim´etrica., 45
+Chaves P´ublicas, 47
+Cifra, 19
+Codiﬁca¸c˜ao Utilizando a Cifra de Vi-
+
+gen`ere, 26
+
+coprimos, 35
+criptograﬁa moderna, 45
+crit´erios de divisibilidade, 42
+crivo de Erat´ostenes, 36
+
+decifrar, 19
+decodiﬁcar, 19
+disco de cifra, 24
+divide, 29
+divisibilidade, 29
+
+enigma, 27
+equa¸c˜oes modulares, 41
+
+fun¸c˜ao da cifra de C´esar, 21
+fun¸c˜ao de m˜ao ´unica, 49
+
+m´aximo divisor comum, 30
+m´etodo da substitui¸c˜ao., 20
+
+n´umeros primos, 34
+
+poli-alfab´eticas, 24
+primo, 34
+protocolos, 49
+
+63
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] HEFEZ, Abramo. Aritm´etica. Rio de Janeiro: S.b.m, 2013.
+
+[2] BOYER, Carl Benjamin. T´opicos de HIST ´ORIA DA MATEM ´ATICA
+para uso em sala de aula: C´alculo. S˜ao Paulo: Atual Editora, 1993.
+
+[3] RONIELTON. Artigo revista seguran¸ca digital: publica¸c˜oes. 2012. Dis-
+pon´ıvel em: http://www.ronielton.eti.br. Acesso em: 15 maio 2015.
+
+[4] SINGH, Simon. O livro dos c´odigos. 7. ed. Rio de Janeiro: Record, 2008.
+
+[5] RODR´IGUEZ, Manuel Gonz´alez. CIFRA DE ALBERTI. Dis-
+http://serdis.dis.ulpgc.es/∼ii-cript/PAGINAWEB CLA-
+
+pon´ıvel em:
+SICA/CRIPTPLOGIA/alberti.htm. Acesso em: 22 nov. 2015.
+
+[6] WINTERBOTHAM,
+
+F. W..
+
+Enigma.
+
+http://pt.wikipedia.org/wiki/Enigma (m´aquina). Acesso
+nov. 2015.
+
+Dispon´ıvel
+em:
+
+[7] ,A
+
+CIFRA
+
+de
+
+Vigen`ere.
+
+Dispon´ıvel
+
+https://pt.wikipedia.org/wiki/Cifra de Vigen`ere. Acesso
+nov. 2015.
+
+em:
+
+em:
+22
+
+em:
+22
+
+[8] , FIARRESGA, Victor Manuel Calhabrˆes. Criptograﬁa e Matem´atica.
+Dispon´ıvel em: https://pt.wikipedia.org/wiki/C´ıtala. Acesso em: 22
+nov. 2015.
+
+[9] MIRANDA, Daniel; CAPUTI, Armando. Bases Matem´aticas. Dispon´ıvel
+em: http://gradmat.ufabc.edu.br/disciplinas/bm/livro/. Acesso em: 22
+nov. 2015
+
+65
+
+

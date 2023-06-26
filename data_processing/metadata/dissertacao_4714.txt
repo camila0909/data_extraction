@@ -1,0 +1,3552 @@
+Resolução de problemas via teoria de grafos 
+
+Renato Ferreira de Souza 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+SERVIÇO DE PÓS-GRADUAÇÃO DO ICMC-USP 
+
+Data de Depósito:     
+
+Assinatura:________________________
+
+Resolução de problemas via teoria de grafos  
+
+Renato Ferreira de Souza 
+
+Orientador: Prof. Dr. Sergio Henrique Monari Soares  
+
+Dissertação  apresentada  ao  Instituto  de  Ciências 
+Matemáticas  e  de  Computação  -  ICMC-USP,  como 
+parte dos requisitos para obtenção do título de Mestre – 
+Programa  de  Mestrado  Profissional  em  Matemática. 
+VERSÃO REVISADA  
+
+USP – São Carlos  
+Novembro de 2014  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Ficha catalográfica elaborada pela Biblioteca Prof. Achille Bassi 
+e Seção Técnica de Informática, ICMC/USP, 
+com os dados fornecidos pelo(a) autor(a)
+
+S719r
+
+Souza, Renato Ferreira de
+   Resolução de problemas via teoria de grafos  /
+Renato Ferreira de Souza; orientador Sergio
+Henrique Monari Soares. -- São Carlos, 2014.
+   48 p.
+
+   Dissertação (Mestrado - Programa de Pós-Graduação
+em Mestrado Profissional em Matemática em Rede
+Nacional) -- Instituto de Ciências Matemáticas e de
+Computação, Universidade de São Paulo, 2014.
+
+   1. Grafos. I. Monari Soares, Sergio Henrique,
+orient. II. Título. 
+
+Dedico esse trabalho a
+
+minha esposa, Fernanda,
+
+que sempre me apoiou e
+
+incentivou a continuar os
+
+estudos. Minha paixão essa
+
+vitória não é somente
+
+minha e sim nossa.
+
+Agradecimentos
+
+Agradeço em primeiro lugar a Deus que possibilitou que eu chegasse até aqui, iluminando
+
+cada passo deste árduo caminho, também a Nossa Senhora por sempre interceder por mim
+
+junto ao Pai, e colocando pessoas abençoadas em meu caminho.
+
+À uma pessoa de enorme importância para que esta conquista tornasse possível, pessoa
+
+esta que no início do Profmat era minha noiva e hoje com a graça divina tornou-se minha
+
+esposa, e com o seu doce amor me incentivou a continuar.
+
+Agradeço imensamente aos meus amados e insubstituíveis pais, e ao meu querido irmão
+
+Rodrigo que me acompanham desde o meu nascimento, comemorando comigo todas as vitórias
+
+e apoiando nos momentos de diﬁculdade.
+
+Ao meu professor orientador, Sergio Henrique Monari Soares, pela grande disponibilidade
+
+de tempo em me atender principalmente aos sábados e pelo seu grande apoio com que conduziu
+
+esse trabalho, a ele meu eterno obrigado.
+
+À toda turma 2012/2013 do Profmat, que foi se reduzindo com o passar dos tempos e
+
+desta forma selecionando guerreiros, e com o apoio da turma vencemos barreiras. O apoio de
+
+todos foi indispensável em minha caminhada.
+
+Resumo
+
+SOUZA, R. F. Resolução de problemas via teoria de grafos. 2014. 48
+f. Dissertação (Mestrado) - Instituto de Ciências Matemáticas e de
+Computação, Universidade de São Paulo, São Carlos, 2014.
+
+O objetivo deste trabalho é introduzir a noção de grafos familiarizando os
+alunos com um conceito pouco estudado no ensino fundamental e médio.
+Para isso, foram estudados algumas situações práticas e a resolução por
+meio de grafos. A apresentação da teoria de grafos é feita utilizando
+alguns dos problemas clássicos (Pontes de Königsberg e o Problema do
+caixeiro-viajante) que originaram a teoria tal como é conhecida nos dias
+de hoje.
+
+Palavra-chave: Grafos.
+
+i
+
+Abstract
+
+SOUZA, R. F. Solving problems via graph theory.
+48 f.
+Dissertação (Mestrado) - Instituto de Ciências Matemáticas e de
+Computação, Universidade de São Paulo, São Carlos, 2014.
+
+2014.
+
+The aim of this work is to introduce the notion of graphs familiarizing
+students with a little concept studied in elementary and middle schools.
+For this, some practical situations were studied and the resolution
+through graphs. The presentation of the theory of graphs is done using
+some of the classic problems (The Königsberg bridge problem and The
+travelling salesman problem) that originated the theory as it is known
+today.
+
+Key word: Graphs.
+
+iii
+
+Sumário
+
+Resumo
+
+Abstract
+
+Introdução
+
+1 Grafos
+
+1
+
+2
+
+Primeiras Noções . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Tipos especiais de grafos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.1
+
+2.2
+
+2.3
+
+Grafos Eulerianos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Grafos Hamiltonianos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Grafos valorados
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3
+
+Problema do caixeiro-viajante
+
+. . . . . . . . . . . . . . . . . . . . . . . . . .
+
+3.1
+
+Métodos de solução para o PCV . . . . . . . . . . . . . . . . . . . . .
+
+2 Roteiro de aula
+
+1
+
+2
+
+3
+
+4
+
+5
+
+Introdução . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.1
+
+1.2
+
+Descrição da Comunidade Avaiense . . . . . . . . . . . . . . . . . . . .
+
+Uma breve descrição da escola e dos alunos participantes . . . . . . . .
+
+Organização da sala de aula . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Folhas de Atividades . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Resultados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+4.1
+
+4.2
+
+Atividade 1 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Atividade 2 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+Resumo dos Resultados
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+5.1
+
+5.2
+
+Oitava série do ensino fundamental . . . . . . . . . . . . . . . . . . . .
+
+Terceira série do ensino médio . . . . . . . . . . . . . . . . . . . . . . .
+
+v
+
+i
+
+iii
+
+1
+
+3
+
+3
+
+9
+
+12
+
+15
+
+17
+
+22
+
+22
+
+29
+
+29
+
+29
+
+30
+
+30
+
+31
+
+36
+
+36
+
+38
+
+41
+
+41
+
+42
+
+6
+
+Considerações Finais . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Modiﬁcações
+6.1
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Conclusões ﬁnais . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.2
+Sugestões de Atividades . . . . . . . . . . . . . . . . . . . . . . . . . .
+6.3
+
+Referências Bibliográﬁcas
+
+42
+42
+43
+44
+
+47
+
+Introdução
+
+Objetivo deste trabalho é trazer o assunto de grafos para o cotidiano dos alunos do ensino
+médio, mesmo que de maneira simpliﬁcada. Apesar de se tratar de um conteúdo que não
+consta do currículo convencional de ensino, a abordagem proposta é acessível a esse nível
+e deste modo é possível introduzir diversos problemas interessantes que surgem em diversas
+áreas como no serviço de coleta de lixo, controle de tráfego, nas etapas de construção na
+engenharia civil, dentre tantas outras.
+
+Em 1736, Leonhard Euler escreveu o primeiro artigo relacionado a grafos, de considerável
+importância não só para esta teoria, como também para a Matemática como um todo. Euler
+iniciou seus estudos em grafos discutindo um enigma, hoje conhecido como O Problema das
+Pontes de Königsberg, o qual ele resolveu e determinou um método geral para problemas do
+mesmo tipo. Posteriormente surgiram outros problemas que hoje são tidos como clássicos
+na teoria de grafos, a saber, o problema das quatro cores e o problema do caixeiro-viajante.
+Nos dias de hoje, os conceitos sobre grafos são usados nos ramos da Economia, Biologia,
+Computação, Engenharia, entre outros.
+
+O presente trabalho está divídido em dois capítulos, sendo que o primeiro traz os conceitos
+de grafos que foram aqui utilizados na discussão de dois problemas clássicos: Pontes de
+Königsberg e o problema do caixeiro viajante. No segundo capítulo temos alguns exercícios
+sobre grafos que foram aplicados em sala de aula de uma escola pública e apresentamos os
+resultados obtidos.
+
+1
+
+Capítulo
+
+1
+Grafos
+
+Neste capítulo apresentaremos conceitos básicos sobre a teoria dos grafos que serão utilizados
+nesta dissertação.
+
+1 Primeiras Noções
+
+Deﬁnição 1.1. Um grafo é um par G = (V, A), onde V é um conjunto ﬁnito não vazio e A
+é uma família de pares não ordenados de elementos, não necessariamente distintos, de V .
+
+Deﬁnição 1.2. Um grafo simples G é um grafo G = (V, A), onde A é um conjunto de pares
+distintos não ordenados de elementos distintos de V.
+
+Os elementos de V são chamados de vértices do grafo, e os elementos A são as arestas do
+grafo. Uma aresta (a, b) ∈ A será denotada simplesmente por ab. Além disso, dizemos que
+uma aresta ab contém os vértices a e b, ou que a e b pertencem à aresta ab.
+
+Deﬁnição 1.3. Dado um grafo (V, A) e a, b ∈ V , dizemos que a é adjacente a b se e somente
+ab ∈ A e que aresta ab é incidente aos vértices a e b. A notação a ∼ b signiﬁca que a é
+adjacente a b.
+
+O número de vértices de uma grafo (V, A) será representado por |V | ou simplesmente n e
+
+o número de arestas será representado por |A| ou simplesmente m.
+A Figura 1.2 é uma representação do grafo simples
+
+(V, A),
+
+sendo V
+
+=
+
+{a, b, c, d, e, f, g, h, i, j} e A = {ab, ac, bd, cd, cg, ch, de, dh, ei, f i, f j, gc, gh, hi}.
+
+3
+
+4
+
+Capítulo 1 — Grafos
+
+No exemplo a seguir, vamos considerar um problema que pode ser abordado pela teoria
+
+de grafos.
+
+Exemplo 1.4. Em uma pequena cidade do interior, Joana é uma agente de endemias que
+trabalha no combate à dengue, inspecionando residências e orientando os moradores sobre os
+possíveis focos da doença. Como faz todo o trajeto a pé, ela resolve buscar uma forma de
+otimizar o seu caminho, e para isso pede ajuda á sua amiga Isabela engenheira de tráfego.
+Primeiramente Isabela pede para a agente o mapa da região que será visitada e em seguida faz
+a identiﬁcação dessa região como um grafo.
+
+Figura 1.1: Representação (Fonte [1])
+
+a
+
+c
+
+g
+
+b
+
+d
+
+h
+
+f
+
+j
+
+e
+
+i
+
+Figura 1.2: Representação em grafo
+
+O que Joana deseja é percorrer um trajeto a partir de um ponto especíﬁco, passando por
+todas as casas, sem precisar repetir nenhuma rua, e voltar ao ponto de partida. A solução
+para o problema de Joana é o que será denominado de circuito de Euler, assunto que será
+abordado posteriormente.
+
+Esse exemplo é uma versão do problema clássico das Sete Pontes de Königsberg.
+Königsberg foi uma cidade da antiga Prússia, que hoje faz parte da Rússia, chamada de
+Kaliningrado.
+
+A Figura 1.3 mostra um mapa da cidade de Königsberg. A cidade é banhada pelo Rio
+Pregel que, ao atravessar a cidade se ramiﬁca formando duas ilhas que estão ligadas entre si e
+ao restante da cidade por sete pontes. Segunda a lenda, os moradores da cidade gostavam de
+passear pela cidade à tarde e cogitaram se haveria um trajeto pela cidade em que cada ponte
+fosse atravessada exatamente uma vez e que voltasse para o ponto de partida. Como as suas
+tentativas foram sempre falhas, muitos deles acreditavam que não era possível encontrar tal
+
+1 Primeiras Noções
+
+5
+
+Figura 1.3: Mapa de Königsberg (Fonte [9])
+
+Figura 1.4: Representação em grafo
+
+percurso, provocando muitas discussões para a época. Coube a Leonhard Euler1 a brilhante
+resolução por meio de uma representação alternativa do problema, usando pontos e segmentos
+
+1Leonhard Euler (1707-1783), matemático e físico suíço. Ele não só fez contribuições decisivas e formativas
+
+para os temas de geometria, cálculo, mecânica e teoria dos números, mas também desenvolveu métodos para
+
+resolução de problemas em astronomia. Em 1727 mudou-se para São Petersburgo, onde ele se tornou associado
+
+da Academia de São Petersburgo de Ciências. Por meio de seus inúmeros livros e teses, Euler elevou o cálculo
+
+integral para um maior grau de perfeição, desenvolveu a teoria de funções trigonométricas e logarítmicas,
+
+reduziu as operações analíticas para uma maior simplicidade, e lançou uma nova luz sobre quase todas as
+
+partes da matemática pura. Em 1741, ele tornou-se membro da Academia de Berlim, onde por 25 anos
+
+produziu um ﬂuxo constante de publicações. Em 1748, em sua obra Introduction in analysin inﬁnitorum, ele
+
+desenvolveu o conceito de função e avançou o uso de inﬁnitesimais e quantidades inﬁnitas. Ele fez para a
+
+geometria analítica moderna e trigonometria o que os Elementos de Euclides tinham feito para a geometria
+
+antiga. Os seus livros de cálculo, Institutiones diﬀerentialis calculi, em 1755, e Institutiones Integralis, em
+
+1768-70, serviram como protótipos para o presente, pois eles contêm fórmulas de diferenciação e numerosos
+
+métodos de integração, muitas das quais ele inventou para determinar o trabalho realizado por uma força e
+
+para a resolução de problemas geométricos, e fez avanços na teoria das equações diferenciais lineares, que são
+
+úteis na resolução de problemas em física. Euler retornou à Rússia em 1766 a convite de Catarina II. Logo
+
+após sua chegada em São Petersburgo, ele foi acometido por uma catarata e passou os últimos anos de sua vida
+
+em cegueira total. Apesar disso, a produtividade continuou intacta, sustentada por uma memória incomum
+
+e uma notável facilidade em cálculos mentais. Seus interesses eram amplos e seu trabalho apresentou uma
+
+exposição admiravelmente clara dos princípios básicos da mecânica, óptica, acústica e astronomia física. Euler
+
+dedicou considerável atenção ao desenvolvimento de uma teoria mais perfeita do movimento lunar, o que foi
+
+particularmente problemático, uma vez que envolveu as interações entre o Sol, a Lua e a Terra, conhecido
+
+atualmente como o problema dos três corpos e ainda sem solução. Ao longo de sua vida, Euler foi muito
+
+6
+
+Capítulo 1 — Grafos
+
+de retas, para elucidá-lo, de acordo com a Figura 1.4. Os vértices representam as regiões de
+terras, enquanto as arestas são as pontes. Notamos que para encontrar a solução de tal
+problema é necessário encontrar um caminho fechado contendo todas as arestas.
+
+Deﬁnição 1.5. Sejam G = (V, A) um grafo e v ∈ V um vértice. O grau de v é o número de
+arestas que incidem sobre ele e se denota por d(v). Chama-se ordem do grafo G ao número
+de vértices de G, |V |, que representa o cardinal de V .
+
+Exemplo 1.6. Na Figura 1.2, temos d(a) = 2; d(b) = 2; d(c) = 4; d(d) = 4; d(e) = 2;
+d(f ) = 2; d(g) = 2; d(h) = 4; d(i) = 4; d(j) = 2.
+
+Deﬁnição 1.7. Um grafo direcionado (dígrafo) é um par ordenado G = (V, A) onde existe
+uma relação de um vértice para outro, informando especiﬁcamente uma direção a ser tomada.
+
+a
+
+b
+
+c
+
+d
+
+Figura 1.5: Grafo Direcionado
+
+Observando a Figura 1.5, vemos que para ir do vértice a para o d será necessária uma
+passagem pelos vértices b e c uma vez que a aresta existente entre a e d incide em direção
+contrária.
+
+No que segue, daremos mais algumas deﬁnições.
+
+• Quando dois vértices estão ligados por mais de uma aresta, denomina-se multigrafo.
+
+Veja a Figura 1.6 para um exemplo.
+
+Figura 1.6: Multigrafo
+
+• Uma aresta é um laço se para v ∈ V , vv ∈ A. Veja a Figura 1.7 para um exemplo.
+
+• Duas arestas ab e cd ∈ A(G) são adjacentes se possuem um vértice em comum, isto é,
+
+se a = c ou a = d, ou b = c ou b = d.
+
+• Sejam os grafos G = (VG, AG) e H = (VH , AH ). Dizemos que H é um subgrafo de G se
+
+VH ⊆ VG e AH ⊆ AG.
+
+absorvido por problemas relacionados com a teoria dos números. Sua maior descoberta, em 1783, foi a lei da
+
+reciprocidade quadrática, que se tornou uma parte essencial da teoria dos números moderna.
+
+1 Primeiras Noções
+
+7
+
+Figura 1.7: Grafo com Laço
+
+Exemplo 1.8. Sejam G e H os seguintes grafos:
+
+V (G) = {1, 2, 3, 4}
+
+V (H) = {1, 3, 4}
+
+A(G) = {{1, 2}, {1, 3}, {2, 3}, {2, 4}, {3, 4}} A(H) = {{1, 3}, {3, 4}}
+
+Note que V (H) ⊂ V (G) e A(H) ⊂ A(G) e, assim, H é um subgrafo de G. Graﬁcamente,
+esses grafos se apresentam como segue
+
+1
+
+3
+
+2
+
+4
+
+Figura 1.8: Grafo G
+
+1
+
+3
+
+4
+
+Figura 1.9: Grafo H
+
+Teorema 1.9. Seja G = (V, A) um grafo não orientado e com m arestas, então:
+
+d(v) = 2|A|.
+
+(cid:88)
+
+v∈V
+
+Isto é, “a soma dos graus dos vértices de um grafo é sempre o dobro do número de arestas”.
+
+Demonstração. Considerando que cada uma das arestas apresentam dois vértices, e com isso
+contando a quantidade de arestas por vértice, teremos que toda aresta será contada duas
+vezes, deste modo, a soma dos graus dos vértices será o dobro da quantidade de arestas.
+
+Observação 1.1. Para a validade do Teorema 1.9, a aresta em um laço deve ser contada
+duas vezes.
+
+Exemplo 1.10. Dez amigos se encontram após longo tempo separados. Quando se encontram
+ocorre uma grande troca de aperto de mãos. Observando que cada um dos dez amigos
+
+8
+
+Capítulo 1 — Grafos
+
+v9
+
+v10
+
+v8
+
+v1
+
+v2
+
+v7
+
+v6
+
+v3
+
+v5
+
+v4
+
+Figura 1.10: Representação do grafo associado ao problema
+
+comprimentariam os nove outros amigos pode-se concluir que ocorreram quantos apertos de
+mãos?
+
+Associando o problema para grafos, os amigos são os vértices V e os apertos de mãos como
+as arestas A. O grau dos vértices é d(vi)=9 com i ∈ {1, 2, . . . , 10}, portanto a soma de todos
+os graus será, 10.9=90. Porém, sabemos que a ligação v1 com v2 é a mesma de v2 com v1, e
+desta forma o número de arestas do grafo é dado por |A| = 45.
+
+Como corolário deste teorema temos:
+
+Corolário 1.11. Em todo grafo o número de vértices de grau ímpar é par.
+
+Demonstração. Suponhamos que um grafo tenha um número ímpar de vértices de grau ímpar.
+Desse modo, a soma desses graus seria ímpar. Por outro lado, a soma dos graus do vértices
+de grau par é sempre par. Sendo assim, a soma dos graus dos vértices desse grafo seria ímpar,
+contradizendo o Teorema 1.9.
+
+Valendo-se do conceito de Matrizes que é estudado tradicionalmente no segundo ano do
+ensino médio, podemos fazer uma outra demonstração do Teorema 1.9. Para fazer isso vamos
+primeiramente representar grafos de por meio de matrizes.
+
+Dado um grafo G = (V, A), com n vértices representados por 1, 2, . . . , n, seja M = [mij] a
+
+matriz n × n dada por
+
+mij =
+
+(cid:40)
+
+1
+
+0
+
+se i é adjacente a j;
+
+caso contrario.
+
+Essa matriz denomina-se matriz de adjacência do grafo G = (V, A). Por exemplo, o grafo
+
+da ﬁgura 1.11, possui matriz de adajacência dada por
+
+M =
+
+
+
+
+
+
+
+
+
+
+
+
+0 1 1 0 0
+
+1 0 1 1 0
+
+1 1 0 0 1
+
+0 1 0 0 1
+
+0 0 1 1 0
+
+
+
+
+
+
+
+
+
+
+
+
+2 Tipos especiais de grafos
+
+9
+
+a
+
+c
+
+e
+
+b
+
+d
+
+Figura 1.11: Grafo simples
+
+A técnica para provar o Teorema 1.9 é então contar quantos 1s há nesta matriz. De fato, note
+que para para cada aresta de G há exatamente dois 1 na matriz (se vivj ∈ A, então há um 1
+na posição ij e um 1 na posição ji). Assim, o número de 1 na matriz é exatamente 2m, onde
+m é o número arestas.
+
+Exercício 1.12.
+
+1. Um determinado reinado tem 100 cidades e saem quatro estradas de cada uma delas.
+
+Quantas estradas existem ao todo neste reinado?
+
+2. Uma turma tem 30 alunos. É possível que nove deles tenham 3 amigos cada (na turma),
+
+onze tenham 4 amigos e dez tenham 5 amigos?
+
+3. Mostre que em todo grupo de pessoas, existem pelo menos duas que possuem o mesmo
+
+número de conhecidos no grupo.
+
+4. Observando a representação em grafo da Figura 1.2, construa a sua matriz de
+
+adjacência.
+
+5. Considerando a matriz de adjacência abaixo, faça sua representação em Grafo.
+
+X =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0 1 1 0 0 0 0 0
+
+1 0 0 1 0 0 0 0
+
+1 0 0 1 0 0 0 0
+
+0 1 1 0 0 0 0 0
+
+0 0 0 0 0 1 0 0
+
+0 0 0 0 1 0 1 0
+
+0 0 0 0 0 1 0 1
+
+0 0 0 0 0 0 1 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 Tipos especiais de grafos
+
+Deﬁnição 1.13. Um grafo é dito completo quando todos os pares de vértices distintos são
+adjacentes. Um grafo completo com n vértices se denota por Kn.
+
+10
+
+Capítulo 1 — Grafos
+
+Figura 1.12: Representação de um grafo completo K5
+
+A Figura 1.12 é a representação de um grafo completo K5. Outro exemplo de um grafo
+
+completo é a situação apresentada na Figura 1.10.
+
+Para a determinação do número de arestas de um grafo completo deve-se realizar a
+
+combinação dos vértices. Por exemplo
+
+|A(k6)| =
+
+(cid:19)
+
+(cid:18)6
+2
+
+= 15,
+
+|A(kn)| =
+
+(cid:19)
+
+(cid:18)n
+2
+
+=
+
+n!
+(n − 2)!.2!
+
+.
+
+Deﬁnição 1.14. Seja G um grafo. Um grafo G é complementar de G sempre que V (G) =
+V (G) e A(G) = {ab : a, b ∈ V (G), a (cid:54)= b, ab /∈ A(G)}.
+
+Figura 1.13: Representação de grafos complementares
+
+Deﬁnição 1.15. Um grafo G é nulo se A(G) = ∅. Isto é, um grafo sem arestas.
+
+Figura 1.14: Grafo nulo
+
+Deﬁnição 1.16. Se todos os vértices de um grafo G têm o mesmo grau k , dizemos que G é
+regular de grau k, ou ainda k-regular.
+
+Observamos que todo grafo completo é regular, mas nem todo regular é completo. ]
+
+Deﬁnição 1.17. Seja G = (V, A) um grafo. Um passeio em G é uma sequência (ou lista)
+ﬁnita de arestas P = (v0v1, v1v2, . . . , vl−1vl). O número l denomina-se o comprimento desse
+
+2 Tipos especiais de grafos
+
+11
+
+Figura 1.15: Representação de um grafo 3-regular
+
+passeio. Quando todas as arestas do passeio são distintas, o passeio é chamado de trilha; se
+v0 = vl o passeio denomina-se trilha fechada, caso contrário denomina-se trilha aberta.
+
+v0
+
+v1
+
+v2
+
+v3
+
+Figura 1.16: Passeio
+
+Deﬁnição 1.18. Um caminho em um grafo G é um passeio em G em que nenhum vértice é
+repetido, a menos dos extremos.
+
+Figura 1.17: Exemplo de caminho
+
+Deﬁnição 1.19. Sejam G e a, b ∈ V (G). Dizemos que a é ligado a b se existe um caminho
+cujo primeiro vértice é a e o último é b.
+
+Deﬁnição 1.20. Um grafo é chamado conexo se cada par de vértices no grafo está ligado por
+um caminho.
+
+Deﬁnição 1.21. Um ciclo é um grafo regular conexo de grau 2.
+
+Observamos que um caminho é um ciclo do qual foi retirada uma aresta.
+
+Exemplo 1.22. Em um país existem 15 cidades, cada uma das quais está ligada por uma
+estrada a pelo menos 7 outras. Prove que o grafo das estradas desse país é conexo, ou seja,
+prove que é possível ir de qualquer cidade à uma outra qualquer, possivelmente passando por
+algumas cidades intermediárias.
+
+12
+
+Capítulo 1 — Grafos
+
+Figura 1.18: Ciclo
+
+Vamos considerar duas cidades quaisquer e supor que não existe tal caminho ligando as
+duas. Sendo assim, não existe uma sequência de estradas, com o ﬁnal de cada uma delas
+coincidindo com o início da próxima, ligando as duas cidades. Sabe-se que cada uma dessas
+duas cidades está ligada a pelo menos outras 7 estradas. Estas 14 estradas têm que ser todas
+distintas: se duas delas fossem a mesma, existiria um caminho que ligaria as duas cidades
+dadas inicialmente (veja a Figura 1.19). Portanto, temos que este país tem pelo menos 16
+cidades diferentes, o que contradiz a enunciado do problema.
+
+A
+
+B
+
+Figura 1.19
+
+2.1 Grafos Eulerianos
+
+Motivados pelo problema das Sete Pontes de Königsberg, somos levados à seguinte deﬁnição:
+
+Deﬁnição 1.23. Seja G = (V, A) um grafo. Um passeio em G que percorre cada aresta de
+G exatamente uma vez é chamado caminho de Euler. Um caminho de Euler que se inicia e
+termina no mesmo vértice é chamado circuito de Euler. Por ﬁm, se G possui um circuito de
+Euler, dizemos que G é um grafo euleriano. Se o grafo não possui um circuito de Euler, mas
+sim um caminho de Euler, ele será denominado semieuleriano.
+
+2 Tipos especiais de grafos
+
+13
+
+c
+
+a
+
+b
+
+d
+
+e
+
+g
+
+i
+
+f
+
+h
+
+temos dois exemplos, o primeiro de um grafo euleriano e o
+Nas ﬁguras acima,
+segundo de um grafo semieuleriano.
+Para primeira ﬁgura encontramos uma trilha
+fechada (ab,bc,cb,bd,dc,cd,da). Para a segunda ﬁgura encontramos uma trilha aberta
+(hg,gf,ﬁ,ih,hf,fe,eg,gi).
+
+No que segue, vamos estabelecer uma condição necessária para um grafo ser euleriano.
+
+Iniciamos com o seguinte lema.
+
+Lema 1.24. Se todo vértice de um grafo G, não necessariamente simples, possui grau maior
+ou igual a 2, então G contém um ciclo.
+
+Demonstração. Se G contém laços ou arestas múltiplas, o resultado é imediato. Suponhamos
+que G seja um grafo simples. A partir de um vértice vi qualquer iniciamos a trilha
+partindo para um vi+1 adjacente e diferente de vi−1 qualquer, vértices estes garantidos pela
+hipótese, como G possui um número ﬁnito de vértice em algum momento deste procedimento
+escolheremos um vértice já escolhido antes, e assim produzindo um ciclo.
+
+Teorema 1.25. Um grafo conexo Gé euleriano se, e somente se, todos os seus vértice
+apresentarem grau par.
+
+Demonstração. Suponhamos que G seja euleriano; assim, todos os vértices possuem grau par.
+De fato, como G possui uma trilha fechada, então devemos começar e terminar em um mesmo
+vértice, desta forma cada vez que se chega em um vértice necessita de uma nova aresta para
+sair dele. Logo, o grau de cada vértice necessariamente é par. Reciprocamente, suponhamos
+que todos os vértices têm grau par. Argumentaremos por indução no número de arestas m.
+Por vacuidade o teorema é válido quando m = 0. Suponhamos que o teorema seja válido
+para todos os grafos com menos de m arestas. Sendo G conexo, todos os vértices apresenta
+grau maior que 2, pois sabemos que os graus são pares. Pelo Lema 1.24, temos um ciclo.
+Dentre todas as trilhas fechadas, escolhemos uma trilha T de comprimento máximo. Se T
+tiver comprimento m, o teorema estaria demonstrado. Caso contrário, considere a trilha H
+obtida pela retirada de uma das arestas de T . Como foi retirado um número par de arestas
+de cada vértice de T e, pela hipótese, todos os vértices apresentam o grau do vértice pares,
+ao menos uma das componentes de H tem vértice comum com o T e tem todos os graus
+pares. Pela hipótese de indução, H tem uma trilha fechada que passa por todos os vértices
+de H, e podemos formar uma trilha fechada maior conectando T com a trilha em H, mas isto
+contrariaria a maximalidade na escolha de T e o demonstração do teorema está concluída.
+
+14
+
+Capítulo 1 — Grafos
+
+Voltando ao problema das Sete Pontes de Königsberg, vemos pelo Teorema 1.25 que é
+impossível atravessar todas as pontes e retornar ao ponto de partida sem passar mais de uma
+vez por todas elas, porque, o grafo que representa as pontes tem vértices de grau ímpar. No
+entanto, persiste a questão da existência de um trajeto pela cidade atravessando todas as
+pontes sem passar mais de uma vez por uma delas sem a necessidade de retornar ao ponto
+de partida, ou seja, a questão da existência de um caminho de Euler. A resposta é dada pelo
+próximo resultado.
+
+Corolário 1.26. Um grafo conexo (não necessariamente simples) G é semieuleriano se, e
+somente se, houver um único par de vértices de grau ímpar .
+
+Demonstração. A ideia é acrescentar uma aresta a dois vértices de grau ímpar e usar o teorema
+anterior.
+
+Exercício 1.27.
+
+1. O Caso Count Van Diamond. A planta abaixo é da residência do bilionário Count Van
+Diamond, que acaba de ser assassinado. Sherlock Gomes (um conhecido detetive que
+nas horas vagas é um estudioso da teoria de grafos) foi chamado para investigar o caso.
+O mordomo alega ter visto o jardineiro entrar na sala da piscina (lugar onde ocorreu o
+assassinato) e logo em seguida sair daquela sala pela mesma porta que havia entrado.
+O jardineiro, contudo, aﬁrma que ele não poderia ser a pessoa vista pelo mordomo, pois
+ele havia entrado na casa, passado por todas as portas uma única vez e, em seguida,
+deixado a casa. Sherlock Gomes avaliou a planta da residência (conforme ﬁgura abaixo)
+e em poucos minutos declarou solucionado o caso. Quem poderia ser o suspeito indicado
+por Sherlock Gomes? Qual o raciocínio utilizado pelo detetive para apontar o suspeito?
+(Fonte: [10])
+
+Figura 1.20: (Fonte: [10])
+
+2 Tipos especiais de grafos
+
+15
+
+2. Um grupo de ilhas estão ligados por pontes de modo que é possível andar de uma ilha
+para outra qualquer. Um turista percorreu todas as ilhas cruzando cada ponte exatamente
+uma vez, tendo visitado a ilha de Tripla três vezes. Quantas pontes há em Tripla se:
+
+(a) o turista não começou e nem terminou o seu percurso na ilha de Tripla;
+
+(b) o turista começou o seu percurso em Tripla, mas não termnou por lá;
+
+(c) o turista começou e terminou o seu percurso na ilha de Tripla;
+
+3.
+
+(a) Uma peça de ﬁo tem 120 cm de comprimento. É possível usá-la para formar arestas
+
+de um cubo com arestas de 10 cm?
+
+(b) Qual o menor números de cortes que é preciso fazer no ﬁo para que se possa formar
+
+o cubo desejado?
+
+2.2 Grafos Hamiltonianos
+
+Para motivar a próxima deﬁnição, vamos considerar The Icosian game, o qual é um jogo
+inventado em 1857 por William Hamilton.2 O jogo envolvia um dodecaedro onde cada um
+dos seus 20 vértices receberam nomes de cidades importantes na época: Dublin, Roma, Paris,
+Madrid, etc. O objetivo do jogo era que o jogador viajasse “ao redor do mundo”, obtendo uma
+viagem circular, num itinerário contínuo pelas arestas de um dodecaedro, que saindo de uma
+determinada cidade, incluísse todas as cidades exatamente uma vez. Observa-se que a única
+restrição neste processo era que só era possível viajar de uma cidade para outra se existisse
+uma aresta entre os vértices correspondentes. O referido itinerário ia-se marcando com um
+ﬁo de lã, que se prendia à cidade inicial (ex: Dublin) e dava a volta no eixo de cada cidade
+por onde passava. O desaﬁo proposto é possível e não muito díﬁcil. Os especialistas podiam
+jogar ﬁxando duas ou mais cidades como ponto de partida.
+
+Como o dodecaedro regular de madeira é um pouco volumoso e díﬁcil manejar, surgiu
+
+uma outra versão do mesmo jogo, agora como uma ﬁgura planiﬁcada (veja Figura 1.21).
+
+Deﬁnição 1.28. Seja G um grafo. Um caminho em G que passa uma única vez por cada
+vértice de G é chamado caminho Hamiltoniano. Se, além disso, o caminho começa e termina
+
+2William Rowan Hamilton (1805-1865), matemático irlandês que contribuiu para o desenvolvimento da
+
+óptica, dinâmica e álgebra, em particular descobrindo a álgebra de quatérnios. De 1833 em diante, Hamilton
+
+adaptou seus métodos ópticos para o estudo de problemas de dinâmica. Dois dos principais artigos de Hamilton
+
+On a General Method in Dynamics foram publicados em 1834 e 1835. No segundo destes, as equações
+
+de movimento de um sistema dinâmico são expressos em uma forma particularmente elegante (equações de
+
+movimento de Hamilton). A abordagem de Hamilton foi aperfeiçoada pelo matemático alemão Carl Jacobi, e
+
+sua importância tornou-se evidente no desenvolvimento da mecânica celeste e mecânica quântica. A Mecânica
+
+Hamiltoniana é subjacente á pesquisa contemporânea em geometria simplética (um campo de pesquisa em
+
+geometria algébrica) e da teoria de sistemas dinâmicos. De 1837 a 1846, Hamilton foi presidente da Real
+
+Academia Irlandesa. Em 1856, Hamilton investigou caminhos fechados ao longo das arestas de um dodecaedro
+
+(um dos sólidos platônicos) que passam cada uma dos vértice exatamente uma vez. Em teoria dos grafos tais
+
+caminhos são conhecidos hoje como ciclo Hamiltonianos.)
+
+16
+
+Capítulo 1 — Grafos
+
+Figura 1.21: Icosain Game (Fonte: [4])
+
+no mesmo vértice, o caminho é chamado ciclo Hamiltoniano. Por ﬁm, se G possui um ciclo
+Hamiltoniano, dizemos que G é um grafo Hamiltoniano.
+
+Observe os dois grafos abaixo. O primeiro apresenta um ciclo Hamiltoniano, já o segundo
+
+não.
+
+v4
+
+v1
+
+v5
+
+v3
+
+v2
+
+v4
+
+v1
+
+v5
+
+v3
+
+v2
+
+Em teoria de grafos, saber se um grafo é ou não Hamiltoniano é uma questão muita
+estudada, devido a sua aplicação em comunicação, transporte e planejamento. O próximo
+resultado apresenta uma condição suﬁciente para um grafo ser Hamiltoniano.
+
+Teorema 1.29. (Dirac) Se G é um grafo de ordem n ≥ 3 tal que o d(v) ≥ n/2 para cada
+vértice v de G, então G é Hamiltoniano.
+
+Demonstração. Suponha que a aﬁrmação seja falsa. Então existe um grafo simples não-
+Hamiltoniano maximal G de ordem n ≥ 3 que satisfaz a condição do teorema. Ou seja,
+(maximal no sentido de que) G é não-Hamiltoniano, mas para qualquer par de vértices não
+adjacentes u, v em G, temos que o grafo G + uv (o grafo obtido pelo acréscimo da aresta
+uv) é Hamiltoniano. Claramente G não é completo (todo grafo completo com pelo menos
+3 vértices é obviamente Hamiltoniano). Portanto, existem vértices u e v não adjacentes em
+G. Considere o grafo H := G + uv. Pela maximalidade de G, segue que H é Hamiltoniano.
+Logo, todo circuito Hamiltoniano em H deve conter a aresta uv. Então G tem um caminho
+Hamiltoniano, digamos
+
+P := (uv1, v1v2, . . . , vnv).
+
+2 Tipos especiais de grafos
+
+17
+
+Note que, se vi é adjacente a u, então vi−1 não é adjacente a v, pois senão
+
+C = (v1vi, vivi+1, . . . , vn−1vn, vnvi−1, vi−1vi−2, . . . , v2v1)
+
+seria um circuito Hamiltoniano em G, contrariando a escolha de G. Portanto, para todo
+vértice adjacente a u, existe um vértice de V (G) tal que v que não é adjacente a v. Mas neste
+caso,
+
+d(v) ≤ n − 1 − d(u).
+
+Como d(u) ≥ n
+verdadeira, e o teorema está provado.
+
+2 , temos que d(v) ≤ n − 1 − n
+
+2 = n
+
+2 − 1, uma contradição. Logo, a aﬁrmação é
+
+O próximo resultado apresente uma outra condição suﬁciente para um grafo ser
+
+Hamiltoniano.
+
+Teorema 1.30. (Ore) Seja G um grafo simples de ordem n ≥ 3. Se d(u) + d(v) ≥ n, para
+todo par u, v de vértices não adjacentes, então G é Hamiltoniano.
+
+Demonstração. Dado G nas condições do Teorema, suponhamos G não Hamiltoniano.
+Adicione em G, se possível, o maior número de arestas de modo que G continue não
+Hamiltoniano. Após isto, qualquer aresta a mais tornará G Hamiltoniano. Observe que
+com a adição destas arestas, ainda temos d(u) + d(v) ≥ n. Seja C = (v1v2, v2v3, . . . , vn−1vn)
+um caminho G que contém todos os vértices (tal caminho existe, pois com uma aresta a
+mais o grafo seria Hamiltoniano fornecendo assim um ciclo Hamiltoniano). Como G não
+é Hamiltoniano, C não é ciclo e então os vértices v1 e vn não são adjacentes. Portanto,
+d(v1) + d(vn) ≥ n e de modo análogo ao teorema anterior, mostramos que existe algum
+vértice vi adjacente a v1 tal que vi−1 é adjacente à vn. Deste modo obtemos um ciclo
+(v1v2, v2v3, . . . , vi−1vn, vnvn−1...vi+1vi, viv1) contendo todos os vértices de G, ou seja, um ciclo
+Hamiltoniano. Mas isso contradiz as hióteses sobre G e portanto G deve ser Hamiltoniano.
+
+2.3 Grafos valorados
+
+Deﬁnição 1.31. Um grafo valorado é uma terna G = (V, A, T ), onde V é o conjunto de
+vértices do grafo, A é o conjunto de arestas do grafo e T é um conjunto de números reais que
+são atribuídos a cada uma das arestas ou aos vértices do grafo.
+
+Para exempliﬁcar o conceito de grafo valorado, vamos considerar o seguinte exemplo:
+
+Exemplo 1.32. Considere a tabela de tarefas para a construção de uma casa de madeira.
+Qual é o tempo mínimo, em dias, para a construção desta casa?
+
+No Capítulo 2 desta dissertação será feito uma análise da aplicação deste exemplo em sala
+
+de aula do ensino fundamental e médio.
+
+18
+
+Capítulo 1 — Grafos
+
+Tarefas
+
+Pré-requisitos Dias
+
+1. Limpeza do terreno
+
+Nenhum
+
+2. Produção e colocação da fundação
+
+3. Produção e colocação da estrutura
+
+4. Colocação das tábuas externas
+
+5. Colocação do telhado
+
+6 Instalação do encanamento e ﬁação
+
+7. Colocação dos batentes de janelas e portas
+
+8. Instalação das Janelas e portas
+
+9. Pintura interior
+
+1
+
+2
+
+3
+
+3
+
+4 e 5
+
+3
+
+6
+
+7 e 8
+
+4
+
+3
+
+7
+
+4
+
+6
+
+6
+
+5
+
+5
+
+5
+
+Tabela 1.1: Tarefas a serem desenvolidas
+
+A resolução do problema em questão trabalha a ideia de minimizar o tempo de construção,
+mas vale ressaltar a necessidade de garantir o tempo mínino para a execução de todas as
+tarefas.
+
+Vamos começar com um grafo sem arestas e a medida que avançarmos no raciocínio
+completaremos o grafo. Os vértices correspondem ás tarefas a serem realizadas e indicaremos
+sobre cada aresta a duração de cada processo, constituindo-se assim um grafo valorado.
+
+1
+
+2
+
+3
+
+4
+
+7
+
+5
+
+6
+
+9
+
+8
+
+Figura 1.22
+
+Inicialmente efetua-se a limpeza do terreno, para posteriormente dar continuidade no
+projeto. Estando concluída a limpeza do terreno, etapa programada para 4 dias, podemos
+
+4
+
+1
+
+2
+
+Figura 1.23: Primeira parte
+
+prosseguir com a produção e colocação da fundação, pois, esta apresenta como pré-requisito
+a limpeza do terreno já efetuada. Sendo assim, a produção e colocação da fundação dará
+inicio no quinto dia de construção. De acordo com a tabela dos procedimentos, vemos que
+para a realização da tarefa 2 é necessário um período previsto de 3 dias. Após a conclusão
+do processo de produção e colocação da fundação já terá transcorrido sete dias de obra sendo
+
+2 Tipos especiais de grafos
+
+19
+
+assim, a produção e colocação das estruturas apenas poderá ocorrer no oitavo dia de trabalho,
+e com uma previsão de sete dias adicionais para a conclusão (Figura 1.24).
+
+4
+
+2
+
+3
+
+1
+
+3
+
+Figura 1.24: Segunda parte
+
+Concluídos todos os trabalhos de produção das estruturas, duas novas equipes de
+construtores e serventes entram em ação para acelerar o processo, tendo em vista que o
+processo de colocação das tábuas externas, colocação do telhado e colocação das janelas e
+portas, são processos independentes, isto é, não é necessária a ﬁnalização de nenhum deles
+para que se prossiga o outro. Portanto, transcorridos 14 dias de construção, três novos
+procedimentos serão iniciados. Observe que para dar continuidade ao processo de construção,
+
+4
+
+3
+
+2
+
+1
+
+3
+
+7
+
+7
+
+7
+
+4
+
+7
+
+5
+
+Figura 1.25: Terceira parte
+
+com a instalação do encanamento e ﬁação, é necessário que os processos de colocação das
+tábuas externas e colocação dos telhados estejam concluídos. Por isto devemos observar que
+após concluído o processo de colocação das tábuas externas, foram transcorridos 18 dias do
+início das obras, de acordo com o grafo da Figura 1.26. Não podendo avançar ainda, pois como
+
+4
+
+3
+
+2
+
+1
+
+3
+
+4
+
+6
+
+7
+
+7
+
+7
+
+4
+
+7
+
+5
+
+Figura 1.26: Quarta parte
+
+foram transcorridos somente dezoito dias, não teremos encerrado o processo de colocação do
+telhado, e desta forma ainda deveremos esperar por mais dois dias para a conclusão desta
+etapa e, somente assim, iniciar o processo de instalação do encanamento e ﬁação no vigésimo
+primeiro dia de obra. Concluídas todas as etapas anteriores, a instalação de portas e janelas
+e somente terá início no vigésimo sétimo dia de obra, mesmo que a colocação de janelas
+e portas tenha sido realizada bem anteriormente. A instalação das mesmas tem previsão
+estimada de 5 dias de construção. O último passo na construção da casa, a pintura, depende
+
+20
+
+Capítulo 1 — Grafos
+
+4
+
+2
+
+3
+
+1
+
+3
+
+4
+
+6
+
+6
+
+5
+
+7
+
+7
+
+7
+
+4
+
+7
+
+Figura 1.27: Quinta parte
+
+4
+
+3
+
+2
+
+1
+
+3
+
+4
+
+5
+
+6
+
+6
+
+6
+
+8
+
+7
+
+7
+
+7
+
+4
+
+7
+
+Figura 1.28: Sexta parte
+
+da boa execução de todos os demais, representados pela colocação de portas e janelas, processo
+iniciado no décimo quinto dia de construção e ﬁnalizado no décimo nono dia, e também da
+instalação das mesmas, fato iniciado no vigésimo sétimo dia e ﬁnalizado no trigésimo primeiro.
+De acordo com as informações contidas na tabela inicial, a pintura da casa tem previsão de
+
+4
+
+2
+
+3
+
+1
+
+3
+
+7
+
+7
+
+7
+
+4
+
+7
+
+5
+
+4
+
+5
+
+6
+
+6
+
+9
+
+6
+
+8
+5
+
+Fim
+
+5
+
+Figura 1.29: Sétima parte
+
+cinco dias de duração, portanto a casa estando concluída transcorridos 36 dias de construção
+(Veja Figura 1.29).
+
+Exercício 1.33.
+
+1. As estradas que ligam à região Norte do Brasil são sempre um
+problema para quem necessita utilizar, visto que são escassas e de má qualidade. A
+região também possui uma grande bacia hidrográﬁca, o que impossibilita a construção
+de estradas em alguns trechos. Um candidato a presidência da república necessita se
+deslocar de Goiás, para Boa Vista, Roraima para cumprir alguns compromissos de sua
+campanha. Por questões econômicas ele decide fazer o percurso de carro, e para isso
+deve otimizar os quilometros, para que se possa gastar o menos possível. Observando a
+ﬁgura 1.30, determine a distância a ser percorrida.
+
+2 Tipos especiais de grafos
+
+21
+
+Figura 1.30: Estradas Região Norte
+
+2. Considerando o mapa do Brasil apresentado na Figura 1.30 represente o grafo sobre os
+
+estados e suas divisas.
+
+3. Seja o mapa com algumas cidades do Estado de São Paulo mostrado abaixo e uma tabela
+
+de distâncias.
+
+Araçatuba
+
+Pres. Venceslau
+
+Pres. Prudente
+
+Tupã Marília Assis
+
+Bauru Ourinhos
+
+Araçatuba
+
+-
+
+Pres. Venceslau
+
+150
+
+Pres. Prudente
+
+Tupã
+
+Marília
+
+Assis
+
+Bauru
+
+Ourinhos
+
+-
+
+90
+
+110
+
+-
+
+160
+
+-
+
+150
+
+-
+
+40
+
+95
+
+-
+
+-
+
+-
+
+-
+
+-
+
+40
+
+-
+
+85
+
+-
+
+105
+
+-
+
+-
+
+90
+
+95
+
+85
+
+-
+
+60
+
+80
+
+-
+
+-
+
+110
+
+-
+
+-
+
+60
+
+-
+
+85
+
+65
+
+80
+
+-
+
+-
+
+105
+
+80
+
+85
+
+-
+
+-
+
+160
+
+-
+
+-
+
+-
+
+65
+
+-
+
+-
+
+75
+
+105
+
+-
+
+-
+
+-
+
+-
+
+80
+
+75
+
+105
+
+-
+
+(a) Calcule a distância e o caminho entre as cidades de Araçatuba e Ourinhos.
+
+Apresente o seu desenvolvimento.
+
+(b) Com a privatização das estradas, praças de pedágios foram construídas em todas as
+rodovias. Nas rodovias de comprimento inferior a 100 km, o pedágio custa R$4, 00;
+caso contrário, o pedágio tem o valor de R$5, 00. Apresente a solução que satisfaça
+as condições de distância e custo.
+
+22
+
+Capítulo 1 — Grafos
+
+3
+
+Problema do caixeiro-viajante
+
+O problema do caixeiro-viajante (PCV) é um problema na teoria dos grafos que nenhum
+método geral de solução é conhecido. Trata de um problema que exige o ciclo Hamiltoniano
+mais eﬁciente (ou seja, de menor distância/custo total) que um vendedor deve tomar por
+todas as n cidades a serem visitadas por ele. Mais especiﬁcamente, dado um grafo completo
+valorado G, determinar o valor do menor ciclo Hamiltoniano de G.
+
+3.1 Métodos de solução para o PCV
+
+Um caixeiro viajante que tem cinco clientes em cinco cidades, que denotaremos por, A, B,
+C, D e E. Ele precisa planejar uma viajem a negócios partindo da cidade A, e retornando a
+mesma cidade, passando por todas as cidades uma única vez.
+
+A
+
+133
+
+E
+
+199
+
+152
+
+119
+
+120
+
+200
+
+150
+
+D
+
+174
+
+C
+
+185
+
+121
+
+B
+
+O grafo acima representa o custo de cada viajem, independente do sentido, também
+
+representados na tabela abaixo.
+
+A
+
+X
+
+B
+
+185
+
+A
+
+B 185
+
+X
+
+C 119
+
+D 152
+
+E 133
+
+121
+
+150
+
+200
+
+C
+
+119
+
+121
+
+X
+
+174
+
+120
+
+D
+
+152
+
+150
+
+174
+
+X
+
+E
+
+133
+
+200
+
+120
+
+199
+
+199
+
+X
+
+Métodos Exatos
+
+Consiste basicamente em fazer um lista com todas as alternativas possível de caminhos, por
+isto torna-se um método exaustivo, e em muitos casos sua complexidade é fatorial e em casos
+como grafos com altos números de vértices. Para facilitar este método, utiliza-se uma técnica
+
+3 Problema do caixeiro-viajante
+
+23
+
+chamada “branch-and-bound”, que consiste em expandir os nós e cortar caminhos de pesquisa
+que não são promissores.
+
+Exemplo 1.34. Utilizar o método exaustivo para resolver o problema do caixeiro-viajante é
+calcular os valores dos 4! = 24 ciclos Hamiltonianos possíveis em K5. Como não nos interessa
+o sentido do ciclo, observa-se a tabela abaixo com todos os 12 ciclos possíveis distintos.
+
+Ciclo Hamiltoniano
+
+Custo total (R$)
+
+Ciclo inverso
+
+A − B − C − D − E − A 185 + 121 + 174 + 199 + 133 = 812 A − E − D − C − B − A
+
+A − B − C − E − D − A 185 + 121 + 120 + 199 + 152 = 777 A − D − E − C − B − A
+
+A − B − D − C − E − A 185 + 150 + 174 + 120 + 133 = 762 A − E − C − D − B − A
+
+A − B − D − E − C − A 185 + 150 + 199 + 120 + 119 = 773 A − C − E − D − B − A
+
+A − B − E − C − D − A 185 + 200 + 120 + 174 + 152 = 831 A − D − C − E − B − A
+
+A − B − E − D − C − A 185 + 200 + 199 + 174 + 119 = 877 A − C − D − E − B − A
+
+A − C − B − D − E − A 119 + 121 + 150 + 199 + 133 = 722 A − E − D − B − C − A
+
+A − C − B − E − D − A 119 + 121 + 200 + 199 + 152 = 791 A − D − E − B − C − A
+
+A − C − D − B − E − A 119 + 174 + 150 + 200 + 133 = 776 A − E − B − D − C − A
+
+A − C − E − B − D − A 119 + 120 + 200 + 150 + 152 = 741 A − D − B − E − C − A
+
+A − D − B − C − E − A 152 + 150 + 121 + 120 + 133 = 676 A − E − C − B − D − A
+
+A − D − C − B − E − A 152 + 174 + 121 + 200 + 133 = 780 A − E − B − C − D − A
+
+Veriﬁcando, assim, que obtemos exatamente um ciclo ótimo, e consequentemente o seu
+inverso também. Em qualquer um dos casos o caixeiro-viajante gasta R$ 676,00 na sua viagem.
+
+Este método é, em geral, impossível de implementar, já que o números de operações é
+da ordem (n − 1)!, para Kn. Até mesmo um supercomputador capaz de fazer bilhões (1015)
+de cálculos por segundo, levaria 10 meses para n = 24, 20 anos para n = 25, 500 anos para
+n = 26 e 284 milhões de anos para n = 30.
+
+Métodos Heurísticos
+
+Em Ciência da Computação, normalmente existem duas propriedades principais na criação e
+elaboração de algoritmos:
+
+• fazer o algoritmo ter um tempo de execução sempre aceitável;
+
+• ser a solução ótima ou provavelmente boa para o problema em todos os casos.
+
+No entanto, um algoritmo heurístico não cumpre uma dessas propriedades, podendo ser
+ou um algoritmo que encontra boas soluções a maioria das vezes, mas não tem garantias de
+que sempre encontrará ou um algoritmo que tem processamento rápido, mas não tem provas
+de que será rápido para todas as situações.
+
+24
+
+Capítulo 1 — Grafos
+
+Método do Vizinho Mais Próximo (método guloso)
+
+Escolhe-se um vértice e a aresta de menor peso incidente nesse vértice. Esta aresta determina
+um outro vértice. De cada novo vértice escolhe-se a aresta de menor peso, de entre as arestas
+que são incidentes nesse vértice e num vértice que ainda não foi escolhido. No ﬁnal, regressa-se
+ao vértice inicial.
+
+Exemplo 1.35. No caso do exemplo do caixeiro-viajante, por este algoritmo ele começa pelo
+vértice A. De A vai para C, de C para E, depois para D e ﬁnalmente para B, de onde regressa
+a A.
+
+A
+
+152
+
+119
+
+200
+
+150
+
+174
+
+C
+
+133
+
+120
+
+D
+
+185
+
+121
+
+B
+
+E
+
+199
+
+Com o custo determinado pelos seguintes pesos, 119 + 120 + 199 + 150 + 185 = 773 O
+
+custo desta viagem é de R$ 773,00
+
+O método do vizinho mais próximo é muito mais rápido do que que o método de exaustão,
+embora não produza, em geral, uma solução optimal. No caso do exemplo anterior, o custo
+adicional é de R$97, 00 e o erro relativo é de 97/676 ≈ 14,3%.
+
+Até que ponto o algoritmo Guloso é suﬁcientemente eﬁciente?
+
+Por exemplo, se n = 30 e demorarmos um minuto em cada operação, conseguiremos a
+solução deste algoritmo em meia hora, tempo suﬁcientemente curto quando comparado pelo
+método da exaustão utilizando um supercomputador gastariamos mais de 200 milhões de
+anos. Ponto forte do método Guloso.
+
+Exemplo 1.36. No exemplo do caixeiro-viajante e cinco cidades, suponhamos que o caixeiro-
+viajante consiga ampliar seu negócio e consiga mais cinco novos clientes em mais cinco cidades
+diferentes.
+
+O custo das viagens entre as cidades está representado abaixo, em forma de um grafo e
+
+em forma de tabela.
+
+Com o total de dez cidades a serem visitadas, a quantidade de caminhos possíveis, aumenta
+
+signiﬁcativamente, como podemos observar.
+
+3 Problema do caixeiro-viajante
+
+25
+
+H
+
+K
+
+A
+
+F
+
+E
+
+B
+
+J
+
+D
+
+C
+
+G
+
+A
+
+X
+
+B
+
+185
+
+A
+
+B 185
+
+X
+
+C 119
+
+D 152
+
+E 133
+
+F 321
+
+G 297
+
+H 277
+
+J
+
+412
+
+K 381
+
+121
+
+150
+
+200
+
+404
+
+458
+
+492
+
+379
+
+427
+
+C
+
+119
+
+121
+
+X
+
+174
+
+120
+
+332
+
+439
+
+348
+
+245
+
+443
+
+D
+
+152
+
+150
+
+174
+
+X
+
+199
+
+495
+
+480
+
+500
+
+454
+
+489
+
+E
+
+133
+
+200
+
+120
+
+199
+
+X
+
+315
+
+463
+
+204
+
+396
+
+487
+
+F
+
+321
+
+404
+
+332
+
+495
+
+315
+
+X
+
+356
+
+211
+
+369
+
+222
+
+G
+
+297
+
+458
+
+439
+
+480
+
+463
+
+356
+
+X
+
+471
+
+241
+
+235
+
+H
+
+277
+
+492
+
+348
+
+500
+
+204
+
+211
+
+471
+
+X
+
+283
+
+478
+
+J
+
+412
+
+379
+
+245
+
+454
+
+396
+
+369
+
+241
+
+283
+
+X
+
+K
+
+381
+
+427
+
+443
+
+489
+
+487
+
+222
+
+235
+
+478
+
+304
+
+304
+
+X
+
+Observamos que para este problema temos que calcular o peso de 9!=362880 ciclos
+Hamiltonianos. Considerando o tempo de trinta segundo para a realização do ciclo, levariamos
+3024 horas, o que representa mais de 4 meses de trabalho, 24 horas por dia, 7 dias por semana.
+
+Recorremos então para o método guloso obtemos o ciclo,
+
+A − C − E − D − B − J − G − K − F − H − A
+
+cujo o custo é de R$ 2153,00. E utilizando um bom computador veriﬁcamos que a solução
+optimal é de R$ 1914,00.
+
+Sendo assim o erro relativo é de (2153 − 1914)/1914 ≈ 12, 5%
+
+26
+
+Capítulo 1 — Grafos
+
+Método do Vizinho Mais Próximo com Repetição
+
+Este algoritmo funciona como o algoritmo do vizinho mais próximo descrito anteriormente,
+sendo a diferença que este último é implementado tantas vezes quantos os vértices do grafo,
+tomando de cada vez um vértice diferente como vértice inicial. Depois, é escolhido o ciclo de
+peso menor como resultado ﬁnal do algoritmo. Se for obtido o ciclo
+
+X1, X2, . . . , Xk, com X1 = Xk,
+
+(1.1)
+
+como resultado deste método, e quisermos um ciclo de vértice inicial Xj, tomamos o ciclo
+
+Xj, Xj+1, . . . , Xk = X1, X2, . . . , Xj−1
+
+cujo peso é o mesmo do ciclo (1.1).
+
+Exemplo 1.37. Consideremos novamente o exemplo do caixeiro-viajante e cinco cidades.
+Aplicando o algoritmo do vizinho mais próximo com repetição, obtemos sucessivamente os
+ciclos:
+
+Ciclo
+
+custo (R$)
+
+A-C-E-D-B-A
+
+B-C-A-E-D-B
+
+C-A-E-D-B-C
+
+D-B-C-A-E-D
+
+E-C-A-D-B-E
+
+773
+
+722
+
+722
+
+722
+
+741
+
+Assim, este algoritmo escolhe o ciclo B − C − A − E − D − B = C − A − E − D − B − C =
+D−B −C −A−E −D, cujo custo é de R$ 722, 00. Como sabemos, este não é um ciclo optimal,
+mas o resultado é mais satisfatório do que o obtido usando o algoritmo do vizinho mais próximo
+(sem repetição) começando em A. Sendo assim o erro relativo é de (722 − 676)/676 ≈ 6, 8%
+
+Algoritmo de Kruskal
+
+O algoritmo de Kruskal consiste em escolher arestas, (adjacentes ou soltas) que apresentam os
+menores pesos. Também conhecido por algoritmo guloso pois, a sua solução pode se aproximar
+ou não da solução ótima. Para a realização de tal algoritmo, devemos obedecer as seguintes
+regras:
+
+1. não é permitido formar um ciclo, a não ser que já tivermos percorridos todos os vértices;
+
+2. não é permitido que das arestas escolhidas três delas sejam incidentes em um mesmo
+
+vértice.
+
+3 Problema do caixeiro-viajante
+
+27
+
+A
+
+133
+
+152
+
+119
+
+120
+
+200
+
+150
+
+D
+
+C
+
+174
+
+185
+
+B
+
+121
+
+E
+
+199
+
+Exemplo 1.38. (o caxeiro-viajante e cinco cidades). Pelo Algoritmo de Kruskal;
+
+Inicialmente temos as arestas a − c = 119 representada pela Figura 1.31 e a aresta
+
+c − e = 120, representada pela Figura 1.32.
+
+E
+
+E
+
+B
+
+119
+
+D
+
+Figura 1.31
+
+A
+
+C
+
+A
+
+119
+
+B
+
+120
+
+D
+
+C
+
+Figura 1.32
+
+Neste momento prosseguiríamos com a aresta b − c = 121 como a de menor peso, porém
+para está escolha, se contraria a segunda regra de Kruskal (três arestas incidêntes em um
+mesmo vértice). Prosseguindo temos a aresta e − a = 133 porém caso seja escolhida esta
+contraria a primeira regra de Kruskal (formar um ciclo antes de percorrer todos os vértices).
+Sendo assim partimos para a aresta b → d ⇒ 150, representada pela Figura 1.33 e a próxima
+aresta e → b ⇒ 152, representada pela Figura 1.34.
+
+28
+
+Capítulo 1 — Grafos
+
+E
+
+E
+
+E
+
+119
+
+120
+
+150
+
+D
+
+Figura 1.33
+
+200
+
+119
+
+120
+
+150
+
+D
+
+Figura 1.34
+
+A
+
+C
+
+A
+
+C
+
+A
+
+152
+
+119
+
+120
+
+200
+
+150
+
+D
+
+C
+
+Figura 1.35
+
+B
+
+B
+
+B
+
+As arestas c − d = 174 e a − b = 185 não satisfazem a segunda condição de Kruskal.
+A aresta d − e = 199 não satisfaz a primeira e nem a segunda condição de Kruskal. Sendo
+assim, para fecharmos a condição do problema temos a aresta d → a ⇒ 200, representada na
+Figura 1.35. Portanto, para a conclusão do percurso, o caixeiro-viajante irá percorrer o ciclo
+A − C − E − B − D − A em um percurso de custo total de R$ 741,00.
+
+Este com erro relativo de (741 − 676)/676 ≈ 9, 6%.
+
+Capítulo
+
+2
+
+Roteiro de aula
+
+1
+
+Introdução
+
+Este capítulo é dedicado a descrever a atividade realizada em sala de aula envolvendo o
+conceito de grafo. Para que se realizassem as atividades com um melhor rendimento dos
+alunos, foram elaboradas ﬁchas de atividades para que se pudessem analisar detalhes sobre a
+resolução e linha de raciocínio utilizada por eles. Para a elaboração das ﬁchas foram utilizadas
+questões do banco de questões da OBMEP [7] e algumas versões dos exemplos apresentados
+no Capítulo 1. Após uma breve descrição da escola e dos alunos envolvidos, descreveremos
+os procedimentos para a aplicação, os resultados obtidos, uma analise do desempenho dos
+estudantes e as considerações ﬁnais.
+
+1.1 Descrição da Comunidade Avaiense
+
+Localizada no centro do Estado de São Paulo, a pequena cidade de Avaí, (4959 habitantes
+segundo ultimo censo do IBGE em 2010) conta com cinco escolas estaduais, sendo apenas
+uma localizada no perímetro urbano, as demais são localizadas na zona rural do municipío
+mais precisamente em quatro aldeias indígenas (Aldeia Ekerua, Aldeia Kopenoti, Aldeia
+Nimuendaju e Aldeia Teregua), porém estas atendem apenas alunos indigenas e conta
+apenas com o ensino fundamental, sendo assim, quando estes chegam ao ensino médio,
+são matriculados na Escola Estadual de Ensino Fundamental e Médio Doutor Anis Dabus
+localizada no centro do município de Avaí.
+
+29
+
+30
+
+Capítulo 2 — Roteiro de aula
+
+1.2 Uma breve descrição da escola e dos alunos participantes
+
+A Escola Estadual de Ensino Fundamental e Médio Doutor Anis Dabus ﬁca localizada na
+rua Doutor Pedro da Rocha Braga, n. 372 no centro do município de Avaí. Os alunos são
+atendidos no três períodos, matutino, vespertino e noturno. Sendo que o período da manhã
+é composto por uma turma do sexto ano, uma turma do sétimo ano, uma turma do oitavo
+ano e duas turmas de oitava série, além de uma segunda série e uma terceira série do ensino
+médio. Já o período da tarde é composto de uma turma de sexto ano, uma turma de sétimo
+ano, duas turmas de oitavo ano e uma oitava série do ensino fundamental, além de uma turma
+da primeira série, uma turma da segunda série e uma turma de terceira série do ensino médio.
+O período noturno é composto de uma turma da primeira série, uma turma de segunda série
+e uma turma da terceira série, ambas do ensino médio. Com turmas médias de 35 alunos. O
+espaço físico da escola e composto por nove salas de aula, um laboratório de informática com
+25 novos computadores, sala de leitura e biblioteca, uma quadra poliesportiva coberta, uma
+sala de vídeo com televisão de 51 polegadas e DVD, refeitório, além da parte administrativa
+da escola que é composta de uma secretaria, uma sala para diretoria e vice diretoria, uma
+sala para a coordenação pedagógica, e uma sala para professores. Os alunos atendidos pela
+escola são distribuídos da seguinte maneira: no período matutino a maioria dos estudantes é
+da zona urbana da cidade, no período vespertino a grande parte alunos atendidos é da zona
+rural, além dos indigenas já mencionados, o período noturno ﬁca dedicado aos alunos da zona
+rural ou urbana que trabalham durante o dia.
+
+2 Organização da sala de aula
+
+As atividades foram aplicadas em duas turmas, sendo uma delas uma oitava série do ensino
+fundamental e uma terceira série do ensino médio, ambas no período da manhã, uma vez que
+o professor que defende esta dissertação de mestrado, leciona apenas neste turno. Inicialmente
+se pensou em aplicar tais atividades em duas séries distintas para avaliar as diferentes formas
+de raciocínio. Em ambas as salas foram aplicadas em uma única aula dupla de 50 minutos
+cada, totalizando 100 minutos de atividades. Para uma melhor realização das atividades as
+turmas foram divididas em duplas.
+
+Sendo que a oitava série ﬁcou dividida em 14 duplas, enquanto a terceira série em 16
+
+duplas, totalizando assim 30 duplas para serem avaliadas.
+
+A proposta era que a atividade fosse entregue sem uma apresentação formal dos conceitos
+de grafo para avaliar o conhecimento prévio dos alunos sobre o assunto. Somente após a
+análise das folhas com as atividades é que o professor realizaria uma explanação sobre os
+aspectos teóricos envolvidos para que os alunos pudessem resolver com maior facilidade.
+
+3 Folhas de Atividades
+
+31
+
+3 Folhas de Atividades
+
+A folha de atividade foi dividida em dois exercícios, sendo que o primeiro era subdividido
+em três itens, onde para os dois primeiros itens os estudantes deveriam encontrar um ciclo
+hamiltoniano, e para o terceiro item, o contrário, mostrar que não existem tal ciclo.
+
+Por se tratar de um item básico, para os itens a e b nada foi mencionado, apenas orientados
+
+a ler e interpretar o enunciado do problema.
+
+Figura 2.1: Problema 1 itens a e b
+
+Esperava-se que os alunos não apresentassem problemas para a solução dos mesmos.
+
+Vejamos uma resposta esperada para cada item.
+
+32
+
+Capítulo 2 — Roteiro de aula
+
+Figura 2.2: Problema 1 item c
+
+1.
+
+(a) Uma simples sequência de ﬂechas já seria considerada resposta certa, porém vamos
+enunciar a resposta com a sequência das iniciais de cada uma das cidades em
+questão
+
+A
+
+D
+
+E
+
+B
+
+C
+
+Figura 2.3: Representação problema 1 item a
+
+Temos como solução de tal problema o ciclo hamiltoniano A − D − C − B − E − A.
+
+(b) Para este item, caso a escolha do ciclo hamiltoniano do item anterior não contenha
+
+a aresta DE o ciclo pode permanecer o mesmo.
+
+A
+
+D
+
+E
+
+B
+
+C
+
+Figura 2.4: Representação problema 1 item b
+
+3 Folhas de Atividades
+
+33
+
+Uma maneira de mostrar soluções distintas para o problema, vamos citar o ciclo
+hamiltoniano A − B − E − C − D − A.
+
+(c) Pela falta de hábito dos alunos em formalizar uma demonstração, deve-se
+mencionar que eles podem fazer por dois métodos, o mais simples de entender,
+porém de maior complexidade para realizar, seria tentar exaustivamente todos os
+caminhos possíveis. O outro método seria encontrar uma maneira de mostrar a
+indisponibilidade de tal caminho.
+
+Vejamos uma demonstração aceitável.
+
+Chamamos de A os vértices já existentes nas situações anteriores, e N os novos
+vértices.
+
+A
+
+N
+
+A
+
+N
+
+A
+
+N
+
+A
+
+N
+
+A
+
+Figura 2.5
+
+Para que se realize o caminho proposto é necessário que se percorra cada vértice
+uma única vez, sendo assim teríamos 5 vértices antigos e 4 novos. Observando que
+de cada ponto antigo somente é possível caminhar para um vértice novo, assim
+como de um ponto novo, somente é possível seguir para um antigo. Portanto se
+fosse possível sair de um vértice antigo e retornar para ele, deveríamos ter uma
+sequência alternada de A, N, A, N, A, N, ... , sempre encerraríamos em um vértice
+novo, para depois retornar ao inicial, e para que isto ocorra deveríamos ter uma
+mesma quantidade de vértices novos e antigos, o que contradiz a situação inicial,
+onde destacamos a existência de 5 vértices antigos e 4 novos! Portanto, não é
+possível que tal caminho exista.
+
+Na segunda parte da atividade foi apresentado um problema sobre a construção de uma
+casa de madeira. Como tarefa, os alunos deveriam determinar o tempo de construção
+por duas empresas concorrentes e decidir qual realizaria a construção em menor tempo.
+Para isso, os alunos deveriam atentar-se ao fato de que alguns passos de construção
+poderiam ser feitos simultaneamente, com isso o tempo de realização da obra não seria
+simplesmente a soma da duração de cada passo.
+
+Nessa atividade os alunos deveriam usar a noção da representação em grafo para melhor
+Já era esperado que os alunos
+visualizar o andamento dos passos da construção.
+apresentassem uma maior diﬁculdade para a realização dessa atividade, justamente pela
+falta de conhecimento da teoria dos grafos.
+
+34
+
+Capítulo 2 — Roteiro de aula
+
+Figura 2.6: Problema 2 itens a e b
+
+2. No que segue, apresentamos um modo de resolução que poderia ser adotado pelos alunos.
+
+(a) Determinação da empresa vencedora.
+
+3 Folhas de Atividades
+
+35
+
+• Iniciamos com a “PATRIMONIOBRASIL”
+
+4
+
+3
+
+2
+
+1
+
+4
+
+7
+
+7
+
+3
+
+5
+
+7
+
+7
+
+4
+
+5
+
+6
+
+6
+
+9
+
+6
+
+8
+5
+
+5
+
+Fim
+
+Figura 2.7: Grafo empresa “PATRIMONIOBRASIL”
+
+Tarefa 1: 4 dias
+Tarefa 2: 3 + 4 = 7 dias
+Tarefa 3: 7 + 7 = 14 dias
+Tarefa 4: 4 + 14 = 18 dias
+Tarefa 5: 6 + 14 = 20 dias
+Tarefa 6: max(TAREFA 4, TAREFA 5) + TAREFA 6 = 20 + 6 = 26 dias
+Tarefa 7: 5 + 14 = 19 dias
+Tarefa 8: 5 + 26 = 31 dias
+Tarefa 9: max(TAREFA 7, TAREFA 8) + TAREFA 9 = 31 + 5 = 36 dias
+
+Desta forma a duração na construção será de 36 dias.
+
+• Para a empresa “CULTURA SEM LIMITES” temos:
+
+5
+
+4
+
+2
+
+1
+
+4
+
+5
+
+5
+
+3
+
+5
+
+5
+
+7
+
+4
+
+8
+
+7
+
+6
+
+9
+
+3
+
+8
+3
+
+2
+
+Fim
+
+Figura 2.8: Grafo empresa “CULTURA SEM LIMITES”
+
+Tarefa 1: 5 dias
+Tarefa 2: 4 + 5 = 9 dias
+Tarefa 3: 5 + 9 = 14 dias
+Tarefa 4: 4 + 14 = 18 dias
+Tarefa 5: 7 + 14 = 21 dias
+Tarefa 6: max(TAREFA 4, TAREFA 5) + TAREFA 6 = 21 + 3 = 24 dias
+Tarefa 7: 8 + 14 = 22 dias
+Tarefa 8: 3 + 24 = 27 dias
+Tarefa 9: max(TAREFA 7, TAREFA 8) + TAREFA 9 = 27 + 2 = 29 dias
+
+Desta forma a duração na construção será de 29 dias.
+
+36
+
+Capítulo 2 — Roteiro de aula
+
+Desta maneira os alunos poderão concluir que a empresa “CULTURA SEM LIMITES”
+será vencedora da licitação para a construção.
+
+(b) Análise do tempo de atraso.
+
+4
+
+4
+
+5
+
+2
+
+4
+
+1
+
+5
+
+5
+
+3
+
+7
+
+5
+
+5
+
+7
+
+8+8
+
+6
+
+9
+
+3
+
+8
+3
+
+2
+
+Fim
+
+Figura 2.9: Grafo empresa “CULTURA SEM LIMITES” com atraso
+
+Tarefa 1: 5 dias
+Tarefa 2: 4 + 5 = 9 dias
+Tarefa 3: 5 + 9 = 14 dias
+Tarefa 4: 4 + 14 = 18 dias
+Tarefa 5: 7 + 14 = 21 dias
+Tarefa 6: max(TAREFA 4, TAREFA 5) + TAREFA 6 = 21 + 3 = 24 dias
+Tarefa 7: 8 + 14+(8 dias de atraso)= 30 dias
+Tarefa 8: 3 + 24 = 27 dias
+Tarefa 9: max(TAREFA 7, TAREFA 8) + TAREFA 9 = 30 + 2 = 32 dias
+
+Desta forma a nova duração na construção será de 32 dias e assim veriﬁca-se 3 dias de
+atraso em relação ao prazo ﬁnal.
+
+4 Resultados
+
+Nesta seção vamos descrever alguns pontos observados na realização das atividades. Atentos
+aos alunos,
+informamos que as salas de aulas são formadas de forma bem heterogênea,
+não existindo assim uma diferenciação de alunos, desta forma ambas as salas contam com
+alunos empenhados como também alunos com rendimento insatisfatório, bem como alunos
+desmotivados e indisciplinados. Portanto, faremos as observações separadamente apenas pelo
+critério das classes serem séries distintas.
+
+4.1 Atividade 1
+
+1. Primeiro item
+
+A primeira atividade consistia em um exercício extraido do banco de questões [7] da
+Olímpiada Brasileira de Matemática das Escolas Públicas OBMEP 2014, onde os alunos
+deveriam apenas encontrar um ciclo hamiltoniano para o problema.
+
+(a) Observando a oitava série:
+
+4 Resultados
+
+37
+
+• 10 duplas conseguiram atingir o objetivo esperado, sendo que alguns alunos
+
+questionavam a facilidade da questão.
+
+• 2 duplas não compreenderam o fato de que a personagem em questão deveria
+retornar ao ponto de partida, sendo assim deixaram de realizar a atividade
+completamente.
+
+• 1 dupla marcou todos os caminhos, e assim errou o item.
+
+• 1 dupla não realizou as atividades.
+
+(b) Terceira série:
+
+• 13 duplas realizaram a tarefa corretamente. Utilizando até mesmo as iniciais
+
+dos nomes das cidades ﬁctícias para indicar o caminho proposto.
+
+• 2 duplas não observaram atentamente o enunciado, e não retornaram ao vértice
+
+inicial.
+
+• 1 dupla simplesmente não realizou a atividade, por falta de interesse e
+
+compromisso com a educação.
+
+Figura 2.10: Resposta parcialmente correta do exercício 1 item a para oitava série
+
+2. Segundo item
+
+Assim como o item “a” do problema, este item também consiste em localizar um ciclo
+hamiltoniano, agora faltando uma das arestas.
+
+(a) Oitava série:
+
+• 10 duplas compreenderam bem o problema e realizaram de maneira
+
+satisfatória.
+
+• 2 duplas não conseguiram compreender a situação e não retornaram ao vértice
+
+inicial. As mesmas duplas que erraram a atividade anterior.
+
+• 2 duplas não conseguiram pensar em um novo caminho, pois a aresta retirada
+
+fazia parte da solução encontrada anteriormente.
+
+(b) Terceira série:
+
+• 12 duplas realizaram de maneira satisfatória a atividade.
+
+38
+
+Capítulo 2 — Roteiro de aula
+
+• 3 duplas novamente não observaram o fato de ter que retornar ao vértice inicial.
+
+• 1 dupla novamente não realizou a atividade.
+
+Figura 2.11: Resposta correta item B
+
+3. Terceiro Item
+
+Diferente dos dois ítens anteriores, este item exigia que o aluno mostrasse não ser possível
+realizar o ciclo hamiltoniano com a inserção de quatro novos vértices.
+
+(a) Oitava série:
+
+• 11 duplas tentaram mais de cinco caminhos diferentes, e veriﬁcaram que
+
+nenhum dos caminhos tentados, satisfaziam os objetivos propostos.
+
+• 3 duplas tentaram uma ou duas vezes, porém não concluindo que não era
+
+possível.
+
+(b) Terceira série:
+
+• 13 duplas tentaram mais de cinco caminhos diferentes, e veriﬁcaram que
+
+nenhum dos caminhos tentados, satisfaziam os objetivos propostos.
+
+• 1 dupla tentou 3 vezes, porém não concluiu a questão.
+
+• 2 duplas não tentaram ao menos uma vez.
+
+Esperava-se que alguma dupla, principalmente da terceira série do ensino médio, pudesse
+
+tentar alguma maneira lógica de mostrar, e não pelo método das possibilidades.
+
+4.2 Atividade 2
+
+Como segunda atividade foi proposto um exercício sobre a construção de casas de madeira
+para exposições nas cidades sedes da copa do mundo. A atividade foi dividida em dois ítens
+para a melhor compreensão dos alunos.
+
+1. Primeiro Item
+
+Como primeiro item, eram apresentadas duas tabelas para o processo de licitação da
+construção das casas e cabia aos alunos à determinação da empresa que construiria em
+menor tempo. Vamos aos resultados.
+
+4 Resultados
+
+39
+
+Figura 2.12: Resposta Parcialmente correta item C
+
+(a) Oitava série
+
+• 8 duplas não conseguiram compreender o que estava sendo pedido no exercício
+e por isso não realizaram as atividades. Resultado até que esperado pelo nível
+de complexidade do exercício.
+
+• 5 duplas se esforçaram para chegar a uma solução, porém apenas realizaram
+as somas das durações de maneira incorreta, pois não compreenderam o fato
+de que algumas atividades distintas poderiam serem feitas simultaneamente,
+sendo assim, somaram a duração das tarefas. Obtendo respectivamente 45 e
+41 dias.
+
+• 1 dupla percebeu o fato de que mais de uma atividade poderiam ser realizadas
+
+simultaneamente, porém não conseguiu chegar no resultado esperado.
+
+(b) Terceira série
+
+• 5 duplas não se atentaram as condições iniciais do problema, sobre o fato
+de que algumas tarefas poderiam ser realizadas simultaneamente e com isso
+acelerando o tempo de construção. Desta forma somaram os valores de todos
+os dias de processo. Obtendo assim 45 dias para a primeira empresa e 41 para
+a segunda, desta forma sagrando-se vencedora a segunda empresa.
+
+• 4 duplas entenderam que tarefas poderiam ser feitas simultaneamente,
+porém não conseguiram associar quais tarefas poderiam ser realizadas
+concomitantemente, somando assim os números dos dias que não tinham as
+mesmas tarefas como pré-requisitos. Obtendo assim valores errados.
+
+40
+
+Capítulo 2 — Roteiro de aula
+
+• 2 duplas realizaram a construção de uma idéia básica de grafo, conseguindo
+assim formar uma representação que melhor as ajudassem a solucionar tal
+problema, porém se confundiram na soma da duração dos dias.
+
+• 1 dupla realizou todo o processo de construção do grafo corretamente e chegou
+a somar e chegou a encontrar a resposta correta do item, porém não foi
+mencionada.
+
+• 4 duplas não se esforçaram para nem ao menos tentar solucionar o problema
+
+e questionaram a diferença no nível de diﬁculdade da atividade anterior.
+
+Figura 2.13: Resposta parcialmente correta exercicio 2 item a
+
+2. Segundo Item
+
+Uma vez conhecida a empresa vencedora, as obras são iniciadas, mas alguns imprevistos
+ocorreram devido a uma greve de funcionários, o que atrasou a entrega de uma
+determinada tarefa em oito dias. Acarretando um possível atraso na entrega ﬁnal.
+Dever do aluno seria veriﬁcar se houve ou não atraso.
+
+(a) Oitava série
+
+• 2 duplas argumentaram que como o tempo de paralização foi de 8 dias o
+possível atraso seria de 8 dias por não terem compreendido o contexto do
+exercício.
+
+• 5 duplas adicionaram apenas os 8 dias de paralização na quantidade de dias
+
+anterior, desta maneira obtemos 41 + 8 = 49 dias.
+
+• 6 duplas não realizaram a atividade por não terem realizado a atividade
+
+anterior.
+
+(b) Terceira série
+
+5 Resumo dos Resultados
+
+41
+
+• 4 duplas não realizaram a atividade tendo em vista que não realizaram o item
+
+anterior.
+
+• 8 duplas desenvolveram estratégias paralelas como somar a duração dos dias
+e descontar os períodos simultâneos, porém, ao término, adicionaram o tempo
+de atraso.
+
+• 3 duplas chegaram a esboçar a representação em formato de um grafo, porém
+
+errando nos cálculos dos procedimentos.
+
+• 1 dupla atingiu o objetivo esperado chegando a solução esperada e em seguida
+observaram que o tempo que o funcionário de colocação das portas e batentes
+permaneceu parado não deveria ser adicionado ao tempo total, tendo em vista
+que outros procedimentos ainda não haviam sido realizados e desta forma
+constatou um tempo adicional de 3 dias.
+
+Figura 2.14: Resposta incorreta exercício 2 item b
+
+5 Resumo dos Resultados
+
+Observe abaixo os resultados individuais de cada turma.
+
+5.1 Oitava série do ensino fundamental
+
+Exercício 1
+
+Satisfatório Parcialmente
+
+Insatisfatório
+
+item a
+
+item b
+
+item c
+
+10
+
+10
+
+0
+
+2
+
+2
+
+11
+
+2
+
+2
+
+3
+
+Tabela 2.1: Tabela 1: Resultados exercício 1, oitava série
+
+42
+
+Capítulo 2 — Roteiro de aula
+
+Exercício 2
+
+Satisfatório Parcialmente
+
+Insatisfatório
+
+item a
+
+item b
+
+0
+
+0
+
+6
+
+5
+
+8
+
+9
+
+Tabela 2.2: Tabela 2: Resultados exercício 2, oitava série
+
+5.2 Terceira série do ensino médio
+
+Exercício 1
+
+Satisfatório Parcialmente
+
+Insatisfatório
+
+item a
+
+item b
+
+item c
+
+13
+
+12
+
+0
+
+2
+
+3
+
+14
+
+1
+
+1
+
+2
+
+Tabela 2.3: Tabela 1: Resultados exercício 1, terceira série
+
+Exercício 2
+
+Satisfatório Parcialmente
+
+Insatisfatório
+
+item a
+
+item b
+
+3
+
+1
+
+4
+
+11
+
+11
+
+4
+
+Tabela 2.4: Tabela 2: Resultados exercício 2, terceira série
+
+Estes são os resultados alcançados pelas turmas. Após a análise dos resultados, os exercćios
+
+foram refeitos juntamente com as respectivas turmas e esclarecendo as dúvidas dos alunos.
+
+6 Considerações Finais
+
+Nesta seção faremos alguns relatos com sugestões de alterações no desenvolvimento das
+atividades relatadas na seção anterior, para que os alunos possam apresentar um melhor
+desempenho, e assim atingindo a totalidade dos objetivos.
+
+6.1 Modiﬁcações
+
+A principal modiﬁcação para uma melhor realização de todos os exercícios é a deﬁnição de um
+lugar especíﬁco para a resolução dos alunos, além de orientações sobre que não serão aceitos
+cálculos e raciocínios fora da região delimitada.
+
+No segundo exercício também se faz necessário uma modiﬁcação no texto presente do item
+b sobre o atraso na construção da obra. A folha de atividade aplicada para os alunos trazia
+a seguinte pergunta:
+
+6 Considerações Finais
+
+43
+
+“Considerando que a empresa vencedora teve um problema com o funcionário responsável
+pela colocação dos batentes das portas e janelas, e que este se manteve em greve por oito dias,
+somente quando sua situação foi regularizada este voltou ao serviço, determine quantos dias
+a obra foi atrasada.”
+
+A pergunta formulada desta maneira, induz o aluno aﬁrmar que houve um atraso. Portanto
+
+é necessário adicionar ao ﬁnal da frase um complemento, ﬁcando da seguinte forma:
+
+“Considerando que a empresa vencedora teve um problema com o funcionário responsável
+pela colocação dos batentes das portas e janelas, e que este se manteve em greve por oito dias,
+somente quando sua situação foi regularizada este voltou ao serviço, determine, caso ocorra,
+de quantos dias será o atraso da obra?”
+
+Uma outra modiﬁcação necessária é uma acerto em alguns pré-requisitos dos
+
+procedimentos para a construção das casas de madeira.
+
+Tarefas
+
+Pré-requisitos Dias
+
+1. Limpeza do terreno
+
+Nenhum
+
+2. Produção e colocação da fundação
+
+3. Produção da estrutura
+
+4. Colocação das tábuas externas
+
+5. Colocação do telhado
+
+6 Instalação do encanamento e ﬁação
+
+7. Colocação dos batentes de janelas e portas
+
+8. Instalação das Janelas e portas
+
+9. Pintura interior
+
+1
+
+2
+
+3
+
+3
+
+4 e 5
+
+3
+
+6
+
+7 e 8
+
+4
+
+3
+
+7
+
+4
+
+6
+
+6
+
+5
+
+5
+
+5
+
+Tabela 2.5: Tabela original atividade 2
+
+As modiﬁcações das tabelas são necessárias uma vez que para a instalação das janelas e
+portas é necessário que a colocação dos batentes de portas e janelas esteja concluído e não a
+instalação dos encanamentos e ﬁações, conforme citado na tabela anterior.
+
+Por ﬁm, observamos que faltou realizar a devolutiva aos alunos das atividades corrigidas,
+
+visando uma melhor aprendizagem dos conceitos.
+
+6.2 Conclusões ﬁnais
+
+A teoria dos grafos apresenta aspectos que merecem destaque no currículo da educação básica
+brasileira, pois é capaz de contribuir para a formação do indivíduo autônomo, criativo e capaz
+de aprender a aprender.
+
+44
+
+Capítulo 2 — Roteiro de aula
+
+Tarefas
+
+Pré-requisitos Dias
+
+1. Limpeza do terreno
+
+Nenhum
+
+2. Produção e colocação da fundação
+
+3. Produção e colocação da estrutura
+
+4. Colocação das tábuas externas
+
+5. Colocação do telhado
+
+6 Instalação do encanamento e ﬁação
+
+7. Colocação dos batentes de janelas e portas
+
+8. Instalação das janelas e portas
+
+9. Pintura interior
+
+1
+
+2
+
+3
+
+3
+
+4 e 5
+
+3
+
+7
+
+7 e 8
+
+4
+
+3
+
+7
+
+4
+
+6
+
+6
+
+5
+
+5
+
+5
+
+Tabela 2.6: Tabela modiﬁcada atividade 2
+
+Documentos oﬁciais do Ministério da Educação apresentam a resoluções de problemas
+como uma alternativa para inserir o aluno em um mundo contemporâneo, visto que as
+escolas de educação básica devem abordar temas pertinentes que possam contribuir com
+desenvolvimento do cidadão que se deseja formar.
+
+Em nossa dissertação de mestrado apresentamos conceitos básicos e históricos sobre
+teoria dos grafos para que este trabalho possa a vir ser aplicado com a educação básica.
+Especiﬁcamente para este trabalho foram elaboradas duas atividades extras curriculares, a
+primeira de baixa diﬁculdade e segunda em um nível mais avançado. Para que obtivéssemos
+resultados mais amplos, as atividades foram aplicadas em duas séries ou anos distintos,
+sendo uma oitava série e um terceiro ano, respectivamente séries ﬁnais dos seus ciclos,
+ensino fundamental II e ensino médio, ambas em uma escola estadual. Apesar da habitual
+desmotivação por parte de alguns alunos com o sistema educacional, conseguimos encontrar
+grupos de alunos alunos que se propuseram a desenvolver as atividades extras curriculares.
+
+De um modo geral, os resultados foram satisfatórios, e me rendeu um avanço em minha
+prática docente, pretendo continuar abordando atividades relacionadas a grafos em todas as
+salas a qual vier lecionar futuramente.
+
+Na seção abaixo encontram algumas sugestões de atividades que podem ser trabalhadas
+com alunos de educação básica, cabendo ao professor responsável selecionar e adaptar ao nível
+de seus alunos.
+
+6.3 Sugestões de Atividades
+
+Abaixo estão listados diversos problemas que podem ser abordados pela teoria dos grafos em
+diferentes momentos para diversas salas do ensino básico.
+
+1. Na cidade de Épsilon existem 45 casas cada uma com uma única linha de telefone,
+
+considerando que as linhas são conectadas. Responda:
+
+6 Considerações Finais
+
+45
+
+(a) É possível conectar estas linhas telefônicas de modo que cada uma seja ligada a
+
+exatamente outros 7 telefones?
+
+(b) E se for conectados a exatamente 6 outras linhas telefônicas?
+
+2. Os amigos João, Pedro, Antônio, Marcelo e Francisco sempre se encontram para
+conversar e as vezes jogar dama, xadrez e dominó. As preferências de cada um são
+as seguintes:
+
+• João só joga Xadrez,
+
+• Pedro não joga dominó,
+
+• Antônio joga tudo,
+
+• Marcelo não joga xadrez e dominó,
+
+• Francisco não joga nada.
+
+(a) Represente através de um grafo G = (V, A) todas as possibilidades de um amigo
+
+jogar com os demais. Deﬁna V e A.
+
+(b) Deﬁna um subgrafo em que todos, menos Francisco, joguem ao mesmo tempo.
+
+3. Em um reino existem 101 cidades, algumas delas são conectadas por estradas, e cada
+par de cidades é conectado por um e somente um caminho simples. Quantas estradas
+existem?
+
+4. Um tabuleiro de xadrez tem a forma de uma cruz, obtida apagando-se os quadrados do
+canto de um tabuleiro 4x4. É possível que um cavalo faça um passeio neste tabuleiro,
+passando por todas as casas exatamente uma vez, e terminando na mesma casa que
+começou?
+
+5. Maria convidou nove garotos e nove garotas para a sua festa de aniversário. Ela preparou
+camisetas com os números de 1 a 18, ﬁcou com a de número 1 e distribuiu as demais
+para seus convidados. Durante uma dança, ela observou que a soma dos números de
+cada casal era um quadrado perfeito. Quais pares estavam dançando?
+
+6. Existem 30 cidades em um país. Cada uma delas conectadas a cada uma das outras por
+uma estrada. Qual é o número máximo de estrada que podem ser fechadas de modo
+que ainda seja possível viajar de uma cidade á qualquer outra?
+
+Referências Bibliográﬁcas
+
+[1] ALVES, R. S. O. Um caminho para combater a dengue. Disponível em: <
+
+http://m3.ime.unicamp.br/recursos/1060>. Acesso em: 22 ago. 2013.
+
+[2] COSTA, P. Teoria de Grafos e suas Aplicações. 2011. 77 f. Dissertação (Mestrado
+Proﬁssional em Matemática) - Instituto de Geociência e Ciência Exatas, Universidade
+Estadual Paulista “Julio de Mesquita Filho”, Rio Claro, 2011.
+
+[3] FOMIN, D.; GENKIN, S.; ITENBERG, I. Círculos matemáticos: a experiência russa.
+
+Rio de Janeiro: IMPA, 2012.
+
+[4] História e imagens do Icosain Game. Disponível em: < http://www.ime.usp.br/ yw/-
+
+2013/graﬁnhos/aulas/cap4.pdf >. Acesso em 22 jul. 2014.
+
+[5] Instituto Brasileiro de Geograﬁa e Estatística: Avaí SP. Disponível em: < http://-
+
+cod.ibge.gov.br/23AT2 >. Acesso em: 22 ago. 2014.
+
+[6] JURKIEWICZ, S. Grafos: uma introdução. Apostila 5 do Programa de Iniciação
+Cientíﬁca Jr. (PIC), 2009. Disponível em: < http://www.obmep.org.br/prog_ic_2010/-
+apostila2010.html>. Acesso em: 20 ago. 2013.
+
+[7] OBMEP 2014: banco de questões. Disponível em: < http://www.obmep.org.br/-
+
+banco.htm>. Acesso em: 03 maio 2014.
+
+[8] MALTA, G. H. S. Grafos no Ensino Médio: uma inserção possível. 2008. 138
+f. Dissertação (Mestrado em Ensino de Matemática) - Instituto de Matemática,
+Universidade Federal do Rio Grande do Sul, Porto Alegre, 2008.
+
+[9] MENDES, D. As pontes de Königsberg. Disponível em: < http://m3.ime.unicamp.br/-
+
+recursos/1258>. Acesso em: 22 ago. 2013.
+
+47
+
+48
+
+Referências Bibliográﬁcas
+
+[10] Problemas e Exercícios sobre Grafos. Disponível em : < http://www.inf.ufsc.br/grafos/-
+
+problemas/index.htm >. Acesso em 22 jul. 2014.
+
+

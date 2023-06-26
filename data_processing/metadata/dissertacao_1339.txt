@@ -1,0 +1,2834 @@
+Criptograﬁa RSA: da teoria à aplicação em sala de aula
+
+Evelyn Gomes da Silva
+
+Dissertação de Mestrado do Programa de Mestrado Proﬁssional em
+Matemática em Rede Nacional (PROFMAT)
+
+UNIVERSIDADE DE SÃO PAULOInstituto de Ciências Matemáticas e de ComputaçãoSERVIÇO DE PÓS-GRADUAÇÃO DO ICMC-USP
+
+Data de Depósito:
+
+Assinatura: ______________________
+
+Evelyn Gomes da Silva
+
+Criptograﬁa RSA: da teoria à aplicação em sala de aula
+
+Dissertação apresentada ao Instituto de Ciências
+Matemáticas e de Computação – ICMC-USP,
+como parte dos requisitos para obtenção do título
+de Mestra em Ciências – Mestrado Proﬁssional em
+Matemática em Rede Nacional. VERSÃO REVISADA
+
+Área de Concentração: Mestrado Proﬁssional em
+Matemática em Rede Nacional
+
+Orientadora: Profa. Dra. Regilene Delazari dos
+Santos Oliveira
+
+USP – São Carlos
+Junho de 2019
+
+Ficha catalográfica elaborada pela Biblioteca Prof. Achille Bassi e Seção Técnica de Informática, ICMC/USP, com os dados inseridos pelo(a) autor(a)                                       Bibliotecários responsáveis pela estrutura de catalogação da publicação de acordo com a AACR2:                                        Gláucia Maria Saia Cristianini - CRB - 8/4938                                        Juliana de Souza Moraes - CRB - 8/6176GcGomes da Silva, Evelyn   Criptografia RSA: da teoria à aplicação em sala deaula / Evelyn Gomes da Silva; orientadora RegileneDelazari dos Santos Oliveira. -- São Carlos, 2019.   65 p.   Dissertação (Mestrado - Programa de Pós-Graduaçãoem Mestrado Profissional em Matemática em RedeNacional) -- Instituto de Ciências Matemáticas e deComputação, Universidade de São Paulo, 2019.   1. Teoria de números. 2. Números primos. 3.Teorema de Fermat. 4. Criptografia RSA. I. Delazaridos Santos Oliveira, Regilene, orient. II. Título. Evelyn Gomes da Silva
+
+RSA Cryptography: from the theory to a classroom
+application
+
+Master dissertation submitted to the Institute of
+Mathematics and Computer Sciences – ICMC-USP, in
+partial fulﬁllment of the requirements for the degree of
+Mathematics Professional Master’s Program. FINAL
+VERSION
+
+Concentration Area: Professional Master Degree
+Program in Mathematics in National Network
+
+Advisor: Profa.
+Santos Oliveira
+
+Dra.
+
+Regilene Delazari dos
+
+USP – São Carlos
+June 2019
+
+Dedico este trabalho ao meu avô José Gomes que,
+com seu exemplo, me mostrou que a honestidade, o amor e a dedicação
+nos leva a alcançar nossos sonhos. E que não necessariamente
+precisamos fazer algo grande, mas sempre colocar amor em tudo que fazemos.
+
+AGRADECIMENTOS
+
+Aos meus amigos de PROFMAT: Adriana, André, Antonio Carlos, Carlos, Diego,
+Douglas, Marcelo, Meryelen, Marcos, Marineusa, Hélio e Rosimar, que foram pessoas fantásticas,
+sempre me ajudando e tornando as sextas-feiras menos cansativas. Obrigado, vocês são incríveis.
+
+Aos professores do PROFMAT, Paulo Dattori, Luiz Ladeira, Sérgio Zani, Michela
+Tuchapesk, Erica Filletti e em especial aos professores Ires Dias e Hermano Ribeiro, que se
+dedicaram muito para que todos alcançassem seus objetivos e nunca desistiram de nós.
+
+À minha orientadora Regilene Delazari, pela sua paciência e compreensão. Sempre que
+me encontrava desanimada, bastava conversar que novamente meu ânimo retornava. Obrigada
+pelo apoio e por se mais que uma orientadora.
+
+À CAPES, que me apoiou com uma bolsa de estudos durante o desenvolvimento deste
+
+projeto.
+
+Aos meus alunos, que sempre se interessam e questionam, me permitindo desenvolver
+
+sempre mais. Vocês são essenciais para o crescimento de um professor.
+
+Por ﬁm, a todos que direta ou indiretamente estiveram presentes nessa caminhada.
+
+Obrigada à todos.
+
+“Eu acredito que ás vezes são as pessoas que
+ninguém espera nada que fazem as coisas que
+ninguém consegue imaginar.”
+(Alan Turing)
+
+RESUMO
+
+SILVA, E. G. Criptograﬁa RSA: da teoria à aplicação em sala de aula. 2019. 65 p. Dis-
+sertação (Mestrado em Ciências – Mestrado Proﬁssional em Matemática em Rede Nacional) –
+Instituto de Ciências Matemáticas e de Computação, Universidade de São Paulo, São Carlos –
+SP, 2019.
+
+Esta dissertação tem por objetivo apresentar a Criptograﬁa RSA, que é o método de criptograﬁa
+mais utilizado no mundo atualmente. Iniciamos a dissertação com um breve histórico sobre a
+criptograﬁa e em seguida introduzimos a teoria matemática empregada no método pertencente a
+teoria dos números. Finalizamos a dissertação com a descrição de uma aplicação simples do
+método levado para uma sala de aula do ensino médio. Este texto pretende introduzir o tema
+de maneira simples e por esta razão, fazemos uso de muitos exemplos. Esperamos ainda que o
+leitor compreenda o que torna este método eﬁciente e seguro.
+
+Palavras-chave: Teoria dos números, números primos, Teorema de Fermat, Criptograﬁa RSA.
+
+ABSTRACT
+
+SILVA, E. G. RSA Cryptography: from the theory to a classroom application. 2019. 65 p.
+Dissertação (Mestrado em Ciências – Mestrado Proﬁssional em Matemática em Rede Nacional)
+– Instituto de Ciências Matemáticas e de Computação, Universidade de São Paulo, São Carlos –
+SP, 2019.
+
+The main goal of this work is to introduce the RSA Criptography that is the most used method in
+Criptography nowadays. We begin the dissertation with a brief introduction about criptography
+and then we discuss concepts from number theory used in the method. Finally we present a
+description of a simple application of Criptography made in a High school classroom. This text
+intend to introduce the subject in a simple way for this reason we present several examples. We
+hope that the reader have the comprehension of the methods and of its security.
+
+Keywords: Number theory, prime numbers, Theorem of Fermat, RSA Cryptography.
+
+LISTA DE ILUSTRAÇÕES
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+56
+56
+56
+57
+57
+57
+57
+58
+58
+59
+59
+60
+60
+61
+
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+.
+.
+.
+.
+.
+.
+.
+
+.
+Figura 1 – Grupo 1 .
+.
+Figura 2 – Grupo 2 .
+.
+Figura 3 – Grupo 3 .
+.
+Figura 4 – Grupo 4 .
+.
+Figura 5 – Grupo 5 .
+.
+Figura 6 – Grupo 5 .
+.
+Figura 7 – Grupo 5 .
+.
+Figura 8 – Grupo 5 .
+Figura 9 – Grupo 1 - 2a Etapa .
+Figura 10 – Grupo 2 - 2a Etapa .
+Figura 11 – Grupo 3 - 2aEtapa .
+Figura 12 – Grupo 4 - 2aEtapa .
+Figura 13 – Grupo 5 - 2aEtapa .
+Figura 14 – Grupo 6 - 2aEtapa .
+
+SUMÁRIO
+
+INTRODUÇÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 19
+
+CRIPTOGRAFIA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 21
+A criptografia ao longo do tempo . . . . . . . . . . . . . . . . . . . . 21
+Criptografia RSA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+
+INTRODUÇÃO À ARITMÉTICA . . . . . . . . . . . . . . . . . . . 23
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+Números Primos .
+Algoritmo da Divisão . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+Algoritmo de Euclides
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 25
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+Fatoração Única .
+Propriedade Fundamental dos Primos . . . . . . . . . . . . . . . . . . 28
+Teorema Fundamental da Aritmética . . . . . . . . . . . . . . . . . . 29
+Aritmética Modular . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+Conjuntos dos Inteiros Módulo m (Zm) . . . . . . . . . . . . . . . . . 30
+Operações em Zm . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 33
+Inverso em Zm .
+34
+.
+Divisões em Zm .
+35
+Congruência Linear . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+Teorema de Fermat . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+Sistemas de Congruências . . . . . . . . . . . . . . . . . . . . . . . . . 37
+Equações Lineares . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+Teorema Chinês do Resto . . . . . . . . . . . . . . . . . . . . . . . . . 39
+Grupos .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+Definição e exemplos . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+Grupos Aritméticos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+Função φ de Euler (Ordem de U (n))
+. . . . . . . . . . . . . . . . . . 43
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 45
+Subgrupos
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+A CRIPTOGRAFIA RSA . . . . . . . . . . . . . . . . . . . . . . . . 47
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+Pré-codificação .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+Codificação .
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+Decodificação .
+Por que funciona? . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+
+.
+
+.
+
+.
+
+1
+
+2
+
+2.1
+
+2.2
+
+3
+
+3.1
+
+3.2
+
+3.2.1
+
+3.3
+
+3.3.1
+
+3.3.2
+
+3.4
+
+3.4.1
+
+3.4.2
+
+3.4.2.1
+
+3.4.2.2
+
+3.4.3
+
+3.5
+
+3.6
+
+3.6.1
+
+3.6.2
+
+3.7
+
+3.7.1
+
+3.7.2
+
+3.7.3
+
+3.7.4
+
+4
+
+4.1
+
+4.2
+
+4.2.1
+
+4.3
+
+4.4
+
+5
+5.1
+5.2
+5.3
+5.4
+
+6
+
+A segurança do RSA .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+.
+
+.
+
+CRIPTOGRAFIA EM SALA DE AULA . . . . . . . . . . . . . . . . 53
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+Atividade .
+.
+Plano de aula .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+Ocorrências da atividade . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+. . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+Anexos
+
+.
+.
+
+.
+.
+
+.
+.
+
+.
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+CONCLUSÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 63
+
+REFERÊNCIAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 65
+
+19
+
+CAPÍTULO
+
+1
+
+INTRODUÇÃO
+
+Esta dissertação traz o estudo do método de Criptograﬁa conhecido como Criptograﬁa
+RSA. Segundo consta na literatura, a criptograﬁa é uma técnica tão antiga quanto a própria
+escrita, uma vez que existem indícios que ela já estava presente no sistema de escrita hieroglíﬁca
+dos egípcios. Há evidências de que os romanos utilizavam códigos secretos para comunicar seus
+planos de batalhas. Além disso, a tecnologia de Criptograﬁa se manteve por um longo período.
+Depois da Segunda Guerra Mundial, com a invenção do computador, a técnica incorporou
+algoritmos matemáticos. Durante a guerra, os ingleses ﬁcaram conhecidos por seus esforços
+para decifração de mensagens, estes deram origem a área atualmente conhecida como ciência da
+computação.
+
+A criptograﬁa pode ser entendida como um conjunto de técnicas que permitem tornar
+incompreensível uma mensagem originalmente escrita com clareza, de forma a permitir que
+apenas o destinário a decifre e a compreenda, e isso só é possivel, a partir do conhecimento das
+convenções e mecanismos de codiﬁcação e decodiﬁcação adotados, ou seja, ter acesso à chave
+que codiﬁca e decodiﬁca a mensagem. A chave é o procedimento do algoritmo utilizado em
+um dado método. Para exempliﬁcar imagine uma festa em que os convidados tenham que usar
+máscaras. A necessidade das máscaras é para que não se identiﬁque a pessoa que a está usando,
+portanto a chave é a máscara.
+
+A Criptograﬁa RSA é o método mais difundido nos dias de hoje e é bastante simples.
+Ele é empregado em sistemas bancários e eletrônicos de modo geral. O método da Criptograﬁa
+RSA faz uso de conceitos básicos e fundamentais da teoria dos números.
+
+Nos dias de hoje todos nós estamos em contato com esta técnica sem tomar conhecimento
+dos conceitos matemáticos envolvidos em seu funcionamento. Assim, nos sentimos empenhados
+em investigar alternativa(s) para levar o tema para sala de aula, esperando assim, motivar os
+alunos para o ensino de matemática.
+
+Nesta dissertação nosso material de apoio para o estudo de conceitos relacionados a
+
+20
+
+Capítulo 1. Introdução
+
+teoria dos números e a compreensão do método da Criptograﬁa foi formado principalmente pelas
+referências (COUTINHO, 1997; COUTINHO, 2015).
+
+Iniciamos este trabalho apresentando um breve histórico sobre a Criptograﬁa RSA e em
+seguida, apresentamos os conceitos matemáticos necessários para a compreensão do método
+e de sua eﬁciência. Nesta primeira etapa nosso objetivo é entender como e por que o método
+funciona, além de compreender as razões pelas quais ele é seguro.
+
+Em seguida apresentamos uma atividade realizada em sala de aula relacionada a Cripto-
+graﬁa. O objetivo da atividade foi despertar no aluno o interesse pela matemática, mostrar como
+funciona a criptograﬁa e como a matemática está presente em nosso dia a dia. Vale ressaltar que
+a atividade realizada em sala de aula não teve por objetivo apresentar os conceitos matemáticos
+envolvidos no método e nesse caso não foi utilizada a Criptograﬁa RSA.
+
+Encerramos a dissertação com algumas considerações ﬁnais sobre a dissertação e o
+
+impacto do Mestrado proﬁssionalizante em minha postura em sala de aula.
+
+21
+
+CAPÍTULO
+
+2
+
+CRIPTOGRAFIA
+
+A palavra Criptograﬁa é originária do grego e é formada por duas partes: kryptós, que
+signiﬁca "segredo"e logia, "estudo". Podemos aﬁrmar que é o método e o estudo da técnica
+empregada para comunicação segura na presença de terceiros (também chamados adversários).
+
+A criptograﬁa nos dias de hoje existe como um tema na intersecção de disciplinas como
+
+matemática, ciência da computação, engenharia elétrica, ciência da comunicação e física.
+
+Neste capítulo fazemos um breve histórico sobre a criptograﬁa, especialmente a Cripto-
+
+graﬁa RSA.
+
+2.1 A criptografia ao longo do tempo
+
+A criptograﬁa surgiu da necessidade de enviar mensagens codiﬁcadas. Codiﬁcar uma
+
+mensagem para que se interceptada não seja compreendida pelo adversário.
+
+Ao longo da história o método de enviar mensagens criptografadas foi muito utilizado,
+especialmente em guerras, neste caso a criptograﬁa permitiu a comunicação evitando a interpre-
+tação de mensagens, exceto pelo legítimo destinatário, o detentor do código de decodiﬁcação. O
+primeiro exemplo desse tipo de código secreto que se tem notícia foi utilizado pelo ditador Júlio
+César para comunicar-se com legiões romanas em combate pela Europa.
+
+As primeiras formas de codiﬁcar uma mensagem eram bem simples, consistiam muitas
+vezes em substituir uma letra por outra, e dessa forma era bem simples quebrar o código e
+decodiﬁcar a mensagem.
+
+Com o tempo esses métodos foram se aperfeiçoando cada vez mais, por exemplo o
+processo conhecido como código de blocos, que consiste em dividir a mensagem em blocos de
+várias letras e embaralhar estas letras. Observamos que esse método contém várias falhas que o
+tornam frágil, principalmente nos dias atuais com o avanço dos computadores e da internet.
+
+22
+
+Capítulo 2. Criptograﬁa
+
+Nos dias de hoje, a criptograﬁa consiste num processo onde a mensagem é facilmente
+codiﬁcada porém diﬁcilmente decodiﬁcada. Trata-se de um método onde duas chaves (códigos)
+são empregados. Uma delas é conhecida como chave pública, a de encriptação, e no processo de
+codiﬁcação ela pode ser conhecida por qualquer pessoa, sem que isso comprometa a segurança
+do código. O método ﬁcou conhecido como Criptograﬁa RSA.
+
+2.2 Criptografia RSA
+
+O acrônimo RSA é composto das letras iniciais dos sobresnomes de Ron Rivest, Adi
+Shamir e Leonard Adleman, fundadores da atual empresa RSA Data Security, Inc., os quais
+foram os primeiros a descrever o algoritmo em 1978. Atualmente sabe-se que Cliffor Cocks,
+um matemático Inglês que trabalhava para a agência de inteligência britânica Government
+Communications Headquarters (GCHQ), desenvolveu um sistema equivalente em 1973, mas ele
+não foi revelado até 1997 (ANDRADE, 2014).
+
+A Criptograﬁa RSA é considerada das mais seguras. Um usuário do RSA cria e então
+publica uma chave pública baseada em dois números primos grandes, junto com um valor auxiliar.
+Os números primos devem ser mantidos secretos. Qualquer um pode usar a chave pública para
+encriptar a mensagem, mas com métodos atualmente publicados, e se a chave pública for muito
+grande, apenas alguém com o conhecimento dos números primos pode decodiﬁcar a mensagem
+de forma viável. Quebrar a encriptação RSA é tão difícil quanto o problema de fatoração em
+números primos, que permanece como uma questão em aberto.
+
+A Criptograﬁa RSA envolve um par de chaves, uma chave pública que pode ser conhecida
+por todos e uma chave privada que deve ser mantida em sigilo. Toda mensagem cifrada usando
+uma chave pública só pode ser decifrada usando a respectiva chave privada.
+
+A Criptograﬁa RSA atua diretamente na internet, por exemplo, em mensagens de emails,
+em compras on-line e o que você imaginar; tudo isso é codiﬁcado e recodiﬁcado pela criptograﬁa
+RSA.
+
+Com o objetivo de compreender este método vamos estudar a teoria envolvida em sua
+construção, tema do próximo capítulo desta dissertação. Mais adiante retornamos a Criptograﬁa
+RSA.
+
+23
+
+CAPÍTULO
+
+3
+
+INTRODUÇÃO À ARITMÉTICA
+
+O conceito primordial para a Criptograﬁa RSA é o de número primos, dessa forma
+
+iniciaremos esse capítulo com a deﬁnição e alguns teoremas importantes referente à isso.
+
+3.1 Números Primos
+
+Deﬁnição 1. Dizemos que um número inteiro positivo maior que 1 é primo se ele é divisível
+apenas por 1 e por ele mesmo. Caso contrário, dizemos que o número inteiro é composto.
+
+Dado um número inteiro qualquer não existe um critério para decidir se este número é
+primo ou composto. Ao longo da história alguns algoritmos foram propostos, porém esse é um
+problema em aberto na Matemática. Vejamos alguns desses algoritmos..
+
+1. Crivo de Eratóstenes
+
+O Crivo de Erastótenes é um método bem conhecido empregado para determinar números
+primos. Ele consiste em eliminar os números compostos e assim aqueles que não possuem
+números divisores serão os números primos. Esse método não é eﬁciente quando o primo
+for um número grande. Por se tratar de um método mais simples de encontrar primos, esse
+é um dos primeiros introduzidos na educação básica.
+
+2. Números de Fermat: F(n) = 22n
+
++ 1, n ∈ N.
+
+Fermat acreditava que todos os números da forma acima eram primos. Realmente os
+números F(1), F(2), F(3) e F(4) são primos, porém Euler provou que F(5) é composto, e
+dessa forma a teoria formulada por Fermat foi quebrada. Os números de Fermat primos
+são chamados de primos de Fermat.
+
+3. Números de Mersenne : M(n) = 2n − 1, onde n é primo.
+
+24
+
+Capítulo 3. Introdução à Aritmética
+
+No intervalo entre 2 e 5000 os números de Mersenne que são primos, chamados de primos
+de Mersenne, correspondem aos seguintes valores de p: 2, 3, 5, 7, 13, 19, 31, 61, 89, 107,
+127, 521, 607, 1279, 2203, 2281, 3217, 4253 e 4423.
+
+Porém esses métodos não são suﬁcientes ou eﬁcientes para encontrar primos em geral.
+
+Atualmemte existe um projeto chamado GIMPS (Grande Busca na Internet pelo Primo
+Mersenne, tradução literal do inglês), cujo principal objetivo é descobrir números primos, a
+procura é por primos de Mersenne. Desde 1996 milhares de voluntários em todo o mundo
+emprestam seus computadores para realização de cálculos automáticos enviados por um servidor
+central e desde então 17 números primos de Mersenne foram descobertos. O maior número primo
+conhecido foi descoberto no ﬁnal de 2018. Ele possui 24.862.048 dígitos, 1,5 milhão a mais do
+que o número primo recorde descoberto em 2017. Este pode ser expresso como 2282589933 − 1 e
+foi descoberto por Patrick Laroche, 35 anos. Patrick é um proﬁssional de TI que usava o software
+GIMPS como um “teste de estresse” gratuito para suas compilações de computador.(IMPA,
+2019)
+
+Este processo nos leva a questionar se esta busca terá ﬁm. Adiante veremos um Teorema
+
+que nos responderá essa questão..
+
+Iniciamos essa seção com o algoritmo da divisão, um teorema importante para a teoria
+
+que vamos estudar em seguida.
+
+3.2 Algoritmo da Divisão
+
+Basicamente, o teorema a seguir nos diz que dados dois inteiros, o quociente e o resto da
+
+divisão entre eles existem e são únicos. Vamos enunciá-lo.
+
+Teorema 1. Sejam a e b números inteiros positivos. Existem únicos números inteiros q e r tais
+que
+
+a = b · q + r
+
+com 0 (cid:54) r < b.
+
+Demonstração. (Unicidade) Se existem q′, r′, q e r satisfazendo as condições do teorema e
+r ≥ r′, ou seja,
+
+e,
+
+a = b · q′ + r′
+
+e
+
+0 (cid:54) r′ < b.
+
+a = b · q + r
+
+e
+
+0 (cid:54) r < b,
+
+mostramos que q = q′ e r = r′. Note que de (3.1) temos
+
+r − r′ = (a − b · q) − (a − b · q′) = b · (q′ − q).
+
+(3.1)
+
+(3.2)
+
+3.2. Algoritmo da Divisão
+
+25
+
+Como por hipótese, r e r′ são menores que b e r ≥ r′, segue que
+
+Então de (3.2) temos
+
+ou equivalentemente
+
+0 ≤ r − r′ < b.
+
+0 ≤ b · (q′ − q) < b,
+
+0 ≤ q′ − q < 1.
+
+Como q − q′ ∈ Z, temos q′ − q = 0, isto é q′ = q e consequentemente r = r′.
+
+(Existência) Suponha que a > b e considere, enquanto ﬁzer sentido, os números
+
+a, a − b, a − 2b, . . . , a − nb, . . .
+
+Pelo Princípio da Boa Ordenação 1 o conjunto S formado pelos elementos acima tem um menor
+elemento r = a − b · q. Vamos provar que r tem a propriedade requerida, ou seja, que r < b.
+
+Se b|a, ou seja, se b divide a, então r = 0 e nada mais temos a provar. Se, por outro
+lado b (cid:45) a, então r ̸= b e, portanto, basta mostrar que não pode ocorrer r > b. De fato, se r > b,
+então existe um número natural c < r tal que r = c + b. Consequentemente, r = c + b = a − b · q,
+teríamos,
+
+c = a − (q + 1)b ∈ S,
+
+com b < r,
+
+contradizendo o fato de r ser o menor elemento de S. Portanto, temos que a = b · q + r com r < b,
+o que prova a existência de q e r.
+
+3.2.1 Algoritmo de Euclides
+
+O algoritmo de Euclides é uma ferramenta que nos permite encontrar o máximo divisor
+comum de dois números, denotado daqui em diante por mdc entre dois números, antes de
+enunciá-lo vejamos algumas deﬁnições importantes.
+
+Dados dois números a, b ̸= 0, dizemos que o número inteiro d é um divisor comum de a
+
+e b se d|a e d|b.
+
+Deﬁnição 2 (mdc). O máximo divisor comum de a e b (dois inteiros), é denotado por d =
+(a, b) = mdc(a, b), e é o número inteiro d estritamente positivo tal que
+
+(i) d|a e d|b;
+
+(ii) Se c|a e c|b ⇒ c|d.
+
+Exemplo 1. Por exemplo mdc(12, 18) = 6
+
+1
+
+(LIMA, 2006) Todo subconjunto S ⊂ N possui um menor elemento, isto é, um elemento n0 ∈ S tal que
+n0 < n para todo n ∈ S.
+
+26
+
+Capítulo 3. Introdução à Aritmética
+
+Observação 1. Se mdc(a, b) = 1, dizemos que a e b são primos entre si.
+
+A observação acima é de extrema importância nessa dissertação.
+
+Exemplo 2. mdc(20, 33) = 1; logo, 20 e 33 são ditos números primos entre si, ou apenas primos
+entre si.
+
+O lema a seguir mostra a relação entre o algoritmo da divisão e o mdc.
+
+Lema 1. Se a = b · q + r então mdc(a, b) = mdc(b, r).
+
+Demonstração. Se d = mdc(a, b) então d|a e d|b, em particular d|a − b · q = r, pois é uma
+combinação inteira de a e b. Portanto, d|b e d|r.
+
+Por outro lado, se c|b e c|r, então c|b · q + r = a, o que implica c|d = mdc(a, b). Logo,
+
+d = mdc(b, r).
+
+Chegamos então ao algoritmo que nomeia a nossa seção, o Algoritmo de Euclides. Vamos
+
+entender aqui seu procedimento.
+
+Algoritmo de Euclides: Sejam a e b ∈ Z. Procedemos da seguinte forma, utilizando o
+
+algoritmo da divisão, diversas vezes:(DIAS; GODOY, 2006)
+
+a = b · q1 + r, 0 (cid:54) r < b
+
+b = r · q2 + r1, 0 (cid:54) r1 < r
+
+r = r1 · q3 + r2, 0 (cid:54) r2 < r1
+
+r1 = r2 · q4 + r3, 0 (cid:54) r3 < r2
+...
+
+rn−2 = rn−1 · qn+1 + rn, 0 (cid:54) rn < rn−1
+
+rn−1 = rn · qn+2.
+
+Então rn (o último resto não nulo) é o mdc(a, b).
+
+Demonstração. De fato, segue do lema anterior que
+
+mdc(a, b) = mdc(b, r1) = mdc(r1, r2) = . . . = mdc(rn−1, rn).
+
+Como rn|rn−1, segue que mdc(rn−1, rn) = rn e, portanto, mdc(a, b) existe e é igual a rn,
+
+que é o ultimo resto diferente de zero.
+
+3.2. Algoritmo da Divisão
+
+27
+
+Exemplo 3. (FIARRESGA, 2010) Para determinar mdc(245, 135), procedemos da seguinte
+forma:
+
+245 = 1 · 135 + 110,
+
+135 = 1 · 110 + 25,
+
+110 = 4 · 25 + 10,
+
+25 = 2 · 10 + 5,
+
+10 = 2 · 5 + 0.
+
+Pelo Algoritmo de Euclides, concluímos que o mdc(245, 135) = 5.
+
+Proposição 1. Sejam a e b ∈ Z. Se d = mdc(a, b) então existem x0 e y0 ∈ Z tais que d =
+a · x0 + b · y0.
+
+Demonstração. Se a ̸= 0 ou b ̸= 0, considere
+
+S = {m · a + n · b, m, n ∈ Z}.
+
+Comoa · a + b · b = a2 + b2 > 0 e a2 + b2 ∈ S, temos que em S existem elementos estritamente
+positivos. Logo, pelo Princípio da Boa Ordenação, existe o menor deles. Seja d este mínimo.
+Agora é suﬁciente mostrar que d = mdc(a; b).
+
+Temos que d ≥ 0 pela maneira como foi escolhido. Como d ∈ S, temos que existem
+x0ey0 ∈ Z tais que d = ax0 + by0. Do algoritmo da divisão temos que a = dq + r, com 0 (cid:54) r < d.
+Substituindo d nesta igualdade obtemos
+
+de onde segue que
+
+a = (ax0 + by0)q + r,
+
+r = a(1 − qx0) + bq([−y0]).
+
+Assim, r ∈ S e, como r ≥ 0, pela minimalidade de d, temos que r = 0. Portanto a = dq, o que
+mostra que d|a. De maneira análoga mostra-se que d|b.
+
+Além disso, se c ∈ Z é tal que c|a e c|b, temos que c|d = ax0 + by0, como queríamos.
+
+Observe que podemos estender essa Proposição para a deﬁnição de números primos
+
+entre si, como mostra o Corolário abaixo.
+
+Corolário 1. Dois números a e b inteiros são primos entre si se, e somente se, existem x0 e y0
+∈ Z tais que a · x0 + b · y0 = 1.
+
+28
+
+Capítulo 3. Introdução à Aritmética
+
+Demonstração. (⇒) Segue imediatamente da Proposição anterior.
+
+(⇐) Se a · x0 + b · y0 = 1, então 1|a e 1|b e, 1 é a menor combinação linear positiva de a
+
+e b com coeﬁcientes inteiros, logo segue que mdc(a, b) = 1.
+
+Observação 2. O Algoritmo de Euclides nos fornece, portanto, um meio prático de escrever o
+mdc de dois números como soma de dois múltiplos dos números em questão. Quando utilizarmos
+o Algoritmo de Euclides para expressar mdc(a; b) na forma a · x0 + b · y0, com x0 e y0 ∈ Z, nos
+referiremos a ele como Algoritmo de Euclides Estendido.
+
+3.3 Fatoração Única
+
+Abaixo encontramos algumas propriedades que são importantes para o Teorema Funda-
+
+mental da Aritmética, o resultado chave dessa seção.
+
+3.3.1 Propriedade Fundamental dos Primos
+
+Lema 2. Sejam a, b e c inteiros positivos, com a e b primos entre si.
+
+1. Se b divide o produto a · c então b divide c.
+
+2. Se a e b dividem c então o produto a · b divide c.
+
+3. Se p é primo e a, b ∈ Z+. Se p|a · b então p|a ou p|b.
+
+Demonstração.
+
+1. mdc(a, b) = 1, então
+
+a · x + b · y = 1,
+
+c · a · x + c · b · y = c.
+
+Como b|a · c segue que c · a · x + c · b · y é divisível por b. Portanto, b|c · a · x + c · b · y = c.
+
+2. Se a|c e b|c temos que c = a · x. Como a e b são primos entre si e b|c = a · x então b tem
+
+que dividir x e temos x = b · t. Portanto,
+
+c = a · x = a · (b · t) = (a · b) · t ⇒ a · b|c.
+
+3. Se p|a está feito. Suponhamos que p (cid:45) a, então p e a são primos entre si. Segue do item (1)
+
+desse lema que se p|a · b então p|b.
+
+3.3. Fatoração Única
+
+29
+
+3.3.2 Teorema Fundamental da Aritmética
+
+O Teorema Fundamental da Aritmética nos diz que existe e é única a fatoração de um
+
+número inteiro positivo.
+
+Teorema 2. Dado um número inteiro positivo n ≥ 2 podemos sempre escrevê-lo, de modo único,
+na forma
+
+n = pe1
+
+1 . . . pek
+k ,
+
+onde 1 < p1 < p2 < p3 < . . . < pk são números primos e e1, . . . , ek são inteiros positivos.
+
+Demonstração. (Unicidade) Suponha que n admite mais de uma fatoração, então,
+
+n = pe1
+
+1 . . . pek
+
+k = qr1
+
+1 . . . qrs
+s .
+
+Como p1|pe1
+
+k = n, então p1|qr1
+
+1 . . . pek
+s , assim como p1 divide um produto de fatores,
+ele divide um de seus fatores, ou seja, p1|q j1
+j , j ∈ 1, 2, . . . , s. Como ambos são primos, então
+p1 = q j, 1 (cid:54) j (cid:54) s. Fazendo esse rarciocínio para cada fator, provamos a unicidade da fatoração
+de n.
+
+1 . . . qrs
+
+(Existência) Prova por indução. Se n = 2, o resultado segue pois 2 é primo. Suponha
+o resultado válido para todo número natural menor do que n e vamos provar que vale para n.
+Se o número n é primo, nada temos a demonstrar. Suponha, então, que n seja composto. Logo,
+existem números naturais n1 e n2 tais que n = n1 · n2 com 1 < n1 < n e 1 < n2 < n. Pela hipótese
+de indução, temos que existem números primos p1, . . . , pr e q1, . . . , qs, tais que n1 = p1 · · · pr e
+n2 = q1 · · · qs. Portanto, n = p1 · · · pr · q1 · · · qs.
+
+Observe que é importante a hipótese n ≥ 2 no enunciado do Teorema 2, do contrário
+
+teríamos por exemplo 6 = 1 · 2 · 3 e 6 = 2 · 3 (fatorações distintas do mesmo número).
+
+Exemplo 4. (SAMPAIO; CAETANO, 2008) Exempliﬁcando o Teorema Fundamental da Arit-
+mética, temos as seguintes fatorações de inteiros.
+
+∙ 342 = 2 · 3 · 3 · 19 = 2 · 32 · 19,
+
+∙ 3888 = 2 · 2 · 2 · 2 · 3 · 3 · 3 · 3 · 3 · 3 = 24 · 35,
+
+∙ 10100 = 2 · 2 · 5 · 5 · 101 = 22 · 52 · 101.
+
+Agora como o Teorema Fundamental da Aritmética, voltamos a falar sobre a inﬁnitude
+
+de primos.
+
+Teorema 3. Existem inﬁnitos números primos.
+
+30
+
+Capítulo 3. Introdução à Aritmética
+
+Demonstração. Suponha que existam ﬁnitos números primos p1, . . . , pr. Considere o número
+natural
+
+n = p1 p2 · · · pr + 1.
+
+Pelo Teorema 2, o número n possui fatoração em primos, isto é, existe um número primo
+p que, deve ser um dos p1, . . . , pr e, consequentemente, divide o produto p1 · p2 · · · pr. Mas isto
+implica que p divide 1, o que é absurdo.
+
+Para compreender e fazer uso da Criptograﬁa RSA, precisamos conhecer também as
+
+propriedades de aritmética modular, que é tratada no decorrer dessa seção.
+
+3.4 Aritmética Modular
+
+Deﬁnição 3. Dizemos que dois números inteiros a e b são congruentes módulo m se a − b é um
+múltiplo de m.
+
+Notação: a ≡ b mod m
+
+Exemplo 5. 21 ≡ 13 mod 2. De fato 21 − 13 = 8 = 2 · 4, múltiplo de 2.
+
+3.4.1 Conjuntos dos Inteiros Módulo m (Zm)
+
+Seja m ∈ Z, m > 1. Deﬁna os conjuntos:
+
+¯0 = {x ∈ Z; x ≡ 0 mod m}
+
+¯1 = {x ∈ Z; x ≡ 1 mod m}
+...
+m − 1 = {x ∈ Z; x ≡ m − 1 mod m},
+
+ou seja, para 0 ≤ a ≤ m − 1,
+
+¯a = {x ∈ Z; x ≡ a mod m}.
+
+O conjunto ¯a = {x ∈ Z; x ≡ a mod m} é chamado de classe residual módulo m do
+
+elemento a de Z.
+
+Para veriﬁcar se dois números são congruentes módulo m, não é necessário efetuar a
+divisão euclidiana de ambos por m para depois comparar os seus restos. É suﬁciente aplicar o
+seguinte resultado:
+
+Proposição 2. Suponha que a, b ∈ N são tais que b ≥ a. Tem-se que a ≡ b mod m, se, e somente
+se, m|b − a.
+
+3.4. Aritmética Modular
+
+31
+
+Demonstração. Sejam a = mq +r, com r < m e b = mq′ +r′, com r′ < m, as divisões euclidianas
+de a e b por m, respectivamente. Logo,
+
+b − a = m′(q′ − q) + (r′ − r).
+
+Portanto, a ≡ b mod m se, e somente se, r = r′, o que é equivalente a dizer que m|b − a
+
+já que |r − r′| < m.
+
+Note que todo numero natural é congruente módulo m ao seu resto na divisão euclidiana
+por m e, portanto, é congruente módulo m a um dos números 0, 1,. . . , m − 1. Além disso, dois
+desses números distintos não são congruentes módulo m.
+
+Em geral, se a ≡ r mod m e 0 (cid:54) r < m, dizemos que r é o resíduo de a módulo m.
+
+Proposição 3. Para cada a ∈ Z existe um e somente um r ∈ N, com r < m, tal que ¯a = ¯r.
+
+Demonstração. Seja a ∈ Z. Pela Divisão Euclidiana, existem dois únicos naturais q e r, com
+r < m, tais que a = m · q + r. Portanto é único o número natural r tal que r < m e a ≡ r mod m.
+Consequentemente, é único o número inteiro r tal que r < m e ¯a = ¯r.
+
+Chamamos de sistema completo de resíduos módulo m a todo conjunto de números
+naturais cujos restos pela divisão por m são os números 0, 1, . . . , m − 1, sem repetições e numa
+ordem qualquer.
+
+Corolário 2. Existem exatamente m classes residuais módulo m distintas, a saber, ¯0, ¯1, . . . , m − 1.
+
+Portanto, um sistema completo de resíduos módulo m possui m elementos.
+
+Proposição 4. Sejam a, b, c, m ∈ N, com m > 1, tem-se que
+
+a + c ≡ b + c mod m ⇔ a ≡ b mod m
+
+Demonstração. (⇐) Suponhamos que a ≡ b mod m. Podemos, sem perda de generalidade, supor
+b ≥ a. Logo temos que m|b − a.
+
+Observe que m|(b − a) + (c − c) e portanto, m|(b + c) − (a + c) como queríamos demons-
+
+trar.
+
+(⇒) Suponhamos que a + c ≡ b + c mod m. Sem perda de generalidade, podemos supor
+que b + c ≥ a + c. Logo, m|b + c − (a + c), o que implica que m|b − a e, consequentemente,
+a ≡ b mod m.
+
+A proposição acima nos diz sobre a lei do cancelamento em relação a operação de adição
+em Zm. Porém essa mesma relação não é válida, em geral, no caso da operação de multiplicação
+em Zm.
+
+32
+
+Capítulo 3. Introdução à Aritmética
+
+Exemplo 6. Como 6 · 9 − 6 · 5 = 24 e 8|24, temos que 6 · 9 ≡ 6 · 5 mod 8 e, no entanto, 9 ̸≡ 5
+mod 8.
+
+Porém vamos mostrar um caso onde a lei do cancelamento na multiplicação é válida.
+
+Denote por d = mdc(c, m).
+
+Proposição 5. Sejam a, b, c, m ∈ N, com c ̸= 0 e m > 1. Temos que
+
+ac ≡ bc mod m ⇔ a ≡ b mod
+
+m
+d
+
+,
+
+onde d = mdc(c, m).
+
+Demonstração. Podemos supor sem perda de generalidade que bc ≥ ac. Portanto
+
+ac ≡ bc mod m ⇔ m|(b − a)c.
+
+Como
+
+m
+d
+
+e
+
+c
+d
+
+são primos entre si temos que
+
+m
+d
+
+(cid:12)
+(cid:12)
+(cid:12)(b − a)
+
+c
+d
+
+⇔
+
+(cid:12)
+(cid:12)
+(cid:12)b − a.
+
+m
+d
+
+De onde segue que a ≡ b mod
+
+m
+d
+
+.
+
+Corolário 3. Sejam a, b, c, m ∈ N, com m > 1 e (c, m) = 1. Temos que
+
+ac ≡ bc mod m ⇔ a ≡ b mod m.
+
+Proposição 6. Sejam a, k, m ∈ N, com m > 1 e (k, m) = 1. Se a1, . . . , am é um sistema completo
+de resíduos módulo m, então
+
+também é um sistema completo de resíduos módulo m.
+
+a + ka1, . . . , a + kam,
+
+Demonstração. Segue do corolário acima que para i, j = 0, . . . , m − 1, temos
+
+a + kai ≡ a + ka j mod m.
+
+Como por hipótese (k, m) = 1, segue que
+
+kai ≡ ka j mod m ⇒ ai ≡ a j mod m.
+
+Portanto, i = j. Isto mostra que a + ka1, . . . , a + kam são dois a dois, não congruentes módulo m
+e, portanto, formam um sistema completo de resíduos módulo m.
+
+3.4. Aritmética Modular
+
+33
+
+3.4.2 Operações em Zm
+
+Deﬁnimos as seguintes operações em Zm:
+
+1. ¯a + ¯b = a + b
+
+2. ¯a · ¯b = a · b
+
+Observação 3. É fácil veriﬁcar que se mudarmos os representantes a e b para as classes
+residuais ¯a e ¯b, o resultado sempre está na mesma classe, o que mostra que as operações estão
+bem deﬁnidas.
+
+Exemplo 7.
+
+(a)
+
+Assim temos que
+
+51 ≡ 31 mod 5
+
+e
+
+43 ≡ 103 mod 5.
+
+51 + 43 = 94
+
+e
+
+31 + 103 = 134.
+
+cuja diferença é -40, assim um múltiplo de 5 e temos
+
+51 + 43 ≡ 31 + 103 mod 5.
+
+(b)
+
+Assim temos que
+
+51 ≡ 31 mod 5
+
+e
+
+43 ≡ 103 mod 5.
+
+51 · 43 = 2193
+
+e 31 · 103 = 3193,
+
+cuja diferença é -1000 e, portanto, um múltiplo de 5, assim:
+
+51 · 43 ≡ 31 · 103 mod 5.
+
+Vamos demonstrar então que dados ¯a, ¯a′, ¯b e ¯b′, temos que a + b = a′ + b′ e a · b = a′ · b′.
+
+De fato, considere ¯a = ¯a′ e ¯b = ¯b′.
+
+(Adição) Note que se a ≡ a′ mod m e b ≡ b′ mod m temos válida a seguinte igualdade
+
+(a − a′) + (b − b′) = (a + b) − (a′ − b′).
+
+Além disso (a + b) − (a′ − b′) é múltiplo de m, portanto a + b = a′ + b′.
+
+(Multiplicação) Se ¯a = ¯a′, digamos a = a′ + r · m, r ∈ Z e se ¯b = ¯b′, isto é,
+
+b = b′ + s · m,
+
+s ∈ Z. Segue que,
+
+a · b = (a′ + rm) · (b′ + sm) = a′b′ + (a′s + rb′ + smr) · m
+
+Logo ab − a′b′ é múltiplo de m
+
+e
+
+a · b = a′ · b′.
+
+34
+
+Capítulo 3. Introdução à Aritmética
+
+A seguir apresentaremos as propriedades da adição e multiplicação da aritmética modular,
+
+cuja demosntração segue diretamente do uso das respectivas deﬁnições.
+
+Propriedades: Sejam ¯a, ¯b e ¯c elementos de Zm, temos:
+
+1. Adição:
+
+Associativa: ( ¯a + ¯b) + ¯c = ¯a + (¯b + ¯c)
+
+Comutativa: ¯a + ¯b = ¯b + ¯a
+
+Elemento neutro: ¯a + ¯0 = ¯a
+
+Elemento simétrico: ¯a + −a = ¯0
+
+2. Multiplicação:
+
+Associativa: ( ¯a · ¯b) · ¯c = ¯a · (¯b · ¯c)
+
+Comutativa: ¯a · ¯b = ¯b · ¯a
+
+Elemento neutro: ¯a · ¯1 = ¯a
+
+3. Distributiva: ¯a · (¯b + ¯c) = ¯a · ¯b + ¯a · ¯c
+
+3.4.2.1 Inverso em Zm
+
+Diremos que a classe ¯α ∈ Zm é o inverso de ¯a se a equação ¯a · ¯α = 1 é veriﬁcada em Zm.
+
+Exemplo 8. Temos que ¯2 é o inverso de ¯4 em Z7, pois 2 · 4 ≡ 1 mod 7.
+
+Teorema 4 (Inversão). A classe ¯a tem inverso em Zm se, e somente se, a e m são primos entre si.
+
+Demonstração. (⇒) Se ¯a é invertível, então existe um ¯b ∈ Zm tal que ¯1 = ¯a · ¯b = a · b. Logo
+a · b ≡ 1 mod m, isto é, existe t ∈ Z tal que a · b + t · m = 1 e, assim (a, m) = 1.
+
+(⇐) Se (a, m) = 1, existem b,t ∈ Z tais que ¯1 = ab + mt = ab + mt = ab + ¯0 = ¯a · ¯b.
+
+Portanto ¯a é invertível.
+
+Observe que para encontrar o inverso ¯α de ¯a em Zm, temos a que resolver a equação
+
+¯a · ¯α = ¯1,
+
+que equivale a dizer que a · α − 1 é divisível por m. Isto é,
+
+a · α + k · m = 1
+
+E para resolver essa equação e encontrarmos α podemos empregar o Algoritmo Euclidi-
+
+ano Estendido.
+
+3.4. Aritmética Modular
+
+35
+
+Exemplo 9. Vamos calcular o inverso multiplicativo de ¯3 em Z32. Note que tal número existe
+pois mdc(3, 32) = 1. Usando o Algoritmo Euclidiano, escrevemos a cada etapa das divisões
+efetuadas o resto em termos do quociente, divisor e dividendo, ou seja, ao dividirmos a por b
+obtendo um quociente q e um resto r, escreveremos r = a − bq. Desse modo temos,
+
+32 = 3 · 10 + 2 ⇒ 2 = 32 − 3 · 10,
+
+3 = 2 · 1 + 1 ⇒ 1 = 3 − 2 · 1.
+
+O próximo passo é, substituir a última expressão obtida para um resto, substituir nas
+
+expressões anteriores. Por exemplo,
+
+1 = 3 − 2 · 1,
+
+1 = 3 − (32 − 3 · 10) · 1,
+
+1 = 11 · 3 − 32.
+
+Logo, se reduzimos a módulo 32, temos −32 = ¯0. O que nos resta é 11 · 3 ≡ 1, que é
+equivalente a ¯3 · 11 = ¯1, que nos diz que o inverso de 3 em Z32 é 11. O inverso de 3 em Z81, por
+exemplo, não existe, já que mdc(3, 81) = 3 ̸= 1.
+
+Deﬁnição 4. O conjunto dos elementos de Zm que tem inverso denotamos por
+
+U (m) = { ¯a ∈ Z : mdc(a, m) = 1}.
+
+Observação 4. U (p) = Zp∖{¯0} quando p é primo.
+
+Exemplo 10. Exemplo de classes inversíveis:
+
+U (4) = {¯1, ¯3};
+
+U (8) = {¯1, ¯3, ¯5, ¯7};
+
+U (11) = {¯1, ¯2, ..., ¯9, ¯10}.
+
+3.4.2.2 Divisões em Zm
+
+Nesta seção veremos a operação de divisão em Zm. Nos reais, dividir a por b é equivalente
+, sendo
+
+o inverso de b, e tal operação sempre está deﬁnida para b ̸= 0.
+
+1
+b
+
+a a ·
+
+1
+b
+
+De maneira similar, para dividir ¯a por ¯b, é preciso saber se ¯b possui inverso, ou seja, se
+
+b ∈ U (m).
+
+Se b ∈ U (m), calculamos o inverso de ¯b em Zm (digamos β ) e dividir ¯a por ¯b, é calcular
+
+¯a · ¯β . Se b não possui inverso em Zm então a divisão não está bem deﬁnida.
+
+36
+
+Capítulo 3. Introdução à Aritmética
+
+Exemplo 11. Vamos efetuar a divisão de ¯2 por ¯3 em Z8. Como mdc(3, 8) = 1, então ¯3 tem
+inverso em Z8. Note que o fato de 2 não ter inverso em Z8 é importante pois 2 não é o divisor.
+Observe que o inverso de ¯3 em Z8 é o próprio ¯3 (como se tratava de números pequenos
+encontramos o inverso por tentativa e erro, caso contrário poderíamos ter aplicado o Algoritmo
+Euclidiano Estentido para encontrar o inverso como ﬁzemos anteriormente). Assim o resultado
+da divisão de ¯2 por ¯3 em Z8 é ¯6.
+
+3.4.3 Congruência Linear
+
+Toda equação da forma
+
+ax ≡ b mod m, onde (a, m) = 1,
+
+é chamada de congruência linear. Para resolvê-la, encontramos o inverso de a (digamos α), assim
+
+ou,
+
+α · ax ≡ α · b mod m,
+
+x ≡ α · b mod m.
+
+Observação 5. Se mdc(a, m) = 1 então a congruência linear ax ≡ b mod m tem uma, e uma só,
+solução em Zm.
+
+Exemplo 12. Vamos resolver a congruência 7x ≡ 3 mod 15.
+
+Primeiramente precisamos multiplicá-la pelo inverso de ¯7 em Z15. Como 15 − 2 · 7 = 1,
+
+o inverso de 7 é −2 = 13. Multiplicando a congruência por 13, temos
+
+x ≡ 13 · 3 ≡ 39 ≡ 9 mod 15
+
+Voltaremos falar sobre congruência na seção 3.6, onde tratamos de algumas propriedades
+
+e inciamos o estudo de sistemas de congruências lineares.
+
+3.5 Teorema de Fermat
+
+O Teorema de Fermat é um resultado importante na Criptograﬁa. Para estudá-lo necessi-
+
+tamos do lema a seguir.
+
+Lema 3. (HEFEZ, ) Seja p um número primo. Os números
+
+divisíveis por p.
+
+(cid:33)
+
+, onde 0 < i < p, são todos
+
+(cid:32)
+
+p
+i
+
+3.6. Sistemas de Congruências
+
+37
+
+Demonstração. O resultado vale trivialmente para i = 1. Portanto, podemos supor que seja
+verdadeiro para 1 < i < p. Neste caso, i!|p(p − 1) · · · (p − i + 1). Como (i!, p) = 1, decorre que
+i!|(p − 1) · · · (p − i + 1), e
+
+(cid:32)
+
+(cid:33)
+
+p
+i
+
+= p
+
+(p − 1) · · · (p − i + 1)
+i!
+
+,
+
+donde segue o lema.
+
+Teorema 5 (Pequeno Teorema de Fermat). Seja p um número primo e a um número inteiro,
+então
+
+ap ≡ a mod p
+
+Demonstração. Vamos mostrar o resultado para a ≥ 0 e a prova é feita por indução sobre a. O
+resultado vale claramente para a = 0, pois p|0.
+
+Supondo o resultado válido para a, iremos prová-lo para a + 1. Pela fórmula do binômio
+
+de Newton, temos
+
+(a + 1)p − (a + 1) = ap − a +
+
+(cid:32)
+
+(cid:33)
+
+p
+
+1
+
+ap−1 + · · · +
+
+(cid:32)
+
+(cid:33)
+
+a.
+
+p
+p − 1
+
+Pelo Lema 3 e a hipótese de indução, o segundo membro da igualdade acima é divisível
+
+por p. Logo o resultado segue.
+
+Segundo o teorema, se p é primo e a é um inteiro qualquer, então ap ≡ a mod p. Se
+p não divide a, então a é inversível módulo p (pelo Teorema da Inversão). Seja a′ um inteiro
+positvo tal que aa′ ≡ 1 mod p. Multiplicando ambos os lados da igualdade de ap ≡ a mod p por
+a′ obtemos
+
+a′a · ap−1 ≡ a′a mod p.
+
+Substituindo a′a ≡ 1 mod p nesta equação, ﬁcamos com
+
+ap−1 ≡ 1 mod p,
+
+esta é a nova versão do Teorema de Fermat.
+
+Teorema 6 (Pequeno Teorema de Fermat - II). Seja p um número primo e a um inteiro que não
+é divisível por p. Então ap−1 ≡ 1 mod p.
+
+3.6 Sistemas de Congruências
+
+Nesta seção vamos estudar como resolver congruências lineares ou sistemas de congruên-
+
+cias.
+
+38
+
+Capítulo 3. Introdução à Aritmética
+
+3.6.1 Equações Lineares
+
+Dada a equação
+
+ax ≡ b mod m, m ∈ Z,
+
+(3.3)
+
+já discutimos anteriormente que esse tipo de equação "é fácil de resolver" se ¯a é invertível em
+Zm. Em particular, se m é primo e a ̸≡ 0 mod m então (3.3) sempre tem solução. Se ¯a não tem
+inverso em Zm, o problema se torna mais complicado. Dizer que ¯a não tem inverso em Zm é
+equivalente a dizer que mdc(a, m) ̸= 1.
+
+Se a equação (3.3) tem solução, isto é, existem x, y ∈ Z tal que
+
+então o mdc(a, m) divide b.
+
+ax − my = b,
+
+Proposição 7. A equação (3.3) tem solução se e somente, se b é divisível pelo mdc(a, m).
+
+Demonstração. De fato, seja a equação
+
+ax − my = b
+
+(3.4)
+
+e suponha que d = mdc(a, m) divide b, ou seja, b = d · b′, a = d · a′ e m = d · m′. Substituindo
+em (3.4) temos
+
+ou seja,
+
+a′dx − dm′y = db′,
+
+a′x − m′y = b′.
+
+a′x ≡ b′ mod m′.
+
+Por outro lado, observe que mdc(a′, m′) = 1, portanto a nova equação tem solução.
+
+Note que neste caso o módulo mudou, e para encontrar a solução da primeira equação
+temos que retornar ao módulo m, e dessa forma encontrar a solução, isso em algumas vezes se
+torna um empecilho. O próximo exemplo mostra que pode ocorrer quando mudamos o módulo
+de uma equação.
+
+Exemplo 13. Encontre a solução da seguinte equação
+
+6x ≡ 4 mod 8.
+
+(3.5)
+
+Observe que mdc(6, 8) = 2 ̸= 1, portanto ¯6 não possui inverso em Z8. Então podemos
+
+escrever a equação (3.5) da forma
+
+6x − 8y = 4, ⇔ 3x − 4y = 2.
+
+3.6. Sistemas de Congruências
+
+Como 3x ≡ 2 mod 4 (¯3 é seu próprio inverso em Z4,) segue que
+
+x ≡ 2 mod 4.
+
+39
+
+(3.6)
+
+Mas observe que (3.6) está em Z4, assim temos que reescrevê-la em Z8. Podemos
+
+escrever
+
+x = 2 + 4k, k ∈ Z
+
+Assim temos duas possibilidades para k.
+
+∙ Se k par (k = 2n) então x ≡ 2 mod 8 é uma solução
+
+∙ Se k ímpar (k = 2n + 1) então x = 6 + 8n, isto é, x ≡ 6 mod 8.
+
+Dessa forma a equação 6x ≡ 4 mod 8 tem duas soluções.
+
+3.6.2 Teorema Chinês do Resto
+
+Nessa seção veremos como calcular um inteiro que satisfaz simultanenamente a várias
+congruências com módulos distintos: o resultado é conhecido como Algoritmo Chinês do Resto.
+Iniciamos a introdução desse algoritmo através de exemplo. Basicamente utilizamos várias
+substituições para resolver o sistema de congruências.
+
+Exemplo 14. Determine o menor inteiro positivo que deixa resto 1 na divisão por 3 e resto 2 na
+divisão por 5.
+
+Observe que podemos escrever o problema da seguinte forma:
+
+x ≡ 1 mod 3,
+
+x ≡ 2 mod 5.
+
+Além disso, temos que x = 3q + 1, q ∈ Z e substituindo na segunda congruência obtemos;
+
+Subtraindo 1 dos dois lados da congruência chegamos a
+
+3q + 1 ≡ 2 mod 5.
+
+3q ≡ 1 mod 5
+
+Multiplicando a congruência por 2 temos
+
+6q ≡ 2 mod 5.
+
+Veja que 6 ≡ 1 mod 5, e então
+
+q ≡ 2 mod 5,
+
+ou seja q = 5k + 2, k ∈ Z.
+
+40
+
+Capítulo 3. Introdução à Aritmética
+
+Substituindo em x = 3q + 1, concluímos que
+
+x = 3(5k + 2) + 1
+
+ou ainda
+
+x = 15k + 7.
+
+Observe, contudo, que o resultado obtido não é uma solução, mas sim uma família de soluções.
+De fato, obtemos uma solução diferente para cada valor inteiro k ﬁxado.
+
+O próximo exemplo trata de um sistema de três congruências, a forma de resolver será
+
+semelhante ao exemplo anterior.
+
+Exemplo 15. (ENQ-2016. . . , 2016) A secretaria de educação de um município recebeu uma
+certa quantidade de livros para distribuir entre as escolas do município. Sabe-se que a quantidade
+é superior a 1000, inferior a 2000, que se dividi-lo entre 7 escolas sobram 4, entre 9 sobram 2 e
+entre 6 sobram 6. Encontre a quantidade de livros.
+
+Seja x a quantidade de livros recebida pela secretaria. Temos que x deve satisfazer as
+
+seguintes equações.
+
+(i) x ≡ 4 mod 7,
+(ii) x ≡ 2 mod 9,
+(iii) x ≡ 6 mod 13.
+
+Por (i) segue que x = 7k + 4, k ∈ Z. Substituindo em (ii) vemos que 7k + 4 ≡ 2 mod 9,
+somando 5 de ambos os lados temos 7k ≡ 7 mod 9, ou seja, k ≡ 1 mod 9. Logo, k = 9n + 1 e
+assim x = 7k + 4 = 7(9n + 1) + 4 = 63n + 11. Colocando essa informação na terceira equação
+segue que 63n + 11 ≡ 6 mod 13. Isso implica que 11n ≡ 8 mod 13. Multiplicando essa equação
+por 6 temos que 66n ≡ 48 mod 13, ou seja, n ≡ 9 mod 13. Assim segue que n = 13t + 9 e
+x = 63n + 11 = 63(13t + 9) + 11 = 819t + 518, com t ∈ Z que é a solução geral do problema.
+
+Observe que nesse caso temos a restrição, 1000 < x < 2000, dessa forma concluímos
+que nossa solução vale apenas para t = 1 e a resposta é "A secretaria de educação recebeu 1397
+livros para serem distribuídos".
+
+Exemplo 16. (PROFMAT-AV3-ARITMETICA, 2011) Quando um macaco sobe uma escada
+de dois em dois degraus, sobra um degrau, quando sobe de três em três degraus, sobram dois
+degraus e quando sobe de cinco em cinco degraus, sobram três degraus. Quantos degraus possui
+a escada, sabendo que o número de degraus está entre 150 e 200?
+
+Seja o número x de degraus. Temos que x é a solução do seguinte sistema
+
+(i) x ≡ 1 mod 2,
+(ii) x ≡ 2 mod 3,
+(iii) x ≡ 3 mod 5.
+
+De (i) x = 2k + 1, k ∈ Z. Substituindo em (ii) temos que 2k + 1 ≡ 2 mod 3. Subtraindo
+uma unidade de ambos os lados temos 2k ≡ 1 mod 3. Multiplicando essa equação por 2 temos que
+
+3.6. Sistemas de Congruências
+
+41
+
+4k ≡ 2 mod 3, ou seja, k ≡ 2 mod 3. Logo, k = 3n+2 e assim x = 2k +1 = 2(3n+2)+1 = 6n+5.
+Colocando essa informação em (iii) segue que 6n + 5 ≡ 3 mod 5, ou seja, n ≡ 3 mod 5. Assim
+segue que n = 5t + 3 e x = 6n + 5 = 6(5t + 3) + 5 = 30t + 23, com t ∈ Z é a solução geral do
+problema.
+
+Observe que nesse caso temos a restrição, 150 < x < 200, dessa forma concluímos que
+
+nossa solução vale apenas para t = 5 e a resposta é "A escada tem 173 degraus".
+
+O Algoritmo Chinês do Resto apenas sistematiza o resultado ﬁnal do método utilizado
+
+nos problemas anteriores. Vamos enunciar o teorema e analisá-lo com mais cuidado.
+
+Teorema 8 (Teorema Chinês do Resto). (COUTINHO, 1997) Sejam m e n inteiros positivos
+primos entre si. Se a e b são inteiros quaisquer, então o sistema
+
+x ≡ a mod m,
+
+x ≡ b mod n,
+
+admite uma solução x. Além disso, a solução é única em Zmn.
+
+Demonstração. Considere o sistema
+
+x ≡ a mod m
+
+x ≡ b mod n
+
+(3.7)
+
+(3.8)
+
+Vamos reescrever (3.7) na forma x = a + my, onde y é um inteiro qualquer. Substituindo
+
+o resultado de (3.7) em (3.8) obtemos a + my ≡ b mod n, ou ainda
+
+my ≡ b − a mod n
+
+(3.9)
+
+Além disso, mdc(m, n) = 1, isto é, m tem inverso em Zn. Chamando de ¯α o inverso de m em Zn,
+a solução da equação (3.9) é y ≡ α(b − a) mod n. Isto é, y = α(b − a) + nz, onde z é um número
+inteiro. Substituindo na equação (3.7), temos
+
+x = a + mα(b − a) + mnz
+
+Ou seja, para todo z, o número inteiro a + mα(b − a) + mnz é solução do nosso sistema
+proposto. Resta mostrar que esta solução é única em Zmn. Suponha que são x e y duas soluções
+do sistema. Então
+
+x ≡ a mod m,
+
+y ≡ b mod m.
+
+Subtraindo uma equação da outra, encontramos x −y ≡ 0 mod m, ou seja, x −y ≡ 0 mod n.
+
+Como mdc(m, n) = 1, temos que m · n divide x − y. Logo se x e y são soluções do sistema
+
+então x ≡ y mod mn. Ou seja, o sistema possui uma única solução em Zmn.
+
+42
+
+Capítulo 3. Introdução à Aritmética
+
+No caso desse teorema, o sistema é composto de duas equações, porém de maneira
+
+análoga é possível generalizá-lo. Vamos enunciar o resultado geral.
+
+Teorema 9. Sejam n1, . . . , nk inteiros positivos dois a dois primos entre si. Então o sistema
+
+x ≡ a1 mod n1,
+x ≡ a2 mod n2,
+...
+x ≡ ak mod nk.
+
+tem uma única solução em Zn1...nk.
+
+3.7 Grupos
+
+3.7.1 Definição e exemplos
+
+Deﬁnição 5. Seja G um conjunto não vazio e seja * uma operação em G. O par (G, *) é um
+grupo se satisfaz as seguintes propriedades:
+
+(i) Associativa: dados, a, b, c ∈ G temos que
+
+a * (b * c) = (a * b) * c.
+
+(ii) Elemento neutro: existe e ∈ G tal que para todo g ∈ G temos
+
+g * e = e * g = g.
+
+(iii) Elemento inverso: dado um elemento g ∈ G qualquer, existe um elemento g′ ∈ G (inverso
+
+de g), tal que
+
+g * g′ = g′ * g = e.
+
+Exemplo 17.
+
+1. (N, +) não é um grupo, pois dado n ∈ N, com n ≥ 1 não possui inverso na
+
+adição em N.
+
+2. (Z, +) é um grupo onde o elemento neutro é o 0 e o elemento oposto da adição para cada
+
+a ∈ Z é o seu oposto −a.
+
+3. (Z, ·) não é um grupo, pois a ∈ Z, a ̸= 1 não admite inverso em Z.
+
+4. (Zn, +) é um grupo de elemento neutro ¯0, e o elemento inverso de ¯a ∈ Zn é −a.
+
+5. (R, +) é um grupo.
+
+6. (R − {0}, ·) é um grupo.
+
+3.7. Grupos
+
+43
+
+Deﬁnição 6 (Ordem de um grupo). Sendo (G; *) um grupo, dizemos que a ordem de G é igual a
+n, se G é um conjunto ﬁnito de n elementos. Se o conjunto G possui inﬁnitos elementos então
+sua ordem será inﬁnita.
+
+Quase todos grupos que destacamos acima possuem ordem inﬁnta, o único exemplo que
+
+vimos de grupo ﬁnito é Zn com a soma; este grupo tem ordem n.
+
+3.7.2 Grupos Aritméticos
+
+Como vimos anteriormente, denotamos por U (n) o conjunto dos elementos inversíveis
+
+de Zn, ou seja,
+
+U (n) = { ¯a ∈ Zn; mdc(a, n) = 1} .
+
+Aﬁrmamos que U (n) é um grupo em relação à multiplicação de classes de Zn. De fato,
+a operação (·) está bem deﬁnida em U (n), ou seja, o produto de dois elementos de U (n) é um
+elemento de U (n). Sejam ¯a e ¯b ∈ U (n) e seus inversos ¯a′ e ¯b′. Então temos,
+
+ab · a′b′ = aa′ · bb′ = ¯1,
+
+ou seja, no conjunto U (n) está bem deﬁnida a operação produto de classes. Resta agora veriﬁcar
+que (·) satisfaz as propriedades de grupo. A propriedade associatividade segue facilmente em
+Zn, o elemento neutro é ¯1 que pertence a U (n), e segue da própria deﬁnição de U (n) que cada
+elemento desse conjunto possui inverso.
+
+3.7.3 Função φ de Euler (Ordem de U (n))
+
+Deﬁnição 7. A função φ de Euler associa a cada elemento em n ∈ N o número de elementos de
+U (n), ou seja, a quantidade de números naturais entre 0 e n − 1 que são primos com n.
+
+Denotando a ordem de U (n) por φ (n), vamos calcular φ . Primeiro começaremos por
+
+um caso mais trivial.
+
+Proposição 7. Sendo p um número primo e k um número natural, temos que φ (pk) = pk − pk−1.
+
+Demonstração. φ (pk) é o número de números naturais menores que pk que são primos com
+pk. Como p é primo, os números naturais que não são primos com pk são aqueles que tem p
+como divisor, ou seja, p, 2p, 3p, . . . pk−1 p. Assim temos pk−1 números que são divisíveis por p
+menores que pk. Logo existem pk − pk−1 números que não são divisíveis por p. Isto é,
+
+φ (pk) = pk − pk−1 = pk−1(p − 1).
+
+44
+
+Capítulo 3. Introdução à Aritmética
+
+Corolário 4. Se p é um número primo então φ (p) = p − 1.
+
+Demonstração. Segue imediatamente de proposição anterior, tomando k = 1.
+
+Observação 6. Note que (t, m·m′) = 1 se, e somente se, (t, m′) = (t, m) = 1: De fato, (t, m·m′) =
+1 implica que existem a, b ∈ Z tais que at + bmm′ = 1, logo at + (bm)m′ = 1 e at + (bm′)m =
+1, o que implica (t, m) = 1 e (t, m′) = 1. Reciprocamente, se (t, m) = (t, m′) = 1, segue que
+(t, mm′) = (t, m′) = 1.
+
+Teorema 10. (HEFEZ, 2010) Se m, n são inteiros positivos tais que mdc(m, n) = 1, então
+
+φ (mn) = φ (m)φ (n).
+
+Demonstração. Considere a seguinte tabela formada pelos números naturais de 1 a m · m′:
+
+1
+m′ + 1
+...
+
+. . .
+. . .
+
+2
+m′ + 2
+...
+
+(m − 1)m′ + 1 (m − 1)m′ + 2 . . .
+
+k
+m′ + k
+...
+(m − 1)m′ + k
+
+. . .
+. . .
+
+m′
+2m′
+...
+
+. . . m · m′
+
+Segue da observação acima que (t, m·m′) = 1 se, e somente se, (t, m′) = (t, m) = 1 , asiim
+para calcular φ (m · m′), devemos determinar os inteiros na tabela acima que são simultaneamente
+primos com m e m′.
+
+Se o primeiro elemento de uma coluna não for primo com m′ então todos os elementos
+da coluna também não são primos com m′. Portanto, os elementos primos com m′ estão necessa-
+riamente nas colunas restantes que são em número φ (m′), cujos elementos são primos com m′.
+Vejamos agora quais são os elementos primos com m em cada uma dessas colunas.
+
+Como (m, m′) = 1, a sequência
+
+k, m′ + k, . . . , (m − 1)m′ + k,
+
+forma um sistema completo de resíduos módulo m (veja Proposição 6) e, portanto φ (m) desses
+elementos são primos com m. Logo, o número de elementos simultaneamente primos com m′ e
+m é φ (m) · φ (m′).
+
+Teorema 11. Se n = pe1
+
+1 . . . pek
+
+k é a decomposição de n em fatores primos, então
+(cid:19)
+
+(cid:18)
+
+(cid:19)
+
+(cid:18)
+
+φ (n) = pe1
+
+1 . . . pek
+
+k
+
+1 −
+
+. . .
+
+1 −
+
+.
+
+1
+p1
+
+1
+pk
+
+Demonstração. Pelo Teorema 10 temos,
+
+φ (n) = φ (pe1
+
+1 ) . . . φ (pek
+k ).
+
+3.7. Grupos
+
+45
+
+E pela Proposição 7, onde utilizamos o cálculo de φ para potências de primos, encontramos
+
+φ (n) = pe1−1
+
+1
+
+. . . pek−1
+k
+
+(p1 − 1)(pk − 1),
+
+como queríamos.
+
+Exemplo 18. Vamos calcular φ (120). Temos que 120 = 23 · 3 · 5, assim
+
+φ (120) = 23 · 3 · 5
+
+(cid:18)
+
+1 −
+
+1
+2
+
+(cid:19) (cid:18)
+
+1 −
+
+(cid:19) (cid:18)
+
+1 −
+
+1
+3
+
+(cid:19)
+
+1
+5
+
+= 32
+
+3.7.4 Subgrupos
+
+Deﬁnição 8. (SAMPAIO, 2008) Sejam G um grupo e H um subconjunto de G. Dizemos que H
+é um subgrupo de G se:
+
+∙ Para todo a, b ∈ H temos a * b ∈ H.
+
+∙ O elemento neutro de G está em H.
+
+∙ Para todo a ∈ H, seu inverso a′ também está em H.
+
+Observação 7. Qualquer grupo tem pelo menos dois subgrupos: o próprio grupo e o subgrupo
+formado apenas pelo elemento neutro.
+
+Exemplo 19.
+
+∙ (Q*, ·) é um subgrupo de (R*, ·);
+
+∙ (Z, +) é um subgrupo de (Q, +);
+
+∙ (N, ·) não é um subgrupo de (Q*, ·) pois não contém todos os inversos de seus elementos.
+
+47
+
+CAPÍTULO
+
+4
+
+A CRIPTOGRAFIA RSA
+
+Nesse capítulo descrevemos o processo da Criptograﬁa RSA, ou seja, explicitamos como
+codiﬁcar e decodiﬁcar uma mensagem utilizando esse método. Além disso, veriﬁcamos que uma
+vez a mensagem codiﬁcada sempre conseguimos retornar a mensagem original. Encerramos o
+capítulo tratando brevemente sobre a segurança do processo.
+
+Vale destacar novamente que a Criptograﬁa RSA é composta de duas chaves: a pública e
+a privada, onde a chave pública (chave de codiﬁcação) é de conhecimento de todos e a chave
+privada (chave de decodiﬁcação) é mantida em sigilo. Dessa forma só é possível decifrar a
+mensagem usando a respectiva chave privada do processo de codiﬁcação. Na Criptograﬁa RSA o
+uso das chaves deve obedecer a seguinte regra:
+
+∙ Chave pública: a forma de criptograﬁa é passada publicamente, para diversas pessoas,
+
+porém a maneira de descriptografá-las ﬁca apenas com a pessoa que criou a chave.
+
+∙ Chave privada: o criador é o único que sabe como codiﬁcar e decodiﬁcar, somente poderão
+
+ler ou esconder a informação a quem ele passar as instruções para fazê-lo.
+
+Iremos então detalhar o processo para gerar e utilizar o par de chaves acima citado.
+
+4.1 Pré-codificação
+
+A primeira coisa a fazer se desejamos usar o método RSA é converter a mensagem em
+
+uma sequência de números.
+
+Para simpliﬁcar suponha que na mensagem há apenas palavras. Essa primeira etapa é
+chamada de pré-codiﬁcação. Na pré-codiﬁcação convertemos as letras em números usando a
+seguinte tabela de conversão:
+
+48
+
+Capítulo 4. A Criptograﬁa RSA
+
+A B
+
+C D E
+
+F G H
+
+I
+
+J
+
+K L M N O P Q
+
+10
+
+11
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+19
+
+20
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+R
+
+27
+
+S
+
+28
+
+T U V W X Y Z
+
+29
+
+30
+
+31
+
+32
+
+33
+
+34
+
+35
+
+O espaço entre duas palavras será substituído pelo número 99. Primeiramente para
+codiﬁcar uma mensagem no sistema RSA precisamos determinar os parâmetros. Estes parâmetros
+são dois primos distintos, que vamos denotar por p e q. Seja n = p · q.
+
+Após converter a mensagem em números, a última fase da pré-codiﬁcação consiste
+em quebrar a mensagem em blocos. Estes blocos devem ser números menores do que n. Para
+exempliﬁcar esse processo de codiﬁcação, utilizamos a seguinte frase:
+
+MATEMÁTICA É LEGAL
+
+Utilizando a tabela de números para conversão temos:
+
+221029142210291812109914992114161021
+
+Se escolhermos os números p = 13 e q = 17, então n = 221. Neste caso a mensagem acima
+pode ser quebrada em blocos cujo número formado seja menor que 221, uma possibilidade é a
+seguinte
+
+22-10-29-142-210-29-181-210-99-149-92-114-16-10-21.
+
+Observação 8. A maneira de escolher os blocos não é única, ou seja, há várias formas de
+pré-codiﬁcar a mensagem, e quando decodiﬁcarmos a mensagem original será a mesma. Alguns
+cuidados devem ser tomados na pré-codiﬁcação, como por exemplo não iniciar um bloco com
+0, pois isso nos traria problemas na decodiﬁcação, uma vez que faltariam letras. Além disso
+é interessante que tomemos blocos diferentes daquele que formamos quando ﬁzemos a pré-
+codiﬁcação, para tornar a mensagem mais difícil de ser decodiﬁcada.
+
+Note que para este exemplo a escolha para o primeiro bloco foi 22. Não poderíamos ter
+escolhido o primeiro bloco como 221, mas poderíamos escolhê-lo como 2. Se o primeiro bloco
+fosse o 2, o segundo seria necessariamente 210, para evitar que o terceiro bloco começasse com
+zero.
+
+4.2 Codificação
+
+Para codiﬁcar a mensagem precisamos de n, que é o produto de primos, e de um inteiro
+positivo e que seja inversível módulo φ (n). Em outras palavras, mdc(e, φ (n)) = 1. Lembremos
+que se conhecemos p e q, então φ (n) = (p − 1)(q − 1). Chamaremos o par (n, e) de chave de
+
+4.2. Codiﬁcação
+
+49
+
+codiﬁcação do sistema RSA que estamos usando. Uma vez que a mensagem foi pré-codiﬁcada
+temos uma sequência de números ou blocos. Codiﬁcarmos cada bloco separadamente, e a
+mensagem será a sequência de blocos codiﬁcados.
+
+Dada a chave de codiﬁcação (n, e), para codiﬁcar um bloco b (lembre-se que b ∈ Z+ e é
+menor que n), vamos fazer o seguinte. Denotando o bloco codiﬁcado por C(b). Temos que C(b)
+é resto da divisão de be por n. Em termos de Aritmética modular, C(b) é a forma reduzida de be
+módulo n.
+
+Voltando ao exemplo que estamos considerando, temos p = 13 e q = 17, logo n = 221
+e φ (n) = (13 − 1)(17 − 1) = 192. Para este exemplo, podemos tomar e = 5. Assim o bloco
+22 da mensagem é codiﬁcado como o resto da divisão de 225 por 221. Veriﬁcamos que 225 ≡
+133 mod 221, por meio de técnicas de aritmética modular e fazendo uso de calculadora eletrônica.
+
+Utilizamos o mesmo raciocínio codiﬁcamos toda mensagem e obtemos a seguinte sequên-
+
+cia de blocos.
+
+133-108-139-194-58-139-129-58-216-132-79-173-152-108-21.
+
+4.2.1 Decodificação
+
+A informação que precisamos para decodiﬁcar a mensagem consiste de dois números: n e
+o inverso de e em φ (n), que denotamos por d. Chamamos o par (n, d) de chave de decodiﬁcação.
+
+Seja a um bloco de mensagem codiﬁcada, então D(a) será o resultado do processo de
+decodiﬁcação e temos que D(a) = resto da divisão de ad por n. Em aritmética modular, D(a) é a
+forma reduzida de ad módulo n. Assim, para decodiﬁcar precisamos conhecer o n e o inverso d
+de e módulo φ (n).
+
+Em nosso exemplo, temos que n = 221 e e = 5. Aplicando o Algoritmo Euclidiano
+
+Estendido para calcular d, temos:
+
+Ou ainda,
+
+192 = 5 · 38 + 2,
+
+5 = 2 · 2 + 1,
+
+1 = 5 − 2 · 2,
+
+1 = 5 − 2(192 − 5 · 38),
+
+1 = 5 · 77 − 2 · 192.
+
+Logo o inverso de 5 módulo 192 é 77. Assim para decodiﬁcar o bloco 133 da mensagem
+codiﬁcada, calculamos 13377 módulo 221, e veriﬁcamos que 13377 ≡ 22 módulo 221. Observe
+
+50
+
+Capítulo 4. A Criptograﬁa RSA
+
+que não precisamos conhecer p e q, apenas n e d. E assim, sucessivamente retornamos mensagem
+a original.
+
+4.3 Por que funciona?
+
+Digamos que temos um sistema RSA de parâmetros p e q com n = p · q. Então temos os
+
+seguintes dados:
+
+∙ chave de codiﬁcação (chave pública): (n, e),
+
+∙ chave de decodiﬁcação (chave privada): (n, d).
+
+Sendo assim, para mostrar a eﬁciência do uso de mensagens criptografadas precisamos
+garantir que nas condições acima a mensagem recebida, quando decodiﬁcada, será exatamente
+igual a mensagem original. Isto equivalente a veriﬁcar que se b (bloco gerado na pré-codiﬁcação)
+é um inteiro tal que 1 (cid:54) b (cid:54) n − 1 então D(C(b)) = b, ou seja, DC(b) ≡ b mod n. Fazendo uso
+do Teorema de Fermat vamos mostrar que esta igualdade é veriﬁcada.
+
+Teorema 12. Seja o par (n, e) a chave de codiﬁcação e o par (n, d) a chave de decodiﬁcação do
+sistema RSA. Então DC(b) ≡ b mod n, para todo inteiro b, com 1 (cid:54) b (cid:54) n − 1.
+
+Demonstração. De fato, segue da deﬁnição de D e C que
+
+DC(b) ≡ (be)d ≡ bed mod n.
+
+(4.1)
+
+Porém d é o inverso de e módulo φ (n), logo ed = 1 + kφ (n), para algum inteiro k.
+Observe ainda que, como e e d são inteiros maiores que 2 e φ (n) > 0, então k > 0. Sendo assim
+temos que
+
+bed ≡ b1+kφ (n) mod n.
+
+Como n = p · q (p e q primos) calculamos bed módulo p e q. Veja que
+
+ed = 1 + kφ (n) = 1 + k(p − 1)(q − 1),
+
+logo,
+
+bed ≡ b · (b(p−1))
+
+k(q−1)
+
+mod p.
+
+Dessa forma temos dois casos a considerar.
+
+(i) Se p não divide b, então pelo Teorema de Fermat, bp−1 ≡ 1 mod p então
+
+bed ≡ b mod p.
+
+4.4. A segurança do RSA
+
+51
+
+(ii) Se p divide b o fato de p ser primo, nos leva a conclusão que b ≡ 0 mod p e a congruência é
+
+facilmente veriﬁcada.
+
+Assim, bed ≡ b mod p se veriﬁca para qualquer b. Analogamente, podemos mostrar que
+bed ≡ b mod q. Em outras palavras, bed − b é divisível por p e por q. Como mdc(p, q) = 1, temos
+que p · q divide bed − b pelo Lema 2. Dessa forma, como n = p · q, concluímos que bed ≡ b mod
+n, para todo número inteiro b.
+
+Segue do resultado acima a eﬁciência do processo de codiﬁcação e decodiﬁcação, ou
+seja, a mensagem decodiﬁcada por meio deste processo será idêntica a mensagem encaminhada
+originalmente, sem qualquer perda de informações.
+
+4.4 A segurança do RSA
+
+Apesar de todo avanço tecnológico e de inúmeras tentativas teóricas e algorítmicas, até
+hoje não existe um método eﬁciente para determinar a fatoração em primos de um número inteiro
+muito grande. A falta deste processo eﬁciente é que torna a Criptograﬁa RSA segura.
+
+Lembramos que no processo da Criptograﬁa RSA precisamos conhecer p e q primos
+tais que n = pq. Sem p e q não conseguimos calcular φ (n) = (p − 1)(q − 1). Apesar da chave
+pública (n, e) ser conhecida, para encontrarmos d, a chave de decodiﬁcação, precisamos aplicar
+o Algoritmo Euclidiano Estendido a φ (n) e e, tarefa impossível sem conhecermos p e q.
+
+53
+
+CAPÍTULO
+
+5
+
+CRIPTOGRAFIA EM SALA DE AULA
+
+Nesse capítulo descreveremos a atividade aplicada aos alunos de uma segunda série
+do Ensino Médio. O objetivo da atividade foi introduzir a noção de criptograﬁa e como ela é
+importante em nosso dia a dia. Vale destacar que nesse caso não foi utilizada a Criptograﬁa RSA.
+
+5.1 Atividade
+
+A Atividade foi adaptada do livro (DANTE, 2018). Trabalhou-se a ideia de matrizes
+com criptograﬁa. Num primeiro momento pensávamos em trabalhar superﬁcialmente a teoria
+dessa dissertação e depois aplicarmos uma atividade direcionada a isso. Porém essa programação
+demandaria várias aulas e a docente temia atrapalhar os conteúdos programados daquele ano.
+Dessa forma, optou-se por uso de outro método mais simples através de tabela, porém que
+engloba-se os principais conceitos da criptograﬁa.
+
+5.2 Plano de aula
+
+Identiﬁcação: Atividade prática de Matemática
+
+Prof. Evelyn Gomes da Silva
+
+Etec Paulino Botelho
+
+Série: 2 ano do ensino médio
+
+Tema: Matrizes e Criptograﬁa
+
+Situação problema: Codiﬁcar e decodiﬁcar uma mensagem usando matrizes e introduzir
+
+a noção de criptograﬁa.
+
+Objetivos especíﬁcos: Trabalhar a ideia de criptograﬁa através de matrizes.
+
+Conceitos-chave: Matriz. Matriz Inversa. Criptograﬁa.
+
+54
+
+Capítulo 5. Criptograﬁa em sala de aula
+
+Conhecimentos prévios: matrizes, matriz inversa e multiplicação de matrizes.
+
+Recursos necessários: Lousa e giz.
+
+Tempo: 2 h/aulas(1h40min)
+
+Avaliação: Envolvimento na atividade e cooperação.
+
+Procedimentos:
+
+∙ Explicar sobre a importância da criptograﬁa no nosso cotidiano, como por exemplo
+em compras on-line e mensagens de whatsapp. É importante destacar como funciona a
+criptograﬁa nesse processo;
+
+∙ Mostrar um exemplo que está contido no livro (DANTE, 2018), pag.82.
+
+Tomamos uma matriz A inversível (a matriz A pode ser qualquer desde que inversível),
+
+por exemplo A =
+
+e a tabela
+
+(cid:32)
+
+(cid:33)
+
+3 1
+2 3
+
+A B C D E F G H I
+
+J
+
+K L M N O P Q
+
+1
+
+2
+
+3
+
+4
+
+5
+
+6
+
+7
+
+8
+
+9
+
+10
+
+12
+
+13
+
+14
+
+15
+
+16
+
+17
+
+18
+
+R
+
+19
+
+S
+
+20
+
+T U V W X Y Z
+
+.
+
+21
+
+22
+
+23
+
+24
+
+25
+
+26
+
+27
+
+28
+
+Suponhamos que a mensagem que vamos transmitir seja:
+
+MATEMÁTICA É LEGAL
+
+De acordo com a tabela numérica temos: 14-1-21-5-14-1-21-9-3-1-28-5-28-13-5-7-1-13
+(substituímos espaços por ·).
+
+Arrumamos a sequência de números numa matriz de duas linhas M:
+
+(cid:32)
+
+M =
+
+14
+1
+
+1
+28
+
+21
+5
+
+14 1 21 9
+
+5
+28 13 5
+
+3
+1 13
+
+7
+
+(cid:33)
+
+Utilizamos a matriz A para codiﬁcar a mensagem e fazemos N=A·M, desse modo obtemos
+a seguinte matriz:
+
+(cid:32)
+
+N =
+
+70 28 22
+43 31 68 43 55
+31 86 57 94 67 17 63 21 45
+
+8
+
+(cid:33)
+
+Os elementos de N constituem a mensagem codiﬁcada: 43-31-68-43-55-8-70-28-22-31-
+86-57-94-67-17-63-21-45.
+
+5.3. Ocorrências da atividade
+
+55
+
+Para realizar a decodiﬁcação necessitamos da matriz inversa de A (A−1), a matriz B =
+
+
+
+
+
+
+
+
+
+3
+7
+
+−1
+7
+
+−2
+7
+
+3
+7
+
+
+
+
+
+
+e procedemos da seguinte forma:
+
+B · N =
+
+
+
+
+
+
+
+
+3
+7
+
+−1
+7
+
+−2
+7
+
+(cid:32)
+
+=
+
+3
+7
+
+14
+1
+
+(cid:32)
+
+
+
+
+
+
+
+
+·
+
+43 31 68 43 55
+70 28 22
+31 86 57 94 67 17 63 21 45
+
+8
+
+(cid:33)
+
+=
+
+1
+28
+
+21
+5
+
+5
+28 13 5
+
+14 1 21 9
+
+3
+1 13
+
+7
+
+(cid:33)
+
+= M
+
+Os elementos da matriz M obtida formam a sequência de números: 14-1-21-5-14-1-21-9-
+3-1-28-5-28-13-5-7-1-13, cuja decodiﬁcação é:
+
+M A T
+
+E M A T
+
+I C A ·
+
+14
+
+1
+
+21
+
+5
+
+14
+
+1
+
+21
+
+9
+
+3
+
+1
+
+28
+
+E
+
+5
+
+·
+
+28
+
+L
+
+13
+
+E G A L
+
+5
+
+7
+
+1
+
+13
+
+∙ Demonstrar porque funciona: B · N
+(cid:124)(cid:123)(cid:122)(cid:125)
+A·M
+
+= B · A
+(cid:124)(cid:123)(cid:122)(cid:125)
+I
+
+·M = I · M = M ;
+
+∙ Foram separados grupos de 5 alunos, a atividade foi elaborada em 2 etapas:
+
+1aEtapa: Os alunos escolhereram palavras com 8 letras ou mais e determinaram uma matriz
+e sua inversa. Em seguida realizaram as operações necessárias para determinar a matriz
+codiﬁcada. Numa folha os alunos colocaram a matriz A e a matriz codiﬁcada.
+
+2aEtapa: Foram entregues para os grupos a atividade da 1a etapa, esses por sua vez deviam
+encontrar a matriz inversa e realizar a multiplicação com a matriz N e por ﬁm encontrar a
+original.
+
+5.3 Ocorrências da atividade
+
+No geral a atividade ocorreu como planejada. Na primerira etapa alguns alunos tiveram
+diﬁculdades para encontrar a inversa da matriz, mas quando a professora interviu ocorreu
+normalmente. A segunda etapa houve mais diﬁculdades, pois alguns alunos não construíram a
+matriz M corretamente, o que impossibilitou os alunos do outro grupo encontrar a mensagem
+codiﬁcada.
+
+Contudo, o objetivo geral foi alcançado, pois os alunos mostraram interesse pela cripto-
+
+graﬁa e houve envolvimento de todos os alunos.
+
+5.4 Anexos
+
+Seguem abaixo as atividades realizadas pelos alunos:
+
+56
+
+Capítulo 5. Criptograﬁa em sala de aula
+
+Figura 1 – Grupo 1
+
+Fonte: Elaborada pelo autor.
+
+Figura 2 – Grupo 2
+
+Fonte: Elaborada pelo autor.
+
+Figura 3 – Grupo 3
+
+Fonte: Elaborada pelo autor.
+
+L 6I \a 5q +b?o IJ6 Lô6 l3oFonor*i:)I trl- K"*o- A*;-,3/o9 /Qo-rat' *"o Êtr8tr8trtrtr-p-le /:s-\! , .A,'nou, *r.qrôü. .&3 4)ôJcn-Crrrlg: rrno.lthgni(o.*"*,o^t 9fs-,.§,erflqr^r.ro., Ílotxrnne&)'trr:tra.r:- O 0rçxi r.oc n\çTo6e* HAnerRiz13 3f 5s 53 Àtu,bo bJ "q 'l tu À3-trEEtrtrEtU13 /oe Agb5 5L \b bt55(o\6íors6 ól',\5).t -:P'h"C\_ 1l L,ltyV(K*rr"r',,,?t a c ^ú- /-,k<r-^-<.rrn^.,-r,#*r.,t+-,N:tu5.4. Anexos
+
+57
+
+Figura 4 – Grupo 4
+
+Fonte: Elaborada pelo autor.
+
+Figura 5 – Grupo 5
+
+Fonte: Elaborada pelo autor.
+
+Figura 6 – Grupo 5
+
+Fonte: Elaborada pelo autor.
+
+Figura 7 – Grupo 5
+
+Fonte: Elaborada pelo autor.
+
+DSTAASS,qtyrlr«iru- Í ôs rà G"lI3s r1 68qSAna C\qraHslerrna hortttinrn'tlal rra CatottneSoYuti@ahiz ôiluoi^etç\u A1\\a,3 )13 ac? g.1/// íVIWA( :)::)3tL({?2Jqi3o .t,sq ?5trEEEtrtrtr'16 b3 crg l(1?z 8q lz? 28,,tt//a^aLÜ;oq.lg51 ol", l:dJ- 3g 6/q3tr .'58
+
+Capítulo 5. Criptograﬁa em sala de aula
+
+Figura 8 – Grupo 5
+
+Fonte: Elaborada pelo autor.
+
+Figura 9 – Grupo 1 - 2a Etapa
+
+Fonte: Elaborada pelo autor.
+
+PN*I^t§,^!f!*-' ü*u,rt*?*$n*í §-L'^41(.) 'l@@: l3 .!9-._!6,. í6À rq +t "t3Tloot3c b +-*OL; Aâ ErRpn '=Cn I Proqnt=iÊ !+).tâÍt,tZ ftl"r*n.ov , A no'H..r-t ^-n*a' . , S^yl '', ,"'A.À-- -a-aaJ+c. = O§ +r4"d'=Qb + 3cü- z Jb = -CcLLJlrf*'-flrlgoL = L3+&3 .y]. ?1 ?&e(rI toc- -- I5.4. Anexos
+
+59
+
+Figura 10 – Grupo 2 - 2a Etapa
+
+Fonte: Elaborada pelo autor.
+
+Figura 11 – Grupo 3 - 2aEtapa
+
+Fonte: Elaborada pelo autor.
+
+W,oW,,t)L!Áb(,-:l/1_LW-;9ú'nire'[C rL'l,-1,a-_yúe-úI3A\T4 r-tt4(,{Á17lTi-t-Jót(qI+trEE@trtr8r3&&Q-= tÍoe:+B51.+6À,=J .ao =J-BA)í->-t5 c, + loc = 3-íc - -Sc =1.q)t -J4b + 3d'= o5 b +6d = Lb =-3à 5 (- ra\ + 5À = L)<-J=L-ê-õ]-,4s-Í4l-Clk6".Ào o.tN :- ^Í\ ^Yd. 3 lc +ae :h+:d5 5 \sc,+Sc =h +f á.5d z t60
+
+Capítulo 5. Criptograﬁa em sala de aula
+
+Figura 12 – Grupo 4 - 2aEtapa
+
+Fonte: Elaborada pelo autor.
+
+Figura 13 – Grupo 5 - 2aEtapa
+
+Fonte: Elaborada pelo autor.
+
+l^'-,a^ d* n, $-fr)A.b: l^d,tJÂt,- Çs'5ç. = '3e=5r,- 6br 6lc - ib, -lr,2íútc = rir tl,+i=6' l-=ZrtPOFíÇc--5l2*rc :a,u, l: [-r ,?/5*'3o Surld, l Iôtlrl\a, u Ilc át{1, rla*o ,u,d,-)s s \s*,1, sbru/^t+a, l.5 *r l\ci()gaü,,:-OSb.adrJ\:, ',\,lg$=Ç,i,s " ,JJLb q LJ^TElrt^,-(,'ç l\ lq r,\\ua g\ ruT txI-,\ lG tE 2,o sz) ú 3 ? ,,/*.=Lê "_q ._(é_;o.tcéça1C: I3U+d: CJa./3c:Qb+brsJ :r$o3. -3à'3 -àô +zd-o -ao +c =l 3a\J §{.d=ô'4Cc- àc = |C: S35tJ'obb= -3---___{q?, q-q3,] '-t{íI9>su" ábfo-z"- r -d1^, )'--2o.- b\3L(2-C-<Il,^-- - 5l(')- tQs trô\5.4. Anexos
+
+61
+
+Figura 14 – Grupo 6 - 2aEtapa
+
+Fonte: Elaborada pelo autor.
+
+Y*'n"Â}"il'^57n-r^LltlJ-.,At'l . Z1 lo(= \.ffi= [fvdffi63
+
+CAPÍTULO
+
+6
+
+CONCLUSÃO
+
+O tema escolhido para a realização desse trabalho mostrou-se muito satisfatório. A
+criptograﬁa RSA provou-se tão interessante quanto aparentava e os tópicos que foram estudados
+antes de atingirmos de fato o objetivo foram bastante engrandecedor do ponto de vista matemático,
+pois me proporcionou trabalhar mais rigorosamnete alguns tópicos da teoria de números. Além
+do fato, que já mencionamos de se tratar de um tema bastante atual, o que despertou maior
+interesse ainda.
+
+Ademais, foi possível levar a abordagem da criptograﬁa para sala de aula, apesar de
+não conseguirmos uma abordagem tão detalhada do método como fomos capazes de realizar
+neste trabalho, mas a experiência foi enriquecedora, e me incentivou a levar mais aplicações da
+matemática em sala de aula.
+
+Outro ponto a salientar é a importância do PROFMAT em minha formação como profes-
+sora, pois os conteúdos das disciplinas e os professores que as lecionaram, me ajudaram muita
+na preparação das aulas e na maneira de ensinar os alunos, além de estimularem a capacidade de
+me expressar matematicamente.
+
+65
+
+REFERÊNCIAS
+
+ANDRADE, E. A História d a Criptograﬁa. 2014. Disponível em: <http://www.dsc.ufcg.edu.
+br/~pet/jornal/abril2014/materias/historia_da_computacao.html>. Citado na página 22.
+
+COUTINHO, S. C. Números Inteiros e Criptograﬁa RSA. [S.l.: s.n.], 1997. Citado nas
+páginas 20 e 41.
+
+. Criptograﬁa. 2015. Disponível em: <http://www.obmep.org.br/docs/apostila7.pdf>. Ci-
+
+tado na página 20.
+
+DANTE, L. R. Matemática: Contexto e Aplicações. [S.l.: s.n.], 2018. Citado nas páginas 53
+e 54.
+
+DIAS, I.; GODOY, S. M. S. de. Elementos de Matemática - Notas de Aulas. 2006. Disponível
+em: <http://conteudo.icmc.usp.br/~iresdias/material/sma341.pdf>. Citado na página 26.
+
+ENQ-2016.2. 2016. Disponível em: <http://www.profmat-sbm.org.br/wp-content/uploads/sites/
+23/2016/08/ENA-2016-Solucoes-com-Gabarito.pdf>. Citado na página 40.
+
+FIARRESGA, V. M. C. Criptograﬁa e Matemática. Dissertação (Mestrado), 2010. Citado na
+página 27.
+
+HEFEZ, A. Aritmética - Coleção PROFMat. [S.l.: s.n.]. Citado na página 36.
+
+. Elementos da Aritmética. [S.l.: s.n.], 2010. Citado na página 44.
+
+IMPA. Descoberto número primo com quase 25 milhões de dígitos. 2019. Disponível em:
+<https://impa.br/page-noticias/descoberto-numero-primo-com-quase-25-milhoes-de-digitos/
+?utm_source=facebook&utm_medium=post-link&utm_campaign=numero_primo&
+utm_term=numero_primo%2C%20primo_marsenne%2C%20gimps&fbclid=
+IwAR0qiQagxnO0q6G9hB5gVVKMofkXoV7M0I51oj9W13AkofE5zTUXi-DOﬂc>. Citado
+na página 24.
+
+LIMA, E. L. de. Análise Real. [S.l.: s.n.], 2006. Citado na página 25.
+
+PROFMAT-AV3-ARITMETICA. Profmat- AV3- Aritmetica. 2011. Disponível em: <http://
+www.profmat-sbm.org.br/wp-content/uploads/sites/23/2016/08/AV3_MA14_2011.pdf>. Citado
+na página 40.
+
+SAMPAIO, J. C. V. Estruturas Algébricas. 2008. Citado na página 45.
+
+SAMPAIO, J. C. V.; CAETANO, P. A. S. Introdução à aTeoria dos Números. [S.l.: s.n.], 2008.
+Citado na página 29.
+
+UNIVERSIDADE DE SÃO PAULOInstituto de Ciências Matemáticas e de Computação

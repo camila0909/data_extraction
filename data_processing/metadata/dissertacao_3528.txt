@@ -1,0 +1,3428 @@
+2016: DISSERTAC¸ ˜AO DE MESTRADO
+Mestrado Proﬁssional em Matem´atica - PROFMAT, Universidade Federal de S˜ao Jo˜ao Del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+Estudos Num´ericos dos M´etodos de Interpola¸c˜ao:
+Lagrange, Newton, Hermite e Spline C´ubico
+
+Edna Mendes de Carvalho 1
+Juan Carlos Zavaleta Aguilar2
+
+Resumo: Neste trabalho ser˜ao apresentados os m´etodos de interpola¸c˜ao de fun¸c˜oes, a sa-
+ber, Newton, Hermite e Spline C´ubico, com o intuito de determinar um polinˆomio de grau
+n, que aproxime o valor da fun¸c˜ao em um determinado ponto de interesse. Geralmente,
+esse valor ´e desconhecido, ou mesmo, dif´ıcil de calcular. Para cada um desses m´etodos ´e
+realizado um estudo do erro de interpola¸c˜ao e ser˜ao analisadas as principais vantagens e
+desvantagens dos mesmos visando sua melhor aplicabilidade.
+
+Palavras-chave: Interpola¸c˜ao. M´etodos Num´ericos. Erro de Interpola¸c˜ao.
+
+1
+
+Introdu¸c˜ao
+
+Em matem´atica, interpola¸c˜ao ﬁnita signiﬁca construir um novo conjunto de dados
+a partir do conhecimento de um conjunto de valores do dom´ınio e de suas respectivas
+imagens. Atrav´es da interpola¸c˜ao podemos criar uma fun¸c˜ao que se aproxima dos valores
+conhecidos e conferir a eles uma continuidade, como pode ser visto no gr´aﬁco 1, na p´agina
+seguinte.
+
+A interpola¸c˜ao se faz necess´aria quando s˜ao conhecidos somente valores num´ericos da
+fun¸c˜ao por um conjuntos de pontos, chamados de n´os, e ´e necess´ario calcular o valor de
+um outro ponto n˜ao tabelado. Ou at´e mesmo quando a fun¸c˜ao em estudo tem um valor
+de dif´ıcil avalia¸c˜ao ou quando tem opera¸c˜oes de diferencia¸c˜ao ou integra¸c˜ao dif´ıceis de
+serem expressas.
+
+A aproxima¸c˜ao de fun¸c˜oes usando m´etodos de interpola¸c˜ao, se torna mais interessante
+
+quando:
+
+a) n˜ao se conhece analiticamente a fun¸c˜ao f (x), ou seja, sabemos apenas de um con-
+junto ﬁnito do dom´ınio e ´e necess´ario calcular seu valor em um determinado ponto,
+ou calcular sua derivada ou integral em um determinado intervalo. Isso acontece
+com dados experimentais especialmente.
+
+1Aluna de Mestrado do PROFMAT, Turma 2014, Universidade Federal de S˜ao Jo˜ao Del-Rei - UFSJ,
+
+ednabq@yahoo.com.br
+
+2Professor orientador, Departamento de Matem´atica e Estat´ıstica - DEMAT, UFSJ,
+
+jaguilar@ufsj.edu.br
+
+b) f (x) ´e extremamente complicada e de dif´ıcil manipula¸c˜ao; nesses casos ´e interessante
+
+diminuir a precis˜ao para a simpliﬁca¸c˜ao dos c´alculos.
+
+Gr´aﬁco 1: N´os da interpola¸c˜ao.
+
+http://www1.univap.br/spilling/CN/CN Capt4.pdf - Acessado em 10/05/2016.
+
+´E evidente que na utiliza¸c˜ao da fun¸c˜ao mais simples para calcular novos dados, normal-
+mente n˜ao se obt´em o mesmo resultado da fun¸c˜ao original, mas dependendo do dom´ınio do
+problema e do m´etodo de interpola¸c˜ao utilizado, o ganho de simplicidade pode compensar
+o erro.
+
+Ou seja, ´e poss´ıvel aproximar qualquer fun¸c˜ao cont´ınua em um intervalo [a, b] atrav´es
+de um polinˆomio, com um erro m´ınimo. ´E interessante aproximar uma fun¸c˜ao por um
+polinˆomio, pois estes s˜ao facilmente comput´aveis, suas derivadas e integrais s˜ao ainda
+polinˆomios e suas ra´ızes s˜ao encontradas com maior facilidade.
+
+2 Polinˆomios de Interpola¸c˜ao
+
+A ideia de interpola¸c˜ao por meio de polinˆomios consiste em determinar um polinˆomio
+Pn(x) de grau m´aximo n, onde s˜ao conhecidos n + 1 pontos distintos (reais ou complexos)
+x0, x1, x2, ... , xn e n + 1 valores de uma fun¸c˜ao y = f (x), y0, y1, ... , yn, tal que :
+
+Pn(x0) = y0; Pn(x1) = y1; ...Pn(xn) = yn
+
+Teorema 1: Dados n + 1 pontos distintos x0, x1 , ... , xn (reais ou complexos) e n + 1
+valores y0, y1, ... , yn , existe um e s´o um polinˆomio Pn(x), de grau menor ou igual a n,
+tal que:
+
+Pn(xk) = yk, para k = 0, 1, 2, ..., n
+
+(2.1)
+
+2
+
+Demostra¸c˜ao:
+
+Seja Pn(x) = a0 + a1x + ... + anxn , um polinˆomio de grau m´aximo n, com n + 1
+
+coeﬁcientes a0, a1, ..., an a serem determinados.
+
+Pela equa¸c˜ao (2.1) tem-se que:
+
+
+a0 + a1x0 + ... + anxn
+
+a0 + a1x1 + ... + anxn
+..............
+
+a0 + a1xn + ... + anxn
+
+0 = y0
+1 = y1
+
+n = yn
+
+,
+
+(2.2)
+
+que seria um sistema linear para os coeﬁcientes a0, a1, a2, ... , an dados `a partir de uma
+matriz V conhecida como matriz de Vandermonde
+
+V =
+
+que tem como determinante:
+
+
+
+
+
+
+
+
+1 x0 x2
+0
+1 x1 x2
+1
+...
+...
+...
+1 xn x2
+n
+
+
+
+
+
+
+
+
+,
+
+. . . xn
+0
+. . . xn
+1
+...
+. . .
+. . . xn
+n
+
+detV = V (x0, x1, ..., xn) = (x1 − x0)(x2 − x0)(x2 − x1)...(xn − x0)...(xn − xn−1).
+
+(2.3)
+
+Para se calcular V procede-se da seguinte maneira:
+
+Considerando a matriz de Vandermonde V (x) deﬁnida por:
+
+V (x) =
+
+
+x2
+x0
+1
+0
+x2
+x1
+1
+
+1
+
+...
+...
+...
+
+
+
+1 xn−1 x2
+
+n−1
+x2
+x
+1
+
+xn
+. . .
+0
+xn
+. . .
+1
+...
+. . .
+. . . xn
+n−1
+xn
+. . .
+
+
+
+
+
+
+
+
+
+
+,
+
+que tem como determinante:
+
+detV (x) = V (x0, x1, ..., xn−1, x) = (x1 − x0)(x2 − x0)(x2 − x1)...(x − x0)...(x − xn−1). (2.4)
+
+detV (x) ´e um polinˆomio de grau menor que ou igual a n. Al´em disso, V (x) se anula
+em x0, x1, ... , xn−1, uma vez que o c´alculo desse tipo de determinante pode ser feito a
+partir do produto de todas as diferen¸cas poss´ıveis entre os elementos da segunda coluna:
+
+detV (x) = (x1 − x0)(x2 − x0)(x2 − x1)...(x − x0)...(x − xn−1).
+
+3
+
+Simpliﬁcando esse c´alculo, tem-se:
+
+V (x0, x1, ..., xn−1, x) = A(x − x0)(x − x1)...(x − xn−1),
+
+(2.5)
+
+onde A depende de x0, x1,..., xn−1.
+
+Para se calcular A, desenvolve-se (2.4) segundo os elementos da ´ultima linha e observa-
+
+se que o coeﬁciente de xn ´e V (x0, x1, ..., xn−1).
+
+Ent˜ao:
+
+V (x0, x1, ..., xn−1, x) = V (x0, x1, ..., xn−1)(x − x0)(x − x1)...(x − xn−1).
+
+(2.6)
+
+Substituindo x por xn em (2.6) obtˆem-se a seguinte f´ormula de recorrˆencia:
+
+V (x0, x1, ..., xn−1, xn) = V (x0, x1, ..., xn−1)(xn − x0)...(xn − xn−1)
+
+(2.7)
+
+De (2.3), temos que V (x0, x1) = x1 − x0.
+
+Com (2.7) pode-se escrever:
+
+V (x0, x1, x2) = (x1 − x0)(x2 − x0)(x2 − x1).
+
+Por aplica¸c˜oes sucessivas de (2.7), obtˆem-se:
+
+V (x0, x1, ..., xn) =
+
+(cid:89)
+
+(xi − xj)
+
+i>j
+
+Por hip´otese, x0 (cid:54)= x1 (cid:54)=, ..., (cid:54)= xn. Assim V (cid:54)= 0 e o sistema (2.2) tem uma e, somente
+
+uma solu¸c˜ao a0, a1,..., an.
+
+Conclu´ımos ent˜ao que a partir de n + 1 pontos distintos: x0, x1,..., xn e n + 1 valores
+f (x0) = y0, f (x1) = y1,...,f (xn) = yn, de uma fun¸c˜ao y = f (x), existe apenas um
+polinˆomio Pn(x) de grau no m´aximo n tal que
+
+Pn(xk) = f (xk), onde k = 0, 1, ..., n.
+
+Deﬁni¸c˜ao 1: Chama-se polinˆomio de interpola¸c˜ao de uma fun¸c˜ao y = f (x) sobre um
+conjunto de pontos distintos x0, x1 ,..., xn , o polinˆomio de grau m´aximo n que coincide
+com f (x) em x0, x1,..., xn. Tal polinˆomio ser´a designado por Pn(f ; x) ou simplesmente
+por Pn(x).
+
+Observa¸c˜oes:
+
+a) Os valores do polinˆomio e da fun¸c˜ao devem coincidir para evitar ou minimizar erros
+
+de c´alculo.
+
+4
+
+b) Nem sempre a melhor solu¸c˜ao para se achar o polinˆomio de interpola¸c˜ao ser´a a re-
+solu¸c˜ao do sistema, pois poder´a ser bem trabalhosa e desgastante, especialmente,
+quando temos um n´umero grande de dados, al´em da possibilidade de erros de ar-
+redondamento que forne¸ca uma solu¸c˜ao diferente do contexto em que est´a sendo
+aplicada. Por esse motivo, ser˜ao estudadas outras maneiras de se achar o polinˆomio
+interpolador.
+
+3 F´ormula de Lagrange
+
+Considerando n + 1 pontos distintos x0, x1,..., xn, e para k = 0, 1, ..., n, os seguintes
+
+polinˆomios (cid:96)k(x) de grau n :
+
+(cid:96)k(x) =
+
+(x − x0)...(x − xk−1)(x − xk+1)...(x − xn)
+(xk − x0)...(xk − xk−1)(xk − xk+1)...(xk − xn)
+
+Veriﬁca-se que:
+
+(cid:96)k(xj) = δkj =
+
+(cid:40)
+
+0, se k (cid:54)= j
+1, se k = j
+
+(3.1)
+
+(3.2)
+
+Para valores dados: f0 = f (x0), f1 = f (x1),..., fn = f (xn) de uma fun¸c˜ao y = f (x), o
+
+polinˆomio:
+
+Pn(x) =
+
+n
+(cid:88)
+
+k=0
+
+fk(cid:96)k(x),
+
+(3.3)
+
+´e de grau no m´aximo n e, a partir de (3.2) :
+
+Dessa forma, Pn(x) ´e o polinˆomio de interpola¸c˜ao de f (x) sobre os pontos x0, x1,...,
+
+Pn(xk) = fk, onde k = 0, 1, 2, ..., n
+
+xn.
+
+A f´ormula (3.3) ´e chamada de F´ormula de Lagrange do Polinˆomio de Inter-
+
+pola¸c˜ao.
+
+Exemplo:
+
+Use a f´ormula de Lagrange para achar o polinˆomio interpolador que passa pelos se-
+
+guintes pontos:
+
+Solu¸c˜ao: Pela f´ormula de Lagrange, ´e preciso encontrar:
+
+5
+
+P2(x) =
+
+2
+(cid:88)
+
+k=0
+
+fk(cid:96)k(x) = f0(cid:96)0(x) + f1(cid:96)1(x) + f2(cid:96)2(x)
+
+(cid:96)0(x) =
+
+=
+
+=
+
+(x − x1)(x − x2)
+(x0 − x1)(x0 − x2)
+(x − 0)(x − 2)
+(−1 − 0)(−1 − 2)
+x2 − 2x
+3
+
+(cid:96)1(x) =
+
+=
+
+=
+
+(x − x0)(x − x2)
+(x1 − x0)(x − x2)
+(x + 1)(x − 2)
+(0 + 1)(0 − 2)
+x2 − x − 2
+−2
+
+(cid:96)2(x) =
+
+=
+
+=
+
+(x − x0)(x − x1)
+(x2 − x0)(x2 − x1)
+(x + 1)(x − 0)
+(2 + 1)(2 − 0)
+x2 + x
+6
+
+Ent˜ao,
+
+P2(x) = 4(
+
+x2 − 2x
+3
+
+) + 1(
+
+x2 − x − 2
+−2
+
+) + (−1)(
+
+x2 + x
+6
+
+)
+
+P2(x) = 1 − 7x
+
+3 + 2x2
+
+3 , que ´e o polinˆomio interpolador procurado.
+
+Para obter o valor em um ponto n˜ao conhecido, podemos aproximar a fun¸c˜ao por seu
+
+polinˆomio de interpola¸c˜ao e, atrav´es deste, ter uma aproxima¸c˜ao no ponto.
+
+6
+
+No exemplo acima, para saber o valor de f (1) ´e necess´ario aproximar a fun¸c˜ao original
+
+pelo polinˆomio interpolador encontrado e obter P2(1) :
+
+f (1) ≈ P2(1) = 1 −
+
+7 · 1
+3
+
++
+
+2 · 12
+3
+
+=
+
+−2
+3
+
+´E poss´ıvel desenvolver um esquema mais pr´atico para calcular o valor do polinˆomio de
+interpola¸c˜ao num ponto, sem determinar a express˜ao do polinˆomio. Considere as f´ormulas
+(3.3) e (3.1). Fazendo:
+
+πn+1(x) = (x − x0)(x − x1)...(x − xn),
+
+Pode-se escrever:
+
+(cid:96)k(x) =
+
+πn+1(x)
+
+(x − xk)π(cid:48)
+
+n+1(xk)
+
+(3.4)
+
+onde π(cid:48)
+
+n+1(xk) ´e a derivada de πn+1(x) no ponto xk.
+
+Partindo do c´alculo das diferen¸cas:
+
+x0 − x1 x0 − x2
+x − x0
+x1 − x2
+x1 − x0
+x − x1
+x − x2
+x2 − x0 x2 − x1
+...
+
+...
+xn − x0 xn − x1 xn − x2
+
+...
+
+... x0 − xn
+... x1 − xn
+... x2 − xn
+...
+... x − xn
+
+...
+
+Denota-se por D0 o produto dos elementos da primeira linha, por D1 o da segunda e
+assim por diante. O produto dos elementos da primeira linha ´e exatamente o denominador
+de (cid:96)0(x) em (3.4), o produto dos elementos da segunda linha ´e o denominador de (cid:96)1(x),
+etc. O produto dos elementos da diagonal principal ser´a, πn+1(x):
+
+Portanto, pode-se expressar:
+
+(cid:96)k(x) =
+
+πn+1(x)
+Dk
+
+onde k = 1, 2, 3, ..., n
+
+Ou seja, a f´ormula de Lagrange se reduz a
+
+Pk(x) = πn+1(x)
+
+n
+(cid:88)
+
+k=0
+
+fk
+Dk
+
+= πn+1(x) · S,
+
+onde S = (cid:80)n
+
+k=0
+
+fk
+Dk
+
+.
+
+Portanto, pode-se obter o valor do polinˆomio num ponto, n˜ao conhecido, da seguinte
+
+maneira:
+
+7
+
+Tabela 1: Esquema Pr´atico par obter o valor de um polinˆomio em um dado ponto.
+
+Fonte: CUMINATO, Jos´e Alberto. C´alculo Num´erico. Apostila USP.
+
+Exemplo:
+Aplicar o esquema acima ao exemplo anterior, isto ´e, calcular f (1) sabendo que:
+
+Solu¸c˜ao:
+Montando o esquema:
+
+8
+
+Fonte: O autor
+
+Assim, obtem-se f (1) ≈ P2(1) = π3(1) · S = −2 · 1
+
+3 = − 2
+3.
+
+3.1 Erro na Interpola¸c˜ao do m´etodo de Lagrange
+
+J´a ´e sabido que o polinˆomio de interpola¸c˜ao Pn(x) para a fun¸c˜ao y = f (x) sobre um
+
+conjunto discreto de pontos x0, x1, x2, ... , xn tem a propriedade:
+
+Pn(xk) = fk, com k = 0, 1, 2, 3, ..., n.
+
+Nos pontos x (cid:54)= xk nem sempre ´e verdade que Pn(x) = f (x), pois sabemos que
+o polinˆomio interpolador ´e apenas uma aproxima¸c˜ao. Mas pode-se ter uma no¸c˜ao do
+tamanho do nosso erro? A teoria do termo do resto pode responder essa pergunta. Para
+isso utiliza-se dois lemas:
+
+Lema 1: Teorema de Rolle. Seja f (x) cont´ınua em [a, b] e diferenci´avel em cada parte
+
+de (a, b). Se f (a) = f (b), ent˜ao existe um ponto x = ξ, a < ξ < b, tal que f (cid:48)(ξ) = 0.
+
+Demonstra¸c˜ao:
+Caso f seja uma fun¸c˜ao constante, f (x) = f (a) = f (b), ent˜ao sua derivada ´e nula em
+todos os pontos de [a, b] e, nesse caso, o teorema est´a demonstrado. Caso contr´ario, f
+atingir´a seu m´ınimo m ou seu m´aximo M num ponto interior ξ ∈ (a, b), pois se ambos
+fossem atingidos nas extremidades, m seria igual a M e a fun¸c˜ao seria constante. Pelo
+corol´ario: “Seja c ∈ (X ∩ X (cid:48)
+−). Se f : X −→ R ´e deriv´avel no ponto a e possui um
+m´ınimo ou um m´aximo local nesse ponto, ent˜ao f (cid:48)(c) = 0” , f (cid:48)(ξ) = 0.
+
++ ∩ X (cid:48)
+
+Lema 2: Teorema de Rolle generalizado: Seja n ≥ 2. Suponha que f (x) seja cont´ınua
+em [a, b] e que f (n−1)(x) exista em cada ponto de (a, b). Suponhamos que f (x1) = f (x2) =
+0 = ... = 0 = f (xn) = 0 para a ≤ x1 < x2 < ... < xn ≤ b. Ent˜ao existe um ponto ξ,
+x1 < ξ < xn, tal que f (n−1)(ξ) = 0.
+
+Pelo lema 1, se f (x) ´e cont´ınua em cada subintervalo [xi, xi+1] , diferenci´avel em
+(xi, xi+1), e ainda f (xi) = f (xi+1), ent˜ao existe um ξ , a < ξ < b, tal que f (cid:48)(ξ) = 0. O
+Teorema de Rolle vale para cada subintervalo [xi, xi+1], ent˜ao existem ci’s, xi < ci <
+xi+1, tal que f (cid:48)(ci) = 0, i = 1, 2, ..., n − 1. Por hip´otese, f (cid:48)(x) existe em [xi, xi+1]
+
+9
+
+e f (cid:48)(ci) = 0. Logo, aplica-se o Teorema de Rolle, novamente em cada subintervalo
+[c1, c2], [c2, c3], ..., [cn−2, cn−1], e ent˜ao existem di’s tal que f (cid:48)(cid:48)(di) = 0, i = 1, ..., n − 2... e
+assim sucessivamente at´e chegarmos `a conclus˜ao do Lema.
+
+A partir desses dois lemas, um teorema dar´a a express˜ao do erro:
+
+Teorema 2: Admita uma fun¸c˜ao f (x) cont´ınua em [a, b] cuja f (n−1)(x) exista em cada
+ponto de (a, b). Se a ≤ x0 < x1 < x2 < ... < xn ≤ b, e Pn(f ; x) o polinˆomio interpolador
+de Lagrange, ent˜ao:
+
+Rn(f ; x) = f (x) − Pn(f ; x) =
+
+(x − x0)...(x − xn)
+(n + 1)!
+
+· f (n−1)(ξ)
+
+(3.1.1)
+
+onde min{x0, x1, x2, ..., xn} < ξ < max{x0, x1, x2, ..., xn}. ξ depende de x.
+
+Demonstra¸c˜ao:
+
+Sendo Pn(f ; xk) = fk, a fun¸c˜ao Rn(f ; x) = f (x) − Pn(f ; x) se anula em x = xk,
+
+k = 0, 1, 2, ..., n.
+
+Considere as fun¸c˜oes K(x) e F (t), deﬁnidas por:
+
+K(x) =
+
+f (x) − P n(f ; x)
+(x − x0)(x − x1)...(x − xn)
+
+, sendo x (cid:54)= xk, k = 0, 1, 2, ..., n.
+
+(3.1.2)
+
+e
+
+F (t) = f (t) − Pn(f ; t) − (t − x0)(t − x1)...(t − xn) · Kn
+
+(3.1.3)
+
+A fun¸c˜ao F (t) se anula nos n + 1 pontos t = x0, t = x1,..., t = xn, bem como em t = x,
+
+em virtude de (3.1.2).
+
+A fun¸c˜ao F (n+1)(t) se anula em um ponto ξ = ξ(x) de acordo com o Lema 2, sendo
+
+que:
+
+min{x0, x1, x2, ..., xn} < ξ < max{x0, x1, x2, ..., xn}.
+
+F (n+1)(t) = f (n+1)(t) − (n + 1)!K(x).
+
+Substituindo t por ξ:
+
+Portanto,
+
+0 = f (n+1)(ξ) − (n + 1)!K(x).
+
+10
+
+K(x) =
+
+f (n+1)(ξ)
+(n + 1)!
+
+(3.1.4)
+
+Comparando (3.1.4) com (3.1.2):
+
+Rn(f ; x) = f (x) − Pn(f ; x) = (x − x0)(x − x1)...(x − xn)
+
+f (n+1)(ξ)
+(n + 1)!
+
+O que demonstra o teorema.
+
+A partir da equa¸c˜ao (3.1.1):
+
+f (x) = Pn(f ; x) + Rn(f ; x)
+
+(3.1.5)
+
+Denomina-se o termo Rn(f ; x) na express˜ao (3.1.5) de termo do erro ou erro de
+truncamento do m´etodo de Lagrange. Esse ´e o erro que se comete na substitui¸c˜ao
+da fun¸c˜ao por seu polinˆomio de interpola¸c˜ao em um dado ponto x.
+
+Teorema 3 : Considere n+1 pontos x0 < x1 < ... < xn e f uma fun¸c˜ao com derivadas
+at´e ordem n + 1 cont´ınuas no intervalo [x0, xn]. Seja pn(x) o polinˆomio que interpola f
+nos pontos x0, ..., xn , ent˜ao o erro da interpola¸c˜ao polinomial satisfaz:
+
+Rn(x) ≤ (
+
+Mn+1
+(n + 1)!
+
+) ·
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+n
+(cid:89)
+
+k=0
+
+(cid:12)
+(cid:12)
+(cid:12)
+(x − xk)
+(cid:12)
+(cid:12)
+
+(3.1.6)
+
+onde:
+
+Demonstra¸c˜ao:
+
+Mn+1 = maxx∈[x0,xk]
+
+(cid:12)f (n+1)(x)(cid:12)
+(cid:12)
+(cid:12)
+
+Sendo f (n+1) cont´ınua em [x0, xn], f (n+1) admite um valor m´aximo Mn+1. Consequen-
+
+temente, pelo Teorema 2.
+
+R(x) =
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+n
+(cid:89)
+
+(x − xk)
+
+k=0
+
+f (n+1)(ξ)
+(n + 1)!
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+≤ (
+
+Mn+1
+(n + 1)!
+
+) ·
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+n
+(cid:89)
+
+(x − xk)
+
+k=0
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+pois,
+
+Exemplo:
+
+Conhecendo-se a tabela:
+
+(cid:12)f (n+1)(ξ)(cid:12)
+(cid:12)
+
+(cid:12) ≤ Mn+1
+
+11
+
+Calcular um limitante superior para o erro de truncamento para avaliar f (0, 35) , onde
+
+f (x) = x · ex. Para isso, use o polinˆomio de interpola¸c˜ao do 3o grau.
+
+Solu¸c˜ao:
+
+Como pretende-se estimar o valor da fun¸c˜ao x · ex no ponto 0, 35 usando o polinˆomio
+de 3o grau, deve-se tomar 4 pontos consecutivos nas vizinhan¸cas de 0, 35. Tomando ent˜ao,
+x0 = 0, 2, x1 = 0, 3, x2 = 0, 4, x3 = 0, 5
+
+Temos de (3.1.6) que:
+
+|R3(f ; x)| ≤
+
+|x − x0| |x − x1| |x − x2| |x − x3|
+4!
+
+· (maxx0≤t≤x3
+
+(cid:12)f iv(t)(cid:12)
+(cid:12)
+(cid:12))
+
+Como f (t) = t · et segue que:
+
+f (cid:48)(t) = et + t · et = et(1 + t)
+
+f (cid:48)(cid:48)(t) = et(1 + t) + et = et(2 + t)
+
+f (cid:48)(cid:48)(cid:48)(t) = et(2 + t) + et = et(3 + t)
+
+f iv(t) = et(3 + t) + et = et(4 + t)
+
+Por outro lado,
+
+maxx0≤t≤x3
+
+(cid:12)f iv(t)(cid:12)
+(cid:12)
+
+(cid:12) = e0,5(4 + 0, 5) ≈ 7, 42
+
+Portanto o limitante superior para o erro de truncamento ser´a:
+
+|R3(f ; x)| ≤
+
+|0, 35 − 0, 2| |0, 35 − 0, 3| |0, 35 − 0, 4| |0, 35 − 0, 5|
+24
+
+· (7, 42) ≈ 1, 74 · 10−5
+
+3.2 F´ormula para pontos igualmente espa¸cados
+
+12
+
+Pode-se estabelecer uma forma mais simples para encontrar o polinˆomio de inter-
+pola¸c˜ao para o caso de n´os igualmente espa¸cados xi+1 − xi = h, h (cid:54)= 0, com i =
+0, 1, 2, ..., n − 1, onde h ´e um n´umero ﬁxado.
+
+Para isso, utiliza-se uma nova vari´avel da seguinte maneira:
+
+u =
+
+x − x0
+h
+
+(3.2.1)
+
+Tem-se, os seguintes teoremas em fun¸c˜ao de u:
+
+Teorema 4: Para r inteiro, n˜ao negativo, x − xr = (u − r) · h.
+
+Demostra¸c˜ao:
+
+Por indu¸c˜ao sobre n:
+
+a) Para r = 0, temos, de (3.2.1), que: x − x0 = uh = (u − 0) · h
+
+b) A hip´otese indutiva para r = p ´e: x − xp = (u − p) · h
+
+c) Concluindo que vale tamb´em para r = p + 1:
+
+Tem-se:
+
+x − xp+1 = x − xp + xp − xp+1
+
+= x − xp − (xp+1 − xp)
+= (u − p) · h − h
+= (u − p − 1) · h = (u − (p + 1)) · h
+
+Logo, o teorema tem validade para todo inteiro r ≥ 0.
+
+Teorema 5: Para r e s inteiros, n˜ao negativos:
+
+xr − xs = (r − s) · h
+
+Demonstra¸c˜ao:
+
+A demonstra¸c˜ao ´e semelhante `a do teorema 4.
+
+13
+
+Considere o polinˆomio de interpola¸c˜ao de f (x) sobre x0, x1 , ... , xn, dado por (3.3),
+
+isto ´e:
+
+Pn(x) =
+
+n
+(cid:88)
+
+k=0
+
+fk ·
+
+(x − x0)(x − x1)...(x − xk−1)(x − xk+1)...(x − xn)
+(xk − x0)(xk − x1)...(xk − xk−1)(xk − xk+1)...(xk − xn)
+
+Utilizando a nova vari´avel dada por (3.2.1) e os teoremas 3 e 4, obtˆem-se:
+
+Pn(x0 + u · h) =
+
+n
+(cid:88)
+
+k=0
+
+fk ·
+
+u(u − 1)...(u − (k − 1))(u − (k + 1))...(u − n)
+k(k − 1)...(k − (k − 1)(k − (k + 1))...(k − n)
+
+(3.2.2)
+
+que ´e a forma adaptada para pontos igualmente espa¸cados, do polinˆomio de inter-
+
+pola¸c˜ao de Lagrange, com h (cid:54)= 0.
+
+Onde:
+
+Pode-se escrever ainda:
+
+onde:
+
+Pn(x0 + u · h) =
+
+n
+(cid:88)
+
+k=0
+
+fk · λn(u)
+
+(3.2.3)
+
+λn(u) =
+
+u(u − 1)...(u − (k − 1))(u − (k + 1))...(u − n)
+k(k − 1)...(k − (k − 1)(k − (k + 1))...(k − n)
+
+(3.2.4)
+
+Exemplo:
+
+Dada a tabela:
+
+Calcular f (0, 35), onde f (x) = x · ex usando polinˆomio de interpola¸c˜ao sobre 4 pontos.
+
+Solu¸c˜ao: Inicialmente escolhe-se 4 pontos na tabela, pr´oximos de 0, 35 e calcula-se os
+
+valores f (x) = x · ex.
+
+Seja ent˜ao: x0 = 0, 2 , x1 = 0, 3 , x2 = 0, 4, x3 = 0, 5
+
+14
+
+De (3.2.4), temos:
+
+λ0(u) =
+
+λ1(u) =
+
+λ2(u) =
+
+λ3(u) =
+
+(u − 1)(u − 2)(u − 3)
+(0 − 1)(0 − 2)(0 − 3)
+(u − 0)(u − 2)(u − 3)
+(1 − 0)(1 − 2)(1 − 3)
+(u − 0)(u − 1)(u − 3)
+(2 − 0)(2 − 1)(2 − 3)
+(u − 0)(u − 1)(u − 2)
+(3 − 0)(3 − 1)(3 − 2)
+
+=
+
+=
+
+=
+
+=
+
+u3 − 6u2 + 8u − 6
+−6
+
+u3 − 5u2 + 6u
+2
+u3 − 4u2 + 3u
+−2
+u3 − 3u2 + 2u
+6
+
+Usando (3.2.3), obtemos:
+
+P3(x0 + uh) =
+
+3
+(cid:88)
+
+k=0
+
+fkλk(u)
+
+= 0, 2443 ·
+
++ 0, 40496 ·
+
+u3 − 6u2 + 8u − 6
+−6
+u3 − 4u2 + 3u
+−2
+
+u3 − 5u2 + 6u
+2
+u3 − 3u2 + 2u
+6
+
++0, 59673 ·
+
++ 0, 82436 ·
+
+Ent˜ao:
+
+P3(x0 + uh) = 0, 0008u3 + 0, 0132u2 + 0, 2688u + 0, 2443
+
+Queremos calcular f (0, 35):
+
+u =
+
+x − x0
+h
+
+=
+
+0, 35 − 0, 2
+0, 1
+
+= 1, 5
+
+Ent˜ao, f (0, 35) ≈ P3(1, 5) ≈ 0, 6799.
+
+O m´etodo de Lagrange pode ser inconveniente em alguns casos para a determina¸c˜ao
+do polinˆomio de interpola¸c˜ao de uma fun¸c˜ao y = f (x) sobre um conjunto de pontos x0,
+x1, x2, ... , xn. Sempre que se deseja passar um polinˆomio de grau p (constru´ıdo por p + 1
+pontos) para um polinˆomio de grau p + 1 (constru´ıdo por p + 2 pontos) todo o trabalho
+precisa ser feito novamente. O ideal seria apenas poder acrescentar mais um termo de grau
+
+15
+
+p. Isso ser´a poss´ıvel atrav´es da f´ormula de Newton do polinˆomio de interpola¸c˜ao. Para
+essa constru¸c˜ao, ´e preciso estabelecer o conceito de diferen¸cas divididas de uma fun¸c˜ao:
+
+4 Diferen¸cas Divididas
+
+Deﬁni¸c˜ao 2: Sejam x0, x1, ... , xn , n + 1 pontos distintos no intervalo [a, b] e sejam
+,n.
+
+, fn , n + 1 valores de uma fun¸c˜ao y = f (x) sobre x = xk, k = 0, 1, ...
+
+f0, f1, ...
+Deﬁne-se:
+
+f [xk] = f (xk), k = 0, 1, ..., n;
+
+f [x0, x1, ..., xn] =
+
+f [x1, x2, ..., xn] − f [x0, x1, ..., xn−1]
+xn − x0
+
+onde f [x0, x1, ..., xn] ´e a diferen¸ca dividida de ordem n da fun¸c˜ao f (x) sobre os pontos
+
+x0, x1, ..., xn.
+
+Aplicando a exposi¸c˜ao acima, tem-se que:
+
+f [x0, x1] =
+
+f [x1] − f [x0]
+x1 − x0
+
+f [x0, x1, x2] =
+
+f [x1, x2] − f [x0, x1]
+x2 − x0
+
+f [x0, x1, x2, x3] =
+
+f [x1, x2, x3] − f [x0, x1, x2]
+x3 − x0
+
+...
+
+f [x0, x1, ..., xn] =
+
+f [x1, x2, ..., xn] − f [x0, x1, ..., xn−1]
+xn − x0
+
+Contudo, pode-se calcular mais facilmente as diferen¸cas divididas de uma fun¸c˜ao.
+
+16
+
+4.1 C´alculo sistem´atico das Diferen¸cas Divididas
+
+Como pode ser feita a constru¸c˜ao de uma tabela para esse c´alculo:
+
+a) a primeira coluna ´e constitu´ıda dos pontos xk, k = 0, 1, 2, ..., n;
+
+b) a segunda coluna ´e formada pelos valores de f (x) nos pontos xk, k = 0, 1, 2, ..., n;
+
+c) nas pr´oximas colunas est˜ao as diferen¸cas divididas de ordem 1, 2, 3, ... , n.
+
+Para calcul´a-las, o numerador ser´a sempre a diferen¸ca entre duas diferen¸cas divididas e
+de ordem imediatamente inferior e o denominador ser´a a diferen¸ca entre os dois extremos
+dos pontos envolvidos.
+
+Tabela 2 - Diferen¸cas Divididas
+
+Fonte: CUMINATO, Jos´e Alberto. C´alculo Num´erico. Apostila USP.
+
+Exemplo:
+
+Construa a tabela de diferen¸cas divididas:
+
+Solu¸c˜ao:
+
+17
+
+Fonte: O autor
+
+4.2 Resultados sobre Diferen¸cas Divididas
+
+Teorema 6: As diferen¸cas divididas de ordem k de uma fun¸c˜ao f (x), satisfazem:
+
+f [x0, x1, ..., xk] =
+
+f [x0]
+(x0 − x1)(x0 − x2)...(x0 − xk)
+
++
+
+f [x0]
+(x1 − x0)(x1 − x2)...(x1 − xk)
+
++
+
+f [x0]
+(xk − x0)(xk − x1)...(xk − xk−1)
+
+Corol´ario 1: As diferen¸cas divididas de ordem k de uma fun¸c˜ao f (x), satisfazem:
+
+f [x0, x1, ..., xk] = f [xj0, xj1, ..., xjk] , onde (j0, j1, ..., jk) ´e qualquer permuta¸c˜ao dos
+
+inteiros (0, 1, ..., k).
+
+Corol´ario 2: As diferen¸cas divididas de ordem k de uma fun¸c˜ao f (x), satisfazem:
+
+f [x0, x1, ..., xk] =
+
+f [x0, ..., xi−1, xi+1, ..., xk] − f [x0, ..., xj−1, xj+1, ..., xk]
+xj − xi
+
+, onde i (cid:54)= j
+
+5 F´ormula de Newton
+
+A deﬁni¸c˜ao de algumas fun¸c˜oes se faz necess´aria para obter a f´ormula de Newton do
+
+polinˆomio de interpola¸c˜ao.
+
+Seja f (x) uma fun¸c˜ao cont´ınua e que possua derivadas cont´ınuas em [a, b] e pontos
+
+distintos x0, x1, ..., xn dentro desse intervalo, deﬁne-se:
+
+(1)∗
+
+f [x0, x] =
+
+f [x] − f [x0]
+x − x0
+
+, deﬁnida em [a, b], para x (cid:54)= x0.
+
+18
+
+(2)∗
+
+f [x0, x1, x] =
+
+f [x1, x] − f [x0, x1]
+x − x0
+
+, deﬁnida em [a, b], para x (cid:54)= x0 e x (cid:54)= x1.
+
+...
+
+(n + 1)∗
+
+f [x0, x1, ..., xn, x] =
+
+f [x1, ..., xn−1, x] − f [x0, x1, ..., xn],
+x − xn
+
+, deﬁnida em [a, b],
+
+para x (cid:54)= xk, k = 0, 1, ..., n.
+
+Observe que foram acrescentadas, sucessivamente, na diferen¸ca dividida das fun¸c˜oes
+acima, o pr´oximo ponto da tabela. ´E poss´ıvel encontrar uma f´ormula de recorrˆencia para
+f (x):
+
+De (1)∗ temos:
+
+f (x) = f (x0) + (x − x0)f [x, x0]
+
+De (2)∗ usando (1)∗ temos:
+
+f [x0, x1, x](x − x1) = f [x0, x] − f [x0, x1]
+
+f [x0, x1, x](x − x1) =
+
+f [x] − f [x0]
+x − x0
+
+− f [x0, x1]
+
+f (x) = f [x0] + (x − x0)f [x0, x1] + (x − x0)(x − x1)f [x0, x1, x].
+
+Analogamente, de (n + 1)∗, temos:
+
+f (x) = {f [x0] + (x − x0)f [x0, x1] + (x − x0)(x − x1)f [x0, x1, x2]
+
++(x − x0)(x − x1)(x − x2)f [x0, x1, x2, x3]
++... + (x − x0)(x − x1)...(x − xn−1)f [x0, x1, ..., xn]}1
++{(x − x0)(x − x1)...(x − xn)f [x0, x1, ..., xn, x]}2
+
+Obtem-se ent˜ao a f´ormula de recorrˆencia para f (x).
+
+A deﬁni¸c˜ao de {...}1 e {...}2 pode ser dada atrav´es do teorema:
+
+19
+
+(5.1)
+
+Teorema 7: O polinˆomio:
+
+Pn(x) = f [x0] + (x − x0)f [x0, x1] + ... + (x − x0)(x − x1)...(x − xn−1)f [x0, x1, ..., xn] = {...}1
+
+´e o polinˆomio de interpola¸c˜ao da fun¸c˜ao y = f (x) sobre os pontos x0, x1, ..., xn, isto ´e,
+
+Pn(x) = f (xk), k = 0, 1, ..., n.
+
+Prova: Por indu¸c˜ao sobre n.
+
+a) Para n = 1 temos que:
+
+P1(x) = f [x0] + (x − x0)f [x0, x1]
+
+P1(x) = f [x0] + (x − x0)
+
+f [x1] − f [x0]
+x1 − x0
+
+Ent˜ao,
+
+Para x = x0 → P1(x0) = f [x0] + (x0 − x0)
+
+Para x = x1 → P1(x1) = f [x0] + (x1 − x0)
+
+f [x1] − f [x0]
+x1 − x0
+
+= f [x0]
+
+f [x1] − f [x0]
+x1 − x0
+
+= f [x1]
+
+b) Presumindo a validade para n = k − 1, isto ´e, Pk−1(xi) = f (xi), i = 0, 1, 2, ..., k − 1.
+
+c) Prova-se para n = k. A prova ser´a dividida em duas partes.
+
+1a) Seja i < k, ent˜ao:
+
+Pk(xi) = Pk−1(xi) + (xi − x0)(xi − x1)...(xi − xk−1)f [x0, x1, ..., xk]
+
+= Pk−1(xi) = f (xi).
+
+pela hip´otese de indu¸c˜ao.
+
+2a) Seja i = k, ent˜ao:
+
+Pk(xk) = f [x0]+(xk−x0)f [x0, x1]+...+(xk−x0)(xk−x1)...(xk−xk−1)f [x0, x1, ..., xn]
+
+Fazendo x = xk em (5.1) e comparando com a express˜ao obtida acima para
+Pk(xk), percebe-se que Pk(xk) = f (xk), (lembrando que n = k) o que completa
+a prova do teorema.
+
+20
+
+Teorema 8: Para x ∈ [a, b], x (cid:54)= xk, k = 0, 1, ..., n
+
+f [x0, x1, ..., xn, x] =
+
+f (n+1)(ξ)
+(n + 1)!
+
+; ξ (cid:15)(x0, xn)
+
+Prova: Utilizando o teorema 7, em (5.1):
+
+f (x) = Pn(x) + (x − x0)...(x − xn)f [x0, x1, ..., xn, x]
+
+f (x) − Pn(x) = (x − x0)...(x − xn)f [x0, x1, ..., xn, x]
+
+(5.2)
+
+Entretanto, usando (3.1.1), temos que:
+
+f (x) − Pn(x) = Rn(x) = (x − x0)...(x − xn)
+
+f (n+1)(ξ)
+(n + 1)!
+
+(5.3)
+
+onde ξ(cid:15)(x0, xn).
+
+Mas, (x − x0)(x − x1)...(x − xn) (cid:54)= 0, uma vez que os pontos tabelados s˜ao distintos.
+
+Comparando (5.2) com (5.3), segue que:
+
+f [x0, x1, ..., xn, x] =
+
+f (n+1)(ξ)
+(n + 1)!
+
+; ξ(cid:15)(x0, xn)
+
+Ent˜ao:
+
+Pn(x) = f (x0) + (x − x0)f [x0, x1] + (x − x0)(x − x1)f [x0, x1, x2]
+
++... + (x − x0)(x − x1)...(x − xn−1)f [x0, x1, ..., xn] = {...}1.
+
+´e a F´ormula de Newton do Polinˆomio de Interpola¸c˜ao, e a express˜ao:
+
+Rn(x) = (x − x0)(x − x1)...(x − xn−1)f [x0, x1, x2, ..., xn] = {...}2
+
+´e o termo do resto ou erro de truncamento.
+
+Vale observar que ´e o mesmo erro da forma de Lagrange.
+
+Exemplo:
+Dada a tabela:
+
+21
+
+a) Obter f (0, 47) usando um polinˆomio de interpola¸c˜ao de grau 2 pelo m´etodo de
+
+Newton.
+
+b) Dar uma estimativa para o erro.
+
+Solu¸c˜ao:
+
+Fonte: O autor
+
+Deve-se escolher 3 pontos na vizinhan¸ca de 0, 47. Seja ent˜ao: x0 = 0, 4, x1 = 0, 52 e
+
+x2 = 0, 6.
+Assim:
+
+P2(x) = f (x0) + (x − x0)f [x0, x1] + (x − x0)(x − x1)f [x0, x1, x2]
+
+P2(x) = 0, 27 + (x − 0, 4)0, 1667 + (x − 0, 4)(x − 0, 52).1, 0415
+
+Portanto, f (0, 47) ≈ P2(0, 47) ≈ 0, 278
+
+Para se achar uma estimativa para o erro de truncamento:
+
+Rn(x) = (x − x0)(x − x1)...(x − xn−1)f [x0, x1, x2, ..., xn]
+
+R2(0, 47) = (0, 47 − 0, 4)(0, 47 − 0, 52)(0, 47 − 0, 6).(−2, 6031) ≈ −1, 18 · 10−3.
+
+22
+
+5.1 Diferen¸cas Ordin´arias
+
+Existe uma forma mais simples de se encontrar o polinˆomio interpolador, atrav´es do
+m´etodo de Newton, quando os valores dos n´os s˜ao igualmente espa¸cados. Admita que
+esse espa¸co entre eles seja um valor h n˜ao nulo.
+
+´E preciso primeiramente construir a no¸c˜ao de diferen¸ca ordin´aria de uma fun¸c˜ao:
+
+Deﬁni¸c˜ao 3: Sejam x0, x1, x2, ..., xn, n + 1 pontos distintos em [a, b] tais que xi+1 −
+xi = h, i = 0, 1, 2, ..., n − 1 e sejam f0, f1, f2, ..., fn, n + 1 valores de uma fun¸c˜ao y = f (x)
+sobre x = xk, k = 0, 1, ..., n.
+
+Deﬁne-se:
+
+∆0f (xk) = f (xk)
+
+∆rf (xk) = ∆r−1f (xk + h) − ∆r−1f (xk)
+
+(5.1.1)
+
+onde ∆rf (xk) ´e a diferen¸ca ordin´aria de f (x) de ordem r em x = xk.
+
+Ent˜ao, utilizando essa deﬁni¸c˜ao:
+
+∆0f (xk) = f (xk)
+
+∆1f (xk) = ∆0f (xk + h) − ∆0f (xk) = f (xk + h) − f (xk)
+
+∆2f (xk) = ∆1f (xk + h) − ∆1f (xk)
+
+= ∆0f (xk + 2h) − ∆0f (xk + h) − ∆0f (xk + h) + ∆0f (xk)
+= (xk + 2h) − 2f (xk + h) + f (xk)
+
+∆3f (xk) = f (xk + 3h) − 3f (xk + 2h) + 3f (xk + h) − f (xk)
+
+...
+
+(cid:19)
+
+(cid:18)r
+0
+
+f (xk + rh) −
+
+∆rf (xk) =
+
+Portanto:
+
+(cid:19)
+
+(cid:18)r
+1
+
+f (xk + (r − 1)h) + ... + (−1)r
+
+(cid:19)
+
+f (xk)
+
+(cid:18)r
+r
+
+23
+
+∆rf (xk) =
+
+r
+(cid:88)
+
+(−1)i
+
+k=0
+
+(cid:18)r
+i
+
+(cid:19)
+
+f (xk + (r − i)h);
+
+onde :
+
+(cid:19)
+
+(cid:18)r
+p
+
+=
+
+r!
+p!(r − p)!
+
+O c´alculo pode ser feito de maneira mais f´acil atrav´es do c´alculo sistem´atico das
+
+diferen¸cas ordin´arias:
+
+5.1.1 C´alculo Sistem´atico das Diferen¸cas Ordin´arias
+
+Utiliza-se a seguinte tabela para o c´alculo das diferen¸cas ordin´arias de uma fun¸c˜ao
+
+f (x) sobre os pontos x0, x1, x2, ..., xn, em que: xn − xn−1 = h para todos os xi :
+
+Tabela 3 - Diferen¸cas Ordin´arias de uma Fun¸c˜ao
+
+Fonte: CUMINATO, Jos´e Alberto. C´alculo Num´erico. Apostila USP.
+
+A tabela ´e constru´ıda da seguinte forma:
+
+24
+
+a) a primeira coluna cont´em os pontos xi, onde i = 0, 1, 2, ..., n;
+
+b) a segunda coluna ´e composta pelos valores de f (x) nos pontos xi, onde i =
+
+0, 1, 2, ..., n;
+
+c) nas pr´oximas colunas est˜ao as diferen¸cas ordin´arias de ordem 1, 2, 3, ... que s˜ao
+encontradas fazendo a diferen¸ca entre duas diferen¸cas ordin´arias consecutivas e de
+ordem imediatamente inferior.
+
+Observa¸c˜ao: Os resultados que ser˜ao aplicados na constru¸c˜ao do polinˆomio inter-
+polador, para n´os igualmente espa¸cados de tamanho h, s˜ao os primeiros valores de cada
+coluna de diferen¸cas, mas ´e necess´ario construir toda a tabela, uma vez que esses valores
+n˜ao s˜ao autˆonomos uns dos outros.
+
+A associa¸c˜ao entre as diferen¸cas divididas de ordem n de uma fun¸c˜ao e as diferen¸cas
+
+ordin´arias de f (x) de ordem n, num ponto x0, pode ser obtida atrav´es do teorema:
+
+Teorema 9:
+
+Se xk = x0 + kh; k = 0, 1, 2, ..., n, ent˜ao:
+
+f [x0, x1, ..., xn] =
+
+∆nf (x0)
+hnn!
+
+Prova:
+
+Por indu¸c˜ao sobre n :
+
+a) Para n = 1. Pela deﬁni¸c˜ao:
+
+f [x0, x1] =
+
+f (x1) − f (x0)
+x1 − x0
+
+=
+
+f (x0 + h) − f (x0)
+h
+
+=
+
+∆1x0
+h
+
+sendo que x1 = x0 + h, f (x1) = ∆0f (x1), f (x0) = ∆0f (x0).
+
+b) Conjecturando para n = k − 1 :
+
+Prova-se, ent˜ao que ser´a v´alido para n = k. Pela deﬁni¸c˜ao e pela hip´otese de indu¸c˜ao,
+obtˆem-se:
+
+25
+
+f [x0, x1, ..., xk] =
+
+f [x1, x2, ..., xk] − f [x0, x1, ..., xk−1]
+xk − x0
+
+∆k−1f (x1)
+hk−1(k − 1)!
+
+−
+
+∆k−1f (x0)
+hk−1(k − 1)!
+
+]
+
+[∆k−1f (x0 + h) − ∆k−1f (x0)]
+
+=
+
+=
+
+=
+
+[
+
+1
+kh
+1
+hkk!
+∆kf (x0)
+hkk!
+
+O que prova o teorema.
+
+Observa-se que as diferen¸cas ordin´arias de ordem n de um polinˆomio de grau n,
+Pn(x) = anxn−1 + ... + a1x + a0 equivalem a hnn! · an. J´a as de grau maior que n
+s˜ao todas iguais a zero.
+
+5.2 F´ormula de Newton - Gregory
+
+Empregando o teorema 8 no teorema 6, ´e poss´ıvel obter um polinˆomio de interpola¸c˜ao
+na forma de Newton, para uma fun¸c˜ao y = f (x) com n´os igualmente espa¸cados, de
+tamanho h, no intervalo [x0, xn]:
+
+Pn(x) = f (x0) + (x − x0)(
+
++(x − x0)(x − x1)(
+
+)
+
+∆1f (x0)
+h1 · 1!
+∆2f (x0)
+h2 · 2!
+
+)
+
++.... + (x − x0)(x − x1)...(x − xn−1)(
+
+Exemplo:
+
+Dada a fun¸c˜ao y = sen(x) tabelada:
+
+26
+
+∆nf (x0)
+hn · n!
+
+)
+
+(5.2)
+
+a) Calcular o polinˆomio de interpola¸c˜ao atrav´es do m´etodo de Newton
+
+b) Calcular o polinˆomio de interpola¸c˜ao atrav´es do m´etodo de Newton - Gregory
+
+Solu¸c˜ao:
+
+a) Pelo m´etodo das diferen¸cas divididas, temos:
+
+Fonte: O autor
+
+Como n = 3, nosso polinˆomio de interpola¸c˜ao na forma de Newton ´e dado por:
+
+P3(x) = f [x0] + (x − x0)f [x0, x1] + (x − x0)(x − x1)f [x0, x1, x2]
++(x − x0)(x − x1)(x − x2)f [x0, x1, x2, x3]
+
+= 0, 932 + (x − 1, 2) · 0, 32 + (x − 1, 2)(x − 1, 3) · (−0, 55)
+
++(x − 1, 2)(x − 1, 3)(x − 1, 4) ·
+
+1
+3
+−3, 114 + 10, 145x − 5, 55x2 + x3
+3
+
+=
+
+b) Calcular o polinˆomio de interpola¸c˜ao atrav´es do m´etodo de Newton - Gregory
+
+27
+
+Fonte: O autor
+
+n = 3, portanto,
+
+P3(x) = f (x0) + (x − x0)(
+
+∆1f (xi)
+h1 · 1!
+
+) + (x − x0)(x − x1)(
+
+∆2f (xi)
+h2 · 2!
+
+)
+
++(x − x0)(x − x1)(x − x2)(
+
+= 0, 932 +
+
+(x − 1, 2) · 0, 032
+0, 11 · 1!
+
++
+
+)
+
+∆3f (xi)
+h3 · 3!
+(x − 1, 2)(x − 1, 3) · (−0, 011)
+0, 12 · 2!
+
++
+
+(x − 1, 2)(x − 1, 3)(x − 1, 4).0, 002
+0, 13 · 3!
+
+=
+
+−3, 114 + 10, 145x − 5, 55x2 + x3
+3
+
+Conclu´ımos que ´e poss´ıvel encontrar o mesmo polinˆomio interpolador pelos dois m´etodos
+de Newton, embora seja menos trabalhoso o m´etodo de Newton - Gregory para n´os equi-
+distantes.
+
+6 Compara¸c˜ao entre os M´etodos de Interpola¸c˜ao de
+
+Lagrange e de Newton
+
+Com pequenos c´alculos acerca da quantidade de n´os descritos no problema ´e poss´ıvel
+
+saber qual dos dois m´etodos seria mais r´apido em chegar ao polinˆomio interpolador.
+
+Vejamos na tabela abaixo:
+
+28
+
+Tabela 4 : Compara¸c˜ao entre o n´umero de opera¸c˜oes entre Lagrange e Newton
+
+Fonte: BARROSO, Leˆonidas Concei¸c˜ao; BARROSO, Magali Maria de Ara´ujo; FILHO,
+Frederico Ferreira Campos; CARVALHO, M´arcio Luiz Bunte e MAIA, Mirian Louren¸co.
+C´alculo Num´erico (com aplica¸c˜oes). 2 ed. Editora Hamburg Ltda. S˜ao Paulo, 1987.
+
+Comparando o total de opera¸c˜oes podemos perceber que 3n2+5n−10
+
+< 2n2 + 3n − 2
+para n ≥ 2, onde n representa o n´umero de pontos que se tem conhecimento com suas
+respectivas imagens. Isso signiﬁca, basicamente, que o m´etodo de Newton pode nos dar
+uma resposta mais r´apida que o m´etodo de Lagrange. Mas, se em um mesmo problema
+existir v´arias fun¸c˜oes y para um mesmo conjunto de pontos x, nas quais se quer chegar
+a um polinˆomio interpolador, ´e vantajoso o emprego da F´ormula de Lagrange, pois uma
+vez constru´ıda, a tabela de diferen¸cas e produtos, seria usada tantas vezes quantas fossem
+as interpola¸c˜oes, bastando para isso substituir-se os valores de y, pois os produtos nos
+denominadores s˜ao calculados apenas uma vez.
+
+2
+
+7 M´etodo de Hermite
+
+Uma modiﬁca¸c˜ao para a t´ecnica de interpola¸c˜ao de Lagrange ´e interpolar os valores
+da fun¸c˜ao e da sua derivada em um conjuntos de pontos. Esse procedimento d´a origem
+`a interpola¸c˜ao de Hermite. A ideia ´e representar uma fun¸c˜ao por um polinˆomio que seja
+interpolador de f em alguns pontos de seu dom´ınio e que sua derivada seja interpolada
+nesses mesmos pontos. Ent˜ao, supondo que f seja diferenci´avel, ser´a preciso achar um
+polinˆomio H tal que:
+
+f (xi) = H(xi)
+f (cid:48)(xi) = H (cid:48)(xi), com i = 0, 1, ..., n
+
+Quando tal circunstˆancia acontece, diz-se que as fun¸c˜oes f e H osculan 2 vezes pelos
+pontos xi. A interpola¸c˜ao de Hermite tem essa propriedade osculadora que permite uma
+melhor aproxima¸c˜ao da fun¸c˜ao. A obten¸c˜ao do polinˆomio pode ser feita de v´arias formas.
+
+29
+
+´E poss´ıvel atrav´es do polinˆomio interpolador de Lagrange e suas derivadas e com o po-
+linˆomio de Newton. Por praticidade, ser´a utilizado o polinˆomio interpolador de Newton
+neste trabalho.
+
+Teorema 10: Seja f ∈ C 2n+2([a, b]) e x0, x1, ..., xn pontos distintos em [a, b]. Existe
+
+apenas um polinˆomio H2n+1 de grau menor ou igual a 2n + 1 que veriﬁca:
+
+f (xi) = H(xi)
+f (cid:48)(xi) = H (cid:48)(xi), com i = 0, 1, ..., n
+
+(7.1)
+
+Demonstra¸c˜ao:
+
+Considere 2n + 2 pontos x0, x0, x1, x1, ..., xn, xn. Pode-se constatar que o polinˆomio de
+
+grau 2n + 1 dado por:
+
+H(x) = f [x0] + f [x0, x0](x − x0) + f [x0, x0, x1](x − x0)2
++f [x0, x0, x1, x1](x − x0)2(x − x1)
++... + f [x0, x0, ..., xn, xn](x − x0)2(x − x1)2...(x − xn−1)2(x − xn)
+
+(7.2)
+
+Veriﬁca as condi¸c˜oes dadas em (7.1), onde as diferen¸cas divididas precedem os resul-
+
+tados:
+
+Sendo que:
+
+f [xi, xi, ..., xi] =
+
+f (r)(xi)
+r!
+
+para r + 1 pontos
+
+(7.3)
+
+f [xi, xi] = lim
+x→xi
+
+f [x, xi]
+
+f [xi, xi] = lim
+x→xi
+
+f (x) − f (xi)
+x − xi
+
+f [xi, xi] = f (cid:48)(xi)
+
+(7.4)
+
+Assim, o polinˆomio interpolador de Hermite de grau 2n + 1 ´e dado por:
+
+H2n+1(x) = f [x0] + f [x0, x0](x − x0) + f [x0, x0, x1](x − x0)2
++f [x0, x0, x1, x1](x − x0)2(x − x1)
++... + f [x0, x0, ..., xn, xn](x − x0)2(x − x1)2...(x − xn−1)2(x − xn)
+
+30
+
+Para determin´a-lo, basta analisar a tabela de diferen¸cas divididas onde cada ponto
+
+aparece duas vezes.
+
+Exemplo:
+
+Determine um polinˆomio interpolador de Hermite de grau 3 para a fun¸c˜ao f (x) =
+
+cos(x) no intervalo de [0, π
+
+2 ].
+
+Para a fun¸c˜ao f (x) = cos(x)
+
+f (cid:48)(x) = −sen(x) f (0) = 1 f (
+
+π
+2
+
+) = 0 f (cid:48)(0) = 0 f (cid:48)(
+
+π
+2
+
+) = −1
+
+Montando a tabela de diferen¸cas divididas, tem-se:
+
+Fonte: O autor
+
+Substituindo na f´ormula do polinˆomio interpolador de Hermite:
+
+H3(x) = f [x0] + f [x0, x0](x − x0) + f [x0, x0, x1](x − x0)2 + f [x0, x0, x1, x1](x − x0)2(x − x1)
+
+= 1 + 0(x − 0) + (−
+
+8π2 − 4π + 8
+π3
+8π2 − 4π + 8
+π3
+Voltando ao teorema anterior: Seja f ∈ C 2n+2([a, b]) e x0, x1, ..., xn pontos distintos
+em [a, b]. Existe apenas um polinˆomio H2n+1 de grau menor ou igual a 2n + 1 que veriﬁca:
+
+4
+π2 )(x − 0)2 + (
+)x2 + (
+
+−4π2 + 2π − 8
+π2
+
+)(x − 0)2(x −
+
+= 1 + (
+
+)x3
+
+π
+2
+
+)
+
+31
+
+f (xi) = H(xi)
+f (cid:48)(xi) = H (cid:48)(xi), com i = 0, 1, ..., n
+
+Demonstra¸c˜ao:
+
+Para atender `as condi¸c˜oes iniciais, o polinˆomio dever´a ser de grau igual ou inferior `a
+
+2n + 1. Para provar a existˆencia, considere as fun¸c˜oes:
+
+Hi(x) = [1 − 2(cid:96)(cid:48)
+
+i(xi)(x − xi)](cid:96)i(x)2 e Hi(x) = (x − xi)(cid:96)i(x)2
+
+com i = 0, 1, ..., n e (cid:96)i os polinˆomios de Lagrange. Veriﬁca-se que:
+
+Hi(xj) = δi,j , H (cid:48)
+
+i (xj) = 0 com i, j = 0, 1, ..., n
+
+Hi(xj) = 0 , H (cid:48)
+
+i (xj) = δi,j com i, j = 0, 1, ..., n
+
+E assim, o polinˆomio:
+
+H2n+1(x) =
+
+n
+(cid:88)
+
+[f (xi)Hi(x) + f (cid:48)(xi)Hi(x)]
+
+i=0
+
+tem grau menor ou igual a 2n + 1 e veriﬁca (7.1).
+
+Para a unicidade, seja Q2n+1 outro polinˆomio de grau menor ou igual a 2n + 1, que
+
+veriﬁca (7.1) e que
+
+R2n+1(x) = H2n+1(x) − Q2n+1(x)
+
+Como R2n+1(x) = R(cid:48)
+
+2n+1(x) = 0, para i = 0, 1, ..., n tem-se que este polinˆomio de grau
+inferior ou igual a 2n + 1 tem 2n + 2 zeros o que implica que ter´a que ser o polinˆomio
+nulo. Ou seja H2n+1(x) ´e ´unico.
+
+7.1 Erro de interpola¸c˜ao do M´etodo de Hermite
+
+O estudo do erro na interpola¸c˜ao de Hermite consiste em generalizar o estudo feito
+
+para a interpola¸c˜ao de Lagrange. Assim,
+
+Rn(x) = f (x) − p(x) = (
+
+f (2n+2)(ξ)
+(2n + 2)!
+
+)(Wn(x))2
+
+onde Wn(x) ´e a fun¸c˜ao:
+
+32
+
+W (x) =
+
+n
+(cid:89)
+
+(x − xj)
+
+j=0
+
+Exemplo:
+
+Com f (x) = ln(x), calcular o erro para o valor da aproxima¸c˜ao de f (1, 5) usando
+
+interpola¸c˜ao c´ubica de Hermite.
+
+Solu¸c˜ao:
+
+Dados,
+
+ou
+
+onde
+
+ent˜ao:
+
+f (1) = 0 f (cid:48)(1) = 1 f (2) = 0, 6931 f (cid:48)(2) = 0, 5
+
+R3(1, 5) = (
+
+f (4)(ξ)
+4!
+
+)(1, 5 − 1)2(2 − 1, 5)2 com ξ ∈ (1, 2)
+
+|R3(1, 5)| ≤ (
+
+M
+4!
+
+) · 0, 54
+
+M ≥ maxx∈[1,2]
+
+(cid:12)f (4)(x)(cid:12)
+(cid:12)
+
+(cid:12) = maxx∈[1,2]
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+−6
+x4
+
+(cid:12)
+(cid:12)
+(cid:12)
+(cid:12)
+
+= 6
+
+|R3(1, 5)| ≤ 0, 02
+
+Este m´etodo ´e mais preciso, segundo o seu erro de aproxima¸c˜ao, que os m´etodos de
+Lagrange e Newton, vistos anteriormente, pois utiliza al´em dos n´os, suas derivadas, por´em
+muitas vezes essa informa¸c˜ao n˜ao ´e dispon´ıvel.
+
+8 Splines
+
+Conforme citado nos itens anteriores, polinˆomios de grau n podem ser usados para inter-
+polar n + 1 pontos de uma fun¸c˜ao. Se tivermos dez pontos, por exemplo, ´e poss´ıvel se
+construir um polinˆomio de grau nove. A curva desse polinˆomio captura todas as oscila¸c˜oes
+previstas por esses pontos, mas polinˆomios interpoladores de elevado grau podem trazer
+grandes diﬁculdades de resolu¸c˜ao. Existe uma alternativa para esses casos: a interpola¸c˜ao
+por splines. Em algumas fun¸c˜oes, pode-se obter polinˆomios com erros de arredondamento
+e para evit´a-los podemos encontrar polinˆomios de grau mais baixo em um subconjunto
+dos n´os dados. Para isso, devem-se impor condi¸c˜oes para que a fun¸c˜ao de aproxima¸c˜ao
+
+33
+
+seja cont´ınua e tenha derivadas cont´ınuas at´e uma determinada ordem. Tais polinˆomios,
+deﬁnidos por partes, recebem o nome de fun¸c˜oes spline. A principal diferen¸ca entre a
+interpola¸c˜ao cl´assica por polinˆomios e esta por splines ´e que splines produzem curvas cu-
+jas equa¸c˜oes de terceiro grau s˜ao seccionalmente cont´ınuas e tem derivadas continuas at´e
+a segunda ordem e descont´ınuas da terceira ordem em diante. Curvas de terceiro grau
+podem ser usadas para conectar esses pontos e s˜ao chamadas de splines c´ubicos.
+
+H´a muitos anos, os m´etodos splines tamb´em s˜ao usadas na engenharia e outras ´areas.
+Em certas aplica¸c˜oes, os splines s˜ao entendidas como r´eguas ﬂex´ıveis que podem ser
+curvadas de forma a passar por um conjunto de pontos, chamados n´os.
+
+Gr´aﬁco 2: Interpola¸c˜ao Spline
+
+Fonte: http://www.mat.ufrgs.br/∼guidi/grad/MAT01032/calculo numerico.cap4.pdf -
+Acessado em 15/05/2016.
+
+Deﬁni¸c˜ao 4: Considere a fun¸c˜ao f (x) com n + 1 pontos: x0 < x1 < ... < xn deﬁnida
+
+em [a, b].
+
+Uma fun¸c˜ao S(x) ´e denominada spline de grau p com n´os nos pontos x0, x1, ..., xn se
+
+atender:
+
+1) em cada subintervalo entre dois n´os consecutivos, S(x) ´e um polinˆomio de grau p;
+
+2) S(x) ´e cont´ınua e tem derivadas cont´ınuas at´e a ordem p − 1 em [a, b];
+
+3) S(xi) = f (xi) para i = 0, 1, 2, ..., n.
+
+Satisfazendo estas condi¸c˜oes, a fun¸c˜ao S(x) receber´a o nome de spline interpolante.
+
+34
+
+8.1 Spline C´ubico
+
+Trabalhar com spline c´ubico signiﬁca trabalhar com polinˆomios do terceiro grau para cada
+intervalo [xi, xi+1] de n´os, logo nesse intervalo:
+
+Si(x) = aix3 + bix2 + cix + di
+
+(8.1.1)
+
+onde i = 1, 2, ..., n.
+
+Ent˜ao, existir´a n intervalos para n+1 pontos dados e 4n constantes a serem calculadas
+
+(inc´ognitas). Existem algumas condi¸c˜oes para calcular as inc´ognitas:
+
+1) Os valores da fun¸c˜ao e do polinˆomio devem ser idˆenticos nos n´os interiores dentro
+
+do intervalo da fun¸c˜ao.
+
+2) A primeira e a ´ultima fun¸c˜ao deve passar pelos n´os extremos.
+
+3) S (cid:48)
+
+k(xk) = S (cid:48)
+
+k+1(xk), k = 1, ..., (n − 1)
+
+4) Sk(xk) = Sk+1(xk), k = 1, ..., (n − 1)
+
+5) S (cid:48)(cid:48)
+
+k (xk) = S (cid:48)(cid:48)
+
+k+1(xk), k = 1, ..., (n − 1)
+
+O fato da fun¸c˜ao spline n˜ao ter picos e nem trocar abruptamente de curvatura nos n´os
+
+vem da continuidade da segunda e terceira derivada.
+
+A seguir, constr´oi-se, de uma maneira simples, a fun¸c˜ao spline c´ubica:
+
+´E f´acil perceber que, como cada par de n´os ´e ligado por um polinˆomio c´ubico, a
+
+segunda derivada no interior de cada intervalo ´e uma reta:
+
+S (cid:48)
+i(xi) = 3aix2 + 2bix + ci
+
+S (cid:48)(cid:48)
+i (xi) = 6aix + 2bi
+
+(8.1.2)
+
+(8.1.3)
+
+Assim, ´e poss´ıvel representar as segundas derivadas por um polinˆomio interpolador de
+
+primeiro grau de Lagrange:
+
+i (xi) = S (cid:48)(cid:48)
+S (cid:48)(cid:48)
+
+i (xi−1)(
+
+x − xi
+xi−1 − xi
+
+) + S (cid:48)(cid:48)
+
+i (xi)(
+
+x − xi−1
+xi − xi−1
+
+)
+
+(8.1.4)
+
+35
+
+onde S (cid:48)(cid:48)(x) ´e o valor da segunda derivada em um ponto qualquer x no i- ´esimo inter-
+valo. Logo, essa equa¸c˜ao liga a segunda derivada no primeiro n´o S (cid:48)(cid:48)(xi−1) com a segunda
+derivada no segundo n´o S (cid:48)(cid:48)(xi).
+
+Ao integrar duas vezes a equa¸c˜ao (8.1.4) tem-se uma express˜ao para Si(x). Contudo,
+essa express˜ao ter´a duas contantes de integra¸c˜ao a serem determinadas. Para determin´a-
+las voltaremos na condi¸c˜ao de igualdade da fun¸c˜ao Si(x) deve ser igual a S(xi−1) em xi−1
+e Si(x) deve ser igual a S(xi) em xi:
+
+S (cid:48)
+i(x) =
+
+=
+
+=
+
+(cid:90)
+
+(cid:90)
+
+S (cid:48)(cid:48)
+i (x)dx
+
+[S(cid:48)(cid:48)
+
+i(xi−1)
+
+(x − xi)
+xi−1 − xi
+
++ S (cid:48)(cid:48)
+
+i (xi)
+
+(x − xi−1)
+xi − xi−1
+
+]dx
+
+S (cid:48)(cid:48)
+
+i (xi−1)
+2(xi−1 − xi)
+
+(x − xi)2 +
+
+S (cid:48)(cid:48)
+
+i (xi)
+2(xi − xi−1)
+
+(x − xi−1)2 + k1
+
+Integrando a segunda vez:
+
+Si(x) =
+
+(cid:90)
+
+S (cid:48)
+i(x)dx
+
+=
+
+=
+
+(cid:90)
+
+S (cid:48)(cid:48)
+
+[
+
+i (xi−1)
+2(xi−1 − xi)
+S (cid:48)(cid:48)
+i (xi−1)
+6(xi−1 − xi)
+
+S (cid:48)(cid:48)
+
+i (xi)
+2(xi − xi−1)
+S (cid:48)(cid:48)
+i (xi)
+6(xi − xi−1)
+
+(x − xi)3 +
+
+(x − xi−1)3 + k1x + k2
+
+(x − xi)2 +
+
+(x − xi−1)2 + k1]dx
+
+Como Si(xi) = S(xi) e Si(xi−1) = S(xi−1),
+
+Si(xi−1) =
+
+Si(xi) =
+
+S (cid:48)(cid:48)
+
+i (xi−1)
+6(xi−1 − xi)
+
+S (cid:48)(cid:48)
+
+i (xi)
+6(xi − xi−1)
+
+(xi−1 − xi)3 + ci(xi − xi−1) = S(xi−1)
+
+(xi − xi−1)3 + di(xi − xi−1) = S(xi)
+
+onde:
+
+ci = {
+
+S(xi−1)
+xi − xi−1
+
+−
+
+S (cid:48)(cid:48)
+i (xi−1)(x − xi−1)2
+6
+
+} ·
+
+1
+(xi − xi−1)
+
+di = {
+
+S(xi)
+xi − xi−1
+
+−
+
+S (cid:48)(cid:48)
+i (xi)(xi − xi−1)2
+6
+
+} ·
+
+1
+(xi − xi−1)
+
+36
+
+Fazendo os c´alculos:
+
+Si(x) =
+
+S (cid:48)(cid:48)
+
++[
+
+i (xi−1)
+6(xi − xi−1)
+S(xi−1)
+(xi − xi−1)
+S (cid:48)(cid:48)(xi)
+(xi − xi−1)
+
++[
+
+(xi − x)3 +
+
+S (cid:48)(cid:48)
+
+i (xi)
+6(xi − xi−1)
+S (cid:48)(cid:48)(xi−1)(xi − xi−1)
+6
+S (cid:48)(cid:48)(xi)(xi − xi−1)
+6
+
+−
+
+−
+
+(x − xi−1)3
+
+](xi − x)
+
+](x − xi−1)
+
+(8.1.5)
+
+Observa-se que essa express˜ao cont´em apenas dois coeﬁcientes a serem determinados,
+no in´ıcio e no ﬁnal do intervalo, S (cid:48)(cid:48)(xi−1) e S (cid:48)(cid:48)(xi). Ent˜ao, determinando adequadamente
+as segundas derivadas em cada n´o, a equa¸c˜ao (8.1.5) ser´a um polinˆomio de grau trˆes que
+pode ser usado para interpolar o intervalo. As segundas derivadas podem vir da condi¸c˜ao
+de que as primeiras derivadas devem ser cont´ınuas nos n´os:
+
+i(xi) = S (cid:48)
+S (cid:48)
+
+i+1(xi)
+
+(8.1.6)
+
+A equa¸c˜ao (8.1.5) pode ser derivada para expressar a derivada primeira. Se isso for
+
+feito para todos os i-´esimo e (i − 1) - ´esimo intervalos encontra-se:
+
+(xi − xi−1)S (cid:48)(cid:48)(xi−1) + 2(xi+1 − xi−1)S (cid:48)(cid:48)(xi)
+
++(xi+1 − xi)S (cid:48)(cid:48)(xi+1) = (
+
+6
+xi+1 − xi
+
+)[S(xi+1) − S(xi)]
+
++(
+
+6
+xi − xi−1
+
+)[S(xi−1) − S(xi)]
+
+(8.1.7)
+
+Na ausˆencia de qualquer informa¸c˜ao espec´ıﬁca nos n´os extremos ´e usualmente aplicadas
+as condi¸c˜oes: S (cid:48)(cid:48)(x0) = S (cid:48)(cid:48)(xn) = 0. A imposi¸c˜ao destas condi¸c˜oes reduz a precis˜ao do
+Spline e ´e chamada de Spline Natural.
+
+Exemplo: Ajustar um spline c´ubico para os seguintes dados e usar uma estimativa
+
+para x = 6:
+
+37
+
+Solu¸c˜ao:
+
+A partir da equa¸c˜ao (8.1.7) ´e poss´ıvel gerar um conjunto de solu¸c˜oes simultˆaneas que
+
+determinam a derivada segunda nos n´os. Escolhendo-se i = 1 e i = 2, tem-se:
+
+(x1 − x0)S (cid:48)(cid:48)(x0) + 2(x2 − x0)S (cid:48)(cid:48)(x1) + (x2 − x1)S (cid:48)(cid:48)(x2) = (
+
+)[S(x2) − S(x1)]
+
+6
+x2 − x1
+6
+x1 − x0
+
++(
+
+6
+x3 − x2
+6
+x2 − x1
+
++(
+
+)[S(x0) − S(x1)]
+
+(8.1.8)
+
+)[S(x1) − S(x2)]
+
+(8.1.9)
+
+(x2 − x1)S (cid:48)(cid:48)(x1) + 2(x3 − x1)S (cid:48)(cid:48)(x2) + (x3 − x2)S (cid:48)(cid:48)(x3) = (
+
+)[S(x3) − f (x2)]
+
+Retirando os n´os interiores da tabela:
+
+x0 = 3 ⇒ S(x0) = 2, 5
+x1 = 4, 5 ⇒ S(x1) = 1
+x2 = 7 ⇒ S(x2) = 2, 5
+x3 = 9 ⇒ S(x3) = 0, 5
+
+Substituindo esses valores nas equa¸c˜oes (8.1.8) e (8.1.9)
+
+(4, 5 − 3)S (cid:48)(cid:48)(3) + 2(7 − 3)S (cid:48)(cid:48)(4, 5) + (7 − 4, 5)S (cid:48)(cid:48)(7) = (
+
++ (
+
+38
+
+6
+7 − 4, 5
+6
+4, 5 − 3
+
+)[S(7) − S(4, 5)]
+
+)[S(3) − S(4, 5)]
+
+(8.1.10)
+
+(7 − 4, 5)S (cid:48)(cid:48)(4, 5) + 2(9 − 4, 5)S (cid:48)(cid:48)(7) + (9 − 7)S (cid:48)(cid:48)(9) = (
+
++ (
+
+)[0, 5 − 2, 5]
+
+6
+9 − 7
+6
+7 − 4, 5
+
+)[1 − 2, 5]
+
+(8.1.11)
+
+Utilizando S (cid:48)(cid:48)(3) = 0 e S (cid:48)(cid:48)(9) = 0, que ´e a condi¸c˜ao de spline natural, e substituindo
+
+em (8.1.10) e (8.1.11) tem-se o seguinte sistema:
+
+(cid:40)
+
+8S (cid:48)(cid:48)(4, 5) + 2, 5S (cid:48)(cid:48)(7) = 9, 6
+2, 5S (cid:48)(cid:48)(4, 5) + 9S (cid:48)(cid:48)(7) = −9, 6
+
+Que tem por solu¸c˜ao:
+
+S (cid:48)(cid:48)(4, 5) = 1, 679 S (cid:48)(cid:48)(7) = −1, 533
+
+Considerando i = 1, 2 e 3 na equa¸c˜ao (8.1.5):
+
+S1(x) =
+
+S2(x) =
+
+S (cid:48)(cid:48)
+
+1 (x0)
+6(x1 − x0)
+S(x0)
+x1 − x0
+S(x1)
+x1 − x0
+
++[
+
++[
+
+S (cid:48)(cid:48)
+
+2 (x1)
+6(x2 − x1)
+S(x1)
+x2 − x1
+S(x2)
+x2 − x1
+
++[
+
++[
+
+(x1 − x)3 +
+
+S (cid:48)(cid:48)
+
+1 (x1)
+6(x1 − x0)
+
+(x − x0)3
+
+−
+
+−
+
+S (cid:48)(cid:48)(x0)(x1 − x0)
+6
+S (cid:48)(cid:48)(x1)(x1 − x0)
+6
+
+](x1 − x)
+
+](x − x0)
+
+(x2 − x)3 +
+
+S (cid:48)(cid:48)
+
+2 (x2)
+6(x2 − x1)
+
+(x − x1)3
+
+−
+
+−
+
+S (cid:48)(cid:48)(x1)(x2 − x1)
+6
+S (cid:48)(cid:48)(x2)(x2 − x1)
+6
+
+](x2 − x)
+
+](x − x1)
+
+39
+
+(8.1.12)
+
+(8.1.13)
+
+S3(x) =
+
+S (cid:48)(cid:48)
+
+3 (x2)
+6(x3 − x2)
+S(x2)
+x3 − x2
+S(x3)
+x3 − x2
+
++[
+
++[
+
+(x3 − x)3 +
+
+S (cid:48)(cid:48)
+
+3 (x3)
+6(x3 − x2)
+
+(x − x2)3
+
+−
+
+−
+
+S (cid:48)(cid:48)(x2)(x3 − x2)
+6
+S (cid:48)(cid:48)(x3)(x3 − x2)
+6
+
+](x3 − x)
+
+](x − x2)
+
+Substituindo os valores de x(cid:48) e S (cid:48)(x) e utilizando a condi¸c˜ao de spline natural:
+
+S1(x) = 0, 1866(x − 3)3 + 1, 666(4, 5 − x) + 0, 2469(x − 3)
+
+(8.1.15)
+
+(8.1.14)
+
+S2(x) = 0, 1119(7 − x)3 − 0, 1022(x − 4, 5)3 − 0, 2996(7 − x) + 1, 6388(x − 4, 5) (8.1.16)
+
+S3(x) = −0, 1277(9 − x)3 + 1, 761(9 − x) + 0, 25(x − 7)
+
+(8.1.17)
+
+Logo, o spline c´ubico ´e dado por:
+
+S(x) =
+
+
+
+
+
+
+S1(x) = 0, 1866(x − 3)3 + 1, 666(4, 5 − x) + 0, 2469(x − 3) se 3 ≤ x ≤ 4, 5
+
+S2(x) = 0, 1119(7 − x)3 − 0, 1022(x − 4, 5)3 − 0, 2996(7 − x)
++1, 6388(x − 4, 5) se 4, 5 ≤ x ≤ 7
+
+S3(x) = −0, 1277(9 − x)3 + 1, 761(9 − x) + 0, 25(x − 7) se 7 ≤ x ≤ 9
+
+(8.1.18)
+
+e, portanto, S(6) ´e calculado atrav´es do segundo intervalo:
+
+S(6) = S2(6) = 0, 1119(7−6)3 −0, 1022(6−4, 5)3 −0, 2996(7−6)+1, 6388(6−4, 5) = 1, 925
+
+8.2 O erro de interpola¸c˜ao do Spline C´ubico
+
+Da mesma forma que os m´etodos anteriores, ´e poss´ıvel se deﬁnir uma f´ormula para o
+c´alculo do erro na compara¸c˜ao com a fun¸c˜ao original. Ent˜ao, para todo x em [a, b], para
+S com derivadas cont´ınuas at´e a ordem 4 pelo menos, o seguinte resultado no erro absoluto
+det´em:
+
+40
+
+maxx∈[xi−1,xi] |S(x) − p3(x)| ≤
+
+h4
+4!
+
+· maxx∈[a,b]
+
+(cid:12)S(4)(x)(cid:12)
+(cid:12)
+(cid:12) ,
+
+Fonte: JINGMEI QIU - https://www.math.uh.edu/ jingqiu/math4364/spline
+
+9 Aplica¸c˜oes
+
+9.1 Fenˆomeno de Runge
+
+Gr´aﬁco 3: Reduzindo o Erro
+
+Fonte: http://www.ime.unicamp.br/∼ biloti/an/interp.pdf − Acessado em 17/05/2016.
+
+A ﬁgura acima ´e composta por 4 polinˆomios diferentes, que foram feitos utilizando
+mais pontos do que o polinˆomio imediatamente anterior na tentaiva de diminuir o erro.
+Os polinˆomios p2, p3 e p4 interpolam as fun¸c˜oes em 3, 4 e 5 pontos, respectivamente,
+igualmente espa¸cados. Analisando o desenho ´e poss´ıvel constatar que p4 ´e o polinˆomio que
+mais se aproxima da fun¸c˜ao original. Mas ser´a que essa estrat´egia de aumentar o n´umero
+de pontos a serem interpolados garante sempre encontar um polinˆomio mais pr´oximo do
+original? Ou seja, ser´a que pn converge para f quando n → ∞. Na verdade, nem sempre
+´e certo que o erro ﬁcar´a reduzido `a medida que o grau do polinˆomio interpolador aumente.
+Esse fenˆomeno ´e conhecido como Fenˆomeno de Runge.
+
+A fun¸c˜ao proposta por Carle D. T. Runge para estudar o comportamento dos erros
+
+na interpola¸c˜ao polinomial foi a seguinte:
+
+f (x) =
+
+1
+
+1 + 25x2 , onde x ∈ [−1, 1].
+
+41
+
+O polinˆomio interpolador constru´ıdo a partir de pontos igualmente espa¸cados no in-
+
+tervalo n˜ao converge para f (x).
+
+Para exempliﬁcar este fato, pode-se construir polinˆomios de grau 2, 4 ,6, 8, 10, para
+pontos igualmente espa¸cados. Para facilitar os c´alculos, ser˜ao constru´ıdos polinˆomios
+interpoladores, usando o m´etodo de Lagrange, na ferramenta “Scilab” e seus gr´aﬁcos na
+ferramenta “Matlab”.
+
+Polinˆomio de grau 2:
+
+P2(x) = 1 − 0, 96x2
+
+Polinˆomio de grau 4:
+
+P4(x) = 1 − 3, 469.10−18x − 4, 277x2 − 1, 041.10−17x3 + 3, 315x4
+
+Polinˆomio de grau 6:
+
+P6(x) = 1 − 8, 283.10−17x − 8, 779x2 − 5, 204.10−16x3 + 20, 937x4 + 3, 886.10−16x5 −
+
+13, 12x6
+
+Polinˆomio de grau 8:
+
+P8(x) = 1 − 1, 413.10−15x − 13, 21x2 − 1, 73.10−14x3 + 61, 383x4 + 3, 476.10−14x5 −
+
+102, 78x6 − 3, 365.10−14x7 + 53, 645x8
+
+42
+
+Polinˆomio de grau 10:
+
+P10(x) = 1 − 0, 267857x − 16, 89x2 + 0, 938x3 + 124, 537x4 − 7, 422x5 − 390, 753x6 +
+
+18, 136x7 + 517, 681x8 − 11, 626x9 − 235, 539x10
+
+O fenˆomeno de Runge pode ser observado na seguinte sequˆencia de gr´aﬁcos:
+
+43
+
+Gr´aﬁco 4: Compara¸c˜ao dos polinˆomios de interpola¸c˜ao na fun¸c˜ao de Runge
+
+Fonte: http://www.ime.unicamp.br/∼valle/Teaching/2015/MS211/Aula21.pdf -
+Acessado em 25/05/2016.
+
+Pela avalia¸c˜ao das aproxima¸c˜aoes acima, ´e poss´ıvel veriﬁcar, por exemplo, que o po-
+linˆomio de grau 9 est´a muito mais pr´oximo da fun¸c˜ao original do que o polinˆomio de grau
+10. Com esse contra exemplo conclui-se que n˜ao ´e poss´ıvel a garantia de que pn → f
+quando n → ∞, para n´os igualmente espa¸cados.
+
+Podemos analisar esse comportamento n˜ao regular da interpola¸c˜ao a partir do termo
+
+n
+(cid:89)
+
+(x − xi)
+
+i=1
+
+(9.1)
+
+Para minimizar esse comportamento, ´e interessante a escolha de pontos n˜ao igualmente
+espa¸cados. ´E poss´ıvel demonstrar que a varia¸c˜ao do termo (9.1) ´e m´ınima em valor
+absoluto quando os pontos xi est˜ao espa¸cados em um intervalo (a, b) segundo a seguinte
+express˜ao:
+
+44
+
+xi =
+
+a + b
+2
+
++
+
+a − b
+2
+
+cos(
+
+2i − 1
+2n
+
+π)
+
+para i = 1, 2, ..., n. Esses pontos s˜ao denominados pontos de Chebyshev.
+
+Utilizando os pontos de Chebyshev no intervalo [−1, 1] podemos controlar o compor-
+tamento dos polinˆomios interpolantes para a fun¸c˜ao de Runge e garantir a convergˆencia
+pn−1(x) → f (x) quando n → +∞.
+
+Mesmo assim, existem fun¸c˜oes cont´ınuas que requerem um n´umero muito grande de
+n´os para que a interpola¸c˜ao se aproxime da fun¸c˜ao original. Por exemplo, a fun¸c˜ao (cid:112)|x|
+no intervalo [−1, 1] requer um polinˆomio de grau maior que 106 para que a interpola¸c˜ao
+seja exata at´e 10−3.
+
+Em geral, quando utilizamos polinˆomios de grau maior ou igual a 100, a maior diﬁ-
+
+culdade ´e lidar com os erros de arredondamento.
+
+9.2 Crescimento Populacional
+
+A cada dez anos ´e feito um censo nos Estados Unidos. A tabela e o gr´aﬁco seguinte
+
+mostram a popula¸c˜ao apurada nos anos de 1950 `a 2000, em milhares de pessoas:
+
+Com base no gr´aﬁco e na tabela, use a interpola¸c˜ao de Lagrange, por diferen¸cas
+divididas e por Spline C´ubico para aproximar a popula¸c˜ao nos anos de 1940, 1975 e 2020.
+
+Tabela 5: Popula¸c˜ao dos Estados Unidos (em milhares de pessoas)
+
+Fonte: BURDEN, Richard L.e FAIRES, J. Douglas. Numerical Analysis. 9 ed.
+
+45
+
+Gr´aﬁco 5: Popula¸c˜ao dos Estados Unidos ao longo dos anos
+
+Fonte: BURDEN, Richard L.e FAIRES, J. Douglas. Numerical Analysis. 9 ed.
+
+Solu¸c˜ao: Para facilitar os c´alculos, ser˜ao usados pontos mais simples em xi para
+representar os anos do gr´aﬁco. Ser´a constru´ıdo um polinˆomio de grau 3 para encontrar o
+polinˆomio interpolador.
+
+Por Lagrange:
+
+Pela f´ormula de Lagrange para pontos igualmente espa¸cados:
+
+Pn(x0 + uh) =
+
+n
+(cid:88)
+
+k=0
+
+fkλk(u)
+
+λk(u) =
+
+u(u − 1)...(u − (k − 1))(u − (k + 1))...(u − n)
+k(k − 1)...(k − (k − 1)(k − (k + 1))...(k − n)
+
+, onde u =
+
+x − x0
+h
+
+46
+
+λ0(u) =
+
+(u − 1)(u − 2)(u − 3)
+(0 − 1)(0 − 2)(0 − 3)
+
+=
+
+−u3 + 6u2 − 11u + 6
+6
+
+λ1(u) =
+
+(u − 0)(u − 2)(u − 3)
+(1 − 0)(1 − 2)(1 − 3)
+
+=
+
+u3 − 5u2 + 6u
+2
+
+λ2(u) =
+
+(u − 0)(u − 1)(u − 3)
+(2 − 0)(2 − 1)(2 − 3)
+
+=
+
+−u3 + 4u2 − 3u
+2
+
+λ3(u) =
+
+(u − 0)(u − 1)(u − 2)
+(3 − 0)(3 − 1)(3 − 2)
+
+=
+
+u3 − 3u2 + 2u
+6
+
+P3(x) = 179, 323(
+
+−u3 + 6u2 − 11u + 6
+6
+−u3 + 4u2 − 3u
+2
+
+) + 203, 302(
+
+u3 − 5u2 + 6u
+2
+
+)
+
+u3 − 3u2 + 2u
+6
+
+)
+
++226, 542(
+
+) + 249, 633(
+
+P3(x) = 0, 0983u3 − 0, 6645u2 + 24, 5452u + 179, 323
+
+Ent˜ao,
+
+f (1940) = f (4) ≈ P3(−2) ≈ 126, 788 milhares de pessoas
+
+u = 4−6
+
+1 = −2
+
+f (1975) = f (7, 5) ≈ P3(1, 5) ≈ 214, 977 milhares de pessoas
+
+u = 7,5−6
+
+1 = 1, 5
+
+f (2020) = f (12) ≈ P3(6) ≈ 323, 905 milhares de pessoas
+
+u = 12−6
+
+1 = 6
+
+Por Diferen¸cas Divididas:
+
+Para facilitar os c´alculos, ser˜ao usados pontos mais simples em xi para representar
+os anos do gr´aﬁco. Ser´a constru´ıdo um polinˆomio de grau 3 para encontrar o polinˆomio
+interpolador.
+
+47
+
+Dados do problema:
+
+Criando a tabela de diferen¸ca Dividida
+
+Fonte: O autor
+
+Escrevendo o polinˆomio:
+
+P3(x) = f [x0] + (x − x0)f [x0, x1] + (x − x0)(x − x1)f [x0, x1, x2]
++(x − x0)(x − x1)(x − x2)f [x0, x1, x2, x3]
+
+= 179, 323 + (x − 6)(23, 979) + (x − 6)(x − 7).(−0, 3695)
+
++(x − 6)(x − 7)(x − 8).(0, 0983)
+
+= −13, 0988 + 43, 1343x − 2, 4338x2 + 0, 0983x3
+
+Ent˜ao:
+
+f (1940) = f (4) ≈ P3(4) ≈ 126, 789 milhares de pessoas
+
+f (1975) = f (7, 5) ≈ P3(7, 5) ≈ 214, 977 milhares de pessoas
+
+f (2020) = f (12) ≈ P3(12) ≈ 323, 908 milhares de pessoas
+
+Por Spline C´ubico:
+
+48
+
+Para facilitar os c´alculos, ser˜ao usados pontos mais simples em xi para representar
+os anos do gr´aﬁco. Ser´a constru´ıdo um polinˆomio de grau 3 para encontrar o polinˆomio
+interpolador.
+
+Dados do problema:
+
+Utilizando as equa¸c˜oes (8.1.8) e (8.1.9):
+
+(x1 − x0)S (cid:48)(cid:48)(x0) + 2(x2 − x0)S (cid:48)(cid:48)(x1) + (x2 − x1)S (cid:48)(cid:48)(x2) = (
+
+(x2 − x1)S (cid:48)(cid:48)(x1) + 2(x3 − x1)S (cid:48)(cid:48)(x2) + (x3 − x2)S (cid:48)(cid:48)(x3) = (
+
+)[S(x3) − S(x2)]
+
+6
+x2 − x1
+6
+x1 − x0
+
++(
+
+6
+x3 − x2
+6
+x2 − x1
+
++(
+
+6
+(8 − 7)
+6
+(7 − 6)
+
++
+
+6
+(9 − 8)
+6
+(8 − 7)
+
++
+
+)[S(x2) − S(x1)]
+
+)[S(x0) − S(x1)]
+
+)[S(x1) − S(x2)]
+
+[226, 542 − 203, 302]
+
+[179, 323 − 203, 302]
+
+[249, 633 − 226, 542]
+
+[203, 302 − 226, 542]
+
+(7 − 6)S (cid:48)(cid:48)(6) + 2(8 − 6)S (cid:48)(cid:48)(7) + (8 − 7)S (cid:48)(cid:48)(8) =
+
+(8 − 7)S (cid:48)(cid:48)(7) + 2(9 − 7)S (cid:48)(cid:48)(8) + (9 − 8)S (cid:48)(cid:48)(9) =
+
+Utilizando S (cid:48)(cid:48)(x0) = S (cid:48)(cid:48)(xn) = 0 que ´e condi¸c˜ao de Spline Natural e substituindo nas
+
+equa¸c˜oes, tem-se o seguinte sistema:
+
+49
+
+
+
+
+
+
+4S (cid:48)(cid:48)(7) + S (cid:48)(cid:48)(8) = −4, 434
+
+S (cid:48)(cid:48)(7) + 4S (cid:48)(cid:48)(8) = −0, 894
+
+Que tem por solu¸c˜ao: S (cid:48)(cid:48)(7) = 1, 1228 e S (cid:48)(cid:48)(8) = 0, 0572.
+
+Considerando i = 1, 2 e 3 na equa¸c˜ao (8.1.5) tem-se:
+
+Si(x) =
+
+S1(x) =
+
+S2(x) =
+
+S3(x) =
+
+S (cid:48)(cid:48)
+
++[
+
+i (xi−1)
+6(xi − xi−1)
+S(xi−1)
+(xi − xi−1)
+S(xi−1)
+(xi − xi−1)
+
++[
+
+(xi − x)3 +
+
+S (cid:48)(cid:48)
+
+i (xi)
+6(xi − xi−1)
+S (cid:48)(cid:48)(xi−1)(xi − xi−1)
+6
+S (cid:48)(cid:48)(xi−1)(xi − xi−1)
+6
+
+−
+
+−
+
+(x − xi−1)3
+
+](xi − x)
+
+](x − xi−1)
+
+S (cid:48)(cid:48)
+
+1 (x0)
+6(x1 − x0)
+S(x0)
+(x1 − x0)
+S(x1)
+(x1 − x0)
+
++[
+
++[
+
+S (cid:48)(cid:48)
+
+2 (x1)
+6(x2 − x1)
+S(x1)
+(x2 − x1)
+S(x2)
+(x2 − x1)
+
++[
+
++[
+
+S (cid:48)(cid:48)
+
+3 (x2)
+6(x3 − x2)
+S(x2)
+(x3 − x2)
+S(x3)
+(x3 − x2)
+
++[
+
++[
+
+(x1 − x)3 +
+
+S (cid:48)(cid:48)
+
+1 (x1)
+6(x1 − x0)
+
+(x − x0)3
+
+−
+
+−
+
+S (cid:48)(cid:48)(x0)(x1 − x0)
+6
+S (cid:48)(cid:48)(x1)(x1 − x0)
+6
+
+](x1 − x)
+
+](x − x0)
+
+(x2 − x)3 +
+
+S (cid:48)(cid:48)
+
+2 (x2)
+6(x2 − x1)
+
+(x − x1)3
+
+−
+
+−
+
+S (cid:48)(cid:48)(x1)(x2 − x1)
+6
+S (cid:48)(cid:48)(x2)(x2 − x1)
+6
+
+](x2 − x)
+
+](x − x1)
+
+(x3 − x)3 +
+
+S (cid:48)(cid:48)
+
+3 (x3)
+6(x3 − x2)
+
+(x − x2)3
+
+−
+
+−
+
+S (cid:48)(cid:48)(x2)(x3 − x2)
+6
+S (cid:48)(cid:48)(x3)(x3 − x2)
+6
+
+](x3 − x)
+
+](x − x2)
+
+50
+
+S1(x) =
+
+0
+6(7 − 6)
+
+(7 − x)3 +
+
+1, 1228
+6(7 − 6)
+1, 1228(7 − 6)
+6
+
+(x − 6)3 + [
+
+179, 323
+7 − 6
+
+− 0](7 − x)
+
+](x − 6)
+
++[
+
+203, 302
+7 − 6
+
+−
+
+S1(x) = 0, 187(x − 6)3 + 179, 323(7 − x) + 203, 115(x − 6)
+
+S2(x) =
+
+1, 1228
+6(8 − 7)
+
+(8 − x)3 +
+
+0, 0572
+6(8 − 7)
+0, 0572(8 − 7)
+6
+
+(x − 7)3 + [
+
+203, 302
+8 − 7
+
+−
+
+1, 1228(8 − 7)
+6
+
+](8 − x)
+
+](x − 7)
+
++[
+
+226, 542
+8 − 7
+
+−
+
+S2(x) = 0, 187(8 − x)3 + 0, 0095(x − 7)3 + 203, 097(8 − x) + 226, 532(x − 7)
+
+S3(x) =
+
+0, 0572
+6(9 − 8)
+
+(9 − x)3 +
+
+0
+6(9 − 8)
+
+(x − 8)3 + [
+
+226, 542
+9 − 8
+
+−
+
+0, 0572(9 − 8)
+6
+
+](9 − x)
+
++[
+
+249, 633
+9 − 8
+
+−
+
+0(9 − 8)
+6
+
+](x − 8)
+
+S3(x) = 0, 0095(9 − x)3 + 226, 532(9 − x) + 249, 633(8 − x)
+
+Tem-se ent˜ao a fun¸c˜ao Spline interpolante:
+
+S1(x) = 0, 187(x − 6)3 + 179, 323(7 − x) + 203, 115(x − 6) para 6 ≤ x ≤ 7
+
+
+
+
+
+
+S(x) =
+
+S2(x) = 0, 187(8 − x)3 + 0, 0095(x − 7)3 + 203, 097(8 − x)
++226, 532(x − 7) para 7 ≤ x ≤ 8
+
+S3(x) = 0, 0095(9 − x)3 + 226, 532(9 − x) + 249, 633(8 − x) para 8 ≤ x ≤ 9
+
+Ent˜ao:
+
+S(1940) = S(4) ≈ S3(4) ≈ 130, 243 milhares de pessoas
+
+S(1975) = S(7, 5) ≈ S3(7, 5) ≈ 214, 918 milhares de pessoas
+
+S(2020) = S(12) ≈ S3(12) ≈ 318, 679 milhares de pessoas
+
+Dos trˆes m´etodos usados, ´e poss´ıvel perceber que a aproxima¸c˜ao para a popula¸c˜ao no
+ano de 1975 ´e o valor que mais coincide com os m´etodos utilizados e a que melhor se
+aproxima, isso se deve a esse valor estar dentro do intervalo de n´os utilizados.
+
+51
+
+Conclus˜ao
+
+Com este trabalho foi poss´ıvel concluir que a interpola¸c˜ao polinomial ´e de grande
+importˆancia para resolver diversos problemas de natureza aplicada. Foi provado, a partir
+do teorema de Weierstrass, que toda fun¸c˜ao cont´ınua pode ser interpolada de maneira
+´unica. Entretanto, dos m´etodos estudados para construir o polinˆomio interpolador, a
+matriz de Vandermonde pode ser mal condicionada e, portanto, ´e a menos indicada.
+
+Apesar da sua simplicidade, a f´ormula de Lagrange nem sempre ´e a melhor op¸c˜ao
+quando se quer interpolar uma fun¸c˜ao, pois esse m´etodo apresenta muitas opera¸c˜oes
+aritm´eticas. Por outro lado, os polinˆomios interpoladores est˜ao associados a um con-
+junto de n´os e uma pequena mudan¸ca pode alter´a-los completamente. Al´em disso, nas
+aplica¸c˜oes, o n´umero de n´os s˜ao estabelecidos por tentativas at´e que se atinja a precis˜ao
+mais adequada e a cada n´o acrescentado todo o trabalho anterior ´e perdido.
+
+O m´etodo de Newton parece resolver o problema de refazer todos os c´alculos ao desen-
+volver polinˆomios interpoladores de ordem mais alta. Por´em, se para um mesmo conjunto
+de pontos, v´arias fun¸c˜oes precisarem ser interpoladas, n˜ao ser´a interessante este m´etodo.
+O m´etodo de Hermite tem como vantagem uma melhor aproxima¸c˜ao do polinˆomio
+interpolador pela fun¸c˜ao, o problema ´e a necessidade dos valores das derivadas nos n´os e
+nem sempre tem-se essa informa¸c˜ao.
+
+Dentre os m´etodos estudados, o mais recomend´avel ´e o spline c´ubico para a apro-
+xima¸c˜ao de fun¸c˜oes a partir de pontos tabelados. Apesar de ser o mais trabalhoso na
+constru¸c˜ao do polinˆomio interpolador, ele n˜ao possui picos e sim curvas suaves que se
+adaptam aos pontos.
+
+Dessa forma, foram estudados diferentes m´etodos de interpola¸c˜ao de fun¸c˜oes, os quais
+possuem caracter´ısticas pr´oprias, e sua aplicabilidade vai depender do tipo do problema
+que estamos enfrentando. Algumas informa¸c˜oes importantes na escolha de um determi-
+nado m´etodo de interpola¸c˜ao s˜ao a quantidade de n´os, as informa¸c˜oes dispon´ıveis sobre
+as derivadas e a precis˜ao desejada.
+
+Agradecimentos
+
+Agrade¸co primeiramente a Deus, que me guiou e me amparou nos momentos de
+desˆanimo. Ao meu professor orientador, Juan Carlos Zavaleta Aguilar, pela paciˆencia
+e dedica¸c˜ao, nas quest˜oes acadˆemicas e cient´ıﬁcas. Sua ajuda foi fundamental! Aos do-
+centes do PROFMAT, pela constru¸c˜ao do meu conhecimento. Aos colegas de curso que
+ﬁzeram uma enorme diferen¸ca em todos os momentos de diﬁculdade, em especial ao Bruno
+Glasses, pela ajuda com suas v´ıdeo-aulas e ao Prof. Sidney Pinheiro Duarte pela ajuda na
+parte da digita¸c˜ao no Latex. Agrade¸co aos meus pais, Lenice e Jos´e, e minha irm˜a, Leila,
+que n˜ao mediram esfor¸cos para que eu chegasse `a essa etapa da minha vida. Aos meus
+tios, Elizio e Maria Jos´e, que sempre se dispuseram a ajudar. `A minha amiga, C´elia, pelo
+incentivo. Ao meu namorado, Anderson, pelo companheirismo e por me fazer acreditar
+que tudo ´e poss´ıvel. Agrade¸co de cora¸c˜ao a todos que colaboraram, de maneira direta ou
+indireta durante todo o meu curso e entenderam que o futuro ´e feito a partir das escolhas
+
+52
+
+feitas no presente. Muito obrigada!
+
+Referˆencias
+
+[1] BARROSO, Leˆonidas Concei¸c˜ao; BARROSO, Magali Maria de Ara´ujo; FILHO, Fre-
+derico Ferreira Campos; CARVALHO, M´arcio Luiz Bunte e MAIA, Mirian Louren¸co.
+C´alculo Num´erico (com aplica¸c˜oes). 2 ed. Editora Hamburg Ltda. S˜ao Paulo, 1987.
+
+[2] BURDEN, Richard L.e FAIRES, J. Douglas. Numerical Analysis. 9 ed.
+
+[3] CHAPRA, S. C.; CANALE, R. P. C. M´etodos num´ericos para engenharia. 5. ed.
+
+McGraww-Hill, 2008.
+
+[4] CUMINATO, Jos´e Alberto. C´alculo Num´erico. Apostila USP.
+
+[5] GOURLAY, A.R.; WATSON,G.A. Computational Methods for Matrix Eigenpro-
+
+blems. John Wiley & Sons, 1973.
+
+[6] MOLER, Cleve. Numerical Computing with MATLAB, 2012.
+
+[7] PINA, Heitor. M´etodos Num´ericos. Escolar Editora. Lisboa. 2010.
+
+[8] RUGGIERO, M´arcia A. Gomes e LOPES, Vera L´ucia da Rocha. C´alculo Num´erico
+
+-Aspectos Te´oricos e Computacionais. 2 ed. Makron Books. S˜ao Paulo. 1996.
+
+[9] Biograﬁas e curiosidades. Dispon´ıvel em: http://biograﬁaecuriosidade.blogspot.com.br/
+
+2013/12/biograﬁa-de-karl-weierstrass.html - Acesso em 22 de abril de 2016.
+
+[10] BILOTI, Ricardo. Interpola¸c˜ao. Dispon´ıvel em: http://www.ime.unicamp.br/ bi-
+
+loti/an/interp.pdf - Acesso em 17 de maio de 2016.
+
+[11] C´alculo Num´erico. Dispon´ıvel em: http://www.mat.ufrgs.br/∼guidi/grad/MAT01032/calculo
+
+numerico.cap4.pdf - Acesso em 15 de maio de 2016.
+
+[12] Interpola¸c˜ao Inversa, Fenˆomeno de Runge e os N´os de Chebyshev. Dispon´ıvel em:
+http://www.ime.unicamp.br/∼valle/Teaching/2015/MS211/Aula21.pdf - Acesso em
+25 de maio de 2016.
+
+[13] Interpola¸c˜ao Polinomial. Dispon´ıvel em: http://www.estgv.ipv.pt/paginaspessoais/nbastos/
+
+20062007/MN Mad/Cap%20IV-AlteradoAlunos.pdf - Acesso em 16 de maio de 2016.
+
+[14] JINGMEI QIU - https://www.math.uh.edu/∼jingqiu/math4364/spline.pdf. Acesso
+
+em 10 de maio de 2016.
+
+53
+
+

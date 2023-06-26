@@ -1,0 +1,3816 @@
+UNIVERSIDADE FEDERAL DO RECÔNCAVO DA BAHIA
+CENTRO DE CIÊNCIAS EXATAS E TECNOLÓGICAS
+
+ALINE DE OLIVEIRA MOREIRA
+
+UM ESTUDO SOBRE REGRESSÃO LINEAR E
+
+REGRESSÃO LOGÍSTICA
+
+CRUZ DAS ALMAS
+
+2021
+
+ALINE DE OLIVEIRA MOREIRA
+
+UM ESTUDO SOBRE REGRESSÃO LINEAR E
+
+REGRESSÃO LOGÍSTICA
+
+Dissertação apresentada ao PROFMAT do Cen-
+tro de Ciências Exatas e Tecnológicas da Uni-
+versidade Federal do Recôncavo da Bahia como
+parte dos requisitos para a obtenção do título
+de Mestre em Matemática.
+
+Orientadora: Julianna Pinele Santos Porto
+
+CRUZ DAS ALMAS
+
+2021
+
+                           FICHA CATALOGRÁFICA     Ficha elaborada pela Biblioteca Universitária de Cruz das Almas - UFRB. Responsável pela Elaboração - Antonio Marcos Sarmento das Chagas (Bibliotecário - CRB5 / 1615).  (os dados para catalogação foram enviados pela usuária via formulário eletrônico).       M838e                 Moreira, Aline de Oliveira.                                      Um estudo sobre regressão linear e regressão logística / Aline de Oliveira Moreira._ Cruz das Almas, Bahia, 2021.                                        59f.: il.                                          Dissertação (Mestrado) – Universidade Federal do Recôncavo da Bahia, Centro de Ciências Exatas e Tecnológicas, Mestrado Profissional em Matemática – PROFMAT.                                       Orientadora: Prof. Dra. Julianna Pinele Santos Porto.                                       1.Matemática – Análise de regressão. 2.Matemática – Aprendizado demáquina. 3. Matemática – Regressão logística. I.Universidade Federal do Recôncavo da Bahia, Centro de Ciências Exatas e Tecnológicas. II.Título.                                                                                                CDD: 519.536  ALINE DE OLIVEIRA MOREIRAUM ESTUDO SOBRE REGRESSÃO LINEAR EREGRESSÃO LOGÍSTICADissertaçãoapresentadaaoProgramadeMestradoemMatemáticaemRedeNacional(PROFMAT)doCentrodeCiênciasExataseTecnológicas(CETEC)daUniversidadeFederaldoRecôncavodaBahia(UFRB)comorequisitoparcialparaobtençãodograudeMestreemMatemática.Trabalho Aprovado em :_16_/_08_/_2021_BANCA EXAMINADORA_______________________________________________Profa. Dra. Juianna Pinele Santos PortoOrientadora - UFRB_______________________________________________Prof. Dr. João Tiago Assunção GomesExaminador - UFRB_______________________________________________Profa. Dra. Paula Aparecida KikuchiExaminadora - UEMSCruz das Almas, BahiaAgosto de 2021 Agradecimentos
+
+Agradeço à minha família e amigos, pelo estímulo e pela companhia nos momentos
+
+divididos e pela compreensão nos momentos de ausência.
+
+Agradeço à minha orientadora, Professora Doutora Julianna Pinele Santos Porto,
+
+por sua orientação, paciência e dedicação.
+
+Agradeço à Sociedade Brasileira de Matemática e à Universidade Federal do
+
+Recôncavo da Bahia pela oportunidade de realização do PROFMAT.
+
+Agradeço ainda a todos os Professores e colegas com quem tive contato durante o
+
+período em que cursei do PROFMAT.
+
+“Sua tarefa é descobrir seu traba-
+lho e, então, com todo o coração,
+dedicar-se a ele.”
+
+Buda
+
+Resumo
+
+Neste trabalho é apresentada a fundamentação teórica sobre os assuntos de regressão
+linear e regressão logística, conceitos que formam a base para compreensão dos processos
+usados em aprendizado de máquina, campo da ciência muito explorado na atualidade. Em
+regressão linear busca-se ajustar em uma reta dados quantitativos disponíveis, e através
+do modelo obtido com tal ajuste fazer previsões futuras ou estimar valores para novas
+situações de interesse. Em regressão logística busca-se desenvolver um modelo através
+do qual seja possível classiﬁcar os dados disponíveis, e através do modelo obtido com tal
+ajuste fazer previsões futuras ou estimar valores para novas situações. São apresentados os
+procedimentos operacionais para o desenvolvimento de modelos de regressão linear simples
+e de regressão logística simples, bem como as bases estatísticas para sua construção e
+validação. Este trabalho serve de fonte bibliográﬁca para professores do ensino médio
+que queiram aprender e aplicar em sala de aula os conceitos aqui desenvolvidos. Ainda é
+apresentada uma sequência didática em que se propõe a aplicação de conceitos de regressão
+linear.
+
+Palavras-chave: Aprendizado de máquina. Regressão linear. Regressão logística.
+
+Abstract
+
+On this written essay there are going to be presented the theoretical foundation on the
+topics regarding linear regression and logistic regression, concepts that form the basis for
+understanding the processes used in machine learning, a ﬁeld of science that is currently
+widely explored. In linear regression, one seeks to adjust the available quantitative data
+in a straight line, and by using the model obtained, make future predictions or estimate
+values for situations of interest. In logistic regression, the aim is to develop a model
+through which it is possible to classify the available data, and by employing the model
+obtained, being able to make future predictions or estimate values for new situations.
+The operational procedures for the development of both simple linear regression and
+simple logistic regression models will be presented, as well as the statistical bases for their
+construction and validation. This work can be used as a bibliographic source for high
+school teachers who want to learn and apply the concepts developed here in the classroom.
+A didactic sequence is also presented in which it is proposed the application of linear
+regression concepts presented here.
+
+Keywords: Machine learning. Linear regression. Logistic regression.
+
+Sumário
+
+1
+
+2
+2.1
+2.2
+2.2.1
+2.2.2
+2.2.3
+2.2.4
+2.2.5
+2.2.6
+
+3
+3.1
+3.2
+3.2.1
+
+3.2.1.1
+
+3.2.1.2
+
+3.2.1.3
+
+3.2.2
+3.2.3
+
+4
+4.1
+4.2
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+
+5
+
+INTRODUÇÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+REGRESSÃO LINEAR SIMPLES . . . . . . . . . . . . . . . . . . . . 15
+Método dos Mínimos Quadrados . . . . . . . . . . . . . . . . . . . . . 18
+Análise do Modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 22
+Hipóteses de um Modelo Linear Simples . . . . . . . . . . . . . . . . . . . 24
+Ajuste do Modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+Intervalos de Conﬁança para os Parâmetros . . . . . . . . . . . . . . . . . 27
+Intervalos de Conﬁança e de Predição . . . . . . . . . . . . . . . . . . . . 28
+Teste de Hipóteses . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 29
+Análise dos Resíduos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 31
+
+REGRESSÃO LOGÍSTICA SIMPLES . . . . . . . . . . . . . . . . . 34
+Estimadores de Máxima Verossimilhança . . . . . . . . . . . . . . . . 37
+Análise do Modelo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 39
+Teste de Hipótese . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+Estatística G . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+40
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Teste Wald
+Teste de Escores . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+43
+Intervalos de Conﬁança para os Parâmetros . . . . . . . . . . . . . . . . . 44
+Intervalo de Conﬁança para a Função Logito e para as Predições . . . . . . 45
+
+43
+
+SEQUÊNCIA DIDÁTICA . . . . . . . . . . . . . . . . . . . . . . . . 47
+Tema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+Conteúdo Abordado . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+Objetivo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+Público Alvo . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+Recursos Usados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+. . . . . . . . . . . . . . . . . . . . . . . . . 48
+Descrição das Atividades
+Avaliação . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+Desenvolvimento . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+CONCLUSÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 53
+
+REFERÊNCIAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+
+APÊNDICES
+
+56
+
+APÊNDICE A – CONCEITOS ESTATÍSTICOS PRELIMINARES . 57
+
+1 Introdução
+
+10
+
+Aprendizado de máquina é um subcampo da ciência da computação que tem
+crescido muito nos últimos anos, e atualmente é uma realidade em nossas vidas (BURKOV,
+2019). Pode-se deﬁnir aprendizado de máquina, de forma simpliﬁcada, como um processo
+de desenvolvimento de algoritmos baseados em uma série de exemplos, chamados de
+dados de treinamento, a ﬁm de obter um modelo estatístico que resolva um determinado
+problema.
+
+Faz-se necessário o uso de aprendizado de máquina em casos em que não é possível
+escrever diretamente um programa para resolver o problema ou em situações em que os
+dados sofrem mudanças no tempo, ou seja, situações em que são necessários algoritmos
+capazes de se adaptar às circunstâncias. Assim, pode-se concluir que aprendizado de
+máquina não se resume apenas a uma solução para problema de banco de dados, mas
+também parte do campo da inteligência artiﬁcial, pois é desejável que o sistema tenha a
+habilidade de aprender quando exposto a um ambiente sujeito a mudanças (BURKOV,
+2019).
+
+Atualmente, há uma abundância de dados disponíveis, no entanto, os dados arma-
+zenados são úteis quando transformados em informações possíveis de serem usadas para
+fazer previsões como por exemplo da compra de um produto. Um grande volume de dados
+é processado a ﬁm de se obter um modelo simpliﬁcado com alto valor agregado (tal como
+um modelo preditivo de elevada acurácia) (ALPAYDIN, 2014).
+
+Acredita-se que há padrões nos dados, apesar de nem sempre o processo gerador
+do dado ser conhecido. Nem sempre é possível identiﬁcar o processo em sua totalidade,
+mas pode-se construir uma aproximação boa e útil a partir da qual podem ser observados
+padrões e regularidades. Através de tais padrões é possível entender melhor o processo e,
+inclusive, fazer previsões acuradas, assumindo que o futuro não diferirá muito do momento
+em que os dados foram coletados (ALPAYDIN, 2014).
+
+Uma vez estabelecido um algoritmo de aprendizagem, obtém-se uma informação
+mais simples do que o dado, o que requer menos espaço de armazenamento (pode-se dizer
+que foi feita uma compressão) e menor manipulação para seu processamento (ALPAYDIN,
+2014).
+
+Por meio da aplicação dos métodos de aprendizado de máquina, busca-se descrever
+a relação entre a variável resposta, também chamadas de variáveis dependentes ou de
+saída, e um conjunto de variáveis explicativas, também chamadas de independentes (JR;
+LEMESHOW; STURDIVANT, 2013).
+
+Capítulo 1.
+
+Introdução
+
+11
+
+Pode-se falar em três abordagens em aprendizado de máquina dependendo do
+tipo de situação a ser tratada, a saber: aprendizado supervisionado, aprendizado não
+supervisionado e aprendizado por reforço. No aprendizado supervisionado, os valores
+corretos são fornecidos por um “professor” e o objetivo é estruturar o algoritmo que
+relaciona a entrada à saída. Já no aprendizado não supervisionado não há “professor” e
+apenas tem-se os dados de entrada, assim o objetivo do algoritmo é encontrar padrões
+nos dados. Os algoritmos capazes de avaliar se um conjunto de ações é ou não favorável
+para atingir um objetivo, com base em sequências passadas de ações a ﬁm de elaborar
+suas diretrizes são chamados métodos de aprendizado por reforço (BRAGA; FERREIRA;
+LUDERMIR, 2007).
+
+Os problemas em que a saída é um valor real, ou seja, uma variável contínua,
+são chamados de problema de regressão. Casos em que o objetivo da análise é designar
+cada vetor de entrada a um número ﬁnito de categorias discretas são chamados de
+problema de classiﬁcação. Ambos os problemas de regressão e classiﬁcação são problemas
+de aprendizado supervisionado, em que a partir de dados de entrada e saída, busca-se
+encontrar um algoritmo que relacione tais dados. Em regressão, a saída é dada por um
+valor, um número (como o preço de uma casa); já em classiﬁcação a saída é dada por uma
+categoria, por exemplo cliente de alto ou baixo risco, no caso de avaliação de clientes para
+empréstimos.
+
+As áreas de aplicação dos conhecimentos de aprendizado de máquina são muitas:
+análise ﬁnanceira para aprovação de crédito, reconhecimento de fraudes bancárias, mercado
+de ações, diagnóstico médico, otimização de rede de telecomunicações a partir de padrões de
+ligações e também em todos os campos da ciência (por exemplo, na astronomia e biologia,
+onde se tem um grande volume de dados inviáveis de serem analisados manualmente).
+
+Praticamente em todos os campos da ciência se faz necessário o ajuste de dados
+a modelos. A partir de experimentos são feitas observações e coletas de dados das quais
+se busca extrair informações com uso de modelos que as expliquem. Este processo de
+extração de regras gerais a partir de dados particulares é chamado de indução. Devido ao
+grande volume de dados, a análise manual seria custosa e feita por um número reduzido
+de pessoas capacitadas para esse ﬁm. Portanto, há um crescente interesse em algoritmos
+computacionais capazes de analisar dados e extrair informações deles, ou seja, aprender
+com eles.
+
+Em aprendizado de máquina se usam teorias de estatística para a construção
+de modelos matemáticos a partir de um conjunto de dados de treinamento a ﬁm de se
+otimizar um critério de performance. O modelo obtido pode ser preditivo (usado para
+prever comportamentos futuros) ou descritivo (usado para extrair informações dos dados
+de treinamento ou exemplos).
+
+A seguir, serão descritas a partir de exemplos uma série de situações em que se
+
+Capítulo 1.
+
+Introdução
+
+12
+
+pode usar algoritmos de aprendizado de máquina (ALPAYDIN, 2014).
+
+Exemplo 1.1. Reconhecimento facial
+Uma aplicação de algoritmo de reconhecimento de padrões é o de reconhecimento facial.
+O desaﬁo vem das diferentes possibilidades de ângulos, iluminação e cortes de cabelo, por
+exemplo. Através da análise de diferentes amostras de imagens de uma determinada pessoa
+o programa aprende os padrões de estrutura e simetria, e passa a reconhecer por meio
+da busca de tais padrões em imagens fornecidas. No problema de reconhecimento facial,
+a entrada é uma imagem, as classes são compostas pelas pessoas a serem identiﬁcadas
+e o algoritmo deve associar as imagens à identidade da pessoa. Este é um programa
+relativamente complexo dadas as variações de posições, iluminação e ainda a possibilidade
+de omissão de algumas características (ocultadas, por exemplo, por óculos e barba).
+
+Exemplo 1.2. Análise da cesta de compra
+Um exemplo de uso de aprendizado de máquina no varejo seria a análise da cesta de
+compras, que consistiria em encontrar relação entre produtos comprados. Ou seja, seria
+encontrar uma regra de associação do tipo: se usualmente um cliente que compra o produto
+X também compra o Y, então um cliente que compra o produto X e não compra o Y é um
+potencial cliente de Y. Uma potencial ação seria deixar os dois produtos mais próximos.
+Essa regra de associação poderia sem entendida como uma probabilidade condicional da
+forma P(X|Y) (lê-se probabilidade de X dado Y) .
+
+Exemplo 1.3. Uso no sistema ﬁnanceiro
+Um exemplo de problema de classiﬁcação é o cálculo do score de crédito de cada cliente feito
+pelos bancos, que é um dado usado na decisão de fornecer, ou não, empréstimo. A partir
+de informações sobre o cliente (tais como idade, se possui poupança, proﬁssão, histórico
+ﬁnanceiro) faz-se sua classiﬁcação em alto ou baixo risco. Tal classiﬁcação baseia-se em
+registros de clientes passados em que os dados pessoais, bem como a informação de se o
+empréstimo foi ou não pago, são usados para inferir tal regra de associação, previsão. Um
+outro uso de aprendizado de máquina no sistema ﬁnanceiro seria a identiﬁcação de dados
+que não seguem os padrões (outliers), o que pode ser usado, por exemplo, na detecção de
+operações fraudulentas.
+
+Exemplo 1.4. Reconhecimento ótico de caracteres
+Em reconhecimento de padrões também pode-se usar algoritmos de aprendizado de
+máquina. Pode-se citar o caso de reconhecimento ótico de caracteres (números ou letras,
+por exemplo), em que se busca identiﬁcá-los a partir de imagens. Um uso de tais tecnologias
+pode ser feito para reconhecimento de letras e palavras a partir de dados escritos à mão.
+Como a escrita à mão varia de pessoa para pessoa, as palavras podem estar escritas em
+letras grandes ou pequenas, com caneta ou lápis, ou seja, há muitas imagens que podem
+corresponder ao mesmo caractere. Como não há uma deﬁnição única, por exemplo, da letra
+
+Capítulo 1.
+
+Introdução
+
+13
+
+A, tomam-se vários exemplos de escrita e deﬁne-se o que é A a partir de características
+em comum, regularidades advindas de tais exemplos de treinamento.
+
+Uma situação em que se usa este tipo de algoritmo é o reconhecimento de dígitos de
+CEP escritos à mão nos Estados Unidos da América (HASTIE; TIBSHIRANI; FRIEDMAN,
+2009).
+
+Exemplo 1.5. Veículos autônomos
+Outra situação passível de ser resolvida através do uso de métodos aprendizado de máquina
+seriam os carros autônomos. As entradas seriam os dados obtidos através de sensores
+e GPS, por exemplo, e a saída seria o ângulo de rotação imprimido ao volante para a
+navegar sem colidir com objetos e desviar da rota (sendo, portanto, um problema de
+regressão). Dados para treinamento do algoritmo podem ser obtidos a partir da análise do
+comportamento de um motorista.
+
+Exemplo 1.6. Robôs autônomos
+Exempliﬁcando a abordagem de aprendizado por reforço, pode-se citar um robô navegando
+por uma região com o objetivo de chegar a um ponto especíﬁco. Ele escolherá uma direção
+para se mover a cada instante dentre todas as direções possíveis. Após algumas tentativas,
+espera-se que ele aprenda a atingir seu objetivo a partir do ponto inicial através de uma
+sequência de ações no menor tempo e sem colisões com obstáculos.
+
+Exemplo 1.7. Aplicações em vídeo games
+Jogadores de vídeo game geram grande volume de dados, uma vez que suas ações são
+salvas. Além de ações e comportamentos, também são importantes os dados de compras
+de produtos virtuais feitas no jogo. Informações extraídas desses dados são de grande
+importância para os desenvolvedores a ﬁm de maximizar tais compras. Algoritmos de
+aprendizado de máquina podem ser usados com o objetivo de se traçar um perﬁl de cada
+jogador para poder oferecer produtos mais prováveis de serem adquiridos por cada perﬁl
+(BERTENS et al., 2018).
+
+Em jogos multijogadores devido a interação entre os jogadores as ações e erros são
+imprevisíveis, permitindo oportunidades de ação. Em jogos elaborados para apenas um
+jogador, essa interação não está presente e o oponente padrão é mais previsível (uma vez
+que segue uma série de algoritmos manualmente codiﬁcados). Uma forma de contornar
+esse problema e desenvolver um oponente desaﬁador e balanceado para cada jogador é
+fazer uso de algoritmos de aprendizado de máquina, usando um conjunto de dados ou
+exemplos de jogos praticados por um jogador experiente a ﬁm de desenvolver um conjunto
+de regras e ações (GEISLER, 2004).
+
+Neste trabalho serão apresentados dois algoritmos de aprendizado de máquina:
+regressão linear simples e regressão logística simples. Apesar de serem algoritmos mais
+
+Capítulo 1.
+
+Introdução
+
+14
+
+básicos, não são menos importantes, uma vez que o raciocínio empregado em seu desenvol-
+vimento serve de ponto de partida para algoritmos mais rebuscados e complexos. Ao longo
+do texto, busca-se trazer uma abordagem mais palpável através da contextualização com
+exemplos para que professores possam fazer uso dos conteúdos aqui abordados com alunos
+do ensino médio.
+
+Uma breve apresentação da organização do trabalho se faz necessária. No Capítulo
+2, apresenta-se regressão linear simples que é uma ferramenta utilizada em problemas
+de aprendizagem supervisionada nos quais a variável resposta é do tipo quantitativa.
+Ainda no Capítulo 2, será apresentado o procedimento operacional para a construção
+do modelo de regressão linear e ainda para a avaliação de sua acurácia. No Capítulo 3
+abordam-se conceitos relacionados a regressão logística simples que é uma ferramenta
+utilizada em problemas de aprendizagem supervisionada nos quais a variável resposta é do
+tipo classiﬁcatória, bem como procedimentos operacionais para a obtenção do modelo de
+regressão logística e sua análise. Por ﬁm, no Capítulo 4 será apresentada uma sugestão de
+sequência didática para a construção de um modelo de regressão linear aplicando conceitos
+vistos no Capítulo 2.
+
+2 Regressão Linear Simples
+
+15
+
+Regressão linear é uma ferramenta simples e útil na predição de respostas quanti-
+tativas, por isso é uma abordagem usada em aprendizado supervisionado e serve de ponto
+de partida para generalizações e abordagens mais complexas.
+
+Caso o leitor não esteja bem familiarizados com alguns termos estatísticos utilizados
+ao longo do texto, no Apêndice A estão apresentados alguns conceitos. Ainda há necessidade
+de conhecimento prévio dos seguintes conceitos: otimização de funções de duas variáveis,
+pontos críticos, distribuição condicional, variância, distribuição t de Student,valor − p
+e gráﬁco de quantis. Para familiarização com tais conceitos, sugere-se consulta de tais
+conceitos materiais (GUIDORIZZI, 1998), (DEVORE, 2010) e (MORETTIN; BUSSAB,
+2010).
+
+Como um exemplo de problema em que se pode usar a abordagem de regressão
+linear, ao longo desta seção será trabalhada a questão da relação entre a área destinada a
+um determinado produto na prateleira de um supermercado com a receita de vendas desse
+produto.
+
+Exemplo 2.1. (Vendas em um supermercado) Seja xi o valor, em metros quadrados, da
+área destinada a um determinado produto em uma prateleira e seja yi, em centenas de
+reais, a receita de vendas desse produto. Neste caso, xi é a variável independente e yi é a
+variável dependente. Os dados das observações em ordem crescente de área de prateleira
+estão na Tabela 1 e foram amostrados com frequência semanal.
+
+Algumas perguntas interessantes podem ser feitas quando se tem um conjunto de
+
+dados que se deseja relacionar:
+
+1. Quão forte é a relação entre os dados que se deseja relacionar? Contextualizando:
+a receita de vendas do produto será muito ou pouco impactada pela variação na
+área de prateleira destinada a ele? Ou seja, sendo destinada uma certa área para
+exposição do produto, com qual exatidão poderia ser estimada a receita de vendas?
+
+2. Quão acurada é a estimativa obtida? Para o exemplo, qual o aumento na venda do
+bem para cada metro quadrado destinado a alocação do item estudado? Com que
+exatidão esse incremento pode ser previsto?
+
+3. Qual a acurácia das previsões feitas usando o modelo obtido? Para um determinado
+estado (posição da prateleira, espaço ocupado pelo item analisado, nível de preço)
+qual a exatidão na previsão da receita de vendas?
+
+Capítulo 2. Regressão Linear Simples
+
+16
+
+Tabela 1 – Receita de vendas (y) de um produto de acordo com a área de prateleira (x).
+
+Observação(i)
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+
+xi
+0,40
+0,42
+0,48
+0,51
+0,57
+0,60
+0,70
+0,75
+0,75
+0,78
+0,84
+0,95
+0,99
+1,03
+1,12
+1,15
+1,20
+1,25
+1,25
+1,28
+1,30
+1,34
+1,37
+1,40
+1,43
+1,46
+1,49
+1,55
+1,58
+1,60
+
+yi
+1,52
+1,71
+1,38
+1,48
+2,02
+2,33
+2,00
+2,30
+2,24
+2,13
+2,50
+3,30
+2,98
+2,97
+3,55
+3,68
+4,26
+4,18
+4,32
+3,71
+4,77
+3,62
+4,49
+4,25
+4,60
+4,68
+4,27
+4,84
+4,71
+5,42
+
+Fonte: Autor.
+
+4. Há relação linear entre o conjunto de dados disponíveis? No exemplo estudado, uma
+pergunta imediata seria: há relação linear entre a área ocupada pelo produto e a
+receita de vendas?
+
+5. A relação entre os dados é linear? Analisando o gráﬁco de dispersão observa-se
+uma relação entre a área de prateleira destinada ao item e sua venda como sendo
+aproximadamente linear?
+
+O modelo de regressão linear simples é uma abordagem estatística direta usada na
+predição de uma resposta y em relação a uma única variável preditiva x, em que se assume
+uma relação linear aproximada entre x e y. Matematicamente, escreve-se essa relação da
+
+Capítulo 2. Regressão Linear Simples
+
+seguinte forma
+
+y ≈ β0 + β1x,
+
+17
+
+(2.1)
+
+em que β0 e β1 são chamados de coeﬁcientes do modelo ou de parâmetros do modelo.
+
+Figura 1 – Representação do modelo de Regressão Linear.
+
+Fonte: Autor.
+
+Uma interpretação dos parâmetros β0 e β1 pode ser vista na Figura 1. É possível
+notar que o valor estimado para yi quando xi = 0 é de yi = β0. Para incrementos de uma
+unidade na variável de entrada é esperado um incremento de β1 na variável de saída.
+
+Uma forma de se inferir que a relação entre as variáveis dependente e independente
+é linear consiste na construção do diagrama de dispersão. Para construir o diagrama,
+dispõem-se os pares ordenados (xi, yi) dos dados de treinamento em um plano cartesiano
+de tal forma que no eixo das abcissas corresponda às variáveis independentes e o eixo
+das ordenadas corresponda às variáveis dependentes (CORREA, 2003). Para o problema
+proposto no Exemplo 2.1, o diagrama de dispersão é apresentado na Figura 2.
+
+Observando o diagrama de dispersão apresentado na Figura 2 é possível notar uma
+tendência de relação linear entre os dados de treinamento. Procede-se então à construção
+do modelo de regressão linear para obter os estimadores ˆβ0 e ˆβ1 para os coeﬁcientes β0 e
+β1, respectivamente. Ao longo do texto será usada a notação com acento circunﬂexo “ˆ”
+para indicar os valores estimados ou preditos.
+
+Os dados de treinamento são utilizados para determinar estimadores ˆβ0 e ˆβ1 dos
+parâmetros β0 e β1. Com estes estimadores é possível se fazer predições para situações
+futuras tomando
+
+em que ˆy indica a previsão de Y dado X = x.
+
+ˆy ≈ ˆβ0 + ˆβ1x,
+
+Capítulo 2. Regressão Linear Simples
+
+18
+
+Figura 2 – Representação do Diagrama de Dispersão para o problema apresentado no
+
+Exemplo 2.1.
+
+Fonte: Autor.
+
+Para cada par ordenado dos dados amostrais (xi, yi), i = 1, ..., n pode-se deﬁnir o
+
+i-ésimo erro ou desvio ei
+
+ei = yi − (β0 + β1x)
+
+como a diferença entre a i-ésima resposta observada e o i-ésimo valor de resposta dada
+pelo modelo linear.
+
+Ainda, deﬁne-se a soma dos quadrados dos erros ou desvios (SQ) para uma amostra
+
+contendo n pares da forma (xi, yi) como
+
+SQ(β0, β1) =
+
+n
+X
+
+i=1
+
+=
+
+e2
+i
+
+n
+X
+
+[yi − (β0 + β1x)]2.
+
+i=1
+
+(2.2)
+
+Note que SQ é uma função dos parâmetros β0 e β1. Para cada valor atribuído a
+
+estes parâmetros será encontrado um resultado para essa soma.
+
+Há muitas formas de estimar os coeﬁcientes do modelo de regressão linear, a ﬁm de
+se obter coeﬁcientes que apresentem baixos valores de desvios. A abordagem que foi usada
+nesse texto para a estimação dos coeﬁcientes do modelo linear envolve a minimização dos
+erros quadrados entre os valores preditos e observados.
+
+2.1 Método dos Mínimos Quadrados
+
+Da deﬁnição de SQ dada na equação (2.2) tem-se que a soma dos quadrados dos
+
+erros pode ser escrita como
+
+SQ =
+
+n
+X
+
+i=1
+
+[yi − (β0 + β1xi)]2.
+
+Capítulo 2. Regressão Linear Simples
+
+19
+
+Como já mencionado, é possível notar que SQ é uma função de duas variáveis: β0 e β1. A
+ﬁm de encontrar os estimadores que torna mínimo SQ, primeiramente serão encontrados
+os pontos críticos ˆβ0 e ˆβ1 da função. Os pontos críticos são aqueles em que as derivadas
+parciais de primeira ordem são iguais a zero. A saber
+
+(2.3)
+
+(2.4)
+
+(2.5)
+
+(2.6)
+
+∂(SQ)
+∂β0
+
+( ˆβ0, ˆβ1) =
+
+n
+X
+
+i=1
+
+[−2][yi − ( ˆβ0 + ˆβ1xi)] = 0,
+
+∂(SQ)
+∂β1
+
+( ˆβ0, ˆβ1) =
+
+n
+X
+
+[yi − ( ˆβ0 + ˆβ1xi)][−2xi] = 0.
+
+i=1
+
+Desenvolvendo as equações (2.3) e (2.4), tem-se que
+
+( ˆβ0, ˆβ1) = 0
+
+∂(SQ)
+∂β0
+n
+[yi − ( ˆβ0 + ˆβ1xi)][−2] = 0
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+
+yi −
+
+n
+X
+
+i=1
+
+n
+X
+
+ˆβ0 −
+
+ˆβ1xi = 0
+
+yi − n ˆβ0 − ˆβ1
+
+xi = 0
+
+i=1
+n
+X
+
+ˆβ0 =
+
+1
+
+n
+
+n
+X
+
+i=1
+
+yi − ˆβ1
+
+i=1
+1
+
+n
+X
+
+n
+
+i=1
+
+xi
+
+Além disso
+
+ˆβ0 = ¯y − ˆβ1 ¯x.
+
+( ˆβ0, ˆβ1) = 0
+
+∂(SQ)
+∂β1
+n
+[yi − ( ˆβ0 + ˆβ1xi)][−2xi] = 0
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+
+yixi −
+
+ˆβ0xi −
+
+n
+X
+
+i=1
+
+n
+X
+
+i=1
+
+ˆβ1x2
+
+i
+
+= 0
+
+yixi − ˆβ0
+
+xi − ˆβ1
+
+n
+X
+
+i=1
+
+n
+X
+
+i=1
+
+= 0
+
+x2
+i
+
+yixi − (¯y − ˆβ1 ¯x)(n¯x) − ˆβ1
+
+n
+X
+
+i=1
+
+= 0
+
+x2
+i
+
+ˆβ1 =
+
+n
+X
+
+yixi − n¯y¯x
+
+i=1
+n
+X
+
+i=1
+
+,
+
+i − n¯x2
+x2
+
+em que as médias amostrais ¯x e ¯y são
+
+¯y =
+
+1
+
+n
+
+n
+X
+
+i=1
+
+yi
+
+e
+
+¯x =
+
+1
+
+n
+
+n
+X
+
+i=1
+
+xi.
+
+Capítulo 2. Regressão Linear Simples
+
+20
+
+Rearranjando os termos do numerador e do denominador de ˆβ1 na equação (2.6), ou seja,
+fazendo
+
+n
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+n
+X
+
+i=1
+
+yixi − n¯y¯x =
+
+=
+
+=
+
+=
+
+yixi − ¯yn¯x − ¯xn¯y + n¯y¯x
+
+yixi − ¯y
+
+n
+X
+
+i=1
+
+xi − ¯x
+
+n
+X
+
+i=1
+
+yi +
+
+n
+X
+
+i=1
+
+¯y¯x
+
+[yixi − xi ¯y − ¯xyi + ¯y¯x]
+
+i=1
+n
+X
+
+(xi − ¯x)(yi − ¯y)
+
+i=1
+
+e
+
+n
+X
+
+i=1
+
+i − n¯x2 =
+x2
+
+=
+
+=
+
+=
+
+=
+
+n
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i − 2n¯x2 + n¯x2
+x2
+
+i − 2¯xn¯x + n¯x2
+x2
+
+i − 2¯x
+x2
+
+n
+X
+
+i=1
+
+xi +
+
+n
+X
+
+i=1
+
+¯x2
+
+[x2
+
+i − 2xi ¯x + ¯x2]
+
+i=1
+n
+X
+
+(xi − ¯x)2.
+
+i=1
+
+Segue que os estimadores encontrados através da minimização dos erros quadrados são
+
+ˆβ1 =
+
+Σn
+
+i=1
+
+(xi − ¯x)(yi − ¯y)
+(xi − ¯x)2
+Σn
+
+i=1
+
+ˆβ0 = ¯y − ˆβ1 ¯x.
+
+(2.7)
+
+(2.8)
+
+Para mostrar que os pontos críticos encontrados são os pontos de mínimo da função
+
+quadrática equação (2.2) observa-se que
+
+n
+X
+
+SQ =
+
+[yi − (β0 + β1xi)]2
+
+=
+
+=
+
+=
+
+=
+
+=
+
+i=1
+n
+X
+
+[yi + ( ˆβ0 − ˆβ0) + ( ˆβ1xi − ˆβ1xi) − (β0 + β1xi)]2
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+n
+X
+
+i=1
+
+h(yi − ˆβ0 − ˆβ1xi) + ( ˆβ0 − β0) + ( ˆβ1 − β1)xi
+
+i2
+
+h
+ei + ( ˆβ0 − β0) + ( ˆβ1 − β1)xi
+
+i2
+
+h
+e2
+i
+
++ 2(( ˆβ0 − β0) + ( ˆβ1 − β1)xi)ei + (( ˆβ0 − β0) + ( ˆβ1 − β1)xi)2i
+
++ 2( ˆβ0 − β0)
+
+e2
+i
+
+n
+X
+
+i=1
+
+ei + 2( ˆβ1 − β1)
+
+n
+X
+
+i=1
+
+xiei +
+
+n
+X
+
+i=1
+
+[( ˆβ0 − β0) + ( ˆβ1 − β1)xi]2.
+
+Capítulo 2. Regressão Linear Simples
+
+21
+
+Das equações (2.3) e (2.4) segue que
+
+2( ˆβ0 − β0)
+
+n
+X
+
+i=1
+
+ei = 0
+
+2( ˆβ1 − β1)
+
+n
+X
+
+i=1
+
+xiei = 0.
+
+Logo, para minimizar SQ basta minimizar a parcela
+
+[( ˆβ0 − β0) + ( ˆβ1 − β1)xi]2.
+
+n
+X
+
+i=1
+
+(2.9)
+
+O mínimo valor da equação (2.9) é zero, já que se trata de uma função quadrática. Logo
+
+( ˆβ0 − β0) + ( ˆβ1 − β1)xi = 0
+
+para todo i = 1, . . . , n. A equação da reta é constante e igual a zero, e isso apenas é
+possível se seus coeﬁcientes forem nulos. Isso implica que
+
+ˆβ0 − β0 = 0 ⇒ ˆβ0 = β0
+
+e
+
+ˆβ1 − β1 = 0 ⇒ ˆβ1 = β1
+
+Portanto, os valores de ˆβ1 e ˆβ0 dados pelas equações (2.7) e (2.8) são pontos de mínimo.
+
+O modelo de regressão ajustado é representado por
+
+ˆyi = ˆβ0 + ˆβ1xi, i = 1, ..., n.
+
+(2.10)
+
+Para o problema apresentado no Exemplo 2.1 os estimadores encontrados foram
+ˆβ1 = 3, 08 e ˆβ0 = 0, 10. A equação que representa a relação entre as variáveis dependente e
+independente é dada por
+
+ˆyi = 0, 10 + 3, 08xi.
+
+(2.11)
+
+Como a variável y está mensurada em centenas de reais, uma interpretação dos valores
+encontrados pela aplicação da equação (2.11) é a seguinte: caso a área de prateleira
+destinada ao item seja nula (por exemplo, caso em que o produto esteja em display apenas
+próximo ao caixa), haverá um total de 10 reais em receita com a venda deste produto.
+Além disso, a cada incremento de uma unidade na quantidade de área destinada para a
+disposição do produto, haverá um aumento de 308 reais em receita de venda do item.
+
+Pode-se, agora deﬁnir cada resíduo ˆei para o modelo representado pela equação
+
+(2.10)
+
+ˆei = yi − ˆyi = yi − ˆβ0 − ˆβ1xi, i = 1, ..., n.
+
+A partir da deﬁnição de resíduo, é possível se deﬁnir a soma dos quadrados dos
+
+resíduos (SQRes)
+
+SQRes =
+
+n
+X
+
+i=1
+
+2 =
+
+ˆei
+
+n
+X
+
+(yi − ˆyi)
+
+i=1
+
+(2.12)
+
+Capítulo 2. Regressão Linear Simples
+
+22
+
+É importante observar que se o valor do estimador ˆβ1 for nulo, a resposta esperada
+para previsões futuras de ˆy será ¯y. Dessa forma, o modelo linear se reduz a um modelo
+mais simples.
+
+2.2 Análise do Modelo
+
+Assume-se que a verdadeira relação entre as variáveis aleatórias X e Y seja linear
+
+e do tipo
+
+y = β0 + β1x + (cid:15),
+
+(2.13)
+
+em que (cid:15) é um termo de erro aleatório de média zero independente de X. O termo de erro
+engloba todas as inadequações relacionadas à suposição de relação linear entre as variáveis
+X e Y : possibilidade de haver erro nas medições de X e Y , inﬂuência de outras variáveis
+preditoras além de X e, inclusive, a possibilidade de que a suposição de relação linear
+entre essas grandezas ser falsa.
+
+A equação (2.13) representa a linha de regressão populacional, e os coeﬁcientes são
+os que melhor relacionam as grandezas X e Y . Mas, como na maioria dos eventos estudados,
+os dados populacionais não são conhecidos, os coeﬁcientes β0 e β1 não podem ser calculados.
+Já os coeﬁcientes estimados pelo método de mínimos quadrados, que representam a reta
+de mínimos quadrados, sempre podem ser calculados mas dependem dos dados amostrais
+usados na sua estimação (o tamanho da amostra, quais dados amostrais foram usados).
+
+A última aﬁrmação ﬁca mais compreensível quando, por exemplo, se calculam os
+coeﬁcientes das retas de mínimos quadrados para alguns subconjuntos dos dados amostrais.
+Para exempliﬁcação, foram tomadas três amostras de tamanho n = 10.
+
+Tabela 2 – Receita de vendas (yi) de um produto de acordo com a área de prateleira (xi)
+
+para várias amostras.
+
+Amostra 1 Amostra 2 Amostra 3
+yi
+xi
+4,77
+0,40
+3,62
+0,42
+4,49
+0,48
+0,51
+4,25
+4,60
+0,57
+4,68
+0,60
+4,27
+0,70
+4,84
+0,75
+4,71
+0,75
+0,78
+5,42
+
+yi
+1,52
+1,71
+1,38
+1,48
+2,02
+2,33
+2,00
+2,30
+2,24
+2,13
+
+yi
+2,50
+3,30
+2,98
+2,97
+3,55
+3,68
+4,26
+4,18
+4,32
+3,71
+
+xi
+1,30
+1,34
+1,37
+1,40
+1,43
+1,46
+1,49
+1,55
+1,58
+1,60
+
+xi
+0,84
+0,95
+0,99
+1,03
+1,12
+1,15
+1,20
+1,25
+1,25
+1,28
+
+Fonte: Autor.
+
+Capítulo 2. Regressão Linear Simples
+
+23
+
+Os estimadores encontrados para cada amostra estão na Tabela 3. A Figura 3
+
+ilustra a representação gráﬁca das retas de mínimos quadrados.
+
+Tabela 3 – Estimadores calculados para cada amostra.
+
+Estimador Amostra 1 Amostra 2 Amostra 3
+
+ˆβ1
+ˆβ0
+
+2,02
+0,71
+
+3,71
+-0,55
+
+2,72
+0,62
+
+Fonte: Autor.
+
+Figura 3 – Retas de mínimos quadrados para os dados amostrais completos, amostra 1,
+
+amostra 2 e amostra 3.
+
+Fonte: Autor.
+
+É possível notar que os valores estimados de resposta (ˆy) são diferentes para cada
+reta de regressão de mínimos quadrados referentes a cada uma das amostras. Pode-se
+chegar à conclusão de que o valor estimado de resposta é dependente do conjunto de dados
+usados na estimação dos parâmetros do modelo de regressão. Em alguns casos, o valor
+estimado de resposta foi subestimado e em outros, superestimado. Isto pode ser observado
+na Tabela 4 na qual são apresentados os estimadores de resposta a partir do conjunto de
+dados completo e de seus subconjuntos (amostras 1, 2 e 3).
+
+Tabela 4 – Estimadores de resposta para dois valores de dados amostrais.
+
+x
+0,84
+0,99
+
+y
+2,50
+2,98
+
+ˆy
+2,69
+3,15
+
+ˆy1
+2,40
+2,71
+
+ˆy2
+2,56
+3,12
+
+ˆy3
+2,90
+3,31
+
+Fonte: Autor.
+
+Apesar dos estimadores dependerem da amostra, mostra-se a seguir que para um
+conjunto de dados grande, na média, esse estimadores equivalem ao parâmetro estimado.
+
+Capítulo 2. Regressão Linear Simples
+
+24
+
+2.2.1 Hipóteses de um Modelo Linear Simples
+
+O modelo de regressão linear simples é fundamentado sobre certas hipóteses, sob as
+quais é possível mostrar que os estimadores dados pelos métodos dos mínimos quadrados
+são os melhores estimadores não enviesados. Caso o leitor não esteja bem familiarizados com
+alguns termos estatísticos utilizados ao longo do texto, no Apêndice A estão apresentados
+alguns conceitos. A seguir essas hipóteses são apresentadas
+
+1. O modelo é linear nos parâmetros, isto é, os coeﬁcientes β0 e β1 da equação (2.1)
+
+fazem parte de equação de forma linear.
+
+2. A amostragem é aleatória.
+
+3. Os erros são normalmente distribuídos.
+
+4. A esperança condicional do erro é igual a zero, isto é, em termos estatísticos,
+
+E(ei|Xi) = 0.
+
+5. A variabilidade dos erros é constante, isto é, E(e2
+i
+
+) = σ2. Isso signiﬁca que a sua
+
+variância é a mesma para qualquer X.
+
+Sob as hipóteses acima, vale o seguinte resultado:
+
+Teorema 2.2. (Teorema de Gauss-Markov) Os estimadores dos métodos dos mínimos
+quadrados são não enviesados e, dentre todos os estimadores não enviesados, apresentam
+a menor variância (V ). Ou seja, se ˆβ é um dos estimadores do parâmetro β dado pelo
+métodos dos mínimos quadrados, tem-se que
+
+E( ˆβ) = β.
+
+Além disso, se ¯β é um outro estimador para o modelo de regressão linear, tem-se que
+
+V ( ˆβ) < V ( ¯β).
+
+A demostração do Teorema acima pode ser encontrada em (KUTNER et al., 2005).
+
+2.2.2 Ajuste do Modelo
+
+A ﬁm de avaliar o modelo obtido, será feita a análise de quão ajustado aos dados é
+o modelo linear. Esta análise é feita comparando o modelo linear com um modelo mais
+simples, o modelo de grau zero. O modelo mais simples é obtido quando previsão de
+resposta é dada pela média dos valores amostrais da variável dependente, ou seja, quando
+ˆβ1 = 0.
+
+Capítulo 2. Regressão Linear Simples
+
+25
+
+Um primeiro critério de medição de ajuste do modelo é comparar a soma dos
+quadrados dos resíduos (SQRes), dado na equação (2.12), com a soma dos quadrados dos
+resíduos do modelo mais simples, a qual dada por
+
+SQT ot =
+
+n
+X
+
+i=1
+
+[yi − ¯y]2
+
+e é chamada de soma de quadrados total. Quando os resíduos são pequenos, tem-se uma
+indicação de que o modelo está produzindo bons resultados (MORETTIN; BUSSAB,
+2010).
+
+Para o problema apresentado no Exemplo 2.1, os valores encontrados foram
+
+SQRes = 2, 66 e SQT ot = 42, 34.
+
+Isso mostra uma redução sensível de cerca de 40 unidades.
+
+Um segundo critério para medir o ajuste do modelo é comparar as suas respectivas
+variâncias residuais. A importância de se comparar os valores estimados de variância para
+cada modelo reside no fato de que o número de graus de liberdade de cada modelo é
+diferente. Isto é, o modelo mais simples tem menos parâmetros que o modelo linear. Vale
+ainda lembrar que a variância mede a dispersão dos dados em torno da média, valores
+menores de variância indicam mais acurácia na estimação. Caso haja uma diminuição da
+variância quando comparado ao modelo linear, pode-se concluir que o modelo linear é mais
+adequado por estar melhor ajustado aos dados.
+
+Para o modelo linear, o estimador ˆσe
+
+2 não enviesado da variância residual σ2
+e
+
+é
+
+dado por
+
+ˆσe
+
+2 = SQRes
+n − 2 .
+
+Para o modelo em que as previsões futuras são feitas pela média, o estimador não enviesado
+da variância residual ˆσ2 é
+
+ˆσ2 = SQT ot
+n − 1 .
+
+Para os dados do Exemplo 2.1, os valores encontrados para a variância residual
+foram ˆσe
+2 = 0, 09 e ˆσ2 = 1, 46. Novamente, observa-se uma redução signiﬁcativa dos valores
+e pode-se concluir que é mais vantajoso adotar o modelo de linear para a previsão de
+respostas.
+
+É interessante mencionar o valor que representa a diminuição da soma dos quadrados
+dos resíduos do modelo linear quando comparada com a soma de quadrados total. Esse
+valor é chamado soma dos quadrados devido à regressão (SQReg) e descrito por
+
+SQReg = SQT ot − SQRes.
+
+Capítulo 2. Regressão Linear Simples
+
+26
+
+Uma melhor visualização do que representa cada um desses resíduos pode ser observado
+na Figura 4. O resíduo gerado pela estimação através do modelo de regressão linear é ˆei,
+enquanto que o resíduo gerado pelo modelo mais simples é dado por yi − ¯y. Desta forma,
+ˆyi − ¯y pode ser compreendido como uma medida de melhoria no valor predito pelo modelo
+de regressão linear quando comparado ao modelo mais simples. Note que ˆei, yi − ¯y e ˆyi − ¯y
+representam a i-ésima parcela de SQRes, SQT ot e SQReg, respectivamente. Para um
+detalhamento maior, ver (MORETTIN; BUSSAB, 2010).
+
+Figura 4 – Representação dos resíduos.
+
+Fonte: Autor.
+
+Ainda através da análise da Figura 4, pode-se entender SQRes como uma medida
+da dispersão que não pode ser explicada pelo modelo de regressão encontrado e SQReg
+como sendo uma medição da dispersão que é explicada pelo modelo após executada a
+regressão linear.
+
+Uma outra forma de analisar o ganho com a introdução do modelo linear é por
+meio da estatística R2. A estatística pode ser entendida como o ganho percentual de quão
+mais ajustado é esse modelo quando comparado com a previsão da resposta dada pela
+média, e é calculada da seguinte forma
+
+R2 = SQReg
+SQT ot
+
+.
+
+Desta forma, a estatística R2 propicia uma alternativa de medida de qualidade de ajuste
+do modelo, uma vez que usa a razão entre a qualidade do ajuste amostral SQReg e o
+quadrado das somas dos erros total SQT ot. Assim, os valores encontrados através dessa
+estatística estarão entre 0 e 1, o que facilita sua interpretação. Uma estatística R2 próxima
+de 1 indica que grande parte da dispersão pode ser explicada pelo modelo. Enquanto, um
+valor de R2 próximo de 0, indica que a regressão não foi capaz de explicar a variabilidade
+na resposta.
+
+Capítulo 2. Regressão Linear Simples
+
+27
+
+Para o problema do Exemplo 2.1, o valor de SQReg e da estatística R2 são
+respectivamente 39, 68 e 0, 94. Pode-se concluir que o modelo de regressão linear explica
+94% da variabilidade total.
+
+Na Tabela 5 são reunidas algumas das estatísticas que permitem avaliar o modelo de
+regressão linear desenvolvido para o problema apresentado no Exemplo 2.1. Comparando
+os valores de SQT ot e SQRes nota-se que o modelo com a variável independente contribui
+para a redução dos erros de predição. Na verdade, o impacto na redução dos erros de
+predição devido à introdução da variável preditiva no modelo de regressão pode ser
+observado através da análise de SQReg de forma absoluta, e através de R2 de forma
+percentual.
+
+Tabela 5 – Grandezas relacionadas ao modelo de Regressão Linear.
+
+Quantidade Valor
+42,34
+2,66
+39,68
+0,94
+
+SQT ot
+SQRes
+SQReg
+R2
+
+Fonte: Autor.
+
+2.2.3 Intervalos de Conﬁança para os Parâmetros
+
+Passa-se agora para a análise dos estimadores encontrados pelo método dos mínimos
+quadrados e também dos parâmetros β1 e β0. Para tanto, os valores esperados de cada
+estimador E( ˆβ0) e E( ˆβ1) e suas respectivas variâncias V ( ˆβ0) e V ( ˆβ1) são
+E( ˆβ0) = β0;
+V ( ˆβ0) = σ2
+
+#
+
+;
+
+" Pn
+n Pn
+
+)
+(x2
+i
+i=1
+(xi − ¯x)2
+
+i=1
+
+e
+
+E( ˆβ1) = β1;
+"
+V ( ˆβ1) = σ2
+
+e
+
+1
+(xi − ¯x)2
+
+#
+
+.
+
+Pn
+
+i=1
+
+Para maiores detalhes dos cálculos dessas propriedades (MORETTIN; BUSSAB, 2010).
+
+Das hipóteses de que o erro e a variável resposta tenham distribuições normais
+, tem-se que as estatísticas
+
+ambas com variância estimada σ2
+e
+
+t(β0) =
+
+v
+u
+u
+t
+
+ˆβ0 − β0
+ˆσe
+
+2
+
+n Pn
+
+i=1
+Pn
+
+(xi − ¯x)2
+)
+(x2
+i
+
+i=1
+
+;
+
+t(β1) =
+
+ˆβ1 − β1
+ˆσe
+
+2
+
+v
+u
+u
+t
+
+n
+X
+
+i=1
+
+(xi − ¯x)2
+
+Capítulo 2. Regressão Linear Simples
+
+28
+
+têm distribuição t de Student com (n − 2) graus de liberdade. Com essas estatísticas
+é possível fazer algumas aﬁrmações sobre os parâmetros β0 e β1 usando intervalos de
+conﬁança. A saber
+
+IC(β0; γ) = ˆβ0 ± tγ(n − 2) ˆσe
+
+v
+u
+u
+t
+
+IC(β1; γ) = ˆβ1 ± tγ(n − 2) ˆσe
+
+n Pn
+s
+
+i=1
+
+Pn
+
+(x2
+)
+i=1
+i
+(xi − ¯x)2
+
+;
+
+1
+(xi − ¯x)2
+
+Pn
+
+i=1
+
+em que γ é o nível ou coeﬁciente de conﬁança e (n − 2) é o número de graus de liberdade
+da distribuição t bicaudal.
+
+Voltando ao problema apresentado no Exemplo 2.1, para γ = 0, 95, (n − 2) = 28
+com valor t0,95(28) = 2, 048, há 95% de probabilidade de que o valor do parâmetro β1
+esteja no intervalo [2, 77, 3, 34]. Ainda, sobre β0 há 95% de probabilidade de que seu
+verdadeiro valor esteja no intervalo [−0, 24, 0, 44]. Assim, pode-se concluir que caso a área
+de prateleira dedicada à exposição do item seja nula será esperada uma receita de venda
+deste produto no intervalo de −24 a 44 reais, mas como o valor de receita negativa não é
+possível, espera-se que a receita de vendas deste produto esteja entre 0 e 44 reais. Ainda,
+para cada incremento de 1m2 de área de prateleira dedicada à exposição do produto,
+espera-se um aumento médio na receita de vendas entre 277 e 334 reais.
+
+2.2.4 Intervalos de Conﬁança e de Predição
+
+Outro ponto interessante a ser analisado é a diferença entre intervalo de conﬁança
+para a predição de valores médios da variável resposta com base no modelo de regressão
+encontrado e intervalo de predição para uma observação de resposta dado um valor de
+variável independente.
+
+Quando fala-se em intervalo de conﬁança para a previsão da resposta, está se
+pensando na distribuição amostral da variável resposta e o intervalo de conﬁança é dado
+por
+
+IC (E(Y |x); γ) = ˆyi ± tγ(n − 2) ˆσe
+
+v
+u
+u
+t
+
+1
+
+n
+
++
+
+(xi − ¯x)2
+
+Pn
+
+i=1
+
+(xi − ¯x)2 .
+
+A ﬁm de maior aprofundamento sobre os cálculos, buscar (MORETTIN; BUSSAB,
+2010). Do cálculo do intervalo de conﬁança para a previsão da resposta se obtém o valor
+médio esperado de resposta, dada uma entrada da variável independente.
+
+Para o problema apresentado no Exemplo 2.1, e supondo que a área destinada ao
+produto tenha sido de x = 0, 75m2, a estimativa pontual de receita de venda calculada
+pela equação (2.11) é de ˆy = 2, 41, em centenas de reais. Considerando como resposta
+procurada a receita média de venda do item, em centenas de reais, para um nível de
+
+Capítulo 2. Regressão Linear Simples
+
+29
+
+conﬁança γ = 0, 95, o intervalo de conﬁança calculado é ]2, 26, 2, 56[. Em outras palavras,
+para semanas em que a área de prateleira destinada ao produto tenha sido de x = 0, 75m2,
+espera-se em média que a receita de venda com determinado produto pertença ao intervalo
+226 a 256 em reais.
+
+O intervalo de predição para uma futura observação, para um dado nível xf , é
+
+dado por
+
+IP (Yf ; γ) = ˆyf ± tγ ˆσe
+
+v
+u
+u
+t1 +
+
+1
+
+n
+
++
+
+(xf − ¯x)2
+
+Pn
+
+i=1
+
+(xi − ¯x)2 ,
+
+e pode ser entendido como o intervalo em que se espera encontrar o valor de uma resposta
+dado um valor de entrada.
+
+Para o problema de área de prateleira destinada a um produto em um supermercado
+(Exemplo 2.1) e ainda supondo que a área destinada à mercadoria tenha sido de x = 0, 75m2,
+o intervalo de predição com 95% de conﬁança é ]1, 76, 3, 06[. Isto signiﬁca que caso em
+uma determinada semana o valor de área de prateleira destinado à mercadoria tenha sido
+de x = 0, 75m2 o valor provável de receita de vendas deste produto nesta semana pertença
+ao intervalo de 176 a 306 reais.
+
+Vale ressaltar que o intervalo de predição será sempre maior do que o intervalo de
+conﬁança para um determinado valor de variável independente, como pôde ser observado
+pelos cálculos da situação em que x = 0, 75m2. Isso ocorre pois com o cálculo do intervalo
+de conﬁança encontram-se valores de resposta esperada média a dado valor de variável
+independente, enquanto que com o cálculo do intervalo de predição encontram-se valores a
+que provavelmente pertencerá a resposta para uma única observação.
+
+2.2.5 Teste de Hipóteses
+
+Outro procedimento que se pode realizar para validação do modelo de regressão
+linear calculado é o teste de hipóteses. Na realização deste teste faz-se uso do cálculo
+do desvio padrão estimado para cada um dos estimadores ˆβ0 e ˆβ1 a ﬁm de se avaliar a
+relevância da relação linear entre X e Y . O teste de hipótese mais comum envolve testar a
+hipótese nula da seguinte forma
+
+H0: não há relação linear entre X e Y
+
+versus a hipótese alternativa
+
+Ha : há relação linear entre X e Y.
+
+Capítulo 2. Regressão Linear Simples
+
+30
+
+Matematicamente, essas relações correspondem a
+
+H0 : β1 = 0,
+Ha : β1 6= 0.
+
+Caso a hipótese nula seja verdadeira, a regressão linear toma a forma Y = β0 + (cid:15) e
+a variável independente X não está associada a Y , sendo mais interessante prever valores
+futuros de y através de sua média amostral ¯y.
+
+O teste de hipótese acima proposto será usado para determinar se o estimador ˆβ1 é
+suﬁcientemente diferente de zero de tal forma a garantir que o parâmetro β1 é diferente
+de zero. Essa análise é dependente da acurácia de ˆβ1, ou seja, depende do desvio padrão
+ˆσ( ˆβ1) de ˆβ1, dado por
+V ( ˆβ1). Se ˆσ( ˆβ1) é pequeno, então mesmo valores pequenos de ˆβ1
+indicam fortes evidências de que β1 é não nulo. Caso ˆσ( ˆβ1) seja grande, então ˆβ1 deve ser
+grande em valor absoluto a ﬁm de que possamos rejeitar a hipótese nula H0.
+
+q
+
+O procedimento prático para a realização dessa análise é supor que o parâmetro β1
+
+seja nulo. Assim, será feira a análise do valor t, calculado por
+
+t =
+
+ˆβ1 − 0
+ˆσ( ˆβ1)
+
+.
+
+A estatística t, que tem distribuição t de Student com (n − 2) graus de liberdade,
+pode ser interpretada como uma medição da distância de ˆβ1 do valor zero (valor do
+parâmetro β1, por suposição) em quantidade de desvios padrão. Quanto maior for o valor
+encontrado para t, maior a evidência de que a hipótese nula é falsa, ou seja, menor é a
+probabilidade de β1 ter valor nulo.
+
+Basta agora consultar a tabela de distribuição t de Student bicaudal com (n − 2)
+graus de liberdade para o cálculo da probabilidade de se observar valores iguais ou
+maiores do que |t|, encontradas por exemplo em (DEVORE, 2010). A Figura 5 traz uma
+representação de como a estatística t está relacionada com o valor − p. É possível notar
+que o valor − p está associado à área sob a curva da distribuição t de Student. Uma
+descrição de como estes valores se relacionam é dizer que a probabilidade de se observar
+valores maiores do que ou iguais a |t| é igual ao valor − p.
+
+Baixos valores do valor − p indicam uma baixa probabilidade de que se possa
+observar uma associação tão grande entre as variáveis analisadas devido ao acaso, ou seja,
+é baixa a probabilidade de que não haja relação entre as grandezas preditivas e predita.
+Ou seja, para baixos valores do valor − p pode-se inferir que há uma relação entre as
+grandezas predita e preditiva e pode-se rejeitar a hipótese nula.
+
+Grande parte das vezes não será possível encontrar o valor − p exato para t pelo
+uso das tabelas, mas para um nível de signiﬁcância α de interesse (exemplos de valor de
+
+Capítulo 2. Regressão Linear Simples
+
+31
+
+Figura 5 – Representação da relação entre o valor de t e do valor − p associado.
+
+Fonte: Autor.
+
+signiﬁcância comumente buscados são 0,05 ou 0,01) é possível encontrar o respectivo valor
+crítico tα e comparar com o valor t encontrado. Caso o valor t seja muito maior do que tα
+para um dado α da distribuição t com (n-2) graus de liberdade, pode-se concluir que o
+valor − p será muito menor do que α.
+
+Nesse trabalho será usada a escala de signiﬁcância de Fischer, apresentada na
+Tabela 6, a ﬁm de se testar a hipótese nula H0 contra a hipótese alternativa Ha. Caso o
+valor − p seja bem pequeno há fortes evidências contra H0, ou seja, há fortes razões para
+a rejeição de H0.
+
+Tabela 6 – Escala de Fischer.
+
+valor-p
+força da evidência
+
+0,10
+
+0,05
+
+limítrofe moderada
+
+0,025
+substancial
+
+0,005
+
+0,01
+forte muito forte
+
+0,001
+fortíssima
+
+Fonte: (EFRON; GOUS, 1997)
+
+2.2.6 Análise dos Resíduos
+
+Uma outra análise possível de ser feita sobre os dados para a veriﬁcação de
+distribuição dos erros de forma aleatória em torno do zero, é a elaboração de gráﬁcos de
+resíduos. Plota-se o gráﬁco cuja abcissa é dada pela variável independente e a ordenada
+pelo respectivo valor de resíduo estimado ˆei, ou resíduo padronizado ˆzi
+
+ˆzi =
+
+ˆei
+ˆσe
+
+.
+
+Para o problema de área de prateleira de um item de supermercado, o gráﬁco de
+resíduos padronizado pode ser visto na Figura 6. Pode-se concluir da análise do gráﬁco
+que os resíduos estão distribuídos aleatoriamente em torno do zero. Caso fosse observada
+
+Capítulo 2. Regressão Linear Simples
+
+32
+
+região com acúmulo de pontos, regiões de alta densidade, isto seria um indicador de que a
+hipótese de variabilidade constante dos erros não é satisfeita para o conjunto de dados
+amostrais. Caso fosse observada tendência na distribuição dos dados (uma distribuição
+quadrática, por exemplo), isto seria um indicador da possibilidade de inadequação da
+hipótese de que as variáveis independente e dependente se relacionem de forma linear. Caso
+houvesse presença de valores outliers, isto seria indicador da necessidade de veriﬁcação
+da possibilidade de haver problemas com os métodos de medição das grandezas, ou da
+necessidade da adoção de métodos mais robustos.
+
+Figura 6 – Representação dos resíduos padronizados.
+
+Fonte: Autor.
+
+A ﬁm de se veriﬁcar a hipótese de distribuição normal dos resíduos, faz-se a análise
+do gráﬁco de quantis, q × q, na Figura 7, em que se faz comparação dos valores dos resíduos
+normalizados com valores de uma distribuição normal padrão. Caso os pontos estejam
+suﬁcientemente próximos da reta e com distribuição simétrica em torno dela, pode-se
+concluir que a hipótese de distribuição normal dos erros é satisfeita.
+
+Figura 7 – Gráﬁco qxq para os resíduos do modelo.
+
+Fonte: Autor.
+
+Capítulo 2. Regressão Linear Simples
+
+33
+
+É possível notar do gráﬁco qxq que os resíduos estão normalmente distribuídos.
+
+Para mais informações, consulte (MORETTIN; BUSSAB, 2010).
+
+Serão retomadas e respondidas as perguntas motivadoras do início da seção.
+
+1. Quão forte é a relação entre os dados que se deseja relacionar?
+
+Para responder esta pergunta, pode-se fazer a análise da estatística R2, como visto
+na Seção 2.2.5. Para o problema analisado tem-se que R2 = 0, 94, de onde é possível
+concluir que o modelo de regressão calculado explica 94% da variabilidade total.
+Assim, conclui-se que há sim uma forte relação entre a área de prateleira ocupada
+pelo produto e sua receita de vendas.
+
+2. Quão acurada é a estimativa obtida?
+
+A ﬁm de se avaliar a acurácia das estimativas analisam-se os intervalos de conﬁança
+para cada um dos parâmetros estimados, como visto na Seção 2.2.3.
+
+3. Qual a acurácia das previsões feitas usando o modelo obtido?
+
+Pode-se calcular os intervalos de conﬁança (resposta média) e de predição (intervalo
+para uma observação) para um dado valor de variável preditiva, como visto na Seção
+2.2.4.
+
+4. Há relação entre a área ocupada pelo produto e a receita de vendas?
+
+Para responder a pergunta procede-se à análise do valor − p encontrado para o valor
+t, como visto na Seção 2.2.5. A hipótese nula H0 : β1 = 0 deverá ser rejeitada. Assim,
+pode-se concluir que há sim relação entre a área de prateleira ocupada pelo item e
+sua receita de vendas.
+
+5. A relação entre os dados é linear?
+
+Com o interesse de responder a esta indagação, faz-se a análise do gráﬁco de resíduos
+padronizados, como visto na Seção 2.2.6. Avaliando a Figura 6 é possível perceber
+que não há padrão de comportamento dos erros padronizados, ou seja, que estão
+aleatoriamente distribuídos. Assim, pode-se concluir que a relação entre as variáveis
+independente e dependente é linear. Outro indicador usado para avaliar se há
+tendência de relação linear entre os dados é o gráﬁco de dispersão. Ao se observar a
+Figura 2 é possível notar uma tendência de relação linear entre os dados.
+
+3 Regressão Logística Simples
+
+34
+
+Para problemas em que a variável resposta é do tipo categórica ou qualitativa é
+adequado se fazer uso de técnicas de predição especíﬁcas para modelos de classiﬁcação.
+Um possível método de classiﬁcação que pode ser usado em problemas com esta natureza
+são modelos de regressão logística. Neste tipo de tratamento, pertencente a abordagem de
+aprendizado supervisionado (pois há um conjunto de dados rotulados de treinamento), a
+predição se dá através do cálculo de probabilidade de pertencimento da resposta (yi) a
+cada uma das classes da variável dependente, dado um valor de variável independente (xi)
+(JAMES et al., 2013).
+
+Para uma melhor compreensão dos conceitos aqui abordados, há necessidade de
+conhecimento prévio dos seguintes conceitos: função logito, função de verossimilhança e
+distribuição Qui-Quadrado. Para familiarização com tais conceitos, sugere-se consulta de
+tais conceitos materiais (DEVORE, 2010) e (MORETTIN; BUSSAB, 2010).
+
+Exemplos de problemas em que se poderia aplicar essa abordagem estatística são
+a classiﬁcação de tumores em maligno ou benigno, classiﬁcação de clientes em alto ou
+baixo risco, e predição de pertencimento a grupo de risco de uma doença dado o estado do
+paciente.
+
+No desenvolvimento deste trabalho serão considerados apenas problemas em que a
+variável resposta seja do tipo dicotômica ou binária, ou seja, pode assumir apenas duas
+classes. Essas classes serão descritas como tendo valor y = 1 para a resposta rotulada como
+resposta de interesse (cliente de alto risco ou tumor maligno, por exemplo) e y = 0 caso a
+resposta não seja a de interesse (cliente de baixo risco ou tumor benigno, por exemplo).
+
+Ao longo desta seção será trabalhado o problema apresentado por (TSUCHIYA,
+
+2002).
+
+Exemplo 3.1. (Presença de doença cardíaca em pacientes de acordo com faixa etária) Se
+busca uma relação entre a idade dos pacientes e a presença (y = 1) ou ausência (y = 0) de
+doença cardíaca. Os dados disponíveis são a quantidade de pacientes em que há presença
+ou ausência da doença, a partir de onde se calculará a frequência de incidência em cada
+faixa etária. Os dados usados no desenvolvimento do modelo são os apresentados na Tabela
+7.
+
+Deseja-se obter um modelo por meio da aplicação do método de regressão logística
+
+que relacione as variáveis dependente e independente da seguinte forma
+
+P (Y = 1|x = xi)
+
+Capítulo 3. Regressão Logística Simples
+
+35
+
+Tabela 7 – Frequência de incidência de doença cardíaca de acordo com a faixa etária dos
+
+pacientes.
+
+Faixa etária (anos) Ausência Presença Frequência de incidência
+
+20-29
+30-34
+35-39
+40-44
+45-49
+50-54
+55-59
+60-69
+Total
+
+9
+13
+9
+10
+7
+3
+4
+2
+57
+
+1
+2
+3
+5
+6
+5
+13
+8
+43
+
+Fonte: (TSUCHIYA, 2002).
+
+0,10
+0,13
+0,25
+0,33
+0,46
+0,63
+0,76
+0,80
+0,43
+
+que pode ser lido como a probabilidade de que a variável resposta pertença à categoria
+Y = 1 dado que a variável de entrada (independente) assuma o valor x = xi e seja
+representado apenas por p(x). Buscam-se valores entre 0 e 1 pela equação acima, e através
+de critérios convenientes para a escolha do limiar será feita a classiﬁcação de pertencimento
+ou não à classe Y = 1. Por exemplo, na classiﬁcação de tumores nas categorias maligno
+(Y = 1) e benigno (Y = 0) em função do seu tamanho (x), uma possível escolha de limiar
+é 0,5. Dada esta escolha, pode-se entender que para valores de P (Y = 1|x = xi) > 0, 5
+o tumor será classiﬁcado como sendo maligno e P (Y = 1|x = xi) ≤ 0, 5 o tumor será
+classiﬁcado como benigno. Caso seja mais conveniente uma abordagem mais conservadora,
+uma possibilidade seria a escolha de um limiar com valor 0,3.
+
+Uma forma de modelar a probabilidade P (Y = 1|x) é através da função logística
+
+p(x) = eβ0+xβ1
+1 + eβ0+xβ1
+
+,
+
+também representada por
+
+p(x) =
+
+1
+1 + e−(β0+xβ1) .
+
+(3.1)
+
+A escolha pela distribuição logística é dada pelo fato de que a resposta obtida
+através da transformação está entre 0 e 1 e, por isto, poder ser interpretada como uma
+probabilidade (JR; LEMESHOW; STURDIVANT, 2013).
+
+A Figura 8 contém o diagrama de dispersão para o problema apresentando no
+Exemplo 3.1. Ao se analisar a Figura 8 é possível observar uma relação entre as variáveis
+independente e dependente próxima à relação entre variáveis que se relacionam através da
+função logística. Nota-se uma aproximação gradativa de 0 e de 1 em seus extremos e ainda é
+possível notar que incrementos unitários na variável de entrada levarão a incrementos cada
+
+Capítulo 3. Regressão Logística Simples
+
+36
+
+Figura 8 – Representação do Diagrama de Dispersão para o problema apresentado no
+
+Exemplo 3.1.
+
+Fonte: Autor.
+
+vez menores na variável de saída quanto mais próximos das extremidades forem tomados
+estes incrementos. Então, há evidências de que a relação entre as variáveis apresentadas
+no Exemplo 3.1 pode ser modelada pela função logística.
+
+Uma forma de interpretação da probabilidade obtida pelo modelo de regressão
+logística é por meio do cálculo da chance Z de ocorrência do evento (FÁVERO et al.,
+2009). Calcula-se a chance através da razão
+
+Z = p(x)
+
+1 − p(x).
+
+(3.2)
+
+Substituindo a expressão de p(x) expressa na equação (3.1) na equação (3.2) segue
+
+que
+
+Por isso
+
+Z =
+
+=
+
+=
+
+1
+1 + e−(β0+xβ1)
+
+1
+1 + e−(β0+xβ1)
+
+1 −
+
+1
+1 + e−(β0+xβ1)
+1 + e−(β0+xβ1) − 1
+1 + e−(β0+xβ1)
+
+1
+e−(β0+xβ1) .
+
+Z = eβ0+xβ1.
+
+(3.3)
+
+A chance calculada através da equação (3.3) pode assumir valores de 0 a inﬁnito, e
+pode ser entendida como a razão entre a probabilidade de ocorrência do evento de interesse
+Y = 1 versus da sua não ocorrência. Normalmente, lê-se a chance na forma fracionária
+a ﬁm de facilitar sua compreensão. De forma mais concreta, dado p(x) = 0, 8 calcula-se
+
+Capítulo 3. Regressão Logística Simples
+
+37
+
+o valor da chance Z = 4, que pode ser entendido como sendo uma situação em que a
+chance de ocorrência do evento será de 4 para 1. Um outro exemplo seria o caso em que
+, situação em que a chance de ocorrência do evento
+p(x) = 0, 2 com valor de chance Z = 1
+4
+será de 1 para 4.
+
+Calculando o logaritmo natural da chance, dada pela equação (3.3), tem-se
+
+g(x) = β0 + xβ1.
+
+(3.4)
+
+A equação (3.4) representa a função chamada logito (PAULINO et al., 2011) e é linear em
+X. Assim, é possível notar que o aumento de uma unidade na variável independente levará
+ao aumento de β1 unidades na função logito e ao produto de eβ1 na função de chance. O
+impacto no cálculo da probabilidade p(x + 1) não é obtido de forma tão fácil e depende do
+valor de p(x) a partir do qual foi feito o incremento na variável independente. Apesar disso,
+para valores positivos de β1, um aumento no valor da variável independente levará ao
+aumento no valor de p(x). Para valores negativos de β1, um aumento no valor da variável
+independente levará a uma diminuição no valor de p(x) (JAMES et al., 2013).
+
+A importância da transformação logito reside no fato de que a função obtida através
+dela é linear em x e, por isso pode ser continua variando de −∞ a +∞ dependendo da
+faixa de variação da variável independente (JR; LEMESHOW; STURDIVANT, 2013).
+
+Procede-se então ao cálculo dos estimadores ˆβ0 e ˆβ1 dos parâmetros β0 e β1 da
+
+equação (3.1).
+
+3.1 Estimadores de Máxima Verossimilhança
+
+A ﬁm de se encontrar os estimadores ˆβ0 e ˆβ1 dos parâmetros β0 e β1 respectivamente,
+
+será usado o Método da Máxima Verossimilhança.
+
+A função de verossimilhança pode ser entendida como sendo uma medida de
+quão provável é a amostra analisada (em relação à população), e uma interpretação dos
+estimadores encontrados por este método é de que são os que tornam a amostra usada
+mais provável, mais próxima dos dados da população (MORETTIN; BUSSAB, 2010).
+Procede-se então a apresentação da função de verossimilhança.
+
+Para cada valor de variável independente x está associada a probabilidade p(x) de
+que a variável resposta y seja igual a 1. Assim, 1 − p(x) pode ser entendido como sendo a
+probabilidade de que y seja igual a 0. Então, pode-se concluir que a parcela na função de
+verossimilhança dos pares de treinamento (xi, yi) em que yi = 1 é dada por p(xi). Já para
+os pares de treinamento (xi, yi) em que yi = 0 é dada por 1 − p(xi) (JR; LEMESHOW;
+STURDIVANT, 2013). Apresentando essa contribuição de uma forma geral, tem-se
+
+[p(xi)]yi[1 − p(xi)]1−yi.
+
+Capítulo 3. Regressão Logística Simples
+
+38
+
+Assumindo-se que as observações são independentes, pode-se calcular a função de
+
+verossimilhança l(β0, β1) da amostra
+
+l(β0, β1) =
+
+n
+Y
+
+[p(xi)]yi[1 − p(xi)]1−yi.
+
+i=1
+
+(3.5)
+
+Observa-se então que a função de verossimilhança representada pela equação (3.5)
+é uma função em que as variáveis são β0 e β1. Os estimadores ˆβ0 e ˆβ1 dos parâmetros
+β0 e β1 são calculados a ﬁm de maximizar a função de verossimilhança. Para facilitar os
+cálculos, prefere-se trabalhar com o valor chamado log-verossimilhança L(β0, β1), obtido
+calculando o logaritmo natural da equação (3.5)
+
+L(β0, β1) =
+
+n
+X
+
+[yi log(p(xi)) + (1 − yi) log(1 − p(xi))].
+
+(3.6)
+
+i=1
+
+A ﬁm de se encontrar os estimadores que tornam máxima a equação (3.6) ela será
+diferenciada em relação a β0 e β1 e igualada a zero (TSUCHIYA, 2002). Desenvolvendo
+
+∂L(β0, β1)
+∂β0
+" yi
+p(xi)
+
+n
+X
+
+i=1
+
+( ˆβ0, ˆβ1) = 0
+∂[p(xi)]
+∂β0
+
++
+
+
+(yi)(1 + e−(β0+xiβ1))
+
+n
+X
+
+i=1
+
+n
+X
+
+i=1
+n
+X
+
+i=1
+
+  e−(β0+xiβ1)
+
+"
+(yi)
+
+1 + e−(β0+xiβ1)
+1
+1 + e−(β0+xiβ1)
+
+(cid:21)
+
+= 0.
+
+(cid:20)
+(yi) −
+
+(1 − yi)
+1 − p(xi)
+
+#
+
+∂[1 − p(xi)]
+∂β0
+
+= 0
+
+e−(β0+xiβ1)
+(1 + e−(β0+xiβ1))2 −
+1
+1 + e−(β0+xiβ1)
+
++ (yi − 1)
+
+(1 − yi)
+1+e−(β0+xiβ1)−1
+1+e−(β0+xiβ1)
+#
+
+= 0
+
+!
+
+Além disso
+
+n
+X
+
+( ˆβ0, ˆβ1) = 0
+∂[p(xi)]
+∂β1
+
+∂L(β0, β1)
+∂β1
+" yi
+∂[1 − p(xi)]
+p(xi)
+∂β1
+(yi)(1 + e−(β0+xiβ1)) xie−(β0+xiβ1)
+
+(1 − yi)
+1 − p(xi)
+
+n
+X
+
+i=1
+
++
+
+
+
+(1 + e−(β0+xiβ1))2 −
+
+#
+
+= 0
+
+i=1
+
+n
+X
+
+"
+(yixi)
+
+i=1
+n
+X
+
+(cid:20)
+
+i=1
+
+(yixi) −
+
+  e−(β0+xiβ1)
+
+!
+
+1 + e−(β0+xiβ1)
+xi
+1 + e−(β0+xiβ1)
+
++ (yi − 1)
+
+(cid:21)
+
+= 0.
+
+(1 − yi)
+1+e−(β0+xiβ1)−1
+1+e−(β0+xiβ1)
+xi
+1 + e−(β0+xiβ1)
+
+#
+
+= 0
+
+e−(β0+xiβ1)
+(1 + e−(β0+xiβ1))2
+
+
+ = 0
+
+xie−(β0+xiβ1)
+(1 + e−(β0+xiβ1))2
+
+
+ = 0
+
+Capítulo 3. Regressão Logística Simples
+
+Assim, se obtém as equações:
+
+n
+X
+
+i=1
+
+[yi − p(xi)] = 0,
+
+n
+X
+
+i=1
+
+xi[yi − p(xi)] = 0.
+
+39
+
+(3.7)
+
+(3.8)
+
+Como as equações (3.7) e (3.8) não são lineares, há necessidade da aplicação
+de métodos numéricos iterativos para calcular ˆβ0 e ˆβ1 que as maximize. A descrição
+pormenorizada do procedimento realizado não faz parte do escopo deste trabalho, para
+um maior detalhamento buscar (BISHOP, 2006). Os valores de ˆβ0 e ˆβ1 podem ser obtidos
+para um conjunto de dados de treinamento através de softwares estatísticos, tais como o
+R.
+
+Para o problema apresentado no Exemplo 3.1 os valores encontrados dos estimadores
+são ˆβ0 = −5, 309 e ˆβ1 = 0, 111, e o modelo de regressão logística, através do qual serão
+calculadas as probabilidades logísticas estimadas (ˆp(x)), pode ser escrito como
+
+ˆp(x) =
+
+1
+1 + e(5,309−0,111x) .
+
+(3.9)
+
+Para cada valor de variável independente xi é possível estimar a probabilidade ˆp(xi)
+de que a variável resposta seja 1 através da equação (3.9). A Figura 9 apresenta o modelo
+de regressão logística dado pela equação (3.9). É possível notar um bom ajuste aos dados
+amostrais.
+
+Figura 9 – Modelo de regressão logística obtido com os dados amostrais para o problema
+
+apresentado no Exemplo 3.1.
+
+Fonte: Autor.
+
+3.2 Análise do Modelo
+
+Os estimadores de variância e erro padrão de ˆβ0 e ˆβ1 poderão ser usados no cálculo
+de intervalos de conﬁança dos parâmetros β0 e β1, e em testes de hipótese para a veriﬁcação
+da acurácia do modelo obtido com o uso dos estimadores.
+
+Capítulo 3. Regressão Logística Simples
+
+40
+
+Uma vez obtidos os estimadores ˆβ0 e ˆβ1 a pergunta a ser respondida a partir de
+então é: o modelo de regressão logística que inclui a variável independente prevê melhor
+a saída do que um modelo que não a inclui? De forma análoga ao que foi feito para a
+regressão linear, a pergunta será respondida por meio da comparação de modelos preditivos
+que incluem e que não incluem a variável independente. Caso o modelo que inclui a variável
+independente seja mais acurado, de acordo com um critério especiﬁcado de medição da
+acurácia, a variável sob análise será considerada signiﬁcativa para predições da variável
+resposta.
+
+3.2.1 Teste de Hipótese
+
+De forma análoga ao que foi feito em regressão linear, procede-se ao teste de
+hipótese para a veriﬁcação da relevância da relação entre as variáveis X e Y . O teste será
+estruturado da seguinte forma
+
+H0: não há relação linear entre X e Y,
+
+versus a hipótese alternativa
+
+Ha: há relação linear entre X e Y.
+
+Matematicamente essas relações correspondem a
+
+H0 : β1 = 0,
+Ha : β1 6= 0.
+
+Caso a hipótese nula seja verdadeira o valor predito será constante e dado por
+ˆp(xi) = ¯y = n1/n, em que n representa o tamanho da amostra e n1 o número de eventos
+em que a variável resposta é igual a 1. Podem-se usar vários critérios na avaliação do teste
+de hipóteses, aqui serão citados e apresentados três: estatística G, teste de Wald e teste
+Score (JR; LEMESHOW; STURDIVANT, 2013).
+
+3.2.1.1 Estatística G
+
+O primeiro critério apresentado será o da estatística G. Em regressão linear eram
+comparados os valores de SQT ot com os valores de SQReg, para uma medição de quão
+mais acurado é o modelo que inclui a variável independente através da diminuição dos
+erros de predição. No caso da função logística a comparação será feita através da diferença
+do logaritmo natural da função de verossimilhança dos modelos com e sem a variável
+preditiva sob estudo. Iniciam-se os cálculos com a de razão de verossimilhança (r) que é
+
+Capítulo 3. Regressão Logística Simples
+
+dada pela expressão
+
+r = l(modelo ajustado)
+l(modelo saturado).
+
+41
+
+(3.10)
+
+No cálculo da razão de verossimilhança pela equação (3.10) se faz uma comparação
+entre a verossimilhança do modelo ajustado e a verossimilhança do modelo saturado, que
+pode ser entendido como contendo tantas variáveis quanto o tamanho da amostra. Assim, a
+resposta prevista pelo modelo saturado é numericamente igual ao próprio valor observado.
+
+Para calcular o valor utilizado como critério na análise realizada no teste de hipótese,
+faz-se o cálculo e uso do produto de menos duas vezes o logaritmo natural da razão de
+verossimilhança, chamado desviância (D) (PAULINO et al., 2011). A saber
+
+D = −2 log
+
+" l( modelo ajustado)
+l(modelo saturado)
+
+#
+
+.
+
+(3.11)
+
+O produto pelo fator (– 2) e a aplicação do logaritmo natural na equação (3.10) para
+obter a equação (3.11), se deve ao fato de que esta transformação leva a uma distribuição
+conhecida, a qui-quadrado com um grau de liberdade, ao se comparar os modelos obtidos
+com e sem a variável independente (JR; LEMESHOW; STURDIVANT, 2013).
+
+Para problemas em que a variável resposta tem natureza dicotômica, a verossimi-
+
+lhança do modelo saturado é 1, pois uma vez que ˆp(xi) = yi
+
+yi = 0 : [p(xi)]yi[1 − p(xi)]1−yi = [0]0 ∗ [1 − 0](1−0) = 1
+
+e caso
+
+yi = 1 : [p(xi)]yi[1 − p(xi)]1−yi = [11] ∗ [1 − 1](1−1) = 1
+
+e por isso, o cálculo da verossimilhança em que se usa a Equação (3.5) para o modelo
+saturado é
+
+l(modelo saturado) =
+
+n
+Y
+
+[p(xi)]yi[1 − p(xi)]1−yi = 1.
+
+i=1
+
+Assim, a equação (3.11) ﬁca
+
+D = −2 log [l(modelo ajustado)] .
+
+(3.12)
+
+O cálculo da desviância em regressão logística é comparável ao cálculo de SQReg
+em regressão linear e, através deste cálculo, se terá uma medição de quão melhor ajustados
+aos dados o modelo que contém a variável independente é quando comparado ao modelo
+que não a contém. A desviância tem um papel importante na medição da qualidade de
+ajuste do modelo (JR; LEMESHOW; STURDIVANT, 2013).
+
+Capítulo 3. Regressão Logística Simples
+
+42
+
+Subtraindo os valores de desviância dos modelos de regressão logística com e sem a
+
+variável independente será obtido um valor de estatística G
+
+G = D(modelo ajustado sem a variável) − D(modelo ajustado com a variável).
+
+Logo, da equação (3.12), segue que
+
+G = −2 log
+
+" l( modelo ajustado sem a variável)
+l(modelo ajustado com a variável)
+
+#
+
+.
+
+(3.13)
+
+Para problemas de classiﬁcação em que a variável resposta é dicotômica, para o
+modelo ajustado sem a variável independente, tem-se a partir da equação (3.7) que o
+estimador ˆβ0 é dado por
+
+n
+X
+
+[yi − p(xi)] = 0
+
+i=1
+
+n1 − n
+
+1
+= 0
+1 + e− ˆβ0
+⇒ e− ˆβ0 = n0
+n1
+
+em que n é o tamanho da amostra, n1 o número de ocorrências em que yi = 1, n0 o número
+de ocorrências em que yi = 0 e n o número totao de ocorrências e por isso n = n0 + n1.
+Finalmente
+
+ˆβ0 = log n1
+n0
+
+,
+
+(3.14)
+
+Calculando o log-verossimilhança do modelo ajustado sem a variável, ou seja, para a
+situação em que ˆβ1 = 0 e ˆβ0 = log n1
+n0
+
+L( ˆβ0, ˆβ1) =
+
+n
+X
+
+i=1
+
+[yi log(p(xi)) + (1 − yi) log(1 − p(xi))]
+
+=n1 log
+
+=n1 log
+
+  1
+
+!
+
+1 + n0
+n1
+(cid:19)
++ n0 log
+
+(cid:18) n1
+n
+
+(cid:19)
+
+(cid:18) n0
+n
+
++ n0 log
+
+(cid:18)
+
+1 −
+
+(cid:19)
+
+n1
+n
+
+=n1 log(n1) + n0 log(n0) − n log(n)
+
+Com isso, a equação (3.13) ﬁca
+
+G = 2
+
+" n
+X
+
+#
+[yi log(ˆp(xi)) + (1 − yi) log(1 − ˆp(xi))] − [n1 log(n1) + n0 log(n0) − n log(n)]
+
+.
+
+i=1
+
+(3.15)
+
+Capítulo 3. Regressão Logística Simples
+
+43
+
+Para o problema apresentado no Exemplo 3.1 o logaritmo natural da verossimilhança
+para o modelo ajustado com a variável independente é dado como resultado pelo software
+R e vale −53, 677. Ainda da Tabela 7, tem-se que n = 100, n1 = 43 e n0 = 57. Portanto, o
+valor da estatística G apresentado na equação (3.15) é
+
+G = 2 [−53, 677 − [43 log(43) + 57 log(57) − 100 log(100)]]
+
+= 29, 31.
+
+O valor − p associado a G = 29, 31 é muito menor do que 0, 005, uma vez que o
+valor crítico associado a α = 0, 005 é de 7, 882 (DEVORE, 2010). Por isso, da Tabela 6
+pode-se concluir que a variável independente idade é signiﬁcativa na predição da presença
+de doença cardíaca.
+
+3.2.1.2 Teste Wald
+
+O teste Wald é análogo ao que foi feito no modelo de regressão linear, em que se
+supõe que o parâmetro β1 tenha valor nulo, e se faz a análise do valor da estatística de
+Wald (W )
+
+W =
+
+ˆβ1
+ˆσ( ˆβ1)
+
+(3.16)
+
+que pode ser entendido como uma medição de quanto ˆβ1 está distante do zero em
+quantidades de desvio padrão estimado para ˆβ1. A distribuição dada por W na equação
+(3.16) segue uma distribuição padrão normal e a ela está associado um valor − p da
+distribuição bicaudal que representa a probabilidade de P (|z| > W ). Para baixos valores
+de valor − p entende-se que o valor de W é pouco provável e, por isso, a hipótese nula
+pode ser descartada. Pode-se usar a Tabela 6 na decisão da rejeição ou não da hipótese
+nula.
+
+Para o problema apresentado no Exemplo 3.1 e usando os valores apresentados por
+(TSUCHIYA, 2002), o valor de ˆσ( ˆβ1) = 0, 024 é dado pelo software R. Por isso, o valor da
+estatística W = 4, 61 leva a um valor − p muito menor do que 0, 001 donde se conclui que
+há fortíssimas evidências para a rejeição da hipótese nula. O valor crítico associado ao
+valor − p = 0, 001 é de 3, 49 (DEVORE, 2010).
+
+3.2.1.3 Teste de Escores
+
+Outro critério usado para a validação ou rejeição da hipótese nula é dado pelo
+teste de escores (PAULINO et al., 2011). Como vantagem deste teste pode ser citado seu
+baixo esforço computacional. O critério será aplicado sobre a distribuição condicional das
+derivadas parciais do logaritmo da função de verossimilhança. A análise será feita sobre
+a distribuição de (3.7) dada a (3.8). Para o caso da variável resposta ser dicotômica e
+
+Capítulo 3. Regressão Logística Simples
+
+44
+
+da suposição da hipótese nula de que o parâmetro β1 = 0 e ainda da equação (3.14), a
+estatística do teste de escores, chamada de estatística de escores (ST ) é calculada
+
+ST =
+
+em que ¯y = n1
+n
+
+.
+
+i=1 xi(yi − ¯y)
+
+Pn
+q¯y(1 − ¯y) Pn
+
+i=1
+
+(xi − ¯x)2
+
+,
+
+(3.17)
+
+A estatística ST segue uma distribuição normal padrão e a análise do valor − p
+
+será feita da mesma forma que para o teste Wald.
+
+Para o problema apresentado no Exemplo 3.1 o valor da estatística ST = 5, 14
+que leva a um valor − p muito menor do que 0, 001. Da Tabela 6 pode-se concluir que há
+evidências fortíssimas para a rejeição da hipótese nula.
+
+De forma análoga ao procedimento que foi realizado em regressão linear, após a
+determinação da relevância dos estimadores na predição da variável resposta, procede-se à
+construção de intervalos de conﬁança para os estimadores e também para a função logito
+e consequentemente para predições individuais.
+
+3.2.2 Intervalos de Conﬁança para os Parâmetros
+
+Os intervalos de conﬁança serão construídos da seguinte maneira
+
+e
+
+IC(β1, α) = ˆβ1 ± ˆσ( ˆβ1)z1− α
+
+2
+
+,
+
+IC(β0, α) = ˆβ0 ± ˆσ( ˆβ0)z1− α
+
+2
+
+(3.18)
+
+(3.19)
+
+em que z1− α
+curva de distribuição normal de forma análoga à apresentada na Figura 5.
+
+é o valor critico superior atrelado a (cid:16)1 − α
+
+(cid:17) que está associado à área sob a
+
+2
+
+2
+
+Para o problema apresentado no Exemplo 3.1 serão apresentados os valores de
+= 0, 1, com conﬁança de 95%, o valor
+
+intervalo de conﬁança dos estimadores. Para α
+2
+crítico z associado é de z = 1, 96 e assim
+
+IC(β1, α) = 0, 111 ± 0, 0241 ∗ 1, 96
+= 0, 111 ± 0, 047,
+
+IC(β0, α) = −5, 309 ± 1, 1337 ∗ 1, 96
+= −5, 309 ± 2, 222.
+
+Assim sendo, há 95% de probabilidade de que o parâmetro β1 esteja no intervalo [0, 064, 0, 158]
+e de que o parâmetro β0 esteja no intervalo [−7, 531, −3, 087].
+
+Capítulo 3. Regressão Logística Simples
+
+45
+
+3.2.3 Intervalo de Conﬁança para a Função Logito e para as Predições
+
+Dados os estimadores ˆβ0 e ˆβ1 é possível calcular o estimador da função logito
+
+com variância
+
+ˆg(xi) = ˆβ0 + xi
+
+ˆβ1
+
+V (ˆg(xi)) = ˆσ2
+ˆβ0
+
++ (xi)2ˆσ2
+ˆβ1
+
++ 2xi
+
+ˆCov( ˆβ0, ˆβ1).
+
+(3.20)
+
+Os valores de variância e covariância serão os obtidos pelo uso de softwares como
+R e lidos em uma matriz de covariância. Para um estudo mais aprofundado buscar (JR;
+LEMESHOW; STURDIVANT, 2013). É possível notar que o estimador de variância da
+função logito dado pela equação (3.20) depende do valor da variável independente.
+
+Enﬁm, pode-se representar o intervalo de conﬁança da função logito como
+
+IC(g(xi), α) = ˆg(xi) ± ˆσˆg(xi)z1− α
+
+2
+
+2
+
+é o valor critico superior atrelado a (cid:16)1 − α
+
+(cid:17) que está associado à área sob a
+em que z1− α
+curva de distribuição normal. Assim sendo, ao se usar os valores limites de IC(g(xi), α)
+é possível calcular o intervalo de conﬁança para p(xi) dado um valor (xi) de variável
+independente.
+
+2
+
+Para o problema do Exemplo 3.1, os valores dos estimadores de variâncias e
+
+covariâncias de ˆβ1 e ˆβ0 estão representados na Tabela 8.
+
+Tabela 8 – Estimadores de variâncias e de covariância de ˆβ1 e ˆβ0 para o problema apresen-
+
+tado no Exemplo 3.1.
+
+ˆβ1
+0,000579
+-0,026677
+
+ˆβ1
+ˆβ0
+
+ˆβ0
+
+1,28517
+
+Fonte: (JR; LEMESHOW; STURDIVANT, 2013).
+
+Desta maneira, para pacientes com idade de 40 anos
+
+ˆg(40) = −5, 309 + 0, 111 ∗ 40 = −0, 869
+ˆp(40) = e(−0,869)/1 + e(−0,869) = 0, 295
+
+ou seja, a probabilidade de que haja presença de doença cardíaca em pacientes de 40 anos
+de idade é em média de ˆp(40) = 0, 295, que representa sua estimativa pontual. Calculando
+a chance pela equação (3.2) para esta estimativa tem-se que Z ≈ 4
+o que pode ser
+10
+interpretado como este evento tendo chance de ocorrência de 4 em 10.
+
+Capítulo 3. Regressão Logística Simples
+
+46
+
+Procede-se ao cálculo de ˆσˆg(40) usando a equação (3.20) e os dados apresentados na
+
+Tabela 8
+
+ˆσ2
+ˆg(40)
+
+= 1, 285 + (402) ∗ 0, 000579 + 2 ∗ 40 ∗ (−0, 0267)
+= 0, 0754
+ˆσˆg(40) = 0, 275.
+
+Deste modo, o intervalo de conﬁança da função logito com 95% de conﬁança é dado por
+
+IC(g(40), 0, 1) = ˆg(40) ± ˆσˆg(40)z0,95
+= −0, 869 ± 0, 275
+
+Portanto, há 95% de probabilidade de que o valor da função logito g(40) esteja no intervalo
+[−1, 114, −0, 594]. Por ﬁm, efetua-se o cálculo do intervalo de conﬁança de p(40) usando
+os limites do intervalo de conﬁança de g(40). Assim sendo
+
+e(−1,114)/1 − e(−1,114) ≤ p(40) ≤ e(−0,594)/1 − e(−0,594)
+0, 241 ≤ p(40) ≤ 0, 356
+
+Calculando a chance pela equação (3.2) para os limites do intervalo de conﬁança
+
+de p(40) tem-se que
+
+que pode ser interpretado como este evento tendo chance de ocorrência de 3 para 10, e
+
+p(40) = 0, 241 ⇒ Z ≈
+
+3
+10
+
+p(40) = 0, 356 ⇒ Z ≈
+
+5
+10
+
+que pode ser interpretado como este evento tendo chance de ocorrência de 5 para 10.
+
+Logo, procedendo de forma análoga a que foi feita para um paciente de 40 anos
+é possível realizar a predição de presença de doença cardíada em pacientes de qualquer
+idade.
+
+4 Sequência Didática
+
+47
+
+Nesta seção será apresentada uma sequência didática através da qual serão aplicados
+
+os conceitos abordados no Capítulo 2.
+
+Serão estudados dados de observações de valores de média semanal de publicações
+de vídeos de um canal do Youtube, bem como a quantidade de visualizações dos vídeos
+neste mesmo período. A escolha do problema foi feita de modo a estimular o engajamento
+dos alunos na atividade, visto que se trata de um assunto de grande interesse por parte
+deles. Seguindo o passo a passo proposto, ao ﬁnal das atividades o aluno terá calculado
+o modelo de regressão linear (reta de mínimos quadrados) que relacione as grandezas
+apresentadas, bem como terá feito a análise do modelo calculado.
+
+É importante que os estudantes tenham contato com esse tipo de conteúdo ainda na
+escola como forma de consolidar os conceitos já aprendidos e compreender a aplicabilidade
+de tais conceitos em situações práticas.
+
+4.1 Tema
+
+Introdução de conceitos de Regressão Linear como motivação para aprofundamento
+
+em Aprendizado de Máquina.
+
+4.2 Conteúdo Abordado
+
+Conceitos de Estatística: população, amostra, média, parâmetros, estimadores.
+
+Regressão Linear Simples: diagrama de dispersão, estimação pelo Método dos
+
+Mínimos Quadrados, resíduos, R2.
+
+4.3 Objetivo
+
+• Identiﬁcar relação linear através da análise de gráﬁco de dispersão.
+
+• Calcular reta de mínimos quadrados.
+
+• Compreender o signiﬁcado de cada um dos estimadores da reta.
+
+• Compreender os critérios de avaliação de proximidade de cada estimador em relação
+
+aos respectivos parâmetros.
+
+• Saber aplicar e interpretar esses critérios em um exemplo.
+
+Capítulo 4. Sequência Didática
+
+48
+
+• Despertar interesse no aprofundamento dos estudos em aprendizado de máquina, por
+meio da percepção de como este tema está inserido em atividades de seus interesses.
+
+4.4 Público Alvo
+
+Alunos do Ensino Médio, por já terem sido apresentados aos conteúdos de funções
+
+aﬁns no nono ano.
+
+4.5 Recursos Usados
+
+Computador, datashow, quadro.
+
+4.6 Descrição das Atividades
+
+• Apresentação dos conceitos de Estatística necessários com ilustração através de
+
+exemplos.
+
+• Apresentação do conceito de gráﬁco de dispersão e inferência de relação linear entre
+variáveis independente e dependente, aplicando os conceitos no exemplo enunciado.
+
+• Apresentação do método dos mínimos quadrados e cálculo e interpretação de cada
+
+parâmetro, aplicando os conceitos no exemplo enunciado.
+
+• Compreensão do impacto da amostra usada nos valores de parâmetros estimados
+(usando subconjuntos dos dados amostrais do exemplo para perceber impacto).
+
+• Análise de exatidão dos coeﬁcientes e modelo desenvolvidos, aplicando os conceitos
+
+no exemplo enunciado.
+
+• Elaboração de relatório com os resultados obtidos das atividades previamente desen-
+
+volvidas.
+
+4.7 Avaliação
+
+Relatório contendo as atividades desenvolvidas e respostas das perguntas propostas.
+
+4.8 Desenvolvimento
+
+A ﬁm de aumentar o número de visualizações em seu canal do Youtube, um
+Youtuber realizou a coleta dos seguintes pares de dados para avaliar qual estratégia tomar:
+
+Capítulo 4. Sequência Didática
+
+49
+
+média de publicações semanais e número de visualizações dos vídeos do canal, tempo de
+duração médio dos vídeos e número de visualizações dos vídeos do canal, percentual de
+tempo de vídeo gasto fazendo propaganda e número de visualizações dos vídeos do canal.
+Os dados obtidos são apresentados nas tabelas Tabela 9, Tabela 10 e Tabela 11.
+
+Tabela 9 – Dados de média semanal de publicações e centenas de visualizações dos vídeos
+
+Observação(i) Média semanal de publicações Centenas de visualizações
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+
+0,40
+0,42
+0,48
+0,51
+0,57
+0,60
+0,70
+0,75
+0,75
+0,78
+0,84
+0,95
+0,99
+1,03
+1,12
+1,15
+1,20
+1,25
+1,25
+1,28
+
+0,50
+0,91
+1,09
+1,38
+1,56
+1,55
+1,52
+1,91
+1,34
+1,84
+1,50
+2,39
+1,89
+2,55
+2,10
+2,72
+2,58
+2,61
+2,92
+2,96
+
+Fonte: Autor.
+
+Pede-se que o discente proceda às seguintes atividades
+
+• Faça o gráﬁco de dispersão linear.
+
+– É possível inferir que há relação linear entre as variáveis?
+
+• Encontre os valores dos estimadores ˆβ0 e ˆβ1 pelo método dos mínimos quadrados.
+
+• Calcule os valores dos estimadores para as amostras dadas pelo seguintes subconjuntos
+de dados: os dez primeiros pares ordenados, os dez últimos pares ordenados, 10 pares
+ordenados de sua escolha (diferentes dos dois primeiros).
+
+• Para a amostra completa, calcule a soma dos quadrados dos resíduos (SQRes), soma
+
+dos quadrados total (SQT ot) e soma dos quadrados da regressão (SQReg).
+
+• Estime a variância e o desvio padrão de cada um dos estimadores e explique o
+
+signiﬁcado destes valores.
+
+Capítulo 4. Sequência Didática
+
+50
+
+• Calcule o valor de R2 para o modelo encontrado e explique o signiﬁcado do valor
+
+encontrado.
+
+Espera-se que os gráﬁcos de dispersão elaborados sejam os apresentados nas ﬁguras
+.... . Da análise das ﬁguras ... espera-se que o aluno perceba que não há relação linear
+entre as grandezas e por isso não construa o modelo de regressão linear. Da análise da
+ﬁgura... espera-se que o aluno perceba a tendência de relação linear entre as variáveis e
+por isso proceda à construção do modelo.
+
+Para encontrar os valores dos estimadores ˆβ0 e ˆβ1 para a amostra de tamanho 20 e
+
+para seus subconjuntos pelo método dos mínimos quadrados serão usadas as equações
+
+ˆβ1 =
+
+Σn
+
+i=1
+
+(xi − ¯x)(yi − ¯y)
+(xi − ¯x)2
+Σn
+
+i=1
+
+e
+
+ˆβ0 = ¯y − ˆβ1 ¯x
+
+Para calcular a soma dos quadrados dos resíduos (SQRes), soma dos quadrados
+
+total (SQT ot) e soma dos quadrados da regressão (SQReg)
+
+SQRes =
+
+n
+X
+
+i=1
+
+[yi − ( ˆβ0 + ˆβ1xi)]2
+
+e SQT ot =
+
+n
+X
+
+[yi − ¯y]2
+
+i=1
+
+SQReg = SQT ot − SQRes
+
+A ﬁm de estimar a variância e o desvio padrão de cada um dos estimadores serão
+
+usadas as equações
+
+ˆσ2
+e
+
+= SQRes
+n − 2
+
+e
+
+ˆσ2 = SQT ot
+n − 1
+
+Com o intuito de calcular o valor de R2 faz-se
+
+R2 = SQReg
+SQT ot
+
+Os valores de cada uma das grandezas calculadas estão listados na tabela 12.
+
+Através da análise de SQRes, SQT ot e de SQReg, espera-se que o aluno perceba
+que o modelo que inclui a variável independente é melhor do que o modelo que não a
+inclui, dado que SQRes < SQT ot. Espera-se ainda que ele perceba que SQReg é uma
+medida de tal melhoria.
+
+Da comparação entre ˆσ2
+e
+
+e ˆσ2, espera-se que o aluno compreenda que como ˆσ2
+
+e < ˆσ2,
+
+o modelo que inclui a variável independente gerará predições mais acuradas.
+
+Da análise do valor de R2 espera-se que o aluno conclua que o modelo que inclui a
+
+variável independente explica 88% da variabilidade na resposta.
+
+Capítulo 4. Sequência Didática
+
+51
+
+Tabela 10 – Dados de tempo em minutos do vídeo publicado e centenas de visualizações
+
+dos vídeos
+
+Observação(i) Tempo (min) Centenas de visualizações
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+
+1,00
+1,00
+1,20
+1,80
+2,10
+2,70
+2,70
+3,00
+4,00
+4,00
+4,00
+4,20
+4,50
+4,50
+4,80
+4,80
+4,80
+5,10
+5,40
+5,70
+6,00
+6,50
+6,90
+7,00
+7,50
+7,50
+7,80
+8,20
+8,40
+9,50
+9,50
+9,50
+9,90
+10,30
+11,20
+11,50
+12,00
+12,50
+12,50
+12,80
+
+Fonte: Autor.
+
+0,62
+1,00
+0,89
+0,82
+1,07
+1,19
+0,83
+0,98
+1,40
+0,55
+1,53
+1,51
+1,53
+0,90
+1,25
+1,34
+0,94
+1,97
+1,30
+2,15
+1,28
+2,06
+1,53
+2,05
+1,98
+1,96
+1,75
+2,19
+1,80
+1,16
+1,16
+0,98
+1,76
+1,71
+0,64
+1,33
+1,06
+0,19
+0,31
+0,03
+
+Capítulo 4. Sequência Didática
+
+52
+
+Tabela 11 – Dados de percentual de tempo de propaganda no vídeo e centenas de visuali-
+
+zações dos vídeos
+
+Observação(i) Percentual de propaganda Centenas de visualizações
+
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+
+0,11
+0,13
+0,18
+0,20
+0,25
+0,27
+0,31
+0,33
+0,35
+0,37
+0,38
+0,39
+0,40
+0,40
+0,41
+0,45
+0,46
+0,47
+0,48
+0,50
+0,54
+0,57
+0,60
+0,68
+0,70
+0,74
+0,78
+0,80
+
+Fonte: Autor.
+
+0,69
+0,91
+1,83
+2,38
+3,44
+3,80
+3,96
+3,83
+3,57
+3,05
+3,01
+2,76
+2,46
+2,31
+2,19
+1,39
+1,18
+0,96
+0,86
+0,56
+0,21
+0,09
+0,04
+0,00
+0,00
+0,00
+0,00
+0,00
+
+Tabela 12 – Valores calculados do modelo de regressão linear em que se relaciona o número
+
+de publicações semanais com o número de visualizações.
+ˆβ1
+2,19
+ˆσ2
+e
+0,064
+
+SQRes SQT ot
+
+SQReg
+8,07
+
+1,15
+ˆσ2
+0,48
+
+ˆβ0
+0,03
+
+R2
+0,88
+
+9,21
+
+5 Conclusão
+
+53
+
+Inicialmente mostrou-se a importância e aplicabilidade dos algoritmos de aprendi-
+zado de máquina como uma forma de motivação, e também de responder ao questionamento
+do para quê servem os assuntos abordados em sala de aula na matemática.
+
+Foram apresentados conteúdos de regressão linear e logística como uma forma de
+mostrar aplicabilidade dos conceitos já aprendidos em sala de aula, tais como probabilidade
+e funções aﬁns. A apresentação de tais assuntos vem como incentivo para aprofundamento
+dos pontos já abordados em sala bem como trazer signiﬁcado para os conceitos aprendidos
+muitas vezes de forma mais abstrata. Assim, este trabalho serve de base para o aprendizado
+e compreensão mais ampla do que são algoritmos de aprendizado de máquina bem como
+trabalha no sentido de uma aprendizagem de conteúdos já ministrados em sala de maneira
+mais signiﬁcativa. É possível passar para os alunos uma noção dos cálculos realizados
+para a construção dos modelos de regressão linear a ﬁm de desmistiﬁcar a diﬁculdade
+em matemática e também mostrar aplicações como forma de motivação de estudo e
+aprendizado neste campo da ciência, mostrando de forma concreta aplicações de conceitos
+muitas vezes abstratos aprendidos em sala de aula.
+
+Sugestões de trabalhos futuros seriam a aplicação da sequência didática proposta
+e aprofundamento dos estudos em regressão logística, assim como o desenvolvimento de
+algoritmos em Python e uso de softwares como o R na resolução dos problemas apresentados
+e ainda como uma ferramenta que permita lidar com bases de dados maiores. Acredita-se
+que o uso de tais ferramentas possa gerar um maior engajamento e motivação dos alunos.
+Outra proposta seria a aplicação de algoritmos de regressão logística na predição de
+aprovação ou reprovação de alunos em disciplinas com altas taxas de reprovação, baseado
+em notas de disciplinas anteriores ou de testes de nivelamento para geração de planos de
+ação para mitigação de tais questões, em que os conhecimentos seriam utilizados como
+ferramenta no próprio processo de ensino.
+
+Enﬁm, acredita-se que a abordagem destes assuntos em salas de aula do ensino
+médio possa contribuir para a formação de competências e habilidades mais amplas nos
+discentes, assim como dar início no processo de alocação proﬁssional dos alunos que se
+engajarem e se interessarem por este ramo da ciência. Além disso, espera-se que a aplicação
+de algoritmos de aprendizado de máquina possa servir como ferramenta pelos próprios
+docentes.
+
+Referências
+
+54
+
+ALPAYDIN, E. Introduction to Machine Learning. 3. ed. Cambridge: MIT Press, 2014.
+Citado 2 vezes nas páginas 10 e 12.
+
+BERTENS, P. et al. A machine-learning item recommendation rystem for video games. In:
+CONFERENCE ON COMPUTATIONAL INTELLIGENCE AND GAMES (CIG), 2018,
+Maastricht. 2018 IEEE Conference on Computational Intelligence and Games (CIG).
+IEEE, 2018. p. 1–4. Disponível em: <https://ieeexplore.ieee.org/document/8490456>.
+Acesso em: 16 jul. 2021. Citado na página 13.
+
+BISHOP, C. M. Pattern Recognition and Machine Learning. Nova York: Springer, 2006.
+Citado na página 39.
+
+BRAGA, A. de P.; FERREIRA, A. C. P. de L.; LUDERMIR, T. B. Redes Neurais
+Artiﬁciais: Teorias e aplicações. Rio de Janeiro: LTC, 2007. Citado na página 11.
+
+BURKOV, A. The Hundred-Page Machine Learning Book. Quebec: Andriy Burkov, 2019.
+Citado na página 10.
+
+CORREA, M. S. B. B. Probabilidade e Estatística. 2. ed. Belo Horizonte: PUC Minas
+Virtual, 2003. Citado na página 17.
+
+DEVORE, J. L. Probabilidade e Estatística para Engenharia e Eiências. São Paulo:
+Cengage Learning Edições Ltda, 2010. Citado 5 vezes nas páginas 15, 30, 34, 43 e 57.
+
+EFRON, B.; GOUS, A. Technical Report. Bayesian and Frequentist Model Selection.
+Califórnia, 1997. Citado na página 31.
+
+FÁVERO, L. P. et al. Análise de Dados: Modelagem Multivariada para Tomada de
+Decisões. Rio de Janeiro: Elsevier, 2009. Citado na página 36.
+
+GEISLER, B. Integrated machine learning for behavior modeling in video games. In: THE
+NINETEENTH NATIONAL CONFERENCE ON ARTIFICIAL INTELLIGENCE, 2004,
+São José. Proceedings [...]. Menlo Park: AAAI Press, 2004. p. 54–62. Citado na página 13.
+
+GUIDORIZZI, H. L. Um Curso de Cálculo. Rio de Janeiro: LTC Editora, 1998. v. 2.
+Citado na página 15.
+
+HASTIE, T.; TIBSHIRANI, R.; FRIEDMAN, J. The Elements of Statistical Learning.
+Nova York: Springer, 2009. (Springer Series in Statistics). Citado na página 13.
+
+JAMES, G. et al. An Introduction to Statistical Learning: with applications in r. Nova
+York: Springer, 2013. (Springer Texts in Statistics). Citado 3 vezes nas páginas 34, 37
+e 57.
+
+JR, D. W. H.; LEMESHOW, S.; STURDIVANT, R. X. Applied logistic regression. Nova
+Jersey: John Wiley & Sons, 2013. Citado 6 vezes nas páginas 10, 35, 37, 40, 41 e 45.
+
+KUTNER, M. H. et al. Applied Linear Statistical Models, 2005. Nova York: McGraw Hill
+Irwin, 2005. Citado na página 24.
+
+Referências
+
+55
+
+MORETTIN, P. A.; BUSSAB, W. O. Estatística básica. Sao Paulo: Saraiva, 2010. Citado
+9 vezes nas páginas 15, 25, 26, 27, 28, 33, 34, 37 e 57.
+
+PAULINO, C. et al. Glossário Inglês-Português de Estatística. 2. ed. [S.l.]: Sociedade
+Portuguesa de Estatística e Associação Brasileira de Estatística, 2011. Citado 3 vezes nas
+páginas 37, 41 e 43.
+
+REIS, E. A.; REIS, I. A. Relatório Técnico do Departamento de Estatística
+da UFMG. Análise descritiva de dados. Belo Horizonte, 2002. Disponível em:
+<http://www.est.ufmg.br/>. Citado na página 57.
+
+TSUCHIYA, Í. Regressão Logística Aplicada na Análise Espacial de Dados Arqueológicos.
+Dissertação (Mestrado em Ciências Cartográﬁcas) — Universidade Estadual Paulista
+(UNESP), Presidente Prudente, 2002. Citado 4 vezes nas páginas 34, 35, 38 e 43.
+
+Apêndices
+
+APÊNDICE A – Conceitos Estatísticos
+Preliminares
+
+57
+
+Abaixo serão apresentadas deﬁnições estatísticas usadas ao longo texto. As deﬁnições
+foram retiradas das referências (DEVORE, 2010), (MORETTIN; BUSSAB, 2010), (REIS;
+REIS, 2002) e (JAMES et al., 2013).
+
+Deﬁnição A.1 (População). Uma população pode ser deﬁnida como o conjunto ou uma
+coleção bem deﬁnida de todos os elementos de interesse em um estudo.
+
+Deﬁnição A.2 (Amostra). Uma amostra é constituída por qualquer subconjunto da
+população.
+
+Deﬁnição A.3 (Parâmetro). Um parâmetro é uma medida usada para descrever uma
+característica da população.
+
+Deﬁnição A.4 (Estatística). Uma estatística é uma característica da amostra.
+
+Deﬁnição A.5 (Estimador). Um estimador de um parâmetro θ é uma função que tem
+como domínio dados amostrais.
+
+É importante ainda deﬁnir a distribuição amostral do estimador T do parâmetro θ.
+
+Deﬁnição A.6 (Distribuição Amostral). Ao se tomar todas as amostras possíveis de
+uma população de acordo com o critério adotado e para cada uma delas se calcular o
+valor do estimador T (chamado de estimativa), tem-se a distribuição amostral de T . Uma
+representação gráﬁca pode ser observada na Figura 10.
+
+Deﬁnição A.7 (Distribuição amostral da média). Seja uma população da qual se conhecem
+os parâmetros de média populacional µ e variância σ2. Seja ¯X. Tomadas todas as amostras
+aleatórias simples e com reposição de tamanho n desta população e calculados os valores
+da estatística média amostral ¯X, pode-se aﬁrmar
+
+E( ¯X) = µ
+σ2( ¯X) = σ2
+n
+
+.
+
+Teorema A.8 (Teorema do Limite Central). À medida que o tamanho n das amostras
+aumenta a distribuição amostral das médias tende a uma distribuição normal de média
+E( ¯X) = µ e de variância σ2( ¯X) = σ2
+n
+população.
+
+e tal tendência independe da distribuição da
+
+APÊNDICE A. Conceitos Estatísticos Preliminares
+
+58
+
+Figura 10 – Distribuição Amostral de um Estimador
+
+Fonte: Autor.
+
+Deﬁnição A.9 (Viés). Sobre critérios de proximidade de um estimador em relação ao
+parâmetro estimado, um estimador é chamado de não-viesado se
+
+E(T ) = θ.
+
+Caso a proposição acima não seja verdadeira, o estimador é chamado viesado e o viés de t
+V (T ) é dado por
+
+V (T ) = E(T ) − θ.
+
+Deﬁnição A.10 (Linha de regressão populacional). A linha de regressão populacional
+é a melhor aproximação linear da verdadeira relação entre as variáveis independente e
+dependente.
+
+Deﬁnição A.11 (Diagrama de dispersão). O diagrama de dispersão é um gráﬁco em que
+pontos do espaço cartesiano são usados para representar simultaneamente os valores de
+duas variáveis quantitativas em cada elemento do conjunto de dados amostrais.
+
+

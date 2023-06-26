@@ -1,0 +1,1870 @@
+2014: Trabalho de Conclus˜ao de Curso do Mestrado Proﬁssional em Matem´atica - PROFMAT
+Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+Sociedade Brasileira de Matem´atica - SBM
+
+CRIPTOGRAFIA RSA
+TEORIA E PR ´ATICA NUMA ABORDAGEM MOTIVACIONAL
+
+Jorge Luiz Vares Raposo 1
+Juan Carlos Zavaleta Aguilar2
+
+Resumo: Esse trabalho aborda conceitos da Teoria de N´umeros como instrumentos da
+constru¸c˜ao te´orica da Criptograﬁa RSA. Recursos computacionais, onde s˜ao implementados
+o sistema de criptograﬁa RSA, s˜ao descritos com o intuito de motivar e complementar o
+aprendizado dos alunos da educa¸c˜ao b´asica.
+
+Palavras-chave: Teoria dos N´umeros. Criptograﬁa RSA. Maxima.
+
+1 Introdu¸c˜ao
+
+A hist´oria da humanidade est´a permeada por avan¸cos no conhecimento gerados por neces-
+sidades b´elicas. Sendo, infelizmente, uma constante na evolu¸c˜ao de todas as sociedades, a
+guerra traz em seu bojo a necessidade de um dos lados contendores sobrepujar a outra parte.
+Assim, a busca por inova¸c˜oes tecnol´ogicas, pr´aticas medicinais mais eﬁcazes, equipamentos
+mais resistentes e meios de comunica¸c˜oes mais seguros, elementos perenes nos campos de
+batalha, sempre contribu´ıram para o desenvolvimento das ciˆencias.
+O primeiro relato do uso de t´ecnicas de criptograﬁa na hist´oria vem justamente da necessidade
+de se transmitir informa¸c˜oes secretas no calor da guerra. Relatos d˜ao conta que o Imperador
+Romano, J´ulio C´esar (13 de julho, 100 a.C. - 15 de mar¸co de 44 a.C), utilizava-se de um
+sistema de codiﬁca¸c˜ao para se comunicar com suas tropas em campanha na Europa. Baseado
+na troca das letras de uma palavra pelas suas respectivas correspondentes, escolhidas a par-
+tir de um posicionamento pr´e-deﬁnido, ou uma chave de codiﬁca¸c˜ao, esse c´odigo funciona da
+seguinte maneira: suponha que cada letra da palavra ser´a substitu´ıda pela terceira letra na
+sequˆencia das letras do alfabeto, admitido com 23 letras. Assim, o A ser´a substitu´ıdo pelo D,
+o B, pelo E, e assim sucessivamente. Por exemplo, a palavra ATACAR seria escrita, usando
+essa codiﬁca¸c˜ao, como DXDFDU.
+Embora o c´odigo usado por C´esar pode ser considerado hoje como um sistema de f´acil de-
+cifragem, a id´eia de se usar m´etodos de oculta¸c˜ao de informa¸c˜ao prevaleceu e evoluiu ao ponto
+de chegar a ser, no presente, a principal ferramenta de seguran¸ca nas transa¸c˜oes executadas
+no maior avan¸co tecnol´ogico de comunica¸c˜ao das ´ultimas d´ecadas: a internet. Obviamente,
+tendo em vista a magnitude do alcance desse meio de comunica¸c˜ao, o sistema de codiﬁca¸c˜ao de
+
+1Aluno de Mestrado Proﬁssional em Matem´atica, Turma 2013
+
+Institui¸c˜ao: Universidade Federal de S˜ao Jo˜ao del-Rei - UFSJ
+E-mail: jorgelvr@ig.com.br
+
+2Orientador do Trabalho de Conclus˜ao de Curso
+
+Departamento de Matem´atica e Estat´ıstica - DEMAT, UFSJ
+E-mail: jaguilar@ufsj.edu.br
+
+informa¸c˜oes n˜ao poderia ser baseado em t´ecnicas simpl´orias, pass´ıveis de serem decodiﬁcadas
+indevidamente. ´E nesse contexto que surge o sistema de criptograﬁa RSA, assim batizada
+em homenagem a seus desenvolvedores (Ronald Rivest, Adi Shamir e Leonard Adleman),
+baseado inteiramente na Teoria dos N´umeros, ramo da Matem´atica que estuda as principais
+propriedades dos n´umeros inteiros [1].
+Esse trabalho tem por objetivos principais a abordagem dos conceitos fundamentais en-
+volvidos na elabora¸c˜ao da Criptograﬁa RSA, os quais muitas vezes n˜ao recebem a devida
+relevˆancia na educa¸c˜ao b´asica e a utiliza¸c˜ao de recursos computacionais em atividades de
+sala de aula, envolvendo esse sistema de criptagem, com vistas `a motiva¸c˜ao dos alunos no
+ensino da Matem´atica.
+
+2 Embasamento Te´orico
+
+O m´etodo de criptograﬁa conhecido como RSA baseia-se, como j´a mencionado na introdu¸c˜ao,
+na Teoria dos N´umeros. Muitos conceitos tratados nessa teoria s˜ao abordados no ensino
+fundamental, sobretudo nos anos intermedi´arios, 6o e 7o anos, sem, contudo, o aproveitamento
+desses conte´udos de forma mais elaborada. Muitas vezes, o que se observa ´e uma transmiss˜ao
+de regras, como para se calcular o m´ınimo m´ultiplo comum (mmc) ou o m´aximo divisor
+comum (mdc), meramente como ferramentas, sem a preocupa¸c˜ao com a interpreta¸c˜ao dos
+conceitos, bem como com a de suas utiliza¸c˜oes no dia-a-dia. H´a que se observar ainda
+que, em todo ensino m´edio, nada se trata sobre a Teoria dos N´umeros, ﬁcando relegada
+apenas `aquelas s´eries intermedi´arias no ensino fundamental. Uma consequˆencia imediata
+desse tratamento meramente algor´ıtmico ´e a diﬁculdade dos alunos em lidar com conceitos
+relativamente simples como n´umeros primos e n´umeros compostos, divisores e m´ultiplos,
+entre outros.
+A Teoria dos N´umeros trata particularmente dos n´umeros inteiros e das propriedades que
+envolvem esses n´umeros. N˜ao ´e o objetivo desse trabalho descrever toda essa teoria, mas,
+apenas aqueles conceitos indispens´aveis `a elabora¸c˜ao da criptograﬁa RSA.
+
+2.1 Divisores e M´ultiplos de um n´umero
+
+Sejam a,b e c n´umeros inteiros, tais que a = bc. Nessas condi¸c˜oes, diz-se que b e c dividem
+a (indica-se esse fato pela nota¸c˜ao b|a, c|a) ou ainda, a ´e m´ultiplo de b ou de c. Chama-se
+tamb´em b e c de fatores de a. Assim, veriﬁca-se, por exemplo, que 12 = 3.4, onde 3 e 4
+dividem 12. ´E interessante notar que 1 ´e fator de qualquer inteiro a, pois, a = 1.a.
+
+2.2 M´aximo Divisor Comum - Algoritmo de Euclides
+
+O conceito de m´aximo divisor comum (mdc) entre n´umeros recebe um tratamento muito tec-
+nicista na educa¸c˜ao b´asica, deixando a compreens˜ao relegada a um segundo plano. Veja, por
+exemplo, organizando-se em conjuntos distintos os divisores positivos de 90 e 24, encontrar-
+se-iam D(90) = {1, 2, 3, 5, 6, 9, 10, 15, 18, 30, 45, 90} e D(24) = {1, 2, 3, 4, 6, 8, 12, 24}. Assim,
+´e imediatamente veriﬁc´avel que 6 ´e o maior divisor comum entre 24 e 90. ´E poss´ıvel se
+explorar tamb´em o fato de que esses n´umeros possuem outros divisores comuns, levando-se
+em considera¸c˜ao inclusive, que quaisquer n´umeros que se tenham, sempre haver´a pelo menos
+o n´umero 1 como divisor comum.
+
+2
+
+2
+
+O processo de se listar todos os divisores de cada um dos n´umeros envolvidos na opera¸c˜ao pode
+ser bastante custoso, embora, nele se encerre o conceito de m´aximo divisor comum. Existem
+alguns processos que permitem encontrar o mdc entre n´umeros, dentre deles destaca-se o
+Algoritmo de Euclides. Esse algoritmo permite, al´em de encontrar o mdc entre os n´umeros
+analisados, escrevˆe-lo como uma combina¸c˜ao linear entre os n´umeros. Sejam a e b n´umeros
+inteiros e positivos. O m´aximo divisor comum entre a e b, utilizando-se Algoritmo de Euclides
+´e processado da seguinte forma:
+
+a = b.q1 + r1
+b = r1.q2 + r2
+(cid:5)
+(cid:5)
+(cid:5)
+rn−2 = rn−1.qn + rn ,
+
+onde rn = 0. O mdc( a, b) = rn−1
+Observe o exemplo j´a citado. Encontrando o m´aximo divisor comum entre 90 e 24, utilizando
+o Algoritmo de Euclides, tem-se que
+
+90 = 24.3 + 18
+24 = 18.1 + 6
+18 = 6.3 + 0
+
+Assim, o mdc(90, 24) = 6.
+Usando o tradicional processo pr´atico para o c´alculo do mdc entre 90 e 24, obt´em-se
+
+Sejam a e b n´umeros inteiros e c o m´aximo divisor comum entre eles.
+Ent˜ao,
+
+mdc(a, b) = c
+c = s.a + t.b,
+
+com s e t n´umeros inteiros.
+O interesse est´a em encontrar os valores de s e t, tais que
+
+Voltando ao exemplo j´a tratado.
+
+s.a + t.b = mdc(a, b).
+
+mdc(24, 90) = 6
+18 = 6.3 e 24 = 18. 1 + 6,
+onde 18 = 24 - 6.
+90 = 24.3+ 18
+90 = 24.3 + 24 - 6
+90 = 24.4 - 6 = (-1).90 + 4.24
+
+Logo, o mdc(24, 90) = 6 pode ser escrito como uma combina¸c˜ao linear entre 24 e 90, como
+se segue
+
+6 = (- 1).90 + 4.24.
+
+3
+
+3
+
+2.3 N´umeros Primos e N´umeros Compostos
+
+Quando se busca escrever um n´umero inteiro como um produto de fatores, procedimento
+conhecido como fatora¸c˜ao num´erica, o que se est´a buscando ´e a decomposi¸c˜ao desse n´umero
+inteiro, em fatores chamados primos. Os primos representam uma classe de n´umeros que
+se caracterizam da seguinte forma: seja p um n´umero primo, ent˜ao p 6= ±1 e p ´e divis´ıvel
+apenas por ±1 e ±p. Por outro lado, se um n´umero inteiro ´e diferente de ±1 e n˜ao ´e primo,
+ou seja, possui outros divisores, ent˜ao esse n´umero ´e chamado composto. Os n´umeros 2, 17,
+- 29 s˜ao primos, por´em, o n´umero 12 = 3.4, n˜ao ´e.
+
+2.4 Fatora¸c˜ao de n´umeros inteiros
+
+O sistema de criptograﬁa RSA utiliza-se de n´umeros primos para a cifragem de mensagens,
+portanto, determinar se um n´umero ´e primo ou n˜ao ´e de vital importˆancia para a utiliza¸c˜ao
+do processo mencionado. Obviamente, dadas as deﬁni¸c˜oes de n´umeros primos e n´umeros
+compostos acima descritas, parece, numa primeira an´alise, que basta veriﬁcar que o n´umero
+inteiro p ´e composto, ou seja, possui outros fatores primos al´em de ±1 e de ±p. Um processo
+bastante utilizado no ensino b´asico para se encontrar os fatores de um n´umero inteiro, con-
+siste em se veriﬁcar se esse n´umero ´e divis´ıvel pelos n´umeros primos, na sequˆencia crescente
+em que eles se apresentam, repetindo a opera¸c˜ao at´e que o ´ultimo quociente encontrado seja
+1. Esse ”algoritmo”pode ser visualizado no exemplo abaixo
+
+30 2
+15 3
+5
+5
+1
+
+Logo, o n´umero 30 pode ser escrito como o produto de seus fatores primos, ou seja,
+30 = 2.3.5, portanto, um n´umero composto.
+Embora esse processo seja bastante pr´atico ele carece de eﬁciˆencia `a medida que o n´umero
+analisado ´e relativamente grande e, al´em disso, o n´umero n˜ao seja divis´ıvel por nenhum dos
+n´umeros primos existentes entre 1 e 10. Isso torna a fatora¸c˜ao desse n´umero um processo
+mais diﬁcultoso, pois, n˜ao possuindo divisores entre os primos j´a mencionados, obviamente
+esse n´umero possuir´a, se possuir, fatores primos iguais ou superiores a 11. Veja o exemplo
+do n´umero 403. Ao se veriﬁcar seus poss´ıveis divisores entre os primos contidos entre 1 e 10,
+observa-se que nenhum deles ´e seu divisor, entretanto, 403 = 13.31, ou seja, um n´umero
+composto. O problema pr´atico est´a justamente em se determinar se dado um n´umero inteiro
+p, ele ´e primo ou n˜ao, quando o processo por fatora¸c˜ao utilizando os primos 2, 3, 5 e 7 como
+poss´ıveis divisores de p falha. Nesse contexto, h´a um processo conhecido como Crivo de
+Erat´ostenes que permite encontrar todos os n´umeros primos at´e um valor pr´e-determinado.
+Erat´ostenes nasceu em Cirene, no ano 276 a.C. e morreu em 194 a.C., na cidade de Alexandria,
+ambas cidades da antiga Gr´ecia. Atuou em v´arias ´areas do conhecimento como Geograﬁa,
+Astronomia e Matem´atica. ´E de sua autoria o c´alculo da circunferˆencia da Terra, usando
+no¸c˜oes de trigonometria e semelhan¸ca entre triˆangulos. Sua principal contribui¸c˜ao `a Teoria
+dos N´umeros est´a justamente na identiﬁca¸c˜ao dos n´umeros primos, utilizando-se de um pro-
+cesso pr´atico cujo nome j´a foi mencionado acima.
+
+4
+
+4
+
+O m´etodo de Erat´ostenes para se encontrar os primos existentes at´e certo valor n deﬁnido
+consiste em se listar todos os n´umeros inteiros at´e n e, a partir do n´umero 2, eliminar dessa
+lista todos os m´ultiplos de 2. De igual maneira procede-se com o pr´oximo primo da lista,
+o n´umero 3,
+seus m´ultiplos. Assim, segue-se utilizando os primos
+constantes da lista, at´e que sobre nela somente n´umeros primos.
+
+eliminando-se todos
+
+Exemplo ( 1 ). Encontrar todos os n´umeros primos positivos existentes entre 1 e 100.
+
+- 1o passo: lista-se todos os n´umeros de 1 a 100.
+
+3
+
+4
+
+8
+
+2
+
+9
+
+7
+
+5
+
+6
+
+1
+10
+11 12 13 14 15 16 17 18 19 20
+21 22 23 24 25 26 27 28 29 30
+31 32 33 34 35 36 37 38 39 40
+41 42 43 44 45 46 47 48 49 50
+51 52 53 54 55 56 57 58 59 60
+61 62 63 64 65 66 67 68 69 70
+71 72 73 74 75 76 77 78 79 80
+81 82 83 84 85 86 87 88 89 90
+91 92 93 94 95 96 97 98 99 100
+
+Tabela 1: n´umeros naturais de 1 a 100
+
+- 2o passo: elimina-se o n´umero 1 e todos os m´ultiplos de 2, excetuando-o.
+
+2
+
+11
+21
+31
+41
+51
+61
+71
+81
+91
+
+3
+13
+23
+33
+43
+53
+63
+73
+83
+93
+
+5
+15
+25
+35
+45
+55
+65
+75
+85
+95
+
+7
+17
+27
+37
+47
+57
+67
+77
+87
+97
+
+9
+19
+29
+39
+49
+59
+69
+79
+89
+99
+
+Tabela 2: exclus˜ao do 1 e dos pares
+
+5
+
+5
+
+- 3o passo: elimina-se todos os m´ultiplos de 3, excetuando-o.
+
+3
+13
+23
+
+43
+53
+
+73
+83
+
+2
+
+11
+
+31
+41
+
+61
+71
+
+91
+
+5
+
+25
+35
+
+55
+65
+
+85
+95
+
+7
+17
+
+37
+47
+
+67
+77
+
+97
+
+19
+29
+
+49
+59
+
+79
+89
+
+Tabela 3: exclus˜ao dos m´ultiplos de 3 maiores que ele
+
+- 4o passo: elimina-se todos os m´ultiplos de 5, excetuando-o.
+
+5
+
+3
+13
+23
+
+43
+53
+
+73
+83
+
+2
+
+11
+
+31
+41
+
+61
+71
+
+91
+
+7
+17
+
+37
+47
+
+67
+77
+
+97
+
+19
+29
+
+49
+59
+
+79
+89
+
+Tabela 4: exclus˜ao dos m´ultiplos de 5 maiores que ele
+
+6
+
+6
+
+- 5o passo: elimina-se todos os m´ultiplos de 7, excetuando-o.
+
+5
+
+2
+
+11
+
+31
+41
+
+61
+71
+
+3
+13
+23
+
+43
+53
+
+73
+83
+
+7
+17
+
+37
+47
+
+67
+
+97
+
+19
+29
+
+59
+
+79
+89
+
+Tabela 5: exclus˜ao dos m´ultiplos de 7 maiores que ele
+
+Observe que n˜ao h´a necessidade de se continuar o processo na sequˆencia crescente dos n´umeros
+primos, ou seja, os pr´oximos m´ultiplos a serem eliminados da tabela seriam os m´ultiplos de
+11, que j´a foram eliminados naturalmente pelos passos anteriores. Dessa forma, chega-se `a
+conclus˜ao que os n´umeros primos existentes entre 1 e 100 s˜ao os que pertencem ao
+conjunto {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97}.
+Obviamente esse processo pr´atico torna-se laborioso `a medida que o n´umero pr´e-determinado
+´e relativamente grande. Veja, por exemplo, determinar se o n´umero 419 ´e primo, seguindo os
+passos anteriores “`a risca”seria custoso. Ent˜ao, pode-se simpliﬁcar os passos listados acima
+da seguinte forma: veriﬁca-se se o n´umero 419 ´e divis´ıvel pelos primos 2, 3, 5, 7 e 11, usando
+crit´erios de divisibilidade [1].
+Se o n´umero n˜ao for divis´ıvel por nenhum desses primos, deve-se prosseguir na veriﬁca¸c˜ao
+√
+at´e o ´ultimo n´umero primo menor ou igual a
+
+419 , ou seja, 19, dado que 19 ≤
+
+419 .
+
+√
+
+419 = 32.13 + 3
+
+419 = 24.11 + 17
+
+419 = 22.19 + 1
+
+√
+
+Logo, veriﬁca-se que 419 ´e de fato um n´umero primo, pois nenhum dos primos menores ou
+iguais a
+419 ´e divisor dele. H´a aqui duas quest˜oes que merecem um tratamento mais
+elaborado: por que se deve interromper a veriﬁca¸c˜ao ao se atingir o ´ultimo n´umero primo
+menor ou igual `a raiz quadrada do n´umero analisado? Por que o n´umero 1 ´e exclu´ıdo da lista
+de n´umeros primos?
+
+Para responder a primeira pergunta, suponha n um n´umero inteiro positivo e composto,
+tal que n = p.c, onde p ´e o menor fator primo de n. Assim, obviamente que c ≥ p. Tratando
+convenientemente essa aﬁrma¸c˜ao, tem-se que p.c ≥ p.p, mas, como n = p.c, pode-se veriﬁcar
+que n ≥ p2, ou, por outro lado, p ≤
+n . Portanto, como veriﬁcado no exemplo, se 419 n˜ao
+419 . Para o
+fosse um n´umero primo, algum fator pr´oprio dele seria encontrado antes da
+segundo questionamento, faz-se necess´ario enunciar o Teorema da Fatora¸c˜ao ´Unica.
+
+√
+
+√
+
+Teorema (1) (Teorema da Fatora¸c˜ao ´Unica): dado um n´umero inteiro positivo n ≥ 2,
+pode-se
+onde
+1 < p1 < p2 < ... < pk s˜ao n´umeros primos e e1, ..., ek s˜ao inteiros positivos [1].
+
+forma n = pe1
+1
+
+· ... · pek
+k ,
+
+de modo
+
+escrevˆe-lo,
+
+sempre
+
+´unico,
+
+na
+
+7
+
+7
+
+Veja que o teorema aﬁrma que todo n´umero pode ser escrito de forma ´unica pelo produto
+de fatores primos, devidamente acompanhados de suas potˆencias necess´arias. Dessa forma,
+se ±1 fossem considerados n´umeros primos, a fatora¸c˜ao do n´umero 2, por exemplo, poderia
+resultar em 2 ou 2.12. Na verdade, qualquer inteiro poderia ter uma inﬁnidade de fatora¸c˜oes,
+caso n˜ao se exclu´ıssem ±1 dos n´umeros primos.
+
+2.5 N´umeros Primos entre si
+
+H´a n´umeros que n˜ao s˜ao primos, por´em, quando se veriﬁca a existˆencia de divisores em co-
+mum entre eles e s´o se encontra o 1, diz-se que esses n´umeros s˜ao primos entre si.
+
+Sejam a e b n´umeros inteiros e o mdc(a, b) = 1, ent˜ao a e b s˜ao n´umeros primos entre
+si. Sejam os n´umeros compostos 14 e 15, por exemplo. O m´aximo divisor comum entre eles
+´e igual a 1. ´E interessante notar que 14 = 2.7 e 15 = 3.5, ou seja, n˜ao possuem fatores
+primos em comum, ent˜ao, pode-se enunciar que n´umeros que n˜ao possuem fatores primos em
+comum, possuem o 1 como m´aximo divisor comum e, portanto, s˜ao n´umeros primos entre si.
+Esse fato merece aten¸c˜ao, pois, o conceito de inverso modular est´a intimamente ligado ao do
+m´aximo divisor comum entre n´umeros e, sobretudo, n´umeros primos entre si.
+
+2.6 Aritm´etica Modular
+
+Um importante fenˆomeno observado na Teoria dos N´umeros diz respeito `a periodicidade com
+que os restos de uma divis˜ao se apresentam. Para ilustrar esse fenˆomeno, observe a tabela
+abaixo, onde est˜ao inclu´ıdos os n´umeros de 0 a 15, e seus respectivos restos, quando divididos
+por 5.
+
+Inteiros 0
+0
+Restos
+
+1
+1
+
+2
+2
+
+3
+3
+
+4
+4
+
+5
+0
+
+6
+1
+
+7
+2
+
+8
+3
+
+9
+4
+
+10 11 12 13 14 15
+0
+0
+
+1
+
+4
+
+3
+
+2
+
+Tabela 6: restos da divis˜ao por 5 dos inteiros positivos de 1 a 5
+
+Observe que, na divis˜ao por 5, os restos se repetem a cada 5 inteiros sucessivos, ou seja,
+nesse exemplo, pode-se aﬁrmar que o per´ıodo em que ocorrem os valores para o resto ´e igual
+a 5. Logo, na execu¸c˜ao de uma divis˜ao de um n´umero inteiro positivo a por outro inteiro
+positivo n, obtem-se a = nq + r, com q e r inteiros e 0 ≤ r < n. Os restos r da divis˜ao desse
+n´umero inteiro positivo a repertir-se-˜ao com periodicidade igual a n. Por quest˜oes de clareza
+nos conceitos, evitando-se assim, confundir o termo periodicidade com a no¸c˜ao de tempo,
+usaremos o termo m´odulo para deﬁnir esses per´ıodos. Assim, utilizando o exemplo acima,
+diz-se que 9 e 14 possuem o mesmo resto m´odulo 5.
+
+Veriﬁcando na tabela 6, ´e poss´ıvel ver que 9 e 14 possuem o mesmo resto quando dividi-
+dos por 5, ou possuem o mesmo m´odulo. Nesses casos dizemos que 9 e 14 s˜ao congruentes
+m´odulo 5. Generalizando, sejam a e b n´umeros inteiros, e n um n´umero inteiro e positivo,
+ent˜ao, a ser´a congruente a b, m´odulo n se n|(a − b).
+
+8
+
+8
+
+´E f´acil veriﬁcar a veracidade dessa aﬁrma¸c˜ao, como se segue
+
+a = n.q1 + r1 e b = n.q2 + r2
+
+n|(n.q1 + r1 − (n.q2 + r2))
+
+n|(n.q1 + r1 − n.q2 − r2),
+
+mas, como a e b s˜ao congruentes m´odulo n, implica que r1 = r2, portanto,
+
+n|n(q1 − q2).
+
+Para indicar que a e b s˜ao congruentes m´odulo n, usa-se a nota¸c˜ao a ≡ b (mod n) e, se n˜ao
+s˜ao congruentes, usa-se a 6≡ b (mod n)
+
+4 ≡ 9 (mod 5), mas, 4 6≡ 10 (mod n)
+
+2.6.1 Propriedades da Congruˆencia Modular
+
+A congruˆencia modular goza de propriedades semelhantes as da igualdade usual, ou seja,
+reﬂexiva, sim´etrica e transitiva. Entretanto, a forma como se demonstra a validade dessas
+propriedades requer um trabalho um pouco mais elaborado.
+
+Reﬂexiva: todo n´umero ´e congruente m´odulo n a ele mesmo.
+
+a ≡ a (mod n). Pela deﬁni¸c˜ao, n|(a − a), ou seja, n|0.
+
+Sim´etrica: se a ≡ b (mod n) ent˜ao b ≡ a (mod n).
+
+a ≡ b (mod n), implica que n|(a − b), ou, a − b = k.n, onde k ´e um n´umero inteiro.
+
+Multiplicando a − b = k.n por (- 1), tem-se que
+
+Transitiva: Se a ≡ b (mod n) e b ≡ c (mod n), ent˜ao a ≡ c (mod n).
+
+b − a = (−k).n, ou seja, n|(b − a).
+
+a ≡ b (mod n) implica que a - b = k.n e b ≡ c (mod n) implica que b − c = j.n,
+
+onde k e j s˜ao n´umeros inteiros.
+
+Assim,
+
+(a − b) + (b − c) = k.n + j.n
+
+a − c = (k + j).n
+
+a ≡ c (mod n).
+
+9
+
+9
+
+2.6.2 O conceito de res´ıduos
+
+Sejam a e n n´umeros inteiros, com a > 0. Dividindo a por n obt´em-se
+
+a = n.q + r e 0 ≤ r < n
+
+a − r = n.q,
+
+que, por deﬁni¸c˜ao, equivale a dizer que a ≡ r (mod n).
+Assim, pode-se aﬁrmar que todo n´umero inteiro positivo ´e congruente m´odulo n ao resto de
+sua divis˜ao por n. Usa-se chamar r de o res´ıduo de a m´odulo n, e esse res´ıduo ´e ´unico. De
+fato, suponha que
+
+a ≡ r (mod n), com 0 ≤ r ≤ n − 1;
+a ≡ r0 (mod n), com 0 ≤ r0 ≤ n − 1
+
+pelas propriedades sim´etrica e transitiva, tem-se que
+
+r ≡ r0 (mod n).
+
+supondo r ≥ r0, n|(r − r0) , mas r e r’ s˜ao menores que n, logo, 0 ≤ r − r0 < n. Dessa forma,
+r − r0 s´o pode ser m´ultiplo de n se r − r0 = 0, ou seja, r = r0.
+A utiliza¸c˜ao da designa¸c˜ao res´ıduo no lugar de resto possui sua sutileza. Enquanto o termo
+resto aplica-se geralmente a n´umeros inteiros positivos, usa-se res´ıduo para qualquer inteiro.
+De fato, supondo n = 8 e a = −23. O objetivo ´e encontrar um res´ıduo r, com 0 ≤ r < 8, tal
+que −23 ≡ r (mod 8).
+Observe que 23 = 2.8 + 7. Se multiplicar por (- 1) ambos os lados dessa igualdade, tem-se
+−23 = (−2).8 − 7, onde −23 ≡ −7 (mod 8). Entretanto, como (- 7) n˜ao pertence ao inter-
+valo 0 ≤ r < 8, n˜ao ´e o res´ıduo procurado. Contudo, 8 = 1 − (−7), donde se conclui que
+−7 ≡ 1 (mod 8) e, pela propriedade da transitividade, −23 ≡ 1 (mod 8). Logo, −23 possui
+res´ıduo 1 m´odulo 8.
+
+2.6.3 Adi¸c˜ao, Multiplica¸c˜ao e Congruˆencia
+
+texto j´a foi abordado que a congruˆencia modular possui propriedades que
+
+se
+Nesse
+assemelham `aquelas aplicadas `a igualdade. ´E de se supor tamb´em, que certos resultados
+aplicados `a soma e `a multiplica¸c˜ao numa igualdade tamb´em podem ser aplicados `a con-
+gruˆencia.
+
+Se a ≡ a0 (mod n) e b ≡ b0 (mod n), ent˜ao
+
+• a + b ≡ a0 + b0 (mod n);
+
+• a.b ≡ a0.b0 (mod n).
+
+Utilizando o pr´oprio conceito do m´odulo, tem-se que
+
+a − a0 = k.n e b − b0 = j.n.
+
+10
+
+10
+
+Somando-se os termos dessas equa¸c˜oes, obt´em-se
+
+(a − a0) + (b − b0) = k.n + j.n,
+
+onde, arrumando convenientemente resulta em
+
+(a + b) − (a0 + b0) = (k + j).n
+
+ou, conforme se queria demonstrar
+
+(a + b) ≡ (a0 + b0) (mod n).
+
+Partindo do mesmo princ´ıpio de que
+
+a − a0 = k.n e b − b0 = j.n
+
+e, arrumando convenientemente tem-se que
+
+a = a0 + k.n e b = b0 + j.n.
+
+Multiplicando-se, membro a membro, essas duas equa¸c˜oes, obt´em-se
+
+a.b = (a0 + k.n)(b0 + j.n) = a0.b0 + n.(a0.j + b0.k + k.j.n),
+
+a.b − a0.b0 = n.(a0.j + b0.k + k.j.n),
+
+a.b ≡ a0.b0 (mod n),
+
+ou seja,
+
+que equivale a dizer que
+
+como se queria demonstrar.
+
+2.6.4 Inversos Modulares
+
+O conceito de inversos modulares assemelha-se ao conceito do inverso de n´umeros
+diferentes de zero. Enquanto o inverso do n´umero 2 ´e
+
+reais
+= 1, o inverso m´odulo 5
+
+, pois, 2.
+
+1
+2
+
+1
+2
+
+de 7 ´e 3. Observe, 7 ≡ 2 (mod 5) e 3 ≡ 3 (mod 5), entretanto, 7.3 ≡ 1 (mod 5). De forma
+intuitiva percebe-se que o inverso modular de um n´umero ´e justamente aquele que resulta,
+por meio de um produto, a congruˆencia com 1. Observe a tabela abaixo.
+
+Res´ıduo
+1
+2
+3
+4
+5
+6
+
+Inverso M´odulo 7
+1
+4
+5
+9
+10
+6
+
+Tabela 7: res´ıduo e inverso m´odulo 7
+
+11
+
+11
+
+Sejam a, a’ e n n´umeros inteiros. Se a.a0 ≡ 1 (mod n), ent˜ao a’ ´e inverso de a m´odulo
+n, e vice-versa. H´a aqui alguns questionamentos interessantes. Todo n´umero inteiro a possui
+inverso modular n? O inverso modular de um n´umero, se existir, ´e ´unico?
+Observe a tabela abaixo.
+
+Res´ıduo
+1
+2
+3
+4
+5
+6
+7
+
+Inverso M´odulo 8
+1
+-
+3
+-
+5
+-
+7
+
+Tabela 8: res´ıduo e inverso m´odulo 8
+
+Na tabela 8 ´e poss´ıvel veriﬁcar que 2, 4 e 6 n˜ao possuem inverso modulo 8. Em outras
+palavras, n˜ao h´a n´umero inteiro que multiplique 2, 4 ou 6 e produza resto 1, quando dividido
+por 8. Observe que justamente esses n´umeros possuem fator primo comum com o 8. Esse
+fato est´a descrito no seguinte teorema.
+
+Teorema (2): Sejam a < n inteiros positivos. O res´ıduo a tem inverso m´odulo n se, e
+somente se, a e n n˜ao tˆem fatores primos em comum. Ou, descrito de outra forma, o res´ıduo
+a possui inverso m´odulo n, se a e n forem primos entre si, ou, mdc(a, n) = 1.
+
+Sejam a e n dois n´umeros inteiros e positivos tais que 1 < a < n. Al´em disso, admiti-
+se que a e n possuam um fator primo p, com 1 < p < n, comum a ambos. Ent˜ao, n = p.c
+e a = p.d. ´E f´acil veriﬁcar que c = n
+p , onde 1 < c < n. Como j´a deﬁnido acima, tem-se
+tamb´em que 1 < a < n, logo, c n˜ao ´e congruente a 0 m´odulo n e a n˜ao ´e congruente a 0
+m´odulo n.
+Tratando convenientemente a congruˆencia a ≡ a (mod n), tem-se
+
+mas,
+
+mas,
+
+portanto,
+
+a ≡ p.d (mod n)
+
+c.a ≡ c.p.d (mod n),
+
+c.p = n
+
+c.a ≡ n.d (mod n),
+
+c.p ≡ n ≡ 0 (mod n),
+
+c.a ≡ c.p.d ≡ 0 (mod n),
+
+concluindo-se assim, que se a e n possuem fatores primos em comum, n˜ao existe inverso a’ de
+a m´odulo n. H´a aqui outra conclus˜ao interessante. Sendo n = p.c e a = p.d, demonstrou-se
+acima que c.a ≡ 0 (mod n).
+
+12
+
+12
+
+Uma importante consequˆencia da existˆencia ou n˜ao do inverso modular de um n´umero ´e a
+possibilidade de se realizar um cancelamento de fatores na congruˆencia. Ou, de forma mais
+clara, veriﬁcar se ´e poss´ıvel ou n˜ao realizar a seguinte opera¸c˜ao a.b ≡ b.c (mod n), implica
+que a ≡ c (mod n).
+Supondo que n > 0 e 1 ≤ a ≤ n − 1 s˜ao n´umeros inteiros que possuem um fator primo p em
+comum. Ent˜ao, pode se escrever n = p.c e a = p.d.
+
+Sabe-se que a.c ≡ a.0 (mod n), com a e c positivos e menores que n, o que garante que
+a 6≡ 0 (mod n) e c 6≡ 0 (mod n).
+Assim, chega-se a seguinte conclus˜ao: se a, b e n > 1 s˜ao inteiros que possuem fator primo
+em comum, ent˜ao a n˜ao pode ser cancelado em congruˆencias do tipo a.b ≡ a.0 (mod n).
+Se a admite um inverso m´odulo n e b e c s˜ao inteiros tais que a.b ≡ a.c (mod n), ent˜ao a
+pode ser cancelado, implicando em b ≡ c (mod n), que ´e facilmente veriﬁc´avel, como se segue.
+Seja a’ o inverso de a m´odulo n. Trabalhando convenientemente a aﬁrma¸c˜ao a.b ≡ a.c (mod n),
+tem-se
+
+a0.a.b ≡ a0.a.c (mod n)
+
+(a0.a).b ≡ (a0.a).c (mod n),
+
+com a0.a ≡ 1 (mod n), conclui-se que
+
+Dessa forma, pode-se enunciar o teorema a seguir.
+
+b ≡ c (mod n).
+
+Teorema (3): Suponha que a possui inverso m´odulo n. Se a.b ≡ a.c (mod n), para b e
+c inteiros, ent˜ao b ≡ c (mod n).
+O problema agora resume-se a demonstrar que se um n´umero inteiro possui inverso m´odulo
+n, esse inverso ´e ´unico.
+Seja a’ o inverso de a m´odulo n. Admitindo que a” tamb´em ´e um inverso de a m´odulo n.
+Ent˜ao, pela deﬁni¸c˜ao, tem-se que
+
+a.a0 ≡ 1 (mod n) e a.a” ≡ 1 (mod n)
+
+a”.a.a0 ≡ a”.1 (mod n)
+
+(a”.a).a0 ≡ a”.1 (mod n)
+
+a0 ≡ a” (mod n),
+
+logo n|(a0 − a”), mas a’ e a” s˜ao n´umeros inteiros positivos menores que n e, portanto, a
+´unica maneira de a0 − a” ser divis´ıvel por n ´e se a0 − a” = 0, ou seja, a0 = a”. Logo, o inverso
+modular de um n´umero, se existir, ´e ´unico.
+
+2.7 Teorema Chinˆes do Resto
+
+Uma importante aplica¸c˜ao da aritm´etica modular est´a na determina¸c˜ao de um n´umero inteiro
+que deixa restos diferentes, quando dividido por n´umeros inteiros diferentes.
+Exemplo (2). Determinar o menor n´umero inteiro positivo que deixa resto 3 quando dividido
+por 5, e resto 2 quando dividido por 7.
+
+13
+
+13
+
+Escrevendo essas situa¸c˜oes em termos de equa¸c˜oes, tem-se que
+
+x = 5.q1 + 3 e x = 7.q2 + 2
+
+Obviamente, por tratar-se de n´umeros relativamente pequenos, h´a a possibilidade de se chegar
+a uma solu¸c˜ao por tentativa, trabalhando n como uma vari´avel, utilizando-se, por exemplo,
+de tabelas contendo as seguintes express˜oes:
+7 , at´e que os resultados
+inteiros e positivos. Ainda assim, h´a que se considerar o
+fossem ambos
+para q1 e q2
+car´ater meramente experimental dessa t´ecnica, o que certamente demandaria muito trabalho
+a medida que os valores envolvidos tornam-se maiores.
+Uma interpreta¸c˜ao diferente desse problema pode ser feita utilizando-se a congruˆencia
+modular. As equa¸c˜oes acima descritas podem ser resumidas `as seguintes congruˆencias:
+
+e q2 = x−2
+
+q1 = x−3
+5
+
+(cid:26) x ≡ 3 (mod 5)
+x ≡ 2 (mod 7)
+
+Num primeiro momento, parece que essa interpreta¸c˜ao s´o mudou a forma de se escrever as
+equa¸c˜oes que podem levar ao valor de n, sem, contudo, trazer algum benef´ıcio `a solu¸c˜ao.
+Acontece que ao se introduzir o conceito de congruˆencia modular, ´e poss´ıvel, utilizando-se
+sistematicamente dos conceitos e propriedades aplicadas `a aritm´etica modular, chegar a um
+conjunto de valores que satisfazem essa equa¸c˜ao.
+A sistematiza¸c˜ao a qual se refere o texto acima ´e denominada Teorema Chinˆes do Resto, cuja
+primeira men¸c˜ao ´e encontrada no livro Manual de Aritm´etica do Mestre Sun, escrito entre
+os anos 287 d.C . e 473 d.C [1].
+
+Teorema (4) (Teorema Chinˆes do Resto). Sejam m e n inteiros positivos primos entre
+si. Se a e b s˜ao inteiros quaisquer, ent˜ao o sistema
+
+(cid:26) x ≡ a (mod m)
+x ≡ b (mod n)
+
+sempre possui solu¸c˜ao e qualquer uma de suas solu¸c˜oes pode ser escrita na forma
+
+onde t ´e um inteiro qualquer e m’ ´e o inverso de m m´odulo n.
+
+a + m.(m0.(b − a) + n.t),
+
+Seja o sistema
+
+(cid:26) x ≡ a (mod m)
+x ≡ b (mod n)
+
+Considere x0 uma solu¸c˜ao dessas congruˆencias, ou seja
+(cid:26) x0 ≡ a (mod m)
+x0 ≡ b (mod n)
+
+Fazendo x0 = a + m.k, com k inteiro, pode-se aﬁrmar que
+
+a + m.k ≡ b (mod n)
+
+14
+
+14
+
+onde se conclui que
+
+m.k ≡ (b − a) (mod n).
+
+Como m e n s˜ao primos entre si, m possui inverso m´odulo n, e chamemos m’ esse inverso.
+Logo
+
+m.k ≡ (b − a) (mod n) .(m0)
+k ≡ m0.(b − a) (mod n).
+
+Assim, pode-se concluir que
+
+k = m0.(b − a) + n.t, para algum t inteiro.
+
+Substituindo k = m0.(b − a) + n.t em x0 = a + m.k, tem-se
+
+x0 = a + m.(m0.(b − a) + n.t),
+
+onde, qualquer que seja o inteiro t, a express˜ao a + m.(m0.(b − a) + n.t) ´e solu¸c˜ao do sistema
+(cid:26) x ≡ a (mod m)
+x ≡ b (mod n)
+
+Voltando ao exemplo ( 2 ) apresentado, o sistema
+
+(cid:26) x ≡ 3 (mod 5)
+x ≡ 2 (mod 7)
+
+Tem-se que 5 e 7 s˜ao primos entre si, mdc(5, 7) = 1 e que 3 ´e o inverso de 5 m´odulo 7, pois
+3.5 ≡ 1 (mod 7). Ent˜ao, usando o Teorema Chinˆes do Resto, as solu¸c˜oes poss´ıveis para o
+sistema s˜ao da forma
+
+x = 3 + 5.(3.(2 − 3) + 7.t),
+
+x = −12 + 35t,
+
+com t inteiro qualquer, que representa todas as solu¸c˜oes poss´ıveis para o sistema apresentado.
+O menor n´umero inteiro positivo procurado ser´a obtido quando t = 1, ou seja
+
+x = −12 + 35.1
+
+x = 23
+
+O Teorema Chinˆes do Resto tamb´em pode levar `a solu¸c˜ao de sistema de congruˆencias do tipo
+(cid:26) x ≡ a (mod m)
+x ≡ b (mod n)
+
+, onde m e n n˜ao s˜ao primos entre si. Nesse caso h´a que se observar a
+
+regra a seguir.
+Considere o sistema de congruˆencias
+
+(cid:26) x ≡ a (mod m)
+x ≡ b (mod n)
+
+Admitindo que o m´aximo divisor comum entre m e n ´e d, com d 6= 1.
+
+• se d|(b − a) ent˜ao o sistema possui solu¸c˜ao;
+
+• se d - (b − a) ent˜ao o sistema n˜ao possui solu¸c˜ao.
+
+15
+
+15
+
+2.8 Teorema de Fermat
+
+Um problema interessante abordado pela aritm´etica modular consiste em encontrar os restos
+da divis˜ao de uma potˆencia por um n´umero qualquer. Obviamente, opera¸c˜oes dessa natureza
+que envolvam potˆencias menores podem ser resolvidas sem maiores diﬁculdades. Por exem-
+´E f´acil veriﬁcar que
+plo, deseja-se encontrar o resto da divis˜ao de 122 por 5.
+122 = 144, e 144 = 28.5 + 4, onde 4 ´e o resto procurado. Nesse exemplo, a opera¸c˜ao ´e
+imediata, por´em, a situa¸c˜ao muda drasticamente se a potˆencia envolvida torna o processo
+descrito acima proibitivo. Veja o exemplo a seguir.
+Exemplo ( 3 ). Encontrar o resto da divis˜ao do n´umero 7231 por 11. ´E evidente que o processo
+utilizado no exemplo anterior seria invi´avel, dada a dimens˜ao do trabalho envolvido. Uma
+vez mais, a aritm´etica modular oferece uma alternativa a esse desaﬁo. Observe a congruˆencia
+modular entre as potˆencias de 7 e o n´umero 11.
+
+71 ≡ 7 (mod 11)
+72 ≡ 5 (mod 11)
+73 ≡ 2 (mod 11)
+74 ≡ 3 (mod 11)
+75 ≡ 10 (mod 11)
+76 ≡ 4 (mod 11)
+77 ≡ 6 (mod 11)
+78 ≡ 9 (mod 11)
+710 ≡ 1 (mod 11)
+
+E a partir de 711 haver´a a repeti¸c˜ao peri´odica dos restos da divis˜ao por 11.
+Podemos escrever 7231 como (710)23.71, e como 710 ≡ 1 (mod 11), aplicando as propriedades
+da congruˆencia, tem-se
+
+7231 ≡ (1)23.7 ≡ 7 (mod 11).
+
+Assim, o resto da divis˜ao de 7231 por 11 ´e igual a 7.
+Embora esse processo permitiu chegar ao resto da divis˜ao sem que recorresse ao c´alculo da
+potˆencia de 7231, o que obviamente seria impratic´avel, o trabalho ainda assim foi consider´avel,
+haja vista a necessidade de se buscar a potˆencia 7n ≡ 1 (mod 11), o que, no exemplo
+analisado obrigou ao c´alculo das potˆencias de 7 at´e a potˆencia 710, a qual gerou a congruˆencia
+1 m´odulo 11. Pode-se diminuir esse trabalho consideravelmente utilizando-se de uma “fer-
+ramenta”espetacular: o Teorema de Fermat.
+
+Teorema (5)(Teorema de Fermat) : se p ´e um n´umero primo e a ´e um n´umero que
+n˜ao ´e divis´ıvel por p, ent˜ao:
+
+ap−1 ≡ 1 (mod p).
+
+Multiplicando-se ambos os lados da congruˆencia por a, temos
+
+a.ap−1 ≡ a.1 (mod p)
+
+a.ap−1 ≡ a (mod p).
+
+Como mdc(a, p) =1, existe o inverso modular a’ de a tal que
+
+a.a0 ≡ 1 (mod p).
+
+16
+
+16
+
+Multiplicando-se ambos os lados da congruˆencia por a’, temos
+
+a0.a.ap−1 ≡ a0.a (mod p)
+
+ap−1 ≡ 1 (mod p)
+Voltando ao exemplo ( 3 ). Descobriu-se o resto da divis˜ao de 7231 por 11, usando a con-
+gruˆencia modular, ao custo de se veriﬁcar todos os res´ıduos da potˆencia 7n m´odulo 11, o que
+demandou relativo trabalho. Por´em, ´e f´acil veriﬁcar, pelo Teorema de Fermat que
+
+logo,
+
+ent˜ao,
+
+710 ≡ 1 (mod 11),
+
+7231 = (710)23.71,
+
+Portanto, o resto da divis˜ao de 7231 por 11 ´e 7, conforme veriﬁcado acima.
+
+7231 ≡ (710)23.71 ≡ 123.71 ≡ 7 (mod 11).
+
+2.9 Teorema de Euler
+
+Embora o Teorema de Fermat permita c´alculos de congruˆencias envolvendo potˆencias, h´a
+uma restri¸c˜ao importante em sua utiliza¸c˜ao: o m´odulo deve ser primo. Na verdade, ´e poss´ıvel
+utilizar o Teorema de Fermat para c´alculo de congruˆencias envolvendo potˆencias, em deter-
+minadas condi¸c˜oes, combinando-o com o Teorema Chinˆes do Resto.
+Entretanto, h´a uma poderosa ferramenta que pode oferecer o mesmo resultado, ao custo da
+redu¸c˜ao do trabalho.
+
+2.9.1 Fun¸c˜ao de Euler
+
+Seja n um n´umero inteiro positivo. A fun¸c˜ao de Euler ´e dada pelo total de n´umeros in-
+teiros positivos menores ou iguais a n que s˜ao primos entre si com n. Para efeito de nota¸c˜ao,
+indica-se a fun¸c˜ao de Euler como φ(n). Assim, por exemplo, o n´umero 16 possui os seguintes
+n´umeros menores ou iguais a ele que s˜ao primos entre si com 16: 1, 3, 5, 7, 9, 11, 13, 15,
+logo, φ(16) = 8.
+´E evidente que se p for um n´umero primo, φ(p) = p − 1. Tamb´em ´e interessante calcular
+φ(pk). Observe o exemplo a seguir
+
+Exemplo ( 4 ). Calcular φ(72).
+Como 72 = 49, pode-se, facilmente encontrar todos o n´umeros inteiros positivos n , tais
+que o mdc (n, 49) 6= 1, ou seja, os elementos que perten¸cam ao conjunto A =
+{7, 14, 21, 28, 35, 42, 49}. Portanto, h´a 7 n´umeros menores ou iguais a 49 que n˜ao s˜ao primos
+entre si com ele. Logo, φ(49) = 49 − 7 = 42.
+Faz-se necess´ario generalizar esse resultado, de forma que seja poss´ıvel se encontrar φ(pk),
+quaisquer que sejam p e k.
+Considere a como um n´umero inteiro que divide pk, tal que 0 < a ≤ pk . Ent˜ao,
+
+p = a.b onde 0 < b ≤ pk−1.
+
+Portanto, h´a pk−1 inteiros positivos menores que pk que s˜ao divis´ıveis por p. Logo, h´a pk −pk−1
+n´umeros inteiros que n˜ao s˜ao divis´ıveis por p.
+
+17
+
+17
+
+Assim
+
+´E f´acil veriﬁcar que essa generaliza¸c˜ao aplica-se ao exemplo ( 4 ).
+
+φ(pk) = pk−1.(p − 1).
+
+φ(72) = 72−1.(7 − 1) = 7.6 = 42
+
+H´a ainda outro teorema que apenas ser´a enunciado aqui, antes de se abordar o Teorema de
+Euler.
+
+Teorema (6). Se m ,n s˜ao inteiros positivos, com mdc(m, n) = 1, ent˜ao
+
+Exemplo. φ(144) = φ(24.32) = φ(24).φ(32) = (23.1).(3.2) = 48
+
+φ(m.n) = φ(m).φ(n) [2].
+
+Assim, pelo teorema acima temos que, se n = pe1
+
+1 · ... · pek
+
+k , ent˜ao
+
+φ(n) = pe1−1
+
+1
+
+· ... · pek−1
+
+k
+
+.(p1 − 1) · ... · (pk − 1)
+
+Teorema (7)(Teorema de Euler): Se n ´e um inteiro positivo e a ´e um inteiro tal que
+mdc(a, n) = 1, ent˜ao
+
+aφ(n) ≡ 1 (mod n)
+
+Seja U (n) o conjunto de todos os n´umeros m, inteiros positivos menores que n tais que
+mdc(m, n) = 1.
+Escrevendo U(n) = {m1, m2, ..., mφ(n)}, temos que
+
+(a.m1) · ... · (a.mφ(n)) ≡ m1.m2 · ... · mφ(n) (mod n)
+
+logo,
+
+aφ(n).m1.m2 · ... · mφ(n) ≡ m1.m2 · ... · mφ(n) (mod n)
+e, sabendo que mdc(m1, m2, ..., mφ(n), n) = 1, podemos fazer o cancelamento dos dois lados
+da congruˆencia, portanto,
+
+Exemplo ( 5 ). Determinar o resto da divis˜ao de 7242 por 12.
+
+aφ(n) ≡ 1 (mod n)
+
+O que se quer encontrar aqui ´e um n´umero x tal que 7242 ≡ x (mod 12). Veja que nesse caso
+o m´odulo ´e um n´umero composto, o que torna a utiliza¸c˜ao do Teorema de Fermat diﬁcul-
+toso, como j´a mencionado no presente texto. Por´em, 7φ(12) ≡ 1 (mod 12), de acordo com o
+Teorema de Euler.
+Como φ(12) = 4, temos 74 ≡ 1 (mod 12).
+Trabalhando convenientemente a potˆencia 7242, temos (74)60.72 ≡ 160.72 ≡ 49 ≡ 1 (mod 12).
+Portanto, o resto da divis˜ao de 7242 por 12 ´e 1.
+
+3 Criptograﬁa RSA
+
+A criptograﬁa pode ser deﬁnida como a arte de se ocultar informa¸c˜oes, de forma que somente
+quem as ocultou e a quem elas se destinam tenham conhecimento de seus reais conte´udos.
+Nesse mister, alguns processos foram desenvolvidos ao longo da hist´oria.
+
+18
+
+18
+
+Contudo, se por um lado id´eias simples, por´em, interessantes foram criadas, como o C´odigo
+de C´esar nesse trabalho j´a mencionado, por outro, a relativa simplicidade dos processos
+permitiam, por meio de processos l´ogicos matem´aticos decifrar os c´odigos utilizados. Alia-se
+a esse fator, o fato de que c´odigos como o de C´esar ou da m´aquina Enigma, utilizado pelos
+alem˜aes na 2a Guerra Mundial para cifragem de mensagens, usarem um sistema de chave
+particular, ou seja, o processo de codiﬁca¸c˜ao s´o podia ser conhecido pelo emissor e pelo
+receptor da mensagem [3].
+Com o avan¸co da tecnologia, a ponto de se permitir realizar transa¸c˜oes ﬁnanceiras por meios
+eletrˆonicos diversiﬁcados, um sistema de codiﬁca¸c˜ao que utilizasse somente chaves privadas
+se tornaria invi´avel, pois, cada pessoa que necessitasse realizar uma transferˆencia de valores
+entre contas, por exemplo, teria que possuir uma chave privada fornecida pela institui¸c˜ao com
+a qual mantinha rela¸c˜oes. Imagine a quantidade de chaves que uma ´unica institui¸c˜ao apenas
+teria que criar para distribuir a seus clientes, sem falar que lojas n˜ao poderiam implementar
+tais sistemas, dada a dimens˜ao do trabalho executado.
+Em 1977, R. L. Rivest, A. Shamir e L. Adleman criaram um m´etodo de cifragem de mensagens
+utilizando um sistema de chave p´ublica, ou seja, um c´odigo que pode ser de conhecimento
+p´ublico, usado para codiﬁcar a mensagem. Esse processo recebeu o nome de Criptograﬁa
+RSA, em homenagem a seus idealizadores. ´E interessante notar tamb´em que, a base te´orica
+desse processo de codiﬁca¸c˜ao, j´a abordada nesse trabalho, ´e a Teoria dos N´umeros, que
+antes desse evento era tratada pela comunidade cientiﬁca como sendo de pouca ou nenhuma
+aplica¸c˜ao pr´atica. A criptograﬁa RSA usa uma chave p´ublica para codiﬁcar a mensagem e
+uma chave particular para a decodiﬁca¸c˜ao [1].
+
+3.1 Pr´e-codiﬁca¸c˜ao
+
+O processo de codiﬁca¸c˜ao de mensagens por RSA consiste basicamente em calcular uma
+potˆencia m´odulo n, portanto, mensagens compostas por textos devem ser convertidas em
+n´umeros inteiros para que se possa usar a aritm´etica modular mencionada.
+Na pr´e-codiﬁca¸c˜ao converte-se letras de um texto em n´umeros usando uma tabela de con-
+vers˜ao, como a exempliﬁcada abaixo.
+
+J K L M
+A B C D E F G H I
+10 11 12 13 14 15 16 17 18 19 20 21 22
+
+N 0 P Q R S T U V W X Y Z
+23 24 25 26 27 28 29 30 31 32 33 34 35
+
+Tabela 9: tabela para pr´e-codiﬁc¸c˜ao
+
+Para codiﬁcar um texto, o espa¸co entre duas palavras deve ser preenchido com o n´umero 99.
+Exemplo ( 6 ). A frase: “penso, logo existo” , atribu´ıda `a Ren´e Descartes (31 de mar¸co de
+1596 - 11 de fevereiro de 1650), seria pr´e-codiﬁcada, excluindo-se a v´ırgula, da seguinte forma
+
+25142328249921241624991433282924.
+
+19
+
+19
+
+A escolha de se substituir as letras das palavras por n´umeros com pelo menos dois algarismos
+tem o prop´osito de se evitar ambiguidades tais como, por exemplo, se a letra A correspon-
+desse ao n´umero 1 e B, ao n´umero 2, o n´umero 12 poderia ser decodiﬁcado como AB ou a
+letra L.
+
+Deve-se encontrar agora n, tal que n = p.q, onde p e q s˜ao dois n´umeros primos. Adotando-
+se, como exemplo, p = 29 e q = 41, tem-se n = 29.41 = 1189.
+
+Por ﬁm, o n´umero gerado pela substitui¸c˜ao das letras deve ser particionado em blocos, de tal
+forma que cada bloco represente um n´umero menor que n. Ent˜ao, considerando n = 1189,
+consegue-se os seguintes blocos:
+
+251 − 423 − 282 − 499 − 212 − 416 − 249 − 914 − 332 − 829 − 24.
+
+A ´unica exigˆencia com rela¸c˜ao aos blocos diz respeito ao n´umero gerado ser menor que n,
+n˜ao importando a quantidade de algarismos que possuam. Esse fato encerra uma aparente
+vantagem, a forma de se gerar os blocos n˜ao ´e ´unica. H´a que se observar tamb´em que os
+blocos assim gerados n˜ao correspondem a nenhuma unidade log´ıstica evitando-se assim uma
+poss´ıvel decodiﬁca¸c˜ao por contagem de frequˆencia [1].
+
+3.2 Codiﬁca¸c˜ao
+
+Com a pr´e-codiﬁca¸c˜ao executada, pode-se realizar a codiﬁca¸c˜ao. Para realizar essa a¸c˜ao
+precisa-se de n = p.q e de um n´umero positivo e que seja invers´ıvel m´odulo φ(n).
+Ou seja,
+
+mdc(e, φ(n)) = mdc(e, (p − 1).(q − 1)) = 1.
+
+Esse par (n, e) ´e a chave de codiﬁca¸c˜ao e ela pode ser de conhecimento p´ublico.
+Chamando b um bloco qualquer dentre os formados na pr´e-codiﬁca¸c˜ao e usando a chave de
+codiﬁca¸c˜ao (n, e), codiﬁc´a-lo ´e executar a opera¸c˜ao abaixo,
+
+C(b) ≡ be (mod n),
+
+onde 0 ≤ C(b) < n ´e o bloco b codiﬁcado.
+No exemplo analisado, j´a se conhece n (n = 1189). Precisamos encontrar e. ´E f´acil determinar
+que φ(1189) = (29 − 1).(41 − 1) = 1120. Se observarmos que mdc (e, 1120) = 1, conclu´ımos
+que o menor valor positivo para e ´e 3.
+Logo, chamando b1 = 251, devemos encontrar o resto da divis˜ao de 2513 por 1189. O
+essa opera¸c˜ao seria 2513 = 15813251, portanto,
+caminho natural para se
+15813251 = 13299.1189 + 740, ou seja, C(251) = 740. Entretanto, ´e nesse ponto que a
+aritm´etica modular far´a a diferen¸ca, pois, o que estamos procurando ´e um n´umero r, tal que
+2513 ≡ r (mod 1189). Ou seja,
+
+efetuar
+
+C(251) ≡ 2513 ≡ 2512.251 ≡ 1173.251 ≡ 740 (mod 1189)
+
+20
+
+20
+
+Procedendo de modo an´alogo para cada um dos demais blocos obtidos na pr´e-codiﬁca¸c˜ao,
+obteremos
+
+C(423) = 1172
+C(282) = 39
+C(499) = 999
+C(212) = 671
+C(416) = 913
+C(249) = 273
+C(914) = 1113
+C(332) = 515
+C(829) = 360
+C(24) = 745
+
+Portanto, a mensagem penso, logo existo apresenta-se codiﬁcada como
+
+740 − 1172 − 39 − 999 − 671 − 913 − 273 − 1113 − 515 − 360 − 745
+
+´E importante observar que se os valores obtidos na codiﬁca¸c˜ao forem agrupados em um
+´unico bloco a decodiﬁca¸c˜ao tornar-se-´a imposs´ıvel, por isso, mant´em-se os blocos codiﬁcados
+separados na sequˆencia original obtida na pr´e-codiﬁca¸c˜ao.
+
+3.3 Decodiﬁca¸c˜ao
+
+Para a codiﬁca¸c˜ao, utiliza-se como chave p´ublica o par (n, e). A decodiﬁca¸c˜ao deve ser um
+processo secreto e, para tanto, utilizar-se-´a uma chave privada composta pelo par (n, d ), onde
+d ´e o inverso de e m´odulo φ(n). Chamando D(c) o resultado do processo de decodiﬁca¸c˜ao
+do bloco b codiﬁcado C(b) = c, tem-se que
+
+D(c) = b, tal que cd ≡ b (mod n)
+
+onde 0 ≤ D(c) < n.
+Voltando ao exemplo j´a codiﬁcado. A primeira coisa que devemos encontrar ´e d. Sabemos
+que n = 1189, e = 3 e φ(1189) = 1120. Usando o algoritmo de Euclides para encontrar d,
+temos
+
+1120 = 373.3 + 1 ⇒ 1 = 1120 + (−373).3
+
+Assim, o inverso de 3 modulo 1120 ´e ( - 373). Por´em, d deve ser um n´umero positivo, pois,
+ser´a utilizado como potˆencia na congruˆencia D(c) ≡ cd (mod n) ent˜ao, d = 1120 - 373 = 747.
+
+Logo,
+
+D(740) = b
+740747 ≡ b (mod 1189)
+
+b = 251
+
+3.4 Funcionamento do processo de criptograﬁa RSA
+
+A pergunta ´obvia que se deve fazer ´e: sempre ser´a poss´ıvel se decodiﬁcar uma mensagem
+codiﬁcada pelo m´etodo RSA? Pois, caso contr´ario, o processo ´e pass´ıvel de falha naquilo que
+´e sua principal fun¸c˜ao: codiﬁcar e decodiﬁcar uma mensagem.
+
+21
+
+21
+
+Todo o processo, como j´a detalhado anteriormente, depende primeiramente da escolha ade-
+quada dos n´umeros primos p e q, os quais geram n (n = p.q). O que se deve provar ´e que
+D(C(b)) ≡ b (mod n), quaisquer que sejam p, q e b, tal que b < n. Sabe-se que
+
+D(C(b)) ≡ (be)d ≡ be.d (mod n),
+
+onde d ´e o inverso de e m´odulo φ(n). Portanto,
+e.d = 1 + k.φ(n).
+Assim,
+
+existe um n´umero inteiro k tal que
+
+A partir dessas congruˆencias h´a duas possibilidades a serem analisadas.
+
+be.d ≡ b1+k.φ(n) ≡ (bφ(n))k.b (mod n).
+
+• Se mdc(b, n) = 1, ent˜ao o Teorema de Euler fornece a prova necess´aria, ou seja,
+
+be.d ≡ (bφ(n))k.b ≡ b (mod n)
+
+• Se b e n n˜ao s˜ao primos entre si e considerando n = p.q, com p e q primos e distintos
+
+entre si.
+Assim,
+
+be.d ≡ b1+k.φ(n) ≡ (b(p−1))k.(q−1).b (mod p)
+
+Se mdc(b, p) = 1, usando o Teorema de Fermat (bp−1 ≡ 1 (mod p)).
+Se b e p n˜ao s˜ao primos entre si, ent˜ao p|b e, portanto,
+
+Logo,
+
+be.d ≡ b ≡ 0 (mod p).
+
+be.d ≡ b (mod p).
+
+Tratando de forma an´aloga com o n´umero primo q, chega-se a
+
+Portanto,
+
+be.d ≡ b (mod q).
+
+be.d ≡ b (mod p.q).
+
+3.5 Vantagens e desvantagens do sistema de criptograﬁa RSA
+
+Todo processo de codiﬁca¸c˜ao possui vantagens e desvantagens que pesam no momento da
+escolha de sua implementa¸c˜ao. ´E fato que o grau de seguran¸ca e conﬁabilidade das opera¸c˜oes
+de criptograﬁa inﬂuenciar´a na escolha de um processo ou outro. O sistema RSA possui como
+principais vantagens:
+
+22
+
+22
+
+• ´E um processo cuja codiﬁca¸c˜ao ´e relativamente simples, pois, depende da escolha de
+dois n´umeros primos que geraram a chave p´ublica n = p.q. Somente n ´e conhecido,
+sendo p e q de conhecimento privado. ´E justamente esse fato que gera a seguran¸ca
+do processo, uma vez que os n´umeros primos utilizados s˜ao extremante grandes. Na
+verdade, utilizam-se primos com pelo menos 100 algarismos, em opera¸c˜oes na internet,
+por exemplo. Dessa forma, o n´umero n possuir´a cerca de 200 algarismos. Fatorar um
+n´umero dessa grandeza ´e um trabalho herc´uleo. Estudos apontam que para se fatorar
+um n´umero composto por 200 algarismos seriam necess´arios aproximadamente 4 bilh˜oes
+de anos, ou seja, a seguran¸ca est´a ligada diretamente `a escolha dos n´umeros primos e
+suas dimens˜oes em termos de quantidade de algarismos que possuem [4].
+
+• A mesma base te´orica (Teoria dos N´umeros) utilizada na implementa¸c˜ao da codiﬁca¸c˜ao
+e decodiﬁca¸c˜ao de mensagens nesse sistema tamb´em permite a elabora¸c˜ao de assinaturas
+digitais. Codiﬁcar uma mensagem usando uma chave p´ublica pode gerar um problema
+de conﬁabilidade no que concerne `a autoria da mensagem. Utilizando-se novamente
+da aritm´etica modular, pode-se implementar uma certiﬁca¸c˜ao privada, de tal forma
+que quem emite uma mensagem agregue a ela essa certiﬁca¸c˜ao e quem a recebe tem a
+capacidade de reconhecer a autenticidade do remetente [2].
+
+• A escolha de n´umeros primos relativamente grandes n˜ao ´e de fato um problema. O
+
+Teorema de Euclides aﬁrma que existem inﬁnitos n´umeros primos [1].
+
+A principal desvantagem desse sistema de criptograﬁa consiste na magnitude dos c´alculos
+envolvidos. O processamento computacional demanda equipamentos potentes, o que limita
+a implementa¸c˜ao de chaves muito maiores dos que as j´a utilizadas, assim, o aumento da
+seguran¸ca nesse sistema que depende do tamanho dos n´umeros primos envolvidos, depender´a
+da evolu¸c˜ao da capacidade de processamento de dados dos computadores dispon´ıveis.
+
+4 RSA em sala de aula
+
+J´a foi abordado nesse trabalho que os conceitos tratados na Teoria dos N´umeros na educa¸c˜ao
+b´asica restringem-se `as opera¸c˜oes fundamentais da aritm´etica e, assim mesmo, de forma bas-
+tante tecnicista. Talvez, por ter sido a aritm´etica modular encarada sob uma ´otica puramente
+conceitual durante tanto tempo, s´o vindo a ter realmente aplica¸c˜oes pr´aticas a partir dos anos
+1970 com a implementa¸c˜ao da criptograﬁa RSA, esse assunto n˜ao galgou tanto destaque na
+educa¸c˜ao b´asica, como outros conceitos tradicionalmente trabalhados nesse n´ıvel educacional.
+
+O grande desaﬁo que se imp˜oe ao professor em sala de aula hoje, mais do que em qual-
+quer outra ´epoca, ´e a competi¸c˜ao que ele enfrenta com os meios tecnol´ogicos `a disposi¸c˜ao
+dos alunos. A abordagem puramente conceitual de conte´udos, sobretudo matem´aticos, en-
+contra cada vez mais resistˆencia num ambiente onde a perspectiva de se obter informa¸c˜ao `a
+velocidade de toques de dedos ´e real. Uma pesquisa sobre resto da divis˜ao de potˆencias no
+principal site de buscas na internet resulta em 437000 sites com poss´ıveis informa¸c˜oes sobre
+o assunto. Cabe aqui uma coloca¸c˜ao que se crˆe ser consenso entre proﬁssionais de educa¸c˜ao:
+informa¸c˜ao n˜ao ´e sinˆonimo autom´atico de conhecimento, ou, posto de outra forma, obter
+uma resposta pronta, sem a an´alise necess´aria de sua constru¸c˜ao, n˜ao signiﬁca decisivamente
+ganho de conhecimento.
+
+23
+
+23
+
+´E nesse sentido que a utiliza¸c˜ao de recursos tecnol´ogicos em sala de aula, como meios com-
+plementares `a pr´atica pedag´ogica, pode conduzir `a t˜ao desejada motiva¸c˜ao dos discentes.
+Motiva¸c˜oes educacionais surgem sob formas diferentes em indiv´ıduos diferentes. Em 1983,
+ano em que cursava a antiga 8a s´erie do ensino fundamental (atual 9o ano) esse mestrando
+que ora desenvolve esse texto, deparou-se com o seguinte problema: encontrar o resto da
+divis˜ao do n´umero 34241 por 5 [5].
+Com a base matem´atica que possui `aquela ´epoca, sabia que a solu¸c˜ao n˜ao passaria pela
+opera¸c˜ao de se elevar 342 a 41. N˜ao possuindo mais recursos para “desvendar”o mist´erio,
+recorreu ao professor que propˆos a seguinte solu¸c˜ao:
+
+342 = 5.68 + 2
+21 produz 2 como resto na divis˜ao por 5
+22 produz 4 como resto na divis˜ao por 5
+23 produz 3 como resto na divis˜ao por 5
+24 produz 1 como resto na divis˜ao por 5
+25 produz 2 como resto na divis˜ao por 5
+
+Como a partir de 25 os restos repetir-se-˜ao de 4 em 4 blocos, bastava veriﬁcar o resto da
+divis˜ao de 41 por 4, ou seja,
+
+logo,
+
+41 = 4.10 + 1
+
+34241 = (5.68 + 2)41,
+
+cujo resto da divis˜ao por 5 ser´a o mesmo obtido da divis˜ao de 21 por 5, ou seja, 2.
+Sem explica¸c˜oes mais elaboradas sobre o porquˆe daquele resultado, esse mestrando aprendeu
+a operacionalizar esse tipo de c´alculo sem, no entanto, absorver o conhecimento necess´ario `a
+interpreta¸c˜ao da solu¸c˜ao. Evidentemente, com o contato com outros conceitos matem´aticos,
+como o Binˆomio de Newton, ﬁcou mais claro o algoritmo utilizado pelo professor para solu-
+cionar o problema. A verdade, por´em, ´e que o problema em si suscitou a motiva¸c˜ao necess´aria
+para que a absor¸c˜ao de outros conte´udos pudessem ser aproveitados em prol do conhecimento
+utilizado em sua solu¸c˜ao, como a aritm´etica modular.
+´E nesse mister que o uso da criptograﬁa com todo seu embasamento matem´atico, aliado `a
+possibilidade de implement´a-la em sala de aula com o apoio de softwares gratuitos, pode
+criar nos discentes a motiva¸c˜ao necess´aria n˜ao s´o ao ensino da Matem´atica, mas, sobretudo
+a busca pela constru¸c˜ao do conhecimento e n˜ao apenas por respostas prontas.
+A implementa¸c˜ao do sistema de criptograﬁa RSA n˜ao ´e simples, do ponto de vista de pro-
+grama¸c˜ao, dada a complexidade das linguagens envolvidas na t´ecnica. H´a que se observar
+tamb´em que esse n˜ao ´e o principal objetivo ao se propor a utiliza¸c˜ao de t´ecnicas computa-
+cionais em sala de aula para a elabora¸c˜ao desse processo de codiﬁca¸c˜ao. O que se busca ´e,
+por meio de programas matem´aticos gratuitos, a intera¸c˜ao entre o conceito apresentado e sua
+poss´ıvel aplica¸c˜ao pr´atica que, nesse contexto, refere-se `a aplica¸c˜ao da Teoria dos N´umeros.
+H´a trˆes programas matem´aticos gratuitos, baseados no sistema de ´algebra computacional
+(CAS), que permitem a realiza¸c˜ao de c´alculos envolvidos na elabora¸c˜ao da criptograﬁa RSA.
+
+24
+
+24
+
+4.1 Maxima
+
+Maxima ´e um sistema de manipula¸c˜ao de express˜oes simb´olicas e num´ericas, incluindo
+diferencia¸c˜ao, integra¸c˜ao, expans˜ao em s´erie de Taylor, transformadas de Laplace, equa¸c˜oes
+diferenciais ordin´arias, sistemas de equa¸c˜oes lineares, vetores, matrizes e tensores, aritm´etica
+modular, entre outros. O Maxima produz resultados de alta precis˜ao usando fra¸c˜oes exatas,
+n´umeros inteiros e n´umeros irracionais. Pode ainda tra¸car gr´aﬁcos de fun¸c˜oes e dados em duas
+ou trˆes dimens˜oes. Pode ser obtido gratuitamente no site http://maxima.sourceforge.net/.
+´E poss´ıvel utilizar o Maxima, como apoio did´atico, para se implementar o RSA [6].
+
+Exemplo ( 6 ). Utilizando a frase: “penso, logo existo”, j´a pr´e-codiﬁcada no item 3.1,
+encontrou-se o n´umero 25142328249921241624991433282924, separado nos seguintes blocos
+
+251 − 423 − 282 − 499 − 212 − 416 − 249 − 914 − 332 − 829 − 24
+
+Para codiﬁcar o bloco 251, utilizando o Maxima, deve-se seguir o algoritmo deﬁnido na tabela
+abaixo.
+
+A¸c˜ao
+Deﬁnir os primos p e q
+
+Encontrar n = p.q
+
+Encontrar r = φ(n) = (p − 1).(q − 1)
+
+Encontrar e, tal que mdc( e,r) = 1 Obs:
+dado o valor de r, deve-se testar, a partir
+do menor n´umero primo e poss´ıvel, que
+produza mdc( e,r) = 1. O par ( n, e) ´e
+a chave p´ublica da criptograﬁa implemen-
+tada.
+Deﬁnir b = bloco a ser codiﬁcado
+
+Codiﬁcar
+o bloco b, tal
+que C(b) ≡
+be (mod n), onde C ´e o bloco codiﬁcado.
+
+Encontrar d, tal que d ´e o inverso de e
+m´odulo φ(n) (Fun¸c˜ao de Euler).
+Obs: o par ( n, d) ´e a chave privada da
+criptograﬁa implementada.
+Decodiﬁcar o bloco C para se obter o bloco
+b original.
+De posse da tabela de convers˜ao de letras
+em n´umeros, retornar ao texto original.
+
+Comando no Maxima
+p:29;
+q:41; (ctrl + enter)
+29
+41
+n : (p ∗ q); (ctrl + enter)
+n:1189
+r : totient(n); (ctrl + enter)
+1120
+gcd(3, r); (ctrl + enter)
+1
+e:3; (ctrl + enter)
+e:3
+
+b : 251; (ctrl + enter)
+b : 251
+power−mod(b, e, n); (ctrl + enter)
+740
+C:740; (ctrl + enter)
+C:740
+inv−mod(e, r); (ctrl + enter)
+747
+d:747; (ctrl + enter)
+d:747
+power−mod(C, d, n); (ctrl + enter)
+251
+
+Tabela 10: comandos no Maxima para implementar o RSA
+
+25
+
+25
+
+Nas ﬁguras 1 e 2, ´e poss´ıvel se veriﬁcar as linhas de comando necess´arias `a implementa¸c˜ao
+do RSA para o exemplo realizado.
+
+Figura 1: tela do Maxima com comandos para o RSA
+
+Figura 2: continua¸c˜ao da tela do Maxima com comandos para o RSA
+
+26
+
+26
+
+Algumas considera¸c˜oes importantes.
+
+1o - Obviamente, a seguran¸ca do sistema de criptograﬁa RSA est´a baseada na diﬁculdade
+relativamente grandes, da ordem de 200 algarismos. No exemplo
+de se fatorar n´umeros
+analisado, usaram-se n´umeros primos pequenos (29 e 41), apenas para se facilitar os c´alculos.
+Querendo-se trabalhar com valores mais pr´oximos da realidade, o Maxima oferece a pos-
+sibilidade de se utilizar n´umeros primos grandes. Por exemplo, deseja-se utilizar o n´umero
+3555736890013, caso seja primo, para deﬁnir as chaves p´ublica e privada da criptograﬁa
+elaborada.
+Digita-se no Maxima
+primep(3555736890013); (ctrl+enter)
+false
+Como retornou false, digita-se
+next−prime(3555736890013); (ctrl+enter)
+3555736890089
+Deve-se testar agora se 3555736890089 ´e primo. Digita-se
+primep(3555736890089); (ctrl+enter)
+true
+Como retornou true, 3555736890089 ´e primo com muita probabilidade.
+Para se deﬁnir um outro primo basta-se digitar
+next−prime(3555736890089); (ctrl+enter)
+3555736890119
+Assim, muito provavelmente haver´a dois n´umeros primos ”grandes”para gerarem n.
+
+2o - Uma vez que a escolha dos valores de p e q no exemplo realizado produziu n = 1189,
+isso obrigou a utilizar o texto pr´e-codiﬁcado em blocos, os quais deveriam formar n´umeros
+menores que n. A desvantagem dessa abordagem est´a no fato de se ter que “rodar”o algoritmo
+criado para cada bloco formado. ´E poss´ıvel se evitar essa repeti¸c˜ao de rotinas, escolhendo-se
+adequadamente os valores dos primos p e q, de tal forma que o n = p.q gerado seja maior
+que o n´umero gerado na pr´e-codiﬁca¸c˜ao do texto.
+
+4.2 GP/Pari
+
+GP/Pari ´e um sistema de ´algebra computacional amplamente utilizado e projetado para
+c´alculos r´apidos na teoria dos n´umeros (fatora¸c˜ao, curvas el´ıpticas ...). Cont´em tamb´em
+um grande n´umero de outras fun¸c˜oes ´uteis para c´alculos matem´aticos, tais como ma-
+trizes, polinˆomios, s´erie de potˆencia, entre outros. Pode ser obtido gratuitamente no site
+http : //pari.math.u − bordeaux.f r/[7].
+´E poss´ıvel se implementar a criptograﬁa RSA no GP/Pari, como se segue.
+
+Usando o exemplo ( 6 ), criptografar a frase: “penso, logo existo”, j´a pr´e-codiﬁcado nos
+blocos abaixo.
+
+251 − 423 − 282 − 499 − 212 − 416 − 249 − 914 − 332 − 829 − 24
+
+27
+
+27
+
+A¸c˜ao
+Deﬁnir n = 29.41 = 1189
+
+Encontrar φ(n) = (p − 1).(q − 1)
+
+Deﬁnir e = 3
+Obs: e, tal que mdc( e,1120) = 1
+Deﬁnir a = M od(e, f i)
+
+Encontrar a inversa de 3 (mod 1120)
+
+Deﬁnir P = 251 (bloco original pr´e-
+codiﬁcado)
+Encontrar o bloco criptografado C
+
+Decodiﬁcar o bloco C para se obter o bloco
+b original.
+
+De posse da tabela de convers˜ao de letras
+em n´umeros, retornar ao texto original.
+
+Comando no GP/Pari
+?n = 29 ∗ 41(enter)
+%1 = 1189
+? ﬁ = eulerphi(n) (enter)
+%2 = 1120
+?e = 3 (enter);
+%3 = 3
+?a = Mod(e,ﬁ) (enter)
+%4 = Mod(3,1120)
+?1/a(enter)
+%5 = (747, 1120)
+?d = 747 (enter)
+%6 = 747
+?P = Mod(251,n) (enter)
+%7 = Mod(251,1189)
+?C = Pˆ e (enter)
+%8 = Mod(740,1189)
+?C = 740 (enter)
+%9 = 740
+?D = Cˆ d (enter)
+%10 = Mod(251,1189)
+?D = 251 (enter)
+% = 251
+
+Tabela 11: comandos no GP/Pari para implementar o RSA
+
+4.3 SAGE
+
+SAGE ´e um software matem´atico livre e de c´odigo aberto (open-source), desenvolvido sob a
+licen¸ca GPL (General Public License) por uma comunidade de programadores e matem´aticos,
+que busca ser uma alternativa para os principais sistemas propriet´arios de software matem´atico
+como o Magma, Maple, Mathematica e Matlab. Ele engloba e se utiliza de um grande n´umero
+de pacotes pr´e-existentes como Maxima, GAP, Pari/GP, softwares de renderiza¸c˜ao de ima-
+gens e muitos outros, integrando-os em uma interface ´unica que busca ser amig´avel e de f´acil
+assimila¸c˜ao. Todos os principais pacotes s˜ao instalados juntamente com o SAGE e muitos
+outros pacotes existem para extens˜oes em ´areas espec´ıﬁcas. Por este motivo O SAGE ´e ade-
+quado para uso em ensino e pesquisa [8].
+Pode ser obtido gratuitamente no site http://www.sagemath.org/pt/.
+´E poss´ıvel
+http : //www.uam.es/personal−pdi/ciencias/pangulo/doc/laboratorio/b6RSA.html.
+
+se observar um exemplo da implementa¸c˜ao da criptograﬁa RSA, no site
+
+28
+
+28
+
+4.4 Conclus˜ao
+´E not´orio o fasc´ınio que os avan¸cos tecnol´ogicos exercem, sobretudo, nos jovens. Quer seja
+se divertindo, comunicando-se, buscando informa¸c˜oes de seu interesse, o aluno, hoje, mais do
+que nunca, est´a imerso num mundo de est´ımulos r´apidos e facilmente acess´ıveis. Assim, a
+sala de aula encerra em seu interior jovens cujas motiva¸c˜oes em prol da educa¸c˜ao precisam
+estar alinhadas com essa realidade contemporˆanea. Buscar o casamento do conceito te´orico
+com a implementa¸c˜ao pr´atica parece ser um bom caminho a seguir, na busca dessa t˜ao
+desejada motiva¸c˜ao. Ao se implementar um sistema de criptograﬁa RSA usando softwares
+gratuitos, por exemplo, o que se pretende n˜ao ´e criar “hackers” capazes de quebrar c´odigos
+na internet, mas, sim pessoas que enxerguem o acoplamento da teoria com o mundo real em
+que vivem, conseguindo assim construir um conhecimento com signiﬁcˆancia para suas vidas
+e, consequentemente, para a sociedade `a qual est˜ao inseridos.
+A Matem´atica nunca decepciona. Oferece sempre desaﬁos `aqueles que nela se aventuram.
+Ali´as,
+
+“a Matem´atica ´e o alfabeto com o qual Deus escreveu o universo”.
+
+Galileu Galilei
+
+5 Agradecimentos
+
+Ao t´ermino dessa empreitada, ´e por consciˆencia e total reconhecimento que n˜ao posso deixar
+de expressar meus mais profundos agradecimentos `aqueles que certamente tornaram essa re-
+aliza¸c˜ao pessoal poss´ıvel.
+Ao Prof Dr Juan Carlos Zavaleta Aguilar, pela sua competˆencia, constante disponibilidade,
+orienta¸c˜oes oportunas e pela forma cordial com que sempre nos tratou. Reconhe¸co tamb´em
+sua compreens˜ao pelas vezes que n˜ao consegui corresponder `as suas expectativas.
+Ao corpo docente da UFSJ que nos concedeu parcela do seu tempo ministrando aulas e
+disponibilizando meios diversos para nos orientar nas disciplinas que cursamos durante essa
+jornada.
+`A UFSJ, pela acolhida e pela oportunidade que nos ofereceu de aprimorarmos nossos
+conhecimentos e pr´aticas, na busca por uma educa¸c˜ao b´asica com mais qualidade para os
+alunos desse n´ıvel de ensino.
+Ao Comando do Col´egio Militar de Belo Horizonte, nas pessoas do Cel Cav Nilton Jos´e
+Batista Moreno J´unior, Comandante e Diretor de Ensino e do Cel Art ´Everton Duarte, Sub-
+diretor de Ensino, pelo inestim´avel apoio concedido `a realiza¸c˜ao desse curso.
+Ao Maj QCO Fernando Carvalho Ramos, Professor e Mestre, Chefe da cadeira de Matem´atica
+do Col´egio Militar de Belo Horizonte, pelo incentivo e pelas sugest˜oes sempre pertinentes.
+`A minha fam´ılia, especialmente aos meus pais, Jorge e Dilza, pela forma¸c˜ao que me propor-
+cionaram e a minha esposa Eliane e a meu ﬁlho Luiz Felipe pelo incentivo em continuar e
+pela compreens˜ao para com minhas ausˆencias rotineiras, devido `a necessidade dos estudos.
+Sem eles, certamente n˜ao teria a base necess´aria para a conclus˜ao dessa etapa de minha vida.
+Ao meu antigo Professor de Matem´atica, Kenji Nishio, inspira¸c˜ao constante em minha vida e
+exemplo de homem correto. Muito do pouco que sei, devo `as incont´aveis horas em que passei
+estudando com ele, h´a mais de 30 anos.
+Aos meus amigos de curso, especialmente Vilmar e Maur´ıcio, pelo conv´ıvio agrad´avel e pela
+preciosa troca de experiˆencias. Sentirei falta desse conv´ıvio.
+Finalmente, a Deus, por tudo.
+
+29
+
+29
+
+Referˆencias
+
+[ 1 ] COUTINHO, S. C. Criptograﬁa. Programa de Inicia¸c˜ao Cientiﬁca OBMEP n. 7. Rio
+de Janeiro, 2008.
+
+[ 2 ] PIMENTEL, E. G. Teoria de N´umeros e Criptograﬁa RSA. 2006.
+Dispon´ıvel em www.mat.ufmg.br/∼ elaine/OBMEP/criptograﬁa.pdf
+Acesso em 12 jan. 2015
+
+[ 3 ] Dispon´ıvel em https://www.lume.ufrgs.br/bitstream/handle/10183/66106/000870987.pdf?
+sequence=1
+Acesso em 20 jan. 2015
+
+[ 4 ] Dispon´ıvel em http://www.batebyte.pr.gov.br/modules/conteudo/conteudo.php?conteudo=1384.
+Acesso em 29 jan. 2015
+
+[ 5 ] BEZERRA, J. B. Quest˜oes de Matem´atica. S˜ao Paulo: Companhia Editora Nacional.
+
+[ 6 ] LUZ, W. B. Introdu¸c˜ao `a Matem´atica do Criptossistema RSA.
+Dispon´ıvel em http://bit.profmat-sbm.org.br/xmlui/handle/123456789/494
+Acesso em 4 fev. 2015
+
+[ 7 ] COSTA, C. ; SILVA DE FIGUEIREDO, L. M.Instrumenta¸c˜ao para o Ensino da
+Matem´atica. T´opicos de Matem´atica e Atualidade. Rio de Janeiro, Universidade Federal
+Fluminense. Centro de Estudo de Pessoal do Ex´ercito Brasileiro. 2006
+
+[ 8 ] Dispon´ıvel em http://www.uam.es/personal−pdi/ciencias/pangulo/doc/laboratorio/b6RSA.html.
+Acesso em 6 fev. 2015
+
+30
+
+30
+
+

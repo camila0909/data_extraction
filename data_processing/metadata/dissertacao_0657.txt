@@ -1,0 +1,3197 @@
+UNIVERSIDADE TECNOLÓGICA FEDERAL DO PARANÁ
+
+JÉSSICA FERNANDES VERONESE
+
+MÉTODOS NUMÉRICOS DE ZERO DE FUNÇÕES APLICADOS EM PROBLEMAS
+DE TAXA INTERNA DE RETORNO
+
+CURITIBA
+
+2022
+
+JÉSSICA FERNANDES VERONESE
+
+MÉTODOS NUMÉRICOS DE ZERO DE FUNÇÕES APLICADOS EM PROBLEMAS
+DE TAXA INTERNA DE RETORNO
+
+NUMERICAL METHODS OF ZERO FUNCTIONS APPLIED IN INTERNAL RATE OF
+RETURN PROBLEMS
+
+Dissertação apresentada como requisito para
+obtenção do título de Mestre no Programa
+Mestrado Profissional em Matemática em Rede
+Nacional - PROFMAT da Universidade Tecnológica
+Federal do Paraná (UTFPR).
+Orientadora: Profa. Dra. Paula Olga Gneri
+Coorientador: Prof. Dr. Jorge Luis Torrejón Matos
+
+CURITIBA
+
+2022
+
+Ministério da Educação Universidade Tecnológica Federal do Paraná Campus CuritibaJESSICA FERNANDES VERONESEMÉTODOS NUMÉRICOS DE ZERO DE FUNÇÕES APLICADOS EM PROBLEMAS DE TAXA INTERNA DE RETORNO.Trabalho de pesquisa de mestrado apresentado como requisito paraobtenção do título de Mestra da Universidade Tecnológica Federal doParaná (UTFPR). Área de concentração: Matemática.Data de aprovação: 08 de Julho de 2022Dr. Jorge Luis Torrejon Matos, Doutorado - Universidade Tecnológica Federal do ParanáDra. Karla Cristiane Arsie, Doutorado - Pontifícia Universidade Católica do Paraná (Pucpr)Dra. Nara Bobko, Doutorado - Universidade Tecnológica Federal do ParanáDocumento gerado pelo Sistema Acadêmico da UTFPR a partir dos dados da Ata de Defesa em 08/07/2022.Dedico este trabalho ao meu pai Valdir (in
+memorian), que não está mais entre nós mas
+continua sendo minha maior força na vida.
+Sua lembrança me faz persistir.
+
+AGRADECIMENTOS
+
+• À Sociedade Brasileira de Matemática que, na busca da melhoria do ensino de matemática
+
+na Educação Básica, viabilizou a implementação do PROFMAT.
+
+• À CAPES, pela recomendaçã do PROFMAT por meio do parecer do Conselho Técnico
+
+Científico da Educação Superior.
+
+• A todo corpo docente pelos ensinamentos que me permitiram apresentar um melhor
+desempenho no processo de formação profissional ao longo do curso, em especial aos
+professores Paula e Jorge, que com paciência e dedicação conduziram a orientação deste
+estudo.
+
+Daria tudo que sei pela metade do que ignoro.
+René Descartes (1596 - 1650): filósofo, físico
+e matemático francês.
+
+RESUMO
+
+Apresentaremos três métodos numéricos - Bissecção, Newton-Raphson e Secante - como forma
+de encontrar taxas de juros aplicadas em transações financeiras partindo de situações reais e
+práticas e assim, buscar relacionar a Matemática Financeira com o Cálculo Numérico. Partindo
+de um caso específico, é possível encontrar uma função generalizada para o parcelamento. A
+aplicação destes diferentes métodos visa, além de aprofundar as possibilidades daquele que
+possui conhecimento superior em matemática, alcançar também um público que muitas vezes se
+depararia com dificuldades no momento em que fosse realizar uma compra ao não ter a certeza
+de quanto estaria pagando por aquilo.
+
+Palavras-chave: Métodos numéricos; Taxa de juro; Parcelamento; Zero de função.
+
+ABSTRACT
+
+We present three numerical methods - Bisection, Newton-Raphson and Secante - as a way to
+find interest rates applied in financial transactions from real and practical situations and thus
+seek to relate Financial Mathematics with Numerical Calculus. Starting with a specific case, it
+is possible to find a generalized function for the installment. The application of these different
+methods aims, in addition, to deepening the possibilities of those who have superior knowledge
+in mathematics, also reaching an audience that would often face difficulties when making a
+purchase, not being sure of how much they would be paying for it.
+Keywords: Numerical methods; Interest rate; installment; zero of function.
+
+LISTA DE FIGURAS
+
+.
+
+Figura 1.1 – Esquema de pagamentos . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Figura 2.1 – Valor no tempo .
+Figura 4.1 – Gráfico de f (x) = x3 − 2x2 − 4x + 1 . . . . . . . . . . . . . . . . . . . .
+Figura 4.2 – Gráfico de f (x) = 5x3 + x2 − 12x + 4 . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . .
+Figura 4.3 – Representação geométrica do Método das Secantes
+Figura 4.4 – Gráfico de f (x) = logx − cosx . . . . . . . . . . . . . . . . . . . . . . . .
+Figura 4.5 – Intersecção dos Gráficos de y1 e y2
+. . . . . . . . . . . . . . . . . . . . . .
+Figura 4.6 – Iterações pelo Método da Bissecção . . . . . . . . . . . . . . . . . . . . . .
+Figura 4.7 – Iterações pelo Método de Newton-Raphson . . . . . . . . . . . . . . . . . .
+Figura 4.8 – Iterações pelo Método das Secantes . . . . . . . . . . . . . . . . . . . . . .
+Figura 5.1 – Gráfico da f(x) plotado no GeoGebra . . . . . . . . . . . . . . . . . . . . .
+Figura 5.2 – Ampliação do gráfico da f(x) plotado no GeoGebra
+. . . . . . . . . . . . .
+Figura 5.3 – Iterações do método da Bissecção em uma compra parcelada . . . . . . . .
+Figura 5.4 – Iterações método de Newton-Raphson em uma compra parcelada . . . . . .
+Figura 5.5 – Iterações método da Secante em uma compra parcelada . . . . . . . . . . .
+Figura 5.6 – Comparação entre os três métodos numéricos aplicados ao exemplo 1 . . . .
+Figura 5.7 – Gráfico da f(x) plotado no GeoGebra . . . . . . . . . . . . . . . . . . . . .
+Figura 5.8 – Ampliação do gráfico da f(x) plotado no GeoGebra
+. . . . . . . . . . . . .
+Figura 5.9 – Iterações método da Bissecção em financiamento de um carro . . . . . . . .
+Figura 5.10–Iterações método de Newton-Raphson em financiamento de um carro . . . .
+Figura 5.11–Iterações método das Secantes em financiamento de um carro . . . . . . . .
+Figura 5.12–Comparação entre os três métodos numéricos aplicados ao exemplo 2 . . . .
+Figura 5.13–Gráfico da f(x) plotado no GeoGebra . . . . . . . . . . . . . . . . . . . . .
+Figura 5.14–Ampliação do gráfico da f(x) plotado no GeoGebra
+. . . . . . . . . . . . .
+Figura 5.15–Iterações método da Bissecção em um financiamento de uma moto . . . . .
+Figura 5.16–Iterações método de Newton-Raphson em um financiamento de uma moto .
+Figura 5.17–Iterações método da Secante em um financiamento de uma moto . . . . . .
+Figura 5.18–Comparação entre os três métodos numéricos aplicados ao exemplo 3 . . . .
+
+12
+18
+30
+39
+41
+42
+43
+45
+45
+46
+49
+49
+50
+50
+51
+51
+52
+53
+53
+54
+54
+55
+55
+56
+56
+57
+57
+58
+
+LISTA DE TABELAS
+
+Tabela 1.1 – Características dos métodos numéricos . . . . . . . . . . . . . . . . . . . .
+Tabela 2.1 – Capitalização Composta . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Tabela 4.1 – Iterações método da Bissecção . . . . . . . . . . . . . . . . . . . . . . . .
+Tabela 4.2 – Iterações método de Newton-Raphson . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . .
+Tabela 4.3 – Iterações método das Secantes
+
+13
+16
+31
+39
+43
+
+SUMÁRIO
+
+INTRODUÇÃO .
+
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+12
+
+MATEMÁTICA FINANCEIRA . . . . . . . . . . . . . . . . . . . . . . .
+
+15
+
+FUNDAMENTAÇÃO MATEMÁTICA . . . . . . . . . . . . . . . . . . .
+
+Teorema dos Intervalos Encaixantes . . . . . . . . . . . . . . . . . . . . . .
+Teorema da permanência do Sinal . . . . . . . . . . . . . . . . . . . . . . .
+Teorema de Bolzano . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Teorema do Valor Intermediário . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Contração .
+.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+Ponto Fixo .
+Teorema de Rolle
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Teorema do Valor Médio . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+.
+.
+.
+
+.
+.
+
+.
+.
+
+21
+
+21
+22
+22
+24
+24
+25
+27
+28
+
+MÉTODOS NUMÉRICOS . . . . . . . . . . . . . . . . . . . . . . . . .
+
+29
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+29
+Método da Bissecção . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+31
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+Algoritmo .
+31
+Critério de Parada .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+33
+Método do Ponto Fixo . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+34
+Ordem de Convergência . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+36
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Algoritmo .
+.
+36
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Critério de Parada .
+36
+Método de Newton-Raphson . . . . . . . . . . . . . . . . . . . . . . . . .
+40
+Ordem de Convergência . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+40
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+.
+Algoritmo .
+40
+Critério de Parada .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+41
+Método das Secantes . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+43
+Ordem de Convergência . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+44
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Algoritmo .
+.
+Critério de Parada .
+44
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+Comparação prática dos três métodos: Bissecção, Newton-Raphson e Secante. 44
+
+.
+
+.
+
+.
+
+.
+
+.
+
+.
+
+APLICAÇÕES .
+
+CONCLUSÃO .
+
+.
+
+.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+47
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+59
+
+REFERÊNCIAS .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+60
+
+1
+
+2
+
+3
+
+3.1
+3.2
+3.3
+3.4
+3.5
+3.6
+3.7
+3.8
+
+4
+
+4.1
+4.1.1
+4.1.2
+4.2
+4.2.1
+4.2.2
+4.2.3
+4.3
+4.3.1
+4.3.2
+4.3.3
+4.4
+4.4.1
+4.4.2
+4.4.3
+4.5
+
+5
+
+6
+
+1 INTRODUÇÃO
+
+12
+
+Entender a relação existente entre tempo e dinheiro se tornou cada vez mais necessária
+nos dias de hoje. Consumidores estão tendo mais possibilidades em adquirir bens devido as
+facilidades em realizar compras de forma parcelada, ou ainda, se tratando de valores mais altos,
+como nos casos de imóveis e veículos, existem os financiamentos com instituições bancárias.
+Porém, não são raros os casos em que se praticam taxas abusivas nessas transações financeiras e
+a única forma do consumidor questionar tal cobrança é tendo conhecimento de como é feito esse
+cálculo.
+
+Por outro lado, existem os investimentos e aplicações financeiras cuja finalidade é fazer
+o dinheiro render e aqui, ao contrário dos financiamentos, quanto maior for essa taxa, melhor
+será o retorno financeiro.
+
+Em suma, cada operação de crédito é operada por taxas de juros, estas que foram definidas
+por Neto (2012, p.1) como "o coeficiente que determina o valor do juro, isto é, a remuneração do
+fator capital utilizado durante certo período de tempo".
+Com o intuito de determinar um modelo matemático capaz de apresentar os valores das taxas
+contidas nessas transações financeiras, analisaremos a situação apresentada por Nascimento
+(2017) onde temos que uma loja vende um produto à vista por R$500,00 ou em 2 prestações iguais
+e mensais de R$257,52. Considerando que as parcelas são postecipadas, queremos determinar a
+taxa de juros cobrada por essa loja.
+
+A Figura 1.1 traz a representação dos pagamentos efetuados nessa situação.
+
+Figura 1.1 – Esquema de pagamentos
+
+Fonte: A autora (2021).
+
+Para determinar a taxa de juros i envolvida nessa compra parcelada, devemos analisar os
+valores envolvidos na operação em uma mesma época de pagamento, sendo a época zero o ato
+da compra e a época 2 o pagamento da segunda parcela. Nesse caso, escolhendo a época 2 para
+análise, precisamos transportar todos os valores para esta data futura. Assim, devemos levar em
+consideração o juro que irá incidir nesse período de tempo, como mostra a Equação (1.1).
+
+500(1 + i)2 = 257, 52 + 257, 52(1 + i).
+
+(1.1)
+
+13
+
+Aqui, observa-se que o valor à vista, referente a época zero, foi transportado duas épocas
+a frente, aplicando sobre esse valor duas vezes a taxa incidente. De modo análogo, a primeira
+parcela precisou ser transportada uma época à frente. Esses valores futuros, podem ser reescritos
+através de uma equação polinomial de segundo grau, fazendo (1 + i) = x temos:
+
+500x2 = 257, 52 + 257, 52x.
+
+Com um pouco de álgebra, encontramos que a taxa envolvida nessa situação é de 2% ao
+
+mês.
+
+Esse processo de análise, quando se tem prestações iguais e periódicas e recaí em um
+polinômio de grau 2, como ocorreu no exemplo 1, é relativamente simples. Porém não são raros
+os casos em que obtemos equações polinomiais com graus que necessitam de outro tipo de
+análise, como ocorre na situação apontada por Lyuu (2004, p. 18): "Um banco emprestou a
+um mutuário $ 260.000 por 15 anos para comprar uma casa. Essa hipoteca de 15 anos tem um
+pagamento mensal de $ 2.000."Por mais que se trate de parcelas de igual valor e periódicas, o
+número de parcelas é grande e recaí em um polinômio que não possui fórmulas genéricas para
+resolvê-lo. A solução nesses casos será obtida através de um algoritmo capaz de analisar tais
+siuações e obter uma aproximação tão próxima quanto se queira do valor procurado: os métodos
+numéricos.
+Dos métodos existentes, a literatura nos trás 3 métodos mais usuais: Bissecção, Newton-Raphson
+e Secante. Podemos observar na Tabela 1.1 algumas informações relevantes sobre cada um deles.
+
+Tabela 1.1 – Características dos métodos numéricos
+
+MÉTODO
+Bissecção
+
+CARCTERÍSTICAS
+Método simples e de fácil entendimento. Sempre converge,
+porém essa convergência é lenta.
+
+Newton-Raphson Possui rápida convergência porém nem sempre converge.
+Necessita de conhecimentos em derivadas e depende de uma
+estimativa inicial boa.
+Não necessita do cálculo de derivadas e possui rápida con-
+vergência porém, além de nem sempre convergir, possui um
+alto custo computacional.
+
+Secante
+
+Fonte: A autora (2021).
+
+A escolha de qual método utilizar é um tanto delicada, pois vários fatores devem ser
+
+levados em consideração.
+
+O tema desta dissertação tem como referência principal a obra de Lyuu (2004) que
+discorre sobre uma engenharia financeira, relacionando a matemática financeira com a ciência
+da computação ao fazer uso das planilhas eletrônicas.
+
+Pensando em como tornar acessível o entendimento de algumas ideias da matemática
+
+financeira e assim facilitar a tomada de decisões no cotidiano como cita Santiago (2021).
+
+O objetivo é determinar um algoritmo capaz de encontrar as taxas de juros aplicada em
+
+transações financeiras.
+
+Este tipo de aplicação se faz em duas principais áreas da matemática:
+
+14
+
+• Matemática financeira;
+
+• Métodos numéricos.
+
+Inicialmente, no Capítulo 1, será apresentado os conceitos essenciais da matemática
+financeira, onde serão apresentadas fórmulas usuais em compras parceladas e em investimentos.
+Nesse sentido, será necessária a compreensão da determinação taxativa nas transações financeiras.
+
+Para tanto, a título de contexto, alguns teoremas serão explicados no Capítulo 2, para
+poder ser feito uma comparação dos métodos numéricos. Em seguida, no Capítulo 3, serão estu-
+dados três métodos numéricos: Bissecção, Newton-Raphson e Secante, tais como sua usabilidade
+em determinadas situações. Para o desenvolvimento desses métodos, será feito uso de planilhas
+eletrônicas, o que também é mostrado aqui.
+
+Finalmente, com essas duas áreas bem definidas e para atingir o objetivo desse trabalho,
+são apresentadas e analisadas situações no qual a união destas áreas se dá afim de exemplificar a
+ideia aqui proposta.
+
+2 MATEMÁTICA FINANCEIRA
+
+15
+
+O salário que você recebe hoje não possui o mesmo valor que essa mesma quantia possuía
+a um ano atrás, e consequentemente não terá o mesmo valor daqui a um ano. Mas por quê isso
+acontece?
+
+Sendo a matemática capaz de estudar a relação entre tempo e dinheiro, com ela é possível
+criar modelos com o intuito de analisar o valor do dinheiro ao longo do tempo. De início, alguns
+conceitos básicos da matemática financeira serão necessários para o entendimento do trabalho
+proposto. Estes serão definidos a partir de uma situação hipotética: "Uma pessoa recebeu R$
+80.000,00 de acerto ao se aposentar. Ela, sem saber qual seria a melhor opção, resolveu aplicar
+50% desse valor em um investimento que rende juros simples e o restante do valor será aplicado
+à juros composto, ambos por um período de 6 meses com rendimento de 3% ao mês nas duas
+aplicações."
+
+Analisando a situação apresentada, podemos identificar e definir vários elementos exis-
+
+tentes na Matemática Financeira, sendo:
+
+• CAPITAL (C)
+
+Representa o valor inicial de qualquer operação financeira. Também conhecido como
+principal. Na situação apresentada esse valor corresponde ao valor de R$ 80.000,00.
+
+• JURO (J)
+
+Pode ser visto como uma compensação financeira em caso de uma aplicação ou ainda
+como o custo de um capital em situações de empréstimos.
+
+• TAXA DE JURO (i)
+
+O valor do Juro é calculado através de um coeficiente apresentado na forma percentual
+denominado por Taxa de Juro. Essa taxa pode ser definida como o custo do capital ao
+longo do tempo. Em um empréstimo, determina o valor a ser pago ou, no caso de uma
+aplicação, será o valor a ser recebido. A taxa de juros apresentado corresponde a 3%. Taxa
+de juro está relacionada com o tempo em que ocorre uma operação financeira. Sendo
+assim, deve vir acompanhada de sua temporalidade, sendo os mais usuais apresentados a
+seguir:
+
+Ao dia (a.d.)
+Ao mês (a.m.)
+Ao ano (a.a.)
+
+• MONTANTE
+
+Ao final de uma transação financeira, obtemos o Montante. Este, se refere a soma do
+capital aplicado inicialmente e do juro que foi acumulado ao longo do tempo e pode ser
+representado por:
+
+16
+
+• SISTEMA DE CAPITALIZAÇÃO
+
+M = C + J
+
+É a forma como o Juro irá incidir sobre o capital. Pode ocorrer de duas formas: Capitaliza-
+ção Simples e Capitalização Composta.
+
+No sistema de Capitalização Simples, o Juro é determinado sobre o valor do Capital e
+pode ser definido sendo:
+
+J = C.i.n
+
+(2.1)
+
+Esse sistema de amortização foi utilizado em nossa situação hipotética em 50% de
+R$80.000,00, ou seja, R$40.000,00. Tal quantia foi investida a Juro Simples de 3% a.m.
+durante 6 meses. Aplicando os dados da situação em (2.1) e considerando um período de
+6 meses, temos que:
+
+J = 40.000 · 0, 03 · 6
+
+Assim, essa parte do investimento, feito a Juro simples, renderá ao aplicador o juro de, no
+final do período investido, R$ 7.200,00.
+
+Já no sistema de Capitalização Composta, o Juro é determinado sobre o valor acumulado
+do mês anterior. Analisando a situação estudada, temos 50% do valor aplicado à Juro
+Composto, a uma taxa de 3% a.m por 6 meses, como pode ser observado na tabela a seguir:
+
+Tabela 2.1 – Capitalização Composta
+
+TEMPO CAPITAL
+
+JURO
+
+1
+2
+3
+4
+5
+6
+
+R$40.000,00 R$1.200,00
+R$41.200,00 R$1.236,00
+R$42.436,00 R$1273,08
+R$43.709,08 R$1.311,27
+R$45.020,35 R$1.350,61
+R$46.370,96 R$1.391,12
+
+Fonte: A autora (2021).
+
+ACUMULADO
+R$41.200,00
+R$42.436,00
+R$43.709,08
+R$45.020,35
+R$46.370,96
+R$47.762,08
+
+A Tabela 2.1, apresenta a evolução do Capital mês a mês, no sistema de capitalização
+composto. Nesse caso, o Capital é alterado a todo novo mês de capitalização, pois nesse
+sistema, o juro é determinado sobre o valor acumulado do período anterior. Assim, o juro
+obtido nessa aplicação é dado pela soma dos valores determinados em cada período, assim:
+
+M = C + (C · i · n)
+
+M = C · (1 + i · n)
+
+17
+
+(2.2)
+
+Tendo que, no sistema de Juro Composto há um novo Capital a cada tempo, podemos
+verificar também um novo Montante a cada período, sendo M1 referente ao primeiro mês,
+M2 ao segundo mês e assim sucessivamente e M será o montante no fim do período de 6
+meses.
+
+– Primeiro mês de aplicação:
+
+– Segundo mês de aplicação:
+
+M1 = C · (1 + i · 1)
+
+M1 = C · (1 + i).
+
+M2 = M1 · (1 + i · 1)
+
+M2 = C · (1 + i) · (1 + i)
+M2 = C · (1 + i)2.
+
+Através do primeiro princípio de indução matemática, tendo verificado a veracidade em
+n = 1, e admitindo que é válida para todo n = k, tem-se que Mk = C · (1 + i)k para todo
+k pertencente aos naturais.
+Devemos provar que a igualdade vale para n = k + 1, assim:
+
+Mk = C · (1 + i)k
+Mk · (1 + i) = C · (1 + i)k · (1 + i)
+M(k+1) = C · (1 + i)(k+1).
+
+Portanto, a fórmula do montante do n-ésimo mês a juros composto pode ser definida por:
+
+Mn = C · (1 + i)n.
+
+Tendo conhecimento do Montante acumulado em uma aplicação, é possível determinar os
+juros obtidos nela, da seguinte forma:
+
+M = C + J
+
+J = M − C
+
+J = C · (1 + i)n − C
+
+J = C · [(1 + i)n − 1].
+
+18
+
+(2.3)
+
+Ao analisar situações financeiras, deve-se levar em conta o período em que ela ocorre. No
+espaço de tempo existente entre o Capital e o Montante, o valor de uma transação se altera
+diversas vezes, podendo ela ser classificada em três diferentes momentos:
+
+• VALOR PRESENTE
+
+Em uma transação financeira, o valor presente (PV) é o valor atualmente acumulado,
+podendo este coincidir com o Capital quando a transação foi iniciada na data atual, ou
+podendo ser um valor intermediário entre Capital e Montante quando a data atual esteja
+durante a operação.
+
+• VALOR FUTURO
+
+Analisado o valor acumulado em qualquer data compreendida entre a atual e a final
+(vencimento da operação) obtemos o valor futuro (FV).
+
+Frequentemente, o valor presente e o valor futuro são tidos como sinônimos do Capital e
+do Montante, respectivamente.
+
+• VALOR NOMINAL
+
+É o valor constante de uma transação financeira. O valor nominal (VN) pode ser tanto o
+Capital quanto o Montante.
+
+Figura 2.1 – Valor no tempo
+
+Fonte: Puccini (2011).
+
+19
+
+A figura 2.1 apresenta o valor no tempo.
+
+O valor ou preço de um Capital em um certo período de tempo é determinado por sua
+capitalização durante esse período. Com o juro sendo calculado periodicamente, através de uma
+taxa fixada mês a mês, temos que o montante obtido, ao final da operação, se dará pela soma
+do capital inicial com a soma das capitalizações que ocorreram durante o processo. Assim, em
+nossa situação hipotética, apresentamos duas formas de capitalizar o capital, sendo uma delas
+atrelada ao juro simples e a outra ao juro composto e, ao estarem sendo atreladas a uma mesma
+taxa dentro de um mesmo período de tempo, não foi difícil perceber qual era a mais conveniente,
+ou seja, na aplicação ao juro composto, o montante acumulado foi R$ 562,08 a mais que o
+acumulado a juro simples.
+
+Conhecer o processo inverso, o de descapitalizar o capital, se torna interessante nos casos
+em que o sujeito queira confirmar a taxa aplicada na prática em uma operação de financiamento,
+por exemplo.
+
+A equação (2.4) mostra esse processo de descapitalização. Nela, estamos trazendo as
+parcelas Cn que seriam pagas no futuro para o presente e, para isso, precisamos desconsiderar
+a taxa aplicada ao fazer o processo inverso do que foi apresentado em (2.2), passando assim a
+dividir as parcelas por (1 + i)n e não multiplicar, tendo:
+
+P V =
+
+C1
+(1 + i)
+
++
+
+C2
+(1 + i)2 +
+
+C3
+
+(1 + i)3 + ... +
+
+Cn
+(1 + i)n .
+
+(2.4)
+
+Com isso, podemos determinar a taxa interna de retorno. Este, se resume á taxa envolvida quando
+analisado o valor presente do capital na data inicial. De modo simples, é como se resolvêssemos
+acertar as parcelas futuras todas no ato da compra, sendo descontado assim o juro que seria
+cobrado. Dessa forma, o sujeito é capaz de verificar se a taxa cobrada confere com a informada
+no ato.
+
+A aplicação dessa fórmula pode ser vista no Exemplo 2.0.1:
+
+Exemplo 2.0.1. Ao realizar uma compra, um cliente pôde parcelar em 2 vezes, com uma taxa de
+0,5% a.m. Considerando que as parcelas são de R$120,00, qual seria o valor devido pago se
+essa compra fosse realizada à vista?
+
+Então, dos dados do problema:
+
+P V =
+
+120
+(1 + 0, 005)
+
++
+
+120
+
+(1 + 0, 005)2 = 119, 40 + 118, 80 = 238, 20.
+
+Portanto, o valor a ser pago se essa compra fosse realizada à vista, seria de R$238,20.
+
+Considerando que as parcelas são iguais, em todos os períodos de pagamento, temos que
+
+C1 = C2 = C3 = Cn = C, podemos reescrevê-la da seguinte forma:
+
+"
+
+P V = C ·
+
+1
+(1 + i)
+
++
+
+1
+(1 + i)2 +
+
+1
+
+(1 + i)3 ... +
+
+1
+(1 + i)n
+
+#
+
+.
+
+20
+
+Aqui, temos que o valor presente (PV) que será obtido através do produto entre o capital e o
+valor a ser pago em cada parcela com uma soma parcial de n termos de uma série geométrica,
+definida por:
+
+"
+
+1
+(1 + i)
+
++
+
+1
+(1 + i)2 +
+
+1
+
+(1 + i)3 ... +
+
+1
+(1 + i)n
+
+#
+
+=
+
+n
+X
+
+k=1
+
+1
+(1 + i)k .
+
+Logo, temos que:
+
+O que também pode ser escrito como sendo:
+
+P V = C ·
+
+n
+X
+
+k=1
+
+1
+(1 + i)k .
+
+P V − C ·
+
+n
+X
+
+k=1
+
+1
+
+(1 + i)k = 0.
+
+Na sentença acima, i pode ser representado como a raiz da função f (x) definida a seguir:
+
+f (x) = P V − C ·
+
+n
+X
+
+k=1
+
+1
+(1 + x)k .
+
+(2.5)
+
+A função (2.5) será vista com mais detalhes no Capítulo 4, em aplicações do dia a dia.
+
+3 FUNDAMENTAÇÃO MATEMÁTICA
+
+21
+
+Alguns dos resultados que serão utilizados e mencionados no próximo capítulo serão
+apresentados aqui e podem ser encontrados no livro Um curso de cálculo - Volume 1 por
+Guidorizzi (1997).
+
+3.1 TEOREMA DOS INTERVALOS ENCAIXANTES
+
+Sendo uma ferramenta fundamental do conjunto dos números Reais, o teorema dos
+intervalos encaixantes será necessário para o método da Bissecção, pois este gera uma série de
+sequências de comprimento sempre igual a metade do anterior.
+
+Teorema 3.1.1. Seja [a0, b0], [a0, b0], [a1, b2], ...[an, bn], ... uma sequência de intervalos satisfa-
+zendo as condições:
+
+(i) [a0, b0] ⊃ [a1, b1] ⊃ [a2, b2] ⊃ ... ⊃ [an, bn] ⊃ ...
+
+(ii) Para todo r > 0, existe um natural n tal que:
+
+bn − an < r
+
+Nestas condições, existe um único real α que pertence a todos os intervalos da sequência, ou
+seja:
+
+an ≤ α ≤ bn, ∀n ∈ N ∪ {0}.
+
+Demonstração. Seja a sequência definida por (a0, a1, a2, ..., an, ...), formada pelos extremos
+esquerdos dos intervalos de 3.1.1, denotada simplesmente por (an). Observe que (an) é limitada
+pois an ∈ [a0, b0] para todo n ∈ N ∪ {0}. Além disso, (an) é monótona crescente e, portanto,
+converge a seu supremo que chamaremos de α. Como α é a menor cota superior de (an) e todo
+bn é cota superior de (an), para todo n natural, temos:
+
+an ≤ α ≤ bn.
+
+Vejamos que α é o único elemento tal que α ∈ [an, bn] para todo n ∈ ∪{0}.
+Sendo β outro real de tal forma que, para todo n,
+
+Então, para todo n,
+
+an ≤ β ≤ bn,
+
+|α − β| ≤ bn − an.
+
+22
+
+Por (ii) do enunciado, percebemos que, para todo r > 0
+
+|α − β| < r.
+
+Logo, α = β.
+
+Note que a sequência (b0, b1, b2, ..., bn, ...), formada pelos extremos direitos dos intervalos
+de 3.1.1, é limitada e monótona decrescente e α obtido no teorema, é seu ínfimo, assim sendo
+seu limite.
+
+3.2 TEOREMA DA PERMANÊNCIA DO SINAL
+
+Este Teorema pode ser encontrado no livro Curso de Análise - Volume 1 por Lima (2014).
+
+Teorema 3.2.1. Sejam X ⊂ R, a ∈ X, f, g : X → R. Se limx→a f (x) = L e limx→a g(x) = M
+com L < M , então existe δ > 0 tal que para x ∈ X e 0 < |x − a| < δ temos f (x) < g(x).
+
+Demonstração. Da definição de limite, temos que:
+
+L = lim
+x→a
+
+f (x) ⇐⇒ ∀ε > 0, ∃δ1 > 0/|x − a| < δ1 ⇒ |f (x) − L| < ε
+
+e
+
+M = lim
+x→a
+Definindo ε = M −L
+2 > 0, pois L < M segue:
+
+g(x) ⇐⇒ ∀ε > 0, ∃δ2 > 0/|x − a| < δ2 ⇒ |g(x) − M | < ε
+
+Para este ε = M −L
+temos que:
+
+2
+
+e
+
+L + ε =
+
+M + L
+2
+
+= M − ε.
+
+, existem δ1 > 0 e δ2 > 0 tais que, se x ∈ X, com 0 < |x − a| < min(δ1, δ2),
+
+|f (x) − L| < ε ⇐⇒ L − ε < f (x) < L + ε
+
+|g(x) − M | < ε ⇐⇒ M − ε < g(x) < M + ε
+
+Assim, usando que L + ε = M − ε temos:
+
+f (x) < ε + L = M − ε < g(x).
+
+3.3 TEOREMA DE BOLZANO
+
+Na aplicação dos método numéricos, inicialmente é necessário delimitar um intervalo
+
+que contenha os zeros da função e isto pode ser feito de duas formas: Analítica e Gráfica.
+O Teorema de Bolzano, conhecido também como Teorema do anulamento, corresponde a maneira
+analítica de fazer essa delimitação, determinando o intervalo real [a, b], de uma função contínua,
+no qual será encontrado uma raiz, como segue.
+
+Teorema 3.3.1. Se f for contínua no intervalo fechado [a, b] e se f (a) e f (b) tiverem sinais
+contrários, então existirá pelo menos um c em [a, b] tal que f (c) = 0.
+
+Demonstração. Suponhamos que f (a) < 0 e f (b) > 0. Sendo a = a0, b = b0 e c0 ponto médio
+do segmento [a0, b0] temos que:
+
+23
+
+ou
+
+f (c0) < 0
+
+f (c0) ≥ 0
+
+Supondo f (c0) < 0, definamos a1 = c0 e b1 = b0. Então f (a1) < 0 e f (b1) > 0.
+Seja c1 o ponto médio do segmento [a1, b1], temos que:
+
+ou
+
+f (c1) < 0
+
+f (c1) ≥ 0
+
+Admitindo f (c1) ≥ 0, se f (c1) = 0, o problema está resolvido. Caso contrário, se f (c1) > 0,
+então definimos a2 = a1 e b2 = c1. Assim, f (a2) < 0 e f (b2) > 0.
+
+De forma análoga a este raciocínio, construímos uma sequência de intervalos encaixantes:
+
+[a0, b0] ⊃ [a1, b1] ⊃ [a2, b2] ⊃ ... ⊃ [an, bn] ⊃ ...,
+
+e, para todo n:
+
+f (an) < 0 e f (bn) ≥ 0.
+
+(3.1)
+
+Pelo Teorema dos Intervalos Encaixantes (teorema 3.1.1), existe único real c tal que, para
+
+todo n:
+
+an ≤ c ≤ bn.
+
+Além disso, as sequências definidas por an e bn convergem para c como foi visto na demonstração
+do Teorema dos Intervalos Encaixantes (Teorema 3.1.1). Assim, da continuidade de f , temos:
+
+lim
+n→∞
+
+f (an) = f (c) e lim
+n→∞
+
+f (bn) = f (c).
+
+(3.2)
+
+De (3.1) e (3.3) segue, pelo teorema de Permanência de Sinal (Teorema 3.2.1), que:
+
+e
+
+Assim,
+
+f (c) ≤ 0
+
+f (c) ≥ 0.
+
+f (c) = 0.
+
+24
+
+3.4 TEOREMA DO VALOR INTERMEDIÁRIO
+
+Este teorema é a generalização do teorema de Bolzano e é considerado um dos pilares
+
+do estudo de funções contínuas.
+
+Teorema 3.4.1. Se f for contínua em [a, b] e se γ for um real compreendido entre f (a) e f (b),
+então existe pelo menos um c em [a, b] tal que f (c) = γ.
+
+Demonstração. Suponhamos f (a) < γ < f (b) e considerando: g(x) = f (x) − γ, x em [a, b].
+Sendo f contínua em [a, b], g também é e ainda:
+
+e
+
+g(a) = f (a) − γ < 0
+
+g(b) = f (b) − γ > 0.
+
+Pelo Teorema de Bolzano (teorema 3.3.1), existe um c em [a, b] tal que g(c) = 0, ou seja,
+f (c) = γ.
+
+3.5 CONTRAÇÃO
+
+Nesta seção, usaremos como referência o trabalho de Oleiro (2016).
+
+Definição 3.1. Uma função f : I → R é uniformemente contínua se, dado ϵ > 0, existe um
+δ > 0 tal que:
+
+x, y ∈ Ie|x − y| < δ ⇒ |f (x) − f (y)| < ϵ.
+
+Definição 3.2. Uma aplicação f : X ⊂ R → R chama-se contração se existe λ ∈ R onde
+0 ≤ λ < 1 tal que |f (x) − f (y)| ≤ λ|x − y| para todo x, y ∈ X. Se for necessário especificar a
+constante λ, diz-se então que f é uma λ-contração.
+
+Desta, segue que:
+
+Teorema 3.5.1. Toda contração é uniformemente contínua.
+
+Demonstração. Partindo da hipótese de que f é uma contração, existe λ ∈ R, com 0 ≤ λ < 1
+tal que:
+
+|f (x) − f (y)| ≤ λ|x − y|, ∀x, y ∈ X.
+
+O objetivo é provar que dado ε > 0, existe δ > 0 tal que, se |x − y| < δ então |f (x) − f (y)| < ε.
+
+25
+
+i. Para 0 < λ < 1.
+
+Seja ε > 0. Tomando δ = ε
+
+λ e considerando |x − y| < δ, tem-se:
+
+|f (x) − f (y)| ≤ λ|x − y| < λδ = λ
+
+ε
+λ
+
+= ε,
+
+Logo, |f (x) − f (y)| < ε.
+
+ii. Para λ = 0.
+
+Como λ = 0 e f é contração, então:
+
+|f (x) − f (y)| ≤ 0 · |x − y| = 0 ⇒ |f (x) − f (y)| = 0
+
+Então dado ε > 0, qualquer que seja δ > 0,
+
+|x − y| < δ ⇒ |f (x) − f (y)| < ε.
+
+Portanto, conclui-se de (i) e (ii) que f é uniformemente contínua.
+
+3.6 PONTO FIXO
+
+Aqui, também será usado como referência o trabalho de Oleiro (2016).
+
+Definição 3.3. Um ponto x ∈ R é dito ponto fixo de uma função ϕ se ϕ(x) = x
+
+Exemplo 3.6.1. A função ϕ(x) = 2x tem como ponto fixo x = 0, pois:
+
+ϕ(0) = 2(0) = 0
+
+Exemplo 3.6.2. A função ϕ(x) = 2x − 1 tem como ponto fixo x = 1, pois:
+
+ϕ(1) = 2(1) − 1 = 1
+
+Exemplo 3.6.3. A função ϕ(x) = 2x2 que tem dois pontos fixos: x1 = 0 e x2 = 1
+
+2, pois:
+
+e
+
+ϕ(0) = 2(0)2 = 0
+
+ϕ(
+
+1
+2
+
+) = 2(
+
+1
+2
+
+)2 =
+
+1
+2
+
+O resultado a seguir estabelece condições suficientes para que uma função tenha um
+
+único ponto fixo.
+
+26
+
+Teorema 3.6.1. Sejam F ⊂ R um subconjunto fechado e f : F → F uma contração. Dado
+qualquer ponto x0 ∈ F , a sequência x1 = f (x0), x2 = f (x1), ..., xn+1 = f (xn) converge para
+um ponto a ∈ F , que é o único ponto fixo de F .
+
+Demonstração. Admitindo, por hipótese, que f : F → F é uma contração, existe 0 ≤ λ < 1 tal
+que:
+
+|f (x) − f (y)| ≤ λ|x − y|, ∀x, y ∈ F.
+
+Em particular,
+
+|f (xn+1) − f (xn)| ≤ λ|xn+1 − xn|, ∀xn ∈ F, n ∈ N.
+
+Para x1 e x2 tem-se: |x2 − x1| = |f (x1) − f (x0)| ≤ λ|x1 − x0|. Logo,
+
+|x2 − x1| ≤ λ|x1 − x0|.
+
+(3.3)
+
+Analogamente, para x2 e x3, tem-se: |x3 −x2| = |f (x2)−f (x1)| ≤ λ|x2 −x1|. Logo, |x3 −x2| ≤
+λ|x2 − x1|. Portanto, por (3.3),
+
+|x3 − x2| ≤ λ2|x1 − x0|.
+
+(3.4)
+
+Novamente, para x3 e x4, tem-se: |x4 − x3| = |f (x3) − f (x2)| ≤ λ|x3 − x2|. Logo, |x4 − x3| ≤
+λ|x3 − x2|. Portanto, por (3.4),
+
+|x4 − x3| ≤ λ3|x1 − x0|.
+
+Repetindo esse processo sucessivamente, obtém-se: |xn+1 − xn| = |f (xn) − f (xn−1)| ≤ λ|xn −
+xn−1|. Logo, |xn+1 − xn| ≤ λ|xn − xn−1| de onde pode-se concluir que:
+
+|xn+1 − xn| ≤ λn|x1 − x0|.
+
+(3.5)
+
+Para demonstrar a existência de um ponto fixo em F , será utilizado, para p ∈ N, o seguinte:
+
+|xn+p − xn| = |(xn+p − xn+(p−1)) + (xn+(p−1) − xn+(p−2)) + ... + (xn+2 − xn+1) + (xn+1 − xn)|.
+
+Pela desigualdade triangular:
+
+|xn+p−xn| ≤ |(xn+p−xn+(p−1))|+|(xn+(p−1)−xn+(p−2))|+...+|(xn+2−xn+1)|+|(xn+1−xn)|.
+
+Por (3.5)
+
+|xn+p − xn| ≤ λn+(p−1)|x1 − x0| + λn+(p−2)|x1 − x0| + ... + λn+1|x1 − x0| + λn|x1 − x0|.
+
+Evidenciando λn e |x1 − x0|
+
+|xn+p − xn| ≤ λn|x1 − x0|
+
+(cid:16)
+λ(p−1) + λ(p−2) + ... + λ + 1
+
+(cid:17)
+
+.
+
+(3.6)
+
+27
+
+Note que, no lado direito da desigualdade, (3.6) temos uma soma parcial de p termos de uma
+série geométrica.
+
+|xn+p − xn| ≤ λn|x1 − x0|
+
+#
+
+" 1 − λp
+1 − λ
+
+h 1−λp
+1−λ
+
+.
+
+i
+
+≤ λn
+
+1−λ |x1 − x0|.
+
+Como 0 < 1 − λp ≤ 1, pois 0 ≤ λ < 1, então λn|x1 − x0| ·
+Segue que:
+
+Tomando limite em (3.7) tendendo ao infinito:
+
+|xn+p − xn| ≤
+
+λn
+1 − λ
+
+|x1 − x0|.
+
+(3.7)
+
+lim
+n→∞
+
+|xn+p − xn| ≤ lim
+n→∞
+
+λn
+1 − λ
+
+|x1 − x0| = 0 · |x1 − x0| = 0
+
+Logo,
+
+lim
+n→∞
+
+|xn+p − xn| = 0
+
+(3.8)
+
+Por (3.8), xn é uma sequência de Cauchy logo é convergente em R.
+Portanto, existe a = limn→∞ xn com a ∈ F , pois, por hipótese, F é fechado.
+Pela definição de contração, f é contínua, então:
+
+f (a) = f [ lim
+n→∞
+
+(xn)] = lim
+n→∞
+
+f [(xn)] = lim
+n→∞
+
+an = a.
+
+Portanto, a ∈ F é ponto fixo de f .
+Vejamos que o ponto fixo de f é único em F . Para tal, suponha que existe um elemento b ∈ F
+tal que f (b) = b. Então,
+
+|b − a| = |f (b) − f (a)| ≤ λ|b − a|.
+
+Assim,
+
+ou também,
+
+|b − a| − λ|b − a| ≤ 0
+
+(1 − λ)|b − a| ≤ 0
+
+Uma vez que (1 − λ) > 0 e |b − a| > 0, então:
+
+(1 − λ)|b − a| = 0 ⇐⇒ |b − a| = 0.
+
+Implicando em b = a.
+Assim, a é o único ponto fixo de f .
+
+3.7 TEOREMA DE ROLLE
+
+Teorema 3.7.1. Se f for contínua em [a, b], derivável em ]a, b[ e f (a) = f (b), então existirá
+pelo menos um c em ]a, b[ tal que f ′(c) = 0.
+
+28
+
+Demonstração. Se f for constante em [a, b], então f ′(x) = 0 em ]a, b[; logo existirá c em ]a, b[
+tal que f ′(c) = 0. Suponhamos, então, que f não seja constante em [a,b]. Como f é contínua no
+intervalo fechado [a,b], pelo teorema de Weierstrass, existem x1 e x2 em [a, b], tais que f (x1) e
+f (x2) são, respectivamente, os valores máximos e mínimo de f em [a, b]. Como f (x1) ̸= f (x2),
+pois estamos supondo f não constante em [a, b], segue que x1 ou x2 pertence a ]a, b[ (estamos
+usando aqui a hipótese f (a) = f (b), daí f ′(x1) = 0 ou f ′(x2) = 0. Portanto, existe c em ]a, b[
+tal que f ′(c) = 0.
+
+3.8 TEOREMA DO VALOR MÉDIO
+
+Teorema 3.8.1. Se f for contínua em [a, b] e derivável em ]a, b[, então existirá pelo menos um c
+em ]a, b[ tal que:
+
+f (b) − f (a) = f ′(c)(b − a).
+
+Demonstração. Seja f uma função definida em [a, b]. Consideremos a função S dada por:
+
+S(x) = f (a) +
+
+f (b) − f (a)
+b − a
+
+(x − a).
+
+(3.9)
+
+Assim, S é a reta secante ao gráfico de f que passa pelos pontos (a, (f (a)) e (b, f (b)).
+
+Seja g função dada por g(x) = f (x)−S(x), x em [a, b], onde S(x) está definida em (3.9).
+Como g é contínua em [a, b], derivável em ]a, b[ pois f e S são contínuas em [a, b] e deriváveis
+em ]a, b[ e g(a) = g(b), pelo Teorema 3.7.1 existe c em ]a, b[ tal que g′(c) = 0. Temos:
+
+Assim,
+
+Daí
+
+Portanto
+
+g′(x) = f ′(x) − S′(x) e S′(x) =
+
+f (b) − f (a)
+b − a
+
+.
+
+g′(x) = f ′(x) −
+
+f (b) − f (a)
+b − a
+
+.
+
+g′(c) = f ′(c) −
+
+f (b) − f (a)
+b − a
+
+= 0.
+
+f (b) − f (a) = f ′(c)(b − a).
+
+4 MÉTODOS NUMÉRICOS
+
+29
+
+Muitas situações matemáticas surgem de problemas no qual se faz necessário determinar
+zeros de funções. De posse de uma representação algébrica, podemos usufruir de métodos
+capazes de solucioná-los. Porém, não são raros os casos em que técnicas e fórmulas populares,
+ensinadas na educação básica não sejam suficientes.
+
+Ao analisar funções polinomiais de 1º e 2º graus, ou ainda algumas de 3º e até 4º grau, é
+relativamente fácil encontrar essas soluções utilizando métodos analíticos, como a fórmula de
+Bhaskara e as Relações de Girardi, por exemplo. Para além disso, funções de graus superiores a
+4 requerem métodos capazes de chegar próximo o quanto se queira da solução, conhecidos como
+métodos numéricos.
+
+Encontrar zeros de funções através de métodos numéricos se baseia em dois passos:
+
+• Determinar um intervalo [a, b] onde se encontra um zero, ou seja, onde f (x) = 0 ou apenas
+
+um ponto de partida de acordo com o método aplicado;
+
+• Refinar o valor encontrado, se aproximando o tanto quanto seja possível dessa raiz.
+
+Na sequência, será apresentado os métodos numéricos selecionados para o desenvolvimento
+deste estudo.
+
+4.1 MÉTODO DA BISSECÇÃO
+
+Nessa busca por zeros de funções, o método da Bissecção é considerado um dos mais
+simples e de fácil entendimento, porém requer certo tempo para ser aplicado pois sua conver-
+gência é lenta. O refinamento da raiz ocorre vagarosamente, pois aqui o intervalo de estudo é
+reduzido sempre pela metade.
+O processo iterativo do método da Bissecção consiste em subdividir um intervalo inicial a0, b0
+em uma sequência de subintervalos encaixados [ak, bk], isto é:
+
+[a0, b0] ⊃ [a1, b1] ⊃ [a2, b2] ⊃ ..., ⊃ [ak, bk] ⊃ ...
+
+onde
+
+|bk − ak| =
+
+1
+2
+
+|bk−1 − ak−1|.
+
+Teorema 4.1.1. Seja uma função f , contínua no intervalo real [a,b] tal que f (a) · f (b) < 0.
+Se x é o único zero de f nesse intervalo, então a sequência xk definida por xk+1 = ak+bk
+,
+satisfazendo f (ak) · f (bk) < 0 para k = 0, 1, 2, 3, ... tal que xk converge para ¯x.
+
+2
+
+30
+
+Para a aplicação do método da Bissecção, inicialmente é necessário determinar um
+
+intervalo que satisfaça a condição do teorema, ou seja, f (ak) · f (bk) < 0.
+
+Devemos dividir esse intervalo em dois subintervalos, considerando o ponto médio do
+
+intervalo inicial, assim a+b
+Tendo x0, temos três casos a serem analisados:
+
+2 = xo originando dois novos intervalos [a, x0] e [x0, b].
+
+• Se f (x0) = 0, a raiz procurada é o próprio valor de x0, encerrando o problema.
+
+• Se f (a).f (x0) > 0 temos que o valor da função nos extremos possuem mesmo sinal, logo
+
+a raiz procurada não se encontra no subintervalo [a, x0] e sim em [b, x0]
+
+• Se f (a).f (x0) < 0, ou seja, quando o produto da função nos respectivos extremos é
+negativo, concluímos que a função avaliada em cada extremo possui sinais contrários.
+Desta forma, temos que um extremo se encontra antes da raiz procurada e o outro, depois.
+
+Exemplo 4.1.1. Determine a raiz real negativa do polinômio f (x) = x3 − 2x2 − 4x + 1.
+
+Para determinar a raiz de um polinômio, devemos determinar para qual valor de x sua
+função se iguala a zero. Podemos representar graficamente esta função polinomial:
+
+Figura 4.1 – Gráfico de f (x) = x3 − 2x2 − 4x + 1
+
+Fonte: A autora (2022).
+
+Analisando o gráfico, podemos verificar a existência de três raízes reais localizadas em
+três intervalos distintos, sendo estes: [−2, −1], [0, 1] e [3, 4].
+
+31
+
+Tabela 4.1 – Iterações método da Bissecção
+
+Iteração
+1
+2
+3
+4
+5
+6
+
+a
+-2
+-1,5
+-1,5
+-1,5
+-1,4375
+-1,40625
+
+b
+-1
+-1
+-1,25
+-1,375
+-1,375
+-1,375
+
+f (a)
+-7
+-0,875
+-0,875
+-0,875
+
+f (b)
+2
+2
+0,921875
+0,119141
+-0,353271 0,119141
+-0,110992 0,119141
+
+xm
+-1,5
+-1,25
+-1,375
+-1,4375
+-1,40625
+-1,39063
+
+f (xm)
+-0,875
+0,921875
+0,119141
+-0,35327
+-0,11099
+0,005581
+
+Fonte: A autora (2021).
+
+Aplicando o método da Bissecção, com o auxílio de uma planilha eletrônica, faremos a
+verificação da raiz negativa dessa função que está localizada no intervalo [−2, −1].
+
+Aqui, após 6 iterações, reduzindo o intervalo sucessivamente pela metade, chegamos no
+intervalo [-1,40625; -1,375] encontramos que a raiz negativa do polinômio x3−2x2−4x+1
+é −1, 39, com aproximação de duas casas decimais. De forma análoga, poderíamos
+determinar as outras duas raízes existentes.
+
+Em suma, o método da Bissecção consiste em subdividir um intervalo em que se encontra
+a raiz procurada do problema sucessivas vezes, até obter um valor tão próximo o quanto se
+queira do valor exato da raiz.
+A convergência do método é garantida pelo Teorema de Bolzano (Teorema 3.3.1), porém
+essa convergência pode ser muito lenta. As iteração são de baixo custo computacional.
+
+4.1.1 ALGORITMO
+
+Algoritmo 1 Método da Bissecção
+
+1: Dados de entrada: a, b, ε.
+2:
+3: Enquanto (b − a) > ε
+x = a+b
+4:
+2
+Se f (a) · f (x) > 0
+5:
+6:
+7:
+8:
+9:
+10: Fim
+11: Saída: ¯x = a+b
+2
+
+Senão
+
+a = x
+
+b = x
+
+Fim
+
+4.1.2 CRITÉRIO DE PARADA
+
+Como visto no Exemplo 4.1.1, utilizamos o gráfico da função para determinar em qual
+intervalo deveríamos aplicar o método. É fundamental ter uma noção do intervalo em que a raiz
+será encontrada.
+
+32
+
+Durante o desenvolvimento, a cada nova iteração nos aproximamos ainda mais desta raiz.
+Mas, quando seria o momento correto de cessar com as iterações e assumir como raiz o valor
+encontrado? Para este método em específico, vamos levar em consideração o Erro absoluto sendo
+determinado da seguinte forma:
+
+E = |xk+1 − xk|
+
+(4.1)
+
+Esse erro deve ser menor do que uma precisão pré-estabelecida, no texto chamada de ε.
+
+Teorema 4.1.2. Dada uma tolerância ε > 0. Então, para o intervalo inicial [a, b], o número
+mínimo k de iterações realizadas pelo método da Bissecção, de modo que |xk − xk−1| < ε, é
+dada por:
+
+k >
+
+ln(b − a) − ln(ε)
+ln(2)
+
+.
+
+(4.2)
+
+A demonstração desta desigualdade que segue, é apresentada no livro Cálculo Numérico
+
+de Andrade e Carlos (2017)
+
+Demonstração. Dado o intervalo inicial [a, b] = [a0, b0]. Na primeira iteração do método da
+Bissecção, obtém-se [a1, b1] tal que:
+
+|b1 − a1| =
+
+|b0 − a0|
+2
+
+.
+
+Dividindo o intervalo ao meio, obtém-se [a2, b2]:
+
+|b2 − a2| =
+
+|b1 − a1|
+2
+
+=
+
+1
+2
+
+·
+
+|b0 − a0|
+2
+
+=
+
+|b0 − a0|
+22
+
+.
+
+De forma análoga até k-ésima iteração:
+
+|bk − ak| =
+
+|b0 − a0|
+2k
+
+.
+
+Como |bk − ak| < ε
+
+ε > |bk − ak| =
+
+|b0 − a0|
+
+2k ⇒ ε >
+
+|b0 − a0|
+2k
+
+.
+
+Aplicando a função logarítmica ln , tem-se:
+
+ln(ε) > ln
+
+!
+
+  |b0 − a0|
+2k
+
+= ln(|b0 − a0|) − k · ln(2)
+
+Segue que:
+
+Portanto, o número mínimo de iterações é dado por:
+
+k · ln(2) > ln(|b0 − a0|) − ln(ε)
+
+k >
+
+ln(|b0 − a0|) − ln(ε)
+ln(2)
+
+33
+
+4.2 MÉTODO DO PONTO FIXO
+
+Considerando f como sendo a função da equação f (x) = 0 e tendo um intervalo inicial
+[a, b] no qual f (a) · f (b) < 0, o método do Ponto Fixo será capaz de obter uma função ϕ da
+forma ϕ(x) = x + A(x)f (x).
+
+Dada as definições de Ponto Fixo e Contração no Capítulo 2, segue o resultado:
+
+Teorema 4.2.1. Seja ϕ : [a, b] → [a, b] contínua com ϕ′ contínua em (a, b). Suponha que
+|ϕ′(x)| ≤ M < 1 para algum M ≥ 0 e para todo x ∈ (a, b). Então, para todo x0 ∈ [a, b]
+tem-se:
+
+1. xk+1 = ϕ(xk) pertence ao intervalo [a, b], ∀k ≥ 0.
+
+2. limk→∞ xk = c, para algum c ∈ [a, b].
+
+3. c é a única solução de x = ϕ(x) em (a, b).
+
+Demonstração. Observe que, pelo Teorema do Valor Médio (Teorema 3.8.1), existe ε entre x e
+y tal que:
+
+|ϕ(y) − ϕ(x)| = |ϕ′(ε)||y − x| ≤ M |y − x|.
+
+Ou seja, pelo teorema do Ponto Fixo para contrações (Teorema 3.6.1), ϕ é uma contração no
+subconjunto fechado F = [a, b]. Portanto, para qualquer x0 que pertence a [a, b], seguem os
+resultados dos itens (1), (2) e (3) do teorema.
+
+Dada f (x) uma função contínua num intervalo no qual existe uma raiz procurada, ou
+seja, f (x) = 0. Transformando a equação em uma equivalente, temos que x = ϕ(x), sendo que
+qualquer solução desta última é também solução da primeira. As soluções obtidas para qualquer
+função ϕ são chamados de Ponto Fixo de ϕ, e essa busca passa então a ser o problema a ser
+resolvido.
+De forma geral, o Método do Ponto Fixo consiste em construir ϕ : [a, b] → R da seguinte
+maneira:
+
+ϕ(x) = x + A(x)f (x),
+
+(4.3)
+
+sendo A(x) ̸= 0, ∀x ∈ [a, b].
+Assim, é possível obter várias expressões para a função ϕ para cada expressão f dada.
+Obter um ponto fixo está diretamente ligado com o encontro de uma raiz.
+Reescrevendo (4.3), para A(x) = −1, encontramos:
+
+ϕ(x) = x + A(x)f (x)
+
+⇒ f (x) = x − ϕ(x).
+
+Desta forma, o método consiste em reescrever a equação f (x) = 0 em x = ϕ(x) e gerar uma
+sequência xk de aproximações, partindo de um x0 como aproximação inicial:
+
+xk+1 = ϕ(xk), k = 0, 1, 2, ...
+
+(4.4)
+
+Exemplo 4.2.1. Dada a função f (x) = x2 + x − 6 = 0 são algumas possibilidades de função
+satisfazendo (4.3):
+
+34
+
+ϕ1(x) = 6 − x2
+
+ϕ2(x) =
+
+ϕ3(x) =
+
+ϕ4(x) =
+
+√
+
+6
+x
+
+6 − x
+
+− 1
+
+6
+x − 1
+
+As raízes da função são facilmente determinadas sendo x = −3 e x = 2.
+Com o intuito de verificar a eficácia do processo iterativo, iremos analisar a aproximação da
+raiz x = 2, partindo de x0 = 1, 5 utilizando duas funções ϕ distintas:
+
+Caso 1: Obter a raiz x = 2 utilizando ϕ1(x) e x0 = 1, 5
+
+x1 = ϕ1(x1) = 6 − (1, 5)2 = 3, 75
+x2 = ϕ1(x2) = 6 − (3, 75)2 = −8, 0625
+x3 = ϕ1(x3) = 6 − (−8, 0625)2 = −59, 0039
+x4 = ϕ1(x4) = 6 − (−59, 0039)2 = −3475, 4605
+
+Essa sequência de iterações não está se aproximando da raiz desejada, como pôde ser observado
+pelos valores obtidos.
+
+Caso 2: Obter a raiz x = 2 utilizando ϕ2(x) e x0 = 1, 5
+
+x1 = ϕ2(x1) =
+
+x2 = ϕ2(x2) =
+
+x3 = ϕ2(x3) =
+
+x4 = ϕ2(x4) =
+
+√
+
+√
+
+√
+
+√
+
+6 − 1, 5 = 2, 1213
+
+6 − 2, 1213 = 1, 9694
+
+6 − 1, 9694 = 2, 0076
+
+6 − 2, 0076 = 1, 9980
+
+Contrário ao que ocorreu no primeiro caso, usando ϕ2 a sequência gerada está se aproximando
+da raiz desejada x = 2.
+
+4.2.1 ORDEM DE CONVERGÊNCIA
+
+Definição 4.1. Sejam {xk} uma sequência gerada por um método numérico que converge para
+¯x e Ek = xk − ¯x o erro cometido na iteração k. Se existem um número p ≤ 1 e uma constante
+C > 0 tais que:
+
+lim
+k→∞
+
+|ϵk+1|
+|ϵk|p = C
+
+35
+
+então p é chamado de ordem de convergência deste método e C é a constante assintótica do
+erro.
+
+Observe que, pelo Teorema do Valor Médio (Teorema 3.8.1), temos que:
+
+Com εk entre xk e ¯x, segue:
+
+xk+1 − ¯x = ϕ′(εk)(xk − ¯x).
+
+|ϵk+1|
+|ϵk|
+
+=
+
+|xk+1 − ¯x|
+|xk − ¯x|
+
+≤ |ϕ′(εk)| ≤ M.
+
+Aplicando limite na fórmula acima, quando k → ∞, com p = 1 e C = M , sabemos que haverá
+convergência para M < 1.
+Como p = 1, a convergência do método do ponto fixo é pelo menos linear.
+A convergência será mais rápida quanto menor for |ϕ′(εk)|. Assim, a sequência gerada a partir
+de ϕ converge ao ponto fixo ¯x.
+De volta aos casos 1 e 2, iremos verificar se as condições de convergência apresentadas em
+(4.2.1) são atendidas:
+
+• Para ϕ1(x) = 6 − x2, temos que sua derivada é dada por ϕ′
+
+1(x) = −2x
+
+Pelas condições de convergência, deve-se ter:
+
+|ϕ′
+
+1(x)| < 1 ⇐⇒ |2x| < 1 ⇐⇒ |x| <
+
+1
+2
+
+⇐⇒ −
+
+1
+2
+
+< x <
+
+1
+2
+
+Dessa forma, com ϕ1(x) não é possível encontrar um zero, pois o seu intervalo de contração
+I definido por [− 1
+2] não contém zero de f e sendo assim, a condição falha. Por isto, não
+estamos nos aproximando da raiz no exemplo.
+
+2, 1
+
+• Para ϕ2(x) =
+
+√
+
+6 − x, definida em x ≤ 0, segue que:
+
+√
+
+6 − x = x ⇐⇒ 6 − x = x2
+
+Assim, a função converge para a raiz positiva 2, mas ainda precisamos verificar se este
+pertence ao intervalo de contração.
+Com derivada corresponde a ϕ′
+
+2(x) = − 1
+√
+
+6−x , temos que:
+
+2
+
+|ϕ′
+
+2(x)| < 1 ⇐⇒
+
+⇐⇒
+
+1
+6 − x
+
+< 1
+
+√
+2
+√
+
+6 − x >
+
+1
+2
+
+1
+4
+
+⇐⇒ 6 − x >
+
+⇐⇒ x <
+
+23
+4
+
+= 5, 75
+
+Encontramos o intervalo de contração de ϕ′
+forma que todas as condições de convergência sejam atendidas.
+
+2 como sendo [0, 5, 75] que contém ¯x = 2 de
+
+36
+
+4.2.2 ALGORITMO
+
+Algoritmo 2 Método do Ponto Fixo
+
+1: Dados de entrada: x0, ε.
+2: x = x0
+3: k = 0
+4: Enquanto (Criterio de parada) > ε
+5:
+6:
+7: Fim
+8: Saída: ¯x = x
+
+x = Φ(x)
+k = k + 1
+
+4.2.3 CRITÉRIO DE PARADA
+
+A finalização das iterações se dará quando uma das situações acontecerem:
+
+• |xk+1 − xk| < ε
+
+• |f (xk)| < ε
+
+4.3 MÉTODO DE NEWTON-RAPHSON
+
+Também conhecido como Método das Tangentes, é muito eficiente e popular na obtenção
+de raízes devido sua rápida convergência e precisão. Porém, esse método necessita do conheci-
+mento da derivada da função, o que nem sempre é possível.
+
+Teorema 4.3.1. Seja f uma função contínua no intervalo [a, b] e duas vezes diferenciável no
+intervalo ]a, b[ satisfazendo f (a) · f (b) < 0 e f ′′ ̸= 0 para todo x ∈ [a, b] e seja ¯x o único zero
+de f nesse intervalo. Se f ′′(x) ≥ 0 ou f ′′(x) ≤ 0 em [a, b], então para uma iterada inicial x0
+com f (x0) · f ′′(x0) ≤ 0 a sequência xk gerada pela equação iteradora
+
+com k = 0, 1, 2, ... converge monotonicamente para ¯x.
+
+xn+1 = xn −
+
+f (xn)
+f ′(xn)
+
+,
+
+(4.5)
+
+A aplicação desse método necessita de uma estimativa inicial para x0, tal que este per-
+tença a [a, b] afim de garantir a convergência do método, considerando que f (x) e f ′(x) sejam
+contínuas nesse intervalo e f ′(α) ̸= 0, com α sendo raiz da função.
+
+O método consiste em, dado x0, construir uma aproximação linear da função nesse ponto, encon-
+trando o zero desta aproximação que passa a ser o novo x0. Este processo iterativo daria origem
+a sequência dada em (4.5), que se trata de um problema de ponto fixo.
+
+37
+
+Demonstração. Por hipótese, tem-se que f : I → R, f ∈ C 2(I) com f ′(x) ̸= 0, ∀x ∈ I.
+Definindo:
+
+ϕN (x) = x −
+
+• f (a) = 0 ⇐⇒ ϕN (a) = a
+
+f (x)
+f ′(x)
+
+(4.6)
+
+• ϕ′
+
+N (x) = f (x)f ”(x)
+
+[f ′(x)]2 ⇒ ϕ′
+
+N (a) = 0, onde a é um zero de f .
+
+Note que, ϕ′
+Por simplicidade, vamos considerar g = ϕ′
+
+N : I → R é contínua desde que f ∈ C 2(I).
+N . Segue que:
+
+(i) Existe uma vizinhança J fechada em a ∈ I tal que |g(x)| ≤ k < 1, ∀x ∈ J.
+
+Com efeito, para todo ε > 0, em particular ε = k < 1, existe δ > 0 tal que se x ∈
+(a − δ, a + δ) ∩ I, implica que:
+
+g(x) ∈ (g(a) − ε, g(a) + ε)
+
+ou
+
+(a − δ, a + δ) ∩ I ⊂ g−1[(g(a) − ε, g(a) + ε)].
+
+Como (g(a)−ε, g(a)+ε) é aberto e como g é contínua, temos que g−1[(g(a)−ε, g(a)+ε)]
+é aberto. Por ser g−1[(g(a) − ε, g(a) + ε)] e I, ambos conjuntos abertos, então:
+
+g−1[(g(a) − ε, g(a) + ε)] ∩ I é aberto .
+
+Assim, existe ρ > 0 tal que:
+
+[a − ρ, a + ρ] ⊂ (a − δ, a + δ) ∩ I ⊂ g−1[(g(a) − ε, g(a) + ε)] ∩ I,
+
+(4.7)
+
+então,
+
+Isto implica que:
+
+[a − ρ, a + ρ] ⊂ g−1[(g(a) − ε, g(a) + ε)].
+
+g([a − ρ, a + ρ]) ⊂ g(g−1(g(a) − ε, g(a) + ε))
+
+⊂ (g(a) − ε, g(a) + ε)
+
+⊂ [g(a) − ε, g(a) + ε].
+
+38
+
+Portanto, para ε = k < 1, existe ρ > 0 tal que g([a − ρ, a + ρ]) ⊂ [g(a) − k, g(a) + k].
+Seja J = [a − ρ, a + ρ], então:
+
+g(J) ⊂ [g(a) − k, g(a) + k] = [−k, k]
+
+(4.8)
+
+Por ser g(a) = 0.
+Observe que de (4.7) e (4.8), J ⊂ I e |g(x)| ≤ k < 1, ∀x ∈ J
+
+(ii) Pelo Teorema do Valor Médio (Teorema 3.8.1), existe c entre x e y ∈ J tal que:
+
+ou
+
+ou
+
+|ϕN (x) − ϕN (y)| = |ϕ′
+
+N (c)||x − y|
+
+|ϕN (x) − ϕN (y)| = |g(c)||x − y| ≤ K|x − y|
+
+|ϕN (x) − ϕN (y)| ≤ K|x − y|, ∀x, y ∈ J.
+
+Também, para x ∈ J, temos que:
+
+|ϕN (x) − ϕN (a)| = |ϕN (x) − a| ≤ k|x − a| < |x − a| ≤ ρ
+
+então,
+
+ou
+
+ϕN (x) ∈ [a − ρ, a + ρ] = J
+
+ϕN (J) ⊂ J.
+
+Portanto, ϕN (x) é uma contração no subconjunto fechado J.
+Assim, pelo Teorema do Ponto Fixo (Teorema 4.2.1) a sequência (xn) ⊂ J definida como
+xn+1 = ϕN (xn), ∀n ∈ N converge para o ponto fixo a ∈ I, ou seja, xn → a.
+
+Afim de garantir a convergência, é necessário que, na estimativa inicial x0, f ′(x) e f ′′(x)
+
+não sejam nulas e f (x0) · f ′′(x0) > 0.
+A escolha conveniente para o valor inicial será:
+
+• x0 = a se ϕ(a) ∈ [a, b], ou
+
+• x0 = b.
+
+Exemplo 4.3.1. Dada a função polinomial f (x) = 5x3 + x2 − 12x + 4, determine com precisão
+de quatro casas decimais, para qual valor de x temos f (x) = 0.
+
+Figura 4.2 – Gráfico de f (x) = 5x3 + x2 − 12x + 4
+
+39
+
+Fonte: A autora (2022).
+
+Para determinar uma estimativa inicial, iremos utilizar a representação gráfica dessa
+
+função, apresentado na Figura 4.2.
+
+Analisando o gráfico, podemos notar a existência de três raízes reais. É possível deter-
+minar todas elas pelos métodos iterativos, porém iremos determinar apenas uma, tendo como
+estimativa inicial o ponto x = 1.
+Por se tratar de uma equação polinomial, sua derivada é conhecida e assim podemos aplicar o
+Método de Newton.
+
+f (x) = 5x3 + x2 − 12x + 4
+
+f ′(x) = 15x2 + x − 12
+
+Utilizando a equação definida em (4.5), e considerando uma precisão de quatro casas
+
+decimais, a Tabela 4.2 apresenta as iterações realizadas.
+
+Tabela 4.2 – Iterações método de Newton-Raphson
+
+Iteração
+1
+2
+3
+4
+5
+
+f ′(xn)
+5
+20,2
+
+xn
+1
+1,4
+1,2574
+1,2270
+1,2256
+
+f (xn)
+-2
+2,88
+0,4327
+0,0182
+0,0000
+Fonte: A autora (2022).
+
+xn+1
+1,4
+1,2574
+14,2316 1,2270
+13,0377 1,2256
+12,9835 1,2256
+
+Dessa forma, a raiz procurada do problema é x = 1, 2256, considerando uma aproxima-
+
+ção de quatro casas decimais
+
+40
+
+4.3.1 ORDEM DE CONVERGÊNCIA
+
+Teorema 4.3.2. Se f, f ′ e f ′′ são contínuas em I cujo centro ¯x é solução de f (x) = 0 e se
+f ′(x) ̸= 0 então a ordem de convergência do método de Newton é quadrática, ou seja, p = 2.
+
+Demonstração. Da equação (4.5), se subtrair a equação ¯x = ϕ (¯x) tem-se que:
+
+xk+1 − ¯x = ϕ(xk) onde ϕ(x) = x −
+
+f (x)
+f ′(x)
+
+.
+
+Desenvolvendo em Série de Taylor a equação ¯x = ϕ em torno do ponto ¯x:
+
+xk+1 − ¯x = ϕ(¯x) + (xk − ¯x)ϕ′(¯x) +
+
+(xk − ¯x)2
+2!
+
+ϕ”(εk) − ϕ(¯x).
+
+Como ϕ′(¯x) = 0 na determinação de A(x):
+
+|xk+1 − ¯x|
+|xk − ¯x|2 =
+
+ϕ”(εk)
+2!
+
+≤ C.
+
+Assim, a ordem de convergência do Método de Newton é p = 2.
+
+A vantagem desse método é justamente a sua convergência quadrática, ou seja, os dígitos
+dobram de quantidade conforme os valores se aproximam de ¯x. Sua desvantagem é o fato de
+necessitar da derivada da função, o que nem sempre é viável.
+
+4.3.2 ALGORITMO
+
+Algoritmo 3 Método de Newton-Raphson
+
+1: Dados de entrada: x0, ε.
+2: x = x0
+3: k = 0
+4: Enquanto (Criterio de parada) > ε
+5:
+6:
+7: Fim
+8: Saída: ¯x = x
+
+x = x − f (x)
+f ′(x)
+k = k + 1
+
+4.3.3 CRITÉRIO DE PARADA
+
+O processo iterativo termina ao atingir, dado uma precisão ε, um dos pontos:
+
+• For atingido o número máximo de iterações;
+
+41
+
+• Obtém xk+1 tal que |xk+1 − xk| ≤ ε;
+
+• Ou |f (xx+1)| ≤ ε, com k = 0, 1, 2, ..., a estimativa para a raiz será o próprio xk+1.
+
+4.4 MÉTODO DAS SECANTES
+
+Outro método que pode ser utilizado é o método das Secantes.
+
+Quando comparado com o Método de Newton-Raphson, sua vantagem é de não haver a necessi-
+dade de utilizar a expressão derivada de uma função.
+
+Dados dois pontos x0 e x1, ao traçar a reta secante nestes encontramos o zero desta
+reta, que passa a ser o novo ponto da sequência que será definida em seguida. Da interpretação
+geométrica, temos que a derivada de uma função em um ponto, fornece o coeficiente angular da
+reta que tangencia a curva nesse mesmo ponto, como pode ser visto na figura 4.3.
+
+Figura 4.3 – Representação geométrica do Método das Secantes
+
+Fonte: Vetter, Santos e Marques (2006).
+
+Sabendo que a derivada de uma função é dada pela sua taxa de variação, temos que:
+
+f ′(xk) =
+
+∆f
+∆x
+
+=
+
+f (xk) − f (xk−1)
+xk − xk−1
+
+.
+
+(4.9)
+
+Ao substituir a expressão obtida para f ′(x) na Equação (4.9) da função iteradora de Newton-
+Raphson, obtemos:
+
+xk+1 = xk −
+
+f (xk)
+f (xk)−f (xk−1)
+xk−xk−1
+
+.
+
+Podendo ser reescrita da seguinte forma:
+
+xk+1 =
+
+xk−1.f (xk) − xk.f (xk−1)
+f (xk) − f (xk−1)
+
+.
+
+(4.10)
+
+42
+
+Na aplicação deste Método, são necessárias duas estimativas iniciais e, em cada nova
+
+iteração, são utilizadas as duas últimas aproximações.
+
+Exemplo 4.4.1. Utilizando o Método das Secantes, determine pelo menos uma raiz da equação:
+logx − cosx = 0.
+
+Da representação gráfica apresentada na Figura 4.4, pode-se verificar a existência de três
+
+raízes, localizadas nos intervalos [1, 2], [5, 6] e [6, 7].
+
+Figura 4.4 – Gráfico de f (x) = logx − cosx
+
+Fonte: A autora (2022).
+
+Inicialmente, afim de obter as estimativas inicias x0 e x1, vamos organizar a equação
+
+inicial em outras duas, sendo estas: y1 = logx e y2 = cosx.
+
+Plotando ambas em um único plano, como mostra a Figura 4.5, podemos verificar os
+
+pontos em que elas se encontram, sendo o valor de x nestes as raízes da equação.
+
+Podemos estimar então x0 sendo 6,5 e x1 como 7, na busca pela raiz representada pelo
+
+ponto C.
+
+Figura 4.5 – Intersecção dos Gráficos de y1 e y2
+
+43
+
+Fonte: A autora (2022).
+
+Aplicando o Método das Secantes, podemos observar as iterações na Tabela 4.3:
+
+Tabela 4.3 – Iterações método das Secantes
+
+Iteração (k)
+1
+2
+3
+4
+5
+
+xk−1
+6,5
+7
+6,821094
+6,859499
+6,863188
+
+xk
+7
+6,821094
+6,859499
+6,863188
+6,863082
+
+f (xk−1)
+-0,16367
+0,091196
+-0,02493
+-0,00218
+6,49E-05
+Fonte: A autora (2022).
+
+f (xk)
+0,091196
+-0,02493
+-0,00218
+6,49E-05
+-1,6E-07
+
+xk+1
+6,821094
+6,859499
+6,863188
+6,863082
+6,863082
+
+Verifica-se assim que a raiz representada pelo ponto C se trata de x = 6, 863082.
+
+De modo análogo, poderíamos verificar as outras duas raízes da equação.
+
+4.4.1 ORDEM DE CONVERGÊNCIA
+
+A ordem de convergência é responsável por medir a velocidade com que as iterações irão
+
+aproximar-se da solução.
+
+No Método da Secantes essa convergência se dá de forma um pouco mais lenta do que
+ocorre no Método de Newton, porém ainda assim é considerada uma ótima opção na busca por
+raízes pois é necessário apenas o cálculo de f (x).
+
+Essa ordem de convergência é dada por p = 1+
+
+√
+2 ≈ 1, 618.
+
+5
+
+4.4.2 ALGORITMO
+
+44
+
+Algoritmo 4 Método da Secante
+1: Dados de entrada: x0, x1 ε.
+2: x = x0
+3: k = 0
+4: Enquanto (Criterio de parada) > ε
+5:
+6:
+7:
+
+xk−1 = xk
+xk = xk+1
+xk+1 = xk−1·f (xk)−xk·f (xk−1)
+k = k + 1
+
+f (xk)−f (xk−1)
+
+8:
+9: Fim
+10: Saída: ¯x = x
+
+4.4.3 CRITÉRIO DE PARADA
+
+O processo iterativo termina ao atingir, dado uma precisão ε, um dos pontos:
+
+• for atingido o número máximo de iterações;
+
+• obtém xk+1 tal que |xk+1 − xk| ≤ ε;
+
+• ou |f (xx+1)| ≤ ε, com k = 0, 1, 2, ..., a estimativa para a raiz será o próprio xk+1.
+
+4.5 COMPARAÇÃO PRÁTICA DOS TRÊS MÉTODOS: BISSECÇÃO, NEWTON-
+
+RAPHSON E SECANTE.
+
+Para verificar na prática a diferença entre os métodos mencionados anteriormente, iremos
+determinar uma raiz da equação x2 + x − 6 = 0 pelos métodos da Bissecção, Newton - Raphson
+e Secante, considerando um erro relativo de 10−6.
+
+• Método da Bissecção
+
+A aplicação deste método requer um maior número de iterações quando comparado aos
+demais métodos aqui abordados. Neste caso, foram necessárias 20 iterações até se obter, com a
+aproximação necessária, o valor da raiz dessa equação, como pode ser visto na Figura 4.6
+
+Figura 4.6 – Iterações pelo Método da Bissecção
+
+45
+
+Fonte: A autora (2022).
+
+• Método de Newton-Raphson
+
+Como pode ser visto na Figura 4.7 , o número de iterações é menor do que ocorre no
+método da Bissecção e, como se trata de uma função polinomial, sua derivada é conhecida, o
+que facilita a aplicação. Como estimativa inicial, foi utilizado x = 1.
+
+Figura 4.7 – Iterações pelo Método de Newton-Raphson
+
+Fonte: A autora (2022).
+
+46
+
+• Método das Secante
+
+Com apenas 6 iterações foi possível encontrar a raiz procurada. As estimativas iniciais
+
+neste caso foram x = 1 e x = 1, 5 (Figura 4.8).
+
+Figura 4.8 – Iterações pelo Método das Secantes
+
+Fonte: A autora (2022).
+
+5 APLICAÇÕES
+
+47
+
+Tendo em vista os conceitos referentes a matemática financeira e a utilização dos Métodos
+Numéricos, neste capítulo iremos verificar aplicações desses conceitos em situações cotidianas.
+
+Inicialmente, utilizando a Função 2.5 apresentada no Capítulo 2, iremos obter uma
+função genérica para o parcelamento. Considerando P V = P , a função inicial que define é dado
+por:
+
+f (x) = P − C
+
+"(cid:18) 1
+
+(cid:19)
+
++
+
+(cid:18) 1
+
+(cid:19)2
+
+1 + x
+
++
+
+(cid:18) 1
+
+(cid:19)3
+
+1 + x
+
++ ... +
+
+(cid:18) 1
+
+1 + x
+
+1 + x
+
+(cid:19)n#
+
+Colocando em evidência (1 + x) obtemos:
+
+f (x) = P −
+
+C
+(1 + x)
+
+"
+
+1 +
+
+(cid:18) 1
+
+(cid:19)
+
+1 + x
+
++
+
+(cid:18) 1
+
+(cid:19)2
+
+1 + x
+
++ ... +
+
+(cid:18) 1
+
+(cid:19)n−1#
+
+1 + x
+
+Chamando de r =
+
+(cid:17)
+
+(cid:16) 1
+1+x
+
+e substituindo em (5.2), obtemos:
+
+f (x) = P − Cr · (1 + r + r2 + ... + rn−1).
+
+.
+
+.
+
+(5.1)
+
+(5.2)
+
+A expressão em parênteses define uma soma parcial de uma série geométrica, assim f (x) pode
+ser reescrita na forma:
+
+f (x) = P − Cr ·
+
+(cid:18) 1 − rn
+1 − r
+
+(cid:19)
+
+,
+
+ou ainda:
+
+f (x) = P − C
+
+(cid:18) r
+
+(cid:19)
+
+1 − r
+
+(1 − rn).
+
+Por outro lado, de r =
+
+(cid:17)
+
+(cid:16) 1
+1+x
+
+nota-se que:
+
+r
+1 − r
+
+= r
+
+(cid:18) 1
+
+(cid:19)
+
+1 − r
+
+=
+
+1
+(1 + x)
+
+·
+
+1
+1 − 1
+
+(1+x)
+
+=
+
+1
+(1 + x) − 1
+
+=
+
+1
+x
+
+Assim, substituindo (5.4) em (5.3):
+
+⇒
+
+r
+1 − r
+
+=
+
+1
+x
+
+f (x) = P − C
+
+(cid:19) (cid:18)
+
+1 −
+
+(cid:18) 1
+x
+
+(cid:18) 1
+
+(cid:19)n(cid:19)
+
+1 + x
+
+(5.3)
+
+(5.4)
+
+Ou
+
+C
+x
+Com a função (5.5) obtida, determinamos sua derivada pois esta se faz necessária na aplicação
+de um dos métodos numéricos mencionados, sendo assim:
+
+[1 − (1 + x)−n].
+
+⇒ f (x) = P −
+
+(5.5)
+
+f ′(x) =
+
+C
+x2
+
+1 − (1 + x)−ni
+h
+
+−
+
+C
+x
+
+h
+
+n · (1 + x)−n−1i
+
+.
+
+O que implica:
+
+Reorganizando:
+
+f ′(x) =
+
+(cid:20)
+1 −
+
+C
+x2
+
+(cid:18) 1
+
+(cid:19)n(cid:21)
+
+1 + x
+
+− n ·
+
+C
+x
+
+"(cid:18) 1
+
+(cid:19)n+1#
+
+1 + x
+
+.
+
+f ′(x) =
+
+"
+
+C
+x2
+
+1 −
+
+(cid:18) 1
+
+(cid:19)n
+
+1 + x
+
+− n · x
+
+(cid:18) 1
+
+(cid:19)n+1#
+
+1 + x
+
+.
+
+48
+
+(5.6)
+
+De posse das expressões (5.5) que define a função f (x) e sua respectiva derivada f ′(x) na
+Equação (5.6), segue aplicação em três exemplos.
+
+Exemplo 5.0.1. Um determinado objeto pode ser adquirido à vista, por R$500,00 ou em três
+parcelas iguais de R$ 183,60 devendo ser paga a primeira 1 mês após a compra.
+Qual é a taxa aplicada na segunda opção de pagamento?
+
+Inicialmente, iremos identificar as variáveis desse problema:
+
+• Valor presente (à vista): P = 500,00.
+
+• Valor de cada parcela: C = 183,60.
+
+• Quantidade de parcelas: n = 3.
+
+• Taxa aplicada: i = x.
+
+Pela função (5.5), ao substituir os valores da situação apresentada, obtemos:
+
+f (x) = 500 −
+
+183, 60
+x
+
+[1 − (1 + x)−3].
+
+Solucionar esse problema se resume em determinar para qual valor de x essa função se
+
+iguala a zero, ou seja, onde o gráfico intercepta o eixo das abscissas.
+
+Para observar o intervalo no qual a raiz se encontra, podemos utilizar o gráfico de f (x).
+A Figura 5.1 apresenta o gráfico de f realizado com o software livre GeoGebra, enquanto a
+Figura 5.2 apresenta uma ampliação do mesmo, facilitando assim a observação do intervalo em
+questão.
+
+Figura 5.1 – Gráfico da f(x) plotado no GeoGebra
+
+49
+
+Fonte: A autora (2022).
+
+Figura 5.2 – Ampliação do gráfico da f(x) plotado no GeoGebra
+
+Fonte: A autora (2022).
+
+De início, aplicamos o método que sempre irá convergir: O método da Bissecção.
+Antes de executar este método, é possível determinar um número mínimo de iterações que serão
+necessárias na sua resolução, através da equação (4.2), como segue:
+
+k >
+
+log(0, 06 − 0, 04) − log(10−6)
+log(2)
+
+.
+
+50
+
+Neste caso, tendo encontrado um intervalo adequado através da analise gráfica como sendo
+[0, 04; 0, 06], foi calculado que k > 14, 2877....Assim, podemos admitir que, na aplicação deste
+método, serão necessárias ao menos 15 iterações para encontrar a taxa procurada.
+
+De fato, observando a Figura 5.3, verificamos que o critério de parada foi atendido na
+
+16º iteração.
+
+Figura 5.3 – Iterações do método da Bissecção em uma compra parcelada
+
+Fonte: A autora (2022).
+
+Verificado através do método da Bissecção que a raiz procurada para este problema
+é algo próximo de 5%, tomemos este valor como referência para aplicação dos métodos que
+seguem.
+
+No caso do Método de Newton-Raphson, além da função dada em (5.5) é necessário
+
+também conhecer a sua derivada para a execução do método. Então, usando (5.6), segue que:
+
+f ′(x) =
+
+183, 60
+x2
+
+"
+1 −
+
+(cid:18) 1
+
+(cid:19)3
+
+1 + x
+
+− 3x
+
+(cid:18) 1
+
+1 + x
+
+(cid:19)4#
+
+.
+
+Assim, tendo conhecimento da derivada da função encontramos o valor procurado em
+
+apenas duas iterações, conforme a Figura 5.4.
+
+Figura 5.4 – Iterações método de Newton-Raphson em uma compra parcelada
+
+Fonte: A autora (2022).
+
+Para o método da Secante, ainda se fazem necessários dois pontos próximos da raiz.
+Como já temos conhecimento desta vizinhança, iremos utilizar os extremos do intervalo utilizado
+no Método da Bissecção, ou seja, 4% e 6% (Figura 5.5).
+
+Figura 5.5 – Iterações método da Secante em uma compra parcelada
+
+51
+
+Fonte: A autora (2022).
+
+A quantidade de iterações necessárias será determinada pela estimativa inicial, ou seja,
+
+quanto mais próxima da raiz estiver, mais rápida será a convergência do método.
+
+Desta forma, utilizando qualquer um dos três métodos apresentados, foi possível deter-
+
+minar o valor dessa taxa como sendo x = 4, 9%.
+
+Figura 5.6 – Comparação entre os três métodos numéricos aplicados ao exemplo 1
+
+Fonte: A autora (2022).
+
+No gráfico apresentado na Figura 5.6, é apresentado a convergência dos três métodos
+numéricos aplicados: O Método da Bissecção é o mais demorado, porém sempre irá convergir
+para a raiz procurada, já pelos Métodos de Newton-Raphson e da Secante essa convergência é
+mais rápida, o primeiro ainda mais que o último.
+
+Exemplo 5.0.2. Um carro foi adquirido pelo valor de 32 mil reais. Pôde ser negociado com
+apenas 3 mil reais de entrada e o restante financiado em 48 parcelas mensais e iguais, no valor
+de R$994,28. Sob qual taxa foi feita essa negociação?
+
+As variáveis aqui apresentadas são:
+
+• Valor à vista: R$32.000,00
+
+• Valor a ser dado de entrada: R$3.000,00
+
+52
+
+• Valor a ser financiado: R$29.000,00
+
+• Valor de cada parcela mensal: C = R$994,28
+
+• Quantidade de parcelas: 48
+
+• Taxa aplicada: i = x
+
+Neste problema, iremos considerar como sendo o valor presente P o valor a ser financiado,
+
+neste caso R$29.000,00 assim, usando (5.5), temos:
+
+f (x) = 29.000 −
+
+994, 28
+x
+
+[1 − (1 + x)−48]
+
+A Figura 5.7 mostra a representação gráfica desta função.
+
+Figura 5.7 – Gráfico da f(x) plotado no GeoGebra
+
+Fonte: A autora (2022).
+
+E uma ampliação se faz necessária para determinar uma vizinhança em que a raiz se
+
+encontra.
+
+Figura 5.8 – Ampliação do gráfico da f(x) plotado no GeoGebra
+
+53
+
+Fonte: A autora (2022).
+
+Partindo do gráfico 5.8, percebe-se que a raiz procurada encontra-se no intervalo
+
+[0, 02; 0, 04], o que correspondem a 2% e 3% a.m.
+
+Aplicando o intervalo acima no método da Bissecção, obtemos as iterações mostradas na
+
+Figura 5.9:
+
+Figura 5.9 – Iterações método da Bissecção em financiamento de um carro
+
+Fonte: A autora (2022).
+
+De fato, a Equação (4.2) é capaz de estimar o número de iterações, neste caso, como
+
+54
+
+sendo no mínimo 15 iterações:
+
+K >
+
+log(0, 04 − 0, 02) − log(10−6)
+log(2)
+
+⇒ k > 14, 28771...
+
+Na prática, encontramos uma taxa de 2, 25% na 16ª iteração.
+
+Para o método de Newton-Raphson, a derivada dessa função se faz necessária e pode ser
+
+obtida através da equação (5.6):
+
+f ′(x) =
+
+994, 28
+x2
+
+"
+
+1 −
+
+(cid:18) 1
+
+(cid:19)48
+
+1 + x
+
+− 48x
+
+(cid:18) 1
+
+(cid:19)49#
+
+1 + x
+
+Com isso, o método se concretiza com apenas 3 iterações, se considerado como estimativa inicial
+uma taxa de 2%, como segue na Figura 5.10:
+
+Figura 5.10 – Iterações método de Newton-Raphson em financiamento de um carro
+
+Fonte: A autora (2022).
+
+Aqui foi encontrada a mesma taxa que já havia sido calculada através do método da
+
+Bissecção, porém com um número bem reduzido de iterações.
+
+Por outro lado, temos o método das Secantes, no qual não se faz necessário o uso da
+derivada da função e, com um número maior de iterações do que o método de Newton-Raphson
+mas ainda assim menor que o da Bissecção é visto na Figura 5.11, que em 6 iterações, a taxa é
+encontrada.
+
+Figura 5.11 – Iterações método das Secantes em financiamento de um carro
+
+Fonte: A autora (2022).
+
+Na aplicação dos três métodos numéricos, encontramos uma taxa igual a 2, 25%.
+
+Na Figura 5.12, podemos verificar graficamente a rapidez em que os três métodos
+
+encontram a raiz procurada.
+
+Figura 5.12 – Comparação entre os três métodos numéricos aplicados ao exemplo 2
+
+55
+
+Fonte: A autora (2022).
+
+Exemplo 5.0.3. Uma moto anunciada por R$12.280,00 pode ser adquirida com uma entrada de
+R$4.610,00 e o restante pago em 12 prestações mensais e iguais a R$748,00. Sob qual taxa foi
+feita essa negociação?
+
+Ao analisar os dados da situação, percebemos que o valor real a ser financiado é de
+R$7.670,00.Dessa forma, por se tratar de uma série de pagamentos uniformes, podemos escrever
+a função parcela dessa situação através da equação (5.5):
+
+748
+x
+Cujo gráfico é apresentado na Figura 5.13 com uma ampliação representada na Figura 5.14:
+
+[1 − (1 + x)−12].
+
+f (x) = 7670 −
+
+Figura 5.13 – Gráfico da f(x) plotado no GeoGebra
+
+Fonte: A autora (2022).
+
+Figura 5.14 – Ampliação do gráfico da f(x) plotado no GeoGebra
+
+56
+
+Fonte: A autora (2022).
+
+Ao analisar a ampliação 5.14, é fácil perceber que o intervalo no qual a raiz procurada
+se encontra é dado por [0, 02; 0, 04]. Através do método da Bissecção, obtemos as iterações da
+Figura 5.15:
+
+Figura 5.15 – Iterações método da Bissecção em um financiamento de uma moto
+
+Fonte: A autora (2022).
+
+Foram necessárias 16 iteração para se obter a taxa de 2,5% que atende a nossa precisão
+
+de erros, partindo do intervalo inicial [0, 02; 0, 04], sendo os extremos como valores de a e b.
+
+57
+
+Essa quantidade de iteração de fato foi calculada, sendo:
+
+k >
+
+log(0, 04 − 0, 02) − log(10−6)
+log(2)
+
+; k > 14, 28771...
+
+Já pelo Método de Newton, é necessário ter conhecimento da derivada dessa função, no caso:
+
+f ′(x) =
+
+"
+1 −
+
+748
+x2
+
+(cid:18) 1
+
+(cid:19)12
+
+1 + x
+
+− 48x
+
+(cid:18) 1
+
+(cid:19)13#
+
+1 + x
+
+.
+
+Através desse método, a solução veio rapidamente com apenas 3 iterações, partindo de uma
+estimativa inicial igual a 2% como pode ser observado na Figura 5.16.
+
+Figura 5.16 – Iterações método de Newton-Raphson em um financiamento de uma moto
+
+Fonte: A autora (2022).
+
+Poderíamos encontrar essa raiz através do método da Secante, considerando o mesmo
+intervalo utilizado no método da Bissecção como estimativa e, com poucas iterações, é possível
+encontrá-la, como visto na Figura 5.17.
+
+Figura 5.17 – Iterações método da Secante em um financiamento de uma moto
+
+Fonte: A autora (2022).
+
+De todo modo, independente do método escolhido para a realização deste cálculo, o
+
+valor da taxa aplicada no financiamento dessa moto de 2,5% ao mês.
+
+Cada método aplicado converge com uma rapidez diferente de outro, o que é comparado
+
+na Figura 5.18:
+
+Figura 5.18 – Comparação entre os três métodos numéricos aplicados ao exemplo 3
+
+58
+
+Fonte: A autora (2022).
+
+6 CONCLUSÃO
+
+59
+
+Os métodos iterativos para realizar aproximações de raízes isoladas para f (x) = 0
+verificadas aqui apresentam vantagens e desvantagens quando comparadas entre si, o que torna
+um método mais eficaz que outro.
+
+Analisando os métodos de forma prática percebemos que, a quantidade de iterações
+necessárias no método da Bissecção pode ser muito maior quando comparado aos demais
+métodos, o que torna o processo lento. Por outro lado, é possível obter uma aproximação
+da quantidade de iterações necessárias e é um processo de fácil aplicação, pois não requer
+conhecimentos avançados em matemática.
+
+Apesar de não ter sido aplicado aos exemplos de forma direta, o método do ponto fixo
+possui como inconveniente a obtenção de uma função ϕ, porém é dele que surge o método de
+Newton-Raphson com o objetivo de acelerar a convergência desse método. Neste último, as
+iterações convergem com mais rapidez porém é necessário determinar a derivada da função f (x)
+e o valor de f ′(x) a cada nova iteração, o que nem sempre é possível de se fazer.
+
+Por fim, o último método abordado é o das Secantes. Neste, a convergência é mais
+rápida do que no primeiro método e mais lenta que no anterior. Mesmo não sendo necessária a
+determinação da derivada da função para a aplicação do método, em casos onde esta for nula, o
+método não se aplica.
+
+Em todos os casos, a escolha de uma estimativa inicial adequada interfere no processo,
+podendo determinar sua convergência ou não. Isso pôde ser encontrado através de análises
+gráficas com o auxílio do software livre GeoGebra.
+
+Outra ferramenta muito usada foi a planilha eletrônica. Nela, todas os cálculos a cada
+
+nova iteração, independente do método aplicado, pôde ser calculado.
+
+O público alvo que não possui conhecimentos avançados em matemática, o método da
+Bissecção é o mais didático a ser aplicado enquanto que, os métodos de Newton-Raphson e
+Secante são mais rápidos para encontrar a solução. Sendo o primeiro deles o mais rápido porém
+ineficaz nos casos em que não é possível determinar a derivada da função passando a ser o
+método da Secante o indicado.
+
+REFERÊNCIAS
+
+60
+
+ANDRADE D.; CARLOS, M. d. A. Cálculo Numérico. Brazil: UniCesumar, 2017. v. 1. 208 p.
+32
+
+GUIDORIZZI, H. L. Um curso de cálculo. Brazil: Editora LTC - Livros Técnicos e Científicos
+S.A, 1997. v. 1. 585 p. 21
+
+LIMA, E. L. Curso de Análise. Brazil: IMPA, 2014. v. 1. 432 p. 22
+
+LYUU, Y. D. Financial Engineering and computation: Principles, mathematic, algorithms.
+[S.l.]: Cambridge, 2004. v. 1. 627 p. 13
+
+NASCIMENTO, S. V. do. Cálculo de taxa de juros nas compras em prestações usando
+Fórmula de Bháskara (parte 1). Brasil: Professor Edigley Aexandre: o blog para professores e
+estudantes de matemática, 2017. Disponível em: <https://www.prof-edigleyalexandre.com/2016/
+11/calculo-taxa-juros-nas-compras-prestacoes-usando-formula-bhaskara.html>. Acesso em:
+2021-03-07. 12
+
+NETO, A. A. Matemática financeira e suas aplicações. Brazil: Editora Atlas S.A, 2012. v. 1.
+308 p. 12
+
+OLEIRO, B. P. O teorema da função implícita. 37 p. Monografia (Graduação) — Pontifícia
+Universidade Católica do Paraná, Paraná, 2016. 24, 25
+
+PUCCINI, E. C. Matemática financeira e análise de investimentos. Brazil: UFSC, 2011. v. 1.
+204 p. 18
+
+SANTIAGO, T. T. do A. et al. Aplicação de métodos numéricos para gestão financeira de
+investimentos. Anais do Salão Internacional de Ensino, Pesquisa e Extensão., v. 10, n. 1,
+2021. Disponível em: <https://guri.unipampa.edu.br/uploads/evt/arq_trabalhos/16480/seer_
+16480.pdf>. Acesso em: 10 mar. 2021. 13
+
+VETTER, N. V.; SANTOS, G. P. S.; MARQUES, R. P. Método da secante para resolução
+de equações do tipo f(x)=0. Simpósio de Excelêcia em Gestão e Tecnologia, v. 6, 2006.
+Disponível em: <https://www.aedb.br/seget/arquivos/artigos06/472_Artigo01%20Nara%
+20Vetter,%20Guilherme%20Paiva,%20Rafael%20Marques.pdf>. Acesso em: 17 julho 2022. 41
+
+

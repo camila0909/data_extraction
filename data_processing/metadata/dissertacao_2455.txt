@@ -1,0 +1,4626 @@
+UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA
+
+Departamento de Ciˆencias Exatas
+
+PROFMAT - Mestrado Profissional em Matem´atica em Rede Nacional
+
+Dissertac¸˜ao de Mestrado
+
+UMA ABORDAGEM UTILIZANDO GRAFOS PARA
+MONTAGEM DE UM HOR ´ARIO ESCOLAR VI ´AVEL
+PARA UMA ESCOLA NO MUNIC´IPIO DE ANGUERA
+
+Marcelo Ataide Silva
+
+Orientadora: Profa Dra. M´arcia Braga de Carvalho Ferreira
+
+Feira de Santana
+
+Outubro de 2017
+
+1
+
+UNIVERSIDADE ESTADUAL DE FEIRA DE SANTANA
+
+Departamento de Ciˆencias Exatas
+
+PROFMAT - Mestrado Profissional em Matem´atica em Rede Nacional
+
+UMA ABORDAGEM UTILIZANDO GRAFOS PARA
+MONTAGEM DE UM HOR ´ARIO ESCOLAR VI ´AVEL
+PARA UMA ESCOLA NO MUNIC´IPIO DE ANGUERA
+
+Marcelo Ataide Silva
+
+Disserta¸c˜ao apresentada ao Programa de Mestrado
+
+Proﬁssional em Matem´atica em Rede Nacional
+
+-
+
+PROFMAT do Departamento de Ciˆencias Exatas,
+
+UEFS, como requisito parcial para a obten¸c˜ao do
+
+t´ıtulo de Mestre.
+
+Orientadora: Profa Dra. M´arcia Braga de Carvalho
+
+Ferreira
+
+Feira de Santana
+
+Outubro de 2017
+
+i
+
+ii
+
+Agradecimentos
+
+Gostaria de agradecer, primeiramente a Deus, presen¸ca vital de ilumina¸c˜ao em minha
+
+vida.
+
+Ao meus pais, Manoel Missias e Maria das Gra¸cas e minha irm˜a, Gracielle Ataide pelo
+
+eterno incentivo durante todo o meu processo educacional.
+
+Agrade¸co a minha noiva, Ana Paula, pelo apoio e compreens˜ao.
+`A minha orientadora M´arcia, pela acolhida e orienta¸c˜ao, e pelas sugest˜oes de melhorias
+durante a elabora¸c˜ao deste trabalho.
+
+A todos os meus colegas da turma do mestrado pela amizade, uni˜ao e muito estudo.
+
+A todos os professores do PROFMAT pelo ensino-aprendizagem e por toda sua gentileza
+
+em compartilhar ideias e experiˆencias valiosas.
+`A Coordena¸c˜ao de Aperfei¸coamento de Pessoal de N´ıvel Superior (CAPES) pelo apoio
+ﬁnanceiro e `a Sociedade Brasileira de Matem´atica (SBM) pela iniciativa do programa de
+
+Mestrado proﬁssional.
+
+iii
+
+Resumo
+
+Neste trabalho foi explorado o problema de programa¸c˜ao de hor´ario escolar na Es-
+cola Centro Educacional Professor ´Aureo de Oliveira Filho, no qual foi utilizado a Teoria
+dos Grafos para a modelagem. A solu¸c˜ao foi baseada a partir da elabora¸c˜ao e do desen-
+
+volvimento de um algoritmo espec´ıﬁco para resolver o problema proposto com os dados
+
+que foram levantados. A principal proposta deste trabalho consiste em encontrar uma
+
+solu¸c˜ao vi´avel, ou seja sem conﬂitos, de um quadro de hor´ario para as turmas do ensino
+
+fundamental do turno vespertino.
+
+Palavras-chave: Teoria dos Grafos, Algoritmo, Problema do Quadro de Hor´ario
+
+Escolar.
+
+iv
+
+Abstract
+
+In this paper we explored the problem of school time programming in the Escola
+
+Educacional Professor Aureo de Oliveira Filho School, in which the Theory of Graphs for
+
+modeling was used. The solution was based on the elaboration and the development of a
+
+speciﬁc algorithm to solve the proposed problem with the data that was raised. The main
+
+proposal of this work is to ﬁnd a viable solution of a timetable for the elementary school
+
+classes of the afternoon shift.
+
+Keywords: Theory of Graphs, Algorithm, School Timetable Problem.
+
+v
+
+Sum´ario
+
+Agradecimentos
+
+Resumo
+
+Sum´ario
+
+Abstract
+
+Introdu¸c˜ao
+
+1 Aspectos Gerais de Grafos
+
+1.1 Abordagem Hist´orica dos Grafos
+
+. . . . . . . . . . . . . . . . . . . . . . . .
+
+1.2 Deﬁni¸c˜oes B´asicas de Grafos . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.3 Grafos Bipartidos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.3.1 Grafo Bipartido Completo . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.4 Subgrafos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+1.5 Caminhos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+iii
+
+iv
+
+iv
+
+v
+
+1
+
+4
+
+4
+
+5
+
+8
+
+8
+
+8
+
+9
+
+1.6 Conexidade . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+1.6.1 Componente Conexa . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+2 Problema do Quadro de Hor´ario
+
+12
+
+2.1 Problema de Grade de Hor´ario em Institui¸c˜oes Educacionais . . . . . . . . . 12
+
+2.2 Formula¸c˜ao Matem´atica para um Problema de Grade Hor´aria Escolar
+
+. . . 14
+
+3 Problema do Quadro de Hor´ario para a Escola CEPAOF
+
+17
+
+3.1 Formula¸c˜ao do Problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+
+3.2 Restri¸c˜oes do Problema . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 24
+3.3 Centro Educacional Professor ´Aureo de Oliveira Filho . . . . . . . . . . . . 26
+3.4 Algoritmo Proposto Para a Resolu¸c˜ao do Problema . . . . . . . . . . . . . . 28
+
+4 Resultados Utilizando o Algoritmo
+
+30
+4.1 Aplicando o Algoritmo Para a Turma do 6o ano . . . . . . . . . . . . . . . . 30
+
+vi
+
+4.2 Resultado do Quadro de Hor´ario para a Turma do 7o ano . . . . . . . . . . 41
+4.3 Resultado do Quadro de Hor´ario para a Turma do 8o ano . . . . . . . . . . 42
+4.4 Resultado do Quadro de Hor´ario para a Turma do 9o ano . . . . . . . . . . 43
+
+4.5 Comparando Resultados . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 44
+
+5 Conclus˜oes e Trabalhos Futuros
+
+Referˆencias Bibliogr´aﬁcas
+
+47
+
+49
+
+vii
+
+Introdu¸c˜ao
+
+A elabora¸c˜ao de um quadro de hor´ario ´e indispens´avel na administra¸c˜ao escolar, seja no
+
+n´ıvel fundamental, m´edio ou superior. O problema de programa¸c˜ao do quadro de hor´ario
+
+diz respeito `a aloca¸c˜ao das aulas de uma escola em um intervalo de tempo, no caso uma
+
+semana, de modo que elas satisfa¸cam um conjunto grande de restri¸c˜oes para que o hor´ario
+
+obtido satisfa¸ca as necessidades dos envolvidos: os professores e a institui¸c˜ao.
+
+Historicamente este problema tem sido resolvido de forma artesanal, ou seja, feito
+
+manualmente, o que torna uma tarefa penosa e complexa, requerendo assim v´arios dias de
+
+trabalho. Essa demora para obter o melhor resultado ´e devido a v´arios motivos, como a
+
+disponibilidade dos professores, redu¸c˜ao dos dias em que o professor estar´a na institui¸c˜ao,
+
+entre outros. Esses motivos sempre geram conﬂitos e tem que ser solucionados, nem sempre
+
+agradando a todos.
+
+A diﬁculdade do problema est´a em respeitar as mais variadas restri¸c˜oes b´asicas ou
+
+restri¸c˜oes fortes, pois sem o atendimento dessas torna-se invi´avel encontrar uma solu¸c˜ao,
+
+como por exemplo, uma turma ter aulas de duas disciplinas simultaneamente. Enquanto
+
+que as restri¸c˜oes desej´aveis ou fracas, buscam melhorar a qualidade do quadro de hor´ario
+
+vi´avel, como por exemplo, respeitar a preferˆencia dos professores por determinados dias e
+
+hor´arios.
+
+Devido a essas restri¸c˜oes e outros fatores como por exemplo pedag´ogicos, educacionais e
+
+pessoais, ´e consenso na comunidade cient´ıﬁca que o problema de programa¸c˜ao de hor´arios ´e
+
+de dif´ıcil generaliza¸c˜ao. Isto se deve `a diversidade de regimes educacionais, os quais variam
+
+de regi˜ao para regi˜ao, e `as caracter´ısticas de cada institui¸c˜ao de ensino. Desta forma, os
+
+sistemas s˜ao comumente desenvolvidos para atender a uma institui¸c˜ao espec´ıﬁca.
+
+O problema de programa¸c˜ao do quadro de hor´ario ´e resolvido e modelado matematica-
+
+mente como um problema de otimiza¸c˜ao combinat´oria, na qual a complexidade aumenta
+
+exponencialmente em fun¸c˜ao do n´umero de turmas e professores envolvidos. O problema
+
+de programa¸c˜ao de hor´arios em escolas (PPHE) ´e considerado um problema NP-Dif´ıcil
+
+(BARBOZA, 2003), ou seja, n˜ao ´e resolvido em tempo polinomial e ´e comumente abordado
+
+atrav´es de algoritmos heur´ısticos. Os algoritmos heur´ısticos s˜ao m´etodos que encontram
+
+uma solu¸c˜ao aproximada com tempo computacional reduzido, entre eles destacam-se as
+
+meta-heur´ısticas, que ´e um conjunto de conceitos que podem ser utilizados para deﬁnir
+
+1
+
+m´etodos heur´ısticos. Estes m´etodos permitem obter solu¸c˜oes aceit´aveis em tempo vi´avel,
+
+mas n˜ao garantem a obten¸c˜ao da solu¸c˜ao ´otima, aplic´aveis a um extenso conjunto de pro-
+
+blemas. Algumas delas s˜ao: Colora¸c˜ao de Grafos, Busca-tabu, Algoritmos Gen´eticos e
+
+Simulated Annealing encontrados no trabalho (WERRA, 1996).
+
+Na literatura o problema de aloca¸c˜ao de aula ´e conhecida como School Timetabling
+
+Problem (STP). A primeira referˆencia foi um artigo de Appleby, Black e Newman (1960)
+
+no qual os autores buscavam em t´ecnicas computacionais a solu¸c˜ao na constru¸c˜ao de um
+
+quadro de hor´ario.
+
+Al´em do quadro de hor´ario escolar, temos o quadro de hor´ario de curso, que consiste em
+
+agendar um conjunto de aulas para cada curso em um per´ıodo de tempo pr´e-determinado
+
+e para um dado n´umero de salas, levando em considera¸c˜ao o tamanho das salas para a
+
+aloca¸c˜ao das turmas. Gotlieb (1962), apresentou a primeira formula¸c˜ao completa para o
+
+problema do quadro de hor´arios para cursos (Timetabling problem Course- Sche-
+
+duling). Temos tamb´em o quadro de hor´arios de exames, que consiste em agendar um
+
+quadro de exames por curso dentro de um per´ıodo de tempo. Broder (1964) se ateve ao
+
+problema do quadro de hor´arios para exames (Timetabling Problem - Examination
+
+Scheduling).
+
+No ano de 1967, Welsh e Powell (1967), estabelecem a rela¸c˜ao de similaridade existente
+
+entre o problema de quadro de hor´arios e o problema sobre colora¸c˜ao de grafos. O problema
+
+foi demonstrado como sendo um exemplar da fam´ılia dos problemas NP-Completos, por
+
+Karp (1972). Somente no in´ıcio da d´ecada de 80, Manvel (1981) e Metha (1981) se
+
+ocuparam da colora¸c˜ao de grandes grafos como forma de ataque a complexas instˆancias
+
+do problema do quadro de hor´ario.
+
+At´e hoje o problema do quadro de hor´ario ´e discutido e pesquisado. No trabalho de
+
+Lobo (2005), ele oferece uma solu¸c˜ao do problema de hor´ario escolar via algoritmo gen´etico
+
+paralelo, com o objetivo de acelerar o processo de convergˆencia. Estudando o quadro de
+
+hor´ario de uma Universidade em Minas Gerais.
+
+No trabalho de Navarro (2016), foi feito um estudo de colora¸c˜ao de grafos aplicado ao
+
+problema de aloca¸c˜ao de hor´ario, utilizando dados do departamento de ciˆencia da com-
+
+puta¸c˜ao da Universidade Presidente Antˆonio Carlos. No trabalho de Santos (2008), na
+
+tentativa de atender a um maior n´umero poss´ıvel de requerimentos e caracter´ısticas do
+
+problema foi desenvolvido o modelo AST, Automated School Timetabling. Ele re´une pro-
+
+grama¸c˜ao inteira e heur´ısticas desenvolvidos sobre um grafo h´ıbrido, sendo essencialmente
+
+meta-heur´ısticas Busca Tabu. Foi realizado utilizando dados de uma escola na Bahia e
+
+outra em Pernambuco.
+
+O objetivo do desenvolvimento deste trabalho ´e encontrar uma solu¸c˜ao vi´avel, ou seja,
+
+sem a existˆencia de conﬂitos e se poss´ıvel otimizada de um quadro de hor´ario de uma
+
+escola do munic´ıpio de Anguera. Neste caso, vamos utilizar a teoria dos grafos para ter
+
+2
+
+uma melhor visualiza¸c˜ao de todos os dados do problema. Para solucion´a-lo desenvolvemos
+
+e aplicamos um algoritmo que encontra uma solu¸c˜ao vi´avel, partindo de uma heur´ıstica
+
+construtiva, que consiste em alocar aula a aula, observando uma ordem de restri¸c˜oes. Desta
+
+maneira, foi realizado um sucinto levantamento bibliogr´aﬁco sobre a Teoria dos Grafos,
+
+suas principais caracter´ısticas e aplica¸c˜oes, al´em disso foram utilizados no problema dados
+
+e demandas reais da escola em quest˜ao.
+
+A motiva¸c˜ao para a elabora¸c˜ao deste trabalho surgiu a partir de observa¸c˜oes reais com
+
+rela¸c˜ao aos constantes problemas encontrados no quadro de hor´ario da escola em quest˜ao,
+
+como por exemplo aulas geminadas quebradas pelo intervalo e principalmente trˆes aulas
+
+consecutivas de algumas disciplinas, al´em das diﬁculdades para elabora¸c˜ao do mesmo por
+
+parte das pessoas respons´aveis. Outra grande motiva¸c˜ao foi estudar a teoria dos grafos e
+
+suas aplica¸c˜oes, conte´udo esse que n˜ao ´e trabalhado no ensino m´edio e em alguns casos
+
+nem no ensino superior. A modelagem atrav´es dos grafos foi um recurso que deixou o
+
+problema de forma bem intuitiva e de melhor entendimento.
+
+A principal contribui¸c˜ao desta disserta¸c˜ao ´e apresentar um m´etodo eﬁciente que solu-
+
+cione o problema de programa¸c˜ao do quadro de hor´ario de uma escola no Munic´ıpio de
+
+Anguera. Desta forma, inicialmente ´e proposto uma modelagem atrav´es de Grafos e, em
+
+seguida, ´e implementado um algoritmo para gerar as solu¸c˜oes de forma vi´avel e otimizada.
+
+Diante da compreens˜ao do contexto e dos objetivos deﬁnidos, dividimos esse trabalho
+
+em quatro cap´ıtulos apresentados da seguinte forma:
+
+No cap´ıtulo 1, ´e apresentado conceitos de grafos, exemplos, tipos de grafos e abordagem
+
+hist´orica.
+
+No cap´ıtulo 2, ser´a abordado os diferentes problemas de aloca¸c˜ao de hor´arios educaci-
+
+onais e a formula¸c˜ao matem´atica para problemas de grade de hor´arios escolares proposta
+
+por Werra (1985) e Junginger(1986).
+
+No cap´ıtulo 3, s˜ao apresentados a formula¸c˜ao do problema juntamente com os grafos
+
+desenvolvidos no software Geogebra, as restri¸c˜oes trabalhadas e a institui¸c˜ao de ensino em
+
+quest˜ao. Ap´os feito isso deﬁnimos algoritmo e apresentamos o algoritmo proposto.
+
+No cap´ıtulo 4, ´e aplicado o algoritmo para todas as turmas do turno vespertino da
+escola, sendo que para a turma do 6o ano foi demonstrado todo o passo a passo do algo-
+
+ritmo. Al´em disso foi feito um comparativo com os problemas de um hor´ario real utilizado
+
+no ano de 2016 na escola em quest˜ao com as solu¸c˜oes encontradas.
+
+Por ﬁm, no cap´ıtulo 5, apresentaremos nossas conclus˜oes e propostas de trabalhos
+
+futuros.
+
+3
+
+Cap´ıtulo 1
+
+Aspectos Gerais de Grafos
+
+Neste cap´ıtulo falaremos sobre a Teoria dos Grafos, sua hist´oria e origem. Apresenta-
+
+remos tamb´em sua deﬁni¸c˜ao b´asica, a deﬁni¸c˜ao de grafos bipartidos, deﬁni¸c˜ao de subgrafo,
+
+de caminhos e de conexidade.
+
+1.1 Abordagem Hist´orica dos Grafos
+
+O desenvolvimento de teorias matem´aticas que relacionam elementos de conjuntos dis-
+
+cretos ´e bastante recente se comparado a hist´oria da matem´atica “cont´ınua”. Exemplo
+
+disso ´e a Teoria dos Grafos formulada j´a no s´eculo XVIII e que ainda assim foi “redesco-
+
+berta muitas vezes”(GOUVEIA, 2003).
+
+A origem a cerca da Teoria dos Grafos est´a associada ao famoso problema das pontes
+
+de Konigsberg (cidade da Pr´ussia que agora se designa Kaliningrad). O problema era
+
+realizar um passeio pela cidade, come¸cando e terminando no mesmo lugar, cruzando cada
+
+uma das sete pontes do rio Pregel, exatamente uma vez, como podemos observar na Figura
+
+1.1.
+
+Discutia-se nas ruas da cidade a possibilidade de atravessar todas essa pontes sem
+
+repetir nenhuma, se tornando uma lenda popular, quando em 1736, Leonhard Euler(1707-
+
+1783) provou que n˜ao existia tal possibilidade. Ele utilizou de um racioc´ınio muito simples,
+
+transformou os caminhos em linhas e suas intersec¸c˜oes em pontos, criando possivelmente
+
+o primeiro grafo da hist´oria.
+
+Ap´os essa demonstra¸c˜ao de Euler, em 1847 o f´ısico alem˜ao Kirchhoﬀ (1824-1887) utili-
+
+zou modelos de grafos no estudo de circuitos el´etricos. E em 1857, Cayley (1821-1895), se
+
+destacou utilizando aplica¸c˜oes de enumera¸c˜ao dos isˆomeros dos hidrocarbonetos alif´aticos
+
+saturados, em qu´ımica orgˆanica.
+
+4
+
+Figura 1.1: Pontes de K¨onigsberg (a) e o respectivo Grafo (b).
+
+1.2 Deﬁni¸c˜oes B´asicas de Grafos
+
+Inicialmente vamos deﬁnir quem s˜ao os conjuntos V (G) e A(G).
+
+• V (G) ´e o conjunto de todos os v´ertices do Grafo, representado geometricamente por
+
+pontos.
+
+V (G) = V = {v1, v2, ..., vn} quantidade n de pontos;
+
+• A(G) ´e o conjunto de todas as arestas do Grafo, representado geometricamente por
+
+segmentos de reta.
+
+A(G)=A= {a1, a2, ..., am} quantidade m de arestas, com ak = {vki, vkj }, para k ∈
+{1, ..., m}.
+
+A partir dos conjuntos acima, temos.
+
+Deﬁni¸c˜ao 1.1. Um Grafo G ´e denotado por um par (V (G), A(G)), que consiste de um
+
+conjunto n˜ao vazio V (G) de v´ertices e um conjunto A(G) de arestas, juntamente com
+
+uma fun¸c˜ao incidˆencia ψ(G) que faz corresponder a cada aresta am ∈ A(G) um par n˜ao
+ordenado de v´ertices, n˜ao necessariamente distintos, de V (G). Os v´ertices pertencentes a
+
+ψ(G)(am) s˜ao os extremos da aresta am.
+
+Deﬁni¸c˜ao 1.2. Sejam u e v dois v´ertices e a = {u, v} uma aresta que os conecta. Para
+
+evitar sobrecarga de nota¸c˜ao substitu´ımos {u, v} ∈ A(G) por uv ∈ A(G), sendo u e v
+
+v´ertices que pertencem a V . Dizemos que a aresta {u, v} incide em u e em v ou ainda,
+
+que u e v s˜ao extremidades dessa aresta, assim os dois v´ertices ser˜ao ditos adjacentes ou
+
+vizinhos.
+
+5
+
+Exemplo 1.3. Seja o Grafo G(V (G), A(G))
+
+onde
+
+V (G) = {v1, v2, v3, v4, v5} e
+A(G)= {a1, a2, a3, a4, a5}
+
+e ψ(G) ´e deﬁnida por:
+
+ψ(G)(a1) = v1v2; ψ(G)(a2) = v2v3; ψ(G)(a3) = v3v4; ψ(G)(a4) = v4v5; ψ(G)(a5) = v5v1
+
+Na Figura 1.2 apresentamos uma representa¸c˜ao geom´etrica do Grafo G.
+
+Figura 1.2: Grafo G
+
+Deﬁni¸c˜ao 1.4. Quando duas arestas forem incidentes a um mesmo par de v´ertices, ou
+
+seja, possuem o mesmo extremo, ser˜ao chamadas de arestas em paralelo.
+
+Deﬁni¸c˜ao 1.5. Quando uma aresta qualquer incide a um ´unico v´ertice, ser´a chamada de
+
+aresta em la¸co.
+
+Deﬁni¸c˜ao 1.6. Quando duas ou mais arestas possu´ırem o mesmo extremo, ser˜ao chama-
+
+das de arestas adjacentes.
+
+Deﬁni¸c˜ao 1.7. Um grafo que n˜ao apresenta arestas em paralelo e nem la¸co, ser´a chamado
+
+de grafo simples.
+
+Deﬁni¸c˜ao 1.8. Um grafo completo ´e um grafo simples onde quaisquer dois de seus v´ertices
+
+s˜ao adjacentes. Ent˜ao, seja G = (V, A) um grafo simples, tal que, para todo par de v´ertices
+
+distintos u, v ∈ V temos uv ∈ A. Denotamos o grafo completo em n v´ertices por Kn.
+
+6
+
+Deﬁni¸c˜ao 1.9. Ordem de um grafo G, consiste na quantidade de v´ertices do grafo ou na
+
+cardinalidade do conjunto V , denotamos por |V (G)|.
+
+Deﬁni¸c˜ao 1.10. A dimens˜ao de um grafo G, ´e a quantidade de arestas do grafo ou a
+
+cardinalidade do conjunto A, denotamos por |A(G)|.
+
+Figura 1.3: Grafo simples
+
+Figura 1.4: Grafo com arestas em la¸co e em paralelo
+
+A partir das deﬁni¸c˜oes 1.9 e 1.10, temos que na Figura 1.3 o |V (G)| = 6 e o |A(G)| = 7.
+
+Enquanto que na Figura 1.4 o |V (G)| = 5 e o |A(G)| = 9, sendo que as arestas i e c est˜ao
+
+em paralelo e a aresta d ´e um la¸co.
+
+7
+
+1.3 Grafos Bipartidos
+
+Tamb´em chamado de bicolorido, b´ıgrafo ou bipartite ´e um grafo simples se o conjunto
+
+dos v´ertices V pode ser divididos em dois conjuntos V1 e V2 com uma quantidade m e
+n de v´ertices, respectivamente. Assim, seja G = (V, A) um grafo simples, V pode ser
+particionado em dois conjuntos V1 e V2, tal que V = V1 ∪ V2 e V1 ∩ V2 = ∅ e os v´ertices
+em V1 conectam-se apenas a v´ertices em V2 e vice-versa.
+
+1.3.1 Grafo Bipartido Completo
+
+Um grafo bipartido ser´a completo quando cada v´ertice do subconjunto V1 ´e adjacente
+a todos os v´ertices do subconjunto V2. Ele ´e denotado por Km,n, onde m = |V1| e n = |V2|.
+A Figura 1.5 exempliﬁca um grafo bipartido completo K3,4.
+
+Figura 1.5: Grafo Bipartido Completo com K3,4
+
+1.4 Subgrafos
+
+Sendo H = (V (cid:48), A(cid:48)) e G = (V, A) grafos, dizemos que H ´e subgrafo de G e denotamos,
+H (cid:54) G, se cada v´ertice e aresta de H ´e tamb´em v´ertice e aresta de G, respectivamente,
+ou seja, V (cid:48) ⊂ V e A(cid:48) ⊂ A.
+
+Para melhor entendimento, consideremos as Figuras (1.6, 1.7 e 1.8). Podemos veriﬁcar
+
+que o grafo H1 da Figura 1.7 ´e um subgrafo do grafo G. J´a o grafo H2 da Figura 1.8 n˜ao
+´e um subgrafo de G, pois a aresta {B, E} /∈ G.
+
+8
+
+Figura 1.6: Grafo G
+
+Figura 1.7: Grafo H1: Subgrafo de G
+
+Figura 1.8: Grafo H2: N˜ao ´e um Subgrafo de G
+
+1.5 Caminhos
+
+Dado G = (V, A) um grafo simples. Vamos deﬁnir os conceitos de passeio, caminho e
+
+trilha.
+
+Deﬁni¸c˜ao 1.11. Passeio ou Percurso ´e uma sequˆencia ﬁnita P = v0v1...vn de v´ertices do
+grafo G tal que vivi+1 ∈ A para 1 ≤ i ≤ n − 1, como podemos ver na Figura 1.9 item (a).
+No qual v0 e vn s˜ao os pontos inicial e ﬁnal do percurso. Se v0 = vn ent˜ao P ´e fechado
+caso contr´ario ´e aberto.
+
+9
+
+Deﬁni¸c˜ao 1.12. Caminho ´e um percurso tal que vi (cid:54)= vj para todo i, j ∈ {0, 1, 2, ..., n},
+podemos veriﬁcar na Figura 1.9 item (c). Quando v1 = vn, ou seja, o primeiro e o ´ultimo
+v´ertices s˜ao os mesmos, o percurso recebe o nome de ciclo, como podemos ver na Figura
+
+1.9 item (e). Um ciclo ´e de ordem n, se |V | = |A| = n.
+
+Deﬁni¸c˜ao 1.13. Trilha ´e um percurso onde {vi, vi+1} (cid:54)= {vj, vj+1} para 1 (cid:54) i, j (cid:54) n − 1,
+ou seja, todas as arestas s˜ao distintas, podemos veriﬁcar na Figura 1.9 item (b). Quando
+
+v1 = vn, a trilha recebe o nome de circuito, como na Figura 1.9 item (d).
+
+Um grafo ´e dito euleriano se cont´em uma trilha que cont´em todas as suas arestas.
+
+Figura 1.9: Exemplos de Percurso (ebfbc), Trilha (afdefb) e Caminho (acbfe), respectiva-
+
+mente
+
+Figura 1.10: Exemplos de Circuito (afdefbca) e Ciclo (fbcadef), respectivamente
+
+10
+
+1.6 Conexidade
+
+Um Grafo G(V, A) ´e dito conexo, Figura 1.11 item (a), se existir um caminho entre
+
+qualquer par de v´ertices distintos u, v ∈ V (G), caso contr´ario ´e desconexo, Figura 1.11
+
+item (b).
+
+Figura 1.11: Exemplo de Grafo Conexo e Desconexo
+
+1.6.1 Componente Conexa
+
+Uma componente conexa de G ´e um subgrafo H de G, conexo, tal que para todo
+
+subgrafo I de G, que contenha estritamente H, se tenha I desconexo.
+
+Figura 1.12: Grafo G = H1 ∪ H2
+
+O grafo G da Figura 1.12 ´e desconexo, pois os v´ertices v1, v5 ∈ G mas n˜ao existe um
+
+caminho v1 − v5 e nem um caminho v5 − v1. H1 e H2 s˜ao componentes conexas de G.
+
+11
+
+Cap´ıtulo 2
+
+Problema do Quadro de Hor´ario
+
+Problemas de produ¸c˜ao de quadro de hor´arios em Institui¸c˜oes de ensino tˆem sido
+
+bastante estudados nas ´ultimas d´ecadas. Entre as principais raz˜oes para esse interesse
+
+est˜ao:
+
+a) A diﬁculdade de resolu¸c˜ao, pois encontrar um quadro de hor´arios que satisfa¸ca tantos
+
+interesses ´e uma tarefa complicada;
+
+b) Importˆancia pr´atica, permitir a satisfa¸c˜ao da grande maioria dos envolvidos dentro
+
+da institui¸c˜ao;
+
+c) Importˆancia te´orica, por serem dif´ıceis de serem resolvidos, s˜ao um grande desa-
+
+ﬁo para pesquisas em ´area como computa¸c˜ao e matem´atica, pois s˜ao problemas
+
+NP-completo, deﬁnido como problemas de decis˜ao poss´ıveis de veriﬁcar em tempo
+
+polinomial o valor das instˆancias.
+
+Sendo assim, neste cap´ıtulo vamos apresentar a deﬁni¸c˜ao dos principais problemas de
+
+grade de hor´ario e a formula¸c˜ao matem´atica para o problema formulada por Werra (1985)
+
+e Junginger (1986).
+
+2.1 Problema de Grade de Hor´ario em Institui¸c˜oes Educa-
+
+cionais
+
+O problema de grade de hor´ario em institui¸c˜oes educacionais, consiste em agendar
+
+uma sequˆencia de evento (aulas ou exames) os quais envolvem professores e estudantes em
+
+um hor´ario pr´e-ﬁxado, satisfazendo sempre a um conjunto de restri¸c˜oes. A programa¸c˜ao
+
+de hor´arios ´e algo muito importante, pois inﬂuencia diretamente na vida de funcion´arios,
+
+alunos e professores. Uma vez implementado um quadro de hor´arios, esse normalmente
+
+´e utilizado durante todo o per´ıodo letivo, fazendo com que em v´arias situa¸c˜oes alunos e
+
+12
+
+professores tenham que se adaptar a ele, pois as solu¸c˜oes geralmente n˜ao atendem `a todos
+
+os interesses e disponibilidade dos envolvidos.
+
+Um grande n´umero de varia¸c˜oes deste problema tem sido proposto na literatura, sendo
+
+essa classiﬁca¸c˜ao proposta por Schaerf (1999). Existem trˆes tipos principais que se diferem
+
+pelo tipo de evento, tipo de institui¸c˜ao envolvida (escolas de fundamental e m´edio ou
+
+universidades) e `a inﬂuˆencia de restri¸c˜oes, s˜ao elas:
+
+• Grade de Hor´ario para uma escola de ensino fundamental e m´edio: Co-
+
+nhecido tamb´em como Problema Turma- Professor(PTP), consiste na aloca¸c˜ao de
+
+aulas em uma grade de hor´ario semanal para todas as turmas de uma escola, respei-
+
+tando restri¸c˜oes essenciais que s˜ao aqueles que garantem a viabilidade da solu¸c˜ao e
+
+as restri¸c˜oes desej´aveis, cuja fun¸c˜ao ´e melhorar a qualidade da solu¸c˜ao mas que, no
+
+entanto, seu n˜ao atendimento n˜ao inviabiliza uma aloca¸c˜ao, temos como exemplo,
+
+nenhuma turma ou professor pode ser envolvido em mais de uma aula. Aqui s˜ao
+
+consideradas que as disciplinas s˜ao ﬁxas para cada turma e o objetivo principal ´e
+
+evitar que um professor esteja alocado a duas turmas simultaneamente ou que uma
+
+turma tenha aula com dois professores diferentes em um mesmo hor´ario.
+
+• Grade de Hor´ario para cursos universit´arios: Esquematiza¸c˜ao da grade de
+
+hor´arios semanal de um conjunto de cursos universit´arios (Programa¸c˜ao, C´alculo,
+
+etc.), no qual cada estudante escolhe as disciplinas que ir´a estudar. Sendo que n˜ao
+
+´e necess´ario que sejam sempre estudantes de um mesmo curr´ıculo, sendo assim uma
+
+turma de um determinado curso pode ter estudante de v´arios curr´ıculos diferentes.
+
+Ainda existe um conjunto de hor´arios dispon´ıveis para aloca¸c˜ao das aulas, e para
+
+cada hor´ario um n´umero limitado de salas. O problema consiste em alocar as aulas
+
+aos hor´arios dispon´ıveis, e atribuir cada aula a uma sala, respeitando disponibilidade
+
+e capacidade dessas, de forma que nenhum estudante tenha aulas simultˆaneas. Uma
+
+das caracter´ısticas de problemas dessa classe ´e que ao contr´ario dos problemas de
+
+hor´arios em escola, existe uma maior ﬂexibilidade em rela¸c˜ao aos hor´arios, pois a
+
+princ´ıpio um curso pode ser escalonado em todo o per´ıodo de funcionamento da
+
+institui¸c˜ao (manh˜a, tarde e noite). Ainda outra diferen¸ca ´e que como o conceito de
+
+turmas nesse problema ´e diferente em rela¸c˜ao ao problema em escolas secund´arias,
+
+aqui os alunos deslocam-se para terem suas aulas.
+
+• Grade de hor´ario para exames: ´E deﬁnido como um problema relacionado a
+institui¸c˜oes com caracter´ısticas de uma universidade t´ıpica. ´E composto por um
+conjunto de estudantes previamente matriculados em cursos, um conjunto de exames
+
+para cada estudante e um conjunto de hor´arios disponibilizados para realizar exames.
+
+O objetivo prim´ario nesse problema ´e alocar os exames a hor´arios de modo que
+
+nenhum estudante tenha que fazer dois exames simultaneamente. Algumas restri¸c˜oes
+
+13
+
+s˜ao t´ıpicas desse tipo de problema, tais como: os estudantes n˜ao podem fazer mais
+
+que um n´umero n de exames por dia, alguns exames de certos cursos n˜ao podem
+
+preceder a exames de outros e alguns exames tˆem que ser alocados em um mesmo
+
+hor´ario.
+
+Nos hor´arios escolares, em geral, os grupos de alunos j´a est˜ao deﬁnidos, s˜ao as classes
+
+ou turmas. E ´e com as classes que o problema ´e deﬁnido, n˜ao com os alunos. O problema
+
+b´asico consiste em dados os conjuntos classes, professores e per´ıodos, encontrar uma grade
+
+de hor´ario que atenda alguns requisitos (restri¸c˜oes). Duas importantes restri¸c˜oes s˜ao a
+
+restri¸c˜ao de conﬂito para professores e a restri¸c˜ao de conﬂito para classes. Esses requisitos
+
+podem ser alterados de institui¸c˜ao para institui¸c˜ao tornando o problema de dif´ıcil gene-
+
+raliza¸c˜ao. Sendo que a correta administra¸c˜ao dos interesses de professores e de alunos,
+
+expressa em um quadro de hor´arios adequado, passa a ser um problema de grande interesse
+
+pr´atico, ao lado de sua importˆancia te´orica.
+
+Considerando a modelagem de um problema de grade de hor´ario escolar (PGHE), ser˜ao
+
+primeiramente deﬁnidos as restri¸c˜oes do problema, que usualmente s˜ao de dois tipos:
+
+• Restri¸c˜oes fortes: Essas restri¸c˜oes s˜ao indispens´aveis que sejam satisfeitas para
+
+que seja poss´ıvel a implementa¸c˜ao de um quadro de hor´arios fact´ıvel, ou seja vi´avel.
+
+A restri¸c˜ao mais comum ´e a n˜ao ocorrˆencia de conﬂitos, como por exemplo, um
+
+professor lecionar em duas turmas diferentes em um mesmo hor´ario ou ent˜ao uma
+
+turma assistir a aula de dois professores;
+
+• Restri¸c˜oes Fracas: Esse conjunto de restri¸c˜oes s˜ao aquelas cuja satisfa¸c˜ao ´e de-
+
+sej´avel, ou seja, caso n˜ao satisfeita, n˜ao atrapalha a viabilidade do quadro de hor´ario,
+
+por´em melhora o quadro de hor´ario. Temos como exemplo de restri¸c˜ao fraca as pre-
+
+ferˆencias de professores por determinada turma, ou determinado per´ıodo de trabalho
+
+e ainda seu dia de folga.
+
+2.2 Formula¸c˜ao Matem´atica para um Problema de Grade
+
+Hor´aria Escolar
+
+O Problema de Programa¸c˜ao de Hor´ario Escolar estabelece a programa¸c˜ao semanal de
+
+hor´arios das aulas das turmas de uma escola. Essa formula¸c˜ao foi proposta por Werra
+
+(1985), mas em seu modelo ele n˜ao considerava restri¸c˜oes tais como a disponibilidade
+
+de professores e pr´e-aloca¸c˜oes do tipo: professor p1 lecionar na turma t1 em um hor´ario
+qualquer k. Considere:
+
+• Conjunto de Turmas: T = {t1, t2, ...ti};
+
+14
+
+• Conjunto de Professores: P = {p1, p2, ..., pj};
+
+• Conjunto de Hor´arios: H = {h1, h2, ..., hk};
+
+• R uma matriz de inteiros n˜ao negativos, em que rij ∈ R ´e a carga hor´aria do professor
+
+j na turma i.
+
+O objetivo ´e encontrar:
+
+xijk
+
+∀i ∈ T,
+
+j ∈ P,
+
+k ∈ H
+
+Tal que xijk = 1 caso o professor j tenha aula na turma i no per´ıodo k, e xijk = 0 caso
+
+contr´ario.
+
+Temos as seguintes restri¸c˜oes deﬁnidas pelas equa¸c˜oes e inequa¸c˜oes abaixo:
+
+1. Garante o n´umero de aulas correto entre o professor j e a turma i;
+
+|H|
+(cid:88)
+
+k=1
+
+xijk = rij
+
+∀i ∈ T, j ∈ P
+
+2. Garante que n˜ao exista sobreposi¸c˜ao de turmas;
+
+|P |
+(cid:88)
+
+j=1
+
+xijk (cid:54) 1
+
+∀i ∈ T, k ∈ H
+
+3. Garante que n˜ao ocorra sobreposi¸c˜ao de professores.
+
+|T |
+(cid:88)
+
+i=1
+
+xijk (cid:54) 1
+
+∀j ∈ P, k ∈ H
+
+Enquanto que no trabalho proposto por Junginger (1986) s˜ao abordados restri¸c˜oes que
+
+no trabalho de Werra n˜ao traz. S˜ao elas:
+
+1. Garante que uma turma n˜ao ter´a uma aula em um hor´ario n˜ao dispon´ıvel;
+
+|P |
+(cid:88)
+
+xijk (cid:54) dtik
+
+∀i ∈ T, k ∈ H
+
+j=1
+Nesta formula¸c˜ao dtik = 1 caso a turma i esteja dispon´ıvel no hor´ario k, ou dtik = 0
+caso contr´ario.
+
+2. Garante que um professor n˜ao ser´a alocado em um hor´ario n˜ao dispon´ıvel;
+
+|T |
+(cid:88)
+
+xijk (cid:54) dpjk
+
+∀j ∈ P, k ∈ H
+
+i=1
+Nesta formula¸c˜ao dpjk = 1 se o professor j esteja dispon´ıvel no hor´ario k, ou dpjk = 0
+caso contr´ario.
+
+15
+
+3. Garante uma pr´e-aloca¸c˜ao ser´a respeitada.
+
+xijk (cid:62) Aijk
+
+∀i ∈ T, j ∈ P, k ∈ H
+
+Nesta formula¸c˜ao Aijk = 1 caso exista uma pr´e-aloca¸c˜ao professor j deve lecionar
+na turma i no per´ıodo k, ou Aijk = 0 caso contr´ario.
+
+A solu¸c˜ao ser´a:
+
+xijk ∈ {0, 1}
+
+∀i ∈ T,
+
+j ∈ P,
+
+k ∈ H
+
+Tal que xijk = 1 caso o professor j tenha aula na turma i no per´ıodo k, e xijk = 0 caso
+
+contr´ario.
+
+Nos modelos apresentados acima, o objetivo era apenas determinar uma solu¸c˜ao vi´avel
+
+(problema de viabilidade), por´em na maioria dos problemas a necessidade ´e achar um
+
+boa solu¸c˜ao, ou seja, otimizar uma fun¸c˜ao objetivo. Junginger [23] propˆos uma fun¸c˜ao,
+
+descrita abaixo, como objetivo de transformar o problema de viabilidade em um problema
+
+de otimiza¸c˜ao.
+
+min
+
+|T |
+(cid:88)
+
+|P |
+(cid:88)
+
+|H|
+(cid:88)
+
+i=1
+
+j=1
+
+k=1
+
+xijkdijk
+
+Esta fun¸c˜ao objetivo atua como um mecanismo de penaliza¸c˜ao, onde dijk ´e um valor
+
+associado a satisfabilidade de o professor j ser alocado `a turma i no hor´ario k.
+
+16
+
+Cap´ıtulo 3
+
+Problema do Quadro de Hor´ario
+
+para a Escola CEPAOF
+
+Neste cap´ıtulo ser´a apresentado a formula¸c˜ao do problema, com as respectivas res-
+
+tri¸c˜oes trabalhadas, a descri¸c˜ao da escola com suas caracter´ısticas e por ﬁm ´e apresentado
+
+o algoritmo proposto para a resolu¸c˜ao do problema.
+
+3.1 Formula¸c˜ao do Problema
+
+Ap´os a organiza¸c˜ao dos dados da escola em quest˜ao e do levantamento das restri¸c˜oes
+
+fortes e fracas que permeiam o problema de elaborar um quadro de hor´ario escolar, mo-
+
+delamos o problema atrav´es de um grafo conexo, relacionando as disciplinas da grade
+
+curricular com os hor´arios e os dias da semana, que est´a representado no grafo geral na
+
+Figura 3.1.
+
+No grafo, temos um v´ertice de sa´ıda s e um v´ertice de chegada t. A primeira coluna de
+
+v´ertices s˜ao de todas as disciplinas ofertadas na escola, a segunda coluna ´e referente aos
+
+dias da semana e a terceira coluna ´e referente aos hor´arios de aula para o turno vespertino.
+
+O valor da aresta respectiva a (s, cimj) ser´a o valor da carga hor´aria da disciplina dada
+pela matriz de carga hor´aria, que ir´a variar de 1 a 4. O valor da aresta (cimj, dk) ser´a
+no m´aximo 2, que representa a quantidade m´axima de aula por dia. E o valor da aresta
+
+(dk, hk) ser´a sempre 1, representando a hora aula e a somat´oria dos valores de todas essas
+arestas ser´a 25, que corresponde ao n´umero total de aulas por semana de cada turma.
+
+Para uma turma i qualquer, utilizaremos os v´ertices referentes apenas as disciplinas
+
+que pertencem a sua matriz curricular, assim faremos uma remo¸c˜ao de alguns v´ertices.
+
+17
+
+Figura 3.1: Grafo Geral
+
+Para esta formula¸c˜ao descreveremos a seguir, como foi adaptado as nomenclaturas e
+
+os conjuntos em quest˜ao:
+
+• C = {ci}, com i = 1, ..., 4, um conjunto de turmas;
+
+– 6o ano - c1
+
+– 7o ano - c2
+
+– 8o ano - c3
+
+– 9o ano -c4
+
+• M = {mj}, com j = 1, ..., 14, um conjunto de disciplinas;
+
+– Portuguˆes - m1
+
+– Matem´atica - m2
+
+– Ciˆencias - m3
+
+– Geograﬁa -m4
+
+– Hist´oria - m5
+
+– Artes - m6
+
+18
+
+– L´ıngua Estrangeira - m7
+
+– Educa¸c˜ao F´ısica -m8
+
+– Religi˜ao - m9
+
+– Cidadania - m10
+
+– Geometria - m11
+
+– Meio Ambiente - m12
+
+– Identidade e Cultura - m13
+
+– Reda¸c˜ao - m14
+
+• H = {hk}, com 1 (cid:54) k (cid:54) 5, um conjunto de hor´arios semanais;
+
+– 1o Hor´ario - h1
+
+(13:20 as 14:00)
+
+– 2o Hor´ario - h2
+
+(14:00 as 14:40)
+
+– 3o Hor´ario - h3
+
+(14:40 as 15:20)
+
+– 4o Hor´ario - h4
+
+(15:40 as 16:20)
+
+– 5o Hor´ario - h5
+
+(16:20 as 17:00)
+
+• D = {dk}, com 1 (cid:54) k (cid:54) 5, um conjunto de dias da semana;
+
+– Segunda-Feira - d1
+
+– Ter¸ca-Feira - d2
+
+– Quarta-Feira - d3
+
+– Quinta-feira - d4
+
+– Sexta-feira - d5
+
+19
+
+• B = (bhk,dk ), uma matriz da grade de hor´ario. Esta matriz representa uma solu¸c˜ao
+para o problema ap´os os passos do algoritmo. A matriz B ´e quadrada de ordem 5.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+bh1,d1
+bh2,d1
+bh3,d1
+bh4,d1
+bh5,d1
+
+bh1,d2
+bh2,d2
+bh3,d2
+bh4,d2
+bh5,d2
+
+bh1,d3
+bh2,d3
+bh3,d3
+bh4,d3
+bh5,d3
+
+bh1,d4
+bh2,d4
+bh3,d4
+bh4,d4
+bh5,d4
+
+bh1,d5
+bh2,d5
+bh3,d5
+bh4,d5
+bh5,d5
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+• AjX k = (amj ,dk ), uma matriz que representa a disponibilidade dos professores por
+turma. Nesta matriz apresentamos todas as disciplinas (mj) e seus respectivos dias
+(dk) dispon´ıveis para aloca¸c˜ao de aula dada por cada professor.
+
+A leitura ´e feita da seguinte forma:
+
+0 - Corresponde a Atividade Complementar (A.C.), dia em que o professor n˜ao pode
+
+ter aula, pois nesse dia acontece uma reuni˜ao com a coordena¸c˜ao;
+
+1 - Corresponde a um dia de folga escolhido pelo professor;
+
+2 - Dia dispon´ıvel para alocar aula;
+
+3 - Disciplina n˜ao pertence a grade curricular da turma.
+
+20
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×5
+
+=
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2 1 2 0 2
+
+1 2 0 2 2
+
+2 1 0 2 2
+
+2 1 0 2 2
+
+1 0 2 2 2
+
+2 0 2 1 2
+
+1 2 2 0 2
+
+2 2 1 0 2
+
+1 2 0 2 2
+
+1 2 2 0 2
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+2 1 2 0 2
+
+1 2 0 2 2
+
+2 1 0 2 2
+
+2 1 0 2 2
+
+1 0 2 2 2
+
+1 0 2 2 2
+
+2 2 2 0 1
+
+2 2 1 0 2
+
+2 0 1 2 2
+
+1 2 2 0 2
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×5
+
+14×5
+
+Turma 6o ano - c1
+
+
+AjX k =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+am1,d4
+am2,d4
+
+am1,d2
+am2,d2
+
+am3,d4
+am5,d4
+am4,d4
+am7,d4
+am6,d4
+
+am3,d2
+am5,d2
+am4,d2
+am7,d2
+am6,d2
+
+am1,d1
+am1,d3
+am1,d5
+am2,d5
+am2,d3
+am2,d1
+am11,d1 am11,d2 am11,d3 am11,d4 am11,d5
+am3,d5
+am3,d3
+am3,d1
+am5,d5
+am5,d3
+am5,d1
+am4,d5
+am4,d3
+am4,d1
+am7,d5
+am7,d3
+am7,d1
+am6,d1
+am6,d5
+am6,d3
+am12,d1 am12,d2 am12,d3 am12,d4 am12,d5
+am8,d5
+am8,d3
+am8,d1
+am13,d1 am13,d2 am13,d3 am13,d4 am13,d5
+am10,d1 am10,d2 am10,d3 am10,d4 am10,d5
+am9,d5
+am9,d3
+am9,d1
+am14,d1 am14,d2 am14,d3 am14,d4 am14,d5
+
+am8,d2
+
+am9,d2
+
+am8,d4
+
+am9,d4
+
+Turma 7o ano - c2
+
+
+AjX k =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+am1,d4
+am2,d4
+
+am1,d2
+am2,d2
+
+am3,d4
+am5,d4
+am4,d4
+am7,d4
+am6,d4
+
+am3,d2
+am5,d2
+am4,d2
+am7,d2
+am6,d2
+
+am1,d5
+am1,d3
+am1,d1
+am2,d1
+am2,d5
+am2,d3
+am11,d1 am11,d2 am11,d3 am11,d4 am11,d5
+am3,d5
+am3,d3
+am3,d1
+am5,d5
+am5,d3
+am5,d1
+am4,d5
+am4,d3
+am4,d1
+am7,d5
+am7,d3
+am7,d1
+am6,d1
+am6,d5
+am6,d3
+am13,d1 am13,d2 am13,d3 am13,d4 am13,d5
+am8,d1
+am8,d5
+am8,d3
+am12,d1 am12,d2 am12,d3 am12,d4 am12,d5
+am10,d1 am10,d2 am10,d3 am10,d4 am10,d5
+am9,d1
+am9,d5
+am9,d3
+am14,d1 am14,d2 am14,d3 am14,d4 am14,d5
+
+am8,d2
+
+am9,d2
+
+am8,d4
+
+am9,d4
+
+21
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×5
+
+=
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 2 2 0 2
+
+2 1 0 2 2
+
+2 1 2 0 2
+
+2 2 0 1 2
+
+2 0 2 1 2
+
+2 0 2 2 1
+
+1 2 2 0 2
+
+2 1 2 0 2
+
+2 0 2 2 1
+
+2 2 1 0 2
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+1 2 2 0 2
+
+2 1 0 2 2
+
+1 0 2 2 2
+
+2 2 0 1 2
+
+2 0 2 2 1
+
+2 0 2 2 1
+
+2 1 2 0 2
+
+1 2 2 0 2
+
+2 2 1 0 2
+
+2 1 2 0 2
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+3 3 3 3 3
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×5
+
+14×5
+
+Turma 8o ano - c3
+
+
+AjX k =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+am1,d4
+am2,d4
+
+am1,d2
+am2,d2
+
+am3,d4
+am5,d4
+am4,d4
+am7,d4
+am6,d4
+
+am3,d2
+am5,d2
+am4,d2
+am7,d2
+am6,d2
+
+am1,d1
+am1,d3
+am1,d5
+am2,d5
+am2,d3
+am2,d1
+am14,d1 am14,d2 am14,d3 am14,d4 am14,d5
+am3,d5
+am3,d3
+am3,d1
+am5,d5
+am5,d3
+am5,d1
+am4,d5
+am4,d3
+am4,d1
+am7,d5
+am7,d3
+am7,d1
+am6,d1
+am6,d5
+am6,d3
+am10,d1 am10,d2 am10,d3 am10,d4 am10,d5
+am8,d5
+am8,d3
+am8,d1
+am12,d1 am12,d2 am12,d3 am12,d4 am12,d5
+am13,d1 am13,d2 am13,d3 am13,d4 am13,d5
+am9,d5
+am9,d3
+am9,d1
+am11,d1 am11,d2 am11,d3 am11,d4 am11,d5
+
+am8,d2
+
+am9,d2
+
+am9,d4
+
+am8,d4
+
+Turma 9o ano - c4
+
+
+AjX k =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+am1,d4
+am2,d4
+am9,d4
+am3,d4
+am5,d4
+am4,d4
+am7,d4
+am6,d4
+
+am1,d2
+am2,d2
+am9,d2
+am3,d2
+am5,d2
+am4,d2
+am7,d2
+am6,d2
+
+am1,d5
+am1,d3
+am1,d1
+am2,d5
+am2,d3
+am2,d1
+am9,d5
+am9,d3
+am9,d1
+am3,d5
+am3,d3
+am3,d1
+am5,d5
+am5,d3
+am5,d1
+am4,d5
+am4,d3
+am4,d1
+am7,d5
+am7,d3
+am7,d1
+am6,d1
+am6,d5
+am6,d3
+am14,d1 am14,d2 am14,d3 am14,d4 am14,d5
+am8,d1
+am8,d5
+am8,d3
+am12,d1 am12,d2 am12,d3 am12,d4 am12,d5
+am13,d1 am13,d2 am13,d3 am13,d4 am13,d5
+am10,d1 am10,d2 am10,d3 am10,d4 am10,d5
+am11,d1 am11,d2 am11,d3 am11,d4 am11,d5
+
+am8,d2
+
+am8,d4
+
+22
+
+• CjX1 = (cmj ), uma matriz coluna da carga hor´aria das disciplinas. Esta matriz
+
+apresenta o n´umero de aulas semanais de cada disciplina em cada turma.
+
+Turma 6o ano - c1
+
+
+
+
+CjX1 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CjX1 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cm1,
+cm2
+cm11
+cm3
+cm5
+cm4
+cm7
+cm6
+cm12
+cm8
+cm13
+cm10
+cm9
+cm14
+
+cm1
+cm2
+cm11
+cm3
+cm5
+cm4
+cm7
+cm6
+cm13
+cm8
+cm12
+cm10
+cm9
+cm14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×1
+
+Turma 7o ano - c2
+
+
+
+
+=
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+
+4
+
+1
+
+3
+
+3
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+1
+
+4
+
+4
+
+1
+
+3
+
+3
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+1
+
+14×1
+
+14×1
+
+23
+
+Turma 8o ano - c3
+
+
+
+
+CjX1 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CjX1 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cm1
+cm2
+cm14
+cm3
+cm5
+cm4
+cm7
+cm6
+cm10
+cm8
+cm12
+cm13
+cm9
+cm11
+
+cm1
+cm2
+cm9
+cm3
+cm5
+cm4
+cm7
+cm6
+cm14
+cm8
+cm12
+cm13
+cm10
+cm11
+
+=
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+4
+
+4
+
+1
+
+3
+
+3
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+1
+
+4
+
+4
+
+1
+
+3
+
+3
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+2
+
+1
+
+14×1
+
+14×1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+14×1
+
+Turma 9o ano - c4
+
+
+
+
+3.2 Restri¸c˜oes do Problema
+
+Geralmente as institui¸c˜oes de ensino possuem caracter´ısticas que as diferem umas das
+
+outras. Isso se deve ao fato de que, dependendo da regi˜ao (Pa´ıs, Estado ou Munic´ıpio) na
+
+qual elas se encontram, elas possuem diferentes aspectos organizacionais, como aloca¸c˜ao de
+
+salas; pedag´ogicos, como dura¸c˜ao das aulas e intervalos entre as mesmas; e pessoais, como
+
+atender as preferˆencias e necessidades dos membros do corpo docente. Por possu´ırem
+
+24
+
+um ´unico conjunto de regras, as ferramentas de montagem de hor´ario escolar tornam-
+
+se invi´aveis para serem utilizadas em um amplo grupo de institui¸c˜oes. Assim elas s˜ao
+
+desenvolvidas para se adequar as necessidades espec´ıﬁcas da institui¸c˜ao que a utiliza, ou
+
+seja, de acordo com o contexto. Abaixo ser˜ao descritas os requerimentos/restri¸c˜oes que
+
+ser˜ao utilizados nesse trabalho e dever˜ao ser satisfeitas.
+
+Restri¸c˜oes Fortes do Problema de Aloca¸c˜ao de Hor´ario
+
+1. Sobreposi¸c˜ao de Professores:
+
+Nenhuma turma pode assistir a duas disciplinas diferentes ao mesmo tempo;
+
+2. Sobreposi¸c˜ao de Turmas:
+
+Nenhum professor pode lecionar em duas turmas diferentes ao mesmo tempo;
+
+3. N´umero m´aximo de aulas di´arias por turma:
+
+O n´umero de encontros di´arios de uma disciplina numa classe n˜ao pode ultrapassar
+
+duas aulas;
+
+4. Indisponibilidade:
+
+A sele¸c˜ao do hor´ario das disciplinas ´e baseado dentre os dias dispon´ıveis e vagas
+
+dispon´ıveis naquele determinado dia, alocando sempre nos primeiros hor´arios dis-
+
+pon´ıveis;
+
+5. Ordenamento da Aloca¸c˜ao:
+
+Alocar as disciplinas na ordem da matriz de disponibilidade;
+
+6. N´umero de aulas Geminadas:
+
+Alocar as disciplinas com maior n´umero de aulas geminadas sem a quebra do inter-
+
+valo;
+
+7. Distribui¸c˜ao da Carga Hor´aria:
+
+• Disciplinas com carga hor´aria de 4 horas-aula semanais, deve-se alocar sempre
+
+na conﬁgura¸c˜ao 2-2 em dias diferentes, isto ´e duas aulas geminadas, mas n˜ao
+
+alocar no terceiro e quarto hor´ario;
+
+• Disciplinas com carga hor´aria de 1 hora-aula por semana, enquanto tiver ter-
+
+ceiro hor´ario dispon´ıvel alocar, sen˜ao em qualquer outro hor´ario dispon´ıvel;
+
+• Disciplinas com carga hor´aria de 3 horas-aula por semana, alocar na seguinte
+
+conﬁgura¸c˜ao 2-1, ou seja, duas aulas geminada, ministradas em hor´arios conse-
+
+cutivos primeiro duas aulas juntas, exceto no terceiro e quarto hor´ario e uma
+
+aula no terceiro hor´ario se dispon´ıvel em algum dia da semana, sen˜ao em qual-
+
+quer hor´ario;
+
+25
+
+• Disciplinas com carga hor´aria de 2 horas-aula por semana alocar em dois
+
+hor´arios dispon´ıveis geminados, caso n˜ao tenha, alocar na conﬁgura¸c˜ao 1-1 em
+
+dias diferentes.
+
+Restri¸c˜oes Fracas
+
+1. Maior n´umero poss´ıvel de aulas geminadas;
+
+2. M´ınimo de aulas geminadas separadas por intervalo ou por qualquer outra disciplina.
+
+3.3 Centro Educacional Professor ´Aureo de Oliveira Filho
+
+Situada no munic´ıpio de Anguera, Bahia, a escola Centro Educacional Professor ´Aureo
+de Oliveira Filho, conhecida tamb´em como CEPAOF foi a institui¸c˜ao escolhida para a
+
+an´alise. Trata-se de uma t´ıpica escola p´ublica de primeiro grau brasileira que possu´ıa no
+
+ano de 2016 um n´umero total de 23 professores entre efetivos e contratados e 11 turmas
+
+distribu´ıdas em dois turnos, matutino e vespertino, perfazendo um total de aproxima-
+
+damente 200 alunos matriculados, sendo considerada uma escola de m´edio porte para o
+
+munic´ıpio. Havia professores que lecionavam em mais de um turno, por´em todas as tur-
+
+mas possuem suas aulas em um ´unico turno e em uma ´unica sala. Desta forma, estas
+
+salas s˜ao pr´e-determinadas no in´ıcio de cada ano pelos Gestores e, portanto, a associa¸c˜ao
+
+turma-sala n˜ao precisa ser considerada neste problema de aloca¸c˜ao de aulas.
+
+As turmas tem cinco aulas por dia, de segunda-feira a sexta-feira, somando um total
+
+de 25 aulas por semana, tanto para o turno matutino como para o vespertino, sendo que
+
+as aulas para cada turma s˜ao ministradas em um mesmo turno. E para cada classe ou
+
+turma, h´a um professor e uma carga hor´aria semanal para cada disciplina.
+
+O que nos interessa neste problema ´e a ordem de agendamento das aulas, pois todas
+
+possuem um mesmo tempo de dura¸c˜ao e a unidade de tempo de uma aula ser´a chamada
+
+de hor´ario de aula que corresponde a 40 minutos, no qual entre o terceiro e quarto hor´ario
+
+h´a um intervalo de 20 minutos.
+
+Essa escola possui turmas do 2o Ciclo do Ensino Fundamental (do sexto ao nono ano).
+
+O agendamento ´e feito anualmente, no in´ıcio de cada ano letivo, ap´os feito o levanta-
+
+mento das disponibilidades dos professores, no per´ıodo de planejamento chamado jornada
+
+pedag´ogica. Ficando incumbido de montar um quadro de hor´ario os gestores e coordena-
+
+dores da escola, o que ´e uma tarefa dif´ıcil e requer muita experiˆencia. Em geral, a grade de
+
+hor´ario leva semanas para ﬁcar pronta e sempre possui problemas. Na tabela 2.1 abaixo,
+
+resume-se os dados levantados na pesquisa.
+
+As cargas hor´arias dos professores s˜ao distribu´ıdas entre esses turnos, sendo que o
+
+m´ınimo de aulas que um professor deve ter ´e de 13 horas/aula. Para esse regime de trabalho
+
+cada professor deve lecionar mat´erias de sua competˆencia, caso n˜ao consiga atingir o limite
+
+26
+
+Turno Matutino
+
+Turno Vepertino
+
+N´umero de dias de aula por semana: 5
+
+N´umero de Professores nos dois turnos: 23
+
+Turmas Aulas/dia
+
+7
+
+4
+
+5
+
+5
+
+N´umero de alunos matriculados aproximadamente nos dois turnos: 200
+
+Tabela 3.1: Caracter´ısticas do CEPAOF
+
+estipulado para o cargo, ent˜ao, o professor deve completar sua carga hor´aria contratual
+
+com outras mat´erias aﬁns. Havendo assim um grande grupo de professores que lecionam
+
+apenas pelo turno da manh˜a, outro pequeno grupo de professores que lecionam apenas
+
+pela tarde e um outro grupo que leciona nos dois turnos, ou seja, sua carga hor´aria ´e
+
+distribu´ıda tanto no turno da manh˜a como no turno da tarde.
+
+Neste trabalho nos concentramos apenas no turno vespertino, desta forma, as carga
+
+hor´aria de alguns professores n˜ao ir˜ao ser cumpridas, devido o fato de n˜ao incluirmos no
+
+trabalho o turno matutino, pois aumentaria o n´umero de turmas e restri¸c˜oes, tornando o
+
+trabalho mais complexo para se resolver por m´etodos heur´ısticos construtivos.
+
+As disciplinas na institui¸c˜ao s˜ao distribu´ıdas entre os professores, assim cada professor
+
+est´a ligado a uma ou mais disciplinas, no entanto, uma disciplina s´o est´a ligada a somente
+um professor. ´E importante frisar que disciplinas com o mesmo nome, mas de s´eries
+diferentes s˜ao consideradas distintas e podem ou n˜ao ter o mesmo professor. A disciplina
+
+de L´ıngua Estrangeira tem subturma, s˜ao divididas em Inglˆes e Espanhol, mas n˜ao ´e mais
+
+uma vari´avel do problema, pois ´e considerada como uma s´o disciplina na grade de hor´ario,
+
+embora na pr´atica existam dois professores em salas diferentes que dividem a turma.
+
+Outro fator que aumenta a diﬁculdade em encontrar um hor´ario vi´avel e fact´ıvel s˜ao as
+
+reuni˜oes semanais entre professores e coordenadores, chamada de Atividade Complementar
+
+(A.C.). Os professores s˜ao “divididos”por ´area de conhecimento, sendo assim disciplinas
+
+como Portuguˆes, L´ıngua Estrangeira, Educa¸c˜ao F´ısica, Artes e Reda¸c˜ao fazem parte da
+
+´area de Linguagem, e sua respectiva reuni˜ao acontece nas quintas-feiras. As disciplinas
+
+de Matem´atica, Ciˆencias, Geometria e Meio ambiente fazem parte da ´area de Exatas, e
+
+sua respectiva reuni˜ao acontece nas quartas-feiras. E por ﬁm, as disciplinas de Geograﬁa,
+
+Hist´oria, Religi˜ao, Cidadania e Identidade e Cultura fazem parte da ´area de Humanas, e
+
+sua respectiva reuni˜ao acontece nas ter¸cas-feiras. Al´em disso, cada professor tem direito
+
+a um dia da semana da sua escolha para tirar uma folga, j´a que sua carga hor´aria ´e de
+
+apenas 20 horas.
+
+27
+
+3.4 Algoritmo Proposto Para a Resolu¸c˜ao do Problema
+
+Primeiramente vamos deﬁnir algoritmo. De acordo com Cruz (1997), temos a seguinte
+
+deﬁni¸c˜ao:
+
+Deﬁni¸c˜ao 3.1. Algoritmo ´e uma sequˆencia ﬁnita de instru¸c˜oes bem deﬁnidas e n˜ao
+
+amb´ıguas, cada uma das quais devendo ser executadas mecˆanica ou eletronicamente em
+
+um intervalo de tempo ﬁnito e com uma quantidade de esfor¸co ﬁnita.
+
+Para solucionar o problema do quadro de hor´ario da escola CEPAOF, foi implementado
+
+o seguinte algoritmo.
+
+Entrada: Selecionar a turma ci, com 1 (cid:54) i (cid:54) 4, turmas descritas no Cap´ıtulo 3,
+
+se¸c˜ao 3.1.
+
+A partir da escolha da turma, iremos consultar a matriz AjX k de disponibilidade dos
+
+professores, que se encontra no Cap´ıtulo 3, se¸c˜ao 3.1:
+
+• Se amj ,dk = 0 ´e Atividade Complementar (A.C.), n˜ao pode alocar aula, para 1 (cid:54)
+
+j (cid:54) 14 e 1 (cid:54) k (cid:54) 5;
+
+• Se amj ,dk = 1 ´e folga, dia escolhido pelo professor para n˜ao ter aula, n˜ao pode alocar
+
+aula, para 1 (cid:54) j (cid:54) 14 e 1 (cid:54) k (cid:54) 5;
+
+• Se amj ,dk = 2 , dia dispon´ıvel para alocar aula, para 1 (cid:54) j (cid:54) 14 e 1 (cid:54) k (cid:54) 5;
+
+• Se amj ,dk = 3, disciplina n˜ao est´a na grade curricular da turma, portanto n˜ao pode
+
+alocar aula, para 1 (cid:54) j (cid:54) 14 e 1 (cid:54) k (cid:54) 5;
+
+As disciplinas ser˜ao alocadas de acordo com a restri¸c˜ao sobre ordenamento citada no
+
+Cap´ıtulo 3, se¸c˜ao 3.2, item 5 que diz que ser˜ao alocadas as disciplinas na ordem da matriz
+
+AjX k de disponibilidade dada no Cap´ıtulo 3, se¸c˜ao 3.1. No qual as disciplinas foram
+ordenadas de acordo com sua carga hor´aria e pela prioridade em alocar.
+
+(i) Iniciar com as disciplinas com carga hor´aria de 4 aulas por semana, consultar matriz
+
+CjX1 da carga hor´aria no Cap´ıtulo 3, se¸c˜ao 3.1, alocando de 2 em 2 aulas pelo
+m´etodo de sele¸c˜ao aleat´orio, em dias diferentes (dk1 (cid:54)= dk2,com k1 (cid:54)= k2), n˜ao alocar
+nas posi¸c˜oes bh3,dk e bh4,dk com 1 (cid:54) k (cid:54) 5 da matriz BkXk da grade de hor´ario.
+
+a. Enquanto houver disciplina com carga hor´aria de 4 aulas alocar.
+
+b. Se n˜ao, ﬁnaliza e vai para a pr´oxima carga hor´aria.
+
+(ii) Alocar as disciplinas com carga hor´aria de 1 aula por semana, consultar matriz CjX1
+
+da carga hor´aria no Cap´ıtulo 3, se¸c˜ao 3.1, alocando pelo m´etodo aleat´orio.
+
+a. Enquanto bh3,dk estiver dispon´ıvel alocar, com 1 (cid:54) k (cid:54) 5 da matriz BkXk da
+
+grade de hor´ario.
+
+28
+
+b. Se n˜ao em qualquer outro hor´ario bhk,dk .
+
+(iii) Alocar as disciplinas com carga hor´aria de 3 aulas por semana, consultar matriz CjX1
+da carga hor´aria no Cap´ıtulo 3, se¸c˜ao 3.1, alocar 2 aulas geminadas pelo m´etodo de
+sele¸c˜ao aleat´orio, exceto nas posi¸c˜oes bh3,dk e bh4,dk com 1 (cid:54) k (cid:54) 5 da matriz BkXk
+da grade de hor´ario. E, por ﬁm alocar 1 aula, pelo m´etodo aleat´orio.
+
+a. Enquanto bh3,dk estiver dispon´ıvel alocar, com 1 (cid:54) k (cid:54) 5 da matriz BkXk da
+
+grade de hor´ario.
+
+b. Se n˜ao em qualquer outro hor´ario bhk,dk .
+
+c. Enquanto houver disciplina com carga hor´aria de 3 aulas alocar.
+
+d. Se n˜ao, ﬁnaliza e vai para a pr´oxima carga hor´aria.
+
+(iv) Alocar as disciplinas com carga hor´aria de 2 aulas, consultar a matriz CjX1 da carga
+
+hor´aria no Cap´ıtulo 3, se¸c˜ao 3.1.
+
+a. Enquanto tiver 2 aulas geminadas em algum dia (dk) alocar, pelo m´etodo de
+sele¸c˜ao aleat´orio. Evitando sempre que puder os hor´arios nas posi¸c˜oes bh3,dk e
+bh4,dk .
+
+b. Se n˜ao, alocar de 1 em 1 em dias diferentes (dk1 (cid:54)= dk2, com k1 (cid:54)= k2), pelo m´etodo
+
+de sele¸c˜ao aleat´orio.
+
+Fim da aloca¸c˜ao.
+
+Caso ocorra alguma infactibilidade iniciar o algoritmo novamente at´e que se encontre
+
+um hor´ario fact´ıvel.
+
+29
+
+Cap´ıtulo 4
+
+Resultados Utilizando o Algoritmo
+
+Neste cap´ıtulo ser´a apresentado os passos do algoritmo para encontrar uma solu¸c˜ao
+
+para cada turma da escola CEPAOF do turno vespertino. Faremos tamb´em uma com-
+
+para¸c˜ao entre os resultados obtidos neste trabalho com o hor´ario real da escola do ano de
+
+2016.
+
+4.1 Aplicando o Algoritmo Para a Turma do 6o ano
+
+Vamos aplicar os passos do algoritmo para construir a grade de hor´ario para a turma
+do 6o ano e veriﬁcar sua eﬁciˆencia e simplicidade na sua utiliza¸c˜ao. Os Grafos apresentados
+
+abaixo, ap´os cada aloca¸c˜ao, cont´em apenas os v´ertices das disciplinas referentes a grade
+
+curricular da turma em quest˜ao associados com seus respectivos dias de disponibilidade
+
+para aula retirados a partir da matriz AjX k de disponibilidade no Cap´ıtulo 3, se¸c˜ao 3.1,
+sendo assim os grafos abaixo ser˜ao subgrafos do grafo geral da Figura 3.1.
+
+Todas as aloca¸c˜oes das aulas foram feitas de maneira aleat´oria, ou seja, todos os dias
+
+dispon´ıveis para aula de cada disciplina tinham iguais probabilidades de ser escolhido,
+
+sendo essa sua principal vantagem, embora n˜ao garanta que ir´a ocorrer viabilidade no
+
+hor´ario.
+
+Entrada: Turma selecionada c1
+Aplicando o passo (i), observando a ordem da matriz AjX k de disponibilidade, vamos
+iniciar a aloca¸c˜ao com a disciplina m1. Sendo os dias dispon´ıveis para aula segunda, quarta
+e sexta. Escolhendo de forma aleat´oria o dia. Teremos:
+
+30
+
+Figura 4.1: Grafo representado ap´os aloca¸c˜ao da disciplina m1
+
+Abaixo est´a a matriz da grade de hor´aria que foi feita a partir do grafo.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1
+m1
+bh3,d1
+bh4,d1
+bh5,d1
+
+bh1,d2 m1
+bh2,d2 m1
+bh3,d3
+bh3,d2
+bh4,d3
+bh4,d2
+bh5,d3
+bh5,d2
+
+bh1,d4
+bh2,d4
+bh3,d4
+bh4,d4
+bh5,d4
+
+
+
+
+
+
+
+
+
+
+
+
+bh1,d5
+bh2,d5
+bh3,d5
+bh4,d5
+bh5,d5
+
+5×5
+
+Agora, de acordo com o algoritmo enquanto houver disciplina com carga hor´aria de 4
+
+aulas alocar, observando a matriz AjX k de disponibilidade vamos alocar a disciplina m2,
+sendo os dias dispon´ıveis para aula ter¸ca, quinta e sexta. Escolhendo de forma aleat´oria
+
+os dias, teremos:
+
+31
+
+Figura 4.2: Grafo representado ap´os aloca¸c˜ao da disciplina m2
+
+Abaixo a matriz da grade de hor´ario ap´os a aloca¸c˜ao.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1
+m1
+bh3,d1
+bh4,d1
+bh5,d1
+
+m2
+m2
+bh3,d2
+bh4,d2
+bh5,d2
+
+m1
+m1
+bh3,d3
+bh4,d3
+bh5,d3
+
+m2
+m2
+bh3,d4
+bh4,d4
+bh5,d4
+
+
+
+
+
+
+
+
+
+
+
+
+bh1,d5
+bh2,d5
+bh3,d5
+bh4,d5
+bh5,d5
+
+5×5
+
+Como n˜ao tem mais disciplinas com carga hor´aria de 4 aulas, ﬁnalizamos e vamos para
+
+a pr´oxima carga hor´aria.
+
+Passo (ii) do algoritmo. Consultando matriz AjX k de disponibilidade da turma, que se
+encontra no Cap´ıtulo 3, se¸c˜ao 3.1, iremos alocar agora a disciplina m11. Observamos que
+os dias dispon´ıveis para aula s˜ao segunda, quinta e sexta. Vamos colocar como preferˆencia
+
+os hor´arios h3 do grafo para qualquer dia que estiver dispon´ıvel, pois assim iremos ga-
+rantir que as outras disciplinas com carga hor´aria maior tenham mais chances de ﬁcarem
+
+geminadas sem a quebra do intervalo. Escolhendo o dia de forma aleat´oria, teremos.
+
+32
+
+Figura 4.3: Grafo representado ap´os aloca¸c˜ao da disciplina m11
+
+Segue matriz da grade de hor´ario abaixo.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1
+m1
+m11
+bh4,d1
+bh5,d1
+
+m2
+m2
+bh3,d2
+bh4,d2
+bh5,d2
+
+m1
+m1
+bh3,d3
+bh4,d3
+bh5,d3
+
+m2
+m2
+bh3,d4
+bh4,d4
+bh5,d4
+
+
+
+
+
+
+
+
+
+
+
+
+bh1,d5
+bh2,d5
+bh3,d5
+bh4,d5
+bh5,d5
+
+5×5
+
+Agora aplicando o passo (iii) do algoritmo, vamos alocar as disciplinas que tem carga
+
+hor´aria de 3 aulas. Ser´a alocada priorizando as duas aulas geminadas e a terceira aula se
+
+encaixando em algum terceiro hor´ario dispon´ıvel. Pela ordem da matriz AjX k de disponi-
+bilidade, que se encontra no Cap´ıtulo 3, se¸c˜ao 3.1, temos primeiramente a disciplina m3.
+Sua disponibilidade s˜ao para os seguintes dias segunda, quinta e sexta. De forma aleat´oria
+
+e excluindo os hor´arios j´a ocupados pelas outras disciplinas de acordo com a Figura 4.3.
+
+Teremos:
+
+33
+
+Figura 4.4: Grafo representado ap´os aloca¸c˜ao da disciplina m3
+
+Segue matriz da grade hor´aria abaixo:
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2
+m1 m2
+bh3,d2
+m11
+bh4,d2
+m3
+bh5,d2
+m3
+
+m2
+m1
+m1
+m2
+bh3,d3 m3
+bh4,d4
+bh4,d3
+bh5,d4
+bh5,d3
+
+
+
+
+
+
+
+
+
+
+
+
+bh1,d5
+bh2,d5
+bh3,d5
+bh4,d5
+bh5,d5
+
+5×5
+
+Agora, observando a matriz AjX k de disponibilidade, que se encontra no Cap´ıtulo 3,
+se¸c˜ao 3.1, veriﬁcamos outra disciplina de carga hor´aria de 3 aulas. A disciplina m5, sendo
+os dias dispon´ıveis para aula quarta, quinta e sexta. Como aﬁrma o algoritmo n˜ao podemos
+alocar as aulas geminadas para os 3o e 4o hor´arios (h3) e (h4), pois a aula seria quebrada
+pelo intervalo, al´em disso a terceira aula ter´a que ser alocada no 3o hor´ario (h3), enquanto
+estiver dispon´ıvel. Escolhendo de forma aleat´oria, teremos:
+
+34
+
+Figura 4.5: Grafo representado ap´os aloca¸c˜ao da disciplina m5
+
+Segue matriz da grade de hor´ario ap´os a aloca¸c˜ao acima.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2
+m1 m2
+bh3,d2
+m11
+bh4,d2 m5
+m3
+bh5,d2 m5
+m3
+
+m2
+m1
+m1
+m2
+bh3,d3 m3
+bh4,d4
+bh5,d4
+
+
+
+
+
+
+
+
+
+
+
+
+bh1,d5
+bh2,d5
+m5
+bh4,d5
+bh5,d5
+
+5×5
+
+Por ﬁm, vamos aplicar o passo (iv) com as disciplinas de carga hor´aria de duas aulas.
+
+Iniciando pela disciplina m4, que tem disponibilidade nos dias de segunda, quarta e sexta.
+Como segunda j´a est´a completo e quarta n˜ao tem aulas geminadas, vamos alocar na sexta,
+
+escolhendo o hor´ario de forma aleat´oria, teremos.
+
+35
+
+Figura 4.6: Grafo representado ap´os aloca¸c˜ao da disciplina m4
+
+Matriz representando o hor´ario ap´os a aloca¸c˜ao da disciplina m4.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2
+m1 m2
+bh3,d2
+m11
+bh4,d2 m5
+m3
+bh5,d2 m5
+m3
+
+m2
+m1
+m1
+m2
+bh3,d3 m3
+bh4,d4
+bh5,d4
+
+
+
+
+
+
+
+
+
+
+
+
+m4
+m4
+m5
+bh4,d5
+bh5,d5
+
+5×5
+
+Em seguida a disciplina, m7, dispon´ıvel nos dias de ter¸ca, quarta e sexta. Como a
+quarta tem apenas uma aula. De forma aleat´oria, podemos escolher a ter¸ca ou a sexta
+
+para alocar as aulas, assim teremos.
+
+36
+
+Figura 4.7: Grafo representado ap´os aloca¸c˜ao da disciplina m7
+
+Abaixo segue matriz da grade hor´aria ap´os a aloca¸c˜ao da disciplina m7.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2
+m1 m2
+m11
+bh3,d2
+m3 m7
+m3 m7
+
+m2
+m1
+m2
+m1
+bh3,d3 m3
+bh4,d4
+m5
+bh5,d4
+m5
+
+
+
+
+
+
+
+
+
+
+
+
+m4
+m4
+m5
+bh4,d5
+bh5,d5
+
+5×5
+
+Agora a disciplina m6, dispon´ıvel nos dias de segunda, ter¸ca e sexta. Como a segunda
+j´a est´a completa, o ´unico dia com aula geminada dispon´ıvel ´e a sexta feira. Assim, teremos.
+
+37
+
+Figura 4.8: Grafo representado ap´os aloca¸c˜ao da disciplina m6
+
+Abaixo segue matriz da grade hor´aria ap´os a aloca¸c˜ao da disciplina m6.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2
+m1 m2
+m11
+bh3,d2
+m3 m7
+m3 m7
+
+m2 m4
+m1
+m2 m4
+m1
+bh3,d3 m3 m5
+bh4,d4 m6
+m5
+bh5,d4 m6
+m5
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+A disciplina m12, dispon´ıvel nos dias de ter¸ca, quinta e sexta. Pelo que temos na matriz
+anterior, temos os dois ´ultimos hor´arios na quinta. A ter¸ca feira, n˜ao tem aulas geminadas,
+
+j´a a sexta-feira est´a completa, logo vamos alocar na quinta-feira nos dois ´ultimos hor´arios.
+
+Ent˜ao, teremos.
+
+38
+
+Figura 4.9: Grafo representado ap´os aloca¸c˜ao da disciplina m12
+
+Abaixo segue matriz da grade hor´aria ap´os a aloca¸c˜ao da disciplina m12.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2
+m1 m2
+bh3,d2
+m11
+m3 m7
+m3 m7
+
+m1 m2 m4
+m1 m2 m4
+bh3,d3 m3 m5
+m5 m12 m6
+m5 m12 m6
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+Agora para ﬁnalizar o algoritmo temos a disciplina m8, dispon´ıvel nos dias de ter¸ca,
+quarta e sexta. Como podemos observar a partir do grafo na Figura 4.9, sobrou somente
+
+o hor´ario h3 na ter¸ca e na quarta. Sendo assim, teremos.
+
+39
+
+Figura 4.10: Grafo representado ap´os aloca¸c˜ao da disciplina m8
+
+Segue abaixo matriz da grade de hor´aria ﬁnalizado, sem nenhum choque ou qualquer
+
+outro tipo de problema.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m1 m2 m1 m2 m4
+m1 m2 m1 m2 m4
+m11 m8 m8 m3 m5
+m3 m7 m5 m12 m6
+m3 m7 m5 m12 m6
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+A partir do grafo e da matriz B acima temos o hor´ario da turma do 6o ano completa-
+
+mente alocado. Assim temos o seguinte quadro de hor´ario.
+
+Hor´arios
+
+Segunda
+
+Ter¸ca
+
+Quarta
+
+Quinta
+
+Sexta
+
+13:20
+
+14:00
+
+Portuguˆes
+
+Matem´atica
+
+Portuguˆes
+
+Matem´atica
+
+Geograﬁa
+
+Portuguˆes
+
+Matem´atica
+
+Portuguˆes
+
+Matem´atica
+
+Geograﬁa
+
+14:40
+
+Geometria
+
+Ed. F´ısica
+
+Ed. F´ısica
+
+Ciˆencias
+
+Hist´oria
+
+15:40
+
+16:20
+
+Ciˆencias
+
+L´ıngua Estrangeira
+
+Hist´oria Meio Ambiente
+
+Ciˆencias
+
+L´ıngua Estrangeira
+
+Hist´oria Meio Ambiente
+
+Artes
+
+Artes
+
+Tabela 4.1: Grade de Hor´ario da turma do 6o ano
+
+40
+
+4.2 Resultado do Quadro de Hor´ario para a Turma do 7o
+
+ano
+
+Utilizando o mesmo algoritmo e seguindo a rigor todos os passos. Vamos mostrar os
+resultados das aloca¸c˜oes feitas para as outras turmas. Primeiramente para a turma do 7o
+
+ano.
+
+Figura 4.11: Grafo representado ap´os aloca¸c˜ao de todas as disciplinas para a turma c2.
+
+A partir da leitura do grafo acima, temos a matriz da grade de hor´aria ﬁnalizado, sem
+
+nenhum choque ou qualquer outro tipo de problema.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m13 m2 m1 m3 m1
+m13 m2 m1 m3 m1
+m3 m8 m5 m11 m8
+m7 m6 m4 m5 m2
+m7 m6 m4 m5 m2
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+Abaixo se encontra o quadro de hor´ario respectivo ao grafo e a matriz de solu¸c˜ao
+
+encontrado.
+
+41
+
+Hor´arios
+
+Segunda
+
+Ter¸ca
+
+Quarta
+
+Quinta
+
+Sexta
+
+13:20
+
+Identidade e Cultura Matem´atica Portuguˆes
+
+Ciˆencias
+
+Portuguˆes
+
+14:00
+
+Identidade e Cultura Matem´atica Portuguˆes
+
+Ciˆencias
+
+Portuguˆes
+
+14:40
+
+15:40
+
+16:20
+
+Ciˆencias
+
+Ed. F´ısica
+
+Hist´oria Geometria
+
+Ed. F´ısica
+
+L´ıngua Estrangeira
+
+L´ıngua Estrangeira
+
+Artes
+
+Artes
+
+Geograﬁa
+
+Hist´oria Matem´atica
+
+Geograﬁa
+
+Hist´oria Matem´atica
+
+Tabela 4.2: Grade de Hor´ario da turma do 7o ano
+
+4.3 Resultado do Quadro de Hor´ario para a Turma do 8o
+
+ano
+
+Agora observamos os resultados para a turma do 8o ano.
+
+Figura 4.12: Grafo representado ap´os aloca¸c˜ao de todas as disciplinas para a turma c3
+
+Matriz da grade de hor´aria ﬁnalizado, sem nenhum choque ou qualquer outro tipo de
+
+problema.
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m2 m1 m1 m2 m6
+m2 m1 m1 m2 m6
+m14 m3 m10 m10 m5
+m3 m7 m5 m4 m8
+m3 m7 m5 m4 m8
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+42
+
+A partir do grafo e da matriz acima temos o hor´ario da turma do 8o ano completamente
+
+alocado. Assim temos o seguinte quadro de hor´ario.
+
+Hor´arios
+
+Segunda
+
+Ter¸ca
+
+Quarta
+
+Quinta
+
+13:20 Matem´atica
+
+Portuguˆes
+
+Portuguˆes Matem´atica
+
+14:00 Matem´atica
+
+Portuguˆes
+
+Portuguˆes Matem´atica
+
+Sexta
+
+Artes
+
+Artes
+
+14:40
+
+15:40
+
+16:20
+
+Reda¸c˜ao
+
+Ciˆencias
+
+Cidadania
+
+Cidadania
+
+Hist´oria
+
+Ciˆencias
+
+L´ıngua Estrangeira
+
+Hist´oria
+
+Geograﬁa
+
+Ed. F´ısica
+
+Ciˆencias
+
+L´ıngua Estrangeira
+
+Hist´oria
+
+Geograﬁa
+
+Ed. F´ısic
+
+Tabela 4.3: Grade de Hor´ario da turma do 8o ano
+
+4.4 Resultado do Quadro de Hor´ario para a Turma do 9o
+
+ano
+
+E, por ﬁm, abaixo est´a um exemplo de solu¸c˜ao para o hor´ario da turma do 9o ano.
+
+Figura 4.13: Grafo representado ap´os aloca¸c˜ao de todas as disciplinas para a turma c4
+
+Matriz da grade de hor´aria ﬁnalizado, sem nenhum choque ou qualquer outro tipo de
+
+problema.
+
+43
+
+B =
+
+
+
+
+
+
+
+
+
+
+
+
+m2 m1 m5 m2 m1
+m2 m1 m5 m2 m1
+m5 m3 m8 m9 m8
+m3 m14 m7 m4 m6
+m3 m14 m7 m4 m6
+
+
+
+
+
+
+
+
+
+
+
+
+5×5
+
+A partir do grafo e da matriz acima temos o hor´ario da turma do 9o ano completamente
+
+alocado. Assim temos o seguinte quadro de hor´ario.
+
+Hor´arios
+
+Segunda
+
+Ter¸ca
+
+13:20 Matem´atica Portuguˆes
+
+14:00 Matem´atica Portuguˆes
+
+Quarta
+
+Hist´oria
+
+Hist´oria
+
+Quinta
+
+Sexta
+
+Matem´atica Portuguˆes
+
+Matem´atica Portuguˆes
+
+14:40
+
+15:40
+
+16:20
+
+Hist´oria
+
+Ciˆencias
+
+Ed. F´ısica
+
+Religi˜ao
+
+Ed. F´ısica
+
+Ciˆencias
+
+Reda¸c˜ao
+
+L´ıngua Estrangeira
+
+Geograﬁa
+
+Ciˆencias
+
+Reda¸c˜ao
+
+L´ıngua Estrangeira
+
+Geograﬁa
+
+Artes
+
+Artes
+
+Tabela 4.4: Grade de Hor´ario da turma do 9o ano
+
+4.5 Comparando Resultados
+
+A Figura 4.14 mostra a grade do hor´ario real no turno vespertino no ano de 2016 da
+
+Escola CEPAOF. Foi feita uma an´alise da grade e nesta se¸c˜ao faremos uma compara¸c˜ao
+
+com os resultados encontrados na se¸c˜ao anterior. Como podemos observar temos alguns
+
+problemas no hor´ario real que foram evitados na proposta de solu¸c˜ao deste trabalho, s˜ao
+
+eles:
+
+Na turma do 6o ano, os principais problemas que podemos observar s˜ao: a disciplina
+
+Hist´oria com 3 aulas consecutivas em um mesmo dia, isso acarreta cansa¸co e um plane-
+
+jamento diferenciado ao professor e principalmente desmotiva¸c˜ao, falta de concentra¸c˜ao
+
+e falta de vontade pela aula, por parte dos alunos; temos a disciplina de Portuguˆes que
+
+possui apenas 2 aulas geminadas e as outras duas separadas em dias diferentes o que pode
+
+acarretar preju´ızo na sedimenta¸c˜ao da aprendizagem, por ser uma disciplina muito im-
+
+portante na vida escolar do alunado; outro problema s˜ao as aulas de Ciˆencias separadas
+
+pelo intervalo, n˜ao ´e interessante do ponto de vista pedag´ogico que aulas geminadas sejam
+
+separadas por intervalo, na pr´atica o que vai acontecer ´e uma quebra do racioc´ınio por
+
+parte dos alunos e diﬁculdade do professor em continuar o conte´udo.
+
+Na turma do 7o ano, os problemas na grade de hor´ario s˜ao: as aulas da disciplina de
+
+Portuguˆes separadas em 3 dias distintos, assim como na turma anterior, prejudica o ensino
+
+aprendizagem por parte dos alunos; outra quest˜ao ´e a disciplina de Matem´atica separada
+
+44
+
+pelo intervalo, pois h´a uma quebra de racioc´ınio, ainda mais numa disciplina importante
+
+como essa em que manter a aten¸c˜ao dos alunos ´e indispens´avel.
+
+Na turma do 8o ano ou 7a s´erie, acontecem os mesmo problemas citados acima nas
+
+disciplinas de Artes que tem suas aulas separadas pelo intervalo. E as disciplinas de
+
+Portuguˆes e Matem´atica separadas em 3 dias distintos, sendo que o ideal ´e que as aulas
+
+aconte¸cam em 2 dias com aulas geminadas, como foi mostrado na solu¸c˜ao da se¸c˜ao anterior.
+Na turma do 9o ano ou 8a s´erie, al´em das disciplinas de Educa¸c˜ao F´ısica e Matem´atica
+
+separadas pelo intervalo, temos o pior de todos os problemas, que ´e a disciplina de Ciˆencias
+
+com 3 aulas consecutivas em um mesmo dia, como foi dito anteriormente sobrecarrega
+
+tanto o professor como o aluno para dar conta de tanto conte´udo no mesmo dia.
+
+Estes problemas citados, provavelmente aconteceram devido a preferˆencia dos profes-
+
+sores por determinados dias e hor´arios, para facilitar sua carga hor´aria de trabalho, j´a que
+
+a grande maioria trabalha em outras institui¸c˜oes de ensino, assim n˜ao foi observado o lado
+
+dos alunos.
+
+Podemos ent˜ao destacar a importˆancia do m´etodo proposto neste trabalho. Pois como
+
+foi descrito acima, existiram muitos problemas no hor´ario real utilizado na escola no ano
+
+de 2016 que n˜ao foram encontrados na solu¸c˜ao proposta. Indo mais al´em, os hor´arios en-
+
+contrados nas solu¸c˜oes foram n˜ao somente vi´aveis como tamb´em hor´arios otimizados, pois
+
+foi encontrado um grande n´umero de aulas geminadas e nenhuma dessas aulas separadas
+
+pelo intervalo, isso se deu ao atendimento de todas as restri¸c˜oes impostas pelo problema.
+
+45
+
+Figura 4.14: Hor´ario real do turno vespertino, montado e utilizado durante o ano letivo
+
+de 2016 na Escola CEPAOF.
+
+46
+
+Cap´ıtulo 5
+
+Conclus˜oes e Trabalhos Futuros
+
+Existem v´arios estudos na tentativa de solucionar o problema da grade de hor´ario esco-
+
+lar. Apesar de existirem diversas ferramentas, h´a a diﬁculdade dos usu´arios em encontrar
+
+uma que satisfa¸ca as suas necessidades por completo. Dessa forma, essas s˜ao constru´ıdas
+
+ou modiﬁcadas para atender a cada institui¸c˜ao.
+
+Estudamos o problema de programa¸c˜ao da grade de hor´ario em uma institui¸c˜ao edu-
+
+cacional de ensino fundamental, descrevendo as suas caracter´ısticas b´asicas e as principais
+
+restri¸c˜oes. Descrevemos um problema t´ıpico e b´asico para a Escola P´ublica Municipal
+Centro Educacional Professor ´Aureo de Oliveira Filho do Estado da Bahia.
+
+A ideia de estudar sobre tal problema surgiu a partir da observa¸c˜ao do n´ıvel de diﬁ-
+
+culdade encontrada por parte das pessoas respons´aveis em elaborar um quadro de hor´ario
+
+vi´avel e a grande importˆancia pr´atica que um bom quadro de hor´ario permiti satisfazer a
+
+todos os envolvidos dentro da institui¸c˜ao.
+
+Este trabalho se propˆos a desenvolver um algoritmo que tratasse o turno vespertino da
+
+Escola em quest˜ao, considerando suas principais restri¸c˜oes, atrav´es da Teoria dos Grafos.
+
+A solu¸c˜ao encontrada se mostrou vi´avel perante as restri¸c˜oes e com uma ´otima qualidade.
+
+Podemos observar nas solu¸c˜oes o grande n´umero de aulas geminadas encontradas sendo
+
+que nenhuma foi interrompida pelo intervalo ou outra disciplina, al´em disso nenhuma
+
+disciplina ﬁcou com mais de duas horas aulas por dia.
+
+Podemos comprovar atrav´es dos grafos que quanto maior o n´umero de turmas, pro-
+
+fessores e restri¸c˜oes maior ser´a a diﬁculdade de encontrar uma melhor solu¸c˜ao. Um dos
+
+aspectos evidenciados em an´alises feitas nesse tipo de problema ´e o tempo gasto (n˜ao
+
+polinomial) na busca por um resultado que satisfa¸ca as regras pr´e-estabelecidas. Outro
+
+fator importante ´e a qualidade do resultado obtido, j´a que seu extenso conjunto de regras
+
+torna a sua obten¸c˜ao mais complexa.
+
+Sugere-se para trabalhos futuros, a altera¸c˜ao da heur´ıstica construtiva, para o pro-
+
+blema de hor´ario escolar, como por exemplo a heur´ıstica de Algoritmos Gen´eticos, que s˜ao
+
+algoritmos de busca e otimiza¸c˜ao que consideram cada indiv´ıduo como sendo candidato
+
+47
+
+integrante do resultado ´otimo. Outra proposta seria o aumento das restri¸c˜oes, o que gera
+
+uma grande mudan¸ca na diﬁculdade da resolu¸c˜ao do problema, podendo assim abranger
+
+um n´umero maior de institui¸c˜oes de ensino. Por exemplo, restri¸c˜oes que dizem respeito as
+
+institui¸c˜oes que possuem mais de uma unidade de ensino e que possuem professores que
+
+trabalham em v´arias destas unidades.
+
+Outra proposta futura ´e comparar estes procedimentos com outros, como por exemplo,
+
+Colora¸c˜ao de Grafos, que se trata de atribuir cores a elementos de um grafo sujeita a certas
+
+restri¸c˜oes.
+
+48
+
+Referˆencias Bibliogr´aﬁcas
+
+[1] APPLEBY, J.S.; BLACK, D.V.;NEWMAN, E. A. ”Techniques for producting School
+
+Timetables on a computerand Their Apllication to Other Scheduling Problems”.The
+
+Computer Journal,v.3,pp 237-245,1960.
+
+[2] GOTTLIEB, C., ”The Construction of Class-Teacher Timetables”,in Proceeding of
+
+the IFIP Congress,pp. 73-77, 1962.
+
+[3] BRODER, S., ”Final Examination Scheduling”,Comm.A.C.M., v.7,pp.494-498, 1964.
+
+[4] WELSH, D.J.A., POWELL,M.B., ”An Upper Bound for the Chromatic Number of a
+
+Graph and Its Application to Timetabling Problems”.Comput.J.10, pp. 85-86, 1967.
+
+[5] KARP,R. M., ”Reducibility among Combinatorial Problems”. In Complexity of Com-
+
+puter Computations, Miller,R.E.,and Thatcher, J.W.(eds), Plenum Press, New York,
+
+pp. 85-104,1972.
+
+[6] MANVEL, B., ”Coloring Large Graphs”. In Proceedings of the 1981 Southeast Con-
+
+ference on Graph Theory,Combinatorics and Computer Science, 1981.
+
+[7] METHA, N., ”The Application of a Graph COloring Method to An Examination
+
+Scheduling Problem”. Interfaces, 11, pp. 57-64,1981.
+
+[8] LOBO, E. L. M., Uma Solu¸c˜ao do Problema de Hor´ario escolar via Algoritmo
+
+Gen´etico Paralelo.Disserta¸c˜ao deMestrado em Modelagem Matem´atica e Computaci-
+
+onal. Minas Gerais, 2005.
+
+[9] NAVARRO, F., Estudo de Colora¸c˜ao Aplicado ao Problema de Aloca¸c˜ao de Hor´ario
+
+de Professores. DCC-UNIPACC. Minas Gerais, 2016.
+
+[10] SANTOS, J.R., AST: Um modelo para automa¸c˜ao de hor´arios escolares. Tese de
+
+doutorado em Matem´atica Computacional.Recife, 2008.
+
+[11] Imagem acessada dia 08/05/2017 https://pt.slideshare.net/RioInfo2009/oﬁcina-
+
+analytics-ricardo-costa.
+
+49
+
+[12] DIESTEL, R., Graph Theory (Graduate Texts in Mathematics). Springer, August
+
+2005.
+
+[13] GOUVEIA, M. C. de, Um pequeno hist´orico da Teoria dos Grafos. UC, 2003. Dis-
+
+pon´ıvel em http://www.mat.uc.pt/ mcag/FEA2003/Teoria de Grafos.doc. Acesso em
+
+Maio de 2017.
+
+[14] SILVA, B. C., Emparelhamento em Grafos Bipartidos no Ensino M´edio. Disserta¸c˜ao
+
+de Mestrado pelo PROFMAT. Rio de Janeiro, 2016.
+
+[15] SOUZA, V. N., Programa¸c˜ao de Grade de Hor´ario em Escolas de Ensino Fundamental
+
+e M´edio. Disserta¸c˜ao de Mestrado pela UNICAMP. Campinas-SP, 2006.
+
+[16] SANTOS, H. G., SOUZA, M. J. F., Programa¸c˜ao de Hor´arios em Institui¸c˜oes Edu-
+
+cacionais: Formula¸c˜oes e Algoritmos.UFRJ e UFOP. Agosto, 2007.
+
+[17] BELLO, G. S., RANGEL, M. C., BOERES M. C. S., Uma Abordagem do Problema de
+
+Programa¸c˜ao de Grade Hor´aria Sujeita a Restri¸c˜oes Utilizando Colora¸c˜ao de Grafos.
+
+UFES. Setembro, 2008.
+
+[18] ALVES, A. C., GIRS - Genetic Information Retrieval System. Disserta¸c˜ao defendida
+
+na Universidade de Santa Cruz do Sul. Outubro, 2009.
+
+[20] SCHAERF, A.,A survey of automated timetabling. Arti?cial Intelligence Review 13.
+
+The Netherlands, Amsterdam, pp. 87-127, 1999.
+
+[21] CRUZ, A.
+
+J.
+
+de O., Algoritmos. N´ucleo
+
+de Computa¸c˜ao Eletrˆonica
+
+da Universidade Federal
+
+do Rio
+
+de
+
+Janeiro,
+
+1997. Dispon´ıvel
+
+em:
+
+http://equipe.nce.ufrj.br/adriano/c/apostila/algoritmos.htm. Acesso em Agosto
+
+de 2017.
+
+[22] WERRA, D., An Introduction to timetabling. European Journal of Operational Re-
+
+search 19. pp. 151?162, 1985.
+
+[23] JUNGINGER, W., Timetabling in germany - a Survey. Interfaces 16. pp. 667, 1986.
+
+[24] BARBOZA, F. J. R., Resumos de artigos sobre algoritmos gen´eticos. Mestrado em
+
+Mecatrˆonica - Escola de Engenharia, UFBA. Salvador, 2003.
+
+[25] WERRA, D., Some Combinatorial Models for Course Scheduling. In Burke, E.K.,
+
+Ross, P. (eds), Practice and Theory of Automated Timetabling, v. 1153, pp. 296-308.
+
+Springer-Verlag, Berlin, 1996.
+
+[26] NOGUEIRA, D. K. Introdu¸c˜ao `a Teoria dos Grafos: Proposta para o Ensino M´edio.
+
+Disserta¸c˜ao (PROFMAT)-Universidade Federal de Bras´ılia, Bras´ılia, 2015.
+
+50
+
+

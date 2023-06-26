@@ -1,0 +1,2894 @@
+Gleyd Oliveira dos Santos 
+
+Aplicação de Curvas de Bézier para o Estudo 
+
+de Funções Polinomiais no Ensino Médio. 
+
+Dissertação de Mestrado 
+
+Dissertação apresentada ao Programa de Pós-Graduação 
+em  Matemática  da  PUC-Rio  como  requisito  parcial  para 
+obtenção do grau de Mestre em Matemática.   
+
+Orientador: Prof. Sinesio Pesco 
+
+Rio de Janeiro 
+Março de 2015 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Gleyd Oliveira dos Santos 
+
+Aplicação de Curvas de Bézier para o Estudo 
+
+de Funções Polinomiais no Ensino Médio. 
+
+Dissertação  apresentada  como  requisito  parcial  para 
+obtenção  do  grau  de  Mestre  pelo  Programa  de  Pós-
+Graduação  em  Matemática  do  Departamento  de 
+Matemática  do  Centro  Técnico  Científico  da  PUC-Rio. 
+Aprovada pela Comissão Examinadora abaixo assinada. 
+
+Prof. Sinesio Pesco 
+Orientador 
+Departamento de Matemática – PUC-Rio 
+
+Prof.ª Dirce Uesu Pesco 
+Departamento de Geometria – UFF 
+
+Prof.ª Christine Sertã Costa 
+Departamento de Matemática – PUC-Rio 
+
+Prof. José Eugenio Leal 
+Coordenador Setorial do Centro 
+Técnico Científico - PUC-Rio 
+
+Rio de Janeiro, 26 de Março de 2015 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Todos  os  direitos  reservados.  É  proibida  a  reprodução 
+total  ou  parcial  do  trabalho  sem  autorização  da 
+universidade, do autor e do orientador. 
+
+Gleyd Oliveira dos Santos 
+
+Graduou-se em Licenciatura em Matemática na UFF (Uni-
+versidade Federal Fluminense) em 2011. Atualmente é pro-
+fessora efetiva  da Secretaria de Educação do Estado do 
+Rio de Janeiro. 
+
+Ficha Catalográfica 
+
+Santos, Gleyd Oliveira dos 
+
+      Aplicação  de  Curvas  de  Bézier  para  o  estudo  de 
+funções  polinomiais  no  Ensino  Médio  /  Gleyd  Oliveira 
+dos Santos ; orientador: Sinesio Pesco. – 2015. 
+      50 f. : il. (color.) ; 30 cm 
+
+      Dissertação 
+(mestrado)–Pontifícia  Universidade 
+Católica  do  Rio  de  Janeiro,  Departamento  de 
+Matemática, 2015. 
+      Inclui bibliografia 
+
+      1.  Matemática  –  Teses.  2.  Curvas  de  Bézier.  3. 
+Algoritmo de De Casteljau. 4. Bézier não paramétrico. 
+5.  Função  polinomial.  I.  Pesco,  Sinesio.  II.  Pontifícia 
+Universidade Católica do Rio de Janeiro. Departamento 
+de Matemática. III. Título. 
+
+CDD: 510 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+       
+       
+Dedico esse trabalho a minha mãe, por todo seu 
+
+esforço para me dar educação, atenção e carinho. 
+A minha família pelo apoio e compreensão. 
+Ao  meu  grande  amor,  Henrique,  por  estar  ao 
+
+meu lado em todos os momentos. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Agradecimentos 
+
+Antes de tudo, agradeço a Deus, meu Mestre e Criador, pela sabedoria e força 
+
+a mim concedidas. E por ter colocado pessoas mais que importantes no meu cami-
+
+nho. 
+
+A CAPES e à PUC-Rio, pelos auxílios concedidos, sem os quais este trabalho 
+
+não poderia ter sido realizado. 
+
+Ao meu orientador Sinesio Pesco pelo apoio, aprendizado, colaboração, con-
+
+fiança e oportunidade de trabalhar ao seu lado. 
+
+Aos professores que contribuíram diretamente nesta minha pós-graduação: 
+
+Nicolau Saldanha; Christine Sertã Costa; Marcos Craizer; Eduardo Barbosa Pi-
+
+nheiro; Juliana Abrantes Freire; Débora Freire Mondaini e Carlos Frederico Pal-
+
+meira. 
+
+À minha mãe Regina, por se orgulhar de mim, por me fazer acreditar que sou 
+
+capaz e por sua ajuda incondicional. 
+
+Às minhas tias, Sheila e Nazareth, e ao meu tio Amilson, meu agradecimento 
+
+especial, por sempre estarem ao meu lado e por acreditarem em mim. 
+
+Ao meu namorado, Henrique, pela compreensão. 
+
+Aos colegas de turma pelo incentivo e companheirismo. 
+
+Às minhas amigas Bruna, Érica, Renata e Thaís, por esclarecerem minhas 
+
+dúvidas e por terem tornado meu trabalho mais leve e agradável.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Resumo 
+
+Santos,  Gleyd  Oliveira  dos;  Pesco,  Sinesio  (Orientador).  Aplicação  de 
+Curvas  de  Bézier  para  o  Estudo  de  Funções  Polinomiais  no  Ensino 
+Médio. Rio de Janeiro, 2015. 50p. Dissertação de Mestrado – Departamento 
+de Matemática, Pontifícia Universidade Católica do Rio de Janeiro. 
+
+Neste trabalho apresentamos uma proposta para auxiliar o estudo de funções 
+
+polinomiais no ensino médio por intermédio das Curvas de Bézier. Para isto intro-
+
+duzimos as curvas de Bézier utilizando o algoritmo de De Casteljau e discutimos 
+
+suas propriedades. Em seguida aplicamos a formulação das curvas de Bézier não 
+
+paramétricas para representar funções polinomiais e discutimos alguns resultados 
+
+observados em sala de aula. 
+
+Palavras-chave 
+
+Curvas de Bézier; algoritmo de De Casteljau; Bézier não paramétrico; função 
+
+polinomial. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Abstract 
+
+Santos,  Gleyd  Oliveira  dos;  Pesco,  Sinesio  (Advisor).  Bézier  Curves 
+application for the study of polynomial functions in high school. Rio de 
+Janeiro,  2015.  50p.  MSc.  Dissertation  –  Departamento  de  Matemática, 
+Pontifícia Universidade Católica do Rio de Janeiro. 
+
+In this work we present a proposal to assist the study of polynomial functions 
+
+in high school through the Bezier curves. For this we introduce the Bezier curves 
+
+using  the  De  Casteljau  algorithm  and  discuss  its  properties.  Then  apply  the 
+
+formulation of Bezier curves non-parametric to represent polynomial functions and 
+
+discuss some results observed in the classroom. 
+
+Keywords 
+
+Bezier  Curves;  De  Casteljau's  Algorithm;  Non-parametric  Bezier; 
+
+Polynomial function. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Sumário 
+
+1. 
+
+Introdução 
+
+Curvas de Bézier 
+
+2. 
+2.1.  Algoritmo de De Casteljau 
+2.2.  Definição de Bézier 
+2.3.  Propriedades 
+2.4.  Exemplos 
+
+3. 
+Bézier não paramétrico 
+3.1.  Formulação não paramétrica 
+
+4. 
+
+Resultados em sala de aula 
+
+5. 
+
+Conclusão 
+
+6. 
+
+Referências Bibliográficas 
+
+7. 
+Anexos 
+7.1.  Questionário 
+7.2.  Resposta dos Alunos 
+7.3.  Auto Avaliação 
+
+12 
+
+15 
+15 
+17 
+19 
+22 
+
+28 
+28 
+
+34 
+
+45 
+
+46 
+
+47 
+47 
+48 
+50 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Lista de figuras 
+
+Figura 01 -  A  Chords  Bridge  é  uma  ponte  que  lembra  o  algo-
+ritmo de De Casteljau na arquitetura e engenharia. 
+
+12 
+
+Figura 02 -  Algumas  curvas  de  Bézier  usadas  para  fazer  as 
+
+13 
+
+letras “a”, “g” e “r”. 
+
+1. 
+
+2 (
+
+1 (
+
+1P1
+
+1
+), P1
+5
+
+1
+) e segmento P0
+5
+
+1
+) sobre o segmento P0
+5
+1
+) e a curva de Bézier de grau 2. 
+5
+
+Figura 03 -  Ponto P correspondente a t sobre o segmento P0P1.  15 
+16 
+Figura 04 -  Pontos P0, P1 e P2 e os segmentos P0P1 e P1P2. 
+16 
+Figura 05 -  Pontos P0
+1 (
+Figura 06 -  Ponto P0
+Figura 07 -  Ponto P0
+Figura 08 -  Polígono de controle e curva de Bézier. 
+Figura 09 -  Fecho convexo contendo a curva. 
+Figura 10 -  Modelagem através do polígono de controle. 
+Figura 11 -  Pseudo controle local com 4 pontos de controle. 
+Figura 12 -  Pseudo controle local com 11 pontos de controle. 
+Figura 13 -  Curva de Bézier gerada pelos pontos (1,1), (0,0) e 
+
+19 
+20 
+21 
+21 
+22 
+23 
+
+1P1
+
+17 
+
+17 
+
+2 (
+
+1. 
+
+(1,1). 
+
+Figura 14 -  Curva de Bézier gerada pelos pontos (−1,1), (0, −1) 
+
+24 
+
+e (1,1). 
+
+Figura 15 -  Curva de Bézier gerada pelos pontos (1,1), (2,2) e 
+
+25 
+
+(3,1). 
+
+Figura 16 -  Generalização da curva de Bézier com 3 pontos de 
+
+25 
+
+controle. 
+
+Figura 17 -  Generalização da curva de Bézier com 4 pontos de 
+
+26 
+
+controle. 
+
+Figura 18 -  Gráfico da função y(t) = t2. 
+Figura 19 -  Gráfico da função y(t) = t3. 
+Figura 20 -  Gráfico do polinômio y(t) = −3t3 +
+Figura 21 -  Aparato de madeira e elásticos, construído para 
+
+t2 −
+
+t. 
+
+2
+
+2
+
+1
+
+9
+
+descrever o algoritmo de De Casteljau. 
+
+29 
+32 
+33 
+
+34 
+
+35 
+Figura 22 -  Fotos da Oficina. 
+Figura 23 -  Algoritmo de De Casteljau com 3 pontos de controle.  37 
+37 
+Figura 24 -  Campo  de  entrada:  parametrização  de  um  seg-
+
+mento. 
+
+Figura 25 -  Algoritmo de De Casteljau com 4 pontos de controle.  38 
+
+ 
+ 
+ 
+ 
+ 
+ 
+Figura 26 -  Campo de entrada: divisão do segmento em 10 par-
+
+38 
+
+tes iguais. 
+
+Figura 27 -  Algoritmo de De Casteljau, construção livre. 
+Figura 28 -  Bézier  não  paramétrico,  janela  CAS  mostrando  a 
+
+39 
+40 
+
+formulação polinomial. 
+
+Figura 29 -  Bézier  não  paramétrico,  janela  visualização  mos-
+trando a curva de Bézier e o gráfico da função f(x) =
+x3. 
+Bézier não paramétrico, janela de visualização mos-
+trando curva de Bézier com uma casa decimal. 
+Bézier não paramétrico, janela de visualização mos-
+trando curva de Bézier com três casas decimais. 
+
+Figura 31 
+
+Figura 30 
+
+40 
+
+41 
+
+41 
+
+Figura 32 -  Janela de álgebra mostrando a função gerada pelos 
+
+42 
+
+coeficientes a, b e c. 
+Figura 33 - 
+Inserindo os pontos na planilha. 
+Figura 34 -  Subníveis gerados na planilha. 
+Figura 35 -  Curva  de  Bézier  e  Algoritmo  de  De  Casteljau  com 
+
+42 
+43 
+43 
+
+seus níveis. 
+
+ 
+ 
+ 
+ 
+“Sempre me pareceu estranho que todos aqueles que 
+
+estudam  seriamente  esta  ciência  (matemática)  aca-
+
+bam tomados de uma espécie de paixão pela mesma. 
+
+Em verdade, o que proporciona o máximo de prazer 
+
+não é o conhecimento e sim a aprendizagem, não é a 
+
+posse, mas a aquisição, não é a presença, mas o ato de 
+
+atingir a meta.” 
+
+Carl Friedrich Gauss  
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+1 
+Introdução 
+
+Paul de Casteljau, nasceu em 1930, na França, tornou-se físico e um grande 
+
+matemático. Por volta de 1958, quando trabalhava na Citroën, de Casteljau conce-
+
+beu um sistema de algoritmos que calculava um certo grupo de curvas, conhecido 
+
+hoje como algoritmo de De Casteljau, que foi usado para o design de automóveis.  
+
+Segundo Gerald Farin, em seu livro, Curves and Surfaces for CAGD (1992, 
+
+p.2), “Citroën mantinha segredo sobre os resultados obtidos por Paul de Casteljau, 
+
+e fez o famoso relatório técnico MAC-TR-41 (por S.A. Coons) não aparecer antes 
+
+de 1967”, os resultados de sua obra foram impressos apenas em 1975. Durante esse 
+
+período, vários trabalhos foram surgindo, embora abordados de outra forma. Um 
+
+outro francês, Pierre Bézier Étienne, engenheiro e funcionário da Renault, divulgou 
+
+um novo trabalho que intitulou “Curvas de Bézier” (equivalente ao algoritmo de De 
+
+Casteljau), tornando-se líder na transformação de design de automóveis. 
+
+A curva de Bézier é uma curva paramétrica1, que foi desenvolvida para a con-
+
+fecção de automóveis na montadora Renault. Além da grande utilização nas indus-
+
+trias automotivas, a curva de Bézier é amplamente usada na computação gráfica e 
+
+no design de produtos, arquitetura, engenharia, entre outros.  
+
+Figura  01  –  A  Chords  Bridge  é  uma  ponte  que  lembra  o  algoritmo  de  De  Casteljau  na 
+arquitetura e engenharia.
+
+1 Curva Paramétrica: É uma curva que expressa o valor de cada variável x,y em função de 
+
+uma variável independente t, que é chamada de parâmetro. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+13 
+
+Alguns programas que aplicam a curva de Bézier são por exemplo: Adobe 
+
+Illustrator,  CorelDraw,  Inkscape  e  Photoshop.  Eles  a  utilizam  para  criar  um 
+
+logotipo; vetorizar uma imagem; modelar e desenhar curvas (assim como veremos 
+
+na propriedade 3); etc. 
+
+Um uso também muito comum das curvas de Bézier está nas fontes de com-
+
+putador, que são confeccionadas através da composição de várias dessas curvas. 
+
+Figura 02 – Algumas curvas de Bézier usados para fazer as letras “a”, “g” e “r”. 
+
+O objetivo deste trabalho é introduzir este importante conceito aos alunos do 
+
+ensino médio como uma motivação ao estudo de polinômios (já que o estudo de 
+
+polinômios é um dos instrumentos mais explorados para se desenhar curvas) e mos-
+
+trar como trabalhar com a curva de Bézier através do algoritmo de De Casteljau. 
+
+Para isso, vamos desenvolver instrumentos e estratégias que facilitem o processo 
+
+de aprendizagem.  
+
+A principal questão é como introduzir no ensino médio as curvas de Bézier. 
+
+Uma das dificuldades encontradas para se trabalhar esse assunto é que essa curva 
+
+lida com o modelo paramétrico. Apesar do aluno estar acostumado com alguns pro-
+
+gramas que desenham curvas, por exemplo o Paint Brush, ainda assim, ele não tem 
+
+elementos  matemáticos  suficientes.  E  quais  elementos  matemáticos  ele  tem?  As 
+
+funções polinomiais. Assim, nossa estratégia foi buscar um modelo de curvas de 
+
+Bézier  restrito  ao  caso  em  que  se  reduzam  ao  gráfico  de  um  polinômio,  mas  de 
+
+forma que ainda possamos explorar as interessantes propriedades destas curvas. 
+
+De acordo com o currículo mínimo obrigatório, esse trabalho pode ser apli-
+
+cado como auxílio ao estudo de polinômios a partir do 8° ano do ensino fundamen-
+
+tal, nesse ano pode-se trabalhar com a representação geométrica de um polinômio 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+14 
+
+de diferentes  graus, já no 9° ano o trabalho  pode ser focado nas equações do 2° 
+
+grau, que é um assunto de grande importância. No ensino médio, podemos traba-
+
+lhar, por exemplo, com funções polinomiais do 1° e 2° grau, polinômios e equações 
+
+algébricas.  
+
+Este trabalho foi dividido nos seguintes capítulos: No Capitulo 2 vamos estu-
+
+dar o método recursivo de De Casteljau, definir a curva de Bézier e apresentar al-
+
+gumas propriedades da curva e veremos exemplos. No capítulo 3 introduziremos 
+
+uma formulação que irá restringir as curvas de Bézier ao gráfico de uma função 
+
+polinomial.  No  capítulo  4  atividades  serão  propostas  e  aplicadas  para  alunos  do 
+
+ensino fundamental e médio; mostraremos alguns dos resultados obtidos
+
+ 
+2 
+Curvas de Bézier 
+
+Neste capítulo apresentaremos a definição da curva de Bézier, primeiro utili-
+
+zando o algoritmo de De Casteljau, depois a formulação de Bézier e algumas pro-
+
+priedades e exemplos. 
+
+2.1 
+Algoritmo de De Casteljau 
+
+O  algoritmo  de  De  Casteljau  é  um  método  para  gerar  as  curvas  de  Bézier 
+
+aplicando repetidas interpolações lineares, ou seja, vamos obter um segmento de 
+
+reta que passa por dois pontos de controle consecutivos, P0P1, P1P2, ... , Pn−1Pn. Esse 
+
+processo será feito por n-1 vezes, e assim encontraremos o ponto que pertencerá a 
+
+curva. 
+
+Vamos ilustrar o algoritmo de De Casteljau construindo uma curva de Bézier 
+
+de grau 2, usando a interpretação geométrica do algoritmo. 
+
+Para isso, precisamos  escolher um  parâmetro t,  no mínimo tomar 3 pontos 
+
+distintos quaisquer (que serão os pontos de controle da curva), através das interpo-
+
+lações iremos obter o ponto P(t) que pertence a curva, fazendo o parâmetro t variar 
+
+de 0 a 1, teremos a curva de Bézier desejada. 
+
+Para determinarmos, por exemplo, o ponto P(
+
+1
+) pertencente a curva, vamos 
+5
+
+proceder do seguinte modo: 
+
+ 
+
+ 
+
+Primeiramente vamos escolher o parâmetro t =
+
+1
+, t ∈ [0,1]. 
+5
+
+Dado um segmento P0P1 e um parâmetro t, obtemos um ponto P correspon-
+
+dente a t sobre o segmento P0P1, pela equação paramétrica da reta: 
+
+P(t) = (1 − t). P0 + t. P1
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+16 
+
+Figura 03: Ponto P correspondente a t sobre o segmento P0P1. 
+
+Utilizaremos a notação Pi
+
+r(t) para significar o ponto P(t) sobre o segmento 
+PiPi+1 e r = 1, … , n o nível de recursão2 que indicará o avanço nas repetidas inter-
+polações lineares. Neste exemplo de uma curva de grau 2 temos que n=2. 
+
+ 
+
+Sejam os pontos P0, P1 e P2 e os segmentos P0P1 e P1P2.  
+
+Figura 04: Pontos P0, P1 e P2 e os segmentos P0P1 e P1P2. 
+
+ 
+
+No primeiro nível de recursão, n=1, vamos obter os pontos P0
+
+1 (
+
+1
+), P1
+5
+
+1 (
+
+1
+)  
+5
+
+respectivamente sobre o segmento P0P1 e P1P2. A partir desses pontos obtemos o 
+
+segmento P0
+
+1P1
+
+1. 
+
+Figura 05: Pontos P0
+
+1 (
+
+1
+
+5
+
+), P1
+
+1 (
+
+1
+
+5
+
+) e segmento P0
+
+1P1
+
+1. 
+
+ 
+
+Passamos agora ao segundo nível de recursão,  n = 2, e do mesmo modo, 
+
+vamos encontrar o ponto P0
+
+2 (
+
+1
+) sobre o segmento P0
+5
+
+1P1
+
+1. Como estamos no nível 2 
+
+para uma curva de grau 2, então o ponto P0
+
+2 (
+
+1
+) é o ponto P(
+5
+
+1
+) que buscamos. 
+5
+
+2 Recursão: Em computação, a recursividade é a definição de uma função que pode invocar 
+
+a si mesma. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+                                                 
+17 
+
+Figura 06: Ponto P0
+
+2 (
+
+1
+
+5
+
+) sobre o segmento P0
+
+1P1
+
+1. 
+
+ 
+
+De forma análoga, podemos obter todos os pontos da curva, com t ∈ [0,1]. 
+
+Figura 07: Ponto P0
+
+2 (
+
+1
+
+5
+
+) e a curva de Bézier de grau 2. 
+
+Segundo Farin, “a construção anterior para uma parábola pode ser generali-
+
+zada para gerar uma curva polinomial de grau n arbitrária: 
+
+Dados os pontos P0, P1, … , Pn e t ∈ ℝ, 
+
+r(t) = (1 − t). Pi
+Pi
+
+r−1(t) + t. Pi+1
+
+r−1(t)        {
+
+r = 1, … , n
+i = 0, … , n − r
+
+0(t) = Pi. Então P0
+
+e Pi
+por conseguinte, P0
+
+n(t) = Pn.” 
+
+n(t) é o ponto com o valor do parâmetro t na curva de Bézier, 
+
+2.2 
+Definição de Bézier 
+
+A curva de Bézier, como já vimos, é uma curva paramétrica. Definida através 
+
+de um parâmetro t ∈ (0,1) e de seus pontos de controle. 
+
+Vamos expressar a curva de Bézier aplicando uma outra formulação em ter-
+
+mos de polinômios de Bernstein, [Farin]: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+18 
+
+n
+
+B(t) = ∑ (
+
+i=0
+
+n
+i
+
+)
+
+. Pi. (1 − t)n−i. ti 
+
+B(t) = (1 − t)n. P0 + (
+
+n
+1
+
++ tn. Pn 
+
+) . (1 − t)n−1. t. P1 + ⋯ + (
+
+n
+n − 1
+
+) . (1 − t). tn−1. Pn−1
+
+Onde Pi é um ponto de controle e (n
+
+i ) =
+
+n!
+i!(n−i)!
+
+. 
+
+Os índices são: 
+
+t: um parâmetro real, t ∈ [0,1]; 
+
+n: o grau da curva; 
+
+i: um parâmetro inteiro, cujo valor varia de 0 até n. 
+
+ 
+
+ 
+
+ 
+
+Como exemplo, vamos obter a curva de Bézier de grau 4, ou seja, n = 4 
+
+4
+B(t) = (1 − t)4. P0 + (
+1
+
++ t4. P4 
+
+) . (1 − t)4−1. t. P1 + ⋯ + (
+
+) . (1 − t). t4−1. P4−1
+
+4
+4 − 1
+
+B(t) = (1 − t)4. P0 + 4. (1 − t)3. t. P1 + 6. (1 − t)2. t2. P2 + 4. (1 − t). t3. P3
+
++ t4. P4,
+
+t ∈ [0,1] 
+
+A linha poligonal formada ligando-se os pontos P0, P1, P2, ..., Pn é chamada 
+
+de polígono de Bézier ou polígono de controle. Da mesma forma, os Pi pontos do 
+
+polígono são chamados de pontos de controle ou pontos de Bézier. Por exemplo, se 
+
+quisermos obter uma curva de grau 5, ou seja, n = 5, basta tomarmos no mínimo 
+
+n + 1 = 6 pontos de controle. Ou vice-versa, se utilizarmos 3 pontos de controle 
+
+obteremos  uma curva de grau máximo  2, tomando 4 pontos de controle teremos 
+
+uma curva de grau máximo 3. 
+
+É possível verificar que a expressão polinomial da curva de Bézier e a fórmula 
+
+geral recursiva de De Casteljau são equivalentes [Farin]. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+2.3 
+Propriedades 
+
+19 
+
+O algoritmo de Casteljau nos permite inferir várias propriedades importantes 
+
+da Curva de Bézier. Nesse trabalho vamos falar de quatro propriedades considera-
+
+das mais importantes, são elas: o fecho convexo, a interpolação de pontos finais, o 
+
+design e o pseudo controle local. 
+
+1. 
+
+Fecho  convexo.  “O  fecho  convexo  de  um  conjunto  de  pontos  é  definido 
+
+como o menor polígono convexo que contém todos os pontos.” [Freitas]. Essa pro-
+
+priedade  garante que  a curva de Bézier estará  totalmente contida nesse fecho.  A 
+
+demonstração disso pode ser vista em [Farin]. 
+
+A figura 08 mostra o polígono de controle e sua respectiva curva de Bézier: 
+
+Figura 08: Polígono de controle e curva de Bézier. 
+
+Aqui mostramos a curva totalmente contida no fecho: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+20 
+
+Figura 09: Fecho convexo contendo a curva. 
+
+2. 
+
+Interpolação  de  pontos  finais.  O  primeiro  e  o  último  ponto  de  controle 
+
+pertencem a curva. Isso pode ser verificado nos casos onde t = 0 e t = 1, por isso 
+
+é importante o controle sobre esses pontos. Vejamos: 
+
+ 
+
+Para t = 0: 
+
+B(0) = (1 − 0)n. P0 + (
+
+n
+1
+
++ 0n. Pn 
+
+) . (1 − 0)n−1. 0. P1 + ⋯ + (
+
+n
+n − 1
+
+) . (1 − 0). 0n−1. Pn−1
+
+Onde P0 é o primeiro ponto. 
+
+B(0) = 1n. P0 = P0 
+
+ 
+
+Para t = 1: 
+
+B(1) = (1 − 1)n. P0 + (
+
+n
+1
+
++ 1n. Pn 
+
+) . (1 − 1)n−1. 1. P1 + ⋯ + (
+
+n
+n − 1
+
+) . (1 − 1). 1n−1. Pn−1
+
+Onde Pn é o último ponto. 
+
+B(1) = 1n. Pn = Pn 
+
+3. 
+
+Design com curvas de Bézier. A curva de Bézier é uma ferramenta muito 
+
+útil na modelagem de curvas. Através do polígono de controle podemos pré-definir 
+
+o formato da curva, ou seja, se quisermos fazer um “s” basta construirmos um po-
+
+lígono que se aproxime do desenho e depois fazermos os ajustes, como na figura 
+
+10: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+21 
+
+Figura 10: Modelagem através do polígono de controle. 
+
+4. 
+
+Pseudo controle local. Dado uma curva de Bézier com Pn pontos de con-
+
+trole. Ao mover apenas um dos vértices do polígono de controle, por exemplo Pi , a 
+
+curva sofre uma mudança mais acentuada na região próxima ao ponto, um tanto 
+
+previsível, embora a alteração afete toda a curva. Vejamos: 
+
+Nesse primeiro desenho podemos observar que grande parte da curva sofreu 
+
+alteração, isso porque temos apenas 4 pontos de controle. 
+
+Figura 11: Pseudo controle local com 4 pontos de controle. 
+
+Nesse outro exemplo, com 11 pontos de controle, a curva sofreu uma defor-
+
+mação na vizinhança do ponto. A figura ilustra que a região mais próxima do ponto 
+
+movimentado, sofre maior alteração. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+22 
+
+Figura 12: Pseudo controle local com 11 pontos de controle. 
+
+2.4 
+Exemplos 
+
+Vejamos alguns exemplos de como obter a equação paramétrica da curva de 
+
+Bézier, dados os pontos de controle. 
+
+Exemplo 1: Encontrar a equação paramétrica da curva de Bézier gerada pelos 
+
+pontos (−1,1), (0,0) e (1,1). 
+
+Sejam P0 = (−1,1), P1 = (0,0) e P2 = (1,1). Aplicando a equação paramé-
+
+trica da reta temos: 
+
+1(t) = (1 − t). (P0) + t. (P1) 
+P0
+1(t) = (1 − t). (P1) + t. (P2) 
+P1
+
+Encontramos os pontos P0
+
+1(t) que pertence ao segmento P0P1 e P1
+tence ao segmento P1P2. De modo análogo, vamos encontrar o ponto P0
+
+1(t) que per-
+
+2(t) que per-
+
+tence ao segmento P0
+
+1P1
+
+1 e, pelo algoritmo de De Casteljau, está na curva. 
+
+2(t) = (1 − t). (P0
+P0
+
+1(t)) + t. (P1
+
+1(t)) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+23 
+
+2(t) = (1 − t). ((1 − t). (P0) + t. (P1)) + t((1 − t). (P1) + t. (P2)) 
+P0
+2(t) = (1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2) 
+P0
+
+Substituindo  os  pontos  P0,  P1  e  P2  encontramos  a  equação  paramétrica  da 
+
+curva: 
+
+) + (2t − 2t2). (
+
+P0
+
+2(t) = (1 − 2t + t2). (
+
+−1
+1
+2(t) = (−1 + 2t − t2 + t2
+1 − 2t + t2 + t2 ) 
+P0
+−1 + 2t
+
+1 − 2t + 2t2)    ∎ 
+
+2(t) = (
+
+P0
+
+0
+0
+
+) + t2. (
+
+1
+1
+
+) 
+
+Fazendo t variar entre 0 e 1, obtemos a curva ilustrada na figura: 
+
+Figura 13: Curva de Bézier gerada pelos pontos (1,1), (0,0) e (1,1). 
+
+Exemplo 2: Encontrar a equação paramétrica da curva de Bézier gerada pelos 
+
+pontos (−1,1), (0, −1) e (1,1). 
+
+Do exemplo anterior, temos que: 
+
+2(t) = (1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2) 
+P0
+
+Substituindo os pontos P0, P1 e P2 temos; 
+
+2(t) = (1 − 2t + t2). (
+
+P0
+
+−1
+1
+
+) + (2t − 2t2). (
+
+0
+−1
+
+) + t2. (
+
+1
+1
+
+) 
+
+2(t) = (
+
+P0
+
+−1 + 2t − t2 + t2
+1 − 2t + t2 − 2t + 2t2 + t2) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+24 
+
+2(t) = (
+
+P0
+
+2(t) = (
+
+P0
+
+−1 + 2t
+1 − 4t + 4t2) 
+−1 + 2t
+(−1 + 2t)2) ∎    → Equação paramétrica da curva y = x2, veja a figura: 
+
+Figura 14: Curva de Bézier gerada pelos pontos (−1,1), (0, −1) e (1,1). 
+
+Nosso objetivo no próximo capítulo é apresentar curvas de Bézier restritas ao 
+
+caso de gráfico de função. 
+
+Exemplo 3: Encontrar a equação paramétrica da curva de Bézier gerada pelos 
+
+pontos (1,1), (2,2) e (3,1). 
+
+Do exemplo 1, temos que: 
+
+2(t) = (1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2) 
+P0
+
+Substituindo os pontos P0, P1 e P2: 
+
+2(t) = (1 − 2t + t2). (
+
+P0
+
+1
+1
+
+) + (2t − 2t2). (
+
+2
+) + t2. (
+2
+
+3
+1
+
+) 
+
+2(t) = (1 − 2t + t2 + 4t − 4t2 + 3t2
+1 − 2t + t2 + 4t − 4t2 + t2 ) 
+P0
+
+2(t) = (
+
+P0
+
+1 + 2t
+
+1 + 2t − 2t2)    ∎    → Veja a parábola gerada: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+25 
+
+Figura 15: Curva de Bézier gerada pelos pontos (1,1), (2,2) e (3,1). 
+
+Exemplo 4: Generalizar a equação paramétrica da curva de Bézier gerada por 
+
+3 pontos P0 = (x0, yo), P1 = (x1, y1) e P2 = (x2, y2). 
+
+Figura 16: Generalização da curva de Bézier com 3 pontos de controle. 
+
+Do exemplo 1, temos que: 
+
+2(t) = (1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2) 
+P0
+
+Substituindo os pontos P0, P1 e P2: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+26 
+
+2(t) = (1 − t)2. (
+
+P0
+
+x0
+y0
+
+) + 2t. (1 − t). (
+
+x1
+y1
+
+) + t2 (
+
+x2
+y2
+
+) 
+
+2(t) = (1 − 2t + t2). (
+
+P0
+
+x0
+y0
+
+) + (2t − 2t2). (
+
+x1
+y1
+
+) + t2. (
+
+x2
+y2
+
+)    ∎ 
+
+Exemplo 5: Encontrar a equação paramétrica da curva de Bézier gerada pelos 
+
+pontos de controle: P0 = (x0, yo), P1 = (x1, y1), P2 = (x2, y2) e P3 = (x3, y3). 
+
+Figura 17: Generalização da curva de Bézier com 4 pontos de controle. 
+
+1(t) = (1 − t). (P0) + t. (P1) 
+P0
+1(t) = (1 − t). (P1) + t. (P2) 
+P1
+1(t) = (1 − t). (P2) + t. (P3) 
+P2
+
+1(t)) + t. (P1
+
+2(t) = (1 − t). (P0
+P0
+2(t) = (1 − t). ((1 − t). (P0) + t. (P1)) + t. ((1 − t). (P1) + t. (P2)) 
+P0
+2(t) = (1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2) 
+P0
+
+1(t)) 
+
+Analogamente: 
+
+2(t) = (1 − t)2. (P1) + 2t. (1 − t). (P2) + t2(P3) 
+P1
+
+Então, 
+
+3(t) = (1 − t). (P0
+P0
+
+2(t)) + t. (P1
+
+2(t)) 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+27 
+
+3(t) = (1 − t). ((1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2)) + t. ((1 − t)2. (P1)
+P0
+
++ 2t. (1 − t). (P2) + t2(P3)) 
+
+3(t) = (1 − t)3. (P0) + 2t. (1 − t)2. (P1) + t2(1 − t). (P2) + t(1 − t)2. (P1)
+P0
+
++ 2t2(1 − t). (P2) + t3(P3) 
+
+3(t) = (1 − t)3. (P0) + 3t. (1 − t)2. (P1) + 3t2(1 − t). (P2) + t3(P3)   ∎ 
+P0
+
+ 
+3 
+Bézier não paramétrico 
+
+A partir daqui vamos aplicar uma formulação restringindo a curva de Bézier, 
+
+porém ainda podendo explorar suas propriedades, de tal forma que a curva repre-
+
+sente o gráfico de uma função polinomial. 
+
+3.1 
+Formulação não paramétrica 
+
+Para obter uma formulação que seja o gráfico de uma função, ou seja, y =
+
+f(t), vamos usar a seguinte configuração: a coordenada x do ponto de controle Pi 
+
+deve  ser  igual  a 
+
+i
+
+n
+
+,  onde  os  pontos  de  controle  são  P0, P1, … , Pn.  Considere,  P0 =
+
+(x0, yo), P1 = (x1, y1) e P2 = (x2, y2), 3 pontos de controle. Quais os valores de y0, 
+t
+t2), ou seja, a parábola? Nosso objetivo 
+
+y1 e y2 nos fazem obter a curva P(t) = (
+
+no caso geral é obter x(t) = t e y(t) uma função polinomial. 
+
+Pela  configuração  acima,  xi =
+
+i
+
+,  como  queremos  obter  a  parábola,  n = 2, 
+n
+
+logo: 
+
+ 
+
+ 
+
+ 
+
+é: 
+
+x0 =
+
+x1 =
+
+x2 =
+
+0
+
+2
+
+1
+
+2
+
+2
+
+2
+
+= 0  ⟹   P0 = (0, y0) 
+
+  ⟹   P1 = (
+
+1
+
+2
+
+, y1) 
+
+= 1  ⟹   P2 = (1, y2) 
+
+Vimos que a equação paramétrica da curva gerada por 3 pontos de controle 
+
+P(t) = (1 − t)2. (P0) + 2t. (1 − t). (P1) + t2(P2) 
+
+Substituindo os pontos P0 = (0, y0), P1 = (
+
+1
+
+2
+
+, y1), e P2 = (1, y2):
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+29 
+
+P(t) = (1 − t)2. (
+
+0
+y0
+
+) + 2t. (1 − t). (
+
+1
+2
+y1
+
+) + t2 (
+
+1
+y2
+
+) 
+
+P(t) = (1 − 2t + t2). (
+
+0
+y0
+
+) + (2t − 2t2). (
+
+1
+2
+y1
+
+) + t2. (
+
+1
+y2
+
+) 
+
+P(t) = (
+
+P(t) = (
+
+t − t2 + t2
+y0 − 2ty0 + t2y0 + 2ty1 − 2t2y1 + t2y2
+t
+y0 − 2t(y0 − y1) + t2(y0 − 2y1 + y2)) 
+
+) 
+
+Para obtermos, P(t) = (
+
+t
+t2), basta resolvermos o seguinte sistema: 
+
+{
+
+y0 = 0
+y0 − y1 = 0
+y0 − 2y1 + y2 = 1
+
+  ⟹   {
+
+y0 = 0
+y1 = 0
+y2 = 1
+
+Portanto os pontos são: P0 = (0,0), P1 = (
+
+1
+
+2
+
+, 0), P2 = (1,1). Veja a figura: 
+
+Figura 18: Gráfico da função y(t) = t2. 
+
+Vamos verificar que ao considerarmos xi =
+
+i
+
+ , obteremos x(t) = t. Partindo 
+n
+
+da formulação de Bézier: 
+
+n
+
+B(t) = ∑ Pi (
+
+i=0
+
+n
+i
+
+) (1 − t)n−iti
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+30 
+
+Observe pelo binômio de Newton que: 
+
+n
+
+(x + a)n = ∑ (
+
+i=0
+
+n
+i
+
+) xnan−i
+
+Logo, 
+
+n
+
+∑ (
+
+i=0
+
+n
+i
+
+) (1 − t)n−iti
+
+= (t + (1 − t))n = 1n = 1 
+
+Agora para Pi =
+
+i
+
+ segue que: 
+n
+
+n
+
+∑
+
+i=0
+
+i
+n
+
+(
+
+n
+i
+
+n
+
+) (1 − t)n−iti
+
+= ∑
+
+i=0
+
+i
+n
+
+n!
+i! (n − i)!
+
+(1 − t)n−iti
+
+= 
+
+(n − 1)!
+(i − 1)! (n − i)!
+
+(1 − t)n−iti
+
+n − 1
+i − 1
+
+= ∑ (
+
+) (1 − t)n−iti
+
+= 
+
+n − 1
+i − 1
+
+) (1 − t)n−itti−1
+
+= t ∑ (
+
+) (1 − t)n−iti−1
+
+= 
+
+n
+
+i=0
+
+n
+
+n − 1
+i − 1
+
+i=0
+
+n
+
+= ∑
+
+i=0
+
+n
+
+= ∑ (
+
+i=0
+
+n
+
+n − 1
+i − 1
+
+i=0
+
+= t ∑ (
+
+) (1 − t)(n−1)−(i−1)ti−1
+
+= t(t + (1 − t))n−1 = t ∎ 
+
+Com  esta  formulação,  acabamos  perdendo  flexibilidade  para  modelagem, 
+
+porque os pontos deixam de ser livres e se tornam semi livres, ou seja, a coordenada 
+
+t está fixa podendo variar apenas a coordenada y do ponto de controle. Mas as pro-
+
+priedades da curva de Bézier continuam válidas. 
+
+Vejamos alguns exemplos: 
+
+Exemplo  1:  Sejam,  P0 = (x0, yo),  P1 = (x1, y1),  P2 = (x2, y2)  e  P3 =
+
+(x3, y3) 4 pontos de controle. Vamos usar a seguinte configuração: xi =
+
+3. Quais os valores de y0, y1 , y2 e y3 nos fazem obter a curva P(t) = (
+
+i
+
+, com n =
+n
+t
+t3)? 
+
+Pela configuração acima, temos que: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+31 
+
+ 
+
+ 
+
+ 
+
+ 
+
+x0 =
+
+x1 =
+
+x2 =
+
+x3 =
+
+0
+
+3
+
+1
+
+3
+
+2
+
+3
+
+3
+
+3
+
+= 0  ⟹   P0 = (0, y0) 
+
+  ⟹   P1 = (
+
+1
+
+3
+
+, y1) 
+
+  ⟹   P2 = (
+
+2
+
+3
+
+, y2) 
+
+= 1  ⟹   P3 = (1, y3) 
+
+Vimos, no exemplo 5, que a equação paramétrica da curva gerada por 4 pon-
+
+tos de controle é: 
+
+P(t) = (1 − t)3. (P0) + 3t. (1 − t)2. (P1) + 3t2(1 − t). (P2) + t3(P3) 
+
+Substituindo  os  pontos  P0 = (0, y0),  P1 = (
+
+1
+
+3
+
+, y1),  P2 = (
+
+2
+
+3
+
+, y2)  e  P3 =
+
+(1, y3) obtemos a curva: 
+
+P(t) = (1 − t)3. (
+
+0
+y0
+
+) + 3t. (1 − t)2. (
+
+1
+3
+y1
+
+) + 3t2(1 − t). (
+
+2
+3
+y2
+
+) + t3 (
+
+1
+y3
+
+) 
+
+P(t) = (1 − 3t + 3t2 − t3) (
+
+0
+y0
+
+) + (3t − 6t2 + 3t3) (
+
+1
+3
+y1
+
+) + (3t2 − 3t3) (
+
+2
+3
+y2
+
+)
+
++ t3 (
+
+1
+y3
+
+) 
+
+P(t)
+
+= (
+
+t − 2t2 + t3 + 2t2 − t3
+y0 − 3ty0 + 3t2y0 − t3y0 + 3ty1 − 6t2y1 + 3t3y1 + 3t2y2 − 3t3y2 + t3y3
+t
+y0 − 3t(y0 − y1) + 3t2(y0 − 2y1 + y2) − t3(y0 − 3y1 + 3y2 − y3))  
+
+) 
+
+P(t) = (
+
+Queremos P(t) = (
+
+t
+t3), para isso vamos resolver o seguinte sistema: 
+
+{
+
+𝑦0 = 0
+𝑦0 − 𝑦1 = 0
+𝑦0 − 2𝑦1 + 𝑦2 = 0
+𝑦0 − 3𝑦1 + 3y2 − y3 = −1
+
+   ⟹    {
+
+y0 = 0
+y1 = 0
+y2 = 0
+y3 = 1
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Portanto os pontos são: P0 = (0,0), P1 = (
+
+1
+
+3
+
+, 0), P2 = (
+
+2
+
+3
+
+, 0) e P3 = (1,1). 
+
+32 
+
+Figura 19: Gráfico da função y(t) = t3 
+
+Exemplo 2: Sejam os pontos P0 = (0, y0), P1 = (
+
+1
+
+3
+
+, y1), P2 = (
+
+2
+
+3
+
+, y2) e P3 =
+
+(1, y3) obtidos através da configuração do exemplo anterior. Vamos encontrar as 
+coordenadas y0, y1, y2 e y3 para que o polinômio encontrado seja y(t) = −3t3 +
+9
+
+1
+
+t2 −
+
+t  
+
+2
+
+2
+
+Substituindo esses pontos na equação paramétrica, obtivemos: 
+
+P(t) = (
+
+t
+y0 − 3t(y0 − y1) + 3t2(y0 − 2y1 + y2) − t3(y0 − 3y1 + 3y2 − y3))  
+
+Para encontramos o polinômio y(t) = −3t3 +
+
+t2 −
+
+9
+
+2
+
+1
+
+2
+
+t, vamos resolver o se-
+
+guinte sistema: 
+
+𝑦0 = 0
+
+3(𝑦0 − 𝑦1) =
+
+1
+2
+
+3(𝑦0 − 2𝑦1 + 𝑦2) =
+𝑦0 − 3𝑦1 + 3y2 − y3 = 3
+
+{
+
+9
+2
+
+   ⟹   
+
+y0 = 0
+1
+y1 = −
+6
+7
+y2 =
+6
+y3 = 1
+
+{
+
+Logo, os pontos são: P0 = (0,0), P1 = (
+
+1
+
+3
+
+, −
+
+1
+), P2 = (
+6
+
+2
+
+3
+
+,
+
+7
+) e P3 = (1,1). 
+6
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+33 
+
+Figura 20: Gráfico do polinômio y(t) = −3t3 +
+
+t2 −
+
+9
+
+2
+
+1
+
+2
+
+t. 
+
+Entre as propriedades interessantes que nós temos a nossa disposição, embora 
+
+restritas, está a capacidade de modelar e construir um polinômio usando os pontos 
+
+de  controle,  de  tal  forma  que  possamos  reproduzir  aproximadamente  uma  curva 
+
+desejada. 
+
+ 
+ 
+ 
+ 
+4 
+Resultado em Sala de Aula 
+
+As atividades propostas na oficina em sala de aula foram produzidas no sof-
+
+tware Geogebra 5, usando o algoritmo de De Casteljau (veremos  mais a frente). 
+
+Além do conteúdo computacional, foi construído um aparato manual com madeira 
+
+e elásticos, que representa uma curva de De Casteljau, veja figura 21. 
+
+Figura 21: Aparato de madeira e  elástico, construído para  descrever o  algoritmo de De 
+Casteljau. 
+
+A proposta inicial para essa oficina era de realizá-la com dois grupos, um com 
+
+5 alunos do 9° ano do ensino fundamental e outro com 5 alunos do 2° ano do ensino 
+
+médio. Mas devido a problemas na unidade escolar, os alunos do 9° ano foram dis-
+
+pensados  mais  cedo  e  apenas  um  dos  5  alunos  dessa  turma  retornou,  no  horário 
+
+combinado, para a oficina. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+35 
+
+Apesar  do  contratempo,  a  oficina  foi  realizada  no  dia  14  de  dezembro  de 
+
+2014, no laboratório de informática do CIEP 306 Dep. David Quinderê, com 5 alu-
+
+nos do 2ºano do ensino médio e 1 aluno do 9ºano do ensino fundamental. Os alunos 
+
+receberam: um questionário contendo todas as atividades da oficina (Anexo 1); uma 
+
+ficha de auto avaliação (Anexo 2); lápis, régua e papel A4 para preencher as folhas 
+
+e rascunhar. Veja na figura 22 algumas fotos da oficina. 
+
+Figura 22: Fotos da Oficina. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+36 
+
+Toda experiência teve duração aproximada de duas horas, iniciando com uma 
+
+apresentação breve da curva de Bézier e do algoritmo de De Casteljau. Os alunos 
+
+aprenderam  alguns  comandos  básicos  do  Geogebra  e  manusearam  duas  curvas 
+
+construídas  com  o algoritmo.  Logo após,  a primeira atividade foi explicada e os 
+
+alunos tiveram em torno de 10 minutos para responder e trocar informações. Ao 
+
+final  desse  tempo  a  questão  era  discutida  e  esclarecida.  Uma  nova  atividade  era 
+
+sugerida, e assim por diante. 
+
+Veremos como foram produzidas e qual(is) o(s) objetivo(s) de cada atividade. 
+
+Para  construir  todos  os  modelos,  no  Geogebra,  usaremos:  a  ferramenta 
+
+“ponto”  para  criar  os  pontos  de  controle,  a  ferramenta  “segmento”  para  criar  os 
+
+segmentos e a ferramenta “lugar geométrico” para desenhar a curva. 
+
+Nas duas primeiras atividades vamos mostrar dois modos diferentes de obter 
+
+a curva. 
+
+1ª Atividade: Casteljau 3 pontos de controle 
+
+Primeiramente criamos 3 pontos, A, B e C, depois os segmentos AB e BC. 
+
+Marcamos um ponto P sobre o segmento AB. Vamos utilizar o campo de entrada 
+
+para calcular a razão: t  =  Distância[A, P] / Distância[A, B], após encontrar esse 
+
+número vamos usar o algoritmo de De Casteljau, já visto, para parametrizar os ou-
+
+tros  segmentos.  Ainda  no  campo  de  entrada  digitamos:  Q = (1 − t) ∗ B + t ∗ C, 
+
+surgindo  o  ponto  Q.  Analogamente,  criamos  o  ponto  O.  Restando  apenas  usar  a 
+
+ferramenta “Lugar Geométrico” do ponto O conforme P varia, encontrando assim 
+
+a curva desejada. 
+
+ 
+ 
+ 
+ 
+37 
+
+Figura 23: Algoritmo de De Casteljau com 3 pontos de controle. 
+
+O objetivo dessa atividade é mostrar ao aluno que para quaisquer pontos A, 
+
+B e C o ponto O vai sempre pertencer a curva. Comprovando assim a eficácia do 
+
+algoritmo. 
+
+2ª Atividade: Casteljau 4 pontos de controle: 
+
+Criamos os pontos A, B, C, D e os segmentos AB, BC e CD. Com a ferra-
+
+menta “Controle Deslizante”, vamos criar um número t ∈ [0,1]. Usando o campo 
+
+de entrada do Geogebra, iremos parametrizar os segmentos. Para o ponto E: 
+
+Figura 24: Campo de entrada: parametrização de um segmento. 
+
+E assim por diante até obtermos o ponto J. Daí bastar construirmos o lugar 
+
+geométrico do ponto J conforme t varia. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+38 
+
+Figura 25: Algoritmo de De Casteljau com 4 pontos de controle. 
+
+Esse é outro exemplo do algoritmo, porém com 4 pontos de controle. Aqui o 
+
+aluno já pode associar o número de pontos de controle com o grau da curva, ou seja, 
+
+com 4 pontos de controle a curva terá grau máximo 3 (Anexo 3 – Atividade 1 e 2). 
+
+3ª Atividade: Divisão em 10 partes iguais. 
+
+Para fazermos a construção dessa curva, vamos criar 4 pontos A, B, C e D e 
+
+os segmentos AB, BC e CD. Não utilizaremos o parâmetro t, faremos uma constru-
+
+ção “livre” usando os números 0,1; 0,2; ... ; 0,9 e a definição de parametrização. 
+
+Para obtermos os pontos E e F, por exemplo, faremos assim: 
+
+Figura 26: Campo de entrada: divisão do segmento em 10 partes iguais. 
+
+Analogamente vamos encontrar os pontos sobre os segmentos, restando ape-
+
+nas unir os respectivos pontos. O ponto E ao ponto N, o ponto F ao ponto O, ... , o 
+
+ponto N ao W, o ponto O ao Z, ... e assim encontraremos nossa curva. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+39 
+
+Figura 27: Algoritmo de De Casteljau, construção livre. 
+
+O objetivo desta atividade é fazer com que os alunos produzam suas próprias 
+
+curvas,  usando  apenas  lápis,  régua  e  papel.  Sem  a  necessidade  de  fazer  cálculo 
+
+(Anexo 3 – Atividade 3).  
+
+4ª Atividade: Bézier não paramétrico 
+
+Nessa atividade estamos reproduzindo os exemplos 1 e 2 do capítulo 3.  
+
+Essa construção é análoga a 2ª atividade, porém os pontos A, B, C e D foram 
+
+construídos sobre as retas 𝑥 = 0, 𝑥 =
+
+1
+, 𝑥 =
+3
+
+2
+ e 𝑥 = 1, respectivamente. 
+3
+
+Para descobrirmos a função que essa curva descreve, vamos usar a formula-
+ção  já  vista  na  página  31,  P(x) = y0 − 3x(y0 − y1) + 3𝑥2(y0 − 2y1 + y2) −
+x3(y0 − 3y1 + 3y2 − y3), onde y0 é a ordenada do ponto A, y1 é a ordenada do 
+ponto B, y2 é a ordenada do ponto C e y3 é a ordenada do ponto D. Para encontrar 
+
+a expressão simplificada usamos a ferramenta “Calcular Valor Numérico”, da ja-
+
+nela CAS. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+40 
+
+Figura 28: Bézier não paramétrico, janela CAS mostrando a formulação polinomial. 
+
+A proposta dessa atividade é mostrar que com esses pontos, podemos encon-
+
+trar um pedaço de qualquer polinômio de grau menor ou igual a 3. O desafio dos 
+
+alunos era encontrar os pontos de controle que geram a curva P(x) = x3. A verifi-
+
+cação podia ser feita através da janela de álgebra (Anexo 3 – Atividade Computa-
+
+cional 1). 
+
+Figura 29: Bézier não paramétrico, janela visualização mostrando a curva de Bézier e o 
+gráfico da função f(x) = x3. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+41 
+
+Para essa construção, se faz necessário alguns ajustes com relação ao número 
+
+de casas decimais. Para algumas curvas, uma ou duas casas decimais não são sufi-
+
+cientes para determinar com exatidão o gráfico da função. No menu “opções” po-
+
+demos arredondar até 15 casas decimais. Observe as figuras 30 e 31. 
+
+Figura 30: Bézier não paramétrico, janela de visualização mostrando curva de Bézier com 
+uma casa decimal. 
+
+Figura 31: Bézier não paramétrico, janela de visualização mostrando curva de Bézier com 
+três casas decimais. 
+
+5ª Atividade: Encontrar o polinômio de grau 2 que passa pelos pontos A, B e C. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Para construir essa atividade basta criarmos 3 controles deslizantes, a, b e c, 
+
+depois marcamos os três pontos A, B e C e no campo de entrada vamos escrever o 
+
+polinômio de grau 2: f(x) = a ∗ x^2 + b ∗ x + c. 
+
+42 
+
+Figura 32: Janela de álgebra mostrando a função gerada pelos coeficientes a, b e c. 
+
+O objetivo dessa atividade é bem simples, descobrir os valores de a, b e c, 
+
+para que a curva passe pelos 3 pontos dados, os alunos deverão fazer a atividade no 
+
+papel e usar o programa para conferir o resultado. Esse exercício é comum aos alu-
+
+nos  do  ensino  médio,  visto  que  estão  familiarizados  com  polinômios  de  grau  2 
+
+(Anexo 3 – Atividade 4).  
+
+6ª Atividade: Construção de uma letra 
+
+Para essa construção vamos fazer uso da planilha. Primeiro vamos construir 
+
+um parâmetro t ∈ [0,1]. Marcamos 15 pontos aleatórios. Na coluna A da planilha 
+
+vamos inserir os pontos, basta apenas escrever: = A, na primeira célula e assim até 
+
+a letra O. Vejamos: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+43 
+
+Figura 33: Inserindo os pontos na planilha. 
+
+Na célula B2, vamos escrever A1 + t ∗ (A2 − A1) e copiar para as outras co-
+
+lunas até ficar um único ponto. 
+
+Figura 34: Subníveis gerados na planilha. 
+
+O ponto da célula O15 descreve a curva, basta construirmos o lugar geomé-
+
+trico desse ponto conforme t varia e alterarmos o aspecto da curva. Vejamos: 
+
+Figura 35: Curva de Bézier e Algoritmo de De Casteljau com seus níveis. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+44 
+
+Nessa atividade os alunos podem visualizar cada nível do algoritmo de De 
+
+Casteljau, através das cores. O objetivo é mostrar uma aplicação para essa curva, 
+
+através do desenho de uma letra. Apesar dos alunos estarem motivados, a atividade 
+
+não pode ser concluída devido à falta de tempo (Anexo 3 – Atividade 5). 
+
+ 
+ 
+5 
+Conclusão 
+
+Nosso objetivo era apresentar uma formulação acessível para o ensino médio. 
+
+Acreditamos que a formulação via gráfico de função pode contribuir e muito no 
+
+ensino de polinômios. 
+
+Com o modelo “Bézier não paramétrico” o aluno pode obter facilmente a ex-
+
+pressão polinomial da curva dados os pontos de controle e é um ótimo auxílio nos 
+
+cálculos. 
+
+As experiências em sala de aula mostraram que a curva de Bézier pode ser 
+
+introduzida  para  alunos  do  ensino  médio.  Apesar  da  empolgação,  alguns  alunos 
+
+sentiram dificuldade para encontrar a expressão algébrica do polinômio de grau 2 
+
+(Atividade 4).  
+
+O tempo de trabalho para essa atividade foi de 2 aulas, porém recomendamos 
+
+um total de 4 aulas para que possam ser feitas revisões de sistemas de equações e 
+
+gráfico de função.  
+
+ 
+ 
+ 
+ 
+ 
+ 
+6 
+Referências Bibliográficas 
+
+OF 
+
+BRIDGE 
+<http://www.jerusalemite.net/blog/2098/pulling-strings-for-the-bridge-of-
+strings>. Acesso em: 14 jan. 2015. 
+
+STRINGS, 
+
+Disponível 
+
+2008. 
+
+em: 
+
+FARIN,  Gerald  E.  Curves  and  surfaces  for  CAGD:  a  practical  guide. 
+Third Edition. Arizona: Academic Press, 1992. 
+
+FREITAS,  Eduardo  G.  de.  Fecho  convexo  2D.  Disponível  em: 
+<http://www.ime.usp.br/~freitas/gc/fecho.html>. Acesso em: 21 jan. 2015. 
+
+GROSS, Renan. Bridges, string art and Bézier curves. Disponível em: 
+http://plus.maths.org/content/bridges-string-art-and-bezier-curves.  Acesso 
+em: 14 jan. 2015. 
+
+JERUSALEM 
+<https://geolocation.ws/v/P/44760982/jerusalem-chords-bridge/en>. 
+Acesso em: 14 jan. 2015. 
+
+Disponível 
+
+CHORDS 
+
+BRIDGE. 
+
+em: 
+
+PAUL DE CASTELJAU. Disponível em: <http://en.wikipedia.org/wiki/Paul_ 
+de_Casteljau>. Acesso em: 7 jan. 2015. 
+
+PIERRE 
+<http://en.wikipedia.org/wiki/Pierre_Bézier>. Acesso em: 8 jan. 2015. 
+
+Disponível 
+
+BÉZIER. 
+
+em: 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+7 
+Anexos 
+
+Anexo 1 
+
+CURVAS DE BÉZIER 
+
+Questionário – 14 de Novembro de 2014 
+
+Nome: ____________________________________________________________ 
+
+Idade: ___________ Turma: ___________ 
+
+1. 
+
+Para uma construção com 3 pontos de controle, vamos gerar um polinômio 
+de que grau? ________. E com 5 pontos? _______. Podemos generalizar para 
+n pontos de controle que o polinômio gerado terá grau: _________. 
+
+2.  Vimos algumas propriedades das curvas de Bézier, dentre elas observamos 
+que a curva passa por dois pontos de controle. Sejam A, B, C e D, 4 pontos 
+de  controle  de  uma  curva.  Quais  desses  pontos  pertencem  a  curva? 
+___________. 
+
+3.  Construa com lápis e régua, usando o algoritmo de Casteljau, uma curva com 
+
+3 ou 4 pontos de controle. 
+
+Atividade Computacional – Bézier não paramétrico. 
+
+4.  Qual  polinômio  do  2º  grau,  p(x) = ax2 + bx + c  ,  passa  pelos  pontos 
+
+A=(0,2), B= (
+
+,1) e C=(1,3)?  Utilize  o  arquivo:  Construção6  do  geogebra 
+
+1
+
+2
+para conferir seu resultado.  
+
+5.  Com o arquivo: Curva de Bézier do geogebra, construa uma letra do nosso 
+
+alfabeto
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+48 
+
+Anexo 2 
+
+CURVAS DE BÉZIER 
+
+Resposta dos Alunos – 14 de Novembro de 2014 
+
+Atividade 1 e 2: Curva de Bézier. 
+
+Atividade 3: Algoritmo de De Casteljau. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+Atividade Computacional: Bézier não paramétrico. 
+
+49 
+
+Atividade 4: Polinômio de grau 2. 
+
+Atividade 5: Construção de uma letra. 
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+50 
+
+Anexo 3 
+
+CURVAS DE BÉZIER 
+
+Auto Avaliação – 14 de Novembro de 2014 
+
+ 
+ 
+ 
+ 
+ 
+

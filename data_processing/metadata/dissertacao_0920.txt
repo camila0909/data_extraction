@@ -1,0 +1,5796 @@
+Márcio Alexandre dos Santos Silva
+
+FRAÇÕES CONTÍNUAS: UMA APLICAÇÃO
+EM CRIPTOGRAFIA RSA
+
+Itabaiana
+
+Outubro de 2019
+
+Márcio Alexandre dos Santos Silva
+
+FRAÇÕES CONTÍNUAS: UMA APLICAÇÃO EM
+
+CRIPTOGRAFIA RSA
+
+Dissertação submetida ao Corpo Docente do
+Programa de Mestrado Profissional em Ma-
+temática da Universidade Federal de Sergipe
+como requisito para a obtenção do título de
+Mestre em Matemática.
+
+Universidade Federal de Sergipe
+
+Departamento de Matemática
+
+Programa de Pós-Graduação
+
+Orientador: Prof. Me. Samuel Brito Silva
+
+Itabaiana
+
+Outubro de 2019
+
+                                    FICHA CATALOGRÁFICA ELABORADA PELA BIBLIOTECA PROFESSOR ALBERTO CARVALHO UNIVERSIDADE FEDERAL DE SERGIPE    S586f  Silva, Márcio Alexandre dos Santos.         Frações contínuas: uma aplicação em criptografia RSA / Márcio Alexandre dos Santos Silva; orientação: Samuel Brito Silva. – Itabaiana, 2019.  48 f.    Dissertação (Mestrado em Matemática) – Universidade Federal de Sergipe, 2019.   1. Matemática. 2. Frações. 3. Criptografia. I. Silva, Samuel Brito. II. Título.                                                                CDU 511.13       ScannedbyCamScannerDedico este trabalho a Deus, Naty, Louro, Dui,
+
+... Edudim 2004.
+
+Agradecimentos
+
+Na oportunidade da conclusão do presente trabalho, desejo agradecer as seguintes
+
+pessoas e instituições:
+
+Preimeiramente a Deus, porque sem ele não vamos a lugar nenhum;
+
+aos meus pais, Maria da Natividade dos Santos e Lourival Bispo da Silva, pela
+
+força, apoio e colaboração;
+
+ao Prof. Me. Samuel Brito Silva, meu orientador, pela dedicação, incentivo e paci-
+
+ência em acompanhar cada passo deste trabalho;
+
+à Universidade Federal de Sergipe por ter me dado a oportunidade disso tudo
+acontecer. Foi na UFS que dei meus primeiros passos no ensino superior, foi aqui que tive
+a honra de ter trabalhado como Auxiliar em Administração por mais de seis anos;
+
+às Escolas Santa Bárbara, Zumbi dos Palmares, Edvaldo Fernandes, Bolivar San-
+tana e ao Colégio Estadual Severino Vieira por ter me dado a formação básica, por me
+ensinar o que é ser social e, principalmente, pelas alegrias da infância e adolescência;
+
+aos colegas e professores do Profmat que estiveram comigo ao longo desta jornada,
+
+sempre me apoiando e ajudando;
+
+finalmente, a todos que acreditaram e contribuíram de forma direta ou indireta-
+
+mente para a realização deste trabalho.
+
+Resumo
+
+Apresentam-se, nesta dissertação, um estudo sobre a expansão de números reais em forma
+de frações contínuas simples e uma aplicação desta teoria ao sistema de criptografia RSA.
+No primeiro capítulo é discutido as definições, propriedades e reduzidas destas frações.
+Explanam-se ainda reduzidas como as melhores aproximações de um número para um
+dado denominador. Estabelecido este estudo preliminar, expõe-se, no segundo capítulo, o
+ataque à criptografia RSA desenvolvido, em 1990, por Wiener. Sendo assim, este trabalho
+tem como objetivo abordar este ataque através do estudo das frações contínuas simples.
+
+Palavras-chaves: Frações Contínuas, reduzidas, Ataque de Wiener, Criptografia RSA.
+
+Abstract
+
+This dissertation presents a study on the expansion of real numbers in the form of simple
+continuous fractions and an application of this theory to the RSA cryptography system.
+In the first chapter the definitions, properties and reduced of these fractions are discussed.
+They are further explained as the best approximations of a number for a given denomina-
+tor. Once this preliminary study is established, the second chapter presents the attack on
+RSA cryptography developed in 1990 by Wiener. Thus, this paper aims to address this
+attack by studying the simple continuous fractions.
+
+Key-words:
+
+Continued Fractions, reduced, Wiener’s Attack, RSA Cryptosystem.
+
+Sumário
+
+1
+
+2
+2.1
+2.2
+2.3
+2.4
+
+3
+3.1
+3.2
+
+INTRODUÇÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+FRAÇÕES CONTÍNUAS SIMPLES . . . . . . . . . . . . . . . . . . 11
+Frações Contínuas Finitas . . . . . . . . . . . . . . . . . . . . . . . . . 12
+Reduzidas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 16
+Soluções de Equações Diofantinas através de Frações Contínuas . . 23
+Frações Contínuas Infinitas . . . . . . . . . . . . . . . . . . . . . . . . 24
+
+ATAQUE DE WIENER . . . . . . . . . . . . . . . . . . . . . . . . . 40
+Criptografia RSA . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+Ataque de Wiener ao sistema de criptografia RSA . . . . . . . . . . 40
+
+Referências Bibliográficas . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+1 Introdução
+
+9
+
+Sem dúvida alguma, a ideia de números irracionais não é das mais simples. O
+conceito de número natural é intuitivo, o de números inteiros acrescentam-se aos naturais
+apenas os sinais de mais ou menos e o de números racionais é dado como a divisão de
+inteiros por naturais não nulos. Entretanto quando se quer definir ou representar números
+irracionais a tarefa acaba ficando mais complicada, principalmente no que diz respeito
+a sua representação decimal. Apesar disso, podemos, devido a densidade de Q em R,
+aproximá-los por racionais. Assim, dado um número real 𝑥 qualquer sempre é possível
+aproximá-lo por meio de um número inteiro, ou seja, sendo 𝛼 = ⌊𝑥⌋, então a distância
+entre 𝛼 e 𝑥 é menor do que 1. A aproximação por racional é possível, pois considerando
+0 < 𝑥 − 𝛼 < 1, existem inteiros 𝑎1, 𝑎2, 𝑎3, ..., 𝑎𝑛, ... ∈ [0, 1, 2, ..., 9] tais que
+
+Dessa forma, sendo 𝑟𝑛 = 0.10𝑛 + 𝑎1.10𝑛−1 + · + 𝑎𝑛−110 + 𝑎𝑛 então
+
+𝑥 − 𝛼 = 0, 𝑎1𝑎2𝑎3...𝑎𝑛....
+
+𝑟𝑛 + 1
+10𝑛 . Podemos então aproximar 𝑥 por
+
+(︂
+
+𝛼 +
+
+)︂
+
+𝑟𝑛
+10𝑛
+
+𝑟𝑛
+10𝑛 = 0, 𝑎1𝑎2𝑎3...𝑎𝑛,
+
+logo
+
+𝑟𝑛
+10𝑛 < 𝑥 − 𝛼 <
+com erro menor do que
+
+1
+10𝑛 =
+
+𝑟𝑛
+10𝑛 +
+1
+10𝑛 , tendo em vista que
+
+𝑟𝑛
+10𝑛 < 𝑥 − 𝛼 <
+0 < 𝑥 − (𝛼 +
+
+𝑟𝑛 + 1
+10𝑛
+𝑟𝑛
+10𝑛 ) <
+
+1
+10𝑛 .
+
+À medida que 𝑛 cresce, temos uma ótima aproximação racional para 𝑥. Um bom exemplo
+
+é a aproximação
+
+3141592
+1000000
+
+para 𝜋, onde
+
+⃒
+⃒
+⃒
+⃒
+
+𝜋 −
+
+3141592
+1000000
+
+⃒
+⃒
+⃒
+⃒
+
+<
+
+1
+106 .
+
+Contudo nem sempre as aproximações decimais são boas, pois, neste caso por
+exemplo, pode haver racionais com denominadores bem menores 106 mais próximos de
+355
+113
+
+que é uma excelente aproximação para 𝜋,
+
+𝜋. A título de ilustração, temos o racional
+pois
+
+⃒
+⃒
+⃒
+⃒
+
+𝜋 −
+
+355
+113
+
+⃒
+⃒
+⃒
+⃒
+
+<
+
+⃒
+⃒
+⃒
+⃒
+
+𝜋 −
+
+3141592
+1000000
+
+⃒
+⃒
+⃒
+⃒
+
+.
+
+Sendo assim, o primeiro Capítulo deste trabalho tem como objetivo encontrar exce-
+lentes aproximações racionais para números reais. Para isso, apresentaremos os conceitos
+e propriedades de Frações Contínuas. Já o segundo, será destinado à aplicação desse es-
+tudo ao ataque à criptografia RSA. Este sistema, que foi desenvolvido por Rivest, Shamir
+
+Capítulo 1.
+
+Introdução
+
+10
+
+e Adleman, em 1978, é, definitivamente, o mais conhecido dos métodos de criptografia de
+chave pública segundo (COUTINHO, 2000).
+
+Ele é baseado em duas chaves: pública e privada. A pública é utilizada para crip-
+tografar a informação, enquanto que a privada tem o papel de descriptografá-la. Para
+gerar a chave pública, o sistema escolhe dois números primos distintos 𝑝 e 𝑞, realiza a
+multiplicação deles e obtém o módulo 𝑁 . Assim, (𝑁, 𝑒) é a chave pública, onde 𝑒 ∈ Z
+tal que 1 < 𝑒 < (𝑝 − 1)(𝑞 − 1), chamado de expoente público. Já a privada é dada por
+(𝑝, 𝑞, 𝑑), onde 𝑑 é o expoente privado tal que 𝑒𝑑 ≡ 1(𝑚𝑜𝑑 (𝑝 − 1)(𝑞 − 1)).
+
+A ideia por trás do RSA é relativamente simples, tendo em vista que para descobrir
+a chave privada basta encontrar os primos que deram origem ao módulo 𝑁 . Entretanto,
+decompor 𝑁 em fatores primos não é uma tafera muito fácil, caso N tenha mais que
+10100 algarismos. Isso ocorre porque os métodos de fatoração conhecidos atualmente são
+ineficientes, e podem levar milhares de anos para encontrar os fatores primos de um
+número.
+
+Por exemplo, se quiséssemos encontrar a decomposição de 𝑁 em fatores primos,
+supondo 𝑝 e 𝑞 maiores do 1050, então precisaríamos de aproximadamente 1050 divisões, pois
+𝑁 tem aproximadamente 10100 casas decimais. Supondo que um supercomputador realize
+1010 divisões por segundo, ainda assim precisaríamos de 1040 segundos para decompor o
+módulo 𝑁 , ou seja 317097919837646000000000000000000 anos.
+
+A utilização de primos extremamente grandes, no entanto, nem sempre é viável,
+justamente porque a comunicação entre os equipamentos pode ficar lenta. Com o intuito de
+minimizar o tempo gasto para criptografar e descriptografar, pode-se propor a diminuição
+do valor dos expoentes público e privado.
+
+Em um sistema de autenticação feito por meio do uso de cartões inteligentes,
+por exemplo, pode-se acelerar a descriptografia RSA, utilizando um expoente privado 𝑑
+relativamente pequeno. Esta escolha é especialmente interessante, pois há uma grande
+diferença no poder de processamento entre o cartão e computador utilizado.
+
+Apesar de alcançar o resultado desejado, esta medida compromete sobre maneira
+
+a segurança dessas operações, devido ao ataque desenvolvido por Wiener.
+
+Michael J. Wiener descreveu, em 1990, um algoritmo de tempo polinomial para
+quebrar um sistema de criptografia RSA típico, isto é, 𝑝 e 𝑞 são do mesmo tamanho e
+𝑒 < 𝑁 . Assim, ele mostrou que se o expoente privado 𝑑 for menor do que 𝑁 1
+4 , onde 𝑁 é o
+módulo RSA, então pode-se obter 𝑑 analisando apenas a chave pública correspondente.
+
+2 Frações Contínuas Simples
+
+11
+
+Este capítulo tem como objetivos apresentar o conceito de frações contínuas sim-
+ples, definir reduzidas e listar algumas de suas propriedades básicas. Estes resultados serão
+extremamentes importantes para o bom entendimento de todo o trabalho.
+
+Antes de mais nada, sabemos que dados 𝑎, 𝑏 ∈ Z é possível, através do método de
+divisões sucessivas, determinar o 𝑚𝑑𝑐, denotado por (𝑎, 𝑏), desses números da seguinte
+forma:
+
+Exemplo 2.1. Determine o 𝑚𝑑𝑐 de 121 e 34.
+
+121 = 34.3 + 19
+
+34 = 19.1 + 15
+
+19 = 15.1 + 4
+
+15 = 4.3 + 3
+
+4 = 3.1 + 1
+
+3 = 1.3 + 0,
+
+como 1 é o último resto não nulo das divisões sucessivas, logo (121, 34) = 1.
+
+fração
+
+em função dos quocientes encontrados nas divisões sucessivas, ou seja,
+
+Uma das consequências imediatas dessas igualdades é que se pode expressar a
+121
+34
+121
+34
+
+= 3 +
+
+= 3 +
+
+= 3 +
+
+= 3 +
+
+= 3 +
+
+19
+34
+
+1
+
+1
+
+1
+
+1
+
+1 +
+
+1 +
+
+1 +
+
+15
+19
+
+1
+19
+15
+
+4
+15
+
+1
+
+1 +
+
+1 +
+
+1 +
+
+1
+
+1
+
+3 +
+
+1
+4
+3
+
+= 3 +
+
+1
+
+1
+
+3 +
+
+3
+4
+
+1
+34
+19
+
+1
+15
+4
+
+1
+
+121
+34
+
+= 3 +
+
+1
+
+1
+
+1 +
+
+1 +
+
+= 3 +
+
+1
+
+1 +
+
+1 +
+
+121
+34
+
+= 3 +
+
+.
+
+1 +
+
+1 +
+
+1
+
+1
+
+3 +
+
+1
+
+1 +
+
+1
+3
+
+Diz-se que esta última expressão é a representação do número racional
+em termos de
+fração contínua, a qual pode ser representada de maneira simplificada por [3; 1, 1, 3, 1, 3].
+
+121
+34
+
+Capítulo 2. Frações Contínuas Simples
+
+12
+
+Apresentaremos a seguir a definição de frações contínuas.
+
+Definição 2.2. Sejam 𝑎0, 𝑎1, 𝑎2, 𝑎3, ... números reais todos positivos, exceto possivelmente
+o 𝑎0. Uma fração contínua é uma expressão do tipo
+
+𝑎0 +
+
+𝑎1 +
+
+1
+
+1
+
+𝑎2 +
+
+1
+𝑎3 + ...
+
+= [𝑎0; 𝑎1, 𝑎2, 𝑎3...],
+
+onde os números 𝑎0, 𝑎1, 𝑎2, 𝑎3, ... são chamados de quocientes parciais.
+
+2.1 Frações Contínuas Finitas
+
+Definição 2.3. Uma fração contínua é finita quando há um número finito de quocientes
+parciais
+
+= [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛],
+
+𝑎0 +
+
+𝑎1 +
+
+1
+
+1
+
+𝑎2 + ...
+
+1
+
++
+
+𝑎𝑛−1 +
+
+1
+𝑎𝑛
+
+onde 𝑎1, 𝑎2, ..., 𝑎𝑛 são todos positivos.
+
+As frações contínuas são ditas simples, se os 𝑎𝑛, com 𝑛 ∈ N, são números inteiros.
+Como iremos utilizar apenas as frações contínuas simples, então a expressão "frações
+contínuas" deverá ser entendida como "frações contínuas simples".
+
+A fração contínua do Exemplo 2.1 além de ser simples, também é finita, tendo em
+
+vista que tem uma quantidade finita de quocientes parciais.
+
+Considere agora uma sequência finita de números inteiros. Por exemplo, dados os
+
+inteiros 2, 3, 8, 5, a fração contínua representada por eles
+
+[2; 3, 8, 5] = 2 +
+
+3 +
+
+1
+
+1
+
+8 +
+
+1
+5
+
+= 2 +
+
+1
+
+3 +
+
+5
+41
+
+= 2 +
+
+41
+128
+
+=
+
+297
+128
+
+expressa um número racional. Este fato vale de modo geral como mostra o resultado a
+seguir.
+
+Teorema 2.4. Toda fração contínua finita representa um número racional.
+
+Prova. Demonstraremos por indução matemática. Considere os inteiros 𝑎0, 𝑎1, ..., 𝑎𝑘 todos
+positivos, exceto possivelmente o 𝑎0.
+
+Capítulo 2. Frações Contínuas Simples
+
+13
+
+i) Para 𝑘 = 1, temos [𝑎0; 𝑎1] = 𝑎0 +
+
+racional.
+
+1
+𝑎1
+
+=
+
+𝑎0𝑎1 + 1
+𝑎1
+
+. Assim [𝑎0; 𝑎1] representa um
+
+ii) Supondo que para 𝑘 inteiros a fração contínua finita [𝑎0; 𝑎1, ..., 𝑎𝑘] representa um
+
+número racional então
+
+[𝑎0; 𝑎1, ..., 𝑎𝑘, 𝑎𝑘+1] = 𝑎0 +
+
+1
+[𝑎1; 𝑎2, ..., 𝑎𝑘, 𝑎𝑘+1]
+
+.
+
+Como [𝑎1; 𝑎2, ..., 𝑎𝑘, 𝑎𝑘+1] é racional, existem 𝑟 e 𝑠 inteiros positivos tais que
+[𝑎1; 𝑎2, ..., 𝑎𝑘, 𝑎𝑘+1], assim
+
+[𝑎0; 𝑎1, ..., 𝑎𝑘, 𝑎𝑘+1] = 𝑎0 +
+
+1
+𝑟
+𝑠
+
+= 𝑎0 +
+
+𝑠
+𝑟
+
+=
+
+𝑎0𝑟 + 𝑠
+𝑟
+
+,
+
+logo [𝑎0; 𝑎1, ..., 𝑎𝑘, 𝑎𝑘+1] representa um número racional.
+
+𝑟
+𝑠
+
+=
+
+(cid:3)
+
+A recíproca do Teorema acima é verdadeira. Uma vez que é garantia pelo Algoritmo
+de Euclides, pois o processo de divisões sucessivas sempre nos fornece um resto nulo, depois
+de uma quantidade finita de divisões.
+
+Teorema 2.5. Todo número racional pode ser escrito em forma de frações contínuas
+finita.
+
+Prova. Com efeito, seja 𝑟 um número racional, então existem 𝑝 e 𝑟0 inteiros, com 𝑟0
+positivo, tal que 𝑟 =
+
+. Pelo Algoritmo de Euclides, temos a sequência de equações
+
+𝑝
+𝑟0
+
+𝑝 = 𝑟0𝑎0 + 𝑟1
+
+𝑟0 = 𝑟1𝑎1 + 𝑟2
+
+𝑟1 = 𝑟2𝑎2 + 𝑟3
+
+:
+
+0 < 𝑟1 < 𝑟0
+
+0 < 𝑟2 < 𝑟1
+
+0 < 𝑟3 < 𝑟2
+
+:
+
+𝑟𝑛−2 = 𝑟𝑛−1𝑎𝑛−1 + 𝑟𝑛
+
+0 < 𝑟𝑛 < 𝑟𝑛−1
+
+𝑟𝑛−1 = 𝑟𝑛𝑎𝑛,
+
+onde 𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑛 são todos inteiros positivos, exceto possivelmente o 𝑎0. Podemos
+
+Capítulo 2. Frações Contínuas Simples
+
+14
+
+reescrevê-las da seguinte forma
+
+𝑝
+𝑟0
+
+𝑟0
+𝑟1
+
+𝑟1
+𝑟2
+
+𝑟2
+𝑟3
+
+= 𝑎0 +
+
+= 𝑎1 +
+
+= 𝑎2 +
+
+= 𝑎3 +
+
+𝑟1
+𝑟0
+
+𝑟2
+𝑟1
+
+𝑟3
+𝑟2
+
+𝑟4
+𝑟3
+
+= 𝑎0 +
+
+= 𝑎1 +
+
+= 𝑎2 +
+
+= 𝑎3 +
+
+1
+𝑟0
+𝑟1
+
+1
+𝑟1
+𝑟2
+
+1
+𝑟2
+𝑟3
+
+1
+𝑟3
+𝑟4
+
+:
+𝑟𝑛−2
+𝑟𝑛−1
+
+𝑟𝑛−1
+𝑟𝑛
+
+= 𝑎𝑛−1 +
+
+𝑟𝑛
+𝑟𝑛−1
+
+= 𝑎𝑛−1 +
+
+1
+𝑟𝑛−1
+𝑟𝑛
+
+= 𝑎𝑛.
+
+0 < 𝑟1 < 𝑟0
+
+0 < 𝑟2 < 𝑟1
+
+0 < 𝑟3 < 𝑟2
+
+0 < 𝑟4 < 𝑟3
+
+:
+
+0 < 𝑟𝑛 < 𝑟𝑛−1
+
+Portanto como 𝑟 =
+
+𝑝
+𝑟0
+
+então
+
+𝑟 = 𝑎0 +
+
+1
+𝑟0
+𝑟1
+
+= 𝑎0 +
+
+1
+
+𝑎1 +
+
+1
+𝑟1
+𝑟2
+
+= 𝑎0 +
+
+𝑎1 +
+
+1
+
+1
+
+𝑎2 +
+
+1
+𝑟2
+𝑟3
+
+prosseguindo dessa forma, teremos
+
+𝑟 = 𝑎0 +
+
+𝑎1 +
+
+1
+
+1
+
+𝑎2 + ...
+
++
+
+1
+𝑎𝑛−1 + 1
+𝑎𝑛
+
+= [𝑎0; 𝑎1, 𝑎2, 𝑎3, ..., 𝑎𝑛].
+
+Exemplo 2.6. Vamos expressar os racionais
+
+−364
+121
+
+e
+
+34
+121
+
+em termo de frações contínuas.
+
+(cid:3)
+
+Capítulo 2. Frações Contínuas Simples
+
+15
+
+Solução. Sendo −329 = 121(−3) + 34, então podemos escrever
+
+−329
+121
+
+= −3 +
+
+34
+121
+
+= −3 +
+
+1
+121
+34
+
+= −3 +
+
+3 +
+
+1
+
+1
+
+,
+
+1 +
+
+1 +
+
+1
+
+1
+
+3 +
+
+1
+
+1 +
+
+1
+3
+
+−329
+121
+
+logo
+forma
+
+= [−3; 3, 1, 1, 3, 1, 3]. Já o racional
+
+34
+121
+
+, podemos reescrevê-lo da seguintes
+
+34
+121
+
+= 0 +
+
+34
+121
+
+= 0 +
+
+= 0 +
+
+1
+121
+34
+
+3 +
+
+1 +
+
+= [0; 3, 1, 1, 3, 1, 3].
+
+1
+
+1
+
+1
+
+1 +
+
+3 +
+
+1
+
+1
+
+1 +
+
+1
+3
+
+Pode-se inferir, a partir do exemplo acima, que no desenvolvimento da fração con-
+tínua somente o primeiro dos quocientes parciais pode assumir um valor negativo ou nulo.
+
+Proposição 2.7. Se
+
+𝑞 < 𝑝, então
+
+𝑞
+𝑝
+
+= [0; 𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑛].
+
+𝑝
+𝑞
+
+= [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛], onde
+
+𝑝
+𝑞
+
+é um número racional positivo com
+
+Prova. De fato, seja
+
+𝑝
+𝑞
+
+= [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛], logo
+
+𝑝
+𝑞
+
+= 𝑎0 +
+
+𝑎1 +
+
+1
+
+1
+
+.
+
+𝑎2 + ...
+
+1
+
++
+
+𝑎𝑛−1 +
+
+1
+𝑎𝑛
+
+Como
+
+𝑞
+𝑝
+
+= 0 +
+
+1
+𝑝
+𝑞
+
+= 0 +
+
+𝑎0 +
+
+𝑎1 +
+
+1
+
+1
+
+1
+
+𝑎2 + ...
+
+1
+
++
+
+𝑎𝑛−1 +
+
+1
+𝑎𝑛
+
+= [0; 𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑛].
+
+Capítulo 2. Frações Contínuas Simples
+
+16
+
+(cid:3)
+
+Quando o quociente 𝑎𝑛 for maior que 1, podemos substituí-lo por (𝑎𝑛 − 1) +
+
+. Dessa forma, a quantidade de quocientes da fração contínua pode ser par ou ím-
+
+1
+1
+par. Podemos representar
+[𝑎0; 𝑎1, 𝑎2, 𝑎3, ..., 𝑎𝑛] = [𝑎0; 𝑎1, 𝑎2, 𝑎3, ..., 𝑎𝑛 − 1, 1].
+
+51
+27
+
+por [1, 1, 8] ou [1, 1, 7, 1]. Generalizando, se 𝑎𝑛 > 1, então
+
+2.2 Reduzidas
+
+Definição 2.8. A fração contínua [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘], onde 𝑘 é um inteiro não negativo me-
+nor do que ou igual a 𝑛, é chamada de k-ésima reduzida da fração contínua [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, ...].
+A k-ésima reduzida é denotada por 𝑐𝑘.
+
+Teorema 2.9. Sejam 𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑛 números reais com 𝑎1, 𝑎2, ..., 𝑎𝑛 positivos. Sejam as
+sequências 𝑝0, 𝑝1, 𝑝2, ..., 𝑝𝑛 e 𝑞0, 𝑞1, 𝑞2, ..., 𝑞𝑛 definidas recursivamente por
+
+𝑝0 = 𝑎0
+
+𝑝1 = 𝑎0𝑎1 + 1
+
+𝑝2 = 𝑎2𝑝1 + 𝑝0
+
+:
+
+𝑞0 = 1
+
+𝑞1 = 𝑎1
+
+𝑞2 = 𝑎2𝑞1 + 𝑞0
+
+:
+
+𝑝𝑘 = 𝑎𝑘𝑝𝑘−1 + 𝑝𝑘−2
+
+𝑞𝑘 = 𝑎𝑘𝑞𝑘−1 + 𝑞𝑘−2,
+
+para 𝑘 = 2, 3, ..., 𝑛. Então a k-ésima reduzida da fração contínua [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘−1, 𝑎𝑘] é
+dada por 𝑐𝑘 =
+
+.
+
+𝑝𝑘
+𝑞𝑘
+
+Prova. Demonstraremos este teorema por indução matemática.
+
+i) Para 𝑘 = 0 e 𝑘 = 1, temos 𝑐0 = [𝑎0] =
+
+𝑝0
+𝑞0
+e 𝑐2 = [𝑎0; 𝑎1, 𝑎2] = 𝑎0 +
+
+𝑎0
+1
+
+=
+
+𝑎0 +
+
+1
+𝑎1
+
+=
+
+𝑎0𝑎1 + 1
+𝑎1
+
+=
+
+𝑝1
+𝑞1
+
+. Analogamente, 𝑐0 = [𝑎0; 𝑎1] =
+
+logo
+
+1
+
+𝑎1 +
+
+1
+𝑎2
+
+𝑐2 = 𝑎0 +
+
+𝑎2
+𝑎1𝑎2 + 1
+
+=
+
+𝑎0(𝑎1𝑎2 + 1) + 𝑎2
+𝑎1𝑎2 + 1
+
+=
+
+𝑎2(𝑎1𝑎0 + 1) + 𝑎0
+𝑎2𝑎1 + 1
+
+=
+
+𝑎2𝑝1 + 𝑝0
+𝑎2𝑞1 + 𝑞0
+
+=
+
+𝑝2
+𝑞2
+
+.
+
+ii) Suponha que o teorema seja válido para um inteiro 𝑘, onde 2 ≤ 𝑘 < 𝑛, assim
+
+𝑐𝑘 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘] =
+
+𝑝𝑘
+𝑞𝑘
+
+=
+
+𝑎𝑘𝑝𝑘−1 + 𝑝𝑘−2
+𝑎𝑘𝑞𝑘−1 + 𝑞𝑘−2
+
+.
+
+Seja 𝑐𝑘+1 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘, 𝑎𝑘+1] então é possível obter 𝑐𝑘+1 a partir de 𝑐𝑘 sim-
+
+plesmente pela substituição de 𝑎𝑘 por 𝑎𝑘 +
+
+, e note que 𝑝𝑘−1, 𝑞𝑘−1, 𝑝𝑘−2 e 𝑞𝑘−2
+
+1
+𝑎𝑘+1
+
+Capítulo 2. Frações Contínuas Simples
+
+17
+
+dependem apenas dos 𝑎0, 𝑎1, 𝑎2, ..., 𝑎𝑘−1, neste caso, eles não serão alterados na subs-
+tituição. Assim 𝑐𝑘+1 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘−1, 𝑎𝑘 +
+
+], isso resulta em
+
+1
+𝑎𝑘+1
+
+(︃
+
+𝑎𝑘 +
+
+𝑐𝑘+1 =
+
+(︃
+
+𝑎𝑘 +
+
+)︃
+
+)︃
+
+1
+𝑎𝑘+1
+1
+𝑎𝑘+1
+
+𝑝𝑘−1 + 𝑝𝑘−2
+
+𝑞𝑘−1 + 𝑞𝑘−2
+
+=
+
+=
+
+=
+
+=
+
+(𝑎𝑘𝑎𝑘+1 + 1)𝑝𝑘−1 + 𝑎𝑘+1𝑝𝑘−2
+(𝑎𝑘𝑎𝑘+1 + 1)𝑞𝑘−1 + 𝑎𝑘+1𝑞𝑘−2
+𝑎𝑘+1(𝑎𝑘𝑝𝑘−1 + 𝑝𝑘−2) + 𝑝𝑘−1
+𝑎𝑘+1(𝑎𝑘𝑞𝑘−1 + 𝑞𝑘−2) + 𝑞𝑘−1
+𝑎𝑘+1𝑝𝑘 + 𝑝𝑘−1
+𝑎𝑘+1𝑞𝑘 + 𝑞𝑘−1
+𝑝𝑘+1
+𝑞𝑘+1
+
+.
+
+Portanto a demonstração por indução está concluída.
+
+Exemplo 2.10. Se 𝑐𝑘 =
+e 𝑎0 > 0, então
+
+𝑝𝑘
+𝑞𝑘
+
+e
+
+Solução. Sabemos que
+
+é a k-ésima reduzida da fração contínua [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘−1, 𝑎𝑘]
+
+(cid:3)
+
+𝑝𝑘
+𝑝𝑘−1
+
+= [𝑎𝑘; 𝑎𝑘−1, 𝑎𝑘−2, ..., 𝑎1, 𝑎0]
+
+𝑞𝑘
+𝑞𝑘−1
+
+= [𝑎𝑘; 𝑎𝑘−1, 𝑎𝑘−2, ..., 𝑎1].
+
+𝑝𝑟 = 𝑎𝑟𝑝𝑟−1 + 𝑝𝑟−2
+
+𝑝𝑟
+𝑝𝑟−1
+𝑝𝑟
+𝑝𝑟−1
+
+= 𝑎𝑟 +
+
+= 𝑎𝑟 +
+
+𝑝𝑟−2
+𝑝𝑟−1
+1
+𝑝𝑟−1
+𝑝𝑟−2
+
+,
+
+com 𝑟 natural maior do que ou igual a 2. Assim podemos escrever
+
+𝑝𝑘
+𝑝𝑘−1
+
+da seguinte forma
+
+𝑝𝑘
+𝑝𝑘−1
+
+= 𝑎𝑘 +
+
+𝑎𝑘−1 +
+
+1
+
+1
+𝑎𝑘−2 + ...
+
+,
+
+1
+
++
+
+𝑎2 +
+
+1
+𝑝1
+𝑝0
+
+Capítulo 2. Frações Contínuas Simples
+
+18
+
+onde 𝑝1 = 𝑎1𝑎0 + 1 e 𝑝0 = 𝑎0. Logo
+
+𝑝𝑘
+𝑝𝑘−1
+
+= 𝑎𝑘 +
+
+𝑎𝑘−1 +
+
+1
+
+1
+
+= [𝑎𝑘; 𝑎𝑘−1, 𝑎𝑘−2, ..., 𝑎1, 𝑎0].
+
+𝑎𝑘−2 + ...
+
++
+
+𝑎2 +
+
+1
+
+1
+
+𝑎1 +
+
+1
+𝑎0
+
+De modo análogo
+
+𝑞𝑘
+𝑞𝑘−1
+
+𝑞𝑘
+𝑞𝑘−1
+
+temos
+
+= 𝑎𝑘 +
+
+𝑎𝑘−1 +
+
+1
+
+1
+𝑎𝑘−2 + ...
+
+.
+
+1
+
++
+
+𝑎2 +
+
+1
+𝑞1
+𝑞0
+
+Como 𝑞1 = 𝑎1 e 𝑞0 = 1 implica
+
+𝑞𝑘
+𝑞𝑘−1
+
+= 𝑎𝑘 +
+
+𝑎𝑘−1 +
+
+= [𝑎𝑘; 𝑎𝑘−1, 𝑎𝑘−2, ..., 𝑎1].
+
+1
+
+1
+𝑎𝑘−2 + ...
+
+1
+
++
+
+𝑎2 +
+
+1
+𝑎1
+
+Exemplo 2.11. Se 𝑐𝑘 =
+então
+
+𝑝𝑘
+𝑞𝑘
+
+é a k-ésima reduzida da fração contínua [1; 2, 3, 4, ..., 𝑛, 𝑛+1],
+
+𝑝𝑛 = 𝑛𝑝𝑛−1 + 𝑛𝑝𝑛−2 + (𝑛 − 1)𝑝𝑛−3 + · · · + 3𝑝1 + 2𝑝0 + 𝑝0 + 1
+
+Prova. Pela fração contínua, sabemos que 𝑝0 = 1, 𝑝1 = 3, 𝑎𝑘 = (𝑘 + 1) e, pelo Teorema
+2.9, 𝑝𝑘 = 𝑎𝑘𝑝𝑘−1 + 𝑝𝑘−2 ⇒ 𝑝𝑘 = (𝑘 + 1)𝑝𝑘−1 + 𝑝𝑘−2, logo 𝑝𝑘 − 𝑝𝑘−1 = 𝑘𝑝𝑘−1 + 𝑝𝑘−2. Para
+
+Capítulo 2. Frações Contínuas Simples
+
+19
+
+𝑘 ≥ 2 temos
+
+𝑛
+∑︁
+
+(𝑝𝑘 − 𝑝𝑘−1) =
+
+𝑛
+∑︁
+
+(𝑘𝑝𝑘−1 + 𝑝𝑘−2)
+
+𝑘=2
+
+𝑝𝑛 − 𝑝1 =
+
+𝑘=2
+𝑛
+∑︁
+
+𝑘=2
+(︃
+
+𝑘𝑝𝑘−1 +
+
+𝑛
+∑︁
+
+𝑘=2
+
+𝑝𝑘−2
+
+𝑝𝑛 − 𝑝1 =
+
+𝑛𝑝𝑛−1 +
+
+𝑛−1
+∑︁
+
+𝑘=2
+
+)︃
+
+𝑘𝑝𝑘−1
+
++
+
+(︃𝑛−1
+∑︁
+
+𝑘=2
+
+)︃
+
+𝑝𝑘−1 + 𝑝0
+
+𝑝𝑛 = 𝑛𝑝𝑛−1 +
+
+𝑛−1
+∑︁
+
+(𝑘 + 1)𝑝𝑘−1 + 𝑝1 + 𝑝0
+
+𝑘=2
+
+𝑝𝑛 = 𝑛𝑝𝑛−1 + 𝑛𝑝𝑛−2 + · · · + 4𝑝2 + 3𝑝1 + 𝑝1 + 𝑝0
+
+𝑝𝑛 = 𝑛𝑝𝑛−1 + 𝑛𝑝𝑛−2 + · · · + 4𝑝2 + 3𝑝1 + 3𝑝0 + 𝑝0
+
+𝑝𝑛 = 𝑛𝑝𝑛−1 + 𝑛𝑝𝑛−2 + · · · + 4𝑝2 + 3𝑝1 + 2𝑝0 + 𝑝0 + 1.
+
+Teorema 2.12. A relação 𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘 = (−1)𝑘−1 se verifica para todo 𝑘 ≥ 1, onde
+𝑝𝑘 e 𝑞𝑘 são, respectivamente, o numerador e denominador da k-ésima reduzida da fração
+contínua [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘−1, 𝑎𝑘].
+
+Prova. Este resultado será demostrado por indução matemática.
+
+i) Para 𝑘 = 1, temos que 𝑝1𝑞0 − 𝑝0𝑞1 = (𝑎0𝑎1 + 1).1 − 𝑎0.𝑎1 = 1 = (−1)0 = (−1)1−1.
+
+ii) Supondo que 𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘 = (−1)𝑘−1 é válido para algum 𝑘 natural maior do que
+
+ou igual a 2, então
+
+𝑝𝑘+1𝑞𝑘 − 𝑝𝑘𝑞𝑘+1 = (𝑎𝑘+1𝑝𝑘 + 𝑝𝑘−1)𝑞𝑘 − 𝑝𝑘(𝑎𝑘+1𝑞𝑘 + 𝑞𝑘−1)
+
+= 𝑎𝑘+1𝑝𝑘𝑞𝑘 + 𝑝𝑘−1𝑞𝑘 − 𝑎𝑘+1𝑝𝑘𝑞𝑘 − 𝑝𝑘𝑞𝑘−1
+
+= 𝑝𝑘−1𝑞𝑘 − 𝑝𝑘𝑞𝑘−1
+
+= −(𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘)
+= (−1)(−1)𝑘−1 = (−1)𝑘.
+
+Assim a relação é válida para todo inteiro positivo.
+
+Corolário 2.13. Para toda reduzida 𝑐𝑘 =
+
+𝑝𝑘
+𝑞𝑘
+
+tem-se que (𝑝𝑘, 𝑞𝑘) = 1.
+
+Prova. Seja 𝑑 = (𝑝𝑘, 𝑞𝑘), então 𝑑 | 𝑝𝑘 e 𝑑 | 𝑞𝑘, mas como 𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘 = (−1)𝑘−1.
+Então 𝑑 | 1 ou 𝑑 | −1, logo 𝑑 = 1.
+
+(cid:3)
+
+(cid:3)
+
+Capítulo 2. Frações Contínuas Simples
+
+20
+
+Exemplo 2.14. Mostre que 𝑐𝑘 =
+
+, onde 𝑐𝑘 é a n-ésima reduzida da fração contínua
+
+[0; 1, 1, 1, ...] e 𝑢𝑘 é um número de Fibonacci.
+
+𝑢𝑘
+𝑢𝑘+1
+
+Prova. Com efeito, como todos os 𝑎𝑖 = 1 para 𝑖 ≥ 1 então 𝑝𝑘 = 𝑝𝑘−1 + 𝑝𝑘−2 e 𝑞𝑘 =
+𝑞𝑘−1 + 𝑞𝑘−2, sendo 𝑝1 = 1, 𝑝2 = 1, 𝑞0 = 1 e 𝑞1 = 1. Logo 𝑢𝑘 = 𝑝𝑘 e 𝑢𝑘+1 = 𝑞𝑘, resulta que
+
+𝑐𝑘 =
+
+𝑝𝑘
+𝑞𝑘
+
+=
+
+𝑢𝑘
+𝑢𝑘+1
+
+.
+
+(cid:3)
+
+O resultado a seguir é consequência direta da demonstração do exemplo anterior.
+
+Exemplo 2.15. Sendo 𝑢𝑘 o k-ésimo número de Fibonacci, temos que 𝑢2
+(−1)𝑘−1 para 𝑘 ≥ 2.
+
+𝑘 − 𝑢𝑘+1𝑢𝑘−1 =
+
+Prova. Considerando Teorema 2.12, temos que 𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘 = (−1)𝑘−1, para 𝑘 ≥ 2.
+Sendo 𝑢𝑘 = 𝑝𝑘 e 𝑢𝑘−1 = 𝑞𝑘, temos
+
+𝑢𝑘𝑢𝑘 − 𝑢𝑘−1𝑢𝑘+1 = (−1)𝑘−1
+𝑘 − 𝑢𝑘−1𝑢𝑘+1 = (−1)𝑘−1.
+𝑢2
+
+(cid:3)
+
+Os quocientes das reduzidas das Frações Contínuas formam uma sequência cres-
+cente a partir do 𝑞1, ou seja 𝑞0 ≤ 𝑞1 e 𝑞𝑘−1 < 𝑞𝑘 para todo inteiro 𝑘 tal que 𝑘 ≥ 2. Este
+resultado é mostrado no Lema 2.16 que segue abaixo.
+
+Lema 2.16. Se 𝑞𝑘 é o denominador da k-ésima reduzida da fração contínua [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛],
+então 𝑞𝑘−1 ≤ 𝑞𝑘, para 1 ≤ 𝑘 ≤ 𝑛. A desigualdade é estrita para 𝑘 > 1.
+
+Prova. Usaremos novamente o princípio de indução matemática para demonstrar este
+resultado.
+
+i) Para 𝑘 = 1, temos que 𝑞0 = 1 ≤ 𝑎1 = 𝑞1. Sendo 𝑘 = 2 temos 𝑞2 = 𝑎2𝑞1 + 𝑞0, com
+
+𝑎2, 𝑞1, 𝑞0 positivos, logo 𝑞2 > 𝑎2𝑞1 o que resulta 𝑞2 > 𝑞1.
+
+ii) Supondo que seja verdadeiro para algum 𝑚 inteiro tal que 1 ≤ 𝑚 < 𝑘, então como
+
+𝑞𝑚+1 = 𝑎𝑚+1𝑞𝑚 + 𝑞𝑚−1 temos 𝑞𝑚+1 > 𝑎𝑚+1𝑞𝑚 > 𝑞𝑚, pois 𝑞𝑚−1, 𝑎𝑚+1 ≥ 1.
+
+Portanto o resultado é válido para todo inteiro 𝑘 ≥ 1.
+
+(cid:3)
+
+Capítulo 2. Frações Contínuas Simples
+
+21
+
+Proposição 2.17. Se 𝑐𝑘 =
+então
+
+𝑝𝑘
+𝑞𝑘
+
+para 2 ≤ 𝑘 ≤ 𝑛.
+
+é a k-ésima reduzida da fração contínua simples [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛],
+
+𝑞𝑘 ≥ 2
+
+𝑘−1
+2 ,
+
+Prova. Do Teorema 2.9, temos que 𝑞𝑘 = 𝑎𝑘𝑞𝑘−1 + 𝑞𝑘−2 e, pelo Lema 2.16, sabemos que
+a sequência dos quocientes das reduzidas é não decrescente, ou seja 𝑞𝑘−2 ≤ 𝑞𝑘−1, para
+2 ≤ 𝑘 ≤ 𝑛. Sendo 𝑎𝑘 inteiro positivo, então 𝑎𝑘𝑞𝑘−2 ≤ 𝑎𝑘𝑞𝑘−1 implica que 𝑞𝑘−2 ≤ 𝑎𝑘𝑞𝑘−1.
+
+Adicionando 𝑞𝑘−2 em ambos os lados da desigualdade, obtemos
+
+𝑞𝑘−2 + 𝑞𝑘−2 ≤ 𝑎𝑘𝑞𝑘−1 + 𝑞𝑘−2
+
+2𝑞𝑘−2 ≤ 𝑎𝑘𝑞𝑘−1 + 𝑞𝑘−2
+
+2𝑞𝑘−2 ≤ 𝑞𝑘
+
+2 ≤
+
+𝑞𝑘
+𝑞𝑘−2
+
+.
+
+Portanto
+
+)︃
+
+(︃ 𝑞2
+𝑞0
+
+)︃
+
+(︃𝑞3
+𝑞1
+
+.
+
+(︃ 𝑞4
+𝑞2
+
+.
+
+)︃
+
+. · · · .
+
+)︃
+
+(︃ 𝑞𝑘−2
+𝑞𝑘−4
+
+(︃𝑞𝑘−1
+𝑞𝑘−3
+
+.
+
+)︃
+
+.
+
+(︃ 𝑞𝑘
+𝑞𝑘−2
+(︃ 𝑞𝑘𝑞𝑘−1
+𝑞0𝑞1
+
+)︃
+
+)︃
+
+≥ 2𝑘−1
+
+≥ 2𝑘−1
+
+Sendo 𝑞0 = 1, 𝑞1 = 𝑎1 ≥ 1 implica que
+
+1
+𝑞1
+
+≤ 1. Dessa forma,
+
+𝑞𝑘𝑞𝑘−1 ≥
+
+𝑞𝑘𝑞𝑘−1
+𝑞0𝑞1
+
+≥ 2𝑘−1
+
+𝑘 ≥ 𝑞𝑘𝑞𝑘−1 ≥ 2𝑘−1
+𝑞2
+𝑘−1
+2 .
+
+𝑞𝑘 ≥ 2
+
+Teorema 2.18. As reduzidas de índices ímpares de uma fração contínua formam uma
+sequência estritamente decrescente, ao passo que as de índices pares formam uma sequên-
+cia estritamente crescente.
+
+Capítulo 2. Frações Contínuas Simples
+
+22
+
+Prova. Seja
+
+𝑐𝑘+2 − 𝑐𝑘 = (𝑐𝑘+2 − 𝑐𝑘+1) + (𝑐𝑘+1 − 𝑐𝑘)
+
+(︃𝑝𝑘+2
+𝑞𝑘+2
+
+−
+
+𝑝𝑘+1
+𝑞𝑘+1
+
+)︃
+
++
+
+)︃
+
+(︃𝑝𝑘+1
+𝑞𝑘+1
+
+−
+
+𝑝𝑘
+𝑞𝑘
+
+𝑝𝑘+2𝑞𝑘+1 − 𝑝𝑘+1𝑞𝑘+2
+𝑞𝑘+1𝑞𝑘+2
+
++
+
+𝑝𝑘+1𝑞𝑘 − 𝑝𝑘𝑞𝑘+1
+𝑞𝑘+1𝑞𝑘
+
+=
+
+=
+
+=
+
+(−1)𝑘+1
+𝑞𝑘+1𝑞𝑘+2
+
++
+
+(−1)𝑘
+𝑞𝑘+1𝑞𝑘
+
+= (−1)𝑘
+
+= (−1)𝑘
+
+(︃ 1
+
+−
+
+𝑞𝑘+1𝑞𝑘
+(︃ 𝑞𝑘+2 − 𝑞𝑘
+𝑞𝑘+2𝑞𝑘+1𝑞𝑘
+
+)︃
+
+1
+𝑞𝑘+1𝑞𝑘+2
+)︃
+
+.
+
+Pelo Lema 2.16, 𝑞𝑘+2 > 𝑞𝑘+1 e 𝑞𝑘+1 > 𝑞𝑘 então 𝑞𝑘+2 > 𝑞𝑘, para todo 𝑘 > 1.
+
+Portanto 𝑐𝑘+2 − 𝑐𝑘 < 0, se 𝑘 é ímpar. Dessa forma, as reduzidas de índices ímpares
+
+determinam uma sequência estritamente decrescente, ou seja 𝑐1 > 𝑐3 > 𝑐5 > · · · .
+
+Por outro lado, se 𝑘 é par, então 𝑐𝑘+2 − 𝑐𝑘 > 0 e, assim, a sequência das reduzidas
+
+de ordem par é crescente.
+
+Teorema 2.19. Qualquer reduzida de índice ímpar é maior do que qualquer reduzida de
+índice par.
+
+Prova. De fato, pelo Teorema 2.12, temos que 𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘 = (−1)𝑘−1. Assim, sendo
+𝑞𝑘𝑞𝑘−1 ̸= 0, segue que
+
+(cid:3)
+
+𝑝𝑘𝑞𝑘−1 − 𝑝𝑘−1𝑞𝑘
+𝑞𝑘𝑞𝑘−1
+𝑝𝑘
+𝑞𝑘
+
+𝑝𝑘−1
+𝑞𝑘−1
+
+−
+
+=
+
+=
+
+𝑐𝑘 − 𝑐𝑘−1 =
+
+(−1)𝑘−1
+𝑞𝑘𝑞𝑘−1
+(−1)𝑘−1
+𝑞𝑘𝑞𝑘−1
+(−1)𝑘−1
+𝑞𝑘𝑞𝑘−1
+
+.
+
+Para 𝑘 = 2𝑗, com 𝑗 ∈ N, temos que
+
+< 0, portanto 𝑐2𝑗 − 𝑐2𝑗−1 < 0 o que implica
+
+𝑐2𝑗 < 𝑐2𝑗−1. Seja 𝑐2𝑗 a 2j-ésima reduzida de uma fração contínua, como
+
+(−1)2𝑗−1
+𝑞2𝑗𝑞2𝑗−1
+
+com 𝑟 um inteiro positivo. Logo 𝑐2𝑗 < 𝑐2𝑟−1 para 𝑗, 𝑟 ∈ N.
+
+𝑐2𝑗 < 𝑐2𝑗+2𝑟 < 𝑐2𝑗+2𝑟−1 < 𝑐2𝑟−1,
+
+(cid:3)
+
+Capítulo 2. Frações Contínuas Simples
+
+23
+
+2.3 Soluções de Equações Diofantinas através de Frações Contí-
+
+nuas
+
+Seja 𝑎𝑥 + 𝑏𝑦 = 𝑐 uma equação diofantina, com 𝑎, 𝑏, 𝑐 ∈ Z e (𝑎, 𝑏) = 1. Assim
+para encontrarmos um par 𝑋 e 𝑌 que satisfaça a equação precisamos expandir o número
+= [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛], então os dois últimos
+racional
+
+em fração contínua. Considerando
+
+𝑎
+𝑏
+
+𝑎
+𝑏
+reduzidas são 𝑐𝑛−1 =
+
+𝑝𝑛−1
+𝑞𝑛−1
+
+e 𝑐𝑛 =
+
+𝑝𝑛
+𝑞𝑛
+
+=
+
+𝑎
+𝑏
+
+, pois (𝑝𝑛, 𝑞𝑛) = 1.
+
+Pela relação 2.12, temos que 𝑝𝑛𝑞𝑛−1 − 𝑝𝑛−1𝑞𝑛 = (−1)𝑛−1, mas 𝑝𝑛 = 𝑎 e 𝑞𝑛 = 𝑏
+
+resulta que
+
+𝑎𝑞𝑛−1 − 𝑏𝑝𝑛−1 = (−1)𝑛−1.
+
+i) Para 𝑛 ímpar, 𝑎𝑞𝑛−1 − 𝑏𝑝𝑛−1 = 1 logo 𝑥0 = 𝑐𝑞𝑛−1 e 𝑦0 = −𝑐𝑝𝑛−1 é uma solução
+particular. Dessa forma, 𝑋 = 𝑐𝑞𝑛−1 + 𝑏𝑡 e 𝑌 = −𝑐𝑝𝑛−1 − 𝑎𝑡, com 𝑡 ∈ Z, é a solução
+da equação
+
+ii) Para 𝑛 par, temos que 𝑎𝑞𝑛−1 − 𝑏𝑝𝑛−1 = −1 ⇒ −𝑎𝑞𝑛−1 + 𝑏𝑝𝑛−1 = 1. Portanto
+𝑥0 = −𝑐𝑞𝑛−1 e 𝑦0 = 𝑐𝑝𝑛−1 é uma solução particular. Assim 𝑋 = −𝑐𝑞𝑛−1 + 𝑏𝑡 e
+𝑌 = 𝑐𝑝𝑛−1 − 𝑎𝑡, com 𝑡 ∈ Z, é a solução da equação.
+
+Exemplo 2.20. Resolva a equação diofantina linear
+
+363𝑥 + 102𝑦 = 90
+
+por meio das frações contínuas.
+
+Solução. Sabemos que o (363, 102) = 3, assim podemos simplificar a equação dividindo
+ambos os membros por 3, logo temos
+
+121𝑥 + 34𝑦 = 30.
+
+Pelo Exemplo 2.1, temos
+
+121
+34
+
+= [3; 1, 1, 3, 1, 3] portanto
+
+𝑝4
+𝑞4
+
+= 3 +
+
+1 +
+
+isso 𝑝4 = 32 e 𝑞4 = 9. Como 𝑛 = 5 é ímpar, resulta que
+
+, com
+
+1
+
+1
+
+1 +
+
+1
+
+3 +
+
+1
+1
+
+121(9) − 34(32) = 1
+
+121(9.30) − 34(32.30) = 30
+
+121(270) + 34(−960) = 30.
+
+Capítulo 2. Frações Contínuas Simples
+
+24
+
+Dessa forma, 𝑥0 = 270 e 𝑦0 = −960 é uma solução particular da equação diofantina,
+
+ao passo que
+
+𝑥 = 270 + 34𝑡
+
+𝑦 = −960 − 121𝑡,
+
+com 𝑡 ∈ Z, é a solução geral.
+
+2.4 Frações Contínuas Infinitas
+
+Para estudarmos as frações contínuas infinitas, precisaremos de um resultado da
+Análise matemática. Dessa forma, iremos apresentar o Teorema, sem, contudo, demonstrá-
+lo. O leitor interessado em compreender a demonstração do resultado que segue pode
+encontrá-lo em [11].
+
+Teorema 2.21. Toda sequência crescente (decrescente) limitada superiormente (inferi-
+ormente) é convergente.
+
+Com esse resultado podemos demonstrar o teorema que segue.
+
+Teorema 2.22. Sejam 𝑎0, 𝑎1, 𝑎2, ... uma sequência infinita de números inteiros, com
+𝑎1, 𝑎2, ... positivos e 𝑐𝑘 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑘]. Então a sequência das reduzidas 𝑐𝑘 tende para
+o limite 𝛼, isto é
+
+lim
+𝑘→∝
+
+𝑐𝑘 = 𝛼.
+
+Prova. Pelo Teorema 2.18, sabemos que 𝑐0 < 𝑐2 < 𝑐4 < 𝑐6 < · · · , ou seja as reduzidas
+de índices pares formam uma sequência crescente. Mas pelo Teorema 2.19, temos que
+qualquer reduzida de ordem par é menor do qualquer uma de ordem ímpar, em particular
+𝑐2𝑘 < 𝑐1, para todo 𝑘 ∈ N. Dessa forma, a sequência formada pelas reduzidas de ordem par
+é crescente e limitada superiormente, logo, pelo teorema anterior, é convergente. Analoga-
+mente, a sequência das reduzidas de ordem ímpar é decrescente e limitada inferiormente,
+portanto (𝑐2𝑘−1)𝑘∈N é convergente.
+
+Suponha que lim𝑘→∝ 𝑐2𝑘 = 𝐿1 e que lim𝑘→∝ 𝑐2𝑘−1 = 𝐿2, assim
+
+𝑐2𝑘
+
+𝐿2 − 𝐿1 = lim
+𝑘→∝
+
+= lim
+𝑘→∝
+
+= lim
+𝑘→∝
+
+= lim
+𝑘→∝
+
+𝑐2𝑘−1 − lim
+𝑘→∝
+(𝑐2𝑘−1 − 𝑐2𝑘)
+(︃𝑝2𝑘−1
+𝑞2𝑘−1
+(︃𝑝2𝑘−1𝑞2𝑘
+𝑞2𝑘𝑞2𝑘−1
+
+−
+
+−
+
+𝑝2𝑘
+𝑞2𝑘
+
+)︃
+
+)︃
+
+𝑝2𝑘𝑞2𝑘−1
+𝑞2𝑘𝑞2𝑘−1
+
+= lim
+𝑘→∝
+
+𝑝2𝑘−1𝑞2𝑘 − 𝑝2𝑘𝑞2𝑘−1
+𝑞2𝑘𝑞2𝑘−1
+
+= lim
+𝑘→∝
+
+(−1)2𝑘
+𝑞2𝑘𝑞2𝑘−1
+
+= lim
+𝑘→∝
+
+1
+𝑞2𝑘𝑞2𝑘−1
+
+.
+
+Capítulo 2. Frações Contínuas Simples
+
+25
+
+Sendo lim𝑘→∝
+
+𝐿2 = 𝐿1 = 𝛼.
+
+1
+𝑞2𝑘𝑞2𝑘−1
+
+= 0 pois 𝑞𝑘 ≥ 2
+
+𝑘−1
+
+2 para 𝑘 ∈ N, implica que 𝐿2 − 𝐿1 = 0, logo
+
+(cid:3)
+
+Corolário 2.23. Se a sequência das reduzidas (𝑐𝑛)𝑛∈N de [𝑎0; 𝑎1, 𝑎2, ...] converge para 𝛼,
+𝑝𝑛
+então 𝛼 pertence ao segmento de extremos
+𝑞𝑛
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+e
+
+.
+
+Prova. Pelo Teorema 2.22, temos
+
+lim
+𝑘→∝
+
+𝑐2𝑘 = 𝛼
+
+lim
+𝑘→∝
+
+𝑐2𝑘−1 = 𝛼.
+
+Sendo (𝑐2𝑘)𝑘∈N crescente implica que 𝑐2𝑘 < 𝛼, para todo 𝑘 natural. Por outro lado, 𝛼 <
+𝑐2𝑘−1, pois (𝑐2𝑘−1)𝑘∈N é decrescente.
+
+i) Para 𝑛 par, implica 𝑐𝑛 < 𝛼 < 𝑐𝑛+1. Logo 𝛼 ∈ (𝑐𝑛; 𝑐𝑛+1) .
+
+ii) Para 𝑛 ímpar, temos 𝑐𝑛+1 < 𝛼 < 𝑐𝑛. Logo 𝛼 ∈ (𝑐𝑛+1; 𝑐𝑛) .
+
+De toda forma, 𝛼 pertence ao segmento de extremos 𝑐𝑛 =
+
+𝑝𝑛
+𝑞𝑛
+
+e 𝑐𝑛+1 =
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+.
+
+(cid:3)
+
+Definição 2.24. Se 𝑎0, 𝑎1, 𝑎2, ... é uma sequência infinita de numeros inteiros, com 𝑎1, 𝑎2, · · ·
+positivos, então a fração contínua infinita [𝑎0; 𝑎1, 𝑎2, ...] tem o valor
+
+lim
+𝑛→∝
+
+[𝑎0; 𝑎1, 𝑎2, ...𝑎𝑛].
+
+Exemplo 2.25. Vamos recorrer ao Exemplo 2.14 para ilustrarmos a definição acima. Pela
+definição de fração contínua infinita, sabemos [1; 1, 1, ...] = lim𝑛→∝[1; 1, 1, ..., 1]. Como a
+n-ésima reduzida é dada por 𝑐𝑛 =
+
+, então sendo 𝛼 = [1; 1, 1, ...] implica que
+
+𝑢𝑛
+𝑢𝑛+1
+
+𝛼 = lim
+𝑛→∝
+
+[1; 1, 1, ..., 1] = lim
+𝑛→∝
+
+= lim
+𝑛→∝
+
+𝑢𝑛
+𝑢𝑛−1
+𝑢𝑛−1 + 𝑢𝑛−2
+𝑢𝑛−1
+
+(︃
+
+)︃
+
+𝑢𝑛−2
+𝑢𝑛−1
+
+= lim
+𝑛→∝
+
+1 +
+
+= 1 + lim
+𝑛→∝
+
+𝑢𝑛−2
+𝑢𝑛−1
+1
+
+= 1 +
+
+lim𝑛→∝
+
+𝑢𝑛−1
+𝑢𝑛−2
+
+= 1 +
+
+1
+𝛼
+
+Capítulo 2. Frações Contínuas Simples
+
+26
+
+Como 𝛼 = 1 +
+
+1
+𝛼
+
+𝛼2 − 𝛼 − 1 = 0. Logo [1; 1, 1, ...] =
+
+√
+
+5
+
+.
+
+1 +
+2
+
+, então [1; 1, 1, ...] é a raiz positiva da equação do segundo grau
+
+Lema 2.26. Se 𝛼 = [𝑎0; 𝑎1, 𝑎2, ...], então 0 < |𝛼 − 𝑐𝑛| <
+
+1
+𝑞𝑛𝑞𝑛+1
+
+.
+
+Prova. Como 𝛼 = [𝑎0; 𝑎1, 𝑎2, ...] então
+
+𝛼 = lim
+𝑛→∝
+
+[𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛]
+
+𝛼 = lim
+𝑛→∝
+
+𝑐𝑛.
+
+Assim, pelo Corolário 2.23, 𝛼 está estritamente entre 𝑐𝑛 e 𝑐𝑛+1, assim |𝛼 − 𝑐𝑛| > 0 e,
+além disso,
+
+−
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+|𝛼 − 𝑐𝑛| <
+
+|𝛼 − 𝑐𝑛| < |𝑐𝑛+1 − 𝑐𝑛|
+⃒
+𝑝𝑛
+𝑝𝑛+1
+⃒
+⃒
+⃒
+𝑞𝑛
+𝑞𝑛+1
+⃒
+⃒
+𝑝𝑛+1𝑞𝑛 − 𝑝𝑛𝑞𝑛+1
+⃒
+⃒
+⃒
+𝑞𝑛𝑞𝑛+1
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+
+|𝛼 − 𝑐𝑛| <
+
+|𝛼 − 𝑐𝑛| <
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+(−1)𝑛
+𝑞𝑛𝑞𝑛+1
+1
+𝑞𝑛𝑞𝑛+1
+
+,
+
+|𝛼 − 𝑐𝑛| <
+
+logo 0 < |𝛼 − 𝑐𝑛| <
+
+1
+𝑞𝑛𝑞𝑛+1
+
+.
+
+Teorema 2.27. Sejam 𝑎0, 𝑎1, 𝑎2, ... números inteiros, com 𝑎1, 𝑎2, ... positivos. Então [𝑎0; 𝑎1, 𝑎2, ...]
+é irracional.
+
+(cid:3)
+
+Prova. Suponha, por absurdo, que 𝛼 = [𝑎0; 𝑎1, 𝑎2, ...] é racional, assim existem 𝑎, 𝑏 intei-
+
+ros, com 𝑏 positivo, tais que 𝛼 =
+
+. Pelo Lema anterior, temos que 0 <
+
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+− 𝑐𝑛
+
+<
+
+⃒
+⃒
+⃒
+⃒
+
+1
+𝑞𝑛𝑞𝑛+1
+
+,
+
+𝑎
+𝑏
+
+Capítulo 2. Frações Contínuas Simples
+
+27
+
+logo
+
+−
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+⃒
+𝑝𝑛
+⃒
+⃒
+⃒
+𝑞𝑛
+⃒
+⃒
+⃒
+𝑎𝑞𝑛 − 𝑏𝑝𝑛
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+𝑏𝑞𝑛
+⃒
+⃒
+|𝑎𝑞𝑛 − 𝑏𝑝𝑛|
+𝑏𝑞𝑛
+
+<
+
+<
+
+<
+
+|𝑎𝑞𝑛 − 𝑏𝑝𝑛| <
+
+1
+𝑞𝑛𝑞𝑛+1
+1
+𝑞𝑛𝑞𝑛+1
+1
+𝑞𝑛𝑞𝑛+1
+𝑏
+𝑞𝑛+1
+
+,
+
+. Sabemos que 𝑞𝑛 é inteiro e aumenta à medida que 𝑛
+
+portanto 0 < |𝑎𝑞𝑛 − 𝑏𝑝𝑛| <
+
+𝑏
+𝑞𝑛+1
+
+cresce. Assim tomando um 𝑛 suficientemente grande tal que 𝑏 < 𝑞𝑛+1, então
+
+Assim,
+
+0 < |𝑎𝑞𝑛 − 𝑏𝑝𝑛| < 1,
+
+𝑏
+𝑞𝑛+1
+
+< 1.
+
+que é uma contradição, porque 𝑎, 𝑏, 𝑞𝑛, 𝑝𝑛 são inteiros, logo |𝑎𝑞𝑛 − 𝑏𝑝𝑛| é um inteiro que
+estaria entre 0 e 1. Portanto 𝛼 = [𝑎0, 𝑎1, 𝑎2, ...] é um irracional.
+
+Teorema 2.28. Se [𝑎0; 𝑎1, 𝑎2, ...] e [𝑏0; 𝑏1, 𝑏2, ...] representam o mesmo número irracional,
+então 𝑎𝑛 = 𝑏𝑛 para todo 𝑛 ≥ 0.
+
+Prova. A prova será feita por indução.
+
+(cid:3)
+
+i) Devemos mostrar primeiramente que 𝑎0 = 𝑏0. De fato, supondo que [𝑎0; 𝑎1, 𝑎2, ...] =
+𝑛 as n-ésimas reduzidas de cada uma das frações
+
+𝛼 = [𝑏0; 𝑏1, 𝑏2, ...] e que 𝑐𝑛 e 𝑐′
+contínuas infinitas, então 𝑐0 < 𝛼 < 𝑐1 e 𝑐′
+
+0 < 𝛼 < 𝑐′
+
+1. Mais precisamente, temos
+
+𝑎0 < 𝛼 < 𝑎0 +
+
+1
+𝑎1
+
+𝑏0 < 𝛼 < 𝑏0 +
+
+1
+𝑏1
+
+.
+
+Sendo 𝑎1 e 𝑏1 inteiros positivos, então
+
+1
+𝑎1
+
+≤ 1 e
+
+1
+𝑏1
+
+≤ 1. Assim
+
+𝑎0 < 𝛼 < 𝑎0 + 1
+
+𝑒
+
+𝑏0 < 𝛼 < 𝑏0 + 1
+
+𝑎0 = ⌊𝛼⌋
+
+𝑏0 = ⌊𝛼⌋,
+
+onde ⌊𝛼⌋ é a parte inteira do irracional 𝛼. Dessa forma 𝑎0 = 𝑏0.
+
+Capítulo 2. Frações Contínuas Simples
+
+28
+
+ii) Supondo que 𝑎𝑘 = 𝑏𝑘 para todo 𝑘 ≤ 𝑛, então devemos mostrar que 𝑎𝑛+1 = 𝑏𝑛+1.
+
+Pois bem, como
+
+[𝑎0; 𝑎1, 𝑎2, ...] = lim
+𝑛→∝
+
+[𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛]
+(︃
+
+= lim
+𝑛→∝
+
+𝑎0 +
+
+(︃
+
+= 𝑎0 + lim
+𝑛→∝
+
+1
+[𝑎1; 𝑎2, 𝑎3, ..., 𝑎𝑛]
+1
+[𝑎1; 𝑎2, 𝑎3, ..., 𝑎𝑛]
+
+)︃
+
+)︃
+
+= 𝑎0 +
+
+= 𝑎0 +
+
+1
+lim𝑛→∝[𝑎1; 𝑎2, 𝑎3, ..., 𝑎𝑛]
+
+1
+[𝑎1; 𝑎2, 𝑎3, ...]
+
+e, de forma análoga,
+
+[𝑏0; 𝑏1, 𝑏2, ...] = 𝑏0 +
+
+1
+[𝑏1; 𝑏2, 𝑏3, ...]
+
+,
+
+então sendo 𝑎0 = 𝑏0 implica [𝑎1; 𝑎2, 𝑎3, ...] = [𝑏1; 𝑏2, 𝑏3, ...]. Procedendo da mesma
+forma e tendo 𝑎0 = 𝑏0, 𝑎1 = 𝑏1, ..., 𝑎𝑛 = 𝑏𝑛 resulta
+
+[𝑎𝑛+1; 𝑎𝑛+2, 𝑎𝑛+3, ...] = [𝑏𝑛+1; 𝑏𝑛+2, 𝑏𝑛+3, ...] = 𝛽.
+
+Logo
+
+𝑎𝑛+1 < 𝛽 < 𝑎𝑛+1 + 1
+
+𝑏𝑛+1 < 𝛽 < 𝑏𝑛+1 + 1
+
+𝑎𝑛+1 = ⌊𝛽⌋
+
+𝑏𝑛+1 = ⌊𝛽⌋,
+
+portanto 𝑎𝑛+1 = 𝑏𝑛+1. Dessa forma 𝑎𝑛 = 𝑏𝑛 para todo 𝑛 ∈ N.
+
+(cid:3)
+
+Teorema 2.29. Seja 𝛼 = 𝑥0 um número irracional. Se 𝑥𝑛+1 é definido recursivamente
+como 𝑥𝑛+1 =
+, com 𝑎𝑛 = ⌊𝑥𝑛⌋, então 𝛼 é o valor da fração contínua infinita
+
+1
+𝑥𝑛 − ⌊𝑥𝑛⌋
+
+[𝑎0; 𝑎1, 𝑎2, ...].
+
+Prova. De fato, como 𝑥𝑛+1 =
+
+1
+𝑥𝑛 − ⌊𝑥𝑛⌋
+
+implica que 𝑥𝑛 = ⌊𝑥𝑛⌋ +
+
+1
+𝑥𝑛+1
+
+= 𝑎𝑛 +
+
+1
+𝑥𝑛+1
+
+,
+
+Capítulo 2. Frações Contínuas Simples
+
+29
+
+para 𝑛 ≥ 0. Portanto
+
+𝛼 = 𝑎0 +
+
+= 𝑎0 +
+
+:
+
+= 𝑎0 +
+
+1
+𝑥1
+
+1
+
+𝑎1 +
+
+1
+𝑥2
+
+𝑎1 +
+
+1
+
+1
+
+𝑎2 + ...
+
+1
+
++
+
+𝑎𝑛 +
+
+1
+𝑥𝑛+1
+
+= [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, 𝑥𝑛+1],
+
+logo 𝛼 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, 𝑥𝑛+1].
+
+Assim, como 𝑥0 é irracional, implica que 𝑥𝑛+1 é irracional, para todo 𝑛 ≥ 0. Pro-
+
+varemos esse fato por indução sobre 𝑛.
+
+i) Pois bem, para 𝑛 = 0, 𝑥1 =
+
+será.
+
+1
+𝑥0 − ⌊𝑥0⌋
+
+. Sendo 𝑥0 − ⌊𝑥0⌋ irracional, então 𝑥1 também
+
+ii) Supondo que 𝑥𝑛 é um número irracional, para algum 𝑛 natural. Então 𝑥𝑛 − ⌊𝑥𝑛⌋ é
+
+é irracional. Assim 𝑥𝑛+1 é um número irracional, para
+
+irracional, logo
+
+todo 𝑛 ≥ 0.
+
+1
+𝑥𝑛 − ⌊𝑥𝑛⌋
+
+Como 𝑥𝑛 − ⌊𝑥𝑛⌋ < 1 então 1 <
+
+= 𝑥𝑛+1, para 𝑛 ≥ 0. Sendo 𝑎𝑛+1 =
+
+⌊𝑥𝑛+1⌋, logo 𝑎𝑛+1 ≥ 1. Assim os inteiros 𝑎𝑛+1 são todos maiores ou iguais a 1, exceto
+possivelmente o 𝑎0.
+
+1
+𝑥𝑛 − ⌊𝑥𝑛⌋
+
+Considerando a fração contínua infinita [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, ...], verificam-se que as
+(𝑛+1) primeiras reduzidas são iguais às de [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, 𝑥𝑛+1]. Como 𝛼 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, 𝑥𝑛+1]
+então, pelo Teorema 2.9, 𝛼 =
+
+. Sendo 𝑐𝑛 a n-ésima reduzida de [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, ...],
+
+𝑥𝑛+1𝑝𝑛 + 𝑝𝑛−1
+𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1
+
+então
+
+Capítulo 2. Frações Contínuas Simples
+
+30
+
+𝛼 − 𝑐𝑛 =
+
+𝛼 − 𝑐𝑛 =
+
+−
+
+𝑝𝑛
+𝑥𝑛+1𝑝𝑛 + 𝑝𝑛−1
+𝑞𝑛
+𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1
+𝑥𝑛+1𝑝𝑛𝑞𝑛 + 𝑝𝑛−1𝑞𝑛 − 𝑝𝑛𝑥𝑛+1𝑞𝑛 − 𝑝𝑛𝑞𝑛−1
+𝑞𝑛(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)
+
+𝛼 − 𝑐𝑛 =
+
+𝛼 − 𝑐𝑛 =
+
+−(−𝑝𝑛−1𝑞𝑛 + 𝑝𝑛𝑞𝑛−1)
+𝑞𝑛(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)
+
+(−1)𝑛
+𝑞𝑛(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)
+
+.
+
+Sabendo que 𝑥𝑛+1 > 𝑎𝑛+1, temos que
+
+|𝛼 − 𝑐𝑛| =
+
+1
+𝑞𝑛(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)
+
+<
+
+1
+𝑞𝑛(𝑎𝑛+1𝑞𝑛 + 𝑞𝑛−1)
+
+<
+
+1
+𝑞𝑛𝑞𝑛+1
+
+.
+
+Assim
+
+𝛼 = lim
+𝑛→∝
+
+𝑐𝑛 = [𝑎0; 𝑎1, 𝑎2, 𝑎3, ...].
+
+(cid:3)
+
+Exemplo 2.30. Para ilustrarmos o algoritmo anterior, iremos expandir
+
+5 em termo de
+
+frações contínuas. Como 𝑥𝑛+1 =
+
+, com 𝑎𝑛 = ⌊𝑥𝑛⌋, então 𝑎0 = ⌊
+
+5⌋ = 2.
+
+1
+𝑥𝑛 − ⌊𝑥𝑛⌋
+
+√
+
+√
+
+𝑥1 =
+
+√
+
+𝑥2 =
+
+√
+(
+
+1
+
+5 + 2) − 4
+
+=
+
+√
+
+1
+5 − 2
+1
+5 − 2
+
+√
+5
+
+𝑥0 =
+√
+
+=
+
+5 + 2
+
+√
+
+=
+
+5 + 2
+
+𝑎0 = 2
+
+𝑎1 = 4
+
+𝑎2 = 4
+
+Como 𝑥2 = 𝑥1 implica que ⌊𝑥2⌋ = ⌊𝑥1⌋, assim
+
+𝑥3 =
+
+1
+𝑥2 − ⌊𝑥2⌋
+
+=
+
+1
+𝑥1 − ⌊𝑥1⌋
+
+= 𝑥2 = 𝑥1,
+
+logo 𝑥1 = 𝑥2 = 𝑥3 = 𝑥4 = · · · e, portanto, 𝑎1 = 𝑎2 = 𝑎3 = 𝑎4 = · · · . Assim podemos
+representar
+
+5 por [2; 4, 4, ...]
+
+√
+
+Dizemos, neste caso, que a expansão de
+
+√
+
+5 em termo de fração contínua é infinita
+
+e periódica.
+
+Capítulo 2. Frações Contínuas Simples
+
+31
+
+Proposição 2.31. Sejam 𝛼 = 𝑥0 um número irracional e 𝑥𝑛+1 definido recursivamente
+como no Teorema 2.29, assim
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+=
+
+(−1)𝑛
+(𝑥𝑛+1 + 𝑦𝑛+1)𝑞𝑛
+
+2 ,
+
+com 𝑦𝑛+1 =
+
+𝑞𝑛−1
+𝑞𝑛
+
+e 𝑎𝑛 = ⌊𝑥𝑛⌋.
+
+Prova. Como na demonstração do Teorema 2.29 𝛼 = [𝑎0; 𝑎1, 𝑎2, ..., 𝑎𝑛, 𝑥𝑛+1], então
+
+Dessa forma,
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+=
+
+=
+
+=
+
+=
+
+=
+
+𝛼 =
+
+(𝑥𝑛+1)𝑝𝑛 + 𝑝𝑛−1
+(𝑥𝑛+1)𝑞𝑛 + 𝑞𝑛−1
+
+.
+
+−
+
+𝑝𝑛
+(𝑥𝑛+1)𝑝𝑛 + 𝑝𝑛−1
+(𝑥𝑛+1)𝑞𝑛 + 𝑞𝑛−1
+𝑞𝑛
+𝑥𝑛+1𝑝𝑛𝑞𝑛 + 𝑝𝑛−1𝑞𝑛 − 𝑥𝑛+1𝑝𝑛𝑞𝑛 − 𝑝𝑛𝑞𝑛−1
+(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)𝑞𝑛
+
+𝑝𝑛−1𝑞𝑛 − 𝑝𝑛𝑞𝑛−1
+(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)𝑞𝑛
+(−1)𝑛
+(𝑥𝑛+1𝑞𝑛 + 𝑞𝑛−1)𝑞𝑛
+(−1)𝑛
+𝑞𝑛−1
+𝑞𝑛
+
+𝑥𝑛+1 +
+
+𝑞𝑛
+
+(︃
+
+)︃
+
+(−1)𝑛
+(𝑥𝑛+1 + 𝑦𝑛+1) 𝑞𝑛
+
+2 .
+
+=
+
+2
+
+(cid:3)
+
+Uma das consequências imediatas desta proposição é o seguinte teorema.
+
+Teorema 2.32. Sejam 𝛼 = [𝑎0; 𝑎1, 𝑎2, ...] um número irracional e
+
+desta expansão, então
+
+𝑝𝑛
+𝑞𝑛
+
+a n-ésima reduzida
+
+1
+(𝑎𝑛+1 + 2)𝑞𝑛
+
+2 <
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+1
+𝑎𝑛+1𝑞𝑛
+
+2 ,
+
+onde 𝑦𝑛+1 =
+
+𝑞𝑛−1
+𝑞𝑛
+
+, 𝑥0 = 𝛼 e 𝑎𝑛 = ⌊𝑥𝑛⌋.
+
+Prova. De fato, sabemos da proposição anterior que 𝛼 −
+
+𝑦𝑛+1 =
+
+𝑞𝑛−1
+𝑞𝑛
+
+, logo
+
+⃒
+⃒
+⃒
+𝛼 −
+⃒
+⃒
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+=
+
+1
+(𝑥𝑛+1 + 𝑦𝑛+1)𝑞𝑛
+
+2 .
+
+𝑝𝑛
+𝑞𝑛
+
+=
+
+(−1)𝑛
+(𝑥𝑛+1 + 𝑦𝑛+1)𝑞𝑛
+
+2 , com
+
+Capítulo 2. Frações Contínuas Simples
+
+32
+
+Sendo crescente a sequência dos denominadores das reduzidas, então 𝑞𝑛−1 < 𝑞𝑛, ou
+
+seja
+
+< 1. Assim
+
+𝑞𝑛−1
+𝑞𝑛
+
+Como 𝑎𝑛 = ⌊𝑥𝑛⌋, implica
+
+De (2.1) e (2.2), temos
+
+0 < 𝑦𝑛+1 < 1.
+
+𝑎𝑛+1 < 𝑥𝑛+1 < 𝑎𝑛+1 + 1.
+
+(2.1)
+
+(2.2)
+
+𝑎𝑛+1 < 𝑥𝑛+1 + 𝑦𝑛+1 < 𝑎𝑛+1 + 2
+1
+𝑥𝑛+1 + 𝑦𝑛+1
+
+1
+𝑎𝑛+1 + 2
+
+1
+𝑎𝑛+1
+
+<
+
+<
+
+,
+
+multiplicando todos os membros das desigualdades por
+
+1
+𝑞𝑛
+
+2 , obtemos
+
+1
+(𝑎𝑛+1 + 2)𝑞𝑛
+
+2 <
+
+1
+(𝑥𝑛+1 + 𝑦𝑛+1)𝑞𝑛
+
+2 <
+
+1
+(𝑎𝑛+1)𝑞𝑛
+
+2 ,
+
+o que implica
+
+1
+(𝑎𝑛+1 + 2)𝑞𝑛
+
+2 <
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+1
+(𝑎𝑛+1)𝑞𝑛
+
+2 .
+
+Teorema 2.33. Se 𝛼 = [𝑎0; 𝑎1, 𝑎2, ...] e
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+1
+2𝑞𝑛
+
+2
+
+Prova. Suponha, por absurdo, que
+
+⃒
+⃒
+⃒
+𝛼 −
+⃒
+⃒
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+≥
+
+1
+2𝑞𝑛
+
+2
+
+𝑝𝑛
+𝑞𝑛
+
+𝑜𝑢
+
+𝑒
+
+Como 𝛼 pertence ao intervalo de extremos
+
+𝑝𝑛
+𝑞𝑛
+
+e
+
+𝑝𝑛
+𝑞𝑛
+(︁
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+=
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+(
+
+𝑝𝑛+1
+𝑞𝑛+1
+)︁
+
+− 𝛼) + (𝛼 −
+
+⃒
+⃒
+⃒
+⃒
+⃒
+(︁ 𝑝𝑛+1
+𝑞𝑛+1
+1
+𝑞𝑛𝑞𝑛+1
+
+porque
+
+𝑝𝑛
+𝑞𝑛
+
+| =
+
+𝑝𝑛+1
+𝑞𝑛+1
+)︁
+
+− 𝛼
+
+−
+
+e
+
+, logo
+
+é a n-ésima reduzida para 𝑛 ≥ 1, então
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+1
+2𝑞𝑛+1
+
+2 .
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+≥
+
+1
+2𝑞𝑛+1
+
+2 .
+
+, assim
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+− 𝛼
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
++
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+,
+
+𝑝𝑛+1
+𝑞𝑛+1
+⃒
+⃒
+⃒
+⃒
+⃒
+
+=
+
+)
+
+𝑝𝑛
+𝑞𝑛
+
+𝛼 − 𝑝𝑛
+𝑞𝑛
+
+possuem o mesmo sinal. Pelo Teorema 2.12 temos | 𝑝𝑛+1
+𝑞𝑛+1
+
+1
+𝑞𝑛𝑞𝑛+1
+
+=
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+−
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+=
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+− 𝛼
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
++
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+≥
+
+1
+2𝑞𝑛+1
+
+2 +
+
+1
+2𝑞𝑛
+
+2 ,
+
+(cid:3)
+
+−
+
+Capítulo 2. Frações Contínuas Simples
+
+dessa desigualdade, temos
+
+𝑞𝑛
+
+que é uma contradição.
+
+2
+
+2 − 2𝑞𝑛𝑞𝑛+1 + 𝑞𝑛+1
+2𝑞𝑛+1
+(𝑞𝑛 − 𝑞𝑛+1)2 ≤ 0 ⇒ 𝑞𝑛 = 𝑞𝑛+1,
+
+≤ 0
+
+2𝑞𝑛
+
+2
+
+33
+
+(cid:3)
+
+As reduzidas 𝑐𝑛 das frações contínuas infinitas da expansão de um número irracional
+𝛼 são boas aproximações racionais para 𝛼. Elas são os racionais mais próximos de 𝛼, dentre
+todos aqueles que têm denominador menor ou igual a 𝑞𝑛.
+
+Este fato será demonstrado no Teorema 2.35, antes, porém, necessitamos do Lema
+
+2.34, que segue abaixo.
+
+Lema 2.34. Seja
+
+a n-ésima reduzida da fração contínua que representa o número
+
+irracional 𝛼. Se 𝑎 e 𝑏 são inteiros, com 1 ≤ 𝑏 < 𝑞𝑛+1, então
+
+𝑝𝑛
+𝑞𝑛
+
+Prova. Considere o seguinte sistema de equações nas variáveis 𝜑 e 𝛽 :
+
+|𝑞𝑛𝛼 − 𝑝𝑛| ≤ |𝑏𝛼 − 𝑎|.
+
+𝑝𝑛𝜑 + 𝑝𝑛+1𝛽 = 𝑎
+
+𝑞𝑛𝜑 + 𝑞𝑛+1𝛽 = 𝑏.
+
+Sendo 𝐷 o determinante da matriz dos coeficientes do sistema, temos que 𝐷 =
+
+𝑝𝑛𝑞𝑛+1 − 𝑝𝑛+1𝑞𝑛 = (−1)𝑛+1 ̸= 0, logo o sistema admite solução única
+
+𝜑 = (−1)𝑛+1(𝑎𝑞𝑛+1 − 𝑏𝑝𝑛+1)
+𝛽 = (−1)𝑛+1(𝑏𝑝𝑛 − 𝑎𝑞𝑛).
+
+É evidente que 𝜑 ̸= 0, pois caso contrário 𝑎𝑞𝑛+1 = 𝑏𝑝𝑛+1 e como (𝑝𝑛+1, 𝑞𝑛+1) = 1
+
+implica que 𝑞𝑛+1 | 𝑏 que é um absurdo, tendo em vista que 1 ≤ 𝑏 < 𝑞𝑛+1.
+
+Passaremos a analisar agora os casos em que 𝛽 é maior, menor ou igual a zero.
+
+i) Para 𝛽 = 0, temos 𝑝𝑛𝜑 = 𝑎 e 𝑞𝑛𝜑 = 𝑏, logo |𝑏𝛼 − 𝑎| = |𝑞𝑛𝜑𝛼 − 𝑝𝑛𝜑| = |𝜑||𝑞𝑛𝛼 − 𝑝𝑛|.
+
+Como 𝜑 ̸= 0 implica 1 ≤ |𝜑|, assim
+
+|𝑞𝑛𝛼 − 𝑝𝑛| ≤ |𝜑||𝑞𝑛𝛼 − 𝑝𝑛| = |𝑏𝛼 − 𝑎|.
+
+Capítulo 2. Frações Contínuas Simples
+
+34
+
+ii) Para 𝛽 > 0, temos 𝑏 < 𝑞𝑛+1𝛽, pois 𝑏 < 𝑞𝑛+1 por hipótese. Sabemos que 𝑞𝑛𝜑+𝑞𝑛+1𝛽 =
+
+𝑏, então 𝑞𝑛𝜑 + 𝑏 < 𝑏. Logo 𝑞𝑛𝜑 < 0, portanto 𝜑 < 0.
+
+iii) Se 𝛽 < 0, então, como sabemos que 𝑞𝑛𝜑 + 𝑞𝑛+1𝛽 = 𝑏, implica 𝑞𝑛𝜑 = 𝑏 − 𝑞𝑛+1𝛽 > 0.
+
+Assim 𝑞𝑛𝜑 > 0, logo 𝜑 > 0.
+
+Caso 𝛽 = 0 verificamos que o Lema é satisfeito. Sendo 𝛽 não nulo, constatamos,
+
+a partir de (𝑖𝑖) e (𝑖𝑖𝑖), que 𝜑 e 𝛽 têm sinais contrários.
+
+Além disso, podemos inferir também que 𝑞𝑛𝛼−𝑝𝑛 e 𝑞𝑛+1𝛼−𝑝𝑛+1 têm sinais opostos.
+<
+
+Com efeito, como 𝛼 se encontra entre as reduzidas consecutivas
+
+, então
+
+𝑝𝑛
+𝑞𝑛
+< 𝛼, ou seja 0 < 𝑞𝑛𝛼 − 𝑝𝑛. Analogamente, 𝛼 <
+
+𝑝𝑛
+𝑞𝑛
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+e
+𝑝𝑛+1
+𝑞𝑛+1
+
+𝛼 <
+
+𝑝𝑛+1
+𝑞𝑛+1
+𝑝𝑛+1 < 0.
+
+. Assim
+
+𝑝𝑛
+𝑞𝑛
+
+então 𝑞𝑛+1𝛼 −
+
+(cid:3)
+
+Sendo assim, os números
+
+𝜑(𝑞𝑛𝛼 − 𝑝𝑛)
+
+𝑒
+
+𝛽(𝑞𝑛+1𝛼 − 𝑝𝑛+1)
+
+têm o mesmo sinal.
+
+Podemos concluir que
+
+|𝑏𝛼 − 𝑎| = |(𝑞𝑛𝜑 + 𝑞𝑛+1𝛽)𝛼 − (𝑝𝑛𝜑 + 𝑝𝑛+1𝛽)|
+
+= |𝑞𝑛𝜑𝛼 + 𝑞𝑛+1𝛽𝛼 − (𝑝𝑛𝜑 + 𝑝𝑛+1𝛽)|
+
+= |(𝑞𝑛𝜑𝛼 − 𝑝𝑛𝜑) + (𝑞𝑛+1𝛽𝛼 − 𝑝𝑛+1𝛽)|
+
+= |𝜑||𝑞𝑛𝛼 − 𝑝𝑛| + |𝛽||𝑞𝑛+1𝛼 − 𝑝𝑛+1|
+
+≥ |𝜑||𝑞𝑛𝛼 − 𝑝𝑛| ≥ |𝑞𝑛𝛼 − 𝑝𝑛|.
+
+Teorema 2.35. Se 1 ≤ 𝑏 ≤ 𝑞𝑛, então o número racional
+
+𝑎
+𝑏
+
+satisfaz
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+≤
+
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+,
+
+onde
+
+𝑝𝑛
+𝑞𝑛
+
+representa a n-ésima reduzada da fração contínua de 𝛼.
+
+Prova. Suponha que
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+>
+
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+|𝑞𝑛𝛼 − 𝑝𝑛| = 𝑞𝑛|𝛼 −
+
+. Então como
+
+𝑝𝑛
+𝑞𝑛
+
+| > 𝑏|𝛼 −
+
+𝑎
+𝑏
+
+| = |𝑏𝛼 − 𝑎|,
+
+logo |𝑞𝑛𝛼 − 𝑝𝑛| > |𝑏𝛼 − 𝑎| que é um absurdo, conforme Lema anterior.
+
+Capítulo 2. Frações Contínuas Simples
+
+35
+
+(cid:3)
+
+√
+
+Exemplo 2.36. Como
+
+2, 𝑐1 =
+
+38
+17
+a melhor aproximação racional de
+
+e 𝑐3 =
+
+, 𝑐2 =
+
+9
+4
+
+√
+
+5 = [2; 4, 4, 4, ...] então as quatro primeiras reduzidas são 𝑐0 =
+161
+72
+
+. Podemos concluir, a partir do teorema anterior, que
+
+9
+4
+
+é
+
+5 com denominador menor ou igual a 4. Da mesma
+
+forma,
+
+é a melhor aproximal racional de
+
+5 com denominador menor ou igual a 72.
+
+√
+
+161
+72
+
+Apresentaremos a seguir um resultado que garante que qualquer aproximação raci-
+onal suficientemente próxima de um irracional arbitrário 𝛼 é uma das reduzidas da fração
+contínua infinita que representa este 𝛼.
+
+Teorema 2.37. Seja 𝛼 um número irracional arbitrário. Se o racional irredutível
+𝑏 ≥ 1, satisfaz
+
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+<
+
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+1
+2𝑏2 ,
+
+então
+
+𝑎
+𝑏
+
+é uma das reduzidas da fração contínua infinita que representa 𝛼.
+
+𝑎
+𝑏
+
+, com
+
+𝑎
+𝑏
+
+𝑎
+𝑏
+
+𝑝𝑛
+𝑞𝑛
+
+Prova. Suponha que
+
+não é uma das reduzidas de 𝛼, logo
+
+̸=
+
+, a qual podemos
+
+reescrever da seguinte forma 𝑎𝑞𝑛 − 𝑏𝑝𝑛 ̸= 0. Sabemos que a sequência dos denominadores
+das reduzidas de 𝛼 é crescente, sendo assim existe um único 𝑛 ∈ N tal que 𝑏 está entre 𝑞𝑛
+e 𝑞𝑛+1, ou seja
+
+A partir do Lema 2.34 para este 𝑛, obtemos
+
+𝑞𝑛 ≤ 𝑏 < 𝑞𝑛+1.
+
+|𝑞𝑛𝛼 − 𝑝𝑛| ≤ |𝑏𝛼 − 𝑎| = 𝑏
+
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+.
+
+Dessa última desigualdade e considerando
+
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+
+<
+
+1
+2𝑏2 , temos
+
+|𝑞𝑛𝛼 − 𝑝𝑛| <
+
+⃒
+⃒
+⃒
+𝛼 −
+⃒
+⃒
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+1
+2𝑏
+1
+2𝑏𝑞𝑛
+
+.
+
+Como 𝑎𝑞𝑛 − 𝑏𝑝𝑛 é um inteiro não nulo, então |𝑎𝑞𝑛 − 𝑏𝑝𝑛| ≥ 1. Dividindo ambos os
+
+Capítulo 2. Frações Contínuas Simples
+
+36
+
+membros por 𝑏𝑞𝑛 a desigualdade não se altera, porque 𝑏 e 𝑞𝑛 são ambos positivos. Assim
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑎𝑞𝑛
+𝑏𝑞𝑛
+
+𝑏𝑝𝑛
+𝑏𝑞𝑛
+
+1
+𝑏𝑞𝑛
+
+𝑝𝑛
+𝑞𝑛
+
+𝑎
+𝑏
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+−
+
+−
+
+≤
+
+=
+
+=
+
+⃒
+⃒
+⃒
+⃒
+⃒
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+− 𝛼 + 𝛼 −
+
+|𝑎𝑞𝑛 − 𝑏𝑝𝑛|
+𝑏𝑞𝑛
+𝑝𝑛
+𝑞𝑛
+
+−
+
+=
+
+⃒
+⃒
+⃒
+⃒
+⃒
+)︂
+
+𝑎
+𝑏
+(︂ 𝑎
+𝑏
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑎
+𝑏
+(︃
+
+− 𝛼
+
++
+
+𝛼 −
+
+𝑎
+𝑏
+
+− 𝛼
+
+⃒
+⃒
+⃒
+⃒
+
++
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝛼 −
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+⃒
+
+≤
+
+≤
+
+≤
+
+𝑝𝑛
+𝑞𝑛
+
+)︃⃒
+⃒
+⃒
+⃒
+⃒
+1
+2𝑏2 +
+
+1
+2𝑏𝑞𝑛
+
+logo
+
+1
+𝑏𝑞𝑛
+
+<
+
+1
+2𝑏2 +
+
+1
+2𝑏𝑞𝑛
+
+o que resulta
+
+1
+𝑏𝑞𝑛
+
+−
+
+1
+2𝑏𝑞𝑛
+1
+2𝑏𝑞𝑛
+1
+𝑞𝑛
+
+<
+
+<
+
+<
+
+1
+2𝑏2
+1
+2𝑏2
+1
+𝑏
+
+portanto 𝑏 < 𝑞𝑛, que é uma contradição.
+
+Teorema 2.38. Para todo 𝛼 irracional e todo inteiro 𝑛 ≥ 1, temos
+
+(cid:3)
+
+para pelo menos um racional
+
+𝑝
+𝑞
+
+∈
+
+𝛼 −
+
+⃒
+⃒
+⃒
+⃒
+⃒
+{︃𝑝𝑛−1
+𝑞𝑛−1
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑝
+𝑞
+
+<
+
+√
+
+,
+
+𝑝𝑛
+𝑞𝑛
+
+,
+
+𝑝𝑛+1
+𝑞𝑛+1
+
+1
+5𝑞2
+}︃
+
+,
+
+.
+
+Prova. Pela Proposição 2.31, temos
+
+⃒
+⃒
+⃒
+𝛼 −
+⃒
+⃒
+
+𝑝𝑛
+𝑞𝑛
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+=
+
+1
+(𝑥𝑛+1 + 𝑦𝑛+1)𝑞𝑛
+
+2 ,
+
+𝑞𝑛−1
+𝑞𝑛
+
+com 𝑦𝑛+1 =
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑝𝑛
+𝑞𝑛
+da seguinte forma
+
+temos que
+
+𝛼 −
+
+, para algum 𝛼 irracional. Assim, supondo que o Teorema seja falso,
+⃒
+⃒
+⃒
+⃒
+⃒
+
+, para 𝑛 ≥ 1. Podemos reescrever esta última desigualdade
+
+1
+5𝑞𝑛
+
+√
+
+≥
+
+2
+
+1
+(𝑥𝑛+1 + 𝑦𝑛+1)𝑞𝑛
+
+2 ≥
+
+𝑥𝑛+1 + 𝑦𝑛+1 ≤
+
+√
+
+√
+
+1
+5𝑞𝑛
+5.
+
+2
+
+Capítulo 2. Frações Contínuas Simples
+
+37
+
+Desse jeito,
+
+𝑥𝑛−1 + 𝑦𝑛−1 ≤
+
+√
+
+5,
+
+𝑥𝑛 + 𝑦𝑛 ≤
+
+√
+
+5,
+
+𝑥𝑛+1 + 𝑦𝑛+1 ≤
+
+√
+
+5.
+
+Por outro lado, sabemos que 𝑦𝑛+1 =
+
+e que 𝑞𝑛 = 𝑎𝑛𝑞𝑛−1 + 𝑞𝑛−2, então
+
+𝑞𝑛−1
+𝑞𝑛
+𝑞𝑛−1
+𝑎𝑛𝑞𝑛−1 + 𝑞𝑛−2
+1
+𝑎𝑛𝑞𝑛−1 + 𝑞𝑛−2
+𝑞𝑛−1
+1
+𝑞𝑛−2
+𝑞𝑛−1
+
+𝑎𝑛 +
+
+1
+𝑎𝑛 + 𝑦𝑛
+
+,
+
+𝑦𝑛+1 =
+
+=
+
+=
+
+=
+
+logo
+
+𝑦𝑛+1 =
+
+1
+𝑎𝑛 + 𝑦𝑛
+
+.
+
+(2.3)
+
+Como 𝑥𝑘 + 𝑦𝑘 ≤
+
+√
+
+5, para 𝑘 ∈ {𝑛, 𝑛 + 1, 𝑛 + 2}, então 𝑥𝑘 < 3 e 𝑎𝑘 = ⌊𝑥𝑘⌋ ≤ 2.
+
+Sendo 1 < 𝑥𝑘 resulta que 1 ≤ 𝑎𝑘 ≤ 2.
+
+Assim 1 < 𝑎𝑘 +𝑦𝑘 < 3, pois 𝑦𝑘 é um número racional entre zero e um. Dessa última
+
+desigualdade, resulta que
+
+<
+
+= 𝑦𝑘+1, isso nos mostra que
+
+1
+3
+
+1
+𝑎𝑘 + 𝑦𝑘
+
+1
+3
+
+< 𝑦𝑛+1,
+
+1
+3
+
+< 𝑦𝑛+2,
+
+1
+3
+
+< 𝑦𝑛+3.
+
+Supondo, por absurdo, que 𝑎𝑛+1 = 2, temos 𝑎𝑛+1 + 𝑦𝑛+1 > 2 +
+
+claramente impossível, tendo em vista que 𝑥𝑛+1 + 𝑦𝑛+1 ≤
+então nos conduz ao absurdo 2 +
+
+< 𝑎𝑛+2 + 𝑦𝑛+2, assim 𝑎𝑛+1 = 𝑎𝑛+2 = 1.
+
+1
+3
+
+1
+3
+5. Analogamente, se 𝑎𝑛+2 = 2
+
+5 que é
+
+>
+
+√
+
+√
+
+Considerando 𝑥𝑛+2 =
+1
+𝑥𝑛+1 − 1
+
+1
+𝑏
+
+=
+
+1, temos
+
+⇒ 𝑥𝑛+1 = 𝑏 + 1.
+
+1
+𝑏
+
+, 𝑦𝑛+1 = 𝑐 e sabendo que 𝑥𝑛+2 =
+
+1
+𝑥𝑛+1 − 𝑎𝑛+1
+
+, com 𝑎𝑛+1 =
+
+Da mesma forma, temos que 𝑥𝑛+1 =
+
+podemos reescrever da seguinte forma
+
+1
+𝑥𝑛 − 𝑎𝑛
+
+o que resulta 𝑏 + 1 =
+
+1
+𝑥𝑛 − 𝑎𝑛
+
+, a qual
+
+𝑥𝑛 − 𝑎𝑛 =
+
+1
+𝑏 + 1
+
+.
+
+(2.4)
+
+Para determinarmos 𝑦𝑛 e 𝑦𝑛+2, usaremos a relação de recorrência em (2.3). Assim
+
+𝑦𝑛+2 =
+
+, pois 𝑦𝑛+1 = 𝑐 e 𝑎𝑛+1 = 1. Analogamente, como 𝑦𝑛+1 =
+
+, então
+
+1
+1 + 𝑐
+
+1
+𝑎𝑛 + 𝑦𝑛
+
+Capítulo 2. Frações Contínuas Simples
+
+𝑎𝑛 + 𝑦𝑛 =
+
+1
+𝑦𝑛+1
+
+o que resulta em
+
+De (2.4) e (2.5), temos
+
+𝑎𝑛 + 𝑦𝑛 =
+
+1
+𝑐
+
+38
+
+(2.5)
+
+(𝑥𝑛 − 𝑎𝑛) + (𝑎𝑛 + 𝑦𝑛) =
+
+𝑥𝑛 + 𝑦𝑛 =
+
+1
+1 + 𝑏
+1
+1 + 𝑏
+1
+1 + 𝑏
+
++
+
++
+
++
+
+1
+𝑐
+1
+𝑐
+1
+𝑐
+
+√
+
+5.
+
+≤
+
+Além disso, como 𝑥𝑛+1 = 1 + 𝑏 e 𝑦𝑛+1 = 𝑐 implica
+
+𝑥𝑛+1 + 𝑦𝑛+1 = (1 + 𝑏) + 𝑐
+
+(1 + 𝑏) + 𝑐 ≤
+
+√
+
+5
+
+e como 𝑥𝑛+2 =
+
+1
+𝑏
+
+e 𝑦𝑛+2 =
+
+1
+1 + 𝑐
+
+, temos
+
+𝑥𝑛+2 + 𝑦𝑛+2 =
+
+1
+𝑏
+1
+𝑏
+
++
+
++
+
+1
+1 + 𝑐
+1
+1 + 𝑐
+
+√
+
+5.
+
+≤
+
+Sabendo que (1 + 𝑏) + 𝑐 ≤
+
+√
+
+5 então 1 + 𝑏 ≤
+
+√
+
+5 − 𝑐, logo
+
+√
+
+1
+5 − 𝑐
+
+≤
+
+1
+1 + 𝑏
+
+.
+
+Ao somarmos
+
+1
+𝑐
+
+em ambos os membros da desigualdade, obtemos
+
+√
+
+𝑐 +
+√
+(
+
+1
+5 − 𝑐
+√
+
++
+
+1
+𝑐
+5 − 𝑐
+5 − 𝑐)𝑐
+√
+5
+5 − 𝑐)𝑐
+
+√
+(
+
++
+
++
+
+1
+𝑐
+1
+𝑐
+
+1
+1 + 𝑏
+1
+1 + 𝑏
+√
+
+5.
+
+≤
+
+≤
+
+≤
+
+√
+
+5
+
+≤
+
+√
+
+1 ≤ (
+
+5 − 𝑐)𝑐
+
+√
+
+0 ≤ −𝑐2 +
+
+5𝑐 − 1
+
+Capítulo 2. Frações Contínuas Simples
+
+39
+
+√
+
+Determinaremos agora para quais valores de 𝑐 a função quadrática 𝑓 (𝑐) = −𝑐2 +
+5𝑐 + 1 = 0, implica que a função 𝑓 é
+
+5𝑐 − 1 assume valores não negativos. Sendo 𝑐2 −
+
+√
+
+não negativa para
+
+√
+
+5 − 1
+2
+
+≤ 𝑐 ≤
+
+√
+
+5 + 1
+2
+
+.
+
+Por outro lado, podemos também reorganizar a desigualdade (1 + 𝑏) + 𝑐 ≤
+
+√
+
+5 como
+
+segue
+
+√
+
+𝑏 ≤
+
+5 − 𝑐 − 1
+
+√
+
+1
+5 − 𝑐 − 1
+
+≤
+
+1
+𝑏
+
+.
+
+Somando
+
+1
+1 + 𝑐
+
+em ambos os membros da desigualdade, temos
+
+√
+
+1 + 𝑐 +
+√
+(
+
++
+
+1
+5 − 𝑐 − 1
+√
+
+1
+1 + 𝑐
+5 − 𝑐 − 1
+5 − 𝑐 − 1)(1 + 𝑐)
+5
+5 − 𝑐 − 1)(1 + 𝑐)
+
+√
+
+√
+(
+
+1
+1 + 𝑐
+1
+1 + 𝑐
+
+1
+𝑏
+1
+𝑏
+√
+
++
+
++
+
+5
+
+≤
+
+≤
+
+≤
+
+√
+5
+
+≤
+
+√
+
+1 ≤ (
+
+5 − 𝑐 − 1)(1 + 𝑐)
+
+0 ≤ −𝑐2 + 𝑐(
+
+5 − 2) +
+
+5 − 2
+
+√
+
+√
+
+√
+
+Semelhantemente, determinaremos para quais valores de 𝑐 a função quadrática 𝑓 (𝑐) =
+−𝑐2 + 𝑐(
+5 − 2 assume valores não negativos. Assim 𝑓 é não negativa para
+√
+5 − 3
+2
+
+5 − 2) +
+√
+
+5 − 1
+2
+
+≤ 𝑐 ≤
+
+√
+
+.
+
+Como o único valor de 𝑐 que satisfaz as duas inequações é
+
+que é obviamente um absurdo, pois 𝑐 = 𝑦𝑛+1 =
+
+𝑞𝑛−1
+𝑞𝑛
+
+∈ Q.
+
+√
+
+5 − 1
+2
+
+, assim 𝑐 ∈ R−Q
+
+(cid:3)
+
+40
+
+3 Ataque de Wiener
+
+3.1 Criptografia RSA
+
+Mostraremos na próxima seção o ataque à Criptografia RSA desenvolvido por Wi-
+ener. Basicamente este ataque fatora, em um tempo polinomial, o módulo RSA, desde
+que o expoente privado 𝑑 seja suficientemente pequeno.
+
+Sabemos que neste sistema criptografia, o módulo 𝑁 é dado por 𝑁 = 𝑝𝑞, onde 𝑝 e
+
+𝑞 são primos grandes distintos, e que 𝜑(𝑁 ) = (𝑝 − 1)(𝑞 − 1), com 𝜑 a função de Euler.
+
+Assim, a chave pública é dada por (𝑁, 𝑒), ao passo que a privada é dada por (𝑝, 𝑞, 𝑑),
+
+onde 𝑒𝑑 ≡ 1(𝑚𝑜𝑑 𝜑(𝑁 )), com 𝑒, 𝑑 ∈ N satisfazendo 1 < 𝑒, 𝑑 < 𝜑(𝑁 ) .
+
+Para se codificar uma mensagem 𝑚 - supondo 𝑚 < 𝑁 , se não for, pode-se enviar
+
+em blocos - usa-se a função de criptografia
+
+𝐸(𝑚) ≡ 𝑚𝑒(𝑚𝑜𝑑 𝑁 ).
+
+De posse da mensagem cripitografada 𝑚𝑒, pode-se, com a função de descriptografia,
+
+recuperar a mensagem 𝑚, ou seja
+
+𝐷(𝑚𝑒) ≡ (𝑚𝑒)𝑑 ≡ 𝑚𝑒𝑑 ≡ 𝑚(𝑚𝑜𝑑 𝑁 ).
+
+3.2 Ataque de Wiener ao sistema de criptografia RSA
+
+Sejam 𝑁 = 𝑝𝑞, onde 𝑝 e 𝑞 são primos ímpares, 𝑎 o menor natural tal que 𝑝 < 𝑞 < 𝑎𝑝
+e 𝑒 com 𝑒𝑑 ≡ 1(𝑚𝑜𝑑 𝜑(𝑁 )), sendo 1 < 𝑒, 𝑑 < 𝜑(𝑁 ). Podemos reescrever esta congruência
+da seguinte forma
+
+𝜑(𝑁 ) =
+
+, 𝑘 ∈ N.
+
+(3.1)
+
+𝑒𝑑 − 1
+𝑘
+
+A ideia principal do ataque de Wiener é mostrar que para certas restrições de 𝑑
+
+permitem que a fração
+
+possa ser uma das reduzidas de
+
+𝑘
+𝑑
+
+𝑒
+𝑁
+
+.
+
+Para determinarmos uma restrição para 𝑑, precisaremos dos três Lemas seguintes.
+
+Lema 3.1. Seja 𝑁 = 𝑝𝑞 onde 𝑝 e 𝑞 são primos distintos tais que 𝑝 < 𝑞 < 𝑎𝑝 para alguns
+𝑎 ∈ N. Então 𝑁 − (𝑎 + 1)
+
+𝑁 < 𝜑(𝑁 ) < 𝑁 .
+
+√
+
+Capítulo 3. Ataque de Wiener
+
+41
+
+Prova. Primeiro vamos mostrar que 𝑁 > 𝜑(𝑁 ). De fato, como 𝑝 e 𝑞 são primos distintos,
+com 𝑝 < 𝑞, então 2 ≤ 𝑝 < 𝑞 o que implica 1 < 𝑝 + 𝑞. Dessa forma,
+
+𝑝 + 𝑞 > 1
+
+0 > 1 − 𝑝 − 𝑞
+
+𝑝𝑞 > 𝑝𝑞 + 1 − 𝑝 − 𝑞
+
+𝑁 > 𝑝(𝑞 − 1) − (𝑞 − 1)
+
+𝑁 > (𝑝 − 1)(𝑞 − 1)
+
+𝑁 > 𝜑(𝑁 )
+
+Agora provaremos que 𝑁 − (𝑎 + 1)
+
+√
+
+𝑁 < 𝜑(𝑁 ).
+
+Sendo 𝑝 < 𝑞 ambos primos então 𝑝𝑝 < 𝑝𝑞. Assim 𝑝2 < 𝑁 , logo
+
+Além disso, como 𝑎 ∈ N então
+
+√
+
+𝑁 .
+
+𝑝 <
+
+1
+𝑎 + 1
+
+> 0, logo
+
+𝑝 > 𝑝 −
+
+1
+𝑎 + 1
+
+.
+
+Das desigualdades (3.2) e (3.3), temos que
+
+√
+
+𝑁 > 𝑝 > 𝑝 −
+
+1
+𝑎 + 1
+
+.
+
+Esta afirmação implica
+
+√
+
+√
+
+√
+
+√
+
+√
+
+√
+
+√
+
+(𝑎 + 1)
+
+(𝑎 + 1)
+
+−(𝑎 + 1)
+
+𝑁 − (𝑎 + 1)
+
+𝑁 − (𝑎 + 1)
+
+𝑁 − (𝑎 + 1)
+
+𝑁 − (𝑎 + 1)
+
+𝑁 > 𝑝(𝑎 + 1) − 1
+
+𝑁 > 𝑝𝑎 + 𝑝 − 1 > 𝑞 + 𝑝 − 1
+
+𝑁 < 1 − 𝑝 − 𝑞
+
+𝑁 < 𝑁 + 1 − 𝑝 − 𝑞
+
+𝑁 < 𝑝𝑞 + 1 − 𝑝 − 𝑞
+
+𝑁 < (𝑝 − 1)(𝑞 − 1)
+
+𝑁 < 𝜑(𝑁 ),
+
+portanto 𝑁 − (𝑎 + 1)
+
+√
+
+𝑁 < 𝜑(𝑁 ) < 𝑁.
+
+(3.2)
+
+(3.3)
+
+(cid:3)
+
+Iremos apresentar um resultado que será importante para obtermos uma restrição
+
+de 𝑑 para a qual a fração
+
+será uma das reduzidas de
+
+𝑘
+𝑑
+
+𝑒
+𝑁
+
+.
+
+Capítulo 3. Ataque de Wiener
+
+42
+
+Lema 3.2. Seja (𝑁, 𝑒) a chave pública, com 𝑁 = 𝑝𝑞 tal que 𝑝 < 𝑞 < 𝑎𝑝 para alguns
+𝑎 ∈ N. Além disso, sejam 𝑘 e 𝑑 definidos a partir de (3.1). Então
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑘
+𝑑
+
+−
+
+𝑒
+𝑁
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+𝑘(𝑎 + 1)
+√
+
+.
+
+𝑑
+
+𝑁
+
+Prova. Mostraremos, primeiro, que
+
+(︃ 𝑘
+𝑑
+
+−
+
+)︃
+
+<
+
+𝑘(𝑎 + 1)
+√
+
+.
+
+𝑑
+
+𝑁
+
+Assim, pelo Lema 3.1, 𝑁 − (𝑎 + 1)
+√
+
+𝑁 ) < 𝑘𝜑(𝑁 ). Sendo 𝜑(𝑁 ) =
+
+𝑁 < 𝜑(𝑁 ) < 𝑁, logo, para 𝑘 ∈ N, 𝑘(𝑁 −
+, com 𝑘 ∈ N, temos que 𝑘𝜑(𝑁 ) = 𝑒𝑑 − 1.
+
+(𝑎 + 1)
+Portanto
+
+𝑒
+𝑁
+√
+
+𝑒𝑑 − 1
+𝑘
+
+√
+
+𝑘(𝑁 − (𝑎 + 1)
+
+𝑘𝑁 − 𝑘(𝑎 + 1)
+
+𝑁 ) < 𝑒𝑑 − 1
+√
+
+𝑁 < 𝑒𝑑 − 1
+
+𝑘𝑁 − 𝑒𝑑 < 𝑘(𝑎 + 1)
+
+𝑁 − 1
+
+𝑘(𝑎 + 1)
+
+𝑁 − 1
+
+pois 𝑑𝑁 ̸= 0. Dessa forma,
+
+𝑘𝑁 − 𝑒𝑑
+𝑑𝑁
+
+<
+
+√
+
+√
+
+𝑑𝑁
+
+−
+
+1
+𝑑𝑁
+
+.
+
+𝑘
+𝑑
+𝑘
+𝑑
+
+−
+
+−
+
+𝑒
+𝑁
+𝑒
+𝑁
+
+<
+
+<
+
+𝑘(𝑎 + 1)
+√
+
+𝑑
+
+𝑁
+
+𝑘(𝑎 + 1)
+√
+
+𝑑
+
+𝑁
+
+Agora, vamos mostrar que −
+
+𝜑(𝑁 ) < 𝑁 , assim
+
+𝑘(𝑎 + 1)
+√
+
+𝑑
+
+𝑁
+
+<
+
+(︃ 𝑘
+𝑑
+
+−
+
+𝑒
+𝑁
+
+)︃
+
+. Sabemos, pelo Lema 3.1, que
+
+𝑘𝜑(𝑁 ) < 𝑘𝑁.
+
+Além disso, sabemos que 𝑘𝜑(𝑁 ) = 𝑒𝑑 − 1 o que implica 𝑘𝜑(𝑁 ) + 2 = 𝑒𝑑 + 1. Por
+
+hipótese, 𝑝 < 𝑞 < 𝑎𝑝 com 𝑝, 𝑞 primos distintos e 𝑎 ∈ N, assim 𝑎 > 1, logo 𝑎 + 1 > 2.
+
+Sendo 𝑁 = 𝑝𝑞 > 1 logo
+
+√
+
+𝑁 > 1. Portanto, para 𝑘 ∈ N, implica que
+
+Considerando
+
+2 ≤ 2𝑘 < 𝑘(𝑎 + 1)
+
+√
+
+𝑁 .
+
+𝑘𝜑(𝑁 ) < 𝑘𝑁,
+
+(3.4)
+
+(3.5)
+
+Capítulo 3. Ataque de Wiener
+
+temos, a partir de (3.4) e (3.5), que
+
+𝑘𝜑(𝑁 ) + 2 < 𝑘𝑁 + 𝑘(𝑎 + 1)
+
+𝑒𝑑 + 1 < 𝑘𝑁 + 𝑘(𝑎 + 1)
+
+√
+
+1 − 𝑘(𝑎 + 1)
+
+𝑁 < 𝑘𝑁 − 𝑒𝑑
+
+1
+𝑑𝑁
+
+−
+
+−
+
+𝑘(𝑎 + 1)
+√
+
+𝑑
+
+𝑁
+
+𝑘(𝑎 + 1)
+√
+
+𝑑
+
+𝑁
+
+<
+
+<
+
+𝑘
+𝑑
+𝑘
+𝑑
+
+−
+
+−
+
+𝑒
+𝑁
+𝑒
+𝑁
+
+.
+
+Portanto
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑘
+𝑑
+
+−
+
+𝑒
+𝑁
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+𝑘(𝑎 + 1)
+√
+
+.
+
+𝑑
+
+𝑁
+
+√
+
+√
+
+𝑁
+
+𝑁
+
+43
+
+(cid:3)
+
+Lema 3.3. Sejam 𝑘 e 𝑑 definidos a partir de (3.1). Então 𝑘 < 𝑑.
+
+Prova. Com efeito, sendo 1 < 𝑒, 𝑑 < 𝜑(𝑁 ) e 𝑘 ∈ N então 𝑘𝑒 < 𝑘𝜑(𝑁 ) logo 𝑘𝑒 − 1 <
+𝑘𝜑(𝑁 ). Sabemos de (3.1) que
+
+assim 𝑘𝑒 − 1 < 𝑒𝑑 − 1 o que mostra que 𝑘𝑒 < 𝑒𝑑, portanto 𝑘 < 𝑑.
+
+𝑘𝜑(𝑁 ) = 𝑒𝑑 − 1,
+
+Com os Lemas 3.1, 3.2 e 3.3 estabelecidos, mostraremos agora que
+
+𝑘
+𝑑
+, para certos valores de 𝑑. Para isso, recorreremos ao Teorema 2.37.
+
+é uma reduzida
+
+de
+
+𝑒
+𝑁
+
+(cid:3)
+
+Teorema 3.4. Temos
+
+𝑘
+𝑑
+
+como reduzida de
+
+𝑒
+𝑁
+√
+4
+
+, desde que
+
+𝑑 ≤
+
+√︁
+
+𝑁
+
+.
+
+2(𝑎 + 1)
+
+Prova. Sabemos, a partir do Teorema 2.37, que a fração irredutível
+
+de
+
+se
+
+𝑒
+𝑁
+
+𝑘
+𝑑
+
+é uma das reduzidas
+
+⃒
+𝑘
+⃒
+⃒
+⃒
+𝑑
+⃒
+Sendo (𝑁, 𝑒) a chave pública, com 𝑁 = 𝑝𝑞 e 𝑝 < 𝑞 < 𝑎𝑝 para alguns 𝑎 ∈ N, então, pelo
+Lema 3.2, temos
+
+1
+2𝑑2 .
+
+𝑒
+𝑁
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+−
+
+<
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+𝑒
+𝑁
+
+−
+
+𝑘
+𝑑
+
+⃒
+⃒
+⃒
+⃒
+⃒
+
+<
+
+(𝑎 + 1)𝑘
+√
+
+.
+
+𝑑
+
+𝑁
+
+Capítulo 3. Ataque de Wiener
+
+44
+
+Assim para
+
+(𝑎 + 1)𝑘
+√
+
+𝑑
+
+𝑁
+
+<
+
+Podemos reescrever
+
+1
+2𝑑2 implica que
+(𝑎 + 1)𝑘
+√
+
+<
+
+𝑑
+
+𝑁
+
+𝑘
+𝑑
+
+é uma das reduzidas de
+
+𝑒
+𝑁
+
+.
+
+1
+2𝑑2 da seguinte forma
+√
+
+2𝑑𝑘(𝑎 + 1) <
+
+𝑁 .
+
+Sendo 𝑘 < 𝑑, pelo Lema 3.4, e 𝑎 ∈ N, temos
+
+2𝑑𝑘 < 2𝑑2
+
+2𝑑𝑘(𝑎 + 1) < 2𝑑2(𝑎 + 1).
+
+Sendo assim, maximizaremos 𝑑 deixando 2𝑑2(𝑎 + 1) ≤
+
+√
+
+𝑁 , que produz
+
+𝑑2 ≤
+
+√
+
+𝑁
+2(𝑎 + 1)
+√
+4
+
+𝑁
+
+𝑑 ≤
+
+√︁
+
+2(𝑎 + 1)
+
+.
+
+(cid:3)
+
+A partir do Teorema anterior, podemos observar que o valor máximo de 𝑑 depende
+de 𝑎 e, além disso, à medida que 𝑎 aumenta o valor de 𝑑 diminui, onde 𝑑 é o valor que
+
+garante que
+
+é uma reduzida de
+
+𝑘
+𝑑
+
+𝑒
+𝑁
+
+.
+
+A partir deste momento, iremos determinar
+supondo que 𝑁 = 𝑥2 − 𝑦2 = (𝑥 − 𝑦)(𝑥 + 𝑦), com 𝑥, 𝑦 ∈ N.
+
+𝑘
+𝑑
+
+através da fatoração de 𝑁 , ou seja
+
+Como 𝑁 = 𝑝𝑞 implica 𝑝 = 𝑥 − 𝑦 e 𝑞 = 𝑥 + 𝑦 ou 1 = 𝑥 − 𝑦 e 𝑁 = 𝑥 + 𝑦. Logo
+
+𝑥 =
+
+𝑥 =
+
+𝑝 + 𝑞
+2
+𝑜𝑢
+𝑁 + 1
+2
+
+𝑦 =
+
+𝑞 − 𝑝
+2
+
+𝑦 =
+
+𝑁 − 1
+2
+
+.
+
+Veremos como utilizar essas informações no ataque de Wiener para determinarmos
+
+a chave privada (𝑝, 𝑞, 𝑑).
+
+Assumindo que 𝑁 = 𝑥2 − 𝑦2 e que 𝑑 é o maior denominador das reduzidas de
+
+𝑒
+𝑁
+
+tal que 𝑑 ≤
+
+√︁
+
+, então testaremos sequencialmente cada uma das reduzidas. Seja
+
+√
+
+4
+
+𝑁
+
+2(𝑎 + 1)
+
+Capítulo 3. Ataque de Wiener
+
+45
+
+𝑘′
+𝑑′ a reduzida de
+definidos da seguintes forma:
+
+𝑒
+𝑁
+
+que está sendo testada. Para cada reduzida
+
+𝑘′
+𝑑′ , sejam 𝜑′(𝑁 ), 𝑥′ e 𝑦′
+
+𝜑′(𝑁 ) =
+
+𝑥′ =
+
+𝑦′ =
+
+𝑒𝑑′ − 1
+𝑘′
+
+𝑁 − 𝜑′(𝑁 ) + 1
+2
+(𝑥′)2 − 𝑁 .
+
+√︁
+
+O Teorema a seguir mostra como determinar a chave privada (𝑝, 𝑞, 𝑑) a partir de
+
+𝑥′ e 𝑦′.
+
+Teorema 3.5. Seja
+
+𝑘′
+𝑑′ uma reduzida de
+
+𝑒
+𝑁
+
+. Se 𝑥′, 𝑦′ ∈ N, definidos como
+
+𝑥′ =
+
+𝑦′ =
+
+𝑁 − 𝜑′(𝑁 ) + 1
+2
+(𝑥′)2 − 𝑁 ,
+
+√︁
+
+então a chave privada (𝑝, 𝑞, 𝑑) = (𝑥′ − 𝑦′, 𝑥′ + 𝑦′, 𝑑′).
+
+Prova. Sendo 𝑥′ e 𝑦′ números naturais, então como 𝑦′ =
+
+√︁
+
+(𝑥′)2 − 𝑁 resulta que
+
+𝑁 = (𝑥′)2 − (𝑦′)2
+
+𝑁 = (𝑥′ − 𝑦′)(𝑥′ + 𝑦′).
+
+Obviamente 𝑥′ − 𝑦′
+
+𝑥′ =
+
+𝑁 + 1
+2
+
+. Como 𝑥′ =
+
+̸= 1. De fato, supondo 1 = 𝑥′ − 𝑦′ então 𝑁 = 𝑥′ + 𝑦′, assim temos
+𝑒𝑑′ − 1
+𝑘′
+
+𝑁 − 𝜑′(𝑁 ) + 1
+2
+
+e 𝜑′(𝑁 ) =
+
+implica
+
+𝑥′ =
+
+𝑁 + 1
+2
+
+=
+
+𝑁 + 1
+2
+𝑁 + 1
+2
+
+−
+
+−
+
+𝜑′(𝑁 )
+2
+𝜑′(𝑁 )
+2
+
+𝜑′(𝑁 ) = 0.
+
+𝑒𝑑′ − 1
+𝑘′
+
+Assim
+natural maior do que 1.
+
+= 0, logo 𝑒𝑑′ − 1 = 0 ⇒ 𝑒𝑑′ = 1, que é um absurdo pois 𝑒 é um número
+
+Dessa forma, como 𝑁 = 𝑝𝑞, com 𝑝 < 𝑞, implica 𝑝 = 𝑥′ − 𝑦′ e 𝑞 = 𝑥′ + 𝑦′. Logo
+
+𝑥′ =
+
+𝑝 + 𝑞
+2
+
+𝑦′ =
+
+𝑞 − 𝑝
+2
+
+.
+
+Capítulo 3. Ataque de Wiener
+
+46
+
+Sendo 𝑥′ =
+
+𝑁 − 𝜑′(𝑁 ) + 1
+2
+
+resulta
+
+2𝑥′ = 𝑁 − 𝜑′(𝑁 ) + 1
+
+𝜑′(𝑁 ) = 𝑁 − 2𝑥′ + 1
+
+𝜑′(𝑁 ) = 𝑁 − (𝑝 + 𝑞) + 1
+
+𝜑′(𝑁 ) = 𝑝𝑞 − (𝑝 + 𝑞) + 1
+
+𝜑′(𝑁 ) = (𝑝 − 1)(𝑞 − 1) = 𝜑(𝑁 ).
+
+Como 𝜑′(𝑁 )𝑘′ = 𝑒𝑑′ − 1 e que 𝜑(𝑁 )𝑘 = 𝑒𝑑 − 1, então
+
+𝜑′(𝑁 ) | (𝑒𝑑′ − 1)
+
+𝜑(𝑁 ) | (𝑒𝑑 − 1).
+
+Sendo 𝜑′(𝑁 ) = 𝜑(𝑁 ), temos
+
+𝜑(𝑁 ) | (𝑒𝑑 − 1)
+
+𝜑(𝑁 ) | (𝑒𝑑 − 1) − (𝑒𝑑′ − 1) ⇒
+
+𝜑(𝑁 ) | (𝑒𝑑′ − 1)
+
+𝜑(𝑁 ) | 𝑒(𝑑 − 𝑑′).
+
+Dessa forma, temos 𝜑(𝑁 ) | (𝑑 − 𝑑′) porque 𝜑(𝑁 ) (cid:45) 𝑒, pois 1 < 𝑒 < 𝜑(𝑁 ).
+
+Sendo a sequência dos denominadores das reduzidas crescente então 𝑑′ ≤ 𝑑, pois
+estamos testando as reduzidas sequencialmente. Assim como 1 < 𝑑 < 𝜑(𝑁 ) segue que
+𝑑′ = 𝑑, pois se 𝑑′ < 𝑑 resultaria no absurdo de 𝜑(𝑁 ) dividir um número natural menor do
+que ele. Portanto 𝑝 = 𝑥′ − 𝑦′, 𝑞 = 𝑥′ + 𝑦′ e 𝑑 = 𝑑′.
+
+Exemplo 3.6. Sejam 𝑁 = 6932927 e 𝑒 = 2186443. Use o ataque de Wiener para deter-
+minar a chave privada (𝑝, 𝑞, 𝑑).
+
+(cid:3)
+
+Solução. Sabemos que 𝑑 ≤
+
+√
+4
+
+𝑁
+
+√︁
+
+2(𝑎 + 1)
+
+, implica 𝑑 ≤
+
+√
+4
+𝑁
+√
+6
+
+mos, sequencialmente, todos os denominadores 𝑑′ das reduzidas de
+do que ou iguais a 20.
+
+, pois 𝑎 ≥ 2. Portanto testare-
+
+𝑒
+𝑁
+
+que sejam menores
+
+Como a sétima reduzida de
+
+é dada por 𝑐7 = [0; 3, 5, 1, 5, 1, 3, 2] assim 𝑐1 =
+
+𝑒
+𝑁
+
+1
+3
+
+, 𝑐2 =
+
+, 𝑐3 =
+
+5
+35
+16
+111
+Sendo 𝜑′(𝑁 ), 𝑥′ e 𝑦′ definidos como seguem
+
+e 𝑐4 =
+
+6
+19
+
+.
+
+𝜑′(𝑁 ) =
+
+𝑥′ =
+
+𝑦′ =
+
+𝑒𝑑′ − 1
+𝑘′
+
+𝑁 − 𝜑′(𝑁 ) + 1
+2
+(𝑥′)2 − 𝑁 ,
+
+√︁
+
+Capítulo 3. Ataque de Wiener
+
+47
+
+i) Para 𝑐1 =
+
+, temos 𝑑′ = 3 e 𝑘′ = 1. Assim 𝜑′(𝑁 ) =
+
+2186443 · 3 − 1
+1
+
+= 6559328, logo
+
+= 186800 e 𝑦′ =
+
+(186800)2 − 6932927 = 186781, 44
+
+√︁
+
+1
+3
+
+6932927 − 6559328 + 1
+2
+
+𝑥′ =
+dessa forma o teste falha, pois 𝑦′ /∈ N.
+
+ii) Para 𝑐2 =
+
+5
+16
+
+6996617, 4, logo 𝑥′ =
+𝑥′ /∈ N.
+
+, temos 𝑑′ = 16 e 𝑘′ = 5. Assim 𝜑′(𝑁 ) =
+
+6932927 − 6996617, 4 + 1
+2
+
+2186443 · 16 − 1
+5
+
+=
+
+= −31844, 7. O teste falha, pois
+
+iii) Para 𝑐3 =
+
+, temos 𝑑′ = 19 e 𝑘′ = 6. Assim 𝜑′(𝑁 ) =
+
+6
+19
+6932927 − 6923736 + 1
+2
+
+logo 𝑥′ =
+forma o teste é válido, tendo em vista que 𝑥′, 𝑦′ ∈ N.
+
+= 4596 e 𝑦′ =
+
+2186443 · 19 − 1
+6
+
+= 6923736,
+
+√︁
+
+(4596)2 − 6932927 = 3767 dessa
+
+Sendo 𝑥′ = 4596 e 𝑦′ = 3767, temos que 𝑝 = 𝑥′ − 𝑦′ = 829 e 𝑞 = 𝑥′ + 𝑦′ = 8363.
+
+Com isso a chave privada é dada por (829, 8363, 19).
+
+Referências Bibliográficas
+
+48
+
+[1] ROSEN, Kenneth H. Elementary Number Theory and Its Applications,
+
+6th ed. Pearson, 2011.
+
+[2] BURTON, David M. Elementary Number Theory, 6th ed., Mc Graw Hill,
+
+New York, 2007.
+
+[3] MOREIRA, Carlos Gustavo T. de A. Frações Contínuas, Representações
+de Números e Aproximações Diofantinas. 1o Coloquio da Região Sudeste. São João
+del-Rei, 2011.
+
+[4] SANTOS, José Plínio de Oliveira. Introducão à Teoria dos Números. 3ed.
+
+Rio de Janeiro, RJ: IMPA, 2017.
+
+[5] BARBEDO, Inês. O Sistema Criptográfico RSA: Ataques e Variantes, 2003.
+
+[6] DUJELLA, Andrej. Continued fractions and RSA with small secret ex-
+
+ponent, Tatra Mt. Math. Publ. 29 (2004).
+
+[7] COUTINHO, S. C. Números Inteiros e Criptografia RSA, 2ed. Rio de
+
+Janeiro, RJ: IMPA, 2005.
+
+[8] SMART, Nigel. Cryptography:An Introduction, McGraw-Hill, London, 2002.
+
+[9] WIENER, M. J. Cryptanalysis of short RSA secret exponents, IEEE
+
+Trans. Inform. Theory 36 (1990), 553–558
+
+[10] KAUFER, Aaron H. Applications of Continued Fractions in Crypto-
+
+graphy and Diophantine Equations, 2009.
+
+[11] LIMA, Elon Lages. Análise Real, Vol. 1, Instituto de Matemática Pura e
+
+Aplicada, Rio de Janeiro, 2006.
+
+

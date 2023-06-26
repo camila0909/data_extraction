@@ -1,0 +1,7192 @@
+UNIVERSIDADE FEDERAL DE SANTA CATARINA
+CAMPUS DE FLORIAN ´OPOLIS
+PROGRAMA DE MESTRADO PROFISSIONAL DE MATEM ´ATICA EM REDE
+
+NACIONAL - PROFMAT
+
+Bruna da Silva Donadel
+
+RESTAURA ¸C ˜AO DE IMAGENS:
+
+Uma abordagem did´atica para ensino de subespa¸cos vetoriais
+
+Florian´opolis
+
+2021
+
+Bruna da Silva Donadel
+
+RESTAURA ¸C ˜AO DE IMAGENS:
+
+Uma abordagem did´atica para ensino de subespa¸cos vetoriais
+
+Disserta¸c˜ao submetida ao Programa de Mes-
+trado Proﬁssional de Matem´atica em Rede Na-
+cional - PROFMAT da Universidade Federal de
+Santa Catarina como requisito parcial para a
+obten¸c˜ao do Grau de Mestre em Matem´atica.
+Com ´area de concentra¸c˜ao no Ensino de Mate-
+m´atica.
+Orientador: Prof. Dr. Leonardo Silveira Borges
+
+Florian´opolis
+
+2021
+
+Ficha de identiﬁca¸c˜ao da obra elaborada pelo autor.
+
+Bruna da Silva Donadel
+
+Restaura¸c~ao de Imagens: Uma abordagem did´a-
+
+tica para ensino de subespa¸cos vetoriais / Bruna
+da Silva Donadel; Orientador, Leonardo Silveira
+Borges, 2021.
+
+82 p.
+
+Disserta¸c~ao (Mestrado profissional)
+
+- Univer-
+
+sidade Federal de Santa Catarina, Departamento de
+Matem´atica, Programa de Mestrado Profissional de
+Matem´atica em Rede Nacional - PROFMAT.
+
+Inclui refer^encias
+
+1.
+
+Restaura¸c~ao de imagens. 2.
+
+LSQR. 3.TSVD.
+
+´Algebra Linear.
+
+5. Sequ^encia did´atica. I.
+
+4.
+Leonardo Silveira Borges. II. Universidade Federal
+de Santa Catarina. Programa de Mestrado Profissio-
+nal de Matem´atica em Rede Nacional - PROFMAT. III.
+RESTAURA¸C~AO DE IMAGENS: Uma abordagem did´atica para
+ensino de subespa¸cos vetoriais.
+
+Bruna da Silva Donadel
+
+RESTAURA ¸C ˜AO DE IMAGENS:
+
+Uma abordagem did´atica para ensino de subespa¸cos vetoriais
+
+O presente trabalho em n´ıvel de mestrado foi avaliado e aprovado pela Banca Exami-
+
+nadora composta pelos seguintes membros:
+
+Prof. Dr. Ednei Felix Reis
+UTFPR
+
+Prof. Dr. Leandro Batista Morgado
+UFSC
+
+Prof. Dr. S´ergio Tadao Martins
+UFSC
+
+Certiﬁcamos que esta ´e a vers˜ao original e ﬁnal do trabalho de conclus˜ao que foi
+
+julgado adequado para obten¸c˜ao do t´ıtulo de Mestre em Matem´atica.
+
+Profa. Dra. Maria Inez Cardoso Gon¸calves
+Coordenadora do Programa
+
+Prof. Dr. Leonardo Silveira Borges
+Orientador
+
+Florian´opolis, 29 de novembro de 2021.
+
+Dedico este trabalho aos meus pais, minha base.
+
+AGRADECIMENTOS
+
+Agrade¸co primeiramente a Deus pela minha vida e dos que me rodeiam, como tamb´em
+
+por me fortalecer nos dias bons e ruins.
+
+Ao meu orientador, Prof. Dr. Leonardo Silveira Borges, pela paciˆencia, disponibilidade
+
+e in´umeras contribui¸c˜oes. Sua colabora¸c˜ao foi de suma importˆancia.
+
+Ao meu marido, Gustavo Machado, por literalmente estar ao meu lado me ajudando
+
+em diversos aspectos.
+
+Aos meus pais, irm˜aos, av´os, sogros e amigos pelo apoio e compreens˜ao.
+
+Aos colegas da Sinqia que tornam o trabalho mais descontra´ıdo.
+
+RESUMO
+
+Este trabalho apresenta um estudo sobre os problemas inversos de restaura¸c˜ao de imagem,
+
+abordando os cl´assicos m´etodos de proje¸c˜ao TSVD e LSQR para solu¸c˜ao de problemas de
+grande porte e sugere a abordagem dessa problem´atica na disciplina de ´Algebra Linear do
+
+Ensino Superior, contribuindo para ampliar o entendimento de conceitos como Espa¸co Ve-
+
+torial e Subespa¸co. Partindo do pressuposto que o processo de emba¸camento de imagens
+
+´e linear, algumas fun¸c˜oes de propaga¸c˜ao de ponto s˜ao apresentadas para posteriormente
+
+serem usadas na modelagem dos problemas de restaura¸c˜ao. O m´etodo TSVD trunca a
+
+solu¸c˜ao cl´assica de m´ınimos quadrados escrita em termos da decomposi¸c˜ao em valores
+
+singulares da matriz A, descartando a informa¸c˜ao relacionada aos menores valores singu-
+
+lares, a ﬁm de amenizar a contribui¸c˜ao do ru´ıdo na solu¸c˜ao. Embora este seja um m´etodo
+
+poderoso, o alto custo computacional necess´ario para calcular a SVD torna invi´avel sua
+
+utiliza¸c˜ao em problemas de grande porte. J´a o m´etodo LSQR constr´oi uma sequˆencia de
+
+solu¸c˜oes sobre os subespa¸cos de Krylov
+
+K
+
+j(AT A, AT b) e obt´em boa parte das informa¸c˜oes
+
+relevantes do problema com relativamente poucas itera¸c˜oes. Para exempliﬁcar esse fenˆo-
+
+meno, o trabalho mostra o comportamento das solu¸c˜oes para alguns problemas num´ericos
+
+com e sem ru´ıdo nos dados. Ao ﬁnal, prop˜oe uma sequˆencia de aulas e alguns exerc´ıcios
+para uma primeira disciplina de ´Algebra Linear que exploram os problemas de restaura¸c˜ao
+
+de imagem com solu¸c˜ao via m´etodo LSQR.
+Palavras-chave: Restaura¸c˜ao de imagens; LSQR; TSVD; ´Algebra Linear; Sequˆencia di-
+
+d´atica.
+
+ABSTRACT
+
+This work presents a study on the inverse problems of image restoration, approaching
+
+the classical TSVD and LSQR projection methods to solve large-scale linear systems,
+
+and proposes to treat this problem in the Linear Algebra subject of higher education,
+
+which helps to broaden the understanding of concepts such as Vector Space and Subs-
+
+pace. Assuming that the image blurring process is linear, some Point Spread Function
+
+are introduced, which can be used later in modeling image restoration problems. The
+
+TSVD method truncates the naive least squares solution written in terms of the singular
+
+value decomposition of the matrix A, discarding the information related to the smallest
+
+singular values to mitigate the contribution of the noise in the solution. Although this
+
+is a powerful method, the high computational cost required to calculate the SVD makes
+
+its use unfeasible when dealing with large-scale problems. The LSQR method, on the
+
+other hand, generates a sequence of solutions on the Krylov subspaces
+
+j(AT A, AT b) and
+
+K
+
+obtains much of the relevant information of the problem with relatively few iterations. To
+
+illustrate this phenomenon, the work shows the behavior of solutions to some numerical
+
+problems with and without noise in the data. At the end, it proposes a set of classes
+
+and some exercises for a ﬁrst course of Linear Algebra that explore the problems of image
+
+restoration problems with the solution by the LSQR method.
+
+Keywords: Image restoration; LSQR; TSVD; Linear algebra; Teaching sequence.
+
+x
+
+Lista de Figuras
+
+2.1 Modelagem de um processo f´ısico. . . . . . . . . . . . . . . . . . . . . . . .
+
+2.2 Representa¸c˜ao de pixels em formato quadrado (esquerda) e redondo (direita)
+
+2.3 Exemplo de ﬁgura 18
+
+×
+2.4 Exemplo de imagem 252
+
+18 pixels (esquerda) e 512
+
+512 pixels (direita) . .
+
+×
+
+252 pixels (esquerda) e 512
+
+512 pixels (direita)
+
+×
+
+×
+
+2.5 Exemplo de imagem decomposta em RGB e sua vers˜ao original
+
+. . . . . .
+
+2.6 Exemplo de imagem decomposta em CMY e sua vers˜ao original
+
+. . . . . .
+
+2.7 Cilindro s´olido de cor HSV . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+2.8 Exemplo de imagem decomposta em HSV e sua vers˜ao original . . . . . . .
+
+3
+
+5
+
+6
+
+6
+
+7
+
+7
+
+8
+
+8
+
+2.9 Um ponto de luz e sua PSF `a direita . . . . . . . . . . . . . . . . . . . . . 11
+
+2.10 Sat´elite de 216
+
+×
+
+216 pixels
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+2.11 Exemplos de PSF fora de foco, com diferentes raios, e respectivas imagens
+
+emba¸cadas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+2.12 Exemplos de PSF gaussiana para turbulˆencia atmosf´erica, com ρ = 0 e
+
+diferentes s1 e s2, e respectivas imagens emba¸cadas
+
+. . . . . . . . . . . . . 13
+
+2.13 Exemplos de PSF gaussiana para turbulˆencia atmosf´erica, com s1 = 6,
+
+s2 = 15 e diferentes ρ, e respectivas imagens emba¸cadas . . . . . . . . . . . 14
+
+2.14 Exemplos de PSF gaussiana, com diferentes σ, e respectivas imagens em-
+
+ba¸cadas
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+2.15 Exemplos de PSF Motion Blur horizontal, com diferentes intensidades, e
+
+respectivas imagens emba¸cadas
+
+. . . . . . . . . . . . . . . . . . . . . . . . 15
+
+3.1 Compara¸c˜ao de algumas solu¸c˜oes do m´etodo TSVD para dois problemas
+
+diferentes
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+3.2 Paralelo entre valores singulares de A1 e A2 e erros relativos E1 e E2 . . . . 27
+
+3.3
+
+Ilustra¸c˜ao de algumas solu¸c˜oes do m´etodo LSQR . . . . . . . . . . . . . . . 34
+
+xi
+
+xii
+
+3.4
+
+`A esquerda est´a a imagem exata do sat´elite, no meio a imagem emba¸cada
+
+e a respectiva melhor solu¸c˜ao e `a direita a imagem emba¸cada com 5% de
+
+ru´ıdo e a respectiva melhor solu¸c˜ao . . . . . . . . . . . . . . . . . . . . . . 35
+
+3.5 Gr´aﬁco de compara¸c˜ao dos erros relativos das solu¸c˜oes LSQR do problema
+
+do Sat´elite exato e com diferentes n´ıveis de ru´ıdo (eixo y em escala logar´ıt-
+
+mica) . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 36
+`A esquerda est´a a imagem exata do Pirata, no meio a imagem emba¸cada
+
+3.6
+
+e a respectiva melhor solu¸c˜ao e `a direita a imagem emba¸cada com 5% de
+
+ru´ıdo e a respectiva melhor solu¸c˜ao . . . . . . . . . . . . . . . . . . . . . . 37
+
+3.7 Gr´aﬁco de compara¸c˜ao dos erros relativos das solu¸c˜oes LSQR do problema
+
+do Pirata exato e com diferentes n´ıveis de ru´ıdo (eixo y em escala logar´ıtmica) 37
+
+4.1
+
+Interpreta¸c˜ao geom´etrica da solu¸c˜ao de m´ınimos quadrados . . . . . . . . . 41
+
+4.2 Solu¸c˜ao do exerc´ıcio 4: Gr´aﬁco dos erros relativos . . . . . . . . . . . . . . 43
+
+4.3 Solu¸c˜ao do exerc´ıcio 5: Imagem emba¸cada ao lado da imagem restaurada . 44
+
+Lista de Tabelas
+
+3.1 Tempo de processamento da SVD . . . . . . . . . . . . . . . . . . . . . . . 28
+
+3.2 Tempo de processamento da LSQR . . . . . . . . . . . . . . . . . . . . . . 34
+
+3.3 Menor erro relativo, dimens˜ao do subespa¸co e tempo de processamento de
+
+cada um dos problemas do sat´elite
+
+. . . . . . . . . . . . . . . . . . . . . . 36
+
+3.4 Menor erro relativo, dimens˜ao do subespa¸co e tempo de processamento de
+
+cada um dos problemas do pirata . . . . . . . . . . . . . . . . . . . . . . . 38
+
+4.1 Proposta de sequˆencia de aulas
+
+. . . . . . . . . . . . . . . . . . . . . . . . 42
+
+xiii
+
+xiv
+
+Abreviaturas e Siglas
+
+LSQR M´ınimos Quadrados via fatora¸c˜ao QR (Least Squares via QR factorization). 19
+
+PSF Fun¸c˜ao de Propaga¸c˜ao do Ponto (Point Spread Function). 11
+
+TSVD Decomposi¸c˜ao em Valores Singulares Truncada (Truncated Singular Value Decom-
+
+position). 19
+
+xv
+
+xvi
+
+Conte´udo
+
+1 Introdu¸c˜ao
+
+2 Processamento de Imagem
+
+2.1 Captura e representa¸c˜ao de imagens . . . . . . . . . . . . . . . . . . . . . .
+
+1
+
+3
+
+5
+
+2.2 Modelos de emba¸camento . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+3 M´etodos Iterativos
+
+19
+
+3.1 O que s˜ao m´etodos iterativos e m´etodos de proje¸c˜ao? . . . . . . . . . . . . 19
+
+3.2 Solu¸c˜ao de m´ınimos quadrados em termos da SVD e o m´etodo da TSVD . 21
+
+3.3 O m´etodo LSQR . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 28
+
+3.4 Exemplos de aplica¸c˜oes em problemas com ru´ıdo . . . . . . . . . . . . . . . 35
+
+4 Uma proposta de aplica¸c˜ao no Ensino Superior
+
+39
+
+4.1 Exerc´ıcios propostos
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+
+5 Considera¸c˜oes Finais
+
+A Orienta¸c˜oes sobre os exerc´ıcios
+
+B Fun¸c˜ao de emba¸camento foraDeFoco.m
+
+C Script exercicioRelogio.m
+
+D Script solucaoExercicioRelogio.m
+
+I Fun¸c˜ao de emba¸camento mblur.m
+
+II Fun¸c˜ao de emba¸camento oblur.m
+
+III M´etodo lsqr b.m
+
+xvii
+
+47
+
+51
+
+53
+
+55
+
+57
+
+59
+
+61
+
+63
+
+xviii
+
+Cap´ıtulo 1
+
+Introdu¸c˜ao
+
+A matem´atica ´e considerada por muitos uma disciplina dif´ıcil e complicada, tanto ´e
+
+que aqueles que tˆem maior facilidade nas disciplinas de exatas muitas das vezes s˜ao con-
+
+siderados “mais inteligentes” (COIMBRA, 2008). Al´em da diﬁculdade caracter´ıstica, n˜ao
+
+´e dif´ıcil encontrar casos em que o aluno depara-se com novos conceitos que s˜ao apresenta-
+
+dos de forma completamente abstrata em que n˜ao h´a preocupa¸c˜ao em vincular com algo
+
+pr´atico ou com os conhecimentos anteriores j´a consolidados na estrutura cognitiva dele.
+
+Na gradua¸c˜ao n˜ao ´e diferente, muita das vezes alunos dos cursos de exatas tˆem diﬁ-
+
+culdade em entender efetivamente alguns conceitos, principalmente quando exigem certo
+
+n´ıvel de abstra¸c˜ao. Por conhecimento de causa e corroborado por Coimbra (2008) e Fur-
+
+tado (2010), dois desses assuntos que costumam gerar d´uvidas s˜ao os Espa¸cos Vetoriais e
+os Subespa¸cos, conte´udos abordados em um primeiro curso de ´Algebra Linear, sobre os
+
+quais muitos outros s˜ao desenvolvidos.
+
+Nesta disserta¸c˜ao apresentamos uma proposta de abordagem de subespa¸cos vetoriais
+
+aplicada ao problema inverso de restaura¸c˜ao de imagens, pois nesse contexto conseguimos
+
+ilustrar espa¸cos e subespa¸cos vetoriais de grandes dimens˜oes, tornando o assunto mais
+
+visual e pr´atico.
+
+Para embasar o problema de restaura¸c˜ao de imagens, no Cap´ıtulo 2 introduzimos o con-
+
+te´udo de processamento de imagens digitais, como tamb´em apresentamos alguns modelos
+
+de emba¸camento, que s˜ao necess´arios para aplica¸c˜ao da nossa proposta de restaura¸c˜ao.
+
+No Cap´ıtulo 3 apresentamos duas metodologias de como resolver problemas Ax = b:
+
+(i) uma baseada na decomposi¸c˜ao em valores singulares, que ´e ferramenta extremamente
+
+poderosa, mas que rapidamente se torna computacionalmente muito “cara” quando as
+
+1
+
+2
+
+dimens˜oes do problema aumentam; (ii) e uma outra baseada em proje¸c˜ao em subespa¸cos
+
+de Krylov que ´e computacionalmente menos custosa e mais adequada para problemas de
+
+grande porte.
+
+J´a no Cap´ıtulo 4, propomos uma sequˆencia de aulas para a disciplina de ´Algebra
+
+Linear. Essa sequˆencia foi pensada para que ao ﬁnal os alunos tenham insumos suﬁcientes
+
+para vislumbrar como espa¸cos e subespa¸cos vetoriais podem ser utilizados na pr´atica. Por
+
+ﬁm, temos as considera¸c˜oes ﬁnais no Cap´ıtulo 5.
+
+Cap´ıtulo 2
+
+Processamento de Imagem
+
+Fenˆomenos f´ısicos podem ser interpretados como uma sequˆencia de causa, processa-
+
+mento e efeito, em que a “causa” ´e a entrada de dados (input) ou o est´ımulo que ao sofrer
+
+a a¸c˜ao das propriedades do sistema gera uma resposta que tamb´em pode ser chamada de
+
+sa´ıda, output ou efeito, conforme Figura 2.1.
+
+Figura 2.1: Modelagem de um processo f´ısico.
+
+f
+
+-
+
+Entrada
+
+Sistema
+
+g
+
+-
+
+Sa´ıda
+
+Os problemas diretos buscam descobrir a resposta do sistema a partir de determinado
+
+est´ımulo inicial e do processamento que ele sofre, enquanto os problemas inversos partem
+
+da resposta observada ou desejada para encontrar a causa.
+
+Para exempliﬁcar, apresentamos a seguir alguns pares de problemas diretos e inversos:
+
+o problema de encontrar os valores y1, y2,
+
+· · ·
+
+, yn que um dado polinˆomio assume para
+
+x1, x2,
+
+· · ·
+
+, xn ´e um problema direto, enquanto encontrar um polinˆomio p de grau n que
+
+assume os valores y1, y2,
+
+, yn nos pontos x1, x2,
+
+· · ·
+
+· · ·
+
+, xn ´e um problema inverso. Ou
+
+ent˜ao, o problema inverso de encontrar a imagem original, dados a imagem emba¸cada
+
+e o modelo de emba¸camento, nesse caso o problema direto correspondente ´e obter a
+
+imagem emba¸cada sendo dados a imagem “exata” e o modelo de emba¸camento. Ou ainda,
+
+encontrar a forma de um objeto, dada a intensidade do som ou das ondas eletromagn´eticas
+
+espalhadas por esse objeto, ´e um problema inverso, enquanto o problema direto ´e calcular
+
+3
+
+4
+
+a onda espalhada para um determinado objeto (KIRSCH, 2011).
+
+Na matem´atica esses fenˆomenos podem ser modelados como uma equa¸c˜ao do tipo
+
+(f ) = g
+
+A
+
+(2.1)
+
+sendo
+
+:
+
+A
+
+F → G
+
+entrada e sa´ıda, respectivamente, para
+
+e
+
+G
+
+F
+
+∈ F
+
+∈ G
+espa¸cos apropriados. Assim, dados
+
+e f ,
+
+A
+
+um operador, linear ou n˜ao, f
+
+e g
+
+fun¸c˜oes ou vetores de
+
+os problemas diretos consistem em calcular
+
+(f ) e, dados
+
+A
+
+A
+
+e g, os problemas inversos
+
+buscam f que satisfaz
+
+A
+
+(f ) = g (KIRSCH, 2011).
+
+Hadamard (apud. Kirsch, 2011) propˆos que um modelo matem´atico para um problema
+
+f´ısico ´e bem-posto se cumpre as trˆes exigˆencias seguintes:
+
+1. Existe uma solu¸c˜ao para o problema (existˆencia);
+
+2. Existe no m´aximo uma solu¸c˜ao para o problema (unicidade);
+
+3. A solu¸c˜ao depende continuamente dos dados (estabilidade).
+
+Desses fatores, o mais importante para conseguir obter uma solu¸c˜ao satisfat´oria ´e a
+
+estabilidade, pois ´e quase imposs´ıvel evitar perturba¸c˜ao nos dados. Porque, se estamos
+
+lidando com problemas pr´aticos, os dados obtidos muitas vezes cont´em imprecis˜oes ou
+
+erros de medi¸c˜oes e, al´em disso, podem haver erros de arredondamentos e truncamentos
+
+quando estes dados s˜ao manipulados em sistemas computacionais que muitas vezes uti-
+
+lizam aritm´etica ﬁnita em vez de aritm´etica exata, por exemplo. Sem a garantia deste
+
+item a solu¸c˜ao pode ﬁcar muito distante da desej´avel. J´a em casos de m´ultiplas solu-
+
+¸c˜oes ´e preciso obter mais informa¸c˜oes do problema e em caso de n˜ao haver solu¸c˜ao uma
+
+possibilidade ´e ampliar o espa¸co da solu¸c˜ao (KIRSCH, 2011). Caso algum item n˜ao seja
+
+satisfeito temos um problema mal-posto.
+
+Em geral, sen˜ao sempre, os problemas inversos s˜ao mal-postos no sentido de Hadamard.
+
+Esses problemas aparecem em restaura¸c˜ao de imagem (NAGY; PALMER; PERRONE,
+
+2004), espalhamento ac´ustico (COLTON; COYLE; MONK, 2000), (ZHANG; GUO, 2021),
+
+eletrocardiograﬁa e magnetocardiograﬁa (AHRENS, 2015), tomograﬁa (MARTINS, 2016),
+convolu¸c˜ao (BAUMEISTER; LEIT ˜AO, 2005), entre outros.
+
+Neste trabalho, nosso foco est´a nos problemas inversos relacionados a restaura¸c˜ao de
+
+imagens digitais e como podemos explorar este tema para facilitar a compreens˜ao de su-
+
+bespa¸cos. Neste cap´ıtulo introduziremos como ´e feita a representa¸c˜ao de uma imagem em
+
+5
+
+formato digital, passando por diferentes formatos de cor e modelagem de alguns processos
+
+de emba¸camento.
+
+2.1 Captura e representa¸c˜ao de imagens
+
+O processo de reprodu¸c˜ao de uma imagem real em formato digital basicamente passa,
+
+entre outras coisas, pela etapa de captura da luz pela cˆamera e a interpreta¸c˜ao dela em
+
+forma de um conjunto de pequenos elementos que juntos formam a imagem. Esses “peque-
+
+nos elementos” s˜ao chamados de pixels e carregam a informa¸c˜ao sobre a ´area de uma regi˜ao
+
+da ﬁgura. Cabe ressaltar que os pixels em uma imagem digital s˜ao, geralmente, represen-
+
+tados por quadrados ou retˆangulos. Apesar de outros formatos como c´ırculos ou linhas
+
+serem poss´ıveis, o formato quadrado/retangular ´e mais comumente usado em monitores,
+
+cˆameras digitais, celulares, entre outros, por n˜ao deixar “espa¸cos” entre si. Ilustramos tal
+
+“falha” na Figura 2.2. Perceba os “espa¸cos” n˜ao preenchidos quando os pixels s˜ao redondos.
+
+Tendo isto em mente, para n´os o termo “pixel” ser´a sempre retangular/quadrado.
+
+Figura 2.2: Representa¸c˜ao de pixels em formato quadrado (esquerda) e redondo (direita)
+
+Por exemplo, na Figura 2.3 temos duas imagens com quantidades de pixels diferentes,
+
+a da esquerda possui 18
+
+×
+
+18 pixels e, por estar ampliada, ´e f´acil identiﬁc´a-los, pois s˜ao
+
+quadrados relativamente grandes, enquanto a imagem da direita possui 512
+
+512 pixels
+
+×
+
+e, neste caso, estes s˜ao t˜ao menores que se tornam impercept´ıveis.
+
+Ent˜ao, podemos concluir que quanto maior a quantidade de pixels, melhor ´e a quali-
+
+dade da imagem? N˜ao necessariamente, veja, por exemplo, a Figura 2.4 em que temos
+
+duas imagens, uma de 252
+
+252 (esquerda) e uma de 512
+
+×
+252 ter menos de um quarto dos pixels de 512
+
+512 (direita). Apesar de
+
+×
+
+512, esta ´e mais n´ıtida do que a
+
+×
+
+252
+
+×
+
+segunda que est´a fora de foco e n˜ao nos diz muita coisa. Portanto, em termos de quali-
+
+dade, a capacidade do equipamento de conseguir registrar muitos pixels n˜ao ´e suﬁciente
+
+6
+
+Figura 2.3: Exemplo de ﬁgura 18
+
+18 pixels (esquerda) e 512
+
+512 pixels (direita)
+
+×
+
+×
+
+se a imagem exata sofrer qualquer tipo de altera¸c˜ao ou perturba¸c˜ao durante o processo
+
+de digitaliza¸c˜ao.
+
+Figura 2.4: Exemplo de imagem 252
+
+252 pixels (esquerda) e 512
+
+512 pixels (direita)
+
+×
+
+×
+
+No que diz respeito `as cores, as imagens podem ser representadas em preto e branco,
+
+tons de cinza (como na Figura 2.3) ou coloridas, al´em de existirem diferentes formas
+
+de quantiﬁcar os pixels. Por exemplo, para imagens em tons de cinza ´e comum usar
+
+uma escala de valores inteiros no intervalo [0, 255] ou [0, 65.535], em que o m´ınimo (0)
+
+representa o preto e o m´aximo (255 ou 65.535) representa o branco; enquanto imagens
+
+coloridas usam diferentes modelos de cores como RGB, HSV e CMY/CMYK em que as
+
+imagens s˜ao composta por m´ultiplas “camadas” ou canais de cor (layers).
+
+No modelo RGB s˜ao usados trˆes canais, um para cada cor prim´aria da luz: vermelho
+
+(do inglˆes, Red ), verde (Green) e azul (Blue) (HANSEN; NAGY; O’LEARY, 2006), como
+
+mostra a Figura 2.5. Cada uma dessas trˆes cores pode ser interpretada como um vetor da
+
+base de um espa¸co de 3 dimens˜oes, ent˜ao cada pixel ´e a combina¸c˜ao linear dessa base. Esse
+
+modelo ´e considerado aditivo, ´e usado para representar cores emitidas (ou projetadas) por
+
+fontes de luz, em que a jun¸c˜ao das trˆes cores prim´arias gera o branco e a ausˆencia delas
+
+gera o preto, ele ´e comumente usado em dispositivos digitais coloridos como os monitores,
+
+cˆameras, scanners e aﬁns.
+
+Figura 2.5: Exemplo de imagem decomposta em RGB e sua vers˜ao original
+
+7
+
+Fonte: <https://unsplash.com/photos/vXJ7uv2haSo>, 2021
+
+No modelo CMY as camadas correspondem `as cores ciano (do inglˆes, Cyan), magenta
+
+(Magenta) e amarelo (Yellow ), veja a Figura 2.6.
+
+Figura 2.6: Exemplo de imagem decomposta em CMY e sua vers˜ao original
+
+Fonte: <https://unsplash.com/photos/a53e2Zwz7xY>, 2021
+
+Ao contr´ario do RGB, esse modelo ´e subtrativo e representa a luz reﬂetida (como um
+
+ﬁltro que absorve/subtrai as demais cores), nesse caso, teoricamente, a presen¸ca das trˆes
+
+cores gera o preto (todas as cores s˜ao absorvidas, subtrai-se a luz) e a ausˆencia das cores
+
+produz o branco (nenhuma cor da luz ´e absorvida). A convers˜ao de imagens em RGB
+
+(com valores entre 0 e 255) para CMY (com valores entre 0 e 1) ´e dada por
+
+C = 1
+
+−
+
+(R/255), M = 1
+
+−
+
+(G/255)
+
+e
+
+Y = 1
+
+(B/255).
+
+−
+
+E fazendo as opera¸c˜oes inversas, temos a convers˜ao contr´aria:
+
+R = (1
+
+−
+
+C) 255, G = (1
+
+−
+
+M ) 255
+
+e B = (1
+
+Y ) 255.
+
+−
+
+Semelhante a este, no formato CMYK, al´em das trˆes citadas anteriormente, ´e acrescen-
+
+tada uma camada de cor preta (blacK ), que para o uso em impressoras e fotocopiadoras
+
+ajuda a melhorar a qualidade de impress˜oes, pois na pr´atica o uso das trˆes cores para gerar
+
+8
+
+o preto pode n˜ao produzir o efeito ideal e ainda deixar o papel muito ´umido e sens´ıvel
+
+por conta da quantidade de tinta utilizada.
+
+Em uma abordagem diferente das anteriores, temos o HSV que signiﬁca matiz (do
+
+inglˆes, Hue), satura¸c˜ao (Saturation) e valor (Value). O modelo HSV utiliza um espa¸co
+
+de cor cil´ındrico e as camadas n˜ao representam cores como RGB e CMY. Para melhor
+
+compreens˜ao, a Figura 2.7 ilustra como cada parˆametro ´e interpretado neste espa¸co.
+
+Figura 2.7: Cilindro s´olido de cor HSV
+
+Fonte: <https://commons.wikimedia.org>, 2021
+
+Conforme a ilustra¸c˜ao, matiz ´e a tonalidade e em geral varia de 0 a 360, a satura¸c˜ao
+
+representa a “pureza” e varia de 0 a 1 (raio do cilindro), sendo que quanto mais pr´oximo
+
+de zero mais cinza ´e a cor e o valor diz respeito ao brilho e tamb´em varia de 0 a 1 (altura
+
+do cilindro). Para exempliﬁcar a decomposi¸c˜ao da imagem em HSV temos a Figura
+
+2.8, que dessa vez apresentamos cada uma das camadas em tons de cinza, pois, como
+
+mencionamos anteriormente, neste formato cada componente da imagem n˜ao corresponde
+
+a uma cor propriamente, mas atua como parˆametro para deﬁnir a cor ﬁnal.
+
+Figura 2.8: Exemplo de imagem decomposta em HSV e sua vers˜ao original
+
+Fonte: <https://unsplash.com/photos/wNypLh377 o>, 2021
+
+Considerando uma imagem em RGB com entradas R, G e B num intervalo de 0 a 1
+
+e denotando ζM = max
+
+R, G, B
+{
+
+}
+
+e ζm = min
+
+R, G, B
+
+, podemos converter o formato de
+}
+
+{
+
+cor da seguinte forma
+
+9
+
+,
+
+H =
+
+·
+
+60
+
+60
+
+0, se ζM = ζm
+B
+G
+ζm
+ζM
+(cid:18)
+B
+ζM
+R
+ζM
+·
+ζm
+ζM −
+ζM
+
+−
+−
+R
+ζm
+G
+ζm
+
+−
+−
+−
+−
+, se ζM > 0
+
+60
+
+·
+
+
+
+
+
+
+mod 6
+
+, se ζM = R e
+
+(cid:19)
++ 120, se ζM = G
+
++ 240, se ζM = B
+
+,
+
+0, se ζM = 0
+
+S = 
+
+V = ζM .
+
+Neste trabalho vamos usar imagens em tons de cinza, em que cada imagem ´e represen-
+
+tada por apenas uma matriz de pixels. Para ilustrar, vamos considerar a ﬂor de 18
+
+18
+
+pixels que est´a na Figura 2.3 (esquerda). Neste caso temos uma matriz 18
+
+×
+
+entradas variam de 0 at´e 255, essa matriz ´e apresentada a seguir.
+
+×
+18 cujas
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+255
+
+255
+
+255
+
+0
+
+255
+
+255
+
+0
+
+255
+
+255
+
+255
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+0
+
+255
+
+0
+
+255
+
+0
+
+255
+
+255
+
+255
+
+255
+
+0
+
+255
+
+0
+
+221
+
+255
+
+255
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+255
+
+255
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+0
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+221
+
+255
+
+255
+
+255
+
+0
+
+0
+
+255
+
+255
+
+255
+
+0
+
+0
+
+255
+
+255
+
+255
+
+221
+
+255
+
+255
+
+0
+
+255
+
+255
+
+0
+
+255
+
+0
+
+255
+
+255
+
+0
+
+255
+
+255
+
+221
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+221
+
+221
+
+0
+
+0
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+221
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+221
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+221
+
+221
+
+221
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+0
+
+221
+
+221
+
+221
+
+221
+
+221
+
+221
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+255
+
+255
+
+255
+
+0
+
+0
+
+0
+
+255
+
+255
+
+255
+
+0
+
+100
+
+100
+
+46
+
+0
+
+255
+
+255
+
+0
+
+0
+
+100
+
+100
+
+100
+
+100
+
+46
+
+46
+
+46
+
+46
+
+46
+
+46
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+100
+
+46
+
+100
+
+46
+
+100
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+100
+
+100
+
+46
+
+0
+
+255
+
+255
+
+255
+
+100
+
+100
+
+100
+
+100
+
+46
+
+46
+
+46
+
+46
+
+46
+
+46
+
+0
+
+0
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+255
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10
+
+Perceba que o que mais chama aten¸c˜ao nessa matriz s˜ao as bordas da ﬂor que s˜ao pretas
+
+e aparecem como zeros, enquanto os demais pixels s˜ao claros e aparecem com n´umeros
+
+de dois ou trˆes d´ıgitos. Os casos de ﬁguras coloridas s˜ao an´alogos, com uma matriz para
+
+cada camada de cor.
+
+A grande quest˜ao sobre as imagens digitais ´e que nem sempre elas representam a
+
+imagem real como desejado, conforme Figura 2.4, isso por in´umeros motivos, tais como a
+
+distor¸c˜ao provocada pelas lentes da cˆamera que fez a captura, por exemplo, fora de foco,
+
+movimento dos objetos da imagem, interferˆencias atmosf´ericas, etc. Em outras palavras,
+
+a imagem capturada cont´em algum tipo de “emba¸camento”.
+
+A ﬁm de restaurar imagens via m´etodos matem´aticos, ´e necess´ario ter um modelo que
+
+relacione a imagem emba¸cada com a imagem exata desejada. Nessa disserta¸c˜ao partimos
+
+do pressuposto que essa opera¸c˜ao que ocorre de uma imagem `a outra ´e linear, pois na
+
+f´ısica muitas vezes efetivamente ´e o que ocorre (HANSEN; NAGY; O’LEARY, 2006). Se
+
+denotarmos a imagem exata de M
+
+N pixels como uma matriz X (tamb´em de dimens˜ao
+
+×
+N ) e a imagem emba¸cada de M
+
+M
+
+×
+
+N pixels como uma matriz B, ent˜ao existe uma
+
+×
+
+matriz A de tamanho M N
+
+×
+
+M N que relaciona as imagens X e B por
+
+Ax = b,
+
+em que A modela o processo de emba¸camento, x = vec(X) e b = vec(B). A opera¸c˜ao “vec”
+
+nada mais ´e do que transformar uma matriz “M
+
+N ” em um vetor coluna “empilhando”
+
+×
+
+as colunas da matriz, por exemplo,
+
+B = 
+
+
+
+
+
+b11
+
+b12
+
+b13
+
+b21
+
+b22
+
+b23
+
+
+
+
+
+
+
+
+b = vec(B) =
+
+⇒
+
+b11
+
+b21
+
+b12
+
+b22
+
+b13
+
+b23
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Assim, se A ´e n˜ao singular, teoricamente x = A−1b. Infelizmente, considerando nosso
+
+contexto, mesmo as menores ﬁguras est˜ao associadas a grandes matrizes, por exemplo,
+
+uma imagem de 64
+
+×
+
+64 pixels gera um sistema linear com A na ordem de 4.096
+
+4.096.
+
+×
+
+11
+
+Do ponto de vista computacional, calcular a inversa de matrizes ´e um processo “proibido”,
+
+al´em, ´e claro, da possibilidade da inversa nem existir. Ademais, em aplica¸c˜oes pr´aticas
+
+os dados (imagem capturada) raramente s˜ao exatos, isto ´e, dispomos apenas de uma
+
+imagem b = bexato + e, em que e ´e um vetor que representa o erro ou ru´ıdo nos dados
+
+(erros num´ericos de arredondamento/truncamento, erros de medi¸c˜ao, etc) e bexato ´e a
+
+imagem livre de ru´ıdos. Logo,
+
+x = A−1b = A−1(bexato + e) = A−1bexato + A−1e,
+
+ou seja, a imagem restaurada cont´em, al´em da imagem desejada, algum tipo de artefato.
+
+2.2 Modelos de emba¸camento
+
+Como mencionado anteriormente, vamos considerar emba¸camentos provenientes de
+
+fenˆomenos f´ısicos que podem ser aproximados por modelos lineares. Chamamos de PSF,
+
+do inglˆes Point Spread Function, que em tradu¸c˜ao livre signiﬁca Fun¸c˜ao de Propaga¸c˜ao
+
+do Ponto, a fun¸c˜ao que modela o emba¸camento e determina a matriz A.
+
+Figura 2.9: Um ponto de luz e sua PSF `a direita
+
+Por ser linear, a PSF pode ser representada por uma matriz P . Em alguns casos,
+
+a PSF pode ser descrita analiticamente e encontramos a matriz P associada atrav´es de
+
+uma fun¸c˜ao (ao inv´es de experimenta¸c˜ao). Em outros casos, conhecemos o processo f´ısico
+
+que provoca o emba¸camento, ent˜ao P ´e obtida por meio de express˜oes matem´aticas. Por
+
+exemplo, em uma imagem fora de foco, os elementos pij s˜ao obtidos de
+
+1
+πr2 , se (i
+0, caso contr´ario
+
+−
+
+k)2 + (j
+
+pij = 
+
+
+l)2
+
+r2
+
+≤
+
+−
+
+(2.2)
+
+em que (k, l) ´e o centro de P e r ´e o raio do desfoque (HANSEN; NAGY; O’LEARY,
+
+
+
+12
+
+2006). Ent˜ao obtemos A colocando os elementos de P nas posi¸c˜oes apropriadas, conforme
+
+exploraremos mais adiante. Na pr´atica, uma vez que temos a PSF, a matriz A ´e criada
+
+com aux´ılio do pacote RestoreTools (NAGY et al., 2007).
+
+Para ilustrar, criamos algumas PSFs e aplicamos sobre a Figura 2.10 de um sat´elite.
+
+Figura 2.10: Sat´elite de 216
+
+216 pixels
+
+×
+
+Na literatura geralmente aparecem apenas PSFs com centro da PSF coincidindo com
+
+o centro da imagem, caso mais comum de acontecer considerando os fenˆomenos f´ısicos,
+
+ent˜ao para os exemplos que apresentamos a seguir adotamos o centro coincidindo com o
+
+centro da imagem, nesse caso, (k, l) = (108, 108).
+
+Na Figura 2.11, ilustramos o efeito fora de foco para trˆes raios r diferentes. Fica
+
+Figura 2.11: Exemplos de PSF fora de foco, com diferentes raios, e respectivas imagens emba-
+¸cadas
+
+r = 3
+
+r = 8
+
+r = 15
+
+evidente que quanto maior o raio pior ´e a qualidade da imagem, pois cada pixel da
+
+imagem original interfere na regi˜ao do entorno delimitada pelo raio, assim quanto maior
+
+13
+
+o raio de emba¸camento, maior a inﬂuˆencia do pixel sobre seus vizinhos e vice-versa, ent˜ao
+
+a imagem ﬁnal acaba perdendo a sensibilidade de captura dos detalhes e contornos.
+
+Cabe ressaltar que a PSF busca modelar o espalhamento de um ponto de luz mantendo
+
+seu brilho inalterado, isto ´e, a quantidade de energia capturada deve ser mantida, ent˜ao
+
+a soma de todos os elementos da matriz P deve ser igual a 1.
+
+Outro fenˆomeno conhecido s˜ao as turbulˆencias atmosf´ericas, que podem ser modeladas
+
+como uma fun¸c˜ao gaussiana bidimensional, cujos elementos da matriz P s˜ao dados por
+
+T
+
+−1
+
+pij = exp 
+
+−
+
+i
+
+j
+
+k
+
+l
+
+−
+
+−
+
+1
+2 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 ρ2
+s2
+ρ2 s2
+2
+
+
+
+
+
+
+
+
+
+
+
+i
+
+j
+
+k
+
+l
+
+−
+
+−
+
+
+
+
+
+
+
+
+
+
+
+(2.3)
+
+em que s1, s2 e ρ determinam a largura e orienta¸c˜ao da PSF, centrada no elemento (k, l)
+
+(HANSEN; NAGY; O’LEARY, 2006). Analogamente nas Figuras 2.12 e 2.13 ilustramos
+
+Figura 2.12: Exemplos de PSF gaussiana para turbulˆencia atmosf´erica, com ρ = 0 e diferentes
+s1 e s2, e respectivas imagens emba¸cadas
+
+s1 = 4, s2 = 7
+
+s1 = 7, s2 = 4
+
+s1 = 6, s2 = 15
+
+s1 = 10, s2 = 10
+
+algumas PSFs desse fenˆomeno, variando s1 e s2 na primeira e ρ na segunda, a ﬁm de
+
+perceber melhor a inﬂuˆencia dos parˆametros no resultado ﬁnal.
+
+Podemos perceber que para ρ = 0 a PSF ´e sim´etrica em rela¸c˜ao ao eixos horizontal e
+
+vertical. Nessas dire¸c˜oes a amplitude ´e deﬁnida pelos parˆametros s1 e s2, respectivamente,
+
+e ao modiﬁcar o parˆametro ρ, a orienta¸c˜ao do emba¸camento ﬁca mais diagonalizada.
+
+Em particular, temos a PSF gaussiana em que o espalhamento ´e sim´etrico em todas
+
+14
+
+Figura 2.13: Exemplos de PSF gaussiana para turbulˆencia atmosf´erica, com s1 = 6, s2 = 15 e
+diferentes ρ, e respectivas imagens emba¸cadas
+
+ρ = 3
+
+ρ = 6
+
+ρ = 8
+
+ρ = 9
+
+as dire¸c˜oes em rela¸c˜ao ao centro (como acontece quando s1 = s2 e ρ = 0 no caso anterior).
+
+Ent˜ao a matriz ´e obtida por
+
+pij =
+
+1
+√2πσ2
+
+exp
+
+−
+
+(cid:18)
+
+(i
+
+−
+
+k)2 + (j
+2σ2
+
+l)2
+
+−
+
+(cid:19)
+
+em que σ ´e o grau de dispers˜ao e (k, l) ´e o centro. Na Figura 2.14 exempliﬁcamos essa
+
+distribui¸c˜ao para trˆes diferentes σ.
+
+Outro efeito comum ´e o Motion Blur, ou borr˜ao de movimento, causado por movimen-
+
+tos r´apidos do objeto que est´a sendo capturado ou da cˆamera ou ent˜ao quando a captura
+
+´e feita por longa exposi¸c˜ao. Ilustramos na Figura 2.15 a PSF do Motion Blur horizontal
+
+com diferentes intensidades r. Fenˆomeno an´alogo acontece em outras dire¸c˜oes.
+
+Em nossos exemplos usamos uma mesma PSF para emba¸car todos os pixels da ﬁgura,
+
+quando isso acontece dizemos que o emba¸camento ´e espacialmente invari´avel (HANSEN;
+
+NAGY; O’LEARY, 2006). Nem sempre ´e assim, mas ´e o que acontece na maioria das
+
+vezes, ent˜ao neste trabalho tratamos apenas desse caso.
+
+Finalmente, obtemos A colocando os elementos de P nas posi¸c˜oes apropriadas, de tal
+
+forma que a A descreva a convolu¸c˜ao da PSF com a imagem verdadeira. Para embasar,
+
+temos a deﬁni¸c˜ao 2.2.1 a seguir.
+
+Figura 2.14: Exemplos de PSF gaussiana, com diferentes σ, e respectivas imagens emba¸cadas
+
+σ = 2
+
+σ = 5
+
+σ = 20
+
+15
+
+Figura 2.15: Exemplos de PSF Motion Blur horizontal, com diferentes intensidades, e respectivas
+imagens emba¸cadas
+
+r = 4
+
+r = 8
+
+r = 15
+
+Deﬁni¸c˜ao 2.2.1. Dadas duas fun¸c˜oes p e x cont´ınuas por partes para s
+
+0, a convolu¸c˜ao
+
+≥
+
+de p e x ´e a fun¸c˜ao deﬁnida por:
+
+b(s) =
+
+∞
+
+−∞
+
+Z
+
+p(s
+
+−
+
+t) x(t) dt,
+
+Tamb´em denotamos a convolu¸c˜ao por (p
+
+x)(s) ou p(s)
+
+x(s).
+
+∗
+
+∗
+
+16
+
+Nesse caso, podemos interpretar cada valor de b(s) como a m´edia ponderada de x(t),
+
+em que os pesos s˜ao dados por p (HANSEN; NAGY; O’LEARY, 2006). Essa ´e uma
+
+opera¸c˜ao que tem propriedades associativa, comutativa, distributiva, entre outras.
+
+No caso discreto, a convolu¸c˜ao ´e obtida por uma soma ﬁnita de termos. Ent˜ao, em
+
+nosso contexto, os pixels da imagem emba¸cada s˜ao obtidos pela soma ponderada dos pixels
+
+correspondentes e seus vizinhos na imagem real, sendo que os pesos s˜ao dados pela matriz
+
+PSF.
+
+Por simplicidade, vamos exempliﬁcar o caso de uma imagem unidimensional em que
+
+desprezamos as informa¸c˜oes fora da fronteira da imagem, para outros tratamentos da
+
+fronteira sugerimos Hansen, Nagy e O’Leary (2006). Sejam a PSF e a imagem exata
+
+dadas pelas seguintes matrizes:
+
+p1
+
+p2
+
+
+
+
+
+x1
+
+x2
+
+
+
+
+
+p3
+
+p =
+
+
+
+
+
+
+
+
+
+
+
+
+a convolu¸c˜ao de p com x ´e calculada conforme os seguintes passos:
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+x =
+
+x4
+
+x3
+
+x5
+
+p5
+
+p4
+
+e
+
+,
+
+• Giramos p em 180◦ (no caso unidimensional equivale a escrevermos seus elementos
+
+de baixo para cima);
+
+• Alinhamos o centro da PSF com a i-´esima entrada de x;
+
+• E fazemos as somas dos produtos dos pares correspondentes.
+
+Assumindo que o centro da PSF ´e p3, ent˜ao, por exemplo, b1 = p3x1 + p2x2 + p1x3 e
+
+a convolu¸c˜ao pode ser escrita como o seguinte produto de matrizes:
+
+b1
+
+b2
+
+b3
+
+b4
+
+b5
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+p3 p2 p1
+
+p4 p3 p2 p1
+
+p5 p4 p3 p2 p1
+
+p5 p4 p3 p2
+
+p5 p4 p3
+
+x1
+
+x2
+
+x3
+
+x4
+
+x5
+
+,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+(2.4)
+
+assim obtemos a matriz A, que ´e a matriz de coeﬁcientes pi de (2.4).
+
+Analogamente, no caso bidimensional
+
+p11 p12 p13
+
+x11 x12 x13
+
+
+
+P =
+
+p21 p22 p23
+
+
+
+e X =
+
+
+
+x21 x22 x23
+
+
+
+
+
+
+em que p22 ´e o centro da PSF, temos por exemplo que
+
+p31 p32 p33
+
+
+
+
+
+
+
+
+
+
+
+
+
+x31 x32 x33
+
+17
+
+,
+
+
+
+
+
+
+
+
+
+e
+
+b11 = p22x11 + p21x12
+
++ p12x21 + p11x22
+
+b22 = p33x11 + p32x12 + p31x13
+
++ p23x21 + p22x22 + p21x23
+
++ p13x31 + p12x32 + p11x33
+
+ent˜ao relacionamos b = vec(B) e x = vec(X) por
+
+b11
+
+b21
+
+b31
+
+b12
+
+b22
+
+b32
+
+b13
+
+b23
+
+b33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+p22 p12
+
+p21 p11
+
+p32 p22 p12 p31 p21 p11
+
+p32 p22
+
+p31 p21
+
+p23 p13
+
+p22 p12
+
+p21 p11
+
+p33 p23 p13 p32 p22 p12 p31 p21 p11
+
+p33 p23
+
+p32 p22
+
+p31 p21
+
+p23 p13
+
+p22 p12
+
+p33 p23 p13 p32 p22 p12
+
+p33 p23
+
+p32 p22
+
+x11
+
+x21
+
+x31
+
+x12
+
+x22
+
+x32
+
+x13
+
+x23
+
+x33
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+·
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.
+
+(2.5)
+
+Para mais informa¸c˜oes sobre PSF e a constru¸c˜ao da matriz A recomendamos Hansen,
+
+Nagy e O’Leary (2006).
+
+Portanto, neste cap´ıtulo vimos que uma imagem digital pode ser representada como
+
+uma matriz (ou mais, a depender do formato de cor), vimos tamb´em que muitas vezes os
+
+processos de emba¸camento s˜ao lineares e podem ser descritos por PSFs, que representam
+
+18
+
+como um ponto de luz se espalha ap´os emba¸camento e, dada uma PSF, constru´ımos a
+
+matriz A respons´avel por emba¸car a imagem inteira. Ent˜ao modelamos o problema de
+
+restaura¸c˜ao de imagens como um sistema Ax = b de grande porte, em que o emba¸camento
+
+A
+
+Rmn×mn e a imagem emba¸cada b
+
+Rmn s˜ao conhecidos.
+
+∈
+No cap´ıtulo a seguir propomos dois m´etodos para resolver problemas inversos, dado
+
+∈
+
+que para esse tipo de problema ´e completamente invi´avel resolver por m´etodos diretos.
+
+Cap´ıtulo 3
+
+M´etodos Iterativos
+
+Vimos no cap´ıtulo anterior que uma das etapas ﬁnais do processo de restaura¸c˜ao
+
+envolve a obten¸c˜ao da solu¸c˜ao de um sistema linear, representado matricialmente por
+
+Ax = b,
+
+(3.1)
+
+que em um contexto mais gen´erico, A ´e a matriz de coeﬁcientes m
+
+n (neste trabalho
+
+×
+
+contemplamos apenas o caso m
+
+≥
+
+n e A tem posto completo, ou seja, posto(A) = n), b ´e
+
+o vetor do lado direito ou vetor de dados e x ´e o vetor de inc´ognitas.
+
+Teoricamente, a solu¸c˜ao deste problema pode ser obtida como x = A−1b ou x = A†b,
+
+em que † denota a pseudo-inversa da matriz A – para mais informa¸c˜oes sobre a pseudo-
+
+inversa, sugerimos ver o livro Matrix Analysis and Applied Linear Algebra (MEYER,
+
+2000). Entretanto, para problemas de grande porte, a obten¸c˜ao da solu¸c˜ao ´e invi´avel
+
+por m´etodos diretos, tais como elimina¸c˜ao gaussiana (BURDEN; FAIRES; BURDEN,
+
+2016) ou m´etodos baseados em fatora¸c˜oes matriciais como LU e QR. Alternativamente,
+
+apresentamos na sequˆencia o conceito de m´etodos iterativos e m´etodos de proje¸c˜ao, sendo
+
+que nosso foco neste cap´ıtulo s˜ao dois populares m´etodos de proje¸c˜ao em subespa¸cos:
+
+TSVD e LSQR.
+
+3.1 O que s˜ao m´etodos iterativos e m´etodos de proje¸c˜ao?
+
+Dado o problema da equa¸c˜ao (3.1) desejamos obter, se existir, uma solu¸c˜ao para o
+
+sistema, isto ´e, encontrar x∗ que satisfaz a igualdade ou ent˜ao, caso n˜ao exista solu¸c˜ao,
+
+19
+
+20
+
+encontrar xLS solu¸c˜ao do problema de m´ınimos quadrados
+
+xLS = argmin
+
+b
+x∈Rn k
+
+Ax
+
+k2,
+
+−
+
+(3.2)
+
+nesse caso, queremos minimizar a norma do res´ıduo r = b
+
+Ax.
+
+−
+
+Existem v´arias formas de resolver tanto o problema (3.1) quanto o problema (3.2).
+
+Entre elas est˜ao os m´etodos iterativos, que basicamente s˜ao algoritmos que geram uma
+
+sequˆencia de vetores que converge para a solu¸c˜ao desejada, isto ´e, dada uma aproxima¸c˜ao
+
+inicial x0, a cada nova itera¸c˜ao obtemos um novo xk e xk
+
+x∗ ou xk
+
+→
+
+→
+
+xLS. Entretanto,
+
+muitas das vezes os m´etodos s´o convergem sob determinadas condi¸c˜oes. Por exemplo,
+
+∈
+
+itera¸c˜oes de Landweber formam uma sequˆencia obtida por xk+1 = xk + γAT (b
+
+Axk), em
+R e usualmente x0 = 0, nesse caso a convergˆencia depende do parˆametro γ, isto
+
+que γ
+
+−
+
+´e, a sequˆencia converge para xLS se 0 < γ < 2
+
+γ , em que γ ´e o maior autovalor da matriz
+
+AT A (DAX, 1990). Ou o m´etodo SOR no qual a sequˆencia ´e constru´ıda como,
+
+[xk]i = (1
+
+−
+
+ω)[xk−1]i +
+
+ω
+aii "
+
+bi
+
+−
+
+i−1
+
+j=1
+X
+
+aij[xk]j
+
+n
+
+−
+
+j=i+1
+X
+
+aij[xk−1]j
+
+#
+
+em que [xk]i denota o i-´esimo elemento do vetor xk. Neste caso, a convergˆencia ´e garantida
+
+se, e somente se, 0 < ω < 2 (HADJIDIMOS, 1999).
+
+Uma classe particular de m´etodos iterativos s˜ao os m´etodos de proje¸c˜ao em subespa¸cos.
+
+Considere, no Rn, uma sequˆencia de subespa¸cos V1, V2,
+
+⊂
+Vk+1 e dim(Vk) = k. O objetivo dos m´etodos de proje¸c˜ao ´e construir uma sequˆencia de
+
+· · ·
+
+, Vk encaixantes, isto ´e, Vk
+
+vetores x1, x2, ..., xk tal que
+
+xk = argmin
+
+x∈Vk k
+
+b
+
+Ax
+
+k2.
+
+−
+
+(3.3)
+
+Por serem subespa¸cos encaixantes, `a medida que aumentamos a dimens˜ao do subes-
+
+pa¸co, a norma do res´ıduo rk = b
+
+−
+
+a norma do res´ıduo em Vk.
+
+Axk torna-se menor ou se mant´em, isto ´e, xk minimiza
+
+Teorema 3.1.1. Seja xk, k
+
+1, dada por (3.3), ent˜ao
+
+rk
+rk+1k2 ≤ k
+
+k2 para k
+
+k
+
+≥
+
+1.
+
+≥
+
+Demonstra¸c˜ao. Como xk+1 satisfaz
+
+xk+1 = argmin
+
+x∈Vk+1 k
+
+b
+
+−
+
+Ax
+
+k2
+
+21
+
+ent˜ao
+
+rk+1k2 =
+
+k
+
+b
+k
+
+−
+
+b
+Axk+1k2 ≤ k
+
+−
+
+Ax
+
+k2,
+
+x
+
+∀
+
+∈
+
+Vk+1.
+
+Como Vk
+
+⊂
+
+Vk+1, ent˜ao xk
+
+Vk+1, logo
+
+∈
+
+b
+rk+1k2 ≤ k
+
+k
+
+−
+
+Axkk2 =
+
+rkk2.
+k
+
+A seguir temos um teorema que garante a convergˆencia da sequˆencia xk.
+
+Teorema 3.1.2. Seja Vk uma sequˆencia de subespa¸cos encaixantes, isto ´e, Vk
+
+Vk+1 e
+
+⊂
+
+dim(Vk) = k. Se xk ´e a sequˆencia deﬁnida por (3.3), ent˜ao xk
+
+xLS quando k
+
+n.
+
+→
+Rn, e dim(Vk) = k, ent˜ao se k = n temos Vn = Rn, logo
+
+→
+
+Demonstra¸c˜ao. Como Vk
+
+⊂
+
+xn = argmin
+
+x∈Vn k
+
+b
+
+Ax
+
+k2 = argmin
+x∈Rn k
+
+b
+
+Ax
+
+k2 = xLS.
+
+−
+
+−
+
+Existem diversos m´etodos na literatura e aqui descreveremos a seguir dois m´etodos
+
+cl´assicos.
+
+3.2 Solu¸c˜ao de m´ınimos quadrados em termos da SVD e o
+
+m´etodo da TSVD
+
+Um m´etodo para encontrar a solu¸c˜ao de m´ınimos quadrados ´e atrav´es da decomposi¸c˜ao
+
+em valores singulares (do inglˆes, Singular Value Decomposition - SVD) da matriz A, que
+
+mostraremos a seguir, mas primeiro apresentamos um outro resultado ´util.
+
+V2 ] ´e ortogonal.
+
+Rn×r, r < n, tem colunas ortonormais, ent˜ao existe V2 ∈
+
+Teorema 3.2.1. Se V1 ∈
+Rn×(n−r), de forma que V = [ V1 |
+Demonstra¸c˜ao. Se V = [ v1 | · · · |
+vr ]
+vi para i = 1, 2,
+· · ·
+tem colunas ortonormais, podemos construir o complemento ortogonal de V1 para o Rn
+(STEINBRUCH; WINTERLE, 1987), que ´e V2 = [ vr+1 | · · · |
+seja ortogonal.
+
+, n forma uma base ortonormal para Rn. Logo, se V1 = [ v1 | · · · |
+
+Rn×n ´e uma matriz ortogonal, ent˜ao o conjunto de
+
+vn ], tal que V = [ V1 |
+
+V2 ]
+
+vn ]
+
+∈
+
+22
+
+Teorema 3.2.2 (SVD). Se A ´e uma matriz real de ordem m
+
+n, ent˜ao existem matrizes
+
+×
+
+ortogonais
+
+tais que
+
+U =
+
+u1 · · ·
+
+um
+
+(cid:2)
+
+∈
+
+(cid:3)
+
+Rm×m
+
+e
+
+V =
+
+Rn×n
+
+v1 · · ·
+
+vn
+
+(cid:2)
+
+∈
+
+(cid:3)
+
+U T AV = Σ = diag(σ1, σ2,
+
+, σp)
+
+∈
+
+· · ·
+
+Rm×n,
+
+p = min
+
+m, n
+
+{
+
+}
+
+(3.4)
+
+σ2 ≥ · · · ≥
+em que σ1 ≥
+Demonstra¸c˜ao. Dados x
+
+σp ≥
+
+0.
+
+Rn e y
+
+∈
+
+k
+Rm×(m−1), tais que V = [ x
+
+satisfazem Ax = σy, em que σ =
+e U2 ∈
+Disso podemos dizer que
+
+Rm vetores unit´arios (na norma euclidiana) que
+Rn×(n−1)
+
+∈
+k2. Ent˜ao, pelo Teorema 3.2.1, existem V2 ∈
+A
+V2 ]
+|
+
+Rm×m s˜ao ortogonais.
+
+Rn×n e U = [ y
+
+U2 ]
+
+∈
+
+∈
+
+|
+
+σ wT
+
+0 B
+
+U T AV = 
+
+
+
+em que w
+
+∈
+
+Rn−1 e B
+
+∈
+
+R(m−1)×(n−1). Ent˜ao
+
+A1
+
+≡
+
+
+
+
+
+
+2
+
+2
+
+σ
+
+σ2 + wT w
+
+
+
+
+
+w
+
+A1 
+
+= (cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(σ2 + wT w). Por´em, pela constru¸c˜ao, σ2 =
+
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+(cid:13)
+
+Bw
+
+
+
+
+
+
+
+
+
+
+
+
+
+≥
+
+
+
+2
+
+2
+
+(σ2 + wT w)2,
+
+2
+2 =
+
+A
+k
+
+k
+
+k
+
+2
+2, portanto temos
+
+A1k
+
+logo
+
+A1k
+k
+
+2
+2 ≥
+
+que w = 0. Por indu¸c˜ao, a demonstra¸c˜ao est´a completa.
+
+Como em nosso contexto m
+
+n e A tem posto completo, ent˜ao σ1 ≥ · · · ≥
+
+≥
+
+σn > 0.
+
+Nesse teorema os σi s˜ao os valores singulares de A, isto ´e, s˜ao as ra´ızes quadradas dos
+
+autovalores n˜ao nulos de AAT e AT A; os ui s˜ao os vetores singulares `a esquerda de A,
+
+ou seja, os autovetores de AAT e; os vi s˜ao os vetores singulares `a direita, nesse caso,
+
+autovetores de AT A.
+
+Tendo em vista que U e V s˜ao matrizes ortogonais, isto ´e, U −1 = U T e V −1 = V T ,
+
+temos, da equa¸c˜ao (3.4), que
+
+U T AV = Σ
+
+⇒
+
+U U T AV V T = U ΣV T
+
+A = U ΣV T .
+
+⇒
+
+Como a matriz A tem posto completo, ent˜ao Σ tamb´em tem posto completo e, conse-
+
+23
+
+quentemente, A† = (U ΣV T )† = V Σ†U T .
+
+No caso da matriz Σ temos
+
+Σ† = diag
+
+1
+σ1
+
+,
+
+1
+σ2
+
+,
+
+· · ·
+
+,
+
+1
+σn (cid:19)
+
+∈
+
+(cid:18)
+
+Rn×m =
+
+1
+σ1
+
+0
+...
+
+0
+
+
+
+
+
+
+
+
+
+
+
+
+0
+
+1
+σ2
+
+...
+
+0
+
+0
+
+0
+...
+
+1
+σn
+
+· · ·
+
+· · ·
+. . .
+
+· · ·
+
+· · ·
+
+· · ·
+. . .
+
+· · ·
+
+0
+
+0
+...
+
+0
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+Podemos usar a SVD da matriz A para encontrar a solu¸c˜ao do problema de minimiza¸c˜ao
+
+(3.2), ou, no caso de existˆencia de inﬁnitas solu¸c˜oes, aquela que tem a menor norma. Res-
+
+saltamos que como A tem posto completo, ent˜ao o problema (3.2) admite ´unica solu¸c˜ao.
+
+Note que encontrar a solu¸c˜ao do problema de minimiza¸c˜ao (3.2) ´e equivalente a en-
+
+contrar a solu¸c˜oes das chamadas equa¸c˜oes normais
+
+AT Ax = AT b.
+
+(3.5)
+
+Se a matriz A tem posto completo, ent˜ao AT A tamb´em tem posto completo e ´e, portanto,
+
+n˜ao singular, logo
+
+xLS = argmin
+
+x∈Rn k
+
+Ax
+
+b
+
+−
+
+k2 ⇐⇒
+
+xLS = (AT A)−1AT b.
+
+Como a pseudo-inversa da matriz A ´e
+
+ent˜ao
+
+A† = (AT A)−1AT ,
+
+xLS = A†b.
+
+Assim, aplicando a SVD da matriz A, encontramos
+
+Ax = b
+
+⇒
+
+xLS = A†b
+
+⇒
+
+xLS = V Σ†U T b =
+
+uT
+i b
+σi
+
+vi.
+
+n
+
+i=1
+X
+
+(3.6)
+
+Perceba que se A possui valores singulares σi muito pequenos, especialmente se σi
+
+(cid:28)
+1. A consequˆencia disso ´e que a solu¸c˜ao pode tornar-se sens´ıvel a
+
+|
+
+|
+pequenas perturba¸c˜oes em b, podendo gerar demasiada perturba¸c˜ao na solu¸c˜ao xLS, ou
+
+uT
+i b
+|
+σi (cid:29)
+
+uT
+i b
+
+, ent˜ao |
+
+24
+
+seja, xexato = A†bexato muito diferente de xLS = A†b. Como na maioria dos problemas reais
+
+os dados possuem algum ru´ıdo e, ent˜ao
+
+xLS =
+
+n
+
+i=1
+X
+
+uT
+i (bexato + e)
+σi
+
+vi =
+
+n
+
+i=1
+X
+
+uT
+i bexato
+σi
+
+vi
+
++
+
+uT
+i e
+σi
+
+vi
+
+.
+
+(3.7)
+
+n
+
+i=1
+X
+
+Solu¸c˜ao exata
+
+Erro
+
+|
+Com o intuito de abater parte do erro da solu¸c˜ao, o m´etodo da SVD truncada (no
+
+{z
+
+{z
+
+}
+
+|
+
+}
+
+inglˆes, Truncated SVD - TSVD) consiste em construir a solu¸c˜ao xk no subespa¸co formado
+
+pelos k primeiros vetores singulares da matriz A, ou seja, em
+
+k = span
+
+v1, v2,
+
+, vk
+
+,
+}
+
+· · ·
+
+{
+
+V
+
+ent˜ao
+
+Perceba que se x
+
+∈ V
+
+xk = argmin
+
+x∈Vk k
+
+b
+
+Ax
+
+k2.
+
+−
+
+k, ent˜ao x ´e combina¸c˜ao linear dos vetores da base
+
+(3.8)
+
+v1, v2,
+
+, vk
+
+,
+}
+
+· · ·
+
+{
+
+ou seja, x =
+
+v1
+
+v2
+
+· · ·
+
+vk
+
+y = Vk y, para algum y
+
+Rk. Logo,
+
+∈
+
+(cid:2)
+xk = argmin
+
+b
+x∈Vk k
+
+−
+
+(cid:3)
+Ax
+
+k2 = Vk yk
+
+⇐⇒
+
+yk = argmin
+
+y∈Rk k
+
+b
+
+−
+
+AVky
+
+k2.
+
+(3.9)
+
+Nessas condi¸c˜oes ´e interessante trabalhar com a SVD de A particionada como
+
+A =
+
+Uk Um−k
+
+
+
+
+
+
+
+
+
+(3.10)
+
+Σk
+
+0
+
+V T
+k
+
+(cid:20)
+
+(cid:21)
+
+0 Σ0
+
+V T
+
+
+
+
+em que Uk e Vk s˜ao matrizes formadas pelas k-´esimas primeiras colunas das respectivas
+R(m−k)×(n−k).
+
+matrizes, Um−k e Vn−k s˜ao os demais elementos e Σ0 = diag(σk+1,
+
+, σn)
+
+
+
+
+
+
+
+
+
+
+
+
+
+n−k
+
+· · ·
+
+∈
+
+Ent˜ao yk pode ser obtido por
+
+25
+
+(3.11)
+
+(3.12)
+
+
+
+
+
+
+
+
+
+
+
+
+
+yk = (AVk)†b
+
+†
+
+[ Vk ]
+
+
+
+b
+
+
+†
+
+
+
+
+
+V T
+k
+
+V T
+
+n−k
+
+Ik
+
+0
+
+b
+
+
+
+
+
+
+
+
+
+
+
+Σk
+
+0
+
+0 Σ0
+
+Σk
+
+0
+
+0 Σ0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+†
+
+
+
+
+
+
+
+Σk
+
+0
+
+b
+
+
+
+
+
+
+
+
+
+
+
+(cid:21)
+
+(cid:21)
+
+(cid:21)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Uk Um−k
+
+Uk Um−k
+
+Uk Um−k
+
+= 
+(cid:20)
+
+
+
+
+= 
+(cid:20)
+
+
+
+
+= 
+(cid:20)
+
+
+
+
+= (UkΣk)†b
+
+= Σ−1
+
+k U T
+k b
+
+e, ﬁnalmente, a k-´esima solu¸c˜ao TSVD ´e
+
+xk = Vk yk = VkΣ−1
+
+k U T
+
+k b.
+
+Abrindo as contas,
+
+xk = VkΣ−1
+
+k U T
+k b
+
+v11u11
+σ1
+
+(cid:18)
+
++
+
+· · ·
+
++
+
+v1ku1k
+σk (cid:19)
+
+b1 +
+
+· · ·
+...
+
+v11um1
+σ1
+
++
+
+(cid:18)
+
++
+
+· · ·
+
++
+
+v1kumk
+
+σk (cid:19)
+
+bm
+
+b1 +
+
++
+
+· · ·
+
+(cid:18)
+
+vn1um1
+σ1
+
++
+
+· · ·
+
++
+
+vnkumk
+
+σk (cid:19)
+
+bm
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+uT
+1 b
+σ1
+
+=
+
+=
+
+=
+
+vn1u11
+σ1
+
++
+
+· · ·
+
++
+
+(cid:18)
+uT
+1 b
+σ1
+
+v11 +
+
++
+
+· · ·
+...
+
+vnku1k
+
+σk (cid:19)
+uT
+k b
+v1k
+σk
+
+
+
+uT
+1 b
+σ1
+
+vn1 +
+
++
+
+· · ·
+
+uT
+k b
+σk
+
+vnk
+
+v1 +
+
++
+
+· · ·
+
+uT
+k b
+σk
+
+vk =
+
+
+
+
+
+
+
+
+
+
+k
+
+i=1
+X
+
+uT
+i b
+σi
+
+vi,
+
+e note que este ´ultimo somat´orio ´e similar `a equa¸c˜ao (3.6), ou seja, se truncarmos o
+
+26
+
+somat´orio da equa¸c˜ao (3.6) em k < n, obtemos a k-´esima solu¸c˜ao TSVD.
+
+Para exempliﬁcar, aplicamos o m´etodo em dois problemas de restaura¸c˜ao, A1x = b1
+
+e A2x = b2. Ambos foram gerados de uma ﬁgura pequena de 18
+
+18 pixels que passou
+
+×
+
+por processos de emba¸camentos diferentes (matrizes A1 e A2 diferentes) que simulam uma
+
+imagem “tremida”, o resultado ´e apresentado na Figura 3.1.
+
+Figura 3.1: Compara¸c˜ao de algumas solu¸c˜oes do m´etodo TSVD para dois problemas diferentes
+
+Emba¸cado 1
+
+k = 1
+
+k = 110
+
+k = 288
+
+k = 324
+
+Emba¸cado 2
+
+k = 1
+
+k = 110
+
+k = 288
+
+k = 324
+
+Em ambos os casos temos um sistema da forma Ax = b, com A de ordem 324
+
+324 e
+
+×
+
+o ru´ıdo nos dados ´e proveniente apenas de arredondamentos ou truncamentos num´ericos.
+
+Na Figura 3.1 apresentamos para cada problema a imagem emba¸cada e quatro solu¸c˜oes
+
+TSVD, para k = 1, 110, 288 e 324, sendo a solu¸c˜ao com k = 324 a de menor erro relativo
+
+no problema 1 e a solu¸c˜ao com k = 288 a de menor erro relativo no problema 2.
+
+Perceba que as solu¸c˜oes ﬁcam mais pr´oximas da imagem original `a medida que au-
+
+mentamos o n´umero de itera¸c˜oes k. Entretanto, no segundo caso, as ´ultimas itera¸c˜oes
+
+sofrem muito com a inﬂuˆencia do ru´ıdo dos dados, mesmo sendo decorrente apenas de
+
+arredondamentos. Isso acontece pois, no primeiro caso, o maior valor singular da matriz
+
+´e aproximadamente 0,99, o menor valor singular 0,03 e o n´umero de condi¸c˜ao da matriz
+
+´e de aproximadamente 31,66, ou seja, ´e uma matriz relativamente bem-condicionada e,
+
+aliado ao fato de termos dados com quase nada de erros/ru´ıdos, ent˜ao da equa¸c˜ao (3.7)
+
+percebemos que a contribui¸c˜ao do vetor de ru´ıdos e ´e bastante insigniﬁcante e o melhor
+
+resultado ´e obtido com k = 324. Em contrapartida, no segundo caso, os extremos dos
+
+valores singulares s˜ao aproximadamente 0,97 e 4,49
+
+×
+
+m´aquina) e o n´umero de condi¸c˜ao da matriz ﬁca em torno de 2,17
+
+10−18 (menor que a precis˜ao da
+
+1017, revelando que
+
+×
+
+a matriz ´e mal-condicionada e tornando a solu¸c˜ao truncada mais interessante. Aqui, pelo
+
+fato dos menores valores singulares serem extremamente pr´oximos de zero, isto faz com
+
+27
+
+que as parcelas do ru´ıdo e associadas aos menores valores singulares tenham forte contri-
+
+bui¸c˜ao na solu¸c˜ao de m´ınimos quadrados. A ideia do m´etodo TSVD ´e tentar construir
+
+uma solu¸c˜ao que “ﬁltre” o ru´ıdo nos dados de modo a n˜ao incluir as contribui¸c˜oes das
+
+componentes de e associadas aos menores valores singulares, mesmo que isso implique em
+
+n˜ao capturar parte da informa¸c˜ao de bexato.
+
+Na Figura 3.2 apresentamos os valores singulares das matrizes A1 e A2 respons´aveis
+
+pelas distor¸c˜oes 1 e 2, respectivamente, e os erros relativos entre a k-´esima solu¸c˜ao obtida
+
+com o m´etodo TSVD e a imagem original, ou seja,
+
+E(k)
+
+1 = k
+
+xexatok
+
+x(k)
+1 −
+xexatok
+k
+
+e E(k)
+
+2 = k
+
+xexatok
+
+x(k)
+2 −
+xexatok
+k
+
+,
+
+em que E(k)
+1
+mente, e x(k)
+1
+
+e E(k)
+e x(k)
+2
+
+2 denotam os k-´esimos erros relativos dos problemas 1 e 2, respectiva-
+
+representam as k-´esimas solu¸c˜oes em cada um dos problemas.
+
+Figura 3.2: Paralelo entre valores singulares de A1 e A2 e erros relativos E1 e E2
+
+Valores singulares de A1
+
+Valores singulares de A2
+
+100
+
+10−1
+
+10−2
+
+103105
+100
+10−3
+10−6
+10−9
+10−12
+10−14
+
+0
+
+50 100 150 200 250 300 350
+
+Erros relativos E(k)
+
+1
+
+0
+
+50 100 150 200 250 300 350
+
+100
+10−3
+10−6
+10−9
+10−12
+10−15
+10−18
+
+105
+104
+103
+102
+101
+100
+10−1
+
+0
+
+50 100 150 200 250 300 350
+
+Erros relativos E(k)
+
+2
+
+0
+
+50 100 150 200 250 300 350
+
+Pela distribui¸c˜ao dos valores singulares, ﬁca ainda mais evidente o comportamento
+
+do m´etodo. Enquanto com A1 os valores singulares ﬁcam “controlados”, o erro relativo
+
+se mant´em de acordo, por´em, no segundo caso, de σ289 = 3,6892
+
+10−16 em diante,
+
+×
+
+a contribui¸c˜ao do ru´ıdo e ´e dominante, provocando uma perturba¸c˜ao signiﬁcativa nas
+
+solu¸c˜oes.
+
+Apesar do bom desempenho desse m´etodo, calcular a SVD se torna uma tarefa com-
+
+28
+
+putacionalmente cara a medida que n aumenta, conforme mostramos na Tabela 3.1, em
+
+que apresentamos um paralelo entre a dimens˜ao da matriz A e o tempo para calcular a sua
+
+SVD via Octave (EATON et al., 2020) instalado em uma m´aquina que possui processador
+
+de 2,5 GHz Dual-Core Intel Core i5 e mem´oria RAM de 10 GB.
+
+Tabela 3.1: Tempo de processamento da SVD
+
+Dimens˜ao
+
+324
+
+576
+
+1024
+
+1600
+
+2500
+
+×
+
+×
+
+×
+
+×
+
+×
+
+324
+
+576
+
+1024
+
+1600
+
+2500
+
+Tempo (s)
+
+1,35
+
+1,78
+
+14,78
+
+42,30
+
+148,72
+
+Por conta disso, para resolver esse tipo de problema muitas vezes ´e necess´ario recorrer
+
+a outros m´etodos que s˜ao computacionalmente mais baratos.
+
+3.3 O m´etodo LSQR
+
+Sabemos que encontrar uma solu¸c˜ao de m´ınimos ´e equivalente a encontrar a solu¸c˜ao
+
+das equa¸c˜oes normais 3.5.
+
+O m´etodo LSQR contr´oi solu¸c˜oes iteradas em um tipo particular de subespa¸cos asso-
+
+ciados `a matriz AT A e ao vetor AT b, mais especiﬁcamente em subespa¸cos de Krylov cuja
+
+deﬁni¸c˜ao apresentamos a seguir.
+
+Deﬁni¸c˜ao 3.3.1. Seja A uma matriz quadrada de ordem n e um vetor b
+
+Rn, o subespa¸co
+
+∈
+
+de Krylov de ordem k associado ao par (A, b) ´e
+
+Kk(A, b) = span
+
+b, Ab, A2b,
+{
+
+, Ak−1b
+
+.
+}
+
+· · ·
+
+Conforme mencionado anteriormente, o m´etodo LSQR constr´oi solu¸c˜oes nos subespa-
+
+¸cos de Krylov
+
+K
+
+k(AT A, AT b), ou seja,
+
+xk = argmin
+
+x∈Kk k
+
+b
+
+−
+
+Ax
+
+k2
+
+e, por constru¸c˜ao, temos Kk
+
+Kk+1.
+
+⊂
+
+Um dos pontos centrais do algoritmo LSQR ´e a bidiagonaliza¸c˜ao de Golub e Kahan
+
+(1965) que tem o prop´osito de reduzir uma matriz A a uma estrutura bidiagonal superior.
+
+29
+
+Colocamos o teorema aqui por conveniˆencia.
+
+Teorema 3.3.2. Seja A uma matriz m
+
+×
+
+escrita como
+
+n com elementos complexos. Ent˜ao A pode ser
+
+A = P JQ∗,
+
+em que P e Q s˜ao matrizes unit´arias e J ´e bidiagonal superior.
+
+Demonstra¸c˜ao. A demonstra¸c˜ao do teorema pode ser encontrada em Golub e Kahan
+
+(1965).
+
+Deste resultado temos duas formas de bidiagonaliza¸c˜ao, uma superior e uma inferior.
+
+Como queremos apenas a redu¸c˜ao a forma bidiagonal inferior, n˜ao abordaremos a superior.
+
+Perceba que deﬁnindo u1 adequadamente, recursivamente ´e poss´ıvel obter os vetores
+
+v1, u2, v2,
+
+· · ·
+
+, vk e uk+1 e os respectivos α1,
+
+, αk, β2,
+
+· · ·
+
+· · ·
+
+, βk+1 da seguinte maneira
+
+qj = AT uj
+
+−
+
+βjvj−1, αj =
+
+qj
+
+k
+
+k2
+
+e
+
+vj = α−1
+
+j qj,
+
+pj = Avj −
+
+αjuj,
+
+βj+1 =
+
+pjk2
+
+k
+
+e uj+1 = β−1
+
+j+1 pj.
+
+(3.13)
+
+(3.14)
+
+Por ser um algoritmo iterativo, para k = 1,
+
+, n buscamos encontrar na k-´esima
+
+· · ·
+
+itera¸c˜ao as matrizes
+
+Uk = [ u1 u2 · · ·
+
+uk+1 ]
+
+∈
+
+Rm×(k+1),
+
+Vk = [ v1 v2 · · ·
+
+vk ]
+
+∈
+
+Rn×k
+
+e
+
+α1
+
+
+
+
+
+Bk =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+β2 α2
+
+β3
+
+. . .
+. . .
+
+αk
+
+βk+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+R(k+1)×k,
+
+∈
+
+ent˜ao, pelo forma como a decomposi¸c˜ao ´e construida, para qualquer j
+
+1, 2,
+
+, n
+
+,
+
+}
+
+· · ·
+
+∈ {
+
+vale que
+
+Avj = αjuj + βj+1uj+1,
+
+(3.15)
+
+30
+
+disso podemos escrever que
+
+AVk = UkBk
+
+(3.16)
+
+e impondo que β1v0 ≡
+
+0 e αk+1vk+1 ≡
+
+0, para qualquer j
+
+1, 2,
+
+∈ {
+
+· · ·
+
+, n + 1
+
+}
+
+vale que
+
+AT uj = βjvj−1 + αjvj,
+
+ent˜ao podemos escrever
+
+AT Uk+1 = VkBT
+
+k + αk+1vk+1eT
+
+k+1
+
+(3.17)
+
+(3.18)
+
+em que ek+1 ´e o vetor ek+1 = [0
+
+Por conveniˆencia para o objetivo do m´etodo, ﬁxamos
+
+1]T .
+
+0
+· · ·
+k vezes
+
+| {z }
+
+β1u1 = b
+
+(3.19)
+
+e como
+
+u1k2 = 1, pois ´e ortonormal, consideramos u1 = b
+Ent˜ao pela forma que uj e vj s˜ao constru´ıdos, temos que uj
+
+kbk2
+
+k
+
+e β1 =
+
+b
+k
+
+k2.
+ˆ
+j(AAT , b) e vj
+K
+
+∈
+
+∈
+
+j(AT A, AT b) sendo
+
+ˇ
+K
+
+ˆ
+K
+
+j(AAT , b) = span
+
+b, (AAT )b,
+
+{
+
+· · ·
+
+, (AAT )j−1b
+
+}
+
+ˇ
+K
+
+j(AT A, AT b) = span
+
+AT b, (AT A)AT b,
+{
+
+· · ·
+
+, (AT A)j−1AT b
+
+}
+
+os subespa¸cos de Krylov associados `as matrizes AAT e AT A, respectivamente.
+
+(3.20)
+
+(3.21)
+
+Com esses insumos, o m´etodo LSQR constr´oi uma sequˆencia de aproxima¸c˜oes xk
+
+∈
+k(AT A, AT b) para o problema de m´ınimos quadrados, que nesse caso ﬁca restrito a estes
+
+ˇ
+K
+subespa¸cos, ou seja,
+
+xk = argmin
+
+x∈ ˇKk k
+
+b
+
+Ax
+
+k2.
+
+−
+
+Como ˇ
+K
+
+k(AT A, AT b) = span(Vk), ent˜ao para algum yk
+
+Rk obtemos
+
+∈
+
+xk = Vkyk.
+
+(3.22)
+
+Logo, o res´ıduo rk associado a esta solu¸c˜ao ´e
+
+rk = b
+
+−
+
+Axk
+
+(3.22)
+
+= b
+
+AVkyk
+
+(3.16)
+
+= b
+
+UkBkyk
+
+−
+
+(3.19)
+
+= β1u1 −
+
+−
+
+UkBkyk = β1Uke1 −
+
+UkBkyk,
+
+em que e1 ´e o vetor canˆonico [1, 0, 0,
+
+, 0]T
+
+∈
+
+· · ·
+
+Rk, e a norma do res´ıduo ´e
+
+rkk2 =
+k
+
+β1Uke1 −
+
+k
+
+UkBkykk2 =
+
+β1e1 −
+k
+
+Bkykk2,
+
+pois as colunas da matriz Uk s˜ao ortonormais.
+
+Mas das equa¸c˜oes (3.22) e (3.23), obtemos o problema de encontrar um yk ∈
+
+que
+
+yk = argmin
+
+y∈Rk k
+
+β1e1 −
+
+Bky
+
+k2.
+
+31
+
+(3.23)
+
+Rk tal
+
+(3.24)
+
+Finalmente usamos a decomposi¸c˜ao QR da matriz bidiagonal inferior Bk para resolver
+
+esse ´ultimo problema (e consequentemente o problema de encontrar xk). Agora o objetivo
+
+´e encontrar Qk
+
+∈
+
+R(k+1)×(k+1) e uma matriz bidiagonal superior Rk
+
+Rk×k tal que
+
+∈
+
+QkBk = Rk = 
+
+
+
+
+
+Rk
+
+0
+
+
+
+
+
+
+
+
+R(k+1)×k.
+
+∈
+
+(3.25)
+
+Consequentemente
+
+Qk(β1e1) =
+
+φ1
+
+φ2
+...
+
+φk−1
+
+φk+1
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+fk
+
+φk+1
+
+= 
+
+
+
+
+
+Rk+1.
+
+∈
+
+
+
+
+
+
+
+
+Tendo em vista que o produto QkBk visa eliminar todos os elementos βi da matriz Bk,
+
+obtemos
+
+ρ1 θ1
+
+
+
+
+
+Rk =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ρ2
+
+θ2
+. . .
+
+. . .
+
+ρk−1 θk−1
+
+ρk
+
+,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+e a matriz Qk pode ser obtida do produto de rota¸c˜oes de Givens, Qk = Gk,k+1Gk−1,k
+
+G1,2,
+
+· · ·
+
+32
+
+em que
+
+c1
+
+s1
+
+−
+
+s1
+
+c1
+
+G1,2 =
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+. . .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1
+
+,
+
+· · ·
+
+, Gj,j+1 =
+
+1
+
+. . .
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+com cj e sj dados por
+
+cj =
+
+αj
+j + β2
+
+α2
+
+j+1
+
+e
+
+sj =
+
+βj+1
+j + β2
+
+α2
+
+j+1
+
+,
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+. . .
+
+1
+
+cj
+
+sj
+
+−
+
+sj
+
+cj
+
+.
+
+Deste modo, obtemos o vetor solu¸c˜ao yk da seguinte forma
+
+q
+
+q
+
+Rkyk = fk
+
+yk = R−1
+
+k fk
+
+⇒
+
+(3.26)
+
+e, considerando que QT
+
+k Qk = I e Bk = QT
+k
+
+¯Rk, o res´ıduo obtido ´e
+
+rk = β1e1 −
+= QT
+
+k Qk(β1e1)
+
+Bkyk
+
+QT
+k
+
+¯RkR−1
+
+k fk
+
+−
+
+QT
+
+k 
+
+−
+
+
+
+
+Ik
+
+0
+
+fk
+
+
+
+
+
+
+= QT
+
+k 
+
+
+
+
+= QT
+
+k 
+
+
+
+
+fk
+¯φk+1
+
+0
+¯φk+1
+
+
+
+
+
+
+
+
+
+
+
+⇓
+k2 =
+
+rk
+k
+
+¯φk+1|
+
+.
+
+|
+
+(3.27)
+
+Um fato importante a ser ressaltado ´e que a cada itera¸c˜ao ´e poss´ıvel “reaproveitar” a
+
+fatora¸c˜ao QR anterior, isso porque da itera¸c˜ao k
+
+1 para a k, a matriz Bk aumenta em
+
+−
+
+uma linha e uma coluna, que exige mais uma rota¸c˜ao para zerar o elemento da posi¸c˜ao
+
+(k + 1, k), mas todo o resto da decomposi¸c˜ao se mant´em. Esse ´ultimo βk+1 que precisa
+
+33
+
+ser zerado sofre altera¸c˜ao da ´ultima rota¸c˜ao da decomposi¸c˜ao anterior e depois ´e zerado
+
+com a aplica¸c˜ao de outra rota¸c˜ao Gk,k+1 resultando na ´ultima coluna de Rk. Enquanto
+
+para Qk(β1e1) basta multiplicarmos Gk,k+1 e
+
+f T
+k φk 0
+
+T
+
+que provoca mudan¸ca apenas nos
+
+elementos φk e 0. Como φk+1 =
+
+−
+
+sk φk, ent˜ao a norma do res´ıduo ´e
+(cid:3)
+
+(cid:2)
+
+(3.27)
+=
+
+rkk2
+
+k
+
+φk+1|
+
+|
+
+=
+
+skφk|
+
+|
+
+=
+
+· · ·
+
+=
+
+sksk−1 · · ·
+
+|
+
+.
+
+s1β1|
+
+(3.28)
+
+Al´em disso, perceba que
+
+skφk| ≤ |
+|
+seja, a normal do res´ıduo ´e n˜ao-crescente, corroborando o teorema 3.1.1.
+
+1, ent˜ao
+
+k2 =
+
+sen θk
+
+| ≤
+
+sk
+
+rk
+
+=
+
+k
+
+|
+
+|
+
+|
+
+φk|
+
+=
+
+rk−1|
+
+|
+
+, ou
+
+Finalmente, substituindo (3.26) em (3.22)
+
+xk = Vkyk = VkR−1
+
+k fk.
+
+Por´em dessa forma ´e necess´ario armazenar os vetores v1,
+
+, vk para calcular xk e de-
+
+· · ·
+
+pendendo das dimens˜oes do problema, isso pode ser computacionalmente muito “caro”.
+
+Entretanto, Paige e Saunders (1982) apresentam uma rela¸c˜ao de recorrˆencia para calcular
+
+xk a partir de xk−1, usando Zk = VkR−1
+
+k . Nesse caso, deﬁnindo z0 = x0 = 0, iterativamente
+
+obtemos
+
+zk =
+
+1
+ρk
+
+(vk
+
+−
+
+θkzk−1)
+
+e
+
+xk = xk−1 + φkzk.
+
+Cabe salientar que toda essa teoria quando aplicada na pr´atica, ﬁca sujeita a preci-
+
+s˜ao da m´aquina e, consequentemente, pode gerar resultados n˜ao esperados e perda de
+
+ortogonalidade dos vetores ui e vi, principalmente se k for grande. Neste caso pode-
+
+mos reortogonalizar os vetores ui e vi pelo processo de Gram-Schmidt ou Gram-Schmidt
+
+modiﬁcado.
+
+Aplicando o m´etodo na mesma ﬁgura que usamos de exemplo na se¸c˜ao anterior, ob-
+
+temos um resultado satisfat´orio para um k pequeno, se comparado ao m´etodo TSVD -
+
+conforme mostra a Figura 3.3.
+
+Neste caso, `a medida que a dimens˜ao do subespa¸co aumenta, a solu¸c˜ao torna-se melhor,
+
+entretanto a partir de k = 30 a mudan¸ca na solu¸c˜ao ´e impercept´ıvel, portanto, do ponto
+
+de vista operacional, n˜ao precisamos da solu¸c˜ao “exata” do sistema linear e o algoritmo
+pode ser interrompido, isto ´e, x30 ≈
+discutidos neste trabalho, mas para mais informa¸c˜oes sugerimos Borges, Baz´an e Cunha
+
+xLS. Salientamos que crit´erios de parada n˜ao ser˜ao
+
+(2015).
+
+34
+
+Figura 3.3: Ilustra¸c˜ao de algumas solu¸c˜oes do m´etodo LSQR
+
+Original
+
+Emba¸cado
+
+k=1
+
+k=15
+
+k=30
+
+k=324
+
+Para ilustrar como o m´etodo LSQR ´e menos custoso que o TSVD, apresentamos a
+
+seguir a tabela 3.2 que indica o tempo decorrido para resolver a quantidade indicada de
+
+solu¸c˜oes/itera¸c˜oes para problemas de restaura¸c˜ao com diferentes quantidades de vari´aveis.
+
+Essa tabela pode ser comparada com a Tabela 3.1 em que apresentamos o tempo de
+
+processamento da SVD.
+
+Tabela 3.2: Tempo de processamento da LSQR
+
+Dimens˜ao
+
+Tempo (s)
+
+Itera¸c˜oes
+
+324
+
+1600
+
+10.000
+
+65.536
+
+262.144
+
+324
+
+1600
+
+10.000
+
+65.536
+
+262.144
+
+×
+
+×
+
+×
+
+×
+
+×
+
+0,07
+
+0,43
+
+3,86
+
+21,26
+
+104,43
+
+324
+
+1600
+
+3000
+
+3000
+
+3000
+
+Conforme o exposto, podemos dizer que para imagens pequenas todas as itera¸c˜oes pos-
+
+s´ıveis s˜ao obtidas quase que instantˆaneamente, mas `a medida que o problema aumenta
+
+deixa de ser interessante esgotar as itera¸c˜oes e mesmo assim obtivemos resultados exce-
+
+lentes. Por exemplo, no problema 262.144
+
+262.144 do teste, antes na itera¸c˜ao 1.000
+
+×
+o algoritmo encontrou uma solu¸c˜ao com pequeno erro relativo de 0, 0040987, n˜ao sendo
+
+necess´ario realizar as outras 2.000 itera¸c˜oes.
+
+35
+
+3.4 Exemplos de aplica¸c˜oes em problemas com ru´ıdo
+
+A ﬁm de entender qual ´e o efeito do ru´ıdo dos dados na pr´atica, aplicamos o algoritmo
+
+LSQR em problemas de 65.536 vari´aveis gerados a partir da imagem de um sat´elite de
+
+256
+
+×
+
+256 pixels. Com o problema exato (exceto por erros de arredondamento) proveniente
+
+do pacote RestoreTools (NAGY et al., 2007) que fornece uma PSF semelhante `a da turbu-
+
+lˆencia atmosf´erica apresenta na se¸c˜ao 2.2, foram criados outros trˆes problemas com n´ıveis
+
+de ru´ıdo relativo nos dados de 0,1%, 1% e 5%. Na Figura 3.4 apresentamos a imagem
+
+exata, como tamb´em o problema sem ru´ıdo e com ru´ıdo de 5%, os casos intermedi´arios s˜ao
+
+semelhantes. Por quest˜oes de processamento, n˜ao executamos os algoritmos at´e o ´ultimo
+
+passo poss´ıvel. Foram realizadas apenas 500 itera¸c˜oes em cada caso e conseguimos perce-
+
+ber caracter´ısticas interessantes. A m´edia de tempo para obter as 500 solu¸c˜oes iteradas
+
+para cada um dos problemas foi de aproximadamente 39s.
+
+Figura 3.4: `A esquerda est´a a imagem exata do sat´elite, no meio a imagem emba¸cada e a
+respectiva melhor solu¸c˜ao e `a direita a imagem emba¸cada com 5% de ru´ıdo e a respectiva melhor
+solu¸c˜ao
+
+Exato
+
+Sem ru´ıdo
+
+5% de ru´ıdo
+
+Restaurada
+
+Restaurada
+
+Na Figura 3.5 apresentamos um gr´aﬁco com os erros relativos das solu¸c˜oes de cada
+
+subespa¸co para cada um dos problemas com diferentes n´ıveis de ru´ıdo.
+
+Percebemos que as linhas que representam os erros relativos do problema com dados
+
+exatos e do problema com ru´ıdo de 0,1% ﬁcam praticamente sobrepostas, o que nos
+
+leva a concluir que pelo menos para as primeiras itera¸c˜oes um ru´ıdo pequeno nos dados
+
+36
+
+Figura 3.5: Gr´aﬁco de compara¸c˜ao dos erros relativos das solu¸c˜oes LSQR do problema do Sat´elite
+exato e com diferentes n´ıveis de ru´ıdo (eixo y em escala logar´ıtmica)
+
+bexato
+
+0,1%
+
+1%
+
+5%
+
+101
+
+100
+
+10−1
+
+100
+
+200
+
+300
+
+400
+
+500
+
+Dimens˜ao do subespa¸co
+
+n˜ao provoca muita interferˆencia na solu¸c˜ao. Em contrapartida, `a medida que o n´ıvel de
+
+ru´ıdo aumenta, mais rapidamente atingimos o limite de itera¸c˜oes em que a solu¸c˜ao iterada
+
+melhora (em rela¸c˜ao a solu¸c˜ao exata), entretanto ap´os esse limite a contribui¸c˜ao associada
+
+ao ru´ıdo pode interferir drasticamente nas solu¸c˜oes, pois a cada nova itera¸c˜ao temos xk
+
+cada vez mais pr´oximo de xLS e, como vimos, xLS ´e dominada pelo ru´ıdo e.
+
+Para deixar mais expl´ıcito, na Tabela (3.3) apresentamos para cada um dos problemas
+
+do sat´elite o menor erro relativo (valor aproximado com 10 casas decimais), a dimens˜ao
+
+do subespa¸co da melhor solu¸c˜ao e o tempo de processamento.
+
+Tabela 3.3: Menor erro relativo, dimens˜ao do subespa¸co e tempo de processamento de cada um
+dos problemas do sat´elite
+
+Ru´ıdo
+
+0
+
+0,1%
+
+1%
+
+5%
+
+Erro m´ınimo
+
+0,2618549133
+
+0,2629424992
+
+0,2928567106
+
+0,3487907997
+
+k
+
+500
+
+500
+
+178
+
+56
+
+Tempo (s)
+
+38
+
+36
+
+41
+
+40
+
+Analogamente, ﬁzemos esse experimento para uma segunda imagem, esta com 512
+
+×
+512 pixels. Novamente criamos 4 problemas, sendo que a matriz de emba¸camento A nesse
+
+caso foi criada a partir de uma PSF fora de foco, a apresentada na se¸c˜ao 2.2, e executamos
+
+o algoritmo at´e a itera¸c˜ao 500.
+
+Como podemos ver na Figura 3.6, por ser uma imagem com mais detalhes, a solu¸c˜ao
+
+Figura 3.6: `A esquerda est´a a imagem exata do Pirata, no meio a imagem emba¸cada e a respectiva
+melhor solu¸c˜ao e `a direita a imagem emba¸cada com 5% de ru´ıdo e a respectiva melhor solu¸c˜ao
+
+Exato
+
+Sem ru´ıdo
+
+5% de ru´ıdo
+
+37
+
+Restaurada
+
+Restaurada
+
+do problema com 5% de ru´ıdo acaba sendo muito mais “polu´ıda” e desagrad´avel.
+
+Nesse caso, o gr´aﬁco da Figura 3.7 deixa mais n´ıtido como o ru´ıdo dos dados afeta as
+
+solu¸c˜oes rapidamente.
+
+Figura 3.7: Gr´aﬁco de compara¸c˜ao dos erros relativos das solu¸c˜oes LSQR do problema do Pirata
+exato e com diferentes n´ıveis de ru´ıdo (eixo y em escala logar´ıtmica)
+
+bexato
+
+0,1%
+
+1%
+
+5%
+
+102
+
+101
+
+100
+
+10−1
+
+10−2
+
+100
+
+200
+
+300
+
+400
+
+500
+
+Dimens˜ao do subespa¸co
+
+No problema com 5% de ru´ıdo, com apenas 15 itera¸c˜oes obtemos o menor erro relativo,
+
+a partir da´ı a contribui¸c˜ao do ru´ıdo e domina a solu¸c˜ao. J´a no problema com apenas 0,1%
+
+a melhor solu¸c˜ao ´e obtida no subespa¸co de dimens˜ao 208, diferente do problema do sat´elite
+
+em que o erro decresceu at´e a ´ultima itera¸c˜ao executada, mas o erro relativo se mant´em
+
+38
+
+controlado at´e a itera¸c˜ao 500.
+
+Condensamos as principais informa¸c˜oes do experimento na Tabela 3.4 que consta os
+
+valores dos menores erros relativos, a dimens˜ao do subespa¸co em que se obteve a melhor
+
+solu¸c˜ao e tempo de processamento das 500 itera¸c˜oes para cada um dos problemas do
+
+pirata.
+
+Tabela 3.4: Menor erro relativo, dimens˜ao do subespa¸co e tempo de processamento de cada um
+dos problemas do pirata
+
+Ru´ıdo
+
+0
+
+0,1%
+
+1%
+
+5%
+
+Erro m´ınimo
+
+0,0769178348
+
+0,1124281242
+
+0,1634833324
+
+0,1966136110
+
+k
+
+500
+
+208
+
+43
+
+15
+
+Tempo (s)
+
+161
+
+173
+
+177
+
+169
+
+Sendo assim, conclu´ımos que o m´etodo LSQR ´e um m´etodo adequado para traba-
+
+lhar com problemas de grande porte por conta de sua eﬁciˆencia em encontrar solu¸c˜oes
+
+signiﬁcativamente boas com poucas itera¸c˜oes, mesmo quando temos ru´ıdo nos dados.
+
+Nesse cap´ıtulo tamb´em exploramos o m´etodo TSVD, mas por conta da dependˆencia
+
+da Decomposi¸c˜ao em Valores Singulares, esse m´etodo ´e muito mais custoso e exige que
+
+sejam executadas quase todas as itera¸c˜oes para obter uma solu¸c˜ao adequada.
+
+Ent˜ao, considerando a hip´otese de abordar o problema de restaura¸c˜ao de imagens no
+
+ensino superior, em que desconhecemos o poder computacional das m´aquinas, acreditamos
+
+ser mais vi´avel a aplica¸c˜ao do m´etodo LSQR, conforme propomos no cap´ıtulo a seguir.
+
+Cap´ıtulo 4
+
+Uma proposta de aplica¸c˜ao no Ensino
+
+Superior
+
+Neste cap´ıtulo apresentamos uma proposta de sequˆencia de aulas para uma primeira
+disciplina de ´Algebra Linear em que os assuntos de restaura¸c˜ao de imagens podem ser
+
+tratados. Nosso p´ublico alvo s˜ao os alunos dos cursos de gradua¸c˜ao em matem´atica
+
+e f´ısica, em que essa disciplina ´e ofertada, conforme consta nas respectivas Diretrizes
+
+Curriculares Nacionais desses cursos, e se estende tamb´em aos cursos de engenharia que
+
+tˆem essa mat´eria no curr´ıculo.
+
+Tendo em vista a gama de conceitos que podem ser abordados no estudo de restaura¸c˜ao
+
+de imagens, que abre margem para falar sobre assuntos como sistemas lineares, solu¸c˜ao
+
+de m´ınimos quadrados, espa¸co e subespa¸co vetorial, matrizes, autovalores e autovetores,
+
+entre outros, sugerimos uma sequˆencia de oito aulas para explorar alguns desses assuntos.
+
+Para essa proposta, consideramos os curr´ıculos dos cursos da Universidade Federal de
+Santa Catarina – UFSC, em que a disciplina de ´Algebra Linear ´e ofertada no segundo ou
+
+terceiro semestre.
+
+Nosso foco nessa sequˆencia ´e tratar desde Sistemas Lineares at´e Espa¸co Vetorial e Base,
+
+passar rapidamente pelo conceito do problema de M´ınimos Quadrados e ﬁnalizar com o
+
+problema pr´atico de restaura¸c˜ao de imagem. E para deixar os assuntos mais encadeados
+
+e ﬂuidos, aconselhamos que o professor prepare os alunos desde o in´ıcio, comentando
+
+previamente sobre a atividade ﬁnal `a medida que o conte´udo se desenvolve.
+
+Inicialmente recomendamos tratar dos assuntos b´asicos de Sistemas Lineares, perme-
+
+ando por deﬁni¸c˜oes, propriedades, exemplos, sistema na forma matricial e o m´etodo de
+
+39
+
+40
+
+solu¸c˜ao por Elimina¸c˜ao Gaussiana (M´etodo de Escalonamento). Nessa etapa, ao falar
+
+de classiﬁca¸c˜ao de Sistemas Lineares, ´e conveniente que o professor deixe expl´ıcito que
+
+quando o sistema ´e imposs´ıvel, podemos considerar, por exemplo, a solu¸c˜ao de m´ınimos
+
+quadrados que ser´a apresentada mais adiante. Estimamos duas aulas para isso, preferen-
+
+cialmente em dias separados.
+
+Na sequˆencia, sugerimos abordar os conte´udos de Espa¸co Vetorial e Subespa¸co Vetorial,
+
+novamente trazendo deﬁni¸c˜oes, propriedades e exemplos. Inclusive, a ideia de vetor deve
+
+ser bem explorada, visto que os alunos j´a conhecem esse termo das aulas do ensino m´edio
+(COIMBRA, 2008), mas na ´Algebra Linear esse termo ´e usado de forma mais ampla.
+
+Ent˜ao ´e importante frizar que, a depender do Espa¸co, um vetor pode ser uma matriz
+
+(como uma imagem) ou polinˆomio, por exemplo. Sugerimos duas aulas nessa etapa.
+
+Feito isso, em uma aula, cabe entrar nos assuntos de combina¸c˜ao linear, subespa¸co
+
+gerado, dependˆencia e independˆencia linear e base. Um quest˜ao que muita das vezes gera
+
+confus˜ao e que aqui pode ser melhor explorada ´e a dimens˜ao do subespa¸co, que muitas
+
+vezes os alunos associam, por exemplo, a quantidade de entradas do vetor, o que n˜ao ´e
+
+correto.
+
+Posteriormente, podemos abordar os conceitos de imagem que apresentamos no cap´ı-
+
+tulo 2, a come¸car pela representa¸c˜ao digital da imagem. Lincando com a aula anterior,
+
+nesse contexto ´e vi´avel apresentar aos alunos a ideia de que, por exemplo, uma imagem
+
+em tons de cinza de 4 pixels (2
+
+2) pode ser representada como
+
+×
+
+a b
+
+c d
+
+= 
+
+
+
+
+
+
+
+
+
+a 0
+
+0 0
+
++ 
+
+
+
+
+
+
+
+
+
+0 b
+
+0 0
+
++ 
+
+
+
+
+
+
+
+
+
+0 0
+
+c 0
+
++ 
+
+
+
+
+
+
+
+
+
+0 0
+
+0 d
+
+,
+
+
+
+
+
+
+
+
+
+
+
+assim, considerando o caso em que todos os pixels s˜ao diferentes de zero, cada uma dessas
+
+imagens que representa um pixel pode ser interpretada como um vetor de uma base do
+R2×2 e a imagem completa ´e obtida como uma combina¸c˜ao linear destas imagens que
+
+representam um ´unico pixel. E podemos generalizar essa ideia para dimens˜oes maiores.
+
+Na sequˆencia podemos dar uma ideia de modelos de emba¸camento e por ﬁm apresentar o
+
+problema de restaura¸c˜ao, que ser´a explorado posteriormente. Uma aula ´e suﬁciente.
+
+Em seguida, podemos usar uma aula para expor o assunto de m´ınimos quadrados e
+
+proje¸c˜ao em subespa¸co. Considerando que a essa altura a turma ainda n˜ao tem muitos
+
+42
+
+ru´ıdo no in´ıcio, por isso ´e importante interromper o processo, abrindo m˜ao de parte da
+
+informa¸c˜ao que seria restaurada, mas garantindo uma solu¸c˜ao com menos ru´ıdo.
+
+Nessa aula ´e importante ter intera¸c˜ao com algum software em que possa mostrar
+
+exemplos pr´aticos de restaura¸c˜ao, ponderando sobre o comportamento das solu¸c˜oes nos
+
+subespa¸cos de diferentes dimens˜oes. Se for vi´avel, nesta oportunidade o professor pode
+
+deslocar a turma para o laborat´orio de inform´atica para que os alunos possam experienciar
+
+o processo e fazer seus pr´oprios testes, deixamos nos anexos algumas rotinas para facilitar
+
+o processo. Para ﬁnalizar esta etapa sugerimos alguns questionamentos que apresentamos
+
+na se¸c˜ao a seguir.
+
+Em resumo, a proposta de sequˆencia de aulas ´e apresentada na Tabela 4.1.
+
+Tabela 4.1: Proposta de sequˆencia de aulas
+
+Aulas
+
+Conte´udo
+
+1
+
+1
+
+2
+
+1
+
+1
+
+1
+
+1
+
+Sistemas Lineares: deﬁni¸c˜ao e propriedades
+
+Sistemas Lineares: Elimina¸c˜ao Gaussiana
+
+Espa¸co Vetorial e Subespa¸co Vetorial
+
+Combina¸c˜ao Linear, Subespa¸co Gerado, Dependˆencia e Inde-
+pendˆencia Linear e Base
+
+Imagens e o Problema de Emba¸camento
+
+M´ınimos Quadrados e Proje¸c˜ao em Subespa¸co
+
+Subespa¸co de Krylov e M´etodo LSQR
+
+4.1 Exerc´ıcios propostos
+
+Para ﬁxa¸c˜ao e melhor compreens˜ao dos assuntos tratados, sugerimos alguns exerc´ıcios
+
+para serem trabalhados em aula.
+
+1. Escolha uma imagem colorida qualquer e exiba separadamente as trˆes camadas de
+
+cor RGB com aux´ılio da fun¸c˜ao imagesc. Considerando sua representa¸c˜ao matricial,
+
+podemos dizer que essa imagem pertence a que espa¸co vetorial? Dica: Para que
+
+uma s´o cor apare¸ca ´e necess´ario zerar as entradas das outras duas camadas de cor.
+
+Espera-se um resultado semelhante ao da Figura 2.5, nesse caso e a dimens˜ao seria
+R960×640×3, sendo uma matriz tridimensional.
+
+43
+
+2. Assinale as aﬁrma¸c˜oes a seguir com “V” para verdadeiro e “F” para falso.
+
+(
+
+) Quanto mais pixels tem uma imagem, mais n´ıtida ela ´e.
+
+F - imagens com mais pixels s˜ao potencialmente melhores, entretanto fenˆomenos de
+
+emba¸camento diminuem a nitidez de imagens de qualquer dimens˜ao.
+
+(
+
+) Uma “imagem exata” n˜ao tem nenhuma perca de informa¸c˜ao.
+
+F - at´e no caso da imagem mais “perfeita”, h´a perca de informa¸c˜oes na discretiza¸c˜ao
+
+da imagem digital, pois n˜ao dispomos de precis˜ao inﬁnita.
+
+(
+
+) ´E poss´ıvel modelar fenˆomenos de emba¸camento por express˜oes matem´aticas.
+
+V - falamos sobre isso na se¸c˜ao 2.2.
+
+3. Informalmente, o que signiﬁca “emba¸camento espacialmente invari´avel”?
+
+Signiﬁca que todos os pixels da imagem passam pelo mesmo processo de emba¸ca-
+
+mento, em outras palavras, usamos a mesma PSF para emba¸car toda a ﬁgura.
+
+4. Para o problema do Rel´ogio (ver orienta¸c˜oes do Apˆendice A), construa o gr´aﬁco dos
+
+erros relativos das solu¸c˜oes do m´etodo LSQR para k = 1 at´e 100. Sugest˜ao: use a
+
+fun¸c˜ao lsqr b do Anexo III para obter as solu¸c˜oes e a fun¸c˜ao plot para criar o gr´aﬁco.
+
+Figura 4.2: Solu¸c˜ao do exerc´ıcio 4: Gr´aﬁco dos erros relativos
+
+Erros relativos
+
+0.16
+
+0.14
+
+0.12
+
+0.1
+
+0.08
+
+0.06
+
+20
+
+40
+
+60
+
+80
+
+100
+
+Dimens˜ao do subespa¸co
+
+5. No exerc´ıcio anterior, para qual subespa¸co temos o melhor resultado? Mostre a
+
+ﬁgura emba¸cada e a melhor ﬁgura restaurada.
+
+A melhor solu¸c˜ao ´e obtida no subespa¸co de dimens˜ao 53, vide Figura 4.3.
+
+6. Construa trˆes problemas a partir de diferentes PSFs e com 4% de ru´ıdo. Exiba as
+
+imagens emba¸cadas.
+
+44
+
+Figura 4.3: Solu¸c˜ao do exerc´ıcio 5: Imagem emba¸cada ao lado da imagem restaurada
+
+Imagem emba¸cada
+
+Melhor solu¸c˜ao, k = 53
+
+Resposta individual, nela os emba¸camentos podem ser criados com auxiliou das fun-
+
+¸c˜oes em anexo oblur.m ou mblur.m ou criando PSF pr´oprias (no Apˆendice A tem
+
+mais orienta¸c˜oes sobre) ou ainda usando a fun¸c˜ao psfGauss.m da pasta TestDada
+
+do pacote RestoreTools.
+
+7. Crie uma tabela que indique o erro m´ınimo e o k da melhor solu¸c˜ao do m´etodo
+
+LSQR para cada um dos problemas do exerc´ıcio anterior. O que vocˆe pode concluir
+
+disso?
+
+Resposta individual.
+
+8. Seja A = [a1 · · ·
+
+an] uma matriz m
+
+×
+
+n em que ai, com i = 1,
+
+, n, denota
+
+· · ·
+
+a i-´esima coluna de A. O subespa¸co gerado pelas colunas da matriz ´e R(A) =
+
+span
+
+a1,
+{
+
+· · ·
+
+, an
+
+}
+
+. Podemos dizer que R(A) = Rm? Por quˆe?
+
+N˜ao, porque n˜ao h´a garantia de que entre os vetores temos um conjunto LI de m
+
+elementos.
+
+9. Seja A uma matriz m
+
+n e b
+
+×
+
+∈
+
+Rm, podemos aﬁrmar que b
+
+R(A)?
+
+∈
+
+N˜ao.
+
+10. Dˆe um exemplo de uma matriz A
+
+R3×3 e vetores b1, b2 ∈
+
+R3, tais que b1 ∈
+
+∈
+
+R(A) e
+
+R(A). Geometricamente, como podemos interpretar isto?
+
+b2 /
+∈
+
+Esperamos que os alunos encontrem uma matriz A com pelo menos uma coluna
+
+n˜ao nula e as demais m´ultiplas dessa ou A com duas colunas LI e a terceira uma
+
+combina¸c˜ao linear delas, b1 pode ser uma das colunas da matriz e b2 pode ser qual-
+
+quer vetor fora ao espa¸co gerado de R(A). Apesar de A possuir 3 colunas, elas
+
+= R3, nesse caso R(A) pode ser interpretado
+s˜ao LD e, consequentemente, R(A)
+geometricamente como um plano (como na Figura 4.1) ou uma reta no espa¸co R3.
+
+45
+
+11. Seja uma matriz A
+
+Rm×n e b
+
+Rm.
+
+∈
+
+∈
+
+a) Mostre que o conjunto
+
+N (A) =
+
+x
+
+{
+
+∈
+
+Rn/Ax = 0
+
+}
+
+´e um subespa¸co vetorial.
+
+Basta veriﬁcar as propriedades de subespa¸co vetorial.
+
+b) Mostre que se x0 ´e uma solu¸c˜ao do sistema linear Ax = b, ent˜ao qualquer vetor
+
+da forma
+
+tamb´em ´e solu¸c˜ao.
+
+x = x0 + x∗, para todo x∗
+
+N (A)
+
+∈
+
+A ideia ´e mostrar que A(x0+x∗) = b. De fato, por ser linear A(x0+x∗) = Ax0+Ax∗,
+
+como x0 ´e solu¸c˜ao e x∗
+
+∈
+
+solu¸c˜ao.
+
+N (A), ent˜ao Ax0 + Ax∗ = b + 0 = b, logo x = x0 + x∗ ´e
+
+6
+46
+
+Cap´ıtulo 5
+
+Considera¸c˜oes Finais
+
+Existem diversas ´areas em que os problemas inversos est˜ao presentes e se faz necess´ario
+o uso das mais diversas ferramentas provenientes da ´Algebra Linear para conseguirmos
+
+obter solu¸c˜oes computacionalmente aplic´aveis. Neste trabalho buscamos unir o ´util ao
+
+agrad´avel, explorando problemas pr´aticos de restaura¸c˜ao de imagens nas aulas de gradua-
+¸c˜ao para ilustrar alguns dos principais conceitos de ´Algebra Linear, em especial o conceito
+
+de Subespa¸cos, incentivando os alunos a expandirem seu entendimento a respeito. Esti-
+
+mulamos tamb´em a intera¸c˜ao com software livre Octave para aplica¸c˜ao dos m´etodos, que
+
+por ventura pode despertar o interesse do aluno a explorar a ferramenta para outros ﬁns.
+
+Para fundamentar a proposta, dedicamos um cap´ıtulo para discorrer brevemente sobre
+
+como se d˜ao os processos de captura de imagem e representa¸c˜ao digital e trouxemos alguns
+
+modelos de processos f´ısicos de emba¸camento, que s˜ao parte importante da constru¸c˜ao do
+
+problema de restaura¸c˜ao.
+
+Visto que nesse tipo de problema temos que resolver sistemas lineares com milha-
+
+res ou milh˜oes de vari´aveis e, portanto, seria invi´avel de resolver por m´etodos diretos,
+
+apresentamos dois poderosos m´etodos iterativos de para calcular solu¸c˜oes ´uteis.
+
+No primeiro m´etodo usamos a decomposi¸c˜ao em valores singulares da matriz de coe-
+
+ﬁcientes A. Por´em vimos que se A possui valores singulares muito pequenos, a solu¸c˜ao
+
+torna-se inst´avel a pequenas perturba¸c˜oes nos dados e por isso ´e mais interessante trunc´a-
+
+la, isto ´e, desprezando uma parcela dos dados associada aos menores valores singulares,
+
+chamamos esse m´etodo de TSVD. O ponto negativo desse m´etodo ´e a diﬁculdade em obter
+
+a decomposi¸c˜ao em valores singulares da matriz, alternativamente apresentamos o m´etodo
+
+LSQR. Esse por sua vez ´e um m´etodo de proje¸c˜ao que constr´oi uma sequˆencia de solu¸c˜oes
+
+47
+
+48
+
+para problemas de m´ınimos quadrados restritos aos Subespa¸cos de Krylov associados `a
+
+matriz AT A e ao vetor AT b. Temos uma se¸c˜ao destinada ao m´etodo LSQR em que entra-
+
+mos em detalhes na forma como este usa a bidiagonaliza¸c˜ao inferior de Golub e Kahan
+
+(1965) na matriz de coeﬁcientes A para obter problemas de m´ınimos quadrados sobre os
+
+Subespa¸cos de Krylov, que s˜ao resolvidos usando a fatora¸c˜ao QR e rota¸c˜oes de Givens.
+
+Para fechar esse cap´ıtulo, exibimos os resultados de alguns experimentos num´ericos com
+
+o m´etodo LSQR que mostram a tendˆencia de comportamento das solu¸c˜oes iteradas em
+
+problemas com e sem ru´ıdo e tamb´em registramos os tempos de processamento, que evi-
+
+denciam que o m´etodo ´e computacionalmente vi´avel para ser aplicado em sala de aula,
+
+visto que seu processamento ´e r´apido.
+
+Finalmente, propomos uma sequˆencia de oito aulas com sugest˜oes de como os proble-
+
+mas de restaura¸c˜ao de imagens podem ser apresentados para turmas de gradua¸c˜ao em
+sua primeira disciplina de ´Algebra Linear, mesmo que nesse momento do curso os alunos
+
+ainda n˜ao tenham ferramentas suﬁcientes para compreender os fundamentos por tr´as do
+
+m´etodo, julgamos a experiˆencia apropriada, tornando a forma¸c˜ao mais ﬂex´ıvel abrangendo
+
+teoria e pr´atica. E para apoiar o professor, deixamos uma lista de exerc´ıcios relacionada
+
+ao assunto com as devidas orienta¸c˜oes de como reproduzir os problemas que envolvem
+
+programa¸c˜ao.
+
+Como sugest˜ao de trabalho futuro, podemos aplicar a proposta em turmas reais e
+
+colher informa¸c˜oes sobre os impactos dessa iniciativa sobre a disciplina. Al´em disso, seria
+
+interessante tamb´em avaliar a resposta dos alunos ao aplicar assuntos como esses em outros
+
+momentos do curso, por exemplo, aliando o m´etodo TSVD ao conte´udo de autovalores e
+
+autovetores.
+
+Bibliograﬁa
+
+AHRENS, H. The inverse problem of Magnetocardiography. Disserta¸c˜ao (Mestrado) —
+Christian-Albrechts-Universit¨at zu Kiel, 2015.
+
+BAUMEISTER, J.; LEIT ˜AO, A. Topics in Inverse Problems. [S.l.]: IMPA, 2005. ISBN
+85-244-0224-5.
+
+BORGES, L. S.; BAZ ´AN, F. S. V.; CUNHA, M. Automatic stopping rule for iterative
+methods in discrete ill-posed problems. Computational and Applied Mathematics, v. 34,
+p. 1175–1197, 2015.
+
+BURDEN, R. L.; FAIRES, D. J.; BURDEN, A. M. An´alise num´erica. 3. ed. [S.l.]:
+Cengage Learning, 2016. v. 10. ISBN 10-85-221-2341-1.
+
+COIMBRA, J. L. Alguns Aspectos Problem´aticos Relacionados ao Ensino-Aprendizagem
+da ´Algebra Linear. Disserta¸c˜ao (Mestrado) — Universidade Federal do Par´a, 2008.
+
+COLTON, D.; COYLE, J.; MONK, P. Recent developments in inverse acoustic scattering
+theory. SIAM Review, v. 42, n. 3, p. 369–414, 09 2000.
+
+DAX, A. The convergence of linear stationary iterative processes for solving singular
+unstructured systems of linear equations. SIAM Review, v. 32, n. 4, p. 611–635, 12 1990.
+
+EATON, J. W. et al. GNU Octave version 6.1.0 manual: a high-level interactive
+language for numerical computations. [S.l.], 2020. Dispon´ıvel em: <https://www.gnu.
+org/software/octave/doc/v6.1.0/>. Acesso em: 24 set. 2021.
+
+FURTADO, A. L. C. Diﬁculdades na Aprendizagem de Conceitos Abstratos da ´Algebra
+Linear. Disserta¸c˜ao (Mestrado) — Universidade Federal do Rio de Janeiro, 2010.
+
+GOLUB, G. H.; KAHAN, W. Calculating the singular values and pseudo-inverse of a
+matrix. SIAM Journal on Numerical Analysis, v. 2, n. 2, p. 205 – 224, 1965.
+
+HADJIDIMOS, A. Successive overrelaxation (sor) and related methods. Journal of
+Computational and Applied Mathematics, v. 123, n. 2000, p. 177 – 199, 09 1999.
+
+HANSEN, P. C.; NAGY, J. G.; O’LEARY, D. P. Deblurring Images. [S.l.]: Society for
+Industrial and Applied Mathematics, 2006.
+
+KIRSCH, A. An introduction to the mathematical theory of inverse problems. 2. ed. [S.l.]:
+Springer-Verlag New York, 2011. (Applied Mathematical Sciences 120).
+
+MARTINS, J. S. Solu¸c˜ao do Problema Inverso da Tomograﬁa por Impedˆancia El´etrica
+Utilizando o Simulated Annealing: Uma Nova Abordagem. Tese (Doutorado) — Pontif´ıcia
+Universidade Cat´olica do Rio Grande do Sul, Porto Alegre, 01 2016.
+
+49
+
+50
+
+MEYER, C. D. Matrix Analysis and Applied Linear Algebra. [S.l.]: Cambridge University
+Press, 2000.
+
+NAGY, J.; PALMER, K.; PERRONE, L. Iterative methods for image deblurring: a
+matlab object-oriented approach. Numerical Algorithms, v. 36, p. 73–93, 12 2004.
+
+NAGY, J. et al. RestoreTools. 1.4. ed. [S.l.], 2007. Dispon´ıvel em: <http:
+//www.mathcs.emory.edu/˜nagy/RestoreTools/>. Acesso em: 11 ago. 2021.
+
+PAIGE, C. C.; SAUNDERS, M. A. Lsqr: An algorithm for sparse linear equations and
+sparse least squares. ACM Transactions on Mathematical Software, v. 8, p. 43 – 71,
+March 1982.
+
+STEINBRUCH, A.; WINTERLE, P. Algebra Linear. 2. ed. [S.l.]: Pearson Makron Books,
+1987.
+
+ZHANG, D.; GUO, Y. Some recent developments in the unique determinations in
+phaseless inverse acoustic scattering theory. Electronic Research Archive, v. 29, n. 2, p.
+2149–2165, 06 2021.
+
+Apˆendice A
+
+Orienta¸c˜oes sobre os exerc´ıcios
+
+Para criar exerc´ıcios de restaura¸c˜ao de imagem podemos usar os scripts mblur.m, do
+
+Apˆendice I, ou oblur.m, do Apˆendice II, para criar matrizes A de emba¸camento. Nesse
+
+caso, o primeiro cria o efeito de borr˜ao de movimento (como da Figura 2.15) e o segundo
+
+gera um efeito fora de foco, por´em o espalhamento do ponto se d´a como um quadrado, ao
+
+inv´es de um c´ırculo como na Figura 2.11. Outra op¸c˜ao ´e criarmos PSFs pr´oprias e para
+
+obter a matriz A usamos a fun¸c˜ao psfMatrix do pacote RestoreTools vers˜ao 1.4 (NAGY
+
+et al., 2007), dispon´ıvel para download no site <http://www.mathcs.emory.edu/˜nagy/
+
+RestoreTools/>.
+
+No exerc´ıcio do Rel´ogio, da Se¸c˜ao 4.1, utilizamos a ﬁgura “Clock”, dispon´ıvel para
+
+download em <https://sipi.usc.edu/database/database.php?volume=misc>, e aplicamos
+
+o emba¸camento Fora de Foco apresentado na Se¸c˜ao 2.2. Para reproduzir o exerc´ıcio, em
+
+uma pasta do seu computador copie os scrips foraDeFoco.m (Apˆendice C) e exercicioRe-
+
+logio.m (Apˆendice C), dentro da mesma pasta fa¸ca o download da imagem “Clock” e do
+
+pacote RestoreTools, citados anteriormente. Ent˜ao basta abrir o Octave na pasta com os
+
+c´odigos e executar o exercicioRelogio.m para obter b e A, entre outras vari´aveis. Para
+
+disponibilizar aos alunos, sugerimos enviar por e-mail um arquivo compactado da pasta
+
+com todos os c´odigos.
+
+No Apˆendice D sugerimos um c´odigo para resolver o exerc´ıcio do Rel´ogio, para que
+
+funcione corretamente ele deve ser salvo na pasta juntamente com o script lsqr b.m do
+
+Anexo III e as vari´aveis A e b devem estar criadas no ambiente de trabalho do Octave, ou
+
+seja, o script depende das vari´aveis do exercicioRelogio.m e por isso deve ser executado
+
+ap´os ele.
+
+51
+
+52
+
+Apˆendice B
+
+Fun¸c˜ao de emba¸camento foraDeFoco.m
+
+function P = foraDeFoco (N , raio , k , l )
+
+% foraDeFoco retorna uma matriz P quadrada NxN usada para criar a PSF
+
+%
+
+% P = foraDeFoco (N , raio , k , l )
+
+%
+
+% O raio define o " tamanho " do desfoque .
+
+% As vari ´a veis (k , l ) s ~a o as coordenadas do centro do emba ¸c amento
+
+P = zeros (N , N ) ;
+
+raio2 = raio ^2;
+
+nivelEmbacamento = 1/( pi * raio2 ) ;
+
+if ( nargin < 3) , k = N /2 , l = N /2; end
+
+if raio > k
+
+iMin = 1;
+
+else
+
+iMin = k - raio2 ;
+
+endif
+
+if N < k + raio2
+
+iMax = N ;
+
+else
+
+iMax = k + raio2 ;
+
+endif
+
+if raio > l
+
+jMin = 1;
+
+else
+
+jMin = l - raio2 ;
+
+53
+
+54
+
+endif
+
+if N < l + raio2
+
+jMax = N ;
+
+else
+
+jMax = l + raio2 ;
+
+endif
+
+for i = iMin : iMax
+
+for j = jMin : jMax
+
+if ( (i - k ) ^2 + (j - l ) ^2 <= raio ^2 )
+
+P (i , j ) = nivelEmbacamento ;
+
+endif
+
+endfor
+
+endfor
+
+endfunction
+
+Apˆendice C
+
+Script exercicioRelogio.m
+
+clear
+
+pkg load image
+
+path ( path , " ./ RestoreTools / Classes " )
+
+# Carregando dados
+
+x = imread ( " clock . tiff " ) ;
+
+x = im2double ( x (:) ) ;
+
+N = 256;
+
+P = foraDeFoco (N , 10) ;
+
+A = psfMatrix ( P ) ;
+
+b = A * x ;
+
+# Acrescimo de ruido aos dados
+
+randn ( " seed " ,1) ;
+
+e = randn ( size ( b ) ) ;
+
+e = e / norm ( e ) * norm ( b ) ;
+
+b = b + e *0.0015;
+
+55
+
+56
+
+Apˆendice D
+
+Script solucaoExercicioRelogio.m
+
+# Solucoes
+
+n = 100;
+
+xLSQR = lsqr_b (A ,b , n ) ;
+
+# Erros relativos
+
+erroRelativo = zeros (1 , n ) ;
+
+for i = 1: n
+
+erroRelativo (1 , i ) = norm (x - xLSQR (: , i ) ) / norm ( x ) ;
+
+endfor
+
+[ menorErroRelativo , kMenorErro ] = min ( erroRelativo ) ;
+
+# Grafico
+
+figure (1)
+
+plot (1: n , erroRelativo , " LineWidth " ,0.75)
+
+axis ([1 n ])
+
+xlabel ( " Dimens ~a o do subespa ¸c o " )
+
+title " Erros relativos "
+
+# Imagem embacada e imagem restaurada
+
+figure (2)
+
+subplot (1 ,2 ,1)
+
+imagesc ( reshape (b ,N , N ) ) , colormap ( gray )
+
+axis square
+
+axis off
+
+title " Imagem emba ¸c ada "
+
+57
+
+58
+
+subplot (1 ,2 ,2)
+
+imagesc ( reshape ( xLSQR (: , kMenorErro ) ,N , N ) ) , colormap ( gray )
+
+axis square
+
+axis off
+
+title ( sprintf ( " Melhor solu ¸c ~ao , k =% d " , kMenorErro ) )
+
+Anexo I
+
+Fun¸c˜ao de emba¸camento mblur.m
+
+function T = mblur (N , bandw , xy ) ;
+
+% MBLUR
+
+Create a block Toeplitz matrix that models motion deblurring .
+
+%
+
+% function T = mblur (N , bandw , xy ) ;
+
+%
+
+% The matrix T an N *N - by - N * N symmetric , block Toeplitz matrix that
+
+models
+
+% blurring of an N - by - N image by a linear motion blur along the x - or y -
+
+axis .
+
+% It is stored in sparse matrix format .
+
+%
+
+% The bandwidth , specified by the integer bandw , detemines the " length "
+
+% of the deblurring , in the sense that bandw is the half - bandwidth of
+
+% the matrix .
+
+Hence , the total " length " of the deblurring is 2* bandw -1.
+
+% If bandw is not specified , bandw = 3 is used .
+
+%
+
+% The direction of the motion blurring is determined by the third
+
+% argument being either ’x ’ og ’y ’.
+
+The default is ’y ’ ,
+
+% Per Christian Hansen , IMM , 09/03/97.
+
+% Initialization .
+
+if ( nargin < 2) , bandw = 3; end
+
+bandw = min ( bandw , N ) ;
+
+if ( nargin < 3) , xy = " y " ; end
+
+% Construct T via Kronecker product .
+
+59
+
+60
+
+T = spdiags ( ones (N ,2* bandw -1) ,[ - bandw +1: bandw -1] , N , N ) /(2* bandw -1) ;
+
+if ( xy == " x " )
+
+T = kron (T , speye ( N ) ) ;
+
+elseif ( xy == " y " )
+
+T = kron ( speye ( N ) ,T ) ;
+
+else
+
+error ( " Illegal third argument " )
+
+end
+
+Anexo II
+
+Fun¸c˜ao de emba¸camento oblur.m
+
+function T = oblur (N , bandw ) ;
+
+% OBLUR
+
+Create a block Toeplitz matrix that models our - of - focus
+
+deblurring .
+
+%
+
+% function T = oblur (N , bandw ) ;
+
+%
+
+% The matrix T an N *N - by - N * N symmetric , block Toeplitz matrix that
+
+models
+
+% out - of - foucs blurring of an N - by - N image , stored in sparse matrix
+
+format .
+
+%
+
+% The bandwidth , specified by the integer bandw , detemines the " size "
+
+% of the deblurring , in the sense that bandw is the half - bandwidth of
+
+% the matrix .
+
+If bandw is not specified , bandw = 3 is used .
+
+% Per Christian Hansen , IMM , 09/03/97.
+
+% Initialization .
+
+if ( nargin < 2) , bandw = 3; end
+
+bandw = min ( bandw , N ) ;
+
+% Construct T via Kronecker product .
+
+T = spdiags ( ones (N ,2* bandw -1) ,[ - bandw +1: bandw -1] , N , N ) /(2* bandw -1) ;
+
+T = kron (T , T ) ;
+
+61
+
+62
+
+Anexo III
+
+M´etodo lsqr b.m
+
+function [X , rho , eta , F ] = lsqr_b (A ,b ,k , reorth , s )
+
+% LSQR_B Solution of least squares problems by Lanczos bidiagonalization .
+
+%
+
+% [X , rho , eta , F ] = lsqr_b (A ,b ,k , reorth , s )
+
+%
+
+% Performs k steps of the LSQR Lanczos bidiagonalization algorithm
+
+% applied to the system
+
+%
+
+min || A x - b || .
+
+% The routine returns all k solutions , stored as columns of
+
+% the matrix X .
+
+The solution norm and residual norm are returned
+
+% in eta and rho , respectively .
+
+%
+
+% If the singular values s are also provided , lsqr computes the
+
+% filter factors associated with each step and stores them columnwise
+
+% in the matrix F .
+
+%
+
+% Reorthogonalization is controlled by means of reorth :
+
+%
+
+%
+
+reorth = 0 : no reorthogonalization ( default ) ,
+
+reorth = 1 : reorthogonalization by means of MGS .
+
+% Reference : C . C . Paige & M . A . Saunders , " LSQR : an algorithm for
+
+% sparse linear equations and sparse least squares " , ACM Trans .
+
+% Math . Software 8 (1982) , 43 -71.
+
+% Per Christian Hansen , IMM , April 8 , 2001.
+
+% The fudge threshold is used to prevent filter factors from exploding .
+
+63
+
+64
+
+fudge_thr = 1e -4;
+
+% Initialization .
+
+if ( k < 1) , error ( " Number of steps k must be positive " ) , end
+
+if ( nargin ==3) , reorth = 0; end
+
+% if ( nargout ==4 & nargin <5) , error ( ’ Too few input arguments ’) , end
+
+[m , n ] = size ( A ) ; X = zeros (n , k ) ;
+
+if ( reorth ==0)
+
+UV = 0;
+
+elseif ( reorth ==1)
+
+U = zeros (m , k ) ; V = zeros (n , k ) ; UV = 1;
+
+if (k >= n ) , error ( " No . of iterations must satisfy k < n " ) , end
+
+else
+
+error ( " Illegal reorth " )
+
+end
+
+if ( nargout > 1)
+
+eta = zeros (k ,1) ; rho = eta ;
+
+c2 = -1; s2 = 0; xnorm = 0; z = 0;
+
+end
+
+if ( nargin ==5)
+
+ls = length ( s ) ;
+
+F = zeros ( ls , k ) ; Fv = zeros ( ls ,1) ; Fw = Fv ;
+
+s = s .^2;
+
+end
+
+% Prepare for LSQR iteration .
+
+v = zeros (n ,1) ; x = v ; beta = norm ( b ) ;
+
+if ( beta ==0) , error ( " Right - hand side must be nonzero " ) , end
+
+u = b / beta ; if ( UV ) , U (: ,1) = u ; end
+
+r = A ’* u ; alpha = norm ( r ) ; % A ’* u ;
+
+v = r / alpha ; if ( UV ) , V (: ,1) = v ; end
+
+phi_bar = beta ; rho_bar = alpha ; w = v ;
+
+if ( nargin ==5) , Fv = s /( alpha * beta ) ; Fw = Fv ; end
+
+% Perform Lanczos bidiagonalization with / without reorthogonalization .
+
+for i =2: k +1
+
+alpha_old = alpha ; beta_old = beta ;
+
+65
+
+% Compute A * v - alpha * u .
+
+p = A * v - alpha * u ;
+
+if ( reorth ==0)
+
+beta = norm ( p ) ; u = p / beta ;
+
+else
+
+for j =1: i -1 , p = p - ( U (: , j ) ’* p ) * U (: , j ) ; end
+
+beta = norm ( p ) ; u = p / beta ;
+
+end
+
+% Compute A ’* u - beta * v .
+
+r = A ’* u - beta * v ;
+
+if ( reorth ==0)
+
+alpha = norm ( r ) ; v = r / alpha ;
+
+else
+
+for j =1: i -1 , r = r - ( V (: , j ) ’* r ) * V (: , j ) ; end
+
+alpha = norm ( r ) ; v = r / alpha ;
+
+end
+
+% Store U and V if necessary .
+
+if ( UV ) , U (: , i ) = u ; V (: , i ) = v ; end
+
+% Construct and apply orthogonal transformation .
+
+rrho = norm ([ rho_bar , beta ]) ; c1 = rho_bar / rrho ;
+
+s1 = beta / rrho ; theta = s1 * alpha ; rho_bar = - c1 * alpha ;
+
+phi = c1 * phi_bar ; phi_bar = s1 * phi_bar ;
+
+% Compute solution norm and residual norm if necessary ;
+
+if ( nargout > 1)
+
+delta = s2 * rrho ; gamma_bar = - c2 * rrho ; rhs = phi - delta * z ;
+
+z_bar = rhs / gamma_bar ; eta (i -1) = norm ([ xnorm , z_bar ]) ;
+
+gamma = norm ([ gamma_bar , theta ]) ;
+
+c2 = gamma_bar / gamma ; s2 = theta / gamma ;
+
+z = rhs / gamma ; xnorm = norm ([ xnorm , z ]) ;
+
+rho (i -1) = abs ( phi_bar ) ;
+
+end
+
+% If required , compute the filter factors .
+
+if ( nargin ==5)
+
+66
+
+if ( i ==2)
+
+Fv_old = Fv ;
+
+Fv = Fv .*( s - beta ^2 - alpha_old ^2) /( alpha * beta ) ;
+
+F (: ,i -1) = ( phi / rrho ) * Fw ;
+
+else
+
+tmp = Fv ;
+
+Fv = ( Fv .*( s - beta ^2 - alpha_old ^2) - ...
+
+Fv_old * alpha_old * beta_old ) /( alpha * beta ) ;
+
+Fv_old = tmp ;
+
+F (: ,i -1) = F (: ,i -2) + ( phi / rrho ) * Fw ;
+
+end
+
+if ( i > 3)
+
+f = find ( abs ( F (: ,i -2) -1) < fudge_thr & abs ( F (: ,i -3) -1) < fudge_thr
+
+) ;
+
+if ~ isempty ( f ) , F (f ,i -1) = ones ( length ( f ) ,1) ; end
+
+end
+
+Fw = Fv - ( theta / rrho ) * Fw ;
+
+end
+
+% Update the solution .
+
+x = x + ( phi / rrho ) * w ; w = v - ( theta / rrho ) * w ;
+
+X (: ,i -1) = x ;
+
+end
+
+

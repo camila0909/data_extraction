@@ -1,0 +1,2741 @@
+Universidade Federal da Grande Dourados
+Faculdade de Ci^encias Exatas e Tecnologia
+
+Mestrado Pro(cid:12)ssional em Matem(cid:19)atica em Rede Nacional
+
+Obten(cid:24)c~ao de Corpos de N(cid:19)umeros e
+
+Corpos Finitos utilizando
+
+o Python
+
+Geovane Morato Pinto
+
+Orientadora: Profa. Dra. Ana Cl(cid:19)audia Machado Mendon(cid:24)ca Chagas
+
+Dourados
+
+Fevereiro - 2021
+
+Geovane Morato Pinto
+
+Obten(cid:24)c~ao de Corpos de N(cid:19)umeros e Corpos Finitos utilizando o Python
+
+Disserta(cid:24)c~ao apresentada ao (cid:12)nal do Programa de
+
+Mestrado Pro(cid:12)ssional em Matem(cid:19)atica em Rede Nacional
+
+- PROFMAT da Universidade Federal da Grande Doura-
+
+dos - UFGD como exig^encia parcial para obten(cid:24)c~ao do
+
+t(cid:19)(cid:16)tulo de Mestre em Matem(cid:19)atica.
+
+Dourados-MS
+
+Fevereiro - 2021
+
+3
+
+4
+
+Agradecimentos
+
+Agrade(cid:24)co a minha esposa, minha fam(cid:19)(cid:16)lia e a todos que de alguma forma me apoiaram
+
+nessa caminhada.
+
+Agrade(cid:24)co a todos colegas de p(cid:19)os-gradua(cid:24)c~ao, aos professores de p(cid:19)os-gradua(cid:24)c~ao e em es-
+
+pecial a banca examinadora dessa trabalho: Minha orientadora Profa. Dra. Ana Cl(cid:19)audia,
+
+a Profa Dra. Irene sempre muito prestativa com os alunos de p(cid:19)os-gradua(cid:24)c~ao e ao Profo
+
+Dr. Oyran pelo aceite em participar da avalia(cid:24)c~ao desse trabalho.
+
+\O presente trabalho foi realizado com apoio da Coordena(cid:24)c~ao de Aperfei(cid:24)coamento de
+
+Pessoal de N(cid:19)(cid:16)vel Superior Brasil (CAPES) - C(cid:19)odigo de Financiamento 001"
+
+Resumo
+
+Este trabalho apresenta um pouco da teoria de corpos de n(cid:19)umeros e corpos (cid:12)nitos.
+
+O principal objetivo (cid:19)e mostrar a import^ancia de polin^omios irredut(cid:19)(cid:16)veis para constru(cid:24)c~ao
+de extens~oes (cid:12)nitas dos racionais e de Zp, com p primo. Apresentaremos um algoritmo,
+utilizando o Python, para testar a irredutibilidade de polin^omios de grau 2 e 3 sobre Z3,
+
+dando uma caracteriza(cid:24)c~ao de corpos (cid:12)nitos com 9 e 27 elementos, apresentaremos ainda o
+algor(cid:19)(cid:16)timo de Rabin possibilitando assim caracterizar extens~oes de Zp com pn elementos.
+
+Palavras-chaves: Corpos de n(cid:19)umeros, corpos (cid:12)nitos, polin^omios irredut(cid:19)(cid:16)veis,
+
+python.
+
+Abstract
+
+This work presents a little of the theory of number (cid:12)elds and (cid:12)nite (cid:12)elds. The main
+
+objective is to show the importance of polynomials irreducible for building (cid:12)nite extensions
+of rationals and Zp, with p prime. We will present an algorithm, using Python, to test
+the irreducibility of degree 2 and 3 polynomials over Z3, giving a characterization of (cid:12)nite
+
+(cid:12)elds with 9 and 27 elements, we will also present Rabin algorithm thus making it possible
+to characterize extensions of Zp with pn.
+
+Key-words: Number (cid:12)elds, (cid:12)nite (cid:12)elds, polynomials irreducible, python
+
+Sum(cid:19)ario
+
+Introdu(cid:24)c~ao
+
+1 An(cid:19)eis e Corpos
+
+11
+
+12
+
+1.1 An(cid:19)eis . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 12
+
+1.1.1 Dom(cid:19)(cid:16)nios de Integridade . . . . . . . . . . . . . . . . . . . . . . . . 15
+
+1.1.2 Homomor(cid:12)smo de An(cid:19)eis . . . . . . . . . . . . . . . . . . . . . . . . 16
+
+1.1.3 Caracter(cid:19)(cid:16)stica de um Dom(cid:19)(cid:16)nio de Integridade . . . . . . . . . . . . . 19
+
+1.1.4
+
+Ideais
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 20
+
+1.2 Corpos . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+
+2 Polin^omios
+
+26
+
+2.1 An(cid:19)eis de Polin^omios
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 26
+
+2.1.1 Divis~ao de Polin^omios
+
+. . . . . . . . . . . . . . . . . . . . . . . . . 29
+
+2.1.2 Ra(cid:19)(cid:16)zes de Polin^omios . . . . . . . . . . . . . . . . . . . . . . . . . . 30
+
+2.1.3
+
+Ideais em K[x] . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 32
+
+2.2 Crit(cid:19)erios de Irredutibilidade de Polin^omios . . . . . . . . . . . . . . . . . . 33
+
+3 Extens~oes de Corpos
+
+36
+
+3.1 Extens~oes (cid:12)nitas
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 38
+
+3.1.1
+
+Corpo de Decomposi(cid:24)c~ao de polin^omios . . . . . . . . . . . . . . . . 40
+
+3.2 Extens~oes Finitas de Zp
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . 40
+
+3.3 Extens~oes Finitas dos Racionais . . . . . . . . . . . . . . . . . . . . . . . . 44
+
+4 Polin^omios irredut(cid:19)(cid:16)veis utilizando o Python
+
+45
+
+8
+
+Lista de Figuras
+
+4.1 Produto de Polin^omios. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 47
+
+4.2 Exemplo de produto.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 48
+
+4.3 Soma de polin^omios.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+4.4 Subtra(cid:24)c~ao de polin^omios. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 50
+
+4.5 Polin^omio nulo.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 51
+
+4.6 Lista de polin^omios de grau ≤ 2.
+
+. . . . . . . . . . . . . . . . . . . . . . . 52
+
+4.7 Lista de polin^omios de grau ≤ 3.
+
+. . . . . . . . . . . . . . . . . . . . . . . 53
+
+4.8 Lista dos m^onicos de grau 2 e 3. . . . . . . . . . . . . . . . . . . . . . . . . 54
+
+4.9 M^onicos de grau 2.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+4.10 M^onicos de grau 3.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+4.11 Irredut(cid:19)(cid:16)veis de grau 2.
+4.12 Exemplo de irredut(cid:19)(cid:16)veis de grau 2 sobre Z3.
+
+4.13 Irredut(cid:19)(cid:16)veis de grau 3.
+4.14 Exemplo de irredut(cid:19)(cid:16)veis de grau 2 sobre Z3.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 56
+
+. . . . . . . . . . . . . . . . . 57
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 57
+
+. . . . . . . . . . . . . . . . . 58
+
+4.15 Programa que geram G1, G2 e G3. . . . . . . . . . . . . . . . . . . . . . . . 59
+
+4.16 Console do programa que geram G1, G2 e G3.
+
+. . . . . . . . . . . . . . . . 60
+
+4.17 Inverso em Zp. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 61
+
+4.18 Divis~ao de polin^omios.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 62
+
+4.19 Exemplo de divis~ao de polin^omios.
+
+. . . . . . . . . . . . . . . . . . . . . . 63
+
+4.20 MDC de polin^omios.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 64
+
+4.21 Exemplo de MDC de polin^omios.
+
+. . . . . . . . . . . . . . . . . . . . . . . 65
+
+4.22 Polin^omios do tipo xpn − x .
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . 65
+
+4.23 Algor(cid:19)(cid:16)timo de Rabin.
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 66
+
+9
+
+4.24 Exemplo aplica(cid:24)c~ao do algor(cid:19)(cid:16)timo de Rabin em Z3. . . . . . . . . . . . . . . 67
+4.25 Exemplo aplica(cid:24)c~ao do algor(cid:19)(cid:16)timo de Rabin em Z5. . . . . . . . . . . . . . . 67
+
+10
+
+Introdu(cid:24)c~ao
+
+A teoria de corpos (cid:12)nitos e corpos de n(cid:19)umeros s~ao de fundamental import^ancia para
+
+o desenvolvimento da teoria dos c(cid:19)odigos, como vemos em [1], [7] e [9].
+
+Os primeiros c(cid:19)odigos corretores de erros, ou seja, c(cid:19)odigos que al(cid:19)em de detectar os erros
+
+poderiam corrigi-los, surgiram com Richard W. Hamming, Claude E. Shannon e Marcel
+
+J. E. Golay, entre 1947 e 1950. O CPF, por exemplo, (cid:19)e um c(cid:19)odigo corretor de erro.
+
+A estrutura linear e sim(cid:19)etrica de c(cid:19)odigos obtidos utilizando corpos (cid:12)nitos e corpos de
+
+n(cid:19)umeros (cid:19)e de fundamental import^ancia na tarefa de codi(cid:12)ca(cid:24)c~ao, decodi(cid:12)ca(cid:24)c~ao e corre(cid:24)c~ao
+
+de erros.
+
+Para o estudo da teoria de corpos (cid:12)nitos e corpos de n(cid:19)umeros, apresentamos conceitos
+
+e propriedades de an(cid:19)eis, dom(cid:19)(cid:16)nios, corpos, an(cid:19)eis de polin^omios e polin^omios irredut(cid:19)(cid:16)veis.
+
+Testar a irredutibilidade de um polin^omios nem sempre (cid:19)e uma tarefa f(cid:19)acil. Sendo assim,
+
+nesse trabalho usamos como ferramenta a linguagem de programa(cid:24)c~ao python. Em s(cid:19)(cid:16)ntese,
+
+o trabalho traz a constru(cid:24)c~ao de um algoritmo em python para testar a irredutibilidade de
+
+alguns polin^omios, em casos espec(cid:19)(cid:16)(cid:12)cos.
+
+O trabalho est(cid:19)a dividido em quatro cap(cid:19)(cid:16)tulos. O primeiro cap(cid:19)(cid:16)tulo traz os conceitos
+
+iniciais de an(cid:19)eis, dom(cid:19)(cid:16)nios e corpos. O segundo cap(cid:19)(cid:16)tulo de(cid:12)ne an(cid:19)eis de polin^omios so-
+
+bre um corpo, e descreve alguns crit(cid:19)erios de irredutibilidade de polin^omios. O terceiro
+cap(cid:19)(cid:16)tulo trata extens~oes (cid:12)nitas dos racionais e de Zp. No quarto cap(cid:19)(cid:16)tulo, traremos um
+
+algoritmo simples, utilizando a linguagem de programa(cid:24)c~ao python, capaz de veri(cid:12)car a
+
+irredutibilidade de polin^omios.
+
+A partir desse trabalho, podemos ter uma ideia de como relacionar a teoria matem(cid:19)atica
+
+com a programa(cid:24)c~ao. De forma simples e compreensiva, faremos do racioc(cid:19)(cid:16)nio matem(cid:19)atico
+
+alguns algoritmos, que no futuro podem ser melhorados.
+
+11
+
+Cap(cid:19)(cid:16)tulo 1
+
+An(cid:19)eis e Corpos
+
+Neste cap(cid:19)(cid:16)tulo vamos estudar as de(cid:12)ni(cid:24)c~oes e propriedades de um anel, subanel, dom(cid:19)(cid:16)nio
+
+de integridade e corpo. Apresentaremos tamb(cid:19)em os conceitos de caracter(cid:19)(cid:16)stica de um
+
+dom(cid:19)(cid:16)nio de integridade, homomor(cid:12)smo de an(cid:19)eis e ideais. Esses resultados ser~ao de funda-
+
+mental import^ancia no desenvolvimento do trabalho. As refer^encias desse cap(cid:19)(cid:16)tulo podem
+
+ser encontradas em : [3] e [10].
+
+1.1 An(cid:19)eis
+
+Seja A um conjunto n~ao vazio munido de duas opera(cid:24)c~oes: adi(cid:24)c~ao (+) e multiplica(cid:24)c~ao
+
+(·). Vamos denotar este conjunto por(A, +, ·).
+
+De(cid:12)ni(cid:24)c~ao 1.1. Dizemos que (A, +, ·) (cid:19)e um anel se satisfaz:
+
+i) a + b = b + a (Comutatividade da Adi(cid:24)c~ao).
+
+ii) (a + b) + c = a + (b + c) (Associatividade da adi(cid:24)c~ao).
+
+iii) (a · b) · c = a · (b · c) (Associatividade da multiplica(cid:24)c~ao).
+
+iv) ∃ 0A ∈ A tal que 0A + a = a, ∀a ∈ A (Elemento neutro da adi(cid:24)c~ao).
+
+v) ∀a ∈ A existe −a ∈ A tal que a + (−a) = 0A (Elemento oposto de a).
+
+vi) a · (b + c) = a · b + a · c (Distributividade).
+
+12
+
+13
+
+De(cid:12)ni(cid:24)c~ao 1.2. Considere (A, +, ·) um anel,
+
+i) Se a multiplica(cid:24)c~ao (cid:19)e comutativa, ou seja, a · b = b · a ∀a, b ∈ A, ent~ao dizemos que
+
+(A, +, ·) (cid:19)e anel comutativo.
+
+ii) Se existe o elemento neutro da multiplica(cid:24)c~ao, ou seja, ∃1A ∈ A tal que 1A · a =
+
+a · 1A = a, ∀a ∈ A, ent~ao (A, +, ·) (cid:19)e chamado anel com unidade.
+
+Exemplo 1.1. a) (Z, +, ·), (Q, +, ·),(R, +, ·) e (C, +, ·) s~ao exemplos de an(cid:19)eis comuta-
+
+tivos com unidade.
+
+b)Seja nZ = {n · a; a ∈ Z}, logo (nZ, +, ·) para n ∈ N, n ≥ 2 (cid:19)e um anel comutativo,
+
+por(cid:19)em sem unidade.
+
+c)Considere Zn = {0, 1, . . . , n − 1} o conjunto das classes residuais m(cid:19)odulo n. Temos
+
+que (Zn, +, ·), para n ∈ N, n ≥ 2 (cid:19)e um anel comutativo com unidade.
+
+d) Considere Z[
+
+√
+
+√
+
+2] = {a+b
+
+2; a, b ∈ Z}. Temos que (Z[
+
+√
+
+2], +, ·) (cid:19)e um anel comutativo
+
+com unidade, com as opera(cid:24)c~oes de(cid:12)nidas da seguinte forma:
+
+√
+
+√
+
+√
+
+Sejam x e y ∈ Z[
+
+2], tal que x = a + b
+
+2 e y = c + d
+
+2, ent~ao
+
+Adi(cid:24)c~ao.
+
+√
+
++ : Z[
+
+√
+
+2] × Z[
+
+√
+
+2] −→ Z[
+
+2]
+
+(x, y) 7−→ x + y = (a + c) + (b + d)
+
+√
+
+2
+
+Multiplica(cid:24)c~ao.
+
+√
+
+· : Z[
+
+√
+
+2] × Z[
+
+√
+
+2] −→ Z[
+
+2]
+
+(x, y)
+
+7−→ x · y = (ac + 2bd) + (ad + cb)
+
+2
+
+√
+
+Propriedades 1.1. Seja (A, +, ·) um anel. S~ao v(cid:19)alidas as seguintes propriedades:
+
+1) Unicidade do elemento neutro.
+
+2) Unicidade do elemento sim(cid:19)etrico.
+
+3) Se a1, a2, · · · , an ∈ A(n ≥ 2), ent~ao −(a1 + a2 + · · · + an) = −a1 + (−a2) + · · · + (−an).
+
+4) ∀a ∈ A, −(−a) = a.
+
+5) ∀a, b, c ∈ A, se a + b = a + c, ent~ao b=c ( Lei do corte da adi(cid:24)c~ao).
+
+6) O conjunto solu(cid:24)c~ao da equa(cid:24)c~ao a + x = b, na vari(cid:19)avel x, (cid:19)e x = −a + b,
+
+∀a, b ∈ A.
+
+14
+
+7) ∀a ∈ A, a · 0A = 0A = 0A · a.
+
+8) ∀a, b ∈ A, tem-se que a(−b) = (−a)b = −(ab).
+
+9) ∀a, b ∈ A, tem-se que ab = (−a)(−b).
+
+De(cid:12)ni(cid:24)c~ao 1.3. Sejam (A, +, ·) um anel e a, b ∈ A. De(cid:12)nimos a diferen(cid:24)ca entre a e b
+
+como a − b = a + (−b).
+
+Com base na multiplica(cid:24)c~ao em um anel A, podemos de(cid:12)nir o conceito de pot^encia de
+
+um elemento de A.
+
+De(cid:12)ni(cid:24)c~ao 1.4. Seja a ∈ A de(cid:12)nimos a n-(cid:19)esima pot^encia de a da seguinte forma: a1 = a
+e an = an−1 · a para n ≥ 2.
+
+Utilizando a De(cid:12)ni(cid:24)c~ao 1.4 e o racioc(cid:19)(cid:16)nio indutivo (cid:19)e f(cid:19)acil provar as seguintes pro-
+
+priedades de pot^encia de um elemento do anel A.
+
+Propriedades 1.2. Sejam (A, +, ·) um anel com a, b, c ∈ A e m, n ∈ N∗. S~ao v(cid:19)alidas as
+
+propriedades abaixo:
+
+i) am · an = am+n
+
+ii) (am)n = amn
+
+De(cid:12)ni(cid:24)c~ao 1.5. Sejam (A, +, ·) um anel e L ⊆ A n~ao vazio. Dizemos que L (cid:19)e subanel de
+
+A se:
+
+i) L (cid:19)e fechado para a adi(cid:24)c~ao e multiplica(cid:24)c~ao.
+
+ii) (L, +, ·) (cid:19)e um anel (com as opera(cid:24)c~oes de A restritas a L).
+
+Nota(cid:24)c~ao: L ≤ A.
+
+Como vimos no Exemplo 1.1, Z, Q, R, C, Z[
+
+Q ≤ R ≤ C e Z[
+
+2] ≤ R.
+
+√
+
+15
+
+2], e nZ s~ao an(cid:19)eis. Assim, nZ ≤ Z ≤
+
+√
+
+A pr(cid:19)oxima proposi(cid:24)c~ao facilitar(cid:19)a a veri(cid:12)ca(cid:24)c~ao de suban(cid:19)eis de um anel A. Note que para
+
+quaisquer subconjunto de um anel A herda as propriedades comutativas, associativas e
+
+distributiva.
+
+Proposi(cid:24)c~ao 1.1. Sejam (A, +, ·) um anel e L ⊆ A n~ao vazio. Tem-se que L ≤ A se, e
+
+somente se, a − b ∈ L e a · b ∈ L, ∀a, b ∈ L.
+
+Demonstra(cid:24)c~ao. (⇒) Como b ∈ L e L ≤ A, seque que −b ∈ L. Como L (cid:19)e fechado para
+
+a adi(cid:24)c~ao e a − b = a + (−b) ∈ L. Obviamente, a · b ∈ L.
+
+(⇐) Como observado antes, as condi(cid:24)c~oes de comutatividade da adi(cid:24)c~ao, associatividade
+
+da adi(cid:24)c~ao e multiplica(cid:24)c~ao e tamb(cid:19)em a distributiva s~ao herdadas de A. Sendo assim, (cid:19)e
+
+su(cid:12)ciente veri(cid:12)car que L (cid:19)e fechado para ambas as opera(cid:24)c~oes, exist^encia do elemento neutro
+
+e exist^encia do oposto. De fato, tem-se por hip(cid:19)otese que a · b ∈ L, ∀a, b ∈ L, segue que
+
+L (cid:19)e fechado para a multiplica(cid:24)c~ao. Como L ̸= ∅, existe a ∈ L, assim a − a ∈ L. Como
+a − a = 0A, tem-se que 0A ∈ L. Temos assim, 0A − a = −a ∈ L, ou seja, existe o oposto
+em L. Como a + b = a − (−b), se a, b ∈ L, ent~ao a + b ∈ L, ou seja, L (cid:19)e fechado para a
+
+adi(cid:24)c~ao.
+
+1.1.1 Dom(cid:19)(cid:16)nios de Integridade
+
+De(cid:12)ni(cid:24)c~ao 1.6. Seja (A, +, ·) um anel comutativo com unidade. Dizemos que A (cid:19)e um
+
+dom(cid:19)(cid:16)nio de integridade, quando A n~ao possui divisores de zero, ou seja, quando a · b = 0,
+
+implicar que a = 0 ou b = 0, com a, b ∈ A.
+
+Exemplo 1.2.
+
+a) Z, Q, R e C n~ao tem divisores de zero. Logo, s~ao dom(cid:19)(cid:16)nios de inte-
+
+gridade.
+
+b) Z4 = {0, 1, 2, 3} tem divisores de zero, pois 2 · 2 = 4 = 0.
+
+Exemplo 1.3. Z[
+
+√
+
+2] (cid:19)e um dom(cid:19)(cid:16)nio de integridade.
+
+16
+
+Justi(cid:12)cativa: Primeiramente consideramos que Z n~ao tem divisores de zero. Sejam
+
+x = a + b
+
+2 e y = c + d
+
+2]. Assim, xy = 0 se, e s(cid:19)o se,
+
+√
+
+√
+
+√
+
+2 ∈ Z[
+√
+
+√
+
+(ac + 2bd) + (ad + bc)
+
+2 = 0 + 0[
+
+2] ⇔ ac + 2bd = 0 e ad + bc = 0
+
+⇔ ac = −2bd e ad = −bc
+
+⇔ adc = −2bd2
+
+e ad = −bc
+
+⇔ −bc2 = −2bd2
+
+⇔ b(c2 − 2d2) = 0
+
+⇔ b = 0 ou c2 = 2d2.
+
+Temos que c2 = 2d2 se, e somente se, c = d = 0. De fato, vejamos que se c2 = 2d2,
+
+teremos que c2 (cid:19)e par, e portanto, c tamb(cid:19)em (cid:19)e par, ent~ao a decomposi(cid:24)c~ao de c2 possui
+
+um n(cid:19)umero par de fatores iguais a 2 em sua decomposi(cid:24)c~ao em fatores primos. Segue
+
+ainda que se d2 tamb(cid:19)em (cid:19)e par, contendo um n(cid:19)umero par de fatores iguais a 2 em sua
+
+decomposi(cid:24)c~ao em fatores primos, teremos 2d2 com um n(cid:19)umero (cid:19)(cid:16)mpar de fatores 2 em sua
+
+decomposi(cid:24)c~ao. O que n~ao pode ocorrer pois, c2 = 2d2. E portanto, esta igualdade s(cid:19)o
+
+ocorre quando c = d = 0. Sendo assim temos que b = 0 ou c = d = 0. Se c = d = 0
+
+est(cid:19)a demonstrado, caso contr(cid:19)ario teremos que ad = −bc com b = 0, isso se, e s(cid:19)o se, a = 0.
+
+E portanto, conclu(cid:19)(cid:16)mos que a = b = 0 ou c = d = 0.
+
+Proposi(cid:24)c~ao 1.2. Seja m ∈ N∗ tem-se que Zm (cid:19)e um dom(cid:19)(cid:16)nio de integridade se, e s(cid:19)o se,
+
+m (cid:19)e primo.
+
+Demonstra(cid:24)c~ao. (⇒) Suponha m composto, ou seja, existe n, l ∈ Z tal que nl = m, com
+1 < n, l < m. Temos que, n · l = nl = m = 0 em Zm. Como Zm (cid:19)e dom(cid:19)(cid:16)nio, segue que
+
+n = 0 ou l = 0, absurdo pois 1 < n, l < m. Portanto, m (cid:19)e primo.
+(⇐) Suponhamos que n · l = 0 em Zm e m primo, tem-se que m | (n · l) se, e somente se,
+m | l ou m | l. Logo, temos que n = 0 ou l = 0.
+
+1.1.2 Homomor(cid:12)smo de An(cid:19)eis
+
+Vamos considerar nessa se(cid:24)c~ao (A, +, ·) e (B, +, ·) an(cid:19)eis.
+
+De(cid:12)ni(cid:24)c~ao 1.7. Uma aplica(cid:24)c~ao φ : A → B, (cid:19)e um homomor(cid:12)smo de an(cid:19)eis se satisfaz:
+
+17
+
+i) φ(a + b) = φ(a) + φ(b)
+
+ii) φ(a · b) = φ(a) · φ(b),
+
+Para todo a, b ∈ A.
+
+Exemplo 1.4. a)A aplica(cid:24)c~ao identidade
+
+id : A −→ A
+
+a 7−→ a
+
+(cid:19)e um homomor(cid:12)smo de an(cid:19)eis.
+
+b) Considere o produto cartesiano diretoA × B = {(a, b), a ∈ A e b ∈ B}. Temos que as
+
+proje(cid:24)c~oes
+
+e
+
+s~ao homomor(cid:12)smo de an(cid:19)eis.
+
+c) Seja m ∈ Z positivo, tem-se que
+
+π1 : A × B −→ A
+
+(a, b) 7→ a
+
+π2 : A × B −→ B
+
+(a, b) 7−→ b
+
+f : Z → Zm
+
+a 7→ a
+
+(cid:19)e homomor(cid:12)smo de an(cid:19)eis.
+
+De(cid:12)ni(cid:24)c~ao 1.8. Seja f : A −→ B um homomor(cid:12)smo de an(cid:19)eis, chamaremos o subconjunto
+
+de A, {a ∈ A; f (a) = 0} de n(cid:19)ucleo de f . Nota(cid:24)c~ao: N (f ) ou ker(f ).
+
+Vejamos que, no Exemplo 1.4, ker(f ) = {a ∈ Z; f (a) = a = 0} = aZ. Nas fun(cid:24)c~oes
+π1 : A × B → A tal que, π1((a, b)) = a e π2 : A × B → A tal que, π2((a, b)) = b temos
+que, ker(π1) = {0A} × B e ker(π2) = A × {0B}.
+
+Para simpli(cid:12)car a escrita daqui para frente, vamos chamar um homomor(cid:12)smo f :
+
+18
+
+A −→ B de:
+
+i) monomor(cid:12)smo, se f (cid:19)e injetor.
+
+ii) epimor(cid:12)smo, se f (cid:19)e sobrejetor.
+
+iii) endomor(cid:12)smo, se A = B.
+
+iv) automor(cid:12)smo, se f (cid:19)e endomor(cid:12)smo bijetor.
+
+v) isomor(cid:12)smo, se f (cid:19)e homomor(cid:12)smo bijetor. Neste caso, usaremos o s(cid:19)(cid:16)mbolo ≃, para
+
+dizer que A (cid:19)e isomorfo a B.
+
+Em seguida apresentaremos alguns resultados importantes de homomor(cid:12)smo de an(cid:19)eis,
+
+para isto de(cid:12)niremos os invers(cid:19)(cid:16)veis de um anel A, como sendo todo elemento de A que
+
+possui inverso multiplicativo em A e o conjunto dos invenc(cid:19)(cid:16)veis sera denotado por U (A),
+
+isto (cid:19)e U (A) = {a ∈ A; ab = 1, b ∈ A}.
+
+Proposi(cid:24)c~ao 1.3. Sejam A, B an(cid:19)eis e f : A → B homomor(cid:12)smo, s~ao v(cid:19)alidas:
+
+1.
+
+2.
+
+3.
+
+4.
+
+5.
+
+6.
+
+f (0A) = 0B;
+
+f (−a) = −f (a);
+
+f (a − b) = f (a) − f (b);
+
+f (cid:19)e injetor se, e s(cid:19)o se, ker(f ) = {0A};
+
+Se f (cid:19)e sobrejetora e A possui unidade, ent~ao B possui unidade e f (1A) = 1B;
+
+Se f (cid:19)e sobrejetora, A possui unidade e a ∈ U (A), ent~ao f (a) ∈ U (B) e f (a−1) =
+(f (a))−1.
+
+1.1.3 Caracter(cid:19)(cid:16)stica de um Dom(cid:19)(cid:16)nio de Integridade
+
+O conceito de caracter(cid:19)(cid:16)stica tem grande import^ancia em nosso estudo uma vez que
+
+nosso foco s~ao os corpos de n(cid:19)umeros e corpos (cid:12)nitos.
+
+19
+
+Vamos considerar D um dom(cid:19)(cid:16)nio de integridade e o conjunto
+
+Z.1D =
+
+m.1D = 1D + 1D + . . . + 1D(m vezes), se m > 0
+m.1D = −1D − 1D . . . − 1D(mvezes), se m < 0.
+
+
+
+
+
+0.1D = 0D
+Claramente, Z.1D (cid:19)e subanel de D.
+
+De(cid:12)ni(cid:24)c~ao 1.9. Seja D um dom(cid:19)(cid:16)nio de integridade. De(cid:12)nimos caracter(cid:19)(cid:16)stica como o
+
+menor inteiro positivo m tal que m1D = 0, isto (cid:19)e,
+
+car(D) = min{m ∈ Z∗
+
++; m1D = 0}.
+
+Caso n~ao exista m ∈ Z∗
+
++ tal que m1D = 0, diremos que a caracter(cid:19)(cid:16)stica (cid:19)e zero.
+
+Um exemplo (cid:19)e Zp com p primo. Pela Proposi(cid:24)c~ao 1.2, Zp (cid:19)e um dom(cid:19)(cid:16)nio de integridade
+
+e claramente Zp tem caracter(cid:19)(cid:16)stica p. Temos que Z, Q, R e C tem caracter(cid:19)(cid:16)stica zero.
+
+Teorema 1.1. Se D (cid:19)e um dom(cid:19)(cid:16)nio de integridade, ent~ao car(D) = 0 ou car(D) = p,
+
+com p um n(cid:19)umero primo.
+
+Demonstra(cid:24)c~ao. Suponhamos car(D) = n = n1n2, com 1 < n1, n2, < n. Assim, temos
+
+n1D = n1n21D = (n11D)(n21D) = 0. Como D (cid:19)e dom(cid:19)(cid:16)nio temos que n11D = 0 ou n21D = 0,
+
+o que contradiz a minimalidade de n. Portanto, n (cid:19)e um n(cid:19)umero primo.
+
+Corol(cid:19)ario 1.2. Se D (cid:19)e um dom(cid:19)(cid:16)nio de integridade e car(D) = 0, ent~ao D tem um subanel
+
+isomorfo a Z.
+
+Demonstra(cid:24)c~ao. Basta considerar a aplica(cid:24)c~ao φ : Z → Z.1D, dada por φ(m) = m.1D.
+
+Tem-se que φ est(cid:19)a bem de(cid:12)nida, pois a adi(cid:24)c~ao em D est(cid:19)a bem de(cid:12)nida. Claramente,
+N (φ) = {0} e Im(φ) = Z.1D, ou seja, φ (cid:19)e injetora e sobrejetora. Por (cid:12)m, φ(m + n) =
+
+(m+n).1D = m.1D +n.1D = φ(m)+φ(n) e φ(mn) = (mn).1D = m.1D.n.1D = φ(m).φ(n).
+
+Portanto, φ (cid:19)e um isomor(cid:12)smo.
+
+20
+
+Corol(cid:19)ario 1.3. Se D (cid:19)e um dom(cid:19)(cid:16)nio de integridade e car(D) = p, com p um n(cid:19)umero
+primo, ent~ao D tem um subanel isomorfo a Zp.
+
+Demonstra(cid:24)c~ao. Basta considerar ψ : Zp → Z.1D, dada por ψ(m) = m.1D. Tem-se que
+ψ est(cid:19)a bem de(cid:12)nida, pois se m = n, ent~ao m − n = kp, para algum k ∈ Z, e assim,
+(m − n).1D = 0D, ou seja, m.1D = n.1D. Note que N (ψ) = kp, com k ∈ Z. Logo, ψ
+(cid:19)e injetora. Como Im(ψ) = {0.1D, 1.1D, . . . , (p − 1).1D} = Z.1D, pois car(D) = p, segue
+
+que ψ (cid:19)e sobrejetora. Ainda, ψ(m + n) = ψ(m + n) = (m + n).1D = m.1D + n.1D e
+
+ψ(m.n) = ψ(mn) = mn.1D = m.1Dn.1D, tem-se que ψ (cid:19)e um isomor(cid:12)smo.
+
+Observa(cid:24)c~ao 1.1. Note que se car(D) = 0, pelo Corol(cid:19)ario 1.2, D tem um c(cid:19)opia de Z.
+
+Logo, D (cid:19)e in(cid:12)nito. E se D (cid:19)e (cid:12)nito, ent~ao car(D) = p, com p primo e D tem uma c(cid:19)opia
+de Zp.
+
+Proposi(cid:24)c~ao 1.4. Sejam D um dom(cid:19)(cid:16)nio de integridade de caracter(cid:19)(cid:16)stica p e q ∈ Z tal que
+
+q = pr, para algum inteiro positivo r. Se a, b ∈ D, ent~ao (a ± b)q = aq ± bq.
+
+
+ q
+1
+
+Demonstra(cid:24)c~ao. A demonstra(cid:24)c~ao (cid:19)e consequ^encia direta do bin^omio de Newton e do fato
+
+
+
+
+
+
+ p
+i
+
+que p divide
+
+
+
+
+ q
+
+q − 1
+
+, para todo i = 1, . . . , p − 1. Vamos denotar m =
+
+ aq−1b + · · · +
+
+ abq−1 em (a+b)q = aq +
+
+ abq−1+bq = aq +m+bq.
+
+
+ q
+1
+
+
+
+ aq−1b+· · ·+
+
+
+ q
+
+q − 1
+
+
+
+Como q divide m e p divide q temos que m = 0. Assim, conclu(cid:19)(cid:16)mos que (a + b)q = aq + bq.
+
+Para o caso (a − b)q a demonstra(cid:24)c~ao ser(cid:19)a an(cid:19)aloga.
+
+1.1.4 Ideais
+
+Vamos considerar nessa se(cid:24)c~ao A um anel comutativo.
+
+De(cid:12)ni(cid:24)c~ao 1.10. Seja I subconjunto n~ao-vazio de A, dizemos que I (cid:19)e ideal de A se as
+
+condi(cid:24)c~oes a seguir s~ao veri(cid:12)cadas:
+
+i)x − y ∈ I, para todo x, y ∈ I;
+
+ii)a · x ∈ I, para todo a ∈ A e x ∈ I.
+
+Nota(cid:24)c~ao: I E A.
+
+21
+
+Chamaremos {0} e A de ideais triviais e os ideais n~ao triviais chamaremos de ideais
+
+pr(cid:19)oprios.
+
+De(cid:12)ni(cid:24)c~ao 1.11. Chamaremos um ideal I de ideal principal gerado por a ∈ A, se todo
+
+elemento x ∈ I (cid:19)e da forma x = a · y, com y ∈ A. Vamos denotar o ideal principal gerado
+
+por a da seguinte forma I = ⟨a⟩.
+
+Um dom(cid:19)(cid:16)nio de integridade que s(cid:19)o possui ideais principais (cid:19)e chamado de dom(cid:19)(cid:16)nio
+
+principal.
+
+Proposi(cid:24)c~ao 1.5. Temos que Z (cid:19)e um dom(cid:19)(cid:16)nio principal.
+
+Demonstra(cid:24)c~ao. Devemos mostrar que para todo J E Z, tem-se que J (cid:19)e principal. De
+
+fato, como J ̸= ∅, segue que existe x ∈ J, e assim, x − x = 0 ∈ J. Se 0 (cid:19)e o (cid:19)unico elemento
+
+de J temos que J = ⟨0⟩, ou seja, J (cid:19)e principal.
+
+Agora, se existe a ∈ J, com a ̸= 0, ent~ao −a ∈ J. Logo, existe um subconjunto de
+
+J com elementos positivos. Pelo princ(cid:19)(cid:16)pio do menor inteiro positivo, existe b ∈ J menor
+
+elemento positivo de J. Seja m ∈ J, pelo algor(cid:19)(cid:16)timo de Euclides existem q e r ∈ Z, tais
+
+que m = bq + r, com 0 ≤ r < b. Como m e b ∈ J, segue que r = m − bq ∈ J. Logo r = 0,
+
+pois b (cid:19)e o menor elemento positivo de J. Assim, m = bq, e dai, m ∈ ⟨b⟩, ou seja, J ⊂ ⟨b⟩.
+
+Claramente, ⟨b⟩ ⊂ J, e assim, J = ⟨b⟩, com b o menor elemento de J.
+
+De(cid:12)ni(cid:24)c~ao 1.12.
+
+i) Um ideal P de A (cid:19)e chamado de ideal primo, se P ̸= A e sempre
+
+que x · y ∈ P , tem se x ∈ P ou y ∈ P
+
+ii) Um ideal pr(cid:19)oprio J de A (cid:19)e dito ideal maximal, quando J ⊆ I ⊆ A, implicar que,
+
+I = A ou I = J.
+
+Proposi(cid:24)c~ao 1.6.
+
+i) Os ideais primos de Z s~ao ideais gerados por um n(cid:19)umero primo ou
+
+por 0.
+
+ii)Todo ideal primo de Z (cid:19)e maximal.
+
+Demonstra(cid:24)c~ao. i) Se P = {0}, temos que ⟨0⟩ = P . Se P = ⟨a⟩ com a ̸= 0, suponhamos
+
+que a = x.y, com 1 < x, y < a. Como ⟨a⟩ (cid:19)e primo, temos que x ∈ ⟨a⟩ ou y ∈ ⟨a⟩,
+
+contradizendo a minimalidade de a. Portanto, a (cid:19)e primo.
+
+ii) Sejam J, I E Z tal que J ⊆ I ⊆ Z e J (cid:19)e ideal primo de Z. Como Z (cid:19)e dom(cid:19)(cid:16)nio
+
+principal, temos que J = ⟨p⟩ e I = ⟨m⟩. Sendo p primo e J ⊆ I temos que p = mk, mas
+
+isso s(cid:19)o (cid:19)e poss(cid:19)(cid:16)vel se m = 1 ou k = 1, ou seja, I = Z ou J = I.
+
+22
+
+Seja I um ideal do anel A. Vamos inicialmente de(cid:12)nir a seguinte rela(cid:24)c~ao;
+
+x, y ∈ A, x ∼
+
+= y(modI), ⇔ x − y ∈ I
+
+Podemos facilmente veri(cid:12)car que se trata de uma rela(cid:24)c~ao de equival^encia e denotaremos
+por a + I = {x ∈ A; x ∼
+rela(cid:24)c~ao ∼
+
+= a(modI) a classe de equival^encia do elemento a ∈ A, com a
+
+= (modI).
+
+Agora, vamos considerar I D A e
+
+A
+I
+
+o anel quociente de A por I, com as opera(cid:24)c~oes
+
+(a + I) + (b + I) = (a + b) + I e (a + I).(b + I) = (a.b) + I. Claramente, a + I = b + I se,
+
+e somente se, a − b ∈ I, em que 0 + I (cid:19)e o elemento neutro e 1 + J (cid:19)e a unidade de
+
+A
+I
+
+.
+
+Teorema 1.4. (Teorema do Isomor(cid:12)smo) Sejam A e B an(cid:19)eis comutativos. Se f : A → B
+
+(cid:19)e um epimor(cid:12)smo, ent~ao
+
+A
+N (f )
+
+≃ B.
+
+Demonstra(cid:24)c~ao. Primeiramente, vamos mostrar que N (f ) (cid:19)e um ideal de A. Temos que
+N (f ) ̸= ∅, pois 0 ∈ N (f ). Se x, y ∈ N (f ), ent~ao f (x − y) = f (x) − f (y) = 0B − 0B = 0B,
+ou seja, x − y ∈ N (f ). E se x ∈ N (f ) e a ∈ A, ent~ao f (xa) = f (x)f (a) = 0Bf (a) = 0B,
+ou seja, xa ∈ N (f ). Logo, N (f ) (cid:19)e ideal de A. Para facilitar a escrita, consideramos
+
+N (f ) = I.
+
+Agora, considere φ :
+
+A
+I
+
+isomor(cid:12)smo.
+
+→ B dada por φ(a + I) = f (a). Mostraremos que φ (cid:19)e um
+
+De fato, note que φ est(cid:19)a bem de(cid:12)nida, pois se φ(a + I) = f (a) e φ(a + I) = f (a′),
+
+ent~ao f n~ao estaria bem de(cid:12)nida, o que n~ao ocorre.
+
+Claramente, φ (cid:19)e homomor(cid:12)smo, pois f (cid:19)e homomor(cid:12)smo. Agora, considere b ∈ B.
+
+Como f (cid:19)e epimor(cid:12)smo, existe a ∈ A tal que f (a) = b. Assim, basta tomar φ(a + I) =
+
+f (a) = b e φ (cid:19)e sobrejetora.
+
+Por (cid:12)m, note que N (φ) = {a + N (f ); φ(a + N (f )) = f (a) = 0B} = N (f ), ou seja,
+
+N (φ) = 0 + N (f ), ou seja, φ (cid:19)e injetora. Portanto, φ (cid:19)e um isomor(cid:12)smo.
+
+23
+
+O pr(cid:19)oximo resultado (cid:19)e um dos resultados mais importantes do cap(cid:19)(cid:16)tulo. E ter(cid:19)a uma
+
+vers~ao mais forte na se(cid:24)c~ao de corpos.
+
+Proposi(cid:24)c~ao 1.7. Tem-se que I D A primo se, e somente se,
+
+A
+I
+
+(cid:19)e um dom(cid:19)(cid:16)nio de inte-
+
+gridade.
+Demonstra(cid:24)c~ao. Sejam a+I e b+I ∈ A
+I
+Logo, ab ∈ I com I ideal primo de A, ou seja, a ∈ I ou b ∈ I. Desta forma, a + I = 0 + I
+
+, com (a+I)(b+I) = 0+I, ou seja, ab+I = 0+I.
+
+ou b + I = 0 + I. Portanto,
+
+A
+I
+
+(cid:19)e um dom(cid:19)(cid:16)nio de integridade.
+
+Reciprocamente, considere ab ∈ I. Logo, ab + I = 0 + I em
+
+(a + I)(b + I), segue que a + I = 0 + I ou b + I = 0 + I, pois
+
+ou b ∈ I. Portanto, I D A primo.
+
+A
+I
+
+1.2 Corpos
+
+A
+I
+
+. Como ab + I =
+
+(cid:19)e dom(cid:19)(cid:16)nio . Assim, a ∈ I
+
+Agora, vamos de(cid:12)nir corpos que (cid:19)e o principal conceito do trabalho.
+
+De(cid:12)ni(cid:24)c~ao 1.13. Um corpo (cid:19)e um anel comutativo com unidade (A, +, ·), em que todo
+elemento n~ao nulo (cid:19)e invert(cid:19)(cid:16)vel, ou seja, ∀a ∈ A∗, ∃ a−1 ∈ A∗ tal que aa−1 = 1.
+
+Exemplo 1.5. a) Q, R, C s~ao corpos.
+
+b) Z n~ao (cid:19)e um corpo. Em particular, somente 1 e −1 s~ao invers(cid:19)(cid:16)veis em Z.
+
+Proposi(cid:24)c~ao 1.8. Todo corpo (cid:19)e um dom(cid:19)(cid:16)nio de integridade.
+
+Demonstra(cid:24)c~ao. Seja K um corpo e a, b ∈ K, tais que ab = 0. Se a ̸= 0, ent~ao existe
+a−1 ∈ K, tal que aa−1 = 1. Logo a−1ab = 1b e a−1ab = a−10 = 0, ou seja, b = 0. De
+
+modo an(cid:19)alogo, se b ̸= 0, ent~ao a = 0. Portanto K (cid:19)e dom(cid:19)(cid:16)nio.
+
+Proposi(cid:24)c~ao 1.9. Todo dom(cid:19)(cid:16)nio de integridade (cid:12)nito (cid:19)e corpo.
+
+Demonstra(cid:24)c~ao. Seja A um dom(cid:19)(cid:16)nio de integridade (cid:12)nito, A = {a1, a2, · · · an}. Considere
+ai ̸= 0 e a aplica(cid:24)c~ao
+
+fai : A −→ A
+
+aj 7−→ ajai.
+
+24
+
+i)Temos que fai est(cid:19)a bem de(cid:12)nida, pois A (cid:19)e fechado para a multiplica(cid:24)c~ao, ou seja,
+ajai ∈ A e se tiv(cid:19)essemos ajai = ak e ajai = al, com ak ̸= al a multiplica(cid:24)c~ao em A
+
+n~ao estaria bem de(cid:12)nida, o que n~ao ocorre.
+
+ii)Se akai = ajai, ent~ao (ak − aj)ai = 0. Como A (cid:19)e dom(cid:19)(cid:16)nio e ai ̸= 0 segue que ak = aj,
+
+e portanto, f (cid:19)e injetora.
+
+iii) Como fai (cid:19)e injetora e A (cid:19)e (cid:12)nito, segue que fai (cid:19)e sobrejetora.
+
+Assim existe aj ∈ A∗ tal que aiaj = 1, ∀ai ∈ A∗.
+
+Portanto A (cid:19)e corpo.
+
+Exemplo 1.6. Se p (cid:19)e um n(cid:19)umero primo, ent~ao Zp (cid:19)e (cid:12)nito e (cid:19)e um dom(cid:19)(cid:16)nio de integridade,
+
+e portanto, um corpo.
+
+Observa(cid:24)c~ao 1.2. Como vimos na Observa(cid:24)c~ao 1.1 se K (cid:19)e um corpo de caracter(cid:19)(cid:16)stica p,
+temos que K tem uma c(cid:19)opia de Zp. Al(cid:19)em disso, Zp (cid:19)e isomorfo ao menor corpo contido
+em K. Para isso, basta notar que Z.1K est(cid:19)a contido em todo subcorpo de K.
+
+Proposi(cid:24)c~ao 1.10. Se K (cid:19)e um corpo e car(K) = 0, ent~ao o menor subcorpo de K (cid:19)e
+
+isomorfo a Q.
+
+Demonstra(cid:24)c~ao. O menor subcorpo de K (cid:19)e a interse(cid:24)c~ao de todos os subcorpos de K.
+Seja F = ∩Ki, com Ki subcorpo de K. Devemos mostra que F ≃ Q.
+
+De fato, considere a aplica(cid:24)c~ao ψ : Q → K, dada por ψ
+
+Vejamos inicialmente que ψ esta bem de(cid:12)nida. Sejam
+
+(
+
+)
+
+a
+b
+a
+b
+
+=
+
+e
+
+c
+d
+
+.
+
+a · 1
+b · 1
+, com mdc(b, d) = 1 e
+
+, logo teremos que a · 1 ̸= c · 1 com b · 1 e d · 1 primos entre si, e
+
+a ̸= c, isto (cid:19)e
+a · 1
+d · 1
+
+portanto
+
+a
+b
+̸=
+
+c
+̸=
+d
+c · 1
+d · 1
+
+.
+
+ii) Como N (ψ) =
+
+seja, ψ (cid:19)e injetora.
+
+{
+
+a
+b
+
+i) Claramente ψ (cid:19)e um homomor(cid:12)smo de an(cid:19)eis.
+
+}
+
+∈ Q; a.1 = 0
+
+e car(K) = 0 segue que N (ψ) =
+
+}
+
+= 0
+
+, ou
+
+{
+
+0
+b
+
+iii) Logo, pelo Teorema 1.4, Q ≃ ψ(Q), ou seja, ψ(Q) (cid:19)e subcorpo de K.
+
+iv) Basta notar que ψ(Q) = F. Claramente, F ⊂ ψ(Q), e como, a.1, b.1 ∈ F segue que
+
+a.1(b.1)−1 ∈ F, ou seja,
+
+a.1
+b.1
+
+∈ F.
+
+25
+
+Portanto, F ≃ Q.
+
+Neste cap(cid:19)(cid:16)tulo vimos que existem dois tipos de corpos. Os corpos de caracter(cid:19)(cid:16)stica
+
+zero, que cont(cid:19)em um c(cid:19)opia dos racionais, que por consequ^encia s~ao corpos com uma
+
+in(cid:12)nidade de elementos. E os corpos de caracter(cid:19)(cid:16)stica um n(cid:19)umero primo p, que cont(cid:19)em
+uma c(cid:19)opia de Zp.
+
+Nosso objetivo nos pr(cid:19)oximos cap(cid:19)(cid:16)tulos (cid:19)e entender como esses corpos s~ao obtidos.
+
+Cap(cid:19)(cid:16)tulo 2
+
+Polin^omios
+
+Neste cap(cid:19)(cid:16)tulo iremos estudar polin^omios com coe(cid:12)cientes em um corpo e alguns
+
+crit(cid:19)erios de irredutibilidade de polin^omios. As principais refer^encias s~ao:
+
+[2], [4], [8] e
+
+[10].
+
+2.1 An(cid:19)eis de Polin^omios
+
+Seja A um anel e x uma vari(cid:19)avel. A express~ao f (x) = a0 + a1x + · · · + anxn, onde
+ai ∈ A, para i = 0, 1, 2, · · · , n e n ∈ IN = {0, 1, 2, · · · } (cid:19)e chamado de polin^omio na vari(cid:19)avel
+
+x com coe(cid:12)cientes em A.
+
+Se ai = 0, ∀i = 0, 1, · · · , n, chamamos f (x) de polin^omio identicamente nulo e deno-
+
+tamos f ≡ 0.
+
+Para os termos em que ai = 0 , omitiremos o termo aixi.
+Dois polin^omios f (x) = a0 + a1x + · · · + anxn e g(x) = b0 + b1x + · · · + bnxn s~ao iguais
+
+se, e somente se, ai = bi, para todo i = 0, 1, · · · , n.
+
+Chamaremos de grau do polin^omio n~ao nulo f (x) = a0 + a1x + · · · + anxn, o maior n
+tal que an ̸= 0 e denotaremos ∂(f (x)), ou simplesmente, ∂(f ). Se ∂(f ) = n, chamamos
+
+an de coe(cid:12)ciente l(cid:19)(cid:16)der. Se ∂(f ) = n e an = 1, chamaremos f de polin^omio m^onico.
+
+Vamos denotar por A[x], o conjunto de todos os polin^omios na vari(cid:19)avel x com coe(cid:12)-
+
+cientes em A.
+
+Observa(cid:24)c~ao 2.1. Claramente A ⊂ A[x]. Basta tomar f (x) = a, com a ∈ A.
+
+26
+
+De(cid:12)niremos agora duas opera(cid:24)c~oes em A[x]. Sejam f (x) = a0 + a1x + · · · + anxn e
+
+g(x) = b0 + b1x + · · · + bmxm em A[x].
+
+27
+
++ : A[x] × A[x] −→ A[x]
+
+(f (x), g(x)) 7−→ (f + g)(x) = (a0 + b0) + (a1 + b1)x + · · · + (ak + bk)xk,
+
+onde k = max{m, n}
+
+· : A[x] × A[x] −→ A[x]
+
+(f (x), g(x)) 7−→ (f · g)(x) =
+
+m+n∑
+
+i=0
+
+cixi,
+
+onde ci =
+
+∑
+i
+j=0 ajbi−j.
+
+Observa(cid:24)c~ao 2.2. Se f (x), g(x) ∈ A[x] n~ao nulos, com ∂(f ) = n e ∂(g) = m, ent~ao
+
+∂(f + g) ≤ max{∂(f ), ∂(g)} ou f + g ≡ 0 e ∂(f.g) ≤ ∂(f ) + ∂(g) ou f.g ≡ 0.
+
+Exemplo 2.1. Sejam f (x) = −1 + x + 2x2 e g(x) = 4 + 3x em Z[x]. Temos que
+(f + g)(x) = 3 + 4x + 2x2 e (f · g)(x) = c0 + c1x + c2x2 + c3x3, onde.
+
+c0 = a0b0 = (−1)4 = −4
+
+c1 = a0b1 + a1b0 = (−1)3 + 1 · 4 = 1
+
+c2 = a0b2 + a1b1 + a2b0 = 0 + 1 · 2 + 2 · 4 = 11
+
+c3 = a0b3 + a1b2 + a2b1 + a3b1 = 0 + 0 + 2 · 3 + 0 = 6
+
+ou seja, (f · g)(x) = −4 + x + 11x2 + 6x3.
+
+Logo, se A um anel comutativo com unidade, ent~ao (A[x], +, ·) tamb(cid:19)em (cid:19)e um anel
+
+comutativo com unidade, onde f (x) = 0 (cid:19)e o elemento neutro e g(x) = 1 (cid:19)e a unidade.
+
+Proposi(cid:24)c~ao 2.1. Se A (cid:19)e um dom(cid:19)(cid:16)nio de integridade, ent~ao A[x] (cid:19)e um dom(cid:19)(cid:16)nio de inte-
+
+gridade.
+
+Demonstra(cid:24)c~ao. Se A n~ao tem divisores de zero, temos que a ̸= 0 e b ̸= 0 implica que
+ab ̸= 0. Sejam f (x) = a0 + a1x + · · · + anxn ̸≡ 0 e g(x) = b0 + b1x1 + · · · + bmxm ̸≡ 0
+e supondo que ∂(f ) = n e ∂(g) = m, tem-se que an ̸= 0 e bm ̸= 0. Como f (x)g(x) =
+
+∑
+
+m+n
+i=0 cixi e ci =
+temos f (x)g(x) ̸≡ 0.
+
+∑
+i
+
+j=0 ajbi−j, temos ent~ao que cn+m = anbm ̸= 0, consequentemente
+
+28
+
+Observa(cid:24)c~ao 2.3. De acordo com a Proposi(cid:24)c~ao 2.1, se f (x), g(x) ∈ A[x] n~ao nulos, com
+
+A dom(cid:19)(cid:16)nio de integridade, ∂(f ) = n e ∂(g) = m, teremos que ∂(f.g) = n + m.
+
+Na pr(cid:19)oxima Proposi(cid:24)c~ao vamos considerar U (A) o conjunto dos elementos invers(cid:19)(cid:16)veis
+
+do anel A.
+
+Proposi(cid:24)c~ao 2.2. Se A (cid:19)e um dom(cid:19)(cid:16)nio de integridade, ent~ao U (A[x]) = U (A).
+
+Demonstra(cid:24)c~ao. Claramente temos que U (A) ⊂ U (A[X]), pois se a ∈ U (A) existe
+
+b ∈ U (A) tal que ab = 1. Logo, se f (x) = a ∈ A[x], existe g(x) = b ∈ A[x], tal que
+
+f (x)g(x) = ab = 1.
+
+∑
+n
+
+∑
+
+Agora, seja p(x) =
+j=0 bjxj ∈ A[x], n~ao nulo tal que
+
+m
+
+i=0 aixi ∈ A[x], n~ao nulo e invers(cid:19)(cid:16)vel. Logo, existe q(x) =
+
+p(x)q(x) =
+
+m+n∑
+
+k=0
+
+ckxk = 1,
+
+em que ck =
+
+∑
+k
+t=0 atbk−t, ou seja,
+
+cm+n = anbm = 0
+
+cm+n−1 = anbm−1 + an−1bm = 0
+
+...
+
+c0 = a0b0 = 1
+
+Se an ̸= 0 teremos bm = 0, em cm+n. Da mesma forma teremos bm−1 = 0 em cm+n−1.
+Repetindo esse processo concluiremos que bm = bm−1 = · · · = b1 = 0. Assim, q(x) = b0,
+com b0 ∈ A, n~ao nulo e invers(cid:19)(cid:16)vel. Assim p(x) tamb(cid:19)em (cid:19)e constante, n~ao nulo e invers(cid:19)(cid:16)vel
+
+como quer(cid:19)(cid:16)amos.
+
+29
+
+2.1.1 Divis~ao de Polin^omios
+
+Vamos considerar a partir desta se(cid:24)c~ao K um corpo e K[x] o anel de polin^omios sobre
+
+K.
+
+Teorema 2.1. (Algoritmo da divis~ao euclidiana) Sejam f (x), g(x) ∈ K[x] e g(x) n~ao
+
+nulo. Ent~ao existem (cid:19)unicos q(x), r(x) ∈ K[x], tais que f (x) = g(x)q(x) + r(x), com
+
+∂(r) < ∂(g) ou r ≡ 0.
+
+Demonstra(cid:24)c~ao. Caso f ≡ 0, basta tomar q ≡ 0 e r ≡ 0. Se f ̸≡ 0, temos ∂(f ) = n ≥
+
+∂(g) = m ou n < m. Se n < m, consideramos g ≡ 0 e r(x) = f (x) garantido a condi(cid:24)c~ao
+
+que ∂(r) < ∂(g).
+
+Se n ≥ m vamos de(cid:12)nir f1(x) = f (x) − anb−1
+
+f (x) e bm o coe(cid:12)ciente l(cid:19)(cid:16)der de g(x). Vejamos que o coe(cid:12)ciente l(cid:19)(cid:16)der de anb−1
+
+m xn−mg(x), onde an (cid:19)e o coe(cid:12)ciente l(cid:19)(cid:16)der de
+m xn−mg(x) (cid:19)e
+an, assim teremos que ∂(f1) < ∂(f ). Sendo su(cid:12)ciente mostrar agora a exist^encia de f1(x),
+para todo n ≥ 0. Fa(cid:24)camos por indu(cid:24)c~ao sobre n.
+
+Para n = 0 temos m = 0, e assim, f (x) = a0 ̸= 0 e g(x) = b0 ̸= 0, o que implica, que
+
+f1 ≡ 0 e f (x) = a0b−1
+
+0 g(x) ̸= 0, ou seja, q(x) = a0b−1
+
+0
+
+e r ≡ 0.
+
+Agora vamos mostrar a unicidade do teorema. Suponhamos agora que existam q(x), r(x) ∈
+
+K[x] para todo k < n. Temos ent~ao que existem q1(x) e r1(x) tal que f1(x) = q1(x)g(x) +
+r1(x), com r1 ≡ 0 ou ∂(r1) < ∂(g). Substituindo f1(x) em f (x) = f1(x) + anb−1
+temos f (x) = q1(x)g(x) + r1(x) + anb−1
+seja, existe q(x) = q1(x) + anb−1
+
+m g(x)
+m xn−m)g(x) + r1(x), ou
+
+m xn−mg(x) = (q1(x) + anb−1
+
+m xn−m e r(x) = r1(x).
+
+Suponhamos que existam q1(x), r1(x), q2(x), r2(x) ∈ K[x] tal que f (x) = q1(x)g(x) +
+
+r1(x) e f (x) = q2(x)g(x) + r2(x), assim temos a igualdade;
+
+q1(x)g(x) + r1(x) = q2(x)g(x) + r2(x)
+
+⇔q1(x)g(x) + r1(x) − q2(x)g(x) = r2(x)
+
+⇔(q1(x) − q2(x))g(x) = r2(x) − r1(x)
+
+Sendo assim ∂((q1−q2)g) = ∂(r2−r1). Suponhamos q1(x) ̸= q2(x). Analisando os graus
+temos ∂((q1 − q2)g) = ∂(q1 − q2) + ∂(g) ≥ ∂g e ∂(r2 − r1) ≤ max{∂(r1), ∂(r2)} < ∂(g),
+
+30
+
+que (cid:19)e uma contradi(cid:24)c~ao ou ∂(r2 − r1) = 0. Portanto, s(cid:19)o podemos ter q1(x) = q2(x),
+
+consequentemente r1(x) = r2(x).
+
+Sejam f (x) e g(x) ∈ K[x]. Assim, pelo Teorema 2.1 existem (cid:19)unicos q(x) e r(x) ∈ K[x],
+
+tais que, f (x) = g(x)q(x) + r(x), com r(x) = 0 ou ∂(r) < ∂(g). Logo, se r ≡ 0, dizemos
+
+que g(x) divide f (x), e denotaremos por g|f , caso r(x) ̸≡ 0, temos que g(x) n~ao divide
+
+f (x) e denotamos por g - f .
+
+De(cid:12)ni(cid:24)c~ao 2.1. Seja A um anel comutativo com unidade. Dizemos que f (x) ∈ A[x] (cid:19)e
+
+irredut(cid:19)(cid:16)vel sobre A se, e somente se, f (x) ̸∈ U (A[x]) e sempre que f (x) = p(x)g(x),
+
+tivermos p(x) ou g(x) ∈ U (A[x]). Se f (x) n~ao (cid:19)e irredut(cid:19)(cid:16)vel dizemos que f (x) (cid:19)e redut(cid:19)(cid:16)vel.
+
+Exemplo 2.2. a) Vejamos que todo polin^omio de grau um em A[x] (cid:19)e irredut(cid:19)(cid:16)vel.
+
+b) Seja f (x) ∈ A[x] em que ∂f = n > 1. Vejamos que se o termo independente for
+
+nulo, teremos que f (x) ser(cid:19)a redut(cid:19)(cid:16)vel por x pois podemos escrever f (x) da seguinte forma;
+
+f (x) = x(a1 + a2x + · · · anxn−1)
+
+De acordo com a De(cid:12)ni(cid:24)c~ao 2.1, se tivermos f (x) ∈ K[x], ent~ao f (x) (cid:19)e irredut(cid:19)(cid:16)vel se, e
+
+somente se, f (x) ̸∈ K∗ e sempre que f (x) = p(x)g(x), tivermos p(x) ou g(x) ∈ K∗.
+
+Mais adiante iremos apresentar alguns crit(cid:19)erios de irredutibilidade de polin^omios. Mas
+
+antes vamos de(cid:12)nir raiz de um polin^omio.
+
+2.1.2 Ra(cid:19)(cid:16)zes de Polin^omios
+
+Vamos continuar considerando K um corpo.
+
+De(cid:12)ni(cid:24)c~ao 2.2. Seja f (x) ∈ K[x] um polin^omio n~ao nulo. Dizemos que α ∈ K (cid:19)e raiz de
+
+f (x) ∈ K[x] quando f (α) = 0.
+
+Proposi(cid:24)c~ao 2.3. Se f (x) ∈ K[x] (cid:19)e n~ao nulo e ∂(f ) = n, ent~ao f tem no m(cid:19)aximo n ra(cid:19)(cid:16)zes
+
+em K.
+
+Demonstra(cid:24)c~ao. Se f n~ao tiver ra(cid:19)(cid:16)zes em K n~ao h(cid:19)a o que demonstrar. Caso contr(cid:19)ario
+
+vamos mostrar por indu(cid:24)c~ao sobre ∂(f ) = n. Se ∂(f ) = 0, ent~ao f (x) = a ̸= 0, e assim, f
+
+n~ao possui raiz em K.
+
+31
+
+Suponhamos que existe α ∈ K raiz de f . Temos que α tamb(cid:19)em (cid:19)e raiz de x − α ∈ K[x].
+
+Utilizando o algoritmo euclidiano existem q(x) e r(x) em K[x] tais que f (x) = (x−α)q(x)+
+
+r(x), com 0 ≤ ∂(r) < 1 ou r ≡ 0. Assim, r(x) = b ∈ K ou r ≡ 0. Como f (α) = 0, segue
+
+que (α − α)q(α) + r(α) = r(α) = 0. Logo, r ≡ 0, ou seja, f (x) = (x − α)q(x). Note que se
+
+β ̸= α ∈ K (cid:19)e raiz de f (x), ent~ao β (cid:19)e raiz de q(x), pois K (cid:19)e um corpo. Como ∂(q) = n − 1
+
+podemos aplicar a hip(cid:19)otese de indu(cid:24)c~ao, e assim, q tem no m(cid:19)aximo n − 1 ra(cid:19)(cid:16)zes em K, o
+
+que implicar(cid:19)a que f tem no m(cid:19)aximo n ra(cid:19)(cid:16)zes em K como quer(cid:19)(cid:16)amos.
+
+Corol(cid:19)ario 2.2. Sejam f (x) ∈ K[x] n~ao nulo e α ∈ K. Temos que (x − α) | f se, e
+
+somente se, α (cid:19)e raiz de f .
+
+Demonstra(cid:24)c~ao. Temos que (x − α) | f se, e somente se, existe q(x) ∈ K[x] tal que
+
+f (x) = (x − α)q(x) se, e somente se, f (α) = (α − α)q(α) = 0 se, e somente se, α (cid:19)e raiz de
+
+f .
+
+Corol(cid:19)ario 2.3. Se f (x) ∈ K[x], com ∂(f ) = 2 ou 3, temos que f (cid:19)e redut(cid:19)(cid:16)vel se, e somente
+
+se, existe α ∈ K tal que f (α) = 0.
+
+Demonstra(cid:24)c~ao. Em ambos os casos, f (cid:19)e redut(cid:19)(cid:16)vel se, e somente se, f (x) = g(x)q(x),
+
+com pelo menos ∂(g) = 1. Logo, sem perda de generalidade podemos considerar f m^onico,
+
+e assim, g(x) = x − α, com α ∈ K. Portanto, α (cid:19)e raiz de f .
+
+Vejamos que para polin^omios de grau maior que tr^es, existe a possibilidade de que o
+
+polin^omio pode ser redut(cid:19)(cid:16)vel por polin^omios irredut(cid:19)(cid:16)veis de grau maior ou igual a dois,
+
+Justi(cid:12)cando assim o por que o corol(cid:19)ario acima n~ao (cid:19)e v(cid:19)alido para polin^omios de grau maior
+
+que tr^es.
+
+De(cid:12)ni(cid:24)c~ao 2.3. Sejam f (x) e g(x) ∈ K[x]. Se existe d(x) ∈ K[x] tal que d(x) | f (x), d(x) |
+g(x) e sempre que existir d′(x) tal que d′(x) | f (x) e ’.(x) | g(x) tivermos que d(x) | d′(x),
+diremos que d(x) (cid:19)e o M(cid:19)aximo Divisor Comum, e denotaremos d(x) = M DC(f (x), g(x)).
+
+Agora, vamos considerar f (x), g(x) ∈ K[x] n~ao simultaneamente nulos. Suponhamos
+
+∂(f ) ≥ ∂(g). Logo, existem q1(x) e r1(x) ∈ K[x] tais que
+
+f (x) = g(x)q1(x) + r1(x), com 0 ≤ ∂(r1) < ∂(g) ou r1 ≡ 0
+
+32
+
+Se ∂(r1) < ∂(g), existem q2(x) e r2(x) ∈ K[x] tais que
+
+g(x) = r1(x)q2(x) + r2(x), com 0 ≤ ∂(r2) < ∂(r1) ou r2 ≡ 0
+
+Aplicando o processo sucessivamente at(cid:19)e chegarmos em rn ≡ 0, temos que rn−1 ser(cid:19)a
+
+chamado de mdc(f, g).
+
+Claramente, se g | f , temos que mdc(f, g) = g.
+
+Como consequ^encia desse processo de sucess~oes sucessivas pode-se a(cid:12)rmar que se
+
+d(x) = mdc(f (x), g(x)), ent~ao existem m(x) e n(x) ∈ K[x] tais que d(x) = m(x)f (x) +
+
+n(x)g(x). A rec(cid:19)(cid:16)proca tamb(cid:19)em (cid:19)e v(cid:19)alida. Quando mdc(f, g) = 1, diremos que f e g s~ao
+
+primos entre si.
+
+2.1.3 Ideais em K[x]
+
+Continuaremos considerando K um corpo. Nessa se(cid:24)c~ao mostraremos que K[x] (cid:19)e um
+
+dom(cid:19)(cid:16)nio de ideais principais e analisaremos quais polin^omios geram os ideais primos e
+
+maximais de K[x].
+
+Teorema 2.4. K[x] (cid:19)e um dom(cid:19)(cid:16)nio de ideais principais.
+
+Demonstra(cid:24)c~ao. Seja I E K[x] n~ao nulo. Claramente, se I = {0}, ent~ao I = ⟨0⟩, ou
+
+seja, (cid:19)e principal. Agora, se existe p(x) ∈ I, com p ̸≡ 0, temos que ∂(p) = 0 ou ∂(p) > 0.
+Se ∂(p) = 0, ou seja, p(x) = a ̸= 0, com a ∈ K, teremos que aa−1 = 1 ∈ I. Com isso,
+
+I = K[x] = ⟨1⟩. Se ∂(p) > 0, ent~ao vamos supor sem perda de generalidade que ∂(p)
+
+(cid:19)e o menor de I. Logo, se f (x) ∈ I, como ∂(f ) > ∂(p), existem q(x), r(x) ∈ K[x] tais
+
+que f (x) = p(x)q(x) + r(x), com ∂(r) < ∂(p) ou r ≡ 0. Como f (x) ∈ I e p(x)q(x) ∈ I,
+
+segue que r(x) ∈ I, mas como p(x) (cid:19)e o de menor grau em I, tem-se que r ≡ 0. Portanto,
+
+f (x) ∈ ⟨p(x)⟩, ou seja, I = ⟨p(x)⟩.
+
+Seja f (x) ∈ K[x], m^onico n~ao constante de grau n. Temos o anel quociente F =
+
+K[x]
+⟨f (x)⟩
+e como K[x] (cid:19)e dom(cid:19)(cid:16)nio de ideais principais, podemos escrever o anel quociente da seguinte
+
+forma:
+
+F =
+
+K[x]
+⟨f (x)⟩ = {r(x); r(x) ∈ K[x], com r ≡ 0 ou ∂(r) < ∂(f )}.
+
+33
+
+Podemos facilmente veri(cid:12)car que F =
+
+as propriedades s~ao herdadas de K[x].
+
+K[x]
+⟨f (x)⟩ (cid:19)e um anel comutativo com unidade, pois
+
+Proposi(cid:24)c~ao 2.4. Seja g(x) ∈ F =
+
+somente se, mdc(f, g) = 1.
+
+K[x]
+⟨f (x)⟩ n~ao nulo, temos que g(x) (cid:19)e invers(cid:19)(cid:16)vel se, e
+
+Demonstra(cid:24)c~ao. Suponhamos g(x) n~ao nulo e invers(cid:19)(cid:16)vel em F. Assim, existe h(x) ∈ F,
+
+tal que g(x)h(x) = 1 em F, isto (cid:19)e, existe q(x) ∈ K[x] tal que g(x)h(x) = f (x)q(x) + 1, ou
+
+seja, g(x)h(x) − f (x)q(x) = 1. Portanto, mdc(f, g) = 1.
+
+Agora, se mdc(f, g) = 1, ent~ao existem h(x) e q(x) ∈ K[x] tal que g(x)h(x) +
+
+f (x)q(x) = 1. Assim, g(x)h(x) = f (x)(−q(x)) + 1. Portanto existe h(x) ∈ K[x] tal
+
+que g(x)h(x) = 1 em F, ou seja, g(x) (cid:19)e invers(cid:19)(cid:16)vel.
+
+Proposi(cid:24)c~ao 2.5. O anel F =
+
+K[x]
+⟨f (x)⟩ (cid:19)e um corpo se, e somente se, f (x) (cid:19)e irredut(cid:19)(cid:16)vel.
+
+Demonstra(cid:24)c~ao. Suponhamos f (x) redut(cid:19)(cid:16)vel, isto (cid:19)e, existem g(x) e q(x) ∈ K[x] n~ao
+
+nulos, tais que f (x) = g(x)q(x). Como f (x) = 0 em F, segue que g(x)q(x) = 0 em F o
+
+que n~ao ocorre pois F (cid:19)e corpo.
+
+Agora se F (cid:19)e corpo, ent~ao todo g(x) ∈ F n~ao nulo (cid:19)e invers(cid:19)(cid:16)vel. Segue da Proposi(cid:24)c~ao
+
+2.4 que g - f , ou seja, f (cid:19)e irredut(cid:19)(cid:16)vel.
+
+2.2 Crit(cid:19)erios de Irredutibilidade de Polin^omios
+
+Nessa se(cid:24)c~ao daremos alguns resultados sobre irredutibilidade de polin^omios sobre Q e
+
+sobre Zp, com p primo. A principal refer^encia desta se(cid:24)c~ao ser(cid:19)a [2].
+
+Inicialmente vamos considerar f (x) = anxn+an−1xn−1+· · ·+a0 ∈ Q[x] n~ao nulo. Como
+an, . . . , a1, a0 ∈ Q, podemos encontrar o mmc = m dos denominadores an, . . . , a1, a0, e
+assim, escrever f (x) = f1(x)
+m , com f1(x) ∈ Z[x]. Supondo f1(x) irredut(cid:19)(cid:16)vel sobre Z con-
+seguimos mostrar que f1(x) (cid:19)e irredut(cid:19)(cid:16)vel sobre Q, consequentemente, f (x) ser(cid:19)a irredut(cid:19)(cid:16)vel
+sobre Q. Esse resultado (cid:19)e conhecido como Lema de Gauss.
+
+Lema 2.5. (Lema de Gauss) Seja f (x) ∈ Z[x]. Se f (x) (cid:19)e irredut(cid:19)(cid:16)vel sobre Z, ent~ao f (x)
+
+(cid:19)e irredut(cid:19)(cid:16)vel sobre Q.
+
+Demonstra(cid:24)c~ao. [2], p(cid:19)ag. 43.
+
+A seguir daremos um crit(cid:19)erio para irredutibilidade em Z.
+
+Teorema 2.6. (Crit(cid:19)erio de Eisenstein) Seja f (x) = anxn + an−1xn−1 + · · · + a0 ∈ Z[x].
+
+34
+
+Se existir primo p tal que
+
+i)p - an
+ii)p | a0, a1, . . . , p | an
+iii)p2 - a0.
+ent~ao f (x) (cid:19)e irredut(cid:19)(cid:16)vel sobre Z.
+
+Demonstra(cid:24)c~ao. [2], p(cid:19)ag. 44.
+
+Utilizando ent~ao o lema de Gauss, podemos veri(cid:12)car que se as condi(cid:24)c~oes do crit(cid:19)erio
+
+de Eisenstein forem satisfeitas, ent~ao f (x) ser(cid:19)a irredut(cid:19)(cid:16)vel sobre Q.
+
+Vimos no Corol(cid:19)ario 2.3, que se ∂(f ) = 2 ou 3, f (cid:19)e redut(cid:19)(cid:16)vel sobre K se, e somente, se
+
+f tem raiz em K. Uma forma de veri(cid:12)car se um polin^omio de grau 2 ou 3 sobre Q tem
+
+raiz em Q (cid:19)e usar o Teste da raiz racional a seguir.
+
+Teorema 2.7. (Teste da raiz racional) Seja f (x) = anxn + an−1xn−1 + · · · + a0 ∈ Z[x],
+com ∂(f ) = n. Se α = r
+s
+
+∈ Q (cid:19)e raiz de f (x) e mdc(r, s) = 1, ent~ao r|a0 e s|an.
+
+Demonstra(cid:24)c~ao. [2], p(cid:19)ag. 28.
+
+Exemplo 2.3. Seja f (x) = x5 + 6x4 − 3x2 + 3 ∈ Z[x]. Pelo crit(cid:19)erio de Eisenstein para
+
+p = 3, temos que 3 - 1, 3 | 3, 3 | −3 e 3 | 6, mas 32 - 3. Logo, f (x) (cid:19)e irredut(cid:19)(cid:16)vel sobre Q.
+
+Exemplo 2.4. Seja g(x) = 5x3 + 3x2 − 1 ∈ Z[x]. As poss(cid:19)(cid:16)veis ra(cid:19)(cid:16)zes racionais de g(x)
+= −23
+25 ,
+
+. Como g(1) = 7, g(−1) = −3g
+
+est~ao no conjunto
+
+±1, ± 1
+5
+
+25 e g
+
+= −21
+
+−1
+5
+
+}
+
+{
+
+1
+5
+
+)
+
+(
+
+(
+
+)
+
+segue que g(x) (cid:19)e irredut(cid:19)(cid:16)vel sobre Q.
+
+Agora vamos apresentar o Algoritmo de Rabin[2], para irredutibilidade sobre f (x) ∈
+Zp[x], neste momento o algor(cid:19)(cid:16)timo ir(cid:19)a parecer um tanto confuso, porem no capitulo 3
+
+mostraremos porque ele funciona.
+
+Queremos analisar se f (x) ∈ Zp[x] (cid:19)e irredut(cid:19)(cid:16)vel sobre Zp. Primeiramente, f (x) deve
+
+ser m^onico e seu termo constante n~ao poder(cid:19)a ser nulo, pois caso isso ocorra f (x) ter(cid:19)a
+
+o fator x. Em seguida, veri(cid:12)caremos se f (x) divide xpn − x, onde n = ∂(f ). Por (cid:12)m,
+
+devemos ter que mdc(f, xpj − x) = 1, para todo j | n. Se f (x) satis(cid:12)zer essas 3 condi(cid:24)c~oes
+f (x) ser(cid:19)a irredut(cid:19)(cid:16)vel sobre Zp.
+
+35
+
+Cap(cid:19)(cid:16)tulo 3
+
+Extens~oes de Corpos
+
+A (cid:12)m de estudar as extens~oes de Q e Zp, com p primo.
+
+Iniciaremos apresentando
+
+resultados e de(cid:12)ni(cid:24)c~oes sobre extens~oes de um corpo K qualquer. As refer^encias dessa
+
+cap(cid:19)(cid:16)tulo s~ao: [7], [8] e [10].
+
+De(cid:12)ni(cid:24)c~ao 3.1. Sejam L e K corpos tais que K ⊂ L. Dizemos que L (cid:19)e uma extens~ao de
+
+K, e denotaremos por L|K.
+
+Exemplo 3.1.
+
+i) Como Q e R s~ao corpos e Q ⊂ R, temos que R (cid:19)e uma extens~ao de Q.
+
+√
+
+ii) Seja Q(
+
+2) o menor subcorpo de C contendo
+
+√
+
+2 e Q. Temos que Q(
+
+√
+
+2) ⊃ Q, ou
+
+seja, (cid:19)e uma extens~ao de Q.
+
+De(cid:12)ni(cid:24)c~ao 3.2. i) Seja L|K extens~ao de corpos. Dizemos que α ∈ L (cid:19)e alg(cid:19)ebrico sobre K
+
+se existe f (x) ∈ K[x], n~ao nulo tal que f (α) = 0.
+
+ii)Dizemos que L|K (cid:19)e alg(cid:19)ebrica se ∀α ∈ L, α (cid:19)e alg(cid:19)ebrico sobre K.
+
+Observa(cid:24)c~ao 3.1. Se f (x) ∈ K[x] n~ao nulo e f (α) = 0, ent~ao existe um polin^omio m^onico
+
+irredut(cid:19)(cid:16)vel p(x) ∈ K[x] tal que p(α) = 0. Vamos denotar p(x) com essas caracter(cid:19)(cid:16)sticas
+
+por irr(α, K).
+
+Teorema 3.1. Se α ∈ L e φ : K[x] −→ L tal que φ(f (x)) = f (α), ent~ao φ (cid:19)e homomor-
+
+(cid:12)smo tal que
+
+i) Imφ = K[α] e K ⊂ K[α] ⊂ L
+
+36
+
+37
+
+ii) Se α (cid:19)e alg(cid:19)ebrico sobre K, ent~ao N (φ) = ⟨p(x)⟩, onde p(x) = irr(α, K).
+
+iii)Se α (cid:19)e alg(cid:19)ebrico sobre K, ent~ao
+
+K[x]
+⟨p(x)⟩
+
+≃ K[α], onde p(x) = irr(α, K).
+
+Demonstra(cid:24)c~ao. Claramente φ (cid:19)e homomor(cid:12)smo, pois ;
+
+φ(f (x) + g(x)) = φ((f + g)(x)) = (f + g)(α) = f (α) + g(α)
+
+φ(f (x) · g(x)) = φ((f · g)(x) = (f · g)(α) = f (α) · g(α)
+
+i) Temos que Im(φ) ⊂ K[α], pois φ(f (x)) = f (α) ∈ K[α]. Tomando f (α) ∈ K[α],
+
+basta tomar f (x) ∈ K[x], que assim φ(f (x)) = f (α), ou seja K[α] ⊂ Im(φ). Concluindo
+que Im(φ) = K[α]. Claramente K ⊂ K[α], pois basta tomar f (x) = a0 + 0α + · · · + 0αn,
+com a0 ∈ K.
+
+Portanto, K[α] = Im(φ) e K ⊂ K[α] ⊂ L.
+
+ii) Tomando f (x) ∈ N (φ), segue que existem (cid:19)unicos q(x), r(x) ∈ K[x] tais que
+
+f (x) = p(x)q(x) + r(x); r ≡ 0 ou ∂(r) < ∂(p)
+
+Como f (α) = 0, segue que f (α) = p(α)q(α) + r(α) = 0, sendo p(x) = irr(α, K), tem-
+
+se p(α) = 0, e assim r(x) = 0. Portanto, f (x) = p(x)q(x), ou seja, N (φ) ⊂ ⟨p(x)⟩.
+
+Claramente, se f (x) ∈ ⟨p(x)⟩, ent~ao f (x) = p(x)q(x), para algum q(x) ∈ K[x]. Logo
+
+f (α) = p(α)q(α) = 0 e portanto, ⟨p(x)⟩ ⊂ N (φ). Conclu(cid:19)(cid:16)mos ent~ao que N (φ) = ⟨p(x)⟩
+
+iii) Segue diretamente do Teorema 1.4.
+
+Proposi(cid:24)c~ao 3.1. Seja L|K extens~ao de corpos e α ∈ L alg(cid:19)ebrico sobre K. Se ∂(irr(α, K)) =
+
+n, ent~ao
+
+a) ∀f (x) ∈ K[x], f (α) pode ser escrito de modo (cid:19)unico na forma f (α) = a0 + a1α +
+
+· · · + an−1αn−1, com ai‘s ∈ K.
+
+b) K[α] = {a0 + a1α + · · · + an−1αn−1; ai ∈ K} (cid:19)e subcorpo de L que cont(cid:19)em K.
+
+Demonstra(cid:24)c~ao. a) Seja p(x) = irr(α, K) e ∂(p) = n. Assim dado f (x) ∈ K[x] existem
+
+(cid:19)unicos q(x), r(x) ∈ K[x] tais que
+
+f (x) = p(x)q(x) + r(x), com r ≡ 0 ou ∂(r) < ∂(p).
+
+38
+
+Logo, f (α) = p(α)q(α) + r(α) = r(α). Como ∂(r) < ∂(p) = n e r(x) (cid:19)e (cid:19)unico, tem-se que
+podemos escrever de forma (cid:19)unica f (α) = a0 + a1α + · · · + an−1αn−1, com ai‘s ∈ K.
+
+b) Temos que K[α] = {f (α); f (x) ∈ K[x]} = {a0 +a1α+· · ·+an−1αn−1; ai‘s ∈ K}, pelo
+item a. Sejam f (x), g(x) ∈ K[x] assim f (x) − g(x) ∈ K[x], logo temos que f (α) − g(α) ∈
+K[α], de modo an(cid:19)alogo temos f (x)g(x)−1 ∈ K[x], e assim, temos f (α)g(α)−1 ∈ K[α].
+
+Portanto, K[α] (cid:19)e subcorpo de L.
+
+Observa(cid:24)c~ao 3.2. Seja K(α) o menor corpo que cont(cid:19)em K e α. Como K[α] ≃
+
+K[x]
+⟨p(x)⟩ (cid:19)e
+corpo, segue que K[α] coincide com K(α), quando α (cid:19)e alg(cid:19)ebrico, pois K e α pertencem
+a K[α], e com isso, K(α) ⊆ K[α] e por {1, α, . . . , αn−1} ser base de K[α] sobre K todo
+
+elemento de K[α] est(cid:19)a contido em K(α).
+
+Exemplo 3.2. 1) Considere f (x) = x3 − 2 ∈ Q[x]. Temos que f (x) (cid:19)e irredut(cid:19)(cid:16)vel sobre
+
+√
+Q, mais precisamente, f (x) = irr( 3
+
+2, Q). Logo,
+
+Q[x]
+< x3 − 2 >
+
+√
+≃ Q( 3
+
+2).
+
+2) Considere p(x) = x2+x+1 ∈ Z2[x]. Temos que p(x) = irr(α, Z2), com α ∈ F4 ⊃ Z2
+
+tal que α2 = α + 1. Logo,
+
+Z2[x]
+< x2 + x + 1 >
+
+≃ Z2(α) ≃ F4.
+
+Exemplo 3.3. Considerando o exemplo 3.2.
+
+√
+Q( 3
+
+2) = {a0 + a1
+
+√
+3
+
+2 + a2
+
+√
+3
+
+2
+2
+
+; ai ∈ Q}
+
+e
+
+Z2(α) = {a0 + a1α; a0, a1 ∈ Z2} = {0, 1, α, 1 + α}
+
+3.1 Extens~oes (cid:12)nitas
+
+Se L|K (cid:19)e uma extens~ao de corpos, podemos ver L como um K-espa(cid:24)co vetorial, con-
+
+siderando a adi(cid:24)c~ao em L e a multiplica(cid:24)c~ao de um elemento de K por um elemento de L,
+
+como a multiplica(cid:24)c~ao em L.
+
+Assim se existe B ⊂ L, tal que B (cid:19)e base de L sobre K com B (cid:19)e (cid:12)nito, ent~ao L (cid:19)e
+
+K-espa(cid:24)co vetorial de dimens~ao (cid:12)nita e #B = dimKL.
+
+De(cid:12)ni(cid:24)c~ao 3.3. Dizemos que B = {a1, a2, · · · an} (cid:19)e uma base de L sobre K quando B gera
+L sobre K e os elementos de B s~ao linearmente independente.
+
+39
+
+De(cid:12)ni(cid:24)c~ao 3.4. Seja dimKL = n ((cid:12)nita) diremos que L|K (cid:19)e uma extens~ao (cid:12)nita, deno-
+
+taremos dimKL = [L : K] e chamaremos de grau de L sobre K, ou simplesmente, grau da
+
+extens~ao L|K.
+
+Proposi(cid:24)c~ao 3.2. Seja L|K uma extens~ao de corpos.
+
+i) Se L|K (cid:19)e (cid:12)nita, ent~ao L|K (cid:19)e alg(cid:19)ebrica.
+ii) Se α ∈ L alg(cid:19)ebrico sobre K e ∂(irr(α, K)) = n, ent~ao B = {1, α, · · · αn−1} (cid:19)e
+
+K − base de K(α) e [K(α) : K] = n.
+
+Demonstra(cid:24)c~ao.
+
+i) Se L|K (cid:19)e (cid:12)nita com [L : K] = m e α ∈  L, ent~ao K(α) (cid:19)e um
+
+K-subespa(cid:24)co de L. Logo dimKK(α) (cid:19)e (cid:12)nita e digamos que dimKK(α) = n. Logo,
+{1, α, α2, · · · , αn} (cid:19)e um conjunto linearmente dependente. Desta forma, existem a0, a1, · · · , an ∈
+K n~ao todos nulos tais que a0 + a1α + · · · + anαn = 0, ou seja, tomando f (x) =
+a0 + a1x + · · · + anxn ∈ K[x] temos que f (α) = 0. Portanto, K[α] ≃ K(α) (cid:19)e alg(cid:19)ebrico
+sobre K.
+
+ii) Como vimos se α (cid:19)e alg(cid:19)ebrico sobre K, ent~ao K[α] (cid:19)e um corpo. Pelo item (a) da
+
+Proposi(cid:24)c~ao (3.1) temos que f (α) (cid:19)e escrito de modo (cid:19)unico da forma f (α) = a0 + a1α +
+· · · + an−1αn−1. Assim, B = {1, α, · · · , αn−1} (cid:19)e base de K[α] sobre K.
+
+Proposi(cid:24)c~ao 3.3. Se L|K e M|L s~ao extens~oes de corpos (cid:12)nitas, ent~ao
+
+[M : K] = [M : L][L : K].
+
+Demonstra(cid:24)c~ao. Sejam {v1, v2, · · · vm} base de M sobre L e {u1, u2, · · · ul} base de L
+sobre K. (cid:19)E su(cid:12)ciente mostrar que C = {viuj; i = 1, · · · , m e j = 1, · · · , l} (cid:19)e base de M
+sobre K.
+
+Vamos veri(cid:12)car se C (cid:19)e linearmente independente. Seja αij ∈ K, para 1 ≤ i ≤ m e
+
+m;l∑
+
+l∑
+
+l∑
+
+l∑
+
+1 ≤ j ≤ l.Se
+
+αijviuj = 0, ent~ao
+
+α1jv1uj +
+
+α2jv2uj + · · · +
+
+αmjvmuj = 0,
+
+i;j=1
+
+l∑
+
+ou seja, v1
+
+α1juj + v2
+
+j=1
+
+j=1
+
+j=1
+
+j=1
+
+l∑
+
+j=1
+
+α2juj + · · · + vm
+
+l∑
+
+j=1
+
+αmjuj = 0. Como v1, v2, · · · vm (cid:19)e um
+
+conjunto linearmente independente sobre L, e portanto, sobre K, segue que
+
+l∑
+
+j=1
+
+αijuj = 0,
+
+para todo 1 ≤ i ≤ m. Como {u1, u2, · · · ul} (cid:19)e um conjunto linearmente independente
+sobre K e αij ∈ K, segue que αij = 0, ∀1 ≤ i ≤ m e 1 ≤ j ≤ l.
+
+40
+
+Agora vamos veri(cid:12)car se C gera M sobre K. Seja y ∈ M. Sendo {v1, · · · , vm} base
+de M sobre L, temos que y = λ1v1 + λ2v2 + · · · λmvm, com λi ∈ L e 1 ≤ i ≤ m. Como
+λ′
+is ∈ L, segue que λi = αi1u1 + αi2u2 + · · · + αilul, pois {u1, u2, · · · ul} (cid:19)e base de L sobre
+
+K. Assim, y =
+
+αijviuj. Portanto, [M : K] = [M : L][L : K].
+
+m∑
+
+l∑
+
+m;l∑
+
+vi
+
+αijuj =
+
+i=1
+
+j=1
+
+i;j=1
+
+3.1.1 Corpo de Decomposi(cid:24)c~ao de polin^omios
+
+Vamos considerar nessa se(cid:24)c~ao K um corpo e f (x) ∈ K[x] n~ao constante.
+
+De(cid:12)ni(cid:24)c~ao 3.5. O menor corpo que cont(cid:19)em K e todas as ra(cid:19)(cid:16)zes de f (x) ∈ K[x] (cid:19)e chamado
+
+de corpo de decomposi(cid:24)c~ao de f (x).
+
+Se ∂(f ) = n e digamos que α1, α2, . . . , αn s~ao as ra(cid:19)(cid:16)zes de f (x), assim, K(α1, α2, . . . , αn)
+
+(cid:19)e o corpo de decomposi(cid:24)c~ao de f . O pr(cid:19)oximo resultado garante a exist^encia de uma
+
+extens~ao de K que cont(cid:19)em todas as ra(cid:19)(cid:16)zes de f (x).
+
+Proposi(cid:24)c~ao 3.4. Existe uma extens~ao L de K que (cid:19)e o corpo de decomposi(cid:24)c~ao de f (x) ∈
+
+K[x]. Al(cid:19)em disso, quaisquer dois corpos de decomposi(cid:24)c~ao de f (x) ∈ K[x] s~ao isomorfos.
+
+Demonstra(cid:24)c~ao. [8], p(cid:19)ag. 29.
+
+√
+Exemplo 3.4. Considere f (x) = x4−2 ∈ Q[x] sobre Q. As ra(cid:19)(cid:16)zes de f (x) s~ao 4
+
+√
+2, − 4
+
+√
+2, i 4
+
+2
+
+√
+e −i 4
+
+√
+2. Logo, Q( 4
+
+√
+2, i 4
+
+2) (cid:19)e o corpo de decomposi(cid:24)c~ao de x4 − 2.
+
+Na se(cid:24)c~ao a seguir veremos a rela(cid:24)c~ao entre o corpo de decomposi(cid:24)c~ao de um polin^omio
+
+com corpos (cid:12)nitos.
+
+3.2 Extens~oes Finitas de Zp
+
+Nesta se(cid:24)c~ao vamos considerar p um n(cid:19)umero primo. No Cap(cid:19)(cid:16)tulo 1, vimos que Zp (cid:19)e um
+corpo e que todo corpo de caracter(cid:19)(cid:16)stica p tem um subcorpo isomorfo a Zp. Em particular,
+todo corpo (cid:12)nito (cid:19)e uma extens~ao de Zp. Neste cap(cid:19)(cid:16)tulo veremos que para todo natural n
+
+41
+
+e todo p primo existe um corpo com pn elementos e que dois corpos com pn elementos s~ao
+
+isomorfos.
+
+Vimos tamb(cid:19)em que se F uma extens~ao (cid:12)nita de Zp e α ∈ F, ent~ao α (cid:19)e alg(cid:19)ebrico sobre
+Zp e Zp(α) (cid:19)e uma extens~ao de grau n sobre Zp, onde n = ∂(irr(α, Zp)). Na Proposi(cid:24)c~ao 3.2,
+vimos que B = {1, α, . . . , αn−1} (cid:19)e base de Zp(α) sobre Zp. Com isso, claramente Zp(α)
+tem pn elementos. E sendo [F : Zp] (cid:12)nito, F tamb(cid:19)em ter(cid:19)a pm elementos, para algum m
+tal que m|n pela Proposi(cid:24)c~ao 3.3.
+
+Na Proposi(cid:24)c~ao 2.5, vimos uma forma de construir extens~oes, com pn elementos, de
+Zp. Para isso, basta encontrarmos um polin^omio irredut(cid:19)(cid:16)vel sobre Zp de grau n. Mas n~ao
+podemos garantir, para todo n, que exista f (x) irredut(cid:19)(cid:16)vel sobre Zp. A seguir, daremos
+alguns resultados a(cid:12)m de mostrar que todo corpo (cid:12)nito com pn elementos (cid:19)e isomorfo ao
+
+corpo de decomposi(cid:24)c~ao de xpn − x.
+
+Vamos utilizar a Proposi(cid:24)c~ao 3.5 para mostrar a exist^encia de um corpo de ordem pn.
+
+Proposi(cid:24)c~ao 3.5. Seja F um corpo (cid:12)nito de caracter(cid:19)(cid:16)stica p, com q = pn elementos. O
+
+conjunto K = {α ∈ F; αq − α = 0} (cid:19)e um subcorpo de F.
+
+Demonstra(cid:24)c~ao. Vamos considerar x, y ∈ K, assim temos que xq − x = 0 e yq − y = 0.
+
+Logo segue a igualdade 0 = 0 − 0 = (xq − x) − (yq − y) = (xq − yq) − (x − y), ou
+seja, x − y ∈ K. Vamos veri(cid:12)car que xy−1 ∈ K, com x, y ∈ K e y ̸= 0. Vejamos que
+(xy−1)q − xy−1 = xqy−q − xy−1 = (xq − xyq−1)y−q.
+
+Como yq − y = y(yq−1 − 1) = 0, com y ̸= 0, implica que yq−1 = 1. Conclu(cid:19)(cid:16)mos que
+
+(xq − xyq−1)y−q = (xq − x)y−q = 0. Portanto K (cid:19)e subcorpo de F.
+
+Os resultados a seguir ser~ao usados para mostrar a unicidade de um corpo (cid:12)nito.
+
+Proposi(cid:24)c~ao 3.6. Seja F um corpo (cid:12)nito com q = pn elementos. Para todo α ∈ F∗ = F−0,
+temos que αq−1 = 1.
+
+Demonstra(cid:24)c~ao. Considere a aplica(cid:24)c~ao:
+
+f(cid:11) : F∗ −→ F∗
+
+x 7−→ αx
+
+42
+
+Vejamos que se f(cid:11) for injetora teremos f(cid:11) sobrejetora. Claramente f(cid:11) (cid:19)e injetora, pois se
+x1, x2 ∈ F∗, tal que x1 ̸= x2, teremos f (x1) = αx1 ̸= αx2 = f(cid:11)(x2). Logo, {a1, a2, · · · aq−1} =
+{αa1, αa2, · · · αaq−1}, realizando o produto temos αq−1(a1 · a2 · · · aq−1) = a1 · a2 · · · aq−1,
+isso ocorre se, e s(cid:19)o se, αq−1 = 1.
+
+Teorema 3.2. (Exist^encia e unicidade de corpos (cid:12)nitos)Sejam p um n(cid:19)umero primo e n
+
+inteiro positivo. Existe um corpo (cid:12)nito com pn elementos e, al(cid:19)em disso, quaisquer corpo
+(cid:12)nitos com pn elementos s~ao isomorfos ao corpo de decomposi(cid:24)c~ao de xpn − x sobre Zp.
+
+Demonstra(cid:24)c~ao. Seja xpn − x ∈ Zp[x]. Vamos considerar F o corpo de decomposi(cid:24)c~ao
+de xpn − x, ou seja, o menor corpo que cont(cid:19)em Zp e todas as ra(cid:19)(cid:16)zes de xpn − x. Se
+considerarmos xpn − x ∈ F[x], teremos que xpn − x tem no m(cid:19)aximo pn ra(cid:19)(cid:16)zes. Note que
+mdc(xpn − x, pnxpn−1 − 1) = 1, ou seja, xpn − x n~ao tem raiz m(cid:19)ultipla. Logo, em F, xpn − x
+
+tem todas ra(cid:19)(cid:16)zes distintas. Agora considere K = {a ∈ F; apn = a} ⊂ F. Temos que K
+
+tem pn elementos e pela Proposi(cid:24)c~ao 3.5, K (cid:19)e um corpo. Assim, pela minimalidade de F
+
+temos que K = F.
+
+Agora, seja F um corpo com q = pn elementos. Logo, F tem caracter(cid:19)(cid:16)stica p e cont(cid:19)em
+Zp. Considere xpn − x ∈ F[x]. Temos que xpn − x tem no m(cid:19)aximo pn ra(cid:19)(cid:16)zes em F e pela
+Proposi(cid:24)c~ao 3.6 temos que ∀a ∈ F, apn = a, ou seja, xpn − x =
+(x − a) em F. Portanto,
+
+∏
+
+F (cid:19)e o corpo de decomposi(cid:24)c~ao de xpn − x sobre Zp.
+
+a∈F
+
+Nosso objetivo agora (cid:19)e escrever xpn − x como produtos de polin^omios m^onicos irre-
+
+dut(cid:19)(cid:16)veis em Zp[x].
+
+De(cid:12)ni(cid:24)c~ao 3.6. Chamamos de Gn(x) o produto de todos os polin^omios m^onicos irre-
+dut(cid:19)(cid:16)veis de grau n em Zp[x].
+
+Exemplo 3.5. i) Temos que x, x + 1 s~ao os m^onicos irredut(cid:19)(cid:16)veis de grau 1 em Z2[x]
+e x2 + x + 1 (cid:19)e o (cid:19)unico m(cid:19)onico irredut(cid:19)(cid:16)vel em Z2[x]. Assim temos G1(x) = x2 − x e
+G2(x) = x2 + x + 1.
+
+ii)Em Z3[x] temos x, x + 1 e x + 2 s~ao m^onicos e irredut(cid:19)(cid:16)veis de grau um. Assim,
+G1(x) = x(x + 1)(x + 2) = x3 − x. Vejamos ainda que x2 + 1, x2 + 2 e x2 + x + 2 s~ao os
+m^onicos e irredut(cid:19)(cid:16)veis de grau dois em Z3[x]. Assim, G2(x) = (x2 +1)(x2 +2)(x2 +x+2) =
+(x4 + 2)(x2 + x + 2) = x6 + x5 + 2x4 + 2x2 + 2x + 1
+
+43
+
+Proposi(cid:24)c~ao 3.7. Se F (cid:19)e um corpo (cid:12)nito com q = pn elementos, ent~ao
+
+xq − x =
+
+∏
+
+t|n
+
+Gt(x).
+
+Demonstra(cid:24)c~ao. [7], p(cid:19)ag. 73.
+
+Corol(cid:19)ario 3.3. Seja F um corpo (cid:12)nito com q = pn elementos e I(t) o n(cid:19)umero de
+polin^omios m^onicos irredut(cid:19)(cid:16)veis de grau t em Zp[x]. Assim,
+
+qn =
+
+∑
+
+t|n
+
+tI(t).
+
+Demonstra(cid:24)c~ao. Vejamos que tI(t) = ∂Gt(x), assim comparando os graus da igualdade
+
+na proposi(cid:24)c~ao anterior temos
+
+∑
+
+t|n
+
+tI(t) = ∂
+
+∏
+
+t|n
+
+Gt(x) = ∂(xqn − x) = qn.
+
+Exemplo 3.6. Vamos determinar I(n) para n = 1, 2, · · · , 6 em Z2[x]
+
+Solu(cid:24)c~ao: Vejamos que q = #K = 2 assim, aplicando o corol(cid:19)ario 3.3
+
+i) I(1) = q1 = 2
+
+ii) 22 = 1I(1) + 2I(2) ⇒ I(2) = 1
+
+iii) 23 = 1I(1) + 3I(3) ⇒ I(3) = 2
+
+iv) 24 = 1I(1) + 2I(2) + 4I(4) ⇒ I(4) = 3
+
+v) 25 = 1I(1) + 5I(5) ⇒ I(5) = 6
+
+vi) 26 = 1I(1) + 2I(2) + 3I(3) + 6I(3) ⇒ I(6) = 9
+
+3.3 Extens~oes Finitas dos Racionais
+
+Chamaremos uma extens~ao (cid:12)nita K de Q de Corpo de N(cid:19)umeros.
+
+Pela Proposi(cid:24)c~ao 2.5, vimos que podemos construir extens~oes (cid:12)nitas de Q, de grau n,
+
+44
+
+atrav(cid:19)es de um polin^omio irredut(cid:19)(cid:16)vel f (x) sobre Q de grau n. E no Teorema 3.1, vimos que
+
+se α (cid:19)e alg(cid:19)ebrico sobre Q, ent~ao
+
+≃ Q(α), com [Q(α) : Q] = ∂(f ) e f (x) = irr(α, Q).
+
+Q[x]
+⟨f (x)⟩
+
+Neste caso, α (cid:19)e chamado de Elemento Primitivo [11].
+
+Nosso objetivo nesse trabalho (cid:19)e a partir de um polin^omio m^onico e irredut(cid:19)(cid:16)vel f (x) ∈
+
+Q[x], com ∂(f ) = n, construir um corpo de n(cid:19)umeros de grau n tal que
+
+≃ Q(α),
+
+com α raiz de f . O contr(cid:19)ario, ou seja, a partir de [F : Q] = n explicitar α e f = irr(α, Q)
+
+Q[x]
+⟨f (x)⟩
+
+n~ao iremos abordar aqui.
+
+Exemplo 3.7. Vimos no Exemplo 2.4, que g(x) = 5x3 + 3x2 − 1 (cid:19)e irredut(cid:19)(cid:16)vel sobre Q.
+
+Logo,
+
+Q[x]
+⟨5x3 + 3x2 − 1⟩
+
+≃ Q(α), com [Q(α) : Q] = 3 e α raiz de g(x).
+
+Exemplo 3.8. Seja g(x) = x3 − 5 ∈ Q[x]. Claramente, g (cid:19)e irredut(cid:19)(cid:16)vel sobre Q. Neste
+
+√
+caso, g( 3
+
+5) = 0, e assim,teremos
+
+√
+≃ Q( 3
+
+√
+5). E com isso, [Q( 3
+
+5) : Q] = 3.
+
+Q[x]
+⟨x3 − 5⟩
+
+Cap(cid:19)(cid:16)tulo 4
+
+Polin^omios irredut(cid:19)(cid:16)veis utilizando o
+
+Python
+
+Nesse cap(cid:19)(cid:16)tulo iremos dar a ideia de criar um programa para encontrar polin^omios
+
+irredut(cid:19)(cid:16)veis utilizando a linguagem de programa(cid:24)c~ao Python. Para iniciar o estudo sobre
+
+a linguagem de programa(cid:24)c~ao Python usamos [6] e [5] como refer^encias. O Python por ser
+
+um software livre, de f(cid:19)acil compreens~ao e em crescimento mundial foi o escolhido. Em [6]
+
+(cid:19)e poss(cid:19)(cid:16)vel entender como instalar o Python e o Pycharm, que (cid:19)e um interpretador Python.
+
+A jun(cid:24)c~ao dos algoritmos, l(cid:19)ogica matem(cid:19)atica e programa(cid:24)c~ao foi um grande desa(cid:12)o. As
+
+ideais apresentadas nesse trabalho foram constru(cid:19)(cid:16)das atrav(cid:19)es na compreens~ao da teoria
+
+matem(cid:19)atica por tr(cid:19)as dos objetivos alcan(cid:24)cados.
+
+Para melhor compreens~ao dos m(cid:19)odulos criados para fazer os c(cid:19)alculos com polin^omios,
+
+vamos considerar os polin^omios listas no Python. As listas s~ao colocadas entre colchetes.
+
+O sinal de igualdades (cid:19)e ==, o sinal de diferente ! =, o resta da divis~ao por %, a mul-
+
+tiplica(cid:24)c~ao pode *, a potencia(cid:24)c~ao por **, o comprimento de uma lista f por len(f ) e um
+
+par^ametro t variando em uma lista {0, 1, . . . , p} por "t in range(0,p)". S~ao usados if para
+
+designar se, else para designar sen~ao, while para enquanto, e assim, por diante.
+
+Mais precisamente, traremos produto, soma e subtra(cid:24)c~ao de polin^omios, polin^omios
+de grau 2 e 3 irredut(cid:19)(cid:16)veis sobre Z3, encontraremos os Gi’s de(cid:12)nidos no cap(cid:19)(cid:16)tulo 3. O
+
+racioc(cid:19)(cid:16)nio feito aqui pode ser expandido para polin^omios de graus maiores e sobre p maior
+
+do que 3, Para isto apresentaremos um programa que utiliza do algor(cid:19)(cid:16)timo de Rabin para
+
+45
+
+veri(cid:12)car se um polin^omio de grau n qualquer (cid:19)e irredut(cid:19)(cid:16)vel sobre Zp com p primo qualquer.
+
+A seguir temos um c(cid:19)odigo que realiza o produto entre dois polin^omios. Ao (cid:12)nal do
+
+c(cid:19)odigo apresentarei um exemplo.
+
+46
+
+Figura 4.1: Produto.
+
+47
+
+Fonte: Autor.
+
+Rogando o programa anterior obtemos.
+
+48
+
+Figura 4.2: Exemplo de produto.
+
+Fonte: Autor.
+
+No c(cid:19)odigo a seguir temos a soma, juntamente com um exemplo.
+
+Figura 4.3: Soma de polin^omios.
+
+49
+
+Fonte: Autor.
+
+Com pequenas altera(cid:24)c~oes podemos constru(cid:19)(cid:16)mos um c(cid:19)odigo que realiza a subtra(cid:24)c~ao,
+
+como veremos.
+
+Figura 4.4: Subtra(cid:24)c~ao de polin^omios.
+
+50
+
+Fonte: Autor.
+
+Na imagem abaixo temos um c(cid:19)odigo que gera polin^omio com n coe(cid:12)cientes, todos
+
+nulos, este sendo fundamental para determinar a lista de todos os polin^omios de grau 2
+
+ou 3 e ainda o utilizarei para construir o MDC.
+
+Figura 4.5: Polin^omio nulo.
+
+51
+
+Fonte: Autor.
+
+A seguir temos um c(cid:19)odigo que gera uma lesta de listas com tr^es termos representando
+
+todos os polin^omios de grau menor ou igual a dois.
+
+Figura 4.6: Lista de polin^omios de grau ≤ 2.
+
+52
+
+Fonte: Autor.
+
+Veja que ao (cid:12)nal da imagem temos uma lista de listas, representando os polin^omio
+
+p0(x) = 0 + 0x + 0x2, p1(x) = 1 + 0x + 0x2, · · · , p27(x) = 2 + 2x + 2x2.
+
+De modo an(cid:19)alogo, listamos os polin^omios de grau 3. Neste caso n~ao apresentarei a
+
+lista de listas de todos os polin^omios de grau menor ou igual a tr^es, pois, est(cid:19)a possui um
+
+total de 34 polin^omios.
+
+53
+
+Figura 4.7: Lista de polin^omios de grau ≤ 3.
+
+Fonte: Autor.
+
+A partir da lista dos polin^omios de grau menor igual a 2 e da lista dos polin^omios
+
+de grau menor igual a 3, extra(cid:19)(cid:16)mos os polin^omios em que o termo independente seja n~ao
+
+nulo e com coe(cid:12)ciente l(cid:19)(cid:16)der igual a um, para posteriormente obter os m^onicos irredut(cid:19)(cid:16)veis.
+
+Para isto constru(cid:19)(cid:16)mos os seguintes c(cid:19)odigos.
+
+Figura 4.8: Lista dos m^onicos de grau 2 e 3.
+
+54
+
+Fonte: Autor.
+
+Este c(cid:19)odigo retorna uma lista com seis polin^omios de grau dois m^onicos com termos
+
+constante n~ao nulo que apresentaremos na lista abaixo.
+
+55
+
+Figura 4.9: M^onicos de grau 2.
+
+Fonte: Autor.
+
+Para polin^omios de grau 3 temos um total de dezoito polin^omios m^onicos com termo
+
+constante n~ao nulo, os quais est~ao representados por listas na imagem abaixo.
+
+Figura 4.10: M^onicos de grau 3.
+
+Fonte: Autor.
+
+Utilizando o corol(cid:19)ario 2.3 constru(cid:19)(cid:16)mos dois c(cid:19)odigos um para grau dois e outro para
+
+grau tr^es, capazes de veri(cid:12)car quais dos polin^omios listados anteriormente s~ao irredut(cid:19)(cid:16)veis.
+
+C(cid:19)odigos que est~ao na imagem abaixo.
+
+Figura 4.11: Irredut(cid:19)(cid:16)veis de grau 2.
+
+56
+
+Fonte: Autor.
+
+Obtendo assim uma lista com os polin^omios m^onicos irredut(cid:19)(cid:16)veis de grau dois. Tomando
+como exemplo polin^omios sobre Z3 temos um total de tr^es polin^omios m^onicos irredut(cid:19)(cid:16)veis
+
+que est~ao na lista abaixo.
+
+Figura 4.12: Exemplo de irredut(cid:19)(cid:16)veis de grau 2 sobre Z3.
+
+57
+
+Fonte: Autor.
+
+De modo semelhante obtemos os irredut(cid:19)(cid:16)veis de grau 3.
+
+Figura 4.13: Irredut(cid:19)(cid:16)veis de grau 3.
+
+Fonte: Autor.
+
+Para polin^omios de grau tr^es sobre Z3 obtemos um total de oito polin^omios m^onicos
+
+irredut(cid:19)(cid:16)veis, como mostra a lista abaixo.
+
+58
+
+Figura 4.14: Exemplo de irredut(cid:19)(cid:16)veis de grau 2 sobre Z3.
+
+Fonte: Autor.
+
+Ap(cid:19)os obter com os c(cid:19)odigos citados anteriormente os m^onicos irredut(cid:19)(cid:16)veis de grau dois
+e tr^es sobre Z3 e sabendo que os m^onicos irredut(cid:19)(cid:16)veis de grau um sobre Z3 s~ao x, x + 1 e
+
+x + 2, podemos ent~ao calcular G1, G2 e G3, onde Gi (cid:19)e o produto de todos os polin^omios
+
+m^onicos irredut(cid:19)(cid:16)veis de grau i, para isto foi feito o programa a seguir.
+
+Figura 4.15: Programa que geram G1, G2 e G3.
+
+59
+
+Fonte: Autor.
+
+Veja que ao (cid:12)m do programa acima foi realizado o produto de G1 por G2, obtendo
+assim o polin^omio x32 −x de forma semelhante realizamos o produto de G1 por G3 gerando
+
+x33 − x. Vejamos a seguir o console ap(cid:19)os rodar o programa.
+
+60
+
+Figura 4.16: Console do programa que geram G1, G2 e G3.
+
+Fonte: Autor.
+
+Como j(cid:19)a visto no trabalho as extens~oes de Zp possui pn elementos com p primo e
+ainda (cid:19)e isomorfo ao corpo de decomposi(cid:24)c~ao de xpn − x, vejamos que os c(cid:19)odigos est~ao
+
+limitados para n ≤ 3 pois o crit(cid:19)erio utilizado esta restrito a polin^omios de grau dois ou
+
+tr^es e assim obtemos polin^omios da forma xpn − x de grau p2 e p3 com p primo. Para
+
+abranger um pouco mais estas extens~oes precisamos de um crit(cid:19)erio de irredutibilidade
+
+mais amplo, para isto utilizaremos o crit(cid:19)erio de Rabin j(cid:19)a descrito anteriormente. Assim
+
+precisaremos construir dois outros c(cid:19)odigos, uma para realizar a divis~ao de polin^omios e
+
+outro para determinar o MDC.
+
+Figura 4.17: Inverso em Zp.
+
+61
+
+Fonte: Autor.
+
+O c(cid:19)odigo a acima ser(cid:19)a utilizado para construir a divis~ao, ele tem por objetivo determi-
+
+nar o inverso de um elemento em Zp com p primo. O algor(cid:19)(cid:16)timo abaixo realiza a divis~ao
+
+de polin^omios da mesma forma coma a qual realizamos cotidianamente utilizando a chave.
+
+Figura 4.18: Divis~ao de polin^omios.
+
+62
+
+Fonte: Autor.
+
+Vejamos no exemplo a seguir que o c(cid:19)odigo nos retorna dois polin^omios, o quociente e o
+
+resto da divis~ao, ambos necess(cid:19)arios para a constru(cid:24)c~ao do m(cid:19)etodo para determinar o MDC.
+
+63
+
+Figura 4.19: Exemplo de divis~ao de polin^omios.
+
+Fonte: Autor.
+
+Para determinar o MDC utilizaremos o m(cid:19)etodo de divis~oes sucessivas pelo resto, como
+
+no c(cid:19)odigo abaixo.
+
+Figura 4.20: MDC de polin^omios.
+
+64
+
+Fonte: Autor.
+
+Neste programa temos um exemplo e ainda o console ap(cid:19)os rodar o programa.
+
+Figura 4.21: Exemplo de MDC de polin^omios.
+
+65
+
+Fonte: Autor.
+
+O c(cid:19)odigo a seguir gera polin^omios do tipo xpn − x, para ser utilizado no algor(cid:19)(cid:16)timo de
+
+Rabin.
+
+Figura 4.22: Polin^omios do tipo xpn − x.
+
+Fonte: Autor.
+
+Apresentaremos agora um programa capaz de veri(cid:12)car se um polin^omio sobre Zp (cid:19)e ou
+
+n~ao redut(cid:19)(cid:16)vel. Este programa trata o algor(cid:19)(cid:16)timo de Rabin. Posteriormente apresentare-
+
+mos um exemplo.
+
+Figura 4.23: Algor(cid:19)(cid:16)timo de Rabin.
+
+66
+
+Fonte: Autor.
+
+Ressaltando que este programa (cid:19)e capaz de veri(cid:12)car se um polin^omio qualquer de grau n
+qualquer (cid:19)e irredut(cid:19)(cid:16)vel sobre Zp com p primo qualquer. Vejamos alguns exemplos sobre Z3.
+
+Figura 4.24: Exemplo aplica(cid:24)c~ao do algor(cid:19)(cid:16)timo de Rabin em Z3.
+
+67
+
+Fonte: Autor.
+
+Vejamos agora alguns exemplos de polin^omios sobre Z5
+
+Figura 4.25: Exemplo aplica(cid:24)c~ao do algor(cid:19)(cid:16)timo de Rabin em Z5.
+
+Fonte: Autor.
+
+Veja que no caso do polin^omio [3, 3, 0, 1, 1], f (x) = 3 + 3x + 0x2 + x3 + x4 o programa
+
+realiza a divis~ao de x54 − x por f (x) tarefa invi(cid:19)avel sem o uso do programa.
+
+Considera(cid:24)c~oes (cid:12)nais e perspectivas
+
+Nesse trabalho, vimos a import^ancia dos polin^omios irredut(cid:19)(cid:16)veis para obten(cid:24)c~ao de cor-
+
+pos de n(cid:19)umeros e corpos (cid:12)nitos. A exist^encia de crit(cid:19)erios de irredutibilidade de polin^omios
+sobre Q e Zp s~ao de grande import^ancia, por(cid:19)em a cria(cid:24)c~ao de um c(cid:19)odigo, utilizando uma
+
+linguagem de programa(cid:24)c~ao, ajuda nessa tarefa (cid:19)ardua.
+
+A linguagem de programa(cid:24)c~ao Python foi escolhida, pois (cid:19)e uma linguagem simples
+
+e livre. A ideia de transformar a sistematiza(cid:24)c~ao dos conceitos matem(cid:19)aticos em um al-
+
+goritmo em python pode ser estendida a outras teorias matem(cid:19)aticas. Pode-se usar a
+
+linguagem python para criar uma calculadora ou reproduzir algoritmos matem(cid:19)aticos em
+
+sala de aula, por exemplo. Fazendo assim, as aulas de matem(cid:19)aticas do ensino b(cid:19)asico mais
+
+interessantes. A import^ancia da l(cid:19)ogica matem(cid:19)atica tamb(cid:19)em merece destaque, pois sem
+
+ela essa sistematiza(cid:24)c~ao n~ao seria poss(cid:19)(cid:16)vel.
+
+Entender de(cid:12)ni(cid:24)c~oes matem(cid:19)aticas e a l(cid:19)ogica matem(cid:19)atica (cid:19)e crucial para programa(cid:24)c~ao e
+
+codi(cid:12)ca(cid:24)c~ao.
+
+68
+
+Refer^encias Bibliogr(cid:19)a(cid:12)cas
+
+[1] Ara(cid:19)ujo, R. R. Reticulados alg(cid:19)ebricos e alpica(cid:24)c~oes a c(cid:19)odigos e criptogra(cid:12)a. Tese de
+
+doutorado. Unicamp - IMECC, Campinas, 2018.
+
+[2] Biazzi, R. N. Polin^omios Irredut(cid:19)(cid:16)veis: Crit(cid:19)erios e Aplica(cid:24)c~oes. Disserta(cid:24)c~ao de
+
+Mestrado do Profmat, 74f. Rio Claro, 2014.
+
+[3] Domingues, H. H., Iezzi, G. (cid:19)Algebra Moderna. 2a ed. Atual Editora. S~ao Paulo,
+
+1982.
+
+[4] Endler, O. Teoria dos Corpos. Publica(cid:24)c~oes Matem(cid:19)aticas. Rio de Janeiro: Impa,
+
+2010.
+
+[5] Foundation, Python Software vers~ao 3. Dispon(cid:19)(cid:16)vel em: < www.pyhton.org >.
+
+Acesso: 26 de fevereiro de 2021.
+
+[6] Guanabara, G. Curso em v(cid:19)(cid:16)deo: Python Dispon(cid:19)(cid:16)vel em:
+
+< www.youtube.com/watch?v=S9uPNppGsGo&list=PLvE-ZAFRgX8hnE
+
+CDn1v9HNTI71veL3oW0 > Acesso: 26 de fevereiro de 2021.
+
+[7] Hefez, A., Villela, M. L. T. C(cid:19)odigos Corretores de Erros. Rio de Janeiro:
+
+Impa, 2017.
+
+[8] Masuda, A. M., Panario, D. T(cid:19)opicos de Corpos Finitos com Aplica(cid:24)c~ao em Crip-
+
+togra(cid:12)a e Teoria dos C(cid:19)odigos. 26o Col(cid:19)oquio Brasileiro de Matem(cid:19)atica. Rio de Janeiro:
+
+Impa, 2007.
+
+69
+
+70
+
+[9] Milies, C. P. Introdu(cid:24)c~ao (cid:18)a Teoria dos C(cid:19)odigos Corretores de Erros. Col(cid:19)oquio de
+
+Matem(cid:19)atica da Regi~ao Centro-Oeste, Departamento de Matem(cid:19)atica, UFMS. Campo
+
+Grande, 2009.
+
+[10] Roman, S. Fields Theory. 2a ed. Graduate Texts in Mathematics. Springer, 2005.
+
+[11] Samuel, P. Algebraic Theory od Numbers. Hermann, Paris, 1970.
+
+

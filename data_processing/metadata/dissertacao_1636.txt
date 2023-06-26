@@ -1,0 +1,5892 @@
+UNIVERSIDADE FEDERAL DA GRANDE DOURADOS - UFGD
+
+Eder Espinola
+
+Decomposição em Valores Singulares Aplicado a Reconstrução e
+
+Compressão de Imagens
+
+Dourados - MS
+
+2018
+
+Dados Internacionais de Catalogação na Publicação (CIP).
+
+E77d  Espinola, Eder
+
+Decomposição em Valores Singulares Aplicado a Reconstrução e Compressão de Imagens
+
+[recurso eletrônico] / Eder Espinola. -- 2019.
+
+Arquivo em formato pdf.
+
+Orientador: Adriano Oliveira Barbosa.
+
+Dissertação (Mestrado em Matemática)-Universidade Federal da Grande Dourados, 2018.
+
+Disponível no Repositório Institucional da UFGD em:
+
+https://portal.ufgd.edu.br/setor/biblioteca/repositorio
+
+1. Matriz. 2. Decomposição SVD. 3. Reconstrução de imagem. I. Barbosa, Adriano Oliveira. II.
+
+Título.
+
+Ficha catalográfica elaborada automaticamente de acordo com os dados fornecidos pelo(a) autor(a).
+
+©Direitos reservados. Permitido a reprodução parcial desde que citada a fonte.
+
+Agradecimentos
+
+À Deus pela vida.
+
+À Minha família que sempre estiveram dispostos a ajudar, a minha esposa Cristiane
+e ﬁlha Valentina que são o motivo de querer melhorar, agradeço pela paciência de estarem
+comigo nesta caminhada, aos professores desse curso que não mediram esforços para que
+isso tudo acontecesse.
+
+Ao meu Professor orientador Adriano por ter me apresentado uma aplicação
+
+interessante de álgebra linear, meus agradecimentos pela paciência e cuidado.
+
+À Professora Irene coordenadora do curso, pela garra e comprometimento com o
+trabalho, com certeza nos mostrou muito mais do que teoremas e proposições, mas sim
+atitude e perseverança de que tudo é possível com muito trabalho.
+
+Ao PROFMAT que vem proporcionando aos professores esse processo de formação
+
+continuada, essencial para melhora na qualidade da educação básica.
+
+Aos meus colegas pela convivência em dois anos onde muito conhecimento foi
+
+compartilhado. Em especial a Edvair, Katiuce e Anderson por momentos memoráveis.
+
+Não existem métodos fáceis para resolver problemas difíceis (René Descartes)
+
+Resumo
+
+Em uma primeira vista decompor uma matriz não parece ser tão interessante, porém
+aprofundando os estudos observamos o quanto ela está presente em nossos afazeres diários,
+principalmente de quem lida com as ferramentas computacionais.
+
+Vendo uma imagem ou um desenho num computador ou celular nem nos damos conta de
+quanta matemática existe por trás dessas exibições. Mostraremos que uma imagem pode
+ser armazenada em uma quantidade menor de espaço sem perdermos a característica da
+imagem original, para isso usaremos matemática, decomposição matricial, que basicamente
+trabalha com matriz, ele nos auxiliará na decomposição e na reconstrução da imagem com
+menos informação.
+
+Palavras-chaves:Matriz, decomposição SVD, reconstrução de imagem.
+
+Abstract
+
+At ﬁrst glance decomposing a matrix does not seem to be so interesting but deepening the
+studies we observe how much it is present in our daily tasks, mainly of those who deal
+with the computational tools.
+
+Seeing an image or a drawing on a computer or cell phone, we do not even realize how
+much mathematics there is behind these exhibits. We will show that an image can be
+stored in a smaller amount of space without losing the characteristic of the original image,
+for that we will use mathematics, or matrix composition, that basically works with matrix,
+it will help us in decomposing and rebuilding the image with less information.
+
+Key-words: matrix, singular value decomposition, image reconstructíon.
+
+Lista de ilustrações
+
+Figura 2.1 – Transformação T . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 18
+. . . . . . . . . . . . . . . . . . 38
+Figura 3.1 – Imagem decomposta em três camadas
+Figura 4.1 – Imagem original da ﬂor . . . . . . . . . . . . . . . . . . . . . . . . . . . 43
+Figura 4.2 – Imagem reconstruída com p = 5 valores singulares.
+. . . . . . . . . . . 43
+Figura 4.3 – Imagem reconstruída com p = 100 valores singulares.
+. . . . . . . . . . 44
+Figura 4.4 – Imagem reconstruída com p = 600 valores singulares.
+. . . . . . . . . . 45
+Figura 4.5 – Imagem original da zebra . . . . . . . . . . . . . . . . . . . . . . . . . 46
+Figura 4.6 – Imagem reconstruída com p = 5 valores singulares.
+. . . . . . . . . . . 47
+Figura 4.7 – Imagem reconstruída com p = 100 valores singulares.
+. . . . . . . . . . 47
+Figura 4.8 – Imagem reconstruída com p = 600 valores singulares.
+. . . . . . . . . . 48
+Figura 4.9 – Imagem da diferença com p = 5 . . . . . . . . . . . . . . . . . . . . . . 50
+Figura 4.10–Imagem da diferença com p = 100 . . . . . . . . . . . . . . . . . . . . . 50
+Figura 4.11–Imagem da diferença com p = 5 . . . . . . . . . . . . . . . . . . . . . .
+51
+Figura 4.12–Imagem da diferença com p = 100 . . . . . . . . . . . . . . . . . . . . .
+51
+Figura 4.13–gráﬁco da norma da diferença entre a imagem original e a imagem
+
+reconstruida para a imagem da ﬂor. . . . . . . . . . . . . . . . . . . . . 52
+
+Figura 4.14–gráﬁco da norma da diferença entre a imagem original e a imagem
+
+reconstruida para a imagem da zebra. . . . . . . . . . . . . . . . . . . . 53
+
+Lista de tabelas
+
+Tabela 4.1 – Tabela da Norma da diferença das imagens
+
+. . . . . . . . . . . . . . . 49
+
+Sumário
+
+Lista de tabelas
+
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+9
+
+Sumário . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 10
+
+INTRODUÇÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 11
+
+DEFINIÇÕES E DEMONSTRAÇÕES DE RESULTADOS . . . . . . 13
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 13
+Espaço vetorial
+Subespaço vetorial
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . 14
+Propriedades dos Subespaços . . . . . . . . . . . . . . . . . . . . . . . . . 14
+Combinação Linear . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 15
+Dependência e Independência Linear
+. . . . . . . . . . . . . . . . . . 16
+Transformações Lineares . . . . . . . . . . . . . . . . . . . . . . . . . . 17
+. . . . . . . . . . . . . . . . . . . . . . . . 21
+Autovalores e Autovetores
+Diagonalização . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 23
+Produto interno e Ortogonalidade . . . . . . . . . . . . . . . . . . . . 26
+Matrizes simétricas . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 27
+
+COR E IMAGEM . . . . . . . . . . . . . . . . . . . . . . . . . . . . 37
+
+DECOMPOSIÇÃO MATRICIAL E RECONSTRUÇÃO DE IMAGENS 40
+Aplicação da SVD. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 42
+Imagem da Diferença . . . . . . . . . . . . . . . . . . . . . . . . . . . 49
+
+CONCLUSÃO . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 54
+
+1
+
+2
+2.1
+2.2
+2.2.1
+
+2.3
+2.4
+2.5
+2.6
+2.7
+2.8
+2.9
+
+3
+
+4
+4.1
+4.2
+
+5
+
+REFERÊNCIAS . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 55
+
+APÊNDICES
+
+56
+
+APÊNDICE A – IMPLEMENTAÇÃO DA DECOMPOSIÇÃO E RE-
+
+CONSTRUÇÃO DE IMAGENS . . . . . . . . . . . 57
+
+1 Introdução
+
+10
+
+Este trabalho é o encerramento do curso do mestrado proﬁssional de matemática em
+Rede pela UFGD, que traz na sua essência uma amostra de um dos ramos da matemática
+moderna, computação gráﬁca. Graças a avanços tecnológicos e em especial a computação
+gráﬁca, hoje podemos ver desde um feto que está no útero da mãe até a imagem de pessoa
+daqui a vinte, trinta anos. É impressionante os passos largos dados por essa área em um
+espaço tão curto de tempo, um exemplo visível até mesmo para o mais leigo é o aparelho
+de televisão que vem melhorando a cada dia a exibição da imagem ﬁcando tão próxima da
+real.
+
+Mostraremos como a matemática está intimamente ligada aos afazeres diários,
+um simples ato de visualizar uma imagem no celular ou em um computador esconde
+por trás uma inﬁnidade de teorias matemáticas, por sinal muito complexo. Na parte da
+imagem trataremos de um caso bem especíﬁco que é a compactação de imagem. Quando
+estamos falando de imagem, entendemos por espaço, e quanto menos espaços pudermos
+usar para armazenar uma informação melhor. Existem várias ferramentas que fazem a
+compactação, muitas já estão agregadas no sistema operacional de cada equipamento,
+nossa implementação foi feita no OCTAVE uma ferramente extremamente poderosa, criada
+para resolver cálculos complexos.
+
+Na matemática e na computação uma imagem pode ser vista como uma matriz,
+onde cada entrada é um ponto da imagem que é chamado de “pixel” que está associado a
+uma cor, a imagem pode ser monocromática ou colorida, trataremos aqui das imagens
+coloridas. A tarefa do OCTAVE vai ser a decomposição dessa matriz e logo depois a
+reconstrução, na decomposição o OCTAVE usa a teoria da decomposição em valores
+singulares (singular value decomposition - SVD), que reescreve a matriz original em três
+matrizes, onde a primeira e a terceira são matrizes de autovetores associados aos autovalores
+das matrizes AAT e AT A sendo A nossa matriz (imagem) original e a matriz do centro é
+uma matriz diagonal com seus termos sendo a raiz quadrada dos autovalores, feito essa
+decomposição faremos a reconstrução, porem usando menos informações que a original.
+
+Para chegarmos a isso, dividimos o texto em cinco capítulos. No capítulo 2 mos-
+traremos o alicerce necessário para que esses resultados aconteçam, deﬁnições, teoremas
+e exemplos serão mostrados, tudo de acordo com a necessidade para o entendimento da
+teorema central (decomposição em valores singulares).
+
+No capítulo 3 faremos uma breve explanação de como está estruturada a imagem e
+a cor. Falaremos um pouco do sistema tricromático (R, G, B) que são as cores primárias
+que forma uma inﬁnidade de cores graças a combinações lineares com essa base (vermelho,
+
+Capítulo 1.
+
+Introdução
+
+verde, azul).
+
+11
+
+No capítulo 4, faremos a explanação de como é feita a decomposição e reconstrução
+juntamente com a prova de que ela funciona, na sequência faremos a aplicação da SVD
+em uma imagem, mostraremos que mesmo com uma quantidade menor de informações a
+sua reconstrução é uma matriz (imagem) tão próxima quanto se queira da original que
+não notamos a diferença, com essa ferramenta podemos armazenar uma informação em
+menor espaço. Para mostrarmos a distancia entre a original e a reconstruída usaremos a
+Norma matricial como parámetro númerico. Além disso mostra remos os gráﬁcos dos erros
+da duas imagens utilizadada neste trabalho, ela nós mostra claramente que quanto mais
+se acrescenta parcelas na reconstrução mais próximo de zero tente o erro, ou seja, mais
+próxima a imagem ﬁca da original.
+
+Por último, no capítulo 5, faremos as considerações ﬁnais analisando de uma
+
+maneira geral a aplicação da SVD usando a ferramenta OCTAVE.
+
+2 Deﬁnições e demonstrações de resultados
+
+12
+
+Neste capítulo mostraremos algumas deﬁnições e resultados que serão importan-
+tes para o entendimento do objetivo principal que é a demonstração e aplicação da
+decomposição em valores singulares.
+
+2.1 Espaço vetorial
+
+Deﬁnição 2.1 (Espaço vetorial). Um espaço vetorial real é um conjunto V não-vazio,
+com duas operações: Soma V
+V , tais
+que, para quaisquer u, v, w
+
+V , a multiplicação por escalar. R
+×
+R valem as seguintes propriedades:
+
+V
+×
+V , a, b
+
+−→
+
+V
+
+−→
+∈
+
+∈
+
+a. (u + v) + w = u + (v + w)
+
+b. u + v = v + u
+
+c. Existe 0
+
+∈
+
+V tal que u + 0 = u, 0 é chamado vetor nulo
+
+d. Existe
+
+u
+
+−
+
+∈
+
+V tal que u + (
+
+u) = 0
+
+−
+
+e. a(u + v) = au + av
+
+f. (a + b)v = av + bv
+
+g. (ab)v = a(bv)
+
+h. 1u = u
+
+Exemplo 2.1. O conjunto das n-uplas de números reais é um espaço vetorial.
+
+V = Rn =
+
+(x1, x2, x3, . . . , xn)
+}
+
+{
+
+; xi
+
+∈
+
+R
+
+se u = (x1, x2, . . . , xn) e v = (y1, y2, . . . , yn) e a
+
+R
+
+∈
+
+u + v = (x1 + y1, x2 + y2, . . . , xn + yn) e au = (ax1, ax2, . . . , axn)
+
+Exemplo 2.2. Considere as matrizes de dimensão 2
+
+2.
+
+×
+
+V = M (2
+
+2) =
+
+×
+
+vetorial?
+
+a b
+c d
+
+
+
+
+
+
+
+
+
+
+
+: a, b, c, d
+
+R
+
+∈
+
+. Qual é o vetor nulo deste espaço
+
+
+
+
+
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+13
+
+=
+
+
+
++
+
+a b
+c d
+
+
+0 0
+0 0
+
+
+
+0 0
+vetorial é a matriz
+
+0 0
+
+
+
+
+
+a + 0 b + 0
+c + 0 d + 0
+
+
+
+
+
+
+=
+
+a b
+c d
+
+
+
+
+
+
+com isso o vetor nulo desse espaço
+
+2.2 Subespaço vetorial
+
+Deﬁnição 2.2. Dado um espaço vetorial V , um subconjunto W não-vazio será um subes-
+paço vetorial de V se obedecer os seguintes itens:
+
+i. Para quaisquer u, v
+
+ii. Para quaisquer a
+
+∈
+
+∈
+R, u
+
+W tivermos u + v
+
+W ;
+
+∈
+
+W tivermos au
+
+W .
+
+∈
+
+∈
+
+Isso nos garante que quando estamos trabalhando em W tanto somando como
+multiplicando, nunca teremos um vetor fora de W , esses itens são o suﬁciente para
+garantirmos que W é um espaço vetorial. E mais, qualquer subespaço contém o vetor nulo
+e como consequência o espaço vetorial admite pelo menos dois subespaço, o próprio espaço
+vetorial e o espaço nulo.
+
+Exemplo 2.3. Mostre que o espaço nulo é um subespaço vetorial.
+
+Sejam u, v
+
+W =
+
+∈
+u = 0, v = 0 e u + v = 0
+
+0
+}
+{
+
+e a
+
+∈
+
+R
+
+∈
+W
+
+au = 0
+
+W
+
+∈
+
+2.2.1 Propriedades dos Subespaços
+
+Teorema 2.1 (Intersecção de subespaços). Dados os subespaços W1 e W2 de um espaço
+vetorial V , a interseção W1 ∩
+
+W2 ainda é um subespaço vetorial de V .
+
+W2 nunca é vazio pois ambos os subes-
+Demonstração. Observamos inicialmente que W1 ∩
+paços contêm o vetor nulo de V . É necessário veriﬁcar a deﬁnição(2.2) para mostrar que
+W1 ∩
+
+W2 também é um subespaço vetorial de V .
+
+i. Dados x, y
+
+W2, x, y
+W1 e W2 são subespaço de V . Portanto x + y
+
+W1 e x, y
+
+W1 ∩
+
+∈
+
+∈
+
+∈
+
+W2 então x + y
+W2.
+W1 ∩
+
+∈
+W2, pela interseção temos que x
+
+∈
+
+∈
+W2, pois W1 e W2 são subespaços. Portanto a
+
+W1 ∩
+
+ii. Seja x
+ax
+
+∈
+
+W1 e x + y
+
+W2, pois
+
+∈
+
+∈
+
+W1 e x
+x
+
+·
+
+∈
+
+∈
+W1 ∩
+
+W2 assim ax
+W2.
+
+W1 e
+
+∈
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+14
+
+Teorema 2.2 (Soma de subespaços). Sejam W1 e W2 subespaço de um espaço vetorial V .
+Então o conjunto
+
+W1 + W2 =
+
+v
+{
+
+V ; v = w1 + w2, w1 ∈
+
+W1 e w2 ∈
+
+W2}
+
+∈
+
+é um subespaço vetorial de
+
+V .
+
+Sejam v = w1 + w2 e u = w3 + w4 com w1, w3 ∈
+v + u = (w1 + w2) + (w3 + w4) = (w1 + w3) + (w2 + w4) com w1 + w3 ∈
+
+W1 e w2, w4 ∈
+
+W2.
+
+W1 e
+
+w2 + w4 ∈
+
+Sejam a
+
+W2 portanto v + u
+
+W1 + W2;
+∈
+R, v = w1 + w2, com w1 ∈
+av = a(w1 + w2) = aw1 + aw2. Como w1 ∈
+W2, pois W1, W2 são subespaços. Logo aw1 + aw2 ∈
+
+W1 e w2 ∈
+
+W2.
+W1 e w2 ∈
+
+∈
+
+aw2 ∈
+um subespaço de V .
+
+W1 e
+W2 então aw1 ∈
+W1 + W2. Assim W1 + W2 é
+
+2.3 Combinação Linear
+
+Deﬁnição 2.3. Sejam V um espaço vetorial real, v1, v2, . . . , vn
+ros reais. Então, o vetor
+
+∈
+
+V e a1, a2, . . . , an núme-
+
+V = a1v1 + a2v2 +
+
+· · ·
+
++ anvn é uma combinação linear de v1, v2, . . . , vn.
+
+Uma vez ﬁxados vetores v1, v2, . . . , vn em V , o conjunto W de todos os vetores de
+
+V que são combinação linear destes, é um subespaço vetorial.
+
+Podemos escrever W como:
+
+W = [v1, v2, . . . , vn]
+
+Deﬁnição 2.4. Dizemos que um conjunto X
+vetorial V se para todo vetor w
+
+⊂
+
+V podemos exprimir com uma combinação linear
+
+V é um conjunto gerador do espaço
+
+∈
+
+w = α1v1 +
+
++ αnvn
+
+· · ·
+
+com v1, . . . , vn
+
+X.
+
+∈
+
+Exemplo 2.4. Seja V = R3 com v1 = (1, 0, 0), v2 = (0, 1, 0), v3 = (0, 0, 1). Mostre que
+v1, v2, v3}
+
+gera V .
+
+{
+
+Seja v = (x, y, z)
+
+∈
+
+seja,
+
+v = xv1 + yv2 + zv3
+
+R3 temos que (x, y, z) = x(1, 0, 0) + y(0, 1, 0) + z(0, 0, 1), ou
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+15
+
+2.4 Dependência e Independência Linear
+
+Deﬁnição 2.5. Sejam V um espaço vetorial e v1, v2, . . . , vn
+v1, v2, . . . , vn
+
+é linearmente independente (LI) se a equação a1v1 + a2v2 +
+
+∈
+
+V . Dizemos que o conjunto
++ anvn = 0,
+= 0 dizemos que v1, v2, . . . , vn são
+
+· · ·
+
+= an = 0. Caso exista um ai
+
+}
+
+{
+implicar que a1 = a2 =
+linearmente dependentes (LD).
+
+· · ·
+
+Deﬁnição 2.6. Uma base de uma espaço vetorial V é um conjunto B
+independente que gera V .
+
+⊂
+
+V linearmente
+
+Deﬁnição 2.7. O número de elementos da base de um espaço vetorial V é chamado de
+dimensão de V e denotamos por, dim V .
+
+Exemplo 2.5. Mostre que o conjunto
+
+(1, 0), (0, 1)
+}
+
+{
+
+é uma base do R2.
+
+Primeiramente vamos mostrar que o conjunto (1, 0), (0, 1) é LI.
+
+De fato, sejam a e b números reais tais que:
+
+a(1, 0) + b(0, 1) = (0, 0)
+
+(a, b) = (0, 0)
+
+Isso so é possível com a = b = 0.
+
+Além disso o conjunto gera todo o R2, pois qualquer v = (x, y)
+
+escrito como uma combinação desse conjunto.
+
+R2 pode ser
+
+∈
+
+(x, y) = x(1, 0) + y(0, 1).
+
+Exemplo 2.6. Mostre que o conjunto
+
+(1, 2), (0, 1)
+}
+{
+
+é uma base para o R2.
+
+Montando a equação:
+
+a(1, 2) + b(0, 1) = (0, 0)
+
+(a, 2a + b) = (0, 0)
+
+Para a solução desse sistema temos a = b = 0. Logo o conjunto
+
+{
+R2 pode ser escrito como:
+
+(1, 2), (0, 1)
+}
+
+é LI.
+
+Além disso qualquer v = (x, y)
+
+∈
+
+Ó
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+16
+
+(x, y) = x(1, 2) + (y
+
+2x)(0, 1)
+
+−
+
+portanto
+
+(1, 2), (0, 1)
+}
+
+{
+
+é uma base para o R2.
+
+2.5 Transformações Lineares
+
+Deﬁnição 2.8. Dados dois espaços vetoriais V e W , uma transformação linear é uma
+função de V em W , F : V
+
+W , que satisfaz as propriedades.
+
+→
+
+i. Quaisquer que sejam u e v em V
+
+F (u + v) = F (u) + F (v)
+
+ii. Quaisquer que sejam k
+
+R e v
+
+V
+
+∈
+
+∈
+
+F (kv) = kF (v)
+
+A transformação linear é uma ferramenta matemática muito usada na física e na
+química, para citar algumas temos as transformações dadas do plano no plano como a
+reﬂexão em torno o eixo e a reﬂexão em torno da origem e varias outras. Mais exemplos
+podem ser consultados em (BOLDRINI et al., 1978)
+
+Exemplo 2.7. Mostre que a aplicação F : R2
+uma transformação linear.
+
+→
+
+R3 dada por F (x, y) = (3x, 2y, x + y) é
+
+Sejam u = (x1, y1) e v = (x2, y2) vetores de R2
+
+i. F (u + v) = F (x1 + x2, y1 + y2) = (3(x1 + x2), 2(y1 + y2), (x1 + x2) + (y1 + y2))
+
+= (3x1 + 3x2, 2y1 + 2y2, (x1 + y1) + (x2 + y2))
+
+= (3x1, 2y1, (x1 + y1)) + (3x2, 2y2, (x2 + y2))
+
+= F (u) + F (v).
+
+ii. F (ku) = F (k(x1, y1)) = F (kx1, ky1) = (3(kx1), 2(ky1), kx1 + kx2)
+
+= k(3x1, 2y1, x1 + y1)
+
+= kF (x1, y1)
+
+= kF (u)
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+17
+
+Observe que matriz 
+
+
+
+
+3x + 0y
+0x + 2y
+x + y
+
+3 0
+0 2
+1 1
+
+
+
+
+
+x
+y
+
+
+· 
+
+
+= 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+é tal que:
+
+3x
+2y
+x + y
+
+
+.
+
+
+
+
+
+
+
+= 
+
+
+
+
+
+Portanto, a matriz 
+
+
+
+
+
+3 0
+0 2
+1 1
+
+
+
+
+
+
+
+
+
+
+
+
+3 0
+0 2
+1 1
+
+
+
+
+
+
+
+
+está associada a transformação dada.
+
+Esse exemplo nos mostra que essa transformação linear de R2 em R3 está associada
+
+a uma matriz 3
+
+2 e vice-versa.
+
+×
+
+Exemplo 2.8. Considere a transformação dada por T (x, y) = (2x + y, x + y). Vejamos
+como se T se comporta geometricamente para o vetor u = (2, 2):
+
+Observe que a matriz associada a transformação dada,
+
+Para o vetor u = (2, 2), temos T (2, 2) = (2
+
+·
+
+2 1
+Ô→ 
+1 1
+
+
+2 + 2, 2 + 2) = (6, 4)
+
+x
+y
+
+
+
+
+
+
+x
+y
+
+
+· 
+
+
+Figura 2.1 – Transformação T
+
+Deﬁnição 2.9. Seja T : E
+N (T ) =
+
+E
+
+T v = 0
+}
+
+|
+
+v
+{
+
+∈
+
+→
+
+F uma transformação linear. Deﬁnimos núcleo de T como,
+
+. A imagem de T como, Im(T ) =
+
+v′
+{
+
+∈
+
+F
+
+v
+
+∈
+
+| ∃
+
+E, T v = v′
+
+}
+
+Teorema 2.3 (Teorema do Núcleo e da Imagem). Sejam E, F espaços vetoriais de
+dimensão ﬁnita. Para toda transformação linear T : E
+F tem-se dimE = dimN (T ) +
+dimIm(T ).
+
+→
+
+Demonstração. Seja
+
+v1, . . . , vk
+{
+
+} ⊂
+
+N (T ) uma base a qual completaremos para uma base
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+18
+
+E. Se conseguirmos provar que B =
+
+v1, . . . , vk, . . . , vn
+{
+de Im(T ) o teorema estará demonstrado. Dado w
+v = α1v1 +
+
++ αnvn. Portanto,
+
+} ⊂
+
+∈
+
+· · ·
+
+T vk+1, . . . , T vn
+
+é uma base
+Im(T ), tem-se w = T v, onde
+
+{
+
+}
+
+w = T (α1v1 +
+
++ αnvn)
+
+· · ·
+
++ αnT vn
+
+= α1T v1 +
+
+· · ·
+= αk+1T vk+1 +
+
++ αnT vn
+
+· · ·
+
+pois T v1 =
+
+· · ·
+
+= T vk = 0. Logo o conjunto B gera a imagem de T .
+
+Além disso, se
+
+αk+1T vk+1 +
+
+· · ·
+
++ αnT vn = 0
+
+temos sucessivamente:
+
+αk+1vk+1 +
+
+αk+1vk+1 +
+
+pois v1, . . . , vk é base de N (T )
+
+· · ·
+
+· · ·
+
+T (αk+1vk+1 +
+
++ αnvn) = 0,
+
+· · ·
++ αnvn
+
+N (T ),
+
+∈
++ αnvn = β1v1 +
+
++ βkvk,
+
+· · ·
+
+β1v1 +
+
++ βkvk
+
+−
+
+αk+1vk+1 − · · · −
+= αn = 0,
+
+= βk = αk+1 =
+
+· · ·
+
+· · ·
+
+· · ·
+
+αnvn = 0
+
+β1 =
+
+logo vk+1, . . . , vn é LI.
+
+Teorema 2.4. Sejam V e W dois espaços vetoriais e
+uma base de V .
+Sejam w1, w2, . . . , wn elementos arbitrários de W . Então existe uma única aplicação linear
+T : V
+
+W tal que T (v1) = w1, T (v2) = w2, . . . , T (vn) = wn.
+
+u1, u2, . . . , un
+{
+
+}
+
+→
+
+Demonstração. (Existência) Como
+u
+
+}
+V pode ser escrito de modo único sob a forma
+
+u1, u2, . . . , un
+
+{
+
+∈
+
+é uma base de V temos que cada vetor
+
+v = x1u1 + x2u2 +
+
+n
+
++ xnun =
+
+xiui
+
+i=1
+Ø
+
+· · ·
+
+n
+
+Vamos deﬁnir T : V
+
+→
+T (u) = x1w1 + x2w2 +
+
+W
+
+· · ·
+
++ xnwn =
+
+xiwi.
+
+i=1
+Ø
+
+É claro que T está bem deﬁnida e
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+19
+
+T (ui) = wi, i = 1, . . . , n
+
+pois
+
+ui = 0u1 +
+
++ 0ui
+
+−
+
+· · ·
+
+1 + 1ui + 0ui+1 +
+
+· · ·
+
++ 0un, i = 1, . . . , n.
+
+Dados v
+
+V
+
+∈
+
+R, temos que
+
+e c
+
+∈
+
+v = y1u1 +
+
++ ynun,
+
+· · ·
+
+n
+
+n
+
+T (u + v) = T
+
+(xi + yi)ui
+
+=
+
+(xi + yi)wi
+
+=
+
+n
+
+i=1
+Ø
+
+e
+
+A
+
+i=1
+Ø
+xiwi +
+
+B
+
+i=1
+Ø
+yiwi = T (u) + T (v)
+
+n
+
+i=1
+Ø
+
+T (cu) = T
+
+n
+
+A
+
+i=1
+Ø
+n
+
+(cxiui)
+
+n
+
+=
+
+(cxi)wi
+
+B
+
+i=1
+Ø
+= cT (u)
+
+= c
+
+xiwi
+
+B
+
+A
+
+i=1
+Ø
+
+Portanto, T é uma transformação linear.
+
+(Unicidade) Seja S : V
+
+→
+
+W outra transformação linear tal que
+
+S(ui) = wi, i = 1, . . . , n
+
+Então
+
+S(u) = S
+
+n
+
+A
+
+i=1
+Ø
+
+xiui
+
+=
+
+B
+
+n
+
+i=1
+Ø
+
+n
+
+xiS(ui) =
+
+xiwi = T (u),
+
+i=1
+Ø
+
+para todo u
+
+∈
+
+V . Portanto, S = T .
+
+Exemplo 2.9. Qual é a transformação linear T : R2
+T (0,
+
+1) = (1, 0, 2)?
+
+−
+
+R3 tal que T (1, 2) = (2,
+
+1, 0) e
+
+−
+
+→
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+20
+
+Sejam b1 = (1, 2) e b2 = (0,
+
+pois são LI e geram o R2.
+
+1), veja que esses vetores formam uma base para R2,
+
+−
+
+Seja (x, y) um vetor do R2, vamos encontrar a combinação linear em relação a base
+
+dada.
+
+(x, y) = a(1, 2) + b(0,
+
+1) isso implica que
+
+−
+
+(x, y) = (a, 2a
+
+b) assim temos
+
+a = x, b = 2x
+
+−
+y
+
+−
+
+reescrevendo, temos:
+
+(x, y) = x(1, 2) + (2x
+
+−
+T (x, y) = xT (1, 2) + (2x
+
+y)(0,
+
+1)
+
+−
+y)T (0,
+
+−
+1, 0) + (2x
+
+−
+
+1)
+
+−
+y)(1, 0, 2)
+
+−
+2y)
+
+T (x, y) = x(2,
+
+T (x, y) = (4x
+
+y,
+
+−
+
+x, 4x
+
+−
+
+−
+
+E mais, a matriz associada a essa transformação linear é:
+
+4
+1
+−
+4
+
+
+
+
+
+
+
+
+1
+−
+
+0
+
+2
+
+−
+
+
+
+2.6 Autovalores e Autovetores
+
+Nessa seção faremos um estudo sobre autovalores e autovetores e mostraremos
+alguns exemplos. Dada uma transformação linear de um espaço vetorial nele mesmo
+T : V
+
+V temos a seguinte situação:
+
+→
+Quais são os vetores que são levados em múltiplos de si mesmo, ou seja:
+
+T (v) = λv.
+
+onde λ
+
+R e v
+
+V .
+
+∈
+
+∈
+
+= 0, e
+R tais que T (v) = λv, chamamos λ de autovalor de T e v de autovetor de T associado
+
+V um operador linear. Se existir v
+
+V , com v
+
+→
+
+∈
+
+Deﬁnição 2.10. Seja T : V
+λ
+∈
+a λ.
+
+Exemplo 2.10. Considere a matriz A =
+
+associado a autovalor λ = 3, pois
+
+1 1
+
+4 1
+
+
+
+observe que v =
+
+é um autovetor
+
+2
+
+4
+
+
+
+1 1
+
+4 1
+
+
+
+2
+· 
+4
+
+
+
+= 3
+
+2
+.
+
+4
+
+
+
+Ó
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+21
+
+Observe a seguinte transformação linear T (x, y) = (x + y, 4x + y), colocando na
+
+forma matricial:
+
+x
+y
+
+
+
+
+
+
+1 1
+4 1
+→ 
+
+
+
+x
+,
+y
+
+
+· 
+
+
+ou seja, a matriz é a mesma dada no exemplo.
+
+O que falta fazer é mostrar um método prático para encontrar os autovalores e os
+
+seus autovetores associados.
+
+Observe que podemos escrever a igualdade Av = λv da seguinte forma:
+
+Av
+
+(A
+
+−
+
+−
+
+λv = 0
+
+λI)v = 0, sendo I a matriz identidade.
+
+Reescrevendo o exemplo 2.10, temos:
+
+1 1
+
+4 1
+
+
+
+
+
+
+
+λ 0
+0 λ
+
+
+x
+y
+
+
+=
+
+0
+
+0
+
+
+
+
+
+
+
+
+
+
+
+− 
+
+
+Fazendo os cálculos chegamos na seguinte equação matricial:
+
+λ
+
+−
+4
+
+1
+
+
+
+
+1
+
+−
+
+1
+
+λ
+
+
+x
+y
+
+
+
+
+
+
+=
+
+0
+.
+0
+
+
+
+
+Se o determinante da matriz for diferente de zero, teremos uma única solução
+λI) = 0 nos dá outras
+
+x = y = 0, o que não satisfaz a deﬁnição 2.10. Assim, det(A
+soluções além da trivial.
+
+−
+
+Deﬁnição 2.11. O polinômio pa(λ) = det(A
+
+λI) é dito polinômio característico de A.
+
+−
+
+Com essa deﬁnição podemos achar o polinômio característico do exemplo 2.10
+
+det
+
+λ
+
+1
+
+
+
+
+−
+4
+
+(1
+
+
+λ)2 = 4
+
+
+−
+
+1
+
+−
+
+1
+
+λ
+
+
+
+
+
+
+= (1
+
+λ)2
+
+−
+
+−
+
+4 = 0
+
+λ) =
+
+2, com isso temos
+
+(1
+
+−
+λ =
+
+−
+
+±
+1, λ = 3.
+
+Achado os autovalores de A vamos montar um sistema para achar seus autovetores
+
+associados:
+
+Para λ = 3 temos:
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+22
+
+1 1
+4 1
+
+
+
+
+x
+y
+
+
+
+
+
+
+= 3
+
+x
+y
+
+
+
+
+
+
+x + y = 3x
+−
+4x + y = 3y ⇒ 
+⇒ 
+4x
+
+
+
+2x + y = 0
+
+2y = 0
+
+−
+
+fazendo as contas chegamos em v = (x, 2x). Para x = 1, temos v = (1, 2).
+
+
+
+
+
+Para λ =
+
+1 temos:
+
+−
+
+1 1
+
+4 1
+
+
+
+x
+y
+
+
+
+
+
+
+=
+
+1
+−
+
+x
+y
+
+
+
+
+
+
+x + y =
+
+⇒ 
+
+
+4x + y =
+
+−
+
+x
+y ⇒ 
+
+−
+
+2x + y = 0
+
+4x + 2y = 0
+
+fazendo as contas chegamos em v = (x,
+
+
+
+2x), para x = 1 temos v = (1,
+
+
+
+−
+
+2)
+
+−
+
+2.7 Diagonalização
+
+Nosso objetivo nesta seção é encontrar uma base do espaço vetorial que nos permita
+
+escrever uma matriz A como uma matriz diagonal.
+
+Deﬁnição 2.12. Uma matriz A
+invertível P e uma matriz diagonal D tais que:
+
+M (n
+
+×
+
+∈
+
+n) é dita diagonalizável se existir uma matriz
+
+A = P DP −
+
+1
+
+Exemplo 2.11. Seja as matrizes P =
+
+1
+
+2
+
+
+1
+2
+
+
+, P −
+
+1 =
+
+
+
+e D =
+
+
+
+1
+1
+4
+2
+1
+1
+4 −
+4
+
+−
+1 e faça as comparações com a matriz do exemplo 2.10.
+
+−
+
+
+
+
+
+3
+
+0
+
+
+0
+,
+1
+
+
+construa a matriz A = P DP −
+
+Fazendo os cálculos:
+
+1
+
+A =
+
+1
+
+2
+
+3
+
+6
+
+
+A = P DP −
+1
+2
+−
+
+1
+−
+2
+−
+
+1 1
+
+4 1
+
+
+
+A =
+
+A =
+
+0
+1
+
+
+1
+1
+4
+2
+1
+1
+4 −
+4
+
+
+
+
+
+
+
+
+
+3
+
+0
+
+
+
+
+
+
+−
+1
+1
+4
+2
+1
+1
+2 −
+4
+
+
+
+
+
+Observe que a matriz A é a mesma dada no exemplo 2.10 e que os vetores colunas
+da matriz P são os autovetores associados aos autovalores que estão na matriz diagonal D.
+
+Teorema 2.5. Autovetores associados a autovalores distintos são linearmente indepen-
+dentes.
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+23
+
+Demonstração. Faremos esta prova para dois autovalores distintos. Sejam λ1 e λ2 autovalo-
+= λ2, v1 e v2 autovetores associados aos autovalores λ1 e λ2, respectivamente.
+res de T , λ1 Ó
+Mostraremos que v1 e v2 são LI.
+
+Seja a1v1 + a2v2 = 0, apliquemos a esta equação a transformação T
+
+λ2I.
+
+−
+
+Usando a linearidade de T e lembrando que T (vi) = λivi e Ivi = vi para i = 1, 2,
+
+temos:
+
+(T
+
+−
+
+λ2I)(a1v1 + a2v2)
+
+⇒
+
+⇒
+
+⇒
+
+T (a1v1 + a2v2)
+−
+a1T (v1) + a2T (v2)
+a1λ2v1 −
+−
+a1λ2v1 −
+a1λ1v1 + a2λ2v2 −
+λ2) + a2v2(λ2 −
+a1v1(λ1 −
+λ2) = 0
+
+⇒
+
+a1v1(λ1 −
+
+λ2I(a1v1 + a2v2) = 0
+
+a2λ2v2 = 0
+
+a2λ2v2 = 0
+
+λ2) = 0
+
+Como v1 Ó
+Retomando a equação original e aplicando a T
+
+= λ2, chegamos que a1 = 0.
+
+= 0 e λ1 Ó
+
+a1v1(λ1 −
+
+λ1) + a2v2(λ2 −
+λ1) = 0.
+
+a2v2(λ2 −
+
+λ1I temos:
+
+−
+
+λ1) = 0
+
+como v2 Ó
+
+= 0 e λ2 Ó
+
+= λ1 chegamos que a2 = 0. Portanto v1 e v2 são LI.
+
+Teorema 2.6. Uma matriz A
+M (n
+autovetores linearmente independentes.
+
+∈
+
+×
+
+n) é diagonalizável se, e somente se, A possui n
+
+Demonstração. Suponha que A seja diagonalizável, isto é, que existe uma matriz invertível
+P e uma diagonal D tais que,
+
+D = P −
+
+1AP
+
+multiplicando por P em ambos os lados temos,
+
+P D = AP .
+
+Escrevendo as matrizes segundo suas colunas
+
+P = [v1, v2, . . . , vn]
+
+AP = [Av1, Av2, . . . , Avn]
+
+P D = [λ1v1, λ2v2, . . . , λnvn]
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+24
+
+como AP = P D, comparando concluímos que
+
+Av1 = λ1v1
+
+Av2 = λ2v2
+...
+
+Avn = λnvn
+
+Isto é, as colunas de P são autovetores de A. Como P é invertível, suas colunas
+
+são LI. Logo encontramos n autovetores LI para A.
+
+Reciprocamente, suponha agora que existam n vetores LI, v1, v2, . . . , vn, tais que:
+
+Av1 = λ1v1, Av2 = λ2v2, . . . , Avn = λnvn.
+
+Deﬁnimos uma matriz n
+
+n P por,
+
+×
+
+P = [v1, v2, . . . , vn].
+
+Como as colunas de P são LI, segue que P é invertível , logo
+
+AP = A [v1, v2, . . . , vn] = [Av1, Av2, . . . , Avn] = [λ1v1, λ2v2, . . . , λnvn]
+. . .
+. . .
+. . .
+0
+
+λ1
+0
+0 λ2
+
+...
+...
+0
+0
+
+= [v1, v2, . . . , vn]
+
+0
+0
+...
+λn
+
+= P D
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+onde denotamos
+
+D =
+
+λ1
+0
+0 λ2
+
+...
+...
+0
+0
+
+
+
+
+
+
+
+
+
+. . .
+. . .
+. . .
+0
+
+0
+0
+...
+λn
+
+
+.
+
+
+
+
+
+
+
+
+Multiplicando ambos os lados da equação por P −
+
+1 obtemos:
+
+P −
+
+1AP = D.
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+25
+
+2.8 Produto interno e Ortogonalidade
+
+Deﬁnição 2.13. Seja V um espaço vetorial real. Um produto interno sobre V é uma
+R chamado produto
+função que associa a cada par de vetores v1, v2 ∈
+interno de u por v de modo que sejam satisfeitas as seguintes condições:
+
+V um escalar vT
+
+1 v2 ∈
+
+i. (λv1 + v2)T v3 = λvT
+
+1 v3 + vT
+
+2 v3, v1, v2, v3 ∈
+
+V.
+
+ii. vT v
+
+≥
+
+0 para todo v
+
+V .
+
+∈
+
+iii. vT v = 0
+
+v = 0.
+
+⇒
+1 v2 = vT
+2 v1.
+
+iv. vT
+
+Deﬁnição 2.14. Seja V um espaço vetorial com produto interno. Dois vetores u, v
+V
+∈
+chamam-se ortogonais (ou perpendiculares) quando uT v = 0. Um conjunto X
+V diz-se
+ortogonal quando dois vetores distintos quaisquer em X são ortogonais. Se todos os vetores
+de X são unitários então X chama-se conjunto ortonormal.
+
+⊂
+
+Deﬁnição 2.15. Seja V um subespaço não vazio de Rn. O complemento ortogonal de V ,
+denotado por V ⊥ é o conjunto de todos os vetores x de Rn que são ortogonais a todos os
+vetores y de V . Ou seja,
+
+V ⊥ =
+
+Rn
+
+x
+{
+
+∈
+
+x
+
+·
+
+|
+
+y = 0 para todo y
+
+V
+
+.
+
+}
+
+∈
+
+Teorema 2.7. Seja uma matriz A
+
+M (m
+
+×
+
+∈
+
+n), então
+
+1. N (A) = Im(AT )⊥.
+
+2. N (AT ) = Im(A)⊥.
+
+Demonstração.
+
+1. Seja um vetor v
+
+N (A), ou seja, Av = 0. Isto acontece se, e somente
+∈
+Rm. Esta
+se, Av é ortogonal a todo vetor y
+equação é equivalente a sua transposta, ou seja, vT AT y = 0. Variando y em Rm, AT y
+Rm se, e somente
+percorre toda a imagem de AT . Assim, vT AT y = 0, para todo y
+se, v
+
+Rm. Assim yT Av = 0, para todo y
+
+N (A) se, e somente se, v
+
+Im(AT )⊥. Com isso, v
+
+∈
+Im(AT )⊥.
+
+∈
+
+∈
+
+∈
+
+∈
+
+∈
+
+2. É so aplicar a demonstração da primeira para AT .
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+26
+
+2.9 Matrizes simétricas
+
+Deﬁnição 2.16. Uma matriz A
+
+Deﬁnição 2.17. Uma matriz A
+sua matriz transposta.
+
+M (n
+
+M (n
+
+×
+
+×
+
+∈
+
+∈
+
+n) é dita simétrica se A = AT .
+
+n) é dita ortogonal se sua inversa coincide com
+
+Isto é,
+
+A−
+
+1 = AT .
+
+Teorema 2.8. Se A é uma matriz real simétrica, então seus autovalores são reais.
+
+Demonstração. Suponha que λ seja um autovalor de A com autovetor correspondente v.
+
+Av = λv e tomando conjugados complexos, temos.
+
+Av = λv com isso
+
+Av = λv
+
+Av = λv
+
+Av = λv
+
+(Av)T = (λv)T
+
+vT AT = λvT
+
+vT A = λvT
+
+tomando a transposta temos:
+
+multiplicando por um vetor v temos:
+
+(vT A)v = (λvT )v
+
+vT (Av) = λ(vT v)
+
+vT (λv) = λ(vT v)
+
+λ(vT v) = λ(vT v)
+
+λ)(vT v) = 0
+
+(λ
+
+−
+
+a1 + b1i
+...
+an + bni
+
+Agora se v = 
+
+
+
+
+
+
+
+
+
+
+
+
+, então v = 
+
+
+
+
+
+b1i
+
+a1 −
+...
+
+an
+
+bni
+
+−
+
+e assim
+
+
+
+
+
+
+
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+27
+
+vT v = (a2
+concluimos que λ
+
+1 + b2
+
++ (a2
+
+1) +
+λ = 0 ou seja λ = λ. logo, λ é real.
+
+n) > 0 sendo v
+
+n + b2
+
+· · ·
+
+−
+
+= 0 pois é uma autovetor, com isso
+
+Teorema 2.9 (Teorema Espectral). Se A
+P, D
+
+M (n
+
+n) tais que P é ortogonal, D é diagonal e
+
+M (n
+
+×
+
+∈
+
+∈
+
+×
+
+n) é simétrica, então existem matrizes,
+
+P T AP = D
+
+Demonstração. Usaremos indução em n nessa prova. Para n = 1, o resultado é imediato.
+vamos supor que seja válido para n
+
+1, provaremos que vale para n.
+
+−
+
+Sabemos que todos os autovalores de A são reais, demonstrado no Teorema 2.8.
+R de A, ou seja,
+
+Rn associado ao autovalor λ
+
+∈
+
+Considere então o autovetor unitário v
+2 = 1.
+Av = λv com
+ë
+
+v
+ë
+
+∈
+
+Sejam [v] o subespaço gerado pelo autovetor v e B =
+
+uma base
+Rn e considere a matriz M = [u1, . . . , un
+n
+1).
+−
+[v]⊥, para todo j = 1, . . . , n
+1,
+
+u1, u2, . . . , un
+1}
+{
+−
+M (n
+
+1) e que Auj
+
+×
+
+1]
+
+∈
+
+n
+
+1
+
+−
+
+×
+
+−
+
+∈
+
+−
+−
+
+ortonormal para [v]⊥, onde uj
+Observe que M T M = I
+pois
+
+∈
+
+∈
+M (n
+
+vT (Auj) = (vT A)uj = (AT v)T uj = (Av)T uj = (λv)T uj = λvT uj = 0
+
+Portanto, Auj = b1ju1 + b2ju2 + . . . + b(n
+−
+
+1)jun
+−
+
+1, com bj =
+
+assim temos Auj = M bj. Tomando B = [b1b2 . . . bn
+−
+que AM = M B. Portanto B = M T AM , logo B é simétrica, pois
+
+1]
+
+∈
+
+M (n
+
+b1j
+b2j
+...
+
+
+
+
+
+
+
+b(n
+
+
+−
+
+−
+
+×
+
+1
+
+
+,
+
+
+
+
+
+
+
+−
+
+1)j
+
+n
+
+1), conclui-se
+
+BT = (M T AM )T = M T AT (M T )T = M T AM = B.
+
+Pela hipótese, existem matrizes Q, E
+
+diagonal tais que
+
+M (n
+
+n
+
+1
+
+×
+
+−
+
+−
+
+∈
+
+1), com Q ortogonal e E
+
+QT BQ = E.
+
+Deﬁnindo P = [vM Q] e D =
+
+De fato,
+
+, temos que P é ortogonal e D é diagonal.
+
+λ 0
+0 E
+
+
+
+
+
+
+P T P =
+
+vT
+QT M T 
+
+
+v M Q
+é
+
+è
+
+=
+
+vT v
+
+vT M Q
+
+
+
+
+
+QT M T v QT M T M Q
+
+
+
+
+
+
+Assim temos:
+
+Ó
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+28
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+•
+
+1] Q =
+
+vT ui . . . vT un
+−
+
+Q = [0 . . . 0] Q = 0
+
+1
+
+M (1
+
+n
+
+×
+
+−
+
+1)
+
+∈
+
+v
+ë
+
+vT v =
+
+2 = 1.
+ë
+vT M Q = vT [ui . . . un
+−
+
+è
+QT M T v = (vT M Q)T = 0T = 0
+
+∈
+QT M T M Q = QT IQ = QT Q = I
+
+M (n
+
+1
+
+−
+
+M (n
+
+−
+
+∈
+
+×
+
+1
+
+é
+1)
+
+n
+
+×
+
+−
+
+1)
+
+Assim,
+
+P T P =
+
+1 0
+0 I
+
+
+
+
+= I
+
+M (n
+
+n).
+
+×
+
+∈
+
+Como D é diagonal, por deﬁnição. Assim temos:
+
+P T AP = D.
+
+P T AP =
+
+
+
+vT
+QT M T 
+
+
+A
+
+v M Q
+é
+
+è
+
+=
+
+
+
+vT
+QT M T 
+
+
+Av AM Q
+é
+
+è
+
+=
+
+vT Av
+
+vT AM Q
+
+
+
+
+
+QT M T AV QT M T AM Q
+
+
+
+
+
+vT Av = vT (λv) = λ(vT v) = λ
+
+2 = λ
+
+v
+ë
+
+ë
+vT AM Q = vT (AM )Q = vT (M B)Q = (vT M )BQ = [0 . . . 0] BQ = 0
+
+M (1
+
+n
+
+×
+
+−
+
+1)
+
+∈
+
+QT M T Av = (vT AT M Q)T = (vT AM Q)T = 0T = 0
+
+M (n
+
+1
+
+×
+
+−
+
+1)
+
+∈
+
+QT M T AM Q = QT (M T AM )Q = QT BQ = E
+
+Portanto,
+
+P T AP =
+
+= D
+
+λ 0
+0 E
+
+M (n
+
+
+
+
+
+Corolário 2.1. Se A
+Rn formado de autovetores de A.
+
+×
+
+∈
+
+n) é simétrica, então existe uma base ortonormal para o
+
+Esse corolário é um resultado muito importante que será usado na demonstração
+
+da decomposição SVD.
+
+Teorema 2.10. Se A é uma matriz M (m
+
+n), então N (AT A) = N (A)
+
+×
+
+Demonstração. Para demostrarmos esse teorema precisamos fazer duas coisas:
+
+i. N (AT A)
+
+N (A)
+
+⊆
+
+N (AT A) então AT Ax = 0
+
+Se x
+
+∈
+como,
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+29
+
+Ax
+
+2 = (Ax)T Ax = (xT AT )Ax = xT AT Ax = 0.
+
+ë
+
+ë
+Logo, Ax = 0, isto é x
+
+Assim,
+
+N (A).
+
+∈
+
+N (AT A)
+
+N (A)
+
+⊆
+
+ii. N (A)
+
+N (AT A).
+
+⊆
+N (A), então Ax = 0 com isso
+
+Se x
+
+∈
+
+Assim,
+
+Portanto,
+
+AT Ax = AT 0 = 0
+
+N (AT A)
+
+x
+
+∈
+
+N (A)
+
+⊆
+
+N (AT A)
+
+como N (AT A)
+
+⊆
+N (AT A) = N (A)
+
+N (A) e N (A)
+
+⊆
+
+N (AT A), concluimos que
+
+Teorema 2.11. Se A é uma matriz simétrica, então os autovetores associados aos auto-
+valores distintos de A são ortogonais.
+
+Demonstração. Sejam u e v autovetores correspondentes a autovalores distintos λ1 Ó
+de modo que:
+
+= λ2,
+
+Agora,
+
+Au = λ1u e Av = λ2v.
+
+λ1(uT v) = (λ1u)T v.
+
+Pois o produto de escalar por matriz é associativo. Como u é autovetor correspon-
+
+dente a λ1 e como A é simétrica, então
+
+(λ1u)T v = (Au)T v = uT AT v = uT (Av).
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+30
+
+Como v é autovetor associado a λ2 e usando a propriedade de que o produto entre
+
+escalar e matriz é comutativo, temos que:
+
+uT (Av) = uT (λ2v) = λ2(uT v).
+
+Portanto,
+
+Subtraindo, obtemos
+
+λ1(uT v) = λ2(uT v)
+
+(λ1 −
+
+λ2)(uT v) = 0
+
+Como λ1 Ó
+
+= λ2, concluimos que uT v = 0, logo u e v são ortogonais.
+
+Teorema 2.12 (Decomposição em valores singulares). Toda matriz A
+ser decomposta como
+
+∈
+
+M (m
+
+×
+
+n) pode
+
+A = U ΣV T
+
+onde:
+
+U
+
+q
+V
+
+∈
+
+∈
+
+∈
+
+•
+
+•
+
+•
+
+M (m
+
+M (m
+
+×
+
+×
+
+m) é ortogonal e suas colunas são formadas por autovetores de AAT ;
+
+n) é diagonal, cujas entradas diagonais são valores singulares de A;
+
+M (n
+
+×
+
+n) é ortogonal e suas colunas são formadas por autovetores de AT A.
+
+Demonstração. Vamos construir essa decomposição.
+
+Ordenando os autovalores da matriz simétrica AT A de modo que:
+
+λ1 ≥
+
+λ2 ≥ · · · ≥
+
+λr > 0 e λr+1 = λr+2 =
+
+= λn = 0.
+
+· · ·
+
+Usando o resultado do teorema 2.10, temos que:
+
+dimN (AT A) = n
+
+−
+
+r, logo dimN (A) = n
+
+r. Pelo teorema 2.3,
+
+−
+
+dimIm(A) + dimN (A) = n
+
+dimIm(A) = r
+
+⇒
+
+Portanto, o posto de A é r. Considere v1, v2, . . . , vn
+
+Rn tais que:
+
+∈
+
+AT Avi = λivi, para 1 6 i 6 r;
+
+•
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+31
+
+AT Avi = 0, para r + 1 6 i 6 n;
+
+vT
+i vj = 0, para j
+
+= i;
+
+•
+
+•
+
+= 1.
+
+vi
+
+ë
+
+• ë
+
+Note que podemos fazer essas escolhas pois AT A é simétrica.
+
+Chamando de valores singulares de A as raízes quadradas dos autovalores positivos
+
+de AT A e denotando por σ temos:
+
+Agora, para 1 6 i 6 r, fazemos
+
+σi = √λi
+
+ui =
+
+1
+σi
+
+Avi.
+
+Usando essa igualdade podemos mostrar que ui é um auto vetor de AAT com os
+
+mesmos autovalores de AT A. De fato,
+
+AAT ui = AAT
+
+1
+σi Avi
+
+= 1
+
+σi A
+
+AT Avi
+
+= 1
+
+σi A (λivi) = λi
+
+1
+σi Avi
+
+= λiui
+
+Além disso temos:
+
+1
+
+2
+
+1
+
+2
+
+1
+
+2
+
+uT
+i uj = 0
+
+se i
+
+= j, 1 6 i, j 6 r. De fato,
+
+uT
+i uj =
+
+1
+σi
+3
+para i = j temos,
+
+Avi
+
+T
+
+A
+
+4
+
+1
+σj
+
+Avj
+
+=
+
+B
+
+1
+σiσj
+
+i AT Avj =
+vT
+
+1
+σiσj
+
+vT
+i (λjvj) =
+
+λj
+σiσj
+
+vT
+i vj = 0
+
+2 = uT
+
+i ui =
+
+ui
+
+ë
+
+ë
+
+3
+= 1
+
+ui
+ë
+
+ë
+
+isso mostra que
+
+Perceba que ui
+
+∈
+
+uma base ortonormal para Im(A).
+
+1
+σi
+
+Avi
+
+T
+
+4
+
+3
+
+1
+σi
+
+Avi
+
+=
+
+4
+
+1
+σ2
+i
+
+i AT Avi =
+vT
+
+1
+λi
+
+i (λivi) = vT
+vT
+
+i vi = 1
+
+Im(A), como dimIm(A) = r, temos que u1, u2, . . . , ur formam
+
+Como dimIm(A) = dimIm(AT ) = r, temos que
+
+dimN (AT ) = m
+
+r
+
+−
+
+Considere então ur+1, ur+2, . . . , um uma base ortonormal para o N (AT ). Como
+
+Im(A) = N (AT )⊥, temos
+
+uT
+i uj = 0
+
+Ó
+Ó
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+32
+
+i
+
+= j, 1
+
+i, j
+
+m
+
+≤
+
+≤
+Pondo v1, v2, . . . , vn como colunas de V e u1, u2, . . . , um como colunas de U .
+
+V = [v1v2 . . . vrvr+1 . . . vn] e [u1u2 . . . urur+1 . . . um]
+
+Por construção, V
+
+M (n
+
+×
+
+∈
+
+n) e U
+
+∈
+
+M (m
+
+×
+
+m) são matrizes ortgonais, logo
+
+V T V = V V T = I
+
+M (n
+
+n) e U T U = U U T = I
+
+∈
+Vamos efetuar a seguinte multiplicação
+
+×
+
+M (m
+
+m).
+
+×
+
+∈
+
+U T AV
+
+U T AV =
+
+=
+
+A [v1v2 . . . vn] =
+
+[Av1Av2 . . . Avn]
+
+
+
+uT
+1
+uT
+2
+...
+
+
+
+
+uT
+
+m
+
+
+uT
+1 Av1 uT
+2 Av1 uT
+uT
+...
+uT
+mAv1 uT
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+1 Av2
+2 Av2
+...
+mAv2
+
+
+
+
+
+uT
+1
+uT
+2
+...
+uT
+m
+
+
+
+
+
+
+
+
+. . . uT
+. . . uT
+...
+. . . uT
+
+
+
+
+
+
+
+
+1 Avn
+2 Avn
+...
+mAvn
+
+
+
+
+
+
+
+
+
+
+
+Assim o elemento ij de U T AV é uT
+
+i Avj.
+
+Se j > r, temos que AT Avj = 0 e já vimos que N (AT A) = N (A), logo Avj = 0 e
+
+•
+
+uT
+i Avj = 0
+
+Se j
+
+≤
+
+•
+
+r, temos que Avj = σjuj, assim
+
+i Avj = uT
+uT
+
+i (σjuj) = σjuT
+
+i uj
+
+- Se j
+
+= i, já vimos que uT
+
+i uj = 0, portanto
+
+- Se j = i, temos que uT
+
+i ui = 1 e
+
+uT
+i Avj = 0
+
+uT
+i Avi = σi
+
+Portanto, pela análise conclui-se que:
+
+Ó
+Ó
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+33
+
+Se i = j
+
+≤
+
+r, o elemento ij é σi
+
+Se i
+
+= j ou i = j > r, o elemento ij é 0
+
+•
+
+•
+
+Fazendo
+
+=
+
+q
+
+, onde
+
+r 0
+0
+
+
+
+
+0
+q
+
+
+
+r =
+
+q
+
+σ1
+
+
+σ2
+
+
+
+
+
+
+
+
+
+= U T AV
+
+q
+
+. . .
+
+σr
+
+
+
+, com
+
+
+
+
+
+
+
+
+
+M (r
+
+×
+
+r) temos
+
+r ∈
+
+q
+
+Como U e V são matrizes ortogonais:
+
+A = U
+
+V T
+
+q
+
+Mostraremos um exemplo prático da decomposição SVD.
+
+Exemplo 2.12. Calcule a decomposição SVD da matriz A = 
+
+
+
+
+
+1
+1
+
+.
+0
+0
+
+2 2
+
+
+
+
+−
+
+O primeiro passo é calcular as matrizes AAT e AT A:
+
+1
+1
+
+0
+0
+
+2 2
+
+
+
+
+−
+
+AAT = 
+
+
+
+
+
+1 0
+1 0
+
+
+
+
+
+2
+−
+2 
+
+
+= 
+
+
+
+
+
+2 0 0
+0 0 0
+0 0 8
+
+
+
+
+
+
+
+
+AT A =
+
+1 0
+1 0
+
+
+
+
+
+2
+−
+2 
+
+
+1
+1
+
+0
+0
+
+2 2
+
+
+
+
+−
+
+
+
+
+
+
+
+
+=
+
+5
+3
+−
+
+
+
+
+
+.
+
+3
+−
+5 
+
+
+O segundo passo é acharmos os autovalores dessas matrizes:
+
+det
+
+AAT
+
+λI
+
+−
+
+1
+
+(2
+
+−
+
+λ)(
+
+λ)(8
+
+−
+
+= det 
+
+
+
+
+
+
+
+
+
+
+2
+
+−
+
+2
+
+
+λ
+
+−
+0
+0
+
+0
+λ
+
+−
+0
+
+0
+0
+
+λ
+
+8
+
+−
+
+
+
+
+
+
+
+
+
+
+
+λ) = 0 assim temos λ1 = 8, λ2 = 2, λ3 = 0.
+
+
+
+
+
+= 0 isso implica
+
+Achados os autovalores temos como calcular os autovetores associados:
+
+Para λ1 = 8
+
+Ó
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+34
+
+0
+8
+−
+0
+
+8
+
+−
+0
+0
+
+2
+
+
+
+
+
+
+
+0
+0
+
+8
+
+−
+
+
+
+
+8
+
+
+
+
+x
+y
+z
+
+
+
+
+
+
+
+
+0
+
+= 
+0
+
+
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fazendo os calculos chegamos ao vetor u = (0, 0, z), tomando z = 1, temos
+
+u1 = (0, 0, 1).
+
+Para λ2 = 2
+
+0
+2
+−
+0
+
+2
+
+−
+0
+0
+
+2
+
+
+
+
+
+
+
+0
+0
+
+8
+
+−
+
+
+
+
+2
+
+
+
+
+x
+y
+z
+
+
+
+
+
+
+
+
+0
+= 
+
+.
+0
+
+
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fazendo os calculos chegamos a u2 = (x, 0, 0), atribuindo a x = 1, temos u2 =
+
+(1, 0, 0).
+
+Para λ3 = 0:
+
+0
+0
+−
+0
+
+0
+
+−
+0
+0
+
+2
+
+
+
+
+
+
+
+0
+0
+
+8
+
+−
+
+
+
+
+0
+
+
+
+
+x
+y
+z
+
+
+
+
+
+
+
+
+0
+= 
+
+0
+
+
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Fazendo os cálculos chegamos em u3 = (0, y, 0), atribuindo a y = 1, temos u3 =
+
+(0, 1, 0).
+
+A matriz U será U = 
+
+
+
+
+
+0 1 0
+0 0 1
+1 0 0
+
+
+.
+
+
+
+
+
+Para encontrar a matriz V usamos o fato de que vi = 1
+
+σi AT ui.
+
+v1 = 1
+
+√8 
+
+1 0
+1 0
+
+
+
+2
+−
+2 
+
+
+= 1
+
+√8 
+
+2
+−
+2 
+
+
+=
+
+√2
+−
+2
+√2
+2
+
+
+
+
+
+
+
+
+
+
+
+V2 = 1
+
+√2 
+
+1 0
+1 0
+
+2
+−
+2 
+
+
+= 1
+
+1
+√2 
+1
+
+
+
+=
+
+
+
+1
+√2
+1
+√2
+
+=
+
+
+
+
+
+√2
+2
+√2
+2
+
+
+
+
+
+
+Observamos o que acontece quando fazemos a multiplicação da matrizes na forma
+
+
+
+
+
+
+
+0
+
+
+0
+
+
+1
+
+
+
+
+
+
+1
+
+
+0
+
+
+0
+
+
+
+
+
+
+
+A = U
+
+q
+
+0 1 0
+0 0 1
+1 0 0
+
+√8
+0
+0 √2
+0
+0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+V T = 
+
+
+
+
+
+√2
+−
+2
+√2
+2
+
+
+
+
+
+√2
+2
+√2
+2
+
+.
+
+
+
+
+Capítulo 2. Deﬁnições e demonstrações de resultados
+
+35
+
+A idéia desse exemplo é mostrar o quanto é trabalhoso o processo para achar as
+matrizes que formam a decomposição SVD, mesmo sendo uma matriz pequena. Isso nos
+faz pensar o quanto seria demorado sem uma ferramenta computacional para fazer esse
+trabalho e imagine quantos cálculos seriam necessários para uma matriz A2322
+
+4128.
+
+×
+
+Esse exemplo foi extraído de (OLIVEIRA, 2016) pela sua simplicidade e facilidade
+na realização dos cálculos, e outros textos foram usados como apoio, como (SOLTO, 2000),
+(ELIAS, 2010) e (LIMA, 1995).
+
+3 Cor e Imagem
+
+36
+
+Em se tratando de computação gráﬁca, a matemática é imperativa na área. E não
+é para menos, pois quando se trata de organizar, tabular, achar métodos de otimização,
+interagir resultados, a primeira ferramenta que nos vem em mente é a matemática e a
+computação.
+
+Faremos aqui uma breve explanação de como funciona o processo de captura e
+representação de imagem, visto que nosso objetivo é reconstruir uma imagem de modo que
+ainda se possa visualizar a imagem original porém com o menor número de informação.
+Como estamos trabalhando com cor é natural que tenhamos um mínimo de conhecimento
+desses tópicos.
+
+Qual é o papel da cor na computação graﬁca? Como é emitida a cor em um projetor?
+Como é formado uma imagem de modo que ela seja o mais parecido com a imagem no
+mundo real? Essas são algumas perguntas que vamos responder de maneira suscinta, muita
+matemática será omitida pois foge do nosso objetivo. De uma maneira intuitiva a imagem
+ﬁca determinada pela variação da cor nos diversos pontos onde ela é representada, a idéia
+é tentar entender como funciona a cor no mundo real e achar um modelo matemático para
+representar o mais próximo possível com a do mundo real. Na física a cor é deﬁnida por
+uma radiação eletromagnética λ que varia entre λa = 380 e λb = 740, chamado de espectro
+visível (medida espectral) nanômetros. A energia que é liberada por essa onda e chamada
+de energia radiante.
+
+Quando enxergamos uma cor nossos olhos estão recebendo radiações de onda
+com vários comprimentos. O funcionamento do olho humano tem um dos sistemas mais
+complexos que conhecemos, é muito parecido com o sistema de uma “câmera fotográﬁca”
+ela é constituída por olho, córnea, humor aquoso, humor vítreo, cristalino, ires e a retina.
+E é justamente na retina que se observa a divisão de duas areas que são fundamentais
+para a percepção visual, que são os cones e bastonetes. Os cones que é encontrado na
+parte central da retina tem esse nome com causa de seu formato são responsáveis pelas
+imagens coloridas, envolvendo os cones temos os bastonetes que são responsáveis pelas
+imagens em preto e branco.
+
+Issac Newton descobriu que a cor branca tem diversas cores do espectro com igual
+energia. Em geral a cor de um objeto muda de acordo com a temperatura, uma vez que
+com temperaturas diferentes a energia radiante muda.
+
+No século XIX foi introduzido pelos físicos Young e Helmholtz um modelo de
+percepção de cor, conhecido como RGB (“Red”, “Green” e “Blue”) essas são as iniciais
+da cores que são captadas pelo olho humano atráves de células fotosensíveis em amostras
+
+Capítulo 3. Cor e Imagem
+
+37
+
+de baixa frequência, cor vermelha, em amostras de média frequência a cor verde e com
+amostras de alta frequência com a cor azul. Dessa forma o sistema de Young e Helmholtz
+é representado pelo R3 (GOMES JONAS. VELHO, 2008)
+
+De uma forma prática a imagem é vista como uma matriz, onde cada entrada é
+chamada de pixel, uma imagem colorida é composta por três matrizes sendo a primeira
+com os valores reais associados a cor vermelho a segunda aos valores associados a cor
+verde, e a terceira a cor azul. Como pode ser observado na ﬁgura
+
+Figura 3.1 – Imagem decomposta em três camadas
+
+Deﬁnição 3.1. A(m, n, p) é uma matriz A com m linhas n colunas e p camadas, se a
+imagem for cor de cinza, p = 1, se a imagem for colorida p = 3.
+
+Como iremos trabalhar com imagem colorida podemos simpliﬁcar a notação de
+
+A(m, n, p) por A(m, n).
+
+Para mostrarmos que os resultados são válidos matematicamente deﬁniremos uma
+
+a notação que usaremos nos cálculos.
+
+Deﬁnição 3.2. Denotamos por A(:, :)m
+colunas.
+
+×
+
+n uma matriz com todas as m linhas e todas as n
+
+Deﬁnição 3.3. Denotamos por A(i, :)m
+
+×
+
+n a linha i de A.
+
+Deﬁnição 3.4. Denotamos por A(:, j)m
+
+×
+
+n a coluna j de A.
+
+Deﬁnição 3.5. Denotamos por A(i, j)m
+
+×
+
+n o elemento ij de A.
+
+Para representar uma imagem em preto e branco basta associar cada pixel a um
+valor numérico que tem o valor 0 associado a cor preto e o valor 255 a cor branco, os
+valores entre esses números são tons de cinza. Mas não e por acaso que temos e esses 256
+niveis de cores, como o computador armazena as informações em bits que pode ser 0 ou 1,
+para simpliﬁcar ﬁzeram o agrupamento de 8 bits, formando o byte, com isso o byte pode
+armazenar 28 = 256 valores diferentes.
+
+Capítulo 3. Cor e Imagem
+
+38
+
+Já as imagens coloridas tem cada pixel associado a três componentes que são as
+
+cores vermelho, verde e azul, como visto na ﬁgura 3.1
+
+Assim a cor branca em uma imagem colorida tem as componentes RGB =
+
+(255, 255, 255) e a cor preto tem RGB = (0, 0, 0).
+
+4 Decomposição Matricial e Reconstrução de
+
+39
+
+Imagens
+
+Nessa parte mostraremos como funciona matematicamente o processo de decompo-
+
+sição da imagem pela SVD.
+
+Como foi mostrado no Teorema 2.12 qualquer matriz pode ser decomposta em
+n:
+
+função de seus valores singulares. Para tanto vamos considerar a matriz genérica Am
+
+×
+
+Am
+
+×
+
+n = Um
+
+×
+
+mΣm
+
+×
+
+nV T
+n
+×
+
+n
+
+A(:, :)m
+
+×
+
+n = U (:, :)m
+
+×
+
+m
+
+(:, :)m
+
+×
+
+nV T (:, :)n
+×
+
+n
+
+q
+
+Vamos mostrar que:
+
+A(:, :)m
+
+×
+
+n = U (:, 1)Σ(1, 1)V T (1, :) + U (:, 2)Σ(2, 2)V T (2, :) +
+
+· · ·
+
++ U (:, r)Σ(r, r)V T (r, :)
+(4.1)
+
+onde r é número de valores singulares de A.
+
+Calculando cada parcela dessa soma temos uma soma de matrizes de tamanho
+
+m
+
+n:
+
+×
+
+(Σ(1, 1)U (:, 1)V T (1, :))m
+×
+
+n + (Σ(2, 2)U (:, 2)V T (2, :))m
+×
+
+n +
+
++ (Σ(r, r)U (:, r)V T (r, :))m
+×
+
+n
+
+· · ·
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+40
+
+=
+
+
+
+u11
+u21
+...
+
+
+
+
+ui1
+
+
+...
+
+
+
+
+
+um1
+
+
+
+
+σ11
+
+11 vT
+vT
+12
+
+è
+
+é è
+
+vT
+1j
+
+· · ·
+
+· · ·
+
+vT
+12
+
++
+
+é
+
+
+
+u12
+u22
+...
+
+
+
+
+ui2
+
+
+...
+
+
+
+
+
+um2
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+σ22
+
+21 vT
+vT
+22
+
+è
+
+é è
+
+vT
+2j
+
+· · ·
+
+· · ·
+
+vT
+2n
+
+é
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+u1r
+u2r
+...
+uir
+...
+umj
+
+è
+
++
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+σ11u11vT
+σ11u21vT
+= 
+...
+
+
+
+
+σrru1rvT
+σrru2rvT
++ 
+...
+
+
+
+
+
+σrr
+
+r1 vT
+vT
+r2
+
+vT
+rj
+
+· · ·
+
+· · ·
+
+é è
+
+vT
+rn
+
+é
+
+11 σ11u11vT
+12
+11 σ11u21vT
+12
+
+r1 σrru1rvT
+r2
+r1 σrru2rvT
+r2
+
+...
+
+...
+
+σ22u12vT
+σ22u22vT
++ 
+...
+
+
+
+
+
+21 σ22u12vT
+22
+21 σ22u22vT
+22
+
+...
+
++
+
+· · ·
+
+· · ·
+· · ·
+...
+
+
+
+
+
+
+
+
+· · ·
+· · ·
+...
+
+
+
+
+
+
+
+
+· · ·
+· · ·
+...
+
+
+
+
+
+
+
+
+Mostrando de forma genérica ﬁca asssim.
+
+σ11ui1v1j
+
++
+
+σ22ui2v2j
+
++
+
+è
+
+é
+
+è
+
+é
+
+· · ·
+
++
+
+σrruirvrj
+
+è
+
+é
+
+Assim cada elemento da matriz resultante da soma tem a seguinte forma:
+
+•
+
+•
+
+•
+
+a11 = σ11u11vT
+
+11 + σ22u12vT
+
+21 +
+
+a21 = σ11u21vT
+
+11 + σ22u22vT
+
+21 +
+
++ σrru1rvT
+r1.
+
++ σrru2rvT
+r1
+
+· · ·
+
+· · ·
+
+aij = σ11ui1vT
+
+1j + σ22ui2vT
+
+2j +
+
++ σrruirvT
+rj
+
+· · ·
+
+aij =
+
+r
+
+Øk=1
+
+σkkuikvT
+kj
+
+Agora temos que mostrar que o mesmo resultado é obtido com a multiplicação
+
+usual das matrizes da SVD:
+
+Um
+
+mΣm
+
+nV T
+n
+×
+
+n
+
+×
+
+×
+O elemento ik de (U
+
+)
+
+q
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+41
+
+m
+
+(U
+
+)ik =
+
+uilσlk.
+
+q
+
+Øl=1
+
+Observe que cada elemento desse produto é o somatório do produto da i-ésima
+
+linha pela k-ésima coluna da matriz dada.
+
+Calculando o elemento ij de U
+
+V T :
+
+[(U Σ)V T ]ij =
+
+=
+
+=
+
+=
+
+n
+
+m
+
+q
+uilσlk
+
+vT
+kj
+
+B
+
+Øk=1 A
+
+Øl=1
+uilσlkvT
+kj
+
+σlkuilvT
+kj
+
+Øk,l
+
+Øk,l
+r
+
+σkkuikvT
+
+kj, pois σlk = 0 para k
+
+= l e k > r
+
+Øk=1
+= aij
+
+que é o mesmo aij resultado da anterior. Mostrando que A =
+
+U (:, i)
+
+r
+
+i=1 1
+Ø
+
+(i, i)V T (i, :)
+2
+
+Ø
+
+4.1 Aplicação da SVD.
+
+Nessa seção mostraremos como podemos decompor e recontruir uma imagem
+através da decomposição SVD. A ideia principal é mostrar que é possível reconstruir uma
+imagem utilizando menos informação do que a informação contida na imagem original.
+Nossa implementação será feita utilizando o OCTAVE, ver apêndice A.
+
+A reconstrução da imagem será feita utilizando a soma apresentada na equação 4.1.
+Para que as primeiras parcelas dessa soma tenham maior relevância, tomaremos a decom-
+posição SVD de modo que os valores singulares estejam ordenados do maior para o menor.
+Nossa imagem reconstruída será composta pelas p primeiras parcelas da soma 4.1.
+
+Faremos a reconstrução da imagem com menos informações do que a imagem
+original, mostraremos que essa visualização é possível graças a aplicação da SVD que
+mostramos na seção anterior. Na ﬁgura 4.1 temos nossa imagem original com 2322
+×
+4128 pixels. Por se tratar de uma imagem colorida, essa imagem pode ser modelada
+matematicamente usando três matrizes de dimensão 2322
+4128, uma para cada canal de
+4128 = 9585216 números reais para cada
+cor. Dessa forma, precisamos armazenar 2322
+canal de cor, totalizando 28755648 números reais a ser armazenados.
+
+×
+
+×
+
+Mostraremos algumas comparações da imagem original com as imagens reconstruí-
+das partindo de uma quantidade pequena de parcelas e acrescentando, de modo a tornar a
+imagem mais clara e limpa, com isso podemos ter a ideia da melhora em cada comparação
+apresentada.
+
+Ó
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+42
+
+Na primeira comparação como pode ser visto logo a seguir na ﬁgura 4.2 é impossível
+compreender o conteúdo da imagem se já não soubéssemos que era a imagem original.
+Nessas comparações podemos observar a melhora do conteúdo quando acrescentamos mais
+parcelas, a ponto de não podermos mais perceber a diferença da imagem original com
+a imagem reconstruída, sendo impossível tirar conclusões da melhora da qualidade da
+imagem a olho nu, para isso é preciso o auxílio de ferramentas para que possamos dar uma
+resposta embasada naquilo que podemos ver com os olhos.
+
+Figura 4.1 – Imagem original da ﬂor
+
+Fonte: Paulo Cesar Torraca
+
+Figura 4.2 – Imagem reconstruída com p = 5 valores singulares.
+
+Nessa primeira imagem com a original na esquerda e a reconstruída à direita com
+apenas os 5 primeiros valores singulares. Como podemos visualizar a imagem, parece um
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+43
+
+quadro com várias pinceladas de cores variadas e não conseguimos entender nada; porém, o
+impressionante é que com essa ferramenta sabemos que a imagem é a mesma da esquerda,
+contudo com menos informações. Seguindo essa lógica podemos conseguir uma quantidade
+mínima de valores singulares para que na reconstrução possamos entender visualmente a
+imagem. Como visto acima, vimos que com essa quantidade é impossível prever alguma
+coisa.
+
+Como nossa ﬁgura original tem as dimensões de A2322
+
+trução temos:
+
+4128, nessa primeira recons-
+
+×
+
+U (:, 1)Σ(1, 1)V T (1, :) +
+
+A
+
+≈
+
+· · ·
+
++ U (:, 5)Σ(5, 5)V T (5, :)
+
+(4.2)
+
+Observe que temos uma soma de valores, onde cada termo acrescenta mais in-
+formações na imagem, assim podemos controlar o tamanho que queremos armazenar de
+uma determinada imagem, porém não podemos deixar de observar que na reconstrução
+não temos resultados visualmente parecidos, em duas imagens diferentes com a mesma
+quantidade de valores singulares na reconstrução podemos ter uma qualidade perceptível
+melhor em um e não em outro, isso porque em cada imagem após a decomposição cada
+valor singular tem seu peso característico.
+
+1 e cada elemento de Σ tem tamanho 1
+
+Para armazenar essa imagem em 4.2 cada coluna de U tem tamanho 2322
+
+1, cada
+linha de V T tem tamanho 4128
+1 como são
+cinco parcelas temos 2322
+5 + 5 = 32255 números reais para cada canal de cor,
+ou seja, 96765 de números reais no total. Como na imagem original precisamos de 28755648
+números reais, a imagem reconstrída pode ser armazenada com aproximadamente 0, 1% da
+quantidade de números reais da imagem original. Com esses números podemos observar
+que essa quantidade de informação é praticamente irrelevante em relação a original.
+
+5 + 4128
+
+×
+
+×
+
+×
+
+×
+
+×
+
+Figura 4.3 – Imagem reconstruída com p = 100 valores singulares.
+
+Nessa segunda imagem que colocamos lado a lado já podemos visualizar a imagem
+de maneira clara porém não com perfeição, pois podemos observar nas bordas de cada
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+44
+
+elemento que ela parece estar apagada, e mais as paredes dão a impressão de estar
+descascada isso se deve ao fato de ter apenas os 100 primeiros valores singulares em sua
+reconstrução. Observe que quanto mais valores singulares na reconstrução da imagem,
+melhor ela ﬁca.
+
+U (:, 1)Σ(1, 1)V T (1, :) +
+
+A
+
+≈
+
+· · ·
+
++ U (:, 100)Σ(100, 100)V T (100, :)
+
+Para armazenar essa imagem precisamos de:
+
+×
+
+2322
+
+100 + 4128
+
+100 + 100 = 645100 pixels, para os três canais temos 1935300
+pixels, isso é um pouco mais de 6, 7% dos números reais de informação da imagem original,
+e mesmo com tão pouca informação percentual já conseguimos visualizar com clareza a
+imagem.
+
+×
+
+Com essa quantidade de valores singulares, podemos ter uma ideia do peso de cada
+um, se não quisermos ver os detalhes podemos armazenar tranquilamente essa imagem
+com pouco mais de 6, 7% de números reais do total.
+
+Nessa próxima imagem já é quase impossível ver a diferença
+
+Figura 4.4 – Imagem reconstruída com p = 600 valores singulares.
+
+Observe que chega a um ponto que não faz tanta diferença a quantidade de valores
+singulares que se acresenta, tornando-se imperceptível a diferença, isso porque o peso não
+tem um valor expressivo após uma determinada quantidade. No caso desta ﬁgura estamos
+com os 600 primeiros valores singulares que é visivelmente muito semelhante com a ﬁgura
+original.
+
+Em números para os 600 valores singulares temos:
+
+U (:, 1)Σ(1, 1)V T (1, :) +
+
+A
+
+≈
+
+· · ·
+
++ U (:, 600)Σ(600, 600)V T (600, :)
+
+Para armazenar essa imagem precisamos de:
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+45
+
+2322
+
+600 + 4128
+
+600 + 600 = 3870600 números reais, para os três canais temos
+11611800, isso equivale a um pouca mais de 40% de números reais do total da imagem
+original.
+
+×
+
+×
+
+É impressionante a qualidade da imagem com apenas 40% de números reais da
+informação original, isso mostra o quanto é imprescindível o uso de ferramentas que
+compactem a informação, maximizando o espaço de modo que ainda seja compreensível.
+
+Mostraremos mais uma imagem com as mesmas quantidades de valores singulares
+usados na primeira reconstrução. As dimensões serão as mesmas, visto que foram capturadas
+pelo mesmo dispositivo.
+
+Nesta imagem temos uma zebra colorida com as dimensões de (2322
+
+4128)
+
+×
+
+Figura 4.5 – Imagem original da zebra
+
+Fonte: Paulo Cesar Torraca
+
+Nesta primeira comparação usamos os 5 primeiros valores singulares. Como pode
+ser visto, não conseguimos entender nada, mas podemos concluir que nesta imagem a
+quantidade de informações é insuﬁciente para que possamos visualizar alguma coisa.
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+46
+
+Figura 4.6 – Imagem reconstruída com p = 5 valores singulares.
+
+Como na primeira imagem reconstruída em 4.2 com apenas os 5 primeiros valores
+
+singulares.
+
+U (:, 1)Σ(1, 1)V T (1, :) +
+
+A
+
+≈
+
+· · ·
+
++ U (:, 5)Σ(5, 5)V T (5, :)
+
+Fazendo os cálculos chegamos que essa imagem tem 2322
+
+5 + 5 = 32255
+números reais para cada canal, sendo 96765 para os três canais, ou seja, se a imagem
+original tem 28755648 pixels, essa imagem reconstruída tem menos de 0, 1% de números
+reais da imagem original.
+
+5 + 4128
+
+×
+
+×
+
+Nesta próxima comparação já conseguimos visualizar claramente a imagem do lado
+direito. Ela aparece um pouco apagada em alguns pontos, principalmente nas bordas,
+porém, já conseguimos deﬁnir que se trata de uma zebra colorida.
+
+Figura 4.7 – Imagem reconstruída com p = 100 valores singulares.
+
+Nesta reconstrução contamos com os 100 primeiros valores singulares. Observe que
+com tão pouca informação, comparado com a quantidade total da original ja é possível
+ver perfeitamente a imagem.
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+47
+
+Nesta próxima imagem é imperceptível a diferença da imagem da direita com o
+da esquerda, quase que não conseguimos distinguir a original da reconstruida, os 600
+primeiros valores singulares usado nessa reconstrução são o suﬁciente para termos uma
+qualidade razoável com o resultado muito semelhante ao original.
+
+Figura 4.8 – Imagem reconstruída com p = 600 valores singulares.
+
+Observe que até o momento ﬁzemos apenas uma comparação visual. Agora usaremos
+uma ferramenta matemática para que possamos atribuir um valor númerico a cada imagem
+reconstruída e com isso podemos comparar a melhora na reconstrução através dessa
+métrica. Para isso utilizaremos uma norma matricial:
+
+Deﬁnição 4.1. Uma norma é uma função
+R, que satisfaz as seguintes propriedades para quaisquer u, v
+
+ë · ë
+
+, de um espaço vetorial V no conjunto do
+
+V e α
+
+∈
+
+R:
+
+∈
+
+1.
+
+2.
+
+3.
+
+ë
+
+ë
+
+ë
+
+v
+
+ë≥
+
+0 com
+
+v
+
+= 0 se, e somente se, v = 0;
+ë
+
+ë
+
+αv
+
+= α
+ë
+
+ë
+
+u + v
+
+ë≤ë
+
+v
+
+u
+
+.
+ë
+
++
+
+v
+
+ë
+
+ë
+
+. (desigualdade triangular).
+ë
+
+Uma função
+
+: M (n
+
+n)
+
+R é uma norma matricial
+
+→
+Mostraremos alguns exemplos de normas matriciais para X =
+
+ë · ë
+
+×
+
+x1, x2,
+
+. . . xn
+
+è
+
+é
+
+X
+
+X
+
+• ë
+
+• ë
+
+ë1= max
+
+1<j<n
+
+ë2= max
+
+1<i<n
+
+xij
+
+.
+|
+
+n
+
+i=1 |
+Ø
+σi
+
+X
+
+F =
+ë
+
+• ë
+
+1
+2
+
+.
+
+n
+
+n
+
+j=1 |
+Ø
+
+i=1
+Ø
+
+
+
+
+
+xij
+
+2
+|
+
+
+
+
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+48
+
+X
+
+= max
+16i6n
+
+ë∞
+
+• ë
+
+n
+
+j=1 |
+Ø
+
+xij
+
+.
+|
+
+Calcularemos a diferença
+
+Ir utilizando as normas 1, 2, Frobenius e Inﬁnito.
+
+Ir
+
+I
+ë
+
+−
+
+ë
+
+entre a imagem original I e a imagem reconstruída
+
+Imagem da ﬂor
+
+Imagem da zebra
+
+p
+5
+100
+600
+2322
+5
+100
+600
+2322
+
+ë
+
+I
+Ir
+ë1
+−
+435,13
+122,89
+29,823
+0
+369,29
+103,86
+21,962
+0
+
+I
+Ir
+ë2
+−
+ë
+114,64
+15,109
+2,6760
+0
+106,51
+12,518
+2,0667
+0
+
+I
+Ir
+F
+ë
+−
+ë
+431,13
+157,92
+39,820
+0
+375,78
+125,50
+31,303
+0
+
+ë
+
+ë∞
+
+I
+Ir
+−
+688,75
+212,21
+49,403
+0
+560,49
+159,92
+38,415
+0
+
+Tabela 4.1 – Tabela da Norma da diferença das imagens
+
+De posse dessa tabela podemos tirar algumas conclusões. Observando os resultados
+para a norma 2, na ﬁgura 4.2 temos o valor de 114, 64 como o resultado da norma da
+diferença da imagem original menos a imagem reconstruida. Na sequência temos o valor
+de 15, 109 para a ﬁgura 4.3. Observe e essa valor está diminuindo, como era de se esperar
+pois quanto mais informações se acrescenta na imagem reconstruida mais próxima ela ﬁca
+da original. Quando feito os cálculos para a quantidade total de valores singulares, isso
+pode ser feito no OCTAVE usando o valor do menor lado da dimensão A2322
+4128 que é
+2322 chegamos ao resultado de 0 como mostrado na tabela, sendo o mesmo resultado para
+as quatro normas utilizadas.
+
+×
+
+Essa mesma conclusão podemos tirar para as imagens das ﬁguras 4.6, 4.7, 4.8.
+E por ﬁm com os cálculos para a quantidade total de valores singulares que pode ser
+feito com o valor 2322, chegamos ao resultado 0 que era o esperado. Mostrando assim
+matematicamento o que era observado visualmente.
+
+4.2
+
+Imagem da Diferença
+
+Observe que na ﬁgura 4.2 vimos na imagem reconstruida que não conseguimos
+observar praticamente nada. Com isso nos vem uma pergunta: o que falta nessa imagem
+para ela chegar a imagem original? Nesta seção mostraremos a imagem da diferença da
+ﬁgura original pela imagem reconstruida.
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+49
+
+Figura 4.9 – Imagem da diferença com p = 5
+
+Como resposta temos esta exibição, que é justamente o que falta para termos a
+
+imagem completa.
+
+Observe que quando aumentamos os valores singulares, o que nos é visualmente
+
+perceptível são os contornos da diferença das imagens.
+
+Figura 4.10 – Imagem da diferença com p = 100
+
+Já nesta imagem não conseguimos ver absolutamente nada, além de alguns pontos
+brilhantes que se concentra nas bordas da ﬁgura, isso porque na reconstrução com os 100
+primeiros valores singulares visto na imagem 4.3 já é nítida.
+
+Nestas duas próximas exibições mostraremos a diferença das imagens 4.6 e 4.7
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+50
+
+Figura 4.11 – Imagem da diferença com p = 5
+
+Figura 4.12 – Imagem da diferença com p = 100
+
+Com essas ﬁguras conseguimos observar que quanto mais visível for a reconstrução
+menos se consegue observar na diferença, ou seja, a diferença ﬁca mais próximo de zero
+que é representado pela cor preto.
+
+Feito essas observações vamos mostrar um gráﬁco para cada uma das imagens que
+vai nos mostrar o comportamento da norma da diferença, gráﬁco esse que vai tendendo
+para zero uma vez que ele o obtido pela diferença da imagem original pela reconstruida.
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+51
+
+Figura 4.13 – gráﬁco da norma da diferença entre a imagem original e a imagem recons-
+
+truida para a imagem da ﬂor.
+
+Esse gráﬁco foi construido da seguinte forma, no eixo x temos os valores de p usado
+na reconstrução, que nesse caso ﬁzemos para p = 0, 200, 400, . . . , 2200 e no eixo y a média
+das normas. Oque podemos observar e que para a reconstrução com p = 200 o erro diminui
+mais de 80% e que a partir de p = 400 o erro decresce de uma forma suave. Isso reforça a
+nossa interpretação de que após um determinado valor o ganho na melhora da imagem é
+mínimo e quase que imperceptível.
+
+Capítulo 4. Decomposição Matricial e Reconstrução de Imagens
+
+52
+
+Figura 4.14 – gráﬁco da norma da diferença entre a imagem original e a imagem recons-
+
+truida para a imagem da zebra.
+
+O que podemos observar é que esse gráﬁco tem as mesmas características do gráﬁco
+4.13 nas primeiras 200 parcelas da reconstrução o erro que é a diferença diminui mais de
+80%, mostrando o peso das primeiras parcelas na reconstrução, após p = 400 a suavidade
+do gráﬁco mostra que o erro diminui de forma lenta.
+
+5 Conclusão
+
+53
+
+Neste trabalho apresentamos uma introdução de Álgebra linear, que nos pareceu
+relevante, para que pudéssemos desenvolver a demonstração e aplicação do teorema central
+SVD. Este teorema foi aplicado por meio de uma ferramenta chamado OCTAVE, que foi
+desenvoldido para realizar tarefas complexas, como por exemplo, cálculos com matrizes.
+
+Por seguinte, o objetivo do texto é mostrar o quanto a aplicação da SVD é útil
+com o intuiuto de comprimir informação. Isto é extremamente válido do ponto de vista
+custo computacional, uma vez que com tão pouca imformação se consegue ter noção da
+imagem original.
+
+Para a aplicação usamos duas imagens com uma característica importante: ambas
+possuem cores fortes, que vão desde o branco até o preto, passando assim por variados
+tons.Isto é um diferencial, pois poderíamos ter uma imagem do mar com a cor azul
+predominante, ou, uma ﬂoresta com a cor verde predominante. Imagens como estas, são
+chamadas de monocromáticas com pouca diferenciação quando aplicada à SVD.
+
+É satisfatório a aplicação desta ferramenta para a compactação, pois como visto
+nos resultados (imagens), com pouco mais de 6% já se consegue compreender a imagem.
+Além disso, conseguimos observar que a norma da diferença das imagem ﬁcam cada vez
+menores: quanto mais informações acrescentamos nas reconstruções, melhor elas podem
+ser visualizadas, conforme observado na tabela 4.1. Já nos gráﬁcos da diferença 4.13 e 4.14
+podemos constatar que a melhora acontece de forma mais acentuada com os primeiras
+parcelas, e que depois de um determinado ponto o ganho na melhora da imagem e muito
+lento.
+
+Mas isto é compreensível, pois como visto no Teorema 2.12 a SVD funciona com
+somas de valores. Quanto mais termos se adicionam, mais próximo a imagem ﬁca da
+original, fazendo com que a norma da diferença da imagem original, menos a reconstruída
+tende a ser zero.
+
+Referências
+
+54
+
+BOLDRINI, J. L. et al. Álgebra Linear. São paulo: Editora harper & row do brasil ltda,
+1978. Citado na página 17.
+
+ELIAS, L. M. Minimização de funções quadráticas. disponivel em, curitiba, 2010. Citado
+na página 36.
+
+GOMES JONAS. VELHO, L. Fundamentos da computação gráﬁca. Rio de janeiro:
+Instituto de Matemática Pura e Aplicada, IMPA, 2008. Citado na página 38.
+
+LIMA, E. L. Álgebra Linear. Rio de Janeiro: Instituto de Matemática Pura e Aplicada,
+CNPq, 1995. Citado na página 36.
+
+OLIVEIRA, J. V. d. Estudo da decomposição em valores singulares e Ánalise dos
+componentes principais. disponivel em, Rio de Janeiro, 2016. Citado na página 36.
+
+SOLTO, G. Decomposição em valores singulares. disponivel em, 2000. Citado na página
+36.
+
+Apêndices
+
+APÊNDICE A – Implementação da
+decomposição e reconstrução de imagens
+
+56
+
+Abaixo o código usado no OCTAVE para decomposição e reconstrução das imagens.
+
+1 c l e a r ; % li m pa as v a r i a v e i s
+
+2 img = imread ( ’ f l o r 1 . j p g ’ ) ; % l e a imagem
+
+3
+
+[ n l i n h a s , n c o l u n a s , ~ ] = s i z e ( img ) ; % num de l i n h a s e c o l u n a s de img
+
+4 img = d o u b l e ( img ) ; % c o n v e r t e a img em numeros r e a i s
+
+5 img = img . / 2 5 5 . 0 ; % n o r m a l i z a a imagem no i n t e r v a l o [ 0 , 1 ]
+
+6
+
+7 % decomposicao s v d em cada c a n a l ( r , g , b )
+
+8
+
+9
+
+10
+
+[ u1 , s1 , v1 ] = svd ( img ( : , : , 1 ) ) ;
+[ u2 , s2 , v2 ] = svd ( img ( : , : , 2 ) ) ;
+[ u3 , s3 , v3 ] = svd ( img ( : , : , 3 ) ) ;
+
+11
+12 disp ( ’ nnz ␣ s 1 : ␣ ’ ) ; disp ( nnz ( diag ( s 1 ) ) ) ;
+13 disp ( ’ nnz ␣ s 2 : ␣ ’ ) ; disp ( nnz ( diag ( s 2 ) ) ) ;
+14 disp ( ’ nnz ␣ s 3 : ␣ ’ ) ; disp ( nnz ( diag ( s 3 ) ) ) ;
+
+15
+
+16
+
+17
+
+r = 6 0 0 ; % q u a n t i d a d e de v a l o r e s
+
+s i n g u l a r e s
+
+18 % i n i c i a l i z a n d o as novas imagens de cada c a n a l
+19 nova_img1 = zeros ( n l i n h a s , n c o l u n a s ) ;
+20 nova_img2 = zeros ( n l i n h a s , n c o l u n a s ) ;
+21 nova_img3 = zeros ( n l i n h a s , n c o l u n a s ) ;
+
+22 % r e c o n s t r u c a o da imagem
+
+23
+
+24
+
+25
+
+f or i =1: r
+
+nova_img1 = nova_img1 + u1 ( : , i )
+
+nova_img2 = nova_img2 + u2 ( : , i )
+
+nova_img3 = nova_img3 + u3 ( : , i )
+
+26
+27 end
+
+28
+
+s 1 ( i , i )
+
+s 2 ( i , i )
+
+s 3 ( i , i )
+
+∗
+
+∗
+
+∗
+
+∗
+
+∗
+
+∗
+
+v1 ( : , i ) ’ ;
+
+v2 ( : , i ) ’ ;
+
+v3 ( : , i ) ’ ;
+
+29 % e x i b i r as imagens r e c o n s t r u i d a s
+30 nova_img = zeros ( n l i n h a s , n c o l u n a s , 3 ) ;
+
+31 nova_img ( : , : , 1 ) = nova_img1 ;
+
+32 nova_img ( : , : , 2 ) = nova_img2 ;
+
+33 nova_img ( : , : , 3 ) = nova_img3 ;
+
+34 %imshow ( nova_img ) ;
+
+APÊNDICE A. Implementação da decomposição e reconstrução de imagens
+
+57
+
+35 %i m w r i t e ( nova_img ,
+
+’ r e s z e b r a 6 0 0 . j p g ’ ) ;
+
+36
+
+’ i n f ’
+
+’ f r o ’ ,
+
+37 % 1 ,
+38 norma1=norm( img ( : , : , 1 )
+39 norma2=norm( img ( : , : , 2 )
+40 norma3=norm( img ( : , : , 3 )
+41 mean ( [ norma1 , norma2 , norma3 ] )
+
+−
+
+−
+
+−
+
+nova_img ( : , : , 1 ) , ’ i n f ’ ) ;
+
+nova_img ( : , : , 2 ) , ’ i n f ’ ) ;
+
+nova_img ( : , : , 3 ) , ’ i n f ’ ) ;
+
+
